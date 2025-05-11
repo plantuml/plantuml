@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageSelfArrow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">MessageSelfArrow.java</span></div><h1>MessageSelfArrow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowComponent;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.url.Url;
+
+class MessageSelfArrow extends Arrow {
+
+	private final LivingParticipantBox p1;
+	private final double deltaX;
+	private final double deltaY;
+	private final boolean isReverse;
+	private final int currentLevel;
+	private final double halfLifeWidth;
+
+	public MessageSelfArrow(AtomicInteger counter, Pragma pragma, double startingY, Rose skin, ArrowComponent arrow,
+			LivingParticipantBox p1, double deltaY, Url url, double deltaX, boolean isReverse, int currentLevel,
+			double halfLifeWidth) {
+<span class="fc" id="L65">		super(counter, pragma, startingY, skin, arrow, url);</span>
+<span class="fc" id="L66">		this.p1 = p1;</span>
+<span class="fc" id="L67">		this.deltaY = deltaY;</span>
+<span class="fc" id="L68">		this.deltaX = deltaX;</span>
+<span class="fc" id="L69">		this.isReverse = isReverse;</span>
+<span class="fc" id="L70">		this.currentLevel = currentLevel;</span>
+<span class="fc" id="L71">		this.halfLifeWidth = halfLifeWidth;</span>
+<span class="fc" id="L72">	}</span>
+
+	@Override
+	public double getPreferredHeight(StringBounder stringBounder) {
+<span class="fc" id="L76">		return getArrowComponent().getPreferredHeight(stringBounder);</span>
+	}
+
+	@Override
+	public double getPreferredWidth(StringBounder stringBounder) {
+<span class="fc" id="L81">		double length = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()</span>
+<span class="fc" id="L82">				.getLength();</span>
+<span class="fc" id="L83">		return getArrowComponent().getPreferredWidth(stringBounder) + length;</span>
+	}
+
+	@Override
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+<span class="fc" id="L88">		startGroup(ug);</span>
+<span class="fc" id="L89">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L90">		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY() + deltaY));</span>
+<span class="fc" id="L91">		final Area area = new Area(</span>
+<span class="fc" id="L92">				new XDimension2D(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder)));</span>
+<span class="fc" id="L93">		area.setDeltaX1(deltaY);</span>
+<span class="fc" id="L94">		area.setLevel(currentLevel);</span>
+<span class="fc" id="L95">		area.setLiveDeltaSize(halfLifeWidth);</span>
+<span class="fc" id="L96">		startUrl(ug);</span>
+<span class="fc" id="L97">		getArrowComponent().drawU(ug, area, context);</span>
+<span class="fc" id="L98">		endUrl(ug);</span>
+<span class="fc" id="L99">		endGroup(ug);</span>
+<span class="fc" id="L100">	}</span>
+
+	@Override
+	public double getStartingX(StringBounder stringBounder) {
+		// if (OptionFlags.STRICT_SELFMESSAGE_POSITION) {
+		// final double pos1 = p1.getLiveThicknessAt(stringBounder,
+		// getArrowYEndLevel(stringBounder)).getSegment()
+		// .getPos2();
+		// return pos1;
+		// }
+<span class="fc" id="L110">		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()</span>
+<span class="fc" id="L111">				.getPos2();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (isReverse) {</span>
+
+<span class="fc" id="L114">			return pos2 - getPreferredWidth(stringBounder);</span>
+		} else
+<span class="fc" id="L116">			return pos2 + deltaX;</span>
+	}
+
+	@Override
+	public int getDirection(StringBounder stringBounder) {
+<span class="nc" id="L121">		return 1;</span>
+	}
+
+	@Override
+	public double getArrowYStartLevel(StringBounder stringBounder) {
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (getArrowComponent() instanceof ArrowComponent) {</span>
+<span class="fc" id="L127">			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();</span>
+<span class="fc" id="L128">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
+<span class="fc" id="L129">					arrowComponent.getPreferredHeight(stringBounder));</span>
+<span class="fc" id="L130">			return getStartingY() + arrowComponent.getStartPoint(stringBounder, dim).getY();</span>
+		}
+<span class="nc" id="L132">		return getStartingY();</span>
+	}
+
+	@Override
+	public double getArrowYEndLevel(StringBounder stringBounder) {
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (getArrowComponent() instanceof ArrowComponent) {</span>
+<span class="fc" id="L138">			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();</span>
+<span class="fc" id="L139">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
+<span class="fc" id="L140">					arrowComponent.getPreferredHeight(stringBounder));</span>
+<span class="fc" id="L141">			return getStartingY() + arrowComponent.getEndPoint(stringBounder, dim).getY();</span>
+		}
+<span class="nc" id="L143">		return getStartingY() + getArrowComponent().getPreferredHeight(stringBounder);</span>
+	}
+
+	public double getMaxX(StringBounder stringBounder) {
+<span class="fc" id="L147">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
+	}
+
+	public double getMinX(StringBounder stringBounder) {
+<span class="fc" id="L151">		return getStartingX(stringBounder);</span>
+	}
+
+	public String toString(StringBounder stringBounder) {
+<span class="nc" id="L155">		return super.toString();</span>
+	}
+
+	@Override
+	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
+<span class="fc" id="L160">		return p1;</span>
+	}
+
+	@Override
+	protected Participant getParticipant1() {
+<span class="fc" id="L165">		return p1.getParticipant();</span>
+	}
+
+	@Override
+	protected Participant getParticipant2() {
+<span class="fc" id="L170">		return p1.getParticipant();</span>
+	}
+
+	@Override
+	public double getActualWidth(StringBounder stringBounder) {
+<span class="fc" id="L175">		return getPreferredWidth(stringBounder);</span>
+	}
+
+	public boolean isReverse() {
+<span class="fc" id="L179">		return isReverse;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrettyPrint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">PrettyPrint.java</span></div><h1>PrettyPrint.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
+
+/**
+ * Enables human readable JSON output by inserting whitespace between
+ * values.after commas and colons. Example:
+ *
+ * &lt;pre&gt;
+ * jsonValue.writeTo(writer, PrettyPrint.singleLine());
+ * &lt;/pre&gt;
+ */
+public class PrettyPrint extends WriterConfig {
+
+	private final char[] indentChars;
+
+<span class="fc" id="L43">	protected PrettyPrint(char[] indentChars) {</span>
+<span class="fc" id="L44">		this.indentChars = indentChars;</span>
+<span class="fc" id="L45">	}</span>
+
+	/**
+	 * Print every value on a separate line. Use tabs (&lt;code&gt;\t&lt;/code&gt;) for
+	 * indentation.
+	 *
+	 * @return A PrettyPrint instance for wrapped mode with tab indentation
+	 */
+	public static PrettyPrint singleLine() {
+<span class="nc" id="L54">		return new PrettyPrint(null);</span>
+	}
+
+	/**
+	 * Print every value on a separate line. Use the given number of spaces for
+	 * indentation.
+	 *
+	 * @param number the number of spaces to use
+	 * @return A PrettyPrint instance for wrapped mode with spaces indentation
+	 */
+	public static PrettyPrint indentWithSpaces(int number) {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (number &lt; 0) {</span>
+<span class="nc" id="L66">			throw new IllegalArgumentException(&quot;number is negative&quot;);</span>
+		}
+<span class="fc" id="L68">		char[] chars = new char[number];</span>
+<span class="fc" id="L69">		Arrays.fill(chars, ' ');</span>
+<span class="fc" id="L70">		return new PrettyPrint(chars);</span>
+	}
+
+	/**
+	 * Do not break lines, but still insert whitespace between values.
+	 *
+	 * @return A PrettyPrint instance for single-line mode
+	 */
+	public static PrettyPrint indentWithTabs() {
+<span class="nc" id="L79">		return new PrettyPrint(new char[] { '\t' });</span>
+	}
+
+	@Override
+	protected JsonWriter createWriter(Writer writer) {
+<span class="nc" id="L84">		return new PrettyPrintWriter(writer, indentChars);</span>
+	}
+
+	private static class PrettyPrintWriter extends JsonWriter {
+
+		private final char[] indentChars;
+		private int indent;
+
+		private PrettyPrintWriter(Writer writer, char[] indentChars) {
+<span class="nc" id="L93">			super(writer);</span>
+<span class="nc" id="L94">			this.indentChars = indentChars;</span>
+<span class="nc" id="L95">		}</span>
+
+		@Override
+		protected void writeArrayOpen() throws IOException {
+<span class="nc" id="L99">			indent++;</span>
+<span class="nc" id="L100">			writer.write('[');</span>
+<span class="nc" id="L101">			writeNewLine();</span>
+<span class="nc" id="L102">		}</span>
+
+		@Override
+		protected void writeArrayClose() throws IOException {
+<span class="nc" id="L106">			indent--;</span>
+<span class="nc" id="L107">			writeNewLine();</span>
+<span class="nc" id="L108">			writer.write(']');</span>
+<span class="nc" id="L109">		}</span>
+
+		@Override
+		protected void writeArraySeparator() throws IOException {
+<span class="nc" id="L113">			writer.write(',');</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (!writeNewLine()) {</span>
+<span class="nc" id="L115">				writer.write(' ');</span>
+			}
+<span class="nc" id="L117">		}</span>
+
+		@Override
+		protected void writeObjectOpen() throws IOException {
+<span class="nc" id="L121">			indent++;</span>
+<span class="nc" id="L122">			writer.write('{');</span>
+<span class="nc" id="L123">			writeNewLine();</span>
+<span class="nc" id="L124">		}</span>
+
+		@Override
+		protected void writeObjectClose() throws IOException {
+<span class="nc" id="L128">			indent--;</span>
+<span class="nc" id="L129">			writeNewLine();</span>
+<span class="nc" id="L130">			writer.write('}');</span>
+<span class="nc" id="L131">		}</span>
+
+		@Override
+		protected void writeMemberSeparator() throws IOException {
+<span class="nc" id="L135">			writer.write(':');</span>
+<span class="nc" id="L136">			writer.write(' ');</span>
+<span class="nc" id="L137">		}</span>
+
+		@Override
+		protected void writeObjectSeparator() throws IOException {
+<span class="nc" id="L141">			writer.write(',');</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (!writeNewLine()) {</span>
+<span class="nc" id="L143">				writer.write(' ');</span>
+			}
+<span class="nc" id="L145">		}</span>
+
+		private boolean writeNewLine() throws IOException {
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (indentChars == null) {</span>
+<span class="nc" id="L149">				return false;</span>
+			}
+<span class="nc" id="L151">			writer.write('\n');</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			for (int i = 0; i &lt; indent; i++) {</span>
+<span class="nc" id="L153">				writer.write(indentChars);</span>
+			}
+<span class="nc" id="L155">			return true;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

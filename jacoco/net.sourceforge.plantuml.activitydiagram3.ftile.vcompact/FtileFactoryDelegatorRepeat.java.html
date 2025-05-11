@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileFactoryDelegatorRepeat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> &gt; <span class="el_source">FtileFactoryDelegatorRepeat.java</span></div><h1>FtileFactoryDelegatorRepeat.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileBreak;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Genealogy;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.svek.ConditionStyle;
+
+public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
+
+	public FtileFactoryDelegatorRepeat(FtileFactory factory) {
+<span class="fc" id="L72">		super(factory);</span>
+<span class="fc" id="L73">	}</span>
+
+	@Override
+	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
+			Display startLabel, final Ftile repeat, Display test, Display yes, Display out, Colors colors,
+			Ftile backward, boolean noOut, LinkRendering incoming1, LinkRendering incoming2,
+			StyleBuilder currentStyleBuilder) {
+
+<span class="fc" id="L81">		final ConditionStyle conditionStyle = skinParam().getConditionStyle();</span>
+
+<span class="fc" id="L83">		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);</span>
+<span class="fc" id="L84">		final Style styleDiamond = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype)</span>
+<span class="fc" id="L85">				.getMergedStyle(currentStyleBuilder);</span>
+<span class="fc" id="L86">		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L87">		final HColor diamondColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L88">		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L89">		final FontConfiguration fcDiamond = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L90">		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L92">		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();</span>
+
+<span class="fc" id="L95">		final Ftile entry = getEntry(swimlane, startLabel, colors, boxStyleIn, stereotype);</span>
+
+<span class="fc" id="L97">		Ftile result = FtileRepeat.create(swimlane, swimlaneOut, entry, repeat, test, yes, out, borderColor,</span>
+<span class="fc" id="L98">				diamondColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond, fcArrow,</span>
+				backward, noOut, incoming1, incoming2);
+
+<span class="fc" id="L101">		final List&lt;WeldingPoint&gt; weldingPoints = repeat.getWeldingPoints();</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (weldingPoints.size() &gt; 0) {</span>
+
+<span class="nc" id="L104">			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), diamondColor, borderColor, swimlane);</span>
+<span class="nc" id="L105">			result = assembly(FtileUtils.addHorizontalMargin(result, 10, 0), diamondBreak);</span>
+<span class="nc" id="L106">			final Genealogy genealogy = new Genealogy(result);</span>
+
+<span class="nc" id="L108">			final Collection&lt;Connection&gt; connections = new ArrayList&lt;Connection&gt;();</span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			for (int i = 0; i &lt; weldingPoints.size(); i++) {</span>
+<span class="nc" id="L111">				final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(i);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">				final boolean first = i == 0;</span>
+<span class="nc" id="L113">				connections.add(new Connection() {</span>
+					public void drawU(UGraphic ug) {
+<span class="nc" id="L115">						final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());</span>
+<span class="nc" id="L116">						final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());</span>
+<span class="nc" id="L117">						final XDimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());</span>
+
+						final Snake snake;
+<span class="nc bnc" id="L120" title="All 2 branches missed.">						if (first) {</span>
+<span class="nc" id="L121">							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight());</span>
+<span class="nc" id="L122">							snake.addPoint(tr1.getDx(), tr1.getDy());</span>
+<span class="nc" id="L123">							snake.addPoint(0, tr1.getDy());</span>
+<span class="nc" id="L124">							snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);</span>
+<span class="nc" id="L125">							snake.addPoint(tr2.getDx(), tr2.getDy() + dimDiamond.getHeight() / 2);</span>
+						} else {
+<span class="nc" id="L127">							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft());</span>
+<span class="nc" id="L128">							snake.addPoint(tr1.getDx(), tr1.getDy());</span>
+<span class="nc" id="L129">							snake.addPoint(0, tr1.getDy());</span>
+						}
+<span class="nc" id="L131">						ug.draw(snake);</span>
+<span class="nc" id="L132">					}</span>
+
+					public Ftile getFtile1() {
+<span class="nc" id="L135">						return ftileBreak;</span>
+					}
+
+					public Ftile getFtile2() {
+<span class="nc" id="L139">						return diamondBreak;</span>
+					}
+
+				});
+			}
+
+<span class="nc" id="L145">			result = FtileUtils.addConnection(result, connections);</span>
+
+		}
+<span class="fc" id="L148">		return result;</span>
+	}
+
+	private Ftile getEntry(Swimlane swimlane, Display startLabel, Colors colors, BoxStyle boxStyleIn,
+			Stereotype stereotype) {
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (Display.isNull(startLabel))</span>
+<span class="fc" id="L154">			return null;</span>
+
+<span class="nc" id="L156">		return this.activity(startLabel, swimlane, boxStyleIn, colors, stereotype);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

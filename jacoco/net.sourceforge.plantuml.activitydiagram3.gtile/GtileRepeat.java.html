@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GtileRepeat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.gtile</a> &gt; <span class="el_source">GtileRepeat.java</span></div><h1>GtileRepeat.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.gtile;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class GtileRepeat extends GtileTopDown3 {
+
+	private static final double SUPP_WIDTH = 15;
+
+	private final Gtile backward;
+
+	public GtileRepeat(Swimlane swimlane, Gtile gtile, HColor color, Display test, Gtile backward) {
+<span class="nc" id="L61">		super(getShape1(swimlane, color, gtile.getStringBounder(), gtile.skinParam()), gtile,</span>
+<span class="nc" id="L62">				getShape2(swimlane, color, gtile.getStringBounder(), gtile.skinParam(), test));</span>
+<span class="nc" id="L63">		this.backward = backward;</span>
+
+<span class="nc" id="L65">	}</span>
+
+	private static Gtile getShape1(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam) {
+<span class="nc" id="L68">		final AbstractGtileRoot tmp = Gtiles.diamondEmpty(swimlane, stringBounder, skinParam,</span>
+<span class="nc" id="L69">				getDefaultStyleDefinitionDiamond(), color);</span>
+<span class="nc" id="L70">		return Gtiles.withSouthMargin(tmp, 20);</span>
+//		GtileHexagonInside tmp = Gtiles.hexagonInside(stringBounder, skinParam, swimlane,
+//				getDefaultStyleDefinitionDiamond(), branch0);
+//		final TextBlock tmp0 = branch0.getTextBlockPositive();
+//		return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 20);
+	}
+
+	private static Gtile getShape2(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam,
+			Display test) {
+<span class="nc" id="L79">		final AbstractGtileRoot tmp = Gtiles.hexagonInside(swimlane, stringBounder, skinParam,</span>
+<span class="nc" id="L80">				getDefaultStyleDefinitionDiamond(), color, test);</span>
+<span class="nc" id="L81">		return Gtiles.withNorthMargin(tmp, 20);</span>
+	}
+
+	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
+<span class="nc" id="L85">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
+	}
+
+	final static public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
+<span class="nc" id="L89">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
+	}
+
+	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
+<span class="nc" id="L93">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L98">		return super.calculateDimension(stringBounder).delta(SUPP_WIDTH, 0);</span>
+	}
+
+	@Override
+	protected void drawUInternal(UGraphic ug) {
+<span class="nc" id="L103">		super.drawUInternal(ug);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (backward != null) {</span>
+<span class="nc" id="L105">			backward.drawU(ug);</span>
+		}
+<span class="nc" id="L107">	}</span>
+
+	@Override
+	public Collection&lt;GConnection&gt; getInnerConnections() {
+
+<span class="nc" id="L112">		final List&lt;GConnection&gt; result = new ArrayList&lt;GConnection&gt;();</span>
+<span class="nc" id="L113">		final GConnection arrow1 = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH_HOOK), getPos2(),</span>
+<span class="nc" id="L114">				tile2.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
+<span class="nc" id="L115">		final GConnection arrow2 = new GConnectionVerticalDown(getPos2(), tile2.getGPoint(GPoint.SOUTH_HOOK), getPos3(),</span>
+<span class="nc" id="L116">				tile3.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
+
+<span class="nc" id="L118">		result.add(arrow1);</span>
+<span class="nc" id="L119">		result.add(arrow2);</span>
+
+<span class="nc" id="L121">		final double xright = calculateDimension(stringBounder).getWidth();</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (backward == null) {</span>
+<span class="nc" id="L124">			final GConnection arrow3 = new GConnectionSideThenVerticalThenSide(getPos3(),</span>
+<span class="nc" id="L125">					tile3.getGPoint(GPoint.EAST_HOOK), getPos1(), tile1.getGPoint(GPoint.EAST_HOOK), xright,</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+<span class="nc" id="L127">			result.add(arrow3);</span>
+		}
+
+		// final List&lt;GConnection&gt; result = Arrays.asList(arrow1, arrow2, arrow3);
+<span class="nc" id="L131">		return Collections.unmodifiableList(result);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

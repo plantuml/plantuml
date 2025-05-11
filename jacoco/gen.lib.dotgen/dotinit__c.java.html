@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>dotinit__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">dotinit__c.java</span></div><h1>dotinit__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.cgraph.edge__c.agfstout;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agnxtout;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.graph__c.agnnodes;
+import static gen.lib.cgraph.node__c.agfstnode;
+import static gen.lib.cgraph.node__c.agnxtnode;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.cgraph.rec__c.agbindrec;
+import static gen.lib.cgraph.subg__c.agfstsubg;
+import static gen.lib.cgraph.subg__c.agnxtsubg;
+import static gen.lib.common.postproc__c.dotneato_postprocess;
+import static gen.lib.common.utils__c.common_init_edge;
+import static gen.lib.common.utils__c.common_init_node;
+import static gen.lib.common.utils__c.gv_nodesize;
+import static gen.lib.common.utils__c.late_int;
+import static gen.lib.common.utils__c.late_string;
+import static gen.lib.common.utils__c.mapbool;
+import static gen.lib.common.utils__c.setEdgeType;
+import static gen.lib.dotgen.aspect__c.setAspect;
+import static gen.lib.dotgen.class1__c.nonconstraint_edge;
+import static gen.lib.dotgen.compound__c.dot_compoundEdges;
+import static gen.lib.dotgen.dotsplines__c.dot_splines;
+import static gen.lib.dotgen.mincross__c.dot_mincross;
+import static gen.lib.dotgen.position__c.dot_position;
+import static gen.lib.dotgen.rank__c.dot_rank;
+import static gen.lib.dotgen.sameport__c.dot_sameports;
+import static gen.lib.pack.pack__c.getPack;
+import static gen.lib.pack.pack__c.getPackInfo;
+import static gen.lib.pack.pack__c.getPackModeInfo;
+import static smetana.core.Macro.CL_OFFSET;
+import static smetana.core.Macro.ED_count;
+import static smetana.core.Macro.ED_minlen;
+import static smetana.core.Macro.ED_showboxes;
+import static smetana.core.Macro.ED_weight;
+import static smetana.core.Macro.ED_xpenalty;
+import static smetana.core.Macro.ET_SPLINE;
+import static smetana.core.Macro.GD_dotroot;
+import static smetana.core.Macro.GD_flags;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_flat_in;
+import static smetana.core.Macro.ND_flat_out;
+import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_other;
+import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.NEW_RANK;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.agfindgraphattr;
+import static smetana.core.Macro.alloc_elist;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.EN_pack_mode;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_aspect_t;
+import h.ST_pack_info;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.size_t;
+
+<span class="nc" id="L119">public class dotinit__c {</span>
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_subg&quot;, key=&quot;cmr94z4p2bdeiply1d4wrqwes&quot;, definition=&quot;static void dot_init_subg(graph_t * g, graph_t* droot)&quot;)
+public static void dot_init_subg(Globals zz, ST_Agraph_s g, ST_Agraph_s droot) {
+<span class="fc" id="L126">ENTERING(&quot;cmr94z4p2bdeiply1d4wrqwes&quot;,&quot;dot_init_subg&quot;);</span>
+try {
+    ST_Agraph_s subg;
+    
+<span class="fc bfc" id="L130" title="All 2 branches covered.">    if ((g != agroot(g)))</span>
+<span class="fc" id="L131">	agbindrec(zz, g, new CString(&quot;Agraphinfo_t&quot;), new size_t(ZType.ST_Agraphinfo_t), true);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">    if (g == droot)</span>
+<span class="fc" id="L133">	GD_dotroot(agroot(g), droot);</span>
+    
+<span class="fc bfc" id="L135" title="All 2 branches covered.">    for (subg = agfstsubg(zz, g); subg!=null; subg = agnxtsubg(zz, subg)) {</span>
+<span class="fc" id="L136">	dot_init_subg(zz, subg, droot);</span>
+    }
+} finally {
+<span class="fc" id="L139">LEAVING(&quot;cmr94z4p2bdeiply1d4wrqwes&quot;,&quot;dot_init_subg&quot;);</span>
+}
+<span class="fc" id="L141">}</span>
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_node&quot;, key=&quot;3hk92jbrfjmn6no3svn9jvje9&quot;, definition=&quot;static void  dot_init_node(node_t * n)&quot;)
+public static void dot_init_node(Globals zz, ST_Agnode_s n) {
+<span class="fc" id="L149">ENTERING(&quot;3hk92jbrfjmn6no3svn9jvje9&quot;,&quot;dot_init_node&quot;);</span>
+try {
+<span class="fc" id="L151">    agbindrec(zz, n, new CString(&quot;Agnodeinfo_t&quot;), new size_t(ZType.ST_Agnodeinfo_t), true);	//graph custom data</span>
+<span class="fc" id="L152">    common_init_node(zz, n);</span>
+<span class="fc" id="L153">    gv_nodesize(n, GD_flip(agraphof(n)));</span>
+<span class="fc" id="L154">    alloc_elist(4, ND_in(n));</span>
+<span class="fc" id="L155">    alloc_elist(4, ND_out(n));</span>
+<span class="fc" id="L156">    alloc_elist(2, ND_flat_in(n));</span>
+<span class="fc" id="L157">    alloc_elist(2, ND_flat_out(n));</span>
+<span class="fc" id="L158">    alloc_elist(2, ND_other(n));</span>
+<span class="fc" id="L159">    ND_UF_size(n, 1);</span>
+} finally {
+<span class="fc" id="L161">LEAVING(&quot;3hk92jbrfjmn6no3svn9jvje9&quot;,&quot;dot_init_node&quot;);</span>
+}
+<span class="fc" id="L163">}</span>
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_edge&quot;, key=&quot;zbvhnhd78bppq8wb872847bj&quot;, definition=&quot;static void  dot_init_edge(edge_t * e)&quot;)
+public static void dot_init_edge(Globals zz, ST_Agedge_s e) {
+<span class="fc" id="L170">ENTERING(&quot;zbvhnhd78bppq8wb872847bj&quot;,&quot;dot_init_edge&quot;);</span>
+try {
+    CString tailgroup, headgroup;
+<span class="fc" id="L173">    agbindrec(zz, e, new CString(&quot;Agedgeinfo_t&quot;), new size_t(ZType.ST_Agedgeinfo_t), true);	//graph custom data</span>
+<span class="fc" id="L174">    common_init_edge(zz, e);</span>
+    
+    
+<span class="fc" id="L177">    ED_weight(e, late_int(e, zz.E_weight, 1, 0));</span>
+<span class="fc" id="L178">    tailgroup = late_string(agtail(e), zz.N_group, new CString(&quot;&quot;));</span>
+<span class="fc" id="L179">    headgroup = late_string(aghead(e), zz.N_group, new CString(&quot;&quot;));</span>
+<span class="fc" id="L180">    ED_count(e, 1);</span>
+<span class="fc" id="L181">    ED_xpenalty(e, 1);</span>
+<span class="pc bpc" id="L182" title="3 of 4 branches missed.">    if (tailgroup.charAt(0)!='\0' &amp;&amp; (tailgroup.isSame(headgroup))) {</span>
+<span class="nc" id="L183">	UNSUPPORTED(&quot;atjraranegsdjegclykesn5gx&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 1000;</span>
+<span class="nc" id="L184">	UNSUPPORTED(&quot;5y0yunmvmngg67c9exlbn6jbk&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) *= 100;</span>
+    }
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">    if (nonconstraint_edge(zz, e)) {</span>
+<span class="nc" id="L187">	UNSUPPORTED(&quot;54niz21n2omf1i9v67brdid9w&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 0;</span>
+<span class="nc" id="L188">	UNSUPPORTED(&quot;2v5u5jdguhhn7vjihniotrml0&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) = 0;</span>
+    }
+    
+    
+<span class="fc" id="L192">    ED_showboxes(e, late_int(e, zz.E_showboxes, 0, 0));</span>
+<span class="fc" id="L193">    ED_minlen(e, late_int(e, zz.E_minlen, 1, 0));</span>
+} finally {
+<span class="fc" id="L195">LEAVING(&quot;zbvhnhd78bppq8wb872847bj&quot;,&quot;dot_init_edge&quot;);</span>
+}
+<span class="fc" id="L197">}</span>
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_node_edge&quot;, key=&quot;2ylyhz7macit0ts1hap2tg3wy&quot;, definition=&quot;void  dot_init_node_edge(graph_t * g)&quot;)
+public static void dot_init_node_edge(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L205">ENTERING(&quot;2ylyhz7macit0ts1hap2tg3wy&quot;,&quot;dot_init_node_edge&quot;);</span>
+try {
+	ST_Agnode_s n;
+	ST_Agedge_s e;
+<span class="fc bfc" id="L209" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n))</span>
+<span class="fc" id="L210">	dot_init_node(zz, n);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e))</span>
+<span class="fc" id="L213">	    dot_init_edge(zz, e);</span>
+    }
+} finally {
+<span class="fc" id="L216">LEAVING(&quot;2ylyhz7macit0ts1hap2tg3wy&quot;,&quot;dot_init_node_edge&quot;);</span>
+}
+<span class="fc" id="L218">}</span>
+
+
+
+
+
+
+<span class="fc" id="L225">public static CFunction dot_cleanup = new CFunctionAbstract(&quot;dot_cleanup&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L228">		return dot_cleanup(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_cleanup&quot;, key=&quot;2uv40x0vx6nmbvld01reukyly&quot;, definition=&quot;void dot_cleanup(graph_t * g)&quot;)
+public static Object dot_cleanup(Object... arg_) {
+<span class="nc" id="L233">UNSUPPORTED(&quot;a2tqiktifcbodk46i6x0ux9j1&quot;); // void dot_cleanup(graph_t * g)</span>
+<span class="nc" id="L234">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L235">UNSUPPORTED(&quot;cjx5v6hayed3q8eeub1cggqca&quot;); //     node_t *n;</span>
+<span class="nc" id="L236">UNSUPPORTED(&quot;5gypxs09iuryx5a2eho9lgdcp&quot;); //     edge_t *e;</span>
+<span class="nc" id="L237">UNSUPPORTED(&quot;v8twirr9ihzxnb06d6x6nxrd&quot;); //     free_virtual_node_list(GD_nlist(g));</span>
+<span class="nc" id="L238">UNSUPPORTED(&quot;44thr6ep72jsj3fksjiwdx3yr&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g, n)) {</span>
+<span class="nc" id="L239">UNSUPPORTED(&quot;e20lm4qtccvgsfq5fzjv6sjyl&quot;); // 	for (e = agfstout(g, n); e; e = agnxtout(g, e)) {</span>
+<span class="nc" id="L240">UNSUPPORTED(&quot;5otoqd7o1zz8ni50urywr7yjy&quot;); // 	    gv_cleanup_edge(e);</span>
+<span class="nc" id="L241">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L242">UNSUPPORTED(&quot;yis08tp9td0x00hxoxqopt6b&quot;); // 	dot_cleanup_node(n);</span>
+<span class="nc" id="L243">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L244">UNSUPPORTED(&quot;2w88m44roqcqg67kuhg5k4agu&quot;); //     dot_cleanup_graph(g);</span>
+<span class="nc" id="L245">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L247">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 4jt1p8taqjuk4atqpwbxkru3g
+// static void remove_from_rank (Agraph_t * g, Agnode_t* n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;remove_from_rank&quot;, key=&quot;4jt1p8taqjuk4atqpwbxkru3g&quot;, definition=&quot;static void remove_from_rank (Agraph_t * g, Agnode_t* n)&quot;)
+public static Object remove_from_rank(Object... arg) {
+<span class="nc" id="L258">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L259">UNSUPPORTED(&quot;9axg5z61bd5rkf0cbubkto6eb&quot;); // remove_from_rank (Agraph_t * g, Agnode_t* n)</span>
+<span class="nc" id="L260">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L261">UNSUPPORTED(&quot;5v9scbkty9fkcyo8yw7jmkokj&quot;); //     Agnode_t* v = NULL;</span>
+<span class="nc" id="L262">UNSUPPORTED(&quot;86gmm9qxyhkzst815hr54r1sp&quot;); //     int j, rk = ND_rank(n);</span>
+<span class="nc" id="L263">UNSUPPORTED(&quot;7bstlpzg93apc08cfgp386p7m&quot;); //     for (j = 0; j &lt; GD_rank(g)[rk].n; j++) {</span>
+<span class="nc" id="L264">UNSUPPORTED(&quot;5oq2646mpw8p4gen80z8g8baz&quot;); // 	v = GD_rank(g)[rk].v[j];</span>
+<span class="nc" id="L265">UNSUPPORTED(&quot;aby82dr89m0xbcj8mya7f9fvx&quot;); // 	if (v == n) {</span>
+<span class="nc" id="L266">UNSUPPORTED(&quot;5494ozi7uqin7n7xlbkqrsahd&quot;); // 	    for (j++; j &lt; GD_rank(g)[rk].n; j++) {</span>
+<span class="nc" id="L267">UNSUPPORTED(&quot;a4l7560unq1yw14pck0v0yo6x&quot;); // 		GD_rank(g)[rk].v[j-1] = GD_rank(g)[rk].v[j];</span>
+<span class="nc" id="L268">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L269">UNSUPPORTED(&quot;8pdkxsqmvoce243jar5hwxl3u&quot;); // 	    GD_rank(g)[rk].n--;</span>
+<span class="nc" id="L270">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L271">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L272">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L273">UNSUPPORTED(&quot;cytanc5i1hmu0ag0vz4awfpi&quot;); //     assert (v == n);  /* if found */</span>
+<span class="nc" id="L274">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L276">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 xgvyh3kinj6cbnknb5oo9qfr
+// static void removeFill (Agraph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;removeFill&quot;, key=&quot;xgvyh3kinj6cbnknb5oo9qfr&quot;, definition=&quot;static void removeFill (Agraph_t * g)&quot;)
+public static Object removeFill(Object... arg) {
+<span class="nc" id="L287">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L288">UNSUPPORTED(&quot;8asq16rjvm285smlce6dul5nq&quot;); // removeFill (Agraph_t * g)</span>
+<span class="nc" id="L289">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L290">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
+<span class="nc" id="L291">UNSUPPORTED(&quot;167at4ws3rrdv3znbvpsnb83o&quot;); //     Agnode_t* nxt;</span>
+<span class="nc" id="L292">UNSUPPORTED(&quot;22j86kdb5hbziiedfsspj3ipn&quot;); //     Agraph_t* sg = agsubg (g, &quot;_new_rank&quot;, 0);</span>
+<span class="nc" id="L293">UNSUPPORTED(&quot;1pjx7ke9o4h5tgq0cs9jfui7j&quot;); //     if (!sg) return;</span>
+<span class="nc" id="L294">UNSUPPORTED(&quot;5sms8ok354044bziyaq1kfv93&quot;); //     for (n = agfstnode(sg); n; n = nxt) {</span>
+<span class="nc" id="L295">UNSUPPORTED(&quot;18crodqmo1f1apt7bwq0mv72m&quot;); // 	nxt = agnxtnode(sg, n);</span>
+<span class="nc" id="L296">UNSUPPORTED(&quot;227ays2g6u04e210i8wp3jntu&quot;); // 	delete_fast_node (g, n);</span>
+<span class="nc" id="L297">UNSUPPORTED(&quot;2tp9t78wzq032fbm3msk2gpfx&quot;); // 	remove_from_rank (g, n);</span>
+<span class="nc" id="L298">UNSUPPORTED(&quot;cyyixtb6lqfain86edffcd92b&quot;); // 	dot_cleanup_node (n);</span>
+<span class="nc" id="L299">UNSUPPORTED(&quot;3xjgsp211uvaug1aa3mvpdlnc&quot;); // 	agdelnode(g, n);</span>
+<span class="nc" id="L300">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L301">UNSUPPORTED(&quot;9ar3yxaq5s0lagg5bw59suv8u&quot;); //     agdelsubg (g, sg);</span>
+<span class="nc" id="L302">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L304">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 63o8ieaetc5apjocrd74fobt0
+// static void attach_phase_attrs (Agraph_t * g, int maxphase) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;attach_phase_attrs&quot;, key=&quot;63o8ieaetc5apjocrd74fobt0&quot;, definition=&quot;static void attach_phase_attrs (Agraph_t * g, int maxphase)&quot;)
+public static Object attach_phase_attrs(Object... arg) {
+<span class="nc" id="L315">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L316">UNSUPPORTED(&quot;adogsvx2s8kkwixbfl53zj175&quot;); // attach_phase_attrs (Agraph_t * g, int maxphase)</span>
+<span class="nc" id="L317">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L318">UNSUPPORTED(&quot;28snkvv05tay2b94o220j0rkx&quot;); //     Agsym_t* rk = agattr(g,AGNODE,&quot;rank&quot;,&quot;&quot;);</span>
+<span class="nc" id="L319">UNSUPPORTED(&quot;2mf6hpet62ccb0nfggxptz459&quot;); //     Agsym_t* order = agattr(g,AGNODE,&quot;order&quot;,&quot;&quot;);</span>
+<span class="nc" id="L320">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
+<span class="nc" id="L321">UNSUPPORTED(&quot;cf8w5z35zxww7q6yjin9lc9op&quot;); //     char buf[BUFSIZ];</span>
+<span class="nc" id="L322">UNSUPPORTED(&quot;7wq24g054kmx3aw25vk5ksj4&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g,n)) {</span>
+<span class="nc" id="L323">UNSUPPORTED(&quot;16p5t5iyomfedg6du3xoszhzq&quot;); // 	if (maxphase &gt;= 1) {</span>
+<span class="nc" id="L324">UNSUPPORTED(&quot;bwgz5xhm64nl5wtnj9vfs1rx7&quot;); // 	    sprintf(buf, &quot;%d&quot;, ND_rank(n));</span>
+<span class="nc" id="L325">UNSUPPORTED(&quot;42xwkqdgcponmubqyxg876oo6&quot;); // 	    agxset(n,rk,buf);</span>
+<span class="nc" id="L326">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L327">UNSUPPORTED(&quot;93x84236b3xx5glpnx5xseeg0&quot;); // 	if (maxphase &gt;= 2) {</span>
+<span class="nc" id="L328">UNSUPPORTED(&quot;dt1ra0nrgwwdbm8fmxvgcz16x&quot;); // 	    sprintf(buf, &quot;%d&quot;, ND_order(n));</span>
+<span class="nc" id="L329">UNSUPPORTED(&quot;5e6vrutroh3qimffd0rioyhnz&quot;); // 	    agxset(n,order,buf);</span>
+<span class="nc" id="L330">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L331">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L332">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L334">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dotLayout&quot;, key=&quot;7t18nggek2s9vvb5opwqa8rwr&quot;, definition=&quot;static void dotLayout(Agraph_t * g)&quot;)
+public static void dotLayout(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L343">ENTERING(&quot;7t18nggek2s9vvb5opwqa8rwr&quot;,&quot;dotLayout&quot;);</span>
+try {
+<span class="fc" id="L345">	ST_aspect_t aspect = new ST_aspect_t();</span>
+	ST_aspect_t asp;
+<span class="fc" id="L347">    int maxphase = late_int(g, agfindgraphattr(zz, g,&quot;phase&quot;), -1, 1);</span>
+    
+<span class="fc" id="L349">    setEdgeType (zz, g, ET_SPLINE);</span>
+<span class="fc" id="L350">    asp = setAspect (zz, g, aspect);</span>
+    
+<span class="fc" id="L352">    dot_init_subg(zz, g,g);</span>
+<span class="fc" id="L353">    dot_init_node_edge(zz, g);</span>
+    
+    do {
+<span class="fc" id="L356">        dot_rank(zz, g, asp);</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">	if (maxphase == 1) {</span>
+<span class="nc" id="L358">	    attach_phase_attrs (g, 1);</span>
+<span class="nc" id="L359">	    return;</span>
+	}
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">	if (aspect.badGraph!=0) {</span>
+<span class="nc" id="L362">UNSUPPORTED(&quot;1yu5j8tk43i6jlmu8wk9jks15&quot;); // 	    agerr(AGWARN, &quot;dot does not support the aspect attribute for disconnected graphs or graphs with clusters\n&quot;);</span>
+<span class="nc" id="L363">UNSUPPORTED(&quot;5uwp9z6jkv5uc30iyfszyg6dw&quot;); // 	    asp = NULL;</span>
+<span class="nc" id="L364">UNSUPPORTED(&quot;28kbszyxsjoj03gb134ov4hag&quot;); // 	    aspect.nextIter = 0;</span>
+	}
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">        dot_mincross(zz, g, (asp != null));</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">	if (maxphase == 2) {</span>
+<span class="nc" id="L368">	    attach_phase_attrs (g, 2);</span>
+<span class="nc" id="L369">	    return;</span>
+	}
+<span class="fc" id="L371">        dot_position(zz, g, asp);</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">	if (maxphase == 3) {</span>
+<span class="nc" id="L373">	    attach_phase_attrs (g, 2);  /* positions will be attached on output */</span>
+<span class="nc" id="L374">	    return;</span>
+	}
+<span class="fc" id="L376">	aspect.nPasses--;</span>
+<span class="pc bpc" id="L377" title="3 of 4 branches missed.">    } while (aspect.nextIter!=0 &amp;&amp; aspect.nPasses!=0);</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">    if ((GD_flags(g) &amp; NEW_RANK)!=0)</span>
+<span class="nc" id="L379">	removeFill (g);</span>
+<span class="fc" id="L380">    dot_sameports(zz, g);</span>
+<span class="fc" id="L381">    dot_splines(zz, g);</span>
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">    if (mapbool(agget(zz, g, new CString(&quot;compound&quot;))))</span>
+<span class="nc" id="L383">	dot_compoundEdges(g);</span>
+} finally {
+<span class="fc" id="L385">LEAVING(&quot;7t18nggek2s9vvb5opwqa8rwr&quot;,&quot;dotLayout&quot;);</span>
+}
+<span class="fc" id="L387">}</span>
+
+
+
+
+//3 j18uqz16uc5895o8w92sc8us
+// static void initSubg (Agraph_t* sg, Agraph_t* g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;initSubg&quot;, key=&quot;j18uqz16uc5895o8w92sc8us&quot;, definition=&quot;static void initSubg (Agraph_t* sg, Agraph_t* g)&quot;)
+public static Object initSubg(Object... arg) {
+<span class="nc" id="L397">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L398">UNSUPPORTED(&quot;dxv1kymai2xe3m4wblwapgffu&quot;); // initSubg (Agraph_t* sg, Agraph_t* g)</span>
+<span class="nc" id="L399">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L400">UNSUPPORTED(&quot;3oolj8gqkndhoy95ebyjmjt0w&quot;); //     agbindrec(sg, &quot;Agraphinfo_t&quot;, sizeof(Agraphinfo_t), NOT(0));</span>
+<span class="nc" id="L401">UNSUPPORTED(&quot;2um641xaifqq107czm0htblc3&quot;); //     GD_drawing(sg) = (layout_t*)zmalloc(sizeof(layout_t));</span>
+<span class="nc" id="L402">UNSUPPORTED(&quot;bfocldqmll6ddnmq3h3ci6njt&quot;); //     GD_drawing(sg)-&gt;quantum = GD_drawing(g)-&gt;quantum; </span>
+<span class="nc" id="L403">UNSUPPORTED(&quot;7cnwfvm4lswn7kvucss74krd3&quot;); //     GD_drawing(sg)-&gt;dpi = GD_drawing(g)-&gt;dpi;</span>
+<span class="nc" id="L404">UNSUPPORTED(&quot;7kbbs52ycpyuytqi61m5vme4c&quot;); //     GD_gvc(sg) = GD_gvc (g);</span>
+<span class="nc" id="L405">UNSUPPORTED(&quot;8flpf5avt4eg89sc16bgp9v13&quot;); //     GD_charset(sg) = GD_charset (g);</span>
+<span class="nc" id="L406">UNSUPPORTED(&quot;d9o7bxs9hl0r5ma0lt9oejmqv&quot;); //     GD_rankdir2(sg) = GD_rankdir2 (g);</span>
+<span class="nc" id="L407">UNSUPPORTED(&quot;74762qecxnstp743fwt31hk0p&quot;); //     GD_nodesep(sg) = GD_nodesep(g);</span>
+<span class="nc" id="L408">UNSUPPORTED(&quot;b29jhl6zjh8f8jqfb6okoixby&quot;); //     GD_ranksep(sg) = GD_ranksep(g);</span>
+<span class="nc" id="L409">UNSUPPORTED(&quot;bctcse1zj9vx2p0in9p4jhso3&quot;); //     GD_fontnames(sg) = GD_fontnames(g);</span>
+<span class="nc" id="L410">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L412">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 9pe0e6i01ks2zju1xjzgg39v1
+// static void attachPos (Agraph_t* g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;attachPos&quot;, key=&quot;9pe0e6i01ks2zju1xjzgg39v1&quot;, definition=&quot;static void attachPos (Agraph_t* g)&quot;)
+public static Object attachPos(Object... arg) {
+<span class="nc" id="L423">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L424">UNSUPPORTED(&quot;d606brtp0hf4k8bamafqhu08b&quot;); // attachPos (Agraph_t* g)</span>
+<span class="nc" id="L425">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L426">UNSUPPORTED(&quot;8fmu9hadea4uw8fwzoexoxab&quot;); //     node_t* np;</span>
+<span class="nc" id="L427">UNSUPPORTED(&quot;5cl2cj5wj7w1zr7qjww0s4cdf&quot;); //     double* ps = (double*)zmalloc((2*agnnodes(g))*sizeof(double));</span>
+<span class="nc" id="L428">UNSUPPORTED(&quot;73rfwkv8ws65l7qgnz7jw27gf&quot;); //     for (np = agfstnode(g); np; np = agnxtnode(g, np)) {</span>
+<span class="nc" id="L429">UNSUPPORTED(&quot;7tbl6es7oks3vntqoetg24xa4&quot;); // 	ND_pos(np) = ps;</span>
+<span class="nc" id="L430">UNSUPPORTED(&quot;9qwq8ll4gb28hun94xos9i4ud&quot;); // 	ps[0] = ((ND_coord(np).x)/(double)72);</span>
+<span class="nc" id="L431">UNSUPPORTED(&quot;5z9ztec30pze3mzecneza61qq&quot;); // 	ps[1] = ((ND_coord(np).y)/(double)72);</span>
+<span class="nc" id="L432">UNSUPPORTED(&quot;aeuy5zibx9et1ncwcqwlr3s3m&quot;); // 	ps += 2;</span>
+<span class="nc" id="L433">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L434">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L436">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 eufhyu2dccn1mleg8a43s9k2h
+// static void resetCoord (Agraph_t* g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;resetCoord&quot;, key=&quot;eufhyu2dccn1mleg8a43s9k2h&quot;, definition=&quot;static void resetCoord (Agraph_t* g)&quot;)
+public static Object resetCoord(Object... arg) {
+<span class="nc" id="L447">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L448">UNSUPPORTED(&quot;caofcucw710wwaiwfz4650zsz&quot;); // resetCoord (Agraph_t* g)</span>
+<span class="nc" id="L449">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L450">UNSUPPORTED(&quot;7ds7ppzwt5kjihc3hp8q0ncyl&quot;); //     node_t* np = agfstnode(g);</span>
+<span class="nc" id="L451">UNSUPPORTED(&quot;5s8nx20pwknmsow15z16muyab&quot;); //     double* sp = ND_pos(np);</span>
+<span class="nc" id="L452">UNSUPPORTED(&quot;5u1fte9td0znzxeayi62ozq8a&quot;); //     double* ps = sp;</span>
+<span class="nc" id="L453">UNSUPPORTED(&quot;73rfwkv8ws65l7qgnz7jw27gf&quot;); //     for (np = agfstnode(g); np; np = agnxtnode(g, np)) {</span>
+<span class="nc" id="L454">UNSUPPORTED(&quot;8p3hwwbq7seyn0wpf7llgw1xd&quot;); // 	ND_pos(np) = 0;</span>
+<span class="nc" id="L455">UNSUPPORTED(&quot;a33fx4q39yal0dnv915x71zia&quot;); // 	ND_coord(np).x = ((ps[0])*(double)72);</span>
+<span class="nc" id="L456">UNSUPPORTED(&quot;avms8890ml5c9jclp66fpto3x&quot;); // 	ND_coord(np).y = ((ps[1])*(double)72);</span>
+<span class="nc" id="L457">UNSUPPORTED(&quot;aeuy5zibx9et1ncwcqwlr3s3m&quot;); // 	ps += 2;</span>
+<span class="nc" id="L458">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L459">UNSUPPORTED(&quot;btsriptlygrzlk6ojhvss234j&quot;); //     free (sp);</span>
+<span class="nc" id="L460">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L462">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+/* doDot:
+ * Assume g has nodes.
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;doDot&quot;, key=&quot;nedairhdof6qkmjjoh4h68zy&quot;, definition=&quot;static void doDot (Agraph_t* g)&quot;)
+public static void doDot(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L474">ENTERING(&quot;nedairhdof6qkmjjoh4h68zy&quot;,&quot;doDot&quot;);</span>
+try {
+    ST_Agraph_s ccs[];
+    ST_Agraph_s sg;
+    int ncc;
+    int i;
+<span class="fc" id="L480">    final ST_pack_info pinfo = new ST_pack_info();</span>
+<span class="fc" id="L481">    int Pack = getPack(zz, g, -1, CL_OFFSET);</span>
+<span class="fc" id="L482">    EN_pack_mode mode = getPackModeInfo (zz, g, EN_pack_mode.l_undef, pinfo);</span>
+<span class="fc" id="L483">    getPackInfo(zz, g, EN_pack_mode.l_node, 8, pinfo);</span>
+<span class="pc bpc" id="L484" title="2 of 4 branches missed.">    if ((mode == EN_pack_mode.l_undef) &amp;&amp; (Pack &lt; 0)) {</span>
+	/* No pack information; use old dot with components
+         * handled during layout
+         */
+<span class="fc" id="L488">	dotLayout(zz, g);</span>
+    } else {
+<span class="nc" id="L490">UNSUPPORTED(&quot;952usp51fee2pbidl2frwpq2x&quot;); // 	/* fill in default values */</span>
+<span class="nc" id="L491">UNSUPPORTED(&quot;7d8flcn5zht92nop46f168hf9&quot;); // 	if (mode == l_undef) </span>
+<span class="nc" id="L492">UNSUPPORTED(&quot;bf04f2a6do2dovxgq57ta3qz5&quot;); // 	    pinfo.mode = l_node;</span>
+<span class="nc" id="L493">UNSUPPORTED(&quot;7l7lph3yd7o3jelejupsiytnc&quot;); // 	else if (Pack &lt; 0)</span>
+<span class="nc" id="L494">UNSUPPORTED(&quot;7odp6lwv29g4nwpfvqt8hkmve&quot;); // 	    Pack = 8;</span>
+<span class="nc" id="L495">UNSUPPORTED(&quot;au4kpvl0egq3dt8hlmqnad61o&quot;); // 	pinfo.margin = Pack;</span>
+<span class="nc" id="L496">UNSUPPORTED(&quot;6o6lvrnsp1zkqdkduwrfetrrm&quot;); // 	pinfo.fixed = 0;</span>
+<span class="nc" id="L497">UNSUPPORTED(&quot;7ijhbsssflu2oty986iwhi5u7&quot;); //           /* components using clusters */</span>
+<span class="nc" id="L498">UNSUPPORTED(&quot;axesx20t6oyprzdzjz5cwneq4&quot;); // 	ccs = cccomps(g, &amp;ncc, 0);</span>
+<span class="nc" id="L499">UNSUPPORTED(&quot;edukq9g8egufczs6ja3h99k6a&quot;); // 	if (ncc == 1) {</span>
+<span class="nc" id="L500">UNSUPPORTED(&quot;aj3wrqm1ouyaocsn56geghko0&quot;); // 	    dotLayout(g);</span>
+<span class="nc" id="L501">UNSUPPORTED(&quot;2pkescmk4qojc8cqt3wzo8jkp&quot;); // 	} else if ((((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind == R_NONE) {</span>
+<span class="nc" id="L502">UNSUPPORTED(&quot;295yqzsqueggcx71mcuv1zy7t&quot;); // 	    pinfo.doSplines = 1;</span>
+<span class="nc" id="L503">UNSUPPORTED(&quot;3rfcnwowz3h58n92j7igzwap0&quot;); // 	    for (i = 0; i &lt; ncc; i++) {</span>
+<span class="nc" id="L504">UNSUPPORTED(&quot;6n1wgj9rnpi5u0c1f6mo7hvdr&quot;); // 		sg = ccs[i];</span>
+<span class="nc" id="L505">UNSUPPORTED(&quot;9f5l1z5fur3bn6wlzykztsrr5&quot;); // 		initSubg (sg, g);</span>
+<span class="nc" id="L506">UNSUPPORTED(&quot;boery4d5nv4jssiy0y3mf2yf7&quot;); // 		dotLayout (sg);</span>
+<span class="nc" id="L507">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L508">UNSUPPORTED(&quot;ahr97rgrh96az7iroebb6p14f&quot;); // 	    attachPos (g);</span>
+<span class="nc" id="L509">UNSUPPORTED(&quot;1eeqkm1855z53jwep9ukxptxa&quot;); // 	    packSubgraphs(ncc, ccs, g, &amp;pinfo);</span>
+<span class="nc" id="L510">UNSUPPORTED(&quot;5jevnxwr3ejh3o6i1n3b15oyz&quot;); // 	    resetCoord (g);</span>
+<span class="nc" id="L511">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L512">UNSUPPORTED(&quot;3dnz4esjw60s265perisqld8n&quot;); // 	    /* Not sure what semantics should be for non-trivial ratio</span>
+<span class="nc" id="L513">UNSUPPORTED(&quot;9752lfn24j9vhkz6y8fvyvpop&quot;); //              * attribute with multiple components.</span>
+<span class="nc" id="L514">UNSUPPORTED(&quot;cxv608avcmjij1ltc81ac9zp0&quot;); //              * One possibility is to layout nodes, pack, then apply the ratio</span>
+<span class="nc" id="L515">UNSUPPORTED(&quot;71ykqx29qwldoh9wf4e85xh7u&quot;); //              * adjustment. We would then have to re-adjust all positions.</span>
+<span class="nc" id="L516">UNSUPPORTED(&quot;29edlge3wqyp1gs0vymtr5700&quot;); //              */</span>
+<span class="nc" id="L517">UNSUPPORTED(&quot;aj3wrqm1ouyaocsn56geghko0&quot;); // 	    dotLayout(g);</span>
+<span class="nc" id="L518">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L519">UNSUPPORTED(&quot;cjjlbx1oxw3twss3vlotij507&quot;); // 	for (i = 0; i &lt; ncc; i++) {</span>
+<span class="nc" id="L520">UNSUPPORTED(&quot;dc0uduk2687c8n6qn7y3y0aph&quot;); // 	    free ((((Agraphinfo_t*)(((Agobj_t*)(ccs[i]))-&gt;data))-&gt;drawing));</span>
+<span class="nc" id="L521">UNSUPPORTED(&quot;6lefivq8plsiwa47ucvy1ze1a&quot;); // 	    agdelete(g, ccs[i]);</span>
+<span class="nc" id="L522">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L523">UNSUPPORTED(&quot;5eru5cerydhchm7ojmgdlkv9y&quot;); // 	free(ccs);</span>
+    }
+} finally {
+<span class="fc" id="L526">LEAVING(&quot;nedairhdof6qkmjjoh4h68zy&quot;,&quot;doDot&quot;);</span>
+}
+<span class="fc" id="L528">}</span>
+
+
+
+<span class="fc" id="L532">public static CFunction dot_layout = new CFunctionAbstract(&quot;dot_layout&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L535">		dot_layout(zz, (ST_Agraph_s)args[0]);</span>
+<span class="fc" id="L536">		return null;</span>
+	}};
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_layout&quot;, key=&quot;euvc3uoksq3e24augkwebfkcv&quot;, definition=&quot;void dot_layout(Agraph_t * g)&quot;)
+public static void dot_layout(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L541">ENTERING(&quot;euvc3uoksq3e24augkwebfkcv&quot;,&quot;dot_layout&quot;);</span>
+try {
+<span class="pc bpc" id="L543" title="1 of 2 branches missed.">    if (agnnodes(g)!=0) doDot (zz, g);</span>
+<span class="fc" id="L544">    dotneato_postprocess(zz, g);</span>
+} finally {
+<span class="fc" id="L546">LEAVING(&quot;euvc3uoksq3e24augkwebfkcv&quot;,&quot;dot_layout&quot;);</span>
+}
+<span class="fc" id="L548">}</span>
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_root&quot;, key=&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;, definition=&quot;Agraph_t * dot_root (void* p)&quot;)
+public static ST_Agraph_s dot_root(ST_Agobj_s p) {
+<span class="fc" id="L556">ENTERING(&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;,&quot;dot_root&quot;);</span>
+try {
+<span class="fc" id="L558">    return GD_dotroot(agroot(p));</span>
+} finally {
+<span class="fc" id="L560">LEAVING(&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;,&quot;dot_root&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

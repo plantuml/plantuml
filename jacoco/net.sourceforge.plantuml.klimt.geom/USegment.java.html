@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>USegment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">USegment.java</span></div><h1>USegment.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.geom;
+
+// ::comment when __HAXE__
+import java.awt.geom.AffineTransform;
+// ::done
+import java.util.Arrays;
+
+public class USegment {
+
+	private final double coord[];
+	private final USegmentType pathType;
+
+<span class="fc" id="L48">	public USegment(double[] coord, USegmentType pathType) {</span>
+<span class="fc" id="L49">		this.coord = coord.clone();</span>
+<span class="fc" id="L50">		this.pathType = pathType;</span>
+<span class="fc" id="L51">	}</span>
+
+	// ::comment when __HAXE__
+	@Override
+	public String toString() {
+<span class="nc" id="L56">		return pathType.toString() + &quot; &quot; + Arrays.toString(coord);</span>
+	}
+	// ::done
+
+	public final double[] getCoord() {
+<span class="fc" id="L61">		return coord;</span>
+	}
+
+	public final USegmentType getSegmentType() {
+<span class="fc" id="L65">		return pathType;</span>
+	}
+
+	public USegment translate(double dx, double dy) {
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (pathType == USegmentType.SEG_ARCTO)</span>
+<span class="nc" id="L71">			return new USegment(</span>
+					new double[] { coord[0], coord[1], coord[2], coord[3], coord[4], coord[5] + dx, coord[6] + dy },
+					pathType);
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (pathType == USegmentType.SEG_CUBICTO) {</span>
+<span class="nc" id="L76">			return new USegment(new double[] { coord[0] + dx, coord[1] + dy, coord[2] + dx, coord[3] + dy,</span>
+					coord[4] + dx, coord[5] + dy }, pathType);
+		}
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (coord.length != 2)</span>
+<span class="nc" id="L80">			throw new UnsupportedOperationException();</span>
+
+<span class="nc" id="L82">		return new USegment(new double[] { coord[0] + dx, coord[1] + dy }, pathType);</span>
+	}
+
+	// ::comment when __HAXE__
+	public USegment rotate(double theta) {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (coord.length != 2)</span>
+<span class="nc" id="L88">			throw new UnsupportedOperationException();</span>
+
+<span class="nc" id="L90">		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);</span>
+<span class="nc" id="L91">		final AffineTransform rotate = AffineTransform.getRotateInstance(theta);</span>
+<span class="nc" id="L92">		p1 = p1.transform(rotate);</span>
+
+<span class="nc" id="L94">		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);</span>
+	}
+
+	public USegment affine(AffineTransform transform, double angle, double scale) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (pathType == USegmentType.SEG_ARCTO) {</span>
+<span class="nc" id="L99">			XPoint2D p1 = new XPoint2D(coord[5], coord[6]);</span>
+
+<span class="nc" id="L101">			p1 = p1.transform(transform);</span>
+
+<span class="nc" id="L103">			final double large_arc_flag = coord[3];</span>
+<span class="nc" id="L104">			final double sweep_flag = coord[4];</span>
+<span class="nc" id="L105">			return new USegment(new double[] { coord[0] * scale, coord[1] * scale, coord[2] + angle, large_arc_flag,</span>
+<span class="nc" id="L106">					sweep_flag, p1.getX(), p1.getY() }, pathType);</span>
+		}
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (coord.length != 2)</span>
+<span class="nc" id="L110">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L111">		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);</span>
+<span class="nc" id="L112">		p1 = p1.transform(transform);</span>
+
+<span class="nc" id="L114">		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);</span>
+	}
+	// ::done
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

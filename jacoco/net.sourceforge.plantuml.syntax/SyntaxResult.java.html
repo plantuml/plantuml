@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SyntaxResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.syntax</a> &gt; <span class="el_source">SyntaxResult.java</span></div><h1>SyntaxResult.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.syntax;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+<span class="nc" id="L49">public class SyntaxResult {</span>
+	// ::remove file when __CORE__
+
+	private UmlDiagramType umlDiagramType;
+	private boolean isError;
+	private String description;
+<span class="nc" id="L55">	private Collection&lt;String&gt; errors = new TreeSet&lt;&gt;();</span>
+	private boolean hasCmapData;
+	private PSystemError systemError;
+	private LineLocation lineLocation;
+
+	public UmlDiagramType getUmlDiagramType() {
+<span class="nc" id="L61">		return umlDiagramType;</span>
+	}
+
+	public boolean isError() {
+<span class="nc" id="L65">		return isError;</span>
+	}
+
+	public String getDescription() {
+<span class="nc" id="L69">		return description;</span>
+	}
+
+	public Collection&lt;String&gt; getErrors() {
+<span class="nc" id="L73">		return Collections.unmodifiableCollection(errors);</span>
+	}
+
+	public void setUmlDiagramType(UmlDiagramType umlDiagramType) {
+<span class="nc" id="L77">		this.umlDiagramType = umlDiagramType;</span>
+<span class="nc" id="L78">	}</span>
+
+	public void setError(boolean isError) {
+<span class="nc" id="L81">		this.isError = isError;</span>
+<span class="nc" id="L82">	}</span>
+
+	public void setDescription(String description) {
+<span class="nc" id="L85">		this.description = description;</span>
+<span class="nc" id="L86">	}</span>
+
+	public void addErrorText(String error) {
+<span class="nc" id="L89">		this.errors.add(error);</span>
+<span class="nc" id="L90">	}</span>
+
+	public final boolean hasCmapData() {
+<span class="nc" id="L93">		return hasCmapData;</span>
+	}
+
+	public final void setCmapData(boolean hasCmapData) {
+<span class="nc" id="L97">		this.hasCmapData = hasCmapData;</span>
+<span class="nc" id="L98">	}</span>
+
+	public void setSystemError(PSystemError systemError) {
+<span class="nc" id="L101">		this.systemError = systemError;</span>
+<span class="nc" id="L102">	}</span>
+
+	public void generateDiagramDescriptionForError(OutputStream os, FileFormatOption fileFormatOption)
+			throws IOException {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (systemError == null)</span>
+<span class="nc" id="L107">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L109">		systemError.exportDiagram(os, 0, fileFormatOption);</span>
+<span class="nc" id="L110">	}</span>
+
+	public void setLineLocation(LineLocation lineLocation) {
+<span class="nc" id="L113">		this.lineLocation = lineLocation;</span>
+<span class="nc" id="L114">	}</span>
+
+	public LineLocation getLineLocation() {
+<span class="nc" id="L117">		return lineLocation;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Globals.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">smetana.core</a> &gt; <span class="el_source">Globals.java</span></div><h1>Globals.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ * 
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package smetana.core;
+
+import static smetana.core.Macro.ARR_TYPE_BOX;
+import static smetana.core.Macro.ARR_TYPE_CROW;
+import static smetana.core.Macro.ARR_TYPE_CURVE;
+import static smetana.core.Macro.ARR_TYPE_DIAMOND;
+import static smetana.core.Macro.ARR_TYPE_DOT;
+import static smetana.core.Macro.ARR_TYPE_GAP;
+import static smetana.core.Macro.ARR_TYPE_NORM;
+import static smetana.core.Macro.ARR_TYPE_TEE;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.plantuml.api.cheerpj.WasmLog;
+
+import gen.lib.cdt.dttree__c;
+import gen.lib.cgraph.attr__c;
+import gen.lib.cgraph.edge__c;
+import gen.lib.cgraph.graph__c;
+import gen.lib.cgraph.id__c;
+import gen.lib.cgraph.mem__c;
+import gen.lib.cgraph.node__c;
+import gen.lib.cgraph.utils__c;
+import gen.lib.common.arrows__c;
+import gen.lib.common.shapes__c;
+import gen.lib.dotgen.dotsplines__c;
+import gen.lib.label.xlabels__c;
+import h.ST_Agdesc_s;
+import h.ST_Agedge_s;
+import h.ST_Agiddisc_s;
+import h.ST_Agmemdisc_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agsubnode_s;
+import h.ST_Agsym_s;
+import h.ST_Agtag_s;
+import h.ST_Pedge_t;
+import h.ST_arrowname_t;
+import h.ST_arrowtype_t;
+import h.ST_boxf;
+import h.ST_deque_t;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dtmethod_s;
+import h.ST_elist;
+import h.ST_nlist_t;
+import h.ST_pointf;
+import h.ST_pointnlink_t;
+import h.ST_polygon_t;
+import h.ST_port;
+import h.ST_shape_desc;
+import h.ST_shape_functions;
+import h.ST_splineInfo;
+import h.ST_textfont_t;
+import h.ST_tna_t;
+import h.ST_triangle_t;
+
+final public class Globals {
+
+	public static Globals open() {
+<span class="fc" id="L98">		WasmLog.log(&quot;Starting smetana instance&quot;);</span>
+<span class="fc" id="L99">		return new Globals();</span>
+	}
+
+	public static void close() {
+<span class="fc" id="L103">		WasmLog.log(&quot;Ending smetana instance&quot;);</span>
+<span class="fc" id="L104">	}</span>
+
+<span class="fc" id="L106">	public final Map&lt;Integer, CString&gt; all = new HashMap&lt;Integer, CString&gt;();</span>
+
+<span class="fc" id="L108">	public final ST_dtmethod_s _Dttree = new ST_dtmethod_s();</span>
+<span class="fc" id="L109">	public final ST_dtmethod_s Dttree = _Dttree;</span>
+
+<span class="fc" id="L111">	public final ST_dtmethod_s _Dtobag = new ST_dtmethod_s();</span>
+<span class="fc" id="L112">	public final ST_dtmethod_s Dtobag = _Dtobag;</span>
+
+<span class="fc" id="L114">	public final ST_dtdisc_s AgDataDictDisc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L116">	public final ST_Agdesc_s ProtoDesc = new ST_Agdesc_s();</span>
+
+	public ST_Agraph_s ProtoGraph;
+
+<span class="fc" id="L120">	public final ST_Agtag_s Tag = new ST_Agtag_s();</span>
+
+<span class="fc" id="L122">	public final ST_dtdisc_s Ag_mainedge_seq_disc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L124">	public final ST_dtdisc_s Ag_subedge_seq_disc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L126">	public final ST_dtdisc_s Ag_subedge_id_disc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L128">	public final ST_dtdisc_s Ag_subgraph_id_disc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L130">	public final ST_Agiddisc_s AgIdDisc = new ST_Agiddisc_s();</span>
+
+<span class="fc" id="L132">	public final ST_Agmemdisc_s AgMemDisc = new ST_Agmemdisc_s();</span>
+
+<span class="fc" id="L134">	public final ST_dtdisc_s Ag_subnode_id_disc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L136">	public final ST_dtdisc_s Ag_subnode_seq_disc = new ST_dtdisc_s();</span>
+
+	public int HTML_BIT;
+
+	public int CNT_BITS;
+
+<span class="fc" id="L142">	public final ST_dtdisc_s Refstrdisc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L144">	public final ST_dtdisc_s Hdisc = new ST_dtdisc_s();</span>
+
+	public ST_dt_s Refdict_default;
+
+	public ST_Agraph_s Ag_dictop_G;
+
+<span class="fc" id="L150">	public final ST_arrowname_t Arrowsynonyms[] = new ST_arrowname_t[] { create_arrowname_t(null, 0) };</span>
+
+<span class="fc" id="L152">	public final ST_arrowname_t Arrownames[] = new ST_arrowname_t[] { create_arrowname_t(&quot;normal&quot;, ARR_TYPE_NORM),</span>
+<span class="fc" id="L153">			create_arrowname_t(&quot;none&quot;, ARR_TYPE_GAP), create_arrowname_t(null, 0) };</span>
+
+<span class="fc" id="L155">	public final ST_arrowname_t Arrowmods[] = new ST_arrowname_t[] { create_arrowname_t(null, 0) };</span>
+
+<span class="fc" id="L157">	public final ST_arrowtype_t Arrowtypes[] = new ST_arrowtype_t[] {</span>
+<span class="fc" id="L158">			createArrowtypes(ARR_TYPE_NORM, 1.0, arrows__c.arrow_type_normal),</span>
+<span class="fc" id="L159">			createArrowtypes(ARR_TYPE_CROW, 1.0, arrows__c.arrow_type_crow),</span>
+<span class="fc" id="L160">			createArrowtypes(ARR_TYPE_TEE, 0.5, arrows__c.arrow_type_tee),</span>
+<span class="fc" id="L161">			createArrowtypes(ARR_TYPE_BOX, 1.0, arrows__c.arrow_type_box),</span>
+<span class="fc" id="L162">			createArrowtypes(ARR_TYPE_DIAMOND, 1.2, arrows__c.arrow_type_diamond),</span>
+<span class="fc" id="L163">			createArrowtypes(ARR_TYPE_DOT, 0.8, arrows__c.arrow_type_dot),</span>
+<span class="fc" id="L164">			createArrowtypes(ARR_TYPE_CURVE, 1.0, arrows__c.arrow_type_curve),</span>
+<span class="fc" id="L165">			createArrowtypes(ARR_TYPE_GAP, 0.5, arrows__c.arrow_type_gap), createArrowtypes(0, 0.0, null) };</span>
+
+	public __ptr__ Show_boxes;
+
+	public int CL_type;
+
+	public boolean Concentrate;
+
+	public int MaxIter;
+
+	public int State;
+
+	public int EdgeLabelsDone;
+
+	public double Initial_dist;
+
+	public ST_Agsym_s G_activepencolor, G_activefillcolor, G_selectedpencolor, G_selectedfillcolor, G_visitedpencolor,
+			G_visitedfillcolor, G_deletedpencolor, G_deletedfillcolor, G_ordering, G_peripheries, G_penwidth,
+			G_gradientangle, G_margin;
+
+	public ST_Agsym_s N_height, N_width, N_shape, N_color, N_fillcolor, N_activepencolor, N_activefillcolor,
+			N_selectedpencolor, N_selectedfillcolor, N_visitedpencolor, N_visitedfillcolor, N_deletedpencolor,
+			N_deletedfillcolor, N_fontsize, N_fontname, N_fontcolor, N_margin, N_label, N_xlabel, N_nojustify, N_style,
+			N_showboxes, N_sides, N_peripheries, N_ordering, N_orientation, N_skew, N_distortion, N_fixed, N_imagescale,
+			N_layer, N_group, N_comment, N_vertices, N_z, N_penwidth, N_gradientangle;
+
+	public ST_Agsym_s E_weight, E_minlen, E_color, E_fillcolor, E_activepencolor, E_activefillcolor, E_selectedpencolor,
+			E_selectedfillcolor, E_visitedpencolor, E_visitedfillcolor, E_deletedpencolor, E_deletedfillcolor,
+			E_fontsize, E_fontname, E_fontcolor, E_label, E_xlabel, E_dir, E_style, E_decorate, E_showboxes, E_arrowsz,
+			E_constr, E_layer, E_comment, E_label_float, E_samehead, E_sametail, E_arrowhead, E_arrowtail, E_headlabel,
+			E_taillabel, E_labelfontsize, E_labelfontname, E_labelfontcolor, E_labeldistance, E_labelangle, E_tailclip,
+			E_headclip, E_penwidth;
+
+	public int N_nodes, N_edges;
+
+	public int Minrank, Maxrank;
+
+	public int S_i;
+
+	public int Search_size;
+
+<span class="fc" id="L206">	public final ST_nlist_t Tree_node = new ST_nlist_t();</span>
+
+<span class="fc" id="L208">	public final ST_elist Tree_edge = new ST_elist();</span>
+
+	public ST_Agedge_s Enter;
+
+	public int Low, Lim, Slack;
+
+	public int Rankdir;
+
+	public boolean Flip;
+
+<span class="fc" id="L218">	public final ST_pointf Offset = new ST_pointf();</span>
+
+	public int nedges, nboxes;
+
+	public int routeinit;
+
+	public CArray&lt;ST_pointf&gt; ps;
+
+	public int maxpn;
+
+	public CArray&lt;ST_pointf&gt; polypoints;
+
+	public int polypointn;
+
+	public CArray&lt;ST_Pedge_t&gt; edges;
+
+	public int edgen;
+
+<span class="fc" id="L236">	public final ST_boxf[] boxes = ST_boxf.malloc(1000);</span>
+
+	public int MinQuit;
+
+	public double Convergence;
+
+	public ST_Agraph_s Root;
+
+	public int GlobalMinRank, GlobalMaxRank;
+
+	public boolean ReMincross;
+
+	public CArrayOfStar&lt;ST_Agedge_s&gt; TE_list;
+
+	public int TI_list[];
+
+	public ST_Agnode_s Last_node_decomp;
+	public ST_Agnode_s Last_node_rank;
+
+	public char Cmark;
+
+	public int trin, tril;
+
+	public CArray&lt;ST_triangle_t&gt; tris;
+
+	public int pnln, pnll;
+
+	public ST_pointnlink_t pnls[];
+	public ST_pointnlink_t pnlps[];
+
+<span class="fc" id="L266">	public final ST_port Center = new ST_port();</span>
+
+<span class="fc" id="L268">	public final ST_polygon_t p_ellipse = new ST_polygon_t();</span>
+
+<span class="fc" id="L270">	public final ST_polygon_t p_box = new ST_polygon_t();</span>
+
+<span class="fc" id="L272">	public final ST_shape_functions poly_fns = new ST_shape_functions();</span>
+
+<span class="fc" id="L274">	public final ST_shape_functions record_fns = new ST_shape_functions();</span>
+
+	public CArray&lt;ST_tna_t&gt; tnas;
+	public int tnan;
+
+<span class="fc" id="L279">	public final ST_shape_desc Shapes[] = { __Shapes__(&quot;box&quot;, poly_fns, p_box),</span>
+<span class="fc" id="L280">			__Shapes__(&quot;ellipse&quot;, poly_fns, p_ellipse), __Shapes__(&quot;record&quot;, record_fns, null),</span>
+<span class="fc" id="L281">			__Shapes__(null, null, null) };</span>
+
+<span class="fc" id="L283">	public final ST_dtdisc_s Ag_mainedge_id_disc = new ST_dtdisc_s();</span>
+
+<span class="fc" id="L285">	public final ST_deque_t dq = new ST_deque_t();</span>
+
+<span class="fc" id="L287">	public final ST_Agdesc_s Agdirected = new ST_Agdesc_s();</span>
+
+<span class="fc" id="L289">	public final ST_splineInfo sinfo = new ST_splineInfo();</span>
+
+	public ST_Agnode_s lastn; /* last node argument */
+	public ST_polygon_t poly;
+	public int last, outp, sides;
+<span class="fc" id="L294">	public final ST_pointf O = new ST_pointf(); /* point (0,0) */</span>
+	public CArray&lt;ST_pointf&gt; vertex;
+	public double xsize, ysize, scalex, scaley, box_URx, box_URy;
+
+<span class="fc" id="L298">	public final ST_textfont_t tf = new ST_textfont_t();</span>
+
+	public CArray&lt;ST_pointf&gt; pointfs;
+	public CArray&lt;ST_pointf&gt; pointfs2;
+	public int numpts;
+	public int numpts2;
+
+	public int[] Count;
+	public int C;
+
+<span class="fc" id="L308">	public int ctr = 1;</span>
+
+<span class="fc" id="L310">	public final ST_Agsubnode_s template = new ST_Agsubnode_s();</span>
+<span class="fc" id="L311">	public final ST_Agnode_s dummy = new ST_Agnode_s();</span>
+
+	public ST_Agraph_s G_ns;
+	public ST_Agraph_s G_decomp;
+
+	public int opl;
+
+	public int opn_route;
+	public int opn_shortest;
+
+	public CArray&lt;ST_pointf&gt; ops_route;
+	public CArray&lt;ST_pointf&gt; ops_shortest;
+
+	public CString reclblp;
+
+	public int isz;
+	public CArray&lt;ST_pointf&gt; ispline;
+
+	private ST_shape_desc __Shapes__(String s, ST_shape_functions shape_functions, ST_polygon_t polygon) {
+<span class="fc" id="L330">		ST_shape_desc result = new ST_shape_desc();</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		result.name = s == null ? null : new CString(s);</span>
+<span class="fc" id="L332">		result.fns = shape_functions;</span>
+<span class="fc" id="L333">		result.polygon = polygon;</span>
+<span class="fc" id="L334">		return result;</span>
+	}
+
+	private final static ST_arrowtype_t createArrowtypes(int type, double lenfact, CFunction function) {
+<span class="fc" id="L338">		final ST_arrowtype_t result = new ST_arrowtype_t();</span>
+<span class="fc" id="L339">		result.type = type;</span>
+<span class="fc" id="L340">		result.lenfact = lenfact;</span>
+<span class="fc" id="L341">		result.gen = function;</span>
+<span class="fc" id="L342">		return result;</span>
+	}
+
+	private final static ST_arrowname_t create_arrowname_t(String name, int type) {
+<span class="fc" id="L346">		final ST_arrowname_t result = new ST_arrowname_t();</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">		result.name = name == null ? null : new CString(name);</span>
+<span class="fc" id="L348">		result.type = type;</span>
+<span class="fc" id="L349">		return result;</span>
+	}
+
+<span class="fc" id="L352">	private Globals() {</span>
+
+<span class="fc" id="L354">		_Dttree.searchf = dttree__c.dttree;</span>
+<span class="fc" id="L355">		_Dttree.type = Macro.DT_OSET;</span>
+
+<span class="fc" id="L357">		_Dtobag.searchf = dttree__c.dttree;</span>
+<span class="fc" id="L358">		_Dtobag.type = Macro.DT_OBAG;</span>
+
+<span class="fc" id="L360">		AgDataDictDisc.key = FieldOffset.name;</span>
+<span class="fc" id="L361">		AgDataDictDisc.size = -1;</span>
+<span class="fc" id="L362">		AgDataDictDisc.link = FieldOffset.link;</span>
+<span class="fc" id="L363">		AgDataDictDisc.makef = null;</span>
+<span class="fc" id="L364">		AgDataDictDisc.freef = attr__c.freesym;</span>
+<span class="fc" id="L365">		AgDataDictDisc.comparf = null;</span>
+<span class="fc" id="L366">		AgDataDictDisc.hashf = null;</span>
+
+<span class="fc" id="L368">		ProtoDesc.directed = 1;</span>
+<span class="fc" id="L369">		ProtoDesc.strict = 0;</span>
+<span class="fc" id="L370">		ProtoDesc.no_loop = 1;</span>
+<span class="fc" id="L371">		ProtoDesc.maingraph = 0;</span>
+<span class="fc" id="L372">		ProtoDesc.flatlock = 1;</span>
+<span class="fc" id="L373">		ProtoDesc.no_write = 1;</span>
+
+<span class="fc" id="L375">		Ag_mainedge_seq_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L376">		Ag_mainedge_seq_disc.size = 0;</span>
+<span class="fc" id="L377">		Ag_mainedge_seq_disc.link = FieldOffset.seq_link; // seq_link is the third</span>
+															// field in Agedge_t
+<span class="fc" id="L379">		Ag_mainedge_seq_disc.makef = null;</span>
+<span class="fc" id="L380">		Ag_mainedge_seq_disc.freef = null;</span>
+<span class="fc" id="L381">		Ag_mainedge_seq_disc.comparf = edge__c.agedgeseqcmpf;</span>
+<span class="fc" id="L382">		Ag_mainedge_seq_disc.hashf = null;</span>
+<span class="fc" id="L383">		Ag_mainedge_seq_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L384">		Ag_mainedge_seq_disc.eventf = null;</span>
+
+<span class="fc" id="L386">		Ag_subedge_seq_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L387">		Ag_subedge_seq_disc.size = 0;</span>
+<span class="fc" id="L388">		Ag_subedge_seq_disc.link = FieldOffset.externalHolder;</span>
+<span class="fc" id="L389">		Ag_subedge_seq_disc.makef = null;</span>
+<span class="fc" id="L390">		Ag_subedge_seq_disc.freef = null;</span>
+<span class="fc" id="L391">		Ag_subedge_seq_disc.comparf = edge__c.agedgeseqcmpf;</span>
+<span class="fc" id="L392">		Ag_subedge_seq_disc.hashf = null;</span>
+<span class="fc" id="L393">		Ag_subedge_seq_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L394">		Ag_subedge_seq_disc.eventf = null;</span>
+
+<span class="fc" id="L396">		Ag_subedge_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L397">		Ag_subedge_id_disc.size = 0;</span>
+<span class="fc" id="L398">		Ag_subedge_id_disc.link = FieldOffset.externalHolder;</span>
+<span class="fc" id="L399">		Ag_subedge_id_disc.makef = null;</span>
+<span class="fc" id="L400">		Ag_subedge_id_disc.freef = null;</span>
+<span class="fc" id="L401">		Ag_subedge_id_disc.comparf = edge__c.agedgeidcmpf;</span>
+<span class="fc" id="L402">		Ag_subedge_id_disc.hashf = null;</span>
+<span class="fc" id="L403">		Ag_subedge_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L404">		Ag_subedge_id_disc.eventf = null;</span>
+
+<span class="fc" id="L406">		Ag_subgraph_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L407">		Ag_subgraph_id_disc.size = 0;</span>
+<span class="fc" id="L408">		Ag_subgraph_id_disc.link = FieldOffset.link; // link is the third field in</span>
+														// Agraph_t
+<span class="fc" id="L410">		Ag_subgraph_id_disc.makef = null;</span>
+<span class="fc" id="L411">		Ag_subgraph_id_disc.freef = null;</span>
+<span class="fc" id="L412">		Ag_subgraph_id_disc.comparf = graph__c.agraphidcmpf;</span>
+<span class="fc" id="L413">		Ag_subgraph_id_disc.hashf = null;</span>
+<span class="fc" id="L414">		Ag_subgraph_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L415">		Ag_subgraph_id_disc.eventf = null;</span>
+
+<span class="fc" id="L417">		AgIdDisc.open = id__c.idopen;</span>
+<span class="fc" id="L418">		AgIdDisc.map = id__c.idmap;</span>
+<span class="fc" id="L419">		AgIdDisc.alloc = id__c.idalloc;</span>
+<span class="fc" id="L420">		AgIdDisc.free = id__c.idfree;</span>
+<span class="fc" id="L421">		AgIdDisc.print = id__c.idprint;</span>
+<span class="fc" id="L422">		AgIdDisc.close = id__c.idclose;</span>
+<span class="fc" id="L423">		AgIdDisc.idregister = id__c.idregister;</span>
+
+<span class="fc" id="L425">		AgMemDisc.open = mem__c.memopen;</span>
+<span class="fc" id="L426">		AgMemDisc.alloc = mem__c.memalloc;</span>
+<span class="fc" id="L427">		AgMemDisc.resize = mem__c.memresize;</span>
+<span class="fc" id="L428">		AgMemDisc.free = mem__c.memfree;</span>
+<span class="fc" id="L429">		AgMemDisc.close = null;</span>
+
+<span class="fc" id="L431">		Ag_subnode_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L432">		Ag_subnode_id_disc.size = 0;</span>
+<span class="fc" id="L433">		Ag_subnode_id_disc.link = FieldOffset.id_link; // id_link is the second</span>
+															// field in Agsubnode_t
+<span class="fc" id="L435">		Ag_subnode_id_disc.makef = null;</span>
+<span class="fc" id="L436">		Ag_subnode_id_disc.freef = null;</span>
+<span class="fc" id="L437">		Ag_subnode_id_disc.comparf = node__c.agsubnodeidcmpf;</span>
+<span class="fc" id="L438">		Ag_subnode_id_disc.hashf = null;</span>
+<span class="fc" id="L439">		Ag_subnode_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L440">		Ag_subnode_id_disc.eventf = null;</span>
+
+<span class="fc" id="L442">		Ag_subnode_seq_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L443">		Ag_subnode_seq_disc.size = 0;</span>
+<span class="fc" id="L444">		Ag_subnode_seq_disc.link = FieldOffset.seq_link; // link is the first</span>
+															// field in
+															// Agsubnode_t
+<span class="fc" id="L447">		Ag_subnode_seq_disc.makef = null;</span>
+<span class="fc" id="L448">		Ag_subnode_seq_disc.freef = node__c.free_subnode;</span>
+<span class="fc" id="L449">		Ag_subnode_seq_disc.comparf = node__c.agsubnodeseqcmpf;</span>
+<span class="fc" id="L450">		Ag_subnode_seq_disc.hashf = null;</span>
+<span class="fc" id="L451">		Ag_subnode_seq_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L452">		Ag_subnode_seq_disc.eventf = null;</span>
+
+<span class="fc" id="L454">		Refstrdisc.key = FieldOffset.s; // *s is the third field in refstr_t</span>
+<span class="fc" id="L455">		Refstrdisc.size = -1;</span>
+<span class="fc" id="L456">		Refstrdisc.link = FieldOffset.zero;</span>
+<span class="fc" id="L457">		Refstrdisc.makef = null;</span>
+<span class="fc" id="L458">		Refstrdisc.freef = utils__c.agdictobjfree;</span>
+<span class="fc" id="L459">		Refstrdisc.comparf = null;</span>
+<span class="fc" id="L460">		Refstrdisc.hashf = null;</span>
+<span class="fc" id="L461">		Refstrdisc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L462">		Refstrdisc.eventf = null;</span>
+
+<span class="fc" id="L464">		Hdisc.key = FieldOffset.key;</span>
+<span class="fc" id="L465">		Hdisc.size = 4;</span>
+<span class="fc" id="L466">		Hdisc.link = FieldOffset.externalHolder;</span>
+<span class="fc" id="L467">		Hdisc.makef = null;</span>
+<span class="fc" id="L468">		Hdisc.freef = null;</span>
+<span class="fc" id="L469">		Hdisc.comparf = xlabels__c.icompare;</span>
+<span class="fc" id="L470">		Hdisc.hashf = null;</span>
+<span class="fc" id="L471">		Hdisc.memoryf = null;</span>
+<span class="fc" id="L472">		Hdisc.eventf = null;</span>
+
+<span class="fc" id="L474">		Center.p.x = 0;</span>
+<span class="fc" id="L475">		Center.p.y = 0;</span>
+<span class="fc" id="L476">		Center.theta = -1;</span>
+<span class="fc" id="L477">		Center.bp = null;</span>
+<span class="fc" id="L478">		Center.defined = false;</span>
+<span class="fc" id="L479">		Center.constrained = false;</span>
+<span class="fc" id="L480">		Center.clip = true;</span>
+<span class="fc" id="L481">		Center.dyna = false;</span>
+<span class="fc" id="L482">		Center.order = 0;</span>
+<span class="fc" id="L483">		Center.side = 0;</span>
+
+<span class="fc" id="L485">		p_ellipse.regular = false;</span>
+<span class="fc" id="L486">		p_ellipse.peripheries = 1;</span>
+<span class="fc" id="L487">		p_ellipse.sides = 1;</span>
+<span class="fc" id="L488">		p_ellipse.orientation = 0.;</span>
+<span class="fc" id="L489">		p_ellipse.distortion = 0.;</span>
+<span class="fc" id="L490">		p_ellipse.skew = 0.;</span>
+
+<span class="fc" id="L492">		p_box.regular = false;</span>
+<span class="fc" id="L493">		p_box.peripheries = 1;</span>
+<span class="fc" id="L494">		p_box.sides = 4;</span>
+<span class="fc" id="L495">		p_box.orientation = 0.;</span>
+<span class="fc" id="L496">		p_box.distortion = 0.;</span>
+<span class="fc" id="L497">		p_box.skew = 0.;</span>
+
+<span class="fc" id="L499">		poly_fns.initfn = shapes__c.poly_init;</span>
+<span class="fc" id="L500">		poly_fns.freefn = shapes__c.poly_free;</span>
+<span class="fc" id="L501">		poly_fns.portfn = shapes__c.poly_port;</span>
+<span class="fc" id="L502">		poly_fns.insidefn = shapes__c.poly_inside;</span>
+<span class="fc" id="L503">		poly_fns.pboxfn = shapes__c.poly_path;</span>
+<span class="fc" id="L504">		poly_fns.codefn = shapes__c.poly_gencode;</span>
+
+<span class="fc" id="L506">		record_fns.initfn = shapes__c.record_init;</span>
+<span class="fc" id="L507">		record_fns.freefn = shapes__c.record_free;</span>
+<span class="fc" id="L508">		record_fns.portfn = shapes__c.record_port;</span>
+<span class="fc" id="L509">		record_fns.insidefn = shapes__c.record_inside;</span>
+<span class="fc" id="L510">		record_fns.pboxfn = shapes__c.record_path;</span>
+<span class="fc" id="L511">		record_fns.codefn = shapes__c.record_gencode;</span>
+
+<span class="fc" id="L513">		Ag_mainedge_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L514">		Ag_mainedge_id_disc.size = 0;</span>
+<span class="fc" id="L515">		Ag_mainedge_id_disc.link = FieldOffset.id_link; // id_link is the second</span>
+															// field in Agedge_t
+<span class="fc" id="L517">		Ag_mainedge_id_disc.makef = null;</span>
+<span class="fc" id="L518">		Ag_mainedge_id_disc.freef = null;</span>
+<span class="fc" id="L519">		Ag_mainedge_id_disc.comparf = edge__c.agedgeidcmpf;</span>
+<span class="fc" id="L520">		Ag_mainedge_id_disc.hashf = null;</span>
+<span class="fc" id="L521">		Ag_mainedge_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L522">		Ag_mainedge_id_disc.eventf = null;</span>
+
+<span class="fc" id="L524">		Agdirected.directed = 1;</span>
+<span class="fc" id="L525">		Agdirected.strict = 0;</span>
+<span class="fc" id="L526">		Agdirected.no_loop = 0;</span>
+<span class="fc" id="L527">		Agdirected.maingraph = 1;</span>
+
+<span class="fc" id="L529">		sinfo.swapEnds = dotsplines__c.swap_ends_p;</span>
+<span class="fc" id="L530">		sinfo.splineMerge = dotsplines__c.spline_merge;</span>
+
+<span class="fc" id="L532">		ispline = null;</span>
+<span class="fc" id="L533">		isz = 0;</span>
+
+<span class="fc" id="L535">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

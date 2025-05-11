@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TitledDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">TitledDiagram.java</span></div><h1>TitledDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.abel.DisplayPositionned;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.api.ApiStable;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.ColorOrder;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
+
+public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
+	// ::remove file when __HAXE__
+
+<span class="fc" id="L79">	public static boolean FORCE_SMETANA = false;</span>
+<span class="fc" id="L80">	public static boolean FORCE_ELK = false;</span>
+
+<span class="fc" id="L82">	private DisplayPositioned title = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
+
+<span class="fc" id="L84">	private DisplayPositioned caption = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);</span>
+<span class="fc" id="L85">	private DisplayPositioned legend = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);</span>
+<span class="fc" id="L86">	private DisplayPositioned header = DisplayPositioned.none(HorizontalAlignment.CENTER, null);</span>
+<span class="fc" id="L87">	private DisplayPositioned footer = DisplayPositioned.none(HorizontalAlignment.CENTER, null);</span>
+<span class="fc" id="L88">	private DisplayPositioned mainFrame = DisplayPositioned.none(null, null);</span>
+	private final UmlDiagramType type;
+
+	private final SkinParam skinParam;
+
+	public TitledDiagram(UmlSource source, UmlDiagramType type, Previous previous,
+			PreprocessingArtifact preprocessing) {
+<span class="fc" id="L95">		super(source, preprocessing);</span>
+<span class="fc" id="L96">		this.type = type;</span>
+<span class="fc" id="L97">		this.skinParam = SkinParam.create(type, Pragma.createEmpty(), preprocessing.getOption());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (previous != null)</span>
+<span class="fc" id="L99">			this.skinParam.copyAllFrom(previous);</span>
+
+<span class="fc" id="L101">	}</span>
+
+	public final StyleBuilder getCurrentStyleBuilder() {
+<span class="fc" id="L104">		return skinParam.getCurrentStyleBuilder();</span>
+	}
+
+	final public UmlDiagramType getUmlDiagramType() {
+<span class="fc" id="L108">		return type;</span>
+	}
+
+	public final ISkinParam getSkinParam() {
+<span class="fc" id="L112">		return skinParam;</span>
+	}
+
+	public void setParam(String key, String value) {
+<span class="fc" id="L116">		skinParam.setParam(StringUtils.goLowerCase(key), value);</span>
+<span class="fc" id="L117">	}</span>
+
+	public void addSprite(String name, Sprite sprite) {
+<span class="fc" id="L120">		skinParam.addSprite(name, sprite);</span>
+<span class="fc" id="L121">	}</span>
+
+	@DuplicateCode(reference = &quot;StyleExtractor&quot;)
+	public CommandExecutionResult loadSkin(String newSkin) throws IOException {
+<span class="fc" id="L125">		final String filename = newSkin + &quot;.skin&quot;;</span>
+<span class="fc" id="L126">		final InputStream is = StyleLoader.getInputStreamForStyle(filename);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L128">			return CommandExecutionResult.error(&quot;Cannot find style &quot; + newSkin);</span>
+<span class="fc" id="L129">		is.close();</span>
+
+<span class="fc" id="L131">		getSkinParam().setDefaultSkin(filename);</span>
+<span class="fc" id="L132">		return CommandExecutionResult.ok();</span>
+	}
+
+	final public void setTitle(DisplayPositioned title) {
+<span class="pc bpc" id="L136" title="2 of 4 branches missed.">		if (title.isNull() || title.getDisplay().isWhite())</span>
+<span class="nc" id="L137">			return;</span>
+<span class="fc" id="L138">		this.title = title;</span>
+<span class="fc" id="L139">	}</span>
+
+	@Override
+	final public DisplayPositionned getTitle() {
+<span class="fc" id="L143">		return title;</span>
+	}
+
+	@Override
+	@ApiStable
+	final public Display getTitleDisplay() {
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (title == null)</span>
+<span class="nc" id="L150">			return Display.NULL;</span>
+<span class="fc" id="L151">		return title.getDisplay();</span>
+	}
+
+	final public void setMainFrame(DisplayPositioned mainFrame) {
+<span class="nc" id="L155">		this.mainFrame = mainFrame;</span>
+<span class="nc" id="L156">	}</span>
+
+	final public void setCaption(DisplayPositioned caption) {
+<span class="fc" id="L159">		this.caption = caption;</span>
+<span class="fc" id="L160">	}</span>
+
+	@Override
+	final public DisplayPositioned getCaption() {
+<span class="fc" id="L164">		return caption;</span>
+	}
+
+	@Override
+	final public DisplayPositioned getHeader() {
+<span class="fc" id="L169">		return header;</span>
+	}
+
+	@Override
+	final public DisplayPositioned getFooter() {
+<span class="fc" id="L174">		return footer;</span>
+	}
+
+	public void updateFooter(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
+<span class="fc" id="L178">		this.footer = this.footer.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
+<span class="fc" id="L179">				.withLocation(location);</span>
+<span class="fc" id="L180">	}</span>
+
+	public void updateHeader(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
+<span class="fc" id="L183">		this.header = this.header.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
+<span class="fc" id="L184">				.withLocation(location);</span>
+<span class="fc" id="L185">	}</span>
+
+	@Override
+	final public DisplayPositioned getLegend() {
+<span class="fc" id="L189">		return legend;</span>
+	}
+
+	public void setLegend(DisplayPositioned legend) {
+<span class="fc" id="L193">		this.legend = legend;</span>
+<span class="fc" id="L194">	}</span>
+
+	@Override
+	final public DisplayPositioned getMainFrame() {
+<span class="fc" id="L198">		return mainFrame;</span>
+	}
+
+	private boolean useSmetana;
+	private boolean useElk;
+
+	public void setUseSmetana(boolean useSmetana) {
+<span class="fc" id="L205">		this.useSmetana = useSmetana;</span>
+<span class="fc" id="L206">	}</span>
+
+	public void setUseElk(boolean useElk) {
+<span class="nc" id="L209">		this.useElk = useElk;</span>
+<span class="nc" id="L210">	}</span>
+
+	public boolean isUseElk() {
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (FORCE_ELK)</span>
+<span class="nc" id="L214">			return true;</span>
+<span class="fc" id="L215">		return this.useElk;</span>
+	}
+
+	public boolean isUseSmetana() {
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (FORCE_SMETANA)</span>
+<span class="fc" id="L220">			return true;</span>
+<span class="fc" id="L221">		return useSmetana;</span>
+		// return true;
+	}
+
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+<span class="fc" id="L227">		return ClockwiseTopRightBottomLeft.same(10);</span>
+	}
+
+	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+<span class="fc" id="L232">		return super.createImageBuilder(fileFormatOption).styled(this);</span>
+	}
+
+	public HColor calculateBackColor() {
+<span class="fc" id="L236">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())</span>
+<span class="fc" id="L237">				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());</span>
+
+<span class="fc" id="L239">		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (backgroundColor == null)</span>
+<span class="nc" id="L241">			backgroundColor = HColors.transparent();</span>
+
+<span class="fc" id="L243">		return backgroundColor;</span>
+	}
+
+	@Override
+	protected ColorMapper muteColorMapper(ColorMapper init) {
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (SkinParam.isDark(getSkinParam()))</span>
+<span class="nc" id="L249">			return ColorMapper.DARK_MODE;</span>
+<span class="fc" id="L250">		final String monochrome = getSkinParam().getValue(&quot;monochrome&quot;);</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (&quot;true&quot;.equals(monochrome))</span>
+<span class="nc" id="L252">			return ColorMapper.MONOCHROME;</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (&quot;reverse&quot;.equals(monochrome))</span>
+<span class="nc" id="L254">			return ColorMapper.MONOCHROME_REVERSE;</span>
+
+<span class="fc" id="L256">		final String reversecolor = getSkinParam().getValue(&quot;reversecolor&quot;);</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		if (reversecolor == null)</span>
+<span class="fc" id="L258">			return init;</span>
+
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (&quot;dark&quot;.equalsIgnoreCase(reversecolor))</span>
+<span class="nc" id="L261">			return ColorMapper.LIGTHNESS_INVERSE;</span>
+
+<span class="nc" id="L263">		final ColorOrder order = ColorOrder.fromString(reversecolor);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (order == null)</span>
+<span class="nc" id="L265">			return init;</span>
+
+<span class="nc" id="L267">		return ColorMapper.reverse(order);</span>
+
+	}
+
+	protected abstract TextBlock getTextMainBlock(FileFormatOption fileFormatOption);
+
+	@Override
+	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+<span class="nc" id="L275">		final TextBlock textBlock = getTextMainBlock(fileFormatOption);</span>
+<span class="nc" id="L276">		textBlock.drawU(ug);</span>
+<span class="nc" id="L277">	}</span>
+
+	final public Pragma getPragma() {
+<span class="fc" id="L280">		return skinParam.getPragma();</span>
+	}
+
+	@Override
+	public void addWarning(Warning warning) {
+<span class="nc" id="L285">		getPragma().addWarning(warning);</span>
+<span class="nc" id="L286">	}</span>
+
+	@Override
+	public Collection&lt;Warning&gt; getWarnings() {
+<span class="fc" id="L290">		return join(getPreprocessingArtifact().getWarnings(), getPragma().getWarnings());</span>
+	}
+
+	static private Collection&lt;Warning&gt; join(Collection&lt;Warning&gt; col1, Collection&lt;Warning&gt; col2) {
+<span class="fc" id="L294">		final LinkedHashSet&lt;Warning&gt; result = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L295">		result.addAll(col1);</span>
+<span class="fc" id="L296">		result.addAll(col2);</span>
+<span class="fc" id="L297">		return result;</span>
+	}
+
+	public String getFlashData() {
+<span class="nc" id="L301">		final UmlSource source = getSource();</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L303">			return &quot;&quot;;</span>
+
+<span class="nc" id="L305">		return source.getPlainString(&quot;\n&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

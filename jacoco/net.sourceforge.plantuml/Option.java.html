@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Option.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">Option.java</span></div><h1>Option.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.api.ApiWarning;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.file.FileGroup;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.stats.StatsUtils;
+import net.sourceforge.plantuml.utils.Log;
+
+public class Option {
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
+
+<span class="fc" id="L66">	private final List&lt;String&gt; excludes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L67">	private final List&lt;String&gt; config = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">	private final Map&lt;String, String&gt; defines = new LinkedHashMap&lt;String, String&gt;();</span>
+
+	private String charset;
+	// ::comment when __CORE__
+<span class="fc" id="L72">	private boolean computeurl = false;</span>
+<span class="fc" id="L73">	private boolean decodeurl = false;</span>
+<span class="fc" id="L74">	private boolean pipe = false;</span>
+	private String pipeDelimitor;
+<span class="fc" id="L76">	private boolean pipeMap = false;</span>
+<span class="fc" id="L77">	private boolean pipeNoStdErr = false;</span>
+<span class="fc" id="L78">	private boolean syntax = false;</span>
+<span class="fc" id="L79">	private boolean checkOnly = false;</span>
+	// ::done
+
+<span class="fc" id="L82">	private OptionPreprocOutputMode preprocessorOutput = null;</span>
+<span class="fc" id="L83">	private boolean failfast = false;</span>
+<span class="fc" id="L84">	private boolean failfast2 = false;</span>
+<span class="fc" id="L85">	private boolean noerror = false;</span>
+
+<span class="fc" id="L87">	private boolean duration = false;</span>
+<span class="fc" id="L88">	private boolean debugsvek = false;</span>
+<span class="fc" id="L89">	private int nbThreads = 0;</span>
+
+	// ::comment when __CORE__
+<span class="fc" id="L92">	private boolean splash = false;</span>
+<span class="fc" id="L93">	private boolean textProgressBar = false;</span>
+<span class="fc" id="L94">	private int ftpPort = -1;</span>
+<span class="fc" id="L95">	private String picowebBindAddress = null;</span>
+<span class="fc" id="L96">	private int picowebPort = -1;</span>
+<span class="fc" id="L97">	private boolean picowebEnableStop = false;</span>
+<span class="fc" id="L98">	private int stdrpt = 0;</span>
+<span class="fc" id="L99">	private boolean hideMetadata = false;</span>
+<span class="fc" id="L100">	private boolean checkMetadata = false;</span>
+	private String filename;
+	// ::done
+<span class="fc" id="L103">	private int imageIndex = 0;</span>
+	private String fileDir;
+
+<span class="fc" id="L106">	private File outputDir = null;</span>
+<span class="fc" id="L107">	private File outputFile = null;</span>
+
+<span class="fc" id="L109">	private final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L111">	public Option() {</span>
+<span class="fc" id="L112">	}</span>
+
+<span class="fc" id="L114">	private FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);</span>
+
+	/**
+	 *  @deprecated Use {@link #setFileFormatOption(FileFormatOption)} instead
+	 */
+	@Deprecated
+	@ApiWarning(willBeRemoved = &quot;in next major release&quot;)
+	final public void setFileFormat(FileFormat fileFormat) {
+<span class="nc" id="L122">		setFileFormatOption(new FileFormatOption(fileFormat));</span>
+<span class="nc" id="L123">	}</span>
+
+	final public void setFileFormatOption(FileFormatOption newFormat) {
+<span class="fc" id="L126">		this.fileFormatOption = newFormat;</span>
+<span class="fc" id="L127">	}</span>
+
+	// ::comment when __CORE__
+<span class="fc" id="L130">	public Option(String... arg) throws InterruptedException, IOException {</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (arg.length == 0)</span>
+<span class="nc" id="L132">			OptionFlags.getInstance().setGui(true);</span>
+
+<span class="fc" id="L134">		initInclude(GraphvizUtils.getenvDefaultConfigFilename());</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (int i = 0; i &lt; arg.length; i++) {</span>
+<span class="fc" id="L136">			String s = arg[i];</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (s.equalsIgnoreCase(&quot;-headless&quot;)) {</span>
+				// Useless because done in Run.java
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (i != 0)</span>
+<span class="nc" id="L140">					Log.error(&quot;Warning: -headless flag must be the first one in the command line&quot;);</span>
+
+<span class="nc" id="L142">				System.setProperty(&quot;java.awt.headless&quot;, &quot;true&quot;);</span>
+<span class="pc bpc" id="L143" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-tsvg&quot;) || s.equalsIgnoreCase(&quot;-svg&quot;)) {</span>
+<span class="nc" id="L144">				setFileFormatOption(new FileFormatOption(FileFormat.SVG));</span>
+
+<span class="pc bpc" id="L146" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-tsvg:nornd&quot;) || s.equalsIgnoreCase(&quot;-svg:nornd&quot;)) {</span>
+<span class="nc" id="L147">				setFileFormatOption(new FileFormatOption(FileFormat.SVG));</span>
+
+<span class="pc bpc" id="L149" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-thtml&quot;) || s.equalsIgnoreCase(&quot;-html&quot;)) {</span>
+<span class="nc" id="L150">				setFileFormatOption(new FileFormatOption(FileFormat.HTML));</span>
+
+<span class="pc bpc" id="L152" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-tscxml&quot;) || s.equalsIgnoreCase(&quot;-scxml&quot;)) {</span>
+<span class="nc" id="L153">				setFileFormatOption(new FileFormatOption(FileFormat.SCXML));</span>
+
+<span class="pc bpc" id="L155" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-txmi&quot;) || s.equalsIgnoreCase(&quot;-xmi&quot;)) {</span>
+<span class="nc" id="L156">				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));</span>
+
+<span class="pc bpc" id="L158" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-txmi:argo&quot;) || s.equalsIgnoreCase(&quot;-xmi:argo&quot;)) {</span>
+<span class="nc" id="L159">				setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));</span>
+
+<span class="pc bpc" id="L161" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-txmi:custom&quot;) || s.equalsIgnoreCase(&quot;-xmi:custom&quot;)) {</span>
+<span class="nc" id="L162">				setFileFormatOption(new FileFormatOption(FileFormat.XMI_CUSTOM));</span>
+
+<span class="pc bpc" id="L164" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-txmi:script&quot;) || s.equalsIgnoreCase(&quot;-xmi:script&quot;)) {</span>
+<span class="nc" id="L165">				setFileFormatOption(new FileFormatOption(FileFormat.XMI_SCRIPT));</span>
+
+<span class="pc bpc" id="L167" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-txmi:star&quot;) || s.equalsIgnoreCase(&quot;-xmi:star&quot;)) {</span>
+<span class="nc" id="L168">				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));</span>
+
+<span class="pc bpc" id="L170" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-teps&quot;) || s.equalsIgnoreCase(&quot;-eps&quot;)) {</span>
+<span class="nc" id="L171">				setFileFormatOption(new FileFormatOption(FileFormat.EPS));</span>
+
+<span class="pc bpc" id="L173" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-teps:text&quot;) || s.equalsIgnoreCase(&quot;-eps:text&quot;)) {</span>
+<span class="nc" id="L174">				setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));</span>
+
+<span class="pc bpc" id="L176" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-ttxt&quot;) || s.equalsIgnoreCase(&quot;-txt&quot;)) {</span>
+<span class="nc" id="L177">				setFileFormatOption(new FileFormatOption(FileFormat.ATXT));</span>
+
+<span class="pc bpc" id="L179" title="1 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-tutxt&quot;) || s.equalsIgnoreCase(&quot;-utxt&quot;)) {</span>
+<span class="fc" id="L180">				setFileFormatOption(new FileFormatOption(FileFormat.UTXT));</span>
+
+<span class="pc bpc" id="L182" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-braille&quot;) || s.equalsIgnoreCase(&quot;-tbraille&quot;)) {</span>
+<span class="nc" id="L183">				setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));</span>
+
+<span class="pc bpc" id="L185" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-png&quot;) || s.equalsIgnoreCase(&quot;-tpng&quot;)) {</span>
+<span class="nc" id="L186">				setFileFormatOption(new FileFormatOption(FileFormat.PNG));</span>
+
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-vdx&quot;) || s.equalsIgnoreCase(&quot;-tvdx&quot;)) {</span>
+<span class="nc" id="L189">				setFileFormatOption(new FileFormatOption(FileFormat.VDX));</span>
+
+<span class="pc bpc" id="L191" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-latex&quot;) || s.equalsIgnoreCase(&quot;-tlatex&quot;)) {</span>
+<span class="nc" id="L192">				setFileFormatOption(new FileFormatOption(FileFormat.LATEX));</span>
+
+<span class="pc bpc" id="L194" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-latex:nopreamble&quot;) || s.equalsIgnoreCase(&quot;-tlatex:nopreamble&quot;)) {</span>
+<span class="nc" id="L195">				setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));</span>
+
+<span class="pc bpc" id="L197" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-base64&quot;) || s.equalsIgnoreCase(&quot;-tbase64&quot;)) {</span>
+<span class="nc" id="L198">				setFileFormatOption(new FileFormatOption(FileFormat.BASE64));</span>
+
+<span class="pc bpc" id="L200" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-pdf&quot;) || s.equalsIgnoreCase(&quot;-tpdf&quot;)) {</span>
+<span class="nc" id="L201">				setFileFormatOption(new FileFormatOption(FileFormat.PDF));</span>
+
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-darkmode&quot;)) {</span>
+<span class="nc" id="L204">				setFileFormatOption(this.fileFormatOption.withColorMapper(ColorMapper.DARK_MODE));</span>
+
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-overwrite&quot;)) {</span>
+<span class="nc" id="L207">				OptionFlags.getInstance().setOverwrite(true);</span>
+
+<span class="pc bpc" id="L209" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-output&quot;) || s.equalsIgnoreCase(&quot;-o&quot;)) {</span>
+<span class="nc" id="L210">				i++;</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L212">					continue;</span>
+
+<span class="nc" id="L214">				outputDir = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-ofile&quot;)) {</span>
+<span class="nc" id="L216">				i++;</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L218">					continue;</span>
+
+<span class="nc" id="L220">				outputFile = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));</span>
+<span class="pc bpc" id="L221" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-graphvizdot&quot;) || s.equalsIgnoreCase(&quot;-graphviz_dot&quot;)) {</span>
+<span class="nc" id="L222">				i++;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L224">					continue;</span>
+
+<span class="nc" id="L226">				GraphvizRuntimeEnvironment.getInstance().setDotExecutable(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-charset&quot;)) {</span>
+<span class="nc" id="L228">				i++;</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L230">					continue;</span>
+
+<span class="nc" id="L232">				charset = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-filename&quot;)) {</span>
+<span class="nc" id="L234">				i++;</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L236">					continue;</span>
+
+<span class="nc" id="L238">				filename = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;-filedir&quot;)) {</span>
+<span class="fc" id="L240">				i++;</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L242">					continue;</span>
+
+<span class="fc" id="L244">				fileDir = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);</span>
+<span class="pc bpc" id="L245" title="3 of 4 branches missed.">			} else if (s.startsWith(&quot;-o&quot;) &amp;&amp; s.length() &gt; 3) {</span>
+<span class="nc" id="L246">				s = s.substring(2);</span>
+<span class="nc" id="L247">				outputDir = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));</span>
+<span class="pc bpc" id="L248" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-exclude&quot;) || s.equalsIgnoreCase(&quot;-x&quot;)) {</span>
+<span class="nc" id="L249">				i++;</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L251">					continue;</span>
+
+<span class="nc" id="L253">				excludes.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));</span>
+<span class="pc bpc" id="L254" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-nbthread&quot;) || s.equalsIgnoreCase(&quot;-nbthreads&quot;)) {</span>
+<span class="nc" id="L255">				i++;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L257">					continue;</span>
+
+<span class="nc" id="L259">				final String nb = arg[i];</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">				if (&quot;auto&quot;.equalsIgnoreCase(nb))</span>
+<span class="nc" id="L261">					this.nbThreads = defaultNbThreads();</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">				else if (nb.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L263">					this.nbThreads = Integer.parseInt(nb);</span>
+
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-timeout&quot;)) {</span>
+<span class="nc" id="L266">				i++;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L268">					continue;</span>
+
+<span class="nc" id="L270">				final String timeSeconds = arg[i];</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">				if (timeSeconds.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L272">					OptionFlags.getInstance().setTimeoutMs(Integer.parseInt(timeSeconds) * 1000L);</span>
+
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-failfast&quot;)) {</span>
+<span class="nc" id="L275">				this.failfast = true;</span>
+
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-failfast2&quot;)) {</span>
+<span class="nc" id="L278">				this.failfast2 = true;</span>
+
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-noerror&quot;)) {</span>
+<span class="nc" id="L281">				this.noerror = true;</span>
+
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-checkonly&quot;)) {</span>
+<span class="nc" id="L284">				this.checkOnly = true;</span>
+
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-theme&quot;)) {</span>
+<span class="nc" id="L287">				i++;</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L289">					continue;</span>
+
+<span class="nc" id="L291">				this.config.add(0, &quot;!theme &quot; + arg[i]);</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-config&quot;)) {</span>
+<span class="nc" id="L293">				i++;</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L295">					continue;</span>
+
+<span class="nc" id="L297">				initConfig(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;-I&quot;)) {</span>
+<span class="nc" id="L299">				initInclude(s.substring(2));</span>
+
+<span class="fc bfc" id="L301" title="All 4 branches covered.">			} else if (s.equalsIgnoreCase(&quot;-computeurl&quot;) || s.equalsIgnoreCase(&quot;-encodeurl&quot;)) {</span>
+<span class="fc" id="L302">				this.computeurl = true;</span>
+
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;-x&quot;)) {</span>
+<span class="nc" id="L305">				s = s.substring(2);</span>
+<span class="nc" id="L306">				excludes.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));</span>
+
+<span class="pc bpc" id="L308" title="3 of 6 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-verbose&quot;) || s.equalsIgnoreCase(&quot;--verbose&quot;) || s.equalsIgnoreCase(&quot;-v&quot;)) {</span>
+<span class="nc" id="L309">				OptionFlags.getInstance().setVerbose(true);</span>
+
+<span class="pc bpc" id="L311" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-pipe&quot;) || s.equalsIgnoreCase(&quot;-p&quot;)) {</span>
+<span class="nc" id="L312">				pipe = true;</span>
+
+<span class="fc bfc" id="L314" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;-pipedelimitor&quot;)) {</span>
+<span class="fc" id="L315">				i++;</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L317">					continue;</span>
+
+<span class="fc" id="L319">				pipeDelimitor = arg[i];</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;-pipemap&quot;)) {</span>
+<span class="fc" id="L321">				pipeMap = true;</span>
+
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-pipenostderr&quot;)) {</span>
+<span class="nc" id="L324">				pipeNoStdErr = true;</span>
+
+<span class="fc bfc" id="L326" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;-syntax&quot;)) {</span>
+<span class="fc" id="L327">				syntax = true;</span>
+<span class="fc" id="L328">				OptionFlags.getInstance().setQuiet(true);</span>
+
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-duration&quot;)) {</span>
+<span class="nc" id="L331">				duration = true;</span>
+
+<span class="pc bpc" id="L333" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-debugsvek&quot;) || s.equalsIgnoreCase(&quot;-debug_svek&quot;)) {</span>
+<span class="nc" id="L334">				debugsvek = true;</span>
+
+<span class="pc bpc" id="L336" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-keepfiles&quot;) || s.equalsIgnoreCase(&quot;-keepfile&quot;)) {</span>
+<span class="nc" id="L337">				System.err.println(&quot;-keepfiles option has been removed. Please consider -debugsvek instead&quot;);</span>
+
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-metadata&quot;)) {</span>
+<span class="nc" id="L340">				OptionFlags.getInstance().setExtractFromMetadata(true);</span>
+
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-logdata&quot;)) {</span>
+<span class="nc" id="L343">				i++;</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L345">					continue;</span>
+
+<span class="nc" id="L347">				OptionFlags.getInstance()</span>
+<span class="nc" id="L348">						.setLogData(new SFile(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i])));</span>
+
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-word&quot;)) {</span>
+<span class="nc" id="L351">				OptionFlags.getInstance().setWord(true);</span>
+<span class="nc" id="L352">				OptionFlags.getInstance().setQuiet(true);</span>
+<span class="nc" id="L353">				this.charset = &quot;UTF-8&quot;;</span>
+
+<span class="pc bpc" id="L355" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-quiet&quot;)) {</span>
+<span class="nc" id="L356">				OptionFlags.getInstance().setQuiet(true);</span>
+
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-decodeurl&quot;)) {</span>
+<span class="nc" id="L359">				this.decodeurl = true;</span>
+
+<span class="pc bpc" id="L361" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-version&quot;) || s.equalsIgnoreCase(&quot;--version&quot;)) {</span>
+<span class="nc" id="L362">				OptionPrint.printVersion();</span>
+
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">			} else if (s.matches(&quot;(?i)^-li[sc][ea]n[sc]e\\s*$&quot;)) {</span>
+<span class="nc" id="L365">				OptionPrint.printLicense();</span>
+
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;-DPLANTUML_LIMIT_SIZE=&quot;)) {</span>
+<span class="nc" id="L368">				final String v = s.substring(&quot;-DPLANTUML_LIMIT_SIZE=&quot;.length());</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">				if (v.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L370">					System.setProperty(&quot;PLANTUML_LIMIT_SIZE&quot;, v);</span>
+
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;-D&quot;)) {</span>
+<span class="nc" id="L373">				manageDefine(s.substring(2));</span>
+
+<span class="pc bpc" id="L375" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;-S&quot;)) {</span>
+<span class="nc" id="L376">				manageSkinParam(s.substring(2));</span>
+
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;-P&quot;)) {</span>
+<span class="nc" id="L379">				managePragma(s.substring(2));</span>
+
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-testdot&quot;)) {</span>
+<span class="nc" id="L382">				OptionPrint.printTestDot();</span>
+
+<span class="pc bpc" id="L384" title="2 of 4 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-about&quot;) || s.equalsIgnoreCase(&quot;-author&quot;)</span>
+<span class="pc bpc" id="L385" title="1 of 2 branches missed.">					|| s.equalsIgnoreCase(&quot;-authors&quot;)) {</span>
+<span class="nc" id="L386">				OptionPrint.printAbout();</span>
+
+<span class="pc bpc" id="L388" title="3 of 6 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-help&quot;) || s.equalsIgnoreCase(&quot;-h&quot;) || s.equalsIgnoreCase(&quot;-?&quot;)) {</span>
+<span class="nc" id="L389">				OptionPrint.printHelp();</span>
+
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-language&quot;)) {</span>
+<span class="nc" id="L392">				OptionPrint.printLanguage();</span>
+
+<span class="pc bpc" id="L394" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-gui&quot;)) {</span>
+<span class="nc" id="L395">				OptionFlags.getInstance().setGui(true);</span>
+
+<span class="pc bpc" id="L397" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-encodesprite&quot;)) {</span>
+<span class="nc" id="L398">				OptionFlags.getInstance().setEncodesprite(true);</span>
+
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-printfonts&quot;)) {</span>
+<span class="nc" id="L401">				OptionFlags.getInstance().setPrintFonts(true);</span>
+
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-dumphtmlstats&quot;)) {</span>
+<span class="nc" id="L404">				OptionFlags.getInstance().setDumpHtmlStats(true);</span>
+
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-dumpstats&quot;)) {</span>
+<span class="nc" id="L407">				OptionFlags.getInstance().setDumpStats(true);</span>
+
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-loopstats&quot;)) {</span>
+<span class="nc" id="L410">				OptionFlags.getInstance().setLoopStats(true);</span>
+
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-enablestats&quot;)) {</span>
+<span class="nc" id="L413">				OptionFlags.getInstance().setEnableStats(true);</span>
+
+<span class="pc bpc" id="L415" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-disablestats&quot;)) {</span>
+<span class="nc" id="L416">				OptionFlags.getInstance().setEnableStats(false);</span>
+
+<span class="pc bpc" id="L418" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-extractstdlib&quot;)) {</span>
+<span class="nc" id="L419">				OptionFlags.getInstance().setExtractStdLib(true);</span>
+
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-stdlib&quot;)) {</span>
+<span class="nc" id="L422">				OptionFlags.getInstance().setStdLib(true);</span>
+
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-clipboard&quot;)) {</span>
+<span class="nc" id="L425">				OptionFlags.getInstance().setClipboard(true);</span>
+
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-clipboardloop&quot;)) {</span>
+<span class="nc" id="L428">				OptionFlags.getInstance().setClipboardLoop(true);</span>
+
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-htmlstats&quot;)) {</span>
+<span class="nc" id="L431">				StatsUtils.setHtmlStats(true);</span>
+
+<span class="pc bpc" id="L433" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-xmlstats&quot;)) {</span>
+<span class="nc" id="L434">				StatsUtils.setXmlStats(true);</span>
+
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-realtimestats&quot;)) {</span>
+<span class="nc" id="L437">				StatsUtils.setRealTimeStats(true);</span>
+
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-useseparatorminus&quot;)) {</span>
+<span class="nc" id="L440">				OptionFlags.getInstance().setFileSeparator(&quot;-&quot;);</span>
+
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-splash&quot;)) {</span>
+<span class="nc" id="L443">				splash = true;</span>
+
+<span class="pc bpc" id="L445" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-progress&quot;)) {</span>
+<span class="nc" id="L446">				textProgressBar = true;</span>
+
+<span class="pc bpc" id="L448" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-nometadata&quot;)) {</span>
+<span class="nc" id="L449">				hideMetadata = true;</span>
+
+<span class="fc bfc" id="L451" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;-preproc&quot;)) {</span>
+<span class="fc" id="L452">				preprocessorOutput = OptionPreprocOutputMode.NORMAL;</span>
+<span class="fc" id="L453">				setFileFormatOption(new FileFormatOption(FileFormat.PREPROC));</span>
+
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-cypher&quot;)) {</span>
+<span class="nc" id="L456">				preprocessorOutput = OptionPreprocOutputMode.CYPHER;</span>
+<span class="nc" id="L457">				setFileFormatOption(new FileFormatOption(FileFormat.PREPROC));</span>
+
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-checkmetadata&quot;)) {</span>
+<span class="nc" id="L460">				checkMetadata = true;</span>
+
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-stdrpt:1&quot;)) {</span>
+<span class="nc" id="L463">				stdrpt = 1;</span>
+
+<span class="pc bpc" id="L465" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-stdrpt:2&quot;)) {</span>
+<span class="nc" id="L466">				stdrpt = 2;</span>
+
+<span class="pc bpc" id="L468" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-stdrpt&quot;)) {</span>
+<span class="nc" id="L469">				stdrpt = 2;</span>
+
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;-pipeimageindex&quot;)) {</span>
+<span class="nc" id="L472">				i++;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">				if (i == arg.length)</span>
+<span class="nc" id="L474">					continue;</span>
+
+<span class="nc" id="L476">				final String nb = arg[i];</span>
+<span class="nc bnc" id="L477" title="All 2 branches missed.">				if (nb.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L478">					this.imageIndex = Integer.parseInt(nb);</span>
+
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">			} else if (StringUtils.goLowerCase(s).startsWith(&quot;-ftp&quot;)) {</span>
+<span class="nc" id="L481">				final int x = s.indexOf(':');</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">				if (x == -1)</span>
+<span class="nc" id="L483">					this.ftpPort = 4242;</span>
+				else
+<span class="nc" id="L485">					this.ftpPort = Integer.parseInt(s.substring(x + 1));</span>
+
+<span class="pc bpc" id="L487" title="1 of 2 branches missed.">			} else if (StringUtils.goLowerCase(s).startsWith(&quot;-picoweb&quot;)) {</span>
+<span class="nc" id="L488">				final String[] parts = s.split(&quot;:&quot;);</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">				this.picowebPort = parts.length &gt; 1 ? Integer.parseInt(parts[1]) : 8080;</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">				this.picowebBindAddress = parts.length &gt; 2 ? parts[2] : null;</span>
+
+<span class="nc" id="L492">				this.picowebEnableStop = StringUtils.goLowerCase(s).contains(&quot;stop&quot;);</span>
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;-c&quot;)) {</span>
+<span class="nc" id="L494">				s = s.substring(2);</span>
+<span class="nc" id="L495">				config.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));</span>
+
+			} else {
+<span class="fc" id="L498">				result.add(s);</span>
+			}
+		}
+<span class="fc" id="L501">	}</span>
+
+	public Stdrpt getStdrpt() {
+<span class="pc bpc" id="L504" title="1 of 2 branches missed.">		if (stdrpt == 1)</span>
+<span class="nc" id="L505">			return new StdrptV1();</span>
+
+<span class="pc bpc" id="L507" title="1 of 2 branches missed.">		if (stdrpt == 2)</span>
+<span class="nc" id="L508">			return new StdrptV2();</span>
+
+		// Legacy case
+<span class="pc bpc" id="L511" title="1 of 6 branches missed.">		if (isPipe() || isPipeMap() || isSyntax())</span>
+<span class="fc" id="L512">			return new StdrptPipe0();</span>
+
+<span class="fc" id="L514">		return new StdrptNull();</span>
+	}
+
+	public int getFtpPort() {
+<span class="nc" id="L518">		return ftpPort;</span>
+	}
+
+	public String getPicowebBindAddress() {
+<span class="nc" id="L522">		return picowebBindAddress;</span>
+	}
+
+	public int getPicowebPort() {
+<span class="nc" id="L526">		return picowebPort;</span>
+	}
+
+	public boolean getPicowebEnableStop() {
+<span class="nc" id="L530">		return picowebEnableStop;</span>
+	}
+	// ::done
+
+	private void addInConfig(BufferedReader br) throws IOException {
+<span class="nc bnc" id="L535" title="All 2 branches missed.">		if (br == null)</span>
+<span class="nc" id="L536">			return;</span>
+
+		try {
+<span class="nc" id="L539">			String s = null;</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">			while ((s = br.readLine()) != null)</span>
+<span class="nc" id="L541">				config.add(s);</span>
+
+		} finally {
+<span class="nc" id="L544">			br.close();</span>
+		}
+<span class="nc" id="L546">	}</span>
+
+	public void initConfig(String filename) throws IOException {
+<span class="nc" id="L549">		final BufferedReader br = new BufferedReader(new FileReader(filename));</span>
+<span class="nc" id="L550">		addInConfig(br);</span>
+<span class="nc" id="L551">	}</span>
+
+	private void initInclude(String filename) throws IOException {
+<span class="pc bpc" id="L554" title="1 of 2 branches missed.">		if (filename == null)</span>
+<span class="fc" id="L555">			return;</span>
+
+<span class="nc bnc" id="L557" title="All 2 branches missed.">		if (filename.contains(&quot;*&quot;)) {</span>
+<span class="nc" id="L558">			final FileGroup group = new FileGroup(filename, Collections.&lt;String&gt;emptyList(), null);</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">			for (File f : group.getFiles())</span>
+<span class="nc bnc" id="L560" title="All 4 branches missed.">				if (f.exists() &amp;&amp; f.canRead())</span>
+<span class="nc" id="L561">					addInConfig(new BufferedReader(new FileReader(f)));</span>
+
+<span class="nc" id="L563">		} else {</span>
+<span class="nc" id="L564">			final File f = new File(filename);</span>
+<span class="nc bnc" id="L565" title="All 4 branches missed.">			if (f.exists() &amp;&amp; f.canRead())</span>
+<span class="nc" id="L566">				addInConfig(new BufferedReader(new FileReader(f)));</span>
+
+		}
+<span class="nc" id="L569">	}</span>
+
+	private void manageDefine(String s) {
+<span class="nc" id="L572">		final Pattern2 p = MyPattern.cmpile(&quot;^(\\$?\\w+)(?:=(.*))?$&quot;);</span>
+<span class="nc" id="L573">		final Matcher2 m = p.matcher(s);</span>
+<span class="nc bnc" id="L574" title="All 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L575">			define(m.group(1), m.group(2));</span>
+
+<span class="nc" id="L577">	}</span>
+
+	private void managePragma(String s) {
+<span class="nc" id="L580">		final Pattern2 p = MyPattern.cmpile(&quot;^(\\w+)(?:=(.*))?$&quot;);</span>
+<span class="nc" id="L581">		final Matcher2 m = p.matcher(s);</span>
+<span class="nc bnc" id="L582" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L583">			final String var = m.group(1);</span>
+<span class="nc" id="L584">			final String value = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2));</span>
+<span class="nc bnc" id="L585" title="All 4 branches missed.">			if (var != null &amp;&amp; value != null)</span>
+<span class="nc" id="L586">				config.add(&quot;!pragma &quot; + var + &quot; &quot; + value);</span>
+
+		}
+<span class="nc" id="L589">	}</span>
+
+	private void manageSkinParam(String s) {
+<span class="nc" id="L592">		final Pattern2 p = MyPattern.cmpile(&quot;^(\\w+)(?:=(.*))?$&quot;);</span>
+<span class="nc" id="L593">		final Matcher2 m = p.matcher(s);</span>
+<span class="nc bnc" id="L594" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L595">			final String var = m.group(1);</span>
+<span class="nc" id="L596">			final String value = m.group(2);</span>
+<span class="nc bnc" id="L597" title="All 4 branches missed.">			if (var != null &amp;&amp; value != null)</span>
+<span class="nc" id="L598">				config.add(&quot;skinparamlocked &quot; + var + &quot; &quot; + value);</span>
+
+		}
+<span class="nc" id="L601">	}</span>
+
+	public final File getOutputDir() {
+<span class="nc" id="L604">		return outputDir;</span>
+	}
+
+	public final static String getPattern() {
+<span class="nc" id="L608">		return &quot;(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu|puml|hpp|hh)$&quot;;</span>
+	}
+
+	public void setOutputDir(File f) {
+<span class="nc" id="L612">		outputDir = f;</span>
+<span class="nc" id="L613">	}</span>
+
+	public final List&lt;String&gt; getExcludes() {
+<span class="nc" id="L616">		return Collections.unmodifiableList(excludes);</span>
+	}
+
+	// ::comment when __CORE__
+	public Defines getDefaultDefines(SFile f) {
+<span class="nc" id="L621">		final Defines result = Defines.createWithFileName(f);</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : defines.entrySet()) {</span>
+<span class="nc" id="L623">			String value = ent.getValue();</span>
+<span class="nc bnc" id="L624" title="All 2 branches missed.">			if (value == null)</span>
+<span class="nc" id="L625">				value = &quot;&quot;;</span>
+
+<span class="nc" id="L627">			result.define(ent.getKey(), Arrays.asList(value), false, null);</span>
+<span class="nc" id="L628">		}</span>
+<span class="nc" id="L629">		return result;</span>
+	}
+
+	public Defines getDefaultDefines(java.io.File f) {
+<span class="nc" id="L633">		final Defines result = Defines.createWithFileName(f);</span>
+<span class="nc bnc" id="L634" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : defines.entrySet()) {</span>
+<span class="nc" id="L635">			String value = ent.getValue();</span>
+<span class="nc bnc" id="L636" title="All 2 branches missed.">			if (value == null) {</span>
+<span class="nc" id="L637">				value = &quot;&quot;;</span>
+			}
+<span class="nc" id="L639">			result.define(ent.getKey(), Arrays.asList(value), false, null);</span>
+<span class="nc" id="L640">		}</span>
+<span class="nc" id="L641">		return result;</span>
+	}
+
+	public Defines getDefaultDefines() {
+<span class="fc" id="L645">		final Defines result = Defines.createEmpty();</span>
+<span class="fc" id="L646">		result.overrideFilename(filename);</span>
+<span class="fc" id="L647">		result.overrideDirPath(fileDir);</span>
+<span class="pc bpc" id="L648" title="1 of 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : defines.entrySet())</span>
+<span class="nc" id="L649">			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false, null);</span>
+
+<span class="fc" id="L651">		return result;</span>
+	}
+	// ::done
+
+	public void define(String name, String value) {
+<span class="nc" id="L656">		defines.put(name, value);</span>
+<span class="nc" id="L657">	}</span>
+
+	public List&lt;String&gt; getConfig() {
+<span class="fc" id="L660">		return Collections.unmodifiableList(config);</span>
+	}
+
+	public final List&lt;String&gt; getResult() {
+<span class="nc" id="L664">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public final String getCharset() {
+<span class="fc" id="L668">		return charset;</span>
+	}
+
+	public void setCharset(String s) {
+<span class="nc" id="L672">		this.charset = s;</span>
+
+<span class="nc" id="L674">	}</span>
+
+	// ::comment when __CORE__
+	public final boolean isComputeurl() {
+<span class="fc" id="L678">		return computeurl;</span>
+	}
+
+	public final boolean isDecodeurl() {
+<span class="nc" id="L682">		return decodeurl;</span>
+	}
+
+	public final boolean isPipe() {
+<span class="fc" id="L686">		return pipe;</span>
+	}
+
+	public final boolean isPipeMap() {
+<span class="fc" id="L690">		return pipeMap;</span>
+	}
+
+	public final boolean isSyntax() {
+<span class="fc" id="L694">		return syntax;</span>
+	}
+
+	public FileFormatOption getFileFormatOption() {
+<span class="pc bpc" id="L698" title="1 of 2 branches missed.">		if (debugsvek)</span>
+<span class="nc" id="L699">			fileFormatOption.setDebugSvek(true);</span>
+
+<span class="pc bpc" id="L701" title="1 of 2 branches missed.">		if (hideMetadata)</span>
+<span class="nc" id="L702">			fileFormatOption.hideMetadata();</span>
+
+<span class="fc" id="L704">		return fileFormatOption;</span>
+	}
+	// ::done
+
+	public final boolean isDuration() {
+<span class="nc" id="L709">		return duration;</span>
+	}
+
+	public final int getNbThreads() {
+<span class="nc" id="L713">		return nbThreads;</span>
+	}
+
+	public final void setNbThreads(int nb) {
+<span class="nc" id="L717">		this.nbThreads = nb;</span>
+<span class="nc" id="L718">	}</span>
+
+	public static int defaultNbThreads() {
+<span class="nc" id="L721">		return Runtime.getRuntime().availableProcessors();</span>
+	}
+
+	// ::comment when __CORE__
+	public final boolean isCheckOnly() {
+<span class="nc" id="L726">		return checkOnly;</span>
+	}
+
+	public final void setCheckOnly(boolean checkOnly) {
+<span class="nc" id="L730">		this.checkOnly = checkOnly;</span>
+<span class="nc" id="L731">	}</span>
+	// ::done
+
+	public final boolean isFailfastOrFailfast2() {
+<span class="nc bnc" id="L735" title="All 4 branches missed.">		return failfast || failfast2;</span>
+	}
+
+	public final boolean isFailfast2() {
+<span class="nc" id="L739">		return failfast2;</span>
+	}
+
+	public final void setFailfast(boolean failfast) {
+<span class="nc" id="L743">		this.failfast = failfast;</span>
+<span class="nc" id="L744">	}</span>
+
+	public final void setFailfast2(boolean failfast2) {
+<span class="nc" id="L747">		this.failfast2 = failfast2;</span>
+<span class="nc" id="L748">	}</span>
+
+	public final void setNoerror(boolean noerror) {
+<span class="nc" id="L751">		this.noerror = noerror;</span>
+<span class="nc" id="L752">	}</span>
+
+	public final boolean isNoerror() {
+<span class="nc" id="L755">		return noerror;</span>
+	}
+
+	public final File getOutputFile() {
+<span class="nc" id="L759">		return outputFile;</span>
+	}
+
+	public final void setDebugSvek(boolean debugsvek) {
+<span class="nc" id="L763">		this.debugsvek = debugsvek;</span>
+<span class="nc" id="L764">	}</span>
+
+	boolean isDebugSvek() {
+<span class="nc" id="L767">		return debugsvek;</span>
+	}
+
+	// ::comment when __CORE__
+	public final boolean isSplash() {
+<span class="nc" id="L772">		return splash;</span>
+	}
+
+	public final void setSplash(boolean splash) {
+<span class="nc" id="L776">		this.splash = splash;</span>
+<span class="nc" id="L777">	}</span>
+
+	public final boolean isTextProgressBar() {
+<span class="nc" id="L780">		return textProgressBar;</span>
+	}
+
+	public String getPipeDelimitor() {
+<span class="fc" id="L784">		return pipeDelimitor;</span>
+	}
+
+	public final boolean isPipeNoStdErr() {
+<span class="fc" id="L788">		return pipeNoStdErr;</span>
+	}
+
+	public final boolean isCheckMetadata() {
+<span class="nc" id="L792">		return checkMetadata;</span>
+	}
+
+	public final void setFilename(String filename) {
+<span class="nc" id="L796">		this.filename = filename;</span>
+<span class="nc" id="L797">	}</span>
+
+	// ::done
+
+	public final int getImageIndex() {
+<span class="fc" id="L802">		return imageIndex;</span>
+	}
+
+	public final OptionPreprocOutputMode getPreprocessorOutputMode() {
+<span class="nc" id="L806">		return preprocessorOutput;</span>
+	}
+
+	public String getFileDir() {
+<span class="fc" id="L810">		return fileDir;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

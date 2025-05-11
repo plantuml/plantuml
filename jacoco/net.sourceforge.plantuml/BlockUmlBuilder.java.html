@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlockUmlBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">BlockUmlBuilder.java</span></div><h1>BlockUmlBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ * 
+ */
+package net.sourceforge.plantuml;
+
+import static java.util.Objects.requireNonNull;
+import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.plantuml.api.cheerpj.WasmLog;
+
+import net.sourceforge.plantuml.file.AParentFolderRegular;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.preproc.ReadLineNumbered;
+import net.sourceforge.plantuml.preproc.ReadLineReader;
+import net.sourceforge.plantuml.preproc.UncommentReadLine;
+import net.sourceforge.plantuml.preproc2.Preprocessor;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.StartUtils;
+
+public final class BlockUmlBuilder implements DefinitionsContainer {
+	// ::remove file when __HAXE__
+
+<span class="fc" id="L67">	private final List&lt;BlockUml&gt; blocks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">	private Set&lt;FileWithSuffix&gt; usedFiles = new HashSet&lt;&gt;();</span>
+	private final ImportedFiles importedFiles;
+	private final Charset charset;
+
+	/**
+	 * @deprecated being kept for backwards compatibility, perhaps other projects
+	 *             are using this?
+	 */
+	@Deprecated
+	public BlockUmlBuilder(List&lt;String&gt; config, String charset, Defines defines, Reader readerInit, SFile newCurrentDir,
+			String desc) throws IOException {
+<span class="nc" id="L79">		this(config, charsetOrDefault(charset), defines, readerInit, newCurrentDir, desc);</span>
+<span class="nc" id="L80">	}</span>
+
+	/**
+	 * @deprecated being kept for backwards compatibility, perhaps other projects
+	 *             are using this?
+	 */
+	@Deprecated
+	public BlockUmlBuilder(List&lt;String&gt; config, String charset, Defines defines, Reader reader) throws IOException {
+<span class="nc" id="L88">		this(config, charset, defines, reader, null, null);</span>
+<span class="nc" id="L89">	}</span>
+
+	public BlockUmlBuilder(List&lt;String&gt; config, Charset charset, Defines defines, Reader readerInit,
+<span class="fc" id="L92">			SFile newCurrentDir, String desc) throws IOException {</span>
+
+<span class="fc" id="L94">		this.charset = requireNonNull(charset);</span>
+<span class="fc" id="L95">		final UncommentReadLine reader = new UncommentReadLine(ReadLineReader.create(readerInit, desc));</span>
+<span class="fc" id="L96">		this.importedFiles = ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir));</span>
+
+<span class="fc" id="L98">		try (ReadLineNumbered includer = new Preprocessor(config, reader)) {</span>
+<span class="fc" id="L99">			StringLocated s = null;</span>
+<span class="fc" id="L100">			List&lt;StringLocated&gt; current = null;</span>
+<span class="fc" id="L101">			boolean paused = false;</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			while ((s = includer.readLine()) != null) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">				if (StartUtils.isArobaseStartDiagram(s.getString())) {</span>
+<span class="fc" id="L105">					current = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L106">					paused = false;</span>
+				}
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">				if (StartUtils.isArobasePauseDiagram(s.getString())) {</span>
+<span class="nc" id="L109">					paused = true;</span>
+<span class="nc" id="L110">					reader.setPaused(true);</span>
+				}
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">				if (StartUtils.isExit(s.getString())) {</span>
+<span class="nc" id="L113">					paused = true;</span>
+<span class="nc" id="L114">					reader.setPaused(true);</span>
+				}
+<span class="pc bpc" id="L116" title="1 of 4 branches missed.">				if (current != null &amp;&amp; paused == false) {</span>
+<span class="fc" id="L117">					current.add(s);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">				} else if (paused) {</span>
+<span class="nc" id="L119">					final StringLocated append = StartUtils.getPossibleAppend(s);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">					if (append != null)</span>
+<span class="nc" id="L121">						current.add(append);</span>
+
+				}
+
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">				if (StartUtils.isArobaseUnpauseDiagram(s.getString())) {</span>
+<span class="nc" id="L126">					paused = false;</span>
+<span class="nc" id="L127">					reader.setPaused(false);</span>
+				}
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">				if (StartUtils.isArobaseEndDiagram(s.getString()) &amp;&amp; current != null) {</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">					if (paused)</span>
+<span class="nc" id="L131">						current.add(s);</span>
+
+<span class="fc" id="L133">					WasmLog.log(&quot;...text loaded...&quot;);</span>
+<span class="fc" id="L134">					final BlockUml uml = new BlockUml(current, defines.cloneMe(), null, this, charset);</span>
+<span class="fc" id="L135">					usedFiles.addAll(uml.getIncluded());</span>
+<span class="fc" id="L136">					blocks.add(uml);</span>
+<span class="fc" id="L137">					current = null;</span>
+<span class="fc" id="L138">					reader.setPaused(false);</span>
+<span class="fc" id="L139">				}</span>
+			}
+		} finally {
+<span class="fc" id="L142">			readerInit.close();</span>
+		}
+<span class="fc" id="L144">	}</span>
+
+	public List&lt;BlockUml&gt; getBlockUmls() {
+<span class="fc" id="L147">		return Collections.unmodifiableList(blocks);</span>
+	}
+
+	public final Set&lt;FileWithSuffix&gt; getIncludedFiles() {
+<span class="nc" id="L151">		return Collections.unmodifiableSet(usedFiles);</span>
+	}
+
+	public List&lt;String&gt; getDefinition(String name) {
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (BlockUml block : blocks)</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (block.isStartDef(name))</span>
+<span class="nc" id="L157">				return block.getDefinition(false);</span>
+
+<span class="nc" id="L159">		return Collections.emptyList();</span>
+	}
+
+	public final ImportedFiles getImportedFiles() {
+<span class="fc" id="L163">		return importedFiles;</span>
+	}
+
+	/**
+	 * @deprecated being kept for backwards compatibility, perhaps other projects
+	 *             are using this?
+	 */
+	@Deprecated
+	public final String getCharset() {
+<span class="nc" id="L172">		return charset.name();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

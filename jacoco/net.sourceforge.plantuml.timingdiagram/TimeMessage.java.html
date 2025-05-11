@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram</a> &gt; <span class="el_source">TimeMessage.java</span></div><h1>TimeMessage.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram;
+
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.decoration.WithLinkType;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class TimeMessage extends WithLinkType {
+    // ::remove folder when __HAXE__
+
+	private final TickInPlayer tickInPlayer1;
+	private final TickInPlayer tickInPlayer2;
+	private final Display label;
+	private final ISkinParam skinParam;
+	private final StyleBuilder styleBuilder;
+
+<span class="fc" id="L60">	public TimeMessage(TickInPlayer tickInPlayer1, TickInPlayer tickInPlayer2, String label, ISkinParam skinParam) {</span>
+<span class="fc" id="L61">		this.skinParam = skinParam;</span>
+<span class="fc" id="L62">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L63">		this.tickInPlayer1 = tickInPlayer1;</span>
+<span class="fc" id="L64">		this.tickInPlayer2 = tickInPlayer2;</span>
+<span class="fc" id="L65">		this.label = Display.getWithNewlines(skinParam.getPragma(), label);</span>
+<span class="fc" id="L66">		this.setSpecificColor(getColor());</span>
+<span class="fc" id="L67">		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="fc" id="L68">	}</span>
+
+	@Override
+	public UStroke getUStroke() {
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (styleBuilder == null) {</span>
+<span class="nc" id="L73">			return UStroke.withThickness(1.5);</span>
+		}
+<span class="fc" id="L75">		return getStyle().getStroke();</span>
+	}
+
+	private HColor getColor() {
+//		return HColorUtils.BLUE;
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (styleBuilder == null) {</span>
+<span class="nc" id="L81">			return HColors.MY_RED;</span>
+		}
+<span class="fc" id="L83">		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+	}
+
+	private Style getStyle() {
+<span class="fc" id="L87">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
+	}
+
+	private StyleSignatureBasic getStyleSignature() {
+<span class="fc" id="L91">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.arrow);</span>
+	}
+
+	public final Player getPlayer1() {
+<span class="fc" id="L95">		return tickInPlayer1.getPlayer();</span>
+	}
+
+	public final Player getPlayer2() {
+<span class="fc" id="L99">		return tickInPlayer2.getPlayer();</span>
+	}
+
+	public final TimeTick getTick1() {
+<span class="fc" id="L103">		return tickInPlayer1.getTick();</span>
+	}
+
+	public final TimeTick getTick2() {
+<span class="fc" id="L107">		return tickInPlayer2.getTick();</span>
+	}
+
+	public final Display getLabel() {
+<span class="fc" id="L111">		return label;</span>
+	}
+
+	@Override
+	public void goNorank() {
+		// Nothing to do
+<span class="nc" id="L117">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

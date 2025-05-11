@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Grouping.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">Grouping.java</span></div><h1>Grouping.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.WithStyle;
+
+public abstract class Grouping extends AbstractEvent implements Event, WithStyle {
+
+	private final String title;
+	private final GroupingType type;
+	private final String comment;
+	private final HColor backColorElement;
+
+	// private final StyleBuilder styleBuilder;
+
+	final private Style style;
+	final private Style styleHeader;
+
+	public StyleSignatureBasic getStyleSignature() {
+<span class="fc" id="L59">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);</span>
+	}
+
+	private StyleSignatureBasic getHeaderStyleDefinition() {
+<span class="fc" id="L63">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);</span>
+	}
+
+	public Style[] getUsedStyles() {
+<span class="fc" id="L67">		return new Style[] {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">				style == null ? null : style.eventuallyOverride(PName.BackGroundColor, getBackColorGeneral()),</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">				styleHeader == null ? null : styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };</span>
+	}
+
+	public Grouping(String title, String comment, GroupingType type, HColor backColorElement,
+<span class="fc" id="L73">			StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L74">		this.title = title;</span>
+		// this.styleBuilder = styleBuilder;
+<span class="fc" id="L76">		this.comment = comment;</span>
+<span class="fc" id="L77">		this.type = type;</span>
+<span class="fc" id="L78">		this.backColorElement = backColorElement;</span>
+<span class="fc" id="L79">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L80">		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L81">	}</span>
+
+	@Override
+	public final String toString() {
+<span class="nc" id="L85">		return super.toString() + &quot; &quot; + type + &quot; &quot; + title;</span>
+	}
+
+	final public String getTitle() {
+<span class="fc" id="L89">		return title;</span>
+	}
+
+	final public GroupingType getType() {
+<span class="fc" id="L93">		return type;</span>
+	}
+
+	public abstract int getLevel();
+
+	public abstract HColor getBackColorGeneral();
+
+	final public String getComment() {
+<span class="fc" id="L101">		return comment;</span>
+	}
+
+	public final HColor getBackColorElement() {
+<span class="fc" id="L105">		return backColorElement;</span>
+	}
+
+	public abstract boolean isParallel();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

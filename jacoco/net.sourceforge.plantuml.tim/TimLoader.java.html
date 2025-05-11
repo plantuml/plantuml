@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">TimLoader.java</span></div><h1>TimLoader.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.DefinitionsContainer;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.text.StringLocated;
+
+public class TimLoader {
+
+	private final TContext context;
+<span class="fc" id="L52">	private final TMemory global = new TMemoryGlobal();</span>
+	private boolean preprocessorError;
+	private List&lt;StringLocated&gt; resultList;
+	private PreprocessingArtifact preprocessingArtifact;
+
+	public TimLoader(ImportedFiles importedFiles, Defines defines, Charset charset,
+<span class="fc" id="L58">			DefinitionsContainer definitionsContainer, StringLocated location) {</span>
+<span class="fc" id="L59">		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);</span>
+		try {
+<span class="fc" id="L61">			defines.copyTo(global, location);</span>
+<span class="nc" id="L62">		} catch (EaterException e) {</span>
+<span class="nc" id="L63">			Logme.error(e);</span>
+<span class="fc" id="L64">		}</span>
+<span class="fc" id="L65">	}</span>
+
+	public Set&lt;FileWithSuffix&gt; load(List&lt;StringLocated&gt; list) {
+//		CodeIteratorImpl.indentNow(list);
+		try {
+<span class="fc" id="L70">			context.executeLines(global, list, null, false);</span>
+<span class="fc" id="L71">		} catch (EaterException e) {</span>
+<span class="fc" id="L72">			context.getResultList().add(e.getLocation().withErrorPreprocessor(e.getMessage()));</span>
+<span class="fc" id="L73">			changeLastLine(context.getDebug(), e.getMessage());</span>
+<span class="fc" id="L74">			this.preprocessorError = true;</span>
+<span class="fc" id="L75">		}</span>
+<span class="fc" id="L76">		this.resultList = context.getResultList();</span>
+<span class="fc" id="L77">		this.preprocessingArtifact = context.getPreprocessingArtifact();</span>
+<span class="fc" id="L78">		return context.getFilesUsedCurrent();</span>
+	}
+
+	private void changeLastLine(List&lt;StringLocated&gt; list, String message) {
+<span class="fc" id="L82">		final int num = list.size() - 1;</span>
+<span class="fc" id="L83">		final StringLocated last = list.get(num);</span>
+<span class="fc" id="L84">		list.set(num, last.withErrorPreprocessor(message));</span>
+<span class="fc" id="L85">	}</span>
+
+	public final List&lt;StringLocated&gt; getResultList() {
+<span class="fc" id="L88">		return resultList;</span>
+	}
+
+	public final List&lt;StringLocated&gt; getDebug() {
+<span class="fc" id="L92">		return context.getDebug();</span>
+	}
+
+	public final boolean isPreprocessorError() {
+<span class="fc" id="L96">		return preprocessorError;</span>
+	}
+
+	public PreprocessingArtifact getPreprocessingArtifact() {
+<span class="fc" id="L100">		return preprocessingArtifact;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

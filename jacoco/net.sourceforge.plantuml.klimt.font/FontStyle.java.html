@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FontStyle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.font</a> &gt; <span class="el_source">FontStyle.java</span></div><h1>FontStyle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.font;
+
+import java.awt.Font;
+import java.util.EnumSet;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+
+<span class="fc" id="L46">public enum FontStyle {</span>
+
+<span class="fc" id="L48">	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;</span>
+
+	public UFont mutateFont(UFont font) {
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (this == PLAIN)</span>
+<span class="nc" id="L52">			return font.withStyle(Font.PLAIN);</span>
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L55">			return font.withStyle(font.getStyle() | Font.ITALIC);</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L58">			return font.withStyle(font.getStyle() | Font.BOLD);</span>
+
+<span class="fc" id="L60">		return font;</span>
+	}
+
+	public String getActivationPattern() {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (this == PLAIN)</span>
+<span class="fc" id="L65">			return &quot;\\&lt;[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L68">			return &quot;\\&lt;[iI]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L71">			return &quot;\\&lt;[bB]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L74">			return &quot;\\&lt;[uU](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L77">			return &quot;\\&lt;[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+			// return &quot;\\&lt;[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;
+<span class="fc" id="L81">			return &quot;\\&lt;[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\&gt;&quot;;</span>
+
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L84">			return &quot;\\&lt;(?:s|S|strike|STRIKE|del|DEL)(?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+
+<span class="nc" id="L86">		return null;</span>
+	}
+
+	public boolean canHaveExtendedColor() {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L91">			return true;</span>
+
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L94">			return true;</span>
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+<span class="fc" id="L97">			return true;</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (this == STRIKE)</span>
+<span class="fc" id="L100">			return true;</span>
+
+<span class="fc" id="L102">		return false;</span>
+	}
+
+	public String getCreoleSyntax() {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L107">			return &quot;//&quot;;</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L110">			return &quot;\\*\\*&quot;;</span>
+
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L113">			return &quot;__&quot;;</span>
+
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L116">			return &quot;~~&quot;;</span>
+
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L119">			return &quot;--&quot;;</span>
+
+<span class="nc" id="L121">		throw new UnsupportedOperationException();</span>
+	}
+
+	// ::comment when __HAXE__
+	public HColor getExtendedColor(String s) {
+<span class="fc" id="L126">		final Matcher2 m = MyPattern.cmpile(getActivationPattern()).matcher(s);</span>
+<span class="pc bpc" id="L127" title="2 of 4 branches missed.">		if (m.find() == false || m.groupCount() != 1)</span>
+<span class="nc" id="L128">			return null;</span>
+
+<span class="fc" id="L130">		final String color = m.group(1);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (color == null)</span>
+<span class="fc" id="L132">			return null;</span>
+
+<span class="fc" id="L134">		return HColorSet.instance().getColorOrWhite(color);</span>
+	}
+	// ::done
+
+	public String getDeactivationPattern() {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (this == PLAIN)</span>
+<span class="fc" id="L140">			return &quot;\\&lt;/[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L143">			return &quot;\\&lt;/[iI]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L146">			return &quot;\\&lt;/[bB]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L149">			return &quot;\\&lt;/[uU]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L152">			return &quot;\\&lt;/[wW]\\&gt;&quot;;</span>
+
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+<span class="fc" id="L155">			return &quot;\\&lt;/[bB][aA][cC][kK]\\&gt;&quot;;</span>
+
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L158">			return &quot;\\&lt;/(?:s|S|strike|STRIKE|del|DEL)\\&gt;&quot;;</span>
+
+<span class="nc" id="L160">		return null;</span>
+	}
+
+	public static FontStyle getStyle(String line) {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (FontStyle style : EnumSet.allOf(FontStyle.class))</span>
+<span class="nc bnc" id="L165" title="All 4 branches missed.">			if (line.matches(style.getActivationPattern()) || line.matches(style.getDeactivationPattern()))</span>
+<span class="nc" id="L166">				return style;</span>
+
+<span class="nc" id="L168">		throw new IllegalArgumentException(line);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

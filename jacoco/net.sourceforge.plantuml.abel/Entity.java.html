@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Entity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.abel</a> &gt; <span class="el_source">Entity.java</span></div><h1>Entity.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution:  Hisashi Miyashita
+ * Contribution:  Miguel Esteves
+ *
+ */
+package net.sourceforge.plantuml.abel;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.Bodier;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.dot.Neighborhood;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.stereo.Stereostyles;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.Kal;
+import net.sourceforge.plantuml.svek.Margins;
+import net.sourceforge.plantuml.svek.PackageStyle;
+import net.sourceforge.plantuml.svek.SingleStrategy;
+import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
+import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.Position;
+
+<span class="fc" id="L87">final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, Bag {</span>
+
+	private final CucaDiagram diagram;
+
+	private final Quark&lt;Entity&gt; quark;
+
+	private Url url;
+
+	private final Bodier bodier;
+	private final String uid;
+<span class="fc" id="L97">	private Display display = Display.empty();</span>
+<span class="fc" id="L98">	private DisplayPositioned legend = null;</span>
+
+	private LeafType leafType;
+	private Stereotype stereotype;
+<span class="fc" id="L102">	private Stereostyles stereostyles = Stereostyles.NONE;</span>
+	private String generic;
+
+	private GroupType groupType;
+
+	// Other
+<span class="fc" id="L108">	private Margins margins = Margins.NONE;</span>
+<span class="fc" id="L109">	private final Collection&lt;String&gt; portShortNames = new HashSet&lt;&gt;();</span>
+	private int xposition;
+	private IEntityImage svekImage;
+
+	private USymbol symbol;
+	private final int rawLayout;
+	private char concurrentSeparator;
+	// private LineLocation codeLine;
+	private final LineLocation location;
+
+<span class="fc" id="L119">	private Set&lt;Stereotag&gt; tags = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L120">	private final List&lt;CucaNote&gt; notesTop = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L121">	private final List&lt;CucaNote&gt; notesBottom = new ArrayList&lt;&gt;();</span>
+
+	private Together together;
+
+	private boolean packed;
+	private boolean isStatic;
+<span class="fc" id="L127">	private final Map&lt;Direction, List&lt;Kal&gt;&gt; kals = new EnumMap&lt;&gt;(Direction.class);</span>
+	private VisibilityModifier visibility;
+	private Neighborhood neighborhood;
+<span class="fc" id="L130">	private Colors colors = Colors.empty();</span>
+<span class="fc" id="L131">	private final Map&lt;String, Display&gt; tips = new LinkedHashMap&lt;String, Display&gt;();</span>
+
+	//
+	public void addNote(Display note, Position position, Colors colors) {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (position == Position.TOP)</span>
+<span class="nc" id="L136">			notesTop.add(CucaNote.build(note, position, colors));</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		else if (position == Position.BOTTOM)</span>
+<span class="nc" id="L138">			notesBottom.add(CucaNote.build(note, position, colors));</span>
+<span class="nc" id="L139">	}</span>
+
+	//
+	public List&lt;CucaNote&gt; getNotes(Position position) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (position == Position.TOP)</span>
+<span class="nc" id="L144">			return Collections.unmodifiableList(notesTop);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (position == Position.BOTTOM)</span>
+<span class="nc" id="L146">			return Collections.unmodifiableList(notesBottom);</span>
+<span class="nc" id="L147">		throw new IllegalArgumentException();</span>
+	}
+
+	public void addStereotag(Stereotag tag) {
+<span class="nc" id="L151">		this.tags.add(tag);</span>
+<span class="nc" id="L152">	}</span>
+
+	public Set&lt;Stereotag&gt; stereotags() {
+<span class="nc" id="L155">		return Collections.unmodifiableSet(tags);</span>
+	}
+
+	// Back to Entity
+<span class="fc" id="L159">	private Entity(LineLocation location, Quark&lt;Entity&gt; quark, CucaDiagram diagram, Bodier bodier, int rawLayout) {</span>
+<span class="fc" id="L160">		this.location = location;</span>
+<span class="fc" id="L161">		this.quark = Objects.requireNonNull(quark);</span>
+<span class="fc" id="L162">		this.diagram = diagram;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (quark.isRoot())</span>
+<span class="fc" id="L164">			this.uid = &quot;entroot&quot;;</span>
+		else
+<span class="fc" id="L166">			this.uid = StringUtils.getUid(&quot;ent&quot;, diagram.getUniqueSequenceValue());</span>
+<span class="fc" id="L167">		this.bodier = bodier;</span>
+<span class="fc" id="L168">		this.rawLayout = rawLayout;</span>
+<span class="fc" id="L169">		this.quark.setData(this);</span>
+<span class="fc" id="L170">	}</span>
+
+	public Entity(LineLocation location, Quark&lt;Entity&gt; quark, CucaDiagram diagram, Bodier bodier, LeafType leafType,
+			int rawLayout) {
+<span class="fc" id="L174">		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);</span>
+<span class="fc" id="L175">		this.leafType = leafType;</span>
+<span class="fc" id="L176">	}</span>
+
+	public Entity(LineLocation location, Quark&lt;Entity&gt; quark, CucaDiagram diagram, Bodier bodier, GroupType groupType,
+			int rawLayout) {
+<span class="fc" id="L180">		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);</span>
+<span class="fc" id="L181">		this.groupType = groupType;</span>
+<span class="fc" id="L182">	}</span>
+
+	public LeafType getLeafType() {
+<span class="fc" id="L185">		return leafType;</span>
+	}
+
+	public void muteToType(LeafType newType) {
+<span class="pc bpc" id="L189" title="3 of 4 branches missed.">		if (leafType == LeafType.CLASS &amp;&amp; newType == LeafType.OBJECT)</span>
+<span class="nc" id="L190">			bodier.muteClassToObject();</span>
+<span class="fc" id="L191">		this.groupType = null;</span>
+<span class="fc" id="L192">		this.leafType = newType;</span>
+<span class="fc" id="L193">	}</span>
+
+	public void muteToGroupType(GroupType newType) {
+<span class="fc" id="L196">		this.groupType = newType;</span>
+<span class="fc" id="L197">		this.leafType = null;</span>
+<span class="fc" id="L198">	}</span>
+
+	public boolean muteToType(LeafType newType, USymbol newSymbol) {
+		// checkNotGroup();
+<span class="fc" id="L202">		Objects.requireNonNull(newType);</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (leafType != LeafType.STILL_UNKNOWN) {</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">			if (newType == this.leafType)</span>
+<span class="fc" id="L205">				return true;</span>
+
+<span class="nc bnc" id="L207" title="All 10 branches missed.">			if (leafType != LeafType.ANNOTATION &amp;&amp; leafType != LeafType.ABSTRACT_CLASS &amp;&amp; leafType != LeafType.CLASS</span>
+					&amp;&amp; leafType != LeafType.ENUM &amp;&amp; leafType != LeafType.INTERFACE) {
+<span class="nc" id="L209">				return false;</span>
+				// throw new IllegalArgumentException(&quot;type=&quot; + leafType);
+			}
+<span class="nc bnc" id="L212" title="All 12 branches missed.">			if (newType != LeafType.ANNOTATION &amp;&amp; newType != LeafType.ABSTRACT_CLASS &amp;&amp; newType != LeafType.CLASS</span>
+					&amp;&amp; newType != LeafType.ENUM &amp;&amp; newType != LeafType.INTERFACE &amp;&amp; newType != LeafType.OBJECT) {
+<span class="nc" id="L214">				return false;</span>
+				// throw new IllegalArgumentException(&quot;newtype=&quot; + newType);
+			}
+		}
+<span class="nc bnc" id="L218" title="All 4 branches missed.">		if (leafType == LeafType.CLASS &amp;&amp; newType == LeafType.OBJECT)</span>
+<span class="nc" id="L219">			bodier.muteClassToObject();</span>
+
+<span class="nc" id="L221">		this.leafType = newType;</span>
+<span class="nc" id="L222">		this.symbol = newSymbol;</span>
+<span class="nc" id="L223">		return true;</span>
+	}
+
+	public Quark&lt;Entity&gt; getQuark() {
+<span class="fc" id="L227">		return quark;</span>
+	}
+
+	public Display getDisplay() {
+<span class="fc" id="L231">		return display;</span>
+	}
+
+	public void setDisplay(Display display) {
+<span class="fc" id="L235">		this.display = display;</span>
+<span class="fc" id="L236">	}</span>
+
+	public String getUid() {
+<span class="fc" id="L239">		return uid;</span>
+	}
+
+	public Stereotype getStereotype() {
+<span class="fc" id="L243">		return stereotype;</span>
+	}
+
+	public final void setStereotype(Stereotype stereotype) {
+<span class="fc" id="L247">		this.stereotype = stereotype;</span>
+<span class="fc" id="L248">	}</span>
+
+	public String toString() {
+<span class="fc" id="L251">		return quark.toString() + &quot; &quot; + display + &quot;(&quot; + leafType + &quot;)[&quot; + groupType + &quot;] &quot; + getUid();</span>
+	}
+
+	public final Url getUrl99() {
+<span class="fc" id="L255">		return url;</span>
+	}
+
+	public boolean hasUrl() {
+<span class="nc bnc" id="L259" title="All 4 branches missed.">		if (Display.isNull(display) == false &amp;&amp; display.hasUrl())</span>
+<span class="nc" id="L260">			return true;</span>
+
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (bodier == null)</span>
+<span class="nc" id="L263">			return false;</span>
+
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (bodier.hasUrl())</span>
+<span class="nc" id="L266">			return true;</span>
+
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		return url != null;</span>
+	}
+
+	public final void addUrl(Url url) {
+<span class="nc" id="L272">		this.url = url;</span>
+<span class="nc" id="L273">	}</span>
+
+	public final Margins getMargins() {
+<span class="nc" id="L276">		checkNotGroup();</span>
+<span class="nc" id="L277">		return margins;</span>
+	}
+
+	public final void ensureMargins(Margins newMargins) {
+		// checkNotGroup();
+<span class="nc" id="L282">		this.margins = this.margins.merge(newMargins);</span>
+<span class="nc" id="L283">	}</span>
+
+	public int getXposition() {
+<span class="nc" id="L286">		checkNotGroup();</span>
+<span class="nc" id="L287">		return xposition;</span>
+	}
+
+	public void setXposition(int pos) {
+<span class="nc" id="L291">		checkNotGroup();</span>
+<span class="nc" id="L292">		xposition = pos;</span>
+<span class="nc" id="L293">	}</span>
+
+	public final IEntityImage getSvekImage() {
+<span class="fc" id="L296">		checkNotGroup();</span>
+<span class="fc" id="L297">		return svekImage;</span>
+	}
+
+	public final void setSvekImage(IEntityImage svekImage) {
+<span class="fc" id="L301">		checkNotGroup();</span>
+<span class="fc" id="L302">		this.svekImage = svekImage;</span>
+<span class="fc" id="L303">	}</span>
+
+	public final void setGeneric(String generic) {
+<span class="fc" id="L306">		checkNotGroup();</span>
+<span class="fc" id="L307">		this.generic = generic;</span>
+<span class="fc" id="L308">	}</span>
+
+	public final String getGeneric() {
+<span class="fc" id="L311">		checkNotGroup();</span>
+<span class="fc" id="L312">		return generic;</span>
+	}
+
+	public Bodier getBodier() {
+<span class="fc" id="L316">		return bodier;</span>
+	}
+
+	public EntityPosition getEntityPosition() {
+//		if (leafType == LeafType.PORT)
+//			return EntityPosition.PORT;
+
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (leafType == LeafType.PORTIN)</span>
+<span class="fc" id="L324">			return EntityPosition.PORTIN;</span>
+
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		if (leafType == LeafType.PORTOUT)</span>
+<span class="fc" id="L327">			return EntityPosition.PORTOUT;</span>
+
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (leafType != LeafType.STATE)</span>
+<span class="fc" id="L330">			return EntityPosition.NORMAL;</span>
+
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		if (quark.isRoot())</span>
+<span class="nc" id="L333">			return EntityPosition.NORMAL;</span>
+
+<span class="fc" id="L335">		final Stereotype stereotype = getStereotype();</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (stereotype == null)</span>
+<span class="fc" id="L337">			return EntityPosition.NORMAL;</span>
+
+<span class="nc" id="L339">		return EntityPosition.fromStereotype(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+
+	}
+
+	// ----------
+
+	private void checkGroup() {
+<span class="pc bpc" id="L346" title="1 of 2 branches missed.">		if (isGroup() == false)</span>
+<span class="nc" id="L347">			throw new UnsupportedOperationException();</span>
+
+<span class="fc" id="L349">	}</span>
+
+	private void checkNotGroup() {
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">		if (isGroup())</span>
+<span class="nc" id="L353">			throw new UnsupportedOperationException();</span>
+
+<span class="fc" id="L355">	}</span>
+
+	public GroupType getGroupType() {
+<span class="fc" id="L358">		checkGroup();</span>
+<span class="fc" id="L359">		return groupType;</span>
+	}
+
+	public PackageStyle getPackageStyle() {
+<span class="fc" id="L363">		checkGroup();</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">		if (stereotype == null)</span>
+<span class="fc" id="L365">			return null;</span>
+
+<span class="fc" id="L367">		return stereotype.getPackageStyle();</span>
+	}
+
+	public boolean isGroup() {
+<span class="pc bpc" id="L371" title="1 of 4 branches missed.">		if (groupType != null &amp;&amp; leafType != null)</span>
+<span class="nc" id="L372">			throw new IllegalStateException();</span>
+
+<span class="pc bpc" id="L374" title="1 of 4 branches missed.">		assert groupType == null || leafType == null;</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (groupType != null)</span>
+<span class="fc" id="L376">			return true;</span>
+
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		if (leafType != null)</span>
+<span class="fc" id="L379">			return false;</span>
+
+<span class="nc" id="L381">		throw new IllegalStateException();</span>
+	}
+
+	// ---- other
+
+	public void overrideImage(IEntityImage img, LeafType leafType) {
+<span class="nc" id="L387">		checkGroup();</span>
+<span class="nc" id="L388">		this.svekImage = img;</span>
+<span class="nc" id="L389">		this.url = null;</span>
+
+<span class="nc bnc" id="L391" title="All 2 branches missed.">		for (final Link link : new ArrayList&lt;&gt;(this.diagram.getLinks()))</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink12(this, link))</span>
+<span class="nc" id="L393">				this.diagram.removeLink(link);</span>
+
+<span class="nc" id="L395">		this.groupType = null;</span>
+<span class="nc" id="L396">		this.leafType = leafType;</span>
+<span class="nc" id="L397">	}</span>
+
+	public USymbol getUSymbol() {
+
+<span class="pc bpc" id="L401" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.USECASE)</span>
+<span class="nc" id="L402">			return USymbols.USECASE;</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.USECASE_BUSINESS)</span>
+<span class="nc" id="L404">			return USymbols.USECASE_BUSINESS;</span>
+		// return USymbols.ACTOR_STICKMAN_BUSINESS;
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.CIRCLE)</span>
+<span class="nc" id="L407">			return USymbols.INTERFACE;</span>
+
+<span class="fc" id="L409">		return symbol;</span>
+	}
+
+	public void setUSymbol(USymbol symbol) {
+<span class="fc" id="L413">		this.symbol = symbol;</span>
+<span class="fc" id="L414">	}</span>
+
+	public SingleStrategy getSingleStrategy() {
+<span class="nc" id="L417">		return SingleStrategy.SQUARE;</span>
+	}
+
+	public boolean isHidden() {
+<span class="fc bfc" id="L421" title="All 2 branches covered.">		if (isRoot())</span>
+<span class="fc" id="L422">			return false;</span>
+
+<span class="fc" id="L424">		final Entity parentContainer = getParentContainer();</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">		if (parentContainer == this)</span>
+<span class="nc" id="L426">			return false;</span>
+
+<span class="pc bpc" id="L428" title="2 of 4 branches missed.">		if (parentContainer != null &amp;&amp; parentContainer.isHidden())</span>
+<span class="nc" id="L429">			return true;</span>
+
+<span class="fc" id="L431">		return this.diagram.isHidden(this);</span>
+	}
+
+	public boolean isRemoved() {
+<span class="fc bfc" id="L435" title="All 2 branches covered.">		if (isRoot())</span>
+<span class="fc" id="L436">			return false;</span>
+
+<span class="fc" id="L438">		final Entity parentContainer = getParentContainer();</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">		if (parentContainer == this)</span>
+<span class="nc" id="L440">			return false;</span>
+
+<span class="pc bpc" id="L442" title="2 of 4 branches missed.">		if (parentContainer != null &amp;&amp; parentContainer.isRemoved())</span>
+<span class="nc" id="L443">			return true;</span>
+
+<span class="fc" id="L445">		return this.diagram.isRemoved(this);</span>
+	}
+
+	public boolean isAloneAndUnlinked() {
+<span class="nc bnc" id="L449" title="All 2 branches missed.">		if (isGroup()) {</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">			for (Quark&lt;Entity&gt; quarkChild : getQuark().getChildren()) {</span>
+<span class="nc" id="L451">				final Entity child = quarkChild.getData();</span>
+<span class="nc bnc" id="L452" title="All 2 branches missed.">				if (child.isAloneAndUnlinked() == false)</span>
+<span class="nc" id="L453">					return false;</span>
+<span class="nc" id="L454">			}</span>
+<span class="nc" id="L455">			return true;</span>
+		}
+
+<span class="nc bnc" id="L458" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">			if (link.contains(this)) {</span>
+<span class="nc" id="L460">				final Entity other = link.getOther(this);</span>
+<span class="nc" id="L461">				final boolean removed = this.diagram.isRemovedIgnoreUnlinked(other);</span>
+<span class="nc bnc" id="L462" title="All 4 branches missed.">				if (removed == false &amp;&amp; link.getType().isInvisible() == false)</span>
+<span class="nc" id="L463">					return false;</span>
+			}
+
+<span class="nc" id="L466">		return true;</span>
+	}
+
+	private FontParam getTitleFontParam() {
+<span class="nc bnc" id="L470" title="All 2 branches missed.">		return getGroupType() == GroupType.STATE ? FontParam.STATE : FontParam.PACKAGE;</span>
+	}
+
+	public FontConfiguration getFontConfigurationForTitle(final ISkinParam skinParam) {
+<span class="nc" id="L474">		final FontParam fontParam = getTitleFontParam();</span>
+<span class="nc" id="L475">		final HColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);</span>
+<span class="nc" id="L476">		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);</span>
+<span class="nc" id="L477">		final FontConfiguration fontConfiguration = FontConfiguration.create(font, fontHtmlColor,</span>
+<span class="nc" id="L478">				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());</span>
+<span class="nc" id="L479">		return fontConfiguration;</span>
+	}
+
+	public final int getRawLayout() {
+<span class="nc" id="L483">		return rawLayout;</span>
+	}
+
+	public char getConcurrentSeparator() {
+<span class="nc" id="L487">		return concurrentSeparator;</span>
+	}
+
+	public void setConcurrentSeparator(char separator) {
+<span class="nc" id="L491">		this.concurrentSeparator = separator;</span>
+<span class="nc" id="L492">	}</span>
+
+	public void setNeighborhood(Neighborhood neighborhood) {
+<span class="nc" id="L495">		this.neighborhood = neighborhood;</span>
+<span class="nc" id="L496">	}</span>
+
+	public Neighborhood getNeighborhood() {
+<span class="fc" id="L499">		return neighborhood;</span>
+	}
+
+	public void putTip(String member, Display display) {
+<span class="nc" id="L503">		tips.put(member, display);</span>
+<span class="nc" id="L504">	}</span>
+
+	public Map&lt;String, Display&gt; getTips() {
+<span class="nc" id="L507">		return Collections.unmodifiableMap(tips);</span>
+	}
+
+	public Colors getColors() {
+<span class="fc" id="L511">		return colors;</span>
+	}
+
+	public void setColors(Colors colors) {
+<span class="fc" id="L515">		this.colors = colors;</span>
+<span class="fc" id="L516">	}</span>
+
+	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
+<span class="pc bpc" id="L519" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L520">			this.colors = colors.add(type, color);</span>
+
+<span class="fc" id="L522">	}</span>
+
+	public Collection&lt;String&gt; getPortShortNames() {
+<span class="fc" id="L525">		checkNotGroup();</span>
+<span class="fc" id="L526">		return Collections.unmodifiableCollection(portShortNames);</span>
+	}
+
+	public void addPortShortName(String portShortName) {
+<span class="nc" id="L530">		portShortNames.add(portShortName);</span>
+<span class="nc" id="L531">	}</span>
+
+	public void setVisibilityModifier(VisibilityModifier visibility) {
+<span class="fc" id="L534">		this.visibility = visibility;</span>
+
+<span class="fc" id="L536">	}</span>
+
+	public VisibilityModifier getVisibilityModifier() {
+<span class="fc" id="L539">		return visibility;</span>
+	}
+
+	public void setLegend(DisplayPositioned legend) {
+<span class="nc" id="L543">		checkGroup();</span>
+<span class="nc" id="L544">		this.legend = legend;</span>
+<span class="nc" id="L545">	}</span>
+
+	public DisplayPositioned getLegend() {
+<span class="fc" id="L548">		return legend;</span>
+	}
+
+//	public String getCodeLine() {
+//		if (this.codeLine == null)
+//			return null;
+//
+//		return &quot;&quot; + this.codeLine.getPosition();
+//	}
+//
+//	public void setCodeLine(LineLocation codeLine) {
+//		this.codeLine = codeLine;
+//	}
+
+	public void setStereostyle(String stereo) {
+<span class="fc" id="L563">		this.stereostyles = Stereostyles.build(stereo);</span>
+<span class="fc" id="L564">	}</span>
+
+	public Stereostyles getStereostyles() {
+<span class="fc" id="L567">		return stereostyles;</span>
+	}
+
+	public void addKal(Kal kal) {
+<span class="nc" id="L571">		final Direction position = kal.getPosition();</span>
+<span class="nc" id="L572">		List&lt;Kal&gt; list = kals.get(position);</span>
+<span class="nc bnc" id="L573" title="All 2 branches missed.">		if (list == null) {</span>
+<span class="nc" id="L574">			list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L575">			kals.put(position, list);</span>
+		}
+<span class="nc" id="L577">		list.add(kal);</span>
+<span class="nc" id="L578">	}</span>
+
+	public List&lt;Kal&gt; getKals(Direction position) {
+<span class="fc" id="L581">		final List&lt;Kal&gt; result = kals.get(position);</span>
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L583">			return Collections.emptyList();</span>
+<span class="nc" id="L584">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public CucaDiagram getDiagram() {
+<span class="nc" id="L588">		return diagram;</span>
+	}
+
+	public void setStatic(boolean isStatic) {
+<span class="fc" id="L592">		this.isStatic = isStatic;</span>
+<span class="fc" id="L593">	}</span>
+
+	public boolean isStatic() {
+<span class="fc" id="L596">		return isStatic;</span>
+	}
+
+	// For group
+
+	public TextBlock getStateHeader(ISkinParam skinParam) {
+<span class="fc" id="L602">		checkGroup();</span>
+<span class="fc" id="L603">		final Style style = EntityImageStateCommon.getStyleStateHeader(this, skinParam);</span>
+<span class="fc" id="L604">		final List&lt;CharSequence&gt; details = getBodier().getRawBody();</span>
+
+<span class="pc bpc" id="L606" title="1 of 2 branches missed.">		if (details.size() == 0)</span>
+<span class="fc" id="L607">			return new TextBlockEmpty();</span>
+
+<span class="nc bnc" id="L609" title="All 2 branches missed.">		if (style == null)</span>
+<span class="nc" id="L610">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L611">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
+
+<span class="nc" id="L613">		Display display = null;</span>
+<span class="nc bnc" id="L614" title="All 2 branches missed.">		for (CharSequence s : details)</span>
+<span class="nc bnc" id="L615" title="All 2 branches missed.">			if (display == null)</span>
+<span class="nc" id="L616">				display = Display.getWithNewlines(skinParam.getPragma(), s.toString());</span>
+			else
+<span class="nc" id="L618">				display = display.addAll(Display.getWithNewlines(skinParam.getPragma(), s.toString()));</span>
+
+<span class="nc" id="L620">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="nc" id="L621">		return display.create(fontConfiguration, horizontalAlignment, skinParam);</span>
+
+	}
+
+	public void setTogether(Together together) {
+<span class="fc" id="L626">		this.together = together;</span>
+<span class="fc" id="L627">	}</span>
+
+	public Together getTogether() {
+<span class="nc" id="L630">		return this.together;</span>
+	}
+
+	public Entity getParentContainer() {
+<span class="fc bfc" id="L634" title="All 2 branches covered.">		if (quark.isRoot())</span>
+<span class="fc" id="L635">			return null;</span>
+<span class="fc" id="L636">		return quark.getParent().getData();</span>
+	}
+
+	public Collection&lt;Entity&gt; leafs() {
+<span class="fc" id="L640">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L641" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; child : quark.getChildren()) {</span>
+<span class="fc" id="L642">			final Entity data = child.getData();</span>
+<span class="pc bpc" id="L643" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
+<span class="fc" id="L644">				result.add(data);</span>
+<span class="fc" id="L645">		}</span>
+<span class="fc" id="L646">		return Collections.unmodifiableCollection(result);</span>
+	}
+
+	public Collection&lt;Entity&gt; groups() {
+<span class="fc" id="L650">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L651" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; child : quark.getChildren()) {</span>
+<span class="fc" id="L652">			final Entity data = child.getData();</span>
+<span class="pc bpc" id="L653" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
+<span class="fc" id="L654">				result.add(data);</span>
+<span class="fc" id="L655">		}</span>
+<span class="fc" id="L656">		return Collections.unmodifiableCollection(result);</span>
+	}
+
+	public int countChildren() {
+<span class="nc" id="L660">		return getQuark().countChildren();</span>
+	}
+
+	public boolean isRoot() {
+<span class="fc" id="L664">		return getQuark().isRoot();</span>
+	}
+
+	final public boolean isEmpty() {
+<span class="fc bfc" id="L668" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quarkChild : getQuark().getChildren()) {</span>
+<span class="fc" id="L669">			final Entity child = quarkChild.getData();</span>
+<span class="pc bpc" id="L670" title="1 of 2 branches missed.">			if (this.diagram.isRemoved(child) == false)</span>
+<span class="fc" id="L671">				return false;</span>
+<span class="nc" id="L672">		}</span>
+<span class="fc" id="L673">		return true;</span>
+	}
+
+	public String getName() {
+<span class="fc" id="L677">		return getQuark().getName();</span>
+	}
+
+	public boolean isAutarkic() {
+<span class="nc bnc" id="L681" title="All 2 branches missed.">		if (getGroupType() == GroupType.PACKAGE)</span>
+<span class="nc" id="L682">			return false;</span>
+
+<span class="nc bnc" id="L684" title="All 2 branches missed.">		if (getGroupType() == GroupType.INNER_ACTIVITY)</span>
+<span class="nc" id="L685">			return true;</span>
+
+<span class="nc bnc" id="L687" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_ACTIVITY)</span>
+<span class="nc" id="L688">			return true;</span>
+
+<span class="nc bnc" id="L690" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L691">			return true;</span>
+
+//		if (diag.getChildrenGroups(this).size() &gt; 0)
+//			return false;
+
+<span class="nc bnc" id="L696" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
+<span class="nc bnc" id="L697" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink3(this, link) == false)</span>
+<span class="nc" id="L698">				return false;</span>
+
+<span class="nc bnc" id="L700" title="All 2 branches missed.">		for (Entity leaf : leafs())</span>
+<span class="nc bnc" id="L701" title="All 2 branches missed.">			if (leaf.getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="nc" id="L702">				return false;</span>
+
+<span class="nc" id="L704">		return true;</span>
+	}
+
+	public boolean canBePacked() {
+<span class="nc bnc" id="L708" title="All 2 branches missed.">		if (isPacked())</span>
+<span class="nc" id="L709">			return false;</span>
+<span class="nc bnc" id="L710" title="All 2 branches missed.">		if (countChildren() != 1)</span>
+<span class="nc" id="L711">			return false;</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed.">		if (leafs().size() != 0)</span>
+<span class="nc" id="L713">			return false;</span>
+<span class="nc bnc" id="L714" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
+<span class="nc bnc" id="L715" title="All 2 branches missed.">			if (link.contains(this))</span>
+<span class="nc" id="L716">				return false;</span>
+
+<span class="nc" id="L718">		final Entity child = groups().iterator().next();</span>
+<span class="nc bnc" id="L719" title="All 2 branches missed.">		if (child.countChildren() == 0)</span>
+<span class="nc" id="L720">			return false;</span>
+
+<span class="nc" id="L722">		return true;</span>
+	}
+
+	public final void setPacked(boolean packed) {
+<span class="nc" id="L726">		this.packed = true;</span>
+<span class="nc" id="L727">	}</span>
+
+	public final boolean isPacked() {
+<span class="fc" id="L730">		return packed;</span>
+	}
+
+	public final ISkinParam getSkinParam() {
+<span class="fc" id="L734">		return diagram.getSkinParam();</span>
+	}
+
+	public final UmlDiagramType getUmlDiagramType() {
+<span class="fc" id="L738">		return diagram.getUmlDiagramType();</span>
+	}
+
+	public LineLocation getLocation() {
+<span class="fc" id="L742">		return location;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

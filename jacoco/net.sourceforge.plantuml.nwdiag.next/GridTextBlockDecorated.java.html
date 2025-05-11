@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GridTextBlockDecorated.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.nwdiag.next</a> &gt; <span class="el_source">GridTextBlockDecorated.java</span></div><h1>GridTextBlockDecorated.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.nwdiag.next;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.nwdiag.core.Network;
+import net.sourceforge.plantuml.nwdiag.core.NwGroup;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class GridTextBlockDecorated extends GridTextBlockSimple {
+
+	public static final int NETWORK_THIN = 5;
+
+	private final List&lt;NwGroup&gt; groups;
+	private final List&lt;Network&gt; networks;
+
+	public GridTextBlockDecorated(int lines, int cols, List&lt;NwGroup&gt; groups, List&lt;Network&gt; networks,
+			ISkinParam skinparam) {
+<span class="nc" id="L63">		super(lines, cols, skinparam);</span>
+<span class="nc" id="L64">		this.groups = groups;</span>
+<span class="nc" id="L65">		this.networks = networks;</span>
+<span class="nc" id="L66">	}</span>
+
+	@Override
+	protected void drawGrid(UGraphic ug) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (NwGroup group : groups)</span>
+<span class="nc" id="L71">			drawGroups(ug, group, getSkinParam());</span>
+
+<span class="nc" id="L73">		drawNetworkTube(ug);</span>
+<span class="nc" id="L74">		drawLinks(ug, getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L75">	}</span>
+
+	private void drawLinks(UGraphic ug, StyleBuilder styleBuilder) {
+
+<span class="nc" id="L79">		final Style style = getStyleDefinitionNetwork(SName.arrow).getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L80">		final HColor lineColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc" id="L82">		ug = ug.apply(lineColor);</span>
+
+<span class="nc" id="L84">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="nc" id="L86">			final double lineHeight = lineHeight(stringBounder, i);</span>
+<span class="nc" id="L87">			double x = 0;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
+<span class="nc" id="L89">				final double colWidth = colWidth(stringBounder, j);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">				if (data.get(i, j) != null)</span>
+<span class="nc" id="L91">					data.get(i, j).drawLinks(ug, x, colWidth, lineHeight);</span>
+
+<span class="nc" id="L93">				x += colWidth;</span>
+			}
+		}
+
+<span class="nc" id="L97">	}</span>
+
+	private void drawGroups(UGraphic ug, NwGroup group, ISkinParam skinParam) {
+<span class="nc" id="L100">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc" id="L102">		MinMax size = null;</span>
+<span class="nc" id="L103">		double y = 0;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="nc" id="L105">			final double lineHeight = lineHeight(stringBounder, i);</span>
+<span class="nc" id="L106">			double x = 0;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
+<span class="nc" id="L108">				final double colWidth = colWidth(stringBounder, j);</span>
+<span class="nc" id="L109">				final NServerDraw element = data.get(i, j);</span>
+<span class="nc bnc" id="L110" title="All 4 branches missed.">				if (element != null &amp;&amp; group.contains(element.getServer())) {</span>
+<span class="nc" id="L111">					final MinMax minMax = element.getMinMax(stringBounder, colWidth, lineHeight)</span>
+<span class="nc" id="L112">							.translate(new UTranslate(x, y));</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">					size = size == null ? minMax : size.addMinMax(minMax);</span>
+				}
+<span class="nc" id="L115">				x += colWidth;</span>
+			}
+<span class="nc" id="L117">			y += lineHeight;</span>
+		}
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (size != null)</span>
+<span class="nc" id="L120">			group.drawGroup(ug, size, skinParam);</span>
+
+<span class="nc" id="L122">	}</span>
+
+	private boolean isThereALink(int j, Network network) {
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="nc" id="L126">			final NServerDraw element = data.get(i, j);</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">			if (element != null &amp;&amp; element.isLinkedTo(network))</span>
+<span class="nc" id="L128">				return true;</span>
+
+		}
+<span class="nc" id="L131">		return false;</span>
+	}
+
+	private StyleSignatureBasic getStyleDefinitionNetwork(SName sname) {
+<span class="nc" id="L135">		return StyleSignatureBasic.of(SName.root, SName.element, SName.nwdiagDiagram, sname);</span>
+	}
+
+	private void drawNetworkTube(UGraphic ug) {
+
+<span class="nc" id="L140">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L141">		double y = 0;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="nc" id="L143">			final Network network = getNetwork(i);</span>
+<span class="nc" id="L144">			computeMixMax(data.getLine(i), stringBounder, network);</span>
+
+<span class="nc" id="L146">			final double width = Math.max(GridTextBlockSimple.MINIMUM_WIDTH, network.getXmax() - network.getXmin());</span>
+<span class="nc" id="L147">			final URectangle rect = URectangle.build(width, NETWORK_THIN);</span>
+
+<span class="nc" id="L149">			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));</span>
+<span class="nc" id="L150">			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();</span>
+<span class="nc" id="L151">			final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L152">			final double deltaShadow = style.getShadowing();</span>
+<span class="nc" id="L153">			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet()));</span>
+<span class="nc" id="L154">			ug2 = ug2.apply(style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet()).bg());</span>
+
+<span class="nc" id="L156">			rect.setDeltaShadow(deltaShadow);</span>
+<span class="nc bnc" id="L157" title="All 4 branches missed.">			if (network != null &amp;&amp; network.getColor() != null)</span>
+<span class="nc" id="L158">				ug2 = ug2.apply(network.getColor().bg());</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (network != null)</span>
+<span class="nc" id="L161">				network.setY(y);</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (network.isVisible())</span>
+<span class="nc" id="L164">				ug2.draw(rect);</span>
+
+<span class="nc" id="L166">			y += lineHeight(stringBounder, i);</span>
+		}
+<span class="nc" id="L168">	}</span>
+
+	private void computeMixMax(NServerDraw line[], StringBounder stringBounder, Network network) {
+<span class="nc" id="L171">		double x = 0;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		double xmin = network.isFullWidth() ? 0 : -1;</span>
+<span class="nc" id="L173">		double xmax = 0;</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		for (int j = 0; j &lt; line.length; j++) {</span>
+<span class="nc" id="L175">			final boolean hline = isThereALink(j, network);</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">			if (hline &amp;&amp; xmin &lt; 0)</span>
+<span class="nc" id="L177">				xmin = x;</span>
+
+<span class="nc" id="L179">			x += colWidth(stringBounder, j);</span>
+<span class="nc bnc" id="L180" title="All 4 branches missed.">			if (hline || network.isFullWidth())</span>
+<span class="nc" id="L181">				xmax = x;</span>
+
+		}
+<span class="nc" id="L184">		network.setMinMax(xmin, xmax);</span>
+
+<span class="nc" id="L186">	}</span>
+
+	private Network getNetwork(int i) {
+<span class="nc" id="L189">		return networks.get(i);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

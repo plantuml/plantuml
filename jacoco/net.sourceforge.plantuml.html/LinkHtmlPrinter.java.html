@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkHtmlPrinter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.html</a> &gt; <span class="el_source">LinkHtmlPrinter.java</span></div><h1>LinkHtmlPrinter.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.html;
+
+import java.io.PrintWriter;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+
+public final class LinkHtmlPrinter {
+    // ::remove folder when __HAXE__
+
+	private final Link link;
+	// private final Entity entity;
+	private final boolean chiral;
+
+<span class="nc" id="L53">	public LinkHtmlPrinter(Link link, Entity entity) {</span>
+<span class="nc" id="L54">		this.link = link;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (link.getEntity1() == entity) {</span>
+<span class="nc" id="L56">			this.chiral = false;</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		} else if (link.getEntity2() == entity) {</span>
+<span class="nc" id="L58">			this.chiral = true;</span>
+		} else {
+<span class="nc" id="L60">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L62">	}</span>
+
+	void printLink(PrintWriter pw) {
+		final String ent1h;
+		final String ent2h;
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (chiral) {</span>
+<span class="nc" id="L68">			ent1h = htmlLink(link.getEntity1());</span>
+<span class="nc" id="L69">			ent2h = &quot;&lt;i&gt;&quot; + StringUtils.unicodeForHtml(link.getEntity2().getName()) + &quot;&lt;/i&gt;&quot;;</span>
+		} else {
+<span class="nc" id="L71">			ent1h = &quot;&lt;i&gt;&quot; + StringUtils.unicodeForHtml(link.getEntity1().getName()) + &quot;&lt;/i&gt;&quot;;</span>
+<span class="nc" id="L72">			ent2h = htmlLink(link.getEntity2());</span>
+		}
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		String label = link.getLabel() == null ? null : StringUtils.unicodeForHtml(link.getLabel());</span>
+<span class="nc" id="L75">		String ent1 = ent1h;</span>
+<span class="nc" id="L76">		String ent2 = ent2h;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (link.getQuantifier1() != null) {</span>
+<span class="nc" id="L78">			ent1 = ent1 + &quot; (&quot; + link.getQuantifier1() + &quot;)&quot;;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (label != null) {</span>
+<span class="nc" id="L80">				label = &quot;(&quot; + link.getQuantifier1() + &quot; &quot; + ent1h + &quot;) &quot; + label;</span>
+			}
+		}
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (link.getQuantifier2() != null) {</span>
+<span class="nc" id="L84">			ent2 = ent2 + &quot; (&quot; + link.getQuantifier2() + &quot;)&quot;;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (label != null) {</span>
+<span class="nc" id="L86">				label = label + &quot; (&quot; + link.getQuantifier2() + &quot; &quot; + ent2h + &quot;)&quot;;</span>
+			}
+		}
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (chiral) {</span>
+<span class="nc" id="L90">			pw.println(getHtmlChiral(ent1, ent2));</span>
+		} else {
+<span class="nc" id="L92">			pw.println(getHtml(ent1, ent2));</span>
+		}
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (label != null) {</span>
+<span class="nc" id="L95">			pw.println(&quot;&amp;nbsp;:&amp;nbsp;&quot;);</span>
+<span class="nc" id="L96">			pw.println(label);</span>
+		}
+<span class="nc" id="L98">	}</span>
+
+	private String getHtml(String ent1, String ent2) {
+<span class="nc" id="L101">		final LinkDecor decor1 = link.getType().getDecor1();</span>
+<span class="nc" id="L102">		final LinkDecor decor2 = link.getType().getDecor2();</span>
+
+<span class="nc bnc" id="L104" title="All 4 branches missed.">		if (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.NONE) {</span>
+<span class="nc" id="L105">			return ent1 + &quot; is linked to &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L107" title="All 4 branches missed.">		if (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.EXTENDS) {</span>
+<span class="nc" id="L108">			return ent1 + &quot; is extended by &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L110" title="All 4 branches missed.">		if (decor1 == LinkDecor.EXTENDS &amp;&amp; decor2 == LinkDecor.NONE) {</span>
+<span class="nc" id="L111">			return ent1 + &quot; extends &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (decor2 == LinkDecor.AGREGATION) {</span>
+<span class="nc" id="L114">			return ent1 + &quot; is aggregated by  &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (decor1 == LinkDecor.AGREGATION) {</span>
+<span class="nc" id="L117">			return ent1 + &quot; aggregates &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (decor2 == LinkDecor.COMPOSITION) {</span>
+<span class="nc" id="L120">			return ent1 + &quot; is composed by &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (decor1 == LinkDecor.COMPOSITION) {</span>
+<span class="nc" id="L123">			return ent1 + &quot; composes &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.ARROW) {</span>
+<span class="nc" id="L126">			return ent1 + &quot; is navigable from  &quot; + ent2;</span>
+		}
+<span class="nc bnc" id="L128" title="All 4 branches missed.">		if (decor1 == LinkDecor.ARROW &amp;&amp; decor2 == LinkDecor.NONE) {</span>
+<span class="nc" id="L129">			return ent1 + &quot; navigates to  &quot; + ent2;</span>
+		}
+<span class="nc" id="L131">		return ent1 + &quot; &quot; + decor1 + &quot;-&quot; + decor2 + &quot; &quot; + ent2;</span>
+
+	}
+
+	private String getHtmlChiral(String ent1, String ent2) {
+<span class="nc" id="L136">		final LinkDecor decor1 = link.getType().getDecor1();</span>
+<span class="nc" id="L137">		final LinkDecor decor2 = link.getType().getDecor2();</span>
+
+<span class="nc bnc" id="L139" title="All 4 branches missed.">		if (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.NONE) {</span>
+<span class="nc" id="L140">			return ent2 + &quot; is linked to &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L142" title="All 4 branches missed.">		if (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.EXTENDS) {</span>
+<span class="nc" id="L143">			return ent2 + &quot; extends &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L145" title="All 4 branches missed.">		if (decor1 == LinkDecor.EXTENDS &amp;&amp; decor2 == LinkDecor.NONE) {</span>
+<span class="nc" id="L146">			return ent2 + &quot; is extended by &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (decor2 == LinkDecor.AGREGATION) {</span>
+<span class="nc" id="L149">			return ent2 + &quot; aggregates &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (decor1 == LinkDecor.AGREGATION) {</span>
+<span class="nc" id="L152">			return ent2 + &quot; is aggregated by &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (decor2 == LinkDecor.COMPOSITION) {</span>
+<span class="nc" id="L155">			return ent2 + &quot; composes &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (decor1 == LinkDecor.COMPOSITION) {</span>
+<span class="nc" id="L158">			return ent2 + &quot; is composed by &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L160" title="All 4 branches missed.">		if (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.ARROW) {</span>
+<span class="nc" id="L161">			return ent2 + &quot; navigates to  &quot; + ent1;</span>
+		}
+<span class="nc bnc" id="L163" title="All 4 branches missed.">		if (decor1 == LinkDecor.ARROW &amp;&amp; decor2 == LinkDecor.NONE) {</span>
+<span class="nc" id="L164">			return ent2 + &quot; is navigable from  &quot; + ent1;</span>
+		}
+<span class="nc" id="L166">		return ent1 + &quot; &quot; + decor1 + &quot;-&quot; + decor2 + &quot; &quot; + ent2;</span>
+	}
+
+	static String htmlLink(Entity ent) {
+<span class="nc" id="L170">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L171">		sb.append(&quot;&lt;a href=\&quot;&quot;);</span>
+<span class="nc" id="L172">		sb.append(urlOf(ent));</span>
+<span class="nc" id="L173">		sb.append(&quot;\&quot;&gt;&quot;);</span>
+<span class="nc" id="L174">		sb.append(StringUtils.unicodeForHtml(ent.getName()));</span>
+<span class="nc" id="L175">		sb.append(&quot;&lt;/a&gt;&quot;);</span>
+<span class="nc" id="L176">		return sb.toString();</span>
+	}
+
+	static String urlOf(Entity ent) {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (ent.getLeafType() == LeafType.NOTE) {</span>
+<span class="nc" id="L181">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (ent.getName().matches(&quot;[-\\w_ .]+&quot;)) {</span>
+<span class="nc" id="L184">			return StringUtils.unicodeForHtml(ent.getName()) + &quot;.html&quot;;</span>
+		}
+<span class="nc" id="L186">		return StringUtils.unicodeForHtml(ent.getUid()) + &quot;.html&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

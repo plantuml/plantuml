@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageObject.java</span></div><h1>EntityImageObject.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.abel.LineConfigurable;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2;
+import net.sourceforge.plantuml.klimt.geom.ULayoutGroup;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
+import net.sourceforge.plantuml.klimt.shape.TextBlockLineBefore;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.svek.WithPorts;
+import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.url.Url;
+
+public class EntityImageObject extends AbstractEntityImage implements Stencil, WithPorts {
+
+	final private TextBlock name;
+	final private TextBlock stereo;
+	final private TextBlock fields;
+	final private Url url;
+	final private double roundCorner;
+	private final boolean showFields;
+
+	final private LineConfigurable lineConfig;
+
+	public EntityImageObject(Entity entity, PortionShower portionShower) {
+<span class="nc" id="L91">		super(entity);</span>
+<span class="nc" id="L92">		this.lineConfig = entity;</span>
+<span class="nc" id="L93">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L94">		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();</span>
+
+<span class="nc" id="L96">		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc" id="L98">		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L99">		this.name = TextBlockUtils.withMargin(tmp, 2, 2);</span>
+
+<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)</span>
+<span class="nc" id="L103">			this.stereo = null;</span>
+		else
+<span class="nc" id="L105">			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(</span>
+<span class="nc" id="L106">					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L107">					HorizontalAlignment.CENTER, getSkinParam());</span>
+
+<span class="nc" id="L109">		showFields = portionShower.showPortion(EntityPortion.FIELD, entity);</span>
+
+<span class="nc bnc" id="L111" title="All 4 branches missed.">		if (entity.getBodier().getFieldsToDisplay().size() == 0 &amp;&amp; showFields)</span>
+<span class="nc" id="L112">			this.fields = new TextBlockLineBefore(getStyle().value(PName.LineThickness).asDouble(),</span>
+					new TextBlockEmpty(10, 16));
+		else
+<span class="nc" id="L115">			this.fields = entity.getBodier().getBody(getSkinParam(), false, showFields, entity.getStereotype(),</span>
+<span class="nc" id="L116">					getStyle(), null);</span>
+
+<span class="nc" id="L118">		this.url = entity.getUrl99();</span>
+
+<span class="nc" id="L120">	}</span>
+
+	private Style getStyle() {
+<span class="nc" id="L123">		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.object)</span>
+<span class="nc" id="L124">				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	private Style getStyleHeader() {
+<span class="nc" id="L128">		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.object, SName.header)</span>
+<span class="nc" id="L129">				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	private Display getUnderlinedName(Entity entity) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (getSkinParam().strictUmlStyle())</span>
+<span class="nc" id="L134">			return entity.getDisplay().underlinedName();</span>
+
+<span class="nc" id="L136">		return entity.getDisplay();</span>
+	}
+
+<span class="nc" id="L139">	private int marginEmptyFieldsOrMethod = 13;</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L142">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L143">		final XDimension2D dimFields = fields.calculateDimension(stringBounder);</span>
+<span class="nc" id="L144">		double width = Math.max(dimFields.getWidth(), dimTitle.getWidth() + 2 * xMarginCircle);</span>
+<span class="nc" id="L145">		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (width &lt; minClassWidth)</span>
+<span class="nc" id="L147">			width = minClassWidth;</span>
+
+<span class="nc" id="L149">		final double height = getMethodOrFieldHeight(dimFields) + dimTitle.getHeight();</span>
+<span class="nc" id="L150">		return new XDimension2D(width, height);</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="nc" id="L154">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L155">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L156">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+
+<span class="nc" id="L158">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L159">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="nc" id="L160">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);</span>
+
+<span class="nc" id="L162">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="nc" id="L163">		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);</span>
+
+<span class="nc" id="L165">		final Style style = getStyle();</span>
+<span class="nc" id="L166">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (headerBackcolor == null)</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			headerBackcolor = backcolor == null</span>
+<span class="nc" id="L170">					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())</span>
+<span class="nc" id="L171">					: backcolor;</span>
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (backcolor == null)</span>
+<span class="nc" id="L174">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc" id="L176">		rect.setDeltaShadow(style.getShadowing());</span>
+<span class="nc" id="L177">		final UStroke stroke = style.getStroke();</span>
+
+<span class="nc" id="L179">		ug = ug.apply(borderColor).apply(backcolor.bg());</span>
+
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L182">			ug.startUrl(url);</span>
+
+<span class="nc" id="L184">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="nc" id="L185">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="nc" id="L186">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="nc" id="L187">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="nc" id="L188">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="nc" id="L189">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="nc" id="L190">		ug.startGroup(group);</span>
+<span class="nc" id="L191">		ug.apply(stroke).draw(rect);</span>
+
+<span class="nc bnc" id="L193" title="All 4 branches missed.">		if (headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
+<span class="nc" id="L194">			final Shadowable rect2 = URectangle.build(widthTotal, dimTitle.getHeight()).halfRounded(roundCorner);</span>
+<span class="nc" id="L195">			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());</span>
+<span class="nc" id="L196">			ugHeader.apply(stroke).draw(rect2);</span>
+		}
+
+<span class="nc" id="L199">		final ULayoutGroup header = getLayout(stringBounder);</span>
+<span class="nc" id="L200">		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());</span>
+
+<span class="nc" id="L202">		final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);</span>
+<span class="nc" id="L203">		fields.drawU(ug2.apply(UTranslate.dy(dimTitle.getHeight())));</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L206">			ug.closeUrl();</span>
+
+<span class="nc" id="L208">		ug.closeGroup();</span>
+<span class="nc" id="L209">	}</span>
+
+	private ULayoutGroup getLayout(final StringBounder stringBounder) {
+<span class="nc" id="L212">		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(stringBounder));</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L214">			header.add(stereo);</span>
+
+<span class="nc" id="L216">		header.add(name);</span>
+<span class="nc" id="L217">		return header;</span>
+	}
+
+	private double getMethodOrFieldHeight(final XDimension2D dim) {
+<span class="nc" id="L221">		final double fieldsHeight = dim.getHeight();</span>
+<span class="nc bnc" id="L222" title="All 4 branches missed.">		if (fieldsHeight == 0 &amp;&amp; showFields)</span>
+<span class="nc" id="L223">			return marginEmptyFieldsOrMethod;</span>
+
+<span class="nc" id="L225">		return fieldsHeight;</span>
+	}
+
+<span class="nc" id="L228">	private int xMarginCircle = 5;</span>
+
+	private XDimension2D getTitleDimension(StringBounder stringBounder) {
+<span class="nc" id="L231">		return getNameAndSteretypeDimension(stringBounder);</span>
+	}
+
+	private XDimension2D getNameAndSteretypeDimension(StringBounder stringBounder) {
+<span class="nc" id="L235">		final XDimension2D nameDim = name.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		final XDimension2D stereoDim = stereo == null ? new XDimension2D(0, 0)</span>
+<span class="nc" id="L237">				: stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L238">		final XDimension2D nameAndStereo = new XDimension2D(Math.max(nameDim.getWidth(), stereoDim.getWidth()),</span>
+<span class="nc" id="L239">				nameDim.getHeight() + stereoDim.getHeight());</span>
+<span class="nc" id="L240">		return nameAndStereo;</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (getEntity().getPortShortNames().size() &gt; 0)</span>
+<span class="nc" id="L245">			return ShapeType.RECTANGLE_HTML_FOR_PORTS;</span>
+
+<span class="nc" id="L247">		return ShapeType.RECTANGLE;</span>
+	}
+
+	public double getStartingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L251">		return 0;</span>
+	}
+
+	public double getEndingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L255">		return calculateDimension(stringBounder).getWidth();</span>
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc" id="L260">		final XDimension2D dimHeader = getNameAndSteretypeDimension(stringBounder);</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (fields instanceof WithPorts)</span>
+<span class="nc" id="L262">			return ((WithPorts) fields).getPorts(stringBounder).translateY(dimHeader.getHeight());</span>
+<span class="nc" id="L263">		return new Ports();</span>
+	}
+
+	@Override
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L268">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L269">		final UTranslate translate = UTranslate.dy(dimTitle.getHeight());</span>
+<span class="nc" id="L270">		return translate.apply(fields.getInnerPosition(member, stringBounder, strategy));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

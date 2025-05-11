@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommonCommands.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command</a> &gt; <span class="el_source">CommonCommands.java</span></div><h1>CommonCommands.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility;
+import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
+import net.sourceforge.plantuml.jaws.JawsFlags;
+import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
+import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
+import net.sourceforge.plantuml.style.CommandStyleImport;
+import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
+
+public final class CommonCommands {
+
+	private CommonCommands() {
+	}
+
+	static public void addCommonCommands1(List&lt;Command&gt; cmds) {
+<span class="fc" id="L55">		addTitleCommands(cmds);</span>
+<span class="fc" id="L56">		addCommonCommands2(cmds);</span>
+<span class="fc" id="L57">		addCommonHides(cmds);</span>
+<span class="fc" id="L58">	}</span>
+
+	static public void addCommonCommands2(List&lt;Command&gt; cmds) {
+<span class="fc" id="L61">		cmds.add(CommandNope.ME);</span>
+<span class="fc" id="L62">		cmds.add(CommandPragma.ME);</span>
+<span class="fc" id="L63">		cmds.add(CommandAssumeTransparent.ME);</span>
+
+<span class="fc" id="L65">		cmds.add(CommandSkinParam.ME);</span>
+<span class="fc" id="L66">		cmds.add(CommandSkinParamJaws.ME);</span>
+<span class="fc" id="L67">		cmds.add(CommandSkinParamMultilines.ME);</span>
+		
+<span class="fc" id="L69">		cmds.add(CommandSkin.ME);</span>
+<span class="fc" id="L70">		cmds.add(CommandMinwidth.ME);</span>
+<span class="fc" id="L71">		cmds.add(CommandPage.ME);</span>
+<span class="fc" id="L72">		cmds.add(CommandRotate.ME);</span>
+<span class="fc" id="L73">		cmds.add(CommandScale.ME);</span>
+<span class="fc" id="L74">		cmds.add(CommandScaleWidthAndHeight.ME);</span>
+<span class="fc" id="L75">		cmds.add(CommandScaleWidthOrHeight.ME);</span>
+<span class="fc" id="L76">		cmds.add(CommandScaleMaxWidth.ME);</span>
+<span class="fc" id="L77">		cmds.add(CommandScaleMaxHeight.ME);</span>
+<span class="fc" id="L78">		cmds.add(CommandScaleMaxWidthAndHeight.ME);</span>
+<span class="fc" id="L79">		final CommandFactorySprite factorySpriteCommand = new CommandFactorySprite();</span>
+<span class="fc" id="L80">		cmds.add(factorySpriteCommand.createMultiLine(false));</span>
+<span class="fc" id="L81">		cmds.add(factorySpriteCommand.createSingleLine());</span>
+<span class="fc" id="L82">		cmds.add(CommandSpriteSvg.ME);</span>
+<span class="fc" id="L83">		cmds.add(CommandSpriteFile.ME);</span>
+<span class="fc" id="L84">		cmds.add(CommandSpriteSvgMultiline.ME);</span>
+
+<span class="fc" id="L86">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
+<span class="fc" id="L87">		cmds.add(CommandStyleImport.ME);</span>
+
+<span class="fc" id="L89">	}</span>
+
+	static public void addCommonHides(List&lt;Command&gt; cmds) {
+<span class="fc" id="L92">		cmds.add(CommandHideEmptyDescription.ME);</span>
+<span class="fc" id="L93">		cmds.add(CommandHideShowByVisibility.ME);</span>
+<span class="fc" id="L94">		cmds.add(CommandHideShowByGender.ME);</span>
+<span class="fc" id="L95">	}</span>
+
+	static public void addTitleCommands(List&lt;Command&gt; cmds) {
+<span class="fc" id="L98">		cmds.add(CommandTitle.ME);</span>
+<span class="fc" id="L99">		cmds.add(CommandMainframe.ME);</span>
+<span class="fc" id="L100">		cmds.add(CommandCaption.ME);</span>
+<span class="fc" id="L101">		cmds.add(CommandMultilinesCaption.ME);</span>
+<span class="fc" id="L102">		cmds.add(CommandMultilinesTitle.ME);</span>
+<span class="fc" id="L103">		cmds.add(CommandMultilinesLegend.ME);</span>
+<span class="fc" id="L104">		cmds.add(CommandLegend.ME);</span>
+
+<span class="fc" id="L106">		cmds.add(CommandFooter.ME);</span>
+<span class="fc" id="L107">		cmds.add(CommandMultilinesFooter.ME);</span>
+
+<span class="fc" id="L109">		cmds.add(CommandHeader.ME);</span>
+<span class="fc" id="L110">		cmds.add(CommandMultilinesHeader.ME);</span>
+<span class="fc" id="L111">		cmds.add(CommandNamespaceSeparator.ME);</span>
+<span class="fc" id="L112">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

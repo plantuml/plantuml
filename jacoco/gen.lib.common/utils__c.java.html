@@ -1,0 +1,1140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>utils__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">utils__c.java</span></div><h1>utils__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.cgraph.attr__c.agxget;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.cgraph.refstr__c.aghtmlstr;
+import static gen.lib.common.labels__c.make_label;
+import static gen.lib.common.shapes__c.bind_shape;
+import static gen.lib.common.shapes__c.shapeOf;
+import static gen.lib.common.strcasecmp__c.strcasecmp;
+import static smetana.core.JUtils.EQ_ARRAY;
+import static smetana.core.JUtils.EQ_CSTRING;
+import static smetana.core.JUtils.atoi;
+import static smetana.core.JUtils.isdigit;
+import static smetana.core.JUtils.strchr;
+import static smetana.core.JUtils.strcmp;
+import static smetana.core.JUtils.strtod;
+import static smetana.core.JUtils.strtol;
+import static smetana.core.Macro.DEFAULT_FONTSIZE;
+import static smetana.core.Macro.DEFAULT_NODEHEIGHT;
+import static smetana.core.Macro.DEFAULT_NODESHAPE;
+import static smetana.core.Macro.DEFAULT_NODEWIDTH;
+import static smetana.core.Macro.DIST2;
+import static smetana.core.Macro.EDGE_LABEL;
+import static smetana.core.Macro.ED_head_label;
+import static smetana.core.Macro.ED_head_port;
+import static smetana.core.Macro.ED_label;
+import static smetana.core.Macro.ED_label_ontop;
+import static smetana.core.Macro.ED_tail_label;
+import static smetana.core.Macro.ED_tail_port;
+import static smetana.core.Macro.ET_NONE;
+import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_flags;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_has_labels;
+import static smetana.core.Macro.HEAD_ID;
+import static smetana.core.Macro.HEAD_LABEL;
+import static smetana.core.Macro.INCH2PS;
+import static smetana.core.Macro.LT_HTML;
+import static smetana.core.Macro.LT_NONE;
+import static smetana.core.Macro.LT_RECD;
+import static smetana.core.Macro.MIN_FONTSIZE;
+import static smetana.core.Macro.MIN_NODEHEIGHT;
+import static smetana.core.Macro.MIN_NODEWIDTH;
+import static smetana.core.Macro.ND_UF_parent;
+import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_has_port;
+import static smetana.core.Macro.ND_height;
+import static smetana.core.Macro.ND_ht;
+import static smetana.core.Macro.ND_id;
+import static smetana.core.Macro.ND_label;
+import static smetana.core.Macro.ND_lw;
+import static smetana.core.Macro.ND_ranktype;
+import static smetana.core.Macro.ND_rw;
+import static smetana.core.Macro.ND_shape;
+import static smetana.core.Macro.ND_showboxes;
+import static smetana.core.Macro.ND_width;
+import static smetana.core.Macro.NORMAL;
+import static smetana.core.Macro.TAIL_ID;
+import static smetana.core.Macro.TAIL_LABEL;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Doc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.EN_shape_kind;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agsym_s;
+import h.ST_bezier;
+import h.ST_boxf;
+import h.ST_fontinfo;
+import h.ST_nodequeue;
+import h.ST_pointf;
+import h.ST_port;
+import h.ST_splines;
+import h.ST_textlabel_t;
+import smetana.core.CArray;
+import smetana.core.CArrayOfStar;
+import smetana.core.CFunction;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.ZType;
+import smetana.core.__ptr__;
+
+<span class="pc" id="L137">public class utils__c {</span>
+
+
+
+
+
+
+/*
+ *  a queue of nodes
+ */
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;&quot;, key=&quot;c7cptalfn8k75wyfirbnptnav&quot;, definition=&quot;nodequeue *new_queue(int sz)&quot;)
+public static ST_nodequeue new_queue(int sz) {
+<span class="fc" id="L150">ENTERING(&quot;c7cptalfn8k75wyfirbnptnav&quot;,&quot;new_queue&quot;);</span>
+try {
+<span class="fc" id="L152">    ST_nodequeue q = new ST_nodequeue();</span>
+    
+<span class="fc bfc" id="L154" title="All 2 branches covered.">    if (sz &lt;= 1)</span>
+<span class="fc" id="L155">	sz = 2;</span>
+<span class="fc" id="L156">    q.head = q.tail = q.store = CArrayOfStar.&lt;ST_Agnode_s&gt;ALLOC(sz, ZType.ST_Agnode_s);</span>
+<span class="fc" id="L157">	q.limit = q.store.plus_(sz);</span>
+<span class="fc" id="L158">    return q;</span>
+} finally {
+<span class="fc" id="L160">LEAVING(&quot;c7cptalfn8k75wyfirbnptnav&quot;,&quot;new_queue&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;free_queue&quot;, key=&quot;1uj5nmdvwmuklnpd3v5py547f&quot;, definition=&quot;void free_queue(nodequeue * q)&quot;)
+public static void free_queue(ST_nodequeue q) {
+<span class="fc" id="L170">ENTERING(&quot;1uj5nmdvwmuklnpd3v5py547f&quot;,&quot;free_queue&quot;);</span>
+try {
+<span class="fc" id="L172">    Memory.free(q.store);</span>
+<span class="fc" id="L173">    Memory.free(q);</span>
+} finally {
+<span class="fc" id="L175">LEAVING(&quot;1uj5nmdvwmuklnpd3v5py547f&quot;,&quot;free_queue&quot;);</span>
+}
+<span class="fc" id="L177">}</span>
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;enqueue&quot;, key=&quot;20pwd6i141q3o25lfvrdqytot&quot;, definition=&quot;void enqueue(nodequeue * q, node_t * n)&quot;)
+public static void enqueue(ST_nodequeue q, ST_Agnode_s n) {
+<span class="fc" id="L185">ENTERING(&quot;20pwd6i141q3o25lfvrdqytot&quot;,&quot;enqueue&quot;);</span>
+try {
+<span class="fc" id="L187">    q.tail.set_(0, n);</span>
+<span class="fc" id="L188">    q.tail =q.tail.plus_(1);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">    if (q.tail.comparePointer_(q.limit) &gt;= 0)</span>
+<span class="fc" id="L190">	q.tail = q.store;</span>
+} finally {
+<span class="fc" id="L192">LEAVING(&quot;20pwd6i141q3o25lfvrdqytot&quot;,&quot;enqueue&quot;);</span>
+}
+<span class="fc" id="L194">}</span>
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;&quot;, key=&quot;b612nmtf16au96ztbs8pike9r&quot;, definition=&quot;node_t *dequeue(nodequeue * q)&quot;)
+public static ST_Agnode_s dequeue(ST_nodequeue q) {
+<span class="fc" id="L202">ENTERING(&quot;b612nmtf16au96ztbs8pike9r&quot;,&quot;dequeue&quot;);</span>
+try {
+    ST_Agnode_s n;
+<span class="fc bfc" id="L205" title="All 2 branches covered.">    if (EQ_ARRAY(q.head, q.tail))</span>
+<span class="fc" id="L206">	n = null;</span>
+    else {
+<span class="fc" id="L208">	n = q.head.get_(0);</span>
+<span class="fc" id="L209">	q.head = q.head.plus_(1);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">	if (q.head.comparePointer_(q.limit) &gt;= 0)</span>
+<span class="fc" id="L211">	    q.head = q.store;</span>
+    }
+<span class="fc" id="L213">    return n;</span>
+} finally {
+<span class="fc" id="L215">LEAVING(&quot;b612nmtf16au96ztbs8pike9r&quot;,&quot;dequeue&quot;);</span>
+}
+}
+
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;late_int&quot;, key=&quot;6nydxv4f2m7jcfh8ljs0neu0x&quot;, definition=&quot;int late_int(void *obj, attrsym_t * attr, int def, int low)&quot;)
+public static int late_int(__ptr__ obj, ST_Agsym_s attr, int def, int low) {
+<span class="fc" id="L226">ENTERING(&quot;6nydxv4f2m7jcfh8ljs0neu0x&quot;,&quot;late_int&quot;);</span>
+try {
+    CString p;
+<span class="fc" id="L229">    CString endp[] = new CString[1];</span>
+    int rv;
+<span class="fc bfc" id="L231" title="All 2 branches covered.">    if (attr == null)</span>
+<span class="fc" id="L232">	return def;</span>
+<span class="fc" id="L233">    p = agxget(obj,attr);</span>
+<span class="pc bpc" id="L234" title="2 of 4 branches missed.">    if ((p) == null || p.length()==0)</span>
+<span class="nc" id="L235">	return def;</span>
+<span class="fc" id="L236">    rv = strtol (p, endp, 10);</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">    if (EQ_CSTRING(p, endp[0])) return def;  /* invalid int format */</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">    if (rv &lt; low) return low;</span>
+<span class="fc" id="L239">    else return rv;</span>
+} finally {
+<span class="fc" id="L241">LEAVING(&quot;6nydxv4f2m7jcfh8ljs0neu0x&quot;,&quot;late_int&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;late_double&quot;, key=&quot;d68314e4f20r79tt0cnmxugme&quot;, definition=&quot;double late_double(void *obj, attrsym_t * attr, double def, double low)&quot;)
+public static double late_double(__ptr__ obj, ST_Agsym_s attr, double def, double low) {
+<span class="fc" id="L251">ENTERING(&quot;d68314e4f20r79tt0cnmxugme&quot;,&quot;late_double&quot;);</span>
+try {
+    CString p;
+<span class="fc" id="L254">    CString endp[] = new CString[1];</span>
+    double rv;
+    
+<span class="pc bpc" id="L257" title="1 of 4 branches missed.">    if ((attr) == null || (obj) == null)</span>
+<span class="fc" id="L258">	return def;</span>
+<span class="fc" id="L259">    p = agxget(obj,attr);</span>
+<span class="pc bpc" id="L260" title="2 of 4 branches missed.">    if ((p) == null || p.charAt(0) == '\0')</span>
+<span class="nc" id="L261">	return def;</span>
+<span class="fc" id="L262">    rv = strtod (p, endp);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">    if (p == endp[0]) return def;  /* invalid double format */</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">    if (rv &lt; low) return low;</span>
+<span class="fc" id="L265">    else return rv;</span>
+} finally {
+<span class="fc" id="L267">LEAVING(&quot;d68314e4f20r79tt0cnmxugme&quot;,&quot;late_double&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;late_string&quot;, key=&quot;83xm6yc9q5h1bzufhsnv0v2up&quot;, definition=&quot;char *late_string(void *obj, attrsym_t * attr, char *def)&quot;)
+public static CString late_string(__ptr__ obj, ST_Agsym_s attr, CString def) {
+<span class="fc" id="L277">ENTERING(&quot;83xm6yc9q5h1bzufhsnv0v2up&quot;,&quot;late_string&quot;);</span>
+try {
+<span class="pc bpc" id="L279" title="1 of 4 branches missed.">    if ((attr) == null || (obj) == null)</span>
+<span class="fc" id="L280">	return def;</span>
+<span class="fc" id="L281">    return agxget(obj, attr);</span>
+} finally {
+<span class="fc" id="L283">LEAVING(&quot;83xm6yc9q5h1bzufhsnv0v2up&quot;,&quot;late_string&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;&quot;, key=&quot;8oon4q1mrublaru177xfntqgd&quot;, definition=&quot;char *late_nnstring(void *obj, attrsym_t * attr, char *def)&quot;)
+public static CString late_nnstring(__ptr__ obj, ST_Agsym_s attr, CString def) {
+<span class="fc" id="L292">ENTERING(&quot;8oon4q1mrublaru177xfntqgd&quot;,&quot;late_nnstring&quot;);</span>
+try {
+<span class="fc" id="L294">    CString rv = late_string(obj, attr, def);</span>
+<span class="pc bpc" id="L295" title="2 of 4 branches missed.">    if ((rv) == null || (rv.charAt(0) == '\0'))</span>
+<span class="nc" id="L296">	rv = def;</span>
+<span class="fc" id="L297">    return rv;</span>
+} finally {
+<span class="fc" id="L299">LEAVING(&quot;8oon4q1mrublaru177xfntqgd&quot;,&quot;late_nnstring&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;late_bool&quot;, key=&quot;87ifze04q7qzigjj1fb9y9by2&quot;, definition=&quot;boolean late_bool(void *obj, attrsym_t * attr, int def)&quot;)
+public static boolean late_bool(__ptr__ obj, ST_Agsym_s attr, int def) {
+<span class="fc" id="L309">ENTERING(&quot;87ifze04q7qzigjj1fb9y9by2&quot;,&quot;late_bool&quot;);</span>
+try {
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">if (attr == null)</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">	return def!=0;</span>
+<span class="nc" id="L313">UNSUPPORTED(&quot;a0kh1y5n8u59z0xo7mag3zmt6&quot;); //     return mapbool(agxget(obj, attr));</span>
+<span class="nc" id="L314">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L316">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L318">LEAVING(&quot;87ifze04q7qzigjj1fb9y9by2&quot;,&quot;late_bool&quot;);</span>
+}
+}
+
+
+
+
+/* union-find */
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;&quot;, key=&quot;aeq0acpkhfv3gd5jx8op4jf18&quot;, definition=&quot;node_t *UF_find(node_t * n)&quot;)
+public static ST_Agnode_s UF_find(ST_Agnode_s n) {
+<span class="fc" id="L329">ENTERING(&quot;aeq0acpkhfv3gd5jx8op4jf18&quot;,&quot;UF_find&quot;);</span>
+try {
+<span class="fc bfc" id="L331" title="All 4 branches covered.">    while (ND_UF_parent(n)!=null &amp;&amp; (ND_UF_parent(n) != n)) {</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">	if (ND_UF_parent(ND_UF_parent(n))!=null)</span>
+<span class="fc" id="L333">	    ND_UF_parent(n, ND_UF_parent(ND_UF_parent(n)));</span>
+<span class="fc" id="L334">	n = ND_UF_parent(n);</span>
+    }
+<span class="fc" id="L336">    return n;</span>
+} finally {
+<span class="fc" id="L338">LEAVING(&quot;aeq0acpkhfv3gd5jx8op4jf18&quot;,&quot;UF_find&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;&quot;, key=&quot;9ldxwfr4vvijrvfcvs1hvdzrt&quot;, definition=&quot;node_t *UF_union(node_t * u, node_t * v)&quot;)
+public static ST_Agnode_s UF_union(ST_Agnode_s u, ST_Agnode_s v) {
+<span class="fc" id="L348">ENTERING(&quot;9ldxwfr4vvijrvfcvs1hvdzrt&quot;,&quot;UF_union&quot;);</span>
+try {
+<span class="fc bfc" id="L350" title="All 2 branches covered.">    if (u == v)</span>
+<span class="fc" id="L351">	return u;</span>
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">    if (ND_UF_parent(u) == null) {</span>
+<span class="fc" id="L353">	ND_UF_parent(u, u);</span>
+<span class="fc" id="L354">	ND_UF_size(u, 1);</span>
+    } else
+<span class="nc" id="L356">    UNSUPPORTED(&quot;35c97tyk6tzw1g527j6rp6xoo&quot;); // 	u = UF_find(u);</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">    if (ND_UF_parent(v) == null) {</span>
+<span class="fc" id="L358">	ND_UF_parent(v, v);</span>
+<span class="fc" id="L359">	ND_UF_size(v, 1);</span>
+    } else
+<span class="fc" id="L361">	v = UF_find(v);</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">    if (ND_id(u) &gt; ND_id(v)) {</span>
+<span class="nc" id="L363">	UNSUPPORTED(&quot;2igr3ntnkm6svji4pbnjlp54e&quot;); // 	ND_UF_parent(u) = v;</span>
+<span class="nc" id="L364">	UNSUPPORTED(&quot;3lht90i6tvxbr10meir8nvcic&quot;); // 	ND_UF_size(v) += ND_UF_size(u);</span>
+    } else {
+<span class="fc" id="L366">	ND_UF_parent(v, u);</span>
+<span class="fc" id="L367">	ND_UF_size(u, ND_UF_size(u) + ND_UF_size(v));</span>
+<span class="fc" id="L368">	v = u;</span>
+    }
+<span class="fc" id="L370">    return v;</span>
+} finally {
+<span class="fc" id="L372">LEAVING(&quot;9ldxwfr4vvijrvfcvs1hvdzrt&quot;,&quot;UF_union&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;UF_singleton&quot;, key=&quot;22k0u1imxyw06k9rizqlfz153&quot;, definition=&quot;void UF_singleton(node_t * u)&quot;)
+public static void UF_singleton(ST_Agnode_s u) {
+<span class="fc" id="L382">ENTERING(&quot;22k0u1imxyw06k9rizqlfz153&quot;,&quot;UF_singleton&quot;);</span>
+try {
+<span class="fc" id="L384">    ND_UF_size(u, 1);</span>
+<span class="fc" id="L385">    ND_UF_parent(u, null);</span>
+<span class="fc" id="L386">    ND_ranktype(u, NORMAL);</span>
+} finally {
+<span class="fc" id="L388">LEAVING(&quot;22k0u1imxyw06k9rizqlfz153&quot;,&quot;UF_singleton&quot;);</span>
+}
+<span class="fc" id="L390">}</span>
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;UF_setname&quot;, key=&quot;e0fn8xuzkdt0q8xoofl6j1txb&quot;, definition=&quot;void UF_setname(node_t * u, node_t * v)&quot;)
+public static void UF_setname(ST_Agnode_s u, ST_Agnode_s v) {
+<span class="fc" id="L398">ENTERING(&quot;e0fn8xuzkdt0q8xoofl6j1txb&quot;,&quot;UF_setname&quot;);</span>
+try {
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">    assert(u == UF_find(u));</span>
+<span class="fc" id="L401">    ND_UF_parent(u, v);</span>
+<span class="fc" id="L402">    ND_UF_size(v, ND_UF_size(v) + ND_UF_size(u));</span>
+} finally {
+<span class="fc" id="L404">LEAVING(&quot;e0fn8xuzkdt0q8xoofl6j1txb&quot;,&quot;UF_setname&quot;);</span>
+}
+<span class="fc" id="L406">}</span>
+
+
+/* from Glassner's Graphics Gems */
+private static final int W_DEGREE = 5;
+
+/*
+ *  Bezier : 
+ *	Evaluate a Bezier curve at a particular parameter value
+ *      Fill in control points for resulting sub-curves if &quot;Left&quot; and
+ *	&quot;Right&quot; are non-null.
+ * 
+ */
+//3 6p0ey2c2ujk2o7h221p0b4xon
+// pointf Bezier(pointf * V, int degree, double t, pointf * Left, pointf * Right) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;Bezier&quot;, key=&quot;6p0ey2c2ujk2o7h221p0b4xon&quot;, definition=&quot;pointf Bezier(pointf * V, int degree, double t, pointf * Left, pointf * Right)&quot;)
+public static ST_pointf Bezier(CArray&lt;ST_pointf&gt; V, int degree, double t, CArray&lt;ST_pointf&gt; Left, CArray&lt;ST_pointf&gt; Right) {
+// WARNING!! STRUCT
+<span class="fc" id="L425">return Bezier_w_(V, degree, t, Left, Right).copy();</span>
+}
+private static ST_pointf Bezier_w_(CArray&lt;ST_pointf&gt; V, int degree, double t, CArray&lt;ST_pointf&gt; Left, CArray&lt;ST_pointf&gt; Right) {
+<span class="fc" id="L428">ENTERING(&quot;6p0ey2c2ujk2o7h221p0b4xon&quot;,&quot;Bezier&quot;);</span>
+try {
+    int i, j;			/* Index variables      */
+<span class="fc" id="L431">    final CArray&lt;ST_pointf&gt; Vtemp[] = new CArray[] { CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),</span>
+<span class="fc" id="L432">    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),</span>
+<span class="fc" id="L433">    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),</span>
+<span class="fc" id="L434">    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),</span>
+<span class="fc" id="L435">    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),</span>
+<span class="fc" id="L436">    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf)};</span>
+
+    /* Copy control points  */
+<span class="fc bfc" id="L439" title="All 2 branches covered.">    for (j = 0; j &lt;= degree; j++) {</span>
+<span class="fc" id="L440">	Vtemp[0].get__(j).___(V.get__(j));</span>
+    }
+    
+    /* Triangle computation */
+<span class="fc bfc" id="L444" title="All 2 branches covered.">    for (i = 1; i &lt;= degree; i++) {</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">	for (j = 0; j &lt;= degree - i; j++) {</span>
+<span class="fc" id="L446">	    Vtemp[i].get__(j).x =</span>
+<span class="fc" id="L447">		(1.0 - t) * Vtemp[i - 1].get__(j).x + t * Vtemp[i - 1].get__(j + 1).x;</span>
+<span class="fc" id="L448">	    Vtemp[i].get__(j).y =</span>
+<span class="fc" id="L449">		(1.0 - t) * Vtemp[i - 1].get__(j).y + t * Vtemp[i - 1].get__(j + 1).y;</span>
+	}
+    }
+<span class="fc bfc" id="L452" title="All 2 branches covered.">    if (Left != null)</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">	for (j = 0; j &lt;= degree; j++)</span>
+<span class="fc" id="L454">	    Left.get__(j).___(Vtemp[j].get__(0));</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">    if (Right != null)</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">	for (j = 0; j &lt;= degree; j++)</span>
+<span class="fc" id="L457">	    Right.get__(j).___(Vtemp[degree - j].get__(j));</span>
+<span class="fc" id="L458">    return (Vtemp[degree].get__(0));</span>
+} finally {
+<span class="fc" id="L460">LEAVING(&quot;6p0ey2c2ujk2o7h221p0b4xon&quot;,&quot;Bezier&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;&quot;, key=&quot;3xll2b0v9nthwvx9dafq49t8s&quot;, definition=&quot;const char *safefile(const char *filename)&quot;)
+public static CString safefile(CString filename) {
+<span class="fc" id="L470">ENTERING(&quot;3xll2b0v9nthwvx9dafq49t8s&quot;,&quot;safefile&quot;);</span>
+try {
+<span class="fc" id="L472">	return null;</span>
+} finally {
+<span class="fc" id="L474">LEAVING(&quot;3xll2b0v9nthwvx9dafq49t8s&quot;,&quot;safefile&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;maptoken&quot;, key=&quot;2ihv17oajyaaaycirwsbgz1m7&quot;, definition=&quot;int maptoken(char *p, char **name, int *val)&quot;)
+public static int maptoken(CString p, CString name[], int val[]) {
+<span class="fc" id="L484">ENTERING(&quot;2ihv17oajyaaaycirwsbgz1m7&quot;,&quot;maptoken&quot;);</span>
+try {
+    int i;
+    CString q;
+<span class="fc bfc" id="L488" title="All 2 branches covered.">    for (i = 0; (q = name[i]) != null; i++)</span>
+<span class="pc bpc" id="L489" title="3 of 4 branches missed.">	if (p!=null &amp;&amp; (strcmp(p,q) == 0))</span>
+<span class="nc" id="L490">	    break;</span>
+<span class="fc" id="L491">    return val[i];</span>
+} finally {
+<span class="fc" id="L493">LEAVING(&quot;2ihv17oajyaaaycirwsbgz1m7&quot;,&quot;maptoken&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;mapBool&quot;, key=&quot;4esyuq2yqdaqoddgfqs24m5m3&quot;, definition=&quot;boolean mapBool(char *p, boolean dflt)&quot;)
+public static boolean mapBool(CString p, boolean dflt) {
+<span class="fc" id="L503">ENTERING(&quot;4esyuq2yqdaqoddgfqs24m5m3&quot;,&quot;mapBool&quot;);</span>
+try {
+<span class="pc bpc" id="L505" title="1 of 4 branches missed.">    if ((p) == null || (p.charAt(0) == '\0'))</span>
+<span class="fc" id="L506">	return dflt;</span>
+<span class="pc bpc" id="L507" title="1 of 2 branches missed.">    if (strcasecmp(p, new CString(&quot;false&quot;)) == 0)</span>
+<span class="fc" id="L508">	return false;</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">    if (strcasecmp(p, new CString(&quot;no&quot;)) == 0)</span>
+<span class="nc" id="L510">	return false;</span>
+<span class="nc bnc" id="L511" title="All 2 branches missed.">    if (strcasecmp(p, new CString(&quot;true&quot;)) == 0)</span>
+<span class="nc" id="L512">	return (true);</span>
+<span class="nc bnc" id="L513" title="All 2 branches missed.">    if (strcasecmp(p, new CString(&quot;yes&quot;)) == 0)</span>
+<span class="nc" id="L514">	return (true);</span>
+<span class="nc bnc" id="L515" title="All 2 branches missed.">    if (isdigit(p.charAt(0)))</span>
+<span class="nc bnc" id="L516" title="All 2 branches missed.">	return atoi(p)!=0;</span>
+    else
+<span class="nc" id="L518">	return dflt;</span>
+} finally {
+<span class="fc" id="L520">LEAVING(&quot;4esyuq2yqdaqoddgfqs24m5m3&quot;,&quot;mapBool&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;mapbool&quot;, key=&quot;ehkvqh6bwf4jw3mj1w5p7a8m8&quot;, definition=&quot;boolean mapbool(char *p)&quot;)
+public static boolean mapbool(CString p) {
+<span class="fc" id="L530">ENTERING(&quot;ehkvqh6bwf4jw3mj1w5p7a8m8&quot;,&quot;mapbool&quot;);</span>
+try {
+<span class="fc" id="L532">    return mapBool (p, false);</span>
+} finally {
+<span class="fc" id="L534">LEAVING(&quot;ehkvqh6bwf4jw3mj1w5p7a8m8&quot;,&quot;mapbool&quot;);</span>
+}
+}
+
+
+
+
+//3 37hgj44s94wf9bmz16he85pgq
+// pointf dotneato_closest(splines * spl, pointf pt) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;dotneato_closest&quot;, key=&quot;37hgj44s94wf9bmz16he85pgq&quot;, definition=&quot;pointf dotneato_closest(splines * spl, pointf pt)&quot;)
+public static ST_pointf dotneato_closest(ST_splines spl, final ST_pointf pt) {
+<span class="fc" id="L546">ENTERING(&quot;37hgj44s94wf9bmz16he85pgq&quot;,&quot;dotneato_closest&quot;);</span>
+try {
+<span class="fc" id="L548">    return dotneato_closest_ (spl, pt.copy()).copy();</span>
+} finally {
+<span class="fc" id="L550">LEAVING(&quot;37hgj44s94wf9bmz16he85pgq&quot;,&quot;dotneato_closest&quot;);</span>
+}	
+}
+private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
+     int i, j, k, besti, bestj;
+     double bestdist2, d2, dlow2, dhigh2; /* squares of distances */
+     double low, high, t;
+     // final ST_pointf c[] = new ST_pointf[] {new ST_pointf(),new ST_pointf(),new ST_pointf(),new ST_pointf()};
+<span class="fc" id="L558">	 final CArray&lt;ST_pointf&gt; c = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+<span class="fc" id="L559">     final ST_pointf pt2 = new ST_pointf();</span>
+<span class="fc" id="L560">     final ST_bezier bz = new ST_bezier();</span>
+<span class="fc" id="L561">     besti = bestj = -1;</span>
+<span class="fc" id="L562">     bestdist2 = 1e+38;</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">     for (i = 0; i &lt; spl.size; i++) {</span>
+<span class="fc" id="L564"> 	bz.___(spl.list.get__(i));</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered."> 	for (j = 0; j &lt; bz.size; j++) {</span>
+<span class="fc" id="L566"> 	    final ST_pointf b = new ST_pointf();</span>
+<span class="fc" id="L567"> 	    b.x = bz.list.get__(j).x;</span>
+<span class="fc" id="L568"> 	    b.y = bz.list.get__(j).y;</span>
+<span class="fc" id="L569"> 	    d2 = DIST2(b, pt);</span>
+<span class="fc bfc" id="L570" title="All 4 branches covered."> 	    if ((bestj == -1) || (d2 &lt; bestdist2)) {</span>
+<span class="fc" id="L571"> 		besti = i;</span>
+<span class="fc" id="L572"> 		bestj = j;</span>
+<span class="fc" id="L573"> 		bestdist2 = d2;</span>
+ 	    }
+ 	}
+     }
+<span class="fc" id="L577">  	bz.___(spl.list.get__(besti));</span>
+     /* Pick best Bezier. If bestj is the last point in the B-spline, decrement.
+      * Then set j to be the first point in the corresponding Bezier by dividing
+      * then multiplying be 3. Thus, 0,1,2 =&gt; 0; 3,4,5 =&gt; 3, etc.
+      */
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">     if (bestj == bz.size-1)</span>
+<span class="nc" id="L583"> 	bestj--;</span>
+<span class="fc" id="L584">     j = 3*(bestj / 3);</span>
+<span class="fc bfc" id="L585" title="All 2 branches covered.">     for (k = 0; k &lt; 4; k++) {</span>
+<span class="fc" id="L586"> 	  	c.get__(k).x = bz.list.get__(j + k).x;</span>
+<span class="fc" id="L587"> 	  	c.get__(k).y = bz.list.get__(j + k).y;</span>
+     }
+<span class="fc" id="L589">     low = 0.0;</span>
+<span class="fc" id="L590">     high = 1.0;</span>
+<span class="fc" id="L591">     dlow2 = DIST2(c.get__(0), pt);</span>
+<span class="fc" id="L592">     dhigh2 = DIST2(c.get__(3), pt);</span>
+     do {
+<span class="fc" id="L594"> 	t = (low + high) / 2.0;</span>
+<span class="fc" id="L595"> 	pt2.___(Bezier(c, 3, t, null, null));</span>
+<span class="pc bpc" id="L596" title="1 of 2 branches missed."> 	if (Math.abs(dlow2 - dhigh2) &lt; 1.0)</span>
+<span class="fc" id="L597"> 	    break;</span>
+<span class="nc bnc" id="L598" title="All 2 branches missed."> 	if (Math.abs(high - low) &lt; .00001)</span>
+<span class="nc" id="L599"> 	    break;</span>
+<span class="nc" id="L600">UNSUPPORTED(&quot;6apa9aoby9j8a0eanbfhy5mn2&quot;); // 	if (dlow2 &lt; dhigh2) {</span>
+<span class="nc" id="L601">UNSUPPORTED(&quot;6jttyuryfaxa193mme86dqf58&quot;); // 	    high = t;</span>
+<span class="nc" id="L602">UNSUPPORTED(&quot;6avwplrum9i9qi3g9wl6yvz04&quot;); // 	    dhigh2 = DIST2(pt2, pt);</span>
+<span class="nc" id="L603">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L604">UNSUPPORTED(&quot;556vs5i22602clhs1p3htz7vk&quot;); // 	    low = t;</span>
+<span class="nc" id="L605">UNSUPPORTED(&quot;507tgq81szei2ge3miiak4b1v&quot;); // 	    dlow2 = DIST2(pt2, pt);</span>
+<span class="nc" id="L606">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L607">     } while (true);</span>
+<span class="fc" id="L608">      return pt2;</span>
+}
+
+
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;common_init_node&quot;, key=&quot;cr81drt18h5feqzxyh3jb0u49&quot;, definition=&quot;void common_init_node(node_t * n)&quot;)
+public static void common_init_node(Globals zz, ST_Agnode_s n) {
+<span class="fc" id="L619">ENTERING(&quot;cr81drt18h5feqzxyh3jb0u49&quot;,&quot;common_init_node&quot;);</span>
+try {
+<span class="fc" id="L621">	ST_fontinfo fi = new ST_fontinfo();</span>
+    CString str;
+<span class="fc" id="L623">    ND_width(n,</span>
+<span class="fc" id="L624">	late_double(n, zz.N_width, DEFAULT_NODEWIDTH, MIN_NODEWIDTH));</span>
+<span class="fc" id="L625">    ND_height(n,</span>
+<span class="fc" id="L626">	late_double(n, zz.N_height, DEFAULT_NODEHEIGHT, MIN_NODEHEIGHT));</span>
+<span class="fc" id="L627">    ND_shape(n,</span>
+<span class="fc" id="L628">	bind_shape(zz, late_nnstring(n, zz.N_shape, new CString(DEFAULT_NODESHAPE)), n));</span>
+<span class="fc" id="L629">    str = agxget(n, zz.N_label);</span>
+<span class="fc" id="L630">    fi.fontsize = late_double(n, zz.N_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);</span>
+<span class="fc" id="L631">    fi.fontname = late_nnstring(n, zz.N_fontname, new CString(&quot;Times-Roman&quot;));</span>
+<span class="fc" id="L632">    fi.fontcolor = late_nnstring(n, zz.N_fontcolor, new CString(&quot;black&quot;));</span>
+<span class="fc" id="L633">    ND_label(n, make_label(zz, n, str,</span>
+<span class="pc bpc" id="L634" title="1 of 4 branches missed.">	        ((aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE) | ( (shapeOf(n) == EN_shape_kind.SH_RECORD) ? LT_RECD : LT_NONE)),</span>
+		fi.fontsize, fi.fontname, fi.fontcolor));
+<span class="pc bpc" id="L636" title="5 of 6 branches missed.">    if (zz.N_xlabel!=null &amp;&amp; (str = agxget(n, zz.N_xlabel))!=null &amp;&amp; (str.charAt(0)!='\0')) {</span>
+<span class="nc" id="L637">UNSUPPORTED(&quot;4ua9vld76wpovsm1celv2ff6e&quot;); // 	ND_xlabel(n) = make_label((void*)n, str, (aghtmlstr(str) ? (1 &lt;&lt; 1) : (0 &lt;&lt; 1)),</span>
+<span class="nc" id="L638">UNSUPPORTED(&quot;b0zm6fkpjlt9jacykbgugjodg&quot;); // 				fi.fontsize, fi.fontname, fi.fontcolor);</span>
+<span class="nc" id="L639">UNSUPPORTED(&quot;ail0d4qmxj2aqh2q721inwgqu&quot;); // 	GD_has_labels(agraphof(n)) |= (1 &lt;&lt; 4);</span>
+    }
+    
+<span class="fc" id="L642">    ND_showboxes(n, late_int(n, zz.N_showboxes, 0, 0));</span>
+<span class="fc" id="L643">    ND_shape(n).fns.initfn.exe(zz, n);</span>
+} finally {
+<span class="fc" id="L645">LEAVING(&quot;cr81drt18h5feqzxyh3jb0u49&quot;,&quot;common_init_node&quot;);</span>
+}
+<span class="fc" id="L647">}</span>
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;initFontEdgeAttr&quot;, key=&quot;d2v8l80y27ue2fag5c0qplah8&quot;, definition=&quot;static void initFontEdgeAttr(edge_t * e, struct fontinfo *fi)&quot;)
+public static void initFontEdgeAttr(Globals zz, ST_Agedge_s e, ST_fontinfo fi) {
+<span class="fc" id="L655">ENTERING(&quot;d2v8l80y27ue2fag5c0qplah8&quot;,&quot;initFontEdgeAttr&quot;);</span>
+try {
+<span class="fc" id="L657">    fi.fontsize = late_double(e, zz.E_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);</span>
+<span class="fc" id="L658">    fi.fontname = late_nnstring(e, zz.E_fontname, new CString(&quot;Times-Roman&quot;));</span>
+<span class="fc" id="L659">    fi.fontcolor = late_nnstring(e, zz.E_fontcolor, new CString(&quot;black&quot;));</span>
+} finally {
+<span class="fc" id="L661">LEAVING(&quot;d2v8l80y27ue2fag5c0qplah8&quot;,&quot;initFontEdgeAttr&quot;);</span>
+}
+<span class="fc" id="L663">}</span>
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;initFontLabelEdgeAttr&quot;, key=&quot;ak3pxrdrq900wymudwnjmbito&quot;, definition=&quot;static void initFontLabelEdgeAttr(edge_t * e, struct fontinfo *fi, 		      struct fontinfo *lfi)&quot;)
+public static void initFontLabelEdgeAttr(Globals zz, ST_Agedge_s e, ST_fontinfo fi, ST_fontinfo lfi) {
+<span class="fc" id="L671">ENTERING(&quot;ak3pxrdrq900wymudwnjmbito&quot;,&quot;initFontLabelEdgeAttr&quot;);</span>
+try {
+<span class="pc bpc" id="L673" title="1 of 2 branches missed.">	if ((fi.fontname) == null) initFontEdgeAttr(zz, e, fi);</span>
+<span class="fc" id="L674">    lfi.fontsize = late_double(e, zz.E_labelfontsize, fi.fontsize, MIN_FONTSIZE);</span>
+<span class="fc" id="L675">    lfi.fontname = late_nnstring(e, zz.E_labelfontname, fi.fontname);</span>
+<span class="fc" id="L676">    lfi.fontcolor = late_nnstring(e, zz.E_labelfontcolor, fi.fontcolor);</span>
+} finally {
+<span class="fc" id="L678">LEAVING(&quot;ak3pxrdrq900wymudwnjmbito&quot;,&quot;initFontLabelEdgeAttr&quot;);</span>
+}
+<span class="fc" id="L680">}</span>
+
+
+
+
+/* noClip:
+ * Return true if head/tail end of edge should not be clipped
+ * to node.
+ */
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;noClip&quot;, key=&quot;bgnk1zwht9rwx6thmly98iofb&quot;, definition=&quot;static boolean  noClip(edge_t *e, attrsym_t* sym)&quot;)
+public static boolean noClip(ST_Agedge_s e, ST_Agsym_s sym) {
+<span class="fc" id="L692">ENTERING(&quot;bgnk1zwht9rwx6thmly98iofb&quot;,&quot;noClip&quot;);</span>
+try {
+    CString str;
+<span class="fc" id="L695">    boolean		rv = false;</span>
+    
+<span class="pc bpc" id="L697" title="1 of 2 branches missed.">    if (sym!=null) {	/* mapbool isn't a good fit, because we want &quot;&quot; to mean true */</span>
+<span class="nc" id="L698">	str = agxget(e,sym);</span>
+<span class="nc bnc" id="L699" title="All 6 branches missed.">	if (str!=null &amp;&amp; str.charAt(0)!='\0') rv = !mapbool(str);</span>
+<span class="nc" id="L700">	else rv = false;</span>
+    }
+<span class="fc" id="L702">    return rv;</span>
+} finally {
+<span class="fc" id="L704">LEAVING(&quot;bgnk1zwht9rwx6thmly98iofb&quot;,&quot;noClip&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;chkPort&quot;, key=&quot;9vnr1bc7p533acazoxbhbfmx3&quot;, definition=&quot;static port chkPort (port (*pf)(node_t*, char*, char*), node_t* n, char* s)&quot;)
+public static ST_port chkPort(Globals zz, CFunction pf, ST_Agnode_s n, CString s) {
+// WARNING!! STRUCT
+<span class="fc" id="L715">return chkPort_w_(zz, pf, n, s).copy();</span>
+}
+private static ST_port chkPort_w_(Globals zz, CFunction pf, ST_Agnode_s n, CString s) {
+<span class="fc" id="L718">ENTERING(&quot;9vnr1bc7p533acazoxbhbfmx3&quot;,&quot;chkPort&quot;);</span>
+try {
+<span class="fc" id="L720">    final ST_port pt = new ST_port();</span>
+<span class="fc" id="L721">	CString cp=null;</span>
+<span class="pc bpc" id="L722" title="1 of 2 branches missed.">	if(s!=null)</span>
+<span class="fc" id="L723">		cp= strchr(s,':');</span>
+<span class="pc bpc" id="L724" title="1 of 2 branches missed.">    if (cp!=null) {</span>
+<span class="nc" id="L725">	UNSUPPORTED(&quot;cbuf05ko7kaxq2n9zw35l5v2h&quot;); // 	*cp = '\0';</span>
+<span class="nc" id="L726">	UNSUPPORTED(&quot;7ofc3q8txvlvus6qwefbnbaxu&quot;); // 	pt = pf(n, s, cp+1);</span>
+<span class="nc" id="L727">	UNSUPPORTED(&quot;971i954brvgqb35cftazlqhon&quot;); // 	*cp = ':';</span>
+<span class="nc" id="L728">	UNSUPPORTED(&quot;2o9oidtrr5gspl1dh6vnz7mlz&quot;); // 	pt.name = cp+1;</span>
+    }
+    else
+<span class="fc" id="L731">	pt.___((ST_port) pf.exe(zz, n, s, null));</span>
+<span class="fc" id="L732">	pt.name = s;</span>
+<span class="fc" id="L733">    return pt;</span>
+} finally {
+<span class="fc" id="L735">LEAVING(&quot;9vnr1bc7p533acazoxbhbfmx3&quot;,&quot;chkPort&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;common_init_edge&quot;, key=&quot;3aqh64lxwv4da2snfe7fvr45b&quot;, definition=&quot;int common_init_edge(edge_t * e)&quot;)
+public static int common_init_edge(Globals zz, ST_Agedge_s e) {
+<span class="fc" id="L744">ENTERING(&quot;3aqh64lxwv4da2snfe7fvr45b&quot;,&quot;common_init_edge&quot;);</span>
+try {
+    CString str;
+<span class="fc" id="L747">    int r = 0;</span>
+<span class="fc" id="L748">    final ST_fontinfo fi = new ST_fontinfo();</span>
+<span class="fc" id="L749">    final ST_fontinfo lfi = new ST_fontinfo();</span>
+<span class="fc" id="L750">    ST_Agraph_s sg = agraphof(agtail(e));</span>
+    
+<span class="fc" id="L752">    fi.fontname = null;</span>
+<span class="fc" id="L753">    lfi.fontname = null;</span>
+<span class="pc bpc" id="L754" title="1 of 6 branches missed.">    if (zz.E_label!=null &amp;&amp; (str = agxget(e, zz.E_label))!=null &amp;&amp; (str.charAt(0)!='\0')) {</span>
+<span class="fc" id="L755">	r = 1;</span>
+<span class="fc" id="L756">	initFontEdgeAttr(zz, e, fi);</span>
+<span class="pc bpc" id="L757" title="1 of 2 branches missed.">	ED_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),</span>
+				fi.fontsize, fi.fontname, fi.fontcolor));
+<span class="fc" id="L759">	GD_has_labels(sg, GD_has_labels(sg) | EDGE_LABEL);</span>
+<span class="fc" id="L760">	ED_label_ontop(e,</span>
+<span class="fc" id="L761">	    mapbool(late_string(e, zz.E_label_float, new CString(&quot;false&quot;))));</span>
+    }
+    
+    
+<span class="pc bpc" id="L765" title="5 of 6 branches missed.">    if (zz.E_xlabel!=null &amp;&amp; (str = agxget(e, zz.E_xlabel))!=null &amp;&amp; (str.charAt(0)!='\0')) {</span>
+<span class="nc" id="L766">UNSUPPORTED(&quot;1j3mhgq7abuh3n19q2jtjddbc&quot;); // 	if (!fi.fontname)</span>
+<span class="nc" id="L767">UNSUPPORTED(&quot;bmqo2g5g107quod3h31r8iudr&quot;); // 	    initFontEdgeAttr(e, &amp;fi);</span>
+<span class="nc" id="L768">UNSUPPORTED(&quot;3s7kg9x748riuy3tm697s6e8t&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xlabel) = make_label((void*)e, str, (aghtmlstr(str) ? (1 &lt;&lt; 1) : (0 &lt;&lt; 1)),</span>
+<span class="nc" id="L769">UNSUPPORTED(&quot;b0zm6fkpjlt9jacykbgugjodg&quot;); // 				fi.fontsize, fi.fontname, fi.fontcolor);</span>
+<span class="nc" id="L770">UNSUPPORTED(&quot;c078bypfszv0nsvp1nc0x28wx&quot;); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))-&gt;data))-&gt;has_labels) |= (1 &lt;&lt; 5);</span>
+    }
+    
+    
+    /* vladimir */
+<span class="pc bpc" id="L775" title="1 of 6 branches missed.">    if (zz.E_headlabel!=null &amp;&amp; (str = agxget(e, zz.E_headlabel))!=null &amp;&amp; (str.charAt(0)!='\0')) {</span>
+<span class="fc" id="L776">    	initFontLabelEdgeAttr(zz, e, fi, lfi);</span>
+<span class="pc bpc" id="L777" title="1 of 2 branches missed.">    	ED_head_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),</span>
+				lfi.fontsize, lfi.fontname, lfi.fontcolor));
+<span class="fc" id="L779">    	GD_has_labels(sg, GD_has_labels(sg) | HEAD_LABEL);</span>
+    }
+<span class="pc bpc" id="L781" title="5 of 6 branches missed.">    if (zz.E_taillabel!=null &amp;&amp; (str = agxget(e, zz.E_taillabel))!=null &amp;&amp; (str.charAt(0)!='\0')) {</span>
+<span class="nc" id="L782">    	initFontLabelEdgeAttr(zz, e, fi, lfi);</span>
+<span class="nc bnc" id="L783" title="All 2 branches missed.">    	ED_tail_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),</span>
+				lfi.fontsize, lfi.fontname, lfi.fontcolor));
+<span class="nc" id="L785">    	GD_has_labels(sg, GD_has_labels(sg) | TAIL_LABEL);</span>
+    }
+    /* end vladimir */
+    
+    /* We still accept ports beginning with colons but this is deprecated 
+     * That is, we allow tailport = &quot;:abc&quot; as well as the preferred 
+     * tailport = &quot;abc&quot;.
+     */
+<span class="fc" id="L793">    str = agget(zz, e, TAIL_ID);</span>
+    /* libgraph always defines tailport/headport; libcgraph doesn't */
+<span class="fc bfc" id="L795" title="All 2 branches covered.">    if ((str) == null) str = new CString(&quot;&quot;);</span>
+<span class="pc bpc" id="L796" title="1 of 4 branches missed.">    if (str!=null &amp;&amp; str.charAt(0)!='\0')</span>
+<span class="fc" id="L797">    ND_has_port(agtail(e), true);</span>
+<span class="fc" id="L798">    ED_tail_port(e, chkPort (zz, ND_shape(agtail(e)).fns.portfn, agtail(e), str));</span>
+<span class="pc bpc" id="L799" title="1 of 2 branches missed.">    if (noClip(e, zz.E_tailclip))</span>
+<span class="nc" id="L800">    UNSUPPORTED(&quot;cg4z67u0dm6h9nrcx8kkalnlt&quot;); // 	ED_tail_port(e).clip = FALSE;</span>
+<span class="fc" id="L801">    str = agget(zz, e, HEAD_ID);</span>
+    
+    /* libgraph always defines tailport/headport; libcgraph doesn't */
+<span class="pc bpc" id="L804" title="1 of 2 branches missed.">    if ((str) == null) str = new CString(&quot;&quot;);</span>
+<span class="pc bpc" id="L805" title="2 of 4 branches missed.">    if (str!=null &amp;&amp; str.charAt(0)!='\0')</span>
+<span class="nc" id="L806">    ND_has_port(aghead(e), true);</span>
+<span class="fc" id="L807">    ED_head_port(e, chkPort(zz, ND_shape(aghead(e)).fns.portfn, aghead(e), str));</span>
+<span class="pc bpc" id="L808" title="1 of 2 branches missed.">    if (noClip(e, zz.E_headclip))</span>
+<span class="nc" id="L809">    UNSUPPORTED(&quot;ayqscz30ekhcje94wh4ib1hcu&quot;); // 	ED_head_port(e).clip = FALSE;</span>
+<span class="fc" id="L810">    return r;</span>
+} finally {
+<span class="fc" id="L812">LEAVING(&quot;3aqh64lxwv4da2snfe7fvr45b&quot;,&quot;common_init_edge&quot;);</span>
+}
+}
+
+
+
+
+//3 3mkqvtbyq9j8ktzil6t7vakg5
+// static boxf addLabelBB(boxf bb, textlabel_t * lp, boolean flipxy) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;addLabelBB&quot;, key=&quot;3mkqvtbyq9j8ktzil6t7vakg5&quot;, definition=&quot;static boxf addLabelBB(boxf bb, textlabel_t * lp, boolean flipxy)&quot;)
+public static ST_boxf addLabelBB(final ST_boxf bb, ST_textlabel_t lp, boolean flipxy) {
+// WARNING!! STRUCT
+<span class="fc" id="L825">return addLabelBB_w_(bb.copy(), lp, flipxy).copy();</span>
+}
+private static ST_boxf addLabelBB_w_(final ST_boxf bb, ST_textlabel_t lp, boolean flipxy) {
+<span class="fc" id="L828">ENTERING(&quot;3mkqvtbyq9j8ktzil6t7vakg5&quot;,&quot;addLabelBB&quot;);</span>
+try {
+    double width, height;
+<span class="fc" id="L831">    final ST_pointf p = new ST_pointf();</span>
+<span class="fc" id="L832">    p.___(lp.pos);</span>
+    double min, max;
+<span class="fc bfc" id="L834" title="All 2 branches covered.">    if (flipxy) {</span>
+<span class="fc" id="L835">	height = lp.dimen.x;</span>
+<span class="fc" id="L836">	width = lp.dimen.y;</span>
+    }
+    else {
+<span class="fc" id="L839">	width = lp.dimen.x;</span>
+<span class="fc" id="L840">	height = lp.dimen.y;</span>
+    }
+<span class="fc" id="L842">    min = p.x - width / 2.;</span>
+<span class="fc" id="L843">    max = p.x + width / 2.;</span>
+<span class="pc bpc" id="L844" title="1 of 2 branches missed.">    if (min &lt; bb.LL.x)</span>
+<span class="nc" id="L845">	bb.LL.x = min;</span>
+<span class="fc bfc" id="L846" title="All 2 branches covered.">    if (max &gt; bb.UR.x)</span>
+<span class="fc" id="L847">	bb.UR.x = max;</span>
+<span class="fc" id="L848">    min = p.y - height / 2.;</span>
+<span class="fc" id="L849">    max = p.y + height / 2.;</span>
+<span class="pc bpc" id="L850" title="1 of 2 branches missed.">    if (min &lt; bb.LL.y)</span>
+<span class="nc" id="L851">	bb.LL.y = min;</span>
+<span class="pc bpc" id="L852" title="1 of 2 branches missed.">    if (max &gt; bb.UR.y)</span>
+<span class="nc" id="L853">	bb.UR.y = max;</span>
+<span class="fc" id="L854">    return bb;</span>
+} finally {
+<span class="fc" id="L856">LEAVING(&quot;3mkqvtbyq9j8ktzil6t7vakg5&quot;,&quot;addLabelBB&quot;);</span>
+}
+}
+
+
+
+
+//3 bz7kjecium6a7xa39qfobwwnc
+// void updateBB(graph_t * g, textlabel_t * lp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;updateBB&quot;, key=&quot;bz7kjecium6a7xa39qfobwwnc&quot;, definition=&quot;void updateBB(graph_t * g, textlabel_t * lp)&quot;)
+public static void updateBB(ST_Agraph_s g, ST_textlabel_t lp) {
+<span class="fc" id="L868">ENTERING(&quot;bz7kjecium6a7xa39qfobwwnc&quot;,&quot;updateBB&quot;);</span>
+try {
+<span class="fc" id="L870">    GD_bb(g).___(addLabelBB(GD_bb(g), lp, GD_flip(g)));</span>
+} finally {
+<span class="fc" id="L872">LEAVING(&quot;bz7kjecium6a7xa39qfobwwnc&quot;,&quot;updateBB&quot;);</span>
+}
+<span class="fc" id="L874">}</span>
+
+
+
+
+
+
+
+
+/* htmlEntityUTF8:
+ * substitute html entities like: &amp;#123; and: &amp;amp; with the UTF8 equivalents
+ * check for invalid utf8. If found, treat a single byte as Latin-1, convert it to
+ * utf8 and warn the user.
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;htmlEntityUTF8&quot;, key=&quot;9yungx7uxqkmzfh2ub6gs9l48&quot;, definition=&quot;char* htmlEntityUTF8 (char* s, graph_t* g)&quot;)
+public static CString htmlEntityUTF8(CString s, ST_Agraph_s g) {
+<span class="fc" id="L891">ENTERING(&quot;9yungx7uxqkmzfh2ub6gs9l48&quot;,&quot;htmlEntityUTF8&quot;);</span>
+try {
+<span class="pc bpc" id="L893" title="1 of 2 branches missed.">if (s!=null) return s.duplicate();</span>
+<span class="nc" id="L894">UNSUPPORTED(&quot;1xtgr84lklglr4gz1i1m3t30&quot;); // char* htmlEntityUTF8 (char* s, graph_t* g)</span>
+<span class="nc" id="L895">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L896">UNSUPPORTED(&quot;a86rc8dlb4bgtjxjhv43cnmup&quot;); //     static graph_t* lastg;</span>
+<span class="nc" id="L897">UNSUPPORTED(&quot;1gn88eczuyt54egtiulqe7y7h&quot;); //     static boolean warned;</span>
+<span class="nc" id="L898">UNSUPPORTED(&quot;3rzf3h52xn02xrxie111286a0&quot;); //     char*  ns;</span>
+<span class="nc" id="L899">UNSUPPORTED(&quot;9gou5otj6s39l2cbyc8i5i5lq&quot;); //     agxbuf xb;</span>
+<span class="nc" id="L900">UNSUPPORTED(&quot;esg3s800dx899v69pkng2kavv&quot;); //     unsigned char buf[BUFSIZ];</span>
+<span class="nc" id="L901">UNSUPPORTED(&quot;10sir32iwi5l2jyfgp65pihto&quot;); //     unsigned char c;</span>
+<span class="nc" id="L902">UNSUPPORTED(&quot;4urrp9tny84a3cm8ycya896x3&quot;); //     unsigned int v;</span>
+<span class="nc" id="L903">UNSUPPORTED(&quot;d5druw9z4e87khtgyeivjngvc&quot;); //     int ignored;</span>
+<span class="nc" id="L904">UNSUPPORTED(&quot;4fymyfhfc3ddededhxw7cs671&quot;); //     int uc;</span>
+<span class="nc" id="L905">UNSUPPORTED(&quot;d6z43cxggqxq7iq4puyluzkfn&quot;); //     int ui;</span>
+<span class="nc" id="L906">UNSUPPORTED(&quot;4pgl4pn1cad2whf242bntmjre&quot;); //     (void) ignored;</span>
+<span class="nc" id="L907">UNSUPPORTED(&quot;t65eqheg8dxzi237a648t66j&quot;); //     if (lastg != g) {</span>
+<span class="nc" id="L908">UNSUPPORTED(&quot;emyoumradju26mhebq2bewtva&quot;); // 	lastg = g;</span>
+<span class="nc" id="L909">UNSUPPORTED(&quot;9ys85d2ctjb1a9ra0n11o2a2r&quot;); // 	warned = 0;</span>
+<span class="nc" id="L910">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L911">UNSUPPORTED(&quot;3jwm77zyv02ukrvjv9jppejf7&quot;); //     agxbinit(&amp;xb, BUFSIZ, buf);</span>
+<span class="nc" id="L912">UNSUPPORTED(&quot;11zj3p308ttro04hrzowx0vrh&quot;); //     while ((c = *(unsigned char*)s++)) {</span>
+<span class="nc" id="L913">UNSUPPORTED(&quot;3xqp191v0egfea0z3ds5p1mjt&quot;); //         if (c &lt; 0xC0)</span>
+<span class="nc" id="L914">UNSUPPORTED(&quot;4j200801m87vnfrkblygi6ucj&quot;); // 	    /*</span>
+<span class="nc" id="L915">UNSUPPORTED(&quot;1egwnjpl995mff91kquf9ikvl&quot;); // 	     * Handles properly formed UTF-8 characters between</span>
+<span class="nc" id="L916">UNSUPPORTED(&quot;8rfd02x8qlye0oo8ro9u9g8ya&quot;); // 	     * 0x01 and 0x7F.  Also treats \0 and naked trail</span>
+<span class="nc" id="L917">UNSUPPORTED(&quot;49xkviec8w4s3zvlq13991yqh&quot;); // 	     * bytes 0x80 to 0xBF as valid characters representing</span>
+<span class="nc" id="L918">UNSUPPORTED(&quot;bg2026u05g8jo9nm9pr39cknl&quot;); // 	     * themselves.</span>
+<span class="nc" id="L919">UNSUPPORTED(&quot;20m1lc1moer8x00tx9ceto0iw&quot;); // 	     */</span>
+<span class="nc" id="L920">UNSUPPORTED(&quot;6g3zbtp7zrl9i7jz1if5yi7rj&quot;); //             uc = 0;</span>
+<span class="nc" id="L921">UNSUPPORTED(&quot;5ks80mtyizjvlnrh1bwebqrx7&quot;); //         else if (c &lt; 0xE0)</span>
+<span class="nc" id="L922">UNSUPPORTED(&quot;2gr59wt9ibszrzwii40dqyd5b&quot;); //             uc = 1;</span>
+<span class="nc" id="L923">UNSUPPORTED(&quot;2su1o4swg92stlgi53k4ydm5u&quot;); //         else if (c &lt; 0xF0)</span>
+<span class="nc" id="L924">UNSUPPORTED(&quot;c0zrulbhqoupyvbwpwapfpc70&quot;); //             uc = 2;</span>
+<span class="nc" id="L925">UNSUPPORTED(&quot;dveaae8p8nhz8gosmtiftudrz&quot;); //         else if (c &lt; 0xF8)</span>
+<span class="nc" id="L926">UNSUPPORTED(&quot;a4c1bzq46y652vgwpxsruptth&quot;); //             uc = 3;</span>
+<span class="nc" id="L927">UNSUPPORTED(&quot;3jir07ymknf0hmb9pv9x4dr3o&quot;); //         else {</span>
+<span class="nc" id="L928">UNSUPPORTED(&quot;ar52jlyh4qqazbcbvntg2wet6&quot;); //             uc = -1;</span>
+<span class="nc" id="L929">UNSUPPORTED(&quot;ame11lb7ylv3rp1nhtuq383du&quot;); //             if (!warned) {</span>
+<span class="nc" id="L930">UNSUPPORTED(&quot;7acv020k6kt3q8tholp3ex0qa&quot;); //                 agerr(AGWARN, &quot;UTF8 codes &gt; 4 bytes are not currently supported (graph %s) - treated as Latin-1. Perhaps \&quot;-Gcharset=latin1\&quot; is needed?\n&quot;, agnameof(g));</span>
+<span class="nc" id="L931">UNSUPPORTED(&quot;qr4o1w9xvn1ayc52y0f4c8bh&quot;); //                 warned = 1;</span>
+<span class="nc" id="L932">UNSUPPORTED(&quot;7g94ubxa48a1yi3mf9v521b7c&quot;); //             }</span>
+<span class="nc" id="L933">UNSUPPORTED(&quot;ejqmh8ox9uoy02anzqhcxcrro&quot;); //             c = cvtAndAppend (c, &amp;xb);</span>
+<span class="nc" id="L934">UNSUPPORTED(&quot;4mhlpjofolwivhm0tl8cxznly&quot;); //         }</span>
+<span class="nc" id="L935">UNSUPPORTED(&quot;8n9ts84r09bm29qdb7v2og087&quot;); // 	    if (uc == 0 &amp;&amp; c == '&amp;') {</span>
+<span class="nc" id="L936">UNSUPPORTED(&quot;3cziqu94ggcy3m9kpbpdefqgk&quot;); // 		/* replace html entity sequences like: &amp;amp;</span>
+<span class="nc" id="L937">UNSUPPORTED(&quot;1c1fqb40szvpdlekj4as5qcqq&quot;); // 		 * and: &amp;#123; with their UTF8 equivalents */</span>
+<span class="nc" id="L938">UNSUPPORTED(&quot;buyl72klnvh12cf4m578joukc&quot;); // 	        v = htmlEntity (&amp;s);</span>
+<span class="nc" id="L939">UNSUPPORTED(&quot;1fj0k3ba7vy9tjmjnc4d4mujb&quot;); // 	        if (v) {</span>
+<span class="nc" id="L940">UNSUPPORTED(&quot;aso1t4v0cars70ngqafalmoeq&quot;); // 		    if (v &lt; 0x7F) /* entity needs 1 byte in UTF8 */</span>
+<span class="nc" id="L941">UNSUPPORTED(&quot;777bke4pyf77uol5s5d6qk0i6&quot;); // 			c = v;</span>
+<span class="nc" id="L942">UNSUPPORTED(&quot;4wqu3fuzmckazc7eb1vvoxspn&quot;); // 		    else if (v &lt; 0x07FF) { /* entity needs 2 bytes in UTF8 */</span>
+<span class="nc" id="L943">UNSUPPORTED(&quot;2b9x6g0k8a00ty06llcyp6cqu&quot;); // 			ignored = ((((&amp;xb)-&gt;ptr &gt;= (&amp;xb)-&gt;eptr) ? agxbmore(&amp;xb,1) : 0), (int)(*(&amp;xb)-&gt;ptr++ = ((unsigned char)(v &gt;&gt; 6) | 0xC0)));</span>
+<span class="nc" id="L944">UNSUPPORTED(&quot;el4sow483b296l5o1hy6oqkzp&quot;); // 			c = (v &amp; 0x3F) | 0x80;</span>
+<span class="nc" id="L945">UNSUPPORTED(&quot;dkxvw03k2gg9anv4dbze06axd&quot;); // 		    }</span>
+<span class="nc" id="L946">UNSUPPORTED(&quot;163d4s8voz31qrt0e4c8ysn9e&quot;); // 		    else { /* entity needs 3 bytes in UTF8 */</span>
+<span class="nc" id="L947">UNSUPPORTED(&quot;4tpuwv4i0wslspyymoqhdxsvd&quot;); // 			ignored = ((((&amp;xb)-&gt;ptr &gt;= (&amp;xb)-&gt;eptr) ? agxbmore(&amp;xb,1) : 0), (int)(*(&amp;xb)-&gt;ptr++ = ((unsigned char)(v &gt;&gt; 12) | 0xE0)));</span>
+<span class="nc" id="L948">UNSUPPORTED(&quot;8unuta6ydloexb267kdf96wi&quot;); // 			ignored = ((((&amp;xb)-&gt;ptr &gt;= (&amp;xb)-&gt;eptr) ? agxbmore(&amp;xb,1) : 0), (int)(*(&amp;xb)-&gt;ptr++ = ((unsigned char)((v &gt;&gt; 6) &amp; 0x3F) | 0x80)));</span>
+<span class="nc" id="L949">UNSUPPORTED(&quot;el4sow483b296l5o1hy6oqkzp&quot;); // 			c = (v &amp; 0x3F) | 0x80;</span>
+<span class="nc" id="L950">UNSUPPORTED(&quot;dkxvw03k2gg9anv4dbze06axd&quot;); // 		    }</span>
+<span class="nc" id="L951">UNSUPPORTED(&quot;dkxvw03k2gg9anv4dbze06axd&quot;); // 		    }</span>
+<span class="nc" id="L952">UNSUPPORTED(&quot;4mhlpjofolwivhm0tl8cxznly&quot;); //         }</span>
+<span class="nc" id="L953">UNSUPPORTED(&quot;atwq5cvh75c4mpqr6f8bepwkd&quot;); //         else /* copy n byte UTF8 characters */</span>
+<span class="nc" id="L954">UNSUPPORTED(&quot;75h3d3pcb66cff2xszmbwxny0&quot;); //             for (ui = 0; ui &lt; uc; ++ui)</span>
+<span class="nc" id="L955">UNSUPPORTED(&quot;75m8b2zfuuay6o25xl08y168m&quot;); //                 if ((*s &amp; 0xC0) == 0x80) {</span>
+<span class="nc" id="L956">UNSUPPORTED(&quot;2bav6kbg19gemwcsyepjeg52u&quot;); //                     ignored = ((((&amp;xb)-&gt;ptr &gt;= (&amp;xb)-&gt;eptr) ? agxbmore(&amp;xb,1) : 0), (int)(*(&amp;xb)-&gt;ptr++ = ((unsigned char)c)));</span>
+<span class="nc" id="L957">UNSUPPORTED(&quot;5kkh713qn8pc4dhd3omuop8qk&quot;); //                     c = *(unsigned char*)s++;</span>
+<span class="nc" id="L958">UNSUPPORTED(&quot;7nxu74undh30brb8laojud3f9&quot;); //                 }</span>
+<span class="nc" id="L959">UNSUPPORTED(&quot;69mmu86j5iw8x34fdfo0k59ff&quot;); //                 else { </span>
+<span class="nc" id="L960">UNSUPPORTED(&quot;cjh6htddtrrxjuyqzavdlw01o&quot;); // 		            if (!warned) {</span>
+<span class="nc" id="L961">UNSUPPORTED(&quot;8ljhi9erpokpqsnveckujskly&quot;); // 		                agerr(AGWARN, &quot;Invalid %d-byte UTF8 found in input of graph %s - treated as Latin-1. Perhaps \&quot;-Gcharset=latin1\&quot; is needed?\n&quot;, uc + 1, agnameof(g));</span>
+<span class="nc" id="L962">UNSUPPORTED(&quot;8sgutsruuu83a337z05bvytk0&quot;); // 		                warned = 1;</span>
+<span class="nc" id="L963">UNSUPPORTED(&quot;3d2mow5zy6q4vrtc38f78ucgh&quot;); // 		            }</span>
+<span class="nc" id="L964">UNSUPPORTED(&quot;8jh5xw3y1bjy4poswq4h2wk4n&quot;); // 		            c = cvtAndAppend (c, &amp;xb);</span>
+<span class="nc" id="L965">UNSUPPORTED(&quot;ctqmerohp1f69mb1v1t20jx33&quot;); //                     break;</span>
+<span class="nc" id="L966">UNSUPPORTED(&quot;g2y6e9pld3899aejuqyr2x25&quot;); // 	            }</span>
+<span class="nc" id="L967">UNSUPPORTED(&quot;28mab50dtpxfjz5h216ox1q6w&quot;); // 	    ignored = ((((&amp;xb)-&gt;ptr &gt;= (&amp;xb)-&gt;eptr) ? agxbmore(&amp;xb,1) : 0), (int)(*(&amp;xb)-&gt;ptr++ = ((unsigned char)c)));</span>
+<span class="nc" id="L968">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L969">UNSUPPORTED(&quot;3g7d9dp3ny3ggno64pwi7nmkg&quot;); //     ns = strdup ((((((&amp;xb)-&gt;ptr &gt;= (&amp;xb)-&gt;eptr) ? agxbmore(&amp;xb,1) : 0), (int)(*(&amp;xb)-&gt;ptr++ = ((unsigned char)'\0'))),(char*)((&amp;xb)-&gt;ptr = (&amp;xb)-&gt;buf)));</span>
+<span class="nc" id="L970">UNSUPPORTED(&quot;1at5m9ctjn3ukv5gqtfswik02&quot;); //     agxbfree(&amp;xb);</span>
+<span class="nc" id="L971">UNSUPPORTED(&quot;98aa6ybsfiu5u7r3j6fsv3snz&quot;); //     return ns;</span>
+<span class="nc" id="L972">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L974">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L976">LEAVING(&quot;9yungx7uxqkmzfh2ub6gs9l48&quot;,&quot;htmlEntityUTF8&quot;);</span>
+}
+}
+
+
+
+
+//3 ckavkcnz5rcrqs17lleds1uxu
+// int edgeType (char* s, int dflt) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;edgeType&quot;, key=&quot;ckavkcnz5rcrqs17lleds1uxu&quot;, definition=&quot;int edgeType (char* s, int dflt)&quot;)
+public static int edgeType(CString s, int dflt) {
+<span class="nc" id="L988">ENTERING(&quot;ckavkcnz5rcrqs17lleds1uxu&quot;,&quot;edgeType&quot;);</span>
+try {
+<span class="nc" id="L990">	UNSUPPORTED(&quot;h9kzapvoxea4esxgom157wc0&quot;); // int edgeType (char* s, int dflt)</span>
+<span class="nc" id="L991">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L992">UNSUPPORTED(&quot;26e08yupzx95a4pzp1af0t6og&quot;); //     int et;</span>
+<span class="nc" id="L993">UNSUPPORTED(&quot;73z43mn6ha09hbnvzynnbkvqg&quot;); //     if (!s || (*s == '\0')) return dflt;</span>
+<span class="nc" id="L994">UNSUPPORTED(&quot;527zd48lq0ay6p16b2whyuafo&quot;); //     et = 0 &lt;&lt; 1;</span>
+<span class="nc" id="L995">UNSUPPORTED(&quot;1ctayzw7ya308i4wpppul6b9o&quot;); //     switch (*s) {</span>
+<span class="nc" id="L996">UNSUPPORTED(&quot;acwxya6p4cjrbqeuf7gymcmx2&quot;); //     case '0' :    /* false */</span>
+<span class="nc" id="L997">UNSUPPORTED(&quot;18fcibo027r3vczxrvtju3nah&quot;); // 	et = 1 &lt;&lt; 1;</span>
+<span class="nc" id="L998">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L999">UNSUPPORTED(&quot;no8amccag0mew2zmsprfyekp&quot;); //     case '1' :    /* true */</span>
+<span class="nc" id="L1000">UNSUPPORTED(&quot;8to0pat5o6zmyuqjfl01xs9xc&quot;); //     case '2' :</span>
+<span class="nc" id="L1001">UNSUPPORTED(&quot;c7icptpasun232whn2nn5gydx&quot;); //     case '3' :</span>
+<span class="nc" id="L1002">UNSUPPORTED(&quot;44xov6gwt91mlesh02z3zvxx&quot;); //     case '4' :</span>
+<span class="nc" id="L1003">UNSUPPORTED(&quot;4dwlps5sjcl550fvks2ibv2fi&quot;); //     case '5' :</span>
+<span class="nc" id="L1004">UNSUPPORTED(&quot;cr0jhqsceb5y1hcmvtjd1ttgu&quot;); //     case '6' :</span>
+<span class="nc" id="L1005">UNSUPPORTED(&quot;8jq47j7ezu18niwotmuj92cz3&quot;); //     case '7' :</span>
+<span class="nc" id="L1006">UNSUPPORTED(&quot;ami8xk8243o5ku0cyeqxoeiut&quot;); //     case '8' :</span>
+<span class="nc" id="L1007">UNSUPPORTED(&quot;3onv8t8a6v1tmfaz8y7hk9lvv&quot;); //     case '9' :</span>
+<span class="nc" id="L1008">UNSUPPORTED(&quot;8m599inlx0lbuns9r3iiokwxw&quot;); // 	et = 5 &lt;&lt; 1;</span>
+<span class="nc" id="L1009">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1010">UNSUPPORTED(&quot;vwxe2prs0tywhf20ycwdwa8o&quot;); //     case 'c' :</span>
+<span class="nc" id="L1011">UNSUPPORTED(&quot;e2ux7lqsbmsyyrououuijooiy&quot;); //     case 'C' :</span>
+<span class="nc" id="L1012">UNSUPPORTED(&quot;8zxim9f3q8qdl919cv1v3jf8e&quot;); // 	if (!strcasecmp (s+1, &quot;urved&quot;))</span>
+<span class="nc" id="L1013">UNSUPPORTED(&quot;azc7d85av8k7f1to3mr59m3mz&quot;); // 	    et = 2 &lt;&lt; 1;</span>
+<span class="nc" id="L1014">UNSUPPORTED(&quot;b7i0q9ysed6zrjftn8ilgtn0a&quot;); // 	else if (!strcasecmp (s+1, &quot;ompound&quot;))</span>
+<span class="nc" id="L1015">UNSUPPORTED(&quot;aihlhslp3nd26f10vuyjlnb3q&quot;); // 	    et = 6 &lt;&lt; 1;</span>
+<span class="nc" id="L1016">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1017">UNSUPPORTED(&quot;2ix1d2vw6unhjetclv9vkaw1p&quot;); //     case 'f' :</span>
+<span class="nc" id="L1018">UNSUPPORTED(&quot;2chzjgs8kmwelk00c6469lpx2&quot;); //     case 'F' :</span>
+<span class="nc" id="L1019">UNSUPPORTED(&quot;42jngi39nkk27q16s1sa7sftl&quot;); // 	if (!strcasecmp (s+1, &quot;alse&quot;))</span>
+<span class="nc" id="L1020">UNSUPPORTED(&quot;7xut5zuu25vrpn9gt0f3kc5hz&quot;); // 	    et = 1 &lt;&lt; 1;</span>
+<span class="nc" id="L1021">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1022">UNSUPPORTED(&quot;7ozigs1hjxmhvwgapx2in25cy&quot;); //     case 'l' :</span>
+<span class="nc" id="L1023">UNSUPPORTED(&quot;c2gttjqnkmx1rnuyjknw7segb&quot;); //     case 'L' :</span>
+<span class="nc" id="L1024">UNSUPPORTED(&quot;96lnofxeiqa1g3g7s02b86h6z&quot;); // 	if (!strcasecmp (s+1, &quot;ine&quot;))</span>
+<span class="nc" id="L1025">UNSUPPORTED(&quot;7xut5zuu25vrpn9gt0f3kc5hz&quot;); // 	    et = 1 &lt;&lt; 1;</span>
+<span class="nc" id="L1026">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1027">UNSUPPORTED(&quot;5o5i90c7m363f5yyxamxuzok6&quot;); //     case 'n' :</span>
+<span class="nc" id="L1028">UNSUPPORTED(&quot;3ttrfea54jmrshv2796w3a9h2&quot;); //     case 'N' :</span>
+<span class="nc" id="L1029">UNSUPPORTED(&quot;6qibxt06dimtp2r5spwgriorn&quot;); // 	if (!strcasecmp (s+1, &quot;one&quot;)) return et;</span>
+<span class="nc" id="L1030">UNSUPPORTED(&quot;bqi51jfycttyx733ls9qw2c18&quot;); // 	if (!strcasecmp (s+1, &quot;o&quot;)) return (1 &lt;&lt; 1);</span>
+<span class="nc" id="L1031">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1032">UNSUPPORTED(&quot;18t59gw7hrgsezibz7bbm0ng3&quot;); //     case 'o' :</span>
+<span class="nc" id="L1033">UNSUPPORTED(&quot;4q6jdsek20d4i9sc5ftmm3mdl&quot;); //     case 'O' :</span>
+<span class="nc" id="L1034">UNSUPPORTED(&quot;8scb0vjws7o3davin33k87o2p&quot;); // 	if (!strcasecmp (s+1, &quot;rtho&quot;))</span>
+<span class="nc" id="L1035">UNSUPPORTED(&quot;48rqxx6odtdnqf676ffe1ll7g&quot;); // 	    et = 4 &lt;&lt; 1;</span>
+<span class="nc" id="L1036">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1037">UNSUPPORTED(&quot;5cc40qlotkkym6enwcv916835&quot;); //     case 'p' :</span>
+<span class="nc" id="L1038">UNSUPPORTED(&quot;al1clonjqyw2bo1z0li974ijp&quot;); //     case 'P' :</span>
+<span class="nc" id="L1039">UNSUPPORTED(&quot;68l1a5153ouil03qaammm1zty&quot;); // 	if (!strcasecmp (s+1, &quot;olyline&quot;))</span>
+<span class="nc" id="L1040">UNSUPPORTED(&quot;5ytop08aei3hhllfd12904hh7&quot;); // 	    et = 3 &lt;&lt; 1;</span>
+<span class="nc" id="L1041">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1042">UNSUPPORTED(&quot;20wayzvdomwexzhjzj4wojf4d&quot;); //     case 's' :</span>
+<span class="nc" id="L1043">UNSUPPORTED(&quot;boxft69fzv6rof5elda0zs33z&quot;); //     case 'S' :</span>
+<span class="nc" id="L1044">UNSUPPORTED(&quot;3qs8m2esm62d50tk701b8m0xz&quot;); // 	if (!strcasecmp (s+1, &quot;pline&quot;))</span>
+<span class="nc" id="L1045">UNSUPPORTED(&quot;5l4kd6c21h4bjm98grnqqwra6&quot;); // 	    et = 5 &lt;&lt; 1;</span>
+<span class="nc" id="L1046">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1047">UNSUPPORTED(&quot;ce41quxcxpj3oi50zybc75b9r&quot;); //     case 't' :</span>
+<span class="nc" id="L1048">UNSUPPORTED(&quot;8drchetff3h6zpsu3m08rqi0q&quot;); //     case 'T' :</span>
+<span class="nc" id="L1049">UNSUPPORTED(&quot;7ln0pymv14hb45h3ypy5955nk&quot;); // 	if (!strcasecmp (s+1, &quot;rue&quot;))</span>
+<span class="nc" id="L1050">UNSUPPORTED(&quot;5l4kd6c21h4bjm98grnqqwra6&quot;); // 	    et = 5 &lt;&lt; 1;</span>
+<span class="nc" id="L1051">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1052">UNSUPPORTED(&quot;3d55ucqxr8xg0otty2j39hkgz&quot;); //     case 'y' :</span>
+<span class="nc" id="L1053">UNSUPPORTED(&quot;7oihco3xpq1kek2q2dnrfxmcx&quot;); //     case 'Y' :</span>
+<span class="nc" id="L1054">UNSUPPORTED(&quot;679wmbnx0dakltwkxx2svg5ex&quot;); // 	if (!strcasecmp (s+1, &quot;es&quot;))</span>
+<span class="nc" id="L1055">UNSUPPORTED(&quot;5l4kd6c21h4bjm98grnqqwra6&quot;); // 	    et = 5 &lt;&lt; 1;</span>
+<span class="nc" id="L1056">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L1057">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1058">UNSUPPORTED(&quot;ckjgbybnvrshn8g32qqpy0ppd&quot;); //     if (!et) {</span>
+<span class="nc" id="L1059">UNSUPPORTED(&quot;79f40sxqwmzmgk4ktfha59mxf&quot;); // 	agerr(AGWARN, &quot;Unknown \&quot;splines\&quot; value: \&quot;%s\&quot; - ignored\n&quot;, s);</span>
+<span class="nc" id="L1060">UNSUPPORTED(&quot;mjiefsvltip3uasxic0uipa9&quot;); // 	et = dflt;</span>
+<span class="nc" id="L1061">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1062">UNSUPPORTED(&quot;68yadra75shcc0tia9wr9acr4&quot;); //     return et;</span>
+<span class="nc" id="L1063">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1065">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="nc" id="L1067">LEAVING(&quot;ckavkcnz5rcrqs17lleds1uxu&quot;,&quot;edgeType&quot;);</span>
+}
+}
+
+
+
+
+/* setEdgeType:
+ * Sets graph's edge type based on the &quot;splines&quot; attribute.
+ * If the attribute is not defined, use default.
+ * If the attribute is &quot;&quot;, use NONE.
+ * If attribute value matches (case indepedent), use match.
+ *   ortho =&gt; ET_ORTHO
+ *   none =&gt; ET_NONE
+ *   line =&gt; ET_LINE
+ *   polyline =&gt; ET_PLINE
+ *   spline =&gt; ET_SPLINE
+ * If attribute is boolean, true means ET_SPLINE, false means ET_LINE.
+ * Else warn and use default.
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;setEdgeType&quot;, key=&quot;13cpqbf2ztcjdfz4a6v7nv00u&quot;, definition=&quot;void setEdgeType (graph_t* g, int dflt)&quot;)
+public static void setEdgeType(Globals zz, ST_Agraph_s g, int dflt) {
+<span class="fc" id="L1090">ENTERING(&quot;13cpqbf2ztcjdfz4a6v7nv00u&quot;,&quot;setEdgeType&quot;);</span>
+try {
+<span class="fc" id="L1092">    CString s = agget(zz, g, new CString(&quot;splines&quot;));</span>
+    int et;
+    
+<span class="pc bpc" id="L1095" title="1 of 2 branches missed.">    if ((s) == null) {</span>
+<span class="fc" id="L1096">	et = dflt;</span>
+    }
+<span class="nc bnc" id="L1098" title="All 2 branches missed.">    else if (s.charAt(0) == '\0') {</span>
+<span class="nc" id="L1099">	et = ET_NONE;</span>
+    }
+<span class="nc" id="L1101">    else et = edgeType (s, dflt);</span>
+<span class="fc" id="L1102">    GD_flags(g, GD_flags(g) | et);</span>
+} finally {
+<span class="fc" id="L1104">LEAVING(&quot;13cpqbf2ztcjdfz4a6v7nv00u&quot;,&quot;setEdgeType&quot;);</span>
+}
+<span class="fc" id="L1106">}</span>
+
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Doc(&quot;Store size of a node from inch&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/utils.c&quot;, name=&quot;gv_nodesize&quot;, key=&quot;80q488y0eqojtsm7osnfydmo5&quot;, definition=&quot;void gv_nodesize(node_t * n, boolean flip)&quot;)
+public static void gv_nodesize(ST_Agnode_s n, boolean flip) {
+<span class="fc" id="L1116">ENTERING(&quot;80q488y0eqojtsm7osnfydmo5&quot;,&quot;gv_nodesize&quot;);</span>
+try {
+    double w;
+    
+<span class="fc bfc" id="L1120" title="All 2 branches covered.">    if (flip) {</span>
+<span class="fc" id="L1121">        w = INCH2PS(ND_height(n));</span>
+<span class="fc" id="L1122">        ND_rw(n, w / 2);</span>
+<span class="fc" id="L1123">        ND_lw(n, w / 2);</span>
+<span class="fc" id="L1124">        ND_ht(n, INCH2PS(ND_width(n)));</span>
+    } 
+    else {
+<span class="fc" id="L1127">        w = INCH2PS(ND_width(n));</span>
+<span class="fc" id="L1128">        ND_rw(n, w / 2);</span>
+<span class="fc" id="L1129">        ND_lw(n, w / 2);</span>
+<span class="fc" id="L1130">        ND_ht(n, INCH2PS(ND_height(n)));</span>
+    }
+} finally {
+<span class="fc" id="L1133">LEAVING(&quot;80q488y0eqojtsm7osnfydmo5&quot;,&quot;gv_nodesize&quot;);</span>
+}
+<span class="fc" id="L1135">}</span>
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

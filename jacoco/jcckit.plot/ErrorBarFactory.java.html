@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ErrorBarFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">ErrorBarFactory.java</span></div><h1>ErrorBarFactory.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.GraphicalComposite;
+import jcckit.graphic.GraphicalElement;
+import jcckit.graphic.Rectangle;
+import jcckit.util.ConfigParameters;
+import jcckit.util.Factory;
+
+/**
+ * Symbol factory for creating symbols with error bars. It wraps 
+ * a {@link SymbolFactory} for creating the symbol. The error bars
+ * are {@link Rectangle Rectangles}. 
+ * &lt;p&gt;
+ * Curves with error bars are based on &lt;em&gt;two&lt;/em&gt; 
+ * {@link jcckit.data.DataCurve DataCurves}:
+ * &lt;ol&gt;&lt;li&gt;The plain curve.
+ *     &lt;li&gt;An instance which stores the errors in &lt;i&gt;x&lt;/i&gt; and &lt;i&gt;y&lt;/i&gt;.
+ *         It is assumed that the errors are positive values defining
+ *         the error symmetrically around the curve points.
+ * &lt;/ol&gt;
+ * &lt;p&gt;
+ * The &lt;tt&gt;ErrorBarFactory&lt;/tt&gt; needs an instance of {@link PositionHint}
+ * as initial {@link Hint} for the next curve. Its origin must be
+ * the origin of the data coordinate system in device-independent coordinates.
+ * The position of &lt;tt&gt;PositionHint&lt;/tt&gt; must be undefined.
+ * 
+ * @author Franz-Josef Elmer
+ */
+public class ErrorBarFactory implements SymbolFactory {
+  /** Configuration parameter key. */
+  public static final String SYMBOL_FACTORY_KEY = &quot;symbolFactory&quot;;
+
+  private final SymbolFactory _symbolFactory;
+  private final GraphicAttributes _attributes;
+  private final double _size;
+
+  /**
+   * Creates an instance from the specified configuration parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;symbolFactory = null&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Definition of the wrapped {@link SymbolFactory} which generates
+   *         the curve symbol without bars. By default an empty
+   *         {@link GraphicalComposite} will be created.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;size = 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Width of the error bars.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;attributes = null&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Definition of the {@link GraphicAttributes} of the error 
+   *         bars.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+<span class="nc" id="L76">  public ErrorBarFactory(ConfigParameters config) {</span>
+<span class="nc" id="L77">    _symbolFactory = (SymbolFactory) Factory.createOrGet(</span>
+<span class="nc" id="L78">        config.getNode(SYMBOL_FACTORY_KEY), null);</span>
+<span class="nc" id="L79">    _size = config.getDouble(SIZE_KEY, 0);</span>
+<span class="nc" id="L80">    _attributes = (GraphicAttributes) Factory.createOrGet(</span>
+<span class="nc" id="L81">        config.getNode(ATTRIBUTES_KEY), null);</span>
+<span class="nc" id="L82">  }</span>
+
+  /**
+   * Creates the legend symbol. Calls the wrapped {@link SymbolFactory}
+   * or returns an empty instance of {@link GraphicalComposite} if undefined.
+   */
+  public GraphicalElement createLegendSymbol(GraphPoint centerPosition,
+                                             double size) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">    return _symbolFactory == null ? new GraphicalComposite(null)</span>
+<span class="nc" id="L91">              : _symbolFactory.createLegendSymbol(centerPosition, size);</span>
+  }
+
+  /**
+   * Creates either the curve symbol or the error bars. Error bars are
+   * created when &lt;tt&gt;hintFromPreviousCurve&lt;/tt&gt; is an instance of
+   * {@link PositionHint} and its position attribute is not &lt;tt&gt;null&lt;/tt&gt;.
+   * Otherwise the curve symbol is created. The position attributes stores
+   * the curve point (in device-independent coordinates). The origin is
+   * always as set in the initial &lt;tt&gt;PositionHint&lt;/tt&gt;. The hint for
+   * the next curve wrapped by the returned &lt;tt&gt;Symbol&lt;/tt&gt; is always
+   * a &lt;tt&gt;PositionHint&lt;/tt&gt;.
+   */
+  public Symbol createSymbol(GraphPoint point, Hint hintFromPreviousPoint,
+                             Hint hintFromPreviousCurve) {
+<span class="nc" id="L106">    GraphPoint origin = new GraphPoint(null);</span>
+<span class="nc" id="L107">    GraphPoint position = null;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">    if (hintFromPreviousCurve instanceof PositionHint) {</span>
+<span class="nc" id="L109">      origin = ((PositionHint) hintFromPreviousCurve).getOrigin();</span>
+<span class="nc" id="L110">      position = ((PositionHint) hintFromPreviousCurve).getPosition();</span>
+    }
+<span class="nc bnc" id="L112" title="All 2 branches missed.">    if (position == null) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">      if (_symbolFactory == null) {</span>
+<span class="nc" id="L114">        return new Symbol(new GraphicalComposite(null), hintFromPreviousPoint,</span>
+                          new PositionHint(origin, point));
+      } else {
+<span class="nc" id="L117">        return _symbolFactory.createSymbol(point, hintFromPreviousPoint,</span>
+                                           new PositionHint(origin, point));
+      }
+    } else {
+<span class="nc" id="L121">      double xError = point.getX() - origin.getX();</span>
+<span class="nc" id="L122">      double yError = point.getY() - origin.getY();</span>
+<span class="nc" id="L123">      GraphicalComposite errorBars = new GraphicalComposite(null);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">      if (xError &gt; 0) {</span>
+<span class="nc" id="L125">        errorBars.addElement(new Rectangle(position, 2 * xError, _size, </span>
+                                           _attributes));
+      }
+<span class="nc bnc" id="L128" title="All 2 branches missed.">      if (yError &gt; 0) {</span>
+<span class="nc" id="L129">        errorBars.addElement(new Rectangle(position, _size, 2 * yError, </span>
+                                           _attributes));
+      }
+<span class="nc" id="L132">      return new Symbol(errorBars, hintFromPreviousPoint, </span>
+                        new PositionHint(origin, null));
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

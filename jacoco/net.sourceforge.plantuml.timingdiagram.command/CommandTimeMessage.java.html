@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandTimeMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.command</a> &gt; <span class="el_source">CommandTimeMessage.java</span></div><h1>CommandTimeMessage.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.command;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.timingdiagram.Player;
+import net.sourceforge.plantuml.timingdiagram.TimeMessage;
+import net.sourceforge.plantuml.timingdiagram.TimeTick;
+import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandTimeMessage extends SingleLineCommand2&lt;TimingDiagram&gt; {
+
+	public static final String PLAYER_CODE = &quot;([\\p{L}_][%pLN_.]*)&quot;;
+
+	public CommandTimeMessage() {
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L62">		return RegexConcat.build(CommandTimeMessage.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;PART1&quot;, PLAYER_CODE), //
+<span class="fc" id="L64">				TimeTickBuilder.optionalExpressionAtWithArobase(&quot;TIME1&quot;), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;ARROW_BODY&quot;, &quot;(-+)&quot;), //
+				new RegexLeaf(&quot;ARROW_STYLE&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(&quot;ARROW_HEAD&quot;, &quot;\\&gt;&quot;), //
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;PART2&quot;, PLAYER_CODE), //
+<span class="fc" id="L71">				TimeTickBuilder.optionalExpressionAtWithArobase(&quot;TIME2&quot;), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L76">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;MESSAGE&quot;, &quot;(.*)&quot;) //
+						)), //
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+	}
+
+	@Override
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+<span class="fc" id="L84">		final Player player1 = diagram.getPlayer(arg.get(&quot;PART1&quot;, 0));</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (player1 == null) {</span>
+<span class="nc" id="L86">			return CommandExecutionResult.error(&quot;No such element: &quot; + arg.get(&quot;PART1&quot;, 0));</span>
+		}
+<span class="fc" id="L88">		final Player player2 = diagram.getPlayer(arg.get(&quot;PART2&quot;, 0));</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (player2 == null) {</span>
+<span class="nc" id="L90">			return CommandExecutionResult.error(&quot;No such element: &quot; + arg.get(&quot;PART2&quot;, 0));</span>
+		}
+<span class="fc" id="L92">		final TimeTick tick1 = TimeTickBuilder.parseTimeTick(&quot;TIME1&quot;, arg, diagram);</span>
+<span class="fc" id="L93">		final TimeTick tick2 = TimeTickBuilder.parseTimeTick(&quot;TIME2&quot;, arg, diagram);</span>
+<span class="fc" id="L94">		final TimeMessage result = diagram.createTimeMessage(player1, tick1, player2, tick2, arg.get(&quot;MESSAGE&quot;, 0));</span>
+<span class="fc" id="L95">		result.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="fc" id="L96">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

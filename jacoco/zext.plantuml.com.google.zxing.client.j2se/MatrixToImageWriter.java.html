@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatrixToImageWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.client.j2se</a> &gt; <span class="el_source">MatrixToImageWriter.java</span></div><h1>MatrixToImageWriter.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2009 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.client.j2se;
+
+import java.awt.image.BufferedImage;
+
+import zext.plantuml.com.google.zxing.common.BitMatrix;
+
+/**
+ * Writes a {@link BitMatrix} to {@link BufferedImage},
+ * file or stream. Provided here instead of core since it depends on
+ * Java SE libraries.
+ *
+ * @author Sean Owen
+ */
+public final class MatrixToImageWriter {
+    // ::remove folder when __HAXE__
+
+  private static final int BLACK = 0xFF000000;
+  private static final int WHITE = 0xFFFFFFFF;
+
+  private MatrixToImageWriter() {}
+
+  /**
+   * Renders a {@link BitMatrix} as an image, where &quot;false&quot; bits are rendered
+   * as white, and &quot;true&quot; bits are rendered as black.
+   */
+  public static BufferedImage toBufferedImage(BitMatrix matrix, int fore, int back) {
+<span class="nc" id="L43">    int width = matrix.getWidth();</span>
+<span class="nc" id="L44">    int height = matrix.getHeight();</span>
+<span class="nc" id="L45">    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">    for (int x = 0; x &lt; width; x++) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">      for (int y = 0; y &lt; height; y++) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        image.setRGB(x, y, matrix.get(x, y) ? fore : back);</span>
+      }
+    }
+<span class="nc" id="L51">    return image;</span>
+  }
+
+//  /**
+//   * Writes a {@link BitMatrix} to a file.
+//   *
+//   * @see #toBufferedImage(BitMatrix)
+//   */
+//  public static void writeToFile(BitMatrix matrix, String format, File file)
+//          throws IOException {
+//    BufferedImage image = toBufferedImage(matrix);
+//    ImageIO.write(image, format, file);
+//  }
+//
+//  /**
+//   * Writes a {@link BitMatrix} to a stream.
+//   *
+//   * @see #toBufferedImage(BitMatrix)
+//   */
+//  public static void writeToStream(BitMatrix matrix, String format, OutputStream stream)
+//          throws IOException {
+//    BufferedImage image = toBufferedImage(matrix);
+//    ImageIO.write(image, format, stream);
+//  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

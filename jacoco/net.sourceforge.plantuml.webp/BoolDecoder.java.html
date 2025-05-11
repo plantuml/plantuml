@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoolDecoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">BoolDecoder.java</span></div><h1>BoolDecoder.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package net.sourceforge.plantuml.webp;
+
+import java.io.IOException;
+
+import javax.imageio.stream.ImageInputStream;
+
+public class BoolDecoder {
+    // ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
+    // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+	int bit_count; /* # of bits shifted out of value, at most 7 */
+	ImageInputStream data;
+	private long offset; /* pointer to next compressed data byte */
+	private int range; /* always identical to encoder's range */
+	private int value; /* contains at least 24 significant bits */
+
+<span class="nc" id="L32">	BoolDecoder(ImageInputStream frame, long offset) throws IOException {</span>
+<span class="nc" id="L33">		this.data = frame;</span>
+<span class="nc" id="L34">		this.offset = offset;</span>
+<span class="nc" id="L35">		initBoolDecoder();</span>
+<span class="nc" id="L36">	}</span>
+
+	private void initBoolDecoder() throws IOException {
+
+<span class="nc" id="L40">		value = 0; /* value = first 16 input bits */</span>
+
+<span class="nc" id="L42">		data.seek(offset);</span>
+<span class="nc" id="L43">		value = data.readUnsignedByte() &lt;&lt; 8;</span>
+		// value = (data[offset]) &lt;&lt; 8;
+<span class="nc" id="L45">		offset++;</span>
+
+<span class="nc" id="L47">		range = 255; /* initial range is full */</span>
+<span class="nc" id="L48">		bit_count = 0; /* have not yet shifted out any bits */</span>
+<span class="nc" id="L49">	}</span>
+
+	public int readBit() throws IOException {
+<span class="nc" id="L52">		return readBool(128);</span>
+	}
+
+	public int readBool(int probability) throws IOException {
+
+<span class="nc" id="L57">		int bit = 0;</span>
+		int split;
+		int bigsplit;
+<span class="nc" id="L60">		int range = this.range;</span>
+<span class="nc" id="L61">		int value = this.value;</span>
+<span class="nc" id="L62">		split = 1 + (((range - 1) * probability) &gt;&gt; 8);</span>
+<span class="nc" id="L63">		bigsplit = (split &lt;&lt; 8);</span>
+<span class="nc" id="L64">		range = split;</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (value &gt;= bigsplit) {</span>
+<span class="nc" id="L67">			range = this.range - split;</span>
+<span class="nc" id="L68">			value = value - bigsplit;</span>
+<span class="nc" id="L69">			bit = 1;</span>
+		}
+
+		{
+<span class="nc" id="L73">			int count = this.bit_count;</span>
+<span class="nc" id="L74">			int shift = Globals.vp8dxBitreaderNorm[range];</span>
+<span class="nc" id="L75">			range &lt;&lt;= shift;</span>
+<span class="nc" id="L76">			value &lt;&lt;= shift;</span>
+<span class="nc" id="L77">			count -= shift;</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (count &lt;= 0) {</span>
+				// data.seek(offset);
+<span class="nc" id="L81">				value |= data.readUnsignedByte() &lt;&lt; (-count);</span>
+				// value |= data[offset] &lt;&lt; (-count);
+<span class="nc" id="L83">				offset++;</span>
+<span class="nc" id="L84">				count += 8;</span>
+			}
+
+<span class="nc" id="L87">			this.bit_count = count;</span>
+		}
+<span class="nc" id="L89">		this.value = value;</span>
+<span class="nc" id="L90">		this.range = range;</span>
+<span class="nc" id="L91">		return bit;</span>
+	}
+
+	/*
+	 * Convenience function reads a &quot;literal&quot;, that is, a &quot;num_bits&quot; wide unsigned
+	 * value whose bits come high- to low-order, with each bit encoded at
+	 * probability 128 (i.e., 1/2).
+	 */
+	public int readLiteral(int num_bits) throws IOException {
+<span class="nc" id="L100">		int v = 0;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		while (num_bits-- &gt; 0)</span>
+<span class="nc" id="L102">			v = (v &lt;&lt; 1) + readBool(128);</span>
+<span class="nc" id="L103">		return v;</span>
+	}
+
+	int readTree(int t[], /* tree specification */
+			int p[] /* corresponding interior node probabilities */
+	) throws IOException {
+<span class="nc" id="L109">		int i = 0; /* begin at root */</span>
+
+		/* Descend tree until leaf is reached */
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		while ((i = t[i + readBool(p[i &gt;&gt; 1])]) &gt; 0) {</span>
+		}
+<span class="nc" id="L114">		return -i; /* return value is negation of nonpositive index */</span>
+
+	}
+
+	int readTreeSkip(int t[], /* tree specification */
+			int p[], /* corresponding interior node probabilities */
+			int skip_branches) throws IOException {
+<span class="nc" id="L121">		int i = skip_branches * 2; /* begin at root */</span>
+
+		/* Descend tree until leaf is reached */
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		while ((i = t[i + readBool(p[i &gt;&gt; 1])]) &gt; 0) {</span>
+		}
+<span class="nc" id="L126">		return -i; /* return value is negation of nonpositive index */</span>
+
+	}
+
+	public void seek() throws IOException {
+<span class="nc" id="L131">		data.seek(offset);</span>
+<span class="nc" id="L132">	}</span>
+
+	public String toString() {
+<span class="nc" id="L135">		return &quot;bc: &quot; + value;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

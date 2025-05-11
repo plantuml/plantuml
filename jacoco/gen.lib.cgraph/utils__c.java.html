@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>utils__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">utils__c.java</span></div><h1>utils__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cdt.dtdisc__c.dtdisc;
+import static gen.lib.cdt.dtopen__c.dtopen;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.dtdelete;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agraph_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dtmethod_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.Globals;
+import smetana.core.__ptr__;
+import smetana.core.size_t;
+
+<span class="nc" id="L67">public class utils__c {</span>
+	
+<span class="fc" id="L69">public static CFunction agdictobjmem = new CFunctionAbstract(&quot;agdictobjmem&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L72">		return agdictobjmem((ST_dt_s)args[0], args[1], (size_t)args[2], (ST_dtdisc_s)args[3]);</span>
+	}};
+		
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/utils.c&quot;, name=&quot;agdictobjmem&quot;, key=&quot;7dkudp41c9byhicatk2sxtxqk&quot;, definition=&quot;void *agdictobjmem(Dict_t * dict, void * p, size_t size, Dtdisc_t * disc)&quot;)
+public static Object agdictobjmem(ST_dt_s dict, Object p, size_t size, ST_dtdisc_s disc) {
+<span class="fc" id="L78">ENTERING(&quot;7dkudp41c9byhicatk2sxtxqk&quot;,&quot;agdictobjmem&quot;);</span>
+try {
+<span class="fc" id="L80">	return size.malloc();</span>
+//	ST_Agraph_s g;
+//    g = Z.z().Ag_dictop_G;
+//    if (g!=null) {
+//	if (p!=null)
+//	    agfree(g, p);
+//	else
+//	    return agalloc(g, size);
+//    } else {
+//	if (p!=null)
+//	    Memory.free(p);
+//	else
+//	    return size.malloc();
+//    }
+//    return null;
+} finally {
+<span class="fc" id="L96">LEAVING(&quot;7dkudp41c9byhicatk2sxtxqk&quot;,&quot;agdictobjmem&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L102">public static CFunction agdictobjfree = new CFunctionAbstract(&quot;agdictobjfree&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L105">		return agdictobjfree(args);</span>
+	}};
+	
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/utils.c&quot;, name=&quot;agdictobjfree&quot;, key=&quot;5xdfwxth4q1dm3180qzuf51sn&quot;, definition=&quot;void agdictobjfree(Dict_t * dict, void * p, Dtdisc_t * disc)&quot;)
+public static Object agdictobjfree(Object... arg_) {
+<span class="nc" id="L111">UNSUPPORTED(&quot;bsemnw6m2qx5a4hk13xep80nh&quot;); // void agdictobjfree(Dict_t * dict, void * p, Dtdisc_t * disc)</span>
+<span class="nc" id="L112">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L113">UNSUPPORTED(&quot;1dbyk58q3r4fyfxxo7ovemkpu&quot;); //     Agraph_t *g;</span>
+<span class="nc" id="L114">UNSUPPORTED(&quot;nzl57bfl5onx7q9ge19n2k9i&quot;); //     (void) dict;</span>
+<span class="nc" id="L115">UNSUPPORTED(&quot;8l8wg6vltx6d7vc9dzqb6n3wi&quot;); //     (void) disc;</span>
+<span class="nc" id="L116">UNSUPPORTED(&quot;ah8bddgh4pyntvi4o9xx91fkm&quot;); //     g = Ag_dictop_G;</span>
+<span class="nc" id="L117">UNSUPPORTED(&quot;5skdegxoz3mwfvm59pbtvqtiq&quot;); //     if (g)</span>
+<span class="nc" id="L118">UNSUPPORTED(&quot;akbizhd9c9w4syt1qpirn7xjy&quot;); // 	agfree(g, p);</span>
+<span class="nc" id="L119">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
+<span class="nc" id="L120">UNSUPPORTED(&quot;cy5x5dma0v4hiepir7lrfuo17&quot;); // 	free(p);</span>
+<span class="nc" id="L121">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L123">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/utils.c&quot;, name=&quot;agdtopen&quot;, key=&quot;48ox0bg1qmasrer8np51uwsyk&quot;, definition=&quot;Dict_t *agdtopen(Agraph_t * g, Dtdisc_t * disc, Dtmethod_t * method)&quot;)
+public static ST_dt_s agdtopen(Globals zz, ST_Agraph_s g, ST_dtdisc_s disc, ST_dtmethod_s method) {
+<span class="fc" id="L131">ENTERING(&quot;48ox0bg1qmasrer8np51uwsyk&quot;,&quot;agdtopen&quot;);</span>
+try {
+	CFunction memf;
+    ST_dt_s d;
+<span class="fc" id="L135">    memf = disc.memoryf;</span>
+<span class="fc" id="L136">    disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L137">    zz.Ag_dictop_G = g;</span>
+<span class="fc" id="L138">    d = dtopen(zz, disc, method);</span>
+<span class="fc" id="L139">    disc.memoryf = (CFunction) memf;</span>
+<span class="fc" id="L140">    zz.Ag_dictop_G = null;</span>
+<span class="fc" id="L141">    return d;</span>
+} finally {
+<span class="fc" id="L143">LEAVING(&quot;48ox0bg1qmasrer8np51uwsyk&quot;,&quot;agdtopen&quot;);</span>
+}
+}
+
+
+
+
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/utils.c&quot;, name=&quot;agdtdelete&quot;, key=&quot;6pbz2fsmebq8iy7if4way3ct2&quot;, definition=&quot;long agdtdelete(Agraph_t * g, Dict_t * dict, void *obj)&quot;)
+public static __ptr__ agdtdelete(Globals zz, ST_Agraph_s g, ST_dt_s dict, __ptr__ obj) {
+<span class="nc" id="L153">ENTERING(&quot;6pbz2fsmebq8iy7if4way3ct2&quot;,&quot;agdtdelete&quot;);</span>
+try {
+<span class="nc" id="L155">	zz.Ag_dictop_G = g;</span>
+<span class="nc" id="L156">	return (__ptr__) dtdelete(zz, dict, obj);</span>
+} finally {
+<span class="nc" id="L158">LEAVING(&quot;6pbz2fsmebq8iy7if4way3ct2&quot;,&quot;agdtdelete&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/utils.c&quot;, name=&quot;agdtdisc&quot;, key=&quot;cym72wvu6zffc0vzoa93zha8&quot;, definition=&quot;void agdtdisc(Agraph_t * g, Dict_t * dict, Dtdisc_t * disc)&quot;)
+public static void agdtdisc(Globals zz, ST_Agraph_s g, ST_dt_s dict, ST_dtdisc_s disc) {
+<span class="fc" id="L167">ENTERING(&quot;cym72wvu6zffc0vzoa93zha8&quot;,&quot;agdtdisc&quot;);</span>
+try {
+<span class="pc bpc" id="L169" title="2 of 4 branches missed.">    if (disc!=null &amp;&amp; (dtdisc(zz, dict, null, 0) != disc)) {</span>
+<span class="nc" id="L170">	dtdisc(zz, dict, disc, 0);</span>
+    }
+    /* else unchanged, disc is same as old disc */
+} finally {
+<span class="fc" id="L174">LEAVING(&quot;cym72wvu6zffc0vzoa93zha8&quot;,&quot;agdtdisc&quot;);</span>
+}
+<span class="fc" id="L176">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

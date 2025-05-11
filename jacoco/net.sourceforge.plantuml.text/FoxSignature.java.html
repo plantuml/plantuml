@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FoxSignature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.text</a> &gt; <span class="el_source">FoxSignature.java</span></div><h1>FoxSignature.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.text;
+
+<span class="nc" id="L38">public class FoxSignature {</span>
+
+<span class="fc" id="L40">	private static final long masks[] = new long[127];</span>
+	private static final long MASK_SPACES;
+	private static final long MASK_SPECIAL1;
+
+	static {
+<span class="fc" id="L45">		final String full = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ0!\&quot;#$%&amp;\'()*+,-./:;&lt;=&gt;?@[\\]^_{|}~&quot;;</span>
+<span class="fc" id="L46">		long m = 1L;</span>
+<span class="fc" id="L47">		MASK_SPACES = m;</span>
+<span class="fc" id="L48">		m = m &lt;&lt; 1;</span>
+<span class="fc" id="L49">		MASK_SPECIAL1 = m;</span>
+<span class="fc" id="L50">		m = m &lt;&lt; 1;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		for (int i = 0; i &lt; full.length(); i++) {</span>
+<span class="fc" id="L52">			char ch = full.charAt(i);</span>
+<span class="fc" id="L53">			masks[ch] = m;</span>
+<span class="fc bfc" id="L54" title="All 4 branches covered.">			if (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z') {</span>
+<span class="fc" id="L55">				ch = (char) (ch + ('a' - 'A'));</span>
+<span class="fc" id="L56">				masks[ch] = m;</span>
+<span class="fc bfc" id="L57" title="All 8 branches covered.">			} else if (ch == '.' || ch == '=' || ch == '-' || ch == '~')</span>
+<span class="fc" id="L58">				masks[ch] |= MASK_SPECIAL1;</span>
+<span class="fc" id="L59">			m = m &lt;&lt; 1;</span>
+		}
+<span class="fc" id="L61">		masks[' '] = MASK_SPACES;</span>
+<span class="fc" id="L62">		masks['\t'] = MASK_SPACES;</span>
+<span class="fc" id="L63">		masks['\r'] = MASK_SPACES;</span>
+<span class="fc" id="L64">		masks['\n'] = MASK_SPACES;</span>
+<span class="fc" id="L65">		masks['\f'] = MASK_SPACES;</span>
+
+<span class="fc" id="L67">	}</span>
+
+	public static long getSpecialSpaces() {
+<span class="fc" id="L70">		return MASK_SPACES;</span>
+	}
+
+	public static long getSpecial1() {
+<span class="fc" id="L74">		return MASK_SPECIAL1;</span>
+	}
+
+	public static void printMe() {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (int i = 0; i &lt; masks.length; i++)</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (masks[i] &gt; 0) {</span>
+<span class="nc" id="L80">				final char ch = (char) i;</span>
+<span class="nc" id="L81">				System.err.println(&quot;ch=&quot; + ch + &quot; &quot; + masks[i]);</span>
+			}
+
+<span class="nc" id="L84">	}</span>
+
+	private static long getMask(char ch) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (ch &lt; masks.length)</span>
+<span class="fc" id="L88">			return masks[ch];</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		else if (ch == '\u00A0')</span>
+<span class="nc" id="L90">			return MASK_SPACES;</span>
+
+<span class="fc" id="L92">		return 0L;</span>
+	}
+
+	public static long getFoxSignatureFromRealString(String s) {
+<span class="fc" id="L96">		long result = 0;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="fc" id="L98">			result = result | getMask(s.charAt(i));</span>
+<span class="fc" id="L99">		return result;</span>
+	}
+
+	public static long getFoxSignatureFromRegex(String s) {
+<span class="fc" id="L103">		long result = 0;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			if (s.charAt(i) == '.') {</span>
+<span class="pc bpc" id="L106" title="1 of 4 branches missed.">				if (s.charAt(i + 1) == '+' || s.charAt(i + 1) == '*')</span>
+<span class="fc" id="L107">					i++;</span>
+				else
+<span class="nc" id="L109">					throw new IllegalArgumentException(s);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			} else if (s.charAt(i) == '\\') {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (s.charAt(i + 1) == 'b')</span>
+<span class="fc" id="L112">					i++;</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">				else if (Character.isLetterOrDigit(s.charAt(i + 1)))</span>
+<span class="nc" id="L114">					throw new IllegalArgumentException(s);</span>
+			} else {
+<span class="fc bfc" id="L116" title="All 6 branches covered.">				if (i + 1 &lt; s.length() &amp;&amp; (s.charAt(i + 1) == '?' || s.charAt(i + 1) == '*')) {</span>
+<span class="fc" id="L117">					i++;</span>
+<span class="fc" id="L118">					continue;</span>
+				}
+<span class="fc" id="L120">				result = result | getMask(s.charAt(i));</span>
+<span class="fc bfc" id="L121" title="All 4 branches covered.">				if (i + 1 &lt; s.length() &amp;&amp; s.charAt(i + 1) == '+') {</span>
+<span class="fc" id="L122">					i++;</span>
+				}
+			}
+		}
+<span class="fc" id="L126">		return result;</span>
+	}
+
+	public static String backToString(long check) {
+<span class="nc" id="L130">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		for (int i = 0; i &lt; masks.length; i++)</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">			if (masks[i] != 0L &amp;&amp; (check &amp; masks[i]) != 0L) {</span>
+<span class="nc" id="L133">				final char ch = (char) i;</span>
+<span class="nc" id="L134">				sb.append(ch);</span>
+			}
+<span class="nc" id="L136">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

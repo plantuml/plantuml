@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StatsImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.stats</a> &gt; <span class="el_source">StatsImpl.java</span></div><h1>StatsImpl.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.stats;
+
+import java.util.Date;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.api.NumberAnalyzed;
+import net.sourceforge.plantuml.stats.api.Stats;
+import net.sourceforge.plantuml.stats.api.StatsColumn;
+import net.sourceforge.plantuml.stats.api.StatsLine;
+import net.sourceforge.plantuml.stats.api.StatsTable;
+
+public class StatsImpl implements Stats {
+
+	// private final long jvmcounting;
+
+	private final FormatCounter formatCounterCurrent;
+	private final FormatCounter formatCounterEver;
+
+	private final Map&lt;String, ParsedGenerated&gt; byTypeEver;
+	private final Map&lt;String, ParsedGenerated&gt; byTypeCurrent;
+
+	private final ParsedGenerated fullEver;
+	private final HistoricalData historicalData;
+
+	StatsImpl(Map&lt;String, ParsedGenerated&gt; byTypeEver, Map&lt;String, ParsedGenerated&gt; byTypeCurrent,
+			FormatCounter formatCounterCurrent, FormatCounter formatCounterEver, HistoricalData historicalData,
+<span class="nc" id="L64">			ParsedGenerated fullEver) {</span>
+		// this.jvmcounting = jvmcounting;
+<span class="nc" id="L66">		this.byTypeEver = byTypeEver;</span>
+<span class="nc" id="L67">		this.byTypeCurrent = byTypeCurrent;</span>
+<span class="nc" id="L68">		this.formatCounterCurrent = formatCounterCurrent;</span>
+<span class="nc" id="L69">		this.formatCounterEver = formatCounterEver;</span>
+<span class="nc" id="L70">		this.fullEver = fullEver;</span>
+<span class="nc" id="L71">		this.historicalData = historicalData;</span>
+<span class="nc" id="L72">	}</span>
+
+	private StatsLine createDataLineSession(final ParsedGenerated data) {
+<span class="nc" id="L75">		final Map&lt;StatsColumn, Object&gt; result = new EnumMap&lt;StatsColumn, Object&gt;(StatsColumn.class);</span>
+<span class="nc" id="L76">		final long id = data.getId();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (id != -1) {</span>
+<span class="nc" id="L78">			result.put(StatsColumn.SESSION_ID, id);</span>
+		}
+<span class="nc" id="L80">		result.put(StatsColumn.VERSION, data.getVersion());</span>
+<span class="nc" id="L81">		final long creationTime = data.parsedDated().getCreationTime();</span>
+<span class="nc" id="L82">		final long modificationTime = data.parsedDated().getModificationTime();</span>
+<span class="nc" id="L83">		result.put(StatsColumn.STARTING, new Date(creationTime));</span>
+<span class="nc" id="L84">		result.put(StatsColumn.LAST, new Date(modificationTime));</span>
+<span class="nc" id="L85">		result.put(StatsColumn.DURATION_STRING, new HumanDuration(modificationTime - creationTime));</span>
+<span class="nc" id="L86">		result.put(StatsColumn.PARSED_COUNT, data.parsedDated().getNb());</span>
+<span class="nc" id="L87">		result.put(StatsColumn.PARSED_MEAN_TIME, data.parsedDated().getMean());</span>
+<span class="nc" id="L88">		result.put(StatsColumn.PARSED_STANDARD_DEVIATION, data.parsedDated().getStandardDeviation());</span>
+<span class="nc" id="L89">		result.put(StatsColumn.PARSED_MAX_TIME, data.parsedDated().getMax());</span>
+<span class="nc" id="L90">		result.put(StatsColumn.GENERATED_COUNT, data.generatedDated().getNb());</span>
+<span class="nc" id="L91">		result.put(StatsColumn.GENERATED_MEAN_TIME, data.generatedDated().getMean());</span>
+<span class="nc" id="L92">		result.put(StatsColumn.GENERATED_STANDARD_DEVIATION, data.generatedDated().getStandardDeviation());</span>
+<span class="nc" id="L93">		result.put(StatsColumn.GENERATED_MAX_TIME, data.generatedDated().getMax());</span>
+<span class="nc" id="L94">		return new StatsLineImpl(result);</span>
+	}
+
+	private StatsLine createLineByDiagramType(String key, NumberAnalyzed parse, NumberAnalyzed generate) {
+<span class="nc" id="L98">		final Map&lt;StatsColumn, Object&gt; result = new EnumMap&lt;StatsColumn, Object&gt;(StatsColumn.class);</span>
+<span class="nc" id="L99">		result.put(StatsColumn.DIAGRAM_TYPE, key);</span>
+<span class="nc" id="L100">		result.put(StatsColumn.PARSED_COUNT, parse.getNb());</span>
+<span class="nc" id="L101">		result.put(StatsColumn.PARSED_MEAN_TIME, parse.getMean());</span>
+<span class="nc" id="L102">		result.put(StatsColumn.PARSED_STANDARD_DEVIATION, parse.getStandardDeviation());</span>
+<span class="nc" id="L103">		result.put(StatsColumn.PARSED_MAX_TIME, parse.getMax());</span>
+<span class="nc" id="L104">		result.put(StatsColumn.GENERATED_COUNT, generate.getNb());</span>
+<span class="nc" id="L105">		result.put(StatsColumn.GENERATED_MEAN_TIME, generate.getMean());</span>
+<span class="nc" id="L106">		result.put(StatsColumn.GENERATED_STANDARD_DEVIATION, generate.getStandardDeviation());</span>
+<span class="nc" id="L107">		result.put(StatsColumn.GENERATED_MAX_TIME, generate.getMax());</span>
+<span class="nc" id="L108">		return new StatsLineImpl(result);</span>
+	}
+
+	public StatsTable getLastSessions() {
+<span class="nc" id="L112">		final StatsTableImpl result = new StatsTableImpl(&quot;Statistics&quot;);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (ParsedGenerated histo : historicalData.getHistorical()) {</span>
+<span class="nc" id="L114">			result.addLine(createDataLineSession(histo));</span>
+<span class="nc" id="L115">		}</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (historicalData.current() != null) {</span>
+<span class="nc" id="L117">			result.addLine(createDataLineSession(historicalData.current()));</span>
+		}
+<span class="nc" id="L119">		result.addLine(createDataLineSession(fullEver));</span>
+<span class="nc" id="L120">		return result;</span>
+	}
+
+	public StatsTable getCurrentSessionByFormat() {
+<span class="nc" id="L124">		return formatCounterCurrent.getStatsTable(&quot;current format&quot;);</span>
+	}
+
+	public StatsTable getAllByFormat() {
+<span class="nc" id="L128">		return formatCounterEver.getStatsTable(&quot;all format&quot;);</span>
+	}
+
+	public StatsTable getCurrentSessionByDiagramType() {
+<span class="nc" id="L132">		return getByDiagramType(&quot;Current session&quot;, byTypeCurrent);</span>
+	}
+
+	public StatsTable getAllByDiagramType() {
+<span class="nc" id="L136">		return getByDiagramType(&quot;All session&quot;, byTypeEver);</span>
+	}
+
+	private StatsTable getByDiagramType(String name, Map&lt;String, ParsedGenerated&gt; data) {
+<span class="nc" id="L140">		final StatsTableImpl result = new StatsTableImpl(name);</span>
+<span class="nc" id="L141">		final TreeSet&lt;String&gt; keys = new TreeSet&lt;&gt;(data.keySet());</span>
+<span class="nc" id="L142">		final NumberAnalyzed totalParsing = new NumberAnalyzed();</span>
+<span class="nc" id="L143">		final NumberAnalyzed totalGenerating = new NumberAnalyzed();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (String key : keys) {</span>
+<span class="nc" id="L145">			final NumberAnalyzed parse = data.get(key).parsed();</span>
+<span class="nc" id="L146">			final NumberAnalyzed generate = data.get(key).generated();</span>
+<span class="nc" id="L147">			totalParsing.add(parse);</span>
+<span class="nc" id="L148">			totalGenerating.add(generate);</span>
+<span class="nc" id="L149">			result.addLine(createLineByDiagramType(key, parse, generate));</span>
+<span class="nc" id="L150">		}</span>
+<span class="nc" id="L151">		result.addLine(createLineByDiagramType(&quot;Total&quot;, totalParsing, totalGenerating));</span>
+<span class="nc" id="L152">		return result;</span>
+	}
+
+	// public long totalLaunch() {
+	// return jvmcounting;
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Functions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.argon2.algorithm</a> &gt; <span class="el_source">Functions.java</span></div><h1>Functions.java</h1><pre class="source lang-java linenums">/* 	This file is taken from
+	https://github.com/andreas1327250/argon2-java
+
+	Original Author: Andreas Gadermaier &lt;up.gadermaier@gmail.com&gt;
+ */
+package net.sourceforge.plantuml.argon2.algorithm;
+
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_BLOCK_SIZE;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_PREHASH_DIGEST_LENGTH;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_PREHASH_SEED_LENGTH;
+
+import net.sourceforge.plantuml.argon2.Util;
+import net.sourceforge.plantuml.argon2.blake2.Blake2b;
+import net.sourceforge.plantuml.argon2.model.Block;
+
+<span class="nc" id="L16">class Functions {</span>
+
+	/**
+	 * H0 = H64(p, \u03c4, m, t, v, y, |P|, P, |S|, S, |L|, K, |X|, X) -&gt; 64 byte
+	 * (ARGON2_PREHASH_DIGEST_LENGTH)
+	 */
+	static byte[] initialHash(byte[] lanes, byte[] outputLength, byte[] memory, byte[] iterations, byte[] version,
+			byte[] type, byte[] passwordLength, byte[] password, byte[] saltLength, byte[] salt, byte[] secretLength,
+			byte[] secret, byte[] additionalLength, byte[] additional) {
+
+<span class="nc" id="L26">		Blake2b.Param params = new Blake2b.Param().setDigestLength(ARGON2_PREHASH_DIGEST_LENGTH);</span>
+
+<span class="nc" id="L28">		final Blake2b blake2b = Blake2b.Digest.newInstance(params);</span>
+
+<span class="nc" id="L30">		blake2b.update(lanes);</span>
+<span class="nc" id="L31">		blake2b.update(outputLength);</span>
+<span class="nc" id="L32">		blake2b.update(memory);</span>
+<span class="nc" id="L33">		blake2b.update(iterations);</span>
+<span class="nc" id="L34">		blake2b.update(version);</span>
+<span class="nc" id="L35">		blake2b.update(type);</span>
+
+<span class="nc" id="L37">		blake2b.update(passwordLength);</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">		if (password != null) {</span>
+<span class="nc" id="L39">			blake2b.update(password);</span>
+		}
+
+<span class="nc" id="L42">		blake2b.update(saltLength);</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (salt != null) {</span>
+<span class="nc" id="L44">			blake2b.update(salt);</span>
+		}
+
+<span class="nc" id="L47">		blake2b.update(secretLength);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (secret != null) {</span>
+<span class="nc" id="L49">			blake2b.update(secret);</span>
+		}
+
+<span class="nc" id="L52">		blake2b.update(additionalLength);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (additional != null) {</span>
+<span class="nc" id="L54">			blake2b.update(additional);</span>
+		}
+
+<span class="nc" id="L57">		byte[] blake2hash = blake2b.digest();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		assert (blake2hash.length == 64);</span>
+
+<span class="nc" id="L60">		return blake2hash;</span>
+	}
+
+	/**
+	 * H' - blake2bLong - variable length hash function
+	 */
+	static byte[] blake2bLong(byte[] input, int outputLength) {
+
+<span class="nc bnc" id="L68" title="All 4 branches missed.">		assert (input.length == ARGON2_PREHASH_SEED_LENGTH || input.length == ARGON2_BLOCK_SIZE);</span>
+
+<span class="nc" id="L70">		byte[] result = new byte[outputLength];</span>
+<span class="nc" id="L71">		byte[] outlenBytes = Util.intToLittleEndianBytes(outputLength);</span>
+
+<span class="nc" id="L73">		int blake2bLength = 64;</span>
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (outputLength &lt;= blake2bLength) {</span>
+<span class="nc" id="L76">			result = blake2b(input, outlenBytes, outputLength);</span>
+		} else {
+			byte[] outBuffer;
+
+			/* V1 */
+<span class="nc" id="L81">			outBuffer = blake2b(input, outlenBytes, blake2bLength);</span>
+<span class="nc" id="L82">			System.arraycopy(outBuffer, 0, result, 0, blake2bLength / 2);</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			int r = (outputLength / 32) + (outputLength % 32 == 0 ? 0 : 1) - 2;</span>
+
+<span class="nc" id="L86">			int position = blake2bLength / 2;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			for (int i = 2; i &lt;= r; i++, position += blake2bLength / 2) {</span>
+				/* V2 to Vr */
+<span class="nc" id="L89">				outBuffer = blake2b(outBuffer, null, blake2bLength);</span>
+<span class="nc" id="L90">				System.arraycopy(outBuffer, 0, result, position, blake2bLength / 2);</span>
+			}
+
+<span class="nc" id="L93">			int lastLength = outputLength - 32 * r;</span>
+
+			/* Vr+1 */
+<span class="nc" id="L96">			outBuffer = blake2b(outBuffer, null, lastLength);</span>
+<span class="nc" id="L97">			System.arraycopy(outBuffer, 0, result, position, lastLength);</span>
+		}
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		assert (result.length == outputLength);</span>
+<span class="nc" id="L101">		return result;</span>
+	}
+
+	private static byte[] blake2b(byte[] input, byte[] outlenBytes, int outputLength) {
+<span class="nc" id="L105">		Blake2b.Param params = new Blake2b.Param().setDigestLength(outputLength);</span>
+
+<span class="nc" id="L107">		final Blake2b blake2b = Blake2b.Digest.newInstance(params);</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (outlenBytes != null)</span>
+<span class="nc" id="L110">			blake2b.update(outlenBytes);</span>
+
+<span class="nc" id="L112">		blake2b.update(input);</span>
+
+<span class="nc" id="L114">		return blake2b.digest();</span>
+	}
+
+	static void roundFunction(Block block, int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8,
+			int v9, int v10, int v11, int v12, int v13, int v14, int v15) {
+
+<span class="nc" id="L120">		F(block, v0, v4, v8, v12);</span>
+<span class="nc" id="L121">		F(block, v1, v5, v9, v13);</span>
+<span class="nc" id="L122">		F(block, v2, v6, v10, v14);</span>
+<span class="nc" id="L123">		F(block, v3, v7, v11, v15);</span>
+
+<span class="nc" id="L125">		F(block, v0, v5, v10, v15);</span>
+<span class="nc" id="L126">		F(block, v1, v6, v11, v12);</span>
+<span class="nc" id="L127">		F(block, v2, v7, v8, v13);</span>
+<span class="nc" id="L128">		F(block, v3, v4, v9, v14);</span>
+<span class="nc" id="L129">	}</span>
+
+	private static void F(Block block, int a, int b, int c, int d) {
+<span class="nc" id="L132">		fBlaMka(block, a, b);</span>
+<span class="nc" id="L133">		rotr64(block, d, a, 32);</span>
+
+<span class="nc" id="L135">		fBlaMka(block, c, d);</span>
+<span class="nc" id="L136">		rotr64(block, b, c, 24);</span>
+
+<span class="nc" id="L138">		fBlaMka(block, a, b);</span>
+<span class="nc" id="L139">		rotr64(block, d, a, 16);</span>
+
+<span class="nc" id="L141">		fBlaMka(block, c, d);</span>
+<span class="nc" id="L142">		rotr64(block, b, c, 63);</span>
+<span class="nc" id="L143">	}</span>
+
+	/* designed by the Lyra PHC team */
+	/*
+	 * a &lt;- a + b + 2*aL*bL + == addition modulo 2^64 aL = least 32 bit
+	 */
+	private static void fBlaMka(Block block, int x, int y) {
+<span class="nc" id="L150">		final long m = 0xFFFFFFFFL;</span>
+<span class="nc" id="L151">		final long xy = (block.v[x] &amp; m) * (block.v[y] &amp; m);</span>
+
+<span class="nc" id="L153">		block.v[x] = block.v[x] + block.v[y] + 2 * xy;</span>
+<span class="nc" id="L154">	}</span>
+
+	private static void rotr64(Block block, int v, int w, long c) {
+<span class="nc" id="L157">		final long temp = block.v[v] ^ block.v[w];</span>
+<span class="nc" id="L158">		block.v[v] = (temp &gt;&gt;&gt; c) | (temp &lt;&lt; (64 - c));</span>
+<span class="nc" id="L159">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

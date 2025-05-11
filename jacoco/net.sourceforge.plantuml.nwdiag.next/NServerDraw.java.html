@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NServerDraw.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.nwdiag.next</a> &gt; <span class="el_source">NServerDraw.java</span></div><h1>NServerDraw.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.nwdiag.next;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nwdiag.VerticalLine;
+import net.sourceforge.plantuml.nwdiag.core.NServer;
+import net.sourceforge.plantuml.nwdiag.core.Network;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.utils.MathUtils;
+
+public class NServerDraw {
+
+	public static final int MAGIC = 15;
+
+	private final TextBlock box;
+	private final Network network;
+	private final NServer server;
+	private final Map&lt;Network, String&gt; conns;
+	private final List&lt;Network&gt; networks;
+	private final double topMargin;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L68">		return server.toString() + &quot; &quot; + conns;</span>
+	}
+
+	public NServerDraw(NServer server, TextBlock box, Map&lt;Network, String&gt; conns, List&lt;Network&gt; networks,
+<span class="nc" id="L72">			double topMargin) {</span>
+<span class="nc" id="L73">		this.topMargin = topMargin;</span>
+<span class="nc" id="L74">		this.networks = networks;</span>
+<span class="nc" id="L75">		this.box = box;</span>
+<span class="nc" id="L76">		this.network = server.getMainNetworkNext();</span>
+<span class="nc" id="L77">		this.server = server;</span>
+<span class="nc" id="L78">		this.conns = conns;</span>
+<span class="nc" id="L79">	}</span>
+
+	public boolean isLinkedTo(Network some) {
+<span class="nc" id="L82">		return conns.containsKey(some);</span>
+	}
+
+<span class="nc" id="L85">	private final double marginAd = 10;</span>
+
+	private int marginBoxW() {
+<span class="nc" id="L88">		return 15;</span>
+	}
+
+	private double marginBoxH() {
+<span class="nc" id="L92">		return topMargin;</span>
+	}
+
+	public MinMax getMinMax(StringBounder stringBounder, double width, double height) {
+<span class="nc" id="L96">		final double xMiddle = width / 2;</span>
+<span class="nc" id="L97">		final double yMiddle = height / 2;</span>
+<span class="nc" id="L98">		final XDimension2D dimBox = box.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L100">		final double x1 = xMiddle - dimBox.getWidth() / 2;</span>
+<span class="nc" id="L101">		final double y1 = yMiddle - dimBox.getHeight() / 2;</span>
+<span class="nc" id="L102">		final double x2 = xMiddle + dimBox.getWidth() / 2;</span>
+<span class="nc" id="L103">		final double y2 = yMiddle + dimBox.getHeight() / 2;</span>
+<span class="nc" id="L104">		return MinMax.getEmpty(false).addPoint(x1 - 5, y1 - 5).addPoint(x2 + 5, y2 + 5);</span>
+	}
+
+	public void drawMe(UGraphic ug, double width, double height) {
+<span class="nc" id="L108">		final double xMiddle = width / 2;</span>
+<span class="nc" id="L109">		final double yMiddle = height / 2;</span>
+<span class="nc" id="L110">		drawCenter(ug, box, xMiddle, yMiddle);</span>
+<span class="nc" id="L111">	}</span>
+
+	public void drawLinks(UGraphic ug, double xstart, double width, double height) {
+
+<span class="nc" id="L115">		ug = ug.apply(UTranslate.dx(xstart));</span>
+
+<span class="nc" id="L117">		final double ynet1 = network.getY();</span>
+<span class="nc" id="L118">		final double yMiddle = height / 2;</span>
+<span class="nc" id="L119">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L120">		final XDimension2D dimBox = box.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L122">		final double alpha = yMiddle - dimBox.getHeight() / 2;</span>
+<span class="nc" id="L123">		final double posLink1 = (yMiddle - dimBox.getHeight() / 2 - topMargin + MAGIC) / 2;</span>
+
+<span class="nc" id="L125">		final double xMiddle = width / 2;</span>
+<span class="nc" id="L126">		final double xLinkPos = width / 2;</span>
+
+<span class="nc" id="L128">		final TreeSet&lt;Double&gt; skip = new TreeSet&lt;&gt;();</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (Network n : networks)</span>
+<span class="nc bnc" id="L131" title="All 4 branches missed.">			if (xstart + xMiddle &gt; n.getXmin() &amp;&amp; xstart + xMiddle &lt; n.getXmax())</span>
+<span class="nc" id="L132">				skip.add(n.getY());</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (server.printFirstLink())</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (network.isVisible())</span>
+<span class="nc" id="L136">				new VerticalLine(ynet1 + GridTextBlockDecorated.NETWORK_THIN, ynet1 + alpha, skip)</span>
+<span class="nc" id="L137">						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));</span>
+			else
+<span class="nc" id="L139">				new VerticalLine(ynet1, ynet1 + alpha, Collections.&lt;Double&gt;emptySet())</span>
+<span class="nc" id="L140">						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));</span>
+
+<span class="nc" id="L142">		final TextBlock link = getTextBlockLink1();</span>
+<span class="nc" id="L143">		drawCenter(ug, link, xMiddle + network.magicDelta(), ynet1 + posLink1);</span>
+
+<span class="nc" id="L145">		final double seven = 9.0;</span>
+<span class="nc" id="L146">		double x = xLinkPos - (conns.size() - 2) * seven / 2;</span>
+<span class="nc" id="L147">		boolean first = true;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (Entry&lt;Network, String&gt; ent : conns.entrySet()) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (ent.getKey() == network)</span>
+<span class="nc" id="L150">				continue;</span>
+
+<span class="nc" id="L152">			final double ynet2 = ent.getKey().getY();</span>
+<span class="nc" id="L153">			new VerticalLine(ynet1 + yMiddle + dimBox.getHeight() / 2, ynet2, skip)</span>
+<span class="nc" id="L154">					.drawU(ug.apply(UTranslate.dx(x - ent.getKey().magicDelta())));</span>
+
+<span class="nc" id="L156">			final TextBlock block = server.toTextBlock(SName.arrow, ent.getValue());</span>
+
+			final double xtext;
+<span class="nc bnc" id="L159" title="All 4 branches missed.">			if (first &amp;&amp; conns.size() &gt; 2)</span>
+<span class="nc" id="L160">				xtext = x - block.calculateDimension(stringBounder).getWidth() / 2;</span>
+			else
+<span class="nc" id="L162">				xtext = x;</span>
+
+<span class="nc" id="L164">			drawCenter(ug, block, xtext - ent.getKey().magicDelta(), ynet2 - alpha / 2);</span>
+<span class="nc" id="L165">			x += seven;</span>
+<span class="nc" id="L166">			first = false;</span>
+
+<span class="nc" id="L168">		}</span>
+
+<span class="nc" id="L170">	}</span>
+
+	private TextBlock getTextBlockLink1() {
+<span class="nc" id="L173">		return server.toTextBlock(SName.arrow, conns.get(network));</span>
+	}
+
+	private TextBlock link2() {
+<span class="nc" id="L177">		final int i = networks.indexOf(network);</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (i == networks.size() - 1)</span>
+<span class="nc" id="L179">			return null;</span>
+
+<span class="nc" id="L181">		return server.toTextBlock(SName.arrow, conns.get(networks.get(i + 1)));</span>
+	}
+
+	private void drawCenter(UGraphic ug, TextBlock block, double x, double y) {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (block == null)</span>
+<span class="nc" id="L186">			return;</span>
+
+<span class="nc" id="L188">		final XDimension2D dim = block.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L189">		block.drawU(ug.apply(new UTranslate(x - dim.getWidth() / 2, y - dim.getHeight() / 2)));</span>
+
+<span class="nc" id="L191">	}</span>
+
+	public XDimension2D naturalDimension(StringBounder stringBounder) {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		final XDimension2D dimLink1 = getTextBlockLink1() == null ? new XDimension2D(0, 0)</span>
+<span class="nc" id="L195">				: getTextBlockLink1().calculateDimension(stringBounder);</span>
+<span class="nc" id="L196">		final XDimension2D dimBox = box.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		final XDimension2D dimLink2 = link2() == null ? new XDimension2D(0, 0)</span>
+<span class="nc" id="L198">				: link2().calculateDimension(stringBounder);</span>
+<span class="nc" id="L199">		final double width = MathUtils.max(dimLink1.getWidth() + 2 * marginAd, dimBox.getWidth() + 2 * marginBoxW(),</span>
+<span class="nc" id="L200">				dimLink2.getWidth() + 2 * marginAd);</span>
+<span class="nc" id="L201">		final double height = dimLink1.getHeight() + 2 * marginAd + 2 * marginBoxH() + dimBox.getHeight()</span>
+<span class="nc" id="L202">				+ dimLink2.getHeight() + 2 * marginAd;</span>
+<span class="nc" id="L203">		return new XDimension2D(width, height);</span>
+	}
+
+	public final Network getNetwork() {
+<span class="nc" id="L207">		return network;</span>
+	}
+
+	public final NServer getServer() {
+<span class="nc" id="L211">		return server;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

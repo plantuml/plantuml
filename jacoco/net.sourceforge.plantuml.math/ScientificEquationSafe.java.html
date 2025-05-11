@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScientificEquationSafe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.math</a> &gt; <span class="el_source">ScientificEquationSafe.java</span></div><h1>ScientificEquationSafe.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.math;
+
+
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Arrays;
+
+import net.atmp.ImageBuilder;
+import net.atmp.PixelImage;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.utils.Log;
+
+public class ScientificEquationSafe {
+
+	private final ScientificEquation equation;
+	private final String formula;
+
+<span class="nc" id="L68">	private ScientificEquationSafe(String formula, ScientificEquation equation) {</span>
+<span class="nc" id="L69">		this.formula = formula;</span>
+<span class="nc" id="L70">		this.equation = equation;</span>
+<span class="nc" id="L71">	}</span>
+
+	public static ScientificEquationSafe fromAsciiMath(String formula) {
+		try {
+<span class="nc" id="L75">			return new ScientificEquationSafe(formula, new AsciiMath(formula));</span>
+<span class="nc" id="L76">		} catch (Exception e) {</span>
+<span class="nc" id="L77">			Logme.error(e);</span>
+<span class="nc" id="L78">			Log.info(&quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L79">			return new ScientificEquationSafe(formula, null);</span>
+		}
+	}
+
+	public static ScientificEquationSafe fromLatex(String formula) {
+		try {
+<span class="nc" id="L85">			return new ScientificEquationSafe(formula, new LatexBuilder(formula));</span>
+<span class="nc" id="L86">		} catch (Exception e) {</span>
+<span class="nc" id="L87">			Logme.error(e);</span>
+<span class="nc" id="L88">			Log.info(&quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L89">			return new ScientificEquationSafe(formula, null);</span>
+		}
+	}
+
+	private ImageData dimSvg;
+
+	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (equation != null)</span>
+			try {
+<span class="nc" id="L98">				final UImageSvg svg = equation.getSvg(scale, foregroundColor, backgroundColor);</span>
+<span class="nc" id="L99">				dimSvg = new ImageDataSimple(equation.getDimension());</span>
+<span class="nc" id="L100">				return svg;</span>
+<span class="nc" id="L101">			} catch (Exception e) {</span>
+<span class="nc" id="L102">				printTrace(e);</span>
+			}
+<span class="nc" id="L104">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+		try {
+<span class="nc" id="L106">			dimSvg = ImageBuilder.create(new FileFormatOption(FileFormat.SVG), getRollback()).write(baos);</span>
+<span class="nc" id="L107">		} catch (IOException e1) {</span>
+<span class="nc" id="L108">			return null;</span>
+<span class="nc" id="L109">		}</span>
+<span class="nc" id="L110">		return new UImageSvg(new String(baos.toByteArray()), scale);</span>
+	}
+
+	public MutableImage getImage(Color foregroundColor, Color backgroundColor) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (equation != null)</span>
+			try {
+<span class="nc" id="L116">				return equation.getImage(foregroundColor, backgroundColor);</span>
+<span class="nc" id="L117">			} catch (Exception e) {</span>
+<span class="nc" id="L118">				printTrace(e);</span>
+			}
+		try {
+<span class="nc" id="L121">			final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), getRollback()).writeByteArray();</span>
+<span class="nc" id="L122">			return new PixelImage(SImageIO.read(bytes), AffineTransformType.TYPE_BILINEAR);</span>
+<span class="nc" id="L123">		} catch (IOException e1) {</span>
+<span class="nc" id="L124">			return null;</span>
+		}
+	}
+
+	private void printTrace(Exception e) {
+<span class="nc" id="L129">		System.err.println(&quot;formula=&quot; + formula);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (equation != null) {</span>
+<span class="nc" id="L131">			System.err.println(&quot;Latex=&quot; + equation.getSource());</span>
+		}
+<span class="nc" id="L133">		Logme.error(e);</span>
+<span class="nc" id="L134">	}</span>
+
+	private TextBlock getRollback() {
+<span class="nc" id="L137">		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));</span>
+	}
+
+	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, Color foregroundColor,
+			Color backgroundColor) throws IOException {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.PNG) {</span>
+<span class="nc" id="L143">			final BufferedImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
+<span class="nc" id="L144">			SImageIO.write(image, &quot;png&quot;, os);</span>
+<span class="nc" id="L145">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
+		}
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG) {</span>
+<span class="nc" id="L148">			os.write(getSvg(1, foregroundColor, backgroundColor).getSvg(true).getBytes());</span>
+<span class="nc" id="L149">			return dimSvg;</span>
+		}
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.EPS) {</span>
+<span class="nc" id="L152">			final BufferedImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
+<span class="nc" id="L153">			final EpsGraphics out = new EpsGraphics();</span>
+<span class="nc" id="L154">			out.drawImage(image, 0, 0);</span>
+<span class="nc" id="L155">			out.close();</span>
+<span class="nc" id="L156">			os.write(out.getEPSCode().getBytes());</span>
+<span class="nc" id="L157">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
+		}
+<span class="nc" id="L159">		throw new UnsupportedOperationException();</span>
+	}
+
+	public final String getFormula() {
+<span class="nc" id="L163">		return formula;</span>
+	}
+
+	public final String getSource() {
+<span class="nc" id="L167">		return equation.getSource();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

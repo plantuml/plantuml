@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SourceStringReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">SourceStringReader.java</span></div><h1>SourceStringReader.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.Log;
+
+public class SourceStringReader {
+	// ::remove file when __HAXE__
+
+	final private List&lt;BlockUml&gt; blocks;
+
+	public SourceStringReader(String source) {
+<span class="fc" id="L66">		this(Defines.createEmpty(), source, Collections.&lt;String&gt;emptyList());</span>
+<span class="fc" id="L67">	}</span>
+
+	public SourceStringReader(String source, String charset) {
+<span class="nc" id="L70">		this(Defines.createEmpty(), source, UTF_8.name(), Collections.&lt;String&gt;emptyList());</span>
+<span class="nc" id="L71">	}</span>
+
+	public SourceStringReader(String source, Charset charset) {
+<span class="fc" id="L74">		this(Defines.createEmpty(), source, charset.name(), Collections.&lt;String&gt;emptyList());</span>
+<span class="fc" id="L75">	}</span>
+
+	public SourceStringReader(Defines defines, String source, List&lt;String&gt; config) {
+<span class="fc" id="L78">		this(defines, source, UTF_8.name(), config);</span>
+<span class="fc" id="L79">	}</span>
+
+	public SourceStringReader(Defines defines, String source) {
+<span class="nc" id="L82">		this(defines, source, UTF_8.name(), Collections.&lt;String&gt;emptyList());</span>
+<span class="nc" id="L83">	}</span>
+
+	public SourceStringReader(String source, SFile newCurrentDir) {
+<span class="nc" id="L86">		this(Defines.createEmpty(), source, UTF_8, Collections.&lt;String&gt;emptyList(), newCurrentDir);</span>
+<span class="nc" id="L87">	}</span>
+
+	public SourceStringReader(Defines defines, String source, String charset, List&lt;String&gt; config) {
+<span class="fc" id="L90">		this(defines, source, charset, config, FileSystem.getInstance().getCurrentDir());</span>
+<span class="fc" id="L91">	}</span>
+
+	public SourceStringReader(Defines defines, String source, String charset, List&lt;String&gt; config,
+			SFile newCurrentDir) {
+<span class="fc" id="L95">		this(defines, source, charsetOrDefault(charset), config, newCurrentDir);</span>
+<span class="fc" id="L96">	}</span>
+
+	public SourceStringReader(Defines defines, String source, Charset charset, List&lt;String&gt; config,
+<span class="fc" id="L99">			SFile newCurrentDir) {</span>
+		try {
+<span class="fc" id="L101">			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),</span>
+					newCurrentDir, &quot;string&quot;);
+<span class="fc" id="L103">			this.blocks = builder.getBlockUmls();</span>
+<span class="nc" id="L104">		} catch (IOException e) {</span>
+<span class="nc" id="L105">			Log.error(&quot;error &quot; + e);</span>
+<span class="nc" id="L106">			throw new IllegalStateException(e);</span>
+<span class="fc" id="L107">		}</span>
+<span class="fc" id="L108">	}</span>
+
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream)} instead
+	 */
+	@Deprecated
+	public String generateImage(OutputStream os) throws IOException {
+<span class="nc" id="L115">		return outputImage(os).getDescription();</span>
+	}
+
+	public DiagramDescription outputImage(OutputStream os) throws IOException {
+<span class="nc" id="L119">		return outputImage(os, 0);</span>
+	}
+
+	// ::comment when __CORE__
+	/**
+	 * @deprecated Use {@link #outputImage(SFile)} instead
+	 */
+	@Deprecated
+	public String generateImage(SFile f) throws IOException {
+<span class="nc" id="L128">		return outputImage(f).getDescription();</span>
+	}
+
+	public DiagramDescription outputImage(SFile f) throws IOException {
+<span class="nc" id="L132">		try (OutputStream os = f.createBufferedOutputStream()) {</span>
+<span class="nc" id="L133">			return outputImage(os, 0);</span>
+		}
+	}
+	// ::done
+
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream, FileFormatOption)} instead
+	 */
+	@Deprecated
+	public String generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L143">		return outputImage(os, fileFormatOption).getDescription();</span>
+	}
+
+	public DiagramDescription outputImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L147">		return outputImage(os, 0, fileFormatOption);</span>
+	}
+
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream, int)} instead
+	 */
+	@Deprecated
+	public String generateImage(OutputStream os, int numImage) throws IOException {
+<span class="nc" id="L155">		return outputImage(os, numImage).getDescription();</span>
+	}
+
+	public DiagramDescription outputImage(OutputStream os, int numImage) throws IOException {
+<span class="nc" id="L159">		return outputImage(os, numImage, new FileFormatOption(FileFormat.PNG));</span>
+	}
+
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream, int, FileFormatOption)} instead
+	 */
+	@Deprecated
+	public String generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L167">		return outputImage(os, numImage, fileFormatOption).getDescription();</span>
+	}
+
+	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
+			throws IOException {
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (blocks.size() == 0) {</span>
+<span class="nc" id="L173">			noValidStartFound(os, fileFormatOption);</span>
+<span class="nc" id="L174">			return null;</span>
+		}
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (fileFormatOption.getFileFormat() == FileFormat.PREPROC) {</span>
+<span class="fc" id="L177">			final BlockUml first = blocks.get(0);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			for (StringLocated s : first.getData()) {</span>
+<span class="fc" id="L179">				os.write(s.getString().getBytes(UTF_8));</span>
+<span class="fc" id="L180">				os.write(&quot;\n&quot;.getBytes(UTF_8));</span>
+<span class="fc" id="L181">			}</span>
+<span class="fc" id="L182">			return new DiagramDescription(&quot;PREPROC&quot;);</span>
+		}
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
+<span class="fc" id="L185">			final Diagram system = b.getDiagram();</span>
+<span class="fc" id="L186">			final int nbInSystem = system.getNbImages();</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
+				// final CMapData cmap = new CMapData();
+<span class="fc" id="L189">				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);</span>
+				// if (imageData.containsCMapData()) {
+				// return system.getDescription().getDescription() + BackSlash.BS_N +
+				// imageData.getCMapData(&quot;plantuml&quot;);
+				// }
+<span class="fc" id="L194">				return system.getDescription();</span>
+			}
+<span class="nc" id="L196">			numImage -= nbInSystem;</span>
+<span class="nc" id="L197">		}</span>
+<span class="nc" id="L198">		Log.error(&quot;numImage is too big = &quot; + numImage);</span>
+<span class="nc" id="L199">		return null;</span>
+
+	}
+
+	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (blocks.size() == 0)</span>
+<span class="nc" id="L205">			return null;</span>
+
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		for (BlockUml b : blocks) {</span>
+<span class="nc" id="L208">			final Diagram system = b.getDiagram();</span>
+<span class="nc" id="L209">			final int nbInSystem = system.getNbImages();</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
+				// final ImageData imageData = system.exportDiagram(os, numImage,
+				// fileFormatOption);
+				// if (imageData.containsCMapData()) {
+				// return
+				// system.getDescription().withCMapData(imageData.getCMapData(&quot;plantuml&quot;));
+				// }
+<span class="nc" id="L217">				return system.getDescription();</span>
+			}
+<span class="nc" id="L219">			numImage -= nbInSystem;</span>
+<span class="nc" id="L220">		}</span>
+<span class="nc" id="L221">		Log.error(&quot;numImage is too big = &quot; + numImage);</span>
+<span class="nc" id="L222">		return null;</span>
+	}
+
+	public DiagramDescription generateDiagramDescription() {
+<span class="nc" id="L226">		return generateDiagramDescription(0);</span>
+	}
+
+	public DiagramDescription generateDiagramDescription(FileFormatOption fileFormatOption) {
+<span class="nc" id="L230">		return generateDiagramDescription(0, fileFormatOption);</span>
+	}
+
+	public DiagramDescription generateDiagramDescription(int numImage) {
+<span class="nc" id="L234">		return generateDiagramDescription(numImage, new FileFormatOption(FileFormat.PNG));</span>
+	}
+
+	public String getCMapData(int numImage, FileFormatOption fileFormatOption) throws IOException {
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (blocks.size() == 0)</span>
+<span class="nc" id="L239">			return null;</span>
+
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
+<span class="fc" id="L242">			final Diagram system = b.getDiagram();</span>
+<span class="fc" id="L243">			final int nbInSystem = system.getNbImages();</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
+<span class="fc" id="L245">				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">				if (imageData.containsCMapData())</span>
+<span class="fc" id="L247">					return imageData.getCMapData(&quot;plantuml&quot;);</span>
+
+<span class="fc" id="L249">				return null;</span>
+			}
+<span class="nc" id="L251">			numImage -= nbInSystem;</span>
+<span class="nc" id="L252">		}</span>
+<span class="nc" id="L253">		return null;</span>
+
+	}
+
+	public ImageData noValidStartFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L258">		final TextBlock error = GraphicStrings.createForError(</span>
+<span class="nc" id="L259">				Arrays.asList(&quot;No valid @start/@end found, please check the version&quot;),</span>
+<span class="nc" id="L260">				fileFormatOption.isUseRedForError());</span>
+
+<span class="nc" id="L262">		return ImageBuilder.create(fileFormatOption, error).write(os);</span>
+	}
+
+	public final List&lt;BlockUml&gt; getBlocks() {
+<span class="fc" id="L266">		return Collections.unmodifiableList(blocks);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

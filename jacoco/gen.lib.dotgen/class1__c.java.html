@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>class1__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">class1__c.java</span></div><h1>class1__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.attr__c.agxget;
+import static gen.lib.cgraph.edge__c.agfstout;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agnxtout;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.node__c.agfstnode;
+import static gen.lib.cgraph.node__c.agnxtnode;
+import static gen.lib.common.utils__c.UF_find;
+import static gen.lib.common.utils__c.mapbool;
+import static gen.lib.dotgen.cluster__c.mark_clusters;
+import static gen.lib.dotgen.fastgr__c.find_fast_edge;
+import static gen.lib.dotgen.fastgr__c.merge_oneway;
+import static gen.lib.dotgen.fastgr__c.virtual_edge;
+import static gen.lib.dotgen.fastgr__c.virtual_node;
+import static gen.lib.dotgen.position__c.make_aux_edge;
+import static smetana.core.Macro.ED_minlen;
+import static smetana.core.Macro.ED_to_orig;
+import static smetana.core.Macro.ED_to_virt;
+import static smetana.core.Macro.ED_weight;
+import static smetana.core.Macro.GD_leader;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_node_type;
+import static smetana.core.Macro.ND_rank;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+<span class="nc" id="L82">public class class1__c {</span>
+    // ::remove folder when __HAXE__
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/class1.c&quot;, name=&quot;nonconstraint_edge&quot;, key=&quot;2luyof8ca7ewf9r08z3os3lk7&quot;, definition=&quot;int nonconstraint_edge(edge_t * e)&quot;)
+public static boolean nonconstraint_edge(Globals zz, ST_Agedge_s e) {
+<span class="fc" id="L89">ENTERING(&quot;2luyof8ca7ewf9r08z3os3lk7&quot;,&quot;nonconstraint_edge&quot;);</span>
+try {
+    CString constr;
+    
+<span class="pc bpc" id="L93" title="3 of 4 branches missed.">    if (zz.E_constr!=null &amp;&amp; (constr = agxget(e, zz.E_constr))!=null) {</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">	if (constr.charAt(0)!='\0' &amp;&amp; mapbool(constr) == false)</span>
+<span class="nc" id="L95">	    return true;</span>
+    }
+<span class="fc" id="L97">    return false;</span>
+} finally {
+<span class="fc" id="L99">LEAVING(&quot;2luyof8ca7ewf9r08z3os3lk7&quot;,&quot;nonconstraint_edge&quot;);</span>
+}
+}
+
+
+
+
+//3 dpimuv55sylui7jx8fh3ic1qc
+// static void  interclust1(graph_t * g, node_t * t, node_t * h, edge_t * e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/class1.c&quot;, name=&quot;interclust1&quot;, key=&quot;dpimuv55sylui7jx8fh3ic1qc&quot;, definition=&quot;static void  interclust1(graph_t * g, node_t * t, node_t * h, edge_t * e)&quot;)
+public static void interclust1(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, ST_Agedge_s e) {
+<span class="fc" id="L111">ENTERING(&quot;dpimuv55sylui7jx8fh3ic1qc&quot;,&quot;interclust1&quot;);</span>
+try {
+    ST_Agnode_s v, t0, h0;
+    int offset, t_len, h_len, t_rank, h_rank;
+    ST_Agedge_s rt, rh;
+<span class="fc bfc" id="L116" title="All 2 branches covered.">    if (ND_clust(agtail(e))!=null)</span>
+<span class="fc" id="L117">	t_rank = ND_rank(agtail(e)) - ND_rank(GD_leader(ND_clust(agtail(e))));</span>
+    else
+<span class="fc" id="L119">	t_rank = 0;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">    if (ND_clust(aghead(e))!=null)</span>
+<span class="fc" id="L121">	h_rank = ND_rank(aghead(e)) - ND_rank(GD_leader(ND_clust(aghead(e))));</span>
+    else
+<span class="fc" id="L123">	h_rank = 0;</span>
+<span class="fc" id="L124">    offset = ED_minlen(e) + t_rank - h_rank;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">    if (offset &gt; 0) {</span>
+<span class="fc" id="L126">	t_len = 0;</span>
+<span class="fc" id="L127">	h_len = offset;</span>
+    } else {
+<span class="nc" id="L129">	t_len = -offset;</span>
+<span class="nc" id="L130">	h_len = 0;</span>
+    }
+<span class="fc" id="L132">    v = virtual_node(g);</span>
+<span class="fc" id="L133">    ND_node_type(v, 2);</span>
+<span class="fc" id="L134">    t0 = UF_find(t);</span>
+<span class="fc" id="L135">    h0 = UF_find(h);</span>
+<span class="fc" id="L136">    rt = make_aux_edge(v, t0, t_len, 10 * ED_weight(e));</span>
+<span class="fc" id="L137">    rh = make_aux_edge(v, h0, h_len, ED_weight(e));</span>
+<span class="fc" id="L138">    ED_to_orig(rt, e);</span>
+<span class="fc" id="L139">    ED_to_orig(rh, e);</span>
+} finally {
+<span class="fc" id="L141">LEAVING(&quot;dpimuv55sylui7jx8fh3ic1qc&quot;,&quot;interclust1&quot;);</span>
+}
+<span class="fc" id="L143">}</span>
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/class1.c&quot;, name=&quot;class1&quot;, key=&quot;acy5ct6402jgf0ga5oeeskx5m&quot;, definition=&quot;void class1(graph_t * g)&quot;)
+public static void class1_(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L151">ENTERING(&quot;acy5ct6402jgf0ga5oeeskx5m&quot;,&quot;class1_&quot;);</span>
+try {
+    ST_Agnode_s n, t, h;
+    ST_Agedge_s e, rep;
+    
+<span class="fc" id="L156">    mark_clusters(zz, g);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {</span>
+		
+	    /* skip edges already processed */
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">	    if (ED_to_virt(e)!=null)</span>
+<span class="nc" id="L162">		continue;</span>
+	    
+	    /* skip edges that we want to ignore in this phase */
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">	    if (nonconstraint_edge(zz, e))</span>
+<span class="nc" id="L166">		continue;</span>
+	    
+<span class="fc" id="L168">	    t = UF_find(agtail(e));</span>
+	    
+<span class="fc" id="L170">	    h = UF_find(aghead(e));</span>
+	    /* skip self, flat, and intra-cluster edges */
+<span class="fc bfc" id="L172" title="All 2 branches covered.">	    if (t == h)</span>
+<span class="fc" id="L173">		continue;</span>
+	    
+	    
+	    /* inter-cluster edges require special treatment */
+<span class="fc bfc" id="L177" title="All 4 branches covered.">	    if (ND_clust(t)!=null || ND_clust(h)!=null) {</span>
+<span class="fc" id="L178">		interclust1(g, agtail(e), aghead(e), e);</span>
+<span class="fc" id="L179">		continue;</span>
+	    }
+	    
+	    
+<span class="fc bfc" id="L183" title="All 2 branches covered.">	    if ((rep = find_fast_edge(t, h))!=null)</span>
+<span class="fc" id="L184">		merge_oneway(e, rep);</span>
+	    else
+<span class="fc" id="L186">		virtual_edge(t, h, e);</span>
+	}
+    }
+} finally {
+<span class="fc" id="L190">LEAVING(&quot;acy5ct6402jgf0ga5oeeskx5m&quot;,&quot;class1_&quot;);</span>
+}
+<span class="fc" id="L192">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

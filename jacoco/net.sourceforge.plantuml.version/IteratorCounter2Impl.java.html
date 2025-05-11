@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IteratorCounter2Impl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.version</a> &gt; <span class="el_source">IteratorCounter2Impl.java</span></div><h1>IteratorCounter2Impl.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.version;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.text.StringLocated;
+
+public class IteratorCounter2Impl implements IteratorCounter2 {
+
+	private List&lt;StringLocated&gt; data;
+	private List&lt;StringLocated&gt; trace;
+	private int nb;
+
+	public void copyStateFrom(IteratorCounter2 other) {
+<span class="fc" id="L50">		final IteratorCounter2Impl source = (IteratorCounter2Impl) other;</span>
+<span class="fc" id="L51">		this.nb = source.nb;</span>
+<span class="fc" id="L52">		this.data = source.data;</span>
+<span class="fc" id="L53">		this.trace = source.trace;</span>
+<span class="fc" id="L54">	}</span>
+
+	public IteratorCounter2Impl(List&lt;StringLocated&gt; data) {
+<span class="fc" id="L57">		this(data, 0, new ArrayList&lt;StringLocated&gt;());</span>
+<span class="fc" id="L58">	}</span>
+
+<span class="fc" id="L60">	private IteratorCounter2Impl(List&lt;StringLocated&gt; data, int nb, List&lt;StringLocated&gt; trace) {</span>
+<span class="fc" id="L61">		this.data = data;</span>
+<span class="fc" id="L62">		this.nb = nb;</span>
+<span class="fc" id="L63">		this.trace = trace;</span>
+<span class="fc" id="L64">	}</span>
+
+	public IteratorCounter2 cloneMe() {
+<span class="fc" id="L67">		return new IteratorCounter2Impl(data, nb, new ArrayList&lt;&gt;(trace));</span>
+	}
+
+	public int currentNum() {
+<span class="nc" id="L71">		return nb;</span>
+	}
+
+	public boolean hasNext() {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		return nb &lt; data.size();</span>
+	}
+
+	public StringLocated next() {
+<span class="fc" id="L79">		final StringLocated result = data.get(nb);</span>
+<span class="fc" id="L80">		nb++;</span>
+<span class="fc" id="L81">		trace.add(result);</span>
+<span class="fc" id="L82">		return result;</span>
+	}
+
+	public StringLocated peek() {
+<span class="fc" id="L86">		return data.get(nb);</span>
+	}
+
+	public StringLocated peekPrevious() {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (nb == 0) {</span>
+<span class="nc" id="L91">			return null;</span>
+		}
+<span class="nc" id="L93">		return data.get(nb - 1);</span>
+	}
+
+	public void remove() {
+<span class="nc" id="L97">		throw new UnsupportedOperationException();</span>
+	}
+
+	public final List&lt;StringLocated&gt; getTrace() {
+<span class="fc" id="L101">		return Collections.unmodifiableList(trace);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

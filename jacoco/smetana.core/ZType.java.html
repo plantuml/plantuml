@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ZType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">smetana.core</a> &gt; <span class="el_source">ZType.java</span></div><h1>ZType.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ * 
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package smetana.core;
+
+import h.ST_Agattr_s;
+import h.ST_Agclos_s;
+import h.ST_Agdatadict_s;
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agedgepair_s;
+import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_Agsubnode_s;
+import h.ST_Agsym_s;
+import h.ST_Pedge_t;
+import h.ST_bezier;
+import h.ST_dtdata_s;
+import h.ST_dthold_s;
+import h.ST_field_t;
+import h.ST_object_t;
+import h.ST_path;
+import h.ST_pointf;
+import h.ST_rank_t;
+import h.ST_textspan_t;
+import h.ST_tna_t;
+import h.ST_triangle_t;
+import h.ST_xlabel_t;
+
+<span class="fc" id="L65">public enum ZType {</span>
+<span class="fc" id="L66">	ST_Agedgepair_s, //</span>
+<span class="fc" id="L67">	ST_Agsym_s, //</span>
+<span class="fc" id="L68">	ST_dthold_s, //</span>
+<span class="fc" id="L69">	ST_path, //</span>
+<span class="fc" id="L70">	ST_Agedgeinfo_t, //</span>
+<span class="fc" id="L71">	ST_Agnodeinfo_t, //</span>
+<span class="fc" id="L72">	ST_Agraphinfo_t, //</span>
+<span class="fc" id="L73">	ST_Agattr_s, //</span>
+<span class="fc" id="L74">	ST_Agdatadict_s, //</span>
+<span class="fc" id="L75">	ST_dtdata_s, //</span>
+<span class="fc" id="L76">	ST_Agraph_s, //</span>
+<span class="fc" id="L77">	ST_Agsubnode_s, //</span>
+<span class="fc" id="L78">	ST_Agnode_s, //</span>
+<span class="fc" id="L79">	ST_Agclos_s, //</span>
+<span class="fc" id="L80">	ST_pointf, ST_bezier, ST_Pedge_t, ST_object_t, ST_xlabel_t, ST_triangle_t, ST_Agedge_s, ST_tna_t, ST_rank_t,</span>
+<span class="fc" id="L81">	ST_textspan_t, ST_field_t; //</span>
+
+	public __ptr__ create() {
+<span class="pc bpc" id="L84" title="4 of 26 branches missed.">		switch (this) {</span>
+		case ST_field_t:
+<span class="nc" id="L86">			return new ST_field_t();</span>
+
+		case ST_textspan_t:
+<span class="fc" id="L89">			return new ST_textspan_t();</span>
+
+		case ST_rank_t:
+<span class="fc" id="L92">			return new ST_rank_t();</span>
+
+		case ST_tna_t:
+<span class="fc" id="L95">			return new ST_tna_t();</span>
+
+		case ST_Agedge_s:
+<span class="nc" id="L98">			return new ST_Agedge_s();</span>
+
+		case ST_triangle_t:
+<span class="fc" id="L101">			return new ST_triangle_t();</span>
+
+		case ST_object_t:
+<span class="fc" id="L104">			return new ST_object_t();</span>
+
+		case ST_xlabel_t:
+<span class="fc" id="L107">			return new ST_xlabel_t();</span>
+
+		case ST_Pedge_t:
+<span class="fc" id="L110">			return new ST_Pedge_t();</span>
+
+		case ST_bezier:
+<span class="fc" id="L113">			return new ST_bezier();</span>
+
+		case ST_pointf:
+<span class="fc" id="L116">			return new ST_pointf();</span>
+
+		case ST_Agedgepair_s:
+<span class="fc" id="L119">			return new ST_Agedgepair_s();</span>
+
+		case ST_Agsym_s:
+<span class="fc" id="L122">			return new ST_Agsym_s();</span>
+
+		case ST_dthold_s:
+<span class="fc" id="L125">			return new ST_dthold_s();</span>
+
+		case ST_path:
+<span class="nc" id="L128">			return new ST_path();</span>
+
+		case ST_Agedgeinfo_t:
+<span class="fc" id="L131">			return new ST_Agedgeinfo_t();</span>
+
+		case ST_Agnodeinfo_t:
+<span class="fc" id="L134">			return new ST_Agnodeinfo_t();</span>
+
+		case ST_Agraphinfo_t:
+<span class="fc" id="L137">			return new ST_Agraphinfo_t();</span>
+
+		case ST_Agattr_s:
+<span class="fc" id="L140">			return new ST_Agattr_s();</span>
+
+		case ST_Agdatadict_s:
+<span class="fc" id="L143">			return new ST_Agdatadict_s();</span>
+
+		case ST_dtdata_s:
+<span class="fc" id="L146">			return new ST_dtdata_s();</span>
+
+		case ST_Agraph_s:
+<span class="fc" id="L149">			return new ST_Agraph_s();</span>
+
+		case ST_Agsubnode_s:
+<span class="fc" id="L152">			return new ST_Agsubnode_s();</span>
+
+		case ST_Agnode_s:
+<span class="fc" id="L155">			return new ST_Agnode_s();</span>
+
+		case ST_Agclos_s:
+<span class="fc" id="L158">			return new ST_Agclos_s();</span>
+		}
+
+<span class="nc" id="L161">		throw new UnsupportedOperationException(this.toString());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

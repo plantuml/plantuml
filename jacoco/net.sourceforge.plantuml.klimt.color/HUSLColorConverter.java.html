@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HUSLColorConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">HUSLColorConverter.java</span></div><h1>HUSLColorConverter.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.color;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * Taken from
+ * https://github.com/hsluv/hsluv-java/blob/master/src/main/java/org/hsluv/HUSLColorConverter.java
+ * 
+ * Some other pointer: https://twitter.com/kuon_orochi/ https://www.hsluv.org/
+ * https://www.kuon.ch/post/2020-03-08-hsluv/
+ * 
+ * 
+ * @author Alexei Boronine
+ *
+ */
+<span class="nc" id="L18">public class HUSLColorConverter {</span>
+	// ::remove file when __HAXE__
+<span class="fc" id="L20">	private static double[][] m = new double[][] {</span>
+			new double[] { 3.240969941904521, -1.537383177570093, -0.498610760293 },
+			new double[] { -0.96924363628087, 1.87596750150772, 0.041555057407175 },
+			new double[] { 0.055630079696993, -0.20397695888897, 1.056971514242878 }, };
+
+<span class="fc" id="L25">	private static double[][] minv = new double[][] {</span>
+			new double[] { 0.41239079926595, 0.35758433938387, 0.18048078840183 },
+			new double[] { 0.21263900587151, 0.71516867876775, 0.072192315360733 },
+			new double[] { 0.019330818715591, 0.11919477979462, 0.95053215224966 }, };
+
+<span class="fc" id="L30">	private static double refY = 1.0;</span>
+
+<span class="fc" id="L32">	private static double refU = 0.19783000664283;</span>
+<span class="fc" id="L33">	private static double refV = 0.46831999493879;</span>
+
+<span class="fc" id="L35">	private static double kappa = 903.2962962;</span>
+<span class="fc" id="L36">	private static double epsilon = 0.0088564516;</span>
+
+	private static List&lt;double[]&gt; getBounds(double L) {
+<span class="fc" id="L39">		ArrayList&lt;double[]&gt; result = new ArrayList&lt;double[]&gt;();</span>
+
+<span class="fc" id="L41">		double sub1 = Math.pow(L + 16, 3) / 1560896;</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">		double sub2 = sub1 &gt; epsilon ? sub1 : L / kappa;</span>
+
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		for (int c = 0; c &lt; 3; ++c) {</span>
+<span class="fc" id="L45">			double m1 = m[c][0];</span>
+<span class="fc" id="L46">			double m2 = m[c][1];</span>
+<span class="fc" id="L47">			double m3 = m[c][2];</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			for (int t = 0; t &lt; 2; ++t) {</span>
+<span class="fc" id="L50">				double top1 = (284517 * m1 - 94839 * m3) * sub2;</span>
+<span class="fc" id="L51">				double top2 = (838422 * m3 + 769860 * m2 + 731718 * m1) * L * sub2 - 769860 * t * L;</span>
+<span class="fc" id="L52">				double bottom = (632260 * m3 - 126452 * m2) * sub2 + 126452 * t;</span>
+
+<span class="fc" id="L54">				result.add(new double[] { top1 / bottom, top2 / bottom });</span>
+			}
+		}
+
+<span class="fc" id="L58">		return result;</span>
+	}
+
+	private static double intersectLineLine(double[] lineA, double[] lineB) {
+<span class="nc" id="L62">		return (lineA[1] - lineB[1]) / (lineB[0] - lineA[0]);</span>
+	}
+
+	private static double distanceFromPole(double[] point) {
+<span class="nc" id="L66">		return Math.sqrt(Math.pow(point[0], 2) + Math.pow(point[1], 2));</span>
+	}
+
+	private static Length lengthOfRayUntilIntersect(double theta, double[] line) {
+<span class="fc" id="L70">		double length = line[1] / (Math.sin(theta) - line[0] * Math.cos(theta));</span>
+
+<span class="fc" id="L72">		return new Length(length);</span>
+	}
+
+	private static class Length {
+		final boolean greaterEqualZero;
+		final double length;
+
+<span class="fc" id="L79">		private Length(double length) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			this.greaterEqualZero = length &gt;= 0;</span>
+<span class="fc" id="L81">			this.length = length;</span>
+<span class="fc" id="L82">		}</span>
+	}
+
+	private static double maxSafeChromaForL(double L) {
+<span class="nc" id="L86">		List&lt;double[]&gt; bounds = getBounds(L);</span>
+<span class="nc" id="L87">		double min = Double.MAX_VALUE;</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (int i = 0; i &lt; 2; ++i) {</span>
+<span class="nc" id="L90">			double m1 = bounds.get(i)[0];</span>
+<span class="nc" id="L91">			double b1 = bounds.get(i)[1];</span>
+<span class="nc" id="L92">			double[] line = new double[] { m1, b1 };</span>
+
+<span class="nc" id="L94">			double x = intersectLineLine(line, new double[] { -1 / m1, 0 });</span>
+<span class="nc" id="L95">			double length = distanceFromPole(new double[] { x, b1 + x * m1 });</span>
+
+<span class="nc" id="L97">			min = Math.min(min, length);</span>
+		}
+
+<span class="nc" id="L100">		return min;</span>
+	}
+
+	private static double maxChromaForLH(double L, double H) {
+<span class="fc" id="L104">		double hrad = H / 360 * Math.PI * 2;</span>
+
+<span class="fc" id="L106">		List&lt;double[]&gt; bounds = getBounds(L);</span>
+<span class="fc" id="L107">		double min = Double.MAX_VALUE;</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (double[] bound : bounds) {</span>
+<span class="fc" id="L110">			Length length = lengthOfRayUntilIntersect(hrad, bound);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			if (length.greaterEqualZero) {</span>
+<span class="fc" id="L112">				min = Math.min(min, length.length);</span>
+			}
+<span class="fc" id="L114">		}</span>
+
+<span class="fc" id="L116">		return min;</span>
+	}
+
+	private static double dotProduct(double[] a, double[] b) {
+<span class="fc" id="L120">		double sum = 0;</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (int i = 0; i &lt; a.length; ++i) {</span>
+<span class="fc" id="L123">			sum += a[i] * b[i];</span>
+		}
+
+<span class="fc" id="L126">		return sum;</span>
+	}
+
+	private static double round(double value, int places) {
+<span class="nc" id="L130">		double n = Math.pow(10, places);</span>
+
+<span class="nc" id="L132">		return Math.round(value * n) / n;</span>
+	}
+
+	private static double fromLinear(double c) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (c &lt;= 0.0031308) {</span>
+<span class="fc" id="L137">			return 12.92 * c;</span>
+		} else {
+<span class="fc" id="L139">			return 1.055 * Math.pow(c, 1 / 2.4) - 0.055;</span>
+		}
+	}
+
+	private static double toLinear(double c) {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (c &gt; 0.04045) {</span>
+<span class="fc" id="L145">			return Math.pow((c + 0.055) / (1 + 0.055), 2.4);</span>
+		} else {
+<span class="fc" id="L147">			return c / 12.92;</span>
+		}
+	}
+
+	private static int[] rgbPrepare(double[] tuple) {
+
+<span class="nc" id="L153">		int[] results = new int[tuple.length];</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (int i = 0; i &lt; tuple.length; ++i) {</span>
+<span class="nc" id="L156">			double chan = tuple[i];</span>
+<span class="nc" id="L157">			double rounded = round(chan, 3);</span>
+
+<span class="nc bnc" id="L159" title="All 4 branches missed.">			if (rounded &lt; -0.0001 || rounded &gt; 1.0001) {</span>
+<span class="nc" id="L160">				throw new IllegalArgumentException(&quot;Illegal rgb value: &quot; + rounded);</span>
+			}
+
+<span class="nc" id="L163">			results[i] = (int) Math.round(rounded * 255);</span>
+		}
+
+<span class="nc" id="L166">		return results;</span>
+	}
+
+	public static double[] xyzToRgb(double[] tuple) {
+<span class="fc" id="L170">		return new double[] { fromLinear(dotProduct(m[0], tuple)), fromLinear(dotProduct(m[1], tuple)),</span>
+<span class="fc" id="L171">				fromLinear(dotProduct(m[2], tuple)), };</span>
+	}
+
+	public static double[] rgbToXyz(double[] tuple) {
+<span class="fc" id="L175">		double[] rgbl = new double[] { toLinear(tuple[0]), toLinear(tuple[1]), toLinear(tuple[2]), };</span>
+
+<span class="fc" id="L177">		return new double[] { dotProduct(minv[0], rgbl), dotProduct(minv[1], rgbl), dotProduct(minv[2], rgbl), };</span>
+	}
+
+	private static double yToL(double Y) {
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (Y &lt;= epsilon) {</span>
+<span class="fc" id="L182">			return (Y / refY) * kappa;</span>
+		} else {
+<span class="fc" id="L184">			return 116 * Math.pow(Y / refY, 1.0 / 3.0) - 16;</span>
+		}
+	}
+
+	private static double lToY(double L) {
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (L &lt;= 8) {</span>
+<span class="nc" id="L190">			return refY * L / kappa;</span>
+		} else {
+<span class="fc" id="L192">			return refY * Math.pow((L + 16) / 116, 3);</span>
+		}
+	}
+
+	public static double[] xyzToLuv(double[] tuple) {
+<span class="fc" id="L197">		double X = tuple[0];</span>
+<span class="fc" id="L198">		double Y = tuple[1];</span>
+<span class="fc" id="L199">		double Z = tuple[2];</span>
+
+<span class="fc" id="L201">		double varU = (4 * X) / (X + (15 * Y) + (3 * Z));</span>
+<span class="fc" id="L202">		double varV = (9 * Y) / (X + (15 * Y) + (3 * Z));</span>
+
+<span class="fc" id="L204">		double L = yToL(Y);</span>
+
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (L == 0) {</span>
+<span class="fc" id="L207">			return new double[] { 0, 0, 0 };</span>
+		}
+
+<span class="fc" id="L210">		double U = 13 * L * (varU - refU);</span>
+<span class="fc" id="L211">		double V = 13 * L * (varV - refV);</span>
+
+<span class="fc" id="L213">		return new double[] { L, U, V };</span>
+	}
+
+	public static double[] luvToXyz(double[] tuple) {
+<span class="fc" id="L217">		double L = tuple[0];</span>
+<span class="fc" id="L218">		double U = tuple[1];</span>
+<span class="fc" id="L219">		double V = tuple[2];</span>
+
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (L == 0) {</span>
+<span class="nc" id="L222">			return new double[] { 0, 0, 0 };</span>
+		}
+
+<span class="fc" id="L225">		double varU = U / (13 * L) + refU;</span>
+<span class="fc" id="L226">		double varV = V / (13 * L) + refV;</span>
+
+<span class="fc" id="L228">		double Y = lToY(L);</span>
+<span class="fc" id="L229">		double X = 0 - (9 * Y * varU) / ((varU - 4) * varV - varU * varV);</span>
+<span class="fc" id="L230">		double Z = (9 * Y - (15 * varV * Y) - (varV * X)) / (3 * varV);</span>
+
+<span class="fc" id="L232">		return new double[] { X, Y, Z };</span>
+	}
+
+	public static double[] luvToLch(double[] tuple) {
+<span class="fc" id="L236">		double L = tuple[0];</span>
+<span class="fc" id="L237">		double U = tuple[1];</span>
+<span class="fc" id="L238">		double V = tuple[2];</span>
+
+<span class="fc" id="L240">		double C = Math.sqrt(U * U + V * V);</span>
+		double H;
+
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (C &lt; 0.00000001) {</span>
+<span class="fc" id="L244">			H = 0;</span>
+		} else {
+<span class="fc" id="L246">			double Hrad = Math.atan2(V, U);</span>
+
+			// pi to more digits than they provide it in the stdlib
+<span class="fc" id="L249">			H = (Hrad * 180.0) / 3.1415926535897932;</span>
+
+<span class="fc bfc" id="L251" title="All 2 branches covered.">			if (H &lt; 0) {</span>
+<span class="fc" id="L252">				H = 360 + H;</span>
+			}
+		}
+
+<span class="fc" id="L256">		return new double[] { L, C, H };</span>
+	}
+
+	public static double[] lchToLuv(double[] tuple) {
+<span class="fc" id="L260">		double L = tuple[0];</span>
+<span class="fc" id="L261">		double C = tuple[1];</span>
+<span class="fc" id="L262">		double H = tuple[2];</span>
+
+<span class="fc" id="L264">		double Hrad = H / 360.0 * 2 * Math.PI;</span>
+<span class="fc" id="L265">		double U = Math.cos(Hrad) * C;</span>
+<span class="fc" id="L266">		double V = Math.sin(Hrad) * C;</span>
+
+<span class="fc" id="L268">		return new double[] { L, U, V };</span>
+	}
+
+	public static double[] hsluvToLch(double[] tuple) {
+<span class="fc" id="L272">		double H = tuple[0];</span>
+<span class="fc" id="L273">		double S = tuple[1];</span>
+<span class="fc" id="L274">		double L = tuple[2];</span>
+
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (L &gt; 99.9999999) {</span>
+<span class="nc" id="L277">			return new double[] { 100d, 0, H };</span>
+		}
+
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (L &lt; 0.00000001) {</span>
+<span class="nc" id="L281">			return new double[] { 0, 0, H };</span>
+		}
+
+<span class="fc" id="L284">		double max = maxChromaForLH(L, H);</span>
+<span class="fc" id="L285">		double C = max / 100 * S;</span>
+
+<span class="fc" id="L287">		return new double[] { L, C, H };</span>
+	}
+
+	public static double[] lchToHsluv(double[] tuple) {
+<span class="fc" id="L291">		double L = tuple[0];</span>
+<span class="fc" id="L292">		double C = tuple[1];</span>
+<span class="fc" id="L293">		double H = tuple[2];</span>
+
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		if (L &gt; 99.9999999) {</span>
+<span class="nc" id="L296">			return new double[] { H, 0, 100 };</span>
+		}
+
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (L &lt; 0.00000001) {</span>
+<span class="fc" id="L300">			return new double[] { H, 0, 0 };</span>
+		}
+
+<span class="fc" id="L303">		double max = maxChromaForLH(L, H);</span>
+<span class="fc" id="L304">		double S = C / max * 100;</span>
+
+<span class="fc" id="L306">		return new double[] { H, S, L };</span>
+	}
+
+	public static double[] hpluvToLch(double[] tuple) {
+<span class="nc" id="L310">		double H = tuple[0];</span>
+<span class="nc" id="L311">		double S = tuple[1];</span>
+<span class="nc" id="L312">		double L = tuple[2];</span>
+
+<span class="nc bnc" id="L314" title="All 2 branches missed.">		if (L &gt; 99.9999999) {</span>
+<span class="nc" id="L315">			return new double[] { 100, 0, H };</span>
+		}
+
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		if (L &lt; 0.00000001) {</span>
+<span class="nc" id="L319">			return new double[] { 0, 0, H };</span>
+		}
+
+<span class="nc" id="L322">		double max = maxSafeChromaForL(L);</span>
+<span class="nc" id="L323">		double C = max / 100 * S;</span>
+
+<span class="nc" id="L325">		return new double[] { L, C, H };</span>
+	}
+
+	public static double[] lchToHpluv(double[] tuple) {
+<span class="nc" id="L329">		double L = tuple[0];</span>
+<span class="nc" id="L330">		double C = tuple[1];</span>
+<span class="nc" id="L331">		double H = tuple[2];</span>
+
+<span class="nc bnc" id="L333" title="All 2 branches missed.">		if (L &gt; 99.9999999) {</span>
+<span class="nc" id="L334">			return new double[] { H, 0, 100 };</span>
+		}
+
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (L &lt; 0.00000001) {</span>
+<span class="nc" id="L338">			return new double[] { H, 0, 0 };</span>
+		}
+
+<span class="nc" id="L341">		double max = maxSafeChromaForL(L);</span>
+<span class="nc" id="L342">		double S = C / max * 100;</span>
+
+<span class="nc" id="L344">		return new double[] { H, S, L };</span>
+	}
+
+	public static String rgbToHex(double[] tuple) {
+<span class="nc" id="L348">		int[] prepared = rgbPrepare(tuple);</span>
+
+<span class="nc" id="L350">		return String.format(&quot;#%02x%02x%02x&quot;, prepared[0], prepared[1], prepared[2]);</span>
+	}
+
+	public static double[] hexToRgb(String hex) {
+<span class="nc" id="L354">		return new double[] { Integer.parseInt(hex.substring(1, 3), 16) / 255.0,</span>
+<span class="nc" id="L355">				Integer.parseInt(hex.substring(3, 5), 16) / 255.0, Integer.parseInt(hex.substring(5, 7), 16) / 255.0, };</span>
+	}
+
+	public static double[] lchToRgb(double[] tuple) {
+<span class="fc" id="L359">		return xyzToRgb(luvToXyz(lchToLuv(tuple)));</span>
+	}
+
+	public static double[] rgbToLch(double[] tuple) {
+<span class="fc" id="L363">		return luvToLch(xyzToLuv(rgbToXyz(tuple)));</span>
+	}
+
+	// RGB &lt;--&gt; HUSL(p)
+
+	public static double[] hsluvToRgb(double[] tuple) {
+<span class="fc" id="L369">		return lchToRgb(hsluvToLch(tuple));</span>
+	}
+
+	public static double[] rgbToHsluv(double[] tuple) {
+<span class="fc" id="L373">		return lchToHsluv(rgbToLch(tuple));</span>
+	}
+
+	public static double[] hpluvToRgb(double[] tuple) {
+<span class="nc" id="L377">		return lchToRgb(hpluvToLch(tuple));</span>
+	}
+
+	public static double[] rgbToHpluv(double[] tuple) {
+<span class="nc" id="L381">		return lchToHpluv(rgbToLch(tuple));</span>
+	}
+
+	// Hex
+
+	public static String hsluvToHex(double[] tuple) {
+<span class="nc" id="L387">		return rgbToHex(hsluvToRgb(tuple));</span>
+	}
+
+	public static String hpluvToHex(double[] tuple) {
+<span class="nc" id="L391">		return rgbToHex(hpluvToRgb(tuple));</span>
+	}
+
+	public static double[] hexToHsluv(String s) {
+<span class="nc" id="L395">		return rgbToHsluv(hexToRgb(s));</span>
+	}
+
+	public static double[] hexToHpluv(String s) {
+<span class="nc" id="L399">		return rgbToHpluv(hexToRgb(s));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

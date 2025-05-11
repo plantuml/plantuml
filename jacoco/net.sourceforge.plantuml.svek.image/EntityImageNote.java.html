@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageNote.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageNote.java</span></div><h1>EntityImageNote.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import java.util.Map;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
+import net.sourceforge.plantuml.sdot.SmetanaEdge;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.CornerParam;
+import net.sourceforge.plantuml.skin.SkinParamBackcolored;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.svek.SvekEdge;
+import net.sourceforge.plantuml.svek.SvekNode;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.Direction;
+
+public class EntityImageNote extends AbstractEntityImage implements Stencil {
+
+	private final HColor noteBackgroundColor;
+	private final HColor borderColor;
+	private final double shadowing;
+<span class="fc" id="L89">	private final int marginX1 = 6;</span>
+<span class="fc" id="L90">	private final int marginX2 = 15;</span>
+<span class="fc" id="L91">	private final int marginY = 5;</span>
+
+	private final Style style;
+
+	private final TextBlock textBlock;
+
+	public EntityImageNote(Entity entity) {
+<span class="fc" id="L98">		super(entity);</span>
+
+<span class="fc" id="L100">		final Display strings = entity.getDisplay();</span>
+
+<span class="fc" id="L102">		this.style = getDefaultStyleDefinition(getStyleName()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (entity.getColors().getColor(ColorType.BACK) == null)</span>
+<span class="fc" id="L104">			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+		else
+<span class="nc" id="L106">			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);</span>
+
+<span class="fc" id="L108">		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L109">		this.shadowing = style.getShadowing();</span>
+
+<span class="fc" id="L111">		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L112">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+
+<span class="pc bpc" id="L114" title="1 of 4 branches missed.">		if (strings.size() == 1 &amp;&amp; strings.get(0).length() == 0)</span>
+<span class="nc" id="L115">			textBlock = new TextBlockEmpty();</span>
+		else
+<span class="fc" id="L117">			textBlock = BodyFactory.create3(strings, getSkinParam(), horizontalAlignment, fontConfiguration,</span>
+<span class="fc" id="L118">					style.wrapWidth(), style);</span>
+
+<span class="fc" id="L120">	}</span>
+
+	private static ISkinParam getISkinParam(ISkinParam skinParam, Entity entity) {
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (entity.getColors() != null)</span>
+<span class="nc" id="L124">			return entity.getColors().mute(skinParam);</span>
+
+<span class="nc" id="L126">		return skinParam;</span>
+	}
+
+	static ISkinParam getSkin(ISkinParam skinParam, Entity entity) {
+<span class="nc" id="L130">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L131">		HColor back = entity.getColors().getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (back != null)</span>
+<span class="nc" id="L133">			return new SkinParamBackcolored(skinParam, back);</span>
+
+<span class="nc" id="L135">		back = getColorStatic(skinParam, ColorParam.noteBackground, stereotype);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (back != null)</span>
+<span class="nc" id="L137">			return new SkinParamBackcolored(skinParam, back);</span>
+
+<span class="nc" id="L139">		return skinParam;</span>
+	}
+
+	private static HColor getColorStatic(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
+<span class="nc" id="L143">		final Rose rose = new Rose();</span>
+<span class="nc" id="L144">		return rose.getHtmlColor(skinParam, stereo, colorParam);</span>
+	}
+
+	final public double getPreferredWidth(StringBounder stringBounder) {
+<span class="fc" id="L148">		final double result = getTextWidth(stringBounder);</span>
+<span class="fc" id="L149">		return result;</span>
+	}
+
+	final public double getPreferredHeight(StringBounder stringBounder) {
+<span class="fc" id="L153">		return getTextHeight(stringBounder);</span>
+	}
+
+	private XDimension2D getSize(StringBounder stringBounder, final TextBlock textBlock) {
+<span class="fc" id="L157">		return textBlock.calculateDimension(stringBounder);</span>
+	}
+
+	final protected double getTextHeight(StringBounder stringBounder) {
+<span class="fc" id="L161">		final TextBlock textBlock = getTextBlock();</span>
+<span class="fc" id="L162">		final XDimension2D size = getSize(stringBounder, textBlock);</span>
+<span class="fc" id="L163">		return size.getHeight() + 2 * marginY;</span>
+	}
+
+	final protected TextBlock getTextBlock() {
+<span class="fc" id="L167">		return textBlock;</span>
+	}
+
+	final protected double getPureTextWidth(StringBounder stringBounder) {
+<span class="fc" id="L171">		final TextBlock textBlock = getTextBlock();</span>
+<span class="fc" id="L172">		final XDimension2D size = getSize(stringBounder, textBlock);</span>
+<span class="fc" id="L173">		return size.getWidth();</span>
+	}
+
+	final public double getTextWidth(StringBounder stringBounder) {
+<span class="fc" id="L177">		return getPureTextWidth(stringBounder) + marginX1 + marginX2;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L181">		final double height = getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L182">		final double width = getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L183">		return new XDimension2D(width, height);</span>
+	}
+
+	private StyleSignature getDefaultStyleDefinition(SName sname) {
+<span class="fc" id="L187">		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.note).withTOBECHANGED(getStereo());</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="fc" id="L191">		final Url url = getEntity().getUrl99();</span>
+
+<span class="fc" id="L193">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="fc" id="L194">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="fc" id="L195">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="fc" id="L196">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="fc" id="L197">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="fc" id="L198">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="fc" id="L199">		ug.startGroup(group);</span>
+
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L202">			ug.startUrl(url);</span>
+
+<span class="fc" id="L204">		final UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (opaleLink != null) {</span>
+<span class="fc" id="L206">			final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="fc" id="L208">			final SmetanaEdge smetanaEdged = smetanaPathes.get(opaleLink);</span>
+<span class="fc" id="L209">			final UTranslate move = new UTranslate(-node.getMinX(), -node.getMinY());</span>
+
+<span class="fc" id="L211">			final XPoint2D startPoint = move.getTranslated(smetanaEdged.getStartPoint());</span>
+<span class="fc" id="L212">			final XPoint2D endPoint = move.getTranslated(smetanaEdged.getEndPoint());</span>
+
+<span class="fc" id="L214">			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getStartPoint());</span>
+<span class="fc" id="L215">			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getEndPoint());</span>
+
+<span class="fc" id="L217">			final double textWidth = getTextWidth(stringBounder);</span>
+<span class="fc" id="L218">			final double textHeight = getTextHeight(stringBounder);</span>
+<span class="fc" id="L219">			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);</span>
+
+<span class="fc" id="L221">			XPoint2D pp1 = force2.getTranslated(startPoint);</span>
+<span class="fc" id="L222">			XPoint2D pp2 = force1.getTranslated(endPoint);</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (pp1.distance(center) &lt; pp2.distance(center)) {</span>
+<span class="fc" id="L224">				pp1 = force1.getTranslated(endPoint);</span>
+<span class="fc" id="L225">				pp2 = force2.getTranslated(startPoint);</span>
+			}
+
+<span class="fc" id="L228">			final Direction strategy = getOpaleStrategy(textWidth, textHeight, pp2);</span>
+<span class="fc" id="L229">			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());</span>
+<span class="fc" id="L230">			opale.setRoundCorner(getRoundCorner());</span>
+<span class="fc" id="L231">			opale.setOpale(strategy, pp2, pp1);</span>
+<span class="fc" id="L232">			final UGraphic stroked = applyStroke(ug2);</span>
+<span class="fc" id="L233">			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));</span>
+
+<span class="pc bnc" id="L235" title="All 4 branches missed.">		} else if (opaleLine == null || opaleLine.isOpale() == false) {</span>
+<span class="nc" id="L236">			drawNormal(ug2);</span>
+		} else {
+<span class="nc" id="L238">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L239">			DotPath path = opaleLine.getDotPath();</span>
+
+<span class="nc" id="L241">			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, path.getStartPoint());</span>
+<span class="nc" id="L242">			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, path.getEndPoint());</span>
+
+<span class="nc" id="L244">			path.moveDelta(-node.getMinX(), -node.getMinY());</span>
+
+<span class="nc" id="L246">			final double textWidth = getTextWidth(stringBounder);</span>
+<span class="nc" id="L247">			final double textHeight = getTextHeight(stringBounder);</span>
+<span class="nc" id="L248">			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			if (path.getStartPoint().distance(center) &gt; path.getEndPoint().distance(center))</span>
+<span class="nc" id="L250">				path = path.reverse();</span>
+
+<span class="nc" id="L252">			final Direction strategy = getOpaleStrategy(textWidth, textHeight, path.getStartPoint());</span>
+<span class="nc" id="L253">			final XPoint2D pp1 = force1.getTranslated(path.getStartPoint());</span>
+<span class="nc" id="L254">			final XPoint2D pp2 = force2.getTranslated(path.getEndPoint());</span>
+
+<span class="nc" id="L256">			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());</span>
+<span class="nc" id="L257">			opale.setRoundCorner(getRoundCorner());</span>
+<span class="nc" id="L258">			opale.setOpale(strategy, pp1, pp2);</span>
+<span class="nc" id="L259">			final UGraphic stroked = applyStroke(ug2);</span>
+<span class="nc" id="L260">			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));</span>
+		}
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L263">			ug.closeUrl();</span>
+
+<span class="fc" id="L265">		ug.closeGroup();</span>
+<span class="fc" id="L266">	}</span>
+
+	private double getRoundCorner() {
+<span class="fc" id="L269">		return getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);</span>
+	}
+
+	private void drawNormal(UGraphic ug) {
+<span class="nc" id="L273">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L274">		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),</span>
+<span class="nc" id="L275">				getRoundCorner());</span>
+
+<span class="nc" id="L277">		polygon.setDeltaShadow(this.shadowing);</span>
+
+<span class="nc" id="L279">		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);</span>
+<span class="nc" id="L280">		final UGraphic stroked = applyStroke(ug);</span>
+<span class="nc" id="L281">		stroked.draw(polygon);</span>
+<span class="nc" id="L282">		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));</span>
+
+<span class="nc" id="L284">		getTextBlock().drawU(ug.apply(new UTranslate(marginX1, marginY)));</span>
+<span class="nc" id="L285">	}</span>
+
+	private UGraphic applyStroke(UGraphic ug) {
+<span class="fc" id="L288">		return ug.apply(style.getStroke());</span>
+
+	}
+
+	private UStroke getStroke() {
+<span class="fc" id="L293">		return style.getStroke();</span>
+	}
+
+	private Direction getOpaleStrategy(double width, double height, XPoint2D pt) {
+<span class="fc" id="L297">		final double d1 = getOrthoDistance(new XLine2D(width, 0, width, height), pt);</span>
+<span class="fc" id="L298">		final double d2 = getOrthoDistance(new XLine2D(0, height, width, height), pt);</span>
+<span class="fc" id="L299">		final double d3 = getOrthoDistance(new XLine2D(0, 0, 0, height), pt);</span>
+<span class="fc" id="L300">		final double d4 = getOrthoDistance(new XLine2D(0, 0, width, 0), pt);</span>
+<span class="pc bpc" id="L301" title="3 of 6 branches missed.">		if (d3 &lt;= d1 &amp;&amp; d3 &lt;= d2 &amp;&amp; d3 &lt;= d4)</span>
+<span class="nc" id="L302">			return Direction.LEFT;</span>
+
+<span class="pc bpc" id="L304" title="2 of 6 branches missed.">		if (d1 &lt;= d2 &amp;&amp; d1 &lt;= d3 &amp;&amp; d1 &lt;= d4)</span>
+<span class="fc" id="L305">			return Direction.RIGHT;</span>
+
+<span class="pc bpc" id="L307" title="5 of 6 branches missed.">		if (d4 &lt;= d1 &amp;&amp; d4 &lt;= d2 &amp;&amp; d4 &lt;= d3)</span>
+<span class="nc" id="L308">			return Direction.UP;</span>
+
+<span class="pc bpc" id="L310" title="3 of 6 branches missed.">		if (d2 &lt;= d1 &amp;&amp; d2 &lt;= d3 &amp;&amp; d2 &lt;= d4)</span>
+<span class="fc" id="L311">			return Direction.DOWN;</span>
+
+<span class="nc" id="L313">		return null;</span>
+
+	}
+
+	private static double getOrthoDistance(XLine2D seg, XPoint2D pt) {
+<span class="fc bfc" id="L318" title="All 2 branches covered.">		if (isHorizontal(seg))</span>
+<span class="fc" id="L319">			return Math.abs(seg.getP1().getY() - pt.getY());</span>
+
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		if (isVertical(seg))</span>
+<span class="fc" id="L322">			return Math.abs(seg.getP1().getX() - pt.getX());</span>
+
+<span class="nc" id="L324">		throw new IllegalArgumentException();</span>
+	}
+
+	private static boolean isHorizontal(XLine2D seg) {
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		return seg.getP1().getY() == seg.getP2().getY();</span>
+	}
+
+	private static boolean isVertical(XLine2D seg) {
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		return seg.getP1().getX() == seg.getP2().getX();</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="fc" id="L336">		return ShapeType.RECTANGLE;</span>
+	}
+
+	private SvekEdge opaleLine;
+	private Link opaleLink;
+	private SvekNode node;
+	private SvekNode other;
+	private Map&lt;Link, SmetanaEdge&gt; smetanaPathes;
+
+	public void setOpaleLine(SvekEdge line, SvekNode node, SvekNode other) {
+<span class="nc" id="L346">		this.opaleLine = line;</span>
+<span class="nc" id="L347">		this.node = node;</span>
+<span class="nc" id="L348">		this.other = Objects.requireNonNull(other);</span>
+<span class="nc" id="L349">	}</span>
+
+	public void setOpaleLink(Link link, SvekNode node, SvekNode other, Map&lt;Link, SmetanaEdge&gt; edges) {
+<span class="fc" id="L352">		this.opaleLink = link;</span>
+<span class="fc" id="L353">		this.node = node;</span>
+<span class="fc" id="L354">		this.other = Objects.requireNonNull(other);</span>
+<span class="fc" id="L355">		this.smetanaPathes = edges;</span>
+<span class="fc" id="L356">	}</span>
+
+	public double getStartingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L359">		return 0;</span>
+	}
+
+	public double getEndingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L363">		return calculateDimension(stringBounder).getWidth();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

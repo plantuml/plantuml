@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Purify.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">smetana.core.debug</a> &gt; <span class="el_source">Purify.java</span></div><h1>Purify.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package smetana.core.debug;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import gen.annotation.HasND_Rank;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+
+public final class Purify {
+	// ::remove file when __CORE__
+
+<span class="nc" id="L55">	private final Map&lt;String, Method&gt; methods = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L56">	private final File out2 = new File(&quot;../out-smetana&quot;, &quot;smetana.txt&quot;);</span>
+	private PrintWriter pw2;
+	private int currentLevel;
+
+<span class="nc" id="L60">	public Purify() {</span>
+		try {
+<span class="nc" id="L62">			out2.getParentFile().mkdirs();</span>
+<span class="nc" id="L63">			pw2 = new PrintWriter(out2);</span>
+<span class="nc" id="L64">			System.err.println(&quot;CREATING &quot; + out2.getAbsolutePath());</span>
+<span class="nc" id="L65">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L66">			e.printStackTrace();</span>
+<span class="nc" id="L67">		}</span>
+<span class="nc" id="L68">	}</span>
+
+	synchronized void logline(String s) {
+<span class="nc" id="L71">		System.err.println(s);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (pw2 == null)</span>
+<span class="nc" id="L73">			return;</span>
+<span class="nc" id="L74">		pw2.println(s);</span>
+<span class="nc" id="L75">		pw2.flush();</span>
+<span class="nc" id="L76">	}</span>
+
+	public synchronized void entering(String signature, String methodNameDeclared) {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (methods.containsKey(signature) == false) {</span>
+			try {
+<span class="nc" id="L81">				final Method method = recordMe(methodNameDeclared);</span>
+<span class="nc" id="L82">				methods.put(signature, method);</span>
+<span class="nc" id="L83">				final String key = getKey(method);</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">				if (key.length() &gt; 2 &amp;&amp; key.equals(signature) == false) {</span>
+<span class="nc" id="L85">					throw new IllegalStateException(signature);</span>
+				}
+<span class="nc" id="L87">			} catch (Exception e) {</span>
+<span class="nc" id="L88">				e.printStackTrace();</span>
+<span class="nc" id="L89">				System.exit(0);</span>
+<span class="nc" id="L90">			}</span>
+		}
+<span class="nc" id="L92">		currentLevel++;</span>
+<span class="nc" id="L93">		traceCall(pw2, signature, methodNameDeclared);</span>
+<span class="nc" id="L94">	}</span>
+
+	public synchronized void leaving(String signature, String methodName) {
+<span class="nc" id="L97">		currentLevel--;</span>
+<span class="nc" id="L98">	}</span>
+
+	private void traceCall(PrintWriter pw, String signature, String methodNameDeclared) {
+<span class="nc" id="L101">		final Method m = methods.get(signature);</span>
+<span class="nc" id="L102">		final String line = String.format(&quot;(%02d) %-26.26s [%-10.10s] %s&quot;, currentLevel, signature, getReviewedWhen(m),</span>
+				methodNameDeclared);
+//		if (SmetanaDebug.VERY_VERBOSE)
+//			System.err.println(line);
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (pw == null)</span>
+<span class="nc" id="L107">			return;</span>
+<span class="nc" id="L108">		pw.println(line);</span>
+<span class="nc" id="L109">		pw.flush();</span>
+<span class="nc" id="L110">	}</span>
+
+	private synchronized Method recordMe(String methodNameDeclared) throws ClassNotFoundException {
+<span class="nc" id="L113">		final Throwable creationPoint = new Throwable();</span>
+<span class="nc" id="L114">		creationPoint.fillInStackTrace();</span>
+<span class="nc" id="L115">		final StackTraceElement ste3 = creationPoint.getStackTrace()[3];</span>
+<span class="nc" id="L116">		final StackTraceElement ste4 = creationPoint.getStackTrace()[4];</span>
+<span class="nc" id="L117">		final String className = ste3.getClassName();</span>
+<span class="nc" id="L118">		final String methodName3 = ste3.getMethodName();</span>
+<span class="nc" id="L119">		final String methodName4 = ste4.getMethodName();</span>
+
+<span class="nc" id="L121">		final Class&lt;?&gt; theClass = Class.forName(className);</span>
+<span class="nc" id="L122">		final Method theMethod3 = getTheMethod(theClass, methodName3);</span>
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (methodNameDeclared.equals(theMethod3.getName())) {</span>
+<span class="nc" id="L125">			return theMethod3;</span>
+		}
+
+<span class="nc" id="L128">		final Method theMethod4 = getTheMethod(theClass, methodName4);</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (checkWarning(methodNameDeclared, theMethod3) &amp;&amp; methodNameDeclared.equals(theMethod4.getName())) {</span>
+<span class="nc" id="L130">			return theMethod4;</span>
+		}
+<span class="nc" id="L132">		creationPoint.printStackTrace();</span>
+<span class="nc" id="L133">		System.exit(0);</span>
+<span class="nc" id="L134">		throw new IllegalArgumentException();</span>
+	}
+
+	private synchronized boolean checkWarning(String methodNameDeclared, final Method theMethod3) {
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if ((methodNameDeclared + &quot;_&quot;).equals(theMethod3.getName())) {</span>
+<span class="nc" id="L139">			return true;</span>
+		}
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if ((methodNameDeclared + &quot;_w_&quot;).equals(theMethod3.getName())) {</span>
+<span class="nc" id="L142">			return true;</span>
+		}
+<span class="nc" id="L144">		return false;</span>
+	}
+
+	private synchronized Method getTheMethod(Class&lt;?&gt; theClass, String methodName2) {
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (Method method : theClass.getDeclaredMethods()) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (method.getName().equals(methodName2)) {</span>
+<span class="nc" id="L150">				return method;</span>
+			}
+		}
+<span class="nc" id="L153">		final Throwable creationPoint = new Throwable();</span>
+<span class="nc" id="L154">		creationPoint.fillInStackTrace();</span>
+<span class="nc" id="L155">		creationPoint.printStackTrace();</span>
+<span class="nc" id="L156">		System.exit(0);</span>
+<span class="nc" id="L157">		throw new IllegalArgumentException();</span>
+	}
+
+	public void reset() {
+<span class="nc" id="L161">		methods.clear();</span>
+<span class="nc" id="L162">	}</span>
+
+	public void printMe() {
+<span class="nc" id="L165">		final List&lt;Entry&lt;String, Method&gt;&gt; reverse = new ArrayList&lt;&gt;(methods.entrySet());</span>
+<span class="nc" id="L166">		Collections.reverse(reverse);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (Entry&lt;String, Method&gt; ent : reverse) {</span>
+<span class="nc" id="L168">			final String signature = ent.getKey();</span>
+<span class="nc" id="L169">			final Method m = ent.getValue();</span>
+<span class="nc" id="L170">			final String reviewedWhen = getReviewedWhen(m);</span>
+<span class="nc" id="L171">			final String version = getVersion(m);</span>
+<span class="nc" id="L172">			final String path = getPath(m);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			final String hasND_Rank = hasND_Rank(m) ? &quot;*&quot; : &quot; &quot;;</span>
+<span class="nc" id="L174">			System.err.printf(&quot;%-8s %-26s %-12s %s %-30s %s%n&quot;, version, signature, reviewedWhen, hasND_Rank,</span>
+<span class="nc" id="L175">					m.getName(), path);</span>
+<span class="nc" id="L176">		}</span>
+<span class="nc" id="L177">	}</span>
+
+	private String getVersion(Method method) {
+<span class="nc" id="L180">		final Original original = method.getDeclaredAnnotation(Original.class);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (original == null)</span>
+<span class="nc" id="L182">			return &quot;XX&quot;;</span>
+<span class="nc" id="L183">		return original.version();</span>
+	}
+
+	private String getPath(Method method) {
+<span class="nc" id="L187">		final Original original = method.getDeclaredAnnotation(Original.class);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (original == null)</span>
+<span class="nc" id="L189">			return &quot;XX&quot;;</span>
+<span class="nc" id="L190">		return original.path();</span>
+	}
+
+	private String getReviewedWhen(Method method) {
+<span class="nc" id="L194">		final Reviewed reviewed = method.getDeclaredAnnotation(Reviewed.class);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (reviewed == null) {</span>
+<span class="nc" id="L196">			return &quot;?&quot;;</span>
+		}
+<span class="nc" id="L198">		return reviewed.when();</span>
+	}
+
+	private boolean hasND_Rank(Method method) {
+<span class="nc" id="L202">		final HasND_Rank reviewed = method.getDeclaredAnnotation(HasND_Rank.class);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		return reviewed != null;</span>
+	}
+
+	private String getKey(Method method) {
+<span class="nc" id="L207">		final Original original = method.getDeclaredAnnotation(Original.class);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (original == null) {</span>
+<span class="nc" id="L209">			return &quot;?&quot;;</span>
+		}
+<span class="nc" id="L211">		return original.key();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

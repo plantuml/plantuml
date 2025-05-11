@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>input__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">input__c.java</span></div><h1>input__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static gen.lib.cgraph.attr__c.agattr;
+import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.cgraph.refstr__c.aghtmlstr;
+import static gen.lib.common.emit__c.init_xdot;
+import static gen.lib.common.labels__c.make_label;
+import static gen.lib.common.labels__c.strdup_and_subst_obj;
+import static gen.lib.common.utils__c.late_double;
+import static gen.lib.common.utils__c.late_int;
+import static gen.lib.common.utils__c.late_nnstring;
+import static gen.lib.common.utils__c.late_string;
+import static gen.lib.common.utils__c.mapbool;
+import static gen.lib.common.utils__c.maptoken;
+import static smetana.core.JUtils.atof;
+import static smetana.core.JUtils.atoi;
+import static smetana.core.JUtils.getenv;
+import static smetana.core.Macro.AGNODE;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.BOTTOM_IX;
+import static smetana.core.Macro.DEFAULT_NODESEP;
+import static smetana.core.Macro.DEFAULT_RANKSEP;
+import static smetana.core.Macro.GD_border;
+import static smetana.core.Macro.GD_charset;
+import static smetana.core.Macro.GD_drawing;
+import static smetana.core.Macro.GD_exact_ranksep;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_fontnames;
+import static smetana.core.Macro.GD_has_labels;
+import static smetana.core.Macro.GD_label;
+import static smetana.core.Macro.GD_label_pos;
+import static smetana.core.Macro.GD_nodesep;
+import static smetana.core.Macro.GD_rankdir2;
+import static smetana.core.Macro.GD_ranksep;
+import static smetana.core.Macro.GD_showboxes;
+import static smetana.core.Macro.GLOBAL;
+import static smetana.core.Macro.GRAPH_LABEL;
+import static smetana.core.Macro.GVBEGIN;
+import static smetana.core.Macro.LABEL_AT_BOTTOM;
+import static smetana.core.Macro.LABEL_AT_TOP;
+import static smetana.core.Macro.LEFT_IX;
+import static smetana.core.Macro.LOCAL;
+import static smetana.core.Macro.LT_HTML;
+import static smetana.core.Macro.LT_NONE;
+import static smetana.core.Macro.MIN_NODESEP;
+import static smetana.core.Macro.MYHUGE;
+import static smetana.core.Macro.NOCLUST;
+import static smetana.core.Macro.NODENAME_ESC;
+import static smetana.core.Macro.PAD;
+import static smetana.core.Macro.POINTS;
+import static smetana.core.Macro.RANKDIR_LR;
+import static smetana.core.Macro.RANKDIR_TB;
+import static smetana.core.Macro.RIGHT_IX;
+import static smetana.core.Macro.TOP_IX;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.agfindedgeattr;
+import static smetana.core.Macro.agfindgraphattr;
+import static smetana.core.Macro.agfindnodeattr;
+import static smetana.core.Macro.streq;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.EN_fontname_kind;
+import h.ST_Agraph_s;
+import h.ST_layout_t;
+import h.ST_pointf;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+<span class="nc" id="L117">public class input__c {</span>
+
+
+
+/* getdoubles2ptf:
+ * converts a graph attribute in inches to a pointf in points.
+ * If only one number is given, it is used for both x and y.
+ * Returns true if the attribute ends in '!'.
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/input.c&quot;, name=&quot;getdoubles2ptf&quot;, key=&quot;72no6ayfvjinlnupyn5jlmayg&quot;, definition=&quot;static boolean getdoubles2ptf(graph_t * g, char *name, pointf * result)&quot;)
+public static boolean getdoubles2ptf(Globals zz, ST_Agraph_s g, CString name, ST_pointf result) {
+<span class="fc" id="L129">ENTERING(&quot;72no6ayfvjinlnupyn5jlmayg&quot;,&quot;getdoubles2ptf&quot;);</span>
+try {
+    CString p;
+    int i;
+    double xf, yf;
+<span class="fc" id="L134">    char c = '\0';</span>
+<span class="fc" id="L135">    boolean rv = false;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">    if ((p = agget(zz, g, name))!=null) {</span>
+<span class="nc" id="L137">UNSUPPORTED(&quot;21b2kes0vrizyai71yj9e2os3&quot;); // 	i = sscanf(p, &quot;%lf,%lf%c&quot;, &amp;xf, &amp;yf, &amp;c);</span>
+<span class="nc" id="L138">UNSUPPORTED(&quot;9wua6uiybfvqd70huuo0yatcf&quot;); // 	if ((i &gt; 1) &amp;&amp; (xf &gt; 0) &amp;&amp; (yf &gt; 0)) {</span>
+<span class="nc" id="L139">UNSUPPORTED(&quot;8z2huopqt4m1rvfcd7vqatka4&quot;); // 	    result-&gt;x = ((((xf)*72&gt;=0)?(int)((xf)*72 + .5):(int)((xf)*72 - .5)));</span>
+<span class="nc" id="L140">UNSUPPORTED(&quot;cil4j0n3iq35gr2pfewi2qawz&quot;); // 	    result-&gt;y = ((((yf)*72&gt;=0)?(int)((yf)*72 + .5):(int)((yf)*72 - .5)));</span>
+<span class="nc" id="L141">UNSUPPORTED(&quot;9qnr8qmbz7pf3mmpebux0p08m&quot;); // 	    if (c == '!')</span>
+<span class="nc" id="L142">UNSUPPORTED(&quot;dqyb6drzg8ig5ecb31fq5c1d4&quot;); // 		rv = (!(0));</span>
+<span class="nc" id="L143">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L144">UNSUPPORTED(&quot;8k75h069sv2k9b6tgz77dscwd&quot;); // 	else {</span>
+<span class="nc" id="L145">UNSUPPORTED(&quot;8wtaqjit9awt7xd08vuifknry&quot;); // 	    c = '\0';</span>
+<span class="nc" id="L146">UNSUPPORTED(&quot;705372l4htjtcvnq97l7i54g8&quot;); // 	    i = sscanf(p, &quot;%lf%c&quot;, &amp;xf, &amp;c);</span>
+<span class="nc" id="L147">UNSUPPORTED(&quot;4n9k1twwfmxyet8tokr7xnktj&quot;); // 	    if ((i &gt; 0) &amp;&amp; (xf &gt; 0)) {</span>
+<span class="nc" id="L148">UNSUPPORTED(&quot;8ui53rmpq7ao1p4yin0xqzszj&quot;); // 		result-&gt;y = result-&gt;x = ((((xf)*72&gt;=0)?(int)((xf)*72 + .5):(int)((xf)*72 - .5)));</span>
+<span class="nc" id="L149">UNSUPPORTED(&quot;1rflva1x66uhyqxr5zbpcsgnh&quot;); // 		if (c == '!') rv = (!(0));</span>
+<span class="nc" id="L150">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L151">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+<span class="fc" id="L153">    return rv;</span>
+} finally {
+<span class="fc" id="L155">LEAVING(&quot;72no6ayfvjinlnupyn5jlmayg&quot;,&quot;getdoubles2ptf&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/input.c&quot;, name=&quot;findCharset&quot;, key=&quot;9t08dr2ks9qz1pyfz99awla6x&quot;, definition=&quot;static int findCharset (graph_t * g)&quot;)
+public static int findCharset(ST_Agraph_s g) {
+<span class="fc" id="L165">ENTERING(&quot;9t08dr2ks9qz1pyfz99awla6x&quot;,&quot;findCharset&quot;);</span>
+try {
+<span class="fc" id="L167">	return 0;</span>
+} finally {
+<span class="fc" id="L169">LEAVING(&quot;9t08dr2ks9qz1pyfz99awla6x&quot;,&quot;findCharset&quot;);</span>
+}
+}
+
+
+
+/* setRatio:
+ * Checks &quot;ratio&quot; attribute, if any, and sets enum type.
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/input.c&quot;, name=&quot;setRatio&quot;, key=&quot;3bnmjpvynh1j9oh2p2vi0vh2m&quot;, definition=&quot;static void setRatio(graph_t * g)&quot;)
+public static void setRatio(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L181">ENTERING(&quot;3bnmjpvynh1j9oh2p2vi0vh2m&quot;,&quot;setRatio&quot;);</span>
+try {
+    CString p;
+    char c;
+    double ratio;
+<span class="pc bpc" id="L186" title="3 of 4 branches missed.">    if ((p = agget(zz, g, new CString(&quot;ratio&quot;)))!=null &amp;&amp; ((c = p.charAt(0))!='\0')) {</span>
+<span class="nc" id="L187">UNSUPPORTED(&quot;7rk995hpmaqbbasmi40mqg0yw&quot;); // 	switch (c) {</span>
+<span class="nc" id="L188">UNSUPPORTED(&quot;2v5u3irq50r1n2ccuna0y09lk&quot;); // 	case 'a':</span>
+<span class="nc" id="L189">UNSUPPORTED(&quot;3jv8xrrloj92axkpkgolzwgo6&quot;); // 	    if ((*(p)==*(&quot;auto&quot;)&amp;&amp;!strcmp(p,&quot;auto&quot;)))</span>
+<span class="nc" id="L190">UNSUPPORTED(&quot;8bdbsrt9sk4hnj3wm6z100qm&quot;); // 		(((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind = R_AUTO;</span>
+<span class="nc" id="L191">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L192">UNSUPPORTED(&quot;f3lyz2cejs6yn5fyckhn7ba1&quot;); // 	case 'c':</span>
+<span class="nc" id="L193">UNSUPPORTED(&quot;1v3jyjziibgnha1glbymorwg1&quot;); // 	    if ((*(p)==*(&quot;compress&quot;)&amp;&amp;!strcmp(p,&quot;compress&quot;)))</span>
+<span class="nc" id="L194">UNSUPPORTED(&quot;coprfqf41n6byzz3nfneke6a&quot;); // 		(((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind = R_COMPRESS;</span>
+<span class="nc" id="L195">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L196">UNSUPPORTED(&quot;2fzjr952o6hmcz3ad5arl2n8d&quot;); // 	case 'e':</span>
+<span class="nc" id="L197">UNSUPPORTED(&quot;5s06nikh994hgncpwni2p4rwq&quot;); // 	    if ((*(p)==*(&quot;expand&quot;)&amp;&amp;!strcmp(p,&quot;expand&quot;)))</span>
+<span class="nc" id="L198">UNSUPPORTED(&quot;eanijnkdjj1f6q7su4gmmijpj&quot;); // 		(((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind = R_EXPAND;</span>
+<span class="nc" id="L199">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L200">UNSUPPORTED(&quot;8jntw084f69528np3kisw5ioc&quot;); // 	case 'f':</span>
+<span class="nc" id="L201">UNSUPPORTED(&quot;105p0jwfnsptmrweig5mhpkn9&quot;); // 	    if ((*(p)==*(&quot;fill&quot;)&amp;&amp;!strcmp(p,&quot;fill&quot;)))</span>
+<span class="nc" id="L202">UNSUPPORTED(&quot;eknfh3axjhorf2rfb914hdgbd&quot;); // 		(((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind = R_FILL;</span>
+<span class="nc" id="L203">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L204">UNSUPPORTED(&quot;1drv0xz8hp34qnf72b4jpprg2&quot;); // 	default:</span>
+<span class="nc" id="L205">UNSUPPORTED(&quot;e4fr8djxwn615yr0rj46vtdbd&quot;); // 	    ratio = atof(p);</span>
+<span class="nc" id="L206">UNSUPPORTED(&quot;43a0ik2dkpg3y58orisgkn32q&quot;); // 	    if (ratio &gt; 0.0) {</span>
+<span class="nc" id="L207">UNSUPPORTED(&quot;azv56xi8njootl2n9l5bm1udc&quot;); // 		(((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind = R_VALUE;</span>
+<span class="nc" id="L208">UNSUPPORTED(&quot;ch5o67mezsw0v6iwxylb98myn&quot;); // 		(((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio = ratio;</span>
+<span class="nc" id="L209">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L210">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L211">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L212">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+    }
+} finally {
+<span class="fc" id="L215">LEAVING(&quot;3bnmjpvynh1j9oh2p2vi0vh2m&quot;,&quot;setRatio&quot;);</span>
+}
+<span class="fc" id="L217">}</span>
+
+
+
+
+<span class="fc" id="L222">static CString rankname[] = new CString[] { new CString(&quot;local&quot;), new CString(&quot;global&quot;), new CString(&quot;none&quot;), null };</span>
+<span class="fc" id="L223">static int rankcode[] = { LOCAL, GLOBAL, NOCLUST, LOCAL };</span>
+<span class="fc" id="L224">static CString fontnamenames[] = new CString[] {new CString(&quot;gd&quot;),new CString(&quot;ps&quot;),new CString(&quot;svg&quot;), null};</span>
+<span class="fc" id="L225">static int fontnamecodes[] = {EN_fontname_kind.NATIVEFONTS.ordinal(), EN_fontname_kind.PSFONTS.ordinal(), EN_fontname_kind.SVGFONTS.ordinal(),-1};</span>
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/input.c&quot;, name=&quot;graph_init&quot;, key=&quot;8gzdr3oil2d0e2o7m84wsszfg&quot;, definition=&quot;void graph_init(graph_t * g, boolean use_rankdir)&quot;)
+public static void graph_init(Globals zz, ST_Agraph_s g, boolean use_rankdir) {
+<span class="fc" id="L230">ENTERING(&quot;8gzdr3oil2d0e2o7m84wsszfg&quot;,&quot;graph_init&quot;);</span>
+try {
+    CString p;
+    double xf;
+    int rankdir;
+<span class="fc" id="L235">    GD_drawing(g, new ST_layout_t());</span>
+    /* set this up fairly early in case any string sizes are needed */
+<span class="pc bpc" id="L237" title="2 of 4 branches missed.">    if ((p = agget(zz, g, new CString(&quot;fontpath&quot;)))!=null || (p = getenv(new CString(&quot;DOTFONTPATH&quot;)))!=null) {</span>
+<span class="nc" id="L238">UNSUPPORTED(&quot;81bz3jcukzyotxiqgrlhn9cbq&quot;); // 	/* overide GDFONTPATH in local environment if dot</span>
+<span class="nc" id="L239">UNSUPPORTED(&quot;6jgl7atk1m9yeam4auh127azw&quot;); // 	 * wants its own */</span>
+<span class="nc" id="L240">UNSUPPORTED(&quot;dyk0vc64gdzy1uwvsc2jqnjdw&quot;); // 	static char *buf = 0;</span>
+<span class="nc" id="L241">UNSUPPORTED(&quot;8dywgree8jdjmj2ll2whbekhe&quot;); // 	buf = grealloc(buf, strlen(&quot;GDFONTPATH=&quot;) + strlen(p) + 1);</span>
+<span class="nc" id="L242">UNSUPPORTED(&quot;d9ej6bo2s49vpstu3pql6tkrx&quot;); // 	strcpy(buf, &quot;GDFONTPATH=&quot;);</span>
+<span class="nc" id="L243">UNSUPPORTED(&quot;1s2jcd2h3eok7j6pclv20gyi2&quot;); // 	strcat(buf, p);</span>
+<span class="nc" id="L244">UNSUPPORTED(&quot;abkxekvux4nramryfw2e8vcru&quot;); // 	putenv(buf);</span>
+    }
+    
+    
+<span class="fc" id="L248">    GD_charset(g, findCharset (g));</span>
+<span class="fc" id="L249">    GD_drawing(g).quantum =</span>
+<span class="fc" id="L250"> 	late_double(g, agfindgraphattr(zz, g, &quot;quantum&quot;), 0.0, 0.0);</span>
+    
+    /* setting rankdir=LR is only defined in dot,
+     * but having it set causes shape code and others to use it. 
+     * The result is confused output, so we turn it off unless requested.
+     * This effective rankdir is stored in the bottom 2 bits of g-&gt;u.rankdir.
+     * Sometimes, the code really needs the graph's rankdir, e.g., neato -n
+     * with record shapes, so we store the real rankdir in the next 2 bits.
+     */
+<span class="fc" id="L259">    rankdir = RANKDIR_TB;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">    if ((p = agget(zz, g, new CString(&quot;rankdir&quot;)))!=null) {</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">    	if (streq(p, &quot;LR&quot;))</span>
+<span class="fc" id="L262">    	    rankdir = RANKDIR_LR;</span>
+//UNSUPPORTED(&quot;ry8itlrmblmuegdwk1iu1t0x&quot;); // 	else if ((*(p)==*(&quot;BT&quot;)&amp;&amp;!strcmp(p,&quot;BT&quot;)))
+//UNSUPPORTED(&quot;5hno0xn18yt443qg815w3c2s2&quot;); // 	    rankdir = 2;
+//UNSUPPORTED(&quot;aal39mi047mhafrsrxoutcffk&quot;); // 	else if ((*(p)==*(&quot;RL&quot;)&amp;&amp;!strcmp(p,&quot;RL&quot;)))
+//UNSUPPORTED(&quot;7vlda224wrgcdhr0ts3mndh5q&quot;); // 	    rankdir = 3;
+    }
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">    if (use_rankdir)</span>
+<span class="fc" id="L269">	GD_rankdir2(g, (rankdir &lt;&lt; 2) | rankdir);</span>
+    else
+<span class="nc" id="L271">	GD_rankdir2(g, (rankdir &lt;&lt; 2));</span>
+    
+<span class="fc" id="L273">    xf = late_double(g, agfindgraphattr(zz, g, &quot;nodesep&quot;),</span>
+    	DEFAULT_NODESEP, MIN_NODESEP);
+<span class="fc" id="L275">    GD_nodesep(g, POINTS(xf));</span>
+    
+    
+<span class="fc" id="L278">    p = late_string(g, agfindgraphattr(zz, g, &quot;ranksep&quot;), null);</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">    if (p!=null) {</span>
+<span class="nc" id="L280">    	xf = atof(p);</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">    	if (xf &lt; 0.02)</span>
+<span class="nc" id="L282">    		xf = 0.02;</span>
+
+<span class="nc bnc" id="L284" title="All 2 branches missed.">	if (p.isSame(new CString(&quot;equally&quot;)))</span>
+<span class="nc" id="L285">	    GD_exact_ranksep(g, 1);</span>
+    } else
+<span class="fc" id="L287">	xf = DEFAULT_RANKSEP;</span>
+<span class="fc" id="L288">    GD_ranksep(g, POINTS(xf));</span>
+    
+    
+<span class="fc" id="L291">    GD_showboxes(g, late_int(g, agfindgraphattr(zz, g, &quot;showboxes&quot;), 0, 0));</span>
+<span class="fc" id="L292">    p = late_string(g, agfindgraphattr(zz, g, &quot;fontnames&quot;), null);</span>
+<span class="fc" id="L293">    GD_fontnames(g, maptoken(p, fontnamenames, fontnamecodes));</span>
+    
+    
+<span class="fc" id="L296">    setRatio(zz, g);</span>
+<span class="fc" id="L297">    GD_drawing(g).filled = </span>
+<span class="fc" id="L298">	getdoubles2ptf(zz, g, new CString(&quot;size&quot;), GD_drawing(g).size);</span>
+<span class="fc" id="L299">    getdoubles2ptf(zz, g, new CString(&quot;page&quot;), GD_drawing(g).page);</span>
+    
+    
+<span class="fc" id="L302">    GD_drawing(g).centered = mapbool(agget(zz, g, new CString(&quot;center&quot;)));</span>
+    
+    
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">    if ((p = agget(zz, g, new CString(&quot;rotate&quot;)))!=null)</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">	GD_drawing(g).landscape= (atoi(p) == 90);</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">    else if ((p = agget(zz, g, new CString(&quot;orientation&quot;)))!=null)</span>
+<span class="nc bnc" id="L308" title="All 4 branches missed.">	GD_drawing(g).landscape= ((p.charAt(0) == 'l') || (p.charAt(0) == 'L'));</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">    else if ((p = agget(zz, g, new CString(&quot;landscape&quot;)))!=null)</span>
+<span class="nc" id="L310">	GD_drawing(g).landscape= mapbool(p);</span>
+    
+    
+<span class="fc" id="L313">    p = agget(zz, g, new CString(&quot;clusterrank&quot;));</span>
+<span class="fc" id="L314">    zz.CL_type = maptoken(p, rankname, rankcode);</span>
+<span class="fc" id="L315">    p = agget(zz, g, new CString(&quot;concentrate&quot;));</span>
+<span class="fc" id="L316">    zz.Concentrate = mapbool(p);</span>
+<span class="fc" id="L317">    zz.State = GVBEGIN;</span>
+<span class="fc" id="L318">    zz.EdgeLabelsDone = 0;</span>
+    
+    
+<span class="fc" id="L321">    GD_drawing(g).dpi = 0.0;</span>
+<span class="pc bpc" id="L322" title="3 of 4 branches missed.">    if (((p = agget(zz, g, new CString(&quot;dpi&quot;)))!=null &amp;&amp; p.charAt(0)!='\0')</span>
+<span class="pc bpc" id="L323" title="3 of 4 branches missed.">	|| ((p = agget(zz, g, new CString(&quot;resolution&quot;)))!=null &amp;&amp; p.charAt(0)!='\0'))</span>
+<span class="nc" id="L324">	GD_drawing(g).dpi = atof(p);</span>
+    
+    
+<span class="fc" id="L327">    do_graph_label(zz, g);</span>
+    
+    
+<span class="fc" id="L330">    zz.Initial_dist = MYHUGE;</span>
+    
+<span class="fc" id="L332">    zz.G_ordering = agfindgraphattr(zz, g, &quot;ordering&quot;);</span>
+<span class="fc" id="L333">    zz.G_gradientangle = agfindgraphattr(zz, g,&quot;gradientangle&quot;);</span>
+<span class="fc" id="L334">    zz.G_margin = agfindgraphattr(zz, g, &quot;margin&quot;);</span>
+
+    /* initialize nodes */
+<span class="fc" id="L337">    zz.N_height = agfindnodeattr(zz, g, &quot;height&quot;);</span>
+<span class="fc" id="L338">    zz.N_width = agfindnodeattr(zz, g, &quot;width&quot;);</span>
+<span class="fc" id="L339">    zz.N_shape = agfindnodeattr(zz, g, &quot;shape&quot;);</span>
+<span class="fc" id="L340">    zz.N_color = agfindnodeattr(zz, g, &quot;color&quot;);</span>
+<span class="fc" id="L341">    zz.N_fillcolor = agfindnodeattr(zz, g, &quot;fillcolor&quot;);</span>
+<span class="fc" id="L342">    zz.N_style = agfindnodeattr(zz, g, &quot;style&quot;);</span>
+<span class="fc" id="L343">    zz.N_fontsize = agfindnodeattr(zz, g, &quot;fontsize&quot;);</span>
+<span class="fc" id="L344">    zz.N_fontname = agfindnodeattr(zz, g, &quot;fontname&quot;);</span>
+<span class="fc" id="L345">    zz.N_fontcolor = agfindnodeattr(zz, g, &quot;fontcolor&quot;);</span>
+<span class="fc" id="L346">    zz.N_label = agfindnodeattr(zz, g, &quot;label&quot;);</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">    if ((zz.N_label) == null)</span>
+<span class="fc" id="L348">	zz.N_label = agattr(zz, g, AGNODE, new CString(&quot;label&quot;), new CString(NODENAME_ESC));</span>
+<span class="fc" id="L349">    zz.N_xlabel = agfindnodeattr(zz, g, &quot;xlabel&quot;);</span>
+<span class="fc" id="L350">    zz.N_showboxes = agfindnodeattr(zz, g, &quot;showboxes&quot;);</span>
+<span class="fc" id="L351">    zz.N_penwidth = agfindnodeattr(zz, g, &quot;penwidth&quot;);</span>
+<span class="fc" id="L352">    zz.N_ordering = agfindnodeattr(zz, g, &quot;ordering&quot;);</span>
+<span class="fc" id="L353">    zz.N_margin = agfindnodeattr(zz, g, &quot;margin&quot;);</span>
+    
+    
+    /* attribs for polygon shapes */
+<span class="fc" id="L357">    zz.N_sides = agfindnodeattr(zz, g, &quot;sides&quot;);</span>
+<span class="fc" id="L358">    zz.N_peripheries = agfindnodeattr(zz, g, &quot;peripheries&quot;);</span>
+<span class="fc" id="L359">    zz.N_skew = agfindnodeattr(zz, g, &quot;skew&quot;);</span>
+<span class="fc" id="L360">    zz.N_orientation = agfindnodeattr(zz, g, &quot;orientation&quot;);</span>
+<span class="fc" id="L361">    zz.N_distortion = agfindnodeattr(zz, g, &quot;distortion&quot;);</span>
+<span class="fc" id="L362">    zz.N_fixed = agfindnodeattr(zz, g, &quot;fixedsize&quot;);</span>
+<span class="fc" id="L363">    zz.N_imagescale = agfindnodeattr(zz, g, &quot;imagescale&quot;);</span>
+<span class="fc" id="L364">    zz.N_nojustify = agfindnodeattr(zz, g, &quot;nojustify&quot;);</span>
+<span class="fc" id="L365">    zz.N_layer = agfindnodeattr(zz, g, &quot;layer&quot;);</span>
+<span class="fc" id="L366">    zz.N_group = agfindnodeattr(zz, g, &quot;group&quot;);</span>
+<span class="fc" id="L367">    zz.N_comment = agfindnodeattr(zz, g, &quot;comment&quot;);</span>
+<span class="fc" id="L368">    zz.N_vertices = agfindnodeattr(zz, g, &quot;vertices&quot;);</span>
+<span class="fc" id="L369">    zz.N_z = agfindnodeattr(zz, g, &quot;z&quot;);</span>
+<span class="fc" id="L370">    zz.N_gradientangle = agfindnodeattr(zz, g,&quot;gradientangle&quot;);</span>
+    
+    
+    /* initialize edges */
+<span class="fc" id="L374">    zz.E_weight = agfindedgeattr(zz, g, &quot;weight&quot;);</span>
+<span class="fc" id="L375">    zz.E_color = agfindedgeattr(zz, g, &quot;color&quot;);</span>
+<span class="fc" id="L376">    zz.E_fillcolor = agfindedgeattr(zz, g, &quot;fillcolor&quot;);</span>
+<span class="fc" id="L377">    zz.E_fontsize = agfindedgeattr(zz, g, &quot;fontsize&quot;);</span>
+<span class="fc" id="L378">    zz.E_fontname = agfindedgeattr(zz, g, &quot;fontname&quot;);</span>
+<span class="fc" id="L379">    zz.E_fontcolor = agfindedgeattr(zz, g, &quot;fontcolor&quot;);</span>
+<span class="fc" id="L380">    zz.E_label = agfindedgeattr(zz, g, &quot;label&quot;);</span>
+<span class="fc" id="L381">    zz.E_xlabel = agfindedgeattr(zz, g, &quot;xlabel&quot;);</span>
+<span class="fc" id="L382">    zz.E_label_float = agfindedgeattr(zz, g, &quot;labelfloat&quot;);</span>
+    /* vladimir */
+<span class="fc" id="L384">    zz.E_dir = agfindedgeattr(zz, g, &quot;dir&quot;);</span>
+<span class="fc" id="L385">    zz.E_arrowhead = agfindedgeattr(zz, g, &quot;arrowhead&quot;);</span>
+<span class="fc" id="L386">    zz.E_arrowtail = agfindedgeattr(zz, g, &quot;arrowtail&quot;);</span>
+<span class="fc" id="L387">    zz.E_headlabel = agfindedgeattr(zz, g, &quot;headlabel&quot;);</span>
+<span class="fc" id="L388">    zz.E_taillabel = agfindedgeattr(zz, g, &quot;taillabel&quot;);</span>
+<span class="fc" id="L389">    zz.E_labelfontsize = agfindedgeattr(zz, g, &quot;labelfontsize&quot;);</span>
+<span class="fc" id="L390">    zz.E_labelfontname = agfindedgeattr(zz, g, &quot;labelfontname&quot;);</span>
+<span class="fc" id="L391">    zz.E_labelfontcolor = agfindedgeattr(zz, g, &quot;labelfontcolor&quot;);</span>
+<span class="fc" id="L392">    zz.E_labeldistance = agfindedgeattr(zz, g, &quot;labeldistance&quot;);</span>
+<span class="fc" id="L393">    zz.E_labelangle = agfindedgeattr(zz, g, &quot;labelangle&quot;);</span>
+    /* end vladimir */
+<span class="fc" id="L395">    zz.E_minlen = agfindedgeattr(zz, g, &quot;minlen&quot;);</span>
+<span class="fc" id="L396">    zz.E_showboxes = agfindedgeattr(zz, g, &quot;showboxes&quot;);</span>
+<span class="fc" id="L397">    zz.E_style = agfindedgeattr(zz, g, &quot;style&quot;);</span>
+<span class="fc" id="L398">    zz.E_decorate = agfindedgeattr(zz, g, &quot;decorate&quot;);</span>
+<span class="fc" id="L399">    zz.E_arrowsz = agfindedgeattr(zz, g, &quot;arrowsize&quot;);</span>
+<span class="fc" id="L400">    zz.E_constr = agfindedgeattr(zz, g, &quot;constraint&quot;);</span>
+<span class="fc" id="L401">    zz.E_layer = agfindedgeattr(zz, g, &quot;layer&quot;);</span>
+<span class="fc" id="L402">    zz.E_comment = agfindedgeattr(zz, g, &quot;comment&quot;);</span>
+<span class="fc" id="L403">    zz.E_tailclip = agfindedgeattr(zz, g, &quot;tailclip&quot;);</span>
+<span class="fc" id="L404">    zz.E_headclip = agfindedgeattr(zz, g, &quot;headclip&quot;);</span>
+<span class="fc" id="L405">    zz.E_penwidth = agfindedgeattr(zz, g, &quot;penwidth&quot;);</span>
+    
+    
+    /* background */
+<span class="fc" id="L409">    GD_drawing(g).xdots = init_xdot (zz, g);</span>
+    
+    
+    /* initialize id, if any */
+    
+<span class="pc bpc" id="L414" title="3 of 4 branches missed.">    if ((p = agget(zz, g, new CString(&quot;id&quot;)))!=null &amp;&amp; p.charAt(0)!='\0')</span>
+<span class="nc" id="L415">	GD_drawing(g).id = strdup_and_subst_obj(p, g);</span>
+} finally {
+<span class="fc" id="L417">LEAVING(&quot;8gzdr3oil2d0e2o7m84wsszfg&quot;,&quot;graph_init&quot;);</span>
+}
+<span class="fc" id="L419">}</span>
+
+
+
+
+
+
+
+/* do_graph_label:
+ * Set characteristics of graph label if it exists.
+ * 
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/input.c&quot;, name=&quot;do_graph_label&quot;, key=&quot;5vks1zdadu5vjinaivs0j2bkb&quot;, definition=&quot;void do_graph_label(graph_t * sg)&quot;)
+public static void do_graph_label(Globals zz, ST_Agraph_s  sg) {
+<span class="fc" id="L434">ENTERING(&quot;5vks1zdadu5vjinaivs0j2bkb&quot;,&quot;do_graph_label&quot;);</span>
+try {
+    CString str, pos, just;
+    int pos_ix;
+    
+    /* it would be nice to allow multiple graph labels in the future */
+<span class="fc bfc" id="L440" title="All 4 branches covered.">    if ((str = agget(zz, sg, new CString(&quot;label&quot;)))!=null &amp;&amp; (str.charAt(0) != '\0')) {</span>
+<span class="fc" id="L441">	char pos_flag=0;</span>
+<span class="fc" id="L442">	final ST_pointf dimen = new ST_pointf();</span>
+	
+<span class="fc" id="L444">	GD_has_labels(sg.root, GD_has_labels(sg.root) | GRAPH_LABEL);</span>
+	
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">	GD_label(sg, make_label(zz, sg, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),</span>
+<span class="fc" id="L447">	    late_double(sg, (agattr(zz, sg,AGRAPH,new CString(&quot;fontsize&quot;),null)),</span>
+			14.0, 1.0),
+<span class="fc" id="L449">	    late_nnstring(sg, (agattr(zz, sg,AGRAPH,new CString(&quot;fontname&quot;),null)),</span>
+			new CString(&quot;Times-Roman&quot;)),
+<span class="fc" id="L451">	    late_nnstring(sg, (agattr(zz, sg,AGRAPH,new CString(&quot;fontcolor&quot;),null)),</span>
+			new CString(&quot;black&quot;))));
+	
+	/* set label position */
+<span class="fc" id="L455">	pos = agget(zz, sg, new CString(&quot;labelloc&quot;));</span>
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">	if ((sg != agroot(sg))) {</span>
+<span class="pc bpc" id="L457" title="3 of 4 branches missed.">	    if (pos!=null &amp;&amp; (pos.charAt(0) == 'b'))</span>
+<span class="nc" id="L458">		pos_flag = LABEL_AT_BOTTOM;</span>
+	    else
+<span class="fc" id="L460">		pos_flag = LABEL_AT_TOP;</span>
+	} else {
+<span class="nc" id="L462">UNSUPPORTED(&quot;601b6yrqr391vnfpa74d7fec7&quot;); // 	    if (pos &amp;&amp; (pos[0] == 't'))</span>
+<span class="nc" id="L463">UNSUPPORTED(&quot;bxai2kktsidvda3696ctyk63c&quot;); // 		pos_flag = 1;</span>
+<span class="nc" id="L464">UNSUPPORTED(&quot;5c97f6vfxny0zz35l2bu4maox&quot;); // 	    else</span>
+<span class="nc" id="L465">UNSUPPORTED(&quot;6m5sy5ew8izdy8i10zb5o2dvu&quot;); // 		pos_flag = 0;</span>
+	}
+<span class="fc" id="L467">	just = agget(zz, sg, new CString(&quot;labeljust&quot;));</span>
+<span class="pc bpc" id="L468" title="1 of 2 branches missed.">	if (just!=null) {</span>
+<span class="nc" id="L469">UNSUPPORTED(&quot;3gxohpfqzahytaf7f9apn58az&quot;); // 	    if (just[0] == 'l')</span>
+<span class="nc" id="L470">UNSUPPORTED(&quot;ch7sydr4cg29o8ky9fbk5vnlg&quot;); // 		pos_flag |= 2;</span>
+<span class="nc" id="L471">UNSUPPORTED(&quot;336to8kpmovx00pexhhenz74b&quot;); // 	    else if (just[0] == 'r')</span>
+<span class="nc" id="L472">UNSUPPORTED(&quot;evu9w6pw3kkh7z8w7t4rx4qxc&quot;); // 		pos_flag |= 4;</span>
+	}
+<span class="fc" id="L474">	GD_label_pos(sg, pos_flag);</span>
+	
+	
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">	if (sg == agroot(sg))</span>
+<span class="nc" id="L478">	    return;</span>
+	
+	
+	/* Set border information for cluster labels to allow space
+	 */
+	
+<span class="fc" id="L484">	dimen.___(GD_label(sg).dimen);</span>
+<span class="fc" id="L485">	PAD(dimen);</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">	if (!GD_flip(agroot(sg))) {</span>
+<span class="pc bpc" id="L487" title="1 of 2 branches missed.">	    if ((GD_label_pos(sg) &amp; LABEL_AT_TOP)!=0)</span>
+<span class="fc" id="L488">		pos_ix = TOP_IX;</span>
+	    else
+<span class="nc" id="L490">		pos_ix = BOTTOM_IX;</span>
+<span class="fc" id="L491">	    GD_border(sg)[pos_ix].___(dimen);</span>
+	} else {
+	    /* when rotated, the labels will be restored to TOP or BOTTOM  */
+<span class="nc bnc" id="L494" title="All 2 branches missed.">	    if ((GD_label_pos(sg) &amp; LABEL_AT_TOP)!=0)</span>
+<span class="nc" id="L495">		pos_ix = RIGHT_IX;</span>
+	    else
+<span class="nc" id="L497">		pos_ix = LEFT_IX;</span>
+<span class="nc" id="L498">	    GD_border(sg)[pos_ix].x = dimen.y;</span>
+<span class="nc" id="L499">	    GD_border(sg)[pos_ix].y = dimen.x;	}</span>
+    }
+} finally {
+<span class="fc" id="L502">LEAVING(&quot;5vks1zdadu5vjinaivs0j2bkb&quot;,&quot;do_graph_label&quot;);</span>
+}
+<span class="fc" id="L504">}</span>
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

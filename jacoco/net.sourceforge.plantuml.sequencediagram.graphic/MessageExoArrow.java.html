@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageExoArrow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">MessageExoArrow.java</span></div><h1>MessageExoArrow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.sequencediagram.MessageExoType;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowComponent;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDecoration;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
+import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.url.Url;
+
+<span class="nc" id="L58">public class MessageExoArrow extends Arrow {</span>
+
+	private final LivingParticipantBox p;
+	private final MessageExoType type;
+	private final boolean shortArrow;
+	private final ArrowConfiguration arrowConfiguration;
+
+	public MessageExoArrow(AtomicInteger counter, Pragma pragma, double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p,
+			MessageExoType type, Url url, boolean shortArrow, ArrowConfiguration arrowConfiguration) {
+<span class="nc" id="L67">		super(counter, pragma, startingY, skin, arrow, url);</span>
+<span class="nc" id="L68">		this.p = p;</span>
+<span class="nc" id="L69">		this.type = type;</span>
+<span class="nc" id="L70">		this.shortArrow = shortArrow;</span>
+<span class="nc" id="L71">		this.arrowConfiguration = arrowConfiguration;</span>
+<span class="nc" id="L72">	}</span>
+
+	double getActualWidth(StringBounder stringBounder, double maxX) {
+<span class="nc" id="L75">		final double r = getRightEndInternal(stringBounder, maxX) - getLeftStartInternal(stringBounder);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		assert r &gt; 0;</span>
+<span class="nc" id="L77">		return r;</span>
+	}
+
+	private double getLeftStartInternal(StringBounder stringBounder) {
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (shortArrow) {</span>
+<span class="nc" id="L83">				return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2()</span>
+<span class="nc" id="L84">						- getPreferredWidth(stringBounder);</span>
+			} else {
+<span class="nc bnc" id="L86" title="All 4 branches missed.">				if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_LEFT) {</span>
+<span class="nc" id="L87">					return ComponentRoseArrow.diamCircle;</span>
+				}
+<span class="nc bnc" id="L89" title="All 4 branches missed.">				if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_LEFT) {</span>
+<span class="nc" id="L90">					return ComponentRoseArrow.diamCircle;</span>
+				}
+<span class="nc" id="L92">				return 0;</span>
+			}
+		}
+<span class="nc" id="L95">		return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();</span>
+	}
+
+	private double getRightEndInternal(StringBounder stringBounder, double maxX) {
+<span class="nc bnc" id="L99" title="All 4 branches missed.">		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {</span>
+<span class="nc" id="L100">			return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos1();</span>
+		}
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (shortArrow) {</span>
+<span class="nc" id="L103">			return getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder);</span>
+		}
+<span class="nc" id="L105">		double result = Math.max(maxX, getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder));</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_RIGHT) {</span>
+<span class="nc" id="L107">			result -= ComponentRoseArrow.diamCircle;</span>
+		}
+<span class="nc bnc" id="L109" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_RIGHT) {</span>
+<span class="nc" id="L110">			result -= ComponentRoseArrow.diamCircle;</span>
+		}
+<span class="nc" id="L112">		return result;</span>
+	}
+
+	@Override
+	public double getPreferredHeight(StringBounder stringBounder) {
+<span class="nc" id="L117">		return getArrowComponent().getPreferredHeight(stringBounder);</span>
+	}
+
+	@Override
+	public double getStartingX(StringBounder stringBounder) {
+<span class="nc" id="L122">		return getLeftStartInternal(stringBounder);</span>
+	}
+
+	@Override
+	public int getDirection(StringBounder stringBounder) {
+<span class="nc" id="L127">		return type.getDirection();</span>
+	}
+
+	@Override
+	public double getPreferredWidth(StringBounder stringBounder) {
+<span class="nc" id="L132">		double result = getArrowComponent().getPreferredWidth(stringBounder);</span>
+<span class="nc bnc" id="L133" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_RIGHT) {</span>
+<span class="nc" id="L134">			result += ComponentRoseArrow.diamCircle;</span>
+		}
+<span class="nc bnc" id="L136" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_RIGHT) {</span>
+<span class="nc" id="L137">			result += ComponentRoseArrow.diamCircle;</span>
+		}
+<span class="nc bnc" id="L139" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_LEFT) {</span>
+<span class="nc" id="L140">			result += ComponentRoseArrow.diamCircle;</span>
+		}
+<span class="nc bnc" id="L142" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_LEFT) {</span>
+<span class="nc" id="L143">			result += ComponentRoseArrow.diamCircle;</span>
+		}
+
+<span class="nc" id="L146">		return result;</span>
+	}
+
+	@Override
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+<span class="nc" id="L151">		startGroup(ug);</span>
+<span class="nc" id="L152">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L153">		final double x1 = getStartingX(stringBounder);</span>
+<span class="nc" id="L154">		final double x2 = maxX;</span>
+<span class="nc" id="L155">		ug = ug.apply(new UTranslate(x1, getStartingY()));</span>
+<span class="nc" id="L156">		startUrl(ug);</span>
+<span class="nc" id="L157">		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder, x2)), context);</span>
+<span class="nc" id="L158">		endUrl(ug);</span>
+<span class="nc" id="L159">		endGroup(ug);</span>
+<span class="nc" id="L160">	}</span>
+
+	private XDimension2D getActualDimension(StringBounder stringBounder, double maxX) {
+<span class="nc" id="L163">		return new XDimension2D(getActualWidth(stringBounder, maxX),</span>
+<span class="nc" id="L164">				getArrowComponent().getPreferredHeight(stringBounder));</span>
+	}
+
+	@Override
+	public double getArrowYStartLevel(StringBounder stringBounder) {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (getArrowComponent() instanceof AbstractComponentRoseArrow) {</span>
+<span class="nc" id="L170">			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();</span>
+<span class="nc" id="L171">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
+<span class="nc" id="L172">					arrowComponent.getPreferredHeight(stringBounder));</span>
+<span class="nc" id="L173">			return getStartingY() + arrowComponent.getStartPoint(stringBounder, dim).getY();</span>
+		}
+<span class="nc" id="L175">		return getStartingY();</span>
+	}
+
+	@Override
+	public double getArrowYEndLevel(StringBounder stringBounder) {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (getArrowComponent() instanceof AbstractComponentRoseArrow) {</span>
+<span class="nc" id="L181">			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();</span>
+<span class="nc" id="L182">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
+<span class="nc" id="L183">					arrowComponent.getPreferredHeight(stringBounder));</span>
+<span class="nc" id="L184">			return getStartingY() + arrowComponent.getEndPoint(stringBounder, dim).getY();</span>
+		}
+<span class="nc" id="L186">		return getStartingY() + getArrowComponent().getPreferredHeight(stringBounder);</span>
+	}
+
+	public double getMaxX(StringBounder stringBounder) {
+<span class="nc" id="L190">		return getRightEndInternal(stringBounder, 0);</span>
+	}
+
+	public double getMinX(StringBounder stringBounder) {
+<span class="nc" id="L194">		return getLeftStartInternal(stringBounder);</span>
+	}
+
+	public String toString(StringBounder stringBounder) {
+<span class="nc" id="L198">		return getMinX(stringBounder) + &quot;-&quot; + getMaxX(stringBounder);</span>
+	}
+
+	public final MessageExoType getType() {
+<span class="nc" id="L202">		return type;</span>
+	}
+
+	@Override
+	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
+<span class="nc" id="L207">		return p;</span>
+	}
+
+	@Override
+	protected Participant getParticipant1() {
+<span class="nc" id="L212">		return p.getParticipant();</span>
+	}
+
+	@Override
+	protected Participant getParticipant2() {
+<span class="nc" id="L217">		return p.getParticipant();</span>
+	}
+
+	@Override
+	public double getActualWidth(StringBounder stringBounder) {
+<span class="nc" id="L222">		return getActualWidth(stringBounder, getMaxX());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

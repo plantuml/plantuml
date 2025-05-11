@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvekResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">SvekResult.java</span></div><h1>SvekResult.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.dot.DotData;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UHidden;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public final class SvekResult extends AbstractTextBlock implements IEntityImage {
+	// ::remove file when __CORE__
+
+	private final DotData dotData;
+	private final DotStringFactory clusterManager;
+
+<span class="nc" id="L65">	public SvekResult(DotData dotData, DotStringFactory clusterManager) {</span>
+<span class="nc" id="L66">		this.dotData = dotData;</span>
+<span class="nc" id="L67">		this.clusterManager = clusterManager;</span>
+<span class="nc" id="L68">	}</span>
+
+	public void drawU(UGraphic ug) {
+
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (Cluster cluster : clusterManager.getBibliotekon().allCluster())</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (cluster.getGroup().isPacked() == false)</span>
+<span class="nc" id="L74">				cluster.drawU(ug);</span>
+
+<span class="nc" id="L76">		final Style style2 = getDefaultStyleDefinition(null)</span>
+<span class="nc" id="L77">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
+
+<span class="nc" id="L79">		final HColor borderColor = HColors</span>
+<span class="nc" id="L80">				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (SvekNode node : clusterManager.getBibliotekon().allNodes()) {</span>
+<span class="nc" id="L83">			final double minX = node.getMinX();</span>
+<span class="nc" id="L84">			final double minY = node.getMinY();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			final UGraphic ug2 = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;</span>
+<span class="nc" id="L86">			final IEntityImage image = node.getImage();</span>
+<span class="nc" id="L87">			image.drawU(ug2.apply(new UTranslate(minX, minY)));</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (image instanceof Untranslated)</span>
+<span class="nc" id="L89">				((Untranslated) image).drawUntranslated(ug.apply(borderColor), minX, minY);</span>
+
+<span class="nc" id="L91">		}</span>
+
+<span class="nc" id="L93">		final Set&lt;String&gt; ids = new HashSet&lt;&gt;();</span>
+
+<span class="nc" id="L95">		computeKal();</span>
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (SvekEdge svekEdge : clusterManager.getBibliotekon().allLines()) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			final UGraphic ug2 = svekEdge.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;</span>
+<span class="nc" id="L99">			svekEdge.setSharedIds(ids);</span>
+<span class="nc" id="L100">			svekEdge.drawU(ug2);</span>
+<span class="nc" id="L101">		}</span>
+<span class="nc" id="L102">	}</span>
+
+	private void computeKal() {
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (SvekEdge line : clusterManager.getBibliotekon().allLines())</span>
+<span class="nc" id="L106">			line.computeKal();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (SvekNode node : clusterManager.getBibliotekon().allNodes())</span>
+<span class="nc" id="L108">			node.fixOverlap();</span>
+<span class="nc" id="L109">	}</span>
+
+	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
+<span class="nc" id="L112">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element,</span>
+<span class="nc" id="L113">				dotData.getUmlDiagramType().getStyleName(), SName.arrow);</span>
+
+<span class="nc" id="L115">		return result.withTOBECHANGED(stereotype);</span>
+	}
+
+	// Duplicate SvekResult / GeneralImageBuilder
+	public HColor getBackcolor() {
+<span class="nc" id="L120">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="nc" id="L121">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L122">		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());</span>
+	}
+
+	private MinMax minMax;
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (minMax == null) {</span>
+<span class="nc" id="L129">			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
+<span class="nc" id="L130">			clusterManager.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());</span>
+		}
+<span class="nc" id="L132">		return minMax.getDimension().delta(0, 12);</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L136">		return ShapeType.RECTANGLE;</span>
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+<span class="nc" id="L140">		return Margins.NONE;</span>
+	}
+
+	public boolean isHidden() {
+<span class="nc" id="L144">		return false;</span>
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+<span class="nc" id="L148">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

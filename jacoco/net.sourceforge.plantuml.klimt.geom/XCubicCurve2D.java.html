@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XCubicCurve2D.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">XCubicCurve2D.java</span></div><h1>XCubicCurve2D.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.geom;
+
+public class XCubicCurve2D {
+
+	public double x1;
+	public double y1;
+	public double ctrlx1;
+	public double ctrly1;
+	public double ctrlx2;
+	public double ctrly2;
+	public double x2;
+	public double y2;
+
+	public static XCubicCurve2D none() {
+<span class="nc" id="L15">		return new XCubicCurve2D(0, 0, 0, 0, 0, 0, 0, 0);</span>
+	}
+
+	public XCubicCurve2D(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,
+<span class="fc" id="L19">			double y2) {</span>
+<span class="fc" id="L20">		this.x1 = x1;</span>
+<span class="fc" id="L21">		this.y1 = y1;</span>
+<span class="fc" id="L22">		this.ctrlx1 = ctrlx1;</span>
+<span class="fc" id="L23">		this.ctrly1 = ctrly1;</span>
+<span class="fc" id="L24">		this.ctrlx2 = ctrlx2;</span>
+<span class="fc" id="L25">		this.ctrly2 = ctrly2;</span>
+<span class="fc" id="L26">		this.x2 = x2;</span>
+<span class="fc" id="L27">		this.y2 = y2;</span>
+
+<span class="fc" id="L29">	}</span>
+
+	public XPoint2D getP1() {
+<span class="fc" id="L32">		return new XPoint2D(x1, y1);</span>
+	}
+
+	public XPoint2D getP2() {
+<span class="fc" id="L36">		return new XPoint2D(x2, y2);</span>
+	}
+
+	public void setCurve(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,
+			double y2) {
+<span class="nc" id="L41">		this.x1 = x1;</span>
+<span class="nc" id="L42">		this.y1 = y1;</span>
+<span class="nc" id="L43">		this.ctrlx1 = ctrlx1;</span>
+<span class="nc" id="L44">		this.ctrly1 = ctrly1;</span>
+<span class="nc" id="L45">		this.ctrlx2 = ctrlx2;</span>
+<span class="nc" id="L46">		this.ctrly2 = ctrly2;</span>
+<span class="nc" id="L47">		this.x2 = x2;</span>
+<span class="nc" id="L48">		this.y2 = y2;</span>
+
+<span class="nc" id="L50">	}</span>
+
+	public double getLength() {
+<span class="fc" id="L53">		final double dx = this.x2 - this.x1;</span>
+<span class="fc" id="L54">		final double dy = this.y2 - this.y1;</span>
+<span class="fc" id="L55">		return Math.sqrt(dx * dx + dy * dy);</span>
+	}
+
+	public void setCurve(XCubicCurve2D other) {
+<span class="nc" id="L59">		setCurve(other.x1, other.y1, other.ctrlx1, other.ctrly1, other.ctrlx2, other.ctrly2, other.ctrlx2,</span>
+				other.ctrly2);
+
+<span class="nc" id="L62">	}</span>
+
+	public void subdivide(XCubicCurve2D left, XCubicCurve2D right) {
+<span class="nc" id="L65">		double x1 = this.getX1();</span>
+<span class="nc" id="L66">		double y1 = this.getY1();</span>
+<span class="nc" id="L67">		double ctrlx1 = this.getCtrlX1();</span>
+<span class="nc" id="L68">		double ctrly1 = this.getCtrlY1();</span>
+<span class="nc" id="L69">		double ctrlx2 = this.getCtrlX2();</span>
+<span class="nc" id="L70">		double ctrly2 = this.getCtrlY2();</span>
+<span class="nc" id="L71">		double x2 = this.getX2();</span>
+<span class="nc" id="L72">		double y2 = this.getY2();</span>
+<span class="nc" id="L73">		double centerx = (ctrlx1 + ctrlx2) / 2.0;</span>
+<span class="nc" id="L74">		double centery = (ctrly1 + ctrly2) / 2.0;</span>
+<span class="nc" id="L75">		ctrlx1 = (x1 + ctrlx1) / 2.0;</span>
+<span class="nc" id="L76">		ctrly1 = (y1 + ctrly1) / 2.0;</span>
+<span class="nc" id="L77">		ctrlx2 = (x2 + ctrlx2) / 2.0;</span>
+<span class="nc" id="L78">		ctrly2 = (y2 + ctrly2) / 2.0;</span>
+<span class="nc" id="L79">		double ctrlx12 = (ctrlx1 + centerx) / 2.0;</span>
+<span class="nc" id="L80">		double ctrly12 = (ctrly1 + centery) / 2.0;</span>
+<span class="nc" id="L81">		double ctrlx21 = (ctrlx2 + centerx) / 2.0;</span>
+<span class="nc" id="L82">		double ctrly21 = (ctrly2 + centery) / 2.0;</span>
+<span class="nc" id="L83">		centerx = (ctrlx12 + ctrlx21) / 2.0;</span>
+<span class="nc" id="L84">		centery = (ctrly12 + ctrly21) / 2.0;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (left != null)</span>
+<span class="nc" id="L86">			left.setCurve(x1, y1, ctrlx1, ctrly1, ctrlx12, ctrly12, centerx, centery);</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (right != null)</span>
+<span class="nc" id="L89">			right.setCurve(centerx, centery, ctrlx21, ctrly21, ctrlx2, ctrly2, x2, y2);</span>
+
+<span class="nc" id="L91">	}</span>
+
+	public final double getX1() {
+<span class="nc" id="L94">		return x1;</span>
+	}
+
+	public final double getY1() {
+<span class="nc" id="L98">		return y1;</span>
+	}
+
+	public final double getCtrlX1() {
+<span class="nc" id="L102">		return ctrlx1;</span>
+	}
+
+	public final double getCtrlY1() {
+<span class="nc" id="L106">		return ctrly1;</span>
+	}
+
+	public final double getCtrlX2() {
+<span class="nc" id="L110">		return ctrlx2;</span>
+	}
+
+	public final double getCtrlY2() {
+<span class="nc" id="L114">		return ctrly2;</span>
+	}
+
+	public final double getX2() {
+<span class="nc" id="L118">		return x2;</span>
+	}
+
+	public final double getY2() {
+<span class="nc" id="L122">		return y2;</span>
+	}
+
+	public XPoint2D getCtrlP1() {
+<span class="fc" id="L126">		return new XPoint2D(ctrlx1, ctrly1);</span>
+	}
+
+	public XPoint2D getCtrlP2() {
+<span class="fc" id="L130">		return new XPoint2D(ctrlx2, ctrly2);</span>
+	}
+
+	public double getFlatnessSq() {
+<span class="nc" id="L134">		return Math.max(XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx1, ctrly1),</span>
+<span class="nc" id="L135">				XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx2, ctrly2));</span>
+	}
+
+	public double getFlatness() {
+<span class="nc" id="L139">		return getFlatness(getX1(), getY1(), getCtrlX1(), getCtrlY1(), getCtrlX2(), getCtrlY2(), getX2(), getY2());</span>
+	}
+
+	private static double getFlatness(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2,
+			double x2, double y2) {
+<span class="nc" id="L144">		return Math.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));</span>
+	}
+
+	private static double getFlatnessSq(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2,
+			double ctrly2, double x2, double y2) {
+<span class="nc" id="L149">		return Math.max(XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx1, ctrly1),</span>
+<span class="nc" id="L150">				XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx2, ctrly2));</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

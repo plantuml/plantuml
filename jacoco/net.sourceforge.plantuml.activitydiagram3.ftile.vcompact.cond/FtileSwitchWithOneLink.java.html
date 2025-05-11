@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileSwitchWithOneLink.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</a> &gt; <span class="el_source">FtileSwitchWithOneLink.java</span></div><h1>FtileSwitchWithOneLink.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
+
+	private final Rainbow arrowColor;
+
+	public FtileSwitchWithOneLink(List&lt;Ftile&gt; tiles, List&lt;Branch&gt; branches, Swimlane in, Ftile diamond1, Ftile diamond2,
+			StringBounder stringBounder, Rainbow arrowColor) {
+<span class="nc" id="L60">		super(tiles, branches, in, diamond1, diamond2, stringBounder);</span>
+<span class="nc" id="L61">		this.arrowColor = arrowColor;</span>
+<span class="nc" id="L62">	}</span>
+
+	class ConnectionVerticalTop extends AbstractConnection {
+
+		private final Branch branch;
+
+<span class="nc" id="L68">		public ConnectionVerticalTop(Ftile tile, Branch branch) {</span>
+<span class="nc" id="L69">			super(diamond1, tile);</span>
+<span class="nc" id="L70">			this.branch = branch;</span>
+<span class="nc" id="L71">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L74">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L75">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L76">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L77">			final double x1 = p1.getX();</span>
+<span class="nc" id="L78">			final double y1 = p1.getY();</span>
+<span class="nc" id="L79">			final double x2 = p2.getX();</span>
+<span class="nc" id="L80">			final double y2 = p2.getY();</span>
+
+<span class="nc" id="L82">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())</span>
+<span class="nc" id="L83">					.withLabel(branch.getTextBlockPositive(), arrowHorizontalAlignment());</span>
+<span class="nc" id="L84">			snake.addPoint(x2, y1);</span>
+<span class="nc" id="L85">			snake.addPoint(x2, y2);</span>
+
+<span class="nc" id="L87">			ug.draw(snake);</span>
+<span class="nc" id="L88">		}</span>
+
+		private XPoint2D getP1(StringBounder stringBounder) {
+<span class="nc" id="L91">			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L92">			return getTranslateDiamond1(stringBounder).getTranslated(dimDiamond1.getPointC());</span>
+		}
+
+		private XPoint2D getP2(final StringBounder stringBounder) {
+<span class="nc" id="L96">			return getTranslateOf(getFtile2(), stringBounder)</span>
+<span class="nc" id="L97">					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());</span>
+		}
+	}
+
+	class ConnectionVerticalBottom extends AbstractConnection {
+
+<span class="nc" id="L103">		public ConnectionVerticalBottom(Ftile tile) {</span>
+<span class="nc" id="L104">			super(tile, diamond2);</span>
+<span class="nc" id="L105">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L108">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L109">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L110">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L111">			final double x1 = p1.getX();</span>
+<span class="nc" id="L112">			final double y1 = p1.getY();</span>
+<span class="nc" id="L113">			final double x2 = p2.getX();</span>
+<span class="nc" id="L114">			final double y2 = p2.getY();</span>
+
+<span class="nc" id="L116">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown());</span>
+<span class="nc" id="L117">			snake.addPoint(x2, y1);</span>
+<span class="nc" id="L118">			snake.addPoint(x2, y2);</span>
+
+<span class="nc" id="L120">			ug.draw(snake);</span>
+<span class="nc" id="L121">		}</span>
+
+		private XPoint2D getP1(StringBounder stringBounder) {
+<span class="nc" id="L124">			return getTranslateOf(getFtile1(), stringBounder)</span>
+<span class="nc" id="L125">					.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());</span>
+		}
+
+		private XPoint2D getP2(StringBounder stringBounder) {
+<span class="nc" id="L129">			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L130">			return getTranslateDiamond2(stringBounder).getTranslated(dimDiamond2.getPointA());</span>
+		}
+	}
+
+	public Ftile addLinks(StringBounder stringBounder) {
+<span class="nc" id="L135">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L136">		final Ftile single = tiles.get(0);</span>
+<span class="nc" id="L137">		conns.add(new ConnectionVerticalTop(single, branches.get(0)));</span>
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (single.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L140">			conns.add(new ConnectionVerticalBottom(single));</span>
+
+<span class="nc" id="L142">		return FtileUtils.addConnection(this, conns);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

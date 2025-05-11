@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cluster.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.posimo</a> &gt; <span class="el_source">Cluster.java</span></div><h1>Cluster.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.posimo;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class Cluster implements Clusterable {
+
+<span class="fc" id="L47">	private static int CPT = 1;</span>
+
+	private final Cluster parent;
+<span class="fc" id="L50">	private final Collection&lt;Block&gt; blocs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L51">	private final Collection&lt;Cluster&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L52">	private final int uid = CPT++;</span>
+	private double x;
+	private double y;
+	private double width;
+	private double height;
+
+	private final double titleWidth;
+	private final double titleHeight;
+
+//	public Cluster(Cluster parent) {
+//		this(parent, 100, 20);
+//	}
+//	
+<span class="fc" id="L65">	public Cluster(Cluster parent, double titleWidth, double titleHeight) {</span>
+<span class="fc" id="L66">		this.parent = parent;</span>
+<span class="fc" id="L67">		this.titleWidth = titleWidth;</span>
+<span class="fc" id="L68">		this.titleHeight = titleHeight;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (parent != null) {</span>
+<span class="nc" id="L70">			parent.children.add(this);</span>
+		}
+<span class="fc" id="L72">	}</span>
+
+	public Collection&lt;Cluster&gt; getSubClusters() {
+<span class="nc" id="L75">		return Collections.unmodifiableCollection(children);</span>
+	}
+
+	public Collection&lt;Block&gt; getRecursiveContents() {
+<span class="nc" id="L79">		final Collection&lt;Block&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L80">		addContentRecurse(result);</span>
+<span class="nc" id="L81">		return Collections.unmodifiableCollection(result);</span>
+	}
+
+	private void addContentRecurse(Collection&lt;Block&gt; result) {
+<span class="nc" id="L85">		result.addAll(blocs);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (Cluster c : children) {</span>
+<span class="nc" id="L87">			c.addContentRecurse(result);</span>
+<span class="nc" id="L88">		}</span>
+
+<span class="nc" id="L90">	}</span>
+
+	public int getUid() {
+<span class="nc" id="L93">		return uid;</span>
+	}
+
+	public void addBloc(Block b) {
+<span class="fc" id="L97">		this.blocs.add(b);</span>
+<span class="fc" id="L98">	}</span>
+
+	public Cluster getParent() {
+<span class="nc" id="L101">		return parent;</span>
+	}
+
+	public Collection&lt;Block&gt; getContents() {
+<span class="nc" id="L105">		return Collections.unmodifiableCollection(blocs);</span>
+	}
+
+	public Block getBlock(int uid) {
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (Block b : blocs) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (b.getUid() == uid) {</span>
+<span class="nc" id="L111">				return b;</span>
+			}
+<span class="nc" id="L113">		}</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		for (Cluster sub : children) {</span>
+<span class="nc" id="L115">			final Block result = sub.getBlock(uid);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (result != null) {</span>
+<span class="nc" id="L117">				return result;</span>
+			}
+<span class="nc" id="L119">		}</span>
+<span class="nc" id="L120">		return null;</span>
+	}
+
+	public XPoint2D getPosition() {
+<span class="nc" id="L124">		return new XPoint2D(x, y);</span>
+	}
+
+	public XDimension2D getSize() {
+<span class="nc" id="L128">		return new XDimension2D(width, height);</span>
+	}
+
+	public final void setX(double x) {
+<span class="nc" id="L132">		this.x = x;</span>
+<span class="nc" id="L133">	}</span>
+
+	public final void setY(double y) {
+<span class="nc" id="L136">		this.y = y;</span>
+<span class="nc" id="L137">	}</span>
+
+	public final void setWidth(double width) {
+<span class="nc" id="L140">		this.width = width;</span>
+<span class="nc" id="L141">	}</span>
+
+	public final void setHeight(double height) {
+<span class="nc" id="L144">		this.height = height;</span>
+<span class="nc" id="L145">	}</span>
+
+	public final double getTitleWidth() {
+<span class="nc" id="L148">		return titleWidth;</span>
+	}
+
+	public final double getTitleHeight() {
+<span class="nc" id="L152">		return titleHeight;</span>
+	}
+
+	public void moveDelta(double deltaX, double deltaY) {
+<span class="nc" id="L156">		throw new UnsupportedOperationException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

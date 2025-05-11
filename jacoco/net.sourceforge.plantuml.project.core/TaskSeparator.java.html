@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskSeparator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.core</a> &gt; <span class="el_source">TaskSeparator.java</span></div><h1>TaskSeparator.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.core;
+
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.project.Load;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.url.Url;
+
+public class TaskSeparator extends AbstractTask implements Task {
+
+	private final String comment;
+
+	public TaskSeparator(StyleBuilder styleBuilder, String comment, int id) {
+<span class="nc" id="L52">		super(styleBuilder, TaskCode.fromId(&quot;##&quot; + id));</span>
+<span class="nc" id="L53">		this.comment = comment;</span>
+<span class="nc" id="L54">	}</span>
+
+	@Override
+	public Day getStart() {
+<span class="nc" id="L58">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public Day getEnd() {
+<span class="nc" id="L63">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setStart(Day start) {
+<span class="nc" id="L68">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setEnd(Day end) {
+<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setColors(CenterBorderColor... colors) {
+<span class="nc" id="L78">		throw new UnsupportedOperationException();</span>
+	}
+
+	public String getName() {
+<span class="nc" id="L82">		return comment;</span>
+	}
+
+	@Override
+	public void addResource(Resource resource, int percentage) {
+<span class="nc" id="L87">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public Load getLoad() {
+<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
+	}
+
+	public void setLoad(Load load) {
+<span class="nc" id="L96">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setDiamond(boolean diamond) {
+<span class="nc" id="L101">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public boolean isDiamond() {
+<span class="nc" id="L106">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setCompletion(int completion) {
+<span class="nc" id="L111">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setUrl(Url url) {
+<span class="nc" id="L116">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void addPause(Day pause) {
+<span class="nc" id="L121">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void addPause(DayOfWeek pause) {
+<span class="nc" id="L126">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setNote(Display note, Stereotype stereotype) {
+<span class="nc" id="L131">	}</span>
+
+	@Override
+	public boolean isAssignedTo(Resource res) {
+<span class="nc" id="L135">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

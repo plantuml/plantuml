@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ETileAlternation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ebnf</a> &gt; <span class="el_source">ETileAlternation.java</span></div><h1>ETileAlternation.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ebnf;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+
+<span class="nc" id="L46">public class ETileAlternation extends ETile {</span>
+
+<span class="nc" id="L48">	private final List&lt;ETile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L49">	private final double marginx = 12;</span>
+	private boolean inZeroOrMore;
+
+	@Override
+	public void push(ETile tile) {
+<span class="nc" id="L54">		tiles.add(0, tile);</span>
+<span class="nc" id="L55">	}</span>
+
+	@Override
+	public double getH1(StringBounder stringBounder) {
+<span class="nc" id="L59">		return tiles.get(0).getH1(stringBounder);</span>
+	}
+
+	@Override
+	public double getH2(StringBounder stringBounder) {
+<span class="nc" id="L64">		double height = tiles.get(0).getH2(stringBounder);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (int i = 1; i &lt; tiles.size(); i++) {</span>
+<span class="nc" id="L66">			final ETile tile = tiles.get(i);</span>
+<span class="nc" id="L67">			height += tile.getH1(stringBounder);</span>
+<span class="nc" id="L68">			height += tile.getH2(stringBounder);</span>
+<span class="nc" id="L69">			height += 10;</span>
+		}
+<span class="nc" id="L71">		return height;</span>
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+<span class="nc" id="L76">		double width = 0;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (ETile tile : tiles) {</span>
+<span class="nc" id="L78">			final XDimension2D dim = tile.calculateDimension(stringBounder);</span>
+<span class="nc" id="L79">			width = Math.max(width, dim.getWidth());</span>
+<span class="nc" id="L80">		}</span>
+<span class="nc" id="L81">		width += 2 * 2 * marginx;</span>
+<span class="nc" id="L82">		return width;</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L87">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc" id="L89">		double y = 0;</span>
+<span class="nc" id="L90">		double lastLinePos = 0;</span>
+
+<span class="nc" id="L92">		final double a = 0;</span>
+<span class="nc" id="L93">		final double b = a + marginx;</span>
+<span class="nc" id="L94">		final double c = b + marginx;</span>
+
+<span class="nc" id="L96">		final XDimension2D fullDim = calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L98">		final double r = fullDim.getWidth();</span>
+<span class="nc" id="L99">		final double q = r - marginx;</span>
+<span class="nc" id="L100">		final double p = q - marginx;</span>
+
+<span class="nc" id="L102">		final double linePos = getH1(stringBounder);</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (inZeroOrMore) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			for (int i = 0; i &lt; tiles.size(); i++) {</span>
+<span class="nc" id="L106">				final ETile tile = tiles.get(i);</span>
+<span class="nc" id="L107">				final XDimension2D dim = tile.calculateDimension(stringBounder);</span>
+<span class="nc" id="L108">				lastLinePos = y + tile.getH1(stringBounder);</span>
+<span class="nc" id="L109">				tile.drawU(ug.apply(new UTranslate(c, y)));</span>
+
+<span class="nc" id="L111">				CornerCurved.createSW(marginx).drawU(ug.apply(new UTranslate(b, lastLinePos)));</span>
+<span class="nc" id="L112">				drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.3, 25);</span>
+<span class="nc" id="L113">				CornerCurved.createSE(marginx).drawU(ug.apply(new UTranslate(q, lastLinePos)));</span>
+
+<span class="nc" id="L115">				y += dim.getHeight() + 10;</span>
+
+			}
+<span class="nc" id="L118">			drawVline(ug, b, 0, lastLinePos - marginx);</span>
+<span class="nc" id="L119">			drawVline(ug, q, 0, lastLinePos - marginx);</span>
+
+		} else {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			for (int i = 0; i &lt; tiles.size(); i++) {</span>
+<span class="nc" id="L123">				final ETile tile = tiles.get(i);</span>
+<span class="nc" id="L124">				final XDimension2D dim = tile.calculateDimension(stringBounder);</span>
+<span class="nc" id="L125">				lastLinePos = y + tile.getH1(stringBounder);</span>
+<span class="nc" id="L126">				tile.drawU(ug.apply(new UTranslate(c, y)));</span>
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				if (i == 0) {</span>
+<span class="nc" id="L129">					drawHline(ug, lastLinePos, a, c);</span>
+<span class="nc" id="L130">					drawHline(ug, lastLinePos, c + dim.getWidth(), r);</span>
+<span class="nc bnc" id="L131" title="All 4 branches missed.">				} else if (i &gt; 0 &amp;&amp; i &lt; tiles.size() - 1) {</span>
+<span class="nc" id="L132">					CornerCurved.createSW(marginx).drawU(ug.apply(new UTranslate(b, lastLinePos)));</span>
+<span class="nc" id="L133">					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5, 25);</span>
+<span class="nc" id="L134">					CornerCurved.createSE(marginx).drawU(ug.apply(new UTranslate(q, lastLinePos)));</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">				} else if (i == tiles.size() - 1) {</span>
+<span class="nc" id="L136">					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5, 25);</span>
+
+				}
+<span class="nc" id="L139">				y += dim.getHeight() + 10;</span>
+			}
+
+<span class="nc" id="L142">			final double height42 = lastLinePos - linePos;</span>
+<span class="nc" id="L143">			final UGraphic ug_b = ug.apply(new UTranslate(b, linePos));</span>
+<span class="nc" id="L144">			final UGraphic ug_q = ug.apply(new UTranslate(q, linePos));</span>
+
+<span class="nc" id="L146">			CornerCurved.createSW(marginx).drawU(ug_b.apply(UTranslate.dy(height42)));</span>
+<span class="nc" id="L147">			drawVline(ug_b, 0, marginx, height42 - marginx);</span>
+<span class="nc" id="L148">			CornerCurved.createNE(marginx).drawU(ug_b);</span>
+
+<span class="nc" id="L150">			CornerCurved.createSE(marginx).drawU(ug_q.apply(UTranslate.dy(height42)));</span>
+<span class="nc" id="L151">			drawVline(ug_q, 0, marginx, height42 - marginx);</span>
+<span class="nc" id="L152">			CornerCurved.createNW(marginx).drawU(ug_q);</span>
+
+		}
+
+<span class="nc" id="L156">	}</span>
+
+	// To be removed, never used
+	@Deprecated
+	public void setInZeroOrMore(boolean inZeroOrMore) {
+<span class="nc" id="L161">		this.inZeroOrMore = true;</span>
+
+<span class="nc" id="L163">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

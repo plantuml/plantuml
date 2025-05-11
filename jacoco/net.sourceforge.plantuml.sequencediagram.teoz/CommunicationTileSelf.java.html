@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommunicationTileSelf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">CommunicationTileSelf.java</span></div><h1>CommunicationTileSelf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import java.util.Iterator;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowComponent;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.Log;
+
+public class CommunicationTileSelf extends AbstractTile {
+
+	private final LivingSpace livingSpace1;
+	private final Message message;
+	private final Rose skin;
+	private final ISkinParam skinParam;
+	private final LivingSpaces livingSpaces;
+	private final YGauge yGauge;
+
+	public Event getEvent() {
+<span class="fc" id="L67">		return message;</span>
+	}
+
+	@Override
+	public double getContactPointRelative() {
+<span class="fc" id="L72">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
+	}
+
+	public CommunicationTileSelf(StringBounder stringBounder, LivingSpace livingSpace1, Message message, Rose skin,
+			ISkinParam skinParam, LivingSpaces livingSpaces, YGauge currentY) {
+<span class="fc" id="L77">		super(stringBounder, currentY);</span>
+<span class="fc" id="L78">		this.livingSpace1 = livingSpace1;</span>
+<span class="fc" id="L79">		this.livingSpaces = livingSpaces;</span>
+<span class="fc" id="L80">		this.message = message;</span>
+<span class="fc" id="L81">		this.skin = skin;</span>
+<span class="fc" id="L82">		this.skinParam = skinParam;</span>
+<span class="fc" id="L83">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L84">	}</span>
+
+	@Override
+	public YGauge getYGauge() {
+<span class="nc" id="L88">		return yGauge;</span>
+	}
+
+	private ArrowComponent getComponent(StringBounder stringBounder) {
+<span class="fc" id="L92">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
+<span class="fc" id="L93">		arrowConfiguration = arrowConfiguration.self();</span>
+<span class="fc" id="L94">		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,</span>
+<span class="fc" id="L95">				message.getLabelNumbered());</span>
+<span class="fc" id="L96">		return comp;</span>
+	}
+
+	@Override
+	final protected void callbackY_internal(TimeHook y) {
+<span class="fc" id="L101">		super.callbackY_internal(y);</span>
+<span class="fc" id="L102">		final ArrowComponent comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L103">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L104">		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);</span>
+<span class="fc" id="L105">		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);</span>
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (message.isActivate())</span>
+<span class="fc" id="L108">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		else if (message.isDeactivate())</span>
+<span class="fc" id="L110">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		else if (message.isDestroy())</span>
+<span class="nc" id="L112">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
+
+<span class="fc" id="L114">	}</span>
+
+	public void drawU(UGraphic ug) {
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+<span class="fc" id="L119">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L120">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L122">		double x1 = getMinX().getCurrentValue();</span>
+<span class="fc" id="L123">		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
+<span class="fc" id="L124">		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L125">		Log.info(&quot;CommunicationTileSelf::drawU levelIgnore=&quot; + levelIgnore + &quot; levelConsidere=&quot; + levelConsidere);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (!isReverseDefine()) {</span>
+<span class="fc" id="L127">			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (levelIgnore &lt; levelConsidere) {</span>
+<span class="nc" id="L129">				x1 += CommunicationTile.LIVE_DELTA_SIZE * (levelConsidere-levelIgnore);</span>
+			}
+		}
+
+<span class="fc" id="L133">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
+		// if (message.isActivate()) {
+		// area.setDeltaX1(CommunicationTile.LIVE_DELTA_SIZE);
+		// } else if (message.isDeactivate()) {
+		// // area.setDeltaX1(CommunicationTile.LIVE_DELTA_SIZE);
+		// // x1 += CommunicationTile.LIVE_DELTA_SIZE * levelConsidere;
+		// }
+<span class="fc" id="L140">		area.setDeltaX1((levelIgnore - levelConsidere) * CommunicationTile.LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L141">		area.setLevel(levelIgnore);</span>
+<span class="fc" id="L142">		area.setLiveDeltaSize(CommunicationTile.LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L143">		ug = ug.apply(UTranslate.dx(x1));</span>
+<span class="fc" id="L144">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L145">	}</span>
+
+	public double getPreferredHeight() {
+<span class="fc" id="L148">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L149">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L150">		return dim.getHeight();</span>
+	}
+
+	public void addConstraints() {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc" id="L155">			final LivingSpace previous = getPrevious();</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">			if (previous != null) {</span>
+<span class="fc" id="L157">				livingSpace1.getPosC(getStringBounder())</span>
+<span class="fc" id="L158">						.ensureBiggerThan(previous.getPosC2(getStringBounder()).addFixed(getCompWidth()));</span>
+			}
+<span class="fc" id="L160">		} else {</span>
+<span class="fc" id="L161">			final LivingSpace next = getNext();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			if (next != null) {</span>
+<span class="fc" id="L163">				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());</span>
+			}
+		}
+<span class="fc" id="L166">	}</span>
+
+	private boolean isReverseDefine() {
+<span class="fc" id="L169">		return message.getArrowConfiguration().isReverseDefine();</span>
+	}
+
+	private LivingSpace getPrevious() {
+<span class="fc" id="L173">		LivingSpace previous = null;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L175">			final LivingSpace current = it.next();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (current == livingSpace1) {</span>
+<span class="fc" id="L177">				return previous;</span>
+			}
+<span class="fc" id="L179">			previous = current;</span>
+<span class="fc" id="L180">		}</span>
+<span class="nc" id="L181">		return null;</span>
+	}
+
+	private LivingSpace getNext() {
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L186">			final LivingSpace current = it.next();</span>
+<span class="fc bfc" id="L187" title="All 4 branches covered.">			if (current == livingSpace1 &amp;&amp; it.hasNext()) {</span>
+<span class="fc" id="L188">				return it.next();</span>
+			}
+<span class="fc" id="L190">		}</span>
+<span class="fc" id="L191">		return null;</span>
+	}
+
+	private Real getPoint1(final StringBounder stringBounder) {
+<span class="fc" id="L195">		return livingSpace1.getPosC(stringBounder);</span>
+	}
+
+	public Real getMinX() {
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) &gt; 0</span>
+<span class="fc" id="L201">					? CommunicationTile.LIVE_DELTA_SIZE</span>
+<span class="fc" id="L202">					: 0.0;</span>
+<span class="fc" id="L203">			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth()-liveDeltaWidthAdjustment);</span>
+		}
+<span class="fc" id="L205">		return getPoint1(getStringBounder());</span>
+	}
+
+	public Real getMaxX() {
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc" id="L210">			return livingSpace1.getPosC2(getStringBounder());</span>
+		}
+<span class="fc" id="L212">		return livingSpace1.getPosC2(getStringBounder()).addFixed(getCompWidth());</span>
+	}
+
+	private double getCompWidth() {
+<span class="fc" id="L216">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L217">		return comp.getPreferredDimension(getStringBounder()).getWidth();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

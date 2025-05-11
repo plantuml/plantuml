@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WritingBuffer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">WritingBuffer.java</span></div><h1>WritingBuffer.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+import java.io.IOException;
+import java.io.Writer;
+
+/**
+ * A lightweight writing buffer to reduce the amount of write operations to be
+ * performed on the underlying writer. This implementation is not thread-safe.
+ * It deliberately deviates from the contract of Writer. In particular, it does
+ * not flush or close the wrapped writer nor does it ensure that the wrapped
+ * writer is open.
+ */
+class WritingBuffer extends Writer {
+
+	private final Writer writer;
+	private final char[] buffer;
+<span class="fc" id="L41">	private int fill = 0;</span>
+
+	WritingBuffer(Writer writer) {
+<span class="nc" id="L44">		this(writer, 16);</span>
+<span class="nc" id="L45">	}</span>
+
+<span class="fc" id="L47">	WritingBuffer(Writer writer, int bufferSize) {</span>
+<span class="fc" id="L48">		this.writer = writer;</span>
+<span class="fc" id="L49">		buffer = new char[bufferSize];</span>
+<span class="fc" id="L50">	}</span>
+
+	@Override
+	public void write(int c) throws IOException {
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (fill &gt; buffer.length - 1) {</span>
+<span class="fc" id="L55">			flush();</span>
+		}
+<span class="fc" id="L57">		buffer[fill++] = (char) c;</span>
+<span class="fc" id="L58">	}</span>
+
+	@Override
+	public void write(char[] cbuf, int off, int len) throws IOException {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (fill &gt; buffer.length - len) {</span>
+<span class="nc" id="L63">			flush();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			if (len &gt; buffer.length) {</span>
+<span class="nc" id="L65">				writer.write(cbuf, off, len);</span>
+<span class="nc" id="L66">				return;</span>
+			}
+		}
+<span class="fc" id="L69">		System.arraycopy(cbuf, off, buffer, fill, len);</span>
+<span class="fc" id="L70">		fill += len;</span>
+<span class="fc" id="L71">	}</span>
+
+	@Override
+	public void write(String str, int off, int len) throws IOException {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (fill &gt; buffer.length - len) {</span>
+<span class="fc" id="L76">			flush();</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			if (len &gt; buffer.length) {</span>
+<span class="nc" id="L78">				writer.write(str, off, len);</span>
+<span class="nc" id="L79">				return;</span>
+			}
+		}
+<span class="fc" id="L82">		str.getChars(off, off + len, buffer, fill);</span>
+<span class="fc" id="L83">		fill += len;</span>
+<span class="fc" id="L84">	}</span>
+
+	/**
+	 * Flushes the internal buffer but does not flush the wrapped writer.
+	 */
+	@Override
+	public void flush() throws IOException {
+<span class="fc" id="L91">		writer.write(buffer, 0, fill);</span>
+<span class="fc" id="L92">		fill = 0;</span>
+<span class="fc" id="L93">	}</span>
+
+	/**
+	 * Does not close or flush the wrapped writer.
+	 */
+	@Override
+	public void close() throws IOException {
+<span class="nc" id="L100">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

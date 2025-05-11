@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvgData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.svg</a> &gt; <span class="el_source">SvgData.java</span></div><h1>SvgData.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.svg;
+
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.StringUtils;
+
+public final class SvgData {
+    // ::remove file when __HAXE__
+
+	private String svg;
+	private double startX;
+	private double startY;
+	private double width;
+	private double height;
+
+	public static SvgData fromGraphViz(String s) {
+<span class="nc" id="L54">		return new SvgData(removeSvgXmlHeader1(s));</span>
+	}
+
+<span class="nc" id="L57">	private SvgData(String svg) {</span>
+<span class="nc" id="L58">		this.svg = svg;</span>
+<span class="nc" id="L59">		init();</span>
+<span class="nc" id="L60">	}</span>
+
+	private SvgData() {
+	}
+
+	private static String removeSvgXmlHeader1(String svg) {
+<span class="nc" id="L66">		final String newString = &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&gt;&quot;;</span>
+<span class="nc" id="L67">		svg = svg.replaceFirst(&quot;(?i)&lt;svg[^&gt;]*&gt;&quot;, newString);</span>
+<span class="nc" id="L68">		return svg;</span>
+	}
+
+	public SvgData mutateFromSvgTitler(String newSvg, double suppHeight, double suppWidth) {
+<span class="nc" id="L72">		final SvgData result = new SvgData();</span>
+<span class="nc" id="L73">		result.svg = newSvg;</span>
+<span class="nc" id="L74">		result.startX = this.startX - suppWidth / 2;</span>
+<span class="nc" id="L75">		result.startY = this.startY;</span>
+<span class="nc" id="L76">		result.width = this.width + suppWidth;</span>
+<span class="nc" id="L77">		result.height = this.height + suppHeight;</span>
+<span class="nc" id="L78">		return result;</span>
+	}
+
+	public final String getSvg() {
+<span class="nc" id="L82">		return modifiedSvgXmlHeader();</span>
+	}
+
+	private void init() {
+<span class="nc" id="L86">		final Pattern p = Pattern.compile(&quot;(?i)&lt;polygon\\s+[^&gt;]*points=\&quot;([^\&quot;]+)\&quot;&quot;);</span>
+<span class="nc" id="L87">		final Matcher m = p.matcher(svg);</span>
+<span class="nc" id="L88">		double minX = Double.MAX_VALUE;</span>
+<span class="nc" id="L89">		double minY = Double.MAX_VALUE;</span>
+<span class="nc" id="L90">		double maxX = -Double.MAX_VALUE;</span>
+<span class="nc" id="L91">		double maxY = -Double.MAX_VALUE;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L93">			return;</span>
+		}
+<span class="nc" id="L95">		final String points = m.group(1);</span>
+<span class="nc" id="L96">		final StringTokenizer st = new StringTokenizer(points, &quot; &quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L98">			final String token = st.nextToken();</span>
+<span class="nc" id="L99">			final StringTokenizer st2 = new StringTokenizer(token, &quot;,&quot;);</span>
+<span class="nc" id="L100">			final double x = Double.parseDouble(StringUtils.trin(st2.nextToken()));</span>
+<span class="nc" id="L101">			final double y = Double.parseDouble(StringUtils.trin(st2.nextToken()));</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (x &lt; minX) {</span>
+<span class="nc" id="L103">				minX = x;</span>
+			}
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (y &lt; minY) {</span>
+<span class="nc" id="L106">				minY = y;</span>
+			}
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (x &gt; maxX) {</span>
+<span class="nc" id="L109">				maxX = x;</span>
+			}
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (y &gt; maxY) {</span>
+<span class="nc" id="L112">				maxY = y;</span>
+			}
+<span class="nc" id="L114">		}</span>
+
+<span class="nc" id="L116">		this.width = maxX - minX;</span>
+<span class="nc" id="L117">		this.height = maxY - minY;</span>
+<span class="nc" id="L118">	}</span>
+
+	private String modifiedSvgXmlHeader() {
+<span class="nc" id="L121">		final StringBuilder newString = new StringBuilder(</span>
+				&quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; &quot;);
+<span class="nc" id="L123">		newString.append(&quot;style=\&quot;width:&quot;);</span>
+<span class="nc" id="L124">		newString.append(Math.round(getWidth()));</span>
+<span class="nc" id="L125">		newString.append(&quot;;height:&quot;);</span>
+<span class="nc" id="L126">		newString.append(Math.round(getHeight()));</span>
+<span class="nc" id="L127">		newString.append(&quot;;\&quot; &quot;);</span>
+<span class="nc" id="L128">		newString.append(&quot;width=\&quot;&quot; + Math.round(getWidth()) + &quot;pt\&quot; &quot;);</span>
+<span class="nc" id="L129">		newString.append(&quot;height=\&quot;&quot; + Math.round(getHeight()) + &quot;pt\&quot; &quot;);</span>
+<span class="nc" id="L130">		newString.append(&quot;viewBox=\&quot;&quot; + Math.round(startX) + &quot; &quot; + Math.round(startY) + &quot; &quot; + Math.round(getWidth())</span>
+<span class="nc" id="L131">				+ &quot; &quot; + Math.round(getHeight()) + &quot;\&quot;&quot;);</span>
+		// newString.append(&quot;viewBox=\&quot;&quot; + Math.round(minX) + &quot; &quot; +
+		// Math.round(minY) + &quot; &quot; + Math.round(getWidth()) + &quot; &quot;
+		// + Math.round(getHeight()) + &quot;\&quot;&quot;);
+<span class="nc" id="L135">		newString.append(&quot;&gt;&quot;);</span>
+<span class="nc" id="L136">		return svg.replaceFirst(&quot;(?i)&lt;svg[^&gt;]*&gt;&quot;, newString.toString());</span>
+	}
+
+	public double getWidth() {
+<span class="nc" id="L140">		return width;</span>
+	}
+
+	public double getHeight() {
+<span class="nc" id="L144">		return height;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

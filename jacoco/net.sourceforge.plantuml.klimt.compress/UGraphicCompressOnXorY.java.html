@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicCompressOnXorY.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.compress</a> &gt; <span class="el_source">UGraphicCompressOnXorY.java</span></div><h1>UGraphicCompressOnXorY.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.compress;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
+import net.sourceforge.plantuml.klimt.UBackground;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+<span class="fc" id="L51">public class UGraphicCompressOnXorY extends UGraphicDelegator {</span>
+    // ::remove file when __HAXE__
+
+	public UGraphic apply(UChange change) {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (change instanceof UTranslate)</span>
+<span class="fc" id="L56">			return new UGraphicCompressOnXorY(mode, getUg(), compressionTransform,</span>
+<span class="fc" id="L57">					translate.compose((UTranslate) change));</span>
+<span class="pc bpc" id="L58" title="1 of 6 branches missed.">		else if (change instanceof UStroke || change instanceof UBackground || change instanceof HColor)</span>
+<span class="fc" id="L59">			return new UGraphicCompressOnXorY(mode, getUg().apply(change), compressionTransform, translate);</span>
+
+<span class="nc" id="L61">		throw new UnsupportedOperationException();</span>
+	}
+
+	private final CompressionMode mode;
+	private final PiecewiseAffineTransform compressionTransform;
+	private final UTranslate translate;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L70">		return &quot;UGraphicCompressOnXorY &quot; + mode;</span>
+	}
+
+	public static UGraphicCompressOnXorY create(CompressionMode mode, UGraphic ug,
+			PiecewiseAffineTransform compressionTransform) {
+<span class="fc" id="L75">		return new UGraphicCompressOnXorY(mode, ug, compressionTransform, UTranslate.none());</span>
+	}
+
+	private UGraphicCompressOnXorY(CompressionMode mode, UGraphic ug, PiecewiseAffineTransform compressionTransform,
+			UTranslate translate) {
+<span class="fc" id="L80">		super(ug);</span>
+<span class="fc" id="L81">		this.mode = mode;</span>
+<span class="fc" id="L82">		this.compressionTransform = compressionTransform;</span>
+<span class="fc" id="L83">		this.translate = translate;</span>
+<span class="fc" id="L84">	}</span>
+
+	public void draw(UShape shape) {
+<span class="fc" id="L87">		final double x = translate.getDx();</span>
+<span class="fc" id="L88">		final double y = translate.getDy();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (shape instanceof URectangle) {</span>
+<span class="fc" id="L90">			final URectangle rect = (URectangle) shape;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (mode == CompressionMode.ON_X) {</span>
+<span class="fc" id="L92">				final double x2 = ct(x + rect.getWidth());</span>
+<span class="fc" id="L93">				shape = rect.withWidth(x2 - ct(x));</span>
+<span class="fc" id="L94">			} else {</span>
+<span class="fc" id="L95">				final double y2 = ct(y + rect.getHeight());</span>
+<span class="fc" id="L96">				shape = rect.withHeight(y2 - ct(y));</span>
+			}
+		}
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (shape instanceof CenteredText) {</span>
+<span class="fc" id="L100">			final CenteredText centeredText = (CenteredText) shape;</span>
+<span class="fc" id="L101">			final TextBlock text = centeredText.getText();</span>
+<span class="fc" id="L102">			final double totalWidth = centeredText.getTotalWidth();</span>
+			final double realSpaceWidth;
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if (mode == CompressionMode.ON_X)</span>
+<span class="fc" id="L105">				realSpaceWidth = ct(x + totalWidth) - ct(x);</span>
+			else
+<span class="nc" id="L107">				realSpaceWidth = totalWidth;</span>
+
+<span class="fc" id="L109">			final double textWidth = text.calculateDimension(getStringBounder()).getWidth();</span>
+<span class="fc" id="L110">			final double pos = (realSpaceWidth - textWidth) / 2;</span>
+<span class="fc" id="L111">			text.drawU(getUg().apply(getTranslate(x, y)).apply(UTranslate.dx(pos)));</span>
+<span class="fc" id="L112">			return;</span>
+		}
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (shape instanceof ULine)</span>
+<span class="fc" id="L115">			drawLine(x, y, (ULine) shape);</span>
+		else
+<span class="fc" id="L117">			getUg().apply(getTranslate(x, y)).draw(shape);</span>
+
+<span class="fc" id="L119">	}</span>
+
+	private UTranslate getTranslate(final double x, final double y) {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X)</span>
+<span class="fc" id="L123">			return new UTranslate(ct(x), y);</span>
+		else
+<span class="fc" id="L125">			return new UTranslate(x, ct(y));</span>
+
+	}
+
+	private void drawLine(double x, double y, ULine shape) {
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X)</span>
+<span class="fc" id="L131">			drawLine(ct(x), y, ct(x + shape.getDX()), y + shape.getDY());</span>
+		else
+<span class="fc" id="L133">			drawLine(x, ct(y), x + shape.getDX(), ct(y + shape.getDY()));</span>
+
+<span class="fc" id="L135">	}</span>
+
+	private double ct(double v) {
+<span class="fc" id="L138">		return compressionTransform.transform(v);</span>
+	}
+
+	private void drawLine(double x1, double y1, double x2, double y2) {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (y1 &gt; y2) {</span>
+<span class="fc" id="L143">			drawLine(x2, y2, x1, y1);</span>
+<span class="fc" id="L144">			return;</span>
+		}
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		assert y1 &lt;= y2;</span>
+<span class="fc" id="L147">		getUg().apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));</span>
+<span class="fc" id="L148">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

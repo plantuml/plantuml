@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EbnfExpression.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ebnf</a> &gt; <span class="el_source">EbnfExpression.java</span></div><h1>EbnfExpression.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ebnf;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.utils.CharInspector;
+
+public class EbnfExpression implements TextBlockable {
+
+<span class="fc" id="L60">	private final List&lt;Token&gt; tokens = new ArrayList&lt;&gt;();</span>
+	private final boolean isCompact;
+	private final String commentAbove;
+	private final String commentBelow;
+
+	public static EbnfExpression create(CharInspector it, boolean isCompact, String commentAbove, String commentBelow) {
+<span class="fc" id="L66">		return new EbnfExpression(it, isCompact, commentAbove, commentBelow);</span>
+	}
+
+<span class="fc" id="L69">	private EbnfExpression(CharInspector it, boolean isCompact, String commentAbove, String commentBelow) {</span>
+<span class="fc" id="L70">		this.isCompact = isCompact;</span>
+<span class="fc" id="L71">		this.commentAbove = commentAbove;</span>
+<span class="fc" id="L72">		this.commentBelow = commentBelow;</span>
+		while (true) {
+<span class="fc" id="L74">			final char ch = it.peek(0);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (Character.isWhitespace(ch)) {</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			} else if (ch == '-') {</span>
+<span class="nc" id="L77">				tokens.add(new Token(Symbol.NOT, null));</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			} else if (isLetterOrDigit(ch)) {</span>
+<span class="fc" id="L79">				final String litteral = readLitteral(it);</span>
+<span class="fc" id="L80">				tokens.add(new Token(Symbol.LITTERAL, litteral));</span>
+<span class="fc" id="L81">				continue;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			} else if (ch == '*') {</span>
+<span class="fc" id="L83">				tokens.add(new Token(Symbol.REPETITION_SYMBOL, null));</span>
+<span class="pc bpc" id="L84" title="3 of 4 branches missed.">			} else if (ch == '(' &amp;&amp; it.peek(1) == '*') {</span>
+<span class="nc" id="L85">				final String comment = readComment(it);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				if (comment.trim().length() &gt; 0)</span>
+<span class="nc" id="L87">					tokens.add(new Token(Symbol.COMMENT_TOKEN, comment));</span>
+				continue;
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			} else if (ch == ',') {</span>
+<span class="nc" id="L90">				tokens.add(new Token(Symbol.CONCATENATION, null));</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			} else if (ch == '|') {</span>
+<span class="nc" id="L92">				tokens.add(new Token(Symbol.ALTERNATION, null));</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			} else if (ch == '=') {</span>
+<span class="fc" id="L94">				tokens.add(new Token(Symbol.DEFINITION, null));</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			} else if (ch == '(') {</span>
+<span class="nc" id="L96">				tokens.add(new Token(Symbol.GROUPING_OPEN, null));</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			} else if (ch == ')') {</span>
+<span class="nc" id="L98">				tokens.add(new Token(Symbol.GROUPING_CLOSE, null));</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			} else if (ch == '[') {</span>
+<span class="nc" id="L100">				tokens.add(new Token(Symbol.OPTIONAL_OPEN, null));</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			} else if (ch == ']') {</span>
+<span class="nc" id="L102">				tokens.add(new Token(Symbol.OPTIONAL_CLOSE, null));</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			} else if (ch == '{') {</span>
+<span class="nc" id="L104">				tokens.add(new Token(Symbol.REPETITION_OPEN, null));</span>
+<span class="pc bpc" id="L105" title="3 of 4 branches missed.">			} else if (ch == '}' &amp;&amp; it.peek(1) == '-') {</span>
+<span class="nc" id="L106">				tokens.add(new Token(Symbol.REPETITION_MINUS_CLOSE, null));</span>
+<span class="nc" id="L107">				it.jump();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			} else if (ch == '}') {</span>
+<span class="nc" id="L109">				tokens.add(new Token(Symbol.REPETITION_CLOSE, null));</span>
+<span class="pc bpc" id="L110" title="3 of 4 branches missed.">			} else if (ch == ';' || ch == 0) {</span>
+				// it.next();
+<span class="nc" id="L112">				break;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			} else if (ch == '\&quot;') {</span>
+<span class="nc" id="L114">				final String litteral = readString(it);</span>
+<span class="nc" id="L115">				tokens.add(new Token(Symbol.TERMINAL_STRING1, protect(litteral)));</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			} else if (ch == '\'') {</span>
+<span class="nc" id="L117">				final String litteral = readString(it);</span>
+<span class="nc" id="L118">				tokens.add(new Token(Symbol.TERMINAL_STRING2, protect(litteral)));</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			} else if (ch == '?') {</span>
+<span class="nc" id="L120">				final String litteral = readString(it);</span>
+<span class="nc" id="L121">				tokens.add(new Token(Symbol.SPECIAL_SEQUENCE, protect(litteral)));</span>
+<span class="nc" id="L122">			} else {</span>
+<span class="nc" id="L123">				tokens.clear();</span>
+<span class="nc" id="L124">				return;</span>
+			}
+<span class="fc" id="L126">			it.jump();</span>
+<span class="fc" id="L127">			continue;</span>
+		}
+<span class="fc" id="L129">	}</span>
+
+	private static String protect(final String litteral) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		return litteral.length() == 0 ? &quot; &quot; : litteral;</span>
+	}
+
+	@Override
+	public TextBlock getUDrawable(ISkinParam skinParam, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L137">		final Style style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L138">		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (tokens.size() == 0)</span>
+<span class="nc" id="L141">			return EbnfEngine.syntaxError(fc, skinParam);</span>
+
+		try {
+<span class="nc" id="L144">			final Iterator&lt;Token&gt; iterator = tokens.iterator();</span>
+<span class="nc" id="L145">			final Token name = iterator.next();</span>
+<span class="nc" id="L146">			final Token definition = iterator.next();</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (definition.getSymbol() != Symbol.DEFINITION)</span>
+<span class="nc" id="L148">				return EbnfEngine.syntaxError(fc, skinParam);</span>
+
+			final TextBlock main;
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (iterator.hasNext()) {</span>
+<span class="nc" id="L152">				final List&lt;Token&gt; full = new ShuntingYard(iterator).getOuputQueue();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">				if (full.size() == 0)</span>
+<span class="nc" id="L154">					return EbnfEngine.syntaxError(fc, skinParam);</span>
+
+<span class="nc" id="L156">				main = getMainDrawing(skinParam, preprocessing.getOption(), full.iterator());</span>
+<span class="nc" id="L157">			} else {</span>
+<span class="nc" id="L158">				final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L159">				main = new ETileWithCircles(new ETileEmpty(), lineColor);</span>
+			}
+
+<span class="nc" id="L162">			TextBlock titleBox = new TitleBox(name.getData(), fc);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (commentAbove != null)</span>
+<span class="nc" id="L164">				titleBox = TextBlockUtils.mergeTB(getNoteAbove(skinParam), titleBox, HorizontalAlignment.CENTER);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			if (commentBelow != null)</span>
+<span class="nc" id="L166">				titleBox = TextBlockUtils.mergeTB(titleBox, getNoteBelow(skinParam), HorizontalAlignment.CENTER);</span>
+
+<span class="nc" id="L168">			return TextBlockUtils.mergeTB(titleBox, TextBlockUtils.withMargin(main, 0, 0, 10, 15),</span>
+					HorizontalAlignment.LEFT);
+<span class="nc" id="L170">		} catch (Exception e) {</span>
+<span class="nc" id="L171">			e.printStackTrace();</span>
+<span class="nc" id="L172">			return EbnfEngine.syntaxError(fc, skinParam);</span>
+		}
+	}
+
+	private TextBlock getNoteAbove(ISkinParam skinParam) {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (commentAbove == null)</span>
+<span class="nc" id="L178">			return null;</span>
+<span class="nc" id="L179">		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentAbove),</span>
+				skinParam, SName.ebnf);
+<span class="nc" id="L181">		return note;</span>
+	}
+
+	private TextBlock getNoteBelow(ISkinParam skinParam) {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (commentBelow == null)</span>
+<span class="nc" id="L186">			return null;</span>
+<span class="nc" id="L187">		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentBelow),</span>
+				skinParam, SName.ebnf);
+<span class="nc" id="L189">		return note;</span>
+	}
+
+	private TextBlock getMainDrawing(ISkinParam skinParam, ConfigurationStore&lt;OptionKey&gt; option, Iterator&lt;Token&gt; it) {
+<span class="nc" id="L193">		final EbnfEngine engine = new EbnfEngine(skinParam, option);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L195">			final Token element = it.next();</span>
+<span class="nc bnc" id="L196" title="All 4 branches missed.">			if (element.getSymbol() == Symbol.TERMINAL_STRING1 || element.getSymbol() == Symbol.TERMINAL_STRING2</span>
+<span class="nc bnc" id="L197" title="All 4 branches missed.">					|| element.getSymbol() == Symbol.LITTERAL || element.getSymbol() == Symbol.SPECIAL_SEQUENCE)</span>
+<span class="nc" id="L198">				engine.push(element);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.COMMENT_ABOVE)</span>
+<span class="nc" id="L200">				engine.commentAbove(element.getData());</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.COMMENT_BELOW)</span>
+<span class="nc" id="L202">				engine.commentBelow(element.getData());</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.ALTERNATION)</span>
+<span class="nc" id="L204">				engine.alternation();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.CONCATENATION)</span>
+<span class="nc" id="L206">				engine.concatenation();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.OPTIONAL)</span>
+<span class="nc" id="L208">				engine.optional();</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.NOT)</span>
+<span class="nc" id="L210">				engine.not();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.REPETITION_ZERO_OR_MORE)</span>
+<span class="nc" id="L212">				engine.repetitionZeroOrMore();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.REPETITION_ONE_OR_MORE)</span>
+<span class="nc" id="L214">				engine.repetitionOneOrMore();</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.REPETITION_SYMBOL)</span>
+<span class="nc" id="L216">				engine.repetitionSymbol();</span>
+			else
+<span class="nc" id="L218">				throw new UnsupportedOperationException(element.toString());</span>
+<span class="nc" id="L219">		}</span>
+
+<span class="nc" id="L221">		return engine.getTextBlock();</span>
+	}
+
+	private String readString(CharInspector it) {
+<span class="nc" id="L225">		final char separator = it.peek(0);</span>
+<span class="nc" id="L226">		it.jump();</span>
+<span class="nc" id="L227">		final StringBuilder sb = new StringBuilder();</span>
+		while (true) {
+<span class="nc" id="L229">			final char ch = it.peek(0);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (ch == separator)</span>
+<span class="nc" id="L231">				return sb.toString();</span>
+<span class="nc" id="L232">			sb.append(ch);</span>
+<span class="nc" id="L233">			it.jump();</span>
+<span class="nc" id="L234">		}</span>
+	}
+
+	private String readLitteral(CharInspector it) {
+<span class="fc" id="L238">		final StringBuilder sb = new StringBuilder();</span>
+		while (true) {
+<span class="fc" id="L240">			final char ch = it.peek(0);</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">			if (isLetterOrDigit(ch) == false)</span>
+<span class="fc" id="L242">				return sb.toString();</span>
+<span class="fc" id="L243">			sb.append(ch);</span>
+<span class="fc" id="L244">			it.jump();</span>
+<span class="fc" id="L245">		}</span>
+	}
+
+	private String readComment(CharInspector it) {
+<span class="nc" id="L249">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L250">		it.jump();</span>
+<span class="nc" id="L251">		it.jump();</span>
+		while (true) {
+<span class="nc" id="L253">			final char ch = it.peek(0);</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">			if (ch == '\0')</span>
+<span class="nc" id="L255">				return sb.toString();</span>
+<span class="nc bnc" id="L256" title="All 4 branches missed.">			if (ch == '*' &amp;&amp; it.peek(1) == ')') {</span>
+<span class="nc" id="L257">				it.jump();</span>
+<span class="nc" id="L258">				it.jump();</span>
+<span class="nc" id="L259">				return sb.toString();</span>
+			}
+<span class="nc" id="L261">			sb.append(ch);</span>
+<span class="nc" id="L262">			it.jump();</span>
+<span class="nc" id="L263">		}</span>
+	}
+
+	private boolean isLetterOrDigit(char ch) {
+<span class="pc bpc" id="L267" title="2 of 6 branches missed.">		return ch == '-' || ch == '_' || Character.isLetterOrDigit(ch);</span>
+	}
+
+	public boolean isEmpty() {
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		return tokens.size() == 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

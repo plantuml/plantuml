@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Version.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.datamatrix.decoder</a> &gt; <span class="el_source">Version.java</span></div><h1>Version.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2007 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.datamatrix.decoder;
+
+import zext.plantuml.com.google.zxing.FormatException;
+
+/**
+ * The Version object encapsulates attributes about a particular
+ * size Data Matrix Code.
+ *
+ * @author bbrown@google.com (Brian Brown)
+ */
+public final class Version {
+    // ::remove folder when __HAXE__
+
+<span class="nc" id="L30">  private static final Version[] VERSIONS = buildVersions();</span>
+
+  private final int versionNumber;
+  private final int symbolSizeRows;
+  private final int symbolSizeColumns;
+  private final int dataRegionSizeRows;
+  private final int dataRegionSizeColumns;
+  private final ECBlocks ecBlocks;
+  private final int totalCodewords;
+
+  private Version(int versionNumber,
+                  int symbolSizeRows,
+                  int symbolSizeColumns,
+                  int dataRegionSizeRows,
+                  int dataRegionSizeColumns,
+<span class="nc" id="L45">                  ECBlocks ecBlocks) {</span>
+<span class="nc" id="L46">    this.versionNumber = versionNumber;</span>
+<span class="nc" id="L47">    this.symbolSizeRows = symbolSizeRows;</span>
+<span class="nc" id="L48">    this.symbolSizeColumns = symbolSizeColumns;</span>
+<span class="nc" id="L49">    this.dataRegionSizeRows = dataRegionSizeRows;</span>
+<span class="nc" id="L50">    this.dataRegionSizeColumns = dataRegionSizeColumns;</span>
+<span class="nc" id="L51">    this.ecBlocks = ecBlocks;</span>
+    
+    // Calculate the total number of codewords
+<span class="nc" id="L54">    int total = 0;</span>
+<span class="nc" id="L55">    int ecCodewords = ecBlocks.getECCodewords();</span>
+<span class="nc" id="L56">    ECB[] ecbArray = ecBlocks.getECBlocks();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">    for (int i = 0; i &lt; ecbArray.length; i++) {</span>
+<span class="nc" id="L58">      ECB ecBlock = ecbArray[i];</span>
+<span class="nc" id="L59">      total += ecBlock.getCount() * (ecBlock.getDataCodewords() + ecCodewords);</span>
+    }
+<span class="nc" id="L61">    this.totalCodewords = total;</span>
+<span class="nc" id="L62">  }</span>
+
+  public int getVersionNumber() {
+<span class="nc" id="L65">    return versionNumber;</span>
+  }
+
+  public int getSymbolSizeRows() {
+<span class="nc" id="L69">    return symbolSizeRows;</span>
+  }
+  
+  public int getSymbolSizeColumns() {
+<span class="nc" id="L73">    return symbolSizeColumns;</span>
+  }
+  
+  public int getDataRegionSizeRows() {
+<span class="nc" id="L77">    return dataRegionSizeRows;</span>
+  }
+  
+  public int getDataRegionSizeColumns() {
+<span class="nc" id="L81">    return dataRegionSizeColumns;</span>
+  }
+  
+  public int getTotalCodewords() {
+<span class="nc" id="L85">    return totalCodewords;</span>
+  }
+  
+  ECBlocks getECBlocks() {
+<span class="nc" id="L89">    return ecBlocks;</span>
+  }
+
+  /**
+   * &lt;p&gt;Deduces version information from Data Matrix dimensions.&lt;/p&gt;
+   *
+   * @param numRows Number of rows in modules
+   * @param numColumns Number of columns in modules
+   * @return {@link Version} for a Data Matrix Code of those dimensions
+   * @throws FormatException if dimensions do correspond to a valid Data Matrix size
+   */
+  public static Version getVersionForDimensions(int numRows, int numColumns) throws FormatException {
+<span class="nc bnc" id="L101" title="All 4 branches missed.">    if ((numRows &amp; 0x01) != 0 || (numColumns &amp; 0x01) != 0) {</span>
+<span class="nc" id="L102">      throw FormatException.getFormatInstance();</span>
+    }
+    
+    // TODO(bbrown): This is doing a linear search through the array of versions.
+    // If we interleave the rectangular versions with the square versions we could
+    // do a binary search.
+<span class="nc" id="L108">    int numVersions = VERSIONS.length;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">    for (int i = 0; i &lt; numVersions; ++i){</span>
+<span class="nc" id="L110">      Version version = VERSIONS[i];</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">      if (version.symbolSizeRows == numRows &amp;&amp; version.symbolSizeColumns == numColumns) {</span>
+<span class="nc" id="L112">        return version;</span>
+      }
+    }
+    
+<span class="nc" id="L116">    throw FormatException.getFormatInstance();</span>
+  }
+
+  /**
+   * &lt;p&gt;Encapsulates a set of error-correction blocks in one symbol version. Most versions will
+   * use blocks of differing sizes within one version, so, this encapsulates the parameters for
+   * each set of blocks. It also holds the number of error-correction codewords per block since it
+   * will be the same across all blocks within one version.&lt;/p&gt;
+   */
+  static final class ECBlocks {
+    private final int ecCodewords;
+    private final ECB[] ecBlocks;
+
+<span class="nc" id="L129">    private ECBlocks(int ecCodewords, ECB ecBlocks) {</span>
+<span class="nc" id="L130">      this.ecCodewords = ecCodewords;</span>
+<span class="nc" id="L131">      this.ecBlocks = new ECB[] { ecBlocks };</span>
+<span class="nc" id="L132">    }</span>
+
+<span class="nc" id="L134">    private ECBlocks(int ecCodewords, ECB ecBlocks1, ECB ecBlocks2) {</span>
+<span class="nc" id="L135">      this.ecCodewords = ecCodewords;</span>
+<span class="nc" id="L136">      this.ecBlocks = new ECB[] { ecBlocks1, ecBlocks2 };</span>
+<span class="nc" id="L137">    }</span>
+
+    int getECCodewords() {
+<span class="nc" id="L140">      return ecCodewords;</span>
+    }
+
+    ECB[] getECBlocks() {
+<span class="nc" id="L144">      return ecBlocks;</span>
+    }
+  }
+
+  /**
+   * &lt;p&gt;Encapsualtes the parameters for one error-correction block in one symbol version.
+   * This includes the number of data codewords, and the number of times a block with these
+   * parameters is used consecutively in the Data Matrix code version's format.&lt;/p&gt;
+   */
+  static final class ECB {
+    private final int count;
+    private final int dataCodewords;
+
+<span class="nc" id="L157">    private ECB(int count, int dataCodewords) {</span>
+<span class="nc" id="L158">      this.count = count;</span>
+<span class="nc" id="L159">      this.dataCodewords = dataCodewords;</span>
+<span class="nc" id="L160">    }</span>
+
+    int getCount() {
+<span class="nc" id="L163">      return count;</span>
+    }
+
+    int getDataCodewords() {
+<span class="nc" id="L167">      return dataCodewords;</span>
+    }
+  }
+
+  public String toString() {
+<span class="nc" id="L172">    return String.valueOf(versionNumber);</span>
+  }
+
+  /**
+   * See ISO 16022:2006 5.5.1 Table 7
+   */
+  private static Version[] buildVersions() {
+<span class="nc" id="L179">    return new Version[]{</span>
+        new Version(1, 10, 10, 8, 8,
+            new ECBlocks(5, new ECB(1, 3))),
+        new Version(2, 12, 12, 10, 10,
+            new ECBlocks(7, new ECB(1, 5))),
+        new Version(3, 14, 14, 12, 12,
+            new ECBlocks(10, new ECB(1, 8))),
+        new Version(4, 16, 16, 14, 14,
+            new ECBlocks(12, new ECB(1, 12))),
+        new Version(5, 18, 18, 16, 16,
+            new ECBlocks(14, new ECB(1, 18))),
+        new Version(6, 20, 20, 18, 18,
+            new ECBlocks(18, new ECB(1, 22))),
+        new Version(7, 22, 22, 20, 20,
+            new ECBlocks(20, new ECB(1, 30))),
+        new Version(8, 24, 24, 22, 22,
+            new ECBlocks(24, new ECB(1, 36))),
+        new Version(9, 26, 26, 24, 24,
+            new ECBlocks(28, new ECB(1, 44))),
+        new Version(10, 32, 32, 14, 14,
+            new ECBlocks(36, new ECB(1, 62))),
+        new Version(11, 36, 36, 16, 16,
+            new ECBlocks(42, new ECB(1, 86))),
+        new Version(12, 40, 40, 18, 18,
+            new ECBlocks(48, new ECB(1, 114))),
+        new Version(13, 44, 44, 20, 20,
+            new ECBlocks(56, new ECB(1, 144))),
+        new Version(14, 48, 48, 22, 22,
+            new ECBlocks(68, new ECB(1, 174))),
+        new Version(15, 52, 52, 24, 24,
+            new ECBlocks(42, new ECB(2, 102))),
+        new Version(16, 64, 64, 14, 14,
+            new ECBlocks(56, new ECB(2, 140))),
+        new Version(17, 72, 72, 16, 16,
+            new ECBlocks(36, new ECB(4, 92))),
+        new Version(18, 80, 80, 18, 18,
+            new ECBlocks(48, new ECB(4, 114))),
+        new Version(19, 88, 88, 20, 20,
+            new ECBlocks(56, new ECB(4, 144))),
+        new Version(20, 96, 96, 22, 22,
+            new ECBlocks(68, new ECB(4, 174))),
+        new Version(21, 104, 104, 24, 24,
+            new ECBlocks(56, new ECB(6, 136))),
+        new Version(22, 120, 120, 18, 18,
+            new ECBlocks(68, new ECB(6, 175))),
+        new Version(23, 132, 132, 20, 20,
+            new ECBlocks(62, new ECB(8, 163))),
+        new Version(24, 144, 144, 22, 22,
+            new ECBlocks(62, new ECB(8, 156), new ECB(2, 155))),
+        new Version(25, 8, 18, 6, 16,
+            new ECBlocks(7, new ECB(1, 5))),
+        new Version(26, 8, 32, 6, 14,
+            new ECBlocks(11, new ECB(1, 10))),
+        new Version(27, 12, 26, 10, 24,
+            new ECBlocks(14, new ECB(1, 16))),
+        new Version(28, 12, 36, 10, 16,
+            new ECBlocks(18, new ECB(1, 22))),
+        new Version(29, 16, 36, 10, 16,
+            new ECBlocks(24, new ECB(1, 32))),
+        new Version(30, 16, 48, 14, 22,
+            new ECBlocks(28, new ECB(1, 49)))
+    };
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

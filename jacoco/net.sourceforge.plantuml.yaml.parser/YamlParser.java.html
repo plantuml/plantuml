@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>YamlParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.yaml.parser</a> &gt; <span class="el_source">YamlParser.java</span></div><h1>YamlParser.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.yaml.parser;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.utils.Peeker;
+import net.sourceforge.plantuml.utils.PeekerUtils;
+
+<span class="fc" id="L42">public class YamlParser {</span>
+
+	public Monomorph parse(List&lt;String&gt; lines) {
+<span class="fc" id="L45">		final IndentationStack indentationStack = new IndentationStack();</span>
+<span class="fc" id="L46">		final YamlBuilder yamlBuilder = new YamlBuilder();</span>
+
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		for (Peeker&lt;String&gt; peeker = PeekerUtils.peeker(lines); peeker.peek(0) != null; peeker.jump()) {</span>
+
+<span class="fc" id="L50">			final YamlLine yamlLine = YamlLine.build(peeker.peek(0));</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if (yamlLine.getType() == YamlLineType.EMPTY_LINE)</span>
+<span class="fc" id="L52">				continue;</span>
+
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">			if (yamlLine.getType() == YamlLineType.NO_KEY_ONLY_TEXT)</span>
+<span class="nc" id="L55">				throw new YamlSyntaxException(&quot;YamlLineType.NO_KEY_ONLY_TEXT&quot;);</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			if (yamlLine.getType() == YamlLineType.PLAIN_DASH) {</span>
+<span class="fc" id="L58">				yamlBuilder.onListItemPlainDash();</span>
+<span class="fc" id="L59">				continue;</span>
+			}
+
+<span class="fc bfc" id="L62" title="All 2 branches covered.">			if (indentationStack.size() == 0)</span>
+<span class="fc" id="L63">				indentationStack.push(yamlLine.getIndent());</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (yamlLine.getIndent() &gt; indentationStack.peek()) {</span>
+<span class="fc" id="L66">				yamlBuilder.increaseIndentation();</span>
+<span class="fc" id="L67">				indentationStack.push(yamlLine.getIndent());</span>
+			} else
+<span class="fc bfc" id="L69" title="All 2 branches covered.">				while (yamlLine.getIndent() &lt; indentationStack.peek()) {</span>
+<span class="fc" id="L70">					yamlBuilder.decreaseIndentation();</span>
+<span class="fc" id="L71">					indentationStack.pop();</span>
+				}
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			if (yamlLine.getIndent() == indentationStack.peek()) {</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">				if (yamlLine.isListItem()) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">					if (yamlLine.getType() == YamlLineType.KEY_ONLY)</span>
+<span class="fc" id="L77">						yamlBuilder.onListItemOnlyKey(yamlLine.getKey());</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">					else if (yamlLine.getType() == YamlLineType.PLAIN_ELEMENT_LIST)</span>
+<span class="fc" id="L79">						yamlBuilder.onListItemOnlyValue(yamlLine.getValue());</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">					else if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)</span>
+<span class="fc" id="L81">						yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), yamlLine.getValue());</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">					else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
+<span class="nc" id="L83">						yamlBuilder.onListItemKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());</span>
+					else
+<span class="nc" id="L85">						throw new UnsupportedOperationException(&quot;wip3 &quot; + yamlLine);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">				} else if (yamlLine.getType() == YamlLineType.KEY_ONLY) {</span>
+<span class="fc" id="L87">					final YamlLine next = peekNext(peeker);</span>
+<span class="fc bfc" id="L88" title="All 4 branches covered.">					if (next == null || next.getIndent() &lt;= yamlLine.getIndent())</span>
+<span class="fc" id="L89">						yamlBuilder.onKeyAndValue(yamlLine.getKey(), &quot;&quot;);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">					else if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT)</span>
+<span class="fc" id="L91">						yamlBuilder.onKeyAndValue(yamlLine.getKey(), peekNextOnlyText(peeker));</span>
+					else
+<span class="fc" id="L93">						yamlBuilder.onOnlyKey(yamlLine.getKey());</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">				} else if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)</span>
+<span class="fc" id="L95">					yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">				else if (yamlLine.getType() == YamlLineType.KEY_AND_BLOCK_STYLE)</span>
+<span class="fc" id="L97">					yamlBuilder.onKeyAndValue(yamlLine.getKey(), getBlockStyleString(yamlLine.getIndent(), peeker));</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">				else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
+<span class="fc" id="L99">					yamlBuilder.onKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());</span>
+				else
+<span class="nc" id="L101">					throw new UnsupportedOperationException(&quot;wip4 &quot; + yamlLine);</span>
+
+			} else
+<span class="nc" id="L104">				throw new UnsupportedOperationException(&quot;wip5 &quot; + yamlLine);</span>
+		}
+
+<span class="fc" id="L107">		return yamlBuilder.getResult();</span>
+
+	}
+
+	private String peekNextOnlyText(Peeker&lt;String&gt; peeker) {
+<span class="fc" id="L112">		final StringBuilder result = new StringBuilder();</span>
+		do {
+<span class="fc" id="L114">			final String peek = peeker.peek(1);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (peek == null)</span>
+<span class="nc" id="L116">				return result.toString();</span>
+<span class="fc" id="L117">			final YamlLine next = YamlLine.build(peek);</span>
+<span class="pc bpc" id="L118" title="1 of 4 branches missed.">			if (next != null &amp;&amp; next.getType() == YamlLineType.EMPTY_LINE) {</span>
+<span class="fc" id="L119">				peeker.jump();</span>
+<span class="fc" id="L120">				continue;</span>
+			}
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">				if (result.length() &gt; 0)</span>
+<span class="fc" id="L124">					result.append(&quot; &quot;);</span>
+<span class="fc" id="L125">				result.append(next.getValue());</span>
+<span class="fc" id="L126">				peeker.jump();</span>
+<span class="fc" id="L127">				continue;</span>
+			}
+<span class="fc" id="L129">			return result.toString();</span>
+		} while (true);
+	}
+
+	private YamlLine peekNext(Peeker&lt;String&gt; peeker) {
+<span class="fc" id="L134">		int i = 1;</span>
+		do {
+<span class="fc" id="L136">			final String peek = peeker.peek(i);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			if (peek == null)</span>
+<span class="fc" id="L138">				return null;</span>
+<span class="fc" id="L139">			final YamlLine next = YamlLine.build(peek);</span>
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">			if (next != null &amp;&amp; next.getType() == YamlLineType.EMPTY_LINE)</span>
+<span class="fc" id="L141">				i++;</span>
+			else
+<span class="fc" id="L143">				return next;</span>
+<span class="fc" id="L144">		} while (true);</span>
+	}
+
+	private String getBlockStyleString(int indent, Peeker&lt;String&gt; peeker) {
+<span class="fc" id="L148">		final StringBuilder result = new StringBuilder();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		while (peeker.peek(1) != null) {</span>
+<span class="fc" id="L150">			final String line = peeker.peek(1);</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			if (line == null)</span>
+<span class="nc" id="L152">				return result.toString();</span>
+<span class="fc" id="L153">			final YamlLine yamlLine = YamlLine.build(line);</span>
+<span class="fc bfc" id="L154" title="All 4 branches covered.">			if (yamlLine.getType() != YamlLineType.NO_KEY_ONLY_TEXT &amp;&amp; yamlLine.getType() != YamlLineType.EMPTY_LINE</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">					&amp;&amp; yamlLine.getIndent() &lt;= indent)</span>
+<span class="fc" id="L156">				return result.toString();</span>
+
+<span class="fc" id="L158">			result.append(cleanBlockStyle(indent, line));</span>
+<span class="fc" id="L159">			result.append(&quot;\n&quot;);</span>
+<span class="fc" id="L160">			peeker.jump();</span>
+
+<span class="fc" id="L162">		}</span>
+<span class="nc" id="L163">		return result.toString();</span>
+	}
+
+	private static String cleanBlockStyle(int indent, String s) {
+		// Not finished!
+<span class="fc" id="L168">		return s.trim();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

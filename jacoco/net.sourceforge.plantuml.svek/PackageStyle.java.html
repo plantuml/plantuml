@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PackageStyle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">PackageStyle.java</span></div><h1>PackageStyle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Modified by : Arno Peterson
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.EnumSet;
+
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+<span class="fc" id="L52">public enum PackageStyle {</span>
+
+<span class="fc" id="L54">	FOLDER, RECTANGLE, NODE, FRAME, CLOUD, DATABASE, AGENT, STORAGE, COMPONENT1, COMPONENT2, ARTIFACT, CARD;</span>
+
+	public static PackageStyle fromString(String value) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (p.toString().equalsIgnoreCase(value)) {</span>
+<span class="nc" id="L59">				return p;</span>
+			}
+<span class="fc" id="L61">		}</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (&quot;rect&quot;.equalsIgnoreCase(value)) {</span>
+<span class="nc" id="L63">			return RECTANGLE;</span>
+		}
+<span class="fc" id="L65">		return null;</span>
+	}
+
+	public USymbol toUSymbol() {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (this == NODE)</span>
+<span class="nc" id="L70">			return USymbols.NODE;</span>
+
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (this == CARD)</span>
+<span class="nc" id="L73">			return USymbols.CARD;</span>
+
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (this == DATABASE)</span>
+<span class="nc" id="L76">			return USymbols.DATABASE;</span>
+
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (this == CLOUD)</span>
+<span class="nc" id="L79">			return USymbols.CLOUD;</span>
+
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (this == FRAME)</span>
+<span class="nc" id="L82">			return USymbols.FRAME;</span>
+
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (this == RECTANGLE)</span>
+<span class="nc" id="L85">			return USymbols.RECTANGLE;</span>
+
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (this == FOLDER)</span>
+<span class="fc" id="L88">			return USymbols.PACKAGE;</span>
+
+<span class="nc" id="L90">		return null;</span>
+	}
+
+	public void drawU(UGraphic ug, XDimension2D dim, XDimension2D titleDim, boolean shadowing) {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (titleDim == null) {</span>
+<span class="nc" id="L95">			titleDim = new XDimension2D(0, 0);</span>
+		}
+<span class="nc" id="L97">		final double width = dim.getWidth();</span>
+<span class="nc" id="L98">		final double height = dim.getHeight();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (this == DATABASE) {</span>
+<span class="nc" id="L100">			drawDatabase(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		} else if (this == FOLDER) {</span>
+<span class="nc" id="L102">			drawFolder(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		} else if (this == FRAME) {</span>
+<span class="nc" id="L104">			drawFrame(ug, width, height, titleDim, shadowing);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		} else if (this == CLOUD) {</span>
+<span class="nc" id="L106">			drawCloud(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		} else if (this == RECTANGLE) {</span>
+<span class="nc" id="L108">			drawRect(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		} else if (this == COMPONENT1) {</span>
+<span class="nc" id="L110">			drawComponent1(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		} else if (this == COMPONENT2) {</span>
+<span class="nc" id="L112">			drawComponent2(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		} else if (this == STORAGE) {</span>
+<span class="nc" id="L114">			drawStorage(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		} else if (this == AGENT) {</span>
+<span class="nc" id="L116">			drawRect(ug, width, height, shadowing);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		} else if (this == ARTIFACT) {</span>
+<span class="nc" id="L118">			drawArtifact(ug, width, height, shadowing);</span>
+		} else {
+			// drawNode(ug, xTheoricalPosition, yTheoricalPosition, width, height,
+			// shadowing);
+<span class="nc" id="L122">			throw new UnsupportedOperationException();</span>
+		}
+<span class="nc" id="L124">	}</span>
+
+	private void drawArtifact(UGraphic ug, double width, double height, boolean shadowing) {
+
+<span class="nc" id="L128">		final UPolygon polygon = new UPolygon();</span>
+<span class="nc" id="L129">		polygon.addPoint(0, 0);</span>
+<span class="nc" id="L130">		polygon.addPoint(0, height);</span>
+<span class="nc" id="L131">		polygon.addPoint(width, height);</span>
+<span class="nc" id="L132">		final int cornersize = 10;</span>
+<span class="nc" id="L133">		polygon.addPoint(width, cornersize);</span>
+<span class="nc" id="L134">		polygon.addPoint(width - cornersize, 0);</span>
+<span class="nc" id="L135">		polygon.addPoint(0, 0);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L137">			polygon.setDeltaShadow(3.0);</span>
+		}
+<span class="nc" id="L139">		ug.draw(polygon);</span>
+<span class="nc" id="L140">		ug.apply(UTranslate.dx(width - cornersize)).draw(ULine.vline(cornersize));</span>
+<span class="nc" id="L141">		ug.apply(new UTranslate(width, cornersize)).draw(ULine.hline(-cornersize));</span>
+<span class="nc" id="L142">	}</span>
+
+	private void drawStorage(UGraphic ug, double width, double height, boolean shadowing) {
+<span class="nc" id="L145">		final URectangle shape = URectangle.build(width, height).rounded(70);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L147">			shape.setDeltaShadow(3.0);</span>
+		}
+<span class="nc" id="L149">		ug.draw(shape);</span>
+<span class="nc" id="L150">	}</span>
+
+	private void drawComponent1(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing) {
+
+<span class="nc" id="L154">		final URectangle form = URectangle.build(widthTotal, heightTotal);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L156">			form.setDeltaShadow(4);</span>
+		}
+
+<span class="nc" id="L159">		final UShape small = URectangle.build(10, 5);</span>
+
+<span class="nc" id="L161">		ug.draw(form);</span>
+
+		// UML 1 Component Notation
+<span class="nc" id="L164">		ug.apply(new UTranslate(-5, 5)).draw(small);</span>
+<span class="nc" id="L165">		ug.apply(new UTranslate(-5, heightTotal - 10)).draw(small);</span>
+<span class="nc" id="L166">	}</span>
+
+	private void drawComponent2(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing) {
+
+<span class="nc" id="L170">		final URectangle form = URectangle.build(widthTotal, heightTotal);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L172">			form.setDeltaShadow(4);</span>
+		}
+
+<span class="nc" id="L175">		final UShape small = URectangle.build(15, 10);</span>
+<span class="nc" id="L176">		final UShape tiny = URectangle.build(4, 2);</span>
+
+<span class="nc" id="L178">		ug.draw(form);</span>
+
+		// UML 2 Component Notation
+<span class="nc" id="L181">		ug.apply(new UTranslate(widthTotal - 20, 5)).draw(small);</span>
+<span class="nc" id="L182">		ug.apply(new UTranslate(widthTotal - 22, 7)).draw(tiny);</span>
+<span class="nc" id="L183">		ug.apply(new UTranslate(widthTotal - 22, 11)).draw(tiny);</span>
+<span class="nc" id="L184">	}</span>
+
+	private void drawRect(UGraphic ug, double width, double height, boolean shadowing) {
+<span class="nc" id="L187">		final URectangle shape = URectangle.build(width, height);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L189">			shape.setDeltaShadow(3.0);</span>
+		}
+<span class="nc" id="L191">		ug.draw(shape);</span>
+<span class="nc" id="L192">	}</span>
+
+	private void drawCloud(UGraphic ug, double width, double height, boolean shadowing) {
+<span class="nc" id="L195">		final UPath shape = getSpecificFrontierForCloud(width, height);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L197">			shape.setDeltaShadow(3.0);</span>
+		}
+<span class="nc" id="L199">		ug.apply(new UTranslate(3, -3)).draw(shape);</span>
+<span class="nc" id="L200">	}</span>
+
+	private UPath getSpecificFrontierForCloud(double width, double height) {
+<span class="nc" id="L203">		final UPath path = UPath.none();</span>
+<span class="nc" id="L204">		path.moveTo(0, 10);</span>
+<span class="nc" id="L205">		double x = 0;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		for (int i = 0; i &lt; width - 9; i += 10) {</span>
+<span class="nc" id="L207">			path.cubicTo(i, -3 + 10, 2 + i, -5 + 10, 5 + i, -5 + 10);</span>
+<span class="nc" id="L208">			path.cubicTo(8 + i, -5 + 10, 10 + i, -3 + 10, 10 + i, 10);</span>
+<span class="nc" id="L209">			x = i + 10;</span>
+		}
+<span class="nc" id="L211">		double y = 0;</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (int j = 10; j &lt; height - 9; j += 10) {</span>
+<span class="nc" id="L213">			path.cubicTo(x + 3, j, x + 5, 2 + j, x + 5, 5 + j);</span>
+<span class="nc" id="L214">			path.cubicTo(x + 5, 8 + j, x + 3, 10 + j, x, 10 + j);</span>
+<span class="nc" id="L215">			y = j + 10;</span>
+		}
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		for (int i = 0; i &lt; width - 9; i += 10) {</span>
+<span class="nc" id="L218">			path.cubicTo(x - i, y + 3, x - 3 - i, y + 5, x - 5 - i, y + 5);</span>
+<span class="nc" id="L219">			path.cubicTo(x - 8 - i, y + 5, x - 10 - i, y + 3, x - 10 - i, y);</span>
+		}
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		for (int j = 0; j &lt; height - 9 - 10; j += 10) {</span>
+<span class="nc" id="L222">			path.cubicTo(-3, y - j, -5, y - 2 - j, -5, y - 5 - j);</span>
+<span class="nc" id="L223">			path.cubicTo(-5, y - 8 - j, -3, y - 10 - j, 0, y - 10 - j);</span>
+		}
+<span class="nc" id="L225">		return path;</span>
+	}
+
+	private void drawFrame(UGraphic ug, double width, double height, XDimension2D dimTitle, boolean shadowing) {
+<span class="nc" id="L229">		final URectangle shape = URectangle.build(width, height);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L231">			shape.setDeltaShadow(3.0);</span>
+		}
+
+<span class="nc" id="L234">		ug.draw(shape);</span>
+
+		final double textWidth;
+		final double textHeight;
+		final int cornersize;
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (dimTitle.getWidth() == 0) {</span>
+<span class="nc" id="L240">			textWidth = width / 3;</span>
+<span class="nc" id="L241">			textHeight = 12;</span>
+<span class="nc" id="L242">			cornersize = 7;</span>
+		} else {
+<span class="nc" id="L244">			textWidth = dimTitle.getWidth() + 10;</span>
+<span class="nc" id="L245">			textHeight = dimTitle.getHeight() + 3;</span>
+<span class="nc" id="L246">			cornersize = 10;</span>
+		}
+
+<span class="nc" id="L249">		final UPath polygon = UPath.none();</span>
+<span class="nc" id="L250">		polygon.moveTo(textWidth, 1);</span>
+
+<span class="nc" id="L252">		polygon.lineTo(textWidth, textHeight - cornersize);</span>
+<span class="nc" id="L253">		polygon.lineTo(textWidth - cornersize, textHeight);</span>
+
+<span class="nc" id="L255">		polygon.lineTo(0, textHeight);</span>
+<span class="nc" id="L256">		ug.draw(polygon);</span>
+
+<span class="nc" id="L258">	}</span>
+
+	private void drawFolder(UGraphic ug, double width, double height, boolean shadowing) {
+<span class="nc" id="L261">		final double wtitle = Math.max(30, width / 4);</span>
+<span class="nc" id="L262">		final UPolygon shape = new UPolygon();</span>
+<span class="nc" id="L263">		shape.addPoint(0, 0);</span>
+<span class="nc" id="L264">		shape.addPoint(wtitle, 0);</span>
+<span class="nc" id="L265">		final double htitle = 10;</span>
+<span class="nc" id="L266">		final double marginTitleX3 = 7;</span>
+<span class="nc" id="L267">		shape.addPoint(wtitle + marginTitleX3, htitle);</span>
+<span class="nc" id="L268">		shape.addPoint(width, htitle);</span>
+<span class="nc" id="L269">		shape.addPoint(width, height);</span>
+<span class="nc" id="L270">		shape.addPoint(0, height);</span>
+<span class="nc" id="L271">		shape.addPoint(0, 0);</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L273">			shape.setDeltaShadow(3.0);</span>
+		}
+<span class="nc" id="L275">		ug.draw(shape);</span>
+<span class="nc" id="L276">		ug.apply(UTranslate.dy(htitle)).draw(ULine.hline(wtitle + marginTitleX3));</span>
+<span class="nc" id="L277">	}</span>
+
+	private void drawDatabase(UGraphic ug, double width, double height, boolean shadowing) {
+<span class="nc" id="L280">		final UPath shape = UPath.none();</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L282">			shape.setDeltaShadow(3.0);</span>
+		}
+<span class="nc" id="L284">		shape.moveTo(0, 10);</span>
+<span class="nc" id="L285">		shape.cubicTo(10, 0, width / 2 - 10, 0, width / 2, 0);</span>
+<span class="nc" id="L286">		shape.cubicTo(width / 2 + 10, 0, width - 10, 0, width, 10);</span>
+<span class="nc" id="L287">		shape.lineTo(width, height - 10);</span>
+<span class="nc" id="L288">		shape.cubicTo(width - 10, height, width / 2 - 10, height, width / 2, height);</span>
+<span class="nc" id="L289">		shape.cubicTo(width / 2 + 10, height, 10, height, 0, height - 10);</span>
+<span class="nc" id="L290">		shape.lineTo(0, 10);</span>
+
+<span class="nc" id="L292">		ug.draw(shape);</span>
+
+<span class="nc" id="L294">		final UPath closing = UPath.none();</span>
+<span class="nc" id="L295">		closing.moveTo(0, 10);</span>
+<span class="nc" id="L296">		closing.cubicTo(10, 20, width / 2 - 10, 20, width / 2, 20);</span>
+<span class="nc" id="L297">		closing.cubicTo(width / 2 + 10, 20, width - 10, 20, width, 10);</span>
+
+<span class="nc" id="L299">		ug.draw(closing);</span>
+
+<span class="nc" id="L301">	}</span>
+
+	private void drawNode(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition, double width,
+			double height, boolean shadowing) {
+<span class="nc" id="L305">		final UPolygon shape = new UPolygon();</span>
+<span class="nc" id="L306">		shape.addPoint(0, 10);</span>
+<span class="nc" id="L307">		shape.addPoint(10, 0);</span>
+<span class="nc" id="L308">		shape.addPoint(width, 0);</span>
+<span class="nc" id="L309">		shape.addPoint(width, height - 10);</span>
+<span class="nc" id="L310">		shape.addPoint(width - 10, height);</span>
+<span class="nc" id="L311">		shape.addPoint(0, height);</span>
+<span class="nc" id="L312">		shape.addPoint(0, 10);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">		if (shadowing) {</span>
+<span class="nc" id="L314">			shape.setDeltaShadow(2);</span>
+		}
+<span class="nc" id="L316">		ug.apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(shape);</span>
+
+<span class="nc" id="L318">		ug.apply(new UTranslate(xTheoricalPosition + width - 10, yTheoricalPosition + 10)).draw(new ULine(9, -9));</span>
+<span class="nc" id="L319">		final UPath path = UPath.none();</span>
+<span class="nc" id="L320">		path.moveTo(0, 0);</span>
+<span class="nc" id="L321">		path.lineTo(width - 10, 0);</span>
+<span class="nc" id="L322">		path.lineTo(width - 10, height - 10);</span>
+<span class="nc" id="L323">		ug.apply(new UTranslate(xTheoricalPosition, yTheoricalPosition + 10)).draw(path);</span>
+<span class="nc" id="L324">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

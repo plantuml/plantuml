@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Base64OutputStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.api.cheerpj</a> &gt; <span class="el_source">Base64OutputStream.java</span></div><h1>Base64OutputStream.java</h1><pre class="source lang-java linenums">package com.plantuml.api.cheerpj;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+<span class="nc" id="L6">public class Base64OutputStream extends OutputStream {</span>
+
+<span class="nc" id="L8">	private final StringBuilder sb = new StringBuilder();</span>
+
+	private int nb;
+	private byte a;
+	private byte b;
+	private byte c;
+
+	@Override
+	public void write(int data) throws IOException {
+<span class="nc bnc" id="L17" title="All 4 branches missed.">		switch (nb) {</span>
+		case 0:
+<span class="nc" id="L19">			a = (byte) (data &amp; 0xFF);</span>
+<span class="nc" id="L20">			nb = 1;</span>
+<span class="nc" id="L21">			break;</span>
+		case 1:
+<span class="nc" id="L23">			b = (byte) (data &amp; 0xFF);</span>
+<span class="nc" id="L24">			nb = 2;</span>
+<span class="nc" id="L25">			break;</span>
+		case 2:
+<span class="nc" id="L27">			c = (byte) (data &amp; 0xFF);</span>
+<span class="nc" id="L28">			nb = 0;</span>
+<span class="nc" id="L29">			append3bytes(sb, a, b, c);</span>
+			break;
+		}
+<span class="nc" id="L32">	}</span>
+
+	@Override
+	public void close() throws IOException {
+<span class="nc bnc" id="L36" title="All 4 branches missed.">		switch (nb) {</span>
+		case 0:
+<span class="nc" id="L38">			break;</span>
+		case 1:
+<span class="nc" id="L40">			append3bytes(sb, a, (byte) 0, (byte) 0);</span>
+<span class="nc" id="L41">			break;</span>
+		case 2:
+<span class="nc" id="L43">			append3bytes(sb, a, b, (byte) 0);</span>
+			break;
+		}
+<span class="nc" id="L46">		super.close();</span>
+<span class="nc" id="L47">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L51">		return sb.toString();</span>
+	}
+
+	private void append3bytes(StringBuilder sb, byte a, byte b, byte c) {
+<span class="nc" id="L55">		final int i0 = a &amp; 0xff;</span>
+<span class="nc" id="L56">		final int i1 = b &amp; 0xff;</span>
+<span class="nc" id="L57">		final int i2 = c &amp; 0xff;</span>
+<span class="nc" id="L58">		final int o0 = i0 &gt;&gt;&gt; 2;</span>
+<span class="nc" id="L59">		final int o1 = ((i0 &amp; 3) &lt;&lt; 4) | (i1 &gt;&gt;&gt; 4);</span>
+<span class="nc" id="L60">		final int o2 = ((i1 &amp; 0xf) &lt;&lt; 2) | (i2 &gt;&gt;&gt; 6);</span>
+<span class="nc" id="L61">		final int o3 = i2 &amp; 0x3F;</span>
+<span class="nc" id="L62">		sb.append(getBase(o0));</span>
+<span class="nc" id="L63">		sb.append(getBase(o1));</span>
+<span class="nc" id="L64">		sb.append(getBase(o2));</span>
+<span class="nc" id="L65">		sb.append(getBase(o3));</span>
+<span class="nc" id="L66">	}</span>
+
+	private String getBase(int i) {
+<span class="nc bnc" id="L69" title="All 65 branches missed.">		switch (i) {</span>
+		case 0:
+<span class="nc" id="L71">			return &quot;A&quot;;</span>
+		case 1:
+<span class="nc" id="L73">			return &quot;B&quot;;</span>
+		case 2:
+<span class="nc" id="L75">			return &quot;C&quot;;</span>
+		case 3:
+<span class="nc" id="L77">			return &quot;D&quot;;</span>
+		case 4:
+<span class="nc" id="L79">			return &quot;E&quot;;</span>
+		case 5:
+<span class="nc" id="L81">			return &quot;F&quot;;</span>
+		case 6:
+<span class="nc" id="L83">			return &quot;G&quot;;</span>
+		case 7:
+<span class="nc" id="L85">			return &quot;H&quot;;</span>
+		case 8:
+<span class="nc" id="L87">			return &quot;I&quot;;</span>
+		case 9:
+<span class="nc" id="L89">			return &quot;J&quot;;</span>
+		case 10:
+<span class="nc" id="L91">			return &quot;K&quot;;</span>
+		case 11:
+<span class="nc" id="L93">			return &quot;L&quot;;</span>
+		case 12:
+<span class="nc" id="L95">			return &quot;M&quot;;</span>
+		case 13:
+<span class="nc" id="L97">			return &quot;N&quot;;</span>
+		case 14:
+<span class="nc" id="L99">			return &quot;O&quot;;</span>
+		case 15:
+<span class="nc" id="L101">			return &quot;P&quot;;</span>
+		case 16:
+<span class="nc" id="L103">			return &quot;Q&quot;;</span>
+		case 17:
+<span class="nc" id="L105">			return &quot;R&quot;;</span>
+		case 18:
+<span class="nc" id="L107">			return &quot;S&quot;;</span>
+		case 19:
+<span class="nc" id="L109">			return &quot;T&quot;;</span>
+		case 20:
+<span class="nc" id="L111">			return &quot;U&quot;;</span>
+		case 21:
+<span class="nc" id="L113">			return &quot;V&quot;;</span>
+		case 22:
+<span class="nc" id="L115">			return &quot;W&quot;;</span>
+		case 23:
+<span class="nc" id="L117">			return &quot;X&quot;;</span>
+		case 24:
+<span class="nc" id="L119">			return &quot;Y&quot;;</span>
+		case 25:
+<span class="nc" id="L121">			return &quot;Z&quot;;</span>
+		case 26:
+<span class="nc" id="L123">			return &quot;a&quot;;</span>
+		case 27:
+<span class="nc" id="L125">			return &quot;b&quot;;</span>
+		case 28:
+<span class="nc" id="L127">			return &quot;c&quot;;</span>
+		case 29:
+<span class="nc" id="L129">			return &quot;d&quot;;</span>
+		case 30:
+<span class="nc" id="L131">			return &quot;e&quot;;</span>
+		case 31:
+<span class="nc" id="L133">			return &quot;f&quot;;</span>
+		case 32:
+<span class="nc" id="L135">			return &quot;g&quot;;</span>
+		case 33:
+<span class="nc" id="L137">			return &quot;h&quot;;</span>
+		case 34:
+<span class="nc" id="L139">			return &quot;i&quot;;</span>
+		case 35:
+<span class="nc" id="L141">			return &quot;j&quot;;</span>
+		case 36:
+<span class="nc" id="L143">			return &quot;k&quot;;</span>
+		case 37:
+<span class="nc" id="L145">			return &quot;l&quot;;</span>
+		case 38:
+<span class="nc" id="L147">			return &quot;m&quot;;</span>
+		case 39:
+<span class="nc" id="L149">			return &quot;n&quot;;</span>
+		case 40:
+<span class="nc" id="L151">			return &quot;o&quot;;</span>
+		case 41:
+<span class="nc" id="L153">			return &quot;p&quot;;</span>
+		case 42:
+<span class="nc" id="L155">			return &quot;q&quot;;</span>
+		case 43:
+<span class="nc" id="L157">			return &quot;r&quot;;</span>
+		case 44:
+<span class="nc" id="L159">			return &quot;s&quot;;</span>
+		case 45:
+<span class="nc" id="L161">			return &quot;t&quot;;</span>
+		case 46:
+<span class="nc" id="L163">			return &quot;u&quot;;</span>
+		case 47:
+<span class="nc" id="L165">			return &quot;v&quot;;</span>
+		case 48:
+<span class="nc" id="L167">			return &quot;w&quot;;</span>
+		case 49:
+<span class="nc" id="L169">			return &quot;x&quot;;</span>
+		case 50:
+<span class="nc" id="L171">			return &quot;y&quot;;</span>
+		case 51:
+<span class="nc" id="L173">			return &quot;z&quot;;</span>
+		case 52:
+<span class="nc" id="L175">			return &quot;0&quot;;</span>
+		case 53:
+<span class="nc" id="L177">			return &quot;1&quot;;</span>
+		case 54:
+<span class="nc" id="L179">			return &quot;2&quot;;</span>
+		case 55:
+<span class="nc" id="L181">			return &quot;3&quot;;</span>
+		case 56:
+<span class="nc" id="L183">			return &quot;4&quot;;</span>
+		case 57:
+<span class="nc" id="L185">			return &quot;5&quot;;</span>
+		case 58:
+<span class="nc" id="L187">			return &quot;6&quot;;</span>
+		case 59:
+<span class="nc" id="L189">			return &quot;7&quot;;</span>
+		case 60:
+<span class="nc" id="L191">			return &quot;8&quot;;</span>
+		case 61:
+<span class="nc" id="L193">			return &quot;9&quot;;</span>
+		case 62:
+<span class="nc" id="L195">			return &quot;+&quot;;</span>
+		case 63:
+<span class="nc" id="L197">			return &quot;/&quot;;</span>
+
+		}
+<span class="nc" id="L200">		return &quot;*&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

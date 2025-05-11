@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>xlabels__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.label</a> &gt; <span class="el_source">xlabels__c.java</span></div><h1>xlabels__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.label;
+import static gen.lib.cdt.dtclose__c.dtclose;
+import static gen.lib.cdt.dtopen__c.dtopen;
+import static gen.lib.label.index__c.RTreeClose;
+import static gen.lib.label.index__c.RTreeInsert;
+import static gen.lib.label.index__c.RTreeLeafListFree;
+import static gen.lib.label.index__c.RTreeOpen;
+import static gen.lib.label.index__c.RTreeSearch;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_BestPos_t;
+import h.ST_HDict_t;
+import h.ST_LeafList_t;
+import h.ST_Node_t___;
+import h.ST_RTree;
+import h.ST_Rect_t;
+import h.ST_XLabels_t;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_label_params_t;
+import h.ST_object_t;
+import h.ST_point;
+import h.ST_pointf;
+import h.ST_xlabel_t;
+import smetana.core.CArray;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.Globals;
+import smetana.core.Memory;
+
+
+<span class="nc" id="L81">public class xlabels__c {</span>
+
+<span class="fc" id="L83">public static CFunction icompare = new CFunctionAbstract(&quot;icompare&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L86">		return icompare((ST_dt_s)args[0], (Object)args[1], (Object)args[2], (ST_dtdisc_s)args[3]);</span>
+	}};
+	
+//3 5p3ac8qk4gnne5hj1dc21ysi
+// static int icompare(Dt_t * dt, void * v1, void * v2, Dtdisc_t * disc) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;icompare&quot;, key=&quot;5p3ac8qk4gnne5hj1dc21ysi&quot;, definition=&quot;static int icompare(Dt_t * dt, void * v1, void * v2, Dtdisc_t * disc)&quot;)
+public static int icompare(ST_dt_s dt, Object v1, Object v2, ST_dtdisc_s disc) {
+<span class="fc" id="L94">ENTERING(&quot;5p3ac8qk4gnne5hj1dc21ysi&quot;,&quot;icompare&quot;);</span>
+try {
+<span class="fc" id="L96">	Integer k1 = (Integer) v1;</span>
+<span class="fc" id="L97">	Integer k2 = (Integer) v2;</span>
+<span class="fc" id="L98">    return k1 - k2;</span>
+} finally {
+<span class="fc" id="L100">LEAVING(&quot;5p3ac8qk4gnne5hj1dc21ysi&quot;,&quot;icompare&quot;);</span>
+}
+}
+
+
+
+
+//3 88mbfm305igsr7cew5qx6yldp
+// static XLabels_t *xlnew(object_t * objs, int n_objs, 			xlabel_t * lbls, int n_lbls, 			label_params_t * params) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;&quot;, key=&quot;88mbfm305igsr7cew5qx6yldp&quot;, definition=&quot;static XLabels_t *xlnew(object_t * objs, int n_objs, 			xlabel_t * lbls, int n_lbls, 			label_params_t * params)&quot;)
+public static ST_XLabels_t xlnew(Globals zz, CArray&lt;ST_object_t&gt; objs, int n_objs, CArray&lt;ST_xlabel_t&gt; lbls, int n_lbls, ST_label_params_t params) {
+<span class="fc" id="L112">ENTERING(&quot;88mbfm305igsr7cew5qx6yldp&quot;,&quot;xlnew&quot;);</span>
+try {
+ST_XLabels_t xlp;
+<span class="fc" id="L115">xlp = new ST_XLabels_t();</span>
+/* used to load the rtree in hilbert space filling curve order */
+<span class="fc" id="L117">xlp.hdx = dtopen(zz, zz.Hdisc, zz.Dtobag);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">if ((xlp.hdx) == null) {</span>
+<span class="nc" id="L119">UNSUPPORTED(&quot;4t1y5iinm4310lkpvbal1spve&quot;); // 	fprintf(stderr, &quot;out of memory\n&quot;);</span>
+<span class="nc" id="L120">UNSUPPORTED(&quot;3m406diamp5s5kwcqtwo4pshf&quot;); // 	goto bad;</span>
+}
+/* for querying intersection candidates */
+<span class="fc" id="L123">xlp.spdx = RTreeOpen();</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">if ((xlp.spdx) == null) {</span>
+<span class="nc" id="L125">UNSUPPORTED(&quot;4t1y5iinm4310lkpvbal1spve&quot;); // 	fprintf(stderr, &quot;out of memory\n&quot;);</span>
+<span class="nc" id="L126">UNSUPPORTED(&quot;3m406diamp5s5kwcqtwo4pshf&quot;); // 	goto bad;</span>
+     }
+/* save arg pointers in the handle */
+<span class="fc" id="L129">xlp.objs = objs;</span>
+<span class="fc" id="L130">xlp.n_objs = n_objs;</span>
+<span class="fc" id="L131">xlp.lbls = lbls;</span>
+<span class="fc" id="L132">xlp.n_lbls = n_lbls;</span>
+<span class="fc" id="L133">xlp.params = params;</span>
+<span class="fc" id="L134">return (ST_XLabels_t) xlp;</span>
+} finally {
+<span class="fc" id="L136">LEAVING(&quot;88mbfm305igsr7cew5qx6yldp&quot;,&quot;xlnew&quot;);</span>
+}
+//UNSUPPORTED(&quot;98zx7s9vt8t1s5x9l35evcxnz&quot;); //   bad:
+//UNSUPPORTED(&quot;66s40csd2ivd8rx4h2ut8oai5&quot;); //     if (xlp-&gt;hdx)
+//UNSUPPORTED(&quot;8mg8tqxa78f1nfk4jh9drw2n0&quot;); // 	dtclose(xlp-&gt;hdx);
+//UNSUPPORTED(&quot;b9uy03exphaovgyz5t4gru409&quot;); //     if (xlp-&gt;spdx)
+//UNSUPPORTED(&quot;4cfpl6hom6vo3btrjlhfmn6mi&quot;); // 	RTreeClose(xlp-&gt;spdx);
+//UNSUPPORTED(&quot;dms04fhv1vao18v2p0lmk80xf&quot;); //     free(xlp);
+//UNSUPPORTED(&quot;5oxhd3fvp0gfmrmz12vndnjt&quot;); //     return 0;
+//UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }
+}
+
+
+
+
+//3 apvhod2s1yjb8717rb7gie2kb
+// static void xlfree(XLabels_t * xlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xlfree&quot;, key=&quot;apvhod2s1yjb8717rb7gie2kb&quot;, definition=&quot;static void xlfree(XLabels_t * xlp)&quot;)
+public static void xlfree(ST_XLabels_t xlp) {
+<span class="fc" id="L156">ENTERING(&quot;apvhod2s1yjb8717rb7gie2kb&quot;,&quot;xlfree&quot;);</span>
+try {
+<span class="fc" id="L158">     RTreeClose((ST_RTree) xlp.spdx);</span>
+<span class="fc" id="L159">     Memory.free(xlp);</span>
+} finally {
+<span class="fc" id="L161">LEAVING(&quot;apvhod2s1yjb8717rb7gie2kb&quot;,&quot;xlfree&quot;);</span>
+}
+<span class="fc" id="L163">}</span>
+
+
+
+
+//3 6lz36gkh8fla3z6f0lxniy368
+// static int floorLog2(unsigned int n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;floorLog2&quot;, key=&quot;6lz36gkh8fla3z6f0lxniy368&quot;, definition=&quot;static int floorLog2(unsigned int n)&quot;)
+public static int floorLog2(int n) {
+<span class="fc" id="L173">ENTERING(&quot;6lz36gkh8fla3z6f0lxniy368&quot;,&quot;floorLog2&quot;);</span>
+try {
+<span class="fc" id="L175">    int pos = 0;</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">    if (n == 0)</span>
+<span class="nc" id="L177">	return -1;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">    if (n &gt;= 1 &lt;&lt; 16) {</span>
+<span class="nc" id="L179">	n &gt;&gt;= 16;</span>
+<span class="nc" id="L180">	pos += 16;</span>
+    }
+<span class="fc bfc" id="L182" title="All 2 branches covered.">    if (n &gt;= 1 &lt;&lt; 8) {</span>
+<span class="fc" id="L183">	n &gt;&gt;= 8;</span>
+<span class="fc" id="L184">	pos += 8;</span>
+    }
+<span class="fc bfc" id="L186" title="All 2 branches covered.">    if (n &gt;= 1 &lt;&lt; 4) {</span>
+<span class="fc" id="L187">	n &gt;&gt;= 4;</span>
+<span class="fc" id="L188">	pos += 4;</span>
+    }
+<span class="fc bfc" id="L190" title="All 2 branches covered.">    if (n &gt;= 1 &lt;&lt; 2) {</span>
+<span class="fc" id="L191">	n &gt;&gt;= 2;</span>
+<span class="fc" id="L192">	pos += 2;</span>
+    }
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">    if (n &gt;= 1 &lt;&lt; 1) {</span>
+<span class="fc" id="L195">	pos += 1;</span>
+    }
+<span class="fc" id="L197">    return pos;</span>
+} finally {
+<span class="fc" id="L199">LEAVING(&quot;6lz36gkh8fla3z6f0lxniy368&quot;,&quot;floorLog2&quot;);</span>
+}
+}
+
+
+
+
+//3 uvnzthcpf4xiih05gxie2rx1
+// unsigned int xlhorder(XLabels_t * xlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xlhorder&quot;, key=&quot;uvnzthcpf4xiih05gxie2rx1&quot;, definition=&quot;unsigned int xlhorder(XLabels_t * xlp)&quot;)
+public static int xlhorder(ST_XLabels_t xlp) {
+<span class="fc" id="L211">ENTERING(&quot;uvnzthcpf4xiih05gxie2rx1&quot;,&quot;xlhorder&quot;);</span>
+try {
+<span class="fc" id="L213">    double maxx = xlp.params.bb.UR.x;</span>
+<span class="fc" id="L214">    double maxy = xlp.params.bb.UR.y;</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">    return floorLog2(maxx &gt; maxy ? (int)maxx : (int)maxy) + 1;</span>
+} finally {
+<span class="fc" id="L217">LEAVING(&quot;uvnzthcpf4xiih05gxie2rx1&quot;,&quot;xlhorder&quot;);</span>
+}
+}
+
+
+
+
+//3 9lkyvq87bawe3yon7bdwvcjzq
+// static unsigned int hd_hil_s_from_xy(point p, int n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;hd_hil_s_from_xy&quot;, key=&quot;9lkyvq87bawe3yon7bdwvcjzq&quot;, definition=&quot;static unsigned int hd_hil_s_from_xy(point p, int n)&quot;)
+public static int hd_hil_s_from_xy(ST_point p, int n) {
+<span class="fc" id="L229">ENTERING(&quot;9lkyvq87bawe3yon7bdwvcjzq&quot;,&quot;hd_hil_s_from_xy&quot;);</span>
+try {
+<span class="fc" id="L231">	return hd_hil_s_from_xy_((ST_point) p.copy(), n);</span>
+} finally {
+<span class="fc" id="L233">LEAVING(&quot;9lkyvq87bawe3yon7bdwvcjzq&quot;,&quot;hd_hil_s_from_xy&quot;);</span>
+}
+}
+private static int hd_hil_s_from_xy_(ST_point p, int n) {
+<span class="fc" id="L237">     int i, x = p.x, y = p.y, xi, yi;</span>
+     int s;
+<span class="fc" id="L239">     s = 0;			/* Initialize. */</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">     for (i = n - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L241"> 	xi = (x &gt;&gt; i) &amp; 1;	/* Get bit i of x. */</span>
+<span class="fc" id="L242"> 	yi = (y &gt;&gt; i) &amp; 1;	/* Get bit i of y. */</span>
+<span class="fc" id="L243"> 	s = 4 * s + 2 * xi + (xi ^ yi);	/* Append two bits to s. */</span>
+<span class="fc" id="L244"> 	x = x ^ y;		/* These 3 lines swap */</span>
+<span class="fc" id="L245"> 	y = y ^ (x &amp; (yi - 1));	/* x and y if yi = 0. */</span>
+<span class="fc" id="L246"> 	x = x ^ y;</span>
+<span class="fc" id="L247"> 	x = x ^ (-xi &amp; (yi - 1));	/* Complement x and y if */</span>
+<span class="fc" id="L248"> 	y = y ^ (-xi &amp; (yi - 1));	/* xi = 1 and yi = 0. */</span>
+     }
+<span class="fc" id="L250">     return s;</span>
+ }
+
+
+
+
+//3 bpkzwylrchx5wta1qhytfgbtr
+// static double aabbaabb(Rect_t * r, Rect_t * s) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;aabbaabb&quot;, key=&quot;bpkzwylrchx5wta1qhytfgbtr&quot;, definition=&quot;static double aabbaabb(Rect_t * r, Rect_t * s)&quot;)
+public static double aabbaabb(ST_Rect_t r, ST_Rect_t s) {
+<span class="fc" id="L261">ENTERING(&quot;bpkzwylrchx5wta1qhytfgbtr&quot;,&quot;aabbaabb&quot;);</span>
+try {
+     /* per dimension if( max &lt; omin || min &gt; omax) */
+     double iminx, iminy, imaxx, imaxy;
+<span class="fc bfc" id="L265" title="All 4 branches covered.">     if (r.boundary[2] &lt; s.boundary[0] || r.boundary[0] &gt; s.boundary[2])</span>
+<span class="fc" id="L266"> 	return 0;</span>
+<span class="pc bpc" id="L267" title="2 of 4 branches missed.">     if (r.boundary[3] &lt; s.boundary[1] || r.boundary[1] &gt; s.boundary[3])</span>
+<span class="nc" id="L268">  	return 0;</span>
+     /* if we get here we have an intersection */
+     /* rightmost left edge of the 2 rectangles */
+     iminx =
+<span class="fc bfc" id="L272" title="All 2 branches covered."> 	r.boundary[0] &gt; s.boundary[0] ? r.boundary[0] : s.boundary[0];</span>
+     /* upmost bottom edge */
+     iminy =
+<span class="pc bpc" id="L275" title="1 of 2 branches missed."> 	r.boundary[1] &gt; s.boundary[1] ? r.boundary[1] : s.boundary[1];</span>
+     /* leftmost right edge */
+     imaxx =
+<span class="fc bfc" id="L278" title="All 2 branches covered."> 	r.boundary[2] &lt; s.boundary[2] ? r.boundary[2] : s.boundary[2];</span>
+     /* downmost top edge */
+     imaxy =
+<span class="fc bfc" id="L281" title="All 2 branches covered."> 	r.boundary[3] &lt; s.boundary[3] ? r.boundary[3] : s.boundary[3];</span>
+<span class="fc" id="L282">     return (imaxx - iminx) * (imaxy - iminy);</span>
+} finally {
+<span class="fc" id="L284">LEAVING(&quot;bpkzwylrchx5wta1qhytfgbtr&quot;,&quot;aabbaabb&quot;);</span>
+}
+}
+
+
+
+
+//3 2g71cq6f8w5jbmbnn2x9y5qfq
+// static int lblenclosing(object_t * objp, object_t * objp1) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;lblenclosing&quot;, key=&quot;2g71cq6f8w5jbmbnn2x9y5qfq&quot;, definition=&quot;static int lblenclosing(object_t * objp, object_t * objp1)&quot;)
+public static boolean lblenclosing(ST_object_t objp, ST_object_t objp1) {
+<span class="fc" id="L296">ENTERING(&quot;2g71cq6f8w5jbmbnn2x9y5qfq&quot;,&quot;lblenclosing&quot;);</span>
+try {
+<span class="fc" id="L298">	CArray&lt;ST_xlabel_t&gt; xlp = objp.lbl;</span>
+//   assert(objp1-&gt;sz.x == 0 &amp;&amp; objp1-&gt;sz.y == 0);
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">   if((xlp) == null) return false;</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">      return objp1.pos.x &gt; xlp.get__(0).pos.x &amp;&amp;</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">    		  objp1.pos.x &lt; (xlp.get__(0).pos.x + xlp.get__(0).sz.y) &amp;&amp;</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">    		  objp1.pos.y &gt; xlp.get__(0).pos.y &amp;&amp;</span>
+<span class="pc bnc" id="L304" title="All 2 branches missed.">    		  objp1.pos.y &lt; (xlp.get__(0).pos.y + xlp.get__(0).sz.y);</span>
+//   UNSUPPORTED(&quot;exdts7f2bpam5122kabq2b86c&quot;); //   return objp1-&gt;pos.x &gt; xlp-&gt;pos.x &amp;&amp;
+//   UNSUPPORTED(&quot;99uxf5dqw5nzdymlzfj764uol&quot;); // 	 objp1-&gt;pos.x &lt; (xlp-&gt;pos.x + xlp-&gt;sz.x) &amp;&amp;
+//   UNSUPPORTED(&quot;epx7s3oiw75fuioasz208w1k1&quot;); // 	 objp1-&gt;pos.y &gt; xlp-&gt;pos.y &amp;&amp;
+//   UNSUPPORTED(&quot;29g3tye8vebllnv9b91xyntzi&quot;); // 	 objp1-&gt;pos.y &lt; (xlp-&gt;pos.y + xlp-&gt;sz.y);
+//   UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }
+} finally {
+<span class="fc" id="L311">LEAVING(&quot;2g71cq6f8w5jbmbnn2x9y5qfq&quot;,&quot;lblenclosing&quot;);</span>
+}
+}
+
+
+
+
+
+//3 dq1wkb4oxshdggv6cwtgas6m
+// static void objp2rect(object_t * op, Rect_t * r) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;objp2rect&quot;, key=&quot;dq1wkb4oxshdggv6cwtgas6m&quot;, definition=&quot;static void objp2rect(object_t * op, Rect_t * r)&quot;)
+public static void objp2rect(ST_object_t op, ST_Rect_t r) {
+<span class="fc" id="L324">ENTERING(&quot;dq1wkb4oxshdggv6cwtgas6m&quot;,&quot;objp2rect&quot;);</span>
+try {
+<span class="fc" id="L326">	r.boundary[0]=((int)op.pos.x);</span>
+<span class="fc" id="L327">	r.boundary[1]=((int)op.pos.y);</span>
+<span class="fc" id="L328">	r.boundary[2]=((int)(op.pos.x+op.sz.x));</span>
+<span class="fc" id="L329">	r.boundary[3]=((int)(op.pos.y+op.sz.y));</span>
+} finally {
+<span class="fc" id="L331">LEAVING(&quot;dq1wkb4oxshdggv6cwtgas6m&quot;,&quot;objp2rect&quot;);</span>
+}
+<span class="fc" id="L333">}</span>
+
+
+
+
+//3 71b5ttp3xs7lo9fqgb7ypyqgx
+// static void objplp2rect(object_t * objp, Rect_t * r) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;objplp2rect&quot;, key=&quot;71b5ttp3xs7lo9fqgb7ypyqgx&quot;, definition=&quot;static void objplp2rect(object_t * objp, Rect_t * r)&quot;)
+public static void objplp2rect(ST_object_t objp, ST_Rect_t r) {
+<span class="fc" id="L343">ENTERING(&quot;71b5ttp3xs7lo9fqgb7ypyqgx&quot;,&quot;objplp2rect&quot;);</span>
+try {
+<span class="fc" id="L345">	CArray&lt;ST_xlabel_t&gt; lp = objp.lbl;</span>
+<span class="fc" id="L346">    r.boundary[0]=((int)lp.get__(0).pos.x);</span>
+<span class="fc" id="L347">    r.boundary[1]=((int)lp.get__(0).pos.y);</span>
+<span class="fc" id="L348">    r.boundary[2]=((int)(lp.get__(0).pos.x+lp.get__(0).sz.x));</span>
+<span class="fc" id="L349">    r.boundary[3]=((int)(lp.get__(0).pos.y+lp.get__(0).sz.y));</span>
+} finally {
+<span class="fc" id="L351">LEAVING(&quot;71b5ttp3xs7lo9fqgb7ypyqgx&quot;,&quot;objplp2rect&quot;);</span>
+}
+<span class="fc" id="L353">}</span>
+
+
+
+
+//3 ksqjbiie0e6vvaeawdxriie5
+// static Rect_t objplpmks(XLabels_t * xlp, object_t * objp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;objplpmks&quot;, key=&quot;ksqjbiie0e6vvaeawdxriie5&quot;, definition=&quot;static Rect_t objplpmks(XLabels_t * xlp, object_t * objp)&quot;)
+public static ST_Rect_t objplpmks(ST_XLabels_t xlp, ST_object_t objp) {
+<span class="fc" id="L363">ENTERING(&quot;ksqjbiie0e6vvaeawdxriie5&quot;,&quot;objplpmks&quot;);</span>
+try {
+<span class="fc" id="L365">     final ST_Rect_t rect = new ST_Rect_t();</span>
+<span class="fc" id="L366">     final ST_pointf p = new ST_pointf();</span>
+<span class="fc" id="L367">     p.x = 0;</span>
+<span class="fc" id="L368">     p.y = 0;</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">     if (objp.lbl!=null)</span>
+<span class="fc" id="L370">    	 p.___(objp.lbl.get__(0).sz);</span>
+<span class="fc" id="L371">     rect.boundary[0]=((int) Math.floor(objp.pos.x - p.x));</span>
+<span class="fc" id="L372">     rect.boundary[1]=((int) Math.floor(objp.pos.y - p.y));</span>
+<span class="fc" id="L373">     rect.boundary[2]=((int) Math.ceil(objp.pos.x + objp.sz.x + p.x));</span>
+     //     assert(rect.boundary[2] &lt; INT_MAX);
+<span class="fc" id="L375">     rect.boundary[3]=((int) Math.ceil(objp.pos.y + objp.sz.y + p.y));</span>
+     //     assert(rect.boundary[3] &lt; INT_MAX);
+<span class="fc" id="L377">     return rect;</span>
+} finally {
+<span class="fc" id="L379">LEAVING(&quot;ksqjbiie0e6vvaeawdxriie5&quot;,&quot;objplpmks&quot;);</span>
+}
+}
+
+
+
+
+//3 calnhom3s9dqvvi6crrz3h2wp
+// static int getintrsxi(XLabels_t * xlp, object_t * op, object_t * cp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;getintrsxi&quot;, key=&quot;calnhom3s9dqvvi6crrz3h2wp&quot;, definition=&quot;static int getintrsxi(XLabels_t * xlp, object_t * op, object_t * cp)&quot;)
+public static int getintrsxi(ST_XLabels_t xlp, ST_object_t  op, ST_object_t cp) {
+<span class="fc" id="L391">ENTERING(&quot;calnhom3s9dqvvi6crrz3h2wp&quot;,&quot;getintrsxi&quot;);</span>
+try {
+<span class="fc" id="L393">     int i = -1;</span>
+<span class="fc" id="L394">     CArray&lt;ST_xlabel_t&gt; lp = op.lbl, clp = cp.lbl;</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">     assert(lp != clp);</span>
+<span class="pc bpc" id="L396" title="3 of 4 branches missed.">     if (lp.get__(0).set == 0 || clp.get__(0).set == 0)</span>
+<span class="fc" id="L397"> 	return i;</span>
+<span class="nc" id="L398">UNSUPPORTED(&quot;bofpvwtmumoe1ckgnlgbwg8bt&quot;); //     if ((op-&gt;pos.x == 0.0 &amp;&amp; op-&gt;pos.y == 0.0) ||</span>
+<span class="nc" id="L399">UNSUPPORTED(&quot;f039op8rn0jopi9r8kora4cwz&quot;); // 	(cp-&gt;pos.x == 0.0 &amp;&amp; cp-&gt;pos.y == 0.0))</span>
+<span class="nc" id="L400">UNSUPPORTED(&quot;11drvggon8u61uz4iw75insly&quot;); // 	return i;</span>
+<span class="nc" id="L401">UNSUPPORTED(&quot;5t4dji6xy0hdyx5wguao13hy5&quot;); //     if (cp-&gt;pos.y &lt; op-&gt;pos.y)</span>
+<span class="nc" id="L402">UNSUPPORTED(&quot;kx0a7gocqji2ms0neepjemp0&quot;); // 	if (cp-&gt;pos.x &lt; op-&gt;pos.x)</span>
+<span class="nc" id="L403">UNSUPPORTED(&quot;al11nyatzn20y82ligyxw6doz&quot;); // 	    i = 0;</span>
+<span class="nc" id="L404">UNSUPPORTED(&quot;6u28hrhgdf9tpy6v85nmoma8q&quot;); // 	else if (cp-&gt;pos.x &gt; op-&gt;pos.x)</span>
+<span class="nc" id="L405">UNSUPPORTED(&quot;3nbwdw3wfkpmnrf8loezvflkx&quot;); // 	    i = 2;</span>
+<span class="nc" id="L406">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L407">UNSUPPORTED(&quot;akdfo982ws6tlct2c4wlm7hdb&quot;); // 	    i = 1;</span>
+<span class="nc" id="L408">UNSUPPORTED(&quot;6h2iz13c1pog9oqz0a4f1sqth&quot;); //     else if (cp-&gt;pos.y &gt; op-&gt;pos.y)</span>
+<span class="nc" id="L409">UNSUPPORTED(&quot;kx0a7gocqji2ms0neepjemp0&quot;); // 	if (cp-&gt;pos.x &lt; op-&gt;pos.x)</span>
+<span class="nc" id="L410">UNSUPPORTED(&quot;2rdl000508m132a9u1h076lba&quot;); // 	    i = 6;</span>
+<span class="nc" id="L411">UNSUPPORTED(&quot;6u28hrhgdf9tpy6v85nmoma8q&quot;); // 	else if (cp-&gt;pos.x &gt; op-&gt;pos.x)</span>
+<span class="nc" id="L412">UNSUPPORTED(&quot;7p6vu0p80gdkcsj4l5hz59dqb&quot;); // 	    i = 8;</span>
+<span class="nc" id="L413">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L414">UNSUPPORTED(&quot;69apu46xpi0gdi4dt1tir6dbh&quot;); // 	    i = 7;</span>
+<span class="nc" id="L415">UNSUPPORTED(&quot;73lwftxejfwwrm0v22inmutya&quot;); //     else if (cp-&gt;pos.x &lt; op-&gt;pos.x)</span>
+<span class="nc" id="L416">UNSUPPORTED(&quot;9t0t38axcdz9uuxxaxd4e5oi2&quot;); // 	i = 3;</span>
+<span class="nc" id="L417">UNSUPPORTED(&quot;an605gtk4m1ql9srrrj5k6dah&quot;); //     else if (cp-&gt;pos.x &gt; op-&gt;pos.x)</span>
+<span class="nc" id="L418">UNSUPPORTED(&quot;cmp9l0lizmu0ars1jf1oxdms&quot;); // 	i = 5;</span>
+<span class="nc" id="L419">UNSUPPORTED(&quot;ahwo5hst5k1gyq20ve63ahe81&quot;); //     return i;</span>
+<span class="nc" id="L420">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L422">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L424">LEAVING(&quot;calnhom3s9dqvvi6crrz3h2wp&quot;,&quot;getintrsxi&quot;);</span>
+}
+}
+
+
+
+
+//3 52awwxu810dg9a2pjq45aomam
+// static double recordointrsx(XLabels_t * xlp, object_t * op, object_t * cp, Rect_t * rp, 	      double a, object_t * intrsx[9]) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;recordointrsx&quot;, key=&quot;52awwxu810dg9a2pjq45aomam&quot;, definition=&quot;static double recordointrsx(XLabels_t * xlp, object_t * op, object_t * cp, Rect_t * rp, 	      double a, object_t * intrsx[9])&quot;)
+public static double recordointrsx(ST_XLabels_t xlp, ST_object_t op, ST_object_t cp, ST_Rect_t rp, double a, ST_object_t[] intrsx) {
+<span class="fc" id="L436">ENTERING(&quot;52awwxu810dg9a2pjq45aomam&quot;,&quot;recordointrsx&quot;);</span>
+try {
+<span class="fc" id="L438">     int i = getintrsxi(xlp, op, cp);</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">     if (i &lt; 0)</span>
+<span class="fc" id="L440"> 	i = 5;</span>
+<span class="fc bfc" id="L441" title="All 2 branches covered.">     if (intrsx[i] != null) {</span>
+<span class="fc" id="L442"> 	double sa, maxa = 0.0;</span>
+<span class="fc" id="L443"> 	final ST_Rect_t srect = new ST_Rect_t();</span>
+ 	/* keep maximally overlapping object */
+<span class="fc" id="L445"> 	objp2rect(intrsx[i], srect);</span>
+<span class="fc" id="L446"> 	sa = aabbaabb(rp, srect);</span>
+<span class="fc bfc" id="L447" title="All 2 branches covered."> 	if (sa &gt; a)</span>
+<span class="fc" id="L448"> 	    maxa = sa;</span>
+ 	/*keep maximally overlapping label */
+<span class="pc bpc" id="L450" title="1 of 2 branches missed."> 	if (intrsx[i].lbl!=null) {</span>
+<span class="nc" id="L451"> 	    objplp2rect(intrsx[i], srect);</span>
+<span class="nc" id="L452"> 	    sa = aabbaabb(rp, srect);</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed."> 	    if (sa &gt; a)</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed."> 		maxa = sa &gt; maxa ? sa : maxa;</span>
+ 	}
+<span class="fc bfc" id="L456" title="All 2 branches covered."> 	if (maxa &gt; 0.0)</span>
+<span class="fc" id="L457"> 	    return maxa;</span>
+ 	/*replace overlapping label/object pair */
+<span class="fc" id="L459"> 	intrsx[i] = cp;</span>
+<span class="fc" id="L460"> 	return a;</span>
+     }
+<span class="fc" id="L462">     intrsx[i] = cp;</span>
+<span class="fc" id="L463">     return a;</span>
+} finally {
+<span class="fc" id="L465">LEAVING(&quot;52awwxu810dg9a2pjq45aomam&quot;,&quot;recordointrsx&quot;);</span>
+}
+}
+
+
+
+
+//3 2umrncgkunxoyeuc8i9hd5pwa
+// static double recordlintrsx(XLabels_t * xlp, object_t * op, object_t * cp, Rect_t * rp, 	      double a, object_t * intrsx[9]) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;recordlintrsx&quot;, key=&quot;2umrncgkunxoyeuc8i9hd5pwa&quot;, definition=&quot;static double recordlintrsx(XLabels_t * xlp, object_t * op, object_t * cp, Rect_t * rp, 	      double a, object_t * intrsx[9])&quot;)
+public static double recordlintrsx(ST_XLabels_t xlp, ST_object_t op, ST_object_t cp, ST_Rect_t rp, double a, ST_object_t intrsx[]) {
+<span class="nc" id="L477">ENTERING(&quot;2umrncgkunxoyeuc8i9hd5pwa&quot;,&quot;recordlintrsx&quot;);</span>
+try {
+<span class="nc" id="L479">     int i = getintrsxi(xlp, op, cp);</span>
+<span class="nc bnc" id="L480" title="All 2 branches missed.">     if (i &lt; 0)</span>
+<span class="nc" id="L481"> 	i = 5;</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">     if (intrsx[i] != null) {</span>
+<span class="nc" id="L483"> 	double sa, maxa = 0.0;</span>
+<span class="nc" id="L484"> 	final ST_Rect_t srect = new ST_Rect_t();</span>
+ 	/* keep maximally overlapping object */
+<span class="nc" id="L486"> 	objp2rect(intrsx[i], srect);</span>
+<span class="nc" id="L487"> 	sa = aabbaabb(rp, srect);</span>
+<span class="nc bnc" id="L488" title="All 2 branches missed."> 	if (sa &gt; a)</span>
+<span class="nc" id="L489"> 	    maxa = sa;</span>
+ 	/*keep maximally overlapping label */
+<span class="nc bnc" id="L491" title="All 2 branches missed."> 	if (intrsx[i].lbl!=null) {</span>
+<span class="nc" id="L492"> 	    objplp2rect(intrsx[i], srect);</span>
+<span class="nc" id="L493"> 	    sa = aabbaabb(rp, srect);</span>
+<span class="nc bnc" id="L494" title="All 2 branches missed."> 	    if (sa &gt; a)</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed."> 		maxa = sa &gt; maxa ? sa : maxa;</span>
+ 	}
+<span class="nc bnc" id="L497" title="All 2 branches missed."> 	if (maxa &gt; 0.0)</span>
+<span class="nc" id="L498"> 	    return maxa;</span>
+ 	/*replace overlapping label/object pair */
+<span class="nc" id="L500"> 	intrsx[i] = cp;</span>
+<span class="nc" id="L501"> 	return a;</span>
+     }
+<span class="nc" id="L503">  	intrsx[i] = cp;</span>
+<span class="nc" id="L504">  	return a;</span>
+} finally {
+<span class="nc" id="L506">LEAVING(&quot;2umrncgkunxoyeuc8i9hd5pwa&quot;,&quot;recordlintrsx&quot;);</span>
+}
+}
+
+
+
+
+/* find the objects and labels intersecting lp */
+//3 2td62i5hus8obwt8j1lo3ddj9
+// static BestPos_t xlintersections(XLabels_t * xlp, object_t * objp, object_t * intrsx[9]) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xlintersections&quot;, key=&quot;2td62i5hus8obwt8j1lo3ddj9&quot;, definition=&quot;static BestPos_t xlintersections(XLabels_t * xlp, object_t * objp, object_t * intrsx[9])&quot;)
+public static ST_BestPos_t xlintersections(ST_XLabels_t xlp, ST_object_t objp, ST_object_t intrsx[]) {
+<span class="fc" id="L519">ENTERING(&quot;2td62i5hus8obwt8j1lo3ddj9&quot;,&quot;xlintersections&quot;);</span>
+try {
+<span class="fc" id="L521">	return (ST_BestPos_t) xlintersections_(xlp, objp, intrsx).copy();</span>
+} finally {
+<span class="fc" id="L523">LEAVING(&quot;2td62i5hus8obwt8j1lo3ddj9&quot;,&quot;xlintersections&quot;);</span>
+}
+}
+
+private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp, ST_object_t intrsx[]) {
+	int i;
+	ST_LeafList_t ilp, llp;
+<span class="fc" id="L530">	final ST_Rect_t rect = new ST_Rect_t(), srect = new ST_Rect_t();</span>
+<span class="fc" id="L531">	final ST_BestPos_t bp = new ST_BestPos_t();</span>
+		
+//     assert(objp-&gt;lbl);
+		
+<span class="fc" id="L535">    bp.n = 0;</span>
+<span class="fc" id="L536">    bp.area = 0.0;</span>
+<span class="fc" id="L537">    bp.pos.___(objp.lbl.get__(0).pos);</span>
+
+<span class="fc bfc" id="L539" title="All 2 branches covered.">     for(i=0; i&lt;xlp.n_objs; i++) {</span>
+<span class="fc bfc" id="L540" title="All 2 branches covered.">    	       if (objp == xlp.objs.get__(i)) continue;</span>
+<span class="pc bpc" id="L541" title="1 of 4 branches missed.">       if(xlp.objs.get__(i).sz.x &gt; 0 &amp;&amp; xlp.objs.get__(i).sz.y &gt; 0) continue;</span>
+<span class="pc bpc" id="L542" title="1 of 2 branches missed.">       if(lblenclosing(objp, xlp.objs.get__(i))) {</span>
+<span class="nc" id="L543">    	 	  bp.n = bp.n+1;</span>
+       }
+     }
+     
+<span class="fc" id="L547">     objplp2rect(objp, rect);</span>
+     
+<span class="fc" id="L549">     llp = RTreeSearch(xlp.spdx, xlp.spdx.root, rect);</span>
+<span class="pc bpc" id="L550" title="1 of 2 branches missed.">     if ((llp) == null)</span>
+<span class="nc" id="L551"> 	return bp;</span>
+     
+<span class="fc bfc" id="L553" title="All 2 branches covered.">     for (ilp = llp; ilp!=null; ilp = ilp.next) {</span>
+ 	double a, ra;
+ 	// WARNING FOR TRANSLATION
+ 	// In the C code, &quot;data&quot; was used. However ST_Branch_t is very close to ST_Leaf_t
+ 	// So in Java version, ST_Leaf_t has been removed and ST_Branch_t is used instead
+<span class="fc" id="L558"> 	ST_object_t cp = (ST_object_t) ilp.leaf.child;</span>
+ 	
+<span class="fc bfc" id="L560" title="All 2 branches covered."> 	if (cp == objp)</span>
+<span class="fc" id="L561"> 	    continue;</span>
+ 	
+   /*label-object intersect */
+<span class="fc" id="L564"> 	objp2rect(cp, srect);</span>
+<span class="fc" id="L565"> 	a = aabbaabb(rect, srect);</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered."> 	if (a &gt; 0.0) {</span>
+<span class="fc" id="L567"> 	  ra = recordointrsx(xlp, objp, cp, rect, a, intrsx);</span>
+<span class="fc" id="L568">	  bp.n++;</span>
+<span class="fc" id="L569">	  bp.area += ra;</span>
+ 	}
+ 	/*label-label intersect */
+<span class="pc bpc" id="L572" title="1 of 4 branches missed."> 	if ((cp.lbl) == null || cp.lbl.get__(0).set == 0)</span>
+<span class="fc" id="L573"> 	    continue;</span>
+<span class="nc" id="L574"> 	objplp2rect(cp, srect);</span>
+<span class="nc" id="L575"> 	a = aabbaabb(rect, srect);</span>
+<span class="nc bnc" id="L576" title="All 2 branches missed."> 	if (a &gt; 0.0) {</span>
+<span class="nc" id="L577"> 	  ra = recordlintrsx(xlp, objp, cp, rect, a, intrsx);</span>
+<span class="nc" id="L578">	  bp.n++;</span>
+<span class="nc" id="L579">	  bp.area += ra;</span>
+ 	}
+     }
+<span class="fc" id="L582">     RTreeLeafListFree(llp);</span>
+<span class="fc" id="L583">     return bp;</span>
+}
+
+
+
+
+//3 8rxvucqsqnqej6h8p1osfnk4b
+// static BestPos_t xladjust(XLabels_t * xlp, object_t * objp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xladjust&quot;, key=&quot;8rxvucqsqnqej6h8p1osfnk4b&quot;, definition=&quot;static BestPos_t xladjust(XLabels_t * xlp, object_t * objp)&quot;)
+public static ST_BestPos_t xladjust(ST_XLabels_t xlp, ST_object_t objp) {
+<span class="fc" id="L594">ENTERING(&quot;8rxvucqsqnqej6h8p1osfnk4b&quot;,&quot;xladjust&quot;);</span>
+try {
+<span class="fc" id="L596">	return (ST_BestPos_t) xladjust_(xlp, objp).copy();	</span>
+} finally {
+<span class="fc" id="L598">LEAVING(&quot;8rxvucqsqnqej6h8p1osfnk4b&quot;,&quot;xladjust&quot;);</span>
+}
+}
+private static ST_BestPos_t xladjust_(ST_XLabels_t xlp, ST_object_t objp) {
+<span class="fc" id="L602">	CArray&lt;ST_xlabel_t&gt; lp = objp.lbl; // ST_xlabel_t</span>
+<span class="fc" id="L603">    double xincr = ((2 * lp.get__(0).sz.x + objp.sz.x)) / 8;</span>
+<span class="fc" id="L604">    double yincr = ((2 * lp.get__(0).sz.y + objp.sz.y)) / 2;</span>
+<span class="fc" id="L605">    ST_object_t intrsx[] = new ST_object_t[9];</span>
+<span class="fc" id="L606">    final ST_BestPos_t bp = new ST_BestPos_t();</span>
+<span class="fc" id="L607">    final ST_BestPos_t nbp = new ST_BestPos_t();</span>
+    //     assert(objp-&gt;lbl);
+    //     memset(intrsx, 0, sizeof(intrsx));
+     /*x left */
+<span class="fc" id="L611">    lp.get__(0).pos.x = objp.pos.x - lp.get__(0).sz.x;</span>
+     /*top */
+<span class="fc" id="L613">    lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
+<span class="fc" id="L614">    bp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">     if (bp.n == 0)</span>
+<span class="fc" id="L616"> 	return bp;</span>
+     /*mid */
+<span class="fc" id="L618">     lp.get__(0).pos.y = objp.pos.y;</span>
+<span class="fc" id="L619">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L620" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L621"> 	return nbp;</span>
+<span class="pc bpc" id="L622" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L623"> 	bp.___(nbp);</span>
+     /*bottom */
+<span class="fc" id="L625">     lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="fc" id="L626">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L627" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L628"> 	return nbp;</span>
+<span class="pc bpc" id="L629" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L630"> 	bp.___(nbp);</span>
+     /*x mid */
+<span class="fc" id="L632">     lp.get__(0).pos.x = objp.pos.x;</span>
+     /*top */
+<span class="fc" id="L634">     lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
+<span class="fc" id="L635">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L636" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L637">       return nbp;</span>
+<span class="pc bpc" id="L638" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L639">       bp.___(nbp);</span>
+     /*bottom */
+<span class="fc" id="L641">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="fc" id="L642">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L643" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L644">       return nbp;</span>
+<span class="pc bpc" id="L645" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L646">       bp.___(nbp);</span>
+     /*x right */
+<span class="fc" id="L648"> 	lp.get__(0).pos.x = objp.pos.x + objp.sz.x;</span>
+     /*top */
+<span class="fc" id="L650"> 	lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
+<span class="fc" id="L651">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L652" title="1 of 2 branches missed.">if (nbp.n == 0)</span>
+<span class="nc" id="L653">return nbp;</span>
+<span class="pc bpc" id="L654" title="1 of 2 branches missed.">if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L655">    bp.___(nbp);</span>
+     /*mid */
+<span class="fc" id="L657">	lp.get__(0).pos.y = objp.pos.y;</span>
+<span class="fc" id="L658">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L659" title="1 of 2 branches missed.">if (nbp.n == 0)</span>
+<span class="nc" id="L660">return nbp;</span>
+<span class="pc bpc" id="L661" title="1 of 2 branches missed.">if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L662">    bp.___(nbp);</span>
+     /*bottom */
+<span class="fc" id="L664">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="fc" id="L665">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L666" title="1 of 2 branches missed.">if (nbp.n == 0)</span>
+<span class="nc" id="L667">return nbp;</span>
+<span class="pc bpc" id="L668" title="1 of 2 branches missed.">if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L669">    bp.___(nbp);</span>
+     /*sliding from top left */
+<span class="pc bpc" id="L671" title="5 of 10 branches missed.">     if (intrsx[6]!=null || intrsx[7]!=null || intrsx[8]!=null || intrsx[3]!=null || intrsx[0]!=null) {	/* have to move */</span>
+<span class="nc" id="L672">UNSUPPORTED(&quot;c5acs4cl77hgu5j6nmhk090uz&quot;); // 	if (!intrsx[7] &amp;&amp; !intrsx[8]) {	/* some room right? */</span>
+<span class="nc" id="L673">UNSUPPORTED(&quot;ez8sbh237xdqdjeewev2ys74y&quot;); // 	    /* slide along upper edge */</span>
+<span class="nc" id="L674">UNSUPPORTED(&quot;ajgw2jggmwmofm77lgbx5eo2n&quot;); // 	    for (lp-&gt;pos.x = objp-&gt;pos.x - lp-&gt;sz.x,</span>
+<span class="nc" id="L675">UNSUPPORTED(&quot;nwfhss2g67z5exjkorj0brd&quot;); // 		 lp-&gt;pos.y = objp-&gt;pos.y + objp-&gt;sz.y;</span>
+<span class="nc" id="L676">UNSUPPORTED(&quot;eav75dwa3f3ieedr9mnov3a6u&quot;); // 		 lp-&gt;pos.x &lt;= (objp-&gt;pos.x + objp-&gt;sz.x);</span>
+<span class="nc" id="L677">UNSUPPORTED(&quot;38u334kkfej5n3r31uv1afw9q&quot;); // 		 lp-&gt;pos.x += xincr) {</span>
+<span class="nc" id="L678">UNSUPPORTED(&quot;8pbum2o0fs86ceaiuxv4efbb6&quot;); // 		nbp = xlintersections(xlp, objp, intrsx);</span>
+<span class="nc" id="L679">UNSUPPORTED(&quot;5xx7o143ftoj0rhyhg1hqgioa&quot;); // 		if (nbp.n == 0)</span>
+<span class="nc" id="L680">UNSUPPORTED(&quot;eqanxe9w90oki7yqvwyzpfcw1&quot;); // 		    return nbp;</span>
+<span class="nc" id="L681">UNSUPPORTED(&quot;8yd6g3a3f0g09gmu5f67vah0x&quot;); // 		if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L682">UNSUPPORTED(&quot;d6ac36j6lh6qspxwnn3vi0uc3&quot;); // 		    bp = nbp;</span>
+<span class="nc" id="L683">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L684">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L685">UNSUPPORTED(&quot;4w0qgfnt6kpuhb381pmra3ln4&quot;); // 	if (!intrsx[3] &amp;&amp; !intrsx[0]) {	/* some room down? */</span>
+<span class="nc" id="L686">UNSUPPORTED(&quot;6st33ex0udr4mk4sa9vd119uz&quot;); // 	    /* slide down left edge */</span>
+<span class="nc" id="L687">UNSUPPORTED(&quot;ajgw2jggmwmofm77lgbx5eo2n&quot;); // 	    for (lp-&gt;pos.x = objp-&gt;pos.x - lp-&gt;sz.x,</span>
+<span class="nc" id="L688">UNSUPPORTED(&quot;nwfhss2g67z5exjkorj0brd&quot;); // 		 lp-&gt;pos.y = objp-&gt;pos.y + objp-&gt;sz.y;</span>
+<span class="nc" id="L689">UNSUPPORTED(&quot;eolwmrajeldp9gf9ug6ue0gx2&quot;); // 		 lp-&gt;pos.y &gt;= (objp-&gt;pos.y - lp-&gt;sz.y);</span>
+<span class="nc" id="L690">UNSUPPORTED(&quot;bz3822dbe0xnwj4nm7pf39kae&quot;); // 		 lp-&gt;pos.y -= yincr) {</span>
+<span class="nc" id="L691">UNSUPPORTED(&quot;8pbum2o0fs86ceaiuxv4efbb6&quot;); // 		nbp = xlintersections(xlp, objp, intrsx);</span>
+<span class="nc" id="L692">UNSUPPORTED(&quot;5xx7o143ftoj0rhyhg1hqgioa&quot;); // 		if (nbp.n == 0)</span>
+<span class="nc" id="L693">UNSUPPORTED(&quot;eqanxe9w90oki7yqvwyzpfcw1&quot;); // 		    return nbp;</span>
+<span class="nc" id="L694">UNSUPPORTED(&quot;8yd6g3a3f0g09gmu5f67vah0x&quot;); // 		if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L695">UNSUPPORTED(&quot;d6ac36j6lh6qspxwnn3vi0uc3&quot;); // 		    bp = nbp;</span>
+<span class="nc" id="L696">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L697">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+     }
+     /*sliding from bottom right */
+<span class="fc" id="L700"> 	lp.get__(0).pos.x = objp.pos.x + objp.sz.x;</span>
+<span class="fc" id="L701">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="pc bpc" id="L702" title="6 of 10 branches missed.">     if (intrsx[2]!=null || intrsx[1]!=null || intrsx[0]!=null || intrsx[5]!=null || intrsx[8]!=null) {	/* have to move */</span>
+<span class="pc bpc" id="L703" title="2 of 4 branches missed."> 	if ((intrsx[1]) == null &amp;&amp; (intrsx[0]) == null) {	/* some room left? */</span>
+ 	    /* slide along lower edge */
+<span class="fc" id="L705"> 	    for (lp.get__(0).pos.x = (objp.pos.x + objp.sz.x),</span>
+<span class="fc" id="L706"> 		 lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="fc bfc" id="L707" title="All 2 branches covered."> 		 lp.get__(0).pos.x &gt;= (objp.pos.x - lp.get__(0).sz.x);</span>
+<span class="fc" id="L708"> 		 lp.get__(0).pos.x = (lp.get__(0).pos.x - xincr)) {</span>
+<span class="fc" id="L709"> 		nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="pc bpc" id="L710" title="1 of 2 branches missed."> 		if (nbp.n == 0)</span>
+<span class="nc" id="L711"> 			return nbp;</span>
+<span class="pc bpc" id="L712" title="1 of 2 branches missed."> 			if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L713"> 			    bp.___(nbp);</span>
+ 	    }
+ 	}
+<span class="pc bpc" id="L716" title="3 of 4 branches missed."> 	if ((intrsx[5]) == null &amp;&amp; (intrsx[8]) == null) {	/* some room up? */</span>
+<span class="nc" id="L717">UNSUPPORTED(&quot;4bcpk3ixfwrlr0yzrjv2efigj&quot;); // 	    /* slide up right edge */</span>
+<span class="nc" id="L718">UNSUPPORTED(&quot;7natp0873pfsvymhhhvki1sev&quot;); // 	    for (lp-&gt;pos.x = objp-&gt;pos.x + objp-&gt;sz.x,</span>
+<span class="nc" id="L719">UNSUPPORTED(&quot;56ycmo0ljb7e86mnezdx3regh&quot;); // 		 lp-&gt;pos.y = objp-&gt;pos.y - lp-&gt;sz.y;</span>
+<span class="nc" id="L720">UNSUPPORTED(&quot;9cepfi69gtzy7muk9d27es8oc&quot;); // 		 lp-&gt;pos.y &lt;= (objp-&gt;pos.y + objp-&gt;sz.y);</span>
+<span class="nc" id="L721">UNSUPPORTED(&quot;az41g895dhl39ckrigxl1c5jl&quot;); // 		 lp-&gt;pos.y += yincr) {</span>
+<span class="nc" id="L722">UNSUPPORTED(&quot;8pbum2o0fs86ceaiuxv4efbb6&quot;); // 		nbp = xlintersections(xlp, objp, intrsx);</span>
+<span class="nc" id="L723">UNSUPPORTED(&quot;5xx7o143ftoj0rhyhg1hqgioa&quot;); // 		if (nbp.n == 0)</span>
+<span class="nc" id="L724">UNSUPPORTED(&quot;eqanxe9w90oki7yqvwyzpfcw1&quot;); // 		    return nbp;</span>
+<span class="nc" id="L725">UNSUPPORTED(&quot;8yd6g3a3f0g09gmu5f67vah0x&quot;); // 		if (nbp.area &lt; bp.area)</span>
+<span class="nc" id="L726">UNSUPPORTED(&quot;d6ac36j6lh6qspxwnn3vi0uc3&quot;); // 		    bp = nbp;</span>
+<span class="nc" id="L727">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+ 	}
+     }
+<span class="fc" id="L730">     return bp;</span>
+}
+
+
+
+
+//3 e29g2hwlogx0zchsnvi464c7t
+// static int xlhdxload(XLabels_t * xlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xlhdxload&quot;, key=&quot;e29g2hwlogx0zchsnvi464c7t&quot;, definition=&quot;static int xlhdxload(XLabels_t * xlp)&quot;)
+public static int xlhdxload(Globals zz, ST_XLabels_t xlp) {
+<span class="fc" id="L741">ENTERING(&quot;e29g2hwlogx0zchsnvi464c7t&quot;,&quot;xlhdxload&quot;);</span>
+try {
+     int i;
+<span class="fc" id="L744">     int order = xlhorder(xlp);</span>
+<span class="fc bfc" id="L745" title="All 2 branches covered.">      for (i = 0; i &lt; xlp.n_objs; i++) {</span>
+    	  ST_HDict_t hp;
+<span class="fc" id="L747">    	  final ST_point pi = new ST_point();</span>
+<span class="fc" id="L748">    	  hp = new ST_HDict_t();</span>
+<span class="fc" id="L749">    	  hp.d.child = xlp.objs.get__(i);</span>
+<span class="fc" id="L750">    	  hp.d.rect.___(objplpmks(xlp, xlp.objs.get__(i)));</span>
+          /* center of the labeling area */
+<span class="fc" id="L752">    	  pi.x = hp.d.rect.boundary[0] +</span>
+    	   (hp.d.rect.boundary[2] - hp.d.rect.boundary[0]) / 2;
+<span class="fc" id="L754">		  pi.y = hp.d.rect.boundary[1] +</span>
+		   (hp.d.rect.boundary[3] - hp.d.rect.boundary[1]) / 2;
+		  
+<span class="fc" id="L757">		  hp.key = hd_hil_s_from_xy(pi, order);</span>
+<span class="pc bpc" id="L758" title="1 of 2 branches missed.">		  if ((xlp.hdx.searchf.exe(zz, xlp.hdx, hp, 0000001)) == null)</span>
+			  
+<span class="nc" id="L760"> 	    return -1;</span>
+     }
+<span class="fc" id="L762">     return 0;</span>
+} finally {
+<span class="fc" id="L764">LEAVING(&quot;e29g2hwlogx0zchsnvi464c7t&quot;,&quot;xlhdxload&quot;);</span>
+}
+}
+
+
+
+
+//3 26qpvnyd6tmdut8i2wo4itza3
+// static void xlhdxunload(XLabels_t * xlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xlhdxunload&quot;, key=&quot;26qpvnyd6tmdut8i2wo4itza3&quot;, definition=&quot;static void xlhdxunload(XLabels_t * xlp)&quot;)
+public static void xlhdxunload(ST_XLabels_t xlp) {
+<span class="fc" id="L776">ENTERING(&quot;26qpvnyd6tmdut8i2wo4itza3&quot;,&quot;xlhdxunload&quot;);</span>
+try {
+//UNSUPPORTED(&quot;4bsnj74f63qe288s6be1xmrzw&quot;); // static void xlhdxunload(XLabels_t * xlp)
+//UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {
+//UNSUPPORTED(&quot;9sqtid8yyo2ws8avf33utdebf&quot;); //   int size=dtsize(xlp-&gt;hdx), freed=0;
+//UNSUPPORTED(&quot;dm7bmt2fwlkdskmcebdm1ctqj&quot;); //   while(dtsize(xlp-&gt;hdx) ) {
+//UNSUPPORTED(&quot;a3jz6ykhoarsdfviidq7beb9z&quot;); //     void*vp=(((Dt_t*)(xlp-&gt;hdx))-&gt;data-&gt;here ? (((Dt_t*)((xlp-&gt;hdx)))-&gt;disc-&gt;link &lt; 0 ? ((Dthold_t*)((((Dt_t*)(xlp-&gt;hdx))-&gt;data-&gt;here)))-&gt;obj : (void*)((char*)((((Dt_t*)(xlp-&gt;hdx))-&gt;data-&gt;here)) - ((Dt_t*)((xlp-&gt;hdx)))-&gt;disc-&gt;link) ):(void*)(0));
+//UNSUPPORTED(&quot;2covsywkzvpkysnjf34nmr1uw&quot;); //     assert(vp);
+//UNSUPPORTED(&quot;a9jmr8hmnwcky7f1e1qorwnjv&quot;); //     if(vp) {
+//UNSUPPORTED(&quot;d2vfgb4tj6x8x7cq0kv0qgk23&quot;); //       (*(((Dt_t*)(xlp-&gt;hdx))-&gt;searchf))((xlp-&gt;hdx),(void*)(vp),0010000);
+//UNSUPPORTED(&quot;7f4abg2jsf465jjlnp95d9sk6&quot;); //       free(vp);
+//UNSUPPORTED(&quot;5hklxkrkvjgi37kkm6v9xajwc&quot;); //       freed++;
+//UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }
+//UNSUPPORTED(&quot;7ijd6pszsxnoopppf6xwo8wdl&quot;); //   }
+//UNSUPPORTED(&quot;bifp41eoqo8l51crrab087z21&quot;); //   assert(size==freed);
+//UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }
+} finally {
+<span class="fc" id="L793">LEAVING(&quot;26qpvnyd6tmdut8i2wo4itza3&quot;,&quot;xlhdxunload&quot;);</span>
+}
+<span class="fc" id="L795">}</span>
+
+
+
+
+//3 3wrxwwd3y5ts0ekr32o8vhuvv
+// static int xlspdxload(XLabels_t * xlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xlspdxload&quot;, key=&quot;3wrxwwd3y5ts0ekr32o8vhuvv&quot;, definition=&quot;static int xlspdxload(XLabels_t * xlp)&quot;)
+public static int xlspdxload(Globals zz, ST_XLabels_t xlp) {
+<span class="fc" id="L805">ENTERING(&quot;3wrxwwd3y5ts0ekr32o8vhuvv&quot;,&quot;xlspdxload&quot;);</span>
+try {
+<span class="fc" id="L807">     ST_HDict_t op=null;</span>
+<span class="fc bfc" id="L808" title="All 2 branches covered.">     for (op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, null, 0000200); op!=null;</span>
+<span class="fc" id="L809">    		 op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, op, 0000010)) {</span>
+   	/*          tree       rectangle    data        node             lvl */
+//    	 	RTreeInsert(xlp-&gt;spdx, &amp;op-&gt;d.rect, op-&gt;d.data, &amp;xlp-&gt;spdx-&gt;root, 0);
+    	 // WARNING ARRAY
+<span class="fc" id="L813">     	final ST_Node_t___[] tmp = new ST_Node_t___[] {(ST_Node_t___) xlp.spdx.root};</span>
+<span class="fc" id="L814">		RTreeInsert((ST_RTree) xlp.spdx, (ST_Rect_t)op.d.rect,</span>
+     			op.d.child,
+     			tmp, 0);
+<span class="fc" id="L817">		xlp.spdx.root = tmp[0];</span>
+     }
+<span class="fc" id="L819">     return 0;</span>
+} finally {
+<span class="fc" id="L821">LEAVING(&quot;3wrxwwd3y5ts0ekr32o8vhuvv&quot;,&quot;xlspdxload&quot;);</span>
+}
+}
+
+
+
+
+//3 6d3fqrllm55toeo3wscwvv4ty
+// static int xlinitialize(XLabels_t * xlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;xlinitialize&quot;, key=&quot;6d3fqrllm55toeo3wscwvv4ty&quot;, definition=&quot;static int xlinitialize(XLabels_t * xlp)&quot;)
+public static int xlinitialize(Globals zz, ST_XLabels_t xlp) {
+<span class="fc" id="L833">ENTERING(&quot;6d3fqrllm55toeo3wscwvv4ty&quot;,&quot;xlinitialize&quot;);</span>
+try {
+<span class="fc" id="L835">     int r=0;</span>
+<span class="pc bpc" id="L836" title="1 of 2 branches missed.">     if ((r = xlhdxload(zz, xlp)) &lt; 0)</span>
+<span class="nc" id="L837"> 	return r;</span>
+<span class="pc bpc" id="L838" title="1 of 2 branches missed.">     if ((r = xlspdxload(zz, xlp)) &lt; 0)</span>
+<span class="nc" id="L839"> 	return r;</span>
+<span class="fc" id="L840">     xlhdxunload(xlp);</span>
+<span class="fc" id="L841">     return dtclose(zz, (ST_dt_s) xlp.hdx);</span>
+} finally {
+<span class="fc" id="L843">LEAVING(&quot;6d3fqrllm55toeo3wscwvv4ty&quot;,&quot;xlinitialize&quot;);</span>
+}
+}
+
+
+
+
+//3 brqgbskh3z4ah8infjompibvu
+// int placeLabels(object_t * objs, int n_objs, 	    xlabel_t * lbls, int n_lbls, label_params_t * params) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;placeLabels&quot;, key=&quot;brqgbskh3z4ah8infjompibvu&quot;, definition=&quot;int placeLabels(object_t * objs, int n_objs, 	    xlabel_t * lbls, int n_lbls, label_params_t * params)&quot;)
+public static int placeLabels(Globals zz, CArray&lt;ST_object_t&gt; objs, int n_objs, CArray&lt;ST_xlabel_t&gt; lbls, int n_lbls, ST_label_params_t params) {
+<span class="fc" id="L855">ENTERING(&quot;brqgbskh3z4ah8infjompibvu&quot;,&quot;placeLabels&quot;);</span>
+try {
+int r, i;
+<span class="fc" id="L858">final ST_BestPos_t bp = new ST_BestPos_t();</span>
+<span class="fc" id="L859">ST_XLabels_t xlp = xlnew(zz, objs, n_objs, lbls, n_lbls, params);</span>
+<span class="pc bpc" id="L860" title="1 of 2 branches missed.">     if ((r = xlinitialize(zz, xlp)) &lt; 0)</span>
+<span class="nc" id="L861"> 	return r;</span>
+     /* Place xlabel_t* lp near lp-&gt;obj so that the rectangle whose lower-left
+      * corner is lp-&gt;pos, and size is lp-&gt;sz does not intersect any object
+      * in objs (by convention, an object consisting of a single point
+      * intersects nothing) nor any other label, if possible. On input,
+      * lp-&gt;set is 0.
+      *
+      * On output, any label with a position should have this stored in
+      * lp-&gt;pos and have lp-&gt;set non-zero.
+      *
+      * If params-&gt;force is true, all labels must be positioned, even if
+      * overlaps are necessary.
+      *
+      * Return 0 if all labels could be placed without overlap;
+      * non-zero otherwise.
+      */
+<span class="fc" id="L877">     r = 0;</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">     for (i = 0; i &lt; n_objs; i++) {</span>
+<span class="fc bfc" id="L879" title="All 2 branches covered."> 	if (objs.get__(i).lbl == null)</span>
+<span class="fc" id="L880"> 	    continue;</span>
+<span class="fc" id="L881"> 	bp.___(xladjust(xlp, objs.get__(i)));</span>
+<span class="fc bfc" id="L882" title="All 2 branches covered."> 	if (bp.n == 0) {</span>
+<span class="fc" id="L883"> 	    objs.get__(i).lbl.get__(0).set = 1;</span>
+<span class="pc bpc" id="L884" title="1 of 2 branches missed."> 	} else if(bp.area == 0) {</span>
+<span class="nc" id="L885"> 	    objs.get__(i).lbl.get__(0).pos.x = bp.pos.x;</span>
+<span class="nc" id="L886"> 	    objs.get__(i).lbl.get__(0).pos.y = bp.pos.y;</span>
+<span class="nc" id="L887"> 	    objs.get__(i).lbl.get__(0).set = 1;</span>
+<span class="pc bpc" id="L888" title="1 of 2 branches missed."> 	} else if (params.force) {</span>
+<span class="fc" id="L889"> 	    objs.get__(i).lbl.get__(0).pos.x = bp.pos.x;</span>
+<span class="fc" id="L890"> 	    objs.get__(i).lbl.get__(0).pos.y = bp.pos.y;</span>
+<span class="fc" id="L891"> 	    objs.get__(i).lbl.get__(0).set = 1;</span>
+ 	} else {
+<span class="nc" id="L893"> 	    r = 1;</span>
+ 	}
+     }
+<span class="fc" id="L896">     xlfree(xlp);</span>
+<span class="fc" id="L897">     return r;</span>
+} finally {
+<span class="fc" id="L899">LEAVING(&quot;brqgbskh3z4ah8infjompibvu&quot;,&quot;placeLabels&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

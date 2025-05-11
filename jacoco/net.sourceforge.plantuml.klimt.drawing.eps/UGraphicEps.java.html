@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicEps.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.eps</a> &gt; <span class="el_source">UGraphicEps.java</span></div><h1>UGraphicEps.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.eps;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.url.Url;
+
+public class UGraphicEps extends AbstractUGraphic&lt;EpsGraphics&gt; implements ClipContainer {
+
+	private final EpsStrategy strategyTOBEREMOVED;
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+<span class="nc" id="L65">		final UGraphicEps result = new UGraphicEps(this);</span>
+<span class="nc" id="L66">		return result;</span>
+	}
+
+	protected UGraphicEps(UGraphicEps other) {
+<span class="nc" id="L70">		super(other.getStringBounder());</span>
+<span class="nc" id="L71">		copy(other);</span>
+<span class="nc" id="L72">		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;</span>
+<span class="nc" id="L73">		register();</span>
+<span class="nc" id="L74">	}</span>
+
+	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
+			EpsStrategy strategy) {
+<span class="nc" id="L78">		super(stringBounder);</span>
+<span class="nc" id="L79">		copy(defaultBackground, colorMapper, strategy.creatEpsGraphics());</span>
+<span class="nc" id="L80">		this.strategyTOBEREMOVED = strategy;</span>
+<span class="nc" id="L81">		register();</span>
+<span class="nc" id="L82">	}</span>
+
+	private void register() {
+<span class="nc" id="L85">		registerDriver(URectangle.class, new DriverRectangleEps(this));</span>
+<span class="nc" id="L86">		registerDriver(UText.class, new DriverTextEps(this, strategyTOBEREMOVED));</span>
+<span class="nc" id="L87">		registerDriver(ULine.class, new DriverLineEps(this));</span>
+<span class="nc" id="L88">		registerDriver(UPolygon.class, new DriverPolygonEps(this));</span>
+<span class="nc" id="L89">		registerDriver(UEllipse.class, new DriverEllipseEps(this));</span>
+<span class="nc" id="L90">		registerDriver(UImage.class, new DriverImageEps(this));</span>
+<span class="nc" id="L91">		registerDriver(UPath.class, new DriverPathEps());</span>
+<span class="nc" id="L92">		registerDriver(DotPath.class, new DriverDotPathEps());</span>
+<span class="nc" id="L93">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterEps());</span>
+<span class="nc" id="L94">	}</span>
+
+	public void close() {
+<span class="nc" id="L97">		getEpsGraphics().close();</span>
+<span class="nc" id="L98">	}</span>
+
+	public String getEPSCode() {
+<span class="nc" id="L101">		return getEpsGraphics().getEPSCode();</span>
+	}
+
+	public EpsGraphics getEpsGraphics() {
+<span class="nc" id="L105">		return this.getGraphicObject();</span>
+	}
+
+	public void drawEps(String eps, double x, double y) {
+<span class="nc" id="L109">		this.getGraphicObject().drawEps(eps, x, y);</span>
+<span class="nc" id="L110">	}</span>
+
+	static public String getEpsString(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy epsStrategy,
+			UDrawable udrawable) throws IOException {
+<span class="nc" id="L114">		final UGraphicEps ug = new UGraphicEps(defaultBackground, colorMapper,</span>
+<span class="nc" id="L115">				FileFormat.EPS_TEXT.getDefaultStringBounder(), epsStrategy);</span>
+<span class="nc" id="L116">		udrawable.drawU(ug);</span>
+<span class="nc" id="L117">		return ug.getEPSCode();</span>
+	}
+
+	@Override
+	public void startUrl(Url url) {
+<span class="nc" id="L122">		getGraphicObject().openLink(url.getUrl());</span>
+<span class="nc" id="L123">	}</span>
+
+	@Override
+	public void closeUrl() {
+<span class="nc" id="L127">		getGraphicObject().closeLink();</span>
+<span class="nc" id="L128">	}</span>
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+<span class="nc" id="L132">		os.write(getEPSCode().getBytes());</span>
+<span class="nc" id="L133">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

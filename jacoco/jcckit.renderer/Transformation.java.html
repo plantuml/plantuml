@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transformation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.renderer</a> &gt; <span class="el_source">Transformation.java</span></div><h1>Transformation.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.renderer;
+
+import java.awt.Graphics2D;
+
+import jcckit.graphic.Anchor;
+import jcckit.graphic.ClippingRectangle;
+import jcckit.graphic.GraphPoint;
+
+/**
+ *  Transformation between device-independent coordinates
+ *  and standard Java coordinates. The aspect-ratio will
+ *  be the same. The position in the canvas is determined by a
+ *  {@link jcckit.graphic.Rectangle Rectangle} defining a (virtual)
+ *  paper which is placed in the canvas according to an anchor point.
+ *  Depending on the aspect ratio  of the canvas the paper width or
+ *  height occupies the canvas width or height.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class Transformation {
+    // ::remove folder when __HAXE__
+  private final double _scale, _x0, _y0;
+  
+  public String toString() {
+<span class="nc" id="L43">		return &quot;_scale=&quot; + _scale + &quot; _x0=&quot; + _x0 + &quot; _y0=&quot; + _y0;</span>
+	}
+
+  /**
+   *  Creates an instance for the specified canvas size, paper size,
+   *  and anchor points of the paper.
+   *  @param width Width of the canvas.
+   *  @param height Height of the canvas.
+   *  @param paper Rectangle defining the paper in device-independent
+   *         coordinates.
+   *  @param horizontalAnchor Horizontal anchor of the paper in the canvas.
+   *  @param verticalAnchor Vertical anchor of the paper in the canvas.
+   */
+  public Transformation(int width, int height, ClippingRectangle paper,
+<span class="nc" id="L57">                        Anchor horizontalAnchor, Anchor verticalAnchor) {</span>
+<span class="nc" id="L58">    double pWidth = paper.getMaxX() - paper.getMinX();</span>
+<span class="nc" id="L59">    double pHeight = paper.getMaxY() - paper.getMinY();</span>
+<span class="nc" id="L60">    _scale = Math.min(width / pWidth, height / pHeight);</span>
+<span class="nc" id="L61">    _x0 = 0.5 * horizontalAnchor.getFactor() * (width - _scale * pWidth)</span>
+<span class="nc" id="L62">          - _scale * paper.getMinX();</span>
+<span class="nc" id="L63">    _y0 = 0.5 * verticalAnchor.getFactor() * (_scale * pHeight - height)</span>
+<span class="nc" id="L64">          + height + _scale * + paper.getMinY();</span>
+<span class="nc" id="L65">  }</span>
+
+  /** Transforms the device-independent x coordinate into Java coordinates. */
+  public int transformX(double x) {
+<span class="nc" id="L69">    return trim(_scale * x + _x0);</span>
+  }
+
+  /** Transforms the device-independent y coordinate into Java coordinates. */
+  public int transformY(double y) {
+<span class="nc" id="L74">    return trim(_y0 - _scale * y);</span>
+  }
+
+  /** Transforms the device-independent width into Java width. */
+  public int transformWidth(double width) {
+<span class="nc" id="L79">    return trim(_scale * width + 0.5);</span>
+  }
+
+  /** Transforms the device-independent height into Java height. */
+  public int transformHeight(double height) {
+<span class="nc" id="L84">    return trim(_scale * height + 0.5);</span>
+  }
+  
+  private static int trim(double number)
+  {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">    return number &gt; Short.MAX_VALUE </span>
+<span class="nc" id="L90">              ? Short.MAX_VALUE </span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">              : (number &lt; Short.MIN_VALUE ? Short.MIN_VALUE : (int) number); </span>
+  }
+
+  /**
+   *  Transforms a point in Java coordinates back into device-independent
+   *  coordinates.
+   */
+  public GraphPoint transformBack(int x, int y) {
+<span class="nc" id="L99">    return new GraphPoint((x - _x0) / _scale, (_y0 - y) / _scale);</span>
+  }
+
+public void apply(Graphics2D g) {
+<span class="nc" id="L103">	g.translate(_x0, _y0);</span>
+<span class="nc" id="L104">	g.scale(_scale, -_scale);</span>
+	
+<span class="nc" id="L106">}</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

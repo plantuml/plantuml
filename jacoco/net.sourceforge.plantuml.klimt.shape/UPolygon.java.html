@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UPolygon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.shape</a> &gt; <span class="el_source">UPolygon.java</span></div><h1>UPolygon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.shape;
+
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.AbstractShadowable;
+import net.sourceforge.plantuml.klimt.compress.CompressionMode;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class UPolygon extends AbstractShadowable {
+    // ::remove file when __HAXE__
+
+<span class="fc" id="L50">	private final List&lt;XPoint2D&gt; all = new ArrayList&lt;XPoint2D&gt;();</span>
+	private final String name;
+
+<span class="fc" id="L53">	private MinMax minmax = MinMax.getEmpty(false);</span>
+
+	public UPolygon() {
+<span class="fc" id="L56">		this((String) null);</span>
+<span class="fc" id="L57">	}</span>
+
+	public UPolygon(List&lt;XPoint2D&gt; points) {
+<span class="fc" id="L60">		this((String) null);</span>
+<span class="fc" id="L61">		all.addAll(points);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
+<span class="fc" id="L63">			manageMinMax(pt.getX(), pt.getY());</span>
+
+<span class="fc" id="L65">	}</span>
+
+<span class="fc" id="L67">	public UPolygon(String name) {</span>
+<span class="fc" id="L68">		this.name = name;</span>
+<span class="fc" id="L69">	}</span>
+
+	public XPoint2D getPoint(int idx) {
+<span class="fc" id="L72">		return all.get(idx);</span>
+	}
+
+	public XPoint2D checkMiddleContactForSpecificTriangle(XPoint2D center) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size() - 1; i++) {</span>
+<span class="nc" id="L77">			final XPoint2D pt1 = all.get(i);</span>
+<span class="nc" id="L78">			final XPoint2D pt2 = all.get(i + 1);</span>
+<span class="nc" id="L79">			final XPoint2D middle = new XPoint2D((pt1.getX() + pt2.getX()) / 2, (pt1.getY() + pt2.getY()) / 2);</span>
+<span class="nc" id="L80">			final double delta = middle.distance(center);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (delta &lt; 1)</span>
+<span class="nc" id="L82">				return all.get((i + all.size() - 1) % all.size());</span>
+
+		}
+<span class="nc" id="L85">		return null;</span>
+	}
+
+	public void addPoint(double x, double y) {
+<span class="fc" id="L89">		all.add(new XPoint2D(x, y));</span>
+<span class="fc" id="L90">		manageMinMax(x, y);</span>
+<span class="fc" id="L91">	}</span>
+
+	public void addPoint(XPoint2D point) {
+<span class="fc" id="L94">		addPoint(point.getX(), point.getY());</span>
+<span class="fc" id="L95">	}</span>
+
+	private void manageMinMax(double x, double y) {
+<span class="fc" id="L98">		minmax = minmax.addPoint(x, y);</span>
+<span class="fc" id="L99">	}</span>
+
+	public List&lt;XPoint2D&gt; getPoints() {
+<span class="fc" id="L102">		return all;</span>
+	}
+
+	public UPolygon translate(double dx, double dy) {
+<span class="fc" id="L106">		final UPolygon result = new UPolygon();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
+<span class="fc" id="L108">			result.addPoint(pt.x + dx, pt.y + dy);</span>
+
+<span class="fc" id="L110">		return result;</span>
+	}
+
+	public void rotate(double theta) {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (theta == 0)</span>
+<span class="fc" id="L115">			return;</span>
+<span class="fc" id="L116">		affine(AffineTransform.getRotateInstance(theta));</span>
+<span class="fc" id="L117">	}</span>
+
+	public void affine(AffineTransform rotate) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i++)</span>
+<span class="fc" id="L121">			all.set(i, all.get(i).transform(rotate));</span>
+
+<span class="fc" id="L123">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (name != null)</span>
+<span class="nc" id="L128">			return name;</span>
+
+<span class="nc" id="L130">		return super.toString() + &quot; &quot; + all;</span>
+	}
+
+	public double getHeight() {
+<span class="nc" id="L134">		return minmax.getHeight();</span>
+	}
+
+	public double getWidth() {
+<span class="nc" id="L138">		return minmax.getWidth();</span>
+	}
+
+	public double getMinX() {
+<span class="fc" id="L142">		return minmax.getMinX();</span>
+	}
+
+	public double getMinY() {
+<span class="fc" id="L146">		return minmax.getMinY();</span>
+	}
+
+	public double getMaxX() {
+<span class="fc" id="L150">		return minmax.getMaxX();</span>
+
+	}
+
+	public double getMaxY() {
+<span class="fc" id="L155">		return minmax.getMaxY();</span>
+	}
+
+	public MinMax getMinMax() {
+<span class="nc" id="L159">		return minmax;</span>
+	}
+
+	public double[] getPointArray(double x, double y) {
+<span class="fc" id="L163">		final double points[] = new double[getPoints().size() * 2];</span>
+<span class="fc" id="L164">		int i = 0;</span>
+
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (XPoint2D pt : getPoints()) {</span>
+<span class="fc" id="L167">			points[i++] = pt.getX() + x;</span>
+<span class="fc" id="L168">			points[i++] = pt.getY() + y;</span>
+<span class="fc" id="L169">		}</span>
+<span class="fc" id="L170">		return points;</span>
+	}
+
+	private CompressionMode compressionMode;
+
+	public final CompressionMode getCompressionMode() {
+<span class="fc" id="L176">		return compressionMode;</span>
+	}
+
+	public final void setCompressionMode(CompressionMode compressionMode) {
+<span class="nc" id="L180">		this.compressionMode = compressionMode;</span>
+<span class="nc" id="L181">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GConnectionVerticalDown.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.gtile</a> &gt; <span class="el_source">GConnectionVerticalDown.java</span></div><h1>GConnectionVerticalDown.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.gtile;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+
+public class GConnectionVerticalDown extends GAbstractConnection {
+
+	private final TextBlock textBlock;
+	private final UTranslate pos1;
+	private final UTranslate pos2;
+
+	public GConnectionVerticalDown(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
+			TextBlock textBlock) {
+<span class="nc" id="L53">		super(gpoint1, gpoint2);</span>
+<span class="nc" id="L54">		this.textBlock = textBlock;</span>
+<span class="nc" id="L55">		this.pos1 = pos1;</span>
+<span class="nc" id="L56">		this.pos2 = pos2;</span>
+		// See FtileFactoryDelegatorAssembly
+<span class="nc" id="L58">	}</span>
+
+	@Override
+	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+<span class="nc" id="L62">		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), skinParam().arrows().asToDown())</span>
+<span class="nc" id="L63">				.withLabel(textBlock, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L64">		final XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());</span>
+<span class="nc" id="L65">		final XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());</span>
+<span class="nc" id="L66">		final XPoint2D mp1a = translate1.getTranslated(p1);</span>
+<span class="nc" id="L67">		final XPoint2D mp2b = translate2.getTranslated(p2);</span>
+<span class="nc" id="L68">		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;</span>
+<span class="nc" id="L69">		snake.addPoint(mp1a);</span>
+<span class="nc" id="L70">		snake.addPoint(mp1a.getX(), middle);</span>
+<span class="nc" id="L71">		snake.addPoint(mp2b.getX(), middle);</span>
+<span class="nc" id="L72">		snake.addPoint(mp2b);</span>
+<span class="nc" id="L73">		ug.draw(snake);</span>
+
+<span class="nc" id="L75">	}</span>
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L79">		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), skinParam().arrows().asToDown())</span>
+<span class="nc" id="L80">				.withLabel(textBlock, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L81">		final XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());</span>
+<span class="nc" id="L82">		final XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());</span>
+<span class="nc" id="L83">		snake.addPoint(p1);</span>
+<span class="nc" id="L84">		snake.addPoint(p2);</span>
+<span class="nc" id="L85">		ug.draw(snake);</span>
+<span class="nc" id="L86">	}</span>
+
+//	// DUPLICATE 4561
+//	private Rainbow getInLinkRenderingColor() {
+//		Rainbow color;
+//		final ISkinParam skinParam = gpoint1.getGtile().skinParam();
+//		if (UseStyle.useBetaStyle()) {
+//			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+//			color = Rainbow.build(style, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
+//		} else
+//			color = Rainbow.build(skinParam);
+////		final LinkRendering linkRendering = tile.getInLinkRendering();
+////		if (linkRendering == null) {
+////			if (UseStyle.useBetaStyle()) {
+////				final Style style = getDefaultStyleDefinitionArrow()
+////						.getMergedStyle(skinParam().getCurrentStyleBuilder());
+////				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+////			} else {
+////				color = Rainbow.build(skinParam());
+////			}
+////		} else {
+////			color = linkRendering.getRainbow();
+////		}
+////		if (color.size() == 0) {
+////			if (UseStyle.useBetaStyle()) {
+////				final Style style = getDefaultStyleDefinitionArrow()
+////						.getMergedStyle(skinParam().getCurrentStyleBuilder());
+////				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+////			} else {
+////				color = Rainbow.build(skinParam());
+////			}
+////		}
+//		return color;
+//	}
+
+//	@Override
+//	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+//		final Snake snake = Snake.create(color, Arrows.asToDown()).withLabel(textBlock, HorizontalAlignment.LEFT);
+//		final XPoint2D mp1a = translate1.getTranslated(p1);
+//		final XPoint2D mp2b = translate2.getTranslated(p2);
+//		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
+//		snake.addPoint(mp1a);
+//		snake.addPoint(mp1a.getX(), middle);
+//		snake.addPoint(mp2b.getX(), middle);
+//		snake.addPoint(mp2b);
+//		ug.draw(snake);
+//
+//	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NotesTile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">NotesTile.java</span></div><h1>NotesTile.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteStyle;
+import net.sourceforge.plantuml.sequencediagram.Notes;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class NotesTile extends AbstractTile implements Tile {
+
+	private final LivingSpaces livingSpaces;
+	private final Rose skin;
+	private final ISkinParam skinParam;
+	private final Notes notes;
+	private final YGauge yGauge;
+
+	public Event getEvent() {
+<span class="nc" id="L68">		return notes;</span>
+	}
+
+	public NotesTile(StringBounder stringBounder, LivingSpaces livingSpaces, Notes notes, Rose skin,
+			ISkinParam skinParam, YGauge currentY) {
+<span class="nc" id="L73">		super(stringBounder, currentY);</span>
+<span class="nc" id="L74">		this.livingSpaces = livingSpaces;</span>
+<span class="nc" id="L75">		this.notes = notes;</span>
+<span class="nc" id="L76">		this.skin = skin;</span>
+<span class="nc" id="L77">		this.skinParam = skinParam;</span>
+<span class="nc" id="L78">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="nc" id="L79">	}</span>
+
+	@Override
+	public YGauge getYGauge() {
+<span class="nc" id="L83">		return yGauge;</span>
+	}
+
+	private Component getComponent(StringBounder stringBounder, Note note) {
+<span class="nc" id="L87">		final Component comp = skin.createComponentNote(note.getUsedStyles(), getNoteComponentType(note.getNoteStyle()),</span>
+<span class="nc" id="L88">				note.getSkinParamBackcolored(skinParam), note.getDisplay(), note.getColors(), note.getPosition());</span>
+<span class="nc" id="L89">		return comp;</span>
+	}
+
+	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (noteStyle == NoteStyle.HEXAGONAL)</span>
+<span class="nc" id="L94">			return ComponentType.NOTE_HEXAGONAL;</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (noteStyle == NoteStyle.BOX)</span>
+<span class="nc" id="L97">			return ComponentType.NOTE_BOX;</span>
+
+<span class="nc" id="L99">		return ComponentType.NOTE;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+<span class="nc" id="L105">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (Note note : notes) {</span>
+<span class="nc" id="L108">			final Component comp = getComponent(stringBounder, note);</span>
+<span class="nc" id="L109">			final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L110">			final double x = getX(stringBounder, note).getCurrentValue();</span>
+<span class="nc" id="L111">			final Area area = Area.create(getUsedWidth(stringBounder, note), dim.getHeight());</span>
+
+<span class="nc" id="L113">			final UGraphic ug2 = ug.apply(UTranslate.dx(x));</span>
+<span class="nc" id="L114">			comp.drawU(ug2, area, (Context2D) ug2);</span>
+<span class="nc" id="L115">		}</span>
+<span class="nc" id="L116">	}</span>
+
+	private double getUsedWidth(StringBounder stringBounder, Note note) {
+<span class="nc" id="L119">		final Component comp = getComponent(stringBounder, note);</span>
+<span class="nc" id="L120">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L121">		final double width = dim.getWidth();</span>
+<span class="nc" id="L122">		return width;</span>
+	}
+
+	private Real getXcenter(StringBounder stringBounder, Note note) {
+<span class="nc" id="L126">		final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());</span>
+<span class="nc" id="L127">		return livingSpace1.getPosC(stringBounder);</span>
+	}
+
+	private Real getX(StringBounder stringBounder, Note note) {
+<span class="nc" id="L131">		final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());</span>
+<span class="nc" id="L132">		final NotePosition position = note.getPosition();</span>
+<span class="nc" id="L133">		final double width = getUsedWidth(stringBounder, note);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (position == NotePosition.LEFT) {</span>
+<span class="nc" id="L135">			return livingSpace1.getPosC(stringBounder).addFixed(-width);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		} else if (position == NotePosition.RIGHT) {</span>
+<span class="nc" id="L137">			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="nc" id="L138">			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;</span>
+<span class="nc" id="L139">			return livingSpace1.getPosC(stringBounder).addFixed(dx);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		} else if (position == NotePosition.OVER_SEVERAL) {</span>
+<span class="nc" id="L141">			final LivingSpace livingSpace2 = livingSpaces.get(note.getParticipant2());</span>
+<span class="nc" id="L142">			final Real x1 = livingSpace1.getPosC(stringBounder);</span>
+<span class="nc" id="L143">			final Real x2 = livingSpace2.getPosC(stringBounder);</span>
+<span class="nc" id="L144">			return RealUtils.middle(x1, x2).addFixed(-width / 2);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		} else if (position == NotePosition.OVER) {</span>
+<span class="nc" id="L146">			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);</span>
+		} else {
+<span class="nc" id="L148">			throw new UnsupportedOperationException(position.toString());</span>
+		}
+	}
+
+	public double getPreferredHeight() {
+<span class="nc" id="L153">		double result = 0;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (Note note : notes) {</span>
+<span class="nc" id="L155">			final Component comp = getComponent(getStringBounder(), note);</span>
+<span class="nc" id="L156">			final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L157">			result = Math.max(result, dim.getHeight());</span>
+<span class="nc" id="L158">		}</span>
+<span class="nc" id="L159">		return result;</span>
+	}
+
+	public void addConstraints() {
+<span class="nc" id="L163">		final List&lt;Note&gt; all = notes.asList();</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size() - 1; i++) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			for (int j = i + 1; j &lt; all.size(); j++) {</span>
+<span class="nc" id="L166">				final double center1 = getXcenter(getStringBounder(), all.get(i)).getCurrentValue();</span>
+<span class="nc" id="L167">				final double center2 = getXcenter(getStringBounder(), all.get(j)).getCurrentValue();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">				if (center2 &gt; center1) {</span>
+<span class="nc" id="L169">					final Real point1b = getX2(getStringBounder(), all.get(i));</span>
+<span class="nc" id="L170">					final Real point2 = getX(getStringBounder(), all.get(j));</span>
+<span class="nc" id="L171">					point2.ensureBiggerThan(point1b);</span>
+<span class="nc" id="L172">				} else {</span>
+<span class="nc" id="L173">					final Real point1 = getX(getStringBounder(), all.get(i));</span>
+<span class="nc" id="L174">					final Real point2b = getX2(getStringBounder(), all.get(j));</span>
+<span class="nc" id="L175">					point1.ensureBiggerThan(point2b);</span>
+				}
+			}
+		}
+<span class="nc" id="L179">	}</span>
+
+	public Real getMinX() {
+<span class="nc" id="L182">		final List&lt;Real&gt; reals = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (Note note : notes)</span>
+<span class="nc" id="L184">			reals.add(getX(getStringBounder(), note));</span>
+
+<span class="nc" id="L186">		return RealUtils.min(reals);</span>
+	}
+
+	private Real getX2(StringBounder stringBounder, Note note) {
+<span class="nc" id="L190">		return getX(stringBounder, note).addFixed(getUsedWidth(stringBounder, note));</span>
+	}
+
+	public Real getMaxX() {
+<span class="nc" id="L194">		final List&lt;Real&gt; reals = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (Note note : notes)</span>
+<span class="nc" id="L196">			reals.add(getX2(getStringBounder(), note));</span>
+
+<span class="nc" id="L198">		return RealUtils.max(reals);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

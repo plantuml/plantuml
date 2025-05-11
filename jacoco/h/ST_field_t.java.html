@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ST_field_t.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">h</a> &gt; <span class="el_source">ST_field_t.java</span></div><h1>ST_field_t.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package h;
+
+import smetana.core.CArrayOfStar;
+import smetana.core.CString;
+import smetana.core.UnsupportedStarStruct;
+import smetana.core.__struct__;
+
+<span class="fc" id="L53">final public class ST_field_t extends UnsupportedStarStruct implements SHAPE_INFO {</span>
+
+<span class="fc" id="L55">	public final ST_pointf size = new ST_pointf(); /* its dimension */</span>
+<span class="fc" id="L56">	public final ST_boxf b = new ST_boxf(); /* its placement in node's coordinates */</span>
+	public int n_flds;
+	public ST_textlabel_t lp; /* n_flds == 0 */
+	// struct field_t **fld; /* n_flds &gt; 0 */
+	public CArrayOfStar&lt;ST_field_t&gt; fld;
+	public CString id; /* user's identifier */
+	public boolean LR; /* if box list is horizontal (left to right) */
+	public int sides; /* sides of node exposed to field */
+
+	@Override
+	public String toString() {
+<span class="nc" id="L67">		return id + &quot; sides=&quot; + sides + &quot; n_flds=&quot; + n_flds + &quot; lp=&quot; + lp + &quot; fld=&quot; + fld;</span>
+	}
+
+	@Override
+	public ST_field_t castTo(Class dest) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (dest == ST_field_t.class) {</span>
+<span class="nc" id="L73">			return this;</span>
+		}
+<span class="nc" id="L75">		return (ST_field_t) super.castTo(dest);</span>
+	}
+
+	@Override
+	public void ___(__struct__ other) {
+<span class="nc" id="L80">		ST_field_t other2 = (ST_field_t) other;</span>
+<span class="nc" id="L81">		this.size.___(other2.size);</span>
+<span class="nc" id="L82">		this.b.___(other2.b);</span>
+<span class="nc" id="L83">		this.n_flds = other2.n_flds;</span>
+<span class="nc" id="L84">		this.lp = other2.lp;</span>
+<span class="nc" id="L85">		this.fld = other2.fld;</span>
+<span class="nc" id="L86">		this.id = other2.id;</span>
+<span class="nc" id="L87">		this.LR = other2.LR;</span>
+<span class="nc" id="L88">		this.sides = other2.sides;</span>
+<span class="nc" id="L89">	}</span>
+
+}
+// typedef struct field_t {
+// pointf size;		/* its dimension */
+// boxf b;			/* its placement in node's coordinates */
+// int n_flds;
+// textlabel_t *lp;	/* n_flds == 0 */
+// struct field_t **fld;	/* n_flds &gt; 0 */
+// char *id;		/* user's identifier */
+// unsigned char LR;	/* if box list is horizontal (left to right) */
+// unsigned char sides;    /* sides of node exposed to field */
+// } field_t;
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

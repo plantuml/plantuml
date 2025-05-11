@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>refstr__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">refstr__c.java</span></div><h1>refstr__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cgraph.utils__c.agdtdelete;
+import static gen.lib.cgraph.utils__c.agdtopen;
+import static smetana.core.JUtils.EQ_CSTRING;
+import static smetana.core.Macro.dtinsert;
+import static smetana.core.Macro.dtsearch;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.ST_Agraph_s;
+import h.ST_dt_s;
+import h.ST_refstr_t;
+import smetana.core.ACCESS;
+import smetana.core.CStarStar;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+<span class="nc" id="L65">public class refstr__c {</span>
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/refstr.c&quot;, name=&quot;refdict&quot;, key=&quot;f1nwss2xoaub1hyord232ugoj&quot;, definition = &quot;static Dict_t *refdict(Agraph_t * g)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+private static ST_dt_s refdict(final Globals zz, final ST_Agraph_s g) {
+<span class="fc" id="L72">ENTERING(&quot;f1nwss2xoaub1hyord232ugoj&quot;,&quot;refdict&quot;);</span>
+try {
+		final CStarStar&lt;ST_dt_s&gt; dictref;
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (g != null)</span>
+<span class="fc" id="L76">			dictref = CStarStar.&lt;ST_dt_s&gt; BUILD(new ACCESS&lt;ST_dt_s&gt;() {</span>
+				public ST_dt_s get() {
+<span class="fc" id="L78">					return (ST_dt_s) g.clos.strdict;</span>
+				}
+				public void set(ST_dt_s obj) {
+<span class="fc" id="L81">					g.clos.strdict = obj;</span>
+<span class="fc" id="L82">				}</span>
+			});
+		else
+<span class="nc" id="L85">			dictref = CStarStar.&lt;ST_dt_s&gt; BUILD(new ACCESS&lt;ST_dt_s&gt;() {</span>
+				public ST_dt_s get() {
+<span class="nc" id="L87">					return zz.Refdict_default;</span>
+				}
+				public void set(ST_dt_s obj) {
+<span class="nc" id="L90">					zz.Refdict_default = obj;</span>
+<span class="nc" id="L91">				}</span>
+			});
+<span class="fc bfc" id="L93" title="All 2 branches covered.">    if (dictref.star() == null) {</span>
+<span class="fc" id="L94">	dictref.star(agdtopen(zz, g, zz.Refstrdisc, zz.Dttree));</span>
+<span class="fc" id="L95">	zz.HTML_BIT = 1 &lt;&lt; 31;</span>
+<span class="fc" id="L96">	zz.CNT_BITS = ~zz.HTML_BIT;</span>
+	}
+<span class="fc" id="L98">    return dictref.star();</span>
+} finally {
+<span class="fc" id="L100">LEAVING(&quot;f1nwss2xoaub1hyord232ugoj&quot;,&quot;refdict&quot;);</span>
+}
+}
+
+
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/refstr.c&quot;, name=&quot;refsymbind&quot;, key=&quot;9ts4wqhw2xafdv3tlcilneewq&quot;, definition = &quot;static refstr_t *refsymbind(Dict_t * strdict, char *s)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+private static ST_refstr_t refsymbind(Globals zz, ST_dt_s strdict, CString s) {
+<span class="fc" id="L112">ENTERING(&quot;9ts4wqhw2xafdv3tlcilneewq&quot;,&quot;refsymbind&quot;);</span>
+try {
+<span class="fc" id="L114">    final ST_refstr_t key = new ST_refstr_t();</span>
+    ST_refstr_t r;
+    // key.s = s.duplicate());
+<span class="fc" id="L117">    key.setString(s);</span>
+<span class="fc" id="L118">    r = (ST_refstr_t) dtsearch(zz, strdict, key);</span>
+<span class="fc" id="L119">    return r;</span>
+} finally {
+<span class="fc" id="L121">LEAVING(&quot;9ts4wqhw2xafdv3tlcilneewq&quot;,&quot;refsymbind&quot;);</span>
+}
+}
+
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/refstr.c&quot;, name=&quot;refstrbind&quot;, key=&quot;1scntgo71z7c2v15zapiyw59w&quot;, definition = &quot;static char *refstrbind(Dict_t * strdict, char *s)&quot;)
+private static CString refstrbind(Globals zz, ST_dt_s strdict, CString s) {
+<span class="fc" id="L131">ENTERING(&quot;1scntgo71z7c2v15zapiyw59w&quot;,&quot;refstrbind&quot;);</span>
+try {
+    ST_refstr_t r;
+<span class="fc" id="L134">    r = refsymbind(zz, strdict, s);</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">    if (r!=null)</span>
+<span class="nc" id="L136">	return r.s;</span>
+    else
+<span class="fc" id="L138">	return null;</span>
+} finally {
+<span class="fc" id="L140">LEAVING(&quot;1scntgo71z7c2v15zapiyw59w&quot;,&quot;refstrbind&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/refstr.c&quot;, name=&quot;agstrbind&quot;, key=&quot;bb8aqjshw3ecae2lsmhigd0mc&quot;, definition = &quot;char *agstrbind(Agraph_t * g, char *s)&quot;)
+public static CString agstrbind(Globals zz, ST_Agraph_s g, CString s) {
+<span class="fc" id="L149">ENTERING(&quot;bb8aqjshw3ecae2lsmhigd0mc&quot;,&quot;agstrbind&quot;);</span>
+try {
+<span class="fc" id="L151">    return refstrbind(zz, refdict(zz, g), s);</span>
+} finally {
+<span class="fc" id="L153">LEAVING(&quot;bb8aqjshw3ecae2lsmhigd0mc&quot;,&quot;agstrbind&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/refstr.c&quot;, name=&quot;agstrdup&quot;, key=&quot;86oznromwhn9qeym0k7pih73q&quot;, definition = &quot;char *agstrdup(Agraph_t * g, char *s)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+public static CString agstrdup(Globals zz, ST_Agraph_s g, CString s) {
+<span class="fc" id="L163">ENTERING(&quot;86oznromwhn9qeym0k7pih73q&quot;,&quot;agstrdup&quot;);</span>
+try {
+	ST_refstr_t r;
+    ST_dt_s strdict;
+    // size_t sz;
+    
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">    if (s == null)</span>
+<span class="nc" id="L170">	 return null;</span>
+<span class="fc" id="L171">    strdict = refdict(zz, g);</span>
+<span class="fc" id="L172">    r = (ST_refstr_t) refsymbind(zz, strdict, s);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">    if (r!=null)</span>
+<span class="fc" id="L174">	r.refcnt++;</span>
+    else {
+//	sz = sizeof(ST_refstr_t.class).plus(s.length());
+//	if (g!=null)
+//	    r = (ST_refstr_t) agalloc(g, sz);
+//	else
+<span class="fc" id="L180">	    r = new ST_refstr_t();</span>
+<span class="fc" id="L181">	r.refcnt = 1;</span>
+<span class="fc" id="L182">	r.setString(s.duplicate());</span>
+//	strcpy(r-&gt;store, s);
+//	r-&gt;s = r-&gt;store;
+<span class="fc" id="L185">	dtinsert(zz, strdict, r);</span>
+    }
+<span class="fc" id="L187">	return r.s;</span>
+} finally {
+<span class="fc" id="L189">LEAVING(&quot;86oznromwhn9qeym0k7pih73q&quot;,&quot;agstrdup&quot;);</span>
+}
+}
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/refstr.c&quot;, name=&quot;agstrfree&quot;, key=&quot;enhn1ajfo86a19dgm4b8lduz7&quot;, definition = &quot;int agstrfree(Agraph_t * g, char *s)&quot;)
+public static int agstrfree(Globals zz, ST_Agraph_s g, CString s) {
+<span class="fc" id="L197">ENTERING(&quot;enhn1ajfo86a19dgm4b8lduz7&quot;,&quot;agstrfree&quot;);</span>
+try {
+    ST_refstr_t r;
+    ST_dt_s strdict;
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">    if (s == null)</span>
+<span class="nc" id="L202">	 return -1;</span>
+<span class="fc" id="L203">    strdict = refdict(zz, g);</span>
+<span class="fc" id="L204">    r = (ST_refstr_t) refsymbind(zz, strdict, s);</span>
+<span class="pc bpc" id="L205" title="2 of 4 branches missed.">    if (r!=null &amp;&amp; (EQ_CSTRING(r.s, s))) {</span>
+<span class="fc" id="L206">	r.refcnt--;</span>
+<span class="pc bpc" id="L207" title="3 of 6 branches missed.">	if ((r.refcnt!=0 &amp;&amp; zz.CNT_BITS!=0) == false) {</span>
+<span class="nc" id="L208">	    agdtdelete(zz, g, strdict, r);</span>
+	    /*
+	       if (g) agfree(g,r);
+	       else free(r);
+	     */
+	}
+    }
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">    if (r == null)</span>
+<span class="nc" id="L216">	return -1;</span>
+<span class="fc" id="L217">    return 0;</span>
+} finally {
+<span class="fc" id="L219">LEAVING(&quot;enhn1ajfo86a19dgm4b8lduz7&quot;,&quot;agstrfree&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/refstr.c&quot;, name=&quot;aghtmlstr&quot;, key=&quot;3em4wzjnpajd5d3igb90l3rml&quot;, definition = &quot;int aghtmlstr(char *s)&quot;)
+public static int aghtmlstr(Globals zz, CString s) {
+<span class="fc" id="L228">ENTERING(&quot;3em4wzjnpajd5d3igb90l3rml&quot;,&quot;aghtmlstr&quot;);</span>
+try {
+    ST_refstr_t key;
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">    if (s == null)</span>
+<span class="nc" id="L232">	return 0;</span>
+<span class="fc" id="L233">	key = (ST_refstr_t) s.getParent();</span>
+<span class="fc" id="L234">    return (key.refcnt &amp; zz.HTML_BIT);</span>
+} finally {
+<span class="fc" id="L236">LEAVING(&quot;3em4wzjnpajd5d3igb90l3rml&quot;,&quot;aghtmlstr&quot;);</span>
+}
+}
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

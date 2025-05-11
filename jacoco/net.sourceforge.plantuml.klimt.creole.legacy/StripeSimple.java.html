@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StripeSimple.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.legacy</a> &gt; <span class="el_source">StripeSimple.java</span></div><h1>StripeSimple.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.creole.legacy;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.emoji.Emoji;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.CreoleContext;
+import net.sourceforge.plantuml.klimt.creole.CreoleHorizontalLine;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Stripe;
+import net.sourceforge.plantuml.klimt.creole.StripeStyle;
+import net.sourceforge.plantuml.klimt.creole.StripeStyleType;
+import net.sourceforge.plantuml.klimt.creole.atom.Atom;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomEmoji;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomImg;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomMath;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomOpenIcon;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomSpace;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomSprite;
+import net.sourceforge.plantuml.klimt.creole.command.Command;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleColorAndSizeChange;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleColorChange;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleEmoji;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleExposantChange;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleFontFamilyChange;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleImg;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleLatex;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleMath;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleMonospaced;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleOpenIcon;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleQrcode;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSizeChange;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSpace;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSprite;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleStyle;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSvgAttributeChange;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleUrl;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontPosition;
+import net.sourceforge.plantuml.klimt.font.FontStyle;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.ImgValign;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
+import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import net.sourceforge.plantuml.openiconic.OpenIcon;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.CharHidder;
+
+public class StripeSimple implements Stripe {
+
+	final private Atom header;
+
+<span class="fc" id="L96">	final private List&lt;Atom&gt; atoms = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L98">	final private Map&lt;Character, List&lt;Command&gt;&gt; commands = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L100">	private HorizontalAlignment align = HorizontalAlignment.LEFT;</span>
+
+	public void setCellAlignment(HorizontalAlignment align) {
+<span class="nc" id="L103">		this.align = align;</span>
+<span class="nc" id="L104">	}</span>
+
+	public HorizontalAlignment getCellAlignment() {
+<span class="fc" id="L107">		return align;</span>
+	}
+
+	private FontConfiguration fontConfiguration;
+
+	final private StripeStyle style;
+	final private ISkinSimple skinParam;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L117">		return super.toString() + &quot; &quot; + atoms.toString();</span>
+	}
+
+	public Atom getLHeader() {
+<span class="fc" id="L121">		return header;</span>
+	}
+
+	public StripeSimple(FontConfiguration fontConfiguration, StripeStyle style, CreoleContext context,
+<span class="fc" id="L125">			ISkinSimple skinParam, CreoleMode modeSimpleLine) {</span>
+<span class="fc" id="L126">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L127">		this.style = style;</span>
+<span class="fc" id="L128">		this.skinParam = skinParam;</span>
+
+<span class="fc" id="L130">		addCommand(CommandCreoleStyle.createCreole(FontStyle.BOLD));</span>
+<span class="fc" id="L131">		addCommand(CommandCreoleStyle.createLegacy(FontStyle.BOLD));</span>
+<span class="fc" id="L132">		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.BOLD));</span>
+
+<span class="fc" id="L134">		addCommand(CommandCreoleStyle.createCreole(FontStyle.ITALIC));</span>
+<span class="fc" id="L135">		addCommand(CommandCreoleStyle.createLegacy(FontStyle.ITALIC));</span>
+<span class="fc" id="L136">		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.ITALIC));</span>
+<span class="fc" id="L137">		addCommand(CommandCreoleStyle.createLegacy(FontStyle.PLAIN));</span>
+<span class="fc" id="L138">		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.PLAIN));</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (modeSimpleLine == CreoleMode.FULL)</span>
+<span class="fc" id="L140">			addCommand(CommandCreoleStyle.createCreole(FontStyle.UNDERLINE));</span>
+
+<span class="fc" id="L142">		addCommand(CommandCreoleStyle.createLegacy(FontStyle.UNDERLINE));</span>
+<span class="fc" id="L143">		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.UNDERLINE));</span>
+<span class="fc" id="L144">		addCommand(CommandCreoleStyle.createCreole(FontStyle.STRIKE));</span>
+<span class="fc" id="L145">		addCommand(CommandCreoleStyle.createLegacy(FontStyle.STRIKE));</span>
+<span class="fc" id="L146">		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.STRIKE));</span>
+<span class="fc" id="L147">		addCommand(CommandCreoleStyle.createCreole(FontStyle.WAVE));</span>
+<span class="fc" id="L148">		addCommand(CommandCreoleStyle.createLegacy(FontStyle.WAVE));</span>
+<span class="fc" id="L149">		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.WAVE));</span>
+<span class="fc" id="L150">		addCommand(CommandCreoleStyle.createLegacy(FontStyle.BACKCOLOR));</span>
+<span class="fc" id="L151">		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.BACKCOLOR));</span>
+<span class="fc" id="L152">		addCommand(CommandCreoleSizeChange.create());</span>
+<span class="fc" id="L153">		addCommand(CommandCreoleSizeChange.createEol());</span>
+<span class="fc" id="L154">		addCommand(CommandCreoleColorChange.create());</span>
+<span class="fc" id="L155">		addCommand(CommandCreoleColorChange.createEol());</span>
+<span class="fc" id="L156">		addCommand(CommandCreoleColorAndSizeChange.create());</span>
+<span class="fc" id="L157">		addCommand(CommandCreoleColorAndSizeChange.createEol());</span>
+<span class="fc" id="L158">		addCommand(CommandCreoleExposantChange.create(FontPosition.EXPOSANT));</span>
+<span class="fc" id="L159">		addCommand(CommandCreoleExposantChange.create(FontPosition.INDICE));</span>
+<span class="fc" id="L160">		addCommand(CommandCreoleImg.create());</span>
+<span class="fc" id="L161">		addCommand(CommandCreoleQrcode.create());</span>
+<span class="fc" id="L162">		addCommand(CommandCreoleOpenIcon.create());</span>
+<span class="fc" id="L163">		addCommand(CommandCreoleEmoji.create());</span>
+		// ::comment when __CORE__
+<span class="fc" id="L165">		addCommand(CommandCreoleMath.create());</span>
+<span class="fc" id="L166">		addCommand(CommandCreoleLatex.create());</span>
+		// ::done
+<span class="fc" id="L168">		addCommand(CommandCreoleSprite.create());</span>
+<span class="fc" id="L169">		addCommand(CommandCreoleSpace.create());</span>
+<span class="fc" id="L170">		addCommand(CommandCreoleFontFamilyChange.create());</span>
+<span class="fc" id="L171">		addCommand(CommandCreoleFontFamilyChange.createEol());</span>
+<span class="fc" id="L172">		addCommand(CommandCreoleMonospaced.create());</span>
+<span class="fc" id="L173">		addCommand(CommandCreoleUrl.create());</span>
+		// ::comment when __CORE__
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (SecurityUtils.allowSvgText())</span>
+<span class="fc" id="L176">			addCommand(CommandCreoleSvgAttributeChange.create());</span>
+		// ::done
+
+<span class="fc" id="L179">		this.header = style.getHeader(fontConfiguration, context);</span>
+
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (this.header != null)</span>
+<span class="fc" id="L182">			this.atoms.add(this.header);</span>
+
+<span class="fc" id="L184">	}</span>
+
+	private void addCommand(Command cmd) {
+<span class="fc" id="L187">		final String starters = cmd.startingChars();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (int i = 0; i &lt; starters.length(); i++) {</span>
+<span class="fc" id="L189">			final char ch = starters.charAt(i);</span>
+<span class="fc" id="L190">			List&lt;Command&gt; localList = commands.get(ch);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			if (localList == null) {</span>
+<span class="fc" id="L192">				localList = new ArrayList&lt;Command&gt;();</span>
+<span class="fc" id="L193">				commands.put(ch, localList);</span>
+			}
+<span class="fc" id="L195">			localList.add(cmd);</span>
+		}
+<span class="fc" id="L197">	}</span>
+
+	public List&lt;Atom&gt; getAtoms() {
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (atoms.size() == 0)</span>
+<span class="fc" id="L201">			atoms.add(AtomTextUtils.createLegacy(&quot; &quot;, fontConfiguration));</span>
+
+<span class="fc" id="L203">		return Collections.unmodifiableList(atoms);</span>
+	}
+
+	public FontConfiguration getActualFontConfiguration() {
+<span class="fc" id="L207">		return fontConfiguration;</span>
+	}
+
+	public void setActualFontConfiguration(FontConfiguration fontConfiguration) {
+<span class="fc" id="L211">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L212">	}</span>
+
+	public void analyzeAndAdd(String line) {
+//		if (Objects.requireNonNull(line).contains(&quot;&quot; + BackSlash.hiddenNewLine()))
+//			throw new IllegalArgumentException(line);
+
+		if (Jaws.TRACE)
+			System.err.println(&quot;analyzeAndAdd &quot; + line);
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (line.indexOf(Jaws.BLOCK_E1_NEWLINE) != -1)</span>
+<span class="nc" id="L221">			throw new IllegalArgumentException(line);</span>
+
+<span class="fc" id="L223">		line = CharHidder.hide(line);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (style.getType() == StripeStyleType.HEADING) {</span>
+<span class="fc" id="L225">			fontConfiguration = fontConfigurationForHeading(fontConfiguration, style.getOrder());</span>
+<span class="fc" id="L226">			modifyStripe(line);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {</span>
+<span class="fc" id="L228">			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));</span>
+		} else {
+<span class="fc" id="L230">			modifyStripe(line);</span>
+		}
+<span class="fc" id="L232">	}</span>
+
+	private static FontConfiguration fontConfigurationForHeading(FontConfiguration fontConfiguration, int order) {
+<span class="pc bpc" id="L235" title="3 of 4 branches missed.">		switch (order) {</span>
+		case 0:
+<span class="nc" id="L237">			return fontConfiguration.bigger(4).bold();</span>
+		case 1:
+<span class="fc" id="L239">			return fontConfiguration.bigger(2).bold();</span>
+		case 2:
+<span class="nc" id="L241">			return fontConfiguration.bigger(1).bold();</span>
+		default:
+<span class="nc" id="L243">			return fontConfiguration.italic();</span>
+		}
+	}
+
+	public void addImage(String src, double scale) {
+<span class="nc" id="L248">		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale, null));</span>
+<span class="nc" id="L249">	}</span>
+
+	public void addQrcode(String src, double scale) {
+<span class="nc" id="L252">		atoms.add(AtomImg.createQrcode(src, scale));</span>
+<span class="nc" id="L253">	}</span>
+
+	public void addSpace(int size) {
+<span class="nc" id="L256">		atoms.add(AtomSpace.create(size));</span>
+<span class="nc" id="L257">	}</span>
+
+	public void addUrl(Url url) {
+<span class="fc" id="L260">		atoms.add(AtomTextUtils.createUrl(url, fontConfiguration, skinParam));</span>
+<span class="fc" id="L261">	}</span>
+
+	public void addSprite(String src, double scale, HColor forcedColor) {
+<span class="fc" id="L264">		final Sprite sprite = skinParam.getSprite(src);</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (sprite != null)</span>
+<span class="fc" id="L266">			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null));</span>
+
+<span class="fc" id="L268">	}</span>
+
+	public void addOpenIcon(String src, double scale, HColor color) {
+<span class="nc" id="L271">		final OpenIcon openIcon = OpenIcon.retrieve(src);</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (openIcon != null)</span>
+<span class="nc" id="L273">			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));</span>
+<span class="nc" id="L274">	}</span>
+
+	public void addEmoji(String emojiName, String forcedColor) {
+<span class="nc" id="L277">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">		if (emoji == null)</span>
+<span class="nc" id="L279">			return;</span>
+
+<span class="nc" id="L281">		HColor col = null;</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">		if (forcedColor == null)</span>
+<span class="nc" id="L283">			col = null;</span>
+<span class="nc bnc" id="L284" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
+<span class="nc" id="L285">			col = fontConfiguration.getColor();</span>
+		else
+			try {
+<span class="nc" id="L288">				col = skinParam.getIHtmlColorSet().getColor(forcedColor);</span>
+<span class="nc" id="L289">			} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L290">				col = null;</span>
+<span class="nc" id="L291">			}</span>
+
+<span class="nc" id="L293">		atoms.add(new AtomEmoji(emoji, 1, fontConfiguration.getSize2D(), col));</span>
+<span class="nc" id="L294">	}</span>
+
+	// ::comment when __CORE__
+	public void addMath(ScientificEquationSafe math) {
+<span class="nc" id="L298">		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));</span>
+<span class="nc" id="L299">	}</span>
+	// ::done
+
+	private void modifyStripe(String line) {
+<span class="fc" id="L303">		final StringBuilder pending = new StringBuilder();</span>
+
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		while (line.length() &gt; 0) {</span>
+<span class="fc" id="L306">			final Command cmd = searchCommand(line);</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">			if (cmd == null) {</span>
+<span class="fc" id="L308">				pending.append(line.charAt(0));</span>
+<span class="fc" id="L309">				line = line.substring(1);</span>
+			} else {
+<span class="fc" id="L311">				addPending(pending);</span>
+<span class="fc" id="L312">				line = cmd.executeAndGetRemaining(line, this);</span>
+			}
+<span class="fc" id="L314">		}</span>
+<span class="fc" id="L315">		addPending(pending);</span>
+<span class="fc" id="L316">	}</span>
+
+	private void addPending(StringBuilder pending) {
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		if (pending.length() == 0)</span>
+<span class="fc" id="L320">			return;</span>
+
+<span class="fc" id="L322">		atoms.add(AtomTextUtils.createLegacy(pending.toString(), fontConfiguration));</span>
+<span class="fc" id="L323">		pending.setLength(0);</span>
+<span class="fc" id="L324">	}</span>
+
+	private Command searchCommand(String line) {
+<span class="fc" id="L327">		final List&lt;Command&gt; localList = commands.get(line.charAt(0));</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (localList != null)</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">			for (Command cmd : localList)</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">				if (cmd.matchingSize(line) != 0)</span>
+<span class="fc" id="L331">					return cmd;</span>
+
+<span class="fc" id="L333">		return null;</span>
+	}
+
+	public ISkinSimple getSkinParam() {
+<span class="fc" id="L337">		return skinParam;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

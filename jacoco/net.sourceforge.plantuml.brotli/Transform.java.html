@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transform.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.brotli</a> &gt; <span class="el_source">Transform.java</span></div><h1>Transform.java</h1><pre class="source lang-java linenums">/* Copyright 2015 Google Inc. All Rights Reserved.
+
+   https://github.com/google/brotli/blob/master/LICENSE
+
+   Distributed under MIT license.
+   See file LICENSE for detail or copy at https://opensource.org/licenses/MIT
+*/
+
+package net.sourceforge.plantuml.brotli;
+
+import java.nio.ByteBuffer;
+
+/**
+ * Transformations on dictionary words.
+ */
+<span class="nc" id="L16">final class Transform {</span>
+
+	static final int NUM_TRANSFORMS = 121;
+<span class="fc" id="L19">	private static final int[] TRANSFORMS = new int[NUM_TRANSFORMS * 3];</span>
+<span class="fc" id="L20">	private static final byte[] PREFIX_SUFFIX = new byte[217];</span>
+<span class="fc" id="L21">	private static final int[] PREFIX_SUFFIX_HEADS = new int[51];</span>
+
+	// Bundle of 0-terminated strings.
+	private static final String PREFIX_SUFFIX_SRC = &quot;# #s #, #e #.# the #.com/#\u00C2\u00A0# of # and&quot;
+			+ &quot; # in # to #\&quot;#\&quot;&gt;#\n#]# for # a # that #. # with #'# from # by #. The # on # as # is #ing&quot;
+			+ &quot; #\n\t#:#ed #(# at #ly #=\&quot;# of the #. This #,# not #er #al #='#ful #ive #less #est #ize #&quot; + &quot;ous #&quot;;
+	private static final String TRANSFORMS_SRC = &quot;     !! ! ,  *!  &amp;!  \&quot; !  ) *   * -  ! # !  #!*!  &quot;
+			+ &quot;+  ,$ !  -  %  .  / #   0  1 .  \&quot;   2  3!*   4%  ! # /   5  6  7  8 0  1 &amp;   $   9 +   : &quot;
+			+ &quot; ;  &lt; '  !=  &gt;  ?! 4  @ 4  2  &amp;   A *# (   B  C&amp; ) %  ) !*# *-% A +! *.  D! %'  &amp; E *6  F &quot;
+			+ &quot; G% ! *A *%  H! D  I!+!  J!+   K +- *4! A  L!*4  M  N +6  O!*% +.! K *G  P +%(  ! G *D +D &quot;
+			+ &quot; Q +# *K!*G!+D!+# +G +A +4!+% +K!+4!*D!+K!*K&quot;;
+
+	private static void unpackTransforms(byte[] prefixSuffix, int[] prefixSuffixHeads, int[] transforms,
+			String prefixSuffixSrc, String transformsSrc) {
+<span class="fc" id="L35">		int n = prefixSuffixSrc.length();</span>
+<span class="fc" id="L36">		int index = 1;</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">		for (int i = 0; i &lt; n; ++i) {</span>
+<span class="fc" id="L38">			char c = prefixSuffixSrc.charAt(i);</span>
+<span class="fc" id="L39">			prefixSuffix[i] = (byte) c;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">			if (c == 35) { // == #</span>
+<span class="fc" id="L41">				prefixSuffixHeads[index++] = i + 1;</span>
+<span class="fc" id="L42">				prefixSuffix[i] = 0;</span>
+			}
+		}
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		for (int i = 0; i &lt; NUM_TRANSFORMS * 3; ++i) {</span>
+<span class="fc" id="L47">			transforms[i] = transformsSrc.charAt(i) - 32;</span>
+		}
+<span class="fc" id="L49">	}</span>
+
+	static {
+<span class="fc" id="L52">		unpackTransforms(PREFIX_SUFFIX, PREFIX_SUFFIX_HEADS, TRANSFORMS, PREFIX_SUFFIX_SRC, TRANSFORMS_SRC);</span>
+<span class="fc" id="L53">	}</span>
+
+	static int transformDictionaryWord(byte[] dst, int dstOffset, ByteBuffer data, int wordOffset, int len,
+			int transformIndex) {
+<span class="fc" id="L57">		int offset = dstOffset;</span>
+<span class="fc" id="L58">		int transformOffset = 3 * transformIndex;</span>
+<span class="fc" id="L59">		int transformPrefix = PREFIX_SUFFIX_HEADS[TRANSFORMS[transformOffset]];</span>
+<span class="fc" id="L60">		int transformType = TRANSFORMS[transformOffset + 1];</span>
+<span class="fc" id="L61">		int transformSuffix = PREFIX_SUFFIX_HEADS[TRANSFORMS[transformOffset + 2]];</span>
+
+		// Copy prefix.
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		while (PREFIX_SUFFIX[transformPrefix] != 0) {</span>
+<span class="fc" id="L65">			dst[offset++] = PREFIX_SUFFIX[transformPrefix++];</span>
+		}
+
+		// Copy trimmed word.
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		int omitFirst = transformType &gt;= 12 ? (transformType - 11) : 0;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (omitFirst &gt; len) {</span>
+<span class="nc" id="L71">			omitFirst = len;</span>
+		}
+<span class="fc" id="L73">		wordOffset += omitFirst;</span>
+<span class="fc" id="L74">		len -= omitFirst;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		len -= transformType &lt;= 9 ? transformType : 0; // Omit last.</span>
+<span class="fc" id="L76">		int i = len;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		while (i &gt; 0) {</span>
+<span class="fc" id="L78">			dst[offset++] = data.get(wordOffset++);</span>
+<span class="fc" id="L79">			i--;</span>
+		}
+
+		// Ferment.
+<span class="fc bfc" id="L83" title="All 4 branches covered.">		if (transformType == 11 || transformType == 10) {</span>
+<span class="fc" id="L84">			int uppercaseOffset = offset - len;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (transformType == 10) {</span>
+<span class="fc" id="L86">				len = 1;</span>
+			}
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			while (len &gt; 0) {</span>
+<span class="fc" id="L89">				int tmp = dst[uppercaseOffset] &amp; 0xFF;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">				if (tmp &lt; 0xc0) {</span>
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">					if (tmp &gt;= 97 &amp;&amp; tmp &lt;= 122) { // in [a..z] range</span>
+<span class="fc" id="L92">						dst[uppercaseOffset] ^= (byte) 32;</span>
+					}
+<span class="fc" id="L94">					uppercaseOffset += 1;</span>
+<span class="fc" id="L95">					len -= 1;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				} else if (tmp &lt; 0xe0) {</span>
+<span class="nc" id="L97">					dst[uppercaseOffset + 1] ^= (byte) 32;</span>
+<span class="nc" id="L98">					uppercaseOffset += 2;</span>
+<span class="nc" id="L99">					len -= 2;</span>
+				} else {
+<span class="nc" id="L101">					dst[uppercaseOffset + 2] ^= (byte) 5;</span>
+<span class="nc" id="L102">					uppercaseOffset += 3;</span>
+<span class="nc" id="L103">					len -= 3;</span>
+				}
+<span class="fc" id="L105">			}</span>
+		}
+
+		// Copy suffix.
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		while (PREFIX_SUFFIX[transformSuffix] != 0) {</span>
+<span class="fc" id="L110">			dst[offset++] = PREFIX_SUFFIX[transformSuffix++];</span>
+		}
+
+<span class="fc" id="L113">		return offset - dstOffset;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

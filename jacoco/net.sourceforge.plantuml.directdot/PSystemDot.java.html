@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemDot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.directdot</a> &gt; <span class="el_source">PSystemDot.java</span></div><h1>PSystemDot.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.directdot;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Arrays;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FileImageData;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.dot.ExeState;
+import net.sourceforge.plantuml.dot.Graphviz;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.dot.ProcessState;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+
+public class PSystemDot extends AbstractPSystem {
+	// ::remove folder when __CORE__
+
+	private final String data;
+
+	public PSystemDot(UmlSource source, String data, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L65">		super(source, preprocessing);</span>
+<span class="nc" id="L66">		this.data = data;</span>
+<span class="nc" id="L67">	}</span>
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L70">		return new DiagramDescription(&quot;(Dot)&quot;);</span>
+	}
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
+<span class="nc" id="L76">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,</span>
+<span class="nc" id="L77">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
+<span class="nc" id="L79">			final TextBlock result = GraphicStrings</span>
+<span class="nc" id="L80">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
+<span class="nc" id="L81">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+		}
+<span class="nc" id="L83">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
+<span class="nc" id="L84">		final ProcessState state = graphviz.createFile3(counter);</span>
+		// if (state.differs(ProcessState.TERMINATED_OK())) {
+		// throw new IllegalStateException(&quot;Timeout1 &quot; + state);
+		// }
+<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
+<span class="nc" id="L89">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
+<span class="nc" id="L90">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+		}
+
+<span class="nc" id="L93">		return ImageDataSimple.ok();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

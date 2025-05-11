@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrowAndParticipant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">ArrowAndParticipant.java</span></div><h1>ArrowAndParticipant.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.sequencediagram.InGroupable;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
+
+class ArrowAndParticipant extends Arrow implements InGroupable {
+
+	private final Arrow arrow;
+	private final ParticipantBox participantBox;
+	private final double paddingParticipant;
+
+	public ArrowAndParticipant(AtomicInteger counter, Pragma pragma, StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox,
+			double paddingParticipant) {
+<span class="nc" id="L57">		super(counter, pragma, arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());</span>
+<span class="nc" id="L58">		this.arrow = arrow;</span>
+<span class="nc" id="L59">		this.participantBox = participantBox;</span>
+<span class="nc" id="L60">		this.paddingParticipant = paddingParticipant;</span>
+<span class="nc" id="L61">		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2 - paddingParticipant);</span>
+<span class="nc" id="L62">	}</span>
+
+	@Override
+	public void setMaxX(double m) {
+<span class="nc" id="L66">		super.setMaxX(m);</span>
+<span class="nc" id="L67">		arrow.setMaxX(m);</span>
+<span class="nc" id="L68">	}</span>
+
+	@Override
+	final public double getArrowOnlyWidth(StringBounder stringBounder) {
+<span class="nc" id="L72">		return arrow.getPreferredWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
+	}
+
+	@Override
+	public double getArrowYEndLevel(StringBounder stringBounder) {
+<span class="nc" id="L77">		return arrow.getArrowYEndLevel(stringBounder);</span>
+	}
+
+	@Override
+	public double getArrowYStartLevel(StringBounder stringBounder) {
+<span class="nc" id="L82">		return arrow.getArrowYStartLevel(stringBounder);</span>
+	}
+
+	@Override
+	public int getDirection(StringBounder stringBounder) {
+<span class="nc" id="L87">		return arrow.getDirection(stringBounder);</span>
+	}
+
+	@Override
+	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
+<span class="nc" id="L92">		return arrow.getParticipantAt(stringBounder, position);</span>
+	}
+
+	@Override
+	protected Participant getParticipant1() {
+<span class="nc" id="L97">		return arrow.getParticipant1();</span>
+	}
+
+	@Override
+	protected Participant getParticipant2() {
+<span class="nc" id="L102">		return arrow.getParticipant2();</span>
+	}
+
+	@Override
+	protected void drawInternalU(final UGraphic ug, double maxX, Context2D context) {
+<span class="nc" id="L107">		final double participantBoxStartingX = participantBox.getStartingX();</span>
+<span class="nc" id="L108">		final double arrowStartingX = arrow.getStartingX(ug.getStringBounder());</span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (arrowStartingX &lt; participantBoxStartingX) {</span>
+<span class="nc" id="L111">			arrow.drawInternalU(ug, maxX, context);</span>
+		} else {
+<span class="nc" id="L113">			final double boxWidth = participantBox.getPreferredWidth(ug.getStringBounder());</span>
+<span class="nc" id="L114">			arrow.drawInternalU(ug.apply(UTranslate.dx(boxWidth / 2 - paddingParticipant)), maxX, context);</span>
+		}
+
+<span class="nc" id="L117">		final double arrowHeight = arrow.getPreferredHeight(ug.getStringBounder());</span>
+<span class="nc" id="L118">		final double boxHeight = participantBox.getHeadHeight(ug.getStringBounder());</span>
+		// final double diff = getDiff(ug);
+<span class="nc" id="L120">		double diff = 0;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (arrowHeight &gt; boxHeight) {</span>
+<span class="nc" id="L122">			diff = arrowHeight - boxHeight;</span>
+		}
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (context.isBackground() == false) {</span>
+<span class="nc" id="L125">			participantBox</span>
+<span class="nc" id="L126">					.drawParticipantHead(ug.apply(new UTranslate(participantBoxStartingX, getStartingY() + diff)));</span>
+		}
+<span class="nc" id="L128">	}</span>
+
+	private double getDiff(UGraphic ug) {
+<span class="nc" id="L131">		final double y1 = arrow.getPreferredHeight(ug.getStringBounder());</span>
+<span class="nc" id="L132">		final double y2 = participantBox.getHeadHeight(ug.getStringBounder());</span>
+<span class="nc" id="L133">		final double diff = y1 - y2;</span>
+<span class="nc" id="L134">		return diff;</span>
+	}
+
+	@Override
+	public double getPreferredHeight(StringBounder stringBounder) {
+<span class="nc" id="L139">		return Math.max(arrow.getPreferredHeight(stringBounder), participantBox.getHeadHeight(stringBounder));</span>
+	}
+
+	@Override
+	public double getPreferredWidth(StringBounder stringBounder) {
+<span class="nc" id="L144">		return arrow.getPreferredWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
+	}
+
+	@Override
+	public double getActualWidth(StringBounder stringBounder) {
+<span class="nc" id="L149">		return arrow.getActualWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
+	}
+
+	@Override
+	public double getStartingX(StringBounder stringBounder) {
+<span class="nc" id="L154">		return arrow.getStartingX(stringBounder);</span>
+	}
+
+	public double getMaxX(StringBounder stringBounder) {
+<span class="nc" id="L158">		return arrow.getMaxX(stringBounder);</span>
+	}
+
+	public double getMinX(StringBounder stringBounder) {
+<span class="nc" id="L162">		return arrow.getMinX(stringBounder);</span>
+	}
+
+	public String toString(StringBounder stringBounder) {
+<span class="nc" id="L166">		return arrow.toString(stringBounder);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

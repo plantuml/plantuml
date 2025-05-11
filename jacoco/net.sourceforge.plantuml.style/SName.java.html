@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SName.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">SName.java</span></div><h1>SName.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+<span class="fc" id="L38">public enum SName {</span>
+<span class="fc" id="L39">	action, //</span>
+<span class="fc" id="L40">	activity, //</span>
+<span class="fc" id="L41">	activityBar, //</span>
+<span class="fc" id="L42">	activityDiagram, //</span>
+<span class="fc" id="L43">	actor, //</span>
+<span class="fc" id="L44">	agent, //</span>
+<span class="fc" id="L45">	analog, //</span>
+<span class="fc" id="L46">	archimate, //</span>
+<span class="fc" id="L47">	arrow, //</span>
+<span class="fc" id="L48">	artifact, //</span>
+<span class="fc" id="L49">	binary, //</span>
+<span class="fc" id="L50">	boundary, //</span>
+<span class="fc" id="L51">	box, //</span>
+<span class="fc" id="L52">	boxless, //</span>
+<span class="fc" id="L53">	business, //</span>
+<span class="fc" id="L54">	caption, //</span>
+<span class="fc" id="L55">	card, //</span>
+<span class="fc" id="L56">	cardinality, //</span>
+<span class="fc" id="L57">	circle, //</span>
+<span class="fc" id="L58">	classDiagram, //</span>
+<span class="fc" id="L59">	class_, //</span>
+<span class="fc" id="L60">	clickable, //</span>
+<span class="fc" id="L61">	cloud, //</span>
+<span class="fc" id="L62">	closed, //</span>
+<span class="fc" id="L63">	collection, //</span>
+<span class="fc" id="L64">	collections, //</span>
+<span class="fc" id="L65">	component, //</span>
+<span class="fc" id="L66">	composite, //</span>
+<span class="fc" id="L67">	robust, //</span>
+<span class="fc" id="L68">	chenAttribute, //</span>
+<span class="fc" id="L69">	chenEerDiagram, //</span>
+<span class="fc" id="L70">	chenEntity, //</span>
+<span class="fc" id="L71">	chenRelationship, //</span>
+<span class="fc" id="L72">	concise, //</span>
+<span class="fc" id="L73">	clock, //</span>
+<span class="fc" id="L74">	componentDiagram, //</span>
+<span class="fc" id="L75">	constraintArrow, //</span>
+<span class="fc" id="L76">	control, //</span>
+<span class="fc" id="L77">	database, //</span>
+<span class="fc" id="L78">	day, //</span>
+<span class="fc" id="L79">	delay, //</span>
+<span class="fc" id="L80">	destroy, //</span>
+<span class="fc" id="L81">	diamond, //</span>
+<span class="fc" id="L82">	document, //</span>
+<span class="fc" id="L83">	ebnf, //</span>
+<span class="fc" id="L84">	element, //</span>
+<span class="fc" id="L85">	entity, //</span>
+<span class="fc" id="L86">	end, //</span>
+<span class="fc" id="L87">	start, //</span>
+<span class="fc" id="L88">	stop, //</span>
+<span class="fc" id="L89">	file, //</span>
+<span class="fc" id="L90">	filesDiagram, //</span>
+<span class="fc" id="L91">	folder, //</span>
+<span class="fc" id="L92">	footer, //</span>
+<span class="fc" id="L93">	frame, //</span>
+<span class="fc" id="L94">	ganttDiagram, //</span>
+<span class="fc" id="L95">	generic, //</span>
+<span class="fc" id="L96">	group, //</span>
+<span class="fc" id="L97">	groupHeader, //</span>
+<span class="fc" id="L98">	header, //</span>
+<span class="fc" id="L99">	hexagon, //</span>
+<span class="fc" id="L100">	highlight, //</span>
+<span class="fc" id="L101">	hnote, //</span>
+<span class="fc" id="L102">	interface_, //</span>
+<span class="fc" id="L103">	json, // </span>
+<span class="fc" id="L104">	jsonDiagram, //</span>
+<span class="fc" id="L105">	gitDiagram, //</span>
+<span class="fc" id="L106">	label, //</span>
+<span class="fc" id="L107">	leafNode, //</span>
+<span class="fc" id="L108">	legend, //</span>
+<span class="fc" id="L109">	lifeLine, //</span>
+<span class="fc" id="L110">	mainframe, //</span>
+<span class="fc" id="L111">	map, //</span>
+<span class="fc" id="L112">	milestone, //</span>
+<span class="fc" id="L113">	mindmapDiagram, //</span>
+<span class="fc" id="L114">	month, //</span>
+<span class="fc" id="L115">	network, //</span>
+<span class="fc" id="L116">	newpage, //</span>
+<span class="fc" id="L117">	node, //</span>
+<span class="fc" id="L118">	note, //</span>
+<span class="fc" id="L119">	nwdiagDiagram, //</span>
+<span class="fc" id="L120">	objectDiagram, //</span>
+<span class="fc" id="L121">	object, //</span>
+<span class="fc" id="L122">	package_, //</span>
+<span class="fc" id="L123">	participant, //</span>
+<span class="fc" id="L124">	partition, //</span>
+<span class="fc" id="L125">	person, //</span>
+<span class="fc" id="L126">	port, //</span>
+<span class="fc" id="L127">	process, //</span>
+<span class="fc" id="L128">	qualified, //</span>
+<span class="fc" id="L129">	queue, //</span>
+<span class="fc" id="L130">	rectangle, //</span>
+<span class="fc" id="L131">	reference, //</span>
+<span class="fc" id="L132">	referenceHeader, //</span>
+<span class="fc" id="L133">	regex, //</span>
+<span class="fc" id="L134">	requirement, //</span>
+<span class="fc" id="L135">	rnote, //</span>
+<span class="fc" id="L136">	root, //</span>
+<span class="fc" id="L137">	rootNode, //</span>
+<span class="fc" id="L138">	saltDiagram, //</span>
+<span class="fc" id="L139">	separator, //</span>
+<span class="fc" id="L140">	sequenceDiagram, //</span>
+<span class="fc" id="L141">	server, //</span>
+<span class="fc" id="L142">	stack, //</span>
+<span class="fc" id="L143">	stateDiagram, //</span>
+<span class="fc" id="L144">	state, //</span>
+<span class="fc" id="L145">	stateBody, //</span>
+<span class="fc" id="L146">	stereotype, //</span>
+<span class="fc" id="L147">	storage, //</span>
+<span class="fc" id="L148">	swimlane, //</span>
+<span class="fc" id="L149">	task, //</span>
+<span class="fc" id="L150">	timegrid, //</span>
+<span class="fc" id="L151">	timeline, //</span>
+<span class="fc" id="L152">	timingDiagram, //</span>
+<span class="fc" id="L153">	title, //</span>
+<span class="fc" id="L154">	undone, //</span>
+<span class="fc" id="L155">	unstarted, //</span>
+<span class="fc" id="L156">	usecase, //</span>
+<span class="fc" id="L157">	verticalSeparator, //</span>
+<span class="fc" id="L158">	year, //</span>
+	
+<span class="fc" id="L160">	visibilityIcon, //</span>
+<span class="fc" id="L161">	private_, //</span>
+<span class="fc" id="L162">	protected_, //</span>
+<span class="fc" id="L163">	public_, //</span>
+<span class="fc" id="L164">	IEMandatory, //</span>
+<span class="fc" id="L165">	spot, //</span>
+<span class="fc" id="L166">	spotAnnotation, //</span>
+<span class="fc" id="L167">	spotInterface, //</span>
+<span class="fc" id="L168">	spotEnum, //</span>
+<span class="fc" id="L169">	spotProtocol, //</span>
+<span class="fc" id="L170">	spotStruct, //</span>
+<span class="fc" id="L171">	spotEntity, //</span>
+<span class="fc" id="L172">	spotException, //</span>
+<span class="fc" id="L173">	spotClass, //</span>
+<span class="fc" id="L174">	spotAbstractClass, //</span>
+<span class="fc" id="L175">	spotMetaClass, //</span>
+<span class="fc" id="L176">	spotStereotype, //</span>
+
+<span class="fc" id="L178">	wbsDiagram, //</span>
+<span class="fc" id="L179">	yamlDiagram; //</span>
+
+	public static String depth(int level) {
+<span class="fc" id="L182">		return &quot;depth(&quot; + level + &quot;)&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

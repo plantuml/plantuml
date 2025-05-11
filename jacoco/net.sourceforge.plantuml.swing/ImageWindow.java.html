@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImageWindow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.swing</a> &gt; <span class="el_source">ImageWindow.java</span></div><h1>ImageWindow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.swing;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.prefs.Preferences;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.version.PSystemVersion;
+
+class ImageWindow extends JFrame {
+
+<span class="nc" id="L82">	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow.class);</span>
+	private final static String KEY_ZOOM_FIT = &quot;zoomfit&quot;;
+	private final static String KEY_WIDTH_FIT = &quot;widthfit&quot;;
+
+	private SimpleLine simpleLine;
+	private final JScrollPane scrollPane;
+<span class="nc" id="L88">	private final JButton next = new JButton(&quot;Next&quot;);</span>
+<span class="nc" id="L89">	private final JButton copy = new JButton(&quot;Copy&quot;);</span>
+<span class="nc" id="L90">	private final JButton previous = new JButton(&quot;Previous&quot;);</span>
+<span class="nc" id="L91">	private final JCheckBox zoomFitButt = new JCheckBox(&quot;Zoom fit&quot;);</span>
+<span class="nc" id="L92">	private final JCheckBox widthFitButt = new JCheckBox(&quot;Width fit&quot;);</span>
+<span class="nc" id="L93">	private final JButton zoomMore = new JButton(&quot;+&quot;);</span>
+<span class="nc" id="L94">	private final JButton zoomLess = new JButton(&quot;-&quot;);</span>
+	private final MainWindow main;
+
+	private final ListModel listModel;
+	private int index;
+<span class="nc" id="L99">	private int zoomFactor = 0;</span>
+
+<span class="nc" id="L101">	private enum SizeMode {</span>
+<span class="nc" id="L102">		FULL_SIZE, ZOOM_FIT, WIDTH_FIT</span>
+	};
+
+<span class="nc" id="L105">	private SizeMode sizeMode = SizeMode.FULL_SIZE;</span>
+
+	private int startX, startY;
+
+	public ImageWindow(SimpleLine simpleLine, final MainWindow main, ListModel listModel, int index) {
+<span class="nc" id="L110">		super(simpleLine.toString());</span>
+<span class="nc" id="L111">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
+<span class="nc" id="L112">		this.simpleLine = simpleLine;</span>
+<span class="nc" id="L113">		this.listModel = listModel;</span>
+<span class="nc" id="L114">		this.index = index;</span>
+<span class="nc" id="L115">		this.main = main;</span>
+
+<span class="nc" id="L117">		final JPanel north = new JPanel();</span>
+<span class="nc" id="L118">		north.add(previous);</span>
+<span class="nc" id="L119">		north.add(copy);</span>
+<span class="nc" id="L120">		north.add(next);</span>
+<span class="nc" id="L121">		north.add(zoomFitButt);</span>
+<span class="nc" id="L122">		north.add(widthFitButt);</span>
+<span class="nc" id="L123">		north.add(zoomMore);</span>
+<span class="nc" id="L124">		north.add(zoomLess);</span>
+<span class="nc" id="L125">		copy.setFocusable(false);</span>
+<span class="nc" id="L126">		copy.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent ae) {
+<span class="nc" id="L128">				copy();</span>
+<span class="nc" id="L129">			}</span>
+		});
+<span class="nc" id="L131">		next.setFocusable(false);</span>
+<span class="nc" id="L132">		next.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent ae) {
+<span class="nc" id="L134">				next();</span>
+<span class="nc" id="L135">			}</span>
+		});
+<span class="nc" id="L137">		previous.setFocusable(false);</span>
+<span class="nc" id="L138">		previous.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent ae) {
+<span class="nc" id="L140">				previous();</span>
+<span class="nc" id="L141">			}</span>
+		});
+<span class="nc" id="L143">		zoomFitButt.setFocusable(false);</span>
+<span class="nc" id="L144">		zoomFitButt.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent ae) {
+<span class="nc" id="L146">				widthFitButt.setSelected(false);</span>
+<span class="nc" id="L147">				zoomFit();</span>
+<span class="nc" id="L148">			}</span>
+		});
+<span class="nc" id="L150">		widthFitButt.setFocusable(false);</span>
+<span class="nc" id="L151">		widthFitButt.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent ae) {
+<span class="nc" id="L153">				zoomFitButt.setSelected(false);</span>
+<span class="nc" id="L154">				zoomFit();</span>
+<span class="nc" id="L155">			}</span>
+		});
+<span class="nc" id="L157">		zoomMore.setFocusable(false);</span>
+<span class="nc" id="L158">		zoomMore.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent ae) {
+<span class="nc" id="L160">				zoomFactor++;</span>
+<span class="nc" id="L161">				refreshImage(false);</span>
+<span class="nc" id="L162">			}</span>
+		});
+<span class="nc" id="L164">		zoomLess.setFocusable(false);</span>
+<span class="nc" id="L165">		zoomLess.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent ae) {
+<span class="nc" id="L167">				zoomFactor--;</span>
+<span class="nc" id="L168">				refreshImage(false);</span>
+<span class="nc" id="L169">			}</span>
+		});
+
+<span class="nc" id="L172">		scrollPane = new JScrollPane(buildScrollablePicture());</span>
+<span class="nc" id="L173">		getContentPane().add(north, BorderLayout.NORTH);</span>
+<span class="nc" id="L174">		getContentPane().add(scrollPane, BorderLayout.CENTER);</span>
+<span class="nc" id="L175">		setSize(640, 400);</span>
+<span class="nc" id="L176">		this.setLocationRelativeTo(this.getParent());</span>
+<span class="nc" id="L177">		setVisible(true);</span>
+<span class="nc" id="L178">		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L179">		this.addWindowListener(new WindowAdapter() {</span>
+			@Override
+			public void windowClosing(WindowEvent e) {
+<span class="nc" id="L182">				super.windowClosing(e);</span>
+<span class="nc" id="L183">				main.closing(ImageWindow.this);</span>
+<span class="nc" id="L184">			}</span>
+		});
+
+<span class="nc" id="L187">		this.addComponentListener(new java.awt.event.ComponentAdapter() {</span>
+			public void componentResized(java.awt.event.ComponentEvent e) {
+<span class="nc" id="L189">				super.componentResized(e);</span>
+<span class="nc" id="L190">				refreshImage(false);</span>
+<span class="nc" id="L191">			}</span>
+		});
+
+<span class="nc" id="L194">		final boolean zoomChecked = prefs.getBoolean(KEY_ZOOM_FIT, false);</span>
+<span class="nc" id="L195">		zoomFitButt.setSelected(zoomChecked);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (zoomChecked) {</span>
+<span class="nc" id="L197">			sizeMode = SizeMode.ZOOM_FIT;</span>
+		}
+<span class="nc" id="L199">		final boolean widthZoomChecked = prefs.getBoolean(KEY_WIDTH_FIT, false);</span>
+<span class="nc" id="L200">		widthFitButt.setSelected(widthZoomChecked);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (widthZoomChecked) {</span>
+<span class="nc" id="L202">			sizeMode = SizeMode.WIDTH_FIT;</span>
+		}
+
+<span class="nc" id="L205">		this.setFocusable(true);</span>
+<span class="nc" id="L206">		this.addKeyListener(new KeyAdapter() {</span>
+			public void keyPressed(KeyEvent evt) {
+<span class="nc bnc" id="L208" title="All 2 branches missed.">				if (evt.isControlDown()</span>
+<span class="nc bnc" id="L209" title="All 4 branches missed.">						&amp;&amp; (evt.getKeyCode() == KeyEvent.VK_PLUS || evt.getKeyCode() == KeyEvent.VK_ADD)) {</span>
+<span class="nc" id="L210">					zoomFactor++;</span>
+<span class="nc" id="L211">					refreshImage(false);</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">				} else if (evt.isControlDown()</span>
+<span class="nc bnc" id="L213" title="All 4 branches missed.">						&amp;&amp; (evt.getKeyCode() == KeyEvent.VK_MINUS || evt.getKeyCode() == KeyEvent.VK_SUBTRACT)) {</span>
+<span class="nc" id="L214">					zoomFactor--;</span>
+<span class="nc" id="L215">					refreshImage(false);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">				} else if (evt.isControlDown()</span>
+<span class="nc bnc" id="L217" title="All 4 branches missed.">						&amp;&amp; (evt.getKeyCode() == KeyEvent.VK_0 || evt.getKeyCode() == KeyEvent.VK_NUMPAD0)) {</span>
+<span class="nc" id="L218">					zoomFactor = 0;</span>
+<span class="nc" id="L219">					refreshImage(false);</span>
+<span class="nc bnc" id="L220" title="All 4 branches missed.">				} else if (evt.isControlDown() &amp;&amp; evt.getKeyCode() == KeyEvent.VK_RIGHT) {</span>
+<span class="nc" id="L221">					next();</span>
+<span class="nc bnc" id="L222" title="All 4 branches missed.">				} else if (evt.isControlDown() &amp;&amp; evt.getKeyCode() == KeyEvent.VK_LEFT) {</span>
+<span class="nc" id="L223">					previous();</span>
+<span class="nc bnc" id="L224" title="All 4 branches missed.">				} else if (evt.isAltDown() &amp;&amp; evt.getKeyCode() == KeyEvent.VK_RIGHT) {</span>
+<span class="nc" id="L225">					next();</span>
+<span class="nc bnc" id="L226" title="All 4 branches missed.">				} else if (evt.isAltDown() &amp;&amp; evt.getKeyCode() == KeyEvent.VK_LEFT) {</span>
+<span class="nc" id="L227">					previous();</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">				} else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {</span>
+<span class="nc" id="L229">					imageRight();</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">				} else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {</span>
+<span class="nc" id="L231">					imageLeft();</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">				} else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {</span>
+<span class="nc" id="L233">					imageDown();</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">				} else if (evt.getKeyCode() == KeyEvent.VK_UP) {</span>
+<span class="nc" id="L235">					imageUp();</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">				} else if (evt.getKeyCode() == KeyEvent.VK_C) {</span>
+<span class="nc" id="L237">					copy();</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">				} else if (evt.getKeyCode() == KeyEvent.VK_Z) {</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">					zoomFitButt.setSelected(!zoomFitButt.isSelected());</span>
+<span class="nc" id="L240">					zoomFit();</span>
+				}
+<span class="nc" id="L242">			}</span>
+		});
+<span class="nc" id="L244">	}</span>
+
+	private void next() {
+<span class="nc" id="L247">		index++;</span>
+<span class="nc" id="L248">		updateSimpleLine();</span>
+<span class="nc" id="L249">	}</span>
+
+	private void previous() {
+<span class="nc" id="L252">		index--;</span>
+<span class="nc" id="L253">		updateSimpleLine();</span>
+<span class="nc" id="L254">	}</span>
+
+	private void imageDown() {
+<span class="nc" id="L257">		final JScrollBar bar = scrollPane.getVerticalScrollBar();</span>
+<span class="nc" id="L258">		bar.setValue(bar.getValue() + bar.getBlockIncrement());</span>
+<span class="nc" id="L259">	}</span>
+
+	private void imageUp() {
+<span class="nc" id="L262">		final JScrollBar bar = scrollPane.getVerticalScrollBar();</span>
+<span class="nc" id="L263">		bar.setValue(bar.getValue() - bar.getBlockIncrement());</span>
+<span class="nc" id="L264">	}</span>
+
+	private void imageLeft() {
+<span class="nc" id="L267">		final JScrollBar bar = scrollPane.getHorizontalScrollBar();</span>
+<span class="nc" id="L268">		bar.setValue(bar.getValue() - bar.getBlockIncrement());</span>
+<span class="nc" id="L269">	}</span>
+
+	private void imageRight() {
+<span class="nc" id="L272">		final JScrollBar bar = scrollPane.getHorizontalScrollBar();</span>
+<span class="nc" id="L273">		bar.setValue(bar.getValue() + bar.getBlockIncrement());</span>
+<span class="nc" id="L274">	}</span>
+
+	private void zoomFit() {
+<span class="nc" id="L277">		final boolean selectedZoom = zoomFitButt.isSelected();</span>
+<span class="nc" id="L278">		final boolean selectedWidth = widthFitButt.isSelected();</span>
+<span class="nc" id="L279">		prefs.putBoolean(KEY_ZOOM_FIT, selectedZoom);</span>
+<span class="nc" id="L280">		prefs.putBoolean(KEY_WIDTH_FIT, selectedWidth);</span>
+<span class="nc" id="L281">		zoomFactor = 0;</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">		if (selectedZoom) {</span>
+<span class="nc" id="L283">			sizeMode = SizeMode.ZOOM_FIT;</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		} else if (selectedWidth) {</span>
+<span class="nc" id="L285">			sizeMode = SizeMode.WIDTH_FIT;</span>
+		} else {
+<span class="nc" id="L287">			sizeMode = SizeMode.FULL_SIZE;</span>
+		}
+<span class="nc" id="L289">		refreshImage(false);</span>
+<span class="nc" id="L290">	}</span>
+
+	private void updateSimpleLine() {
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (index &lt; 0) {</span>
+<span class="nc" id="L294">			index = 0;</span>
+		}
+<span class="nc bnc" id="L296" title="All 2 branches missed.">		if (index &gt; listModel.getSize() - 1) {</span>
+<span class="nc" id="L297">			index = listModel.getSize() - 1;</span>
+		}
+<span class="nc" id="L299">		simpleLine = (SimpleLine) listModel.getElementAt(index);</span>
+<span class="nc" id="L300">		setTitle(simpleLine.toString());</span>
+<span class="nc" id="L301">		refreshImage(false);</span>
+<span class="nc" id="L302">	}</span>
+
+	private void refreshSimpleLine() {
+<span class="nc bnc" id="L305" title="All 2 branches missed.">		for (SimpleLine line : main.getCurrentDirectoryListing2()) {</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">			if (line.getFile().equals(simpleLine.getFile())) {</span>
+<span class="nc" id="L307">				simpleLine = line;</span>
+<span class="nc" id="L308">				setTitle(simpleLine.toString());</span>
+			}
+<span class="nc" id="L310">		}</span>
+<span class="nc" id="L311">	}</span>
+
+	private ScrollablePicture buildScrollablePicture() {
+<span class="nc" id="L314">		final GeneratedImage generatedImage = simpleLine.getGeneratedImage();</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (generatedImage == null) {</span>
+<span class="nc" id="L316">			return null;</span>
+		}
+<span class="nc" id="L318">		final File png = generatedImage.getPngFile();</span>
+<span class="nc" id="L319">		BufferedImage image = null;</span>
+		try {
+<span class="nc" id="L321">			image = SImageIO.read(new SFile(png.getAbsolutePath()));</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">			if (sizeMode == SizeMode.ZOOM_FIT) {</span>
+<span class="nc" id="L323">				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L324">				final Dimension newImgDim = ImageHelper.getScaledDimension(imageDim,</span>
+<span class="nc" id="L325">						scrollPane.getViewport().getSize());</span>
+<span class="nc" id="L326">				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), true);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">			} else if (sizeMode == SizeMode.WIDTH_FIT) {</span>
+<span class="nc" id="L328">				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L329">				final Dimension newImgDim = ImageHelper.getScaledDimensionWidthFit(imageDim,</span>
+<span class="nc" id="L330">						scrollPane.getViewport().getSize());</span>
+<span class="nc" id="L331">				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), false);</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">			} else if (zoomFactor != 0) {</span>
+<span class="nc" id="L333">				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L334">				final Dimension newImgDim = ImageHelper.getScaledDimension(imageDim, getZoom());</span>
+<span class="nc" id="L335">				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), false);</span>
+			}
+<span class="nc" id="L337">		} catch (IOException ex) {</span>
+<span class="nc" id="L338">			final String msg = &quot;Error reading file: &quot; + ex.toString();</span>
+<span class="nc" id="L339">			final TextBlock error = GraphicStrings.createForError(Arrays.asList(msg), false);</span>
+			try {
+<span class="nc" id="L341">				final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), error).writeByteArray();</span>
+<span class="nc" id="L342">				image = SImageIO.read(bytes);</span>
+<span class="nc" id="L343">			} catch (IOException e) {</span>
+<span class="nc" id="L344">				Logme.error(e);</span>
+<span class="nc" id="L345">			}</span>
+<span class="nc" id="L346">		}</span>
+<span class="nc" id="L347">		final ImageIcon imageIcon = new ImageIcon(image, simpleLine.toString());</span>
+<span class="nc" id="L348">		final ScrollablePicture scrollablePicture = new ScrollablePicture(imageIcon, 1);</span>
+
+<span class="nc" id="L350">		scrollablePicture.addMouseListener(new MouseAdapter() {</span>
+			public void mousePressed(MouseEvent me) {
+<span class="nc" id="L352">				super.mousePressed(me);</span>
+<span class="nc" id="L353">				startX = me.getX();</span>
+<span class="nc" id="L354">				startY = me.getY();</span>
+<span class="nc" id="L355">			}</span>
+		});
+<span class="nc" id="L357">		scrollablePicture.addMouseMotionListener(new MouseMotionAdapter() {</span>
+			public void mouseDragged(MouseEvent me) {
+<span class="nc" id="L359">				super.mouseDragged(me);</span>
+<span class="nc" id="L360">				final int diffX = me.getX() - startX;</span>
+<span class="nc" id="L361">				final int diffY = me.getY() - startY;</span>
+
+<span class="nc" id="L363">				final JScrollBar hbar = scrollPane.getHorizontalScrollBar();</span>
+<span class="nc" id="L364">				hbar.setValue(hbar.getValue() - diffX);</span>
+<span class="nc" id="L365">				final JScrollBar vbar = scrollPane.getVerticalScrollBar();</span>
+<span class="nc" id="L366">				vbar.setValue(vbar.getValue() - diffY);</span>
+<span class="nc" id="L367">			}</span>
+		});
+
+<span class="nc" id="L370">		return scrollablePicture;</span>
+	}
+
+	private RenderingHints getHints() {
+<span class="nc" id="L374">		final RenderingHints hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION,</span>
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<span class="nc" id="L376">		hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);</span>
+<span class="nc" id="L377">		hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);</span>
+<span class="nc" id="L378">		return hints;</span>
+	}
+
+	private double getZoom() {
+		// if (zoomFactor &lt;= -10) {
+		// return 0.05;
+		// }
+		// return 1.0 + zoomFactor / 10.0;
+<span class="nc" id="L386">		return Math.pow(1.1, zoomFactor);</span>
+	}
+
+	private void copy() {
+<span class="nc" id="L390">		final GeneratedImage generatedImage = simpleLine.getGeneratedImage();</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">		if (generatedImage == null) {</span>
+<span class="nc" id="L392">			return;</span>
+		}
+		try {
+<span class="nc" id="L395">			final File png = generatedImage.getPngFile();</span>
+<span class="nc" id="L396">			final Image image = SImageIO.read(png);</span>
+<span class="nc" id="L397">			final ImageSelection imgSel = new ImageSelection(image);</span>
+<span class="nc" id="L398">			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);</span>
+<span class="nc" id="L399">		} catch (IOException e) {</span>
+<span class="nc" id="L400">			Logme.error(e);</span>
+<span class="nc" id="L401">		}</span>
+<span class="nc" id="L402">	}</span>
+
+	public SimpleLine getSimpleLine() {
+<span class="nc" id="L405">		return simpleLine;</span>
+	}
+
+	private int v1;
+	private int v2;
+
+	public void refreshImage(boolean external) {
+<span class="nc" id="L412">		final JScrollBar bar1 = scrollPane.getVerticalScrollBar();</span>
+<span class="nc" id="L413">		final JScrollBar bar2 = scrollPane.getHorizontalScrollBar();</span>
+<span class="nc bnc" id="L414" title="All 4 branches missed.">		if (external &amp;&amp; isError() == false) {</span>
+<span class="nc" id="L415">			v1 = bar1.getValue();</span>
+<span class="nc" id="L416">			v2 = bar2.getValue();</span>
+		}
+<span class="nc" id="L418">		scrollPane.setViewportView(buildScrollablePicture());</span>
+<span class="nc" id="L419">		force();</span>
+<span class="nc bnc" id="L420" title="All 2 branches missed.">		if (external) {</span>
+<span class="nc" id="L421">			SwingUtilities.invokeLater(new Runnable() {</span>
+				public void run() {
+<span class="nc" id="L423">					refreshSimpleLine();</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">					if (isError() == false) {</span>
+<span class="nc" id="L425">						bar1.setValue(v1);</span>
+<span class="nc" id="L426">						bar2.setValue(v2);</span>
+					}
+<span class="nc" id="L428">				}</span>
+			});
+		}
+<span class="nc" id="L431">	}</span>
+
+	private boolean isError() {
+<span class="nc bnc" id="L434" title="All 4 branches missed.">		return simpleLine.getGeneratedImage() != null &amp;&amp; simpleLine.getGeneratedImage().lineErrorRaw() != -1;</span>
+
+	}
+
+	private void force() {
+		// setVisible(true);
+<span class="nc" id="L440">		repaint();</span>
+		// validate();
+		// getContentPane().validate();
+		// getContentPane().setVisible(true);
+		// getContentPane().repaint();
+		// scrollPane.validate();
+		// scrollPane.setVisible(true);
+		// scrollPane.repaint();
+<span class="nc" id="L448">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

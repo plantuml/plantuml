@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandParticipant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.command</a> &gt; <span class="el_source">CommandParticipant.java</span></div><h1>CommandParticipant.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.sequencediagram.LifeEventType;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.ParticipantType;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public abstract class CommandParticipant extends SingleLineCommand2&lt;SequenceDiagram&gt; {
+
+	public CommandParticipant(IRegex pattern) {
+<span class="fc" id="L67">		super(pattern);</span>
+<span class="fc" id="L68">	}</span>
+
+	static IRegex getOrderRegex() {
+<span class="fc" id="L71">		return new RegexOptional( //</span>
+				new RegexConcat( //
+						new RegexLeaf(&quot;order&quot;), //
+<span class="fc" id="L74">						RegexLeaf.spaceOneOrMore(), //</span>
+						new RegexLeaf(&quot;ORDER&quot;, &quot;(-?\\d{1,7})&quot;) //
+				));
+	}
+
+	static IRegex getRegexType() {
+<span class="fc" id="L80">		return new RegexOr(//</span>
+				new RegexLeaf(&quot;TYPE&quot;, &quot;(participant|actor|create|boundary|control|entity|queue|database|collections)&quot;), //
+				new RegexLeaf(&quot;CREATE&quot;,
+						&quot;create[%s](participant|actor|boundary|control|entity|queue|database|collections)&quot;));
+	}
+
+	@Override
+	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+<span class="fc" id="L89">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
+<span class="nc" id="L91">			diagram.putParticipantInLast(code);</span>
+<span class="nc" id="L92">			return CommandExecutionResult.ok();</span>
+		}
+
+<span class="fc" id="L95">		Display strings = Display.NULL;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (arg.get(&quot;FULL&quot;, 0) != null)</span>
+<span class="fc" id="L97">			strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;FULL&quot;, 0));</span>
+			// strings = Display.create(arg.get(&quot;FULL&quot;, 0));
+
+<span class="fc" id="L100">		final String typeString1 = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L101">		final String typeCreate1 = arg.get(&quot;CREATE&quot;, 0);</span>
+		final ParticipantType type;
+		final boolean create;
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (typeCreate1 != null) {</span>
+<span class="nc" id="L105">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeCreate1));</span>
+<span class="nc" id="L106">			create = true;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		} else if (typeString1.equalsIgnoreCase(&quot;CREATE&quot;)) {</span>
+<span class="nc" id="L108">			type = ParticipantType.PARTICIPANT;</span>
+<span class="nc" id="L109">			create = true;</span>
+		} else {
+<span class="fc" id="L111">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeString1));</span>
+<span class="fc" id="L112">			create = false;</span>
+		}
+<span class="fc" id="L114">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		final int order = orderString == null ? 0 : Integer.parseInt(orderString);</span>
+<span class="fc" id="L116">		final Participant participant = diagram.createNewParticipant(location, type, code, strings, order);</span>
+
+<span class="fc" id="L118">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L121">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L122">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
+<span class="nc" id="L123">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
+<span class="nc" id="L124">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
+<span class="nc" id="L125">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
+		}
+<span class="fc" id="L127">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L128">		participant.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+
+<span class="fc" id="L131">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L133">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L134">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L135">			participant.setUrl(url);</span>
+		}
+
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (create) {</span>
+<span class="nc" id="L139">			final String error = diagram.activate(participant, LifeEventType.CREATE, null);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (error != null)</span>
+<span class="nc" id="L141">				return CommandExecutionResult.error(error);</span>
+
+		}
+
+<span class="fc" id="L145">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

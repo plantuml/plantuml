@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemRegex.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.regexdiagram</a> &gt; <span class="el_source">PSystemRegex.java</span></div><h1>PSystemRegex.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Modified by    :  Shunli Han
+ *
+ *
+ */
+package net.sourceforge.plantuml.regexdiagram;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.ebnf.ETile;
+import net.sourceforge.plantuml.ebnf.ETileAlternation;
+import net.sourceforge.plantuml.ebnf.ETileBox;
+import net.sourceforge.plantuml.ebnf.ETileConcatenation;
+import net.sourceforge.plantuml.ebnf.ETileLookAheadOrBehind;
+import net.sourceforge.plantuml.ebnf.ETileNamedGroup;
+import net.sourceforge.plantuml.ebnf.ETileOneOrMore;
+import net.sourceforge.plantuml.ebnf.ETileOptional2;
+import net.sourceforge.plantuml.ebnf.ETileRegexGroup;
+import net.sourceforge.plantuml.ebnf.ETileRegexGroupAllBut;
+import net.sourceforge.plantuml.ebnf.ETileZeroOrMore;
+import net.sourceforge.plantuml.ebnf.Symbol;
+import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.CharInspector;
+
+public class PSystemRegex extends TitledDiagram {
+
+	public PSystemRegex(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L86">		super(source, UmlDiagramType.REGEX, null, preprocessing);</span>
+<span class="nc" id="L87">		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());</span>
+
+<span class="nc" id="L89">		final ISkinParam skinParam = getSkinParam();</span>
+		try {
+<span class="nc" id="L91">			styleExtractor.applyStyles(skinParam);</span>
+<span class="nc" id="L92">		} catch (StyleParsingException e) {</span>
+<span class="nc" id="L93">			e.printStackTrace();</span>
+<span class="nc" id="L94">		}</span>
+
+<span class="nc" id="L96">		this.style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L97">		this.fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L98">		this.colorSet = skinParam.getIHtmlColorSet();</span>
+<span class="nc" id="L99">		this.lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L100">	}</span>
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L103">		return new DiagramDescription(&quot;(Regular Expression)&quot;);</span>
+	}
+
+<span class="nc" id="L106">	private final Deque&lt;ETile&gt; stack = new ArrayDeque&lt;&gt;();</span>
+	private final FontConfiguration fontConfiguration;
+	private final Style style;
+	private final HColorSet colorSet;
+	private final HColor lineColor;
+
+	@Override
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+<span class="nc" id="L115">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+	}
+
+//	public CommandExecutionResult changeLanguage(String lang) {
+//		setParam(&quot;language&quot;, lang);
+//		return CommandExecutionResult.ok();
+//	}
+//
+//	public CommandExecutionResult useDescriptiveNames(String useDescriptive) {
+//		setParam(&quot;descriptive&quot;, useDescriptive);
+//		return CommandExecutionResult.ok();
+//	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+//		while (stack.size() &gt; 1)
+//			concatenation();
+<span class="nc" id="L132">		final ETile peekFirst = stack.peekFirst();</span>
+<span class="nc" id="L133">		final TextBlock tb = new AbstractTextBlock() {</span>
+
+			@Override
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L137">				peekFirst.drawU(ug.apply(lineColor));</span>
+<span class="nc" id="L138">			}</span>
+
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L142">				return peekFirst.calculateDimension(stringBounder);</span>
+			}
+		};
+<span class="nc" id="L145">		return TextBlockUtils.addBackcolor(tb, null);</span>
+
+	}
+
+	public CommandExecutionResult addBlocLines(BlocLines from) {
+
+		try {
+<span class="nc" id="L152">			final CharInspector it = from.inspector();</span>
+<span class="nc" id="L153">			final List&lt;ReToken&gt; parsed1 = RegexExpression.parse(it);</span>
+			// System.err.println(&quot;parsed1=&quot; + parsed1);
+<span class="nc" id="L155">			final List&lt;ReToken&gt; parsed2 = addImplicitConcatenation(parsed1);</span>
+			// System.err.println(&quot;parsed2=&quot; + parsed2);
+<span class="nc" id="L157">			final ShuntingYard shuntingYard = new ShuntingYard(parsed2.iterator());</span>
+<span class="nc" id="L158">			final List&lt;ReToken&gt; result = shuntingYard.getOuputQueue();</span>
+			// System.err.println(&quot;result=&quot; + result);
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			for (ReToken token : result)</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">				if (token.getType() == ReTokenType.SIMPLE_CHAR)</span>
+<span class="nc" id="L162">					pushEtileBox(token, Symbol.TERMINAL_STRING1);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.ESCAPED_CHAR)</span>
+<span class="nc" id="L164">					pushEtileBox(token, Symbol.TERMINAL_STRING1);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.GROUP)</span>
+<span class="nc" id="L166">					pushRegexGroup(token);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.LOOK_AHEAD)</span>
+<span class="nc" id="L168">					lookAheadOrBehind(token.getData());</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.LOOK_BEHIND)</span>
+<span class="nc" id="L170">					lookAheadOrBehind(token.getData());</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.NAMED_GROUP)</span>
+<span class="nc" id="L172">					namedGroup(token.getData());</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.CLASS)</span>
+<span class="nc" id="L174">					pushEtileBox(token, Symbol.LITTERAL);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.ANCHOR)</span>
+<span class="nc" id="L176">					pushEtileBox(token, Symbol.LITTERAL);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.CONCATENATION_IMPLICIT)</span>
+<span class="nc" id="L178">					concatenation();</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">				else if (token.getType() == ReTokenType.ALTERNATIVE)</span>
+<span class="nc" id="L180">					alternation();</span>
+<span class="nc bnc" id="L181" title="All 4 branches missed.">				else if (token.getType() == ReTokenType.QUANTIFIER &amp;&amp; token.getData().startsWith(&quot;*&quot;))</span>
+<span class="nc" id="L182">					repetitionZeroOrMore();</span>
+<span class="nc bnc" id="L183" title="All 4 branches missed.">				else if (token.getType() == ReTokenType.QUANTIFIER &amp;&amp; token.getData().startsWith(&quot;+&quot;))</span>
+<span class="nc" id="L184">					repetitionOneOrMore();</span>
+<span class="nc bnc" id="L185" title="All 4 branches missed.">				else if (token.getType() == ReTokenType.QUANTIFIER &amp;&amp; token.getData().startsWith(&quot;?&quot;))</span>
+<span class="nc" id="L186">					optional();</span>
+<span class="nc bnc" id="L187" title="All 4 branches missed.">				else if (token.getType() == ReTokenType.QUANTIFIER &amp;&amp; token.getData().startsWith(&quot;{&quot;))</span>
+<span class="nc" id="L188">					repetitionOneOrMore(token.getData());</span>
+				else
+<span class="nc" id="L190">					throw new RegexParsingException(token.toString());</span>
+<span class="nc" id="L191">		} catch (RegexParsingException ex) {</span>
+<span class="nc" id="L192">			return CommandExecutionResult.error(&quot;Error parsing: &quot; + ex.getMessage());</span>
+<span class="nc" id="L193">		}</span>
+
+<span class="nc" id="L195">		return CommandExecutionResult.ok();</span>
+	}
+
+	private List&lt;ReToken&gt; addImplicitConcatenation(List&lt;ReToken&gt; list) {
+<span class="nc" id="L199">		final List&lt;ReToken&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (ReToken token : list) {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (result.size() &gt; 0</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">					&amp;&amp; ReTokenType.needImplicitConcatenation(result.get(result.size() - 1).getType(), token.getType()))</span>
+<span class="nc" id="L203">				result.add(new ReToken(ReTokenType.CONCATENATION_IMPLICIT, &quot;&quot;));</span>
+<span class="nc" id="L204">			result.add(token);</span>
+<span class="nc" id="L205">		}</span>
+<span class="nc" id="L206">		return result;</span>
+	}
+
+	private void pushEtileBox(ReToken element, Symbol type) {
+<span class="nc" id="L210">		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(),</span>
+<span class="nc" id="L211">				getPreprocessingArtifact().getOption()));</span>
+<span class="nc" id="L212">	}</span>
+
+	private void pushRegexGroup(ReToken element) {
+<span class="nc" id="L215">		final List&lt;String&gt; elements = new GroupSplitter().split(element.getData());</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (elements.get(0).equals(&quot;^&quot;))</span>
+<span class="nc" id="L217">			stack.addFirst(new ETileRegexGroupAllBut(elements, fontConfiguration, style, colorSet, getSkinParam()));</span>
+		else
+<span class="nc" id="L219">			stack.addFirst(new ETileRegexGroup(elements, fontConfiguration, style, colorSet, getSkinParam()));</span>
+<span class="nc" id="L220">	}</span>
+
+	private void lookAheadOrBehind(String name) {
+<span class="nc" id="L223">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L224">		stack.addFirst(new ETileLookAheadOrBehind(arg1, fontConfiguration, style, colorSet, name));</span>
+<span class="nc" id="L225">	}</span>
+
+	private void namedGroup(String name) {
+<span class="nc" id="L228">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L229">		stack.addFirst(new ETileNamedGroup(arg1, fontConfiguration, colorSet, getSkinParam(), name));</span>
+<span class="nc" id="L230">	}</span>
+
+	private void repetitionZeroOrMore() {
+<span class="nc" id="L233">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L234">		stack.addFirst(new ETileZeroOrMore(arg1, getSkinParam()));</span>
+<span class="nc" id="L235">	}</span>
+
+	private void optional() {
+<span class="nc" id="L238">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L239">		stack.addFirst(new ETileOptional2(arg1, getSkinParam()));</span>
+<span class="nc" id="L240">	}</span>
+
+	private void repetitionOneOrMore() {
+<span class="nc" id="L243">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L244">		stack.addFirst(new ETileOneOrMore(arg1));</span>
+<span class="nc" id="L245">	}</span>
+
+	private void repetitionOneOrMore(String repetition) {
+<span class="nc" id="L248">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L249">		stack.addFirst(new ETileOneOrMore(arg1, repetition, fontConfiguration.bigger(-2), getSkinParam()));</span>
+
+<span class="nc" id="L251">	}</span>
+
+	private void alternation() {
+<span class="nc" id="L254">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L255">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		if (arg1 instanceof ETileAlternation) {</span>
+<span class="nc" id="L257">			arg1.push(arg2);</span>
+<span class="nc" id="L258">			stack.addFirst(arg1);</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">		} else if (arg2 instanceof ETileAlternation) {</span>
+<span class="nc" id="L260">			arg2.push(arg1);</span>
+<span class="nc" id="L261">			stack.addFirst(arg2);</span>
+		} else {
+<span class="nc" id="L263">			final ETile concat = new ETileAlternation();</span>
+<span class="nc" id="L264">			concat.push(arg1);</span>
+<span class="nc" id="L265">			concat.push(arg2);</span>
+<span class="nc" id="L266">			stack.addFirst(concat);</span>
+		}
+<span class="nc" id="L268">	}</span>
+
+	private void concatenation() {
+<span class="nc" id="L271">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L272">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L273" title="All 4 branches missed.">		if (isBoxMergeable(arg1) &amp;&amp; isBoxMergeable(arg2)) {</span>
+<span class="nc" id="L274">			final ETileBox box1 = (ETileBox) arg1;</span>
+<span class="nc" id="L275">			final ETileBox box2 = (ETileBox) arg2;</span>
+<span class="nc" id="L276">			stack.addFirst(box2.mergeWith(box1));</span>
+<span class="nc" id="L277">			return;</span>
+		}
+<span class="nc bnc" id="L279" title="All 4 branches missed.">		if (isConcatenation1Mergeable(arg1) &amp;&amp; isBoxMergeable(arg2)) {</span>
+<span class="nc" id="L280">			final ETileConcatenation concat1 = (ETileConcatenation) arg1;</span>
+<span class="nc" id="L281">			final ETileBox box1 = (ETileBox) concat1.getFirst();</span>
+<span class="nc" id="L282">			final ETileBox box2 = (ETileBox) arg2;</span>
+<span class="nc" id="L283">			concat1.overideFirst(box2.mergeWith(box1));</span>
+<span class="nc" id="L284">			stack.addFirst(concat1);</span>
+<span class="nc" id="L285">			return;</span>
+		}
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (arg1 instanceof ETileConcatenation) {</span>
+<span class="nc" id="L288">			arg1.push(arg2);</span>
+<span class="nc" id="L289">			stack.addFirst(arg1);</span>
+			// This does not work for (A[B])(C)
+//		} else if (arg2 instanceof ETileConcatenation) {
+//			arg2.push(arg1);
+//			stack.addFirst(arg2);
+		} else {
+<span class="nc" id="L295">			final ETile concat = new ETileConcatenation();</span>
+<span class="nc" id="L296">			concat.push(arg1);</span>
+<span class="nc" id="L297">			concat.push(arg2);</span>
+<span class="nc" id="L298">			stack.addFirst(concat);</span>
+		}
+<span class="nc" id="L300">	}</span>
+
+	private boolean isConcatenation1Mergeable(ETile tile) {
+<span class="nc bnc" id="L303" title="All 2 branches missed.">		if (tile instanceof ETileConcatenation) {</span>
+<span class="nc" id="L304">			final ETileConcatenation concat = (ETileConcatenation) tile;</span>
+<span class="nc" id="L305">			return isBoxMergeable(concat.getFirst());</span>
+		}
+<span class="nc" id="L307">		return false;</span>
+	}
+
+	private boolean isBoxMergeable(ETile tile) {
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		if (tile instanceof ETileBox) {</span>
+<span class="nc" id="L312">			final ETileBox box = (ETileBox) tile;</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			return box.getSymbol() == Symbol.TERMINAL_STRING1;</span>
+		}
+<span class="nc" id="L315">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

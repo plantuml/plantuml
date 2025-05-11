@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BezierUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">BezierUtils.java</span></div><h1>BezierUtils.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.klimt.geom;
+
+<span class="nc" id="L38">public class BezierUtils {</span>
+	static public double getEndingAngle(final XCubicCurve2D left) {
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		if (left.getCtrlP2().equals(left.getP2()))</span>
+<span class="nc" id="L41">			return getAngle(left.getP1(), left.getP2());</span>
+
+<span class="nc" id="L43">		return getAngle(left.getCtrlP2(), left.getP2());</span>
+	}
+
+	static public double getStartingAngle(final XCubicCurve2D left) {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (left.getP1().equals(left.getCtrlP1()))</span>
+<span class="nc" id="L48">			return getAngle(left.getP1(), left.getP2());</span>
+
+<span class="nc" id="L50">		return getAngle(left.getP1(), left.getCtrlP1());</span>
+	}
+
+	public static double getAngle(XPoint2D p1, XPoint2D p2) {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (p1.equals(p2))</span>
+<span class="nc" id="L55">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L57">		return Math.atan2(p2.getY() - p1.getY(), p2.getX() - p1.getX());</span>
+	}
+
+	private static boolean isCutting(XCubicCurve2D bez, XRectangle2D shape) {
+<span class="nc" id="L61">		final boolean contains1 = shape.contains(bez.x1, bez.y1);</span>
+<span class="nc" id="L62">		final boolean contains2 = shape.contains(bez.x2, bez.y2);</span>
+<span class="nc" id="L63">		return contains1 ^ contains2;</span>
+	}
+
+	private static void shorten(XCubicCurve2D bez, XRectangle2D shape) {
+<span class="nc" id="L67">		final boolean contains1 = shape.contains(bez.x1, bez.y1);</span>
+<span class="nc" id="L68">		final boolean contains2 = shape.contains(bez.x2, bez.y2);</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">		if (contains1 ^ contains2 == false)</span>
+<span class="nc" id="L70">			throw new IllegalArgumentException();</span>
+
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (contains1 == false)</span>
+<span class="nc" id="L73">			bez.setCurve(bez.x2, bez.y2, bez.ctrlx2, bez.ctrly2, bez.ctrlx1, bez.ctrly1, bez.x1, bez.y1);</span>
+
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		assert shape.contains(bez.x1, bez.y1) &amp;&amp; shape.contains(bez.x2, bez.y2) == false;</span>
+<span class="nc" id="L76">		final XCubicCurve2D left = XCubicCurve2D.none();</span>
+<span class="nc" id="L77">		final XCubicCurve2D right = XCubicCurve2D.none();</span>
+<span class="nc" id="L78">		subdivide(bez, left, right, 0.5);</span>
+
+<span class="nc bnc" id="L80" title="All 4 branches missed.">		if (isCutting(left, shape) ^ isCutting(right, shape) == false)</span>
+<span class="nc" id="L81">			throw new IllegalArgumentException();</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (isCutting(left, shape))</span>
+<span class="nc" id="L84">			bez.setCurve(left);</span>
+		else
+<span class="nc" id="L86">			bez.setCurve(right);</span>
+
+<span class="nc" id="L88">	}</span>
+
+	private static void subdivide(XCubicCurve2D src, XCubicCurve2D left, XCubicCurve2D right, final double coef) {
+<span class="nc" id="L91">		final double coef1 = coef;</span>
+<span class="nc" id="L92">		final double coef2 = 1 - coef;</span>
+<span class="nc" id="L93">		final double centerxA = src.getCtrlX1() * coef1 + src.getCtrlX2() * coef2;</span>
+<span class="nc" id="L94">		final double centeryA = src.getCtrlY1() * coef1 + src.getCtrlY2() * coef2;</span>
+
+<span class="nc" id="L96">		final double x1 = src.getX1();</span>
+<span class="nc" id="L97">		final double y1 = src.getY1();</span>
+<span class="nc" id="L98">		final double x2 = src.getX2();</span>
+<span class="nc" id="L99">		final double y2 = src.getY2();</span>
+<span class="nc" id="L100">		final double ctrlx1 = x1 * coef1 + src.getCtrlX1() * coef1;</span>
+<span class="nc" id="L101">		final double ctrly1 = y1 * coef1 + src.getCtrlY1() * coef1;</span>
+<span class="nc" id="L102">		final double ctrlx2 = x2 * coef1 + src.getCtrlX2() * coef1;</span>
+<span class="nc" id="L103">		final double ctrly2 = y2 * coef1 + src.getCtrlY2() * coef1;</span>
+
+<span class="nc" id="L105">		final double ctrlx12 = ctrlx1 * coef1 + centerxA * coef1;</span>
+<span class="nc" id="L106">		final double ctrly12 = ctrly1 * coef1 + centeryA * coef1;</span>
+<span class="nc" id="L107">		final double ctrlx21 = ctrlx2 * coef1 + centerxA * coef1;</span>
+<span class="nc" id="L108">		final double ctrly21 = ctrly2 * coef1 + centeryA * coef1;</span>
+<span class="nc" id="L109">		final double centerxB = ctrlx12 * coef1 + ctrlx21 * coef1;</span>
+<span class="nc" id="L110">		final double centeryB = ctrly12 * coef1 + ctrly21 * coef1;</span>
+<span class="nc" id="L111">		left.setCurve(x1, y1, ctrlx1, ctrly1, ctrlx12, ctrly12, centerxB, centeryB);</span>
+<span class="nc" id="L112">		right.setCurve(centerxB, centeryB, ctrlx21, ctrly21, ctrlx2, ctrly2, x2, y2);</span>
+<span class="nc" id="L113">	}</span>
+
+	static double dist(XCubicCurve2D seg) {
+<span class="nc" id="L116">		return XPoint2D.distance(seg.x1, seg.y1, seg.x2, seg.y2);</span>
+	}
+
+	static double dist(XLine2D seg) {
+<span class="nc" id="L120">		return XPoint2D.distance(seg.x1, seg.y1, seg.x2, seg.y2);</span>
+	}
+
+	static public XPoint2D middle(XLine2D seg) {
+<span class="nc" id="L124">		return new XPoint2D((seg.x1 + seg.x2) / 2, (seg.y1 + seg.y2) / 2);</span>
+	}
+
+	static public XPoint2D middle(XPoint2D p1, XPoint2D p2) {
+<span class="nc" id="L128">		return new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);</span>
+	}
+
+	public static XPoint2D intersect(XLine2D orig, XRectangle2D shape) {
+<span class="nc" id="L132">		XLine2D copy = new XLine2D(orig.x1, orig.y1, orig.x2, orig.y2);</span>
+<span class="nc" id="L133">		final boolean contains1 = shape.contains(copy.x1, copy.y1);</span>
+<span class="nc" id="L134">		final boolean contains2 = shape.contains(copy.x2, copy.y2);</span>
+<span class="nc bnc" id="L135" title="All 4 branches missed.">		if (contains1 ^ contains2 == false) {</span>
+			// return new XPoint2D(orig.x2, orig.y2);
+<span class="nc" id="L137">			throw new IllegalArgumentException();</span>
+		}
+		while (true) {
+<span class="nc" id="L140">			final XPoint2D m = copy.getMiddle();</span>
+<span class="nc" id="L141">			final boolean containsMiddle = shape.contains(m.x, m.y);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (contains1 == containsMiddle)</span>
+<span class="nc" id="L143">				copy = copy.withPoint1(m);</span>
+			else
+<span class="nc" id="L145">				copy = copy.withPoint2(m);</span>
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (dist(copy) &lt; 0.1) {</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">				if (contains1)</span>
+<span class="nc" id="L149">					return copy.getP2();</span>
+
+<span class="nc bnc" id="L151" title="All 2 branches missed.">				if (contains2)</span>
+<span class="nc" id="L152">					return copy.getP1();</span>
+
+<span class="nc" id="L154">				throw new IllegalStateException();</span>
+			}
+<span class="nc" id="L156">		}</span>
+	}
+
+	static private XRectangle2D toRectangle(Positionable p) {
+<span class="nc" id="L160">		final XPoint2D point = p.getPosition();</span>
+<span class="nc" id="L161">		final XDimension2D dim = p.getSize();</span>
+<span class="nc" id="L162">		return new XRectangle2D(point.getX(), point.getY(), dim.getWidth(), dim.getHeight());</span>
+	}
+
+	static public boolean intersect(Positionable p1, Positionable p2) {
+<span class="nc" id="L166">		return toRectangle(p1).intersects(toRectangle(p2));</span>
+	}
+
+	static public XPoint2D getCenter(Positionable p) {
+<span class="nc" id="L170">		return new XPoint2D(toRectangle(p).getCenterX(), toRectangle(p).getCenterY());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

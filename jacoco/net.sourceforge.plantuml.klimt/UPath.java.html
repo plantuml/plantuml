@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UPath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt</a> &gt; <span class="el_source">UPath.java</span></div><h1>UPath.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution:  Miguel Esteves
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt;
+
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.compress.CompressionMode;
+import net.sourceforge.plantuml.klimt.compress.UShapeIgnorableForCompression;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt;, UShapeIgnorableForCompression {
+
+	private final String comment;
+	private final String codeLine;
+<span class="fc" id="L56">	private final List&lt;USegment&gt; segments = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">	private MinMax minmax = MinMax.getEmpty(false);</span>
+
+	private boolean isOpenIconic;
+	private boolean ignoreForCompressionOnX;
+	private boolean ignoreForCompressionOnY;
+
+<span class="fc" id="L63">	public UPath(String comment, String codeLine) {</span>
+<span class="fc" id="L64">		this.comment = comment;</span>
+<span class="fc" id="L65">		this.codeLine = codeLine;</span>
+<span class="fc" id="L66">	}</span>
+
+	public static UPath none() {
+<span class="fc" id="L69">		return new UPath(null, null);</span>
+	}
+
+	public void add(double[] coord, USegmentType pathType) {
+<span class="fc" id="L73">		addInternal(new USegment(coord, pathType));</span>
+<span class="fc" id="L74">	}</span>
+
+	public boolean isEmpty() {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		return segments.size() == 0;</span>
+	}
+
+	private void addInternal(USegment segment) {
+<span class="fc" id="L81">		segments.add(segment);</span>
+<span class="fc" id="L82">		final double coord[] = segment.getCoord();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (segment.getSegmentType() == USegmentType.SEG_ARCTO) {</span>
+<span class="fc" id="L84">			minmax = minmax.addPoint(coord[5], coord[6]);</span>
+			// minmax = minmax.addPoint(coord[5] + coord[0], coord[6] + coord[1]);
+			// minmax = minmax.addPoint(coord[5] - coord[0], coord[6] - coord[1]);
+		} else {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			for (int i = 0; i &lt; coord.length; i += 2) {</span>
+<span class="fc" id="L89">				minmax = minmax.addPoint(coord[i], coord[i + 1]);</span>
+			}
+		}
+<span class="fc" id="L92">	}</span>
+
+	public UPath translate(double dx, double dy) {
+<span class="nc bnc" id="L95" title="All 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0)</span>
+<span class="nc" id="L96">			return this;</span>
+<span class="nc" id="L97">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (USegment seg : segments)</span>
+<span class="nc" id="L99">			result.addInternal(seg.translate(dx, dy));</span>
+
+<span class="nc" id="L101">		return result;</span>
+	}
+
+	// ::comment when __HAXE__
+	public UPath rotate(double theta) {
+<span class="nc" id="L106">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (USegment seg : segments)</span>
+<span class="nc" id="L108">			result.addInternal(seg.rotate(theta));</span>
+
+<span class="nc" id="L110">		return result;</span>
+	}
+
+	public UPath affine(AffineTransform transform, double angle, double scale) {
+<span class="nc" id="L114">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (USegment seg : segments)</span>
+<span class="nc" id="L116">			result.addInternal(seg.affine(transform, angle, scale));</span>
+
+<span class="nc" id="L118">		return result;</span>
+	}
+	// ::done
+
+	public void moveTo(XPoint2D pt) {
+<span class="fc" id="L123">		moveTo(pt.getX(), pt.getY());</span>
+<span class="fc" id="L124">	}</span>
+
+	public void lineTo(XPoint2D pt) {
+<span class="fc" id="L127">		lineTo(pt.getX(), pt.getY());</span>
+<span class="fc" id="L128">	}</span>
+
+	public void moveTo(double x, double y) {
+<span class="fc" id="L131">		add(new double[] { x, y }, USegmentType.SEG_MOVETO);</span>
+<span class="fc" id="L132">	}</span>
+
+	public void lineTo(double x, double y) {
+<span class="fc" id="L135">		add(new double[] { x, y }, USegmentType.SEG_LINETO);</span>
+<span class="fc" id="L136">	}</span>
+
+	public void cubicTo(XPoint2D p1, XPoint2D p2, XPoint2D p) {
+<span class="fc" id="L139">		cubicTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p.getX(), p.getY());</span>
+<span class="fc" id="L140">	}</span>
+
+	public void cubicTo(double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2, double y2) {
+<span class="fc" id="L143">		add(new double[] { ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2 }, USegmentType.SEG_CUBICTO);</span>
+<span class="fc" id="L144">	}</span>
+
+	public void quadTo(double ctrlx, double ctrly, double x2, double y2) {
+<span class="nc" id="L147">		add(new double[] { ctrlx, ctrly, ctrlx, ctrly, x2, y2 }, USegmentType.SEG_CUBICTO);</span>
+<span class="nc" id="L148">	}</span>
+
+	public void quadTo(XPoint2D ctrl, XPoint2D pt) {
+<span class="nc" id="L151">		quadTo(ctrl.getX(), ctrl.getY(), pt.getX(), pt.getY());</span>
+<span class="nc" id="L152">	}</span>
+
+	public void arcTo(double rx, double ry, double x_axis_rotation, double large_arc_flag, double sweep_flag, double x,
+			double y) {
+<span class="nc" id="L156">		add(new double[] { rx, ry, x_axis_rotation, large_arc_flag, sweep_flag, x, y }, USegmentType.SEG_ARCTO);</span>
+		// lineTo(x, y);
+<span class="nc" id="L158">	}</span>
+
+	public void arcTo(XPoint2D pt, double radius, double large_arc_flag, double sweep_flag) {
+<span class="fc" id="L161">		add(new double[] { radius, radius, 0, large_arc_flag, sweep_flag, pt.getX(), pt.getY() },</span>
+				USegmentType.SEG_ARCTO);
+		// lineTo(x, y);
+<span class="fc" id="L164">	}</span>
+
+	public void closePath() {
+		// System.err.println(&quot;CLOSE_PATH&quot;);
+<span class="fc" id="L168">	}</span>
+
+	public double getMaxX() {
+<span class="fc" id="L171">		return minmax.getMaxX();</span>
+	}
+
+	public double getMaxY() {
+<span class="fc" id="L175">		return minmax.getMaxY();</span>
+	}
+
+	public double getMinX() {
+<span class="fc" id="L179">		return minmax.getMinX();</span>
+	}
+
+	public double getMinY() {
+<span class="fc" id="L183">		return minmax.getMinY();</span>
+	}
+
+	// ::comment when __HAXE__
+	@Override
+	public String toString() {
+<span class="nc" id="L189">		return segments.toString();</span>
+	}
+	// ::done
+
+	public Iterator&lt;USegment&gt; iterator() {
+<span class="fc" id="L194">		return segments.iterator();</span>
+	}
+
+	public boolean isOpenIconic() {
+<span class="fc" id="L198">		return isOpenIconic;</span>
+	}
+
+	public void setOpenIconic(boolean isOpenIconic) {
+<span class="nc" id="L202">		this.isOpenIconic = isOpenIconic;</span>
+<span class="nc" id="L203">	}</span>
+
+	public final String getComment() {
+<span class="fc" id="L206">		return comment;</span>
+	}
+
+	public final String getCodeLine() {
+<span class="fc" id="L210">		return codeLine;</span>
+	}
+
+	public void setIgnoreForCompressionOnX() {
+<span class="nc" id="L214">		this.ignoreForCompressionOnX = true;</span>
+<span class="nc" id="L215">	}</span>
+
+	public void setIgnoreForCompressionOnY() {
+<span class="nc" id="L218">		this.ignoreForCompressionOnY = true;</span>
+<span class="nc" id="L219">	}</span>
+
+	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {
+<span class="nc" id="L222">	}</span>
+
+	public boolean isIgnoreForCompressionOn(CompressionMode mode) {
+<span class="fc bfc" id="L225" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X) {</span>
+<span class="fc" id="L226">			return ignoreForCompressionOnX;</span>
+		}
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if (mode == CompressionMode.ON_Y) {</span>
+<span class="fc" id="L229">			return ignoreForCompressionOnY;</span>
+		}
+<span class="nc" id="L231">		throw new IllegalArgumentException();</span>
+	}
+
+	// public boolean isEmpty() {
+	// return segments.size() == 0;
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

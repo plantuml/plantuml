@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Doll.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">Doll.java</span></div><h1>Doll.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.teoz.LivingSpace;
+import net.sourceforge.plantuml.sequencediagram.teoz.TileArguments;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.PaddingParam;
+import net.sourceforge.plantuml.skin.SkinParamBackcolored;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.WithStyle;
+
+public class Doll implements WithStyle {
+
+<span class="nc" id="L67">	final private List&lt;Participant&gt; participants = new ArrayList&lt;&gt;();</span>
+	// alls is only used for Teoz: refactor needed after puma will be removed
+	final private Map&lt;ParticipantEnglober, Doll&gt; alls;
+	final private ParticipantEnglober englober;
+	final private StyleBuilder styleBuilder;
+	final private TileArguments tileArguments;
+
+	public static Doll createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Rose skin,
+			StringBounder stringBounder, StyleBuilder styleBuilder) {
+<span class="nc" id="L76">		return new Doll(englober, convertFunctionToBeRemoved(skinParam, skin, stringBounder), styleBuilder, first,</span>
+				null);
+	}
+
+	public static Doll createTeoz(ParticipantEnglober englober, TileArguments tileArguments,
+			Map&lt;ParticipantEnglober, Doll&gt; alls) {
+<span class="nc" id="L82">		return new Doll(englober, tileArguments, tileArguments.getSkinParam().getCurrentStyleBuilder(), null, alls);</span>
+	}
+
+	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin,
+			StringBounder stringBounder) {
+<span class="nc" id="L87">		return new TileArguments(stringBounder, null, skin, skinParam, null, null);</span>
+	}
+
+	private Doll(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder,
+<span class="nc" id="L91">			Participant first, Map&lt;ParticipantEnglober, Doll&gt; alls) {</span>
+<span class="nc" id="L92">		this.englober = Objects.requireNonNull(englober);</span>
+<span class="nc" id="L93">		this.styleBuilder = styleBuilder;</span>
+<span class="nc" id="L94">		this.tileArguments = Objects.requireNonNull(tileArguments);</span>
+<span class="nc" id="L95">		this.alls = alls;</span>
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (first != null)</span>
+<span class="nc" id="L98">			this.participants.add(first);</span>
+
+<span class="nc" id="L100">	}</span>
+
+	final public StyleSignature getStyleSignature() {
+<span class="nc" id="L103">		return ComponentType.ENGLOBER.getStyleSignature();</span>
+	}
+
+	final public Style[] getUsedStyles() {
+<span class="nc" id="L107">		Style tmp = getStyleSignature().withTOBECHANGED(englober.getStereotype()).getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L108">		final HColor backColor = englober.getBoxColor();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (tmp != null)</span>
+<span class="nc" id="L110">			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);</span>
+
+<span class="nc" id="L112">		return new Style[] { tmp };</span>
+	}
+
+	final public ParticipantEnglober getParticipantEnglober() {
+<span class="nc" id="L116">		return englober;</span>
+	}
+
+	private Component getComponent() {
+<span class="nc" id="L120">		final ParticipantEnglober englober = getParticipantEnglober();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		final ISkinParam s = englober.getBoxColor() == null ? tileArguments.getSkinParam()</span>
+<span class="nc" id="L122">				: new SkinParamBackcolored(tileArguments.getSkinParam(), englober.getBoxColor());</span>
+<span class="nc" id="L123">		return tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null, s,</span>
+<span class="nc" id="L124">				englober.getTitle());</span>
+	}
+
+	public double getTitlePreferredHeight() {
+<span class="nc" id="L128">		final Component comp = tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null,</span>
+<span class="nc" id="L129">				tileArguments.getSkinParam(), getParticipantEnglober().getTitle());</span>
+<span class="nc" id="L130">		return comp.getPreferredHeight(tileArguments.getStringBounder());</span>
+	}
+
+	public final Participant getFirst2TOBEPRIVATE() {
+<span class="nc" id="L134">		return participants.get(0);</span>
+	}
+
+	public final Participant getLast2TOBEPRIVATE() {
+<span class="nc" id="L138">		return participants.get(participants.size() - 1);</span>
+	}
+
+	private Real getPosA(StringBounder stringBounder) {
+<span class="nc" id="L142">		return getFirstLivingSpace().getPosA(stringBounder);</span>
+	}
+
+	private Real getPosB(StringBounder stringBounder) {
+<span class="nc" id="L146">		return getFirstLivingSpace().getPosB(stringBounder);</span>
+	}
+
+	private Real getPosD(StringBounder stringBounder) {
+<span class="nc" id="L150">		return getLastLivingSpace().getPosD(stringBounder);</span>
+	}
+
+	private Real getPosE(StringBounder stringBounder) {
+<span class="nc" id="L154">		return getLastLivingSpace().getPosE(stringBounder);</span>
+	}
+
+	private Real getPosAA(StringBounder stringBounder) {
+<span class="nc" id="L158">		final LivingSpace previous = tileArguments.getLivingSpaces().previous(getFirstLivingSpace());</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (previous == null)</span>
+<span class="nc" id="L160">			return tileArguments.getXOrigin();</span>
+
+<span class="nc" id="L162">		return previous.getPosD(stringBounder);</span>
+	}
+
+	private LivingSpace getFirstLivingSpace() {
+<span class="nc" id="L166">		return tileArguments.getLivingSpace(getFirst2TOBEPRIVATE());</span>
+	}
+
+	private LivingSpace getLastLivingSpace() {
+<span class="nc" id="L170">		return tileArguments.getLivingSpace(getLast2TOBEPRIVATE());</span>
+	}
+
+	public boolean contains(Participant p) {
+<span class="nc" id="L174">		return participants.contains(p);</span>
+	}
+
+	public void addParticipant(Participant p) {
+<span class="nc" id="L178">		participants.add(Objects.requireNonNull(p));</span>
+<span class="nc" id="L179">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L183">		return &quot;Doll:&quot; + englober.getTitle().toString() + &quot; &quot; + participants;</span>
+	}
+
+	private double getTitleWidth() {
+<span class="nc" id="L187">		return getComponent().getPreferredWidth(tileArguments.getStringBounder());</span>
+	}
+
+	public void drawMe(UGraphic ug, double height, Context2D context, Doll group) {
+<span class="nc" id="L191">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L192">		final double x1 = getPosA(stringBounder).getCurrentValue() - 4;</span>
+<span class="nc" id="L193">		final double x2 = getPosE(stringBounder).getCurrentValue() + 4;</span>
+
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (Doll current = group; current != null; current = current.getParent()) {</span>
+<span class="nc" id="L196">			final double titlePreferredHeight = current.getTitlePreferredHeight();</span>
+<span class="nc" id="L197">			ug = ug.apply(UTranslate.dy(titlePreferredHeight));</span>
+<span class="nc" id="L198">			height -= titlePreferredHeight;</span>
+		}
+
+<span class="nc" id="L201">		final XDimension2D dim = new XDimension2D(x2 - x1, height);</span>
+<span class="nc" id="L202">		getComponent().drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
+<span class="nc" id="L203">	}</span>
+
+	public Doll getParent() {
+<span class="nc" id="L206">		final ParticipantEnglober parent = getParticipantEnglober().getParent();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L208">			return null;</span>
+<span class="nc" id="L209">		return alls.get(parent);</span>
+	}
+
+	public void addInternalConstraints(StringBounder stringBounder) {
+<span class="nc" id="L213">		final double titleWidth = getTitleWidth();</span>
+<span class="nc" id="L214">		final double x1 = getPosB(stringBounder).getCurrentValue();</span>
+<span class="nc" id="L215">		final double x2 = getPosD(stringBounder).getCurrentValue();</span>
+<span class="nc" id="L216">		final double actualWidth = x2 - x1;</span>
+<span class="nc" id="L217">		final double marginX = (titleWidth + 10 - actualWidth) / 2;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (marginX &gt; 0) {</span>
+<span class="nc" id="L219">			getFirstLivingSpace().ensureMarginBefore(marginX);</span>
+<span class="nc" id="L220">			getLastLivingSpace().ensureMarginAfter(marginX);</span>
+		}
+<span class="nc" id="L222">		getPosA(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding()));</span>
+
+<span class="nc" id="L224">	}</span>
+
+	public void addConstraintAfter(StringBounder stringBounder) {
+<span class="nc" id="L227">		final LivingSpace next = tileArguments.getLivingSpaces().next(getLastLivingSpace());</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (next == null)</span>
+<span class="nc" id="L229">			return;</span>
+
+<span class="nc" id="L231">		next.getPosA(stringBounder).ensureBiggerThan(getPosE(stringBounder).addFixed(20 + 2 * padding()));</span>
+<span class="nc" id="L232">	}</span>
+
+	private double padding() {
+<span class="nc" id="L235">		return tileArguments.getSkinParam().getPadding(PaddingParam.BOX);</span>
+	}
+
+	public Real getMinX(StringBounder stringBounder) {
+<span class="nc" id="L239">		return getPosA(stringBounder);</span>
+	}
+
+	public Real getMaxX(StringBounder stringBounder) {
+<span class="nc" id="L243">		return getPosE(stringBounder).addFixed(10);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

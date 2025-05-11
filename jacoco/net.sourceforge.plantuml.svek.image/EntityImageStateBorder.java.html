@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageStateBorder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageStateBorder.java</span></div><h1>EntityImageStateBorder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPosition;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.Bibliotekon;
+import net.sourceforge.plantuml.svek.Cluster;
+import net.sourceforge.plantuml.svek.SvekNode;
+
+public class EntityImageStateBorder extends AbstractEntityImageBorder {
+
+	public EntityImageStateBorder(Entity leaf, Cluster stateParent, final Bibliotekon bibliotekon) {
+<span class="nc" id="L61">		super(leaf, stateParent, bibliotekon, FontParam.STATE);</span>
+<span class="nc" id="L62">	}</span>
+
+	@Override
+	protected StyleSignatureBasic getSignature() {
+<span class="nc" id="L66">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state);</span>
+	}
+
+	private boolean upPosition() {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L71">			return false;</span>
+
+<span class="nc" id="L73">		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();</span>
+<span class="nc" id="L74">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		return node.getMinY() &lt; clusterCenter.getY();</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="nc" id="L79">		final TextBlock desc = getDesc();</span>
+<span class="nc" id="L80">		double y = 0;</span>
+<span class="nc" id="L81">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L82">		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (upPosition())</span>
+<span class="nc" id="L84">			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();</span>
+		else
+<span class="nc" id="L86">			y += 2 * EntityPosition.RADIUS;</span>
+
+<span class="nc" id="L88">		desc.drawU(ug.apply(new UTranslate(x, y)));</span>
+
+<span class="nc" id="L90">		final Style style = getStyle();</span>
+
+<span class="nc" id="L92">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L93">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (backcolor == null)</span>
+<span class="nc" id="L95">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (backcolor.isTransparent())</span>
+<span class="nc" id="L97">			backcolor = getSkinParam().getBackgroundColor();</span>
+
+<span class="nc" id="L99">		ug = ug.apply(getUStroke()).apply(borderColor);</span>
+<span class="nc" id="L100">		ug = ug.apply(backcolor.bg());</span>
+
+<span class="nc" id="L102">		entityPosition.drawSymbol(ug, rankdir);</span>
+<span class="nc" id="L103">	}</span>
+
+	private UStroke getUStroke() {
+<span class="nc" id="L106">		return UStroke.withThickness(1.5);</span>
+	}
+
+	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
+<span class="nc" id="L110">		final TextBlock desc = getDesc();</span>
+<span class="nc" id="L111">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L112">		return dimDesc.getWidth();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

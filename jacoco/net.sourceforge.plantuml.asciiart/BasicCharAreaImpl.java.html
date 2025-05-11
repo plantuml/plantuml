@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicCharAreaImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiart</a> &gt; <span class="el_source">BasicCharAreaImpl.java</span></div><h1>BasicCharAreaImpl.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiart;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+
+public class BasicCharAreaImpl implements BasicCharArea {
+
+<span class="fc" id="L47">	private int charSize1 = 160;</span>
+<span class="fc" id="L48">	private int charSize2 = 160;</span>
+
+	private int width;
+	private int height;
+
+	private char chars[][];
+
+<span class="fc" id="L55">	public BasicCharAreaImpl() {</span>
+<span class="fc" id="L56">		this.chars = new char[charSize1][charSize2];</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (int i = 0; i &lt; charSize1; i++) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">			for (int j = 0; j &lt; charSize2; j++) {</span>
+<span class="fc" id="L59">				chars[i][j] = ' ';</span>
+			}
+		}
+<span class="fc" id="L62">	}</span>
+
+	public final int getWidth() {
+<span class="nc" id="L65">		return width;</span>
+	}
+
+	public final int getHeight() {
+<span class="nc" id="L69">		return height;</span>
+	}
+
+	public void drawChar(char c, int x, int y) {
+<span class="fc" id="L73">		ensurePossible(x, y);</span>
+<span class="fc" id="L74">		chars[x][y] = c;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (x &gt;= width) {</span>
+<span class="fc" id="L76">			width = x + 1;</span>
+		}
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (y &gt;= height) {</span>
+<span class="fc" id="L79">			height = y + 1;</span>
+		}
+<span class="fc" id="L81">	}</span>
+
+	private boolean isLong(char c) {
+<span class="fc" id="L84">		final int wc = Wcwidth.of(c);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (wc == 1) {</span>
+<span class="fc" id="L86">			return false;</span>
+		}
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (wc == 2) {</span>
+<span class="nc" id="L89">			return true;</span>
+		}
+<span class="nc" id="L91">		return false;</span>
+//		throw new IllegalArgumentException(&quot;warning width=&quot; + wc + &quot; char=&quot; + ((int) c));
+	}
+
+	private void ensurePossible(int x, int y) {
+<span class="fc" id="L96">		int newCharSize1 = charSize1;</span>
+<span class="fc" id="L97">		int newCharSize2 = charSize2;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		while (x &gt;= newCharSize1) {</span>
+<span class="nc" id="L99">			newCharSize1 *= 2;</span>
+		}
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		while (y &gt;= newCharSize2) {</span>
+<span class="nc" id="L102">			newCharSize2 *= 2;</span>
+		}
+<span class="pc bpc" id="L104" title="2 of 4 branches missed.">		if (newCharSize1 != charSize1 || newCharSize2 != charSize2) {</span>
+<span class="nc" id="L105">			final char newChars[][] = new char[newCharSize1][newCharSize2];</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			for (int i = 0; i &lt; newCharSize1; i++) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">				for (int j = 0; j &lt; newCharSize2; j++) {</span>
+<span class="nc" id="L108">					char c = ' ';</span>
+<span class="nc bnc" id="L109" title="All 4 branches missed.">					if (i &lt; charSize1 &amp;&amp; j &lt; charSize2) {</span>
+<span class="nc" id="L110">						c = chars[i][j];</span>
+					}
+<span class="nc" id="L112">					newChars[i][j] = c;</span>
+				}
+			}
+<span class="nc" id="L115">			this.chars = newChars;</span>
+<span class="nc" id="L116">			this.charSize1 = newCharSize1;</span>
+<span class="nc" id="L117">			this.charSize2 = newCharSize2;</span>
+		}
+
+<span class="fc" id="L120">	}</span>
+
+	public void drawStringLR(String string, int x, int y) {
+<span class="fc" id="L123">		int pos = x;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (int i = 0; i &lt; string.length(); i++) {</span>
+<span class="fc" id="L125">			final char c = string.charAt(i);</span>
+<span class="fc" id="L126">			drawChar(c, pos, y);</span>
+<span class="fc" id="L127">			pos++;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (isLong(c)) {</span>
+<span class="nc" id="L129">				drawChar('\0', pos, y);</span>
+<span class="nc" id="L130">				pos++;</span>
+			}
+		}
+<span class="fc" id="L133">	}</span>
+
+	public void drawStringTB(String string, int x, int y) {
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (int i = 0; i &lt; string.length(); i++) {</span>
+<span class="nc" id="L137">			drawChar(string.charAt(i), x, y + i);</span>
+		}
+<span class="nc" id="L139">	}</span>
+
+	public String getLine(int line) {
+<span class="fc" id="L142">		final StringBuilder sb = new StringBuilder(charSize1);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		for (int x = 0; x &lt; width; x++) {</span>
+<span class="fc" id="L144">			final char c = chars[x][line];</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if (c != '\0') {</span>
+<span class="fc" id="L146">				StringUtils.appendInternalToRealBoldNumber(sb, c);</span>
+			}
+		}
+<span class="fc" id="L149">		return sb.toString();</span>
+	}
+
+	public void print(PrintStream ps) {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (String s : getLines()) {</span>
+<span class="fc" id="L154">			ps.println(s);</span>
+<span class="fc" id="L155">		}</span>
+<span class="fc" id="L156">	}</span>
+
+	public List&lt;String&gt; getLines() {
+<span class="fc" id="L159">		final List&lt;String&gt; result = new ArrayList&lt;&gt;(height);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (int y = 0; y &lt; height; y++) {</span>
+<span class="fc" id="L161">			result.add(getLine(y));</span>
+		}
+<span class="fc" id="L163">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public void drawHLine(char c, int line, int col1, int col2) {
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (int x = col1; x &lt; col2; x++) {</span>
+<span class="fc" id="L168">			this.drawChar(c, x, line);</span>
+		}
+<span class="fc" id="L170">	}</span>
+
+	public void drawHLine(char c, int line, int col1, int col2, char ifFound, char thenUse) {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (int x = col1; x &lt; col2; x++) {</span>
+<span class="nc" id="L174">			ensurePossible(x, line);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (this.chars[x][line] == ifFound) {</span>
+<span class="nc" id="L176">				this.drawChar(thenUse, x, line);</span>
+			} else {
+<span class="nc" id="L178">				this.drawChar(c, x, line);</span>
+			}
+		}
+<span class="nc" id="L181">	}</span>
+
+	public void drawVLine(char c, int col, int line1, int line2) {
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (int y = line1; y &lt; line2; y++) {</span>
+<span class="fc" id="L185">			this.drawChar(c, col, y);</span>
+		}
+<span class="fc" id="L187">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L191">		return getLines().toString();</span>
+	}
+
+	public void fillRect(char c, int x, int y, int width, int height) {
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		for (int i = 0; i &lt; width; i++) {</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">			for (int j = 0; j &lt; height; j++) {</span>
+<span class="fc" id="L197">				drawChar(c, x + i, y + j);</span>
+			}
+		}
+<span class="fc" id="L200">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

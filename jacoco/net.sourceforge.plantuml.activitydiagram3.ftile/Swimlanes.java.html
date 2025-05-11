@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Swimlanes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">Swimlanes.java</span></div><h1>Swimlanes.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.activitydiagram3.Instruction;
+import net.sourceforge.plantuml.activitydiagram3.InstructionList;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddNote;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddUrl;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAssembly;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateGroup;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorIf;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorRepeat;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorSwitch;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GConnection;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.compress.CompressionMode;
+import net.sourceforge.plantuml.klimt.compress.SlotFinder;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.svek.UGraphicForSnake;
+import net.sourceforge.plantuml.utils.MathUtils;
+
+<span class="fc" id="L91">public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable {</span>
+
+	private final ISkinParam skinParam;;
+	private final Pragma pragma;
+
+<span class="fc" id="L96">	private final List&lt;Swimlane&gt; swimlanesRaw = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L97">	private final List&lt;Swimlane&gt; swimlanesSpecial = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L98">	private final List&lt;LaneDivider&gt; dividers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L99">	private Swimlane currentSwimlane = null;</span>
+
+<span class="fc" id="L101">	private final Instruction root = InstructionList.empty();</span>
+<span class="fc" id="L102">	private Instruction currentInstruction = root;</span>
+
+<span class="fc" id="L104">	private LinkRendering nextLinkRenderer = LinkRendering.none();</span>
+	private Style style;
+
+	private List&lt;Swimlane&gt; swimlanes() {
+<span class="fc" id="L108">		return Collections.unmodifiableList(swimlanesRaw);</span>
+	}
+
+	private List&lt;Swimlane&gt; swimlanesSpecial() {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (swimlanesSpecial.size() == 0) {</span>
+<span class="fc" id="L113">			swimlanesSpecial.addAll(swimlanesRaw);</span>
+<span class="fc" id="L114">			final Swimlane last = new Swimlane(&quot;&quot;, Integer.MAX_VALUE, pragma);</span>
+<span class="fc" id="L115">			last.setMinMax(MinMax.getEmpty(true));</span>
+<span class="fc" id="L116">			swimlanesSpecial.add(last);</span>
+		}
+<span class="fc" id="L118">		return Collections.unmodifiableList(swimlanesSpecial);</span>
+	}
+
+	public StyleSignatureBasic getStyleSignature() {
+<span class="fc" id="L122">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);</span>
+	}
+
+<span class="fc" id="L125">	public Swimlanes(ISkinParam skinParam, Pragma pragma) {</span>
+<span class="fc" id="L126">		this.skinParam = skinParam;</span>
+<span class="fc" id="L127">		this.pragma = pragma;</span>
+<span class="fc" id="L128">	}</span>
+
+	protected Style getStyle() {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (style == null)</span>
+<span class="fc" id="L132">			this.style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+<span class="fc" id="L134">		return style;</span>
+	}
+
+	private FtileFactory getFtileFactory(StringBounder stringBounder) {
+<span class="fc" id="L138">		FtileFactory factory = new VCompactFactory(skinParam, stringBounder);</span>
+<span class="fc" id="L139">		factory = new FtileFactoryDelegatorAddUrl(factory);</span>
+<span class="fc" id="L140">		factory = new FtileFactoryDelegatorAssembly(factory);</span>
+<span class="fc" id="L141">		factory = new FtileFactoryDelegatorIf(factory, pragma);</span>
+<span class="fc" id="L142">		factory = new FtileFactoryDelegatorSwitch(factory);</span>
+<span class="fc" id="L143">		factory = new FtileFactoryDelegatorWhile(factory);</span>
+<span class="fc" id="L144">		factory = new FtileFactoryDelegatorRepeat(factory);</span>
+<span class="fc" id="L145">		factory = new FtileFactoryDelegatorCreateParallel(factory);</span>
+		// factory = new FtileFactoryDelegatorCreateParallelAddingMargin(new
+		// FtileFactoryDelegatorCreateParallel1(factory));
+<span class="fc" id="L148">		factory = new FtileFactoryDelegatorAddNote(factory);</span>
+<span class="fc" id="L149">		factory = new FtileFactoryDelegatorCreateGroup(factory);</span>
+<span class="fc" id="L150">		return factory;</span>
+	}
+
+	public void swimlane(String name, HColor color, Display label) {
+<span class="fc" id="L154">		currentSwimlane = getOrCreate(name);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L156">			currentSwimlane.setSpecificColorTOBEREMOVED(ColorType.BACK, color);</span>
+
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (Display.isNull(label) == false)</span>
+<span class="nc" id="L159">			currentSwimlane.setDisplay(label);</span>
+
+<span class="fc" id="L161">	}</span>
+
+	private Swimlane getOrCreate(String name) {
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		for (Swimlane s : swimlanes())</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (s.getName().equals(name))</span>
+<span class="nc" id="L166">				return s;</span>
+
+<span class="fc" id="L168">		final Swimlane result = new Swimlane(name, swimlanesRaw.size(), pragma);</span>
+<span class="fc" id="L169">		swimlanesRaw.add(result);</span>
+<span class="fc" id="L170">		return result;</span>
+	}
+
+	class Cross extends UGraphicDelegator {
+
+<span class="fc" id="L175">		private Cross(UGraphic ug) {</span>
+<span class="fc" id="L176">			super(ug);</span>
+<span class="fc" id="L177">		}</span>
+
+		@Override
+		public void draw(UShape shape) {
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			if (shape instanceof Ftile) {</span>
+<span class="fc" id="L182">				final Ftile tile = (Ftile) shape;</span>
+<span class="fc" id="L183">				tile.drawU(this);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			} else if (shape instanceof Connection) {</span>
+<span class="fc" id="L185">				final Connection connection = (Connection) shape;</span>
+<span class="fc" id="L186">				final Ftile tile1 = connection.getFtile1();</span>
+<span class="fc" id="L187">				final Ftile tile2 = connection.getFtile2();</span>
+
+<span class="pc bpc" id="L189" title="2 of 4 branches missed.">				if (tile1 == null || tile2 == null)</span>
+<span class="nc" id="L190">					return;</span>
+
+<span class="fc bfc" id="L192" title="All 2 branches covered.">				if (tile1.getSwimlaneOut() != tile2.getSwimlaneIn()) {</span>
+<span class="fc" id="L193">					final ConnectionCross connectionCross = new ConnectionCross(connection);</span>
+<span class="fc" id="L194">					connectionCross.drawU(getUg());</span>
+				}
+				// ::comment when __CORE__
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">			} else if (shape instanceof Gtile) {</span>
+<span class="nc" id="L198">				final Gtile tile = (Gtile) shape;</span>
+<span class="nc" id="L199">				tile.drawU(this);</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">			} else if (shape instanceof GConnection) {</span>
+<span class="nc" id="L201">				final GConnection connection = (GConnection) shape;</span>
+<span class="nc" id="L202">				System.err.println(&quot;CROSS IN SWIMLANES&quot;);</span>
+<span class="nc" id="L203">				connection.drawTranslatable(getUg());</span>
+				// connection.drawU(this);
+				// throw new UnsupportedOperationException();
+				// ::done
+			}
+<span class="fc" id="L208">		}</span>
+
+		public UGraphic apply(UChange change) {
+<span class="fc" id="L211">			return new Cross(getUg().apply(change));</span>
+		}
+
+	}
+
+	public final void computeSize(StringBounder stringBounder) {
+<span class="fc" id="L217">		final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (swimlanes().size() &gt; 1) {</span>
+<span class="fc" id="L219">			TextBlock full = root.createFtile(getFtileFactory(stringBounder));</span>
+<span class="fc" id="L220">			computeSizeInternal(ug, full);</span>
+		}
+
+<span class="fc" id="L223">	}</span>
+
+	public final void drawU(UGraphic ug) {
+		// ::comment when __CORE__
+		if (Gtile.USE_GTILE) {
+			drawGtile(ug);
+			return;
+		}
+		// ::done
+
+<span class="fc" id="L233">		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));</span>
+
+<span class="fc" id="L235">		ug = new UGraphicForSnake(ug);</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		if (swimlanes().size() &gt; 1) {</span>
+<span class="fc" id="L237">			drawWhenSwimlanes(ug, full);</span>
+		} else {
+			// BUG42
+<span class="fc" id="L240">			full = new TextBlockInterceptorUDrawable(full);</span>
+<span class="fc" id="L241">			full.drawU(ug);</span>
+<span class="fc" id="L242">			ug.flushUg();</span>
+		}
+<span class="fc" id="L244">	}</span>
+
+	// ::comment when __CORE__
+	private void drawGtile(UGraphic ug) {
+<span class="nc" id="L248">		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());</span>
+
+<span class="nc" id="L250">		ug = new UGraphicForSnake(ug);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (swimlanes().size() &gt; 1) {</span>
+<span class="nc" id="L252">			drawWhenSwimlanes(ug, full);</span>
+		} else {
+<span class="nc" id="L254">			full = new TextBlockInterceptorUDrawable(full);</span>
+<span class="nc" id="L255">			full.drawU(ug);</span>
+<span class="nc" id="L256">			ug.flushUg();</span>
+		}
+
+<span class="nc" id="L259">	}</span>
+	// ::done
+
+	private TextBlock getTitle(Swimlane swimlane) {
+<span class="fc" id="L263">		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="fc" id="L264">		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+
+<span class="fc" id="L266">		LineBreakStrategy wrap = getWrap();</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (wrap.isAuto())</span>
+<span class="nc" id="L268">			wrap = new LineBreakStrategy(&quot;&quot; + ((int) swimlane.getActualWidth()));</span>
+
+<span class="fc" id="L270">		return swimlane.getDisplay().create9(fontConfiguration, horizontalAlignment, skinParam, wrap);</span>
+	}
+
+	private LineBreakStrategy getWrap() {
+<span class="fc" id="L274">		LineBreakStrategy wrap = skinParam.swimlaneWrapTitleWidth();</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if (wrap == LineBreakStrategy.NONE)</span>
+<span class="nc" id="L276">			wrap = style.wrapWidth();</span>
+
+<span class="fc" id="L278">		return wrap;</span>
+	}
+
+	private UTranslate getTitleHeightTranslate(final StringBounder stringBounder) {
+<span class="fc" id="L282">		double titlesHeight = getTitlesHeight(stringBounder);</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		return UTranslate.dy(titlesHeight &gt; 0 ? titlesHeight + 5 : 0);</span>
+	}
+
+	private double getTitlesHeight(StringBounder stringBounder) {
+<span class="fc" id="L287">		double titlesHeight = 0;</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
+<span class="fc" id="L289">			final TextBlock swTitle = getTitle(swimlane);</span>
+<span class="fc" id="L290">			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());</span>
+<span class="fc" id="L291">		}</span>
+<span class="fc" id="L292">		return titlesHeight;</span>
+	}
+
+	private void drawWhenSwimlanes(UGraphic ug, TextBlock full) {
+<span class="fc" id="L296">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L297">		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);</span>
+
+<span class="fc" id="L299">		drawTitlesBackground(ug);</span>
+
+<span class="fc" id="L301">		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);</span>
+<span class="fc" id="L302">		int i = 0;</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">		assert dividers.size() == swimlanes().size() + 1;</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanesSpecial()) {</span>
+<span class="fc" id="L305">			final LaneDivider divider1 = dividers.get(i);</span>
+
+<span class="fc" id="L307">			final double xpos = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();</span>
+<span class="fc" id="L308">			final HColor back = swimlane.getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L309" title="3 of 4 branches missed.">			if (back != null &amp;&amp; back.isTransparent() == false) {</span>
+<span class="nc" id="L310">				final LaneDivider divider2 = dividers.get(i + 1);</span>
+<span class="nc" id="L311">				final UGraphic background = ug.apply(back.bg()).apply(back)</span>
+<span class="nc" id="L312">						.apply(UTranslate.dx(xpos - divider1.getX2()));</span>
+<span class="nc" id="L313">				final double width = swimlane.getActualWidth() + divider1.getX2() + divider2.getX1();</span>
+<span class="nc" id="L314">				final double height = dimensionFull.getHeight() + titleHeightTranslate.getDy();</span>
+<span class="nc" id="L315">				background.draw(URectangle.build(width, height).ignoreForCompressionOnX().ignoreForCompressionOnY());</span>
+			}
+
+<span class="fc" id="L318">			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane, swimlanes()).apply(swimlane.getTranslate())</span>
+<span class="fc" id="L319">					.apply(getTitleHeightTranslate(stringBounder)));</span>
+
+<span class="fc" id="L321">			final double dividerWith = divider1.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L322">			divider1.drawU(ug.apply(UTranslate.dx(xpos - dividerWith)));</span>
+<span class="fc" id="L323">			i++;</span>
+<span class="fc" id="L324">		}</span>
+
+<span class="fc" id="L326">		final Cross cross = new Cross(ug.apply(getTitleHeightTranslate(stringBounder)));</span>
+<span class="fc" id="L327">		full.drawU(cross);</span>
+<span class="fc" id="L328">		cross.flushUg();</span>
+
+<span class="fc" id="L330">		drawTitles(ug);</span>
+
+<span class="fc" id="L332">	}</span>
+
+	private void drawTitlesBackground(UGraphic ug) {
+<span class="fc" id="L335">		final HColor color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">		if (color != null) {</span>
+<span class="fc" id="L338">			final double titleHeight = getTitlesHeight(ug.getStringBounder());</span>
+<span class="fc" id="L339">			double fullWidth = swimlanesSpecial().get(swimlanesSpecial().size() - 1).getTranslate().getDx() - 2 * 5 - 1;</span>
+<span class="fc" id="L340">			final URectangle back = URectangle.build(fullWidth, titleHeight).ignoreForCompressionOnX()</span>
+<span class="fc" id="L341">					.ignoreForCompressionOnY();</span>
+<span class="fc" id="L342">			ug.apply(UTranslate.dx(5)).apply(color.bg()).apply(color).draw(back);</span>
+		}
+<span class="fc" id="L344">	}</span>
+
+	private void drawTitles(UGraphic ug) {
+<span class="fc bfc" id="L347" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
+<span class="fc" id="L348">			final TextBlock swTitle = getTitle(swimlane);</span>
+<span class="fc" id="L349">			final double x2 = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();</span>
+<span class="fc" id="L350">			final CenteredText centeredText = new CenteredText(swTitle, getWidthWithoutTitle(swimlane));</span>
+<span class="fc" id="L351">			ug.apply(UTranslate.dx(x2)).draw(centeredText);</span>
+<span class="fc" id="L352">		}</span>
+<span class="fc" id="L353">	}</span>
+
+	private void computeDrawingWidths(UGraphic ug, TextBlock full) {
+<span class="fc" id="L356">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
+<span class="fc" id="L358">			final LimitFinder limitFinder = LimitFinder.create(stringBounder, false);</span>
+<span class="fc" id="L359">			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(</span>
+<span class="fc" id="L360">					new UGraphicForSnake(limitFinder), swimlane, swimlanes());</span>
+<span class="fc" id="L361">			full.drawU(interceptor);</span>
+<span class="fc" id="L362">			interceptor.flushUg();</span>
+<span class="fc" id="L363">			final MinMax minMax = limitFinder.getMinMax();</span>
+<span class="fc" id="L364">			swimlane.setMinMax(minMax);</span>
+<span class="fc" id="L365">		}</span>
+<span class="fc" id="L366">	}</span>
+
+	private void computeSizeInternal(UGraphic ug, TextBlock full) {
+<span class="fc" id="L369">		computeDrawingWidths(ug, full);</span>
+
+<span class="fc" id="L371">		double min = skinParam.swimlaneWidth();</span>
+
+<span class="pc bpc" id="L373" title="1 of 2 branches missed.">		if (min == ISkinParam.SWIMLANE_WIDTH_SAME)</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">			for (Swimlane swimlane : swimlanes())</span>
+<span class="nc" id="L375">				min = Math.max(min, getWidthWithoutTitle(swimlane));</span>
+
+<span class="fc" id="L377">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		for (int i = 0; i &lt; swimlanesSpecial().size(); i++) {</span>
+<span class="fc" id="L380">			final Swimlane swimlane = swimlanesSpecial().get(i);</span>
+<span class="fc" id="L381">			final double swimlaneActualWidth = MathUtils.max(min, getWidthWithoutTitle(swimlane));</span>
+<span class="fc" id="L382">			swimlane.setWidth(swimlaneActualWidth);</span>
+		}
+
+<span class="fc" id="L385">		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);</span>
+<span class="fc" id="L386">		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);</span>
+
+<span class="fc" id="L388">		dividers.clear();</span>
+<span class="fc" id="L389">		double xpos = 0;</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">		for (int i = 0; i &lt; swimlanesSpecial().size(); i++) {</span>
+<span class="fc" id="L391">			final Swimlane swimlane = swimlanesSpecial().get(i);</span>
+<span class="fc" id="L392">			double x1 = getHalfMissingSpace(stringBounder, i, min);</span>
+<span class="fc" id="L393">			double x2 = getHalfMissingSpace(stringBounder, i + 1, min);</span>
+<span class="fc" id="L394">			final LaneDivider laneDivider = new LaneDivider(skinParam, x1, x2,</span>
+<span class="fc" id="L395">					dimensionFull.getHeight() + titleHeightTranslate.getDy());</span>
+<span class="fc" id="L396">			dividers.add(laneDivider);</span>
+
+<span class="fc" id="L398">			final double xx = xpos + laneDivider.getWidth() - swimlane.getMinMax().getMinX()</span>
+<span class="fc" id="L399">					+ (swimlane.getActualWidth() - getWidthWithoutTitle(swimlane)) / 2.0;</span>
+<span class="fc" id="L400">			swimlane.setTranslate(UTranslate.dx(xx));</span>
+
+<span class="fc" id="L402">			xpos += swimlane.getActualWidth() + laneDivider.getWidth();</span>
+		}
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">		assert dividers.size() == swimlanes().size() + 1;</span>
+<span class="fc" id="L405">	}</span>
+
+	public double getHalfMissingSpace(StringBounder stringBounder, int i, double min) {
+<span class="pc bpc" id="L408" title="1 of 4 branches missed.">		if (i == 0 || i &gt; swimlanesSpecial().size())</span>
+<span class="fc" id="L409">			return 5;</span>
+
+<span class="fc" id="L411">		final Swimlane swimlane = swimlanesSpecial().get(i - 1);</span>
+<span class="fc" id="L412">		final double swimlaneActualWidth = Math.max(min, getWidthWithoutTitle(swimlane));</span>
+<span class="fc" id="L413">		final double titleWidth = getTitle(swimlane).calculateDimension(stringBounder).getWidth();</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">		if (titleWidth &lt;= swimlaneActualWidth)</span>
+<span class="fc" id="L415">			return 5;</span>
+
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">		assert titleWidth &gt; swimlaneActualWidth;</span>
+<span class="fc" id="L418">		return Math.max(5, 5 + (titleWidth - swimlaneActualWidth) / 2);</span>
+	}
+
+	private double getWidthWithoutTitle(Swimlane swimlane) {
+<span class="fc" id="L422">		return swimlane.getMinMax().getWidth();</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L426">		return getMinMax(stringBounder).getDimension();</span>
+	}
+
+	public Instruction getCurrent() {
+<span class="fc" id="L430">		return currentInstruction;</span>
+	}
+
+	public void setCurrent(Instruction current) {
+<span class="fc" id="L434">		this.currentInstruction = current;</span>
+<span class="fc" id="L435">	}</span>
+
+	public LinkRendering nextLinkRenderer() {
+<span class="fc" id="L438">		return nextLinkRenderer;</span>
+	}
+
+	public void setNextLinkRenderer(LinkRendering link) {
+<span class="fc" id="L442">		this.nextLinkRenderer = Objects.requireNonNull(link);</span>
+<span class="fc" id="L443">	}</span>
+
+	public Swimlane getCurrentSwimlane() {
+<span class="fc" id="L446">		return currentSwimlane;</span>
+	}
+
+	private MinMax cachedMinMax;
+
+	@Override
+	public MinMax getMinMax(StringBounder stringBounder) {
+<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (cachedMinMax == null)</span>
+<span class="nc" id="L454">			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
+
+<span class="nc" id="L456">		return cachedMinMax;</span>
+	}
+
+	public StyleBuilder getCurrentStyleBuilder() {
+<span class="fc" id="L460">		return skinParam.getCurrentStyleBuilder();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

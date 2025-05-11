@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WithLinkType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.decoration</a> &gt; <span class="el_source">WithLinkType.java</span></div><h1>WithLinkType.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.decoration;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+
+<span class="fc" id="L49">public abstract class WithLinkType {</span>
+
+	protected LinkType type;
+<span class="fc" id="L52">	protected boolean hidden = false;</span>
+<span class="fc" id="L53">	private boolean single = false;</span>
+
+<span class="fc" id="L55">	private Colors colors = Colors.empty();</span>
+
+<span class="fc" id="L57">	private List&lt;Colors&gt; supplementary = new ArrayList&lt;&gt;();</span>
+
+	public final HColor getSpecificColor() {
+<span class="fc" id="L60">		return colors.getColor(ColorType.LINE);</span>
+	}
+
+	public final void setSpecificColor(HColor specificColor) {
+<span class="fc" id="L64">		setSpecificColor(specificColor, 0);</span>
+<span class="fc" id="L65">	}</span>
+
+	public final void setSpecificColor(HColor specificColor, int i) {
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (i == 0) {</span>
+<span class="fc" id="L69">			colors = colors.add(ColorType.LINE, specificColor);</span>
+		} else {
+<span class="nc" id="L71">			supplementary.add(colors.add(ColorType.LINE, specificColor));</span>
+		}
+<span class="fc" id="L73">	}</span>
+
+	public List&lt;Colors&gt; getSupplementaryColors() {
+<span class="nc" id="L76">		return Collections.unmodifiableList(supplementary);</span>
+	}
+
+	public void setColors(Colors colors) {
+<span class="fc" id="L80">		this.colors = colors;</span>
+<span class="fc" id="L81">	}</span>
+
+	public final Colors getColors() {
+<span class="fc" id="L84">		return colors;</span>
+	}
+
+	final public void goDashed() {
+<span class="nc" id="L88">		type = type.goDashed();</span>
+<span class="nc" id="L89">	}</span>
+
+	final public void goDotted() {
+<span class="nc" id="L92">		type = type.goDotted();</span>
+<span class="nc" id="L93">	}</span>
+
+	final public void goThickness(double thickness) {
+<span class="nc" id="L96">		type = type.goThickness(thickness);</span>
+<span class="nc" id="L97">	}</span>
+
+	final public void goHidden() {
+<span class="nc" id="L100">		this.hidden = true;</span>
+<span class="nc" id="L101">	}</span>
+
+	public abstract void goNorank();
+
+	final public void goBold() {
+<span class="nc" id="L106">		type = type.goBold();</span>
+<span class="nc" id="L107">	}</span>
+
+	public final void goSingle() {
+<span class="nc" id="L110">		this.single = true;</span>
+<span class="nc" id="L111">	}</span>
+
+	public boolean isSingle() {
+<span class="fc" id="L114">		return single;</span>
+	}
+
+	public void applyStyle(String arrowStyle) {
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (arrowStyle == null) {</span>
+<span class="fc" id="L119">			return;</span>
+		}
+<span class="nc" id="L121">		final StringTokenizer st = new StringTokenizer(arrowStyle, &quot;;&quot;);</span>
+<span class="nc" id="L122">		int i = 0;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L124">			final String s = st.nextToken();</span>
+<span class="nc" id="L125">			applyOneStyle(s, i);</span>
+<span class="nc" id="L126">			i++;</span>
+<span class="nc" id="L127">		}</span>
+<span class="nc" id="L128">	}</span>
+
+	private void applyOneStyle(String arrowStyle, int i) {
+<span class="nc" id="L131">		final StringTokenizer st = new StringTokenizer(arrowStyle, &quot;,&quot;);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L133">			final String s = st.nextToken();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			if (s.equalsIgnoreCase(&quot;dashed&quot;)) {</span>
+<span class="nc" id="L135">				this.goDashed();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;bold&quot;)) {</span>
+<span class="nc" id="L137">				this.goBold();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;dotted&quot;)) {</span>
+<span class="nc" id="L139">				this.goDotted();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;hidden&quot;)) {</span>
+<span class="nc" id="L141">				this.goHidden();</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;single&quot;)) {</span>
+<span class="nc" id="L143">				this.goSingle();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;plain&quot;)) {</span>
+				// Do nothing
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;norank&quot;)) {</span>
+<span class="nc" id="L147">				this.goNorank();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			} else if (s.startsWith(&quot;thickness=&quot;)) {</span>
+<span class="nc" id="L149">				this.goThickness(Double.parseDouble(s.substring(&quot;thickness=&quot;.length())));</span>
+			} else {
+<span class="nc" id="L151">				final HColor tmp = HColorSet.instance().getColorOrWhite(s);</span>
+<span class="nc" id="L152">				setSpecificColor(tmp, i);</span>
+			}
+<span class="nc" id="L154">		}</span>
+<span class="nc" id="L155">	}</span>
+
+	public LinkType getType() {
+<span class="fc" id="L158">		return type;</span>
+	}
+
+	public UStroke getUStroke() {
+<span class="nc" id="L162">		throw new UnsupportedOperationException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

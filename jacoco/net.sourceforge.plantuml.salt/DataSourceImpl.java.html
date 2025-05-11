@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataSourceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.salt</a> &gt; <span class="el_source">DataSourceImpl.java</span></div><h1>DataSourceImpl.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.salt;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+
+public class DataSourceImpl implements DataSource {
+
+<span class="fc" id="L49">	private int i = 0;</span>
+<span class="fc" id="L50">	private final List&lt;Terminated&lt;String&gt;&gt; data = new ArrayList&lt;Terminated&lt;String&gt;&gt;();</span>
+
+<span class="fc" id="L52">	public DataSourceImpl(List&lt;String&gt; data) {</span>
+<span class="fc" id="L53">		final Pattern2 p = MyPattern.cmpile(&quot;\\{(?:[-+^#!*/]|S-|SI|S)?&quot;);</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (String s : data) {</span>
+<span class="fc" id="L56">			final StringTokenizer st = new StringTokenizer(s, &quot;|}&quot;, true);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L58">				final String token = StringUtils.trin(st.nextToken());</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">				if (token.equals(&quot;|&quot;)) {</span>
+<span class="fc" id="L60">					continue;</span>
+				}
+<span class="fc bfc" id="L62" title="All 2 branches covered.">				final Terminator terminator = st.hasMoreTokens() ? Terminator.NEWCOL : Terminator.NEWLINE;</span>
+<span class="fc" id="L63">				final Matcher2 m = p.matcher(token);</span>
+<span class="fc" id="L64">				final boolean found = m.find();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">				if (found == false) {</span>
+<span class="fc" id="L66">					addInternal(token, terminator);</span>
+<span class="fc" id="L67">					continue;</span>
+				}
+<span class="fc" id="L69">				int lastStart = 0;</span>
+<span class="fc" id="L70">				int end = 0;</span>
+				do {
+<span class="fc" id="L72">					final int start = m.start();</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">					if (start &gt; lastStart) {</span>
+<span class="nc" id="L74">						addInternal(token.substring(lastStart, start), Terminator.NEWCOL);</span>
+					}
+<span class="fc" id="L76">					end = m.end();</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">					final Terminator t = end == token.length() ? terminator : Terminator.NEWCOL;</span>
+<span class="fc" id="L78">					addInternal(token.substring(start, end), t);</span>
+<span class="fc" id="L79">					lastStart = end;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">				} while (m.find());</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">				if (end &lt; token.length()) {</span>
+<span class="nc" id="L82">					addInternal(token.substring(end), terminator);</span>
+				}
+<span class="fc" id="L84">			}</span>
+<span class="fc" id="L85">		}</span>
+<span class="fc" id="L86">	}</span>
+
+	private void addInternal(String s, Terminator t) {
+<span class="fc" id="L89">		s = StringUtils.trin(s);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (s.length() &gt; 0) {</span>
+<span class="fc" id="L91">			data.add(new Terminated&lt;&gt;(s, t));</span>
+		}
+<span class="fc" id="L93">	}</span>
+
+	public Terminated&lt;String&gt; peek(int nb) {
+<span class="fc" id="L96">		return data.get(i + nb);</span>
+	}
+
+	public boolean hasNext() {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		return i &lt; data.size();</span>
+	}
+
+	public Terminated&lt;String&gt; next() {
+<span class="fc" id="L104">		final Terminated&lt;String&gt; result = data.get(i);</span>
+<span class="fc" id="L105">		i++;</span>
+<span class="fc" id="L106">		return result;</span>
+	}
+
+	public void remove() {
+<span class="nc" id="L110">		throw new UnsupportedOperationException();</span>
+	}
+
+	public String toString() {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		return super.toString() + &quot; &quot; + (hasNext() ? peek(0) : &quot;$$$&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandFactoryTipOnEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command.note</a> &gt; <span class="el_source">CommandFactoryTipOnEntity.java</span></div><h1>CommandFactoryTipOnEntity.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command.note;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.NameAndCodeParser;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.Position;
+
+<span class="fc" id="L73">public final class CommandFactoryTipOnEntity implements SingleMultiFactoryCommand&lt;AbstractEntityDiagram&gt; {</span>
+
+<span class="fc" id="L75">	private final String key = &quot;a&quot;;</span>
+
+	private RegexConcat getRegexConcatMultiLine(final boolean withBracket) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (withBracket) {</span>
+<span class="fc" id="L79">			return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //</span>
+					new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L81">					RegexLeaf.spaceOneOrMore(), //</span>
+					new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left)&quot;), //
+<span class="fc" id="L83">					RegexLeaf.spaceOneOrMore(), //</span>
+					new RegexLeaf(&quot;of&quot;), //
+<span class="fc" id="L85">					RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L86">					NameAndCodeParser.codeWithMemberForClass(), //</span>
+<span class="fc" id="L87">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L88">					new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L89">					StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L90">					new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L91">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L92">					ColorParser.exp1(), //</span>
+<span class="fc" id="L93">					RegexLeaf.spaceZeroOrMore(), //</span>
+					UrlBuilder.OPTIONAL, //
+<span class="fc" id="L95">					RegexLeaf.spaceZeroOrMore(), //</span>
+					new RegexLeaf(&quot;\\{&quot;), //
+<span class="fc" id="L97">					RegexLeaf.end() //</span>
+			);
+		}
+<span class="fc" id="L100">		return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L102">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left)&quot;), //
+<span class="fc" id="L104">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;of&quot;), //
+<span class="fc" id="L106">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L107">				NameAndCodeParser.codeWithMemberForClass(), //</span>
+<span class="fc" id="L108">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L109">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L110">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L111">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L112">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L113">				ColorParser.exp1(), //</span>
+<span class="fc" id="L114">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L116">				RegexLeaf.end() //</span>
+		);
+	}
+
+	private static ColorParser color() {
+<span class="nc" id="L121">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	public Command&lt;AbstractEntityDiagram&gt; createSingleLine() {
+<span class="nc" id="L125">		throw new UnsupportedOperationException();</span>
+	}
+
+	public Command&lt;AbstractEntityDiagram&gt; createMultiLine(final boolean withBracket) {
+<span class="fc" id="L129">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(getRegexConcatMultiLine(withBracket),</span>
+<span class="fc" id="L130">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
+
+			@Override
+			public String getPatternEnd() {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				if (withBracket) {</span>
+<span class="nc" id="L135">					return &quot;^(\\})$&quot;;</span>
+				}
+<span class="nc" id="L137">				return &quot;^[%s]*(end[%s]?note)$&quot;;</span>
+			}
+
+			@Override
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
+				// StringUtils.trim(lines, false);
+<span class="nc" id="L144">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L145">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="nc" id="L146">				lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L147">				final Display display = lines.toDisplay();</span>
+
+<span class="nc" id="L149">				Url url = null;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (line0.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc" id="L151">					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue(&quot;topurl&quot;),</span>
+							UrlMode.STRICT);
+<span class="nc" id="L153">					url = urlBuilder.getUrl(line0.get(&quot;URL&quot;, 0));</span>
+				}
+
+<span class="nc" id="L156">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>
+			}
+		};
+	}
+
+	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0, AbstractEntityDiagram diagram, Url url,
+			Display display) throws NoSuchColorException {
+
+<span class="nc" id="L164">		final String pos = line0.get(&quot;POSITION&quot;, 0);</span>
+
+<span class="nc" id="L166">		final String idShort = line0.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L167">		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;CODE&quot;, 1));</span>
+
+<span class="nc" id="L169">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc" id="L170">		final Entity cl1 = quark.getData();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (cl1 == null)</span>
+<span class="nc" id="L172">			return CommandExecutionResult.error(&quot;Nothing to note to&quot;);</span>
+
+<span class="nc" id="L174">		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))</span>
+<span class="nc" id="L175">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
+
+<span class="nc" id="L177">		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + &quot;$$$&quot; + position.name());</span>
+<span class="nc" id="L178">		final Quark&lt;Entity&gt; identTip = diagram.quarkInContext(true, tmp);</span>
+<span class="nc" id="L179">		Entity tips = identTip.getData();</span>
+
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (tips == null) {</span>
+<span class="nc" id="L182">			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;), LeafType.TIPS,</span>
+					null);
+<span class="nc" id="L184">			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
+			final Link link;
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (position == Position.RIGHT)</span>
+<span class="nc" id="L187">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, tips, type,</span>
+<span class="nc" id="L188">						LinkArg.noDisplay(1));</span>
+			else
+<span class="nc" id="L190">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), tips, cl1, type,</span>
+<span class="nc" id="L191">						LinkArg.noDisplay(1));</span>
+
+<span class="nc" id="L193">			diagram.addLink(link);</span>
+		}
+<span class="nc" id="L195">		tips.putTip(member, display);</span>
+
+<span class="nc" id="L197">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc" id="L199">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L200">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (stereotypeString != null) {</span>
+<span class="nc" id="L202">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L203">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
+					ColorParam.noteBorder);
+		}
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L207">			tips.setStereotype(stereotype);</span>
+
+<span class="nc" id="L209">		tips.setColors(colors);</span>
+
+<span class="nc" id="L211">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

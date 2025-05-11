@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageLollipopInterfaceEye2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageLollipopInterfaceEye2.java</span></div><h1>EntityImageLollipopInterfaceEye2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.url.Url;
+
+public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
+
+	public static final double SIZE = 14;
+	private final TextBlock desc;
+	private final TextBlock stereo;
+	private final Fashion ctx;
+	final private Url url;
+
+	public EntityImageLollipopInterfaceEye2(Entity entity, PortionShower portionShower) {
+<span class="nc" id="L74">		super(entity);</span>
+<span class="nc" id="L75">		final Stereotype stereotype = entity.getStereotype();</span>
+
+//		final USymbol symbol = Objects.requireNonNull(
+//				entity.getUSymbol() == null ? skinParam.componentStyle().toUSymbol() : entity.getUSymbol());
+
+		// final FontParam fontParam = symbol.getFontParam();
+<span class="nc" id="L81">		final FontParam fontParam = FontParam.COMPONENT;</span>
+
+<span class="nc" id="L83">		this.desc = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER),</span>
+<span class="nc" id="L84">				entity.getDisplay(), getSkinParam(), stereotype, entity, getStyle(fontParam));</span>
+
+<span class="nc" id="L86">		this.url = entity.getUrl99();</span>
+
+<span class="nc" id="L88">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+//		if (backcolor == null)
+//			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
+
+<span class="nc" id="L92">		final HColor forecolor = HColors.BLACK;</span>
+		// final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(),
+		// symbol.getColorParamBorder());
+<span class="nc" id="L95">		this.ctx = new Fashion(backcolor, forecolor).withStroke(UStroke.withThickness(1.5))</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				.withShadow(getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);</span>
+
+<span class="nc bnc" id="L98" title="All 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">				&amp;&amp; portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {</span>
+//			final FontParam fontParam = symbol.getFontParamStereotype();
+//			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
+//					FontConfiguration.create(getSkinParam(), fontParam, stereotype), HorizontalAlignment.CENTER,
+//					skinParam);
+<span class="nc" id="L104">			stereo = TextBlockUtils.empty(0, 0);</span>
+		} else {
+<span class="nc" id="L106">			stereo = TextBlockUtils.empty(0, 0);</span>
+		}
+
+<span class="nc" id="L109">	}</span>
+
+	private Style getStyle(FontParam fontParam) {
+<span class="nc" id="L112">		return fontParam.getStyleDefinition(SName.componentDiagram)</span>
+<span class="nc" id="L113">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L117">		return new XDimension2D(SIZE, SIZE);</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L122">			ug.startUrl(url);</span>
+		}
+<span class="nc" id="L124">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (getSkinParam().shadowing(getEntity().getStereotype())) {</span>
+<span class="nc" id="L126">			circle.setDeltaShadow(4);</span>
+		}
+<span class="nc" id="L128">		ctx.apply(ug).draw(circle);</span>
+
+<span class="nc" id="L130">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L131">		final double x1 = SIZE / 2 - dimDesc.getWidth() / 2;</span>
+<span class="nc" id="L132">		final double y1 = SIZE * 1.4;</span>
+<span class="nc" id="L133">		desc.drawU(ug.apply(new UTranslate(x1, y1)));</span>
+
+<span class="nc" id="L135">		final XDimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L136">		final double x2 = SIZE / 2 - dimStereo.getWidth() / 2;</span>
+<span class="nc" id="L137">		final double y2 = -dimStereo.getHeight();</span>
+<span class="nc" id="L138">		stereo.drawU(ug.apply(new UTranslate(x2, y2)));</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L141">			ug.closeUrl();</span>
+		}
+<span class="nc" id="L143">	}</span>
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L146">		return ShapeType.CIRCLE;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

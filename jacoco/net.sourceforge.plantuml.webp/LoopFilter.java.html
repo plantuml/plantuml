@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoopFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">LoopFilter.java</span></div><h1>LoopFilter.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package net.sourceforge.plantuml.webp;
+
+<span class="nc" id="L18">public class LoopFilter {</span>
+	private static int abs(int v) {
+<span class="nc bnc" id="L20" title="All 2 branches missed.">		return v &lt; 0 ? -v : v;</span>
+	}
+
+	private static int c(int v) {
+		// return (int) (v &lt; -128 ? -128 : (v &gt; 127 ? v : 127));
+<span class="nc" id="L25">		int r = v;</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">		if (v &lt; -128)</span>
+<span class="nc" id="L27">			r = -128;</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">		if (v &gt; 127)</span>
+<span class="nc" id="L29">			r = 127;</span>
+<span class="nc" id="L30">		return r;</span>
+	}
+
+	private static int common_adjust(boolean use_outer_taps, /*
+																 * filter is 2 or 4 taps wide
+																 */
+			Segment seg) {
+<span class="nc" id="L37">		int p1 = u2s(seg.P1); /* retrieve and convert all 4 pixels */</span>
+<span class="nc" id="L38">		int p0 = u2s(seg.P0);</span>
+<span class="nc" id="L39">		int q0 = u2s(seg.Q0);</span>
+<span class="nc" id="L40">		int q1 = u2s(seg.Q1);</span>
+
+		/*
+		 * Disregarding clamping, when &quot;use_outer_taps&quot; is false, &quot;a&quot; is 3*(q0-p0).
+		 * Since we are about to divide &quot;a&quot; by 8, in this case we end up multiplying the
+		 * edge difference by 5/8. When &quot;use_outer_taps&quot; is true (as for the simple
+		 * filter), &quot;a&quot; is p1 - 3*p0 + 3*q0 - q1, which can be thought of as a
+		 * refinement of 2*(q0 - p0) and the adjustment is something like (q0 - p0)/4.
+		 */
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		int a = c((use_outer_taps ? c(p1 - q1) : 0) + 3 * (q0 - p0));</span>
+		/*
+		 * b is used to balance the rounding of a/8 in the case where the &quot;fractional&quot;
+		 * part &quot;f&quot; of a/8 is exactly 1/2.
+		 */
+<span class="nc" id="L54">		int b = (c(a + 3)) &gt;&gt; 3;</span>
+		/*
+		 * Divide a by 8, rounding up when f &gt;= 1/2. Although not strictly part of the
+		 * &quot;C&quot; language, the right-shift is assumed to propagate the sign bit.
+		 */
+<span class="nc" id="L59">		a = c(a + 4) &gt;&gt; 3;</span>
+		/* Subtract &quot;a&quot; from q0, &quot;bringing it closer&quot; to p0. */
+<span class="nc" id="L61">		seg.Q0 = s2u(q0 - a);</span>
+		/*
+		 * Add &quot;a&quot; (with adjustment &quot;b&quot;) to p0, &quot;bringing it closer&quot; to q0. The clamp of
+		 * &quot;a+b&quot;, while present in the reference decoder, is superfluous; we have -16 &lt;=
+		 * a &lt;= 15 at this point.
+		 */
+<span class="nc" id="L67">		seg.P0 = s2u(p0 + b);</span>
+
+<span class="nc" id="L69">		return a;</span>
+	}
+
+	/*
+	 * All functions take (among other things) a segment (of length at most 4 + 4 =
+	 * 8) symmetrically straddling an edge. The pixel values (or pointers) are
+	 * always given in order, from the &quot;beforemost&quot; to the &quot;aftermost&quot;. So, for a
+	 * horizontal edge (written &quot;|&quot;), an 8-pixel segment would be ordered p3 p2 p1
+	 * p0 | q0 q1 q2 q3.
+	 */
+	/*
+	 * Filtering is disabled if the difference between any two adjacent &quot;interior&quot;
+	 * pixels in the 8-pixel segment exceeds the relevant threshold (I). A more
+	 * complex thresholding calculation is done for the group of four pixels that
+	 * straddle the edge, in line with the calculation in simple_segment() above.
+	 */
+	public static boolean filter_yes(int I, /* limit on interior differences */
+			int E, /* limit at the edge */
+			int p3, int p2, int p1, int p0, /* pixels before edge */
+			int q0, int q1, int q2, int q3 /* pixels after edge */
+	) {
+<span class="nc bnc" id="L90" title="All 8 branches missed.">		return (abs(p0 - q0) * 2 + abs(p1 - q1) / 2) &lt;= E &amp;&amp; abs(p3 - p2) &lt;= I &amp;&amp; abs(p2 - p1) &lt;= I &amp;&amp; abs(p1 - p0) &lt;= I</span>
+<span class="nc bnc" id="L91" title="All 6 branches missed.">				&amp;&amp; abs(q3 - q2) &lt;= I &amp;&amp; abs(q2 - q1) &lt;= I &amp;&amp; abs(q1 - q0) &lt;= I;</span>
+	}
+
+	private static Segment getSegH(SubBlock rsb, SubBlock lsb, int a) {
+<span class="nc" id="L95">		Segment seg = new Segment();</span>
+<span class="nc" id="L96">		int[][] rdest = rsb.getDest();</span>
+<span class="nc" id="L97">		int[][] ldest = lsb.getDest();</span>
+<span class="nc" id="L98">		seg.P0 = ldest[3][a];</span>
+<span class="nc" id="L99">		seg.P1 = ldest[2][a];</span>
+<span class="nc" id="L100">		seg.P2 = ldest[1][a];</span>
+<span class="nc" id="L101">		seg.P3 = ldest[0][a];</span>
+<span class="nc" id="L102">		seg.Q0 = rdest[0][a];</span>
+<span class="nc" id="L103">		seg.Q1 = rdest[1][a];</span>
+<span class="nc" id="L104">		seg.Q2 = rdest[2][a];</span>
+<span class="nc" id="L105">		seg.Q3 = rdest[3][a];</span>
+<span class="nc" id="L106">		return seg;</span>
+	}
+
+	private static Segment getSegV(SubBlock bsb, SubBlock tsb, int a) {
+<span class="nc" id="L110">		Segment seg = new Segment();</span>
+<span class="nc" id="L111">		int[][] bdest = bsb.getDest();</span>
+<span class="nc" id="L112">		int[][] tdest = tsb.getDest();</span>
+
+<span class="nc" id="L114">		seg.P0 = tdest[a][3];</span>
+<span class="nc" id="L115">		seg.P1 = tdest[a][2];</span>
+<span class="nc" id="L116">		seg.P2 = tdest[a][1];</span>
+<span class="nc" id="L117">		seg.P3 = tdest[a][0];</span>
+<span class="nc" id="L118">		seg.Q0 = bdest[a][0];</span>
+<span class="nc" id="L119">		seg.Q1 = bdest[a][1];</span>
+<span class="nc" id="L120">		seg.Q2 = bdest[a][2];</span>
+<span class="nc" id="L121">		seg.Q3 = bdest[a][3];</span>
+<span class="nc" id="L122">		return seg;</span>
+	}
+
+	/*
+	 * Filtering is altered if (at least) one of the differences on either side of
+	 * the edge exceeds a threshold (we have &quot;high edge variance&quot;).
+	 */
+	public static boolean hev(int threshold, int p1, int p0, /*
+																 * pixels before edge
+																 */
+			int q0, int q1 /* pixels after edge */
+	) {
+<span class="nc bnc" id="L134" title="All 4 branches missed.">		return abs(p1 - p0) &gt; threshold || abs(q1 - q0) &gt; threshold;</span>
+	}
+
+	public static void loopFilter(VP8Frame frame) {
+<span class="nc" id="L138">		frame.fireLFProgressUpdate(0);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (frame.getFilterType() == 2) {</span>
+<span class="nc" id="L140">			loopFilterUV(frame);</span>
+<span class="nc" id="L141">			frame.fireLFProgressUpdate(50);</span>
+<span class="nc" id="L142">			loopFilterY(frame);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		} else if (frame.getFilterType() == 1) {</span>
+<span class="nc" id="L144">			loopFilterSimple(frame);</span>
+		}
+<span class="nc" id="L146">		frame.fireLFProgressUpdate(100);</span>
+<span class="nc" id="L147">	}</span>
+
+	public static void loopFilterSimple(VP8Frame frame) {
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		for (int y = 0; y &lt; frame.getMacroBlockRows(); y++) {</span>
+<span class="nc" id="L151">			frame.fireLFProgressUpdate((100.0f * ((float) (y + 1) / (float) (frame.getMacroBlockRows()))));</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			for (int x = 0; x &lt; frame.getMacroBlockCols(); x++) {</span>
+				// System.out.println(&quot;x: &quot;+x+&quot; y: &quot;+y);
+<span class="nc" id="L154">				MacroBlock rmb = frame.getMacroBlock(x, y);</span>
+<span class="nc" id="L155">				MacroBlock bmb = frame.getMacroBlock(x, y);</span>
+
+<span class="nc" id="L157">				int loop_filter_level = rmb.getFilterLevel();</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">				if (loop_filter_level != 0) {</span>
+<span class="nc" id="L159">					int interior_limit = rmb.getFilterLevel();</span>
+
+<span class="nc" id="L161">					int sharpnessLevel = frame.getSharpnessLevel();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">					if (sharpnessLevel &gt; 0) {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">						interior_limit &gt;&gt;= sharpnessLevel &gt; 4 ? 2 : 1;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">						if (interior_limit &gt; 9 - sharpnessLevel)</span>
+<span class="nc" id="L165">							interior_limit = 9 - sharpnessLevel;</span>
+					}
+<span class="nc bnc" id="L167" title="All 2 branches missed.">					if (interior_limit == 0)</span>
+<span class="nc" id="L168">						interior_limit = 1;</span>
+
+					/* Luma and Chroma use the same inter-subblock edge limit */
+<span class="nc" id="L171">					int sub_bedge_limit = (loop_filter_level * 2) + interior_limit;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">					if (sub_bedge_limit &lt; 1)</span>
+<span class="nc" id="L173">						sub_bedge_limit = 1;</span>
+
+					/* Luma and Chroma use the same inter-macroblock edge limit */
+<span class="nc" id="L176">					int mbedge_limit = sub_bedge_limit + 4;</span>
+
+					// left
+<span class="nc bnc" id="L179" title="All 2 branches missed.">					if (x &gt; 0) {</span>
+<span class="nc" id="L180">						MacroBlock lmb = frame.getMacroBlock(x - 1, y);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">						for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L182">							SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1, 0, b);</span>
+<span class="nc" id="L183">							SubBlock lsb = lmb.getSubBlock(SubBlock.PLANE.Y1, 3, b);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">							for (int a = 0; a &lt; 4; a++) {</span>
+<span class="nc" id="L185">								Segment seg = getSegH(rsb, lsb, a);</span>
+								// MBfilter(hev_threshold, interior_limit,
+								// mbedge_limit, seg);
+								// System.out.println(mbedge_limit);
+<span class="nc" id="L189">								simple_segment(mbedge_limit, seg);</span>
+<span class="nc" id="L190">								setSegH(rsb, lsb, seg, a);</span>
+							}
+						}
+					}
+
+					// sb left
+<span class="nc bnc" id="L196" title="All 2 branches missed.">					if (!rmb.isSkip_inner_lf()) {</span>
+
+<span class="nc bnc" id="L198" title="All 2 branches missed.">						for (int a = 1; a &lt; 4; a++) {</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">							for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L200">								SubBlock lsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a - 1, b);</span>
+<span class="nc" id="L201">								SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a, b);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">								for (int c = 0; c &lt; 4; c++) {</span>
+									// System.out.println(&quot;sbleft a:&quot;+a+&quot; b:&quot;+b+&quot; c:&quot;+c);
+<span class="nc" id="L204">									Segment seg = getSegH(rsb, lsb, c);</span>
+<span class="nc" id="L205">									simple_segment(sub_bedge_limit, seg);</span>
+									// System.out.println(sub_bedge_limit);
+									// subblock_filter(hev_threshold,interior_limit,sub_bedge_limit,
+									// seg);
+<span class="nc" id="L209">									setSegH(rsb, lsb, seg, c);</span>
+								}
+							}
+						}
+					}
+
+					// top
+<span class="nc bnc" id="L216" title="All 2 branches missed.">					if (y &gt; 0) {</span>
+<span class="nc" id="L217">						MacroBlock tmb = frame.getMacroBlock(x, y - 1);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">						for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L219">							SubBlock tsb = tmb.getSubBlock(SubBlock.PLANE.Y1, b, 3);</span>
+<span class="nc" id="L220">							SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, 0);</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">							for (int a = 0; a &lt; 4; a++) {</span>
+<span class="nc" id="L222">								Segment seg = getSegV(bsb, tsb, a);</span>
+<span class="nc" id="L223">								simple_segment(mbedge_limit, seg);</span>
+								// System.out.println(mbedge_limit);
+								// MBfilter(hev_threshold, interior_limit,
+								// mbedge_limit, seg);
+<span class="nc" id="L227">								setSegV(bsb, tsb, seg, a);</span>
+							}
+						}
+					}
+
+					// sb top
+<span class="nc bnc" id="L233" title="All 2 branches missed.">					if (!rmb.isSkip_inner_lf()) {</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">						for (int a = 1; a &lt; 4; a++) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">							for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L236">								SubBlock tsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a - 1);</span>
+<span class="nc" id="L237">								SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">								for (int c = 0; c &lt; 4; c++) {</span>
+									// System.out.println(&quot;sbtop&quot;);
+<span class="nc" id="L240">									Segment seg = getSegV(bsb, tsb, c);</span>
+<span class="nc" id="L241">									simple_segment(sub_bedge_limit, seg);</span>
+									// System.out.println(sub_bedge_limit);
+									// subblock_filter(hev_threshold,interior_limit,sub_bedge_limit,
+									// seg);
+<span class="nc" id="L245">									setSegV(bsb, tsb, seg, c);</span>
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+<span class="nc" id="L253">	}</span>
+
+	public static void loopFilterUV(VP8Frame frame) {
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		for (int y = 0; y &lt; frame.getMacroBlockRows(); y++) {</span>
+<span class="nc" id="L257">			frame.fireLFProgressUpdate((100.0f * ((float) (y + 1) / (float) (frame.getMacroBlockRows()))) / 2);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">			for (int x = 0; x &lt; frame.getMacroBlockCols(); x++) {</span>
+<span class="nc" id="L259">				MacroBlock rmb = frame.getMacroBlock(x, y);</span>
+<span class="nc" id="L260">				MacroBlock bmb = frame.getMacroBlock(x, y);</span>
+<span class="nc" id="L261">				int sharpnessLevel = frame.getSharpnessLevel();</span>
+<span class="nc" id="L262">				int loop_filter_level = rmb.getFilterLevel();</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">				if (loop_filter_level != 0) {</span>
+<span class="nc" id="L264">					int interior_limit = rmb.getFilterLevel();</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">					if (sharpnessLevel &gt; 0) {</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">						interior_limit &gt;&gt;= sharpnessLevel &gt; 4 ? 2 : 1;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">						if (interior_limit &gt; 9 - sharpnessLevel)</span>
+<span class="nc" id="L268">							interior_limit = 9 - sharpnessLevel;</span>
+					}
+<span class="nc bnc" id="L270" title="All 2 branches missed.">					if (interior_limit == 0)</span>
+<span class="nc" id="L271">						interior_limit = 1;</span>
+
+<span class="nc" id="L273">					int hev_threshold = 0;</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">					if (frame.getFrameType() == 0) /* current frame is a key frame */</span>
+					{
+<span class="nc bnc" id="L276" title="All 2 branches missed.">						if (loop_filter_level &gt;= 40)</span>
+<span class="nc" id="L277">							hev_threshold = 2;</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">						else if (loop_filter_level &gt;= 15)</span>
+<span class="nc" id="L279">							hev_threshold = 1;</span>
+					} else /* current frame is an interframe */
+					{
+<span class="nc bnc" id="L282" title="All 2 branches missed.">						if (loop_filter_level &gt;= 40)</span>
+<span class="nc" id="L283">							hev_threshold = 3;</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">						else if (loop_filter_level &gt;= 20)</span>
+<span class="nc" id="L285">							hev_threshold = 2;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">						else if (loop_filter_level &gt;= 15)</span>
+<span class="nc" id="L287">							hev_threshold = 1;</span>
+					}
+
+					/* Luma and Chroma use the same inter-macroblock edge limit */
+<span class="nc" id="L291">					int mbedge_limit = ((loop_filter_level + 2) * 2) + interior_limit;</span>
+					/* Luma and Chroma use the same inter-subblock edge limit */
+<span class="nc" id="L293">					int sub_bedge_limit = (loop_filter_level * 2) + interior_limit;</span>
+
+<span class="nc bnc" id="L295" title="All 2 branches missed.">					if (x &gt; 0) {</span>
+<span class="nc" id="L296">						MacroBlock lmb = frame.getMacroBlock(x - 1, y);</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">						for (int b = 0; b &lt; 2; b++) {</span>
+<span class="nc" id="L298">							SubBlock rsbU = rmb.getSubBlock(SubBlock.PLANE.U, 0, b);</span>
+<span class="nc" id="L299">							SubBlock lsbU = lmb.getSubBlock(SubBlock.PLANE.U, 1, b);</span>
+<span class="nc" id="L300">							SubBlock rsbV = rmb.getSubBlock(SubBlock.PLANE.V, 0, b);</span>
+<span class="nc" id="L301">							SubBlock lsbV = lmb.getSubBlock(SubBlock.PLANE.V, 1, b);</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">							for (int a = 0; a &lt; 4; a++) {</span>
+<span class="nc" id="L303">								Segment seg = getSegH(rsbU, lsbU, a);</span>
+<span class="nc" id="L304">								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);</span>
+<span class="nc" id="L305">								setSegH(rsbU, lsbU, seg, a);</span>
+<span class="nc" id="L306">								seg = getSegH(rsbV, lsbV, a);</span>
+<span class="nc" id="L307">								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);</span>
+<span class="nc" id="L308">								setSegH(rsbV, lsbV, seg, a);</span>
+
+							}
+						}
+					}
+					// sb left
+
+<span class="nc bnc" id="L315" title="All 2 branches missed.">					if (!rmb.isSkip_inner_lf()) {</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">						for (int a = 1; a &lt; 2; a++) {</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">							for (int b = 0; b &lt; 2; b++) {</span>
+<span class="nc" id="L318">								SubBlock lsbU = rmb.getSubBlock(SubBlock.PLANE.U, a - 1, b);</span>
+<span class="nc" id="L319">								SubBlock rsbU = rmb.getSubBlock(SubBlock.PLANE.U, a, b);</span>
+<span class="nc" id="L320">								SubBlock lsbV = rmb.getSubBlock(SubBlock.PLANE.V, a - 1, b);</span>
+<span class="nc" id="L321">								SubBlock rsbV = rmb.getSubBlock(SubBlock.PLANE.V, a, b);</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">								for (int c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L323">									Segment seg = getSegH(rsbU, lsbU, c);</span>
+<span class="nc" id="L324">									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);</span>
+<span class="nc" id="L325">									setSegH(rsbU, lsbU, seg, c);</span>
+<span class="nc" id="L326">									seg = getSegH(rsbV, lsbV, c);</span>
+<span class="nc" id="L327">									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);</span>
+<span class="nc" id="L328">									setSegH(rsbV, lsbV, seg, c);</span>
+								}
+							}
+						}
+					}
+					// top
+<span class="nc bnc" id="L334" title="All 2 branches missed.">					if (y &gt; 0) {</span>
+<span class="nc" id="L335">						MacroBlock tmb = frame.getMacroBlock(x, y - 1);</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">						for (int b = 0; b &lt; 2; b++) {</span>
+<span class="nc" id="L337">							SubBlock tsbU = tmb.getSubBlock(SubBlock.PLANE.U, b, 1);</span>
+<span class="nc" id="L338">							SubBlock bsbU = bmb.getSubBlock(SubBlock.PLANE.U, b, 0);</span>
+<span class="nc" id="L339">							SubBlock tsbV = tmb.getSubBlock(SubBlock.PLANE.V, b, 1);</span>
+<span class="nc" id="L340">							SubBlock bsbV = bmb.getSubBlock(SubBlock.PLANE.V, b, 0);</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">							for (int a = 0; a &lt; 4; a++) {</span>
+								// System.out.println(&quot;l&quot;);
+<span class="nc" id="L343">								Segment seg = getSegV(bsbU, tsbU, a);</span>
+<span class="nc" id="L344">								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);</span>
+<span class="nc" id="L345">								setSegV(bsbU, tsbU, seg, a);</span>
+<span class="nc" id="L346">								seg = getSegV(bsbV, tsbV, a);</span>
+<span class="nc" id="L347">								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);</span>
+<span class="nc" id="L348">								setSegV(bsbV, tsbV, seg, a);</span>
+							}
+						}
+					}
+					// sb top
+
+<span class="nc bnc" id="L354" title="All 2 branches missed.">					if (!rmb.isSkip_inner_lf()) {</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">						for (int a = 1; a &lt; 2; a++) {</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">							for (int b = 0; b &lt; 2; b++) {</span>
+<span class="nc" id="L357">								SubBlock tsbU = bmb.getSubBlock(SubBlock.PLANE.U, b, a - 1);</span>
+<span class="nc" id="L358">								SubBlock bsbU = bmb.getSubBlock(SubBlock.PLANE.U, b, a);</span>
+<span class="nc" id="L359">								SubBlock tsbV = bmb.getSubBlock(SubBlock.PLANE.V, b, a - 1);</span>
+<span class="nc" id="L360">								SubBlock bsbV = bmb.getSubBlock(SubBlock.PLANE.V, b, a);</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">								for (int c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L362">									Segment seg = getSegV(bsbU, tsbU, c);</span>
+<span class="nc" id="L363">									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);</span>
+<span class="nc" id="L364">									setSegV(bsbU, tsbU, seg, c);</span>
+<span class="nc" id="L365">									seg = getSegV(bsbV, tsbV, c);</span>
+<span class="nc" id="L366">									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);</span>
+<span class="nc" id="L367">									setSegV(bsbV, tsbV, seg, c);</span>
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+<span class="nc" id="L375">	}</span>
+
+	public static void loopFilterY(VP8Frame frame) {
+<span class="nc bnc" id="L378" title="All 2 branches missed.">		for (int y = 0; y &lt; frame.getMacroBlockRows(); y++) {</span>
+<span class="nc" id="L379">			frame.fireLFProgressUpdate(50 + (100.0f * ((float) (y + 1) / (float) (frame.getMacroBlockRows()))) / 2);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">			for (int x = 0; x &lt; frame.getMacroBlockCols(); x++) {</span>
+<span class="nc" id="L381">				MacroBlock rmb = frame.getMacroBlock(x, y);</span>
+<span class="nc" id="L382">				MacroBlock bmb = frame.getMacroBlock(x, y);</span>
+<span class="nc" id="L383">				int sharpnessLevel = frame.getSharpnessLevel();</span>
+<span class="nc" id="L384">				int loop_filter_level = rmb.getFilterLevel();</span>
+
+<span class="nc bnc" id="L386" title="All 2 branches missed.">				if (loop_filter_level != 0) {</span>
+<span class="nc" id="L387">					int interior_limit = rmb.getFilterLevel();</span>
+
+<span class="nc bnc" id="L389" title="All 2 branches missed.">					if (sharpnessLevel &gt; 0) {</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">						interior_limit &gt;&gt;= sharpnessLevel &gt; 4 ? 2 : 1;</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">						if (interior_limit &gt; 9 - sharpnessLevel)</span>
+<span class="nc" id="L392">							interior_limit = 9 - sharpnessLevel;</span>
+					}
+<span class="nc bnc" id="L394" title="All 2 branches missed.">					if (interior_limit == 0)</span>
+<span class="nc" id="L395">						interior_limit = 1;</span>
+
+<span class="nc" id="L397">					int hev_threshold = 0;</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">					if (frame.getFrameType() == 0) /* current frame is a key frame */</span>
+					{
+<span class="nc bnc" id="L400" title="All 2 branches missed.">						if (loop_filter_level &gt;= 40)</span>
+<span class="nc" id="L401">							hev_threshold = 2;</span>
+<span class="nc bnc" id="L402" title="All 2 branches missed.">						else if (loop_filter_level &gt;= 15)</span>
+<span class="nc" id="L403">							hev_threshold = 1;</span>
+					} else /* current frame is an interframe */
+					{
+<span class="nc bnc" id="L406" title="All 2 branches missed.">						if (loop_filter_level &gt;= 40)</span>
+<span class="nc" id="L407">							hev_threshold = 3;</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">						else if (loop_filter_level &gt;= 20)</span>
+<span class="nc" id="L409">							hev_threshold = 2;</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">						else if (loop_filter_level &gt;= 15)</span>
+<span class="nc" id="L411">							hev_threshold = 1;</span>
+					}
+
+					/* Luma and Chroma use the same inter-macroblock edge limit */
+<span class="nc" id="L415">					int mbedge_limit = ((loop_filter_level + 2) * 2) + interior_limit;</span>
+					/* Luma and Chroma use the same inter-subblock edge limit */
+<span class="nc" id="L417">					int sub_bedge_limit = (loop_filter_level * 2) + interior_limit;</span>
+
+					// left
+<span class="nc bnc" id="L420" title="All 2 branches missed.">					if (x &gt; 0) {</span>
+<span class="nc" id="L421">						MacroBlock lmb = frame.getMacroBlock(x - 1, y);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">						for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L423">							SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1, 0, b);</span>
+<span class="nc" id="L424">							SubBlock lsb = lmb.getSubBlock(SubBlock.PLANE.Y1, 3, b);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">							for (int a = 0; a &lt; 4; a++) {</span>
+<span class="nc" id="L426">								Segment seg = getSegH(rsb, lsb, a);</span>
+<span class="nc" id="L427">								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);</span>
+<span class="nc" id="L428">								setSegH(rsb, lsb, seg, a);</span>
+							}
+						}
+					}
+					// sb left
+<span class="nc bnc" id="L433" title="All 2 branches missed.">					if (!rmb.isSkip_inner_lf()) {</span>
+<span class="nc bnc" id="L434" title="All 2 branches missed.">						for (int a = 1; a &lt; 4; a++) {</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">							for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L436">								SubBlock lsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a - 1, b);</span>
+<span class="nc" id="L437">								SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a, b);</span>
+<span class="nc bnc" id="L438" title="All 2 branches missed.">								for (int c = 0; c &lt; 4; c++) {</span>
+									// System.out.println(&quot;sbleft a:&quot;+a+&quot; b:&quot;+b+&quot; c:&quot;+c);
+<span class="nc" id="L440">									Segment seg = getSegH(rsb, lsb, c);</span>
+<span class="nc" id="L441">									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);</span>
+<span class="nc" id="L442">									setSegH(rsb, lsb, seg, c);</span>
+								}
+							}
+						}
+					}
+					// top
+<span class="nc bnc" id="L448" title="All 2 branches missed.">					if (y &gt; 0) {</span>
+<span class="nc" id="L449">						MacroBlock tmb = frame.getMacroBlock(x, y - 1);</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">						for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L451">							SubBlock tsb = tmb.getSubBlock(SubBlock.PLANE.Y1, b, 3);</span>
+<span class="nc" id="L452">							SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, 0);</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">							for (int a = 0; a &lt; 4; a++) {</span>
+<span class="nc" id="L454">								Segment seg = getSegV(bsb, tsb, a);</span>
+<span class="nc" id="L455">								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);</span>
+<span class="nc" id="L456">								setSegV(bsb, tsb, seg, a);</span>
+							}
+						}
+					}
+					// sb top
+<span class="nc bnc" id="L461" title="All 2 branches missed.">					if (!rmb.isSkip_inner_lf()) {</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">						for (int a = 1; a &lt; 4; a++) {</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">							for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc" id="L464">								SubBlock tsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a - 1);</span>
+<span class="nc" id="L465">								SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a);</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">								for (int c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L467">									Segment seg = getSegV(bsb, tsb, c);</span>
+<span class="nc" id="L468">									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);</span>
+<span class="nc" id="L469">									setSegV(bsb, tsb, seg, c);</span>
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+<span class="nc" id="L477">	}</span>
+
+	static void MBfilter(int hev_threshold, /* detect high edge variance */
+			int interior_limit, /* possibly disable filter */
+			int edge_limit, Segment seg) {
+<span class="nc" id="L482">		int p3 = u2s(seg.P3), p2 = u2s(seg.P2), p1 = u2s(seg.P1), p0 = u2s(seg.P0);</span>
+<span class="nc" id="L483">		int q0 = u2s(seg.Q0), q1 = u2s(seg.Q1), q2 = u2s(seg.Q2), q3 = u2s(seg.Q3);</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">		if (filter_yes(interior_limit, edge_limit, q3, q2, q1, q0, p0, p1, p2, p3)) {</span>
+<span class="nc bnc" id="L485" title="All 2 branches missed.">			if (!hev(hev_threshold, p1, p0, q0, q1)) {</span>
+				// Same as the initial calculation in &quot;common_adjust&quot;,
+				// w is something like twice the edge difference
+<span class="nc" id="L488">				int w = c(c(p1 - q1) + 3 * (q0 - p0));</span>
+
+				// 9/64 is approximately 9/63 = 1/7 and 1&lt;&lt;7 = 128 = 2*64.
+				// So this a, used to adjust the pixels adjacent to the edge,
+				// is something like 3/7 the edge difference.
+<span class="nc" id="L493">				int a = (27 * w + 63) &gt;&gt; 7;</span>
+
+<span class="nc" id="L495">				seg.Q0 = s2u(q0 - a);</span>
+<span class="nc" id="L496">				seg.P0 = s2u(p0 + a);</span>
+				// Next two are adjusted by 2/7 the edge difference
+<span class="nc" id="L498">				a = (18 * w + 63) &gt;&gt; 7;</span>
+				// System.out.println(&quot;a: &quot;+a);
+<span class="nc" id="L500">				seg.Q1 = s2u(q1 - a);</span>
+<span class="nc" id="L501">				seg.P1 = s2u(p1 + a);</span>
+				// Last two are adjusted by 1/7 the edge difference
+<span class="nc" id="L503">				a = (9 * w + 63) &gt;&gt; 7;</span>
+<span class="nc" id="L504">				seg.Q2 = s2u(q2 - a);</span>
+<span class="nc" id="L505">				seg.P2 = s2u(p2 + a);</span>
+<span class="nc" id="L506">			} else</span>
+				// if hev, do simple filter
+<span class="nc" id="L508">				common_adjust(true, seg); // using outer taps</span>
+		}
+<span class="nc" id="L510">	}</span>
+
+	/* Clamp, then convert signed number back to pixel value. */
+	private static int s2u(int v) {
+<span class="nc" id="L514">		return (int) (c(v) + 128);</span>
+	}
+
+	private static void setSegH(SubBlock rsb, SubBlock lsb, Segment seg, int a) {
+<span class="nc" id="L518">		int[][] rdest = rsb.getDest();</span>
+<span class="nc" id="L519">		int[][] ldest = lsb.getDest();</span>
+<span class="nc" id="L520">		ldest[3][a] = seg.P0;</span>
+<span class="nc" id="L521">		ldest[2][a] = seg.P1;</span>
+<span class="nc" id="L522">		ldest[1][a] = seg.P2;</span>
+<span class="nc" id="L523">		ldest[0][a] = seg.P3;</span>
+<span class="nc" id="L524">		rdest[0][a] = seg.Q0;</span>
+<span class="nc" id="L525">		rdest[1][a] = seg.Q1;</span>
+<span class="nc" id="L526">		rdest[2][a] = seg.Q2;</span>
+<span class="nc" id="L527">		rdest[3][a] = seg.Q3;</span>
+
+<span class="nc" id="L529">	}</span>
+
+	private static void setSegV(SubBlock bsb, SubBlock tsb, Segment seg, int a) {
+<span class="nc" id="L532">		int[][] bdest = bsb.getDest();</span>
+<span class="nc" id="L533">		int[][] tdest = tsb.getDest();</span>
+<span class="nc" id="L534">		tdest[a][3] = seg.P0;</span>
+<span class="nc" id="L535">		tdest[a][2] = seg.P1;</span>
+<span class="nc" id="L536">		tdest[a][1] = seg.P2;</span>
+<span class="nc" id="L537">		tdest[a][0] = seg.P3;</span>
+<span class="nc" id="L538">		bdest[a][0] = seg.Q0;</span>
+<span class="nc" id="L539">		bdest[a][1] = seg.Q1;</span>
+<span class="nc" id="L540">		bdest[a][2] = seg.Q2;</span>
+<span class="nc" id="L541">		bdest[a][3] = seg.Q3;</span>
+
+<span class="nc" id="L543">	}</span>
+
+	private static void simple_segment(int edge_limit, /*
+														 * do nothing if edge difference exceeds limit
+														 */
+			Segment seg) {
+<span class="nc bnc" id="L549" title="All 2 branches missed.">		if ((abs(seg.P0 - seg.Q0) * 2 + abs(seg.P1 - seg.Q1) / 2) &lt;= edge_limit) {</span>
+<span class="nc" id="L550">			common_adjust(true, seg); /* use outer taps */</span>
+		} else {
+		}
+<span class="nc" id="L553">	}</span>
+
+	public static void subblock_filter(int hev_threshold, /*
+															 * detect high edge variance
+															 */
+			int interior_limit, /* possibly disable filter */
+			int edge_limit, Segment seg) {
+<span class="nc" id="L560">		int p3 = u2s(seg.P3), p2 = u2s(seg.P2), p1 = u2s(seg.P1), p0 = u2s(seg.P0);</span>
+<span class="nc" id="L561">		int q0 = u2s(seg.Q0), q1 = u2s(seg.Q1), q2 = u2s(seg.Q2), q3 = u2s(seg.Q3);</span>
+<span class="nc bnc" id="L562" title="All 2 branches missed.">		if (filter_yes(interior_limit, edge_limit, q3, q2, q1, q0, p0, p1, p2, p3)) {</span>
+<span class="nc" id="L563">			boolean hv = hev(hev_threshold, p1, p0, q0, q1);</span>
+<span class="nc" id="L564">			int a = (common_adjust(hv, seg) + 1) &gt;&gt; 1;</span>
+<span class="nc bnc" id="L565" title="All 2 branches missed.">			if (!hv) {</span>
+<span class="nc" id="L566">				seg.Q1 = s2u(q1 - a);</span>
+<span class="nc" id="L567">				seg.P1 = s2u(p1 + a);</span>
+			}
+		} else {
+		}
+
+<span class="nc" id="L572">	}</span>
+
+	/* Convert pixel value (0 &lt;= v &lt;= 255) to an 8-bit signed number. */
+	private static int u2s(int v) {
+<span class="nc" id="L576">		return (int) (v - 128);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

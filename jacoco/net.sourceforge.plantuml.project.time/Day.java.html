@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Day.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.time</a> &gt; <span class="el_source">Day.java</span></div><h1>Day.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.time;
+
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import net.sourceforge.plantuml.project.Value;
+import net.sourceforge.plantuml.project.core.PrintScale;
+
+public class Day implements Comparable&lt;Day&gt;, Value {
+
+	static final public long MILLISECONDS_PER_DAY = 1000L * 3600L * 24;
+<span class="fc" id="L48">	static final private Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone(&quot;GMT&quot;));</span>
+
+	private final int dayOfMonth;
+	private final MonthYear monthYear;
+	private final long milliseconds;
+
+	public static Day create(int year, String month, int dayOfMonth) {
+<span class="nc" id="L55">		return new Day(year, Month.fromString(month), dayOfMonth);</span>
+	}
+
+	public static Day create(int year, int month, int dayOfMonth) {
+<span class="fc" id="L59">		return new Day(year, Month.values()[month - 1], dayOfMonth);</span>
+	}
+
+	public static Day create(long ms) {
+<span class="fc" id="L63">		return new Day(ms);</span>
+	}
+
+	public static Day today() {
+<span class="nc" id="L67">		return create(System.currentTimeMillis());</span>
+	}
+
+	public String toStringShort(Locale locale) {
+<span class="nc" id="L71">		return monthYear.shortName(locale) + &quot; &quot; + dayOfMonth;</span>
+	}
+
+	public int getWeekOfYear(WeekNumberStrategy strategy) {
+<span class="fc" id="L75">		synchronized (gmt) {</span>
+<span class="fc" id="L76">			gmt.clear();</span>
+<span class="fc" id="L77">			gmt.setTimeInMillis(milliseconds);</span>
+<span class="fc" id="L78">			gmt.setFirstDayOfWeek(strategy.getFirstDayOfWeekAsLegacyInt());</span>
+<span class="fc" id="L79">			gmt.setMinimalDaysInFirstWeek(strategy.getMinimalDaysInFirstWeek());</span>
+<span class="fc" id="L80">			return gmt.get(Calendar.WEEK_OF_YEAR);</span>
+		}
+	}
+
+<span class="fc" id="L84">	private Day(int year, Month month, int dayOfMonth) {</span>
+<span class="fc" id="L85">		this.dayOfMonth = dayOfMonth;</span>
+<span class="fc" id="L86">		this.monthYear = MonthYear.create(year, month);</span>
+<span class="fc" id="L87">		synchronized (gmt) {</span>
+<span class="fc" id="L88">			gmt.clear();</span>
+<span class="fc" id="L89">			gmt.set(year, month.ordinal(), dayOfMonth);</span>
+<span class="fc" id="L90">			this.milliseconds = gmt.getTimeInMillis();</span>
+<span class="fc" id="L91">		}</span>
+<span class="fc" id="L92">	}</span>
+
+<span class="fc" id="L94">	private Day(long ms) {</span>
+<span class="fc" id="L95">		this.milliseconds = ms;</span>
+<span class="fc" id="L96">		synchronized (gmt) {</span>
+<span class="fc" id="L97">			gmt.clear();</span>
+<span class="fc" id="L98">			gmt.setTimeInMillis(ms);</span>
+<span class="fc" id="L99">			final int year = gmt.get(Calendar.YEAR);</span>
+<span class="fc" id="L100">			final int month = gmt.get(Calendar.MONTH);</span>
+<span class="fc" id="L101">			final int dayOfMonth = gmt.get(Calendar.DAY_OF_MONTH);</span>
+<span class="fc" id="L102">			this.dayOfMonth = dayOfMonth;</span>
+<span class="fc" id="L103">			this.monthYear = MonthYear.create(year, Month.values()[month]);</span>
+<span class="fc" id="L104">		}</span>
+
+<span class="fc" id="L106">	}</span>
+
+	public Day increment() {
+<span class="fc" id="L109">		return addDays(1);</span>
+	}
+
+	public Day decrement() {
+<span class="fc" id="L113">		return addDays(-1);</span>
+	}
+
+	public Day addDays(int nday) {
+<span class="fc" id="L117">		return create(MILLISECONDS_PER_DAY * (getAbsoluteDayNum() + nday));</span>
+	}
+
+	public final int getAbsoluteDayNum() {
+<span class="fc" id="L121">		return (int) (milliseconds / MILLISECONDS_PER_DAY);</span>
+	}
+
+	public final long getMillis() {
+<span class="fc" id="L125">		return milliseconds;</span>
+	}
+
+	public int year() {
+<span class="fc" id="L129">		return monthYear.year();</span>
+	}
+
+	private int internalNumber() {
+<span class="fc" id="L133">		return year() * 100 * 100 + month().ordinal() * 100 + dayOfMonth;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L138">		return monthYear.toString() + &quot;/&quot; + dayOfMonth;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L143">		return monthYear.hashCode() + dayOfMonth * 17;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc" id="L148">		final Day other = (Day) obj;</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		return other.internalNumber() == this.internalNumber();</span>
+	}
+
+	public final int getDayOfMonth() {
+<span class="nc" id="L153">		return dayOfMonth;</span>
+	}
+
+	private int daysPerMonth() {
+<span class="nc" id="L157">		return month().getDaysPerMonth(year());</span>
+	}
+
+	public Month month() {
+<span class="fc" id="L161">		return monthYear.month();</span>
+	}
+
+	public MonthYear monthYear() {
+<span class="fc" id="L165">		return monthYear;</span>
+	}
+
+	// https://en.wikipedia.org/wiki/Zeller%27s_congruence
+	public DayOfWeek getDayOfWeek() {
+<span class="fc" id="L170">		final int q = dayOfMonth;</span>
+<span class="fc" id="L171">		final int m = month().m();</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		final int y = m &gt;= 13 ? year() - 1 : year();</span>
+<span class="fc" id="L173">		final int k = y % 100;</span>
+<span class="fc" id="L174">		final int j = y / 100;</span>
+<span class="fc" id="L175">		final int h = ((q + 13 * (m + 1) / 5) + k + k / 4 + j / 4 + 5 * j) % 7;</span>
+<span class="fc" id="L176">		return DayOfWeek.fromH(h);</span>
+	}
+
+	public int compareTo(Day other) {
+<span class="fc" id="L180">		return this.internalNumber() - other.internalNumber();</span>
+	}
+
+	public static Day min(Day wink1, Day wink2) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (wink2.internalNumber() &lt; wink1.internalNumber())</span>
+<span class="nc" id="L185">			return wink2;</span>
+
+<span class="nc" id="L187">		return wink1;</span>
+	}
+
+	public static Day max(Day wink1, Day wink2) {
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (wink2.internalNumber() &gt; wink1.internalNumber())</span>
+<span class="nc" id="L192">			return wink2;</span>
+
+<span class="nc" id="L194">		return wink1;</span>
+	}
+
+	public Day increment(PrintScale printScale) {
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (printScale == PrintScale.WEEKLY)</span>
+<span class="nc" id="L199">			return this.addDays(7);</span>
+<span class="nc" id="L200">		return increment();</span>
+	}
+
+	public Day roundDayDown() {
+<span class="nc" id="L204">		return new Day((milliseconds / MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY);</span>
+	}
+
+	public Day roundDayUp() {
+<span class="nc" id="L208">		return new Day(((milliseconds + MILLISECONDS_PER_DAY - 1) / MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

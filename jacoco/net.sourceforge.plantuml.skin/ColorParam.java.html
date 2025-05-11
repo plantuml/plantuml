@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColorParam.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">ColorParam.java</span></div><h1>ColorParam.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.skin;
+
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+
+<span class="fc" id="L42">public enum ColorParam {</span>
+<span class="fc" id="L43">	background(HColors.WHITE, true, ColorType.BACK), hyperlink(HColors.BLUE),</span>
+
+<span class="fc" id="L45">	activityBackground(HColors.MY_YELLOW, true, ColorType.BACK), activityBorder(HColors.MY_RED, ColorType.LINE),</span>
+
+<span class="fc" id="L47">	classBackground(HColors.MY_YELLOW, true, ColorType.BACK),</span>
+
+<span class="fc" id="L49">	classBorder(HColors.MY_RED, ColorType.LINE),</span>
+
+<span class="fc" id="L51">	arrowHead(HColors.MY_RED, null),</span>
+
+<span class="fc" id="L53">	stateBorder(HColors.MY_RED, ColorType.LINE),</span>
+
+<span class="fc" id="L55">	noteBackground(HColors.COL_FBFB77, true, ColorType.BACK), noteBorder(HColors.MY_RED, ColorType.LINE),</span>
+
+<span class="fc" id="L57">	diagramBorder(null, ColorType.LINE),</span>
+
+<span class="fc" id="L59">	actorBackground(HColors.MY_YELLOW, true, ColorType.BACK), actorBorder(HColors.MY_RED, ColorType.LINE),</span>
+<span class="fc" id="L60">	sequenceGroupBodyBackground(HColors.RED, true, ColorType.BACK),</span>
+<span class="fc" id="L61">	sequenceReferenceHeaderBackground(HColors.COL_EEEEEE, true, ColorType.BACK),</span>
+<span class="fc" id="L62">	sequenceReferenceBackground(HColors.WHITE, true, ColorType.BACK),</span>
+<span class="fc" id="L63">	sequenceLifeLineBorder(HColors.MY_RED, ColorType.LINE), sequenceNewpageSeparator(HColors.BLACK, ColorType.LINE),</span>
+<span class="fc" id="L64">	sequenceBoxBorder(HColors.MY_RED, ColorType.LINE),</span>
+
+<span class="fc" id="L66">	iconPrivate(HColors.COL_C82930), iconPrivateBackground(HColors.COL_F24D5C), iconPackage(HColors.COL_1963A0),</span>
+<span class="fc" id="L67">	iconPackageBackground(HColors.COL_4177AF), iconProtected(HColors.COL_B38D22),</span>
+<span class="fc" id="L68">	iconProtectedBackground(HColors.COL_FFFF44), iconPublic(HColors.COL_038048),</span>
+<span class="fc" id="L69">	iconPublicBackground(HColors.COL_84BE84), iconIEMandatory(HColors.BLACK),</span>
+
+<span class="fc" id="L71">	arrowLollipop(HColors.WHITE),</span>
+
+<span class="fc" id="L73">	machineBackground(HColors.WHITE), machineBorder(HColors.BLACK, ColorType.LINE),</span>
+<span class="fc" id="L74">	requirementBackground(HColors.WHITE), requirementBorder(HColors.BLACK, ColorType.LINE),</span>
+<span class="fc" id="L75">	designedBackground(HColors.WHITE), designedBorder(HColors.BLACK, ColorType.LINE), domainBackground(HColors.WHITE),</span>
+<span class="fc" id="L76">	domainBorder(HColors.BLACK, ColorType.LINE), lexicalBackground(HColors.WHITE),</span>
+<span class="fc" id="L77">	lexicalBorder(HColors.BLACK, ColorType.LINE), biddableBackground(HColors.WHITE),</span>
+<span class="fc" id="L78">	biddableBorder(HColors.BLACK, ColorType.LINE);</span>
+
+	private final boolean isBackground;
+	private final HColor defaultValue;
+	private final ColorType colorType;
+
+	private ColorParam(HColor defaultValue, ColorType colorType) {
+<span class="fc" id="L85">		this(defaultValue, false, colorType);</span>
+<span class="fc" id="L86">	}</span>
+
+	private ColorParam(HColor defaultValue) {
+<span class="fc" id="L89">		this(defaultValue, false, null);</span>
+<span class="fc" id="L90">	}</span>
+
+	private ColorParam() {
+<span class="nc" id="L93">		this(null, false, null);</span>
+<span class="nc" id="L94">	}</span>
+
+	private ColorParam(boolean isBackground) {
+<span class="nc" id="L97">		this(null, isBackground, null);</span>
+<span class="nc" id="L98">	}</span>
+
+<span class="fc" id="L100">	private ColorParam(HColor defaultValue, boolean isBackground, ColorType colorType) {</span>
+<span class="fc" id="L101">		this.isBackground = isBackground;</span>
+<span class="fc" id="L102">		this.defaultValue = defaultValue;</span>
+<span class="fc" id="L103">		this.colorType = colorType;</span>
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">		if (colorType == ColorType.BACK &amp;&amp; isBackground == false) {</span>
+<span class="nc" id="L105">			System.err.println(this);</span>
+<span class="nc" id="L106">			throw new IllegalStateException();</span>
+		}
+<span class="fc" id="L108">	}</span>
+
+	protected boolean isBackground() {
+<span class="nc" id="L111">		return isBackground;</span>
+	}
+
+	public final HColor getDefaultValue() {
+<span class="fc" id="L115">		return defaultValue;</span>
+	}
+
+	public ColorType getColorType() {
+<span class="nc" id="L119">		return colorType;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

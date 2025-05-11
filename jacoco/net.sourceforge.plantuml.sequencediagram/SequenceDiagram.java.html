@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SequenceDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">SequenceDiagram.java</span></div><h1>SequenceDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
+import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
+import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
+import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
+
+<span class="fc" id="L83">public class SequenceDiagram extends UmlDiagram {</span>
+
+	private boolean hideUnlinkedData;
+
+	public final boolean isHideUnlinkedData() {
+<span class="fc" id="L88">		return hideUnlinkedData;</span>
+	}
+
+	public final void setHideUnlinkedData(boolean hideUnlinkedData) {
+<span class="nc" id="L92">		this.hideUnlinkedData = hideUnlinkedData;</span>
+<span class="nc" id="L93">	}</span>
+
+<span class="fc" id="L95">	private final List&lt;Participant&gt; participantsList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L97">	private final List&lt;Event&gt; events = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L99">	private final Map&lt;Participant, ParticipantEnglober&gt; participantEnglobers2 = new HashMap&lt;Participant, ParticipantEnglober&gt;();</span>
+
+<span class="fc" id="L101">	private final Rose skin2 = new Rose();</span>
+
+<span class="fc" id="L103">	private final AtomicInteger cpt = new AtomicInteger(1);</span>
+
+	public AtomicInteger getCounter() {
+<span class="fc" id="L106">		return cpt;</span>
+	}
+
+	public SequenceDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L110">		super(source, UmlDiagramType.SEQUENCE, previous, preprocessing);</span>
+<span class="fc" id="L111">	}</span>
+
+	@Deprecated
+	public Participant getOrCreateParticipant(LineLocation location, String code) {
+<span class="fc" id="L115">		return getOrCreateParticipant(location, code, Display.getWithNewlines(getPragma(), code));</span>
+	}
+
+	public Participant getOrCreateParticipant(LineLocation location, String code, Display display) {
+<span class="fc" id="L119">		Participant result = participantsget(code);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L121">			result = new Participant(location, ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0,</span>
+<span class="fc" id="L122">					getSkinParam().getCurrentStyleBuilder(), createUid());</span>
+<span class="fc" id="L123">			addWithOrder(result);</span>
+<span class="fc" id="L124">			participantEnglobers2.put(result, participantEnglober);</span>
+		}
+<span class="fc" id="L126">		return result;</span>
+	}
+
+	private Participant participantsget(String code) {
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		for (Participant p : participantsList)</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (p.getCode().equals(code))</span>
+<span class="fc" id="L132">				return p;</span>
+
+<span class="fc" id="L134">		return null;</span>
+	}
+
+	private EventWithDeactivate lastEventWithDeactivate;
+
+	public EventWithDeactivate getLastEventWithDeactivate() {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (events.get(i) instanceof EventWithDeactivate)</span>
+<span class="nc" id="L142">				return (EventWithDeactivate) events.get(i);</span>
+<span class="nc" id="L143">		return null;</span>
+	}
+
+	public EventWithNote getLastEventWithNote() {
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (events.get(i) instanceof EventWithNote)</span>
+<span class="fc" id="L149">				return (EventWithNote) events.get(i);</span>
+<span class="nc" id="L150">		return null;</span>
+	}
+
+	public Participant createNewParticipant(LineLocation location, ParticipantType type, String code, Display display,
+			int order) {
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (participantsget(code) != null)</span>
+<span class="nc" id="L156">			throw new IllegalArgumentException();</span>
+
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (Display.isNull(display)) {</span>
+			// display = Arrays.asList(code);
+<span class="fc" id="L160">			display = Display.getWithNewlines(getPragma(), code);</span>
+		}
+
+<span class="fc" id="L163">		final Participant result = new Participant(location, type, code, display, hiddenPortions, order,</span>
+<span class="fc" id="L164">				getSkinParam().getCurrentStyleBuilder(), createUid());</span>
+<span class="fc" id="L165">		addWithOrder(result);</span>
+<span class="fc" id="L166">		participantEnglobers2.put(result, participantEnglober);</span>
+<span class="fc" id="L167">		return result;</span>
+	}
+
+	private String createUid() {
+<span class="fc" id="L171">		return &quot;part&quot; + cpt.getAndAdd(1);</span>
+	}
+
+	private void addWithOrder(final Participant result) {
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		for (int i = 0; i &lt; participantsList.size(); i++)</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			if (result.getOrder() &lt; participantsList.get(i).getOrder()) {</span>
+<span class="nc" id="L177">				participantsList.add(i, result);</span>
+<span class="nc" id="L178">				return;</span>
+			}
+
+<span class="fc" id="L181">		participantsList.add(result);</span>
+<span class="fc" id="L182">	}</span>
+
+	public Collection&lt;Participant&gt; participants() {
+<span class="fc" id="L185">		return Collections.unmodifiableCollection(participantsList);</span>
+	}
+
+	public boolean participantsContainsKey(String code) {
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		return participantsget(code) != null;</span>
+	}
+
+	public CommandExecutionResult addMessage(AbstractMessage m) {
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (m.isParallel())</span>
+<span class="fc" id="L194">			m.setParallelBrother(getLastAbstractMessage());</span>
+
+<span class="fc" id="L196">		lastEventWithDeactivate = m;</span>
+<span class="fc" id="L197">		lastDelay = null;</span>
+<span class="fc" id="L198">		events.add(m);</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (pendingCreate != null) {</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (m.compatibleForCreate(pendingCreate.getParticipant()) == false)</span>
+<span class="nc" id="L201">				return CommandExecutionResult.error(&quot;After create command, you have to send a message to \&quot;&quot;</span>
+<span class="nc" id="L202">						+ pendingCreate.getParticipant() + &quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L204">			m.addLifeEvent(pendingCreate);</span>
+<span class="nc" id="L205">			pendingCreate = null;</span>
+		}
+<span class="fc" id="L207">		return CommandExecutionResult.ok();</span>
+	}
+
+	private AbstractMessage getLastAbstractMessage() {
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">			if (events.get(i) instanceof AbstractMessage)</span>
+<span class="fc" id="L213">				return (AbstractMessage) events.get(i);</span>
+
+<span class="nc" id="L215">		return null;</span>
+	}
+
+	public void addNote(Note n, boolean tryMerge) {
+		// this.lastEventWithDeactivate = null;
+<span class="pc bpc" id="L220" title="3 of 4 branches missed.">		if (tryMerge &amp;&amp; events.size() &gt; 0) {</span>
+<span class="nc" id="L221">			final Event last = events.get(events.size() - 1);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">			if (last instanceof Note) {</span>
+<span class="nc" id="L223">				final Notes notes = new Notes((Note) last, n);</span>
+<span class="nc" id="L224">				events.set(events.size() - 1, notes);</span>
+<span class="nc" id="L225">				return;</span>
+			}
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (last instanceof Notes) {</span>
+<span class="nc" id="L228">				((Notes) last).add(n);</span>
+<span class="nc" id="L229">				return;</span>
+			}
+		}
+<span class="fc" id="L232">		events.add(n);</span>
+<span class="fc" id="L233">	}</span>
+
+	public void newpage(Display strings) {
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		if (ignoreNewpage)</span>
+<span class="nc" id="L237">			return;</span>
+
+<span class="fc" id="L239">		events.add(new Newpage(strings, getSkinParam().getCurrentStyleBuilder()));</span>
+<span class="fc" id="L240">	}</span>
+
+<span class="fc" id="L242">	private boolean ignoreNewpage = false;</span>
+
+	public void ignoreNewpage() {
+<span class="nc" id="L245">		this.ignoreNewpage = true;</span>
+<span class="nc" id="L246">	}</span>
+
+<span class="fc" id="L248">	private int autonewpage = -1;</span>
+
+	public final int getAutonewpage() {
+<span class="fc" id="L251">		return autonewpage;</span>
+	}
+
+	public void setAutonewpage(int autonewpage) {
+<span class="nc" id="L255">		this.autonewpage = autonewpage;</span>
+<span class="nc" id="L256">	}</span>
+
+	public void divider(Display strings) {
+<span class="fc" id="L259">		events.add(new Divider(strings, getSkinParam().getCurrentStyleBuilder()));</span>
+<span class="fc" id="L260">	}</span>
+
+	public void hspace() {
+<span class="nc" id="L263">		events.add(new HSpace(25));</span>
+<span class="nc" id="L264">	}</span>
+
+	public void hspace(int pixel) {
+<span class="nc" id="L267">		events.add(new HSpace(pixel));</span>
+<span class="nc" id="L268">	}</span>
+
+	private Delay lastDelay;
+
+	public void delay(Display strings) {
+<span class="nc" id="L273">		final Delay delay = new Delay(strings, getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L274">		events.add(delay);</span>
+<span class="nc" id="L275">		lastDelay = delay;</span>
+<span class="nc" id="L276">	}</span>
+
+	public List&lt;Event&gt; events() {
+<span class="fc" id="L279">		return Collections.unmodifiableList(events);</span>
+	}
+
+	private FileMaker getSequenceDiagramPngMaker(int index, FileFormatOption fileFormatOption) {
+
+		// We reset the counter for messages
+<span class="fc" id="L285">		this.cpt.set(1);</span>
+		
+<span class="fc" id="L287">		final FileFormat fileFormat = fileFormatOption.getFileFormat();</span>
+		// ::comment when __CORE__
+<span class="pc bpc" id="L289" title="1 of 4 branches missed.">		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)</span>
+<span class="fc" id="L290">			return new SequenceDiagramTxtMaker(this, fileFormat);</span>
+
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (fileFormat.name().startsWith(&quot;XMI&quot;))</span>
+<span class="nc" id="L293">			return new SequenceDiagramXmiMaker(this, fileFormat);</span>
+		// ::done
+
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (modeTeoz())</span>
+<span class="fc" id="L297">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
+
+<span class="fc" id="L299">		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);</span>
+	}
+
+	private boolean modeTeoz() {
+<span class="fc" id="L303">		return OptionFlags.FORCE_TEOZ || getPragma().isTrue(PragmaKey.TEOZ);</span>
+	}
+
+	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+<span class="fc" id="L308">		return super.createImageBuilder(fileFormatOption).annotations(false);</span>
+		// they are managed in the SequenceDiagramFileMaker* classes
+	}
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormat)
+			throws IOException {
+<span class="fc" id="L315">		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(index, fileFormat);</span>
+<span class="fc" id="L316">		return sequenceDiagramPngMaker.createOne(os, index, fileFormat.isWithMetadata());</span>
+	}
+
+	@Override
+	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+<span class="nc" id="L321">		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, fileFormatOption);</span>
+<span class="nc" id="L322">		sequenceDiagramPngMaker.createOneGraphic(ug);</span>
+<span class="nc" id="L323">	}</span>
+
+	@Override
+	final protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L327">		throw new UnsupportedOperationException();</span>
+	}
+
+	// support for CommandReturn
+<span class="fc" id="L331">	private final Stack&lt;AbstractMessage&gt; activationState = new Stack&lt;&gt;();</span>
+
+	public AbstractMessage getActivatingMessage() {
+<span class="nc bnc" id="L334" title="All 2 branches missed.">		if (activationState.empty())</span>
+<span class="nc" id="L335">			return null;</span>
+
+<span class="nc" id="L337">		return activationState.peek();</span>
+	}
+
+<span class="fc" id="L340">	private LifeEvent pendingCreate = null;</span>
+
+	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor) {
+<span class="fc" id="L343">		return activate(p, lifeEventType, backcolor, null);</span>
+	}
+
+	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor, HColor linecolor) {
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (lastDelay != null)</span>
+<span class="nc" id="L348">			return &quot;You cannot Activate/Deactivate just after a ...&quot;;</span>
+
+<span class="fc" id="L350">		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor), getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L351">		events.add(lifeEvent);</span>
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">		if (lifeEventType == LifeEventType.CREATE) {</span>
+<span class="nc" id="L353">			pendingCreate = lifeEvent;</span>
+<span class="nc" id="L354">			return null;</span>
+		}
+<span class="fc bfc" id="L356" title="All 2 branches covered.">		if (lastEventWithDeactivate == null) {</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
+<span class="fc" id="L358">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
+<span class="fc" id="L359">				return null;</span>
+			}
+<span class="nc bnc" id="L361" title="All 2 branches missed.">			if (p.getInitialLife() == 0)</span>
+<span class="nc" id="L362">				return &quot;You cannot deactivate here&quot;;</span>
+
+<span class="nc" id="L364">			return null;</span>
+		}
+<span class="pc bpc" id="L366" title="1 of 4 branches missed.">		if (lifeEventType == LifeEventType.ACTIVATE &amp;&amp; lastEventWithDeactivate instanceof AbstractMessage)</span>
+<span class="fc" id="L367">			activationState.push((AbstractMessage) lastEventWithDeactivate);</span>
+<span class="fc bfc" id="L368" title="All 4 branches covered.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
+<span class="fc" id="L369">			activationState.pop();</span>
+
+<span class="fc" id="L371">		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (lastEventWithDeactivate instanceof AbstractMessage) {</span>
+<span class="fc" id="L373">			final AbstractMessage lastMessage = (AbstractMessage) lastEventWithDeactivate;</span>
+<span class="fc" id="L374">			lifeEvent.setMessage(lastMessage);</span>
+		}
+<span class="pc bpc" id="L376" title="1 of 2 branches missed.">		if (ok)</span>
+<span class="fc" id="L377">			return null;</span>
+
+<span class="nc" id="L379">		return &quot;Activate/Deactivate already done on &quot; + p.getCode();</span>
+	}
+
+<span class="fc" id="L382">	private final List&lt;GroupingStart&gt; openGroupings = new ArrayList&lt;&gt;();</span>
+
+	public boolean grouping(String title, String comment, GroupingType type, HColor backColorGeneral,
+			HColor backColorElement, boolean parallel) {
+<span class="pc bpc" id="L386" title="1 of 4 branches missed.">		if (type != GroupingType.START &amp;&amp; openGroupings.size() == 0)</span>
+<span class="nc" id="L387">			return false;</span>
+
+<span class="fc bfc" id="L389" title="All 2 branches covered.">		if (backColorGeneral == null)</span>
+<span class="fc" id="L390">			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);</span>
+
+<span class="fc bfc" id="L392" title="All 2 branches covered.">		final GroupingStart top = openGroupings.size() &gt; 0 ? openGroupings.get(0) : null;</span>
+
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		final Grouping g = type == GroupingType.START</span>
+<span class="fc" id="L395">				? new GroupingStart(title, comment, backColorGeneral, backColorElement, top,</span>
+<span class="fc" id="L396">						getSkinParam().getCurrentStyleBuilder())</span>
+<span class="fc" id="L397">				: new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top,</span>
+<span class="fc" id="L398">						getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L399">		events.add(g);</span>
+
+<span class="fc bfc" id="L401" title="All 2 branches covered.">		if (type == GroupingType.START) {</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">			if (parallel)</span>
+<span class="fc" id="L403">				((GroupingStart) g).goParallel();</span>
+
+<span class="fc" id="L405">			openGroupings.add(0, (GroupingStart) g);</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">		} else if (type == GroupingType.END) {</span>
+<span class="fc" id="L407">			openGroupings.remove(0);</span>
+<span class="fc" id="L408">			lastEventWithDeactivate = (GroupingLeaf) g;</span>
+		}
+
+<span class="fc" id="L411">		return true;</span>
+	}
+
+	public DiagramDescription getDescription() {
+<span class="fc" id="L415">		return new DiagramDescription(&quot;(&quot; + participantsList.size() + &quot; participants)&quot;);</span>
+	}
+
+<span class="fc" id="L418">	private final AutoNumber autoNumber = new AutoNumber();</span>
+
+	public final void autonumberGo(DottedNumber startingNumber, int increment, DecimalFormat decimalFormat) {
+<span class="fc" id="L421">		autoNumber.go(startingNumber, increment, decimalFormat);</span>
+<span class="fc" id="L422">	}</span>
+
+	public final void autonumberStop() {
+<span class="nc" id="L425">		autoNumber.stop();</span>
+<span class="nc" id="L426">	}</span>
+
+	public final AutoNumber getAutoNumber() {
+<span class="nc" id="L429">		return autoNumber;</span>
+	}
+
+	// public final void autonumberResume(DecimalFormat decimalFormat) {
+	// autoNumber.resume(decimalFormat);
+	// }
+	//
+	// public final void autonumberResume(int increment, DecimalFormat
+	// decimalFormat) {
+	// autoNumber.resume(increment, decimalFormat);
+	// }
+
+	public String getNextMessageNumber() {
+<span class="fc" id="L442">		return autoNumber.getNextMessageNumber();</span>
+	}
+
+	public boolean isShowFootbox() {
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">		if (getSkinParam().strictUmlStyle())</span>
+<span class="nc" id="L447">			return false;</span>
+
+<span class="fc" id="L449">		final String footbox = getSkinParam().getValue(&quot;footbox&quot;);</span>
+<span class="pc bpc" id="L450" title="1 of 2 branches missed.">		if (footbox == null)</span>
+<span class="fc" id="L451">			return showFootbox;</span>
+
+<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (footbox.equalsIgnoreCase(&quot;hide&quot;))</span>
+<span class="nc" id="L454">			return false;</span>
+
+<span class="nc" id="L456">		return true;</span>
+	}
+
+<span class="fc" id="L459">	private boolean showFootbox = true;</span>
+
+	public void setShowFootbox(boolean footbox) {
+<span class="fc" id="L462">		this.showFootbox = footbox;</span>
+<span class="fc" id="L463">	}</span>
+
+	private ParticipantEnglober participantEnglober;
+
+	public void boxStart(Display comment, HColor color, Stereotype stereotype) {
+<span class="nc bnc" id="L468" title="All 2 branches missed.">		if (participantEnglober == null)</span>
+<span class="nc" id="L469">			this.participantEnglober = ParticipantEnglober.build(comment, color, stereotype);</span>
+		else
+<span class="nc" id="L471">			this.participantEnglober = participantEnglober.newChild(comment, color, stereotype);</span>
+
+<span class="nc" id="L473">	}</span>
+
+	public void endBox() {
+<span class="nc bnc" id="L476" title="All 2 branches missed.">		if (participantEnglober == null)</span>
+<span class="nc" id="L477">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L479">		this.participantEnglober = participantEnglober.getParent();</span>
+<span class="nc" id="L480">	}</span>
+
+	public boolean isBoxPending() {
+<span class="nc bnc" id="L483" title="All 2 branches missed.">		return participantEnglober != null;</span>
+	}
+
+	@Override
+	public int getNbImages() {
+		// ::comment when __CORE__
+		try {
+			// The DEBUG StringBounder is ok just to compute the number of pages here.
+<span class="fc" id="L491">			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();</span>
+<span class="nc" id="L492">		} catch (Throwable t) {</span>
+<span class="nc" id="L493">			Logme.error(t);</span>
+			// ::done
+<span class="nc" id="L495">			return 1;</span>
+			// ::comment when __CORE__
+		}
+		// ::done
+	}
+
+	public void removeHiddenParticipants() {
+<span class="nc bnc" id="L502" title="All 2 branches missed.">		for (Participant p : new ArrayList&lt;&gt;(participantsList))</span>
+<span class="nc bnc" id="L503" title="All 2 branches missed.">			if (isAlone(p))</span>
+<span class="nc" id="L504">				remove(p);</span>
+<span class="nc" id="L505">	}</span>
+
+	private void remove(Participant p) {
+<span class="nc" id="L508">		final boolean ok = participantsList.remove(p);</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">		if (ok == false)</span>
+<span class="nc" id="L510">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L512">		participantEnglobers2.remove(p);</span>
+<span class="nc" id="L513">	}</span>
+
+	private boolean isAlone(Participant p) {
+<span class="nc bnc" id="L516" title="All 2 branches missed.">		for (Event ev : events)</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">			if (ev.dealWith(p))</span>
+<span class="nc" id="L518">				return false;</span>
+
+<span class="nc" id="L520">		return true;</span>
+	}
+
+	public void putParticipantInLast(String code) {
+<span class="nc" id="L524">		final Participant p = Objects.requireNonNull(participantsget(code), code);</span>
+<span class="nc" id="L525">		final boolean ok = participantsList.remove(p);</span>
+<span class="nc bnc" id="L526" title="All 2 branches missed.">		assert ok;</span>
+<span class="nc" id="L527">		addWithOrder(p);</span>
+<span class="nc" id="L528">		participantEnglobers2.put(p, participantEnglober);</span>
+<span class="nc" id="L529">	}</span>
+
+	public ParticipantEnglober getEnglober(Participant p) {
+<span class="fc" id="L532">		return participantEnglobers2.get(p);</span>
+	}
+
+	private boolean autoactivate;
+
+	public final void setAutoactivate(boolean autoactivate) {
+<span class="nc" id="L538">		this.autoactivate = autoactivate;</span>
+<span class="nc" id="L539">	}</span>
+
+	public final boolean isAutoactivate() {
+<span class="fc" id="L542">		return autoactivate;</span>
+	}
+
+	public boolean hasUrl() {
+<span class="nc bnc" id="L546" title="All 2 branches missed.">		for (Participant p : participantsList)</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">			if (p.getUrl() != null)</span>
+<span class="nc" id="L548">				return true;</span>
+
+<span class="nc bnc" id="L550" title="All 2 branches missed.">		for (Event ev : events)</span>
+<span class="nc bnc" id="L551" title="All 2 branches missed.">			if (ev.hasUrl())</span>
+<span class="nc" id="L552">				return true;</span>
+
+<span class="nc bnc" id="L554" title="All 4 branches missed.">		if (getLegend().isNull() == false &amp;&amp; getLegend().hasUrl())</span>
+<span class="nc" id="L555">			return true;</span>
+
+<span class="nc" id="L557">		return false;</span>
+	}
+
+	public void addReference(Reference ref) {
+<span class="nc" id="L561">		events.add(ref);</span>
+<span class="nc" id="L562">	}</span>
+
+	@Override
+	public boolean isOk() {
+<span class="fc bfc" id="L566" title="All 2 branches covered.">		if (participantsList.size() == 0)</span>
+<span class="fc" id="L567">			return false;</span>
+
+<span class="fc" id="L569">		return true;</span>
+	}
+
+	@Override
+	public String checkFinalError() {
+<span class="pc bpc" id="L574" title="1 of 2 branches missed.">		if (this.isHideUnlinkedData())</span>
+<span class="nc" id="L575">			this.removeHiddenParticipants();</span>
+
+<span class="fc" id="L577">		return super.checkFinalError();</span>
+	}
+
+<span class="fc" id="L580">	private final Set&lt;EntityPortion&gt; hiddenPortions = EnumSet.&lt;EntityPortion&gt;noneOf(EntityPortion.class);</span>
+
+	public void hideOrShow(Set&lt;EntityPortion&gt; portions, boolean show) {
+<span class="fc bfc" id="L583" title="All 2 branches covered.">		if (show)</span>
+<span class="fc" id="L584">			hiddenPortions.removeAll(portions);</span>
+		else
+<span class="fc" id="L586">			hiddenPortions.addAll(portions);</span>
+
+<span class="fc" id="L588">	}</span>
+
+	public Display manageVariable(Display labels) {
+<span class="fc" id="L591">		return labels.replace(&quot;%autonumber%&quot;, autoNumber.getCurrentMessageNumber(false));</span>
+	}
+
+<span class="fc" id="L594">	private final List&lt;LinkAnchor&gt; linkAnchors = new ArrayList&lt;&gt;();</span>
+
+	public CommandExecutionResult linkAnchor(String anchor1, String anchor2, String message) {
+<span class="nc" id="L597">		this.linkAnchors.add(new LinkAnchor(anchor1, anchor2, message));</span>
+<span class="nc" id="L598">		return CommandExecutionResult.ok();</span>
+	}
+
+	public List&lt;LinkAnchor&gt; getLinkAnchors() {
+<span class="fc" id="L602">		return Collections.unmodifiableList(linkAnchors);</span>
+	}
+
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+<span class="fc bfc" id="L607" title="All 2 branches covered.">		return modeTeoz() // this is for backward compatibility</span>
+<span class="fc" id="L608">				? ClockwiseTopRightBottomLeft.same(5)</span>
+<span class="fc" id="L609">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

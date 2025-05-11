@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RenderingOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.core</a> &gt; <span class="el_source">RenderingOptions.java</span></div><h1>RenderingOptions.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.core;
+
+import java.awt.Color;
+import java.util.HashMap;
+
+import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+<span class="nc" id="L31">public class RenderingOptions {</span>
+
+	private HashMap&lt;String, CustomShapeDefinition&gt; customShapes;
+	
+<span class="nc" id="L35">	private boolean dropShadows = true;</span>
+<span class="nc" id="L36">	private boolean renderDebugLines = false;</span>
+<span class="nc" id="L37">	private boolean antialias = true;</span>
+<span class="nc" id="L38">    private boolean fixedSlope = false;</span>
+
+<span class="nc" id="L40">	private int cellWidth = 10;</span>
+<span class="nc" id="L41">	private int cellHeight = 14;</span>
+	
+<span class="nc" id="L43">	private float scale = 1;</span>
+	
+<span class="nc" id="L45">	private Color backgroundColor = Color.white;</span>
+
+<span class="nc" id="L47">	public enum ImageType { PNG, SVG };</span>
+
+<span class="nc" id="L49">	private ImageType imageType = ImageType.PNG;</span>
+
+<span class="nc" id="L51">	public ImageType getImageType() { return imageType; }</span>
+<span class="nc" id="L52">	public void setImageType(ImageType type) { imageType = type; }</span>
+
+<span class="nc" id="L54">	private String fontFamily = &quot;Courier&quot;;</span>
+<span class="nc" id="L55">	private String fontURL = null;</span>
+
+<span class="nc" id="L57">	public String getFontFamily() { return fontFamily; }</span>
+<span class="nc" id="L58">	public String getFontURL() { return fontURL; }</span>
+<span class="nc" id="L59">	public void setFontURL(String url) { fontFamily = &quot;Custom&quot;; fontURL = url; }</span>
+
+	public int getCellHeight() {
+<span class="nc" id="L62">		return cellHeight;</span>
+	}
+
+	public int getCellWidth() {
+<span class="nc" id="L66">		return cellWidth;</span>
+	}
+
+	public boolean dropShadows() {
+<span class="nc" id="L70">		return dropShadows;</span>
+	}
+
+	public boolean renderDebugLines() {
+<span class="nc" id="L74">		return renderDebugLines;</span>
+	}
+
+	public float getScale() {
+<span class="nc" id="L78">		return scale;</span>
+	}
+
+	public void setDropShadows(boolean b) {
+<span class="nc" id="L82">		dropShadows = b;</span>
+<span class="nc" id="L83">	}</span>
+
+	public void setRenderDebugLines(boolean b) {
+<span class="nc" id="L86">		renderDebugLines = b;</span>
+<span class="nc" id="L87">	}</span>
+
+	public void setScale(float f) {
+<span class="nc" id="L90">		scale = f;</span>
+<span class="nc" id="L91">		cellWidth *= scale;</span>
+<span class="nc" id="L92">		cellHeight *= scale;</span>
+<span class="nc" id="L93">	}</span>
+
+	public boolean performAntialias() {
+<span class="nc" id="L96">		return antialias;</span>
+	}
+
+	public void setAntialias(boolean b) {
+<span class="nc" id="L100">		antialias = b;</span>
+<span class="nc" id="L101">	}</span>
+
+	public Color getBackgroundColor() {
+<span class="nc" id="L104">		return backgroundColor;</span>
+	}
+
+	public void setBackgroundColor(Color backgroundColor) {
+<span class="nc" id="L108">		this.backgroundColor = backgroundColor;</span>
+<span class="nc" id="L109">	}</span>
+	
+	public boolean needsTransparency() {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		return backgroundColor.getAlpha() &lt; 255;</span>
+	}
+
+	/**
+     * Should the sides of trapezoids and parallelograms have fixed width (false, default)
+     * or fixed slope (true)?
+     * @return true for fixed slope, false for fixed width
+     */
+    public boolean isFixedSlope() {
+<span class="nc" id="L121">        return fixedSlope;</span>
+    }
+
+    /**
+     * Should the sides of trapezoids and parallelograms have fixed width (false, default)
+     * or fixed slope (true)?
+     * @param b true for fixed slope, false for fixed width
+     */
+    public void setFixedSlope(boolean b) {
+<span class="nc" id="L130">        this.fixedSlope = b;</span>
+<span class="nc" id="L131">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

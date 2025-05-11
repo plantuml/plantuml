@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Swimlane.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">Swimlane.java</span></div><h1>Swimlane.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import java.util.Set;
+
+import net.sourceforge.plantuml.abel.SpecificBackcolorable;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.skin.Pragma;
+
+public class Swimlane implements SpecificBackcolorable, Comparable&lt;Swimlane&gt; {
+
+	private final String name;
+	private final int order;
+	private Display display;
+
+<span class="fc" id="L55">	private UTranslate translate = UTranslate.none();</span>
+	private double actualWidth;
+
+<span class="fc" id="L58">	public Swimlane(String name, int order, Pragma pragma) {</span>
+<span class="fc" id="L59">		this.name = name;</span>
+<span class="fc" id="L60">		this.display = Display.getWithNewlines(pragma, name);</span>
+<span class="fc" id="L61">		this.order = order;</span>
+
+<span class="fc" id="L63">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L67">		return name;</span>
+	}
+
+	public String getName() {
+<span class="fc" id="L71">		return name;</span>
+	}
+
+	public Display getDisplay() {
+<span class="fc" id="L75">		return display;</span>
+	}
+
+	public void setDisplay(Display label) {
+<span class="nc" id="L79">		this.display = label;</span>
+<span class="nc" id="L80">	}</span>
+
+	public final UTranslate getTranslate() {
+<span class="fc" id="L83">		return translate;</span>
+	}
+
+	public final void setTranslate(UTranslate translate) {
+<span class="fc" id="L87">		this.translate = translate;</span>
+<span class="fc" id="L88">	}</span>
+
+	public final void setWidth(double actualWidth) {
+<span class="fc" id="L91">		this.actualWidth = actualWidth;</span>
+<span class="fc" id="L92">	}</span>
+
+	public Colors getColors() {
+<span class="fc" id="L95">		return colors;</span>
+	}
+
+	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (color != null) {</span>
+<span class="nc" id="L100">			this.colors = colors.add(type, color);</span>
+		}
+<span class="nc" id="L102">	}</span>
+
+<span class="fc" id="L104">	private Colors colors = Colors.empty();</span>
+
+	public final double getActualWidth() {
+<span class="fc" id="L107">		return actualWidth;</span>
+	}
+
+	public void setColors(Colors colors) {
+<span class="nc" id="L111">		this.colors = colors;</span>
+<span class="nc" id="L112">	}</span>
+
+	private MinMax minMax;
+
+	public void setMinMax(MinMax minMax) {
+<span class="fc" id="L117">		this.minMax = minMax;</span>
+
+<span class="fc" id="L119">	}</span>
+
+	public MinMax getMinMax() {
+<span class="fc" id="L122">		return minMax;</span>
+	}
+
+	@Override
+	public int compareTo(Swimlane other) {
+<span class="nc" id="L127">		return Integer.compare(this.order, other.order);</span>
+	}
+
+	public boolean isSmallerThanAllOthers(Set&lt;Swimlane&gt; others) {
+<span class="nc bnc" id="L131" title="All 4 branches missed.">		if (others.size() == 1 &amp;&amp; others.contains(this))</span>
+<span class="nc" id="L132">			return false;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (Swimlane sw : others)</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			if (sw.compareTo(this) &lt; 0)</span>
+<span class="nc" id="L135">				return false;</span>
+<span class="nc" id="L136">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

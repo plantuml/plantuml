@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.stats</a> &gt; <span class="el_source">XmlConverter.java</span></div><h1>XmlConverter.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.stats;
+
+import java.io.OutputStream;
+import java.text.DateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import net.sourceforge.plantuml.stats.api.Stats;
+import net.sourceforge.plantuml.stats.api.StatsColumn;
+import net.sourceforge.plantuml.stats.api.StatsLine;
+import net.sourceforge.plantuml.stats.api.StatsTable;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.xml.XmlFactories;
+
+public class XmlConverter {
+
+<span class="nc" id="L64">	private final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);</span>
+
+	private final Stats stats;
+
+<span class="nc" id="L68">	public XmlConverter(Stats stats) {</span>
+<span class="nc" id="L69">		this.stats = stats;</span>
+<span class="nc" id="L70">	}</span>
+
+	private Document getDocument() throws ParserConfigurationException {
+<span class="nc" id="L73">		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();</span>
+<span class="nc" id="L74">		final Document document = builder.newDocument();</span>
+<span class="nc" id="L75">		document.setXmlStandalone(true);</span>
+
+<span class="nc" id="L77">		final Element root = (Element) document.createElement(&quot;plantuml&quot;.toUpperCase());</span>
+<span class="nc" id="L78">		document.appendChild(root);</span>
+
+		// final Element elt1 = (Element)
+		// document.createElement(&quot;totalLaunch&quot;.toUpperCase());
+		// elt1.setTextContent(&quot;&quot; + stats.totalLaunch());
+		// root.appendChild(elt1);
+
+<span class="nc" id="L85">		addNode(root, document, stats.getLastSessions());</span>
+<span class="nc" id="L86">		addNode(root, document, stats.getCurrentSessionByDiagramType());</span>
+<span class="nc" id="L87">		addNode(root, document, stats.getCurrentSessionByFormat());</span>
+<span class="nc" id="L88">		addNode(root, document, stats.getAllByDiagramType());</span>
+<span class="nc" id="L89">		addNode(root, document, stats.getAllByFormat());</span>
+
+<span class="nc" id="L91">		return document;</span>
+	}
+
+	private void addNode(Element root, Document document, StatsTable table) {
+<span class="nc" id="L95">		final Element elt = (Element) document.createElement(toXmlName(table.getName()).toUpperCase());</span>
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (StatsLine statsLine : table.getLines()) {</span>
+<span class="nc" id="L98">			final Element line = (Element) document.createElement(&quot;line&quot;.toUpperCase());</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			for (StatsColumn col : table.getColumnHeaders()) {</span>
+<span class="nc" id="L100">				final Element value = (Element) document.createElement(col.name());</span>
+				// value.setAttribute(&quot;value&quot;, toText(statsLine.getValue(col)));
+<span class="nc" id="L102">				value.setTextContent(toText(statsLine.getValue(col)));</span>
+<span class="nc" id="L103">				line.appendChild(value);</span>
+<span class="nc" id="L104">			}</span>
+<span class="nc" id="L105">			elt.appendChild(line);</span>
+<span class="nc" id="L106">		}</span>
+
+<span class="nc" id="L108">		root.appendChild(elt);</span>
+<span class="nc" id="L109">	}</span>
+
+	private String toXmlName(String name) {
+<span class="nc" id="L112">		return name.replaceAll(&quot;\\W+&quot;, &quot;_&quot;);</span>
+	}
+
+	private String toText(Object tmp) {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (tmp instanceof Date) {</span>
+<span class="nc" id="L117">			return &quot;&quot; + ((Date) tmp).getTime();</span>
+		}
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (tmp == null) {</span>
+<span class="nc" id="L120">			return &quot;&quot;;</span>
+		}
+<span class="nc" id="L122">		return tmp.toString();</span>
+	}
+
+	private Transformer getTransformer() throws TransformerException {
+<span class="nc" id="L126">		final Transformer transformer = XmlFactories.newTransformer();</span>
+<span class="nc" id="L127">		transformer.setOutputProperty(OutputKeys.STANDALONE, &quot;yes&quot;);</span>
+<span class="nc" id="L128">		return transformer;</span>
+	}
+
+	public void createXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+<span class="nc" id="L132">		final DOMSource source = new DOMSource(getDocument());</span>
+<span class="nc" id="L133">		final StreamResult scrResult = new StreamResult(os);</span>
+<span class="nc" id="L134">		getTransformer().transform(source, scrResult);</span>
+
+<span class="nc" id="L136">	}</span>
+
+	public String toHtml() {
+<span class="nc" id="L139">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L140">		result.append(&quot;&lt;html&gt;&quot;);</span>
+<span class="nc" id="L141">		result.append(&quot;&lt;style type=\&quot;text/css\&quot;&gt;&quot;);</span>
+<span class="nc" id="L142">		result.append(</span>
+				&quot;body { font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: normal; color: black; background: white;}&quot;);
+<span class="nc" id="L144">		result.append(&quot;th,td { font-size: 12px;}&quot;);</span>
+<span class="nc" id="L145">		result.append(&quot;table { border-collapse: collapse; border-style: none;}&quot;);</span>
+<span class="nc" id="L146">		result.append(&quot;&lt;/style&gt;&quot;);</span>
+<span class="nc" id="L147">		result.append(&quot;&lt;h2&gt;Statistics&lt;/h2&gt;&quot;);</span>
+<span class="nc" id="L148">		printTableHtml(result, stats.getLastSessions());</span>
+<span class="nc" id="L149">		result.append(&quot;&lt;h2&gt;Current session statistics&lt;/h2&gt;&quot;);</span>
+<span class="nc" id="L150">		printTableHtml(result, stats.getCurrentSessionByDiagramType());</span>
+<span class="nc" id="L151">		result.append(&quot;&lt;p&gt;&quot;);</span>
+<span class="nc" id="L152">		printTableHtml(result, stats.getCurrentSessionByFormat());</span>
+<span class="nc" id="L153">		result.append(&quot;&lt;h2&gt;General statistics since ever&lt;/h2&gt;&quot;);</span>
+<span class="nc" id="L154">		printTableHtml(result, stats.getAllByDiagramType());</span>
+<span class="nc" id="L155">		result.append(&quot;&lt;p&gt;&quot;);</span>
+<span class="nc" id="L156">		printTableHtml(result, stats.getAllByFormat());</span>
+<span class="nc" id="L157">		result.append(&quot;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L158">		return result.toString();</span>
+	}
+
+	private void printTableHtml(StringBuilder result, StatsTable table) {
+<span class="nc" id="L162">		final Collection&lt;StatsColumn&gt; headers = table.getColumnHeaders();</span>
+<span class="nc" id="L163">		result.append(&quot;&lt;table border=1 cellspacing=0 cellpadding=2&gt;&quot;);</span>
+<span class="nc" id="L164">		result.append(getHtmlHeader(headers));</span>
+<span class="nc" id="L165">		final List&lt;StatsLine&gt; lines = table.getLines();</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L167">			final StatsLine line = lines.get(i);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			final boolean bold = i == lines.size() - 1;</span>
+<span class="nc" id="L169">			result.append(getCreoleLine(headers, line, bold));</span>
+
+		}
+<span class="nc" id="L172">		result.append(&quot;&lt;/table&gt;&quot;);</span>
+<span class="nc" id="L173">	}</span>
+
+	private String getCreoleLine(Collection&lt;StatsColumn&gt; headers, StatsLine line, boolean bold) {
+<span class="nc" id="L176">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (bold) {</span>
+<span class="nc" id="L178">			result.append(&quot;&lt;tr bgcolor=#f0f0f0&gt;&quot;);</span>
+		} else {
+<span class="nc" id="L180">			result.append(&quot;&lt;tr bgcolor=#fcfcfc&gt;&quot;);</span>
+		}
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (StatsColumn col : headers) {</span>
+<span class="nc" id="L183">			final Object v = line.getValue(col);</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">			if (v instanceof Long || v instanceof HumanDuration) {</span>
+<span class="nc" id="L185">				result.append(&quot;&lt;td align=right&gt;&quot;);</span>
+			} else {
+<span class="nc" id="L187">				result.append(&quot;&lt;td&gt;&quot;);</span>
+			}
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			if (bold) {</span>
+<span class="nc" id="L190">				result.append(&quot;&lt;b&gt;&quot;);</span>
+			}
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (v instanceof Long) {</span>
+<span class="nc" id="L193">				result.append(String.format(&quot;%,d&quot;, v));</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			} else if (v instanceof Date) {</span>
+<span class="nc" id="L195">				result.append(formatter.format(v));</span>
+<span class="nc bnc" id="L196" title="All 4 branches missed.">			} else if (v == null || v.toString().length() == 0) {</span>
+<span class="nc" id="L197">				result.append(&quot; &quot;);</span>
+			} else {
+<span class="nc" id="L199">				result.append(v.toString());</span>
+			}
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (bold) {</span>
+<span class="nc" id="L202">				result.append(&quot;&lt;/b&gt;&quot;);</span>
+			}
+<span class="nc" id="L204">			result.append(&quot;&lt;/td&gt;&quot;);</span>
+<span class="nc" id="L205">		}</span>
+<span class="nc" id="L206">		result.append(&quot;&lt;/tr&gt;&quot;);</span>
+<span class="nc" id="L207">		return result.toString();</span>
+	}
+
+	private String getHtmlHeader(Collection&lt;StatsColumn&gt; headers) {
+<span class="nc" id="L211">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L212">		sb.append(&quot;&lt;tr bgcolor=#e0e0e0&gt;&quot;);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		for (StatsColumn col : headers) {</span>
+<span class="nc" id="L214">			sb.append(&quot;&lt;td&gt;&lt;b&gt;&quot;);</span>
+<span class="nc" id="L215">			sb.append(col.getTitle().replace(BackSlash.BS_BS_N, &quot;&lt;br&gt;&quot;));</span>
+<span class="nc" id="L216">			sb.append(&quot;&lt;/b&gt;&lt;/td&gt;&quot;);</span>
+<span class="nc" id="L217">		}</span>
+<span class="nc" id="L218">		sb.append(&quot;&lt;/tr&gt;&quot;);</span>
+<span class="nc" id="L219">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

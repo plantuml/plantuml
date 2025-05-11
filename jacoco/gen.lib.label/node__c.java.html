@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>node__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.label</a> &gt; <span class="el_source">node__c.java</span></div><h1>node__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.label;
+import static gen.lib.label.rectangle__c.CombineRect;
+import static gen.lib.label.rectangle__c.InitRect;
+import static gen.lib.label.rectangle__c.RectArea;
+import static gen.lib.label.split_q__c.SplitNode;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_Branch_t;
+import h.ST_Node_t___;
+import h.ST_RTree;
+import h.ST_Rect_t;
+
+<span class="nc" id="L62">public class node__c {</span>
+
+
+//3 9uj7ni1m6q6drtoh56w82d6m4
+// Node_t *RTreeNewNode(RTree_t * rtp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;&quot;, key=&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;, definition=&quot;Node_t *RTreeNewNode(RTree_t * rtp)&quot;)
+public static ST_Node_t___ RTreeNewNode(ST_RTree rtp) {
+<span class="fc" id="L70">ENTERING(&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;,&quot;RTreeNewNode&quot;);</span>
+try {
+	ST_Node_t___ n;
+<span class="fc" id="L73">	rtp.NodeCount = rtp.NodeCount + 1;</span>
+<span class="fc" id="L74">	n = new ST_Node_t___();</span>
+<span class="fc" id="L75">     InitNode(n);</span>
+<span class="fc" id="L76">     return n;</span>
+} finally {
+<span class="fc" id="L78">LEAVING(&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;,&quot;RTreeNewNode&quot;);</span>
+}
+}
+
+
+
+
+
+//3 4qk9wkm05q2pwf20ud6g2tufg
+// void InitNode(Node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;InitNode&quot;, key=&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;, definition=&quot;void InitNode(Node_t * n)&quot;)
+public static void InitNode(ST_Node_t___ n) {
+<span class="fc" id="L91">ENTERING(&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;,&quot;InitNode&quot;);</span>
+try {
+     int i;
+<span class="fc" id="L94">     n.count = 0;</span>
+<span class="fc" id="L95">     n.level = -1;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">     for (i = 0; i &lt; 64; i++)</span>
+<span class="fc" id="L97">    	 InitBranch(n.branch[i]);</span>
+     // InitBranch(&amp;(n-&gt;branch[i]));
+} finally {
+<span class="fc" id="L100">LEAVING(&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;,&quot;InitNode&quot;);</span>
+}
+<span class="fc" id="L102">}</span>
+
+
+
+
+//3 ruhxixxei7au9z1iaj0zggwo
+// void InitBranch(Branch_t * b) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;InitBranch&quot;, key=&quot;ruhxixxei7au9z1iaj0zggwo&quot;, definition=&quot;void InitBranch(Branch_t * b)&quot;)
+public static void InitBranch(ST_Branch_t b) {
+<span class="fc" id="L112">ENTERING(&quot;ruhxixxei7au9z1iaj0zggwo&quot;,&quot;InitBranch&quot;);</span>
+try {
+<span class="fc" id="L114">	InitRect(b.rect);</span>
+<span class="fc" id="L115">	b.child = null;</span>
+} finally {
+<span class="fc" id="L117">LEAVING(&quot;ruhxixxei7au9z1iaj0zggwo&quot;,&quot;InitBranch&quot;);</span>
+}
+<span class="fc" id="L119">}</span>
+
+
+
+
+//3 42vjqe8n5yeq2jjby00xzrotk
+// Rect_t NodeCover(Node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;NodeCover&quot;, key=&quot;42vjqe8n5yeq2jjby00xzrotk&quot;, definition=&quot;Rect_t NodeCover(Node_t * n)&quot;)
+public static ST_Rect_t NodeCover(ST_Node_t___ n) {
+<span class="nc" id="L129">ENTERING(&quot;42vjqe8n5yeq2jjby00xzrotk&quot;,&quot;NodeCover&quot;);</span>
+try {
+     int i, flag;
+<span class="nc" id="L132">     final ST_Rect_t r = new ST_Rect_t();</span>
+     //     assert(n);
+<span class="nc" id="L134">     InitRect(r);</span>
+<span class="nc" id="L135">     flag = 1;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">     for (i = 0; i &lt; 64; i++)</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed."> 	if (n.branch[i].child!=null) {</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed."> 	    if (flag!=0) {</span>
+<span class="nc" id="L139"> 		r.___(n.branch[i].rect);</span>
+<span class="nc" id="L140"> 		flag = 0;</span>
+ 	    } else
+<span class="nc" id="L142"> 		r.___(CombineRect(r, (ST_Rect_t) n.branch[i].rect));</span>
+ 	}
+<span class="nc" id="L144">     return r;</span>
+} finally {
+<span class="nc" id="L146">LEAVING(&quot;42vjqe8n5yeq2jjby00xzrotk&quot;,&quot;NodeCover&quot;);</span>
+}
+}
+
+
+
+
+//3 bek56v2skz6jfvw4uggy2h5w3
+// int PickBranch(Rect_t * r, Node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;PickBranch&quot;, key=&quot;bek56v2skz6jfvw4uggy2h5w3&quot;, definition=&quot;int PickBranch(Rect_t * r, Node_t * n)&quot;)
+public static int PickBranch(ST_Rect_t r, ST_Node_t___ n) {
+<span class="nc" id="L158">	ENTERING(&quot;bek56v2skz6jfvw4uggy2h5w3&quot;,&quot;PickBranch&quot;);</span>
+	try {
+<span class="nc" id="L160">     ST_Rect_t rr=null;</span>
+<span class="nc" id="L161">     int i=0, flag=1, increase=0, bestIncr=0, area=0, bestArea=0;</span>
+<span class="nc" id="L162">     int best=0;</span>
+//     assert(r &amp;&amp; n);
+<span class="nc bnc" id="L164" title="All 2 branches missed.">     for (i = 0; i &lt; 64; i++) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed."> 	if (n.branch[i].child!=null) {</span>
+<span class="nc" id="L166"> 	    final ST_Rect_t rect = new ST_Rect_t();</span>
+<span class="nc" id="L167"> 	    rr = (ST_Rect_t) n.branch[i].rect;</span>
+<span class="nc" id="L168"> 	    area = RectArea((ST_Rect_t) rr);</span>
+ 	    /* increase = RectArea(&amp;CombineRect(r, rr)) - area; */
+<span class="nc" id="L170"> 	    rect.___(CombineRect((ST_Rect_t) r, rr));</span>
+<span class="nc" id="L171"> 	    increase = RectArea((ST_Rect_t) rect) - area;</span>
+<span class="nc bnc" id="L172" title="All 4 branches missed."> 	    if (increase &lt; bestIncr || flag!=0) {</span>
+<span class="nc" id="L173"> 		best = i;</span>
+<span class="nc" id="L174"> 		bestArea = area;</span>
+<span class="nc" id="L175"> 		bestIncr = increase;</span>
+<span class="nc" id="L176"> 		flag = 0;</span>
+<span class="nc bnc" id="L177" title="All 4 branches missed."> 	    } else if (increase == bestIncr &amp;&amp; area &lt; bestArea) {</span>
+<span class="nc" id="L178"> 		best = i;</span>
+<span class="nc" id="L179"> 		bestArea = area;</span>
+<span class="nc" id="L180"> 		bestIncr = increase;</span>
+ 	    }
+ 	}
+     }
+<span class="nc" id="L184">     return best;</span>
+} finally {
+<span class="nc" id="L186">LEAVING(&quot;bek56v2skz6jfvw4uggy2h5w3&quot;,&quot;PickBranch&quot;);</span>
+}
+}
+
+
+
+
+//3 2njctcrpeff95ysmv9ji34x4s
+// int AddBranch(RTree_t * rtp, Branch_t * b, Node_t * n, Node_t ** new) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;AddBranch&quot;, key=&quot;2njctcrpeff95ysmv9ji34x4s&quot;, definition=&quot;int AddBranch(RTree_t * rtp, Branch_t * b, Node_t * n, Node_t ** new)&quot;)
+public static int AddBranch(ST_RTree rtp, ST_Branch_t b, ST_Node_t___ n, ST_Node_t___ new_[]) {
+<span class="fc" id="L198">ENTERING(&quot;2njctcrpeff95ysmv9ji34x4s&quot;,&quot;AddBranch&quot;);</span>
+try {
+     int i;
+//     assert(b);
+//     assert(n);
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">     if (n.count &lt; 64) {	/* split won't be necessary */</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed."> 	for (i = 0; i &lt; 64; i++) {	/* find empty branch */</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered."> 	    if (n.branch[i].child == null) {</span>
+<span class="fc" id="L206"> 		n.branch[i].___(b);</span>
+<span class="fc" id="L207"> 		n.count = n.count+1;</span>
+<span class="fc" id="L208"> 		break;</span>
+ 	    }
+}
+// 	assert(i &lt; 64);
+<span class="fc" id="L212"> 	return 0;</span>
+     } else {
+<span class="nc bnc" id="L214" title="All 2 branches missed."> 	if (rtp.StatFlag!=0) {</span>
+<span class="nc" id="L215">UNSUPPORTED(&quot;2y8kv6b3ysrr61q7tqn76rhhc&quot;); // 	    if (rtp-&gt;Deleting)</span>
+<span class="nc" id="L216">UNSUPPORTED(&quot;dn4oynmx9ugizzs5pkxiyptbi&quot;); // 		rtp-&gt;DeTouchCount++;</span>
+<span class="nc" id="L217">UNSUPPORTED(&quot;5c97f6vfxny0zz35l2bu4maox&quot;); // 	    else</span>
+<span class="nc" id="L218">UNSUPPORTED(&quot;2u8wpa4w1q7rg14t07bny6p8i&quot;); // 		rtp-&gt;InTouchCount++;</span>
+ 	}
+// 	assert(new);
+<span class="nc" id="L221"> 	SplitNode(rtp, n, b, new_);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed."> 	if (n.level == 0)</span>
+<span class="nc" id="L223"> 		rtp.LeafCount = rtp.LeafCount+1;</span>
+ 	else
+<span class="nc" id="L225">UNSUPPORTED(&quot;6tkfiebspy7ecivrzb3l5y7jd&quot;); // 	    rtp-&gt;NonLeafCount++;</span>
+<span class="nc" id="L226"> 	return 1;</span>
+     }
+} finally {
+<span class="fc" id="L229">LEAVING(&quot;2njctcrpeff95ysmv9ji34x4s&quot;,&quot;AddBranch&quot;);</span>
+}
+}
+
+
+
+
+//3 eqzamflj58f43cflwns9cemnk
+// void DisconBranch(Node_t * n, int i) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;DisconBranch&quot;, key=&quot;eqzamflj58f43cflwns9cemnk&quot;, definition=&quot;void DisconBranch(Node_t * n, int i)&quot;)
+public static void DisconBranch(ST_Node_t___ n, int i) {
+<span class="fc" id="L241">ENTERING(&quot;eqzamflj58f43cflwns9cemnk&quot;,&quot;DisconBranch&quot;);</span>
+try {
+//     assert(n &amp;&amp; i &gt;= 0 &amp;&amp; i &lt; 64);
+//     assert(n-&gt;branch[i].child);
+<span class="fc" id="L245">     InitBranch(n.branch[i]);</span>
+<span class="fc" id="L246">     n.count = n.count-1;</span>
+} finally {
+<span class="fc" id="L248">LEAVING(&quot;eqzamflj58f43cflwns9cemnk&quot;,&quot;DisconBranch&quot;);</span>
+}
+<span class="fc" id="L250">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

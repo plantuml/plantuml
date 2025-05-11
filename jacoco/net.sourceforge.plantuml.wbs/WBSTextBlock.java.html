@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WBSTextBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.wbs</a> &gt; <span class="el_source">WBSTextBlock.java</span></div><h1>WBSTextBlock.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.wbs;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+abstract class WBSTextBlock extends AbstractTextBlock {
+
+	protected final ISkinParam skinParam;
+	private final Stereotype stereotype;
+	private final StyleBuilder styleBuilder;
+	private final int level;
+
+<span class="fc" id="L64">	public WBSTextBlock(ISkinParam skinParam, StyleBuilder styleBuilder, int level, Stereotype stereotype) {</span>
+<span class="fc" id="L65">		this.skinParam = skinParam;</span>
+<span class="fc" id="L66">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L67">		this.level = level;</span>
+<span class="fc" id="L68">		this.stereotype = stereotype;</span>
+<span class="fc" id="L69">	}</span>
+
+	private Style getStyleUsed() {
+<span class="fc" id="L72">		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow)</span>
+<span class="fc" id="L73">				.add(SName.depth(level)).withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L74">		return signature.getMergedStyle(styleBuilder);</span>
+	}
+
+	final protected void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
+<span class="fc" id="L78">		ug = getStyleUsed().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L79">		final XPoint2D p1 = new XPoint2D(Math.min(x1, x2), y1);</span>
+<span class="fc" id="L80">		final XPoint2D p2 = new XPoint2D(Math.max(x1, x2), y2);</span>
+<span class="fc" id="L81">		final ULine line = ULine.create(p1, p2);</span>
+<span class="fc" id="L82">		ug = ug.apply(UTranslate.point(p1));</span>
+<span class="fc" id="L83">		ug.draw(line);</span>
+<span class="fc" id="L84">	}</span>
+
+	final protected TextBlock buildMain(WElement idea) {
+<span class="fc" id="L87">		final Display label = idea.getLabel();</span>
+<span class="fc" id="L88">		final Style style = idea.getStyle();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (idea.getShape() == IdeaShape.BOX)</span>
+<span class="fc" id="L90">			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);</span>
+
+<span class="nc" id="L92">		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
+<span class="nc" id="L93">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
+<span class="nc" id="L94">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

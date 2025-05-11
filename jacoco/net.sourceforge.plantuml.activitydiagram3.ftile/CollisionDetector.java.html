@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CollisionDetector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">CollisionDetector.java</span></div><h1>CollisionDetector.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UBackground;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicNo;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public class CollisionDetector extends UGraphicNo {
+
+	@Override
+	public UGraphic apply(UChange change) {
+<span class="nc" id="L63">		return new CollisionDetector(this, change);</span>
+	}
+
+	private final Context context;
+
+	private static CollisionDetector create(StringBounder stringBounder) {
+<span class="nc" id="L69">		return new CollisionDetector(stringBounder, UTranslate.none(), new Context());</span>
+	}
+
+	private CollisionDetector(StringBounder stringBounder, UTranslate translate, Context context) {
+<span class="nc" id="L73">		super(stringBounder, translate);</span>
+<span class="nc" id="L74">		this.context = context;</span>
+<span class="nc" id="L75">	}</span>
+
+	private CollisionDetector(CollisionDetector other, UChange change) {
+		// this(other.stringBounder,
+		// change instanceof UTranslate ? other.translate.compose((UTranslate) change) :
+		// other.translate);
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		super(other.getStringBounder(), change instanceof UTranslate ? other.getTranslate().compose((UTranslate) change)</span>
+<span class="nc" id="L82">				: other.getTranslate());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))</span>
+<span class="nc" id="L84">			throw new UnsupportedOperationException(change.getClass().toString());</span>
+
+<span class="nc" id="L86">		this.context = other.context;</span>
+<span class="nc" id="L87">	}</span>
+
+<span class="nc" id="L89">	static class Context {</span>
+<span class="nc" id="L90">		private final List&lt;MinMax&gt; rectangles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L91">		private final List&lt;Snake&gt; snakes = new ArrayList&lt;&gt;();</span>
+		private boolean manageSnakes;
+
+		public void drawDebug(UGraphic ug) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			for (MinMax minmax : rectangles)</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (collision(minmax))</span>
+<span class="nc" id="L97">					minmax.drawGray(ug);</span>
+
+<span class="nc" id="L99">			final HColor color = HColors.BLACK;</span>
+<span class="nc" id="L100">			ug = ug.apply(color).apply(UStroke.withThickness(5));</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (Snake snake : snakes)</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				for (XLine2D line : snake.getHorizontalLines())</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (collision(line))</span>
+<span class="nc" id="L104">						drawLine(ug, line);</span>
+
+<span class="nc" id="L106">		}</span>
+
+		private void drawLine(UGraphic ug, XLine2D line) {
+<span class="nc" id="L109">			ug = ug.apply(new UTranslate(line.getX1(), line.getY1()));</span>
+<span class="nc" id="L110">			ug.draw(new ULine(line.getX2() - line.getX1(), line.getY2() - line.getY1()));</span>
+<span class="nc" id="L111">		}</span>
+
+		private boolean collision(XLine2D hline) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			for (MinMax r : rectangles)</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				if (collisionCheck(r, hline))</span>
+<span class="nc" id="L116">					return true;</span>
+
+<span class="nc" id="L118">			return false;</span>
+		}
+
+		private boolean collision(MinMax r) {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			for (Snake snake : snakes) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">				for (XLine2D hline : snake.getHorizontalLines()) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">					if (collisionCheck(r, hline)) {</span>
+<span class="nc" id="L125">						return true;</span>
+					}
+<span class="nc" id="L127">				}</span>
+<span class="nc" id="L128">			}</span>
+<span class="nc" id="L129">			return false;</span>
+		}
+
+	}
+
+	private static boolean collisionCheck(MinMax rect, XLine2D hline) {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (hline.getY1() != hline.getY2())</span>
+<span class="nc" id="L136">			throw new IllegalArgumentException();</span>
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (hline.getY1() &lt; rect.getMinY())</span>
+<span class="nc" id="L139">			return false;</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (hline.getY1() &gt; rect.getMaxY())</span>
+<span class="nc" id="L142">			return false;</span>
+
+<span class="nc" id="L144">		final double x1 = Math.min(hline.getX1(), hline.getX2());</span>
+<span class="nc" id="L145">		final double x2 = Math.max(hline.getX1(), hline.getX2());</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (x2 &lt; rect.getMinX())</span>
+<span class="nc" id="L147">			return false;</span>
+
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (x1 &gt; rect.getMaxX())</span>
+<span class="nc" id="L150">			return false;</span>
+
+<span class="nc" id="L152">		return true;</span>
+	}
+
+	public void draw(UShape shape) {
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (shape instanceof UPolygon)</span>
+<span class="nc" id="L157">			drawPolygone((UPolygon) shape);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		else if (shape instanceof URectangle)</span>
+<span class="nc" id="L159">			drawRectangle((URectangle) shape);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		else if (shape instanceof Snake)</span>
+<span class="nc" id="L161">			drawSnake((Snake) shape);</span>
+		/*
+		 * else { System.err.println(&quot;shape=&quot; + shape.getClass() + &quot; &quot; + shape); }
+		 */
+<span class="nc" id="L165">	}</span>
+
+	private void drawSnake(Snake shape) {
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (context.manageSnakes)</span>
+<span class="nc" id="L169">			context.snakes.add(shape.translate(getTranslate()));</span>
+
+<span class="nc" id="L171">	}</span>
+
+	private void drawRectangle(URectangle shape) {
+<span class="nc" id="L174">		context.rectangles.add(shape.getMinMax().translate(getTranslate()));</span>
+<span class="nc" id="L175">	}</span>
+
+	private void drawPolygone(UPolygon shape) {
+<span class="nc" id="L178">		context.rectangles.add(shape.getMinMax().translate(getTranslate()));</span>
+<span class="nc" id="L179">	}</span>
+
+	public void drawDebug(UGraphic ug) {
+<span class="nc" id="L182">		context.drawDebug(ug);</span>
+<span class="nc" id="L183">	}</span>
+
+	public final void setManageSnakes(boolean manageSnakes) {
+<span class="nc" id="L186">		this.context.manageSnakes = manageSnakes;</span>
+<span class="nc" id="L187">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

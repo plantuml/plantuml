@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActivityDiagram3.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">ActivityDiagram3.java</span></div><h1>ActivityDiagram3.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.compress.CompressionMode;
+import net.sourceforge.plantuml.klimt.compress.CompressionXorYBuilder;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockRecentred;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.url.Url;
+
+public class ActivityDiagram3 extends UmlDiagram {
+
+<span class="fc" id="L71">	enum SwimlaneStrategy {</span>
+<span class="fc" id="L72">		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED;</span>
+	}
+
+	private SwimlaneStrategy swimlaneStrategy;
+
+<span class="fc" id="L77">	private final Swimlanes swimlanes = new Swimlanes(getSkinParam(), getPragma());</span>
+
+	public ActivityDiagram3(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L80">		super(source, UmlDiagramType.ACTIVITY, previous, preprocessing);</span>
+<span class="fc" id="L81">	}</span>
+
+	private void manageSwimlaneStrategy() {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (swimlaneStrategy == null)</span>
+<span class="fc" id="L85">			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_FORBIDDEN;</span>
+
+<span class="fc" id="L87">	}</span>
+
+	public CommandExecutionResult swimlane(String name, HColor color, Display label) {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (swimlaneStrategy == null)</span>
+<span class="fc" id="L91">			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_ALLOWED;</span>
+
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (swimlaneStrategy == SwimlaneStrategy.SWIMLANE_FORBIDDEN)</span>
+<span class="nc" id="L94">			return CommandExecutionResult.error(&quot;This swimlane must be defined at the start of the diagram.&quot;);</span>
+
+<span class="fc" id="L96">		swimlanes.swimlane(name, color, label);</span>
+<span class="fc" id="L97">		return CommandExecutionResult.ok();</span>
+	}
+
+	private void setCurrent(Instruction ins) {
+<span class="fc" id="L101">		swimlanes.setCurrent(ins);</span>
+<span class="fc" id="L102">	}</span>
+
+	private Instruction current() {
+<span class="fc" id="L105">		return swimlanes.getCurrent();</span>
+	}
+
+	private LinkRendering nextLinkRenderer() {
+<span class="fc" id="L109">		return swimlanes.nextLinkRenderer();</span>
+	}
+
+	public CommandExecutionResult addActivity(Display activity, BoxStyle boxStyle, Url url, Colors colors,
+			Stereotype stereotype) {
+<span class="fc" id="L114">		manageSwimlaneStrategy();</span>
+<span class="fc" id="L115">		final InstructionSimple ins = new InstructionSimple(activity, nextLinkRenderer(),</span>
+<span class="fc" id="L116">				swimlanes.getCurrentSwimlane(), boxStyle, url, colors, stereotype);</span>
+<span class="fc" id="L117">		final CommandExecutionResult added = current().add(ins);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (added.isOk() == false)</span>
+<span class="nc" id="L119">			return added;</span>
+
+<span class="fc" id="L121">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="fc" id="L122">		manageHasUrl(activity);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L124">			hasUrl = true;</span>
+
+<span class="fc" id="L126">		return CommandExecutionResult.ok();</span>
+
+	}
+
+	public void addSpot(String spot, HColor color) {
+<span class="nc" id="L131">		final InstructionSpot ins = new InstructionSpot(spot, color, nextLinkRenderer(),</span>
+<span class="nc" id="L132">				swimlanes.getCurrentSwimlane());</span>
+<span class="nc" id="L133">		current().add(ins);</span>
+<span class="nc" id="L134">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L135">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L136">	}</span>
+
+	public CommandExecutionResult addGoto(String name) {
+<span class="nc" id="L139">		final InstructionGoto ins = new InstructionGoto(swimlanes.getCurrentSwimlane(), name);</span>
+<span class="nc" id="L140">		current().add(ins);</span>
+<span class="nc" id="L141">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L142">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult addLabel(String name) {
+<span class="nc" id="L146">		final InstructionLabel ins = new InstructionLabel(swimlanes.getCurrentSwimlane(), name);</span>
+<span class="nc" id="L147">		current().add(ins);</span>
+<span class="nc" id="L148">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L149">		return CommandExecutionResult.ok();</span>
+	}
+
+	public void start() {
+<span class="fc" id="L153">		manageSwimlaneStrategy();</span>
+<span class="fc" id="L154">		current().add(new InstructionStart(swimlanes.getCurrentSwimlane(), nextLinkRenderer()));</span>
+<span class="fc" id="L155">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="fc" id="L156">	}</span>
+
+	public void stop() {
+<span class="fc" id="L159">		manageSwimlaneStrategy();</span>
+<span class="fc" id="L160">		final InstructionStop ins = new InstructionStop(swimlanes.getCurrentSwimlane(), nextLinkRenderer());</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (manageSpecialStopEndAfterEndWhile(ins))</span>
+<span class="nc" id="L162">			return;</span>
+
+<span class="fc" id="L164">		current().add(ins);</span>
+<span class="fc" id="L165">	}</span>
+
+	public void end() {
+<span class="nc" id="L168">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L169">		final InstructionEnd ins = new InstructionEnd(swimlanes.getCurrentSwimlane(), nextLinkRenderer());</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (manageSpecialStopEndAfterEndWhile(ins))</span>
+<span class="nc" id="L171">			return;</span>
+
+<span class="nc" id="L173">		current().add(ins);</span>
+<span class="nc" id="L174">	}</span>
+
+	private boolean manageSpecialStopEndAfterEndWhile(Instruction special) {
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (current() instanceof InstructionList == false)</span>
+<span class="nc" id="L178">			return false;</span>
+
+<span class="fc" id="L180">		final InstructionList current = (InstructionList) current();</span>
+<span class="fc" id="L181">		final Instruction last = current.getLast();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (last instanceof InstructionWhile == false)</span>
+<span class="fc" id="L183">			return false;</span>
+
+<span class="nc" id="L185">		final InstructionWhile instructionWhile = (InstructionWhile) last;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (instructionWhile.containsBreak())</span>
+<span class="nc" id="L187">			return false;</span>
+
+<span class="nc" id="L189">		instructionWhile.setSpecial(special);</span>
+<span class="nc" id="L190">		return true;</span>
+	}
+
+	public void breakInstruction() {
+<span class="nc" id="L194">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L195">		current().add(new InstructionBreak(swimlanes.getCurrentSwimlane(), nextLinkRenderer()));</span>
+<span class="nc" id="L196">	}</span>
+
+	public DiagramDescription getDescription() {
+<span class="fc" id="L199">		return new DiagramDescription(&quot;activity3&quot;);</span>
+	}
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+<span class="fc" id="L205">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="fc" id="L206">		final TextBlock result = getTextBlock(stringBounder);</span>
+<span class="fc" id="L207">		return createImageBuilder(fileFormatOption).drawable(result).write(os);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L212">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="nc" id="L213">		return getTextBlock(stringBounder);</span>
+	}
+
+	private TextBlock getTextBlock(final StringBounder stringBounder) {
+<span class="fc" id="L217">		swimlanes.computeSize(stringBounder);</span>
+<span class="fc" id="L218">		TextBlock result = swimlanes;</span>
+
+		// BUG42
+		// COMMENT TO DISABLE COMPRESS
+<span class="fc" id="L222">		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, stringBounder);</span>
+<span class="fc" id="L223">		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);</span>
+
+<span class="fc" id="L225">		result = new TextBlockRecentred(result);</span>
+<span class="fc" id="L226">		return result;</span>
+	}
+
+	public void fork() {
+<span class="nc" id="L230">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L231">		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(), getSkinParam(),</span>
+<span class="nc" id="L232">				swimlanes.getCurrentSwimlane());</span>
+<span class="nc" id="L233">		current().add(instructionFork);</span>
+<span class="nc" id="L234">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L235">		setCurrent(instructionFork);</span>
+<span class="nc" id="L236">	}</span>
+
+	public CommandExecutionResult forkAgain() {
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (current() instanceof InstructionFork) {</span>
+<span class="nc" id="L240">			final InstructionFork currentFork = (InstructionFork) current();</span>
+<span class="nc" id="L241">			currentFork.manageOutRendering(nextLinkRenderer(), false);</span>
+<span class="nc" id="L242">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L243">			currentFork.forkAgain(swimlanes.getCurrentSwimlane());</span>
+<span class="nc" id="L244">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L246">		return CommandExecutionResult.error(&quot;Cannot find fork&quot;);</span>
+	}
+
+	public CommandExecutionResult endFork(ForkStyle forkStyle, String label) {
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (current() instanceof InstructionFork) {</span>
+<span class="nc" id="L251">			final InstructionFork currentFork = (InstructionFork) current();</span>
+<span class="nc" id="L252">			currentFork.setStyle(forkStyle, label, swimlanes.getCurrentSwimlane());</span>
+<span class="nc" id="L253">			currentFork.manageOutRendering(nextLinkRenderer(), true);</span>
+<span class="nc" id="L254">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L255">			setCurrent(currentFork.getParent());</span>
+<span class="nc" id="L256">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L258">		return CommandExecutionResult.error(&quot;Cannot find fork&quot;);</span>
+	}
+
+	public void split() {
+<span class="nc" id="L262">		final InstructionSplit instructionSplit = new InstructionSplit(current(), nextLinkRenderer(),</span>
+<span class="nc" id="L263">				swimlanes.getCurrentSwimlane());</span>
+<span class="nc" id="L264">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L265">		current().add(instructionSplit);</span>
+<span class="nc" id="L266">		setCurrent(instructionSplit);</span>
+<span class="nc" id="L267">	}</span>
+
+	public CommandExecutionResult splitAgain() {
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (current() instanceof InstructionSplit) {</span>
+<span class="nc" id="L271">			((InstructionSplit) current()).splitAgain(nextLinkRenderer());</span>
+<span class="nc" id="L272">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L273">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L275">		return CommandExecutionResult.error(&quot;Cannot find split&quot;);</span>
+	}
+
+	public CommandExecutionResult endSplit() {
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (current() instanceof InstructionSplit) {</span>
+<span class="nc" id="L280">			((InstructionSplit) current()).endSplit(nextLinkRenderer(), swimlanes.getCurrentSwimlane());</span>
+<span class="nc" id="L281">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L282">			setCurrent(((InstructionSplit) current()).getParent());</span>
+<span class="nc" id="L283">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L285">		return CommandExecutionResult.error(&quot;Cannot find split&quot;);</span>
+	}
+
+	public void startSwitch(Display test, HColor color) {
+<span class="nc" id="L289">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L290">		final InstructionSwitch instructionSwitch = new InstructionSwitch(swimlanes.getCurrentSwimlane(), current(),</span>
+<span class="nc" id="L291">				test, nextLinkRenderer(), color, getSkinParam());</span>
+<span class="nc" id="L292">		current().add(instructionSwitch);</span>
+<span class="nc" id="L293">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L294">		setCurrent(instructionSwitch);</span>
+<span class="nc" id="L295">	}</span>
+
+	public CommandExecutionResult switchCase(Display labelCase) {
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (current() instanceof InstructionSwitch) {</span>
+<span class="nc" id="L299">			final boolean ok = ((InstructionSwitch) current()).switchCase(labelCase, nextLinkRenderer());</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">			if (ok == false)</span>
+<span class="nc" id="L301">				return CommandExecutionResult.error(&quot;You cannot put an elseIf here&quot;);</span>
+
+<span class="nc" id="L303">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L304">			return CommandExecutionResult.ok();</span>
+
+		}
+<span class="nc" id="L307">		return CommandExecutionResult.error(&quot;Cannot find switch&quot;);</span>
+	}
+
+	public CommandExecutionResult endSwitch() {
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		if (current() instanceof InstructionSwitch) {</span>
+<span class="nc" id="L312">			((InstructionSwitch) current()).endSwitch(nextLinkRenderer());</span>
+<span class="nc" id="L313">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L314">			setCurrent(((InstructionSwitch) current()).getParent());</span>
+<span class="nc" id="L315">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L317">		return CommandExecutionResult.error(&quot;Cannot find switch&quot;);</span>
+	}
+
+	public void startIf(Display test, Display whenThen, HColor color, Url url, Stereotype stereotype) {
+<span class="nc" id="L321">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L322">		final InstructionIf instructionIf = new InstructionIf(swimlanes.getCurrentSwimlane(), current(), test,</span>
+<span class="nc" id="L323">				LinkRendering.none().withDisplay(whenThen), nextLinkRenderer(), color, getSkinParam(), url, stereotype);</span>
+<span class="nc" id="L324">		current().add(instructionIf);</span>
+<span class="nc" id="L325">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L326">		setCurrent(instructionIf);</span>
+<span class="nc" id="L327">	}</span>
+
+	public CommandExecutionResult elseIf(LinkRendering inlabel, Display test, LinkRendering whenThen, HColor color) {
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (current() instanceof InstructionIf) {</span>
+<span class="nc" id="L331">			final boolean ok = ((InstructionIf) current()).elseIf(inlabel, test, whenThen, nextLinkRenderer(), color);</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">			if (ok == false)</span>
+<span class="nc" id="L333">				return CommandExecutionResult.error(&quot;You cannot put an elseIf here&quot;);</span>
+
+<span class="nc" id="L335">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L336">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L338">		return CommandExecutionResult.error(&quot;Cannot find if&quot;);</span>
+	}
+
+	public CommandExecutionResult else2(LinkRendering whenElse) {
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (current() instanceof InstructionIf) {</span>
+<span class="nc" id="L343">			final boolean result = ((InstructionIf) current()).swithToElse2(whenElse, nextLinkRenderer());</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">			if (result == false)</span>
+<span class="nc" id="L345">				return CommandExecutionResult.error(&quot;Cannot find if&quot;);</span>
+
+<span class="nc" id="L347">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L348">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L350">		return CommandExecutionResult.error(&quot;Cannot find if&quot;);</span>
+	}
+
+	public CommandExecutionResult endif() {
+		// System.err.println(&quot;Activity3::endif&quot;);
+<span class="nc bnc" id="L355" title="All 2 branches missed.">		if (current() instanceof InstructionIf) {</span>
+<span class="nc" id="L356">			((InstructionIf) current()).endif(nextLinkRenderer());</span>
+<span class="nc" id="L357">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L358">			setCurrent(((InstructionIf) current()).getParent());</span>
+<span class="nc" id="L359">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L361">		return CommandExecutionResult.error(&quot;Cannot find if&quot;);</span>
+	}
+
+	public void startRepeat(HColor color, Display label, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
+<span class="fc" id="L365">		manageSwimlaneStrategy();</span>
+<span class="fc" id="L366">		final InstructionRepeat instructionRepeat = new InstructionRepeat(swimlanes, current(), nextLinkRenderer(),</span>
+				color, label, boxStyleIn, colors, stereotype);
+<span class="fc" id="L368">		current().add(instructionRepeat);</span>
+<span class="fc" id="L369">		setCurrent(instructionRepeat);</span>
+<span class="fc" id="L370">		setNextLinkRendererInternal(LinkRendering.none());</span>
+
+<span class="fc" id="L372">	}</span>
+
+	public CommandExecutionResult repeatWhile(Display label, Display yes, Display out, Display linkLabel,
+			Rainbow linkColor) {
+<span class="fc" id="L376">		manageSwimlaneStrategy();</span>
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (current() instanceof InstructionRepeat) {</span>
+<span class="fc" id="L378">			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();</span>
+<span class="fc" id="L379">			final LinkRendering back = LinkRendering.create(linkColor).withDisplay(linkLabel);</span>
+<span class="fc" id="L380">			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back, swimlanes.getCurrentSwimlane());</span>
+<span class="fc" id="L381">			setCurrent(instructionRepeat.getParent());</span>
+<span class="fc" id="L382">			this.setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="fc" id="L383">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L385">		return CommandExecutionResult.error(&quot;Cannot find repeat&quot;);</span>
+
+	}
+
+	public CommandExecutionResult backward(Display label, BoxStyle boxStyle, LinkRendering incoming1,
+			LinkRendering incoming2, Stereotype stereotype) {
+<span class="nc" id="L391">		manageSwimlaneStrategy();</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">		if (current() instanceof InstructionRepeat) {</span>
+<span class="nc" id="L393">			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();</span>
+<span class="nc" id="L394">			instructionRepeat.setBackward(label, swimlanes.getCurrentSwimlane(), boxStyle, incoming1, incoming2,</span>
+					stereotype);
+<span class="nc" id="L396">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc bnc" id="L398" title="All 2 branches missed.">		if (current() instanceof InstructionWhile) {</span>
+<span class="nc" id="L399">			final InstructionWhile instructionWhile = (InstructionWhile) current();</span>
+<span class="nc" id="L400">			instructionWhile.setBackward(label, boxStyle, incoming1, incoming2, stereotype);</span>
+<span class="nc" id="L401">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L403">		return CommandExecutionResult.error(&quot;Cannot find repeat&quot;);</span>
+
+	}
+
+	public void doWhile(Display test, Display yes, HColor color) {
+<span class="nc" id="L408">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L409">		final InstructionWhile instructionWhile = new InstructionWhile(swimlanes.getCurrentSwimlane(), current(), test,</span>
+<span class="nc" id="L410">				nextLinkRenderer(), yes, color, getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L411">		current().add(instructionWhile);</span>
+<span class="nc" id="L412">		setCurrent(instructionWhile);</span>
+<span class="nc" id="L413">	}</span>
+
+	public CommandExecutionResult endwhile(Display out) {
+<span class="nc bnc" id="L416" title="All 2 branches missed.">		if (current() instanceof InstructionWhile) {</span>
+<span class="nc" id="L417">			((InstructionWhile) current()).incoming(nextLinkRenderer());</span>
+<span class="nc" id="L418">			((InstructionWhile) current()).outDisplay(out);</span>
+<span class="nc" id="L419">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L420">			setCurrent(((InstructionWhile) current()).getParent());</span>
+<span class="nc" id="L421">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L423">		return CommandExecutionResult.error(&quot;Cannot find while&quot;);</span>
+	}
+
+	final public CommandExecutionResult kill() {
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		if (current().kill() == false)</span>
+<span class="nc" id="L428">			return CommandExecutionResult.error(&quot;kill cannot be used here&quot;);</span>
+
+<span class="nc" id="L430">		return CommandExecutionResult.ok();</span>
+	}
+
+	public void startGroup(Display name, HColor backColor, USymbol type, Style style) {
+<span class="nc" id="L434">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L435">		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor,</span>
+<span class="nc" id="L436">				swimlanes.getCurrentSwimlane(), nextLinkRenderer(), type, style);</span>
+<span class="nc" id="L437">		current().add(instructionGroup);</span>
+<span class="nc" id="L438">		setCurrent(instructionGroup);</span>
+<span class="nc" id="L439">	}</span>
+
+	public CommandExecutionResult endGroup() {
+<span class="nc bnc" id="L442" title="All 2 branches missed.">		if (current() instanceof InstructionGroup) {</span>
+<span class="nc" id="L443">			setCurrent(((InstructionGroup) current()).getParent());</span>
+<span class="nc" id="L444">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L446">		return CommandExecutionResult.error(&quot;Cannot find group&quot;);</span>
+	}
+
+	private void setNextLinkRendererInternal(LinkRendering link) {
+		// System.err.println(&quot;setNextLinkRendererInternal=&quot; + link);
+<span class="fc" id="L451">		swimlanes.setNextLinkRenderer(Objects.requireNonNull(link));</span>
+<span class="fc" id="L452">	}</span>
+
+	private void setNextLink(LinkRendering linkRenderer) {
+<span class="nc" id="L455">		Objects.requireNonNull(linkRenderer);</span>
+		// System.err.println(&quot;setNextLink=&quot; + linkRenderer);
+<span class="nc bnc" id="L457" title="All 2 branches missed.">		if (current() instanceof InstructionCollection) {</span>
+<span class="nc" id="L458">			final Instruction last = ((InstructionCollection) current()).getLast();</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">			if (last instanceof InstructionWhile)</span>
+<span class="nc" id="L460">				((InstructionWhile) last).outColor(linkRenderer.getRainbow());</span>
+<span class="nc bnc" id="L461" title="All 2 branches missed.">			else if (last instanceof InstructionIf)</span>
+<span class="nc" id="L462">				((InstructionIf) last).outColor(linkRenderer);</span>
+
+		}
+<span class="nc" id="L465">		this.setNextLinkRendererInternal(linkRenderer);</span>
+<span class="nc" id="L466">	}</span>
+
+	public void setLabelNextArrow(Display label) {
+//		if (current() instanceof InstructionRepeat &amp;&amp; ((InstructionRepeat) current()).hasBackward()) {
+//			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
+//			instructionRepeat.setBackwardArrowLabel(label);
+//			return;
+//		}
+<span class="nc bnc" id="L474" title="All 4 branches missed.">		if (current() instanceof InstructionWhile &amp;&amp; ((InstructionWhile) current()).getLast() == null) {</span>
+<span class="nc" id="L475">			((InstructionWhile) current()).overwriteYes(label);</span>
+<span class="nc" id="L476">			return;</span>
+		}
+
+<span class="nc" id="L479">		setNextLinkRendererInternal(nextLinkRenderer().withDisplay(label));</span>
+<span class="nc" id="L480">	}</span>
+
+	public void setColorNextArrow(Rainbow color) {
+<span class="nc bnc" id="L483" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L484">			return;</span>
+
+<span class="nc" id="L486">		final LinkRendering link = LinkRendering.create(color);</span>
+<span class="nc" id="L487">		setNextLink(link);</span>
+<span class="nc" id="L488">	}</span>
+
+	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors,
+			Stereotype stereotype) {
+<span class="fc" id="L492">		final boolean ok = current().addNote(note, position, type, colors, swimlanes.getCurrentSwimlane(), stereotype);</span>
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">		if (ok == false)</span>
+<span class="nc" id="L494">			return CommandExecutionResult.error(&quot;Cannot add note here&quot;);</span>
+
+<span class="fc" id="L496">		manageHasUrl(note);</span>
+<span class="fc" id="L497">		return CommandExecutionResult.ok();</span>
+	}
+
+<span class="fc" id="L500">	private boolean hasUrl = false;</span>
+
+	private void manageHasUrl(Display display) {
+<span class="pc bpc" id="L503" title="1 of 2 branches missed.">		if (display.hasUrl())</span>
+<span class="nc" id="L504">			hasUrl = true;</span>
+
+<span class="fc" id="L506">	}</span>
+
+	@Override
+	public boolean hasUrl() {
+<span class="nc" id="L510">		return hasUrl;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>subg__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">subg__c.java</span></div><h1>subg__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cgraph.graph__c.agopen1;
+import static gen.lib.cgraph.id__c.agmapnametoid;
+import static gen.lib.cgraph.id__c.agregister;
+import static gen.lib.cgraph.mem__c.agalloc;
+import static gen.lib.cgraph.utils__c.agdtdisc;
+import static smetana.core.Macro.AGID;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.dtfirst;
+import static smetana.core.Macro.dtnext;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agdesc_s;
+import h.ST_Agraph_s;
+import h.ST_dt_s;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.size_t;
+import smetana.core.debug.SmetanaDebug;
+
+<span class="nc" id="L71">public class subg__c {</span>
+
+//3 11ezyrsjsotjz9b3cyvb4ie8p
+// static Agraph_t *agfindsubg_by_id(Agraph_t * g, unsigned long id) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/subg.c&quot;, name=&quot;&quot;, key=&quot;11ezyrsjsotjz9b3cyvb4ie8p&quot;, definition=&quot;static Agraph_t *agfindsubg_by_id(Agraph_t * g, unsigned long id)&quot;)
+public static ST_Agraph_s agfindsubg_by_id(Globals zz, ST_Agraph_s g, int id) {
+<span class="fc" id="L78">ENTERING(&quot;11ezyrsjsotjz9b3cyvb4ie8p&quot;,&quot;agfindsubg_by_id&quot;);</span>
+try {
+<span class="fc" id="L80">    final ST_Agraph_s template = new ST_Agraph_s();</span>
+<span class="fc" id="L81">    agdtdisc(zz, g, (ST_dt_s) g.g_dict, zz.Ag_subgraph_id_disc);</span>
+<span class="fc" id="L82">    AGID(template, id);</span>
+<span class="fc" id="L83">    return (ST_Agraph_s) g.g_dict.searchf.exe(zz, g.g_dict, template, 0000004);</span>
+} finally {
+<span class="fc" id="L85">LEAVING(&quot;11ezyrsjsotjz9b3cyvb4ie8p&quot;,&quot;agfindsubg_by_id&quot;);</span>
+}
+}
+
+
+
+
+//3 44saycxbfbr9lou0itlyewkb4
+// static Agraph_t *localsubg(Agraph_t * g, unsigned long id) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/subg.c&quot;, name=&quot;&quot;, key=&quot;44saycxbfbr9lou0itlyewkb4&quot;, definition=&quot;static Agraph_t *localsubg(Agraph_t * g, unsigned long id)&quot;)
+public static ST_Agraph_s localsubg(Globals zz, ST_Agraph_s g, int id) {
+<span class="fc" id="L97">ENTERING(&quot;44saycxbfbr9lou0itlyewkb4&quot;,&quot;localsubg&quot;);</span>
+try {
+    ST_Agraph_s subg;
+<span class="fc" id="L100">    subg = agfindsubg_by_id(zz, g, id);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">    if (subg!=null)</span>
+<span class="nc" id="L102">	return subg;</span>
+<span class="fc" id="L103">    subg = (ST_Agraph_s) agalloc(g, new size_t(ZType.ST_Agraph_s));</span>
+<span class="fc" id="L104">    subg.clos = g.clos;</span>
+<span class="fc" id="L105">    subg.desc.___(g.desc);</span>
+<span class="fc" id="L106">    ((ST_Agdesc_s)subg.desc).maingraph = 0;</span>
+<span class="fc" id="L107">    subg.parent = g;</span>
+<span class="fc" id="L108">    subg.root = g.root;</span>
+<span class="fc" id="L109">    AGID(subg, id);</span>
+<span class="fc" id="L110">    return agopen1(zz, subg);</span>
+} finally {
+<span class="fc" id="L112">LEAVING(&quot;44saycxbfbr9lou0itlyewkb4&quot;,&quot;localsubg&quot;);</span>
+}
+}
+
+
+
+
+//3 a24jd4r2sdyb4lb2hyababrda
+// Agraph_t *agsubg(Agraph_t * g, char *name, int cflag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/subg.c&quot;, name=&quot;&quot;, key=&quot;a24jd4r2sdyb4lb2hyababrda&quot;, definition=&quot;Agraph_t *agsubg(Agraph_t * g, char *name, int cflag)&quot;)
+public static ST_Agraph_s agsubg(Globals zz, ST_Agraph_s g, CString name, boolean cflag) {
+<span class="fc" id="L124">ENTERING(&quot;a24jd4r2sdyb4lb2hyababrda&quot;,&quot;agsubg&quot;);</span>
+try {
+<span class="fc" id="L126">    final int id[] = new int[]{0};</span>
+<span class="fc" id="L127">    SmetanaDebug.LOG(&quot;agsubg g=&quot; + g + &quot; name=&quot; + name);</span>
+    ST_Agraph_s subg;
+<span class="pc bpc" id="L129" title="2 of 4 branches missed.">    if (name!=null &amp;&amp; agmapnametoid(zz, g, AGRAPH, name, id, false)!=0) {</span>
+<span class="fc" id="L130">    SmetanaDebug.LOG(&quot;might already exist&quot;);</span>
+	/* might already exist */
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">	if ((subg = agfindsubg_by_id(zz, g, id[0]))!=null) {</span>
+<span class="nc" id="L133">	    SmetanaDebug.LOG(&quot;yes returning &quot;+subg);</span>
+<span class="nc" id="L134">	    return subg;}</span>
+    }
+<span class="pc bpc" id="L136" title="2 of 4 branches missed.">    if (cflag &amp;&amp; agmapnametoid(zz, g, AGRAPH, name, id, true)!=0) {	/* reserve id */</span>
+<span class="fc" id="L137">	subg = localsubg(zz, g, id[0]);</span>
+<span class="fc" id="L138">	agregister(zz, g, AGRAPH, subg);</span>
+<span class="fc" id="L139">	SmetanaDebug.LOG(&quot;reserve id &quot;+subg);</span>
+<span class="fc" id="L140">	return subg;</span>
+    }
+<span class="nc" id="L142">    SmetanaDebug.LOG(&quot;return null&quot;);</span>
+<span class="nc" id="L143">    return null;</span>
+} finally {
+<span class="fc" id="L145">LEAVING(&quot;a24jd4r2sdyb4lb2hyababrda&quot;,&quot;agsubg&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/subg.c&quot;, name=&quot;&quot;, key=&quot;51eksrs0lhkgohunejlpwyc4k&quot;, definition=&quot;Agraph_t *agfstsubg(Agraph_t * g)&quot;)
+public static ST_Agraph_s agfstsubg(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L155">ENTERING(&quot;51eksrs0lhkgohunejlpwyc4k&quot;,&quot;agfstsubg&quot;);</span>
+try {
+<span class="fc" id="L157">	return (ST_Agraph_s) dtfirst(zz, g.g_dict);</span>
+} finally {
+<span class="fc" id="L159">LEAVING(&quot;51eksrs0lhkgohunejlpwyc4k&quot;,&quot;agfstsubg&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/subg.c&quot;, name=&quot;&quot;, key=&quot;85c1qisrein0tzm2regoe61t&quot;, definition=&quot;Agraph_t *agnxtsubg(Agraph_t * subg)&quot;)
+public static ST_Agraph_s agnxtsubg(Globals zz, ST_Agraph_s subg) {
+<span class="fc" id="L169">ENTERING(&quot;85c1qisrein0tzm2regoe61t&quot;,&quot;agnxtsubg&quot;);</span>
+try {
+    ST_Agraph_s g;
+    
+<span class="fc" id="L173">    g = agparent(subg);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">    return g!=null? (ST_Agraph_s) dtnext(zz, g.g_dict, subg) : null;</span>
+} finally {
+<span class="fc" id="L176">LEAVING(&quot;85c1qisrein0tzm2regoe61t&quot;,&quot;agnxtsubg&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/subg.c&quot;, name=&quot;&quot;, key=&quot;7kbp6j03hd7u6nnlivi0vt3ja&quot;, definition=&quot;Agraph_t *agparent(Agraph_t * g)&quot;)
+public static ST_Agraph_s agparent(ST_Agraph_s g) {
+<span class="fc" id="L186">ENTERING(&quot;7kbp6j03hd7u6nnlivi0vt3ja&quot;,&quot;agparent&quot;);</span>
+try {
+<span class="fc" id="L188">	return g.parent;</span>
+} finally {
+<span class="fc" id="L190">LEAVING(&quot;7kbp6j03hd7u6nnlivi0vt3ja&quot;,&quot;agparent&quot;);</span>
+}
+}
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

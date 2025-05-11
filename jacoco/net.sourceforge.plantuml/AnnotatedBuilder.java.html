@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnnotatedBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">AnnotatedBuilder.java</span></div><h1>AnnotatedBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.BigFrame;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.DecorateEntityImage;
+
+public class AnnotatedBuilder {
+	// ::remove file when __HAXE__
+
+	private final Annotated annotated;
+	private final ISkinParam skinParam;
+	private final StringBounder stringBounder;
+
+<span class="fc" id="L74">	public AnnotatedBuilder(Annotated annotated, ISkinParam skinParam, StringBounder stringBounder) {</span>
+<span class="fc" id="L75">		this.annotated = annotated;</span>
+<span class="fc" id="L76">		this.skinParam = skinParam;</span>
+<span class="fc" id="L77">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L78">	}</span>
+
+	public boolean hasMainFrame() {
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		return Display.isNull(annotated.getMainFrame().getDisplay()) == false;</span>
+	}
+
+	public double mainFrameSuppHeight() {
+<span class="nc" id="L85">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
+<span class="nc" id="L86">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
+<span class="nc" id="L87">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L88">		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);</span>
+<span class="nc" id="L89">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L90">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L92">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L93">		final ClockwiseTopRightBottomLeft padding = style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
+
+<span class="nc" id="L95">		return margin.getBottom() + margin.getTop() + padding.getTop() + padding.getBottom() + 10;</span>
+	}
+
+	public TextBlock decoreWithFrame(final TextBlock original) {
+<span class="fc" id="L99">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (Display.isNull(mainFrame))</span>
+<span class="fc" id="L101">			return original;</span>
+
+//		final double x1 = 5;
+//		final double x2 = 7;
+//		final double y1 = 10;
+//		final double y2 = 10;
+
+<span class="nc" id="L108">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
+<span class="nc" id="L109">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L110">		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);</span>
+<span class="nc" id="L111">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L112">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L114">		final Fashion symbolContext = style.getSymbolContext(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L115">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L116">		final ClockwiseTopRightBottomLeft padding = style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
+
+<span class="nc" id="L118">		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder, false);</span>
+
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		final double ww = originalMinMax.getMinX() &gt;= 0 ? originalMinMax.getMaxX() : originalMinMax.getWidth();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		final double hh = originalMinMax.getMinY() &gt;= 0 ? originalMinMax.getMaxY() : originalMinMax.getHeight();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
+<span class="nc" id="L124">		final UTranslate delta = new UTranslate(dx, dy);</span>
+
+<span class="nc" id="L126">		final double width = padding.getLeft() + Math.max(ww + 12, dimTitle.getWidth() + 10) + padding.getRight();</span>
+<span class="nc" id="L127">		final double height = padding.getTop() + dimTitle.getHeight() + hh + padding.getBottom();</span>
+
+<span class="nc" id="L129">		final TextBlock frame = new BigFrame(title, width, height, symbolContext);</span>
+
+<span class="nc" id="L131">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L134">				frame.drawU(ug.apply(margin.getTranslate()));</span>
+<span class="nc" id="L135">				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));</span>
+<span class="nc" id="L136">			}</span>
+
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L139">				final XRectangle2D rect = original.getInnerPosition(member, stringBounder, strategy);</span>
+<span class="nc" id="L140">				return new XRectangle2D(dx + rect.getX() + margin.getLeft() + padding.getLeft(),</span>
+<span class="nc" id="L141">						dy + rect.getY() + margin.getTop() + padding.getTop() + dimTitle.getHeight(), rect.getWidth(),</span>
+<span class="nc" id="L142">						rect.getHeight());</span>
+			}
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L146">				final XDimension2D dim1 = original.calculateDimension(stringBounder);</span>
+<span class="nc" id="L147">				final XDimension2D dim2 = padding.apply(dim1);</span>
+<span class="nc" id="L148">				final XDimension2D dim3 = margin.apply(dim2);</span>
+<span class="nc" id="L149">				return dim3;</span>
+			}
+
+			public HColor getBackcolor() {
+<span class="nc" id="L153">				return symbolContext.getBackColor();</span>
+			}
+		};
+	}
+
+	private ISkinParam getSkinParam() {
+<span class="fc" id="L159">		return skinParam;</span>
+	}
+
+	public TextBlock getLegend() {
+<span class="fc" id="L163">		final DisplayPositioned legend = annotated.getLegend();</span>
+<span class="fc" id="L164">		return EntityImageLegend.create(legend.getDisplay(), getSkinParam());</span>
+	}
+
+	public TextBlock getTitle() {
+<span class="fc" id="L168">		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();</span>
+<span class="fc" id="L169">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
+<span class="fc" id="L170">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L171">		final TextBlock block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),</span>
+				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
+<span class="fc" id="L173">		return block;</span>
+	}
+
+	public TextBlock getCaption() {
+<span class="fc" id="L177">		final DisplayPositioned caption = annotated.getCaption();</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (caption.isNull())</span>
+<span class="fc" id="L179">			return TextBlockUtils.empty(0, 0);</span>
+
+<span class="fc" id="L181">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.caption)</span>
+<span class="fc" id="L182">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L183">		return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam,</span>
+				Style.ID_CAPTION, LineBreakStrategy.NONE);
+
+	}
+
+	public TextBlock addHeaderAndFooter(TextBlock original) {
+<span class="fc" id="L189">		final DisplayPositioned header = annotated.getHeader();</span>
+<span class="fc" id="L190">		final DisplayPositioned footer = annotated.getFooter();</span>
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
+<span class="fc" id="L192">			return original;</span>
+
+<span class="fc" id="L194">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
+<span class="fc" id="L195">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
+
+<span class="fc" id="L197">		TextBlock textHeader = null;</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (header.isNull() == false) {</span>
+<span class="fc" id="L199">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)</span>
+<span class="fc" id="L200">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L201">			textHeader = header.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.HEADER, null),</span>
+<span class="fc" id="L202">					getSkinParam(), style);</span>
+		}
+
+<span class="fc" id="L205">		final UGroup group2 = new UGroup(footer.getLineLocation());</span>
+<span class="fc" id="L206">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
+
+<span class="fc" id="L208">		TextBlock textFooter = null;</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (footer.isNull() == false) {</span>
+
+<span class="fc" id="L211">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)</span>
+<span class="fc" id="L212">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L213">			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),</span>
+<span class="fc" id="L214">					getSkinParam(), style);</span>
+		}
+
+<span class="fc" id="L217">		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),</span>
+<span class="fc" id="L218">				group2, textFooter, footer.getHorizontalAlignment());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

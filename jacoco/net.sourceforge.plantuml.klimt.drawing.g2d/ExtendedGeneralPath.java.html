@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtendedGeneralPath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.g2d</a> &gt; <span class="el_source">ExtendedGeneralPath.java</span></div><h1>ExtendedGeneralPath.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Thierry Kormann
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.g2d;
+
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.log.Logme;
+
+/**
+ * The &lt;code&gt;ExtendedGeneralPath&lt;/code&gt; class represents a geometric path
+ * constructed from straight lines, quadratic and cubic (Bezier) curves and
+ * elliptical arc. This class delegates lines and curves to an enclosed
+ * &lt;code&gt;GeneralPath&lt;/code&gt;. Elliptical arc is implemented using an
+ * &lt;code&gt;Arc2D&lt;/code&gt; in double precision.
+ * 
+ * &lt;p&gt;
+ * &lt;b&gt;Warning&lt;/b&gt; : An elliptical arc may be composed of several path segments.
+ * For further details, see the SVG Appendix&amp;nbsp;F.6
+ * 
+ * @author &lt;a href=&quot;mailto:Thierry.Kormann@sophia.inria.fr&quot;&gt;Thierry Kormann&lt;/a&gt;
+ * @version $Id: ExtendedGeneralPath.java 594018 2007-11-12 04:17:41Z cam $
+ */
+public class ExtendedGeneralPath implements Shape, Cloneable {
+
+	/** The enclosed general path. */
+	private GeneralPath path;
+
+<span class="pc" id="L70">	private int numVals = 0;</span>
+<span class="pc" id="L71">	private int numSeg = 0;</span>
+<span class="pc" id="L72">	private double[] values = null;</span>
+<span class="pc" id="L73">	private int[] types = null;</span>
+
+	private double mx;
+	private double my;
+	private double cx;
+	private double cy;
+
+	/**
+	 * Constructs a new &lt;code&gt;ExtendedGeneralPath&lt;/code&gt;.
+	 */
+<span class="fc" id="L83">	public ExtendedGeneralPath() {</span>
+<span class="fc" id="L84">		path = new GeneralPath();</span>
+<span class="fc" id="L85">	}</span>
+
+	/**
+	 * Constructs a new &lt;code&gt;ExtendedGeneralPath&lt;/code&gt; with the specified winding
+	 * rule to control operations that require the interior of the path to be
+	 * defined.
+	 */
+<span class="nc" id="L92">	public ExtendedGeneralPath(int rule) {</span>
+<span class="nc" id="L93">		path = new GeneralPath(rule);</span>
+<span class="nc" id="L94">	}</span>
+
+	/**
+	 * Constructs a new &lt;code&gt;ExtendedGeneralPath&lt;/code&gt; object with the specified
+	 * winding rule and the specified initial capacity to store path coordinates.
+	 */
+<span class="nc" id="L100">	public ExtendedGeneralPath(int rule, int initialCapacity) {</span>
+<span class="nc" id="L101">		path = new GeneralPath(rule, initialCapacity);</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Constructs a new &lt;code&gt;ExtendedGeneralPath&lt;/code&gt; object from an arbitrary
+	 * &lt;code&gt;Shape&lt;/code&gt; object.
+	 */
+	public ExtendedGeneralPath(Shape s) {
+<span class="nc" id="L109">		this();</span>
+<span class="nc" id="L110">		append(s, false);</span>
+<span class="nc" id="L111">	}</span>
+
+	/**
+	 * Adds an elliptical arc, defined by two radii, an angle from the x-axis, a
+	 * flag to choose the large arc or not, a flag to indicate if we increase or
+	 * decrease the angles and the final point of the arc.
+	 * 
+	 * @param rx           the x radius of the ellipse
+	 * @param ry           the y radius of the ellipse
+	 * 
+	 * @param angle        the angle from the x-axis of the current coordinate
+	 *                     system to the x-axis of the ellipse in degrees.
+	 * 
+	 * @param largeArcFlag the large arc flag. If true the arc spanning less than or
+	 *                     equal to 180 degrees is chosen, otherwise the arc
+	 *                     spanning greater than 180 degrees is chosen
+	 * 
+	 * @param sweepFlag    the sweep flag. If true the line joining center to arc
+	 *                     sweeps through decreasing angles otherwise it sweeps
+	 *                     through increasing angles
+	 * 
+	 * @param x            the absolute x coordinate of the final point of the arc.
+	 * @param y            the absolute y coordinate of the final point of the arc.
+	 */
+	public void arcTo(double rx, double ry, double angle, boolean largeArcFlag, boolean sweepFlag, double x, double y) {
+
+		// Ensure radii are valid
+<span class="pc bpc" id="L138" title="1 of 4 branches missed.">		if (rx == 0 || ry == 0) {</span>
+<span class="fc" id="L139">			lineTo(x, y);</span>
+<span class="fc" id="L140">			return;</span>
+		}
+
+<span class="fc" id="L143">		checkMoveTo(); // check if prev command was moveto</span>
+
+		// Get the current (x, y) coordinates of the path
+<span class="fc" id="L146">		final double x0 = cx;</span>
+<span class="fc" id="L147">		final double y0 = cy;</span>
+<span class="pc bpc" id="L148" title="3 of 4 branches missed.">		if (x0 == x &amp;&amp; y0 == y) {</span>
+			// If the endpoints (x, y) and (x0, y0) are identical, then this
+			// is equivalent to omitting the elliptical arc segment entirely.
+<span class="nc" id="L151">			return;</span>
+		}
+
+<span class="fc" id="L154">		final Arc2D arc = computeArc(x0, y0, rx, ry, angle, largeArcFlag, sweepFlag, x, y);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (arc == null) {</span>
+<span class="nc" id="L156">			return;</span>
+		}
+
+<span class="fc" id="L159">		final AffineTransform t = AffineTransform.getRotateInstance(Math.toRadians(angle), arc.getCenterX(),</span>
+<span class="fc" id="L160">				arc.getCenterY());</span>
+<span class="fc" id="L161">		final Shape s = t.createTransformedShape(arc);</span>
+<span class="fc" id="L162">		path.append(s, true);</span>
+
+<span class="fc" id="L164">		makeRoom(7);</span>
+<span class="fc" id="L165">		types[numSeg++] = ExtendedPathIterator.SEG_ARCTO;</span>
+<span class="fc" id="L166">		values[numVals++] = rx;</span>
+<span class="fc" id="L167">		values[numVals++] = ry;</span>
+<span class="fc" id="L168">		values[numVals++] = angle;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		values[numVals++] = largeArcFlag ? 1 : 0;</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		values[numVals++] = sweepFlag ? 1 : 0;</span>
+<span class="fc" id="L171">		cx = values[numVals++] = x;</span>
+<span class="fc" id="L172">		cy = values[numVals++] = y;</span>
+<span class="fc" id="L173">	}</span>
+
+	/**
+	 * This constructs an unrotated Arc2D from the SVG specification of an
+	 * Elliptical arc. To get the final arc you need to apply a rotation transform
+	 * such as:
+	 * 
+	 * AffineTransform.getRotateInstance (angle, arc.getX()+arc.getWidth()/2,
+	 * arc.getY()+arc.getHeight()/2);
+	 */
+	public static Arc2D computeArc(double x0, double y0, double rx, double ry, double angle, boolean largeArcFlag,
+			boolean sweepFlag, double x, double y) {
+		//
+		// Elliptical arc implementation based on the SVG specification notes
+		//
+
+		// Compute the half distance between the current and the final point
+<span class="fc" id="L190">		final double dx2 = (x0 - x) / 2.0;</span>
+<span class="fc" id="L191">		final double dy2 = (y0 - y) / 2.0;</span>
+		// Convert angle from degrees to radians
+<span class="fc" id="L193">		angle = Math.toRadians(angle % 360.0);</span>
+<span class="fc" id="L194">		final double cosAngle = Math.cos(angle);</span>
+<span class="fc" id="L195">		final double sinAngle = Math.sin(angle);</span>
+
+		//
+		// Step 1 : Compute (x1, y1)
+		//
+<span class="fc" id="L200">		final double x1 = cosAngle * dx2 + sinAngle * dy2;</span>
+<span class="fc" id="L201">		final double y1 = -sinAngle * dx2 + cosAngle * dy2;</span>
+		// Ensure radii are large enough
+<span class="fc" id="L203">		rx = Math.abs(rx);</span>
+<span class="fc" id="L204">		ry = Math.abs(ry);</span>
+<span class="fc" id="L205">		double prx = rx * rx;</span>
+<span class="fc" id="L206">		double pry = ry * ry;</span>
+<span class="fc" id="L207">		final double px1 = x1 * x1;</span>
+<span class="fc" id="L208">		final double py1 = y1 * y1;</span>
+		// check that radii are large enough
+<span class="fc" id="L210">		final double radiiCheck = px1 / prx + py1 / pry;</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (radiiCheck &gt; 1) {</span>
+<span class="nc" id="L212">			rx = Math.sqrt(radiiCheck) * rx;</span>
+<span class="nc" id="L213">			ry = Math.sqrt(radiiCheck) * ry;</span>
+<span class="nc" id="L214">			prx = rx * rx;</span>
+<span class="nc" id="L215">			pry = ry * ry;</span>
+		}
+
+		//
+		// Step 2 : Compute (cx1, cy1)
+		//
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		double sign = (largeArcFlag == sweepFlag) ? -1 : 1;</span>
+<span class="fc" id="L222">		double sq = ((prx * pry) - (prx * py1) - (pry * px1)) / ((prx * py1) + (pry * px1));</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		sq = (sq &lt; 0) ? 0 : sq;</span>
+<span class="fc" id="L224">		final double coef = sign * Math.sqrt(sq);</span>
+<span class="fc" id="L225">		final double cx1 = coef * ((rx * y1) / ry);</span>
+<span class="fc" id="L226">		final double cy1 = coef * -((ry * x1) / rx);</span>
+
+		//
+		// Step 3 : Compute (cx, cy) from (cx1, cy1)
+		//
+<span class="fc" id="L231">		final double sx2 = (x0 + x) / 2.0;</span>
+<span class="fc" id="L232">		final double sy2 = (y0 + y) / 2.0;</span>
+<span class="fc" id="L233">		final double cx = sx2 + (cosAngle * cx1 - sinAngle * cy1);</span>
+<span class="fc" id="L234">		final double cy = sy2 + (sinAngle * cx1 + cosAngle * cy1);</span>
+
+		//
+		// Step 4 : Compute the angleStart (angle1) and the angleExtent (dangle)
+		//
+<span class="fc" id="L239">		final double ux = (x1 - cx1) / rx;</span>
+<span class="fc" id="L240">		final double uy = (y1 - cy1) / ry;</span>
+<span class="fc" id="L241">		final double vx = (-x1 - cx1) / rx;</span>
+<span class="fc" id="L242">		final double vy = (-y1 - cy1) / ry;</span>
+		// Compute the angle start
+<span class="fc" id="L244">		double n = Math.sqrt((ux * ux) + (uy * uy));</span>
+<span class="fc" id="L245">		double p = ux; // (1 * ux) + (0 * uy)</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		sign = (uy &lt; 0) ? -1.0 : 1.0;</span>
+<span class="fc" id="L247">		double angleStart = Math.toDegrees(sign * Math.acos(p / n));</span>
+
+		// Compute the angle extent
+<span class="fc" id="L250">		n = Math.sqrt((ux * ux + uy * uy) * (vx * vx + vy * vy));</span>
+<span class="fc" id="L251">		p = ux * vx + uy * vy;</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		sign = (ux * vy - uy * vx &lt; 0) ? -1.0 : 1.0;</span>
+<span class="fc" id="L253">		double angleExtent = Math.toDegrees(sign * Math.acos(p / n));</span>
+<span class="pc bpc" id="L254" title="2 of 4 branches missed.">		if (!sweepFlag &amp;&amp; angleExtent &gt; 0) {</span>
+<span class="nc" id="L255">			angleExtent -= 360f;</span>
+<span class="pc bpc" id="L256" title="3 of 4 branches missed.">		} else if (sweepFlag &amp;&amp; angleExtent &lt; 0) {</span>
+<span class="nc" id="L257">			angleExtent += 360f;</span>
+		}
+<span class="fc" id="L259">		angleExtent %= 360f;</span>
+<span class="fc" id="L260">		angleStart %= 360f;</span>
+
+		//
+		// We can now build the resulting Arc2D in double precision
+		//
+<span class="fc" id="L265">		final Arc2D.Double arc = new Arc2D.Double();</span>
+<span class="fc" id="L266">		arc.x = cx - rx;</span>
+<span class="fc" id="L267">		arc.y = cy - ry;</span>
+<span class="fc" id="L268">		arc.width = rx * 2.0;</span>
+<span class="fc" id="L269">		arc.height = ry * 2.0;</span>
+<span class="fc" id="L270">		arc.start = -angleStart;</span>
+<span class="fc" id="L271">		arc.extent = -angleExtent;</span>
+
+<span class="fc" id="L273">		return arc;</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void moveTo(double x, double y) {
+		// Don't add moveto to general path unless there is a reason.
+<span class="fc" id="L281">		makeRoom(2);</span>
+<span class="fc" id="L282">		types[numSeg++] = PathIterator.SEG_MOVETO;</span>
+<span class="fc" id="L283">		cx = mx = values[numVals++] = x;</span>
+<span class="fc" id="L284">		cy = my = values[numVals++] = y;</span>
+
+<span class="fc" id="L286">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void lineTo(double x, double y) {
+<span class="fc" id="L292">		checkMoveTo(); // check if prev command was moveto</span>
+<span class="fc" id="L293">		path.lineTo(x, y);</span>
+
+<span class="fc" id="L295">		makeRoom(2);</span>
+<span class="fc" id="L296">		types[numSeg++] = PathIterator.SEG_LINETO;</span>
+<span class="fc" id="L297">		cx = values[numVals++] = x;</span>
+<span class="fc" id="L298">		cy = values[numVals++] = y;</span>
+<span class="fc" id="L299">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void quadTo(double x1, double y1, double x2, double y2) {
+<span class="nc" id="L305">		checkMoveTo(); // check if prev command was moveto</span>
+<span class="nc" id="L306">		path.quadTo(x1, y1, x2, y2);</span>
+
+<span class="nc" id="L308">		makeRoom(4);</span>
+<span class="nc" id="L309">		types[numSeg++] = PathIterator.SEG_QUADTO;</span>
+<span class="nc" id="L310">		values[numVals++] = x1;</span>
+<span class="nc" id="L311">		values[numVals++] = y1;</span>
+<span class="nc" id="L312">		cx = values[numVals++] = x2;</span>
+<span class="nc" id="L313">		cy = values[numVals++] = y2;</span>
+<span class="nc" id="L314">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void curveTo(double x1, double y1, double x2, double y2, double x3, double y3) {
+<span class="fc" id="L320">		checkMoveTo(); // check if prev command was moveto</span>
+<span class="fc" id="L321">		path.curveTo(x1, y1, x2, y2, x3, y3);</span>
+
+<span class="fc" id="L323">		makeRoom(6);</span>
+<span class="fc" id="L324">		types[numSeg++] = PathIterator.SEG_CUBICTO;</span>
+<span class="fc" id="L325">		values[numVals++] = x1;</span>
+<span class="fc" id="L326">		values[numVals++] = y1;</span>
+<span class="fc" id="L327">		values[numVals++] = x2;</span>
+<span class="fc" id="L328">		values[numVals++] = y2;</span>
+<span class="fc" id="L329">		cx = values[numVals++] = x3;</span>
+<span class="fc" id="L330">		cy = values[numVals++] = y3;</span>
+<span class="fc" id="L331">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void closePath() {
+		// Don't double close path.
+<span class="nc bnc" id="L338" title="All 4 branches missed.">		if (numSeg != 0 &amp;&amp; types[numSeg - 1] == PathIterator.SEG_CLOSE) {</span>
+<span class="nc" id="L339">			return;</span>
+		}
+
+		// Only close path if the previous command wasn't a moveto
+<span class="nc bnc" id="L343" title="All 4 branches missed.">		if (numSeg != 0 &amp;&amp; types[numSeg - 1] != PathIterator.SEG_MOVETO) {</span>
+<span class="nc" id="L344">			path.closePath();</span>
+		}
+
+<span class="nc" id="L347">		makeRoom(0);</span>
+<span class="nc" id="L348">		types[numSeg++] = PathIterator.SEG_CLOSE;</span>
+<span class="nc" id="L349">		cx = mx;</span>
+<span class="nc" id="L350">		cy = my;</span>
+<span class="nc" id="L351">	}</span>
+
+	/**
+	 * Checks if previous command was a moveto command, skipping a close command (if
+	 * present).
+	 */
+	protected void checkMoveTo() {
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">		if (numSeg == 0) {</span>
+<span class="nc" id="L359">			return;</span>
+		}
+
+<span class="pc bpc" id="L362" title="1 of 3 branches missed.">		switch (types[numSeg - 1]) {</span>
+
+		case PathIterator.SEG_MOVETO:
+<span class="fc" id="L365">			path.moveTo(values[numVals - 2], values[numVals - 1]);</span>
+<span class="fc" id="L366">			break;</span>
+
+		case PathIterator.SEG_CLOSE:
+<span class="nc bnc" id="L369" title="All 2 branches missed.">			if (numSeg == 1) {</span>
+<span class="nc" id="L370">				return;</span>
+			}
+<span class="nc bnc" id="L372" title="All 2 branches missed.">			if (types[numSeg - 2] == PathIterator.SEG_MOVETO) {</span>
+<span class="nc" id="L373">				path.moveTo(values[numVals - 2], values[numVals - 1]);</span>
+			}
+			break;
+
+		default:
+			break;
+		}
+<span class="fc" id="L380">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void append(Shape s, boolean connect) {
+<span class="nc" id="L386">		append(s.getPathIterator(new AffineTransform()), connect);</span>
+<span class="nc" id="L387">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void append(PathIterator pi, boolean connect) {
+<span class="nc" id="L393">		final double[] vals = new double[6];</span>
+
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		while (!pi.isDone()) {</span>
+<span class="nc" id="L396">			Arrays.fill(vals, 0);</span>
+<span class="nc" id="L397">			int type = pi.currentSegment(vals);</span>
+<span class="nc" id="L398">			pi.next();</span>
+<span class="nc bnc" id="L399" title="All 4 branches missed.">			if (connect &amp;&amp; numVals != 0) {</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">				if (type == PathIterator.SEG_MOVETO) {</span>
+<span class="nc" id="L401">					final double x = vals[0];</span>
+<span class="nc" id="L402">					final double y = vals[1];</span>
+<span class="nc bnc" id="L403" title="All 4 branches missed.">					if (x != cx || y != cy) {</span>
+						// Change MOVETO to LINETO.
+<span class="nc" id="L405">						type = PathIterator.SEG_LINETO;</span>
+					} else {
+						// Redundant segment (move to current loc) drop it...
+<span class="nc bnc" id="L408" title="All 2 branches missed.">						if (pi.isDone()) {</span>
+<span class="nc" id="L409">							break; // Nothing interesting</span>
+						}
+<span class="nc" id="L411">						type = pi.currentSegment(vals);</span>
+<span class="nc" id="L412">						pi.next();</span>
+					}
+				}
+<span class="nc" id="L415">				connect = false;</span>
+			}
+
+<span class="nc bnc" id="L418" title="All 6 branches missed.">			switch (type) {</span>
+			case PathIterator.SEG_CLOSE:
+<span class="nc" id="L420">				closePath();</span>
+<span class="nc" id="L421">				break;</span>
+			case PathIterator.SEG_MOVETO:
+<span class="nc" id="L423">				moveTo(vals[0], vals[1]);</span>
+<span class="nc" id="L424">				break;</span>
+			case PathIterator.SEG_LINETO:
+<span class="nc" id="L426">				lineTo(vals[0], vals[1]);</span>
+<span class="nc" id="L427">				break;</span>
+			case PathIterator.SEG_QUADTO:
+<span class="nc" id="L429">				quadTo(vals[0], vals[1], vals[2], vals[3]);</span>
+<span class="nc" id="L430">				break;</span>
+			case PathIterator.SEG_CUBICTO:
+<span class="nc" id="L432">				curveTo(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);</span>
+				break;
+			}
+<span class="nc" id="L435">		}</span>
+<span class="nc" id="L436">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void append(ExtendedPathIterator epi, boolean connect) {
+<span class="nc" id="L442">		final double[] vals = new double[7];</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">		while (!epi.isDone()) {</span>
+<span class="nc" id="L444">			Arrays.fill(vals, 0);</span>
+<span class="nc" id="L445">			int type = epi.currentSegment(vals);</span>
+<span class="nc" id="L446">			epi.next();</span>
+<span class="nc bnc" id="L447" title="All 4 branches missed.">			if (connect &amp;&amp; numVals != 0) {</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">				if (type == PathIterator.SEG_MOVETO) {</span>
+<span class="nc" id="L449">					final double x = vals[0];</span>
+<span class="nc" id="L450">					final double y = vals[1];</span>
+<span class="nc bnc" id="L451" title="All 4 branches missed.">					if ((x != cx) || (y != cy)) {</span>
+						// Change MOVETO to LINETO.
+<span class="nc" id="L453">						type = PathIterator.SEG_LINETO;</span>
+					} else {
+						// Redundant segment (move to current loc) drop it...
+<span class="nc bnc" id="L456" title="All 2 branches missed.">						if (epi.isDone()) {</span>
+<span class="nc" id="L457">							break; // Nothing interesting</span>
+						}
+<span class="nc" id="L459">						type = epi.currentSegment(vals);</span>
+<span class="nc" id="L460">						epi.next();</span>
+					}
+				}
+<span class="nc" id="L463">				connect = false;</span>
+			}
+
+<span class="nc bnc" id="L466" title="All 7 branches missed.">			switch (type) {</span>
+			case PathIterator.SEG_CLOSE:
+<span class="nc" id="L468">				closePath();</span>
+<span class="nc" id="L469">				break;</span>
+			case PathIterator.SEG_MOVETO:
+<span class="nc" id="L471">				moveTo(vals[0], vals[1]);</span>
+<span class="nc" id="L472">				break;</span>
+			case PathIterator.SEG_LINETO:
+<span class="nc" id="L474">				lineTo(vals[0], vals[1]);</span>
+<span class="nc" id="L475">				break;</span>
+			case PathIterator.SEG_QUADTO:
+<span class="nc" id="L477">				quadTo(vals[0], vals[1], vals[2], vals[3]);</span>
+<span class="nc" id="L478">				break;</span>
+			case PathIterator.SEG_CUBICTO:
+<span class="nc" id="L480">				curveTo(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);</span>
+<span class="nc" id="L481">				break;</span>
+			case ExtendedPathIterator.SEG_ARCTO:
+<span class="nc bnc" id="L483" title="All 4 branches missed.">				arcTo(vals[0], vals[1], vals[2], vals[3] != 0, vals[4] != 0, vals[5], vals[6]);</span>
+				break;
+			}
+<span class="nc" id="L486">		}</span>
+<span class="nc" id="L487">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public int getWindingRule() {
+<span class="nc" id="L493">		return path.getWindingRule();</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void setWindingRule(int rule) {
+<span class="nc" id="L500">		path.setWindingRule(rule);</span>
+<span class="nc" id="L501">	}</span>
+
+	/**
+	 * get the current position or &lt;code&gt;null&lt;/code&gt;.
+	 */
+	public XPoint2D getCurrentPoint() {
+<span class="nc bnc" id="L507" title="All 2 branches missed.">		if (numVals == 0) {</span>
+<span class="nc" id="L508">			return null;</span>
+		}
+<span class="nc" id="L510">		return new XPoint2D(cx, cy);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void reset() {
+<span class="nc" id="L517">		path.reset();</span>
+
+<span class="nc" id="L519">		numSeg = 0;</span>
+<span class="nc" id="L520">		numVals = 0;</span>
+<span class="nc" id="L521">		values = null;</span>
+<span class="nc" id="L522">		types = null;</span>
+<span class="nc" id="L523">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public void transform(AffineTransform at) {
+<span class="nc bnc" id="L529" title="All 2 branches missed.">		if (at.getType() != AffineTransform.TYPE_IDENTITY) {</span>
+<span class="nc" id="L530">			throw new IllegalArgumentException(&quot;ExtendedGeneralPaths can not be transformed&quot;);</span>
+		}
+<span class="nc" id="L532">	}</span>
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public Shape createTransformedShape(AffineTransform at) {
+<span class="nc" id="L538">		return path.createTransformedShape(at);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public Rectangle getBounds() {
+<span class="nc" id="L545">		return path.getBounds();</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public Rectangle2D getBounds2D() {
+<span class="nc" id="L552">		return path.getBounds2D();</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public boolean contains(double x, double y) {
+<span class="nc" id="L559">		return path.contains(x, y);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public boolean contains(Point2D p) {
+<span class="nc" id="L566">		return path.contains(p);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public boolean contains(double x, double y, double w, double h) {
+<span class="nc" id="L573">		return path.contains(x, y, w, h);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public boolean contains(Rectangle2D r) {
+<span class="nc" id="L580">		return path.contains(r);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public boolean intersects(double x, double y, double w, double h) {
+<span class="nc" id="L587">		return path.intersects(x, y, w, h);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public boolean intersects(Rectangle2D r) {
+<span class="nc" id="L594">		return path.intersects(r);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public PathIterator getPathIterator(AffineTransform at) {
+<span class="fc" id="L601">		return path.getPathIterator(at);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public PathIterator getPathIterator(AffineTransform at, double flatness) {
+<span class="nc" id="L608">		return path.getPathIterator(at, flatness);</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public ExtendedPathIterator getExtendedPathIterator() {
+<span class="nc" id="L615">		return new EPI();</span>
+	}
+
+<span class="nc" id="L618">	class EPI implements ExtendedPathIterator {</span>
+<span class="nc" id="L619">		private int segNum = 0;</span>
+<span class="nc" id="L620">		private int valsIdx = 0;</span>
+
+		public int currentSegment() {
+<span class="nc" id="L623">			return types[segNum];</span>
+		}
+
+		public int currentSegment(double[] coords) {
+<span class="nc" id="L627">			final int ret = types[segNum];</span>
+<span class="nc bnc" id="L628" title="All 6 branches missed.">			switch (ret) {</span>
+			case SEG_CLOSE:
+<span class="nc" id="L630">				break;</span>
+			case SEG_MOVETO:
+			case SEG_LINETO:
+<span class="nc" id="L633">				coords[0] = values[valsIdx];</span>
+<span class="nc" id="L634">				coords[1] = values[valsIdx + 1];</span>
+<span class="nc" id="L635">				break;</span>
+			case SEG_QUADTO:
+<span class="nc" id="L637">				coords[0] = values[valsIdx];</span>
+<span class="nc" id="L638">				coords[1] = values[valsIdx + 1];</span>
+<span class="nc" id="L639">				coords[2] = values[valsIdx + 2];</span>
+<span class="nc" id="L640">				coords[3] = values[valsIdx + 3];</span>
+<span class="nc" id="L641">				break;</span>
+			case SEG_CUBICTO:
+<span class="nc" id="L643">				coords[0] = values[valsIdx];</span>
+<span class="nc" id="L644">				coords[1] = values[valsIdx + 1];</span>
+<span class="nc" id="L645">				coords[2] = values[valsIdx + 2];</span>
+<span class="nc" id="L646">				coords[3] = values[valsIdx + 3];</span>
+<span class="nc" id="L647">				coords[4] = values[valsIdx + 4];</span>
+<span class="nc" id="L648">				coords[5] = values[valsIdx + 5];</span>
+<span class="nc" id="L649">				break;</span>
+			case SEG_ARCTO:
+<span class="nc" id="L651">				coords[0] = values[valsIdx];</span>
+<span class="nc" id="L652">				coords[1] = values[valsIdx + 1];</span>
+<span class="nc" id="L653">				coords[2] = values[valsIdx + 2];</span>
+<span class="nc" id="L654">				coords[3] = values[valsIdx + 3];</span>
+<span class="nc" id="L655">				coords[4] = values[valsIdx + 4];</span>
+<span class="nc" id="L656">				coords[5] = values[valsIdx + 5];</span>
+<span class="nc" id="L657">				coords[6] = values[valsIdx + 6];</span>
+				break;
+			}
+<span class="nc" id="L660">			return ret;</span>
+		}
+
+		public int getWindingRule() {
+<span class="nc" id="L664">			return path.getWindingRule();</span>
+		}
+
+		public boolean isDone() {
+<span class="nc bnc" id="L668" title="All 2 branches missed.">			return segNum == numSeg;</span>
+		}
+
+		public void next() {
+<span class="nc" id="L672">			final int type = types[segNum++];</span>
+<span class="nc bnc" id="L673" title="All 6 branches missed.">			switch (type) {</span>
+			case SEG_CLOSE:
+<span class="nc" id="L675">				break;</span>
+			case SEG_MOVETO: // fallthrough is intended
+			case SEG_LINETO:
+<span class="nc" id="L678">				valsIdx += 2;</span>
+<span class="nc" id="L679">				break;</span>
+			case SEG_QUADTO:
+<span class="nc" id="L681">				valsIdx += 4;</span>
+<span class="nc" id="L682">				break;</span>
+			case SEG_CUBICTO:
+<span class="nc" id="L684">				valsIdx += 6;</span>
+<span class="nc" id="L685">				break;</span>
+			case SEG_ARCTO:
+<span class="nc" id="L687">				valsIdx += 7;</span>
+				break;
+			}
+<span class="nc" id="L690">		}</span>
+	}
+
+	/**
+	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
+	 */
+	public Object clone() {
+		try {
+<span class="nc" id="L698">			final ExtendedGeneralPath result = (ExtendedGeneralPath) super.clone();</span>
+<span class="nc" id="L699">			result.path = (GeneralPath) path.clone();</span>
+
+<span class="nc bnc" id="L701" title="All 2 branches missed.">			if (values != null) {</span>
+<span class="nc" id="L702">				result.values = new double[values.length];</span>
+<span class="nc" id="L703">				System.arraycopy(values, 0, result.values, 0, values.length);</span>
+			}
+<span class="nc" id="L705">			result.numVals = numVals;</span>
+
+<span class="nc bnc" id="L707" title="All 2 branches missed.">			if (types != null) {</span>
+<span class="nc" id="L708">				result.types = new int[types.length];</span>
+<span class="nc" id="L709">				System.arraycopy(types, 0, result.types, 0, types.length);</span>
+			}
+<span class="nc" id="L711">			result.numSeg = numSeg;</span>
+
+<span class="nc" id="L713">			return result;</span>
+<span class="nc" id="L714">		} catch (CloneNotSupportedException ex) {</span>
+<span class="nc" id="L715">			Logme.error(ex);</span>
+		}
+<span class="nc" id="L717">		return null;</span>
+	}
+
+	/**
+	 * Make sure, that the requested number of slots in vales[] are available. Must
+	 * be called even for numValues = 0, because it is also used for initialization
+	 * of those arrays.
+	 * 
+	 * @param numValues number of requested coordinates
+	 */
+	private void makeRoom(int numValues) {
+<span class="fc bfc" id="L728" title="All 2 branches covered.">		if (values == null) {</span>
+<span class="fc" id="L729">			values = new double[2 * numValues];</span>
+<span class="fc" id="L730">			types = new int[2];</span>
+<span class="fc" id="L731">			numVals = 0;</span>
+<span class="fc" id="L732">			numSeg = 0;</span>
+<span class="fc" id="L733">			return;</span>
+		}
+
+<span class="fc" id="L736">		final int newSize = numVals + numValues;</span>
+<span class="fc bfc" id="L737" title="All 2 branches covered.">		if (newSize &gt; values.length) {</span>
+<span class="fc" id="L738">			int nlen = values.length * 2;</span>
+<span class="fc bfc" id="L739" title="All 2 branches covered.">			if (nlen &lt; newSize) {</span>
+<span class="fc" id="L740">				nlen = newSize;</span>
+			}
+
+<span class="fc" id="L743">			final double[] nvals = new double[nlen];</span>
+<span class="fc" id="L744">			System.arraycopy(values, 0, nvals, 0, numVals);</span>
+<span class="fc" id="L745">			values = nvals;</span>
+		}
+
+<span class="fc bfc" id="L748" title="All 2 branches covered.">		if (numSeg == types.length) {</span>
+<span class="fc" id="L749">			final int[] ntypes = new int[types.length * 2];</span>
+<span class="fc" id="L750">			System.arraycopy(types, 0, ntypes, 0, types.length);</span>
+<span class="fc" id="L751">			types = ntypes;</span>
+		}
+<span class="fc" id="L753">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

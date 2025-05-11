@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>edge__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">edge__c.java</span></div><h1>edge__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cdt.dtextract__c.dtextract;
+import static gen.lib.cdt.dtrestore__c.dtrestore;
+import static gen.lib.cgraph.attr__c.AgDataRecName;
+import static gen.lib.cgraph.attr__c.agedgeattr_init;
+import static gen.lib.cgraph.graph__c.agisstrict;
+import static gen.lib.cgraph.graph__c.agisundirected;
+import static gen.lib.cgraph.graph__c.agnextseq;
+import static gen.lib.cgraph.id__c.agmapnametoid;
+import static gen.lib.cgraph.id__c.agregister;
+import static gen.lib.cgraph.mem__c.agalloc;
+import static gen.lib.cgraph.node__c.agsubnode;
+import static gen.lib.cgraph.obj__c.agmethod_init;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.cgraph.rec__c.agbindrec;
+import static gen.lib.cgraph.subg__c.agparent;
+import static smetana.core.Macro.AGEDGE;
+import static smetana.core.Macro.AGHEAD;
+import static smetana.core.Macro.AGID;
+import static smetana.core.Macro.AGINEDGE;
+import static smetana.core.Macro.AGMKIN;
+import static smetana.core.Macro.AGMKOUT;
+import static smetana.core.Macro.AGOPP;
+import static smetana.core.Macro.AGOUTEDGE;
+import static smetana.core.Macro.AGSEQ;
+import static smetana.core.Macro.AGTAIL;
+import static smetana.core.Macro.AGTYPE;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.dtfirst;
+import static smetana.core.Macro.dtinsert;
+import static smetana.core.Macro.dtnext;
+import static smetana.core.Macro.dtsearch;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agdesc_s;
+import h.ST_Agedge_s;
+import h.ST_Agedgepair_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agsubnode_s;
+import h.ST_Agtag_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dtlink_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CStarStar;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.__ptr__;
+import smetana.core.size_t;
+
+<span class="nc" id="L103">public class edge__c {</span>
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;9vamtktowqtk4955i546z9obw&quot;, definition=&quot;Agedge_t *agfstout(Agraph_t * g, Agnode_t * n)&quot;)
+public static ST_Agedge_s agfstout(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
+<span class="fc" id="L108">ENTERING(&quot;9vamtktowqtk4955i546z9obw&quot;,&quot;agfstout&quot;);</span>
+try {
+	ST_Agsubnode_s sn;
+<span class="fc" id="L111">	ST_Agedge_s e = null;</span>
+	
+<span class="fc" id="L113">    sn = agsubrep(zz, g, n);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">    if (sn!=null) {</span>
+<span class="fc" id="L115">		dtrestore(g.e_seq, sn.out_seq);</span>
+<span class="fc" id="L116">		e = (ST_Agedge_s) dtfirst(zz, g.e_seq);</span>
+<span class="fc" id="L117">		sn.out_seq = dtextract(g.e_seq);</span>
+	}
+<span class="fc" id="L119">    return e;</span>
+} finally {
+<span class="fc" id="L121">LEAVING(&quot;9vamtktowqtk4955i546z9obw&quot;,&quot;agfstout&quot;);</span>
+}
+}
+
+
+
+
+/* return outedge that follows &lt;e&gt; of &lt;n&gt; */
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;1qh7mgqwomkdqvczauv4ex1lu&quot;, definition=&quot;Agedge_t *agnxtout(Agraph_t * g, Agedge_t * e)&quot;)
+public static ST_Agedge_s agnxtout(Globals zz, ST_Agraph_s g, ST_Agedge_s e) {
+<span class="fc" id="L132">ENTERING(&quot;1qh7mgqwomkdqvczauv4ex1lu&quot;,&quot;agnxtout&quot;);</span>
+try {
+    ST_Agnode_s n;
+    ST_Agsubnode_s sn;
+<span class="fc" id="L136">    ST_Agedge_s f = null;</span>
+    
+<span class="fc" id="L138">    n = AGTAIL(e);</span>
+<span class="fc" id="L139">    sn = agsubrep(zz, g, n);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">    if (sn!=null) {</span>
+<span class="fc" id="L141">		dtrestore(g.e_seq, sn.out_seq);</span>
+<span class="fc" id="L142">		f = (ST_Agedge_s) dtnext(zz, g.e_seq, e);</span>
+<span class="fc" id="L143">		sn.out_seq = dtextract(g.e_seq);</span>
+	}
+<span class="fc" id="L145">    return f;</span>
+} finally {
+<span class="fc" id="L147">LEAVING(&quot;1qh7mgqwomkdqvczauv4ex1lu&quot;,&quot;agnxtout&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;c60qt3ycq0xweabgtqt16xe93&quot;, definition=&quot;Agedge_t *agfstin(Agraph_t * g, Agnode_t * n)&quot;)
+public static ST_Agedge_s agfstin(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
+<span class="fc" id="L157">ENTERING(&quot;c60qt3ycq0xweabgtqt16xe93&quot;,&quot;agfstin&quot;);</span>
+try {
+	ST_Agsubnode_s sn;
+<span class="fc" id="L160">	ST_Agedge_s e = null;</span>
+	
+<span class="fc" id="L162">    sn = agsubrep(zz, g, n);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">	if (sn!=null) {</span>
+<span class="fc" id="L164">		dtrestore(g.e_seq, sn.in_seq);</span>
+<span class="fc" id="L165">		e = (ST_Agedge_s) dtfirst(zz, g.e_seq);</span>
+<span class="fc" id="L166">		sn.in_seq = dtextract(g.e_seq);</span>
+	}
+<span class="fc" id="L168">    return e;</span>
+} finally {
+<span class="fc" id="L170">LEAVING(&quot;c60qt3ycq0xweabgtqt16xe93&quot;,&quot;agfstin&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;f2af4x97mqn16npd6alsw7avs&quot;, definition=&quot;Agedge_t *agnxtin(Agraph_t * g, Agedge_t * e)&quot;)
+public static ST_Agedge_s agnxtin(Globals zz, ST_Agraph_s g, ST_Agedge_s e) {
+<span class="fc" id="L180">ENTERING(&quot;f2af4x97mqn16npd6alsw7avs&quot;,&quot;agnxtin&quot;);</span>
+try {
+    ST_Agnode_s n;
+    ST_Agsubnode_s sn;
+<span class="fc" id="L184">    ST_Agedge_s f = null;</span>
+    
+<span class="fc" id="L186">    n = AGHEAD(e);</span>
+<span class="fc" id="L187">    sn = agsubrep(zz, g, n);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">	if (sn!=null) {</span>
+<span class="fc" id="L189">		dtrestore(g.e_seq, sn.in_seq);</span>
+<span class="fc" id="L190">		f = (ST_Agedge_s) dtnext(zz, g.e_seq, e);</span>
+<span class="fc" id="L191">		sn.in_seq = dtextract(g.e_seq);</span>
+	}
+<span class="fc" id="L193">	return f;</span>
+} finally {
+<span class="fc" id="L195">LEAVING(&quot;f2af4x97mqn16npd6alsw7avs&quot;,&quot;agnxtin&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;6nwyo5bklramr0d093aa1h25o&quot;, definition=&quot;Agedge_t *agfstedge(Agraph_t * g, Agnode_t * n)&quot;)
+public static ST_Agedge_s agfstedge(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
+<span class="fc" id="L205">ENTERING(&quot;6nwyo5bklramr0d093aa1h25o&quot;,&quot;agfstedge&quot;);</span>
+try {
+    ST_Agedge_s rv;
+<span class="fc" id="L208">    rv = agfstout(zz, g, n);</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">    if (rv == null)</span>
+<span class="fc" id="L210">	rv = agfstin(zz, g, n);</span>
+<span class="fc" id="L211">    return rv;</span>
+} finally {
+<span class="fc" id="L213">LEAVING(&quot;6nwyo5bklramr0d093aa1h25o&quot;,&quot;agfstedge&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;8zy2u6gsi2xzv2ffv8o4v4uvf&quot;, definition=&quot;Agedge_t *agnxtedge(Agraph_t * g, Agedge_t * e, Agnode_t * n)&quot;)
+public static ST_Agedge_s agnxtedge(Globals zz, ST_Agraph_s g, ST_Agedge_s e, ST_Agnode_s n) {
+<span class="fc" id="L223">ENTERING(&quot;8zy2u6gsi2xzv2ffv8o4v4uvf&quot;,&quot;agnxtedge&quot;);</span>
+try {
+    ST_Agedge_s rv;
+    
+<span class="fc bfc" id="L227" title="All 2 branches covered.">    if (e.tag.objtype == AGOUTEDGE) {</span>
+<span class="fc" id="L228">	rv = agnxtout(zz, g, e);</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">	if (rv == null) {</span>
+	    do {
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		rv = (rv) == null ? agfstin(zz, g, n) : agnxtin(zz, g,rv);</span>
+<span class="fc bfc" id="L232" title="All 4 branches covered.">	    } while (rv!=null &amp;&amp; rv.node == n);</span>
+	}
+    } else {
+	do {
+<span class="fc" id="L236">	    rv = agnxtin(zz, g, e);		/* so that we only see each edge once, */</span>
+<span class="fc" id="L237">		e = rv;</span>
+<span class="pc bpc" id="L238" title="3 of 4 branches missed.">	} while (rv!=null &amp;&amp; rv.node == n);	/* ignore loops as in-edges */</span>
+    }
+<span class="fc" id="L240">    return rv;</span>
+} finally {
+<span class="fc" id="L242">LEAVING(&quot;8zy2u6gsi2xzv2ffv8o4v4uvf&quot;,&quot;agnxtedge&quot;);</span>
+}
+}
+
+
+
+
+/* internal edge set lookup */
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;c175o6j61jqmfnl4o1g1h1mie&quot;, definition=&quot;static Agedge_t *agfindedge_by_key(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			    Agtag_t key)&quot;)
+public static ST_Agedge_s agfindedge_by_key(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
+// WARNING!! STRUCT
+<span class="fc" id="L254">return agfindedge_by_key_w_(zz, g, t, h, key.copy());</span>
+}
+private static ST_Agedge_s agfindedge_by_key_w_(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
+<span class="fc" id="L257">ENTERING(&quot;c175o6j61jqmfnl4o1g1h1mie&quot;,&quot;agfindedge_by_key&quot;);</span>
+try {
+	ST_Agedge_s e;
+<span class="fc" id="L260">    final ST_Agedge_s template = new ST_Agedge_s();</span>
+    ST_Agsubnode_s sn;
+    
+<span class="pc bpc" id="L263" title="2 of 4 branches missed.">    if ((t == null) || (h == null))</span>
+<span class="nc" id="L264">	return null;</span>
+<span class="fc" id="L265">    template.base.tag.___(key);</span>
+<span class="fc" id="L266">    template.node = t;		/* guess that fan-in &lt; fan-out */</span>
+<span class="fc" id="L267">    sn = agsubrep(zz, g, h);</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">    if ((sn) == null) e = null;</span>
+    else {
+<span class="fc" id="L270">	    dtrestore(g.e_id, sn.in_id);</span>
+<span class="fc" id="L271">	    e = (ST_Agedge_s) dtsearch(zz, g.e_id, template);</span>
+<span class="fc" id="L272">	    sn.in_id = dtextract(g.e_id);</span>
+    }
+<span class="fc" id="L274">    return e;</span>
+} finally {
+<span class="fc" id="L276">LEAVING(&quot;c175o6j61jqmfnl4o1g1h1mie&quot;,&quot;agfindedge_by_key&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;agsubrep&quot;, key=&quot;b32ssm6ex1pdz1b3nt4fwlhul&quot;, definition=&quot;Agsubnode_t *agsubrep(Agraph_t * g, Agnode_t * n)&quot;)
+public static ST_Agsubnode_s agsubrep(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
+<span class="fc" id="L285">ENTERING(&quot;b32ssm6ex1pdz1b3nt4fwlhul&quot;,&quot;agsubrep&quot;);</span>
+try {
+	ST_Agsubnode_s sn;
+<span class="fc" id="L288">    final ST_Agsubnode_s template = new ST_Agsubnode_s();</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">	if (g == n.root) sn = n.mainsub;</span>
+	else {
+<span class="fc" id="L291">			template.node = n;</span>
+<span class="fc" id="L292">			sn = (ST_Agsubnode_s) dtsearch(zz, g.n_id, template);</span>
+	}
+<span class="fc" id="L294">    return sn;</span>
+} finally {
+<span class="fc" id="L296">LEAVING(&quot;b32ssm6ex1pdz1b3nt4fwlhul&quot;,&quot;agsubrep&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;ins&quot;, key=&quot;6u0niow33w9gva780waluva4n&quot;, definition=&quot;static void ins(Dict_t * d, Dtlink_t ** set, Agedge_t * e)&quot;)
+public static void ins(Globals zz, ST_dt_s d, CStarStar&lt;ST_dtlink_s&gt; set, ST_Agedge_s e) {
+<span class="fc" id="L305">ENTERING(&quot;6u0niow33w9gva780waluva4n&quot;,&quot;ins&quot;);</span>
+try {
+<span class="fc" id="L307">    dtrestore(d, set.star());</span>
+<span class="fc" id="L308">    dtinsert(zz, d, e);</span>
+<span class="fc" id="L309">    set.star(dtextract(d));</span>
+} finally {
+<span class="fc" id="L311">LEAVING(&quot;6u0niow33w9gva780waluva4n&quot;,&quot;ins&quot;);</span>
+}
+<span class="fc" id="L313">}</span>
+
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;installedge&quot;, key=&quot;8kizmg7gziussfgx8zs3qvkfw&quot;, definition=&quot;static void installedge(Agraph_t * g, Agedge_t * e)&quot;)
+public static void installedge(Globals zz, ST_Agraph_s g, ST_Agedge_s e) {
+<span class="fc" id="L322">ENTERING(&quot;8kizmg7gziussfgx8zs3qvkfw&quot;,&quot;installedge&quot;);</span>
+try {
+    ST_Agnode_s t, h;
+    ST_Agedge_s out, in;
+    ST_Agsubnode_s sn;
+    
+    
+<span class="fc" id="L329">    out = AGMKOUT(e);</span>
+<span class="fc" id="L330">    in = AGMKIN(e);</span>
+<span class="fc" id="L331">    t = agtail(e);</span>
+<span class="fc" id="L332">    h = aghead(e);</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">    while (g!=null) {</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">	if (agfindedge_by_key(zz, g, t, h, e.tag)!=null) break;</span>
+<span class="fc" id="L335">	sn = agsubrep(zz, g, t);</span>
+<span class="fc" id="L336">	ins(zz, g.e_seq, sn.out_seq_AMP(), out);</span>
+<span class="fc" id="L337">	ins(zz, g.e_id, sn.out_id_AMP(), out);</span>
+<span class="fc" id="L338">	sn = agsubrep(zz, g, h); </span>
+<span class="fc" id="L339">	ins(zz, g.e_seq, sn.in_seq_AMP(), in);</span>
+<span class="fc" id="L340">	ins(zz, g.e_id, sn.in_id_AMP(), in);</span>
+<span class="fc" id="L341">	g = agparent(g);</span>
+    }
+} finally {
+<span class="fc" id="L344">LEAVING(&quot;8kizmg7gziussfgx8zs3qvkfw&quot;,&quot;installedge&quot;);</span>
+}
+<span class="fc" id="L346">}</span>
+
+
+
+
+//3 2vtt6zb0n3oru23okvw4pxasg
+// static void subedge(Agraph_t * g, Agedge_t * e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;subedge&quot;, key=&quot;2vtt6zb0n3oru23okvw4pxasg&quot;, definition=&quot;static void subedge(Agraph_t * g, Agedge_t * e)&quot;)
+public static Object subedge(Object... arg_) {
+<span class="nc" id="L356">UNSUPPORTED(&quot;1qslen16fp6w3yse2y311vtsf&quot;); // static void subedge(Agraph_t * g, Agedge_t * e)</span>
+<span class="nc" id="L357">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L358">UNSUPPORTED(&quot;3rvuc9rdxdwmvq3dtwv2hqwjo&quot;); //     installedge(g, e);</span>
+<span class="nc" id="L359">UNSUPPORTED(&quot;4d70e4y79ekvafnx88hgwdrna&quot;); //     /* might an init method call be needed here? */</span>
+<span class="nc" id="L360">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L362">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 4rzjui6oo0k009o64bxwgjmvq
+// static Agedge_t *newedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			 unsigned long id) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;4rzjui6oo0k009o64bxwgjmvq&quot;, definition=&quot;static Agedge_t *newedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			 unsigned long id)&quot;)
+public static ST_Agedge_s newedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, int id) {
+<span class="fc" id="L373">ENTERING(&quot;4rzjui6oo0k009o64bxwgjmvq&quot;,&quot;newedge&quot;);</span>
+try {
+	ST_Agedgepair_s e2;
+    ST_Agedge_s in, out;
+    int seq;
+<span class="fc" id="L378">    agsubnode(zz, g,t,(true));</span>
+<span class="fc" id="L379">    agsubnode(zz, g,h,(true));</span>
+<span class="fc" id="L380">    e2 = (ST_Agedgepair_s) agalloc(g, new size_t(ZType.ST_Agedgepair_s));</span>
+<span class="fc" id="L381">    in = (ST_Agedge_s) e2.in;</span>
+<span class="fc" id="L382">    out = (ST_Agedge_s) e2.out;</span>
+<span class="fc" id="L383">    seq = agnextseq(g, AGEDGE);</span>
+<span class="fc" id="L384">    AGTYPE(in, AGINEDGE);</span>
+<span class="fc" id="L385">    AGTYPE(out, AGOUTEDGE);</span>
+<span class="fc" id="L386">    AGID(out, id);</span>
+<span class="fc" id="L387">    AGID(in, id);</span>
+<span class="fc" id="L388">    AGSEQ(in, seq);</span>
+<span class="fc" id="L389">    AGSEQ(out, seq);</span>
+<span class="fc" id="L390">    in.node = t;</span>
+<span class="fc" id="L391">    out.node = h;</span>
+<span class="fc" id="L392">    installedge(zz, g, out);</span>
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">    if (((ST_Agdesc_s)g.desc).has_attrs!=0) {</span>
+<span class="fc" id="L394">	  agbindrec(zz, out, AgDataRecName, new size_t(ZType.ST_Agattr_s), false);</span>
+<span class="fc" id="L395">	  agedgeattr_init(zz, g, out);</span>
+    }
+<span class="fc" id="L397">    agmethod_init(g, out);</span>
+<span class="fc" id="L398">    return out;</span>
+} finally {
+<span class="fc" id="L400">LEAVING(&quot;4rzjui6oo0k009o64bxwgjmvq&quot;,&quot;newedge&quot;);</span>
+}
+}
+
+
+
+
+//3 1ufxhg5xnmll1pe5339477823
+// static int ok_to_make_edge(Agraph_t * g, Agnode_t * t, Agnode_t * h) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;ok_to_make_edge&quot;, key=&quot;1ufxhg5xnmll1pe5339477823&quot;, definition=&quot;static int ok_to_make_edge(Agraph_t * g, Agnode_t * t, Agnode_t * h)&quot;)
+public static boolean ok_to_make_edge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
+<span class="fc" id="L412">ENTERING(&quot;1ufxhg5xnmll1pe5339477823&quot;,&quot;ok_to_make_edge&quot;);</span>
+try {
+<span class="fc" id="L414">    final ST_Agtag_s key = new ST_Agtag_s();</span>
+    /* protect against self, multi-edges in strict graphs */
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">    if (agisstrict(g)) {</span>
+<span class="nc bnc" id="L417" title="All 4 branches missed.">	if (g.desc.no_loop!=0 &amp;&amp; (t == h)) /* simple graphs */</span>
+<span class="nc" id="L418">	    return false;</span>
+<span class="nc" id="L419">	key.___(zz.Tag);</span>
+<span class="nc" id="L420">	key.objtype = 0;	/* wild card */</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">	if (agfindedge_by_key(zz, g, t, h, key)!=null)</span>
+<span class="nc" id="L422">	    return false;</span>
+    }
+<span class="fc" id="L424">    return (true);</span>
+} finally {
+<span class="fc" id="L426">LEAVING(&quot;1ufxhg5xnmll1pe5339477823&quot;,&quot;ok_to_make_edge&quot;);</span>
+}
+}
+
+
+
+
+
+//3 4361pvzr3ozft2ov0fgx6t8bo
+// Agedge_t *agedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, char *name, 		 int cflag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;4361pvzr3ozft2ov0fgx6t8bo&quot;, definition=&quot;Agedge_t *agedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, char *name, 		 int cflag)&quot;)
+public static ST_Agedge_s agedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, CString name, boolean cflag) {
+<span class="fc" id="L439">ENTERING(&quot;4361pvzr3ozft2ov0fgx6t8bo&quot;,&quot;agedge&quot;);</span>
+try {
+    ST_Agedge_s e;
+<span class="fc" id="L442">    int id[] = new int[1];</span>
+    int have_id;
+<span class="fc" id="L444">    have_id = agmapnametoid(zz, g, AGEDGE, name, id, false);</span>
+<span class="pc bpc" id="L445" title="4 of 8 branches missed.">    if (have_id!=0 || ((name == null) &amp;&amp; ((!cflag) || agisstrict(g)))) {</span>
+	/* probe for pre-existing edge */
+<span class="nc" id="L447">	final ST_Agtag_s key = new ST_Agtag_s();</span>
+<span class="nc" id="L448">	key.___(zz.Tag);</span>
+<span class="nc bnc" id="L449" title="All 2 branches missed.">	if (have_id!=0) {</span>
+<span class="nc" id="L450">	    key.id = id[0];</span>
+<span class="nc" id="L451">	    key.objtype = AGEDGE;</span>
+	} else {
+<span class="nc" id="L453">	    key.id = 0;</span>
+<span class="nc" id="L454">	    key.objtype = 0;</span>
+	}
+	/* might already exist locally */
+<span class="nc" id="L457">	e = agfindedge_by_key(zz, g, t, h, key);</span>
+<span class="nc bnc" id="L458" title="All 4 branches missed.">	if ((e == null &amp;&amp; agisundirected(g)))</span>
+<span class="nc" id="L459">	    e = agfindedge_by_key(zz, g, h, t, key);</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">	if (e!=null)</span>
+<span class="nc" id="L461">	    return e;</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">	if (cflag) {</span>
+<span class="nc" id="L463">	    e = agfindedge_by_key(zz, agroot(g), t, h, key);</span>
+<span class="nc bnc" id="L464" title="All 4 branches missed.">	    if ((e == null) &amp;&amp; agisundirected(g))</span>
+<span class="nc" id="L465">		e = agfindedge_by_key(zz, agroot(g), h, t, key);</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">	    if (e!=null) {</span>
+<span class="nc" id="L467">		subedge(g,e);</span>
+<span class="nc" id="L468">		return e;</span>
+	    }
+ 	}
+    }
+<span class="pc bpc" id="L472" title="2 of 4 branches missed.">    if (cflag &amp;&amp; ok_to_make_edge(zz, g, t, h)</span>
+<span class="pc bpc" id="L473" title="1 of 2 branches missed.">	&amp;&amp; (agmapnametoid(zz, g, AGEDGE, name, id, (true)))!=0) { /* reserve id */</span>
+<span class="fc" id="L474">	e = newedge(zz, g, t, h, id[0]);</span>
+<span class="fc" id="L475">	agregister(zz, g, AGEDGE, e); /* register new object in external namespace */</span>
+    }
+    else
+<span class="nc" id="L478">	e = null;</span>
+<span class="fc" id="L479">    return e;</span>
+} finally {
+<span class="fc" id="L481">LEAVING(&quot;4361pvzr3ozft2ov0fgx6t8bo&quot;,&quot;agedge&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;30v8z3tlda81fbqbkzx6m9fkn&quot;, definition=&quot;Agedge_t *agsubedge(Agraph_t * g, Agedge_t * e, int cflag)&quot;)
+public static ST_Agedge_s agsubedge(Globals zz, ST_Agraph_s g, ST_Agedge_s e, boolean cflag) {
+<span class="fc" id="L491">ENTERING(&quot;30v8z3tlda81fbqbkzx6m9fkn&quot;,&quot;agsubedge&quot;);</span>
+try {
+    ST_Agnode_s t, h;
+    ST_Agedge_s rv;
+    
+<span class="fc" id="L496">    rv = null;</span>
+<span class="fc" id="L497">    t = agsubnode(zz, g, AGTAIL(e), cflag);</span>
+<span class="fc" id="L498">    h = agsubnode(zz, g, AGHEAD(e), cflag);</span>
+<span class="fc bfc" id="L499" title="All 4 branches covered.">    if (t!=null &amp;&amp; h!=null) {</span>
+<span class="fc" id="L500">	rv = agfindedge_by_key(zz, g, t, h, e.tag);</span>
+<span class="pc bpc" id="L501" title="1 of 4 branches missed.">	if (cflag &amp;&amp; (rv == null)) {</span>
+<span class="fc" id="L502">	installedge(zz, g, e);</span>
+<span class="fc" id="L503">	rv = e;</span>
+	}
+<span class="pc bpc" id="L505" title="1 of 4 branches missed.">	if (rv!=null &amp;&amp; (rv.tag.objtype != e.tag.objtype))</span>
+<span class="fc" id="L506">	    rv = AGOPP(rv);</span>
+    }
+<span class="fc" id="L508">    return rv;</span>
+} finally {
+<span class="fc" id="L510">LEAVING(&quot;30v8z3tlda81fbqbkzx6m9fkn&quot;,&quot;agsubedge&quot;);</span>
+}
+}
+
+
+<span class="fc" id="L515">public static CFunction agedgeidcmpf = new CFunctionAbstract(&quot;agedgeidcmpf&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L518">		return agedgeidcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);</span>
+	}};
+	
+
+/* edge comparison.  OBJTYPE(e) == 0 means ID is a wildcard. */
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;agedgeidcmpf&quot;, key=&quot;avk47eh26r45qk2dtoipwiqvz&quot;, definition=&quot;int agedgeidcmpf(Dict_t * d, void *arg_e0, void *arg_e1, Dtdisc_t * disc)&quot;)
+public static int agedgeidcmpf(ST_dt_s d, ST_Agedge_s arg_e0, ST_Agedge_s arg_e1, ST_dtdisc_s disc) {
+<span class="fc" id="L526">ENTERING(&quot;avk47eh26r45qk2dtoipwiqvz&quot;,&quot;agedgeidcmpf&quot;);</span>
+try {
+    int v;
+    ST_Agedge_s e0, e1;
+<span class="fc" id="L530">    e0 = (ST_Agedge_s) arg_e0;</span>
+<span class="fc" id="L531">    e1 = (ST_Agedge_s) arg_e1;</span>
+<span class="fc" id="L532">    v = e0.node.tag.id - e1.node.tag.id;</span>
+<span class="fc bfc" id="L533" title="All 2 branches covered.">    if (v == 0) {		/* same node */</span>
+<span class="pc bpc" id="L534" title="2 of 4 branches missed.">	if ((e0.tag.objtype == 0) || (e1.tag.objtype == 0))</span>
+<span class="nc" id="L535">	    v = 0;</span>
+	else
+<span class="fc" id="L537">	    v = e0.tag.id - e1.tag.id;</span>
+    }
+<span class="fc bfc" id="L539" title="All 4 branches covered.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
+} finally {
+<span class="fc" id="L541">LEAVING(&quot;avk47eh26r45qk2dtoipwiqvz&quot;,&quot;agedgeidcmpf&quot;);</span>
+}
+}
+
+
+<span class="fc" id="L546">public static CFunction agedgeseqcmpf = new CFunctionAbstract(&quot;agedgeseqcmpf&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L549">		return agedgeseqcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);</span>
+	}};
+	
+
+/* edge comparison.  for ordered traversal. */
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;agedgeseqcmpf&quot;, key=&quot;b6jhzc16xvrknu4e7jp6zx0ue&quot;, definition=&quot;int agedgeseqcmpf(Dict_t * d, void *arg_e0, void *arg_e1, Dtdisc_t * disc)&quot;)
+public static int agedgeseqcmpf(ST_dt_s d, ST_Agedge_s arg_e0, ST_Agedge_s arg_e1, ST_dtdisc_s disc) {
+<span class="fc" id="L557">ENTERING(&quot;b6jhzc16xvrknu4e7jp6zx0ue&quot;,&quot;agedgeseqcmpf&quot;);</span>
+try {
+    int v;
+    ST_Agedge_s e0, e1;
+<span class="fc" id="L561">    e0 = (ST_Agedge_s) arg_e0;</span>
+<span class="fc" id="L562">    e1 = (ST_Agedge_s) arg_e1;</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">	if (e0.node != e1.node) v = e0.node.tag.seq - e1.node.tag.seq;</span>
+<span class="fc" id="L564">	else v = (e0.tag.seq - e1.tag.seq);</span>
+<span class="fc bfc" id="L565" title="All 4 branches covered.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
+} finally {
+<span class="fc" id="L567">LEAVING(&quot;b6jhzc16xvrknu4e7jp6zx0ue&quot;,&quot;agedgeseqcmpf&quot;);</span>
+}
+}
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;ceexs6t1q4jxwz6h0g8fszxp4&quot;, definition=&quot;Agnode_t *agtail(Agedge_t * e)&quot;)
+public static ST_Agnode_s agtail(ST_Agedge_s e) {
+<span class="fc" id="L575">ENTERING(&quot;ceexs6t1q4jxwz6h0g8fszxp4&quot;,&quot;agtail&quot;);</span>
+try {
+<span class="fc" id="L577">    return AGTAIL(e);</span>
+} finally {
+<span class="fc" id="L579">LEAVING(&quot;ceexs6t1q4jxwz6h0g8fszxp4&quot;,&quot;agtail&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;3tj9gj3dvrpox6grrdd3rftd8&quot;, definition=&quot;Agnode_t *aghead(Agedge_t * e)&quot;)
+public static ST_Agnode_s aghead(__ptr__ e) {
+<span class="fc" id="L589">ENTERING(&quot;3tj9gj3dvrpox6grrdd3rftd8&quot;,&quot;aghead&quot;);</span>
+try {
+<span class="fc" id="L591">    return AGHEAD((ST_Agedge_s) e);</span>
+} finally {
+<span class="fc" id="L593">LEAVING(&quot;3tj9gj3dvrpox6grrdd3rftd8&quot;,&quot;aghead&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/edge.c&quot;, name=&quot;&quot;, key=&quot;15e6s5bh5hey2u79yoebir59w&quot;, definition=&quot;Agedge_t *agopp(Agedge_t * e)&quot;)
+public static ST_Agedge_s agopp(__ptr__ e) {
+<span class="fc" id="L603">ENTERING(&quot;15e6s5bh5hey2u79yoebir59w&quot;,&quot;agopp&quot;);</span>
+try {
+<span class="fc" id="L605">    return AGOPP((ST_Agedge_s) e);</span>
+} finally {
+<span class="fc" id="L607">LEAVING(&quot;15e6s5bh5hey2u79yoebir59w&quot;,&quot;agopp&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

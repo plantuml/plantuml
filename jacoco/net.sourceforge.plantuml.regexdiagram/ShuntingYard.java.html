@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShuntingYard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.regexdiagram</a> &gt; <span class="el_source">ShuntingYard.java</span></div><h1>ShuntingYard.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.regexdiagram;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.List;
+
+public class ShuntingYard {
+
+<span class="nc" id="L47">	final private List&lt;ReToken&gt; ouputQueue = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L48">	final private Deque&lt;ReToken&gt; operatorStack = new ArrayDeque&lt;&gt;();</span>
+
+<span class="nc" id="L50">	public ShuntingYard(Iterator&lt;ReToken&gt; it) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L52">			final ReToken token = it.next();</span>
+//			System.err.println(&quot;token=&quot; + token);
+//			System.err.println(&quot;ouputQueue=&quot; + ouputQueue);
+//			System.err.println(&quot;operatorStack=&quot; + operatorStack);
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (token.getType() == ReTokenType.SIMPLE_CHAR) {</span>
+<span class="nc" id="L57">				ouputQueue.add(token);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.ESCAPED_CHAR) {</span>
+<span class="nc" id="L59">				ouputQueue.add(token);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.GROUP) {</span>
+<span class="nc" id="L61">				ouputQueue.add(token);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">			} else if (token.getType().isNamedGroupOrLookAheadOrLookBehind()) {</span>
+<span class="nc" id="L63">				operatorStack.addFirst(token);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.CLASS) {</span>
+<span class="nc" id="L65">				ouputQueue.add(token);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.ANCHOR) {</span>
+<span class="nc" id="L67">				ouputQueue.add(token);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.QUANTIFIER) {</span>
+<span class="nc" id="L69">				ouputQueue.add(token);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.CONCATENATION_IMPLICIT) {</span>
+				// push it onto the operator stack.
+<span class="nc" id="L72">				operatorStack.addFirst(token);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.ALTERNATIVE) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				while (thereIsAConcatenationAtTheTopOfTheOperatorStack())</span>
+<span class="nc" id="L75">					ouputQueue.add(operatorStack.removeFirst());</span>
+				// push it onto the operator stack.
+<span class="nc" id="L77">				operatorStack.addFirst(token);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.PARENTHESIS_OPEN) {</span>
+<span class="nc" id="L79">				operatorStack.addFirst(token);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			} else if (token.getType() == ReTokenType.PARENTHESIS_CLOSE) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">				while (operatorStack.peekFirst() != null</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">						&amp;&amp; operatorStack.peekFirst().getType() != ReTokenType.PARENTHESIS_OPEN)</span>
+<span class="nc" id="L83">					ouputQueue.add(operatorStack.removeFirst());</span>
+<span class="nc" id="L84">				final ReToken first = operatorStack.removeFirst();</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">				if (operatorStack.peekFirst() != null &amp;&amp; operatorStack.peekFirst().getType().isNamedGroupOrLookAheadOrLookBehind())</span>
+<span class="nc" id="L86">					ouputQueue.add(operatorStack.removeFirst());</span>
+
+<span class="nc" id="L88">			} else {</span>
+<span class="nc" id="L89">				throw new UnsupportedOperationException(token.toString());</span>
+			}
+
+<span class="nc" id="L92">		}</span>
+
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		while (operatorStack.isEmpty() == false) {</span>
+<span class="nc" id="L95">			final ReToken token = operatorStack.removeFirst();</span>
+<span class="nc" id="L96">			ouputQueue.add(token);</span>
+<span class="nc" id="L97">		}</span>
+
+		// System.err.println(&quot;ouputQueue=&quot; + ouputQueue);
+<span class="nc" id="L100">	}</span>
+
+	private boolean thereIsAConcatenationAtTheTopOfTheOperatorStack() {
+<span class="nc" id="L103">		final ReToken top = operatorStack.peekFirst();</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">		return top != null &amp;&amp; top.getType() == ReTokenType.CONCATENATION_IMPLICIT;</span>
+	}
+
+	public final List&lt;ReToken&gt; getOuputQueue() {
+<span class="nc" id="L108">		return Collections.unmodifiableList(ouputQueue);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

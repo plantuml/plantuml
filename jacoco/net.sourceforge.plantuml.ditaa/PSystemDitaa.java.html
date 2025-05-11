@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemDitaa.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ditaa</a> &gt; <span class="el_source">PSystemDitaa.java</span></div><h1>PSystemDitaa.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.ditaa;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.stathissideris.ascii2image.core.ConversionOptions;
+import org.stathissideris.ascii2image.graphics.BitmapRenderer;
+import org.stathissideris.ascii2image.graphics.Diagram;
+import org.stathissideris.ascii2image.text.TextGrid;
+
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.utils.BlocLines;
+
+public class PSystemDitaa extends AbstractPSystem {
+	// ::remove folder when __CORE__
+
+<span class="nc" id="L65">	private final ConversionOptions options = new ConversionOptions();</span>
+<span class="nc" id="L66">	private final List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L67">	private int nbStartingSpace = Integer.MAX_VALUE;</span>
+
+	public PSystemDitaa(UmlSource source, boolean performSeparationOfCommonEdges, boolean dropShadows,
+			boolean allCornersAreRound, boolean transparentBackground, float scale,
+			PreprocessingArtifact preprocessing) {
+<span class="nc" id="L72">		super(source, preprocessing);</span>
+
+<span class="nc" id="L74">		options.setDropShadows(dropShadows);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		options.renderingOptions.setBackgroundColor(transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);</span>
+<span class="nc" id="L76">		options.renderingOptions.setScale(scale);</span>
+<span class="nc" id="L77">		options.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);</span>
+<span class="nc" id="L78">		options.processingOptions.setAllCornersAreRound(allCornersAreRound);</span>
+
+<span class="nc" id="L80">	}</span>
+
+	void add(String line) {
+<span class="nc" id="L83">		data.add(line);</span>
+<span class="nc" id="L84">		nbStartingSpace = Math.min(nbStartingSpace, BlocLines.nbStartingSpace(line));</span>
+<span class="nc" id="L85">	}</span>
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L88">		return new DiagramDescription(&quot;(Ditaa)&quot;);</span>
+	}
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
+
+		try {
+<span class="nc" id="L96">			final TextGrid grid = new TextGrid();</span>
+
+<span class="nc" id="L98">			final ArrayList&lt;StringBuilder&gt; lines = new ArrayList&lt;StringBuilder&gt;();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			for (String s : data)</span>
+<span class="nc" id="L100">				lines.add(new StringBuilder(s.substring(nbStartingSpace)));</span>
+
+<span class="nc" id="L102">			grid.initialiseWithLines(lines, null);</span>
+
+<span class="nc" id="L104">			final Diagram diagram = new Diagram(grid, options);</span>
+<span class="nc" id="L105">			final BitmapRenderer bitmapRenderer = new BitmapRenderer();</span>
+
+<span class="nc" id="L107">			final BufferedImage image = (BufferedImage) bitmapRenderer.renderToImage(diagram, options.renderingOptions);</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT) {</span>
+<span class="nc" id="L110">				os.write(getSource().getPlainString(BackSlash.lineSeparator()).getBytes());</span>
+<span class="nc" id="L111">				return ImageDataSimple.ok();</span>
+			}
+
+<span class="nc" id="L114">			SImageIO.write(image, &quot;png&quot;, os);</span>
+<span class="nc" id="L115">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L116">		} catch (Throwable e) {</span>
+<span class="nc" id="L117">			final CrashReportHandler report = new CrashReportHandler(e, null, null);</span>
+<span class="nc" id="L118">			report.add(&quot;DITAA has crashed&quot;);</span>
+<span class="nc" id="L119">			report.addEmptyLine();</span>
+<span class="nc" id="L120">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L121">			report.addEmptyLine();</span>
+<span class="nc" id="L122">			report.exportDiagramError(fileFormat, seed(), os);</span>
+<span class="nc" id="L123">			return ImageDataSimple.error();</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

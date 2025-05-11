@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.common</a> &gt; <span class="el_source">StringUtils.java</span></div><h1>StringUtils.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2010 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.common;
+
+import java.util.Hashtable;
+
+import zext.plantuml.com.google.zxing.DecodeHintType;
+
+/**
+ * Common string-related functions.
+ *
+ * @author Sean Owen
+ */
+public final class StringUtils {
+
+<span class="nc" id="L30">  private static final String PLATFORM_DEFAULT_ENCODING =</span>
+<span class="nc" id="L31">      System.getProperty(&quot;file.encoding&quot;);</span>
+  public static final String SHIFT_JIS = &quot;SJIS&quot;;
+  private static final String EUC_JP = &quot;EUC_JP&quot;;
+  private static final String UTF8 = &quot;UTF8&quot;;
+  private static final String ISO88591 = &quot;ISO8859_1&quot;;
+<span class="nc" id="L36">  private static final boolean ASSUME_SHIFT_JIS =</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">      SHIFT_JIS.equalsIgnoreCase(PLATFORM_DEFAULT_ENCODING) ||</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">      EUC_JP.equalsIgnoreCase(PLATFORM_DEFAULT_ENCODING);</span>
+
+  private StringUtils() {}
+
+  /**
+   * @param bytes bytes encoding a string, whose encoding should be guessed
+   * @param hints decode hints if applicable
+   * @return name of guessed encoding; at the moment will only guess one of:
+   *  {@link #SHIFT_JIS}, {@link #UTF8}, {@link #ISO88591}, or the platform
+   *  default encoding if none of these can possibly be correct
+   */
+  public static String guessEncoding(byte[] bytes, Hashtable hints) {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">    if (hints != null) {</span>
+<span class="nc" id="L51">      String characterSet = (String) hints.get(DecodeHintType.CHARACTER_SET);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">      if (characterSet != null) {</span>
+<span class="nc" id="L53">        return characterSet;</span>
+      }
+    }
+    // Does it start with the UTF-8 byte order mark? then guess it's UTF-8
+<span class="nc bnc" id="L57" title="All 8 branches missed.">    if (bytes.length &gt; 3 &amp;&amp;</span>
+        bytes[0] == (byte) 0xEF &amp;&amp;
+        bytes[1] == (byte) 0xBB &amp;&amp;
+        bytes[2] == (byte) 0xBF) {
+<span class="nc" id="L61">      return UTF8;</span>
+    }
+    // For now, merely tries to distinguish ISO-8859-1, UTF-8 and Shift_JIS,
+    // which should be by far the most common encodings. ISO-8859-1
+    // should not have bytes in the 0x80 - 0x9F range, while Shift_JIS
+    // uses this as a first byte of a two-byte character. If we see this
+    // followed by a valid second byte in Shift_JIS, assume it is Shift_JIS.
+    // If we see something else in that second byte, we'll make the risky guess
+    // that it's UTF-8.
+<span class="nc" id="L70">    int length = bytes.length;</span>
+<span class="nc" id="L71">    boolean canBeISO88591 = true;</span>
+<span class="nc" id="L72">    boolean canBeShiftJIS = true;</span>
+<span class="nc" id="L73">    boolean canBeUTF8 = true;</span>
+<span class="nc" id="L74">    int utf8BytesLeft = 0;</span>
+<span class="nc" id="L75">    int maybeDoubleByteCount = 0;</span>
+<span class="nc" id="L76">    int maybeSingleByteKatakanaCount = 0;</span>
+<span class="nc" id="L77">    boolean sawLatin1Supplement = false;</span>
+<span class="nc" id="L78">    boolean sawUTF8Start = false;</span>
+<span class="nc" id="L79">    boolean lastWasPossibleDoubleByteStart = false;</span>
+
+<span class="nc" id="L81">    for (int i = 0;</span>
+<span class="nc bnc" id="L82" title="All 8 branches missed.">         i &lt; length &amp;&amp; (canBeISO88591 || canBeShiftJIS || canBeUTF8);</span>
+<span class="nc" id="L83">         i++) {</span>
+
+<span class="nc" id="L85">      int value = bytes[i] &amp; 0xFF;</span>
+
+      // UTF-8 stuff
+<span class="nc bnc" id="L88" title="All 4 branches missed.">      if (value &gt;= 0x80 &amp;&amp; value &lt;= 0xBF) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (utf8BytesLeft &gt; 0) {</span>
+<span class="nc" id="L90">          utf8BytesLeft--;</span>
+        }
+      } else {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (utf8BytesLeft &gt; 0) {</span>
+<span class="nc" id="L94">          canBeUTF8 = false;</span>
+        }
+<span class="nc bnc" id="L96" title="All 4 branches missed.">        if (value &gt;= 0xC0 &amp;&amp; value &lt;= 0xFD) {</span>
+<span class="nc" id="L97">          sawUTF8Start = true;</span>
+<span class="nc" id="L98">          int valueCopy = value;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">          while ((valueCopy &amp; 0x40) != 0) {</span>
+<span class="nc" id="L100">            utf8BytesLeft++;</span>
+<span class="nc" id="L101">            valueCopy &lt;&lt;= 1;</span>
+          }
+        }
+      }
+
+      // ISO-8859-1 stuff
+
+<span class="nc bnc" id="L108" title="All 6 branches missed.">      if ((value == 0xC2 || value == 0xC3) &amp;&amp; i &lt; length - 1) {</span>
+        // This is really a poor hack. The slightly more exotic characters people might want to put in
+        // a QR Code, by which I mean the Latin-1 supplement characters (e.g. u-umlaut) have encodings
+        // that start with 0xC2 followed by [0xA0,0xBF], or start with 0xC3 followed by [0x80,0xBF].
+<span class="nc" id="L112">        int nextValue = bytes[i + 1] &amp; 0xFF;</span>
+<span class="nc bnc" id="L113" title="All 10 branches missed.">        if (nextValue &lt;= 0xBF &amp;&amp;</span>
+            ((value == 0xC2 &amp;&amp; nextValue &gt;= 0xA0) || (value == 0xC3 &amp;&amp; nextValue &gt;= 0x80))) {
+<span class="nc" id="L115">          sawLatin1Supplement = true;</span>
+        }
+      }
+<span class="nc bnc" id="L118" title="All 4 branches missed.">      if (value &gt;= 0x7F &amp;&amp; value &lt;= 0x9F) {</span>
+<span class="nc" id="L119">        canBeISO88591 = false;</span>
+      }
+
+      // Shift_JIS stuff
+
+<span class="nc bnc" id="L124" title="All 4 branches missed.">      if (value &gt;= 0xA1 &amp;&amp; value &lt;= 0xDF) {</span>
+        // count the number of characters that might be a Shift_JIS single-byte Katakana character
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (!lastWasPossibleDoubleByteStart) {</span>
+<span class="nc" id="L127">          maybeSingleByteKatakanaCount++;</span>
+        }
+      }
+<span class="nc bnc" id="L130" title="All 10 branches missed.">      if (!lastWasPossibleDoubleByteStart &amp;&amp;</span>
+          ((value &gt;= 0xF0 &amp;&amp; value &lt;= 0xFF) || value == 0x80 || value == 0xA0)) {
+<span class="nc" id="L132">        canBeShiftJIS = false;</span>
+      }
+<span class="nc bnc" id="L134" title="All 8 branches missed.">      if (((value &gt;= 0x81 &amp;&amp; value &lt;= 0x9F) || (value &gt;= 0xE0 &amp;&amp; value &lt;= 0xEF))) {</span>
+        // These start double-byte characters in Shift_JIS. Let's see if it's followed by a valid
+        // second byte.
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (lastWasPossibleDoubleByteStart) {</span>
+          // If we just checked this and the last byte for being a valid double-byte
+          // char, don't check starting on this byte. If this and the last byte
+          // formed a valid pair, then this shouldn't be checked to see if it starts
+          // a double byte pair of course.
+<span class="nc" id="L142">          lastWasPossibleDoubleByteStart = false;</span>
+        } else {
+          // ... otherwise do check to see if this plus the next byte form a valid
+          // double byte pair encoding a character.
+<span class="nc" id="L146">          lastWasPossibleDoubleByteStart = true;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">          if (i &gt;= bytes.length - 1) {</span>
+<span class="nc" id="L148">            canBeShiftJIS = false;</span>
+          } else {
+<span class="nc" id="L150">            int nextValue = bytes[i + 1] &amp; 0xFF;</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">            if (nextValue &lt; 0x40 || nextValue &gt; 0xFC) {</span>
+<span class="nc" id="L152">              canBeShiftJIS = false;</span>
+            } else {
+<span class="nc" id="L154">              maybeDoubleByteCount++;</span>
+            }
+            // There is some conflicting information out there about which bytes can follow which in
+            // double-byte Shift_JIS characters. The rule above seems to be the one that matches practice.
+<span class="nc" id="L158">          }</span>
+        }
+      } else {
+<span class="nc" id="L161">        lastWasPossibleDoubleByteStart = false;</span>
+      }
+    }
+<span class="nc bnc" id="L164" title="All 2 branches missed.">    if (utf8BytesLeft &gt; 0) {</span>
+<span class="nc" id="L165">      canBeUTF8 = false;</span>
+    }
+
+    // Easy -- if assuming Shift_JIS and no evidence it can't be, done
+<span class="nc bnc" id="L169" title="All 4 branches missed.">    if (canBeShiftJIS &amp;&amp; ASSUME_SHIFT_JIS) {</span>
+<span class="nc" id="L170">      return SHIFT_JIS;</span>
+    }
+<span class="nc bnc" id="L172" title="All 4 branches missed.">    if (canBeUTF8 &amp;&amp; sawUTF8Start) {</span>
+<span class="nc" id="L173">      return UTF8;</span>
+    }
+    // Distinguishing Shift_JIS and ISO-8859-1 can be a little tough. The crude heuristic is:
+    // - If we saw
+    //   - at least 3 bytes that starts a double-byte value (bytes that are rare in ISO-8859-1), or
+    //   - over 5% of bytes could be single-byte Katakana (also rare in ISO-8859-1),
+    // - and, saw no sequences that are invalid in Shift_JIS, then we conclude Shift_JIS
+<span class="nc bnc" id="L180" title="All 6 branches missed.">    if (canBeShiftJIS &amp;&amp; (maybeDoubleByteCount &gt;= 3 || 20 * maybeSingleByteKatakanaCount &gt; length)) {</span>
+<span class="nc" id="L181">      return SHIFT_JIS;</span>
+    }
+    // Otherwise, we default to ISO-8859-1 unless we know it can't be
+<span class="nc bnc" id="L184" title="All 4 branches missed.">    if (!sawLatin1Supplement &amp;&amp; canBeISO88591) {</span>
+<span class="nc" id="L185">      return ISO88591;</span>
+    }
+    // Otherwise, we take a wild guess with platform encoding
+<span class="nc" id="L188">    return PLATFORM_DEFAULT_ENCODING;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

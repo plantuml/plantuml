@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DriverTextG2d.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.g2d</a> &gt; <span class="el_source">DriverTextG2d.java</span></div><h1>DriverTextG2d.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.g2d;
+
+import static java.lang.Math.max;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontStyle;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.text.StyledString;
+
+public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
+
+	private final EnsureVisible visible;
+	private final StringBounder stringBounder;
+
+<span class="fc" id="L71">	public DriverTextG2d(EnsureVisible visible, StringBounder stringBounder) {</span>
+<span class="fc" id="L72">		this.visible = visible;</span>
+<span class="fc" id="L73">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L74">	}</span>
+
+	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
+<span class="fc" id="L77">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
+<span class="nc" id="L80">			return;</span>
+
+<span class="fc" id="L82">		final String text = shape.getText();</span>
+
+<span class="fc" id="L84">		final List&lt;StyledString&gt; strings = StyledString.build(text);</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		for (StyledString styledString : strings) {</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">			final FontConfiguration fc = styledString.getStyle() == FontStyle.BOLD ? fontConfiguration.bold()</span>
+<span class="fc" id="L88">					: fontConfiguration;</span>
+<span class="fc" id="L89">			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper);</span>
+<span class="fc" id="L90">		}</span>
+<span class="fc" id="L91">	}</span>
+
+	private double printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text,
+			double x, double y, ColorMapper mapper) {
+<span class="fc" id="L95">		final UFont font = fontConfiguration.getFont();</span>
+<span class="fc" id="L96">		final HColor extended = fontConfiguration.getExtendedColor();</span>
+
+<span class="fc" id="L98">		final XDimension2D dim = stringBounder.calculateDimension(font, text);</span>
+<span class="fc" id="L99">		final double height = max(10, dim.getHeight());</span>
+<span class="fc" id="L100">		final double width = dim.getWidth();</span>
+
+<span class="fc" id="L102">		final int orientation = 0;</span>
+
+<span class="fc" id="L104">		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);</span>
+<span class="fc" id="L105">		g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);</span>
+		// https://stackoverflow.com/questions/31536952/how-to-fix-text-quality-in-java-graphics
+		// https://stackoverflow.com/questions/72818320/improve-java2d-drawing-quality-on-hi-resolution-monitors
+		/*
+		 * g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+		 * RenderingHints.VALUE_RENDER_QUALITY);
+		 * g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+		 * RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+		 */
+
+<span class="fc" id="L115">		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));</span>
+
+		if (orientation == 90) {
+			final AffineTransform orig = g2d.getTransform();
+			g2d.translate(x, y);
+			g2d.rotate(Math.PI / 2);
+			g2d.drawString(text, 0, 0);
+			g2d.setTransform(orig);
+
+		} else if (orientation == 0) {
+
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
+<span class="nc" id="L127">				final Rectangle2D.Double area = new Rectangle2D.Double(x, y - height + 1.5, width, height);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				if (extended instanceof HColorGradient) {</span>
+<span class="nc" id="L129">					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,</span>
+							extended);
+<span class="nc" id="L131">					g2d.setPaint(paint);</span>
+<span class="nc" id="L132">					g2d.fill(area);</span>
+<span class="nc" id="L133">				} else {</span>
+<span class="nc" id="L134">					final Color backColor = extended.toColor(mapper);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">					if (backColor != null) {</span>
+<span class="nc" id="L136">						g2d.setColor(backColor);</span>
+<span class="nc" id="L137">						g2d.setBackground(backColor);</span>
+<span class="nc" id="L138">						g2d.fill(area);</span>
+					}
+				}
+			}
+<span class="fc" id="L142">			visible.ensureVisible(x, y - height + 1.5);</span>
+<span class="fc" id="L143">			visible.ensureVisible(x + width, y + 1.5);</span>
+
+<span class="fc" id="L145">			g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
+<span class="fc" id="L146">			g2d.drawString(text, (float) x, (float) y);</span>
+
+<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">				if (extended != null)</span>
+<span class="fc" id="L150">					g2d.setColor(extended.toColor(mapper));</span>
+
+<span class="fc" id="L152">				final UStroke stroke = fontConfiguration.getUnderlineStroke();</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">				if (stroke.getThickness() &gt; 0) {</span>
+<span class="fc" id="L154">					DriverLineG2d.manageStroke(stroke, g2d);</span>
+<span class="fc" id="L155">					final int ypos = (int) (y + 2.5);</span>
+<span class="fc" id="L156">					g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
+<span class="fc" id="L157">					g2d.setStroke(new BasicStroke());</span>
+				}
+			}
+<span class="fc bfc" id="L160" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
+<span class="fc" id="L161">				final int ypos = (int) (y + 2.5) - 1;</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">				if (extended != null)</span>
+<span class="fc" id="L163">					g2d.setColor(extended.toColor(mapper));</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">				for (int i = (int) x; i &lt; x + width - 5; i += 6) {</span>
+<span class="fc" id="L166">					g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);</span>
+<span class="fc" id="L167">					g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);</span>
+				}
+			}
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="nc" id="L171">				final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(UFontContext.G2D));</span>
+<span class="nc" id="L172">				final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (extended != null)</span>
+<span class="nc" id="L174">					g2d.setColor(extended.toColor(mapper));</span>
+
+<span class="nc" id="L176">				g2d.setStroke(new BasicStroke((float) 1.5));</span>
+<span class="nc" id="L177">				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
+<span class="nc" id="L178">				g2d.setStroke(new BasicStroke());</span>
+			}
+		}
+<span class="fc" id="L181">		return width;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GtileAssembly.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.gtile</a> &gt; <span class="el_source">GtileAssembly.java</span></div><h1>GtileAssembly.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.gtile;
+
+import java.util.Collection;
+import java.util.Collections;
+
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class GtileAssembly extends GtileTopDown {
+
+	private final TextBlock textBlock;
+
+	public GtileAssembly(Gtile tile1, Gtile tile2, LinkRendering linkRendering) {
+<span class="nc" id="L60">		super(tile1, tile2);</span>
+<span class="nc" id="L61">		this.textBlock = getTextBlock(linkRendering.getDisplay());</span>
+		// See FtileFactoryDelegatorAssembly
+<span class="nc" id="L63">	}</span>
+
+	@Override
+	protected UTranslate supplementaryMove() {
+<span class="nc" id="L67">		final double height = 30 + textBlock.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L68">		return new UTranslate(0, height);</span>
+	}
+
+	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
+<span class="nc" id="L72">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L77">		final XDimension2D raw = super.calculateDimension(stringBounder);</span>
+<span class="nc" id="L78">		final double textBlockWidth = textBlock.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L79">		final double pos1 = tile1.getCoord(GPoint.SOUTH_HOOK).compose(getPos1()).getDx();</span>
+<span class="nc" id="L80">		return raw.atLeast(pos1 + textBlockWidth, 0);</span>
+	}
+
+	protected final TextBlock getTextBlock(Display display) {
+		// DUP3945
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L86">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+
+<span class="nc" id="L88">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L89">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L90">		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);</span>
+	}
+
+	@Override
+	public Collection&lt;GConnection&gt; getInnerConnections() {
+<span class="nc" id="L95">		final GConnection arrow = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH_HOOK), getPos2(),</span>
+<span class="nc" id="L96">				tile2.getGPoint(GPoint.NORTH_HOOK), textBlock);</span>
+<span class="nc" id="L97">		return Collections.singletonList(arrow);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

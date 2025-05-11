@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Decode.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.brotli</a> &gt; <span class="el_source">Decode.java</span></div><h1>Decode.java</h1><pre class="source lang-java linenums">/* Copyright 2015 Google Inc. All Rights Reserved.
+
+   https://github.com/google/brotli/blob/master/LICENSE
+
+   Distributed under MIT license.
+   See file LICENSE for detail or copy at https://opensource.org/licenses/MIT
+*/
+
+package net.sourceforge.plantuml.brotli;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * API for Brotli decompression.
+ */
+<span class="nc" id="L17">final class Decode {</span>
+
+	// ----------------------------------------------------------------------------
+	// RunningState
+	// ----------------------------------------------------------------------------
+	private static final int UNINITIALIZED = 0;
+	private static final int BLOCK_START = 1;
+	private static final int COMPRESSED_BLOCK_START = 2;
+	private static final int MAIN_LOOP = 3;
+	private static final int READ_METADATA = 4;
+	private static final int COPY_UNCOMPRESSED = 5;
+	private static final int INSERT_LOOP = 6;
+	private static final int COPY_LOOP = 7;
+	private static final int COPY_WRAP_BUFFER = 8;
+	private static final int TRANSFORM = 9;
+	private static final int FINISHED = 10;
+	private static final int CLOSED = 11;
+	private static final int WRITE = 12;
+
+	private static final int DEFAULT_CODE_LENGTH = 8;
+	private static final int CODE_LENGTH_REPEAT_CODE = 16;
+	private static final int NUM_LITERAL_CODES = 256;
+	private static final int NUM_INSERT_AND_COPY_CODES = 704;
+	private static final int NUM_BLOCK_LENGTH_CODES = 26;
+	private static final int LITERAL_CONTEXT_BITS = 6;
+	private static final int DISTANCE_CONTEXT_BITS = 2;
+
+	private static final int HUFFMAN_TABLE_BITS = 8;
+	private static final int HUFFMAN_TABLE_MASK = 0xFF;
+
+	/**
+	 * Maximum possible Huffman table size for an alphabet size of 704, max code
+	 * length 15 and root table bits 8.
+	 */
+	static final int HUFFMAN_TABLE_SIZE = 1080;
+
+	private static final int CODE_LENGTH_CODES = 18;
+<span class="fc" id="L54">	private static final int[] CODE_LENGTH_CODE_ORDER = { 1, 2, 3, 4, 0, 5, 17, 6, 16, 7, 8, 9, 10, 11, 12, 13, 14,</span>
+			15, };
+
+	private static final int NUM_DISTANCE_SHORT_CODES = 16;
+<span class="fc" id="L58">	private static final int[] DISTANCE_SHORT_CODE_INDEX_OFFSET = { 3, 2, 1, 0, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2 };</span>
+
+<span class="fc" id="L60">	private static final int[] DISTANCE_SHORT_CODE_VALUE_OFFSET = { 0, 0, 0, 0, -1, 1, -2, 2, -3, 3, -1, 1, -2, 2, -3,</span>
+			3 };
+
+	/**
+	 * Static Huffman code for the code length code lengths.
+	 */
+<span class="fc" id="L66">	private static final int[] FIXED_TABLE = { 0x020000, 0x020004, 0x020003, 0x030002, 0x020000, 0x020004, 0x020003,</span>
+			0x040001, 0x020000, 0x020004, 0x020003, 0x030002, 0x020000, 0x020004, 0x020003, 0x040005 };
+
+<span class="fc" id="L69">	static final int[] DICTIONARY_OFFSETS_BY_LENGTH = { 0, 0, 0, 0, 0, 4096, 9216, 21504, 35840, 44032, 53248, 63488,</span>
+			74752, 87040, 93696, 100864, 104704, 106752, 108928, 113536, 115968, 118528, 119872, 121280, 122016 };
+
+<span class="fc" id="L72">	static final int[] DICTIONARY_SIZE_BITS_BY_LENGTH = { 0, 0, 0, 0, 10, 10, 11, 11, 10, 10, 10, 10, 10, 9, 9, 8, 7, 7,</span>
+			8, 7, 7, 6, 6, 5, 5 };
+
+	static final int MIN_WORD_LENGTH = 4;
+
+	static final int MAX_WORD_LENGTH = 24;
+
+	static final int MAX_TRANSFORMED_WORD_LENGTH = 5 + MAX_WORD_LENGTH + 8;
+
+	// ----------------------------------------------------------------------------
+	// Prefix code LUT.
+	// ----------------------------------------------------------------------------
+<span class="fc" id="L84">	static final int[] BLOCK_LENGTH_OFFSET = { 1, 5, 9, 13, 17, 25, 33, 41, 49, 65, 81, 97, 113, 145, 177, 209, 241,</span>
+			305, 369, 497, 753, 1265, 2289, 4337, 8433, 16625 };
+
+<span class="fc" id="L87">	static final int[] BLOCK_LENGTH_N_BITS = { 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 8, 9, 10, 11,</span>
+			12, 13, 24 };
+
+<span class="fc" id="L90">	static final int[] INSERT_LENGTH_OFFSET = { 0, 1, 2, 3, 4, 5, 6, 8, 10, 14, 18, 26, 34, 50, 66, 98, 130, 194, 322,</span>
+			578, 1090, 2114, 6210, 22594 };
+
+<span class="fc" id="L93">	static final int[] INSERT_LENGTH_N_BITS = { 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9, 10, 12, 14,</span>
+			24 };
+
+<span class="fc" id="L96">	static final int[] COPY_LENGTH_OFFSET = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 18, 22, 30, 38, 54, 70, 102, 134, 198,</span>
+			326, 582, 1094, 2118 };
+
+<span class="fc" id="L99">	static final int[] COPY_LENGTH_N_BITS = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9, 10,</span>
+			24 };
+
+<span class="fc" id="L102">	static final int[] INSERT_RANGE_LUT = { 0, 0, 8, 8, 0, 16, 8, 16, 16 };</span>
+
+<span class="fc" id="L104">	static final int[] COPY_RANGE_LUT = { 0, 8, 0, 8, 16, 0, 16, 8, 16 };</span>
+
+	private static int decodeWindowBits(State s) {
+<span class="fc" id="L107">		BitReader.fillBitWindow(s);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (BitReader.readFewBits(s, 1) == 0) {</span>
+<span class="fc" id="L109">			return 16;</span>
+		}
+<span class="fc" id="L111">		int n = BitReader.readFewBits(s, 3);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (n != 0) {</span>
+<span class="fc" id="L113">			return 17 + n;</span>
+		}
+<span class="fc" id="L115">		n = BitReader.readFewBits(s, 3);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (n != 0) {</span>
+<span class="fc" id="L117">			return 8 + n;</span>
+		}
+<span class="nc" id="L119">		return 17;</span>
+	}
+
+	/**
+	 * Associate input with decoder state.
+	 *
+	 * @param s     uninitialized state without associated input
+	 * @param input compressed data source
+	 */
+	static void initState(State s, InputStream input) {
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (s.runningState != UNINITIALIZED) {</span>
+<span class="nc" id="L130">			throw new IllegalStateException(&quot;State MUST be uninitialized&quot;);</span>
+		}
+<span class="fc" id="L132">		s.blockTrees = new int[6 * HUFFMAN_TABLE_SIZE];</span>
+<span class="fc" id="L133">		s.input = input;</span>
+<span class="fc" id="L134">		BitReader.initBitReader(s);</span>
+<span class="fc" id="L135">		int windowBits = decodeWindowBits(s);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (windowBits == 9) { /* Reserved case for future expansion. */</span>
+<span class="nc" id="L137">			throw new BrotliRuntimeException(&quot;Invalid 'windowBits' code&quot;);</span>
+		}
+<span class="fc" id="L139">		s.maxRingBufferSize = 1 &lt;&lt; windowBits;</span>
+<span class="fc" id="L140">		s.maxBackwardDistance = s.maxRingBufferSize - 16;</span>
+<span class="fc" id="L141">		s.runningState = BLOCK_START;</span>
+<span class="fc" id="L142">	}</span>
+
+	static void close(State s) throws IOException {
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (s.runningState == UNINITIALIZED) {</span>
+<span class="nc" id="L146">			throw new IllegalStateException(&quot;State MUST be initialized&quot;);</span>
+		}
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (s.runningState == CLOSED) {</span>
+<span class="nc" id="L149">			return;</span>
+		}
+<span class="fc" id="L151">		s.runningState = CLOSED;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (s.input != null) {</span>
+<span class="fc" id="L153">			Utils.closeInput(s.input);</span>
+<span class="fc" id="L154">			s.input = null;</span>
+		}
+<span class="fc" id="L156">	}</span>
+
+	/**
+	 * Decodes a number in the range [0..255], by reading 1 - 11 bits.
+	 */
+	private static int decodeVarLenUnsignedByte(State s) {
+<span class="fc" id="L162">		BitReader.fillBitWindow(s);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (BitReader.readFewBits(s, 1) != 0) {</span>
+<span class="fc" id="L164">			int n = BitReader.readFewBits(s, 3);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			if (n == 0) {</span>
+<span class="fc" id="L166">				return 1;</span>
+			} else {
+<span class="fc" id="L168">				return BitReader.readFewBits(s, n) + (1 &lt;&lt; n);</span>
+			}
+		}
+<span class="fc" id="L171">		return 0;</span>
+	}
+
+	private static void decodeMetaBlockLength(State s) {
+<span class="fc" id="L175">		BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L176">		s.inputEnd = BitReader.readFewBits(s, 1);</span>
+<span class="fc" id="L177">		s.metaBlockLength = 0;</span>
+<span class="fc" id="L178">		s.isUncompressed = 0;</span>
+<span class="fc" id="L179">		s.isMetadata = 0;</span>
+<span class="pc bpc" id="L180" title="2 of 4 branches missed.">		if ((s.inputEnd != 0) &amp;&amp; BitReader.readFewBits(s, 1) != 0) {</span>
+<span class="nc" id="L181">			return;</span>
+		}
+<span class="fc" id="L183">		int sizeNibbles = BitReader.readFewBits(s, 2) + 4;</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (sizeNibbles == 7) {</span>
+<span class="nc" id="L185">			s.isMetadata = 1;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (BitReader.readFewBits(s, 1) != 0) {</span>
+<span class="nc" id="L187">				throw new BrotliRuntimeException(&quot;Corrupted reserved bit&quot;);</span>
+			}
+<span class="nc" id="L189">			int sizeBytes = BitReader.readFewBits(s, 2);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			if (sizeBytes == 0) {</span>
+<span class="nc" id="L191">				return;</span>
+			}
+<span class="nc bnc" id="L193" title="All 2 branches missed.">			for (int i = 0; i &lt; sizeBytes; i++) {</span>
+<span class="nc" id="L194">				BitReader.fillBitWindow(s);</span>
+<span class="nc" id="L195">				int bits = BitReader.readFewBits(s, 8);</span>
+<span class="nc bnc" id="L196" title="All 6 branches missed.">				if (bits == 0 &amp;&amp; i + 1 == sizeBytes &amp;&amp; sizeBytes &gt; 1) {</span>
+<span class="nc" id="L197">					throw new BrotliRuntimeException(&quot;Exuberant nibble&quot;);</span>
+				}
+<span class="nc" id="L199">				s.metaBlockLength |= bits &lt;&lt; (i * 8);</span>
+			}
+<span class="nc" id="L201">		} else {</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">			for (int i = 0; i &lt; sizeNibbles; i++) {</span>
+<span class="fc" id="L203">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L204">				int bits = BitReader.readFewBits(s, 4);</span>
+<span class="pc bpc" id="L205" title="1 of 6 branches missed.">				if (bits == 0 &amp;&amp; i + 1 == sizeNibbles &amp;&amp; sizeNibbles &gt; 4) {</span>
+<span class="nc" id="L206">					throw new BrotliRuntimeException(&quot;Exuberant nibble&quot;);</span>
+				}
+<span class="fc" id="L208">				s.metaBlockLength |= bits &lt;&lt; (i * 4);</span>
+			}
+		}
+<span class="fc" id="L211">		s.metaBlockLength++;</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (s.inputEnd == 0) {</span>
+<span class="nc" id="L213">			s.isUncompressed = BitReader.readFewBits(s, 1);</span>
+		}
+<span class="fc" id="L215">	}</span>
+
+	/**
+	 * Decodes the next Huffman code from bit-stream.
+	 */
+	private static int readSymbol(int[] table, int offset, State s) {
+<span class="fc" id="L221">		int val = BitReader.peekBits(s);</span>
+<span class="fc" id="L222">		offset += val &amp; HUFFMAN_TABLE_MASK;</span>
+<span class="fc" id="L223">		int bits = table[offset] &gt;&gt; 16;</span>
+<span class="fc" id="L224">		int sym = table[offset] &amp; 0xFFFF;</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">		if (bits &lt;= HUFFMAN_TABLE_BITS) {</span>
+<span class="fc" id="L226">			s.bitOffset += bits;</span>
+<span class="fc" id="L227">			return sym;</span>
+		}
+<span class="fc" id="L229">		offset += sym;</span>
+<span class="fc" id="L230">		int mask = (1 &lt;&lt; bits) - 1;</span>
+<span class="fc" id="L231">		offset += (val &amp; mask) &gt;&gt;&gt; HUFFMAN_TABLE_BITS;</span>
+<span class="fc" id="L232">		s.bitOffset += ((table[offset] &gt;&gt; 16) + HUFFMAN_TABLE_BITS);</span>
+<span class="fc" id="L233">		return table[offset] &amp; 0xFFFF;</span>
+	}
+
+	private static int readBlockLength(int[] table, int offset, State s) {
+<span class="fc" id="L237">		BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L238">		int code = readSymbol(table, offset, s);</span>
+<span class="fc" id="L239">		int n = BLOCK_LENGTH_N_BITS[code];</span>
+<span class="fc" id="L240">		BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L241">		return BLOCK_LENGTH_OFFSET[code] + BitReader.readBits(s, n);</span>
+	}
+
+	private static int translateShortCodes(int code, int[] ringBuffer, int index) {
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		if (code &lt; NUM_DISTANCE_SHORT_CODES) {</span>
+<span class="fc" id="L246">			index += DISTANCE_SHORT_CODE_INDEX_OFFSET[code];</span>
+<span class="fc" id="L247">			index &amp;= 3;</span>
+<span class="fc" id="L248">			return ringBuffer[index] + DISTANCE_SHORT_CODE_VALUE_OFFSET[code];</span>
+		}
+<span class="fc" id="L250">		return code - NUM_DISTANCE_SHORT_CODES + 1;</span>
+	}
+
+	private static void moveToFront(int[] v, int index) {
+<span class="fc" id="L254">		int value = v[index];</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		for (; index &gt; 0; index--) {</span>
+<span class="fc" id="L256">			v[index] = v[index - 1];</span>
+		}
+<span class="fc" id="L258">		v[0] = value;</span>
+<span class="fc" id="L259">	}</span>
+
+	private static void inverseMoveToFrontTransform(byte[] v, int vLen) {
+<span class="fc" id="L262">		int[] mtf = new int[256];</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		for (int i = 0; i &lt; 256; i++) {</span>
+<span class="fc" id="L264">			mtf[i] = i;</span>
+		}
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		for (int i = 0; i &lt; vLen; i++) {</span>
+<span class="fc" id="L267">			int index = v[i] &amp; 0xFF;</span>
+<span class="fc" id="L268">			v[i] = (byte) mtf[index];</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">			if (index != 0) {</span>
+<span class="fc" id="L270">				moveToFront(mtf, index);</span>
+			}
+		}
+<span class="fc" id="L273">	}</span>
+
+	private static void readHuffmanCodeLengths(int[] codeLengthCodeLengths, int numSymbols, int[] codeLengths,
+			State s) {
+<span class="fc" id="L277">		int symbol = 0;</span>
+<span class="fc" id="L278">		int prevCodeLen = DEFAULT_CODE_LENGTH;</span>
+<span class="fc" id="L279">		int repeat = 0;</span>
+<span class="fc" id="L280">		int repeatCodeLen = 0;</span>
+<span class="fc" id="L281">		int space = 32768;</span>
+<span class="fc" id="L282">		int[] table = new int[32];</span>
+
+<span class="fc" id="L284">		Huffman.buildHuffmanTable(table, 0, 5, codeLengthCodeLengths, CODE_LENGTH_CODES);</span>
+
+<span class="fc bfc" id="L286" title="All 4 branches covered.">		while (symbol &lt; numSymbols &amp;&amp; space &gt; 0) {</span>
+<span class="fc" id="L287">			BitReader.readMoreInput(s);</span>
+<span class="fc" id="L288">			BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L289">			int p = BitReader.peekBits(s) &amp; 31;</span>
+<span class="fc" id="L290">			s.bitOffset += table[p] &gt;&gt; 16;</span>
+<span class="fc" id="L291">			int codeLen = table[p] &amp; 0xFFFF;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			if (codeLen &lt; CODE_LENGTH_REPEAT_CODE) {</span>
+<span class="fc" id="L293">				repeat = 0;</span>
+<span class="fc" id="L294">				codeLengths[symbol++] = codeLen;</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">				if (codeLen != 0) {</span>
+<span class="fc" id="L296">					prevCodeLen = codeLen;</span>
+<span class="fc" id="L297">					space -= 32768 &gt;&gt; codeLen;</span>
+				}
+			} else {
+<span class="fc" id="L300">				int extraBits = codeLen - 14;</span>
+<span class="fc" id="L301">				int newLen = 0;</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">				if (codeLen == CODE_LENGTH_REPEAT_CODE) {</span>
+<span class="fc" id="L303">					newLen = prevCodeLen;</span>
+				}
+<span class="fc bfc" id="L305" title="All 2 branches covered.">				if (repeatCodeLen != newLen) {</span>
+<span class="fc" id="L306">					repeat = 0;</span>
+<span class="fc" id="L307">					repeatCodeLen = newLen;</span>
+				}
+<span class="fc" id="L309">				int oldRepeat = repeat;</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">				if (repeat &gt; 0) {</span>
+<span class="fc" id="L311">					repeat -= 2;</span>
+<span class="fc" id="L312">					repeat &lt;&lt;= extraBits;</span>
+				}
+<span class="fc" id="L314">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L315">				repeat += BitReader.readFewBits(s, extraBits) + 3;</span>
+<span class="fc" id="L316">				int repeatDelta = repeat - oldRepeat;</span>
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">				if (symbol + repeatDelta &gt; numSymbols) {</span>
+<span class="nc" id="L318">					throw new BrotliRuntimeException(&quot;symbol + repeatDelta &gt; numSymbols&quot;); // COV_NF_LINE</span>
+				}
+<span class="fc bfc" id="L320" title="All 2 branches covered.">				for (int i = 0; i &lt; repeatDelta; i++) {</span>
+<span class="fc" id="L321">					codeLengths[symbol++] = repeatCodeLen;</span>
+				}
+<span class="fc bfc" id="L323" title="All 2 branches covered.">				if (repeatCodeLen != 0) {</span>
+<span class="fc" id="L324">					space -= repeatDelta &lt;&lt; (15 - repeatCodeLen);</span>
+				}
+			}
+<span class="fc" id="L327">		}</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (space != 0) {</span>
+<span class="nc" id="L329">			throw new BrotliRuntimeException(&quot;Unused space&quot;); // COV_NF_LINE</span>
+		}
+		// TODO: Pass max_symbol to Huffman table builder instead?
+<span class="fc" id="L332">		Utils.fillIntsWithZeroes(codeLengths, symbol, numSymbols);</span>
+<span class="fc" id="L333">	}</span>
+
+	static int checkDupes(int[] symbols, int length) {
+<span class="fc bfc" id="L336" title="All 2 branches covered.">		for (int i = 0; i &lt; length - 1; ++i) {</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">			for (int j = i + 1; j &lt; length; ++j) {</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">				if (symbols[i] == symbols[j]) {</span>
+<span class="nc" id="L339">					return 0;</span>
+				}
+			}
+		}
+<span class="fc" id="L343">		return 1;</span>
+	}
+
+	// TODO: Use specialized versions for smaller tables.
+	static void readHuffmanCode(int alphabetSize, int[] table, int offset, State s) {
+<span class="fc" id="L348">		int ok = 1;</span>
+		int simpleCodeOrSkip;
+<span class="fc" id="L350">		BitReader.readMoreInput(s);</span>
+		// TODO: Avoid allocation.
+<span class="fc" id="L352">		int[] codeLengths = new int[alphabetSize];</span>
+<span class="fc" id="L353">		BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L354">		simpleCodeOrSkip = BitReader.readFewBits(s, 2);</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">		if (simpleCodeOrSkip == 1) { // Read symbols, codes &amp; code lengths directly.</span>
+<span class="fc" id="L356">			int maxBitsCounter = alphabetSize - 1;</span>
+<span class="fc" id="L357">			int maxBits = 0;</span>
+<span class="fc" id="L358">			int[] symbols = new int[4];</span>
+<span class="fc" id="L359">			int numSymbols = BitReader.readFewBits(s, 2) + 1;</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">			while (maxBitsCounter != 0) {</span>
+<span class="fc" id="L361">				maxBitsCounter &gt;&gt;= 1;</span>
+<span class="fc" id="L362">				maxBits++;</span>
+			}
+			// TODO: uncomment when codeLengths is reused.
+			// Utils.fillWithZeroes(codeLengths, 0, alphabetSize);
+<span class="fc bfc" id="L366" title="All 2 branches covered.">			for (int i = 0; i &lt; numSymbols; i++) {</span>
+<span class="fc" id="L367">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L368">				symbols[i] = BitReader.readFewBits(s, maxBits) % alphabetSize;</span>
+<span class="fc" id="L369">				codeLengths[symbols[i]] = 2;</span>
+			}
+<span class="fc" id="L371">			codeLengths[symbols[0]] = 1;</span>
+<span class="fc bfc" id="L372" title="All 3 branches covered.">			switch (numSymbols) {</span>
+			case 2:
+<span class="fc" id="L374">				codeLengths[symbols[1]] = 1;</span>
+<span class="fc" id="L375">				break;</span>
+			case 4:
+<span class="fc bfc" id="L377" title="All 2 branches covered.">				if (BitReader.readFewBits(s, 1) == 1) {</span>
+<span class="fc" id="L378">					codeLengths[symbols[2]] = 3;</span>
+<span class="fc" id="L379">					codeLengths[symbols[3]] = 3;</span>
+				} else {
+<span class="fc" id="L381">					codeLengths[symbols[0]] = 2;</span>
+				}
+<span class="fc" id="L383">				break;</span>
+			default:
+				break;
+			}
+<span class="fc" id="L387">			ok = checkDupes(symbols, numSymbols);</span>
+<span class="fc" id="L388">		} else { // Decode Huffman-coded code lengths.</span>
+<span class="fc" id="L389">			int[] codeLengthCodeLengths = new int[CODE_LENGTH_CODES];</span>
+<span class="fc" id="L390">			int space = 32;</span>
+<span class="fc" id="L391">			int numCodes = 0;</span>
+<span class="fc bfc" id="L392" title="All 4 branches covered.">			for (int i = simpleCodeOrSkip; i &lt; CODE_LENGTH_CODES &amp;&amp; space &gt; 0; i++) {</span>
+<span class="fc" id="L393">				int codeLenIdx = CODE_LENGTH_CODE_ORDER[i];</span>
+<span class="fc" id="L394">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L395">				int p = BitReader.peekBits(s) &amp; 15;</span>
+				// TODO: Demultiplex FIXED_TABLE.
+<span class="fc" id="L397">				s.bitOffset += FIXED_TABLE[p] &gt;&gt; 16;</span>
+<span class="fc" id="L398">				int v = FIXED_TABLE[p] &amp; 0xFFFF;</span>
+<span class="fc" id="L399">				codeLengthCodeLengths[codeLenIdx] = v;</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">				if (v != 0) {</span>
+<span class="fc" id="L401">					space -= (32 &gt;&gt; v);</span>
+<span class="fc" id="L402">					numCodes++;</span>
+				}
+			}
+<span class="pc bpc" id="L405" title="3 of 4 branches missed.">			if (space != 0 &amp;&amp; numCodes != 1) {</span>
+<span class="nc" id="L406">				ok = 0;</span>
+			}
+<span class="fc" id="L408">			readHuffmanCodeLengths(codeLengthCodeLengths, alphabetSize, codeLengths, s);</span>
+		}
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">		if (ok == 0) {</span>
+<span class="nc" id="L411">			throw new BrotliRuntimeException(&quot;Can't readHuffmanCode&quot;); // COV_NF_LINE</span>
+		}
+<span class="fc" id="L413">		Huffman.buildHuffmanTable(table, offset, HUFFMAN_TABLE_BITS, codeLengths, alphabetSize);</span>
+<span class="fc" id="L414">	}</span>
+
+	private static int decodeContextMap(int contextMapSize, byte[] contextMap, State s) {
+<span class="fc" id="L417">		BitReader.readMoreInput(s);</span>
+<span class="fc" id="L418">		int numTrees = decodeVarLenUnsignedByte(s) + 1;</span>
+
+<span class="fc bfc" id="L420" title="All 2 branches covered.">		if (numTrees == 1) {</span>
+<span class="fc" id="L421">			Utils.fillBytesWithZeroes(contextMap, 0, contextMapSize);</span>
+<span class="fc" id="L422">			return numTrees;</span>
+		}
+
+<span class="fc" id="L425">		BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L426">		int useRleForZeros = BitReader.readFewBits(s, 1);</span>
+<span class="fc" id="L427">		int maxRunLengthPrefix = 0;</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">		if (useRleForZeros != 0) {</span>
+<span class="fc" id="L429">			maxRunLengthPrefix = BitReader.readFewBits(s, 4) + 1;</span>
+		}
+<span class="fc" id="L431">		int[] table = new int[HUFFMAN_TABLE_SIZE];</span>
+<span class="fc" id="L432">		readHuffmanCode(numTrees + maxRunLengthPrefix, table, 0, s);</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">		for (int i = 0; i &lt; contextMapSize;) {</span>
+<span class="fc" id="L434">			BitReader.readMoreInput(s);</span>
+<span class="fc" id="L435">			BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L436">			int code = readSymbol(table, 0, s);</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">			if (code == 0) {</span>
+<span class="fc" id="L438">				contextMap[i] = 0;</span>
+<span class="fc" id="L439">				i++;</span>
+<span class="fc bfc" id="L440" title="All 2 branches covered.">			} else if (code &lt;= maxRunLengthPrefix) {</span>
+<span class="fc" id="L441">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L442">				int reps = (1 &lt;&lt; code) + BitReader.readFewBits(s, code);</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">				while (reps != 0) {</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">					if (i &gt;= contextMapSize) {</span>
+<span class="nc" id="L445">						throw new BrotliRuntimeException(&quot;Corrupted context map&quot;); // COV_NF_LINE</span>
+					}
+<span class="fc" id="L447">					contextMap[i] = 0;</span>
+<span class="fc" id="L448">					i++;</span>
+<span class="fc" id="L449">					reps--;</span>
+				}
+<span class="fc" id="L451">			} else {</span>
+<span class="fc" id="L452">				contextMap[i] = (byte) (code - maxRunLengthPrefix);</span>
+<span class="fc" id="L453">				i++;</span>
+			}
+<span class="fc" id="L455">		}</span>
+<span class="fc" id="L456">		BitReader.fillBitWindow(s);</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		if (BitReader.readFewBits(s, 1) == 1) {</span>
+<span class="fc" id="L458">			inverseMoveToFrontTransform(contextMap, contextMapSize);</span>
+		}
+<span class="fc" id="L460">		return numTrees;</span>
+	}
+
+	private static int decodeBlockTypeAndLength(State s, int treeType, int numBlockTypes) {
+<span class="fc" id="L464">		final int[] ringBuffers = s.rings;</span>
+<span class="fc" id="L465">		final int offset = 4 + treeType * 2;</span>
+<span class="fc" id="L466">		BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L467">		int blockType = readSymbol(s.blockTrees, treeType * HUFFMAN_TABLE_SIZE, s);</span>
+<span class="fc" id="L468">		int result = readBlockLength(s.blockTrees, (treeType + 3) * HUFFMAN_TABLE_SIZE, s);</span>
+
+<span class="fc bfc" id="L470" title="All 2 branches covered.">		if (blockType == 1) {</span>
+<span class="fc" id="L471">			blockType = ringBuffers[offset + 1] + 1;</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">		} else if (blockType == 0) {</span>
+<span class="fc" id="L473">			blockType = ringBuffers[offset];</span>
+		} else {
+<span class="fc" id="L475">			blockType -= 2;</span>
+		}
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">		if (blockType &gt;= numBlockTypes) {</span>
+<span class="nc" id="L478">			blockType -= numBlockTypes;</span>
+		}
+<span class="fc" id="L480">		ringBuffers[offset] = ringBuffers[offset + 1];</span>
+<span class="fc" id="L481">		ringBuffers[offset + 1] = blockType;</span>
+<span class="fc" id="L482">		return result;</span>
+	}
+
+	private static void decodeLiteralBlockSwitch(State s) {
+<span class="fc" id="L486">		s.literalBlockLength = decodeBlockTypeAndLength(s, 0, s.numLiteralBlockTypes);</span>
+<span class="fc" id="L487">		int literalBlockType = s.rings[5];</span>
+<span class="fc" id="L488">		s.contextMapSlice = literalBlockType &lt;&lt; LITERAL_CONTEXT_BITS;</span>
+<span class="fc" id="L489">		s.literalTreeIndex = s.contextMap[s.contextMapSlice] &amp; 0xFF;</span>
+<span class="fc" id="L490">		s.literalTree = s.hGroup0[s.literalTreeIndex];</span>
+<span class="fc" id="L491">		int contextMode = s.contextModes[literalBlockType];</span>
+<span class="fc" id="L492">		s.contextLookupOffset1 = contextMode &lt;&lt; 9;</span>
+<span class="fc" id="L493">		s.contextLookupOffset2 = s.contextLookupOffset1 + 256;</span>
+<span class="fc" id="L494">	}</span>
+
+	private static void decodeCommandBlockSwitch(State s) {
+<span class="fc" id="L497">		s.commandBlockLength = decodeBlockTypeAndLength(s, 1, s.numCommandBlockTypes);</span>
+<span class="fc" id="L498">		s.treeCommandOffset = s.hGroup1[s.rings[7]];</span>
+<span class="fc" id="L499">	}</span>
+
+	private static void decodeDistanceBlockSwitch(State s) {
+<span class="fc" id="L502">		s.distanceBlockLength = decodeBlockTypeAndLength(s, 2, s.numDistanceBlockTypes);</span>
+<span class="fc" id="L503">		s.distContextMapSlice = s.rings[9] &lt;&lt; DISTANCE_CONTEXT_BITS;</span>
+<span class="fc" id="L504">	}</span>
+
+	private static void maybeReallocateRingBuffer(State s) {
+<span class="fc" id="L507">		int newSize = s.maxRingBufferSize;</span>
+<span class="pc bpc" id="L508" title="1 of 2 branches missed.">		if (newSize &gt; s.expectedTotalSize) {</span>
+			/* TODO: Handle 2GB+ cases more gracefully. */
+<span class="fc" id="L510">			int minimalNewSize = s.expectedTotalSize;</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">			while ((newSize &gt;&gt; 1) &gt; minimalNewSize) {</span>
+<span class="fc" id="L512">				newSize &gt;&gt;= 1;</span>
+			}
+<span class="pc bpc" id="L514" title="5 of 6 branches missed.">			if ((s.inputEnd == 0) &amp;&amp; newSize &lt; 16384 &amp;&amp; s.maxRingBufferSize &gt;= 16384) {</span>
+<span class="nc" id="L515">				newSize = 16384;</span>
+			}
+		}
+<span class="pc bpc" id="L518" title="1 of 2 branches missed.">		if (newSize &lt;= s.ringBufferSize) {</span>
+<span class="nc" id="L519">			return;</span>
+		}
+<span class="fc" id="L521">		int ringBufferSizeWithSlack = newSize + MAX_TRANSFORMED_WORD_LENGTH;</span>
+<span class="fc" id="L522">		byte[] newBuffer = new byte[ringBufferSizeWithSlack];</span>
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">		if (s.ringBuffer.length != 0) {</span>
+<span class="nc" id="L524">			System.arraycopy(s.ringBuffer, 0, newBuffer, 0, s.ringBufferSize);</span>
+		}
+<span class="fc" id="L526">		s.ringBuffer = newBuffer;</span>
+<span class="fc" id="L527">		s.ringBufferSize = newSize;</span>
+<span class="fc" id="L528">	}</span>
+
+	private static void readNextMetablockHeader(State s) {
+<span class="fc bfc" id="L531" title="All 2 branches covered.">		if (s.inputEnd != 0) {</span>
+<span class="fc" id="L532">			s.nextRunningState = FINISHED;</span>
+<span class="fc" id="L533">			s.bytesToWrite = s.pos;</span>
+<span class="fc" id="L534">			s.bytesWritten = 0;</span>
+<span class="fc" id="L535">			s.runningState = WRITE;</span>
+<span class="fc" id="L536">			return;</span>
+		}
+		// TODO: Reset? Do we need this?
+<span class="fc" id="L539">		s.hGroup0 = new int[0];</span>
+<span class="fc" id="L540">		s.hGroup1 = new int[0];</span>
+<span class="fc" id="L541">		s.hGroup2 = new int[0];</span>
+
+<span class="fc" id="L543">		BitReader.readMoreInput(s);</span>
+<span class="fc" id="L544">		decodeMetaBlockLength(s);</span>
+<span class="pc bpc" id="L545" title="3 of 4 branches missed.">		if ((s.metaBlockLength == 0) &amp;&amp; (s.isMetadata == 0)) {</span>
+<span class="nc" id="L546">			return;</span>
+		}
+<span class="pc bpc" id="L548" title="2 of 4 branches missed.">		if ((s.isUncompressed != 0) || (s.isMetadata != 0)) {</span>
+<span class="nc" id="L549">			BitReader.jumpToByteBoundary(s);</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">			s.runningState = (s.isMetadata != 0) ? READ_METADATA : COPY_UNCOMPRESSED;</span>
+		} else {
+<span class="fc" id="L552">			s.runningState = COMPRESSED_BLOCK_START;</span>
+		}
+
+<span class="pc bpc" id="L555" title="1 of 2 branches missed.">		if (s.isMetadata != 0) {</span>
+<span class="nc" id="L556">			return;</span>
+		}
+<span class="fc" id="L558">		s.expectedTotalSize += s.metaBlockLength;</span>
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">		if (s.expectedTotalSize &gt; 1 &lt;&lt; 30) {</span>
+<span class="nc" id="L560">			s.expectedTotalSize = 1 &lt;&lt; 30;</span>
+		}
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">		if (s.ringBufferSize &lt; s.maxRingBufferSize) {</span>
+<span class="fc" id="L563">			maybeReallocateRingBuffer(s);</span>
+		}
+<span class="fc" id="L565">	}</span>
+
+	private static int readMetablockPartition(State s, int treeType, int numBlockTypes) {
+<span class="fc bfc" id="L568" title="All 2 branches covered.">		if (numBlockTypes &lt;= 1) {</span>
+<span class="fc" id="L569">			return 1 &lt;&lt; 28;</span>
+		}
+<span class="fc" id="L571">		readHuffmanCode(numBlockTypes + 2, s.blockTrees, treeType * HUFFMAN_TABLE_SIZE, s);</span>
+<span class="fc" id="L572">		readHuffmanCode(NUM_BLOCK_LENGTH_CODES, s.blockTrees, (treeType + 3) * HUFFMAN_TABLE_SIZE, s);</span>
+<span class="fc" id="L573">		return readBlockLength(s.blockTrees, (treeType + 3) * HUFFMAN_TABLE_SIZE, s);</span>
+	}
+
+	private static void readMetablockHuffmanCodesAndContextMaps(State s) {
+<span class="fc" id="L577">		s.numLiteralBlockTypes = decodeVarLenUnsignedByte(s) + 1;</span>
+<span class="fc" id="L578">		s.literalBlockLength = readMetablockPartition(s, 0, s.numLiteralBlockTypes);</span>
+<span class="fc" id="L579">		s.numCommandBlockTypes = decodeVarLenUnsignedByte(s) + 1;</span>
+<span class="fc" id="L580">		s.commandBlockLength = readMetablockPartition(s, 1, s.numCommandBlockTypes);</span>
+<span class="fc" id="L581">		s.numDistanceBlockTypes = decodeVarLenUnsignedByte(s) + 1;</span>
+<span class="fc" id="L582">		s.distanceBlockLength = readMetablockPartition(s, 2, s.numDistanceBlockTypes);</span>
+
+<span class="fc" id="L584">		BitReader.readMoreInput(s);</span>
+<span class="fc" id="L585">		BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L586">		s.distancePostfixBits = BitReader.readFewBits(s, 2);</span>
+<span class="fc" id="L587">		s.numDirectDistanceCodes = NUM_DISTANCE_SHORT_CODES + (BitReader.readFewBits(s, 4) &lt;&lt; s.distancePostfixBits);</span>
+<span class="fc" id="L588">		s.distancePostfixMask = (1 &lt;&lt; s.distancePostfixBits) - 1;</span>
+<span class="fc" id="L589">		int numDistanceCodes = s.numDirectDistanceCodes + (48 &lt;&lt; s.distancePostfixBits);</span>
+		// TODO: Reuse?
+<span class="fc" id="L591">		s.contextModes = new byte[s.numLiteralBlockTypes];</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">		for (int i = 0; i &lt; s.numLiteralBlockTypes;) {</span>
+			/* Ensure that less than 256 bits read between readMoreInput. */
+<span class="fc" id="L594">			int limit = Math.min(i + 96, s.numLiteralBlockTypes);</span>
+<span class="fc bfc" id="L595" title="All 2 branches covered.">			for (; i &lt; limit; ++i) {</span>
+<span class="fc" id="L596">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L597">				s.contextModes[i] = (byte) (BitReader.readFewBits(s, 2));</span>
+			}
+<span class="fc" id="L599">			BitReader.readMoreInput(s);</span>
+<span class="fc" id="L600">		}</span>
+
+		// TODO: Reuse?
+<span class="fc" id="L603">		s.contextMap = new byte[s.numLiteralBlockTypes &lt;&lt; LITERAL_CONTEXT_BITS];</span>
+<span class="fc" id="L604">		int numLiteralTrees = decodeContextMap(s.numLiteralBlockTypes &lt;&lt; LITERAL_CONTEXT_BITS, s.contextMap, s);</span>
+<span class="fc" id="L605">		s.trivialLiteralContext = 1;</span>
+<span class="pc bpc" id="L606" title="1 of 2 branches missed.">		for (int j = 0; j &lt; s.numLiteralBlockTypes &lt;&lt; LITERAL_CONTEXT_BITS; j++) {</span>
+<span class="fc bfc" id="L607" title="All 2 branches covered.">			if (s.contextMap[j] != j &gt;&gt; LITERAL_CONTEXT_BITS) {</span>
+<span class="fc" id="L608">				s.trivialLiteralContext = 0;</span>
+<span class="fc" id="L609">				break;</span>
+			}
+		}
+
+		// TODO: Reuse?
+<span class="fc" id="L614">		s.distContextMap = new byte[s.numDistanceBlockTypes &lt;&lt; DISTANCE_CONTEXT_BITS];</span>
+<span class="fc" id="L615">		int numDistTrees = decodeContextMap(s.numDistanceBlockTypes &lt;&lt; DISTANCE_CONTEXT_BITS, s.distContextMap, s);</span>
+
+<span class="fc" id="L617">		s.hGroup0 = decodeHuffmanTreeGroup(NUM_LITERAL_CODES, numLiteralTrees, s);</span>
+<span class="fc" id="L618">		s.hGroup1 = decodeHuffmanTreeGroup(NUM_INSERT_AND_COPY_CODES, s.numCommandBlockTypes, s);</span>
+<span class="fc" id="L619">		s.hGroup2 = decodeHuffmanTreeGroup(numDistanceCodes, numDistTrees, s);</span>
+
+<span class="fc" id="L621">		s.contextMapSlice = 0;</span>
+<span class="fc" id="L622">		s.distContextMapSlice = 0;</span>
+<span class="fc" id="L623">		s.contextLookupOffset1 = (int) (s.contextModes[0]) &lt;&lt; 9;</span>
+<span class="fc" id="L624">		s.contextLookupOffset2 = s.contextLookupOffset1 + 256;</span>
+<span class="fc" id="L625">		s.literalTreeIndex = 0;</span>
+<span class="fc" id="L626">		s.literalTree = s.hGroup0[0];</span>
+<span class="fc" id="L627">		s.treeCommandOffset = s.hGroup1[0];</span>
+
+<span class="fc" id="L629">		s.rings[4] = 1;</span>
+<span class="fc" id="L630">		s.rings[5] = 0;</span>
+<span class="fc" id="L631">		s.rings[6] = 1;</span>
+<span class="fc" id="L632">		s.rings[7] = 0;</span>
+<span class="fc" id="L633">		s.rings[8] = 1;</span>
+<span class="fc" id="L634">		s.rings[9] = 0;</span>
+<span class="fc" id="L635">	}</span>
+
+	private static void copyUncompressedData(State s) {
+<span class="nc" id="L638">		final byte[] ringBuffer = s.ringBuffer;</span>
+
+		// Could happen if block ends at ring buffer end.
+<span class="nc bnc" id="L641" title="All 2 branches missed.">		if (s.metaBlockLength &lt;= 0) {</span>
+<span class="nc" id="L642">			BitReader.reload(s);</span>
+<span class="nc" id="L643">			s.runningState = BLOCK_START;</span>
+<span class="nc" id="L644">			return;</span>
+		}
+
+<span class="nc" id="L647">		int chunkLength = Math.min(s.ringBufferSize - s.pos, s.metaBlockLength);</span>
+<span class="nc" id="L648">		BitReader.copyBytes(s, ringBuffer, s.pos, chunkLength);</span>
+<span class="nc" id="L649">		s.metaBlockLength -= chunkLength;</span>
+<span class="nc" id="L650">		s.pos += chunkLength;</span>
+<span class="nc bnc" id="L651" title="All 2 branches missed.">		if (s.pos == s.ringBufferSize) {</span>
+<span class="nc" id="L652">			s.nextRunningState = COPY_UNCOMPRESSED;</span>
+<span class="nc" id="L653">			s.bytesToWrite = s.ringBufferSize;</span>
+<span class="nc" id="L654">			s.bytesWritten = 0;</span>
+<span class="nc" id="L655">			s.runningState = WRITE;</span>
+<span class="nc" id="L656">			return;</span>
+		}
+
+<span class="nc" id="L659">		BitReader.reload(s);</span>
+<span class="nc" id="L660">		s.runningState = BLOCK_START;</span>
+<span class="nc" id="L661">	}</span>
+
+	private static int writeRingBuffer(State s) {
+<span class="fc" id="L664">		int toWrite = Math.min(s.outputLength - s.outputUsed, s.bytesToWrite - s.bytesWritten);</span>
+<span class="pc bpc" id="L665" title="1 of 2 branches missed.">		if (toWrite != 0) {</span>
+<span class="fc" id="L666">			System.arraycopy(s.ringBuffer, s.bytesWritten, s.output, s.outputOffset + s.outputUsed, toWrite);</span>
+<span class="fc" id="L667">			s.outputUsed += toWrite;</span>
+<span class="fc" id="L668">			s.bytesWritten += toWrite;</span>
+		}
+
+<span class="fc bfc" id="L671" title="All 2 branches covered.">		if (s.outputUsed &lt; s.outputLength) {</span>
+<span class="fc" id="L672">			return 1;</span>
+		} else {
+<span class="fc" id="L674">			return 0;</span>
+		}
+	}
+
+	private static int[] decodeHuffmanTreeGroup(int alphabetSize, int n, State s) {
+<span class="fc" id="L679">		int[] group = new int[n + (n * HUFFMAN_TABLE_SIZE)];</span>
+<span class="fc" id="L680">		int next = n;</span>
+<span class="fc bfc" id="L681" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L682">			group[i] = next;</span>
+<span class="fc" id="L683">			Decode.readHuffmanCode(alphabetSize, group, next, s);</span>
+<span class="fc" id="L684">			next += HUFFMAN_TABLE_SIZE;</span>
+		}
+<span class="fc" id="L686">		return group;</span>
+	}
+
+	/**
+	 * Actual decompress implementation.
+	 */
+	static void decompress(State s) {
+<span class="pc bpc" id="L693" title="1 of 2 branches missed.">		if (s.runningState == UNINITIALIZED) {</span>
+<span class="nc" id="L694">			throw new IllegalStateException(&quot;Can't decompress until initialized&quot;);</span>
+		}
+<span class="pc bpc" id="L696" title="1 of 2 branches missed.">		if (s.runningState == CLOSED) {</span>
+<span class="nc" id="L697">			throw new IllegalStateException(&quot;Can't decompress after close&quot;);</span>
+		}
+<span class="fc" id="L699">		int ringBufferMask = s.ringBufferSize - 1;</span>
+<span class="fc" id="L700">		byte[] ringBuffer = s.ringBuffer;</span>
+
+<span class="fc bfc" id="L702" title="All 2 branches covered.">		while (s.runningState != FINISHED) {</span>
+			// TODO: extract cases to methods for the better readability.
+<span class="pc bpc" id="L704" title="6 of 11 branches missed.">			switch (s.runningState) {</span>
+			case BLOCK_START:
+<span class="pc bpc" id="L706" title="1 of 2 branches missed.">				if (s.metaBlockLength &lt; 0) {</span>
+<span class="nc" id="L707">					throw new BrotliRuntimeException(&quot;Invalid metablock length&quot;);</span>
+				}
+<span class="fc" id="L709">				readNextMetablockHeader(s);</span>
+				/* Ring-buffer would be reallocated here. */
+<span class="fc" id="L711">				ringBufferMask = s.ringBufferSize - 1;</span>
+<span class="fc" id="L712">				ringBuffer = s.ringBuffer;</span>
+<span class="fc" id="L713">				continue;</span>
+
+			case COMPRESSED_BLOCK_START:
+<span class="fc" id="L716">				readMetablockHuffmanCodesAndContextMaps(s);</span>
+<span class="fc" id="L717">				s.runningState = MAIN_LOOP;</span>
+				// Fall through
+
+			case MAIN_LOOP:
+<span class="fc bfc" id="L721" title="All 2 branches covered.">				if (s.metaBlockLength &lt;= 0) {</span>
+<span class="fc" id="L722">					s.runningState = BLOCK_START;</span>
+<span class="fc" id="L723">					continue;</span>
+				}
+<span class="fc" id="L725">				BitReader.readMoreInput(s);</span>
+<span class="fc bfc" id="L726" title="All 2 branches covered.">				if (s.commandBlockLength == 0) {</span>
+<span class="fc" id="L727">					decodeCommandBlockSwitch(s);</span>
+				}
+<span class="fc" id="L729">				s.commandBlockLength--;</span>
+<span class="fc" id="L730">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L731">				int cmdCode = readSymbol(s.hGroup1, s.treeCommandOffset, s);</span>
+<span class="fc" id="L732">				int rangeIdx = cmdCode &gt;&gt;&gt; 6;</span>
+<span class="fc" id="L733">				s.distanceCode = 0;</span>
+<span class="fc bfc" id="L734" title="All 2 branches covered.">				if (rangeIdx &gt;= 2) {</span>
+<span class="fc" id="L735">					rangeIdx -= 2;</span>
+<span class="fc" id="L736">					s.distanceCode = -1;</span>
+				}
+<span class="fc" id="L738">				int insertCode = INSERT_RANGE_LUT[rangeIdx] + ((cmdCode &gt;&gt;&gt; 3) &amp; 7);</span>
+<span class="fc" id="L739">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L740">				int insertBits = INSERT_LENGTH_N_BITS[insertCode];</span>
+<span class="fc" id="L741">				int insertExtra = BitReader.readBits(s, insertBits);</span>
+<span class="fc" id="L742">				s.insertLength = INSERT_LENGTH_OFFSET[insertCode] + insertExtra;</span>
+<span class="fc" id="L743">				int copyCode = COPY_RANGE_LUT[rangeIdx] + (cmdCode &amp; 7);</span>
+<span class="fc" id="L744">				BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L745">				int copyBits = COPY_LENGTH_N_BITS[copyCode];</span>
+<span class="fc" id="L746">				int copyExtra = BitReader.readBits(s, copyBits);</span>
+<span class="fc" id="L747">				s.copyLength = COPY_LENGTH_OFFSET[copyCode] + copyExtra;</span>
+
+<span class="fc" id="L749">				s.j = 0;</span>
+<span class="fc" id="L750">				s.runningState = INSERT_LOOP;</span>
+
+				// Fall through
+			case INSERT_LOOP:
+<span class="pc bpc" id="L754" title="1 of 2 branches missed.">				if (s.trivialLiteralContext != 0) {</span>
+<span class="nc bnc" id="L755" title="All 2 branches missed.">					while (s.j &lt; s.insertLength) {</span>
+<span class="nc" id="L756">						BitReader.readMoreInput(s);</span>
+<span class="nc bnc" id="L757" title="All 2 branches missed.">						if (s.literalBlockLength == 0) {</span>
+<span class="nc" id="L758">							decodeLiteralBlockSwitch(s);</span>
+						}
+<span class="nc" id="L760">						s.literalBlockLength--;</span>
+<span class="nc" id="L761">						BitReader.fillBitWindow(s);</span>
+<span class="nc" id="L762">						ringBuffer[s.pos] = (byte) readSymbol(s.hGroup0, s.literalTree, s);</span>
+<span class="nc" id="L763">						s.j++;</span>
+<span class="nc bnc" id="L764" title="All 2 branches missed.">						if (s.pos++ == ringBufferMask) {</span>
+<span class="nc" id="L765">							s.nextRunningState = INSERT_LOOP;</span>
+<span class="nc" id="L766">							s.bytesToWrite = s.ringBufferSize;</span>
+<span class="nc" id="L767">							s.bytesWritten = 0;</span>
+<span class="nc" id="L768">							s.runningState = WRITE;</span>
+<span class="nc" id="L769">							break;</span>
+						}
+					}
+				} else {
+<span class="fc" id="L773">					int prevByte1 = ringBuffer[(s.pos - 1) &amp; ringBufferMask] &amp; 0xFF;</span>
+<span class="fc" id="L774">					int prevByte2 = ringBuffer[(s.pos - 2) &amp; ringBufferMask] &amp; 0xFF;</span>
+<span class="fc bfc" id="L775" title="All 2 branches covered.">					while (s.j &lt; s.insertLength) {</span>
+<span class="fc" id="L776">						BitReader.readMoreInput(s);</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">						if (s.literalBlockLength == 0) {</span>
+<span class="fc" id="L778">							decodeLiteralBlockSwitch(s);</span>
+						}
+<span class="fc" id="L780">						int literalTreeIndex = s.contextMap[s.contextMapSlice</span>
+								+ (Context.LOOKUP[s.contextLookupOffset1 + prevByte1]
+										| Context.LOOKUP[s.contextLookupOffset2 + prevByte2])]
+								&amp; 0xFF;
+<span class="fc" id="L784">						s.literalBlockLength--;</span>
+<span class="fc" id="L785">						prevByte2 = prevByte1;</span>
+<span class="fc" id="L786">						BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L787">						prevByte1 = readSymbol(s.hGroup0, s.hGroup0[literalTreeIndex], s);</span>
+<span class="fc" id="L788">						ringBuffer[s.pos] = (byte) prevByte1;</span>
+<span class="fc" id="L789">						s.j++;</span>
+<span class="pc bpc" id="L790" title="1 of 2 branches missed.">						if (s.pos++ == ringBufferMask) {</span>
+<span class="nc" id="L791">							s.nextRunningState = INSERT_LOOP;</span>
+<span class="nc" id="L792">							s.bytesToWrite = s.ringBufferSize;</span>
+<span class="nc" id="L793">							s.bytesWritten = 0;</span>
+<span class="nc" id="L794">							s.runningState = WRITE;</span>
+<span class="nc" id="L795">							break;</span>
+						}
+<span class="fc" id="L797">					}</span>
+				}
+<span class="pc bpc" id="L799" title="1 of 2 branches missed.">				if (s.runningState != INSERT_LOOP) {</span>
+<span class="nc" id="L800">					continue;</span>
+				}
+<span class="fc" id="L802">				s.metaBlockLength -= s.insertLength;</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">				if (s.metaBlockLength &lt;= 0) {</span>
+<span class="fc" id="L804">					s.runningState = MAIN_LOOP;</span>
+<span class="fc" id="L805">					continue;</span>
+				}
+<span class="fc bfc" id="L807" title="All 2 branches covered.">				if (s.distanceCode &lt; 0) {</span>
+<span class="fc" id="L808">					BitReader.readMoreInput(s);</span>
+<span class="fc bfc" id="L809" title="All 2 branches covered.">					if (s.distanceBlockLength == 0) {</span>
+<span class="fc" id="L810">						decodeDistanceBlockSwitch(s);</span>
+					}
+<span class="fc" id="L812">					s.distanceBlockLength--;</span>
+<span class="fc" id="L813">					BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L814">					s.distanceCode = readSymbol(s.hGroup2, s.hGroup2[s.distContextMap[s.distContextMapSlice</span>
+<span class="fc bfc" id="L815" title="All 2 branches covered.">							+ (s.copyLength &gt; 4 ? 3 : s.copyLength - 2)] &amp; 0xFF], s);</span>
+<span class="fc bfc" id="L816" title="All 2 branches covered.">					if (s.distanceCode &gt;= s.numDirectDistanceCodes) {</span>
+<span class="fc" id="L817">						s.distanceCode -= s.numDirectDistanceCodes;</span>
+<span class="fc" id="L818">						int postfix = s.distanceCode &amp; s.distancePostfixMask;</span>
+<span class="fc" id="L819">						s.distanceCode &gt;&gt;&gt;= s.distancePostfixBits;</span>
+<span class="fc" id="L820">						int n = (s.distanceCode &gt;&gt;&gt; 1) + 1;</span>
+<span class="fc" id="L821">						int offset = ((2 + (s.distanceCode &amp; 1)) &lt;&lt; n) - 4;</span>
+<span class="fc" id="L822">						BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L823">						int distanceExtra = BitReader.readBits(s, n);</span>
+<span class="fc" id="L824">						s.distanceCode = s.numDirectDistanceCodes + postfix</span>
+								+ ((offset + distanceExtra) &lt;&lt; s.distancePostfixBits);
+					}
+				}
+
+				// Convert the distance code to the actual distance by possibly looking up past
+				// distances
+				// from the ringBuffer.
+<span class="fc" id="L832">				s.distance = translateShortCodes(s.distanceCode, s.rings, s.distRbIdx);</span>
+<span class="pc bpc" id="L833" title="1 of 2 branches missed.">				if (s.distance &lt; 0) {</span>
+<span class="nc" id="L834">					throw new BrotliRuntimeException(&quot;Negative distance&quot;); // COV_NF_LINE</span>
+				}
+
+<span class="pc bpc" id="L837" title="2 of 4 branches missed.">				if (s.maxDistance != s.maxBackwardDistance &amp;&amp; s.pos &lt; s.maxBackwardDistance) {</span>
+<span class="fc" id="L838">					s.maxDistance = s.pos;</span>
+				} else {
+<span class="nc" id="L840">					s.maxDistance = s.maxBackwardDistance;</span>
+				}
+
+<span class="fc" id="L843">				s.copyDst = s.pos;</span>
+<span class="fc bfc" id="L844" title="All 2 branches covered.">				if (s.distance &gt; s.maxDistance) {</span>
+<span class="fc" id="L845">					s.runningState = TRANSFORM;</span>
+<span class="fc" id="L846">					continue;</span>
+				}
+
+<span class="fc bfc" id="L849" title="All 2 branches covered.">				if (s.distanceCode &gt; 0) {</span>
+<span class="fc" id="L850">					s.rings[s.distRbIdx &amp; 3] = s.distance;</span>
+<span class="fc" id="L851">					s.distRbIdx++;</span>
+				}
+
+<span class="pc bpc" id="L854" title="1 of 2 branches missed.">				if (s.copyLength &gt; s.metaBlockLength) {</span>
+<span class="nc" id="L855">					throw new BrotliRuntimeException(&quot;Invalid backward reference&quot;); // COV_NF_LINE</span>
+				}
+<span class="fc" id="L857">				s.j = 0;</span>
+<span class="fc" id="L858">				s.runningState = COPY_LOOP;</span>
+				// fall through
+			case COPY_LOOP:
+<span class="fc" id="L861">				int src = (s.pos - s.distance) &amp; ringBufferMask;</span>
+<span class="fc" id="L862">				int dst = s.pos;</span>
+<span class="fc" id="L863">				int copyLength = s.copyLength - s.j;</span>
+<span class="fc" id="L864">				int srcEnd = src + copyLength;</span>
+<span class="fc" id="L865">				int dstEnd = dst + copyLength;</span>
+<span class="pc bpc" id="L866" title="2 of 4 branches missed.">				if ((srcEnd &lt; ringBufferMask) &amp;&amp; (dstEnd &lt; ringBufferMask)) {</span>
+<span class="pc bpc" id="L867" title="1 of 6 branches missed.">					if (copyLength &lt; 12 || (srcEnd &gt; dst &amp;&amp; dstEnd &gt; src)) {</span>
+<span class="fc bfc" id="L868" title="All 2 branches covered.">						for (int k = 0; k &lt; copyLength; ++k) {</span>
+<span class="fc" id="L869">							ringBuffer[dst++] = ringBuffer[src++];</span>
+						}
+					} else {
+<span class="fc" id="L872">						Utils.copyBytesWithin(ringBuffer, dst, src, srcEnd);</span>
+					}
+<span class="fc" id="L874">					s.j += copyLength;</span>
+<span class="fc" id="L875">					s.metaBlockLength -= copyLength;</span>
+<span class="fc" id="L876">					s.pos += copyLength;</span>
+				} else {
+<span class="nc bnc" id="L878" title="All 2 branches missed.">					for (; s.j &lt; s.copyLength;) {</span>
+<span class="nc" id="L879">						ringBuffer[s.pos] = ringBuffer[(s.pos - s.distance) &amp; ringBufferMask];</span>
+<span class="nc" id="L880">						s.metaBlockLength--;</span>
+<span class="nc" id="L881">						s.j++;</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">						if (s.pos++ == ringBufferMask) {</span>
+<span class="nc" id="L883">							s.nextRunningState = COPY_LOOP;</span>
+<span class="nc" id="L884">							s.bytesToWrite = s.ringBufferSize;</span>
+<span class="nc" id="L885">							s.bytesWritten = 0;</span>
+<span class="nc" id="L886">							s.runningState = WRITE;</span>
+<span class="nc" id="L887">							break;</span>
+						}
+					}
+				}
+<span class="pc bpc" id="L891" title="1 of 2 branches missed.">				if (s.runningState == COPY_LOOP) {</span>
+<span class="fc" id="L892">					s.runningState = MAIN_LOOP;</span>
+				}
+				continue;
+
+			case TRANSFORM:
+<span class="pc bpc" id="L897" title="2 of 4 branches missed.">				if (s.copyLength &gt;= MIN_WORD_LENGTH &amp;&amp; s.copyLength &lt;= MAX_WORD_LENGTH) {</span>
+<span class="fc" id="L898">					int offset = DICTIONARY_OFFSETS_BY_LENGTH[s.copyLength];</span>
+<span class="fc" id="L899">					int wordId = s.distance - s.maxDistance - 1;</span>
+<span class="fc" id="L900">					int shift = DICTIONARY_SIZE_BITS_BY_LENGTH[s.copyLength];</span>
+<span class="fc" id="L901">					int mask = (1 &lt;&lt; shift) - 1;</span>
+<span class="fc" id="L902">					int wordIdx = wordId &amp; mask;</span>
+<span class="fc" id="L903">					int transformIdx = wordId &gt;&gt;&gt; shift;</span>
+<span class="fc" id="L904">					offset += wordIdx * s.copyLength;</span>
+<span class="pc bpc" id="L905" title="1 of 2 branches missed.">					if (transformIdx &lt; Transform.NUM_TRANSFORMS) {</span>
+<span class="fc" id="L906">						int len = Transform.transformDictionaryWord(ringBuffer, s.copyDst, Dictionary.getData(), offset,</span>
+								s.copyLength, transformIdx);
+<span class="fc" id="L908">						s.copyDst += len;</span>
+<span class="fc" id="L909">						s.pos += len;</span>
+<span class="fc" id="L910">						s.metaBlockLength -= len;</span>
+<span class="pc bpc" id="L911" title="1 of 2 branches missed.">						if (s.copyDst &gt;= s.ringBufferSize) {</span>
+<span class="nc" id="L912">							s.nextRunningState = COPY_WRAP_BUFFER;</span>
+<span class="nc" id="L913">							s.bytesToWrite = s.ringBufferSize;</span>
+<span class="nc" id="L914">							s.bytesWritten = 0;</span>
+<span class="nc" id="L915">							s.runningState = WRITE;</span>
+<span class="nc" id="L916">							continue;</span>
+						}
+<span class="fc" id="L918">					} else {</span>
+<span class="nc" id="L919">						throw new BrotliRuntimeException(&quot;Invalid backward reference&quot;); // COV_NF_LINE</span>
+					}
+<span class="fc" id="L921">				} else {</span>
+<span class="nc" id="L922">					throw new BrotliRuntimeException(&quot;Invalid backward reference&quot;); // COV_NF_LINE</span>
+				}
+<span class="fc" id="L924">				s.runningState = MAIN_LOOP;</span>
+<span class="fc" id="L925">				continue;</span>
+
+			case COPY_WRAP_BUFFER:
+<span class="nc" id="L928">				Utils.copyBytesWithin(ringBuffer, 0, s.ringBufferSize, s.copyDst);</span>
+<span class="nc" id="L929">				s.runningState = MAIN_LOOP;</span>
+<span class="nc" id="L930">				continue;</span>
+
+			case READ_METADATA:
+<span class="nc bnc" id="L933" title="All 2 branches missed.">				while (s.metaBlockLength &gt; 0) {</span>
+<span class="nc" id="L934">					BitReader.readMoreInput(s);</span>
+					// Optimize
+<span class="nc" id="L936">					BitReader.fillBitWindow(s);</span>
+<span class="nc" id="L937">					BitReader.readFewBits(s, 8);</span>
+<span class="nc" id="L938">					s.metaBlockLength--;</span>
+				}
+<span class="nc" id="L940">				s.runningState = BLOCK_START;</span>
+<span class="nc" id="L941">				continue;</span>
+
+			case COPY_UNCOMPRESSED:
+<span class="nc" id="L944">				copyUncompressedData(s);</span>
+<span class="nc" id="L945">				continue;</span>
+
+			case WRITE:
+<span class="fc bfc" id="L948" title="All 2 branches covered.">				if (writeRingBuffer(s) == 0) {</span>
+					// Output buffer is full.
+<span class="fc" id="L950">					return;</span>
+				}
+<span class="pc bpc" id="L952" title="1 of 2 branches missed.">				if (s.pos &gt;= s.maxBackwardDistance) {</span>
+<span class="nc" id="L953">					s.maxDistance = s.maxBackwardDistance;</span>
+				}
+<span class="fc" id="L955">				s.pos &amp;= ringBufferMask;</span>
+<span class="fc" id="L956">				s.runningState = s.nextRunningState;</span>
+<span class="fc" id="L957">				continue;</span>
+
+			default:
+<span class="nc" id="L960">				throw new BrotliRuntimeException(&quot;Unexpected state &quot; + s.runningState);</span>
+			}
+		}
+<span class="pc bpc" id="L963" title="1 of 2 branches missed.">		if (s.runningState == FINISHED) {</span>
+<span class="pc bpc" id="L964" title="1 of 2 branches missed.">			if (s.metaBlockLength &lt; 0) {</span>
+<span class="nc" id="L965">				throw new BrotliRuntimeException(&quot;Invalid metablock length&quot;);</span>
+			}
+<span class="fc" id="L967">			BitReader.jumpToByteBoundary(s);</span>
+<span class="fc" id="L968">			BitReader.checkHealth(s, 1);</span>
+		}
+<span class="fc" id="L970">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

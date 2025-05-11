@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskChronology.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chronology</a> &gt; <span class="el_source">TaskChronology.java</span></div><h1>TaskChronology.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.chronology;
+
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.project.Load;
+import net.sourceforge.plantuml.project.core.AbstractTask;
+import net.sourceforge.plantuml.project.core.Resource;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskCode;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.url.Url;
+
+public class TaskChronology extends AbstractTask implements Task {
+
+	private Display note;
+
+	private Url url;
+	private CenterBorderColor[] colors;
+
+	private Day start;
+	private Day end;
+
+	public void setUrl(Url url) {
+<span class="nc" id="L62">		this.url = url;</span>
+<span class="nc" id="L63">	}</span>
+
+	public TaskChronology(StyleBuilder styleBuilder, TaskCode code) {
+<span class="nc" id="L66">		super(styleBuilder, code);</span>
+<span class="nc" id="L67">	}</span>
+
+	@Override
+	public void setStart(Day start) {
+<span class="nc" id="L71">		this.start = start;</span>
+
+<span class="nc" id="L73">	}</span>
+
+	@Override
+	public Day getStart() {
+<span class="nc" id="L77">		return this.start;</span>
+	}
+
+	@Override
+	public void setEnd(Day end) {
+<span class="nc" id="L82">		this.end = end;</span>
+<span class="nc" id="L83">	}</span>
+
+	@Override
+	public Day getEnd() {
+<span class="nc" id="L87">		return this.end;</span>
+	}
+
+	@Override
+	public Load getLoad() {
+<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setLoad(Load load) {
+<span class="nc" id="L97">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void addResource(Resource resource, int percentage) {
+<span class="nc" id="L102">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void setDiamond(boolean diamond) {
+<span class="nc" id="L107">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public boolean isDiamond() {
+<span class="nc" id="L112">		return false;</span>
+	}
+
+	@Override
+	public void setCompletion(int completion) {
+<span class="nc" id="L117">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void addPause(Day pause) {
+<span class="nc" id="L122">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public void addPause(DayOfWeek pause) {
+<span class="nc" id="L127">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public boolean isAssignedTo(Resource res) {
+<span class="nc" id="L132">		throw new UnsupportedOperationException();</span>
+	}
+
+//	@Override
+//	public int getLoadAt(Day instant) {
+//		if (isPaused(instant))
+//			return 0;
+//
+//		LoadPlanable result = defaultPlan;
+//		if (resources.size() &gt; 0)
+//			result = PlanUtils.multiply(defaultPlan, getResourcePlan());
+//
+//		return result.getLoadAt(instant);
+//	}
+//
+//	private boolean isPaused(Day instant) {
+//		if (pausedDay.contains(instant))
+//			return true;
+//
+//		if (pausedDayOfWeek(instant))
+//			return true;
+//
+//		return false;
+//	}
+//
+//	private boolean pausedDayOfWeek(Day instant) {
+//		for (DayOfWeek dayOfWeek : pausedDayOfWeek)
+//			if (instant.getDayOfWeek() == dayOfWeek)
+//				return true;
+//
+//		return false;
+//	}
+//
+//	public int loadForResource(Resource res, Day instant) {
+//		if (resources.keySet().contains(res) &amp;&amp; instant.compareTo(getStart()) &gt;= 0
+//				&amp;&amp; instant.compareTo(getEnd()) &lt;= 0) {
+//			if (isPaused(instant))
+//				return 0;
+//
+//			if (res.isClosedAt(instant))
+//				return 0;
+//
+//			return resources.get(res);
+//		}
+//		return 0;
+//	}
+//
+//	@Override
+//	public void addPause(Day pause) {
+//		this.pausedDay.add(pause);
+//	}
+//
+//	@Override
+//	public void addPause(DayOfWeek pause) {
+//		this.pausedDayOfWeek.add(pause);
+//	}
+//
+//	private LoadPlanable getResourcePlan() {
+//		if (resources.size() == 0)
+//			throw new IllegalStateException();
+//
+//		return new LoadPlanable() {
+//			public int getLoadAt(Day instant) {
+//				int result = 0;
+//				for (Map.Entry&lt;Resource, Integer&gt; ent : resources.entrySet()) {
+//					final Resource res = ent.getKey();
+//					if (res.isClosedAt(instant))
+//						continue;
+//
+//					final int percentage = ent.getValue();
+//					result += percentage;
+//				}
+//				return result;
+//			}
+//
+//			@Override
+//			public Day getLastDayIfAny() {
+//				return TaskChronology.this.getLastDayIfAny();
+//			}
+//		};
+//	}
+//
+//	@Override
+//	public Day getLastDayIfAny() {
+//		Day result = null;
+//
+//		for (Resource res : resources.keySet()) {
+//			if (res.getLastDayIfAny() == null)
+//				return null;
+//
+//			if (result == null || result.compareTo(res.getLastDayIfAny()) &lt; 0)
+//				result = res.getLastDayIfAny();
+//		}
+//
+//		return result;
+//	}
+//
+//	public String getPrettyDisplay() {
+//		if (resources.size() &gt; 0) {
+//			final StringBuilder result = new StringBuilder(getCode().getSimpleDisplay());
+//			result.append(&quot; &quot;);
+//			for (Iterator&lt;Map.Entry&lt;Resource, Integer&gt;&gt; it = resources.entrySet().iterator(); it.hasNext();) {
+//				final Map.Entry&lt;Resource, Integer&gt; ent = it.next();
+//				result.append(&quot;{&quot;);
+//				result.append(ent.getKey().getName());
+//				final int percentage = ent.getValue();
+//				if (percentage != 100)
+//					result.append(&quot;:&quot; + percentage + &quot;%&quot;);
+//
+//				result.append(&quot;}&quot;);
+//				if (it.hasNext())
+//					result.append(&quot; &quot;);
+//
+//			}
+//			return result.toString();
+//		}
+//		return getCode().getSimpleDisplay();
+//	}
+//
+//	@Override
+//	public String toString() {
+//		return getCode().toString();
+//	}
+//
+//	public String debug() {
+//		return &quot;&quot; + getStart() + &quot; ---&gt; &quot; + getEnd() + &quot;   [&quot; + getLoad() + &quot;]&quot;;
+//	}
+//
+//	@Override
+//	public Day getStart() {
+//		Day result = (Day) solver.getData(TaskAttribute.START);
+//		if (diamond == false)
+//			while (getLoadAt(result) == 0)
+//				result = result.increment();
+//
+//		return result;
+//	}
+//
+//	@Override
+//	public Day getEnd() {
+//		return (Day) solver.getData(TaskAttribute.END);
+//	}
+//
+//	@Override
+//	public Load getLoad() {
+//		return (Load) solver.getData(TaskAttribute.LOAD);
+//	}
+//
+//	@Override
+//	public void setLoad(Load load) {
+//		solver.setData(TaskAttribute.LOAD, load);
+//	}
+//
+//	@Override
+//	public void setStart(Day start) {
+//		solver.setData(TaskAttribute.START, start);
+//	}
+//
+//	@Override
+//	public void setEnd(Day end) {
+//		solver.setData(TaskAttribute.END, end);
+//	}
+
+	@Override
+	public void setColors(CenterBorderColor... colors) {
+<span class="nc" id="L297">		this.colors = colors;</span>
+<span class="nc" id="L298">	}</span>
+
+//	@Override
+//	public void addResource(Resource resource, int percentage) {
+//		this.resources.put(resource, percentage);
+//	}
+//
+//	@Override
+//	public void setDiamond(boolean diamond) {
+//		this.diamond = diamond;
+//	}
+//
+//	@Override
+//	public boolean isDiamond() {
+//		return this.diamond;
+//	}
+//
+//	@Override
+//	public void setCompletion(int completion) {
+//		this.completion = completion;
+//	}
+//
+//	public final Url getUrl() {
+//		return url;
+//	}
+//
+//	public final CenterBorderColor getColors() {
+//		if (colors == null)
+//			return null;
+//
+//		if (colors.length == 1)
+//			return colors[0];
+//
+//		return colors[0].unlinearTo(colors[1], completion);
+//	}
+//
+//	public final int getCompletion() {
+//		return completion;
+//	}
+//
+//	public final Collection&lt;Day&gt; getAllPaused() {
+//		final SortedSet&lt;Day&gt; result = new TreeSet&lt;&gt;(pausedDay);
+//		for (DayOfWeek dayOfWeek : pausedDayOfWeek)
+//			addAll(result, dayOfWeek);
+//
+//		return Collections.unmodifiableCollection(result);
+//	}
+//
+//	private void addAll(SortedSet&lt;Day&gt; result, DayOfWeek dayOfWeek) {
+//		final Day start = getStart();
+//		final Day end = getEnd();
+//		for (Day current = start; current.compareTo(end) &lt;= 0; current = current.increment())
+//			if (current.getDayOfWeek() == dayOfWeek)
+//				result.add(current);
+//
+//	}
+
+	@Override
+	public void setNote(Display note, Stereotype stereotype) {
+<span class="nc" id="L357">		this.note = note;</span>
+<span class="nc" id="L358">	}</span>
+
+	public Display getNote() {
+<span class="nc" id="L361">		return note;</span>
+	}
+
+//	public LoadPlanable getDefaultPlan() {
+//		return defaultPlan;
+//	}
+//
+//	@Override
+//	public boolean isAssignedTo(Resource res) {
+//		return resources.containsKey(res);
+//	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

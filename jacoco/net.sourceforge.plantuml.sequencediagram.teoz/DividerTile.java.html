@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DividerTile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">DividerTile.java</span></div><h1>DividerTile.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.Divider;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class DividerTile extends AbstractTile implements Tile {
+
+	private final Rose skin;
+	private final ISkinParam skinParam;
+	private final Divider divider;
+	private final Real xorigin;
+	private final TileArguments tileArguments;
+	private final YGauge yGauge;
+
+	public Event getEvent() {
+<span class="fc" id="L62">		return divider;</span>
+	}
+
+	public DividerTile(Divider divider, TileArguments tileArguments, YGauge currentY) {
+<span class="fc" id="L66">		super(tileArguments.getStringBounder(), currentY);</span>
+<span class="fc" id="L67">		this.tileArguments = tileArguments;</span>
+<span class="fc" id="L68">		this.divider = divider;</span>
+<span class="fc" id="L69">		this.skin = tileArguments.getSkin();</span>
+<span class="fc" id="L70">		this.skinParam = tileArguments.getSkinParam();</span>
+<span class="fc" id="L71">		this.xorigin = tileArguments.getXOrigin();</span>
+<span class="fc" id="L72">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L73">	}</span>
+
+	@Override
+	public YGauge getYGauge() {
+<span class="nc" id="L77">		return yGauge;</span>
+	}
+
+	private Component getComponent(StringBounder stringBounder) {
+<span class="fc" id="L81">		final Component comp = skin.createComponent(divider.getUsedStyles(), ComponentType.DIVIDER, null, skinParam,</span>
+<span class="fc" id="L82">				divider.getText());</span>
+<span class="fc" id="L83">		return comp;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L87">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L88">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L89">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L90">		final Area area = Area.create(</span>
+<span class="fc" id="L91">				tileArguments.getBorder2() - tileArguments.getBorder1() - xorigin.getCurrentValue(), dim.getHeight());</span>
+
+<span class="fc" id="L93">		ug = ug.apply(UTranslate.dx(tileArguments.getBorder1()));</span>
+<span class="fc" id="L94">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L95">	}</span>
+
+	public double getPreferredHeight() {
+<span class="fc" id="L98">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L99">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L100">		return dim.getHeight();</span>
+	}
+
+	public void addConstraints() {
+		// final Component comp = getComponent(stringBounder);
+		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		// final double width = dim.getWidth();
+<span class="fc" id="L107">	}</span>
+
+	public Real getMinX() {
+<span class="fc" id="L110">		return xorigin;</span>
+	}
+
+	public Real getMaxX() {
+<span class="fc" id="L114">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L115">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L116">		return xorigin.addFixed(dim.getWidth());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

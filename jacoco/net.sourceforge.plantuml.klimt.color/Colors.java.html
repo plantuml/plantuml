@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Colors.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">Colors.java</span></div><h1>Colors.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.color;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.decoration.LinkStyle;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.SkinParamColors;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class Colors {
+	// ::remove file when __HAXE__
+
+<span class="fc" id="L55">	private final Map&lt;ColorType, HColor&gt; map = new EnumMap&lt;ColorType, HColor&gt;(ColorType.class);</span>
+<span class="fc" id="L56">	private LinkStyle lineStyle = null;</span>
+<span class="fc" id="L57">	private Boolean shadowing = null;</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L61">		return map.toString() + &quot; &quot; + lineStyle;</span>
+	}
+
+	public static Colors empty() {
+<span class="fc" id="L65">		return new Colors();</span>
+	}
+
+	public boolean isEmpty() {
+<span class="nc" id="L69">		return map.isEmpty();</span>
+	}
+
+	private Colors copy() {
+<span class="fc" id="L73">		final Colors result = new Colors();</span>
+<span class="fc" id="L74">		result.map.putAll(this.map);</span>
+<span class="fc" id="L75">		result.lineStyle = this.lineStyle;</span>
+<span class="fc" id="L76">		return result;</span>
+	}
+
+<span class="fc" id="L79">	private Colors() {</span>
+<span class="fc" id="L80">	}</span>
+
+<span class="fc" id="L82">	public Colors(String data, HColorSet set, ColorType mainType) throws NoSuchColorException {</span>
+<span class="fc" id="L83">		data = StringUtils.goLowerCase(data).replaceAll(&quot;#&quot;, &quot;&quot;);</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (final StringTokenizer st = new StringTokenizer(data, &quot;;&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L86">			final String s = st.nextToken();</span>
+<span class="fc" id="L87">			final int x = s.indexOf(':');</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			if (x == -1) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">				if (s.contains(&quot;.&quot;) == false)</span>
+<span class="fc" id="L90">					map.put(mainType, set.getColor(s));</span>
+
+			} else {
+<span class="fc" id="L93">				final String name = s.substring(0, x);</span>
+<span class="fc" id="L94">				final String value = s.substring(x + 1);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;shadowing&quot;)) {</span>
+<span class="nc" id="L96">					this.shadowing = value.equalsIgnoreCase(&quot;true&quot;);</span>
+				} else {
+<span class="fc" id="L98">					final ColorType key = ColorType.getType(name);</span>
+<span class="fc" id="L99">					final HColor color = set.getColor(value);</span>
+<span class="fc" id="L100">					map.put(key, color);</span>
+				}
+			}
+<span class="fc" id="L103">		}</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (data.contains(&quot;line.dashed&quot;))</span>
+<span class="nc" id="L105">			lineStyle = LinkStyle.DASHED();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.dotted&quot;))</span>
+<span class="nc" id="L107">			lineStyle = LinkStyle.DOTTED();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.bold&quot;))</span>
+<span class="nc" id="L109">			lineStyle = LinkStyle.BOLD();</span>
+
+<span class="fc" id="L111">	}</span>
+
+	public HColor getColor(ColorType key) {
+<span class="fc" id="L114">		return map.get(Objects.requireNonNull(key));</span>
+	}
+
+	public HColor getColor(ColorType key1, ColorType key2) {
+<span class="fc" id="L118">		final HColor result = getColor(key1);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L120">			return result;</span>
+
+<span class="fc" id="L122">		return getColor(key2);</span>
+	}
+
+	public UStroke getSpecificLineStroke() {
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (lineStyle == null)</span>
+<span class="fc" id="L127">			return null;</span>
+
+<span class="nc" id="L129">		return lineStyle.getStroke3();</span>
+	}
+
+	public Colors add(ColorType type, HColor color) {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (color == null)</span>
+<span class="fc" id="L134">			return this;</span>
+
+<span class="fc" id="L136">		final Colors result = copy();</span>
+<span class="fc" id="L137">		result.map.put(type, color);</span>
+<span class="fc" id="L138">		return result;</span>
+	}
+
+	private Colors add(ColorType colorType, Colors other) {
+<span class="nc" id="L142">		final Colors result = copy();</span>
+<span class="nc" id="L143">		result.map.putAll(other.map);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (other.lineStyle != null)</span>
+<span class="nc" id="L145">			result.lineStyle = other.lineStyle;</span>
+
+<span class="nc" id="L147">		return result;</span>
+	}
+
+	public final LinkStyle getLineStyle() {
+<span class="nc" id="L151">		return lineStyle;</span>
+	}
+
+	public ISkinParam mute(ISkinParam skinParam) {
+<span class="fc" id="L155">		return new SkinParamColors(skinParam, this);</span>
+	}
+
+	public Colors addLegacyStroke(String s) {
+<span class="nc" id="L159">		final Colors result = copy();</span>
+<span class="nc" id="L160">		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(Objects.requireNonNull(s)));</span>
+<span class="nc" id="L161">		return result;</span>
+
+	}
+
+	public static UGraphic applyStroke(UGraphic ug, Colors colors) {
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (colors == null)</span>
+<span class="nc" id="L167">			return ug;</span>
+
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (colors.lineStyle == null)</span>
+<span class="fc" id="L170">			return ug;</span>
+
+<span class="nc" id="L172">		return ug.apply(colors.lineStyle.getStroke3());</span>
+	}
+
+	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param)
+			throws NoSuchColorException {
+<span class="nc" id="L177">		Objects.requireNonNull(stereotype);</span>
+<span class="nc" id="L178">		final ColorType colorType = Objects.requireNonNull(Objects.requireNonNull(param).getColorType());</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (getColor(colorType) != null)</span>
+<span class="nc" id="L180">			return this;</span>
+
+<span class="nc" id="L182">		final Colors colors = skinParam.getColors(param, stereotype);</span>
+<span class="nc" id="L183">		return add(colorType, colors);</span>
+	}
+
+	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, ColorParam... params)
+			throws NoSuchColorException {
+<span class="nc" id="L188">		Objects.requireNonNull(stereotype);</span>
+<span class="nc" id="L189">		Colors result = this;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (ColorParam param : Objects.requireNonNull(params))</span>
+<span class="nc" id="L191">			result = result.applyStereotype(stereotype, skinParam, param);</span>
+
+<span class="nc" id="L193">		result.shadowing = skinParam.shadowingForNote(stereotype);</span>
+<span class="nc" id="L194">		return result;</span>
+	}
+
+	public Boolean getShadowing() {
+<span class="nc" id="L198">		return shadowing;</span>
+	}
+
+	public UStroke muteStroke(UStroke stroke) {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (lineStyle == null)</span>
+<span class="nc" id="L203">			return stroke;</span>
+
+<span class="nc" id="L205">		return lineStyle.muteStroke(stroke);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

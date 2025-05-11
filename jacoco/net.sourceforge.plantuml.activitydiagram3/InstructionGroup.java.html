@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstructionGroup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">InstructionGroup.java</span></div><h1>InstructionGroup.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.util.Collections;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNotes;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileGroup;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+public class InstructionGroup extends AbstractInstruction implements Instruction, InstructionCollection {
+
+	private final InstructionList list;
+	private final Instruction parent;
+	private final HColor backColor;
+	private final LinkRendering linkRendering;
+	private final USymbol type;
+
+	private final Display title;
+<span class="nc" id="L70">	private PositionedNote note = null;</span>
+	private final Style style;
+
+	@Override
+	public boolean containsBreak() {
+<span class="nc" id="L75">		return list.containsBreak();</span>
+	}
+
+	public InstructionGroup(Instruction parent, Display title, HColor backColor, Swimlane swimlane,
+<span class="nc" id="L79">			LinkRendering linkRendering, USymbol type, Style style) {</span>
+<span class="nc" id="L80">		this.list = new InstructionList(swimlane);</span>
+<span class="nc" id="L81">		this.type = type;</span>
+<span class="nc" id="L82">		this.linkRendering = linkRendering;</span>
+<span class="nc" id="L83">		this.parent = parent;</span>
+<span class="nc" id="L84">		this.title = title;</span>
+<span class="nc" id="L85">		this.style = style;</span>
+<span class="nc" id="L86">		this.backColor = backColor;</span>
+<span class="nc" id="L87">	}</span>
+
+	@Override
+	public CommandExecutionResult add(Instruction ins) {
+<span class="nc" id="L91">		return list.add(ins);</span>
+	}
+
+	// ::comment when __CORE__
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+<span class="nc" id="L97">		Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L98">		return new GtileGroup(tmp, title, null, HColors.BLUE, backColor, tmp.skinParam(), type, style);</span>
+	}
+	// ::done
+
+	@Override
+	public Ftile createFtile(FtileFactory factory) {
+<span class="nc" id="L104">		Ftile tmp = list.createFtile(factory);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (note != null)</span>
+<span class="nc" id="L106">			tmp = new FtileWithNotes(tmp, Collections.singleton(note), VerticalAlignment.CENTER);</span>
+
+<span class="nc" id="L108">		return factory.createGroup(tmp, title, backColor, null, type, style);</span>
+	}
+
+	public Instruction getParent() {
+<span class="nc" id="L112">		return parent;</span>
+	}
+
+	@Override
+	final public boolean kill() {
+<span class="nc" id="L117">		return list.kill();</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="nc" id="L122">		return linkRendering;</span>
+	}
+
+	@Override
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (list.isEmpty()) {</span>
+<span class="nc" id="L128">			this.note = new PositionedNote(note, position, type, swimlaneNote, colors, stereotype);</span>
+<span class="nc" id="L129">			return true;</span>
+		}
+<span class="nc" id="L131">		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	}
+
+	@Override
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L136">		return list.getSwimlanes();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L141">		return list.getSwimlaneIn();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L146">		return list.getSwimlaneOut();</span>
+	}
+
+	@Override
+	public Instruction getLast() {
+<span class="nc" id="L151">		return list.getLast();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

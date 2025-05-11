@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>decomp__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">decomp__c.java</span></div><h1>decomp__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.node__c.agfstnode;
+import static gen.lib.cgraph.node__c.agnxtnode;
+import static gen.lib.common.utils__c.UF_find;
+import static smetana.core.Macro.GD_comp;
+import static smetana.core.Macro.GD_n_nodes;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_rankleader;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_flat_in;
+import static smetana.core.Macro.ND_flat_out;
+import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_mark;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_prev;
+import static smetana.core.Macro.ND_rank;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_elist;
+import smetana.core.CArrayOfStar;
+import smetana.core.Globals;
+import smetana.core.ZType;
+
+<span class="nc" id="L79">public class decomp__c {</span>
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/decomp.c&quot;, name=&quot;begin_component&quot;, key=&quot;7ggrwt0f912kp1marrxdjq155&quot;, definition=&quot;static void  begin_component(void)&quot;)
+public static void begin_component(Globals zz) {
+<span class="fc" id="L86">ENTERING(&quot;7ggrwt0f912kp1marrxdjq155&quot;,&quot;begin_component&quot;);</span>
+try {
+<span class="fc" id="L88">    GD_nlist(zz.G_decomp, null);</span>
+<span class="fc" id="L89">    zz.Last_node_decomp = null;</span>
+} finally {
+<span class="fc" id="L91">LEAVING(&quot;7ggrwt0f912kp1marrxdjq155&quot;,&quot;begin_component&quot;);</span>
+}
+<span class="fc" id="L93">}</span>
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/decomp.c&quot;, name=&quot;add_to_component&quot;, key=&quot;7icc6b2pvnj6te1yndbel47gg&quot;, definition=&quot;static void  add_to_component(node_t * n)&quot;)
+public static void add_to_component(Globals zz, ST_Agnode_s n) {
+<span class="fc" id="L101">ENTERING(&quot;7icc6b2pvnj6te1yndbel47gg&quot;,&quot;add_to_component&quot;);</span>
+try {
+<span class="fc" id="L103">    GD_n_nodes(zz.G_decomp, GD_n_nodes(zz.G_decomp)+1);</span>
+<span class="fc" id="L104">    ND_mark(n, zz.Cmark);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">    if (zz.Last_node_decomp!=null) {</span>
+<span class="fc" id="L106">	ND_prev(n, zz.Last_node_decomp);</span>
+<span class="fc" id="L107">	ND_next(zz.Last_node_decomp, n);</span>
+    } else {
+<span class="fc" id="L109">	ND_prev(n, null);</span>
+<span class="fc" id="L110">	GD_nlist(zz.G_decomp, n);</span>
+    }
+<span class="fc" id="L112">    zz.Last_node_decomp = n;</span>
+<span class="fc" id="L113">    ND_next(n, null);</span>
+} finally {
+<span class="fc" id="L115">LEAVING(&quot;7icc6b2pvnj6te1yndbel47gg&quot;,&quot;add_to_component&quot;);</span>
+}
+<span class="fc" id="L117">}</span>
+
+
+
+@Difficult
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/decomp.c&quot;, name=&quot;end_component&quot;, key=&quot;5o8hxpr6ppi15pinuy79m7u04&quot;, definition=&quot;static void  end_component(void)&quot;)
+public static void end_component(Globals zz) {
+<span class="fc" id="L125">ENTERING(&quot;5o8hxpr6ppi15pinuy79m7u04&quot;,&quot;end_component&quot;);</span>
+try {
+    int i;
+    
+<span class="fc" id="L129">    i = GD_comp(zz.G_decomp).size++;    </span>
+<span class="fc" id="L130">    GD_comp(zz.G_decomp).list = CArrayOfStar.&lt;ST_Agnode_s&gt;REALLOC(GD_comp(zz.G_decomp).size, GD_comp(zz.G_decomp).list, ZType.ST_Agnode_s);</span>
+<span class="fc" id="L131">    GD_comp(zz.G_decomp).list.set_(i, GD_nlist(zz.G_decomp));</span>
+} finally {
+<span class="fc" id="L133">LEAVING(&quot;5o8hxpr6ppi15pinuy79m7u04&quot;,&quot;end_component&quot;);</span>
+}
+<span class="fc" id="L135">}</span>
+
+
+
+@Difficult
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/decomp.c&quot;, name=&quot;search_component&quot;, key=&quot;c5u5lnfbu0pmlk6vsvyrdj8ep&quot;, definition=&quot;static void search_component(graph_t * g, node_t * n)&quot;)
+public static void search_component(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
+<span class="fc" id="L143">ENTERING(&quot;c5u5lnfbu0pmlk6vsvyrdj8ep&quot;,&quot;search_component&quot;);</span>
+try {
+    int c, i;
+<span class="fc" id="L146">    final ST_elist vec[] = new ST_elist[] {new ST_elist(),new ST_elist(),new ST_elist(),new ST_elist()};</span>
+    ST_Agnode_s other;
+    ST_Agedge_s e;
+    
+<span class="fc" id="L150">    add_to_component(zz, n);</span>
+<span class="fc" id="L151">    vec[0].___(ND_out(n));</span>
+<span class="fc" id="L152">    vec[1].___(ND_in(n));</span>
+<span class="fc" id="L153">    vec[2].___(ND_flat_out(n));</span>
+<span class="fc" id="L154">    vec[3].___(ND_flat_in(n));</span>
+    
+<span class="fc bfc" id="L156" title="All 2 branches covered.">    for (c = 0; c &lt;= 3; c++) {</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">    	if (vec[c].list != null)</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">    	    for (i = 0; (e = (ST_Agedge_s) vec[c].list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if ((other = aghead(e))== n)</span>
+<span class="fc" id="L160">		    other = agtail(e);</span>
+<span class="pc bpc" id="L161" title="1 of 4 branches missed.">		if ((ND_mark(other) != zz.Cmark) &amp;&amp; (other == UF_find(other)))</span>
+<span class="fc" id="L162">		    search_component(zz, g, other);</span>
+	    }
+    }
+} finally {
+<span class="fc" id="L166">LEAVING(&quot;c5u5lnfbu0pmlk6vsvyrdj8ep&quot;,&quot;search_component&quot;);</span>
+}
+<span class="fc" id="L168">}</span>
+
+
+
+@Difficult
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/decomp.c&quot;, name=&quot;decompose&quot;, key=&quot;2t7r964kqtl5qrl7i57i22tqy&quot;, definition=&quot;void decompose(graph_t * g, int pass)&quot;)
+public static void decompose(Globals zz, ST_Agraph_s g, int pass) {
+<span class="fc" id="L176">ENTERING(&quot;2t7r964kqtl5qrl7i57i22tqy&quot;,&quot;decompose&quot;);</span>
+try {
+    ST_Agraph_s subg;
+    ST_Agnode_s n, v;
+    
+    
+<span class="fc" id="L182">    zz.G_decomp = g;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">    if (++zz.Cmark == 0)</span>
+<span class="nc" id="L184">	zz.Cmark = 1;</span>
+<span class="fc" id="L185">    GD_comp(g).size = 0;</span>
+<span class="fc" id="L186">    GD_n_nodes(g, 0);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc" id="L188">	v = n;</span>
+<span class="fc bfc" id="L189" title="All 4 branches covered.">	if ((pass &gt; 0) &amp;&amp; (subg = ND_clust(v))!=null)</span>
+<span class="fc" id="L190">	    v = GD_rankleader(subg).get_(ND_rank(v));</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">	else if (v != UF_find(v))</span>
+<span class="fc" id="L192">	    continue;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">	if (ND_mark(v) != zz.Cmark) {</span>
+<span class="fc" id="L194">	    begin_component(zz);</span>
+<span class="fc" id="L195">	    search_component(zz, g, v);</span>
+<span class="fc" id="L196">	    end_component(zz);</span>
+	}
+    }
+} finally {
+<span class="fc" id="L200">LEAVING(&quot;2t7r964kqtl5qrl7i57i22tqy&quot;,&quot;decompose&quot;);</span>
+}
+<span class="fc" id="L202">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileGroup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> &gt; <span class="el_source">FtileGroup.java</span></div><h1>FtileGroup.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
+
+import java.util.Collection;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicInterceptorUDrawable;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.UGraphicForSnake;
+import net.sourceforge.plantuml.utils.MathUtils;
+
+public class FtileGroup extends AbstractFtile {
+
+<span class="nc" id="L74">	private final double diffYY2 = 20;</span>
+	private final Ftile inner;
+	private final TextBlock name;
+	private final TextBlock headerNote;
+	private final HColor borderColor;
+	private final HColor backColor;
+	private final double shadowing;
+	private final UStroke stroke;
+	private final USymbol type;
+	private final double roundCorner;
+
+	final public StyleSignatureBasic getStyleSignature() {
+<span class="nc" id="L86">		return getStyleSignature(type);</span>
+	}
+
+	final static public StyleSignatureBasic getStyleSignature(USymbol symbol) {
+<span class="nc" id="L90">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, symbol.getSNames(),</span>
+				SName.composite);
+	}
+
+	public FtileGroup(Ftile inner, Display title, HColor backColor, ISkinParam skinParam, USymbol type, Style style) {
+<span class="nc" id="L95">		super(inner.skinParam());</span>
+<span class="nc" id="L96">		this.type = type;</span>
+<span class="nc" id="L97">		this.inner = FtileUtils.addHorizontalMargin(inner, 10);</span>
+
+<span class="nc" id="L99">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="nc" id="L100">		this.shadowing = style.getShadowing();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		this.backColor = backColor == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet()) : backColor;</span>
+<span class="nc" id="L102">		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L103">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (title == null)</span>
+<span class="nc" id="L106">			this.name = TextBlockUtils.empty(0, 0);</span>
+		else
+<span class="nc" id="L108">			this.name = title.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+
+//		if (Display.isNull(displayNote))
+<span class="nc" id="L111">		this.headerNote = TextBlockUtils.empty(0, 0);</span>
+//		else
+//			this.headerNote = new FloatingNote(displayNote, skinParam);
+
+<span class="nc" id="L115">		this.stroke = style.getStroke();</span>
+<span class="nc" id="L116">	}</span>
+
+	@Override
+	public Collection&lt;Ftile&gt; getMyChildren() {
+<span class="nc" id="L120">		return inner.getMyChildren();</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="nc" id="L125">		return inner.getInLinkRendering();</span>
+	}
+
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L129">		return inner.getSwimlanes();</span>
+	}
+
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L133">		return inner.getSwimlaneIn();</span>
+	}
+
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L137">		return inner.getSwimlaneOut();</span>
+	}
+
+	private double diffHeightTitle(StringBounder stringBounder) {
+<span class="nc" id="L141">		final XDimension2D dimTitle = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L142">		return Math.max(25, dimTitle.getHeight() + 20);</span>
+	}
+
+	private UTranslate getTranslate(StringBounder stringBounder) {
+<span class="nc" id="L146">		final double suppWidth = suppWidth(stringBounder);</span>
+<span class="nc" id="L147">		return new UTranslate(suppWidth / 2, diffHeightTitle(stringBounder) + headerNoteHeight(stringBounder));</span>
+	}
+
+	private MinMax getInnerMinMax(StringBounder stringBounder) {
+<span class="nc" id="L151">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, false);</span>
+<span class="nc" id="L152">		final UGraphicForSnake interceptor = new UGraphicForSnake(limitFinder);</span>
+<span class="nc" id="L153">		final UGraphicInterceptorUDrawable interceptor2 = new UGraphicInterceptorUDrawable(interceptor);</span>
+
+<span class="nc" id="L155">		inner.drawU(interceptor2);</span>
+<span class="nc" id="L156">		interceptor2.flushUg();</span>
+<span class="nc" id="L157">		return limitFinder.getMinMax();</span>
+	}
+
+	public double suppWidth(StringBounder stringBounder) {
+<span class="nc" id="L161">		final FtileGeometry orig = getInnerDimension(stringBounder);</span>
+<span class="nc" id="L162">		final XDimension2D dimTitle = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L163">		final XDimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);</span>
+<span class="nc" id="L164">		final double suppWidth = MathUtils.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20)</span>
+<span class="nc" id="L165">				- orig.getWidth();</span>
+<span class="nc" id="L166">		return suppWidth;</span>
+	}
+
+	private FtileGeometry cachedInnerDimension;
+
+	private FtileGeometry getInnerDimension(StringBounder stringBounder) {
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (cachedInnerDimension == null)</span>
+<span class="nc" id="L173">			cachedInnerDimension = getInnerDimensionSlow(stringBounder);</span>
+
+<span class="nc" id="L175">		return cachedInnerDimension;</span>
+
+	}
+
+	private FtileGeometry getInnerDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L180">		final FtileGeometry orig = inner.calculateDimension(stringBounder);</span>
+<span class="nc" id="L181">		final MinMax minMax = getInnerMinMax(stringBounder);</span>
+<span class="nc" id="L182">		final double missingWidth = minMax.getMaxX() - orig.getWidth();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (missingWidth &gt; 0)</span>
+<span class="nc" id="L184">			return orig.addDim(missingWidth + 5, 0);</span>
+
+<span class="nc" id="L186">		return orig;</span>
+	}
+
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+<span class="nc" id="L191">		final FtileGeometry orig = getInnerDimension(stringBounder);</span>
+<span class="nc" id="L192">		final double suppWidth = suppWidth(stringBounder);</span>
+<span class="nc" id="L193">		final double width = orig.getWidth() + suppWidth;</span>
+<span class="nc" id="L194">		final double height = orig.getHeight() + diffHeightTitle(stringBounder) + diffYY2</span>
+<span class="nc" id="L195">				+ headerNoteHeight(stringBounder);</span>
+<span class="nc" id="L196">		final double titleAndHeaderNoteHeight = diffHeightTitle(stringBounder) + headerNoteHeight(stringBounder);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (orig.hasPointOut())</span>
+<span class="nc" id="L198">			return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2,</span>
+<span class="nc" id="L199">					orig.getInY() + titleAndHeaderNoteHeight, orig.getOutY() + titleAndHeaderNoteHeight);</span>
+
+<span class="nc" id="L201">		return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2,</span>
+<span class="nc" id="L202">				orig.getInY() + titleAndHeaderNoteHeight);</span>
+	}
+
+	private double headerNoteHeight(StringBounder stringBounder) {
+<span class="nc" id="L206">		return headerNote.calculateDimension(stringBounder).getHeight();</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L210">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L211">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L213">		final Fashion symbolContext = new Fashion(backColor, borderColor).withShadow(shadowing).withStroke(stroke)</span>
+<span class="nc" id="L214">				.withCorner(roundCorner, 0);</span>
+
+<span class="nc" id="L216">		final HorizontalAlignment align = inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment,</span>
+				null, false, null);
+<span class="nc" id="L218">		type.asBig(name, align, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,</span>
+<span class="nc" id="L219">				skinParam().getStereotypeAlignment()).drawU(ug);</span>
+
+<span class="nc" id="L221">		final XDimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);</span>
+<span class="nc" id="L222">		headerNote.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimHeaderNote.getWidth() - 10,</span>
+<span class="nc" id="L223">				diffHeightTitle(ug.getStringBounder()) - 10)));</span>
+
+<span class="nc" id="L225">		ug.apply(getTranslate(stringBounder)).draw(inner);</span>
+
+<span class="nc" id="L227">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

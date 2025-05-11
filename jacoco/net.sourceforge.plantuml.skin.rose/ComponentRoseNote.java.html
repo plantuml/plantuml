@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComponentRoseNote.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin.rose</a> &gt; <span class="el_source">ComponentRoseNote.java</span></div><h1>ComponentRoseNote.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin.rose;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.svek.image.Opale;
+
+final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
+    // ::remove folder when __HAXE__
+
+	private final double paddingX;
+	private final double paddingY;
+	private final Fashion symbolContext;
+	private final double roundCorner;
+	private final HorizontalAlignment position;
+
+	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY,
+			ISkinParam skinParam, HorizontalAlignment textAlignment, HorizontalAlignment position,
+			Colors colors) {
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		super(style, style.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, skinParam,</span>
+				strings, true);
+<span class="fc" id="L70">		this.paddingX = paddingX;</span>
+<span class="fc" id="L71">		this.paddingY = paddingY;</span>
+<span class="fc" id="L72">		this.position = position;</span>
+<span class="fc" id="L73">		this.symbolContext = style.getSymbolContext(getIHtmlColorSet(), colors);</span>
+<span class="fc" id="L74">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
+
+<span class="fc" id="L76">	}</span>
+
+	@Override
+	final public double getPreferredWidth(StringBounder stringBounder) {
+<span class="fc" id="L80">		final double result = getTextWidth(stringBounder) + 2 * getPaddingX() + symbolContext.getDeltaShadow();</span>
+<span class="fc" id="L81">		return result;</span>
+	}
+
+	@Override
+	final public double getPreferredHeight(StringBounder stringBounder) {
+<span class="fc" id="L86">		return getTextHeight(stringBounder) + 2 * getPaddingY() + symbolContext.getDeltaShadow();</span>
+	}
+
+	@Override
+	public double getPaddingX() {
+<span class="fc" id="L91">		return paddingX;</span>
+	}
+
+	@Override
+	public double getPaddingY() {
+<span class="fc" id="L96">		return paddingY;</span>
+	}
+
+	@Override
+	protected void drawInternalU(UGraphic ug, Area area) {
+
+<span class="fc" id="L102">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L103">		final int textHeight = (int) getTextHeight(stringBounder);</span>
+
+<span class="fc" id="L105">		int x2 = (int) getTextWidth(stringBounder);</span>
+<span class="fc" id="L106">		final double diffX = area.getDimensionToUse().getWidth() - getPreferredWidth(stringBounder);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (diffX &lt; 0) {</span>
+<span class="nc" id="L108">			throw new IllegalArgumentException();</span>
+		}
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (area.getDimensionToUse().getWidth() &gt; getPreferredWidth(stringBounder)) {</span>
+<span class="nc" id="L111">			x2 = (int) (area.getDimensionToUse().getWidth() - 2 * getPaddingX());</span>
+		}
+
+<span class="fc" id="L114">		final UPath polygon = Opale.getPolygonNormal(x2, textHeight, roundCorner);</span>
+<span class="fc" id="L115">		polygon.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+
+<span class="fc" id="L117">		ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L118">		ug.draw(polygon);</span>
+
+<span class="fc" id="L120">		ug.draw(Opale.getCorner(x2, roundCorner));</span>
+<span class="fc" id="L121">		UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());</span>
+
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (position == HorizontalAlignment.LEFT) {</span>
+<span class="fc" id="L124">			ug2 = ug2.apply(new UTranslate(getMarginX1(), getMarginY()));</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		} else if (position == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L126">			ug2 = ug2.apply(</span>
+<span class="nc" id="L127">					new UTranslate(area.getDimensionToUse().getWidth() - getTextWidth(stringBounder), getMarginY()));</span>
+		} else {
+<span class="nc" id="L129">			ug2 = ug2.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY()));</span>
+		}
+
+<span class="fc" id="L132">		getTextBlock().drawU(ug2);</span>
+
+<span class="fc" id="L134">	}</span>
+
+	public double getStartingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L137">		return 0;</span>
+	}
+
+	public double getEndingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L141">		return getTextWidth(stringBounder);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

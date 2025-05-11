@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>cluster__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">cluster__c.java</span></div><h1>cluster__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.edge__c.agfstedge;
+import static gen.lib.cgraph.edge__c.agfstout;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agnxtedge;
+import static gen.lib.cgraph.edge__c.agnxtout;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.node__c.agfstnode;
+import static gen.lib.cgraph.node__c.agnxtnode;
+import static gen.lib.cgraph.obj__c.agcontains;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.common.utils__c.UF_setname;
+import static gen.lib.common.utils__c.UF_singleton;
+import static gen.lib.dotgen.class2__c.class2;
+import static gen.lib.dotgen.class2__c.merge_chain;
+import static gen.lib.dotgen.class2__c.mergeable;
+import static gen.lib.dotgen.dotinit__c.dot_root;
+import static gen.lib.dotgen.fastgr__c.delete_fast_edge;
+import static gen.lib.dotgen.fastgr__c.delete_fast_node;
+import static gen.lib.dotgen.fastgr__c.fast_node;
+import static gen.lib.dotgen.fastgr__c.find_fast_edge;
+import static gen.lib.dotgen.fastgr__c.find_flat_edge;
+import static gen.lib.dotgen.fastgr__c.flat_edge;
+import static gen.lib.dotgen.fastgr__c.merge_oneway;
+import static gen.lib.dotgen.fastgr__c.other_edge;
+import static gen.lib.dotgen.fastgr__c.safe_other_edge;
+import static gen.lib.dotgen.fastgr__c.virtual_edge;
+import static gen.lib.dotgen.fastgr__c.virtual_node;
+import static gen.lib.dotgen.mincross__c.allocate_ranks;
+import static gen.lib.dotgen.mincross__c.build_ranks;
+import static gen.lib.dotgen.mincross__c.enqueue_neighbors;
+import static gen.lib.dotgen.mincross__c.install_in_rank;
+import static gen.lib.dotgen.position__c.ports_eq;
+import static smetana.core.Macro.AGMKOUT;
+import static smetana.core.Macro.CLUSTER;
+import static smetana.core.Macro.CL_CROSS;
+import static smetana.core.Macro.ED_count;
+import static smetana.core.Macro.ED_edge_type;
+import static smetana.core.Macro.ED_to_virt;
+import static smetana.core.Macro.ED_xpenalty;
+import static smetana.core.Macro.GD_clust;
+import static smetana.core.Macro.GD_comp;
+import static smetana.core.Macro.GD_expanded;
+import static smetana.core.Macro.GD_installed;
+import static smetana.core.Macro.GD_leader;
+import static smetana.core.Macro.GD_maxrank;
+import static smetana.core.Macro.GD_minrank;
+import static smetana.core.Macro.GD_n_cluster;
+import static smetana.core.Macro.GD_n_nodes;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_rank;
+import static smetana.core.Macro.GD_rankleader;
+import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_lw;
+import static smetana.core.Macro.ND_node_type;
+import static smetana.core.Macro.ND_order;
+import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_rank;
+import static smetana.core.Macro.ND_ranktype;
+import static smetana.core.Macro.ND_rw;
+import static smetana.core.Macro.NORMAL;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.VIRTUAL;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.HasND_Rank;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_nodequeue;
+import smetana.core.CArrayOfStar;
+import smetana.core.Globals;
+import smetana.core.ZType;
+
+<span class="pc" id="L126">public class cluster__c {</span>
+
+
+
+//3 8bd317q0mykfu6wpr3e4cxmh2
+// static node_t* map_interclust_node(node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;map_interclust_node&quot;, key=&quot;8bd317q0mykfu6wpr3e4cxmh2&quot;, definition=&quot;static node_t* map_interclust_node(node_t * n)&quot;)
+public static ST_Agnode_s map_interclust_node(ST_Agnode_s n) {
+<span class="fc" id="L135">ENTERING(&quot;8bd317q0mykfu6wpr3e4cxmh2&quot;,&quot;map_interclust_node&quot;);</span>
+try {
+    ST_Agnode_s rv;
+<span class="pc bpc" id="L138" title="1 of 4 branches missed.">    if ((ND_clust(n) == null) || (  GD_expanded(ND_clust(n))) )</span>
+<span class="fc" id="L139">	rv = n;</span>
+    else
+<span class="fc" id="L141">	rv = GD_rankleader(ND_clust(n)).get_(ND_rank(n));</span>
+<span class="fc" id="L142">    return rv;</span>
+} finally {
+<span class="fc" id="L144">LEAVING(&quot;8bd317q0mykfu6wpr3e4cxmh2&quot;,&quot;map_interclust_node&quot;);</span>
+}
+}
+
+
+
+
+/* make d slots starting at position pos (where 1 already exists) */
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;make_slots&quot;, key=&quot;5ib4nnt2ah5fdd22zs0xds29r&quot;, definition=&quot;static void  make_slots(graph_t * root, int r, int pos, int d)&quot;)
+public static void make_slots(ST_Agraph_s root, int r, int pos, int d) {
+<span class="fc" id="L155">ENTERING(&quot;5ib4nnt2ah5fdd22zs0xds29r&quot;,&quot;make_slots&quot;);</span>
+try {
+    int i;
+    ST_Agnode_s v;
+    CArrayOfStar&lt;ST_Agnode_s&gt; vlist;
+<span class="fc" id="L160">    vlist = GD_rank(root).get__(r).v;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">    if (d &lt;= 0) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">	for (i = pos - d + 1; i &lt; GD_rank(root).get__(r).n; i++) {</span>
+<span class="nc" id="L163">	    v = vlist.get_(i);</span>
+<span class="nc" id="L164">	    ND_order(v, i + d - 1);</span>
+<span class="nc" id="L165">	    vlist.set_(ND_order(v), v);</span>
+	}
+<span class="nc bnc" id="L167" title="All 2 branches missed.">	for (i = GD_rank(root).get__(r).n + d - 1; i &lt; GD_rank(root).get__(r).n; i++)</span>
+<span class="nc" id="L168">	    vlist.set_(i, null);</span>
+    } else {
+/*assert(ND_rank(root)[r].n + d - 1 &lt;= ND_rank(root)[r].an);*/
+<span class="fc bfc" id="L171" title="All 2 branches covered.">	for (i = GD_rank(root).get__(r).n - 1; i &gt; pos; i--) {</span>
+<span class="fc" id="L172">	    v = vlist.get_(i);</span>
+<span class="fc" id="L173">	    ND_order(v, i + d - 1);</span>
+<span class="fc" id="L174">	    vlist.set_(ND_order(v), v);</span>
+	}
+<span class="fc bfc" id="L176" title="All 2 branches covered.">	for (i = pos + 1; i &lt; pos + d; i++)</span>
+<span class="fc" id="L177">	    vlist.set_(i, null);</span>
+    }
+<span class="fc" id="L179">    GD_rank(root).get__(r).n = GD_rank(root).get__(r).n + d - 1;</span>
+} finally {
+<span class="fc" id="L181">LEAVING(&quot;5ib4nnt2ah5fdd22zs0xds29r&quot;,&quot;make_slots&quot;);</span>
+}
+<span class="fc" id="L183">}</span>
+
+
+
+
+//3 d4mwxesl56uh9dyttg9cjlq70
+// static node_t*  clone_vn(graph_t * g, node_t * vn) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;clone_vn&quot;, key=&quot;d4mwxesl56uh9dyttg9cjlq70&quot;, definition=&quot;static node_t*  clone_vn(graph_t * g, node_t * vn)&quot;)
+public static ST_Agnode_s clone_vn(ST_Agraph_s g, ST_Agnode_s vn) {
+<span class="nc" id="L194">ENTERING(&quot;d4mwxesl56uh9dyttg9cjlq70&quot;,&quot;clone_vn&quot;);</span>
+try {
+    ST_Agnode_s rv;
+    int r;
+<span class="nc" id="L198">    r = ND_rank(vn);</span>
+<span class="nc" id="L199">    make_slots(g, r, ND_order(vn), 2);</span>
+<span class="nc" id="L200">    rv = virtual_node(g);</span>
+<span class="nc" id="L201">    ND_lw(rv, ND_lw(vn));</span>
+<span class="nc" id="L202">    ND_rw(rv, ND_rw(vn));</span>
+<span class="nc" id="L203">    ND_rank(rv, ND_rank(vn));</span>
+<span class="nc" id="L204">UNSUPPORTED(&quot;adc0qfdhup29vh8qu1cwl5jgj&quot;); //     GD_rank(g)[r].v[ND_order(rv)] = rv;</span>
+<span class="nc" id="L205">UNSUPPORTED(&quot;v7vqc9l7ge2bfdwnw11z7rzi&quot;); //     return rv;</span>
+<span class="nc" id="L206">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L208">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="nc" id="L210">LEAVING(&quot;d4mwxesl56uh9dyttg9cjlq70&quot;,&quot;clone_vn&quot;);</span>
+}
+}
+
+
+
+
+//3 6o86r59v2ujlxqcw7761y6o5b
+// static void  map_path(node_t * from, node_t * to, edge_t * orig, edge_t * ve, int type) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;map_path&quot;, key=&quot;6o86r59v2ujlxqcw7761y6o5b&quot;, definition=&quot;static void  map_path(node_t * from, node_t * to, edge_t * orig, edge_t * ve, int type)&quot;)
+public static void map_path(ST_Agnode_s from, ST_Agnode_s to, ST_Agedge_s orig, ST_Agedge_s ve, int type) {
+<span class="fc" id="L222">ENTERING(&quot;6o86r59v2ujlxqcw7761y6o5b&quot;,&quot;map_path&quot;);</span>
+try {
+    int r;
+    ST_Agnode_s u, v;
+    ST_Agedge_s e;
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">    assert(ND_rank(from) &lt; ND_rank(to));</span>
+<span class="pc bpc" id="L228" title="1 of 4 branches missed.">    if (agtail(ve) == from &amp;&amp; aghead(ve) == to)</span>
+<span class="nc" id="L229">	return;</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">    if (ED_count(ve) &gt; 1) {</span>
+<span class="nc" id="L231">	ED_to_virt(orig, null);</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">	if (ND_rank(to) - ND_rank(from) == 1) {</span>
+<span class="nc bnc" id="L233" title="All 4 branches missed.">	    if ((e = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, e))) {</span>
+<span class="nc" id="L234">		merge_oneway(orig, e);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		if ((ND_node_type(from) == 0)</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		    &amp;&amp; (ND_node_type(to) == 0))</span>
+<span class="nc" id="L237">		    other_edge(orig);</span>
+<span class="nc" id="L238">		return;</span>
+	    }
+	}
+<span class="nc" id="L241">	u = from;</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">	for (r = ND_rank(from); r &lt; ND_rank(to); r++) {</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">	    if (r &lt; ND_rank(to) - 1)</span>
+<span class="nc" id="L244">		v = clone_vn(dot_root(from), aghead(ve));</span>
+	    else
+<span class="nc" id="L246">		v = to;</span>
+<span class="nc" id="L247">	    e = virtual_edge(u, v, orig);</span>
+<span class="nc" id="L248">	    ED_edge_type(e, type);</span>
+<span class="nc" id="L249">	    u = v;</span>
+<span class="nc" id="L250">	    ED_count(ve, ED_count(ve) - 1);</span>
+<span class="nc" id="L251">	    ve = (ST_Agedge_s) ND_out(aghead(ve)).list.get_(0);</span>
+	}
+    } else {
+<span class="fc bfc" id="L254" title="All 2 branches covered.">	if (ND_rank(to) - ND_rank(from) == 1) {</span>
+<span class="pc bpc" id="L255" title="3 of 4 branches missed.">	    if ((ve = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, ve))) {</span>
+		/*ED_to_orig(ve) = orig; */
+<span class="nc" id="L257">		ED_to_virt(orig, ve);</span>
+<span class="nc" id="L258">		ED_edge_type(ve, type);</span>
+<span class="nc" id="L259">		ED_count(ve, ED_count(ve)+1);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		if ((ND_node_type(from) == 0)</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		    &amp;&amp; (ND_node_type(to) == 0))</span>
+<span class="nc" id="L262">		    other_edge(orig);</span>
+	    } else {
+<span class="fc" id="L264">		ED_to_virt(orig, null);</span>
+<span class="fc" id="L265">		ve = virtual_edge(from, to, orig);</span>
+<span class="fc" id="L266">		ED_edge_type(ve, type);</span>
+	    }
+	}
+<span class="fc bfc" id="L269" title="All 2 branches covered.">	if (ND_rank(to) - ND_rank(from) &gt; 1) {</span>
+<span class="fc" id="L270">	    e = ve;</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">	    if ((agtail(ve) != from)) {</span>
+<span class="fc" id="L272">		ED_to_virt(orig, null);</span>
+<span class="fc" id="L273">		e = virtual_edge(from, aghead(ve), orig);</span>
+<span class="fc" id="L274">		ED_to_virt(orig, e);</span>
+<span class="fc" id="L275">		delete_fast_edge(ve);</span>
+	    } else
+<span class="fc" id="L277">		e = ve;</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">	    while (ND_rank(aghead(e)) != ND_rank(to))</span>
+<span class="fc" id="L279">		e = (ST_Agedge_s) ND_out(aghead(e)).list.get_(0);</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">	    if ((aghead(e) != to)) {</span>
+<span class="fc" id="L281">		ve = e;</span>
+<span class="fc" id="L282">		e = virtual_edge(agtail(e), to, orig);</span>
+<span class="fc" id="L283">		ED_edge_type(e, type);</span>
+<span class="fc" id="L284">		delete_fast_edge(ve);</span>
+	    }
+	}
+    }
+} finally {
+<span class="fc" id="L289">LEAVING(&quot;6o86r59v2ujlxqcw7761y6o5b&quot;,&quot;map_path&quot;);</span>
+}
+<span class="fc" id="L291">}</span>
+
+
+
+
+//3 69xbflgja0gvrsl5xcv7o7dia
+// static void  make_interclust_chain(graph_t * g, node_t * from, node_t * to, edge_t * orig) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;make_interclust_chain&quot;, key=&quot;69xbflgja0gvrsl5xcv7o7dia&quot;, definition=&quot;static void  make_interclust_chain(graph_t * g, node_t * from, node_t * to, edge_t * orig)&quot;)
+public static void make_interclust_chain(ST_Agraph_s g, ST_Agnode_s from, ST_Agnode_s to, ST_Agedge_s orig) {
+<span class="fc" id="L301">ENTERING(&quot;69xbflgja0gvrsl5xcv7o7dia&quot;,&quot;make_interclust_chain&quot;);</span>
+try {
+    int newtype;
+    ST_Agnode_s u, v;
+<span class="fc" id="L305">    u = map_interclust_node(from);</span>
+<span class="fc" id="L306">    v = map_interclust_node(to);</span>
+<span class="pc bpc" id="L307" title="1 of 4 branches missed.">    if (u == from &amp;&amp; v == to)</span>
+<span class="fc" id="L308">	newtype = 1;</span>
+    else
+<span class="fc" id="L310">	newtype = 5;</span>
+<span class="fc" id="L311">    map_path(u, v, orig, ED_to_virt(orig), newtype);</span>
+} finally {
+<span class="fc" id="L313">LEAVING(&quot;69xbflgja0gvrsl5xcv7o7dia&quot;,&quot;make_interclust_chain&quot;);</span>
+}
+<span class="fc" id="L315">}</span>
+
+
+
+
+/* 
+ * attach and install edges between clusters.
+ * essentially, class2() for interclust edges.
+ */
+@Unused
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;interclexp&quot;, key=&quot;6g2m2y44x66lajznvnon2gubv&quot;, definition=&quot;void interclexp(graph_t * subg)&quot;)
+public static void interclexp(Globals zz, ST_Agraph_s subg) {
+<span class="fc" id="L328">ENTERING(&quot;6g2m2y44x66lajznvnon2gubv&quot;,&quot;interclexp&quot;);</span>
+try {
+    ST_Agraph_s g;
+    ST_Agnode_s n;
+    ST_Agedge_s e, prev, next;
+    
+<span class="fc" id="L334">    g = dot_root(subg);</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">    for (n = agfstnode(zz, subg); n!=null; n = agnxtnode(zz, subg, n)) {</span>
+    
+	/* N.B. n may be in a sub-cluster of subg */
+<span class="fc" id="L338">	prev = null;</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">	for (e = agfstedge(zz, g, n); e!=null; e = next) {</span>
+<span class="fc" id="L340">	    next = agnxtedge(zz, g, e, n);</span>
+<span class="fc bfc" id="L341" title="All 2 branches covered.">	    if (agcontains(zz, subg, e))</span>
+<span class="fc" id="L342">		continue;</span>
+	    
+	    /* canonicalize edge */
+<span class="fc" id="L345">	    e = AGMKOUT(e);</span>
+	    /* short/flat multi edges */
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">	    if (mergeable(prev, e)) {</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">    	if (ND_rank(agtail(e)) == ND_rank(aghead(e)))</span>
+<span class="nc" id="L349">		    ED_to_virt(e, prev);</span>
+    	else
+<span class="nc" id="L351">    		ED_to_virt(e, null);</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed."> 		if (ED_to_virt(prev) == null)</span>
+<span class="nc" id="L353"> 			continue;	/* internal edge */</span>
+<span class="nc" id="L354"> 		merge_chain(subg, e, ED_to_virt(prev), false);</span>
+<span class="nc" id="L355"> 		safe_other_edge(e);</span>
+<span class="nc" id="L356"> 		continue;</span>
+	    }
+	    
+	    /* flat edges */
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">	    if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {</span>
+		ST_Agedge_s fe;
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		if ((fe = find_flat_edge(agtail(e), aghead(e))) == null) {</span>
+<span class="nc" id="L363">		    flat_edge(g, e);</span>
+<span class="nc" id="L364">		    prev = e;</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">		} else if ((e != fe)) {</span>
+<span class="nc" id="L366">		 		    safe_other_edge(e);</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">		 		    if ((ED_to_virt(e)) == null) merge_oneway(e, fe);</span>
+		}
+		continue;
+	    }
+	    
+	    /* forward edges */
+<span class="pc bpc" id="L373" title="1 of 2 branches missed.">	    if (ND_rank(aghead(e)) &gt; ND_rank(agtail(e))) {</span>
+<span class="fc" id="L374">		make_interclust_chain(g, agtail(e), aghead(e), e);</span>
+<span class="fc" id="L375">		prev = e;</span>
+<span class="fc" id="L376">		continue;</span>
+	    }
+	    
+	    /* backward edges */
+	    else {
+/*
+I think that make_interclust_chain should create call other_edge(e) anyway 
+				if (agcontains(subg,agtail(e))
+					&amp;&amp; agfindedge(g,aghead(e),agtail(e))) other_edge(e);
+*/
+<span class="nc" id="L386">		make_interclust_chain(g, aghead(e), agtail(e), e);</span>
+<span class="nc" id="L387">		prev = e;</span>
+	    }
+	}
+    }
+} finally {
+<span class="fc" id="L392">LEAVING(&quot;6g2m2y44x66lajznvnon2gubv&quot;,&quot;interclexp&quot;);</span>
+}
+<span class="fc" id="L394">}</span>
+
+
+
+
+@Unused
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;merge_ranks&quot;, key=&quot;85nhs7tnmwunw0fsjj1kxao7l&quot;, definition=&quot;static void  merge_ranks(graph_t * subg)&quot;)
+public static void merge_ranks(ST_Agraph_s subg) {
+<span class="fc" id="L403">ENTERING(&quot;85nhs7tnmwunw0fsjj1kxao7l&quot;,&quot;merge_ranks&quot;);</span>
+try {
+    int i, d, r, pos, ipos;
+    ST_Agnode_s v;
+    ST_Agraph_s root;
+    
+<span class="fc" id="L409">    root = dot_root(subg);</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">    if (GD_minrank(subg) &gt; 0)</span>
+<span class="fc" id="L411">	GD_rank(root).get__(GD_minrank(subg) - 1).valid = 0;</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">    for (r = GD_minrank(subg); r &lt;= GD_maxrank(subg); r++) {</span>
+<span class="fc" id="L413">	d = GD_rank(subg).get__(r).n;</span>
+<span class="fc" id="L414">	ipos = pos = ND_order(GD_rankleader(subg).get_(r));</span>
+<span class="fc" id="L415">	make_slots(root, r, pos, d);</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(subg).get__(r).n; i++) {</span>
+<span class="fc" id="L417">	    v = GD_rank(subg).get__(r).v.get_(i);</span>
+<span class="fc" id="L418">	    GD_rank(root).get__(r).v.set_(pos, v);</span>
+<span class="fc" id="L419">	    ND_order(v, pos++);</span>
+	/* real nodes automatically have v-&gt;root = root graph */
+<span class="fc bfc" id="L421" title="All 2 branches covered.">	    if (ND_node_type(v) == VIRTUAL)</span>
+<span class="fc" id="L422">		v.root = agroot(root);</span>
+<span class="fc" id="L423">	    delete_fast_node(subg, v);</span>
+<span class="fc" id="L424">	    fast_node(root, v);</span>
+<span class="fc" id="L425">	    GD_n_nodes(root, GD_n_nodes(root)+1);</span>
+	}
+<span class="fc" id="L427">	GD_rank(subg).get__(r).v = GD_rank(root).get__(r).v.plus_(ipos);</span>
+<span class="fc" id="L428">	GD_rank(root).get__(r).valid = 0;</span>
+    }
+<span class="fc bfc" id="L430" title="All 2 branches covered.">    if (r &lt; GD_maxrank(root))</span>
+<span class="fc" id="L431">	GD_rank(root).get__(r).valid = 0;</span>
+<span class="fc" id="L432">    GD_expanded(subg, true);</span>
+} finally {
+<span class="fc" id="L434">LEAVING(&quot;85nhs7tnmwunw0fsjj1kxao7l&quot;,&quot;merge_ranks&quot;);</span>
+}
+<span class="fc" id="L436">}</span>
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;remove_rankleaders&quot;, key=&quot;c9p7dm16i13qktnh95os0sv58&quot;, definition=&quot;static void  remove_rankleaders(graph_t * g)&quot;)
+public static void remove_rankleaders(ST_Agraph_s g) {
+<span class="fc" id="L444">ENTERING(&quot;c9p7dm16i13qktnh95os0sv58&quot;,&quot;remove_rankleaders&quot;);</span>
+try {
+    int r;
+    ST_Agnode_s v;
+    ST_Agedge_s e;
+    
+<span class="fc bfc" id="L450" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L451">	v = GD_rankleader(g).get_(r);</span>
+	
+	/* remove the entire chain */
+<span class="fc bfc" id="L454" title="All 2 branches covered.">	while ((e = (ST_Agedge_s) ND_out(v).list.get_(0))!=null)</span>
+<span class="fc" id="L455">	    delete_fast_edge(e);</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">	while ((e = (ST_Agedge_s) ND_in(v).list.get_(0))!=null)</span>
+<span class="fc" id="L457">	    delete_fast_edge(e);</span>
+<span class="fc" id="L458">	delete_fast_node(dot_root(g), v);</span>
+<span class="fc" id="L459">	GD_rankleader(g).set_(r, null);</span>
+    }
+} finally {
+<span class="fc" id="L462">LEAVING(&quot;c9p7dm16i13qktnh95os0sv58&quot;,&quot;remove_rankleaders&quot;);</span>
+}
+<span class="fc" id="L464">}</span>
+
+
+
+
+/* delete virtual nodes of a cluster, and install real nodes or sub-clusters */
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;expand_cluster&quot;, key=&quot;ecrplg8hsyl484f9kxc5xp0go&quot;, definition=&quot;void expand_cluster(graph_t * subg)&quot;)
+public static void expand_cluster(Globals zz, ST_Agraph_s subg) {
+<span class="fc" id="L473">ENTERING(&quot;ecrplg8hsyl484f9kxc5xp0go&quot;,&quot;expand_cluster&quot;);</span>
+try {
+    /* build internal structure of the cluster */
+<span class="fc" id="L476">    class2(zz, subg);</span>
+<span class="fc" id="L477">    GD_comp(subg).size = 1;</span>
+<span class="fc" id="L478">    GD_comp(subg).list.set_(0, GD_nlist(subg));</span>
+<span class="fc" id="L479">    allocate_ranks(zz, subg);</span>
+<span class="fc" id="L480">    build_ranks(zz, subg, 0);</span>
+<span class="fc" id="L481">    merge_ranks(subg);</span>
+    
+    /* build external structure of the cluster */
+<span class="fc" id="L484">    interclexp(zz, subg);</span>
+<span class="fc" id="L485">    remove_rankleaders(subg);</span>
+} finally {
+<span class="fc" id="L487">LEAVING(&quot;ecrplg8hsyl484f9kxc5xp0go&quot;,&quot;expand_cluster&quot;);</span>
+}
+<span class="fc" id="L489">}</span>
+
+
+
+/* this function marks every node in &lt;g&gt; with its top-level cluster under &lt;g&gt; */
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;mark_clusters&quot;, key=&quot;cxuirggihlap2iv2khmb1w5l5&quot;, definition=&quot;void mark_clusters(graph_t * g)&quot;)
+public static void mark_clusters(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L497">ENTERING(&quot;cxuirggihlap2iv2khmb1w5l5&quot;,&quot;mark_clusters&quot;);</span>
+try {
+    int c;
+<span class="fc" id="L500">    ST_Agnode_s n, nn=null, vn;</span>
+    ST_Agedge_s orig, e;
+    ST_Agraph_s clust;
+    
+    
+    /* remove sub-clusters below this level */
+<span class="fc bfc" id="L506" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc bfc" id="L507" title="All 2 branches covered.">	if (ND_ranktype(n) == CLUSTER)</span>
+<span class="fc" id="L508">	    UF_singleton(n);</span>
+<span class="fc" id="L509">	ND_clust(n, null);</span>
+    }
+    
+    
+<span class="fc bfc" id="L513" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="fc" id="L514">	clust = GD_clust(g).get_(c);</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">	for (n = agfstnode(zz, clust); n!=null; n = nn) {</span>
+<span class="fc" id="L516">		nn = agnxtnode(zz, clust,n);</span>
+<span class="pc bpc" id="L517" title="1 of 2 branches missed.">	    if (ND_ranktype(n) != NORMAL) {</span>
+<span class="nc" id="L518">		UNSUPPORTED(&quot;5l8jenkv77ax02t47zzxyv1k0&quot;); // 		agerr(AGWARN,</span>
+<span class="nc" id="L519">		UNSUPPORTED(&quot;2ipl4umxgijawr7756ysp9hhd&quot;); // 		      &quot;%s was already in a rankset, deleted from cluster %s\n&quot;,</span>
+<span class="nc" id="L520">		UNSUPPORTED(&quot;7r0ulsiau9cygesawzzjnpt5j&quot;); // 		      agnameof(n), agnameof(g));</span>
+<span class="nc" id="L521">		UNSUPPORTED(&quot;4zqc8357rwnd9xe7zaoqooqv3&quot;); // 		agdelete(clust,n);</span>
+<span class="nc" id="L522">		UNSUPPORTED(&quot;6hyelvzskqfqa07xtgjtvg2is&quot;); // 		continue;</span>
+	    }
+<span class="fc" id="L524">	    UF_setname(n, GD_leader(clust));</span>
+<span class="fc" id="L525">	    ND_clust(n, clust);</span>
+<span class="fc" id="L526">	    ND_ranktype(n, CLUSTER);</span>
+	    
+	    
+	    /* here we mark the vnodes of edges in the cluster */
+<span class="fc bfc" id="L530" title="All 2 branches covered.">	    for (orig = agfstout(zz, clust, n); orig!=null;</span>
+<span class="fc" id="L531">		 orig = agnxtout(zz, clust, orig)) {</span>
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">		if ((e = ED_to_virt(orig))!=null) {</span>
+<span class="nc bnc" id="L533" title="All 4 branches missed.">		    while (e!=null &amp;&amp; ND_node_type(vn =aghead(e)) == VIRTUAL) {</span>
+<span class="nc" id="L534">			ND_clust(vn, clust);</span>
+<span class="nc" id="L535">			e = (ST_Agedge_s) ND_out(aghead(e)).list.get_(0);</span>
+			/* trouble if concentrators and clusters are mixed */
+		    }
+		}
+	    }
+	}
+    }
+} finally {
+<span class="fc" id="L543">LEAVING(&quot;cxuirggihlap2iv2khmb1w5l5&quot;,&quot;mark_clusters&quot;);</span>
+}
+<span class="fc" id="L545">}</span>
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;build_skeleton&quot;, key=&quot;bwrw5u0gi2rgah1cn9h0glpse&quot;, definition=&quot;void build_skeleton(graph_t * g, graph_t * subg)&quot;)
+public static void build_skeleton(Globals zz, ST_Agraph_s g, ST_Agraph_s subg) {
+<span class="fc" id="L554">ENTERING(&quot;bwrw5u0gi2rgah1cn9h0glpse&quot;,&quot;build_skeleton&quot;);</span>
+try {
+    int r;
+    ST_Agnode_s v, prev, rl;
+    ST_Agedge_s e;
+    
+<span class="fc" id="L560">    prev = null;</span>
+<span class="fc" id="L561">    GD_rankleader(subg, CArrayOfStar.&lt;ST_Agnode_s&gt;ALLOC(GD_maxrank(subg) + 2, ZType.ST_Agnode_s));</span>
+<span class="fc bfc" id="L562" title="All 2 branches covered.">    for (r = GD_minrank(subg); r &lt;= GD_maxrank(subg); r++) {</span>
+<span class="fc" id="L563">	v = virtual_node(g);</span>
+<span class="fc" id="L564">	GD_rankleader(subg).set_(r, v);</span>
+<span class="fc" id="L565">	ND_rank(v, r);</span>
+<span class="fc" id="L566">	ND_ranktype(v, CLUSTER);</span>
+<span class="fc" id="L567">	ND_clust(v, subg);</span>
+<span class="fc bfc" id="L568" title="All 2 branches covered.">	if (prev!=null) {</span>
+<span class="fc" id="L569">	    e = virtual_edge(prev, v, null);</span>
+<span class="fc" id="L570">	    ED_xpenalty(e, ED_xpenalty(e) * CL_CROSS);</span>
+	}
+<span class="fc" id="L572">	prev = v;</span>
+    }
+    
+    
+    /* set the counts on virtual edges of the cluster skeleton */
+<span class="fc bfc" id="L577" title="All 2 branches covered.">    for (v = agfstnode(zz, subg); v!=null; v = agnxtnode(zz, subg, v)) {</span>
+<span class="fc" id="L578">	rl = GD_rankleader(subg).get_(ND_rank(v));</span>
+<span class="fc" id="L579">	ND_UF_size(rl, ND_UF_size(rl)+1);</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">	for (e = agfstout(zz, subg, v); e!=null; e = agnxtout(zz, subg, e)) {</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">	    for (r = ND_rank(agtail(e)); r &lt; ND_rank(aghead(e)); r++) {</span>
+<span class="fc" id="L582">		ED_count(ND_out(rl).list.get_(0), ED_count(ND_out(rl).list.get_(0))+1);</span>
+	    }
+	}
+    }
+<span class="fc bfc" id="L586" title="All 2 branches covered.">    for (r = GD_minrank(subg); r &lt;= GD_maxrank(subg); r++) {</span>
+<span class="fc" id="L587">	rl = GD_rankleader(subg).get_(r);</span>
+<span class="pc bpc" id="L588" title="1 of 2 branches missed.">	if (ND_UF_size(rl) &gt; 1)</span>
+<span class="fc" id="L589">	    ND_UF_size(rl, ND_UF_size(rl)-1);</span>
+    }
+} finally {
+<span class="fc" id="L592">LEAVING(&quot;bwrw5u0gi2rgah1cn9h0glpse&quot;,&quot;build_skeleton&quot;);</span>
+}
+<span class="fc" id="L594">}</span>
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;install_cluster&quot;, key=&quot;75yt3xwcwnxipi827t1r8zcmn&quot;, definition=&quot;void install_cluster(graph_t * g, node_t * n, int pass, nodequeue * q)&quot;)
+public static void install_cluster(Globals zz, ST_Agraph_s g, ST_Agnode_s n, int pass, ST_nodequeue q) {
+<span class="fc" id="L602">ENTERING(&quot;75yt3xwcwnxipi827t1r8zcmn&quot;,&quot;install_cluster&quot;);</span>
+try {
+    int r;
+    ST_Agraph_s clust;
+<span class="fc" id="L606">    clust = ND_clust(n);</span>
+    
+<span class="fc bfc" id="L608" title="All 2 branches covered.">    if (GD_installed(clust) != pass + 1) {</span>
+<span class="fc bfc" id="L609" title="All 2 branches covered.">	for (r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++)</span>
+<span class="fc" id="L610">	    install_in_rank(zz, g, GD_rankleader(clust).get_(r));</span>
+<span class="fc bfc" id="L611" title="All 2 branches covered.">	for (r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++)</span>
+<span class="fc" id="L612">	    enqueue_neighbors(q, GD_rankleader(clust).get_(r), pass);</span>
+<span class="fc" id="L613">	GD_installed(clust, pass + 1);</span>
+    }
+} finally {
+<span class="fc" id="L616">LEAVING(&quot;75yt3xwcwnxipi827t1r8zcmn&quot;,&quot;install_cluster&quot;);</span>
+}
+<span class="fc" id="L618">}</span>
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;mark_lowclusters&quot;, key=&quot;4muksvb3ec03mt6cvaqpb5c7a&quot;, definition=&quot;void mark_lowclusters(Agraph_t * root)&quot;)
+public static void mark_lowclusters(Globals zz, ST_Agraph_s root) {
+<span class="fc" id="L626">ENTERING(&quot;4muksvb3ec03mt6cvaqpb5c7a&quot;,&quot;mark_lowclusters&quot;);</span>
+try {
+    ST_Agnode_s n, vn;
+    ST_Agedge_s orig, e;
+    
+    /* first, zap any previous cluster labelings */
+<span class="fc bfc" id="L632" title="All 2 branches covered.">    for (n = agfstnode(zz, root); n!=null; n = agnxtnode(zz, root, n)) {</span>
+<span class="fc" id="L633">	ND_clust(n, null);</span>
+<span class="fc bfc" id="L634" title="All 2 branches covered.">	for (orig = agfstout(zz, root, n); orig!=null; orig = agnxtout(zz, root, orig)) {</span>
+<span class="fc bfc" id="L635" title="All 2 branches covered.">	    if ((e = ED_to_virt(orig))!=null) {</span>
+<span class="pc bpc" id="L636" title="1 of 4 branches missed.">		while (e!=null &amp;&amp; (ND_node_type(vn = aghead(e))) == VIRTUAL) {</span>
+<span class="fc" id="L637">		    ND_clust(vn, null);</span>
+<span class="fc" id="L638">		    e = (ST_Agedge_s) ND_out(aghead(e)).list.get_(0);</span>
+		}
+	    }
+	}
+    }
+    
+    
+    /* do the recursion */
+<span class="fc" id="L646">    mark_lowcluster_basic(zz, root);</span>
+} finally {
+<span class="fc" id="L648">LEAVING(&quot;4muksvb3ec03mt6cvaqpb5c7a&quot;,&quot;mark_lowclusters&quot;);</span>
+}
+<span class="fc" id="L650">}</span>
+
+
+
+
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/cluster.c&quot;, name=&quot;mark_lowcluster_basic&quot;, key=&quot;48j6fdymvkcgeh4wde060ctac&quot;, definition=&quot;static void mark_lowcluster_basic(Agraph_t * g)&quot;)
+public static void mark_lowcluster_basic(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L658">ENTERING(&quot;48j6fdymvkcgeh4wde060ctac&quot;,&quot;mark_lowcluster_basic&quot;);</span>
+try {
+    ST_Agraph_s clust;
+    ST_Agnode_s n, vn;
+    ST_Agedge_s orig, e;
+    
+    int c;
+<span class="fc bfc" id="L665" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="fc" id="L666">	clust = GD_clust(g).get_(c);</span>
+<span class="fc" id="L667">	mark_lowcluster_basic(zz, clust);</span>
+    }
+    /* see what belongs to this graph that wasn't already marked */
+<span class="fc bfc" id="L670" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">	if (ND_clust(n) == null)</span>
+<span class="fc" id="L672">	    ND_clust(n, g);</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">	for (orig = agfstout(zz, g, n); orig!=null; orig = agnxtout(zz, g, orig)) {</span>
+<span class="fc bfc" id="L674" title="All 2 branches covered.">	    if ((e = ED_to_virt(orig))!=null) {</span>
+<span class="pc bpc" id="L675" title="1 of 4 branches missed.">		while (e!=null &amp;&amp; (ND_node_type(vn = aghead(e))) == VIRTUAL) {</span>
+<span class="pc bpc" id="L676" title="1 of 2 branches missed.">		    if (ND_clust(vn) == null)</span>
+<span class="fc" id="L677">			ND_clust(vn, g);</span>
+<span class="fc" id="L678">		    e = (ST_Agedge_s) ND_out(aghead(e)).list.get_(0);</span>
+		}
+	    }
+	}
+    }
+} finally {
+<span class="fc" id="L684">LEAVING(&quot;48j6fdymvkcgeh4wde060ctac&quot;,&quot;mark_lowcluster_basic&quot;);</span>
+}
+<span class="fc" id="L686">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

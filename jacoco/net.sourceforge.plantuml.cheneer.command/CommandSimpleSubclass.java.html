@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandSimpleSubclass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cheneer.command</a> &gt; <span class="el_source">CommandSimpleSubclass.java</span></div><h1>CommandSimpleSubclass.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.cheneer.command;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandSimpleSubclass extends SingleLineCommand2&lt;ChenEerDiagram&gt; {
+
+	public CommandSimpleSubclass() {
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
+
+	protected static IRegex getRegexConcat() {
+<span class="fc" id="L65">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;NAME1&quot;, &quot;([%pLN_.-]+)&quot;), //
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;PARTICIPATION&quot;, &quot;([-=])&quot;), //
+				new RegexLeaf(&quot;DIRECTION&quot;, &quot;([&lt;&gt;])&quot;), //
+				new RegexLeaf(&quot;PARTICIPATION2&quot;, &quot;([-=])&quot;), //
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;NAME2&quot;, &quot;([%pLN_.-]+)&quot;), //
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				color().getRegex(), //</span>
+<span class="fc" id="L75">				RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L79">		return ColorParser.simpleColor(ColorType.LINE);</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="fc" id="L85">		String name1 = diagram.cleanId(arg.get(&quot;NAME1&quot;, 0));</span>
+<span class="fc" id="L86">		String name2 = diagram.cleanId(arg.get(&quot;NAME2&quot;, 0));</span>
+<span class="fc" id="L87">		final boolean isDouble = arg.get(&quot;PARTICIPATION&quot;, 0).equals(&quot;=&quot;);</span>
+<span class="fc" id="L88">		final boolean isSuperset = arg.get(&quot;DIRECTION&quot;, 0).equals(&quot;&gt;&quot;);</span>
+
+<span class="fc" id="L90">		final Quark&lt;Entity&gt; quark1 = diagram.quarkInContext(true, name1);</span>
+<span class="fc" id="L91">		final Entity entity1 = quark1.getData();</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (entity1 == null) {</span>
+<span class="nc" id="L93">			return CommandExecutionResult.error(&quot;No such entity: &quot; + name1);</span>
+		}
+
+<span class="fc" id="L96">		final Quark&lt;Entity&gt; quark2 = diagram.quarkInContext(true, name2);</span>
+<span class="fc" id="L97">		final Entity entity2 = quark2.getData();</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (entity2 == null) {</span>
+<span class="nc" id="L99">			return CommandExecutionResult.error(&quot;No such entity: &quot; + name2);</span>
+		}
+
+<span class="fc" id="L102">		LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (isDouble) {</span>
+<span class="fc" id="L104">			linkType = linkType.goBold();</span>
+		}
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (isSuperset) {</span>
+<span class="fc" id="L107">			linkType = linkType.withMiddleSuperset();</span>
+		} else {
+<span class="fc" id="L109">			linkType = linkType.withMiddleSubset();</span>
+		}
+<span class="fc" id="L111">		final Link link = new Link(location, diagram, diagram.getCurrentStyleBuilder(), entity1, entity2,</span>
+<span class="fc" id="L112">				linkType, LinkArg.build(Display.NULL, 3));</span>
+<span class="fc" id="L113">		link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));</span>
+<span class="fc" id="L114">		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc" id="L115">		diagram.addLink(link);</span>
+
+<span class="fc" id="L117">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

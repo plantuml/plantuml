@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandMultilines3.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command</a> &gt; <span class="el_source">CommandMultilines3.java</span></div><h1>CommandMultilines3.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command;
+
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.BlocLines;
+
+public abstract class CommandMultilines3&lt;S extends Diagram&gt; implements Command&lt;S&gt; {
+
+	private final IRegex starting;
+
+	private final MultilinesStrategy strategy;
+
+	private final Trim trimEnd;
+
+<span class="fc" id="L53">	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {</span>
+<span class="pc bpc" id="L54" title="2 of 4 branches missed.">		if (patternStart.getPattern().startsWith(&quot;^&quot;) == false || patternStart.getPattern().endsWith(&quot;$&quot;) == false)</span>
+<span class="nc" id="L55">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart.getPattern());</span>
+
+<span class="fc" id="L57">		this.strategy = strategy;</span>
+<span class="fc" id="L58">		this.starting = patternStart;</span>
+<span class="fc" id="L59">		this.trimEnd = trimEnd;</span>
+<span class="fc" id="L60">	}</span>
+
+	public abstract RegexConcat getPatternEnd2();
+
+	public String[] getDescription() {
+<span class="nc" id="L65">		return new String[] { &quot;START: &quot; + starting.getPattern(), &quot;END: &quot; + getPatternEnd2().getPattern() };</span>
+	}
+
+	final public CommandControl isValid(BlocLines lines) {
+<span class="fc" id="L69">		lines = lines.cleanList(strategy);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc" id="L71">			return CommandControl.NOT_OK;</span>
+
+<span class="fc" id="L73">		final StringLocated first = lines.getFirst();</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (first == null)</span>
+<span class="nc" id="L75">			return CommandControl.NOT_OK;</span>
+
+<span class="fc" id="L77">		final boolean result1 = starting.match(first.getTrimmed());</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (result1 == false)</span>
+<span class="fc" id="L79">			return CommandControl.NOT_OK;</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (lines.size() == 1)</span>
+<span class="fc" id="L82">			return CommandControl.OK_PARTIAL;</span>
+
+		final StringLocated potentialLast;
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (trimEnd == Trim.NONE)</span>
+<span class="fc" id="L86">			potentialLast = lines.getLast();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		else if (trimEnd == Trim.BOTH)</span>
+<span class="nc" id="L88">			potentialLast = lines.getLast().getTrimmed();</span>
+		else
+<span class="nc" id="L90">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L92">		final boolean m1 = getPatternEnd2().match(potentialLast);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (m1 == false)</span>
+<span class="fc" id="L94">			return CommandControl.OK_PARTIAL;</span>
+
+<span class="fc" id="L96">		return finalVerification();</span>
+	}
+
+	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+<span class="fc" id="L100">		lines = lines.cleanList(strategy);</span>
+<span class="fc" id="L101">		return executeNow(system, lines);</span>
+	}
+
+	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines) throws NoSuchColorException;
+
+	protected boolean isCommandForbidden() {
+<span class="fc" id="L107">		return false;</span>
+	}
+
+	protected CommandControl finalVerification() {
+<span class="fc" id="L111">		return CommandControl.OK;</span>
+	}
+
+	protected final IRegex getStartingPattern() {
+<span class="fc" id="L115">		return starting;</span>
+	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

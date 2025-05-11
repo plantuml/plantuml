@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>rec__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">rec__c.java</span></div><h1>rec__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cgraph.edge__c.agopp;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.cgraph.refstr__c.agstrdup;
+import static smetana.core.JUtils.strcmp;
+import static smetana.core.Macro.AGDATA;
+import static smetana.core.Macro.AGINEDGE;
+import static smetana.core.Macro.AGNODE;
+import static smetana.core.Macro.AGOUTEDGE;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.ST_Agedge_s;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_Agrec_s;
+import h.ST_Agtag_s;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.__ptr__;
+import smetana.core.size_t;
+
+<span class="nc" id="L71">public class rec__c {</span>
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/rec.c&quot;, name=&quot;set_data&quot;, key=&quot;62z9z5vraa2as0c9t108j9xaf&quot;, definition = &quot;static void set_data(Agobj_t * obj, Agrec_t * data, int mtflock)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+public static void set_data(ST_Agobj_s obj, ST_Agrec_s data, int mtflock) {
+<span class="fc" id="L77">ENTERING(&quot;62z9z5vraa2as0c9t108j9xaf&quot;,&quot;set_data&quot;);</span>
+try {
+    ST_Agedge_s e;
+<span class="fc" id="L80">    obj.data = data;</span>
+<span class="fc" id="L81">    (obj.tag).mtflock = mtflock;</span>
+<span class="pc bpc" id="L82" title="1 of 4 branches missed.">    if ((obj.tag.objtype == AGINEDGE) || (obj.tag.objtype == AGOUTEDGE)) {</span>
+<span class="fc" id="L83">	e = (ST_Agedge_s) agopp(obj);</span>
+<span class="fc" id="L84">	AGDATA(e, data);</span>
+<span class="fc" id="L85">	(e.base.tag).mtflock = mtflock;</span>
+    }
+} finally {
+<span class="fc" id="L88">LEAVING(&quot;62z9z5vraa2as0c9t108j9xaf&quot;,&quot;set_data&quot;);</span>
+}
+<span class="fc" id="L90">}</span>
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/rec.c&quot;, name=&quot;aggetrec&quot;, key=&quot;7p2ne3oknmyclvsw4lh3axtd8&quot;, definition = &quot;Agrec_t *aggetrec(void *obj, char *name, int mtf)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+public static ST_Agrec_s aggetrec(__ptr__ obj, CString name, boolean mtf) {
+<span class="fc" id="L98">ENTERING(&quot;7p2ne3oknmyclvsw4lh3axtd8&quot;,&quot;aggetrec&quot;);</span>
+try {
+    ST_Agobj_s hdr;
+    ST_Agrec_s d, first;
+<span class="fc" id="L102">    hdr = (ST_Agobj_s) obj;</span>
+<span class="fc" id="L103">    first = d = (ST_Agrec_s) hdr.data;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">    while (d!=null) {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">	if (strcmp(name,d.name) == 0)</span>
+<span class="fc" id="L106">	    break;</span>
+<span class="fc" id="L107">	d = (ST_Agrec_s) d.next;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">	if (d == first) {</span>
+<span class="fc" id="L109">	    d = null;</span>
+<span class="fc" id="L110">	    break;</span>
+	}
+    }
+<span class="fc bfc" id="L113" title="All 2 branches covered.">    if (d!=null) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">	if (((ST_Agtag_s)hdr.tag).mtflock!=0) {</span>
+<span class="pc bpc" id="L115" title="3 of 4 branches missed.">	    if (mtf &amp;&amp; (hdr.data != d))</span>
+<span class="nc" id="L116">		System.err.println(&quot;move to front lock inconsistency&quot;);</span>
+	} else {
+<span class="pc bpc" id="L118" title="1 of 6 branches missed.">	    if ((d != first) || (mtf != ((((ST_Agtag_s)hdr.tag).mtflock)!=0)))</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		set_data(hdr, d, mtf ? 1 : 0);	/* Always optimize */</span>
+	}
+    }
+<span class="fc" id="L122">    return d;</span>
+} finally {
+<span class="fc" id="L124">LEAVING(&quot;7p2ne3oknmyclvsw4lh3axtd8&quot;,&quot;aggetrec&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/rec.c&quot;, name=&quot;objputrec&quot;, key=&quot;7sk4k5ipm2jnd244556g1kr6&quot;, definition = &quot;static void objputrec(Agraph_t * g, Agobj_t * obj, void *arg)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+private static void objputrec(ST_Agraph_s g, ST_Agobj_s obj, ST_Agrec_s arg) {
+<span class="fc" id="L134">ENTERING(&quot;7sk4k5ipm2jnd244556g1kr6&quot;,&quot;objputrec&quot;);</span>
+try {
+	ST_Agrec_s firstrec, newrec;
+<span class="fc" id="L137">    newrec = arg;</span>
+<span class="fc" id="L138">    firstrec = obj.data;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">    if (firstrec == null)</span>
+<span class="fc" id="L140">	newrec.next = newrec;	/* 0 elts */</span>
+    else {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">	if (firstrec.next == firstrec) {</span>
+<span class="fc" id="L143">	    firstrec.next = newrec;	/* 1 elt */</span>
+<span class="fc" id="L144">	    newrec.next = firstrec;</span>
+	} else {
+<span class="fc" id="L146">	    newrec.next = firstrec.next;</span>
+<span class="fc" id="L147">	    firstrec.next = newrec;</span>
+	}
+    }
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">    if (((ST_Agtag_s)obj.tag).mtflock == 0)</span>
+<span class="fc" id="L151">	set_data(obj, newrec, (0));</span>
+} finally {
+<span class="fc" id="L153">LEAVING(&quot;7sk4k5ipm2jnd244556g1kr6&quot;,&quot;objputrec&quot;);</span>
+}
+<span class="fc" id="L155">}</span>
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/rec.c&quot;, name=&quot;agbindrec&quot;, key=&quot;dmh5i83l15mnn1pnu6f5dfv8l&quot;, definition = &quot;void *agbindrec(void *arg_obj, char *recname, unsigned int recsize, int mtf)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+public static __ptr__ agbindrec(Globals zz, __ptr__ arg_obj, CString recname, size_t recsize, boolean mtf) {
+<span class="fc" id="L163">ENTERING(&quot;dmh5i83l15mnn1pnu6f5dfv8l&quot;,&quot;agbindrec&quot;);</span>
+try {
+    ST_Agraph_s g;
+    ST_Agobj_s obj;
+    ST_Agrec_s rec;
+<span class="fc" id="L168">    obj = (ST_Agobj_s) arg_obj;</span>
+<span class="fc" id="L169">    g = agraphof(obj);</span>
+<span class="fc" id="L170">    rec = aggetrec(obj, recname, false);</span>
+<span class="pc bpc" id="L171" title="1 of 4 branches missed.">    if ((rec == null &amp;&amp; recsize.isStrictPositive())) {</span>
+<span class="fc" id="L172">    rec = (ST_Agrec_s) ((__ptr__)recsize.malloc());</span>
+	// rec = (ST_Agrec_s) ((__ptr__)agalloc(g, recsize)).castTo(ST_Agrec_s.class);
+    // rec = (Agrec_s) Memory.malloc(Agrec_s.class);
+<span class="fc" id="L175">	rec.name = agstrdup(zz, g, recname);</span>
+<span class="pc bpc" id="L176" title="1 of 4 branches missed.">	switch (((ST_Agtag_s)obj.tag).objtype) {</span>
+	case AGRAPH:
+<span class="fc" id="L178">	    objputrec(g, obj, rec);</span>
+<span class="fc" id="L179">	    break;</span>
+	case AGNODE:
+<span class="fc" id="L181">	    objputrec(g, obj, rec);</span>
+<span class="fc" id="L182">	    break;</span>
+	case AGINEDGE:
+	case AGOUTEDGE:
+<span class="fc" id="L185">	    objputrec(g, obj, rec);</span>
+	    break;
+	}
+    }
+<span class="fc bfc" id="L189" title="All 2 branches covered.">    if (mtf)</span>
+<span class="fc" id="L190">	aggetrec(arg_obj, recname, (true));</span>
+<span class="fc" id="L191">    return rec;</span>
+} finally {
+<span class="fc" id="L193">LEAVING(&quot;dmh5i83l15mnn1pnu6f5dfv8l&quot;,&quot;agbindrec&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

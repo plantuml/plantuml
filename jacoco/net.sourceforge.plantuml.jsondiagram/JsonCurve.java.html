@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonCurve.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.jsondiagram</a> &gt; <span class="el_source">JsonCurve.java</span></div><h1>JsonCurve.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ * 
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package net.sourceforge.plantuml.jsondiagram;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import h.ST_Agedgeinfo_t;
+import h.ST_bezier;
+import h.ST_pointf;
+import h.ST_splines;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+
+public class JsonCurve {
+
+<span class="fc" id="L50">	private final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+	private double maxX, maxY;
+	private final Mirror xMirror;
+	private final double veryFirstLine;
+
+	private final XPoint2D sp;
+	private final XPoint2D ep;
+
+<span class="fc" id="L58">	public JsonCurve(ST_Agedgeinfo_t data, Mirror xMirror, double veryFirstLine) {</span>
+<span class="fc" id="L59">		this.veryFirstLine = veryFirstLine;</span>
+<span class="fc" id="L60">		this.xMirror = xMirror;</span>
+<span class="fc" id="L61">		final ST_splines splines = data.spl;</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (splines.size != 1) {</span>
+<span class="nc" id="L63">			throw new IllegalStateException();</span>
+		}
+<span class="fc" id="L65">		final ST_bezier beziers = splines.list.get__(0);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (int i = 0; i &lt; beziers.size; i++) {</span>
+<span class="fc" id="L67">			final XPoint2D pt = getPoint(splines, i);</span>
+<span class="fc" id="L68">			maxX = Math.max(maxX, pt.getX());</span>
+<span class="fc" id="L69">			maxY = Math.max(maxY, pt.getY());</span>
+<span class="fc" id="L70">			points.add(pt);</span>
+		}
+
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">		if (beziers.sp.x == 0 &amp;&amp; beziers.sp.y == 0) {</span>
+<span class="fc" id="L74">			sp = null;</span>
+		} else {
+<span class="nc" id="L76">			sp = new XPoint2D(beziers.sp.x, beziers.sp.y);</span>
+		}
+<span class="pc bpc" id="L78" title="3 of 4 branches missed.">		if (beziers.ep.x == 0 &amp;&amp; beziers.ep.y == 0) {</span>
+<span class="nc" id="L79">			ep = null;</span>
+		} else {
+<span class="fc" id="L81">			ep = new XPoint2D(beziers.ep.x, beziers.ep.y);</span>
+		}
+
+<span class="fc" id="L84">	}</span>
+
+	private XPoint2D getPoint(ST_splines splines, int i) {
+<span class="fc" id="L87">		final ST_bezier beziers = splines.list.get__(0);</span>
+<span class="fc" id="L88">		final ST_pointf pt = beziers.list.get__(i);</span>
+<span class="fc" id="L89">		return new XPoint2D(pt.x, pt.y);</span>
+	}
+
+	public void drawCurve(HColor color, UGraphic ug) {
+<span class="fc" id="L93">		final UPath path = UPath.none();</span>
+
+<span class="fc" id="L95">		path.moveTo(getVeryFirst());</span>
+<span class="fc" id="L96">		path.lineTo(xMirror.invAndXYSwitch(points.get(0)));</span>
+
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (int i = 1; i &lt; points.size(); i += 3) {</span>
+<span class="fc" id="L99">			final XPoint2D pt2 = xMirror.invAndXYSwitch(points.get(i));</span>
+<span class="fc" id="L100">			final XPoint2D pt3 = xMirror.invAndXYSwitch(points.get(i + 1));</span>
+<span class="fc" id="L101">			final XPoint2D pt4 = xMirror.invAndXYSwitch(points.get(i + 2));</span>
+<span class="fc" id="L102">			path.cubicTo(pt2, pt3, pt4);</span>
+		}
+<span class="fc" id="L104">		ug.draw(path);</span>
+
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (ep != null) {</span>
+<span class="fc" id="L107">			final XPoint2D last = xMirror.invAndXYSwitch(points.get(points.size() - 1));</span>
+<span class="fc" id="L108">			final XPoint2D trueEp = xMirror.invAndXYSwitch(ep);</span>
+<span class="fc" id="L109">			new Arrow(last, trueEp).drawArrow(ug.apply(color.bg()));</span>
+		}
+<span class="fc" id="L111">	}</span>
+
+	public void drawSpot(UGraphic ug) {
+<span class="fc" id="L114">		final double size = 3;</span>
+<span class="fc" id="L115">		ug = ug.apply(UTranslate.point(getVeryFirst()).compose(new UTranslate(-size, -size)));</span>
+<span class="fc" id="L116">		ug.apply(UStroke.simple()).draw(UEllipse.build(2 * size, 2 * size));</span>
+<span class="fc" id="L117">	}</span>
+
+	private XPoint2D getVeryFirst() {
+<span class="fc" id="L120">		return supp(xMirror.invAndXYSwitch(points.get(0)), xMirror.invAndXYSwitch(points.get(1)), veryFirstLine);</span>
+
+	}
+
+	private static XPoint2D supp(XPoint2D center, XPoint2D direction, double len) {
+<span class="fc" id="L125">		final double full = center.distance(direction);</span>
+<span class="fc" id="L126">		final double dx = (center.getX() - direction.getX()) / full;</span>
+<span class="fc" id="L127">		final double dy = (center.getY() - direction.getY()) / full;</span>
+
+<span class="fc" id="L129">		return new XPoint2D(center.getX() + dx * len, center.getY() + dy * len);</span>
+
+	}
+
+	public double getMaxX() {
+<span class="nc" id="L134">		return maxX;</span>
+	}
+
+	public double getMaxY() {
+<span class="nc" id="L138">		return maxY;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

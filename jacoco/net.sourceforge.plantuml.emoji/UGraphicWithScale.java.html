@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicWithScale.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.emoji</a> &gt; <span class="el_source">UGraphicWithScale.java</span></div><h1>UGraphicWithScale.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.emoji;
+
+import java.awt.geom.AffineTransform;
+
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+
+public class UGraphicWithScale {
+
+	final private UGraphic ug;
+	final private AffineTransform at;
+	final private double angle;
+	final private double scale;
+	final private HColor forcedColor;
+	final private int minGray;
+	final private int maxGray;
+
+	public UGraphicWithScale(UGraphic ug, HColor forcedColor, double scale, int minGray, int maxGray) {
+<span class="nc" id="L59">		this(updateColor(ug, forcedColor), forcedColor, AffineTransform.getScaleInstance(scale, scale), 0, scale,</span>
+				minGray, maxGray);
+<span class="nc" id="L61">	}</span>
+
+	private static UGraphic updateColor(UGraphic ug, HColor forcedColor) {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		final HColor color = forcedColor == null ? HColors.BLACK : forcedColor;</span>
+<span class="nc" id="L65">		return ug.apply(color).apply(color.bg());</span>
+	}
+
+	private UGraphicWithScale(UGraphic ug, HColor forcedColor, AffineTransform at, double angle, double scale,
+<span class="nc" id="L69">			int minGray, int maxGray) {</span>
+<span class="nc" id="L70">		this.ug = ug;</span>
+<span class="nc" id="L71">		this.forcedColor = forcedColor;</span>
+<span class="nc" id="L72">		this.minGray = minGray;</span>
+<span class="nc" id="L73">		this.maxGray = maxGray;</span>
+<span class="nc" id="L74">		this.at = at;</span>
+<span class="nc" id="L75">		this.angle = angle;</span>
+<span class="nc" id="L76">		this.scale = scale;</span>
+<span class="nc" id="L77">	}</span>
+
+	public UGraphic getUg() {
+<span class="nc" id="L80">		return ug;</span>
+	}
+
+	public UGraphicWithScale apply(UChange change) {
+<span class="nc" id="L84">		return new UGraphicWithScale(ug.apply(change), forcedColor, at, angle, scale, minGray, maxGray);</span>
+	}
+
+	public HColor getTrueColor(String code) {
+<span class="nc" id="L88">		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (forcedColor == null)</span>
+<span class="nc" id="L90">			return result;</span>
+<span class="nc" id="L91">		final HColorSimple color = (HColorSimple) forcedColor;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (color.isGray())</span>
+<span class="nc" id="L93">			return result.asMonochrome();</span>
+<span class="nc" id="L94">		return result.asMonochrome(color, this.minGray, this.maxGray);</span>
+	}
+
+	public UGraphicWithScale applyScale(double changex, double changey) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (changex != changey)</span>
+<span class="nc" id="L99">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L100">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L101">		copy.scale(changex, changey);</span>
+<span class="nc" id="L102">		return new UGraphicWithScale(ug, forcedColor, copy, angle, 1 * changex, minGray, maxGray);</span>
+	}
+
+	public void draw(UShape shape) {
+<span class="nc" id="L106">		ug.draw(shape);</span>
+<span class="nc" id="L107">	}</span>
+
+	public UGraphicWithScale applyRotate(double delta_angle, double x, double y) {
+<span class="nc" id="L110">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L111">		copy.rotate(delta_angle * Math.PI / 180, x, y);</span>
+<span class="nc" id="L112">		return new UGraphicWithScale(ug, forcedColor, copy, this.angle + delta_angle, this.scale, minGray, maxGray);</span>
+	}
+
+	public UGraphicWithScale applyTranslate(double x, double y) {
+<span class="nc" id="L116">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L117">		copy.translate(x, y);</span>
+<span class="nc" id="L118">		return new UGraphicWithScale(ug, forcedColor, copy, angle, this.scale, minGray, maxGray);</span>
+	}
+
+	public AffineTransform getAffineTransform() {
+<span class="nc" id="L122">		return at;</span>
+	}
+
+	public UGraphicWithScale applyMatrix(double v1, double v2, double v3, double v4, double v5, double v6) {
+<span class="nc" id="L126">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L127">		copy.concatenate(new AffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));</span>
+<span class="nc" id="L128">		return new UGraphicWithScale(ug, forcedColor, copy, angle, this.scale, minGray, maxGray);</span>
+	}
+
+	public final double getAngle() {
+<span class="nc" id="L132">		return angle;</span>
+	}
+
+	public double getScale() {
+<span class="nc" id="L136">		return scale;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

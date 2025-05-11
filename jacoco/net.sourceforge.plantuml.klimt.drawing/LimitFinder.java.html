@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LimitFinder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing</a> &gt; <span class="el_source">LimitFinder.java</span></div><h1>LimitFinder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing;
+
+import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
+
+import net.atmp.SpecialText;
+import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
+import net.sourceforge.plantuml.klimt.CopyForegroundColorToBackgroundColor;
+import net.sourceforge.plantuml.klimt.UAntiAliasing;
+import net.sourceforge.plantuml.klimt.UBackground;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UEmpty;
+import net.sourceforge.plantuml.klimt.shape.UHidden;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPixel;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+
+public final class LimitFinder extends UGraphicNo {
+    // ::remove file when __HAXE__
+
+	@Override
+	public UGraphic apply(UChange change) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		final UTranslate tmp = change instanceof UTranslate ? this.getTranslate().compose((UTranslate) change)</span>
+<span class="fc" id="L78">				: this.getTranslate();</span>
+<span class="fc" id="L79">		final LimitFinder result = new LimitFinder(this.getStringBounder(), tmp, this.minmax);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (instanceOfAny(change, UAntiAliasing.class, UBackground.class, UClip.class, HColor.class, UHidden.class,</span>
+				UStroke.class, UTranslate.class, CopyForegroundColorToBackgroundColor.class) == false)
+<span class="nc" id="L82">			throw new UnsupportedOperationException(change.getClass().toString());</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		result.clip = change instanceof UClip ? ((UClip) change).translate(result.getTranslate()) : this.clip;</span>
+<span class="fc" id="L84">		return result;</span>
+	}
+
+	private final MinMaxMutable minmax;
+	private UClip clip;
+
+	public static LimitFinder create(StringBounder stringBounder, boolean initToZero) {
+<span class="fc" id="L91">		final LimitFinder result = new LimitFinder(stringBounder, UTranslate.none(), MinMaxMutable.getEmpty(initToZero));</span>
+<span class="fc" id="L92">		result.clip = null;</span>
+<span class="fc" id="L93">		return result;</span>
+	}
+
+	private LimitFinder(StringBounder stringBounder, UTranslate translate, MinMaxMutable minmax) {
+<span class="fc" id="L97">		super(stringBounder, translate);</span>
+<span class="fc" id="L98">		this.minmax = minmax;</span>
+<span class="fc" id="L99">	}</span>
+
+	@Override
+	public void draw(UShape shape) {
+<span class="fc" id="L103">		final double x = getTranslate().getDx();</span>
+<span class="fc" id="L104">		final double y = getTranslate().getDy();</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
+<span class="fc" id="L106">			drawText(x, y, (UText) shape);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		} else if (shape instanceof ULine) {</span>
+<span class="fc" id="L108">			drawULine(x, y, (ULine) shape);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L110">			drawEllipse(x, y, (UEllipse) shape);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
+<span class="fc" id="L112">			drawUPolygon(x, y, (UPolygon) shape);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
+<span class="fc" id="L114">			drawUPath(x, y, (UPath) shape);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
+<span class="fc" id="L116">			drawRectangle(x, y, (URectangle) shape);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
+<span class="fc" id="L118">			drawDotPath(x, y, (DotPath) shape);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
+<span class="fc" id="L120">			drawImage(x, y, (UImage) shape);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		} else if (shape instanceof UImageSvg) {</span>
+<span class="nc" id="L122">			drawImageSvg(x, y, (UImageSvg) shape);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		} else if (shape instanceof UEmpty) {</span>
+<span class="fc" id="L125">			drawEmpty(x, y, (UEmpty) shape);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
+<span class="nc" id="L127">			final TextBlock tb = (TextBlock) shape;</span>
+<span class="nc" id="L128">			tb.drawU(this);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+			// To be done
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		} else if (shape instanceof CenteredText) {</span>
+			// Ignored
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		} else if (shape instanceof SpecialText) {</span>
+			// Ignored
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		} else if (shape instanceof CopyForegroundColorToBackgroundColor) {</span>
+			// Ignored
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		} else if (shape instanceof UPixel) {</span>
+<span class="nc" id="L138">			addPoint(x, y);</span>
+		} else {
+<span class="nc" id="L140">			throw new UnsupportedOperationException(shape.getClass().getName());</span>
+		}
+<span class="fc" id="L142">	}</span>
+
+	private void addPoint(double x, double y) {
+<span class="fc bfc" id="L145" title="All 4 branches covered.">		if (clip == null || clip.isInside(x, y))</span>
+<span class="fc" id="L146">			minmax.addPoint(x, y);</span>
+
+<span class="fc" id="L148">	}</span>
+
+	private void drawEmpty(double x, double y, UEmpty shape) {
+<span class="fc" id="L151">		addPoint(x, y);</span>
+<span class="fc" id="L152">		addPoint(x + shape.getWidth(), y + shape.getHeight());</span>
+<span class="fc" id="L153">	}</span>
+
+	private void drawUPath(double x, double y, UPath shape) {
+<span class="fc" id="L156">		addPoint(x + shape.getMinX(), y + shape.getMinY());</span>
+<span class="fc" id="L157">		addPoint(x + shape.getMaxX(), y + shape.getMaxY());</span>
+<span class="fc" id="L158">	}</span>
+
+	private final static double HACK_X_FOR_POLYGON = 10;
+
+	private void drawUPolygon(double x, double y, UPolygon shape) {
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (shape.getPoints().size() == 0)</span>
+<span class="nc" id="L164">			return;</span>
+
+<span class="fc" id="L166">		addPoint(x + shape.getMinX() - HACK_X_FOR_POLYGON, y + shape.getMinY());</span>
+<span class="fc" id="L167">		addPoint(x + shape.getMaxX() + HACK_X_FOR_POLYGON, y + shape.getMaxY());</span>
+<span class="fc" id="L168">	}</span>
+
+	private void drawULine(double x, double y, ULine shape) {
+<span class="fc" id="L171">		addPoint(x, y);</span>
+<span class="fc" id="L172">		addPoint(x + shape.getDX(), y + shape.getDY());</span>
+<span class="fc" id="L173">	}</span>
+
+	private void drawRectangle(double x, double y, URectangle shape) {
+<span class="fc" id="L176">		addPoint(x - 1, y - 1);</span>
+<span class="fc" id="L177">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
+<span class="fc" id="L178">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
+<span class="fc" id="L179">	}</span>
+
+	private void drawDotPath(double x, double y, DotPath shape) {
+<span class="fc" id="L182">		final MinMax shapeMinMax = shape.getMinMax();</span>
+<span class="fc" id="L183">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
+<span class="fc" id="L184">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
+<span class="fc" id="L185">	}</span>
+
+	private void drawImage(double x, double y, UImage shape) {
+<span class="fc" id="L188">		addPoint(x, y);</span>
+<span class="fc" id="L189">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="fc" id="L190">	}</span>
+
+	private void drawImageSvg(double x, double y, UImageSvg shape) {
+<span class="nc" id="L193">		addPoint(x, y);</span>
+<span class="nc" id="L194">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="nc" id="L195">	}</span>
+
+	private void drawEllipse(double x, double y, UEllipse shape) {
+<span class="fc" id="L198">		addPoint(x, y);</span>
+<span class="fc" id="L199">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
+<span class="fc" id="L200">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
+<span class="fc" id="L201">	}</span>
+
+	private void drawText(double x, double y, UText text) {
+<span class="fc" id="L204">		final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
+<span class="fc" id="L205">				text.getText());</span>
+<span class="fc" id="L206">		y -= dim.getHeight() - 1.5;</span>
+<span class="fc" id="L207">		addPoint(x, y);</span>
+<span class="fc" id="L208">		addPoint(x, y + dim.getHeight());</span>
+<span class="fc" id="L209">		addPoint(x + dim.getWidth(), y);</span>
+<span class="fc" id="L210">		addPoint(x + dim.getWidth(), y + dim.getHeight());</span>
+<span class="fc" id="L211">	}</span>
+
+	public ColorMapper getColorMapper() {
+<span class="fc" id="L214">		return ColorMapper.IDENTITY;</span>
+	}
+
+	public double getMaxX() {
+<span class="fc" id="L218">		return minmax.getMaxX();</span>
+	}
+
+	public double getMaxY() {
+<span class="fc" id="L222">		return minmax.getMaxY();</span>
+	}
+
+	public double getMinX() {
+<span class="nc" id="L226">		return minmax.getMinX();</span>
+	}
+
+	public double getMinY() {
+<span class="nc" id="L230">		return minmax.getMinY();</span>
+	}
+
+	public MinMax getMinMax() {
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (minmax.isInfinity())</span>
+<span class="nc" id="L235">			return MinMax.getEmpty(true);</span>
+
+<span class="fc" id="L237">		return MinMax.fromMutable(minmax);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

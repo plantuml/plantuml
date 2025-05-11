@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DriverEllipseTikz.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.tikz</a> &gt; <span class="el_source">DriverEllipseTikz.java</span></div><h1>DriverEllipseTikz.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.tikz;
+
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.tikz.TikzGraphics;
+
+<span class="nc" id="L43">public class DriverEllipseTikz implements UDriver&lt;UEllipse, TikzGraphics&gt; {</span>
+
+	public void draw(UEllipse shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
+<span class="nc" id="L46">		final double width = shape.getWidth();</span>
+<span class="nc" id="L47">		final double height = shape.getHeight();</span>
+
+<span class="nc" id="L49">		double start = shape.getStart();</span>
+<span class="nc" id="L50">		final double extend = shape.getExtend();</span>
+<span class="nc" id="L51">		final double cx = x + width / 2;</span>
+<span class="nc" id="L52">		final double cy = y + height / 2;</span>
+<span class="nc" id="L53">		tikz.setFillColor(param.getBackcolor());</span>
+<span class="nc" id="L54">		tikz.setStrokeColor(param.getColor());</span>
+<span class="nc" id="L55">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
+<span class="nc" id="L57">			tikz.ellipse(cx, cy, width / 2, height / 2);</span>
+		} else {
+<span class="nc" id="L59">			start = start + 90;</span>
+<span class="nc" id="L60">			final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;</span>
+<span class="nc" id="L61">			final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;</span>
+<span class="nc" id="L62">			final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;</span>
+<span class="nc" id="L63">			final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;</span>
+			// start = start + 360;
+			// tikz.arc(x2, y2, (int) start, (int) (start - 45), (width + height) / 4);
+
+<span class="nc" id="L67">			tikz.arc(x1, y1, (int) ((360 - (start + 270))), (int) (360 - ((start + 270 + extend))),</span>
+					(width + height) / 4);
+			// tikz.arc(x1, y1, (int) (start + 270 + extend), (int) (start + 270), (width +
+			// height) / 4);
+			// //
+			// http://www.itk.ilstu.edu/faculty/javila/SVG/SVG_drawing1/elliptical_curve.htm
+			// // svg.svgEllipse(x1, y1, 1, 1, 0);
+			// // svg.svgEllipse(x2, y2, 1, 1, 0);
+			// svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
+		}
+<span class="nc" id="L77">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

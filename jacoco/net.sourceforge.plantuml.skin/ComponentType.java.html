@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComponentType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">ComponentType.java</span></div><h1>ComponentType.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin;
+
+import net.sourceforge.plantuml.sequencediagram.LifeEventType;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.Styleable;
+
+<span class="fc" id="L44">public enum ComponentType implements Styleable {</span>
+
+<span class="fc" id="L46">	ARROW,</span>
+
+<span class="fc" id="L48">	ACTOR_HEAD, ACTOR_TAIL,</span>
+
+<span class="fc" id="L50">	BOUNDARY_HEAD, BOUNDARY_TAIL, CONTROL_HEAD, CONTROL_TAIL, ENTITY_HEAD, ENTITY_TAIL, QUEUE_HEAD, QUEUE_TAIL,</span>
+<span class="fc" id="L51">	DATABASE_HEAD, DATABASE_TAIL, COLLECTIONS_HEAD, COLLECTIONS_TAIL,</span>
+
+	//
+<span class="fc" id="L54">	ALIVE_BOX_CLOSE_CLOSE, ALIVE_BOX_CLOSE_OPEN, ALIVE_BOX_OPEN_CLOSE, ALIVE_BOX_OPEN_OPEN,</span>
+
+<span class="fc" id="L56">	DELAY_TEXT, DESTROY,</span>
+
+<span class="fc" id="L58">	DELAY_LINE, PARTICIPANT_LINE, CONTINUE_LINE,</span>
+
+	//
+<span class="fc" id="L61">	GROUPING_ELSE_LEGACY, GROUPING_ELSE_TEOZ, GROUPING_HEADER_LEGACY, GROUPING_HEADER_TEOZ, GROUPING_SPACE,</span>
+	//
+<span class="fc" id="L63">	NEWPAGE, NOTE, NOTE_HEXAGONAL, NOTE_BOX, DIVIDER, REFERENCE, ENGLOBER,</span>
+
+	//
+<span class="fc" id="L66">	PARTICIPANT_HEAD, PARTICIPANT_TAIL</span>
+
+	//
+	/* TITLE, SIGNATURE */;
+
+	public boolean isArrow() {
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		return this == ARROW;</span>
+	}
+
+	public StyleSignature getStyleSignature() {
+<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)</span>
+<span class="nc" id="L77">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);</span>
+
+<span class="fc bfc" id="L79" title="All 4 branches covered.">		if (this == PARTICIPANT_LINE || this == CONTINUE_LINE)</span>
+<span class="fc" id="L80">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);</span>
+
+<span class="pc bpc" id="L82" title="2 of 8 branches missed.">		if (this == ALIVE_BOX_CLOSE_CLOSE || this == ALIVE_BOX_CLOSE_OPEN || this == ALIVE_BOX_OPEN_CLOSE</span>
+				|| this == ALIVE_BOX_OPEN_OPEN)
+<span class="fc" id="L84">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (this == DESTROY)</span>
+<span class="fc" id="L87">			return LifeEventType.DESTROY.getStyleSignature();</span>
+
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (this == DIVIDER)</span>
+<span class="fc" id="L90">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);</span>
+
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (this == ENGLOBER)</span>
+<span class="nc" id="L93">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.box);</span>
+
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (this == NEWPAGE)</span>
+<span class="fc" id="L96">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (this == NOTE)</span>
+<span class="nc" id="L99">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (this == DELAY_TEXT)</span>
+<span class="nc" id="L102">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.delay);</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (this == DELAY_LINE)</span>
+<span class="nc" id="L105">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.delay);</span>
+
+//		if (this == REFERENCE) {
+//			return StyleSignature.of(SName.root, SName.element,
+//					SName.sequenceDiagram, SName.reference);
+//		}
+<span class="nc" id="L111">		throw new UnsupportedOperationException(toString());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

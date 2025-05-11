@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileFormatOption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">FileFormatOption.java</span></div><h1>FileFormatOption.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.awt.geom.AffineTransform;
+import java.io.Serializable;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.text.SvgCharSizeHack;
+
+/**
+ * A FileFormat with some parameters.
+ * 
+ * 
+ * @author Arnaud Roques
+ * 
+ */
+public final class FileFormatOption implements Serializable {
+	// ::remove file when __HAXE__
+
+	private final FileFormat fileFormat;
+	private boolean withMetadata;
+	private final boolean useRedForError;
+	private final String svgLinkTarget;
+	private final String hoverColor;
+	private final TikzFontDistortion tikzFontDistortion;
+	private final double scale;
+	private final String preserveAspectRatio;
+	private final String watermark;
+	private final ColorMapper colorMapper;
+
+	public double getScaleCoef() {
+<span class="nc" id="L68">		return scale;</span>
+	}
+
+	public FileFormatOption(FileFormat fileFormat) {
+<span class="fc" id="L72">		this(fileFormat, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,</span>
+				ColorMapper.IDENTITY);
+<span class="fc" id="L74">	}</span>
+
+	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
+<span class="fc" id="L77">		this(fileFormat, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,</span>
+				ColorMapper.IDENTITY);
+<span class="fc" id="L79">	}</span>
+
+	private FileFormatOption(FileFormat fileFormat, boolean withMetadata, boolean useRedForError, String svgLinkTarget,
+			boolean debugsvek, String hoverColor, TikzFontDistortion tikzFontDistortion, double scale,
+<span class="fc" id="L83">			String preserveAspectRatio, String watermark, ColorMapper colorMapper) {</span>
+<span class="fc" id="L84">		this.hoverColor = hoverColor;</span>
+<span class="fc" id="L85">		this.watermark = watermark;</span>
+<span class="fc" id="L86">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L87">		this.withMetadata = withMetadata;</span>
+<span class="fc" id="L88">		this.useRedForError = useRedForError;</span>
+<span class="fc" id="L89">		this.svgLinkTarget = svgLinkTarget;</span>
+<span class="fc" id="L90">		this.debugsvek = debugsvek;</span>
+<span class="fc" id="L91">		this.tikzFontDistortion = Objects.requireNonNull(tikzFontDistortion);</span>
+<span class="fc" id="L92">		this.scale = scale;</span>
+<span class="fc" id="L93">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L94">		this.colorMapper = colorMapper;</span>
+<span class="fc" id="L95">	}</span>
+
+	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
+<span class="fc" id="L98">		return fileFormat.getDefaultStringBounder(tikzFontDistortion, charSizeHack);</span>
+	}
+
+	public String getSvgLinkTarget() {
+<span class="fc" id="L102">		return svgLinkTarget;</span>
+	}
+
+	public final boolean isWithMetadata() {
+<span class="fc" id="L106">		return withMetadata;</span>
+	}
+
+	public final String getPreserveAspectRatio() {
+<span class="fc" id="L110">		return preserveAspectRatio;</span>
+	}
+
+	public FileFormatOption withUseRedForError() {
+<span class="nc" id="L114">		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	public FileFormatOption withTikzFontDistortion(TikzFontDistortion tikzFontDistortion) {
+<span class="fc" id="L119">		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	public FileFormatOption withSvgLinkTarget(String svgLinkTarget) {
+<span class="nc" id="L124">		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	public FileFormatOption withPreserveAspectRatio(String preserveAspectRatio) {
+<span class="fc" id="L129">		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	public FileFormatOption withHoverColor(String hoverColor) {
+<span class="nc" id="L134">		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	public FileFormatOption withScale(double scale) {
+<span class="nc" id="L139">		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	public FileFormatOption withWartermark(String watermark) {
+<span class="nc" id="L144">		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	public FileFormatOption withColorMapper(ColorMapper colorMapper) {
+<span class="fc" id="L149">		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,</span>
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L155">		return fileFormat.toString();</span>
+	}
+
+	public final FileFormat getFileFormat() {
+<span class="fc" id="L159">		return fileFormat;</span>
+	}
+
+	@Deprecated
+	public AffineTransform getAffineTransform() {
+<span class="nc" id="L164">		return null;</span>
+	}
+
+	public final boolean isUseRedForError() {
+<span class="nc" id="L168">		return useRedForError;</span>
+	}
+
+<span class="fc" id="L171">	private boolean debugsvek = false;</span>
+
+	public void setDebugSvek(boolean debugsvek) {
+<span class="nc" id="L174">		this.debugsvek = debugsvek;</span>
+<span class="nc" id="L175">	}</span>
+
+	public boolean isDebugSvek() {
+<span class="fc" id="L178">		return debugsvek;</span>
+	}
+
+	public final String getHoverColor() {
+<span class="fc" id="L182">		return hoverColor;</span>
+	}
+
+	public void hideMetadata() {
+<span class="nc" id="L186">		this.withMetadata = false;</span>
+<span class="nc" id="L187">	}</span>
+
+	public final TikzFontDistortion getTikzFontDistortion() {
+<span class="fc" id="L190">		return tikzFontDistortion;</span>
+	}
+
+	public final String getWatermark() {
+<span class="fc" id="L194">		return watermark;</span>
+	}
+
+	public ColorMapper getColorMapper() {
+<span class="fc" id="L198">		return colorMapper;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AtomMath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.atom</a> &gt; <span class="el_source">AtomMath.java</span></div><h1>AtomMath.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.creole.atom;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.math.ScientificEquationSafe;
+
+public class AtomMath extends AbstractAtom implements Atom {
+	// ::remove file when __CORE__
+
+	private final ScientificEquationSafe math;
+	private final HColor foreground;
+	private final HColor background;
+
+<span class="nc" id="L59">	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background) {</span>
+<span class="nc" id="L60">		this.math = math;</span>
+<span class="nc" id="L61">		this.foreground = foreground;</span>
+<span class="nc" id="L62">		this.background = background;</span>
+<span class="nc" id="L63">	}</span>
+
+	private XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L67">			return stringBounder.calculateDimension(null, math.getSource());</span>
+		}
+<span class="nc" id="L69">		final BufferedImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();</span>
+<span class="nc" id="L70">		return new XDimension2D(image.getWidth(), image.getHeight());</span>
+	}
+
+	private XDimension2D dim;
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (stringBounder instanceof StringBounderDebug) {</span>
+<span class="nc" id="L77">			return calculateDimensionSlow(stringBounder);</span>
+		}
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (dim == null) {</span>
+<span class="nc" id="L80">			dim = calculateDimensionSlow(stringBounder);</span>
+		}
+<span class="nc" id="L82">		return dim;</span>
+	}
+
+	public double getStartingAltitude(StringBounder stringBounder) {
+<span class="nc" id="L86">		return 0;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L90">		final ColorMapper colorMapper = ug.getColorMapper();</span>
+<span class="nc" id="L91">		final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
+		final Color back;
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (background == null)</span>
+<span class="nc" id="L94">			back = null;</span>
+		else
+<span class="nc" id="L96">			back = getColor(colorMapper, background, Color.WHITE);</span>
+
+<span class="nc" id="L98">		final Color fore = getColor(colorMapper, foreground, Color.BLACK);</span>
+		// final double dpiFactor = ug.dpiFactor();
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (isSvg) {</span>
+<span class="nc" id="L101">			final UImageSvg svg = math.getSvg(1, fore, back);</span>
+<span class="nc" id="L102">			ug.draw(svg);</span>
+<span class="nc" id="L103">		} else {</span>
+<span class="nc" id="L104">			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());</span>
+<span class="nc" id="L105">			ug.draw(image);</span>
+		}
+<span class="nc" id="L107">	}</span>
+
+	private Color getColor(ColorMapper colorMapper, HColor color, Color defaultValue) {
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (color instanceof HColorSimple)</span>
+<span class="nc" id="L111">			return color.toColor(colorMapper);</span>
+
+<span class="nc" id="L113">		return defaultValue;</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

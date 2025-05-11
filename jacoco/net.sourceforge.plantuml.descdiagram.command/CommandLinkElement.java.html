@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandLinkElement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram.command</a> &gt; <span class="el_source">CommandLinkElement.java</span></div><h1>CommandLinkElement.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ *
+ */
+package net.sourceforge.plantuml.descdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.ActorStyle;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram&gt; {
+
+	private static final String KEY1 = &quot;dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+&quot;;
+	private static final String UBREX_KEY1 = &quot;dotted┇dashed┇plain┇bold┇hidden┇norank┇single┇thickness=〇+〴d&quot;;
+
+	private static final String KEY2 = &quot;,dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+&quot;;
+	private static final String UBREX_KEY2 = &quot;,dotted┇,dashed┇,plain┇,bold┇,hidden┇,norank┇,single┇,thickness=〇+〴d&quot;;
+
+	public static final String LINE_STYLE = &quot;(?:#\\w+|&quot; + CommandLinkElement.KEY1 + &quot;)(?:,#\\w+|&quot;
+			+ CommandLinkElement.KEY2 + &quot;)*&quot;;
+	public static final String UBREX_LINE_STYLE = &quot;【 #〇+〴w ┇&quot; + CommandLinkElement.UBREX_KEY1 + &quot;】 〇*【 ,#〇+〴w ┇&quot;
+			+ CommandLinkElement.UBREX_KEY2 + &quot;】&quot;;
+
+	private static final String LINE_STYLE_MUTILPLES = LINE_STYLE + &quot;(?:(?:;&quot; + LINE_STYLE + &quot;)*)&quot;;
+	public static final String STYLE_COLORS_MULTIPLES = &quot;-\\[(&quot; + LINE_STYLE_MUTILPLES + &quot;*)\\]-&gt;&quot;;
+
+	public CommandLinkElement() {
+<span class="fc" id="L84">		super(getRegexConcat());</span>
+<span class="fc" id="L85">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L88">		return RegexConcat.build(CommandLinkElement.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L89">				getGroup(&quot;ENT1&quot;), //</span>
+
+<span class="fc" id="L91">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;FIRST_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+<span class="fc" id="L93">				RegexLeaf.spaceZeroOrMore(), //</span>
+//				new RegexOptional(new RegexLeaf(&quot;STEREO1&quot;, &quot;(\\&lt;\\&lt;.*\\&gt;\\&gt;)&quot;)), //
+//				RegexLeaf.spaceZeroOrMore(), //
+
+				new RegexLeaf(&quot;HEAD2&quot;, &quot;(0\\)|&lt;&lt;|&lt;_|[&lt;^*+#0@)]|&lt;\\|[\\|\\:]?|[%s]+o)?&quot;), //
+				new RegexLeaf(&quot;BODY1&quot;, &quot;([-=.~]+)&quot;), //
+				new RegexLeaf(&quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + LINE_STYLE_MUTILPLES + &quot;)\\])?&quot;), //
+				new RegexOptional(new RegexLeaf(&quot;DIRECTION&quot;, &quot;(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])&quot;)), //
+				new RegexOptional(new RegexLeaf(&quot;INSIDE&quot;, &quot;(0|\\(0\\)|\\(0|0\\))(?=[-=.~])&quot;)), //
+				new RegexLeaf(&quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(&quot;BODY2&quot;, &quot;([-=.~]*)&quot;), //
+				new RegexLeaf(&quot;HEAD1&quot;, &quot;(\\(0|&gt;&gt;|_&gt;|[&gt;^*+#0@(]|[\\:\\|]?\\|&gt;|\\\\\\\\|//|o[%s]+)?&quot;), //
+
+<span class="fc" id="L106">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;SECOND_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+<span class="fc" id="L108">				RegexLeaf.spaceZeroOrMore(), //</span>
+
+<span class="fc" id="L110">				getGroup(&quot;ENT2&quot;), //</span>
+<span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>
+//				new RegexOptional(new RegexLeaf(&quot;STEREO2&quot;, &quot;(\\&lt;\\&lt;.*\\&gt;\\&gt;)&quot;)), //
+//				RegexLeaf.spaceZeroOrMore(), //
+
+<span class="fc" id="L115">				color().getRegex(), //</span>
+<span class="fc" id="L116">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+				new RegexLeaf(&quot;LABEL_LINK&quot;, &quot;(?::[%s]*(.+))?&quot;), //
+<span class="fc" id="L118">				RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L122">		return ColorParser.simpleColor(ColorType.LINE);</span>
+	}
+
+	private String getHead(RegexResult arg, final String key) {
+<span class="fc" id="L126">		String result = arg.get(key, 0);</span>
+<span class="fc" id="L127">		result = trimAndLowerCase(result);</span>
+<span class="fc" id="L128">		return result.replace(&quot;_&quot;, &quot;&quot;);</span>
+	}
+
+	private LinkType getLinkType(RegexResult arg) {
+<span class="fc" id="L132">		final String head1 = getHead(arg, &quot;HEAD1&quot;);</span>
+<span class="fc" id="L133">		final String head2 = getHead(arg, &quot;HEAD2&quot;);</span>
+<span class="fc" id="L134">		LinkDecor d1 = LinkDecor.NONE;</span>
+<span class="fc" id="L135">		LinkDecor d2 = LinkDecor.NONE;</span>
+
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (head1.equals(&quot;(0&quot;))</span>
+<span class="nc" id="L138">			d1 = LinkDecor.CIRCLE_CONNECT;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		else if (head1.equals(&quot;#&quot;))</span>
+<span class="nc" id="L140">			d1 = LinkDecor.SQUARE;</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		else if (head1.equals(&quot;0&quot;))</span>
+<span class="nc" id="L142">			d1 = LinkDecor.CIRCLE;</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		else if (head1.equals(&quot;@&quot;))</span>
+<span class="nc" id="L144">			d1 = LinkDecor.CIRCLE_FILL;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		else if (head1.equals(&quot;(&quot;))</span>
+<span class="nc" id="L146">			d1 = LinkDecor.PARENTHESIS;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		else if (head1.equals(&quot;&gt;&quot;))</span>
+<span class="fc" id="L148">			d1 = LinkDecor.ARROW;</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		else if (head1.equals(&quot;*&quot;))</span>
+<span class="nc" id="L150">			d1 = LinkDecor.COMPOSITION;</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		else if (head1.equals(&quot;o&quot;))</span>
+<span class="nc" id="L152">			d1 = LinkDecor.AGREGATION;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		else if (head1.equals(&quot;+&quot;))</span>
+<span class="nc" id="L154">			d1 = LinkDecor.PLUS;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		else if (head1.equals(&quot;\\\\&quot;))</span>
+<span class="nc" id="L156">			d1 = LinkDecor.HALF_ARROW_UP;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		else if (head1.equals(&quot;//&quot;))</span>
+<span class="nc" id="L158">			d1 = LinkDecor.HALF_ARROW_DOWN;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		else if (head1.equals(&quot;&gt;&gt;&quot;))</span>
+<span class="fc" id="L160">			d1 = LinkDecor.ARROW_TRIANGLE;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		else if (head1.equals(&quot;^&quot;))</span>
+<span class="nc" id="L162">			d1 = LinkDecor.EXTENDS;</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		else if (head1.equals(&quot;:|&gt;&quot;))</span>
+<span class="nc" id="L164">			d1 = LinkDecor.DEFINEDBY;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		else if (head1.equals(&quot;||&gt;&quot;))</span>
+<span class="nc" id="L166">			d1 = LinkDecor.REDEFINES;</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		else if (head1.equals(&quot;|&gt;&quot;))</span>
+<span class="nc" id="L168">			d1 = LinkDecor.EXTENDS;</span>
+
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (head2.equals(&quot;0)&quot;))</span>
+<span class="nc" id="L171">			d2 = LinkDecor.CIRCLE_CONNECT;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		else if (head2.equals(&quot;#&quot;))</span>
+<span class="nc" id="L173">			d2 = LinkDecor.SQUARE;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		else if (head2.equals(&quot;0&quot;))</span>
+<span class="nc" id="L175">			d2 = LinkDecor.CIRCLE;</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		else if (head2.equals(&quot;@&quot;))</span>
+<span class="nc" id="L177">			d2 = LinkDecor.CIRCLE_FILL;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		else if (head2.equals(&quot;)&quot;))</span>
+<span class="nc" id="L179">			d2 = LinkDecor.PARENTHESIS;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		else if (head2.equals(&quot;&lt;&quot;))</span>
+<span class="fc" id="L181">			d2 = LinkDecor.ARROW;</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		else if (head2.equals(&quot;*&quot;))</span>
+<span class="nc" id="L183">			d2 = LinkDecor.COMPOSITION;</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		else if (head2.equals(&quot;o&quot;))</span>
+<span class="nc" id="L185">			d2 = LinkDecor.AGREGATION;</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		else if (head2.equals(&quot;+&quot;))</span>
+<span class="nc" id="L187">			d2 = LinkDecor.PLUS;</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		else if (head2.equals(&quot;&lt;&lt;&quot;))</span>
+<span class="nc" id="L189">			d2 = LinkDecor.ARROW_TRIANGLE;</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		else if (head2.equals(&quot;^&quot;))</span>
+<span class="nc" id="L191">			d2 = LinkDecor.EXTENDS;</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		else if (head2.equals(&quot;&lt;|:&quot;))</span>
+<span class="nc" id="L193">			d2 = LinkDecor.DEFINEDBY;</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		else if (head2.equals(&quot;&lt;||&quot;))</span>
+<span class="nc" id="L195">			d2 = LinkDecor.REDEFINES;</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		else if (head2.equals(&quot;&lt;|&quot;))</span>
+<span class="nc" id="L197">			d2 = LinkDecor.EXTENDS;</span>
+
+<span class="fc" id="L199">		LinkType result = new LinkType(d1, d2);</span>
+<span class="fc" id="L200">		final String queue = getQueue(arg);</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (queue.contains(&quot;.&quot;))</span>
+<span class="nc" id="L202">			result = result.goDashed();</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		else if (queue.contains(&quot;~&quot;))</span>
+<span class="nc" id="L204">			result = result.goDotted();</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		else if (queue.contains(&quot;=&quot;))</span>
+<span class="nc" id="L206">			result = result.goBold();</span>
+
+<span class="fc" id="L208">		final String middle = arg.get(&quot;INSIDE&quot;, 0);</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (&quot;0&quot;.equals(middle))</span>
+<span class="nc" id="L210">			result = result.withMiddleCircle();</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		else if (&quot;0)&quot;.equals(middle))</span>
+<span class="nc" id="L212">			result = result.withMiddleCircleCircled1();</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		else if (&quot;(0&quot;.equals(middle))</span>
+<span class="nc" id="L214">			result = result.withMiddleCircleCircled2();</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		else if (&quot;(0)&quot;.equals(middle))</span>
+<span class="nc" id="L216">			result = result.withMiddleCircleCircled();</span>
+
+<span class="fc" id="L218">		return result;</span>
+	}
+
+	private static String trimAndLowerCase(String s) {
+<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (s == null)</span>
+<span class="fc" id="L223">			return &quot;&quot;;</span>
+
+<span class="fc" id="L225">		return StringUtils.goLowerCase(StringUtils.trin(s));</span>
+	}
+
+	private Direction getDirection(RegexResult arg) {
+<span class="fc" id="L229">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (dir == null) {</span>
+<span class="fc" id="L231">			return StringUtils.getQueueDirection(getQueue(arg));</span>
+			// return Direction.DOWN;
+		}
+<span class="fc" id="L234">		return StringUtils.getQueueDirection(dir);</span>
+	}
+
+	private String getQueue(RegexResult arg) {
+<span class="fc" id="L238">		return arg.get(&quot;BODY1&quot;, 0) + arg.get(&quot;BODY2&quot;, 0);</span>
+	}
+
+	private static RegexLeaf getGroup(String name) {
+<span class="fc" id="L242">		return new RegexLeaf(name, &quot;(&quot; + //</span>
+				&quot;[%pLN_.]+&quot; + //
+				&quot;|&quot; + //
+				&quot;[%g][^%g]+[%g]&quot; + //
+				&quot;|&quot; + //
+				&quot;\\(\\)[%s]*[%pLN_.]+&quot; + //
+				&quot;|&quot; + //
+				&quot;\\(\\)[%s]*[%g][^%g]+[%g]&quot; + //
+				&quot;|&quot; + //
+				&quot;:[^:]+:/?&quot; + //
+				&quot;|&quot; + //
+				&quot;(?!\\[\\*\\])\\[[^\\[\\]]+\\]&quot; + //
+				&quot;|&quot; + //
+				&quot;\\((?!\\*\\))[^)]+\\)/?&quot; + //
+				&quot;)&quot;);
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+<span class="fc" id="L262">		final String ent1 = arg.get(&quot;ENT1&quot;, 0);</span>
+<span class="fc" id="L263">		final String ent2 = arg.get(&quot;ENT2&quot;, 0);</span>
+<span class="fc" id="L264">		final String ent1clean = diagram.cleanId(ent1);</span>
+<span class="fc" id="L265">		final String ent2clean = diagram.cleanId(ent2);</span>
+
+<span class="fc" id="L267">		final LinkType linkType = getLinkType(arg);</span>
+<span class="fc" id="L268">		final Direction dir = getDirection(arg);</span>
+		final String queue;
+<span class="fc bfc" id="L270" title="All 4 branches covered.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="fc" id="L271">			queue = &quot;-&quot;;</span>
+		else
+<span class="fc" id="L273">			queue = getQueue(arg);</span>
+
+<span class="fc" id="L275">		final Labels labels = new Labels(arg);</span>
+
+		final Entity cl1;
+		final Entity cl2;
+<span class="pc bpc" id="L279" title="3 of 4 branches missed.">		if (diagram.isGroup(ent1clean) &amp;&amp; diagram.isGroup(ent2clean)) {</span>
+<span class="nc" id="L280">			cl1 = diagram.getGroup(ent1clean);</span>
+<span class="nc" id="L281">			cl2 = diagram.getGroup(ent2clean);</span>
+		} else {
+<span class="fc" id="L283">			cl1 = getDummy(location, diagram, ent1);</span>
+<span class="fc" id="L284">			cl2 = getDummy(location, diagram, ent2);</span>
+		}
+<span class="fc" id="L286">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labels.getLabelLink()),</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">				queue.length(), diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="fc" id="L288">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,</span>
+<span class="fc" id="L289">				linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())</span>
+<span class="fc" id="L290">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>
+<span class="fc bfc" id="L291" title="All 4 branches covered.">		if (dir == Direction.LEFT || dir == Direction.UP)</span>
+<span class="fc" id="L292">			link = link.getInv();</span>
+
+<span class="fc" id="L294">		link.setLinkArrow(labels.getLinkArrow());</span>
+<span class="fc" id="L295">		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc" id="L296">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null) {</span>
+<span class="nc" id="L298">			final Stereotype stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
+<span class="nc" id="L299">			link.setStereotype(stereotype);</span>
+		}
+<span class="fc" id="L301">		diagram.addLink(link);</span>
+<span class="fc" id="L302">		return CommandExecutionResult.ok();</span>
+	}
+
+//	private String removeStartingParenthesis(String s) {
+//		if (s.startsWith(&quot;()&quot;))
+//			return s.substring(2);
+//		return s;
+//	}
+
+	private Entity getDummy(LineLocation location, DescriptionDiagram diagram, String ident) {
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">		if (ident.startsWith(&quot;()&quot;)) {</span>
+<span class="nc" id="L313">			ident = diagram.cleanId(ident);</span>
+<span class="nc" id="L314">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, ident);</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">			if (quark.getData() != null)</span>
+<span class="nc" id="L316">				return quark.getData();</span>
+<span class="nc" id="L317">			return diagram.reallyCreateLeaf(location, quark,</span>
+<span class="nc" id="L318">					Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.DESCRIPTION,</span>
+					USymbols.INTERFACE);
+		}
+
+<span class="fc bfc" id="L322" title="All 2 branches covered.">		final char codeChar = ident.length() &gt; 2 ? ident.charAt(0) : 0;</span>
+<span class="fc" id="L323">		final boolean endWithSlash = ident.endsWith(&quot;/&quot;);</span>
+<span class="fc" id="L324">		ident = diagram.cleanId(ident);</span>
+<span class="fc" id="L325">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, ident);</span>
+
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">		if (diagram.isGroup(quark))</span>
+<span class="nc" id="L328">			return quark.getData();</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="fc" id="L330">			return quark.getData();</span>
+<span class="nc" id="L331">		final Display display = Display.getWithNewlines(diagram.getPragma(), quark.getName());</span>
+
+<span class="nc bnc" id="L333" title="All 2 branches missed.">		if (codeChar == '(') {</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">			if (endWithSlash)</span>
+<span class="nc" id="L335">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE_BUSINESS,</span>
+						USymbols.USECASE_BUSINESS);
+			else
+<span class="nc" id="L338">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE, USymbols.USECASE);</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		} else if (codeChar == ':') {</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">			if (endWithSlash)</span>
+<span class="nc" id="L341">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION,</span>
+<span class="nc" id="L342">						ActorStyle.STICKMAN_BUSINESS.toUSymbol());</span>
+			else
+<span class="nc" id="L344">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION,</span>
+<span class="nc" id="L345">						diagram.getSkinParam().actorStyle().toUSymbol());</span>
+
+<span class="nc bnc" id="L347" title="All 2 branches missed.">		} else if (codeChar == '[') {</span>
+<span class="nc" id="L348">			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();</span>
+<span class="nc" id="L349">			return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION, sym);</span>
+		}
+
+<span class="nc" id="L352">		return diagram.reallyCreateLeaf(location, quark, display, LeafType.STILL_UNKNOWN, null);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

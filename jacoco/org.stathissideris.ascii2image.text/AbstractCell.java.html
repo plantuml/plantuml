@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractCell.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.text</a> &gt; <span class="el_source">AbstractCell.java</span></div><h1>AbstractCell.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.text;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+<span class="nc" id="L26">public class AbstractCell {</span>
+	// ::remove folder when __CORE__
+
+<span class="nc" id="L29">	public int rows[][] = new int[3][3];</span>
+	{
+<span class="nc bnc" id="L31" title="All 2 branches missed.">		for(int y = 0; y &lt; 3; y++)</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">			for(int x = 0; x &lt; 3; x++)</span>
+<span class="nc" id="L33">				rows[x][y] = 0;</span>
+<span class="nc" id="L34">	}</span>
+
+	static AbstractCell makeHorizontalLine(){
+<span class="nc" id="L37">		AbstractCell result = new AbstractCell();</span>
+<span class="nc" id="L38">		result.rows[0][1] = 1;</span>
+<span class="nc" id="L39">		result.rows[1][1] = 1;</span>
+<span class="nc" id="L40">		result.rows[2][1] = 1;</span>
+<span class="nc" id="L41">		return result;</span>
+	}
+
+	static AbstractCell makeVerticalLine(){
+<span class="nc" id="L45">		AbstractCell result = new AbstractCell();</span>
+<span class="nc" id="L46">		result.rows[1][0] = 1;</span>
+<span class="nc" id="L47">		result.rows[1][1] = 1;</span>
+<span class="nc" id="L48">		result.rows[1][2] = 1;</span>
+<span class="nc" id="L49">		return result;</span>
+	}
+
+	static AbstractCell makeCorner1(){
+<span class="nc" id="L53">		AbstractCell result = new AbstractCell();</span>
+<span class="nc" id="L54">		result.rows[1][1] = 1;</span>
+<span class="nc" id="L55">		result.rows[1][2] = 1;</span>
+<span class="nc" id="L56">		result.rows[2][1] = 1;</span>
+<span class="nc" id="L57">		return result;</span>
+	}
+
+	static AbstractCell makeCorner2(){
+<span class="nc" id="L61">		AbstractCell result = new AbstractCell();</span>
+<span class="nc" id="L62">		result.rows[0][1] = 1;</span>
+<span class="nc" id="L63">		result.rows[1][1] = 1;</span>
+<span class="nc" id="L64">		result.rows[1][2] = 1;</span>
+<span class="nc" id="L65">		return result;</span>
+	}
+
+	static AbstractCell makeCorner3(){
+<span class="nc" id="L69">		AbstractCell result = new AbstractCell();</span>
+<span class="nc" id="L70">		result.rows[0][1] = 1;</span>
+<span class="nc" id="L71">		result.rows[1][1] = 1;</span>
+<span class="nc" id="L72">		result.rows[1][0] = 1;</span>
+<span class="nc" id="L73">		return result;</span>
+	}
+
+	static AbstractCell makeCorner4(){
+<span class="nc" id="L77">		AbstractCell result = new AbstractCell();</span>
+<span class="nc" id="L78">		result.rows[2][1] = 1;</span>
+<span class="nc" id="L79">		result.rows[1][1] = 1;</span>
+<span class="nc" id="L80">		result.rows[1][0] = 1;</span>
+<span class="nc" id="L81">		return result;</span>
+	}
+
+	static AbstractCell makeT(){
+<span class="nc" id="L85">		AbstractCell result = AbstractCell.makeHorizontalLine();</span>
+<span class="nc" id="L86">		result.rows[1][2] = 1;</span>
+<span class="nc" id="L87">		return result;</span>
+	}
+
+	static AbstractCell makeInverseT(){
+<span class="nc" id="L91">		AbstractCell result = AbstractCell.makeHorizontalLine();</span>
+<span class="nc" id="L92">		result.rows[1][0] = 1;</span>
+<span class="nc" id="L93">		return result;</span>
+	}
+
+	static AbstractCell makeK(){
+<span class="nc" id="L97">		AbstractCell result = AbstractCell.makeVerticalLine();</span>
+<span class="nc" id="L98">		result.rows[2][1] = 1;</span>
+<span class="nc" id="L99">		return result;</span>
+	}
+
+	static AbstractCell makeInverseK(){
+<span class="nc" id="L103">		AbstractCell result = AbstractCell.makeVerticalLine();</span>
+<span class="nc" id="L104">		result.rows[0][1] = 1;</span>
+<span class="nc" id="L105">		return result;</span>
+	}
+
+	static AbstractCell makeCross(){
+<span class="nc" id="L109">		AbstractCell result = AbstractCell.makeVerticalLine();</span>
+<span class="nc" id="L110">		result.rows[0][1] = 1;</span>
+<span class="nc" id="L111">		result.rows[2][1] = 1;</span>
+<span class="nc" id="L112">		return result;</span>
+	}
+
+	static AbstractCell makeStar(){
+<span class="nc" id="L116">		AbstractCell result = AbstractCell.makeVerticalLine();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		for(int y = 0; y &lt; 3; y++)</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			for(int x = 0; x &lt; 3; x++)</span>
+<span class="nc" id="L119">				result.rows[x][y] = 1;</span>
+<span class="nc" id="L120">		return result;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

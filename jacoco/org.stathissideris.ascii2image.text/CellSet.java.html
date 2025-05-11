@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CellSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.text</a> &gt; <span class="el_source">CellSet.java</span></div><h1>CellSet.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.text;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+public class CellSet implements Iterable&lt;TextGrid.Cell&gt; {
+
+	private static final boolean DEBUG = false;
+	private static final boolean VERBOSE_DEBUG = false;
+	
+	public static final int TYPE_CLOSED = 0;
+	public static final int TYPE_OPEN = 1;
+	public static final int TYPE_MIXED = 2;
+	public static final int TYPE_HAS_CLOSED_AREA = 3;
+	public static final int TYPE_UNDETERMINED = 4;
+
+<span class="nc" id="L42">	Set&lt;TextGrid.Cell&gt; internalSet = new HashSet&lt;TextGrid.Cell&gt;();</span>
+	
+<span class="nc" id="L44">	private int type = TYPE_UNDETERMINED;</span>
+<span class="nc" id="L45">	private boolean typeIsValid = false;</span>
+
+<span class="nc" id="L47">	private static final Object FAKE = new Object();</span>
+	
+<span class="nc" id="L49">	public CellSet(){</span>
+		
+<span class="nc" id="L51">	}</span>
+	
+<span class="nc" id="L53">	public CellSet(CellSet other){</span>
+<span class="nc" id="L54">		addAll(other);</span>
+<span class="nc" id="L55">	}</span>
+	
+	public Iterator&lt;TextGrid.Cell&gt; iterator(){
+<span class="nc" id="L58">		return internalSet.iterator();</span>
+	}
+
+	public Object add(TextGrid.Cell cell){
+<span class="nc" id="L62">		return internalSet.add(cell);</span>
+	}
+
+	public void addAll(CellSet set){
+<span class="nc" id="L66">		internalSet.addAll(set.internalSet);</span>
+<span class="nc" id="L67">	}</span>
+	
+	void clear(){
+<span class="nc" id="L70">		internalSet.clear();</span>
+<span class="nc" id="L71">	}</span>
+	
+	public int size() {
+<span class="nc" id="L74">		return internalSet.size();</span>
+	}
+	
+	public TextGrid.Cell getFirst(){
+		//return internalSet.get(0);
+<span class="nc" id="L79">		return (TextGrid.Cell) internalSet.iterator().next();</span>
+	}
+	
+	public void printAsGrid(){
+<span class="nc" id="L83">		TextGrid grid = new TextGrid(getMaxX()+2, getMaxY()+2);</span>
+<span class="nc" id="L84">		grid.fillCellsWith(this, '*');</span>
+<span class="nc" id="L85">		grid.printDebug();</span>
+<span class="nc" id="L86">	}</span>
+
+	public void printDebug(){
+<span class="nc" id="L89">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L91">			TextGrid.Cell cell = it.next();</span>
+<span class="nc" id="L92">			System.out.print(cell);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if(it.hasNext()) System.out.print(&quot; &quot;);</span>
+<span class="nc" id="L94">		}</span>
+<span class="nc" id="L95">		System.out.println();</span>
+<span class="nc" id="L96">	}</span>
+
+	public String getCellsAsString(){
+<span class="nc" id="L99">		StringBuffer str = new StringBuffer();</span>
+<span class="nc" id="L100">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L102">			str.append(it.next().toString());</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if(it.hasNext()) str.append(&quot;/&quot;);</span>
+		}
+<span class="nc" id="L105">		return str.toString();</span>
+	}
+	
+	public String toString(){
+<span class="nc" id="L109">		TextGrid grid = new TextGrid(getMaxX()+2, getMaxY()+2);</span>
+<span class="nc" id="L110">		grid.fillCellsWith(this, '*');</span>
+<span class="nc" id="L111">		return grid.getDebugString();		</span>
+	}
+	
+	/**
+	 * Deep copy
+	 * 
+	 * @param set
+	 * @return
+	 */
+	public static CellSet copyCellSet(CellSet set) {
+<span class="nc" id="L121">		TextGrid grid = new TextGrid();</span>
+<span class="nc" id="L122">		CellSet newSet = new CellSet();</span>
+		
+<span class="nc" id="L124">		Iterator&lt;TextGrid.Cell&gt; it = set.iterator();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L126">			TextGrid.Cell cell = (TextGrid.Cell) it.next();</span>
+<span class="nc" id="L127">			TextGrid.Cell newCell = grid.new Cell(cell);</span>
+<span class="nc" id="L128">			newSet.add(newCell);</span>
+<span class="nc" id="L129">		}</span>
+<span class="nc" id="L130">		return newSet;</span>
+	}
+
+	/*public BoundarySet(BoundarySet set) {
+		Iterator it = set.iterator();
+		while(it.hasNext()){
+			TextGrid.Cell cell = (TextGrid.Cell) it.next();
+			add(new TextGrid.Cell(cell));
+		}
+	}*/
+
+	public int getType(TextGrid grid) {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if(typeIsValid) return type;</span>
+<span class="nc" id="L143">		typeIsValid = true;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if(size() == 1) {</span>
+<span class="nc" id="L145">			type = TYPE_OPEN;</span>
+<span class="nc" id="L146">			return TYPE_OPEN;</span>
+		} 
+<span class="nc" id="L148">		int typeTrace = getTypeAccordingToTraceMethod(grid);</span>
+
+		if(DEBUG){
+			System.out.println(&quot;trace: &quot;+typeTrace);
+		}
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if(typeTrace == TYPE_OPEN) {</span>
+<span class="nc" id="L155">			type = TYPE_OPEN;</span>
+<span class="nc" id="L156">			return TYPE_OPEN;</span>
+		} 
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if(typeTrace == TYPE_CLOSED) {</span>
+<span class="nc" id="L159">			type = TYPE_CLOSED;</span>
+<span class="nc" id="L160">			return TYPE_CLOSED;</span>
+		} 
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if(typeTrace == TYPE_UNDETERMINED) {</span>
+<span class="nc" id="L164">			int typeFill = getTypeAccordingToFillMethod(grid);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			if(typeFill == TYPE_HAS_CLOSED_AREA){</span>
+<span class="nc" id="L166">				type = TYPE_MIXED;</span>
+<span class="nc" id="L167">				return TYPE_MIXED;	</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			} else if(typeFill == TYPE_OPEN){</span>
+<span class="nc" id="L169">				type = TYPE_OPEN;</span>
+<span class="nc" id="L170">				return TYPE_OPEN;</span>
+			}
+		}
+		
+		//in the case that both return undetermined:
+<span class="nc" id="L175">		type = TYPE_UNDETERMINED;</span>
+<span class="nc" id="L176">		return TYPE_UNDETERMINED;</span>
+	}
+
+	private int getTypeAccordingToTraceMethod(TextGrid grid) {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		if(size() &lt; 2) return TYPE_OPEN;</span>
+		
+<span class="nc" id="L182">		TextGrid workGrid = TextGrid.makeSameSizeAs(grid);</span>
+<span class="nc" id="L183">		grid.copyCellsTo(this, workGrid);</span>
+
+		//start with a line end if it exists or with a &quot;random&quot; cell if not
+<span class="nc" id="L186">		TextGrid.Cell start = null;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		for(TextGrid.Cell cell : this)</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			if(workGrid.isLinesEnd(cell))</span>
+<span class="nc" id="L189">				start = cell;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if(start == null) start = (TextGrid.Cell) getFirst();</span>
+		
+		if (DEBUG)
+			System.out.println(&quot;Tracing:\nStarting at &quot;+start+&quot; (&quot;+grid.getCellTypeAsString(start)+&quot;)&quot;);
+<span class="nc" id="L194">		TextGrid.Cell previous = start;</span>
+<span class="nc" id="L195">		TextGrid.Cell cell = null;</span>
+<span class="nc" id="L196">		CellSet nextCells = workGrid.followCell(previous);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if(nextCells.size() == 0) return TYPE_OPEN;</span>
+<span class="nc" id="L198">		cell = (TextGrid.Cell) nextCells.getFirst();</span>
+		if (DEBUG)
+			System.out.println(&quot;\tat cell &quot;+cell+&quot; (&quot;+grid.getCellTypeAsString(cell)+&quot;)&quot;);
+
+		
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		while(!cell.equals(start)){</span>
+<span class="nc" id="L204">			nextCells = workGrid.followCell(cell, previous);</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			if(nextCells.size() == 0) {</span>
+				if (DEBUG)
+					System.out.println(&quot;-&gt; Found dead-end, shape is open&quot;);
+<span class="nc" id="L208">				return TYPE_OPEN;</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			} if(nextCells.size() == 1) {</span>
+<span class="nc" id="L210">				previous = cell;</span>
+<span class="nc" id="L211">				cell = (TextGrid.Cell) nextCells.getFirst();</span>
+				if (DEBUG)
+					System.out.println(&quot;\tat cell &quot;+cell+&quot; (&quot;+grid.getCellTypeAsString(cell)+&quot;)&quot;);
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			} else if(nextCells.size() &gt; 1) {</span>
+				if (DEBUG)
+					System.out.println(&quot;-&gt; Found intersection at cell &quot;+cell);
+<span class="nc" id="L217">				return TYPE_UNDETERMINED;</span>
+			}
+		}
+		if (DEBUG)
+			System.out.println(&quot;-&gt; Arrived back to start, shape is closed&quot;);
+<span class="nc" id="L222">		return TYPE_CLOSED;</span>
+		
+//		boolean hasMoved = false;
+//		
+//		CellSet workSet;
+//		workSet = new CellSet(this);
+//
+//		TextGrid.Cell start = (TextGrid.Cell) get(0);
+//		
+//		workSet.remove(start);
+//		TextGrid.Cell cell = workSet.findCellNextTo(start);
+//		
+//		while(true &amp;&amp; cell != null){
+//			
+//			hasMoved = true;
+//			workSet.remove(cell);
+//			
+//			CellSet setOfNeighbours = workSet.findCellsNextTo(cell);
+//			
+//			if(setOfNeighbours.isEmpty()) break;
+//
+//			TextGrid.Cell c = null;
+//			if(setOfNeighbours.size() == 1) c = (TextGrid.Cell) setOfNeighbours.get(0);
+//			if(setOfNeighbours.size() &gt; 1) return TYPE_UNDETERMINED;
+//			if(c == null) break;
+//			else cell = c;
+//		}
+//		if(cell != null &amp;&amp; start.isNextTo(cell) &amp;&amp; hasMoved) return TYPE_CLOSED;
+//		else return TYPE_OPEN;
+	}
+
+	private int getTypeAccordingToFillMethod(TextGrid grid){
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if(size() == 0) return TYPE_OPEN;</span>
+		
+<span class="nc" id="L256">		CellSet tempSet = copyCellSet(this);</span>
+<span class="nc" id="L257">		tempSet.translate( -this.getMinX() + 1, -this.getMinY() + 1);</span>
+<span class="nc" id="L258">		TextGrid subGrid = grid.getSubGrid(getMinX() - 1, getMinY() - 1, getWidth() + 3, getHeight() + 3);</span>
+<span class="nc" id="L259">		AbstractionGrid abstraction = new AbstractionGrid(subGrid, tempSet);</span>
+<span class="nc" id="L260">		TextGrid temp = abstraction.getCopyOfInternalBuffer();</span>
+
+<span class="nc" id="L262">		int width = temp.getWidth();</span>
+<span class="nc" id="L263">		int height = temp.getHeight();</span>
+		
+<span class="nc" id="L265">		TextGrid.Cell fillCell = null;</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			for(int x = 0; x &lt; width; x++){</span>
+<span class="nc" id="L268">				TextGrid.Cell cCell = temp.new Cell(x, y);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">				if(temp.isBlank(cCell)){</span>
+<span class="nc" id="L270">					fillCell = cCell;</span>
+<span class="nc" id="L271">					break;</span>
+				}
+			}
+		}
+		
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		if(fillCell == null){</span>
+<span class="nc" id="L277">			System.err.println(&quot;Unexpected error: fill method cannot fill anywhere&quot;);</span>
+<span class="nc" id="L278">			return TYPE_UNDETERMINED;</span>
+		}
+		
+<span class="nc" id="L281">		temp.fillContinuousArea(fillCell, '*');</span>
+		if(VERBOSE_DEBUG) {System.out.println(&quot;Buffer after filling:&quot;); temp.printDebug();}
+		
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		if(temp.hasBlankCells()) return TYPE_HAS_CLOSED_AREA;</span>
+<span class="nc" id="L285">		else return TYPE_OPEN;</span>
+	}
+
+	public void translate(int dx, int dy){
+<span class="nc" id="L289">		typeIsValid = false;</span>
+<span class="nc" id="L290">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L292">			TextGrid.Cell cCell = it.next();</span>
+<span class="nc" id="L293">			cCell.x += dx;</span>
+<span class="nc" id="L294">			cCell.y += dy;</span>
+<span class="nc" id="L295">		}	</span>
+<span class="nc" id="L296">	}</span>
+
+	public TextGrid.Cell find(TextGrid.Cell cell){
+<span class="nc" id="L299">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L301">			TextGrid.Cell cCell = it.next();</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">			if(cCell.equals(cell)) return cCell;</span>
+<span class="nc" id="L303">		}</span>
+<span class="nc" id="L304">		return null;		</span>
+	}
+
+	public boolean contains(TextGrid.Cell cell){
+<span class="nc bnc" id="L308" title="All 2 branches missed.">		if(cell == null) return false;</span>
+<span class="nc" id="L309">		return internalSet.contains(cell);</span>
+	}
+	
+//	public boolean contains(TextGrid.Cell cell){
+//		Iterator&lt;TextGrid.Cell&gt; it = iterator();
+//		while(it.hasNext()){
+//			TextGrid.Cell cCell = it.next();
+//			if(cCell.equals(cell)) return true;
+//		}
+//		return false;		
+//	}
+
+	public void addSet(CellSet set){
+<span class="nc" id="L322">		typeIsValid = false;</span>
+<span class="nc" id="L323">		this.addAll(set);</span>
+<span class="nc" id="L324">	}</span>
+
+	public boolean hasCommonCells(CellSet otherSet){
+<span class="nc" id="L327">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L329">			TextGrid.Cell cell = it.next();</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">			if(otherSet.contains(cell)) return true;</span>
+<span class="nc" id="L331">		}</span>
+<span class="nc" id="L332">		return false;</span>
+	}
+
+	public TextGrid.Cell find(int x, int y){
+<span class="nc" id="L336">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L338">			TextGrid.Cell cCell = it.next();</span>
+<span class="nc bnc" id="L339" title="All 4 branches missed.">			if(cCell.x == x &amp;&amp; cCell.y == y) return cCell;</span>
+<span class="nc" id="L340">		}</span>
+<span class="nc" id="L341">		return null;		</span>
+	}
+	
+	public CellSet getFilledEquivalent(TextGrid textGrid){
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if(this.getType(textGrid) == CellSet.TYPE_OPEN) return new CellSet(this);</span>
+<span class="nc" id="L346">		TextGrid grid = new TextGrid(getMaxX()+2, getMaxY()+2);</span>
+<span class="nc" id="L347">		grid.fillCellsWith(this, '*');</span>
+		
+		//find a cell that has a blank both on the east and the west
+<span class="nc" id="L350">		TextGrid.Cell cell = null;</span>
+<span class="nc" id="L351">		boolean finished = false;</span>
+<span class="nc bnc" id="L352" title="All 4 branches missed.">		for(int y = 0; y &lt; grid.getHeight() &amp;&amp; !finished; y++){</span>
+<span class="nc bnc" id="L353" title="All 4 branches missed.">			for(int x = 0; x &lt; grid.getWidth() &amp;&amp; !finished; x++){</span>
+<span class="nc" id="L354">				cell = grid.new Cell(x, y);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">				if(!grid.isBlank(cell)</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">					 &amp;&amp; grid.isBlank(cell.getEast())</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">					 &amp;&amp; grid.isBlank(cell.getWest())){</span>
+<span class="nc" id="L358">					finished = true;</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		if(cell != null){</span>
+<span class="nc" id="L363">			cell = cell.getEast();</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">			if(grid.isOutOfBounds(cell)) return new CellSet(this);</span>
+<span class="nc" id="L365">			grid.fillContinuousArea(cell, '*');</span>
+<span class="nc" id="L366">			return grid.getAllNonBlank();</span>
+		}
+<span class="nc" id="L368">		System.err.println(&quot;Unexpected error, cannot find the filled equivalent of CellSet&quot;);</span>
+<span class="nc" id="L369">		return null;</span>
+	}
+	
+	/**
+	 * Returns the first cell that is found to be next to &lt;code&gt;cell&lt;/code&gt;.
+	 * 
+	 * @param cell
+	 * @return
+	 */
+	public TextGrid.Cell findCellNextTo(TextGrid.Cell cell){
+<span class="nc" id="L379">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L381">			TextGrid.Cell cCell = it.next();</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">			if(cCell.isNextTo(cell)) return cCell;</span>
+<span class="nc" id="L383">		}</span>
+<span class="nc" id="L384">		return null;</span>
+	}
+
+	/**
+	 * Returns all the cells that are found to be next to &lt;code&gt;cell&lt;/code&gt;.
+	 * 
+	 * @param cell
+	 * @return
+	 */
+	public CellSet findCellsNextTo(TextGrid.Cell cell){
+<span class="nc bnc" id="L394" title="All 2 branches missed.">		if(cell == null) throw new IllegalArgumentException(&quot;cell cannot be null&quot;);</span>
+<span class="nc" id="L395">		CellSet set = new CellSet();</span>
+<span class="nc" id="L396">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L398">			TextGrid.Cell cCell = it.next();</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">			if(cCell.isNextTo(cell)) set.add(cCell);</span>
+<span class="nc" id="L400">		}</span>
+<span class="nc" id="L401">		return set;</span>
+	}
+	
+	public void appendSet(CellSet set){
+<span class="nc" id="L405">		typeIsValid = false;</span>
+<span class="nc" id="L406">		Iterator&lt;TextGrid.Cell&gt; it = set.iterator();</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L408">			TextGrid.Cell cell = it.next();</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">			if(find(cell) == null) add(cell);</span>
+<span class="nc" id="L410">		}	</span>
+<span class="nc" id="L411">	}</span>
+	
+	public void subtractSet(CellSet set){
+<span class="nc" id="L414">		typeIsValid = false;</span>
+<span class="nc" id="L415">		Iterator&lt;TextGrid.Cell&gt; it = set.iterator();</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L417">			TextGrid.Cell cell = it.next();</span>
+<span class="nc" id="L418">			TextGrid.Cell thisCell = find(cell);</span>
+<span class="nc bnc" id="L419" title="All 2 branches missed.">			if(thisCell != null) remove(thisCell);</span>
+<span class="nc" id="L420">		}</span>
+<span class="nc" id="L421">	}</span>
+
+	public int getWidth(){
+<span class="nc" id="L424">		return getMaxX() - getMinX();</span>
+	}
+
+	
+	public int getHeight(){
+<span class="nc" id="L429">		return getMaxY() - getMinY();</span>
+	}
+	
+	public int getMaxX(){
+<span class="nc" id="L433">		int result = 0;</span>
+<span class="nc" id="L434">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L436">			TextGrid.Cell cell = it.next();</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">			if(cell.x &gt; result) result = cell.x;</span>
+<span class="nc" id="L438">		}</span>
+<span class="nc" id="L439">		return result;</span>
+	}
+
+	public int getMinX(){
+<span class="nc" id="L443">		int result = Integer.MAX_VALUE;</span>
+<span class="nc" id="L444">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L446">			TextGrid.Cell cell = it.next();</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">			if(cell.x &lt; result) result = cell.x;</span>
+<span class="nc" id="L448">		}</span>
+<span class="nc" id="L449">		return result;</span>
+	}
+
+
+	public int getMaxY(){
+<span class="nc" id="L454">		int result = 0;</span>
+<span class="nc" id="L455">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L457">			TextGrid.Cell cell = it.next();</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">			if(cell.y &gt; result) result = cell.y;</span>
+<span class="nc" id="L459">		}</span>
+<span class="nc" id="L460">		return result;</span>
+	}
+
+	public int getMinY(){
+<span class="nc" id="L464">		int result = Integer.MAX_VALUE;</span>
+<span class="nc" id="L465">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L467">			TextGrid.Cell cell = it.next();</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">			if(cell.y &lt; result) result = cell.y;</span>
+<span class="nc" id="L469">		}</span>
+<span class="nc" id="L470">		return result;</span>
+	}
+
+
+	public Object remove(TextGrid.Cell cell){
+<span class="nc" id="L475">		typeIsValid = false;</span>
+<span class="nc" id="L476">		cell = find(cell);</span>
+<span class="nc bnc" id="L477" title="All 2 branches missed.">		if(cell != null) return internalSet.remove(cell);</span>
+<span class="nc" id="L478">		else return null;</span>
+	}
+
+	public boolean equals(Object o){
+<span class="nc" id="L482">		CellSet otherSet = (CellSet) o;</span>
+<span class="nc" id="L483">		return internalSet.equals(otherSet.internalSet);</span>
+	}
+
+	
+	public static ArrayList&lt;CellSet&gt; removeDuplicateSets(ArrayList&lt;CellSet&gt; list) {
+<span class="nc" id="L488">		ArrayList&lt;CellSet&gt; uniqueSets = new ArrayList&lt;CellSet&gt;();</span>
+
+<span class="nc" id="L490">		Iterator&lt;CellSet&gt; it = list.iterator();</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L492">			CellSet set = it.next();</span>
+<span class="nc" id="L493">			boolean isOriginal = true;</span>
+<span class="nc" id="L494">			Iterator&lt;CellSet&gt; uniquesIt = uniqueSets.iterator();</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">			while(uniquesIt.hasNext()){</span>
+<span class="nc" id="L496">				CellSet uniqueSet = uniquesIt.next();</span>
+<span class="nc bnc" id="L497" title="All 2 branches missed.">				if(set.equals(uniqueSet)){</span>
+<span class="nc" id="L498">					isOriginal = false;</span>
+				}
+<span class="nc" id="L500">			}</span>
+<span class="nc bnc" id="L501" title="All 2 branches missed.">			if(isOriginal) uniqueSets.add(set);</span>
+<span class="nc" id="L502">		}</span>
+<span class="nc" id="L503">		return uniqueSets;</span>
+	}
+	
+	
+	/**
+	 * Takes into account character info from the grid
+	 * 
+	 * @return ArrayList of distinct BoundarySetS
+	 */
+	public ArrayList&lt;CellSet&gt; breakIntoDistinctBoundaries(TextGrid grid){
+		ArrayList&lt;CellSet&gt; result;
+		
+<span class="nc" id="L515">		AbstractionGrid temp = new AbstractionGrid(grid, this);</span>
+<span class="nc" id="L516">		result = temp.getDistinctShapes();</span>
+
+<span class="nc" id="L518">		return result;		</span>
+	}
+
+
+	/**
+	 * 
+	 * @return ArrayList of distinct BoundarySetS
+	 */
+	public ArrayList&lt;CellSet&gt; breakIntoDistinctBoundaries(){
+<span class="nc" id="L527">		ArrayList&lt;CellSet&gt; result = new ArrayList&lt;CellSet&gt;();</span>
+
+		//CellSet tempSet = copyCellSet(this);
+		//tempSet.translate( - this.getMinX() + 1, - this.getMinY() + 1);
+
+//		TextGrid boundaryGrid = new TextGrid(tempSet.getMaxX()+2, tempSet.getMaxY()+2);
+//		boundaryGrid.fillCellsWith(tempSet, '*');
+
+<span class="nc" id="L535">		TextGrid boundaryGrid = new TextGrid(getMaxX()+2, getMaxY()+2);</span>
+<span class="nc" id="L536">		boundaryGrid.fillCellsWith(this, '*');</span>
+
+		
+<span class="nc" id="L539">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L541">			TextGrid.Cell cell = (TextGrid.Cell) it.next();</span>
+<span class="nc bnc" id="L542" title="All 2 branches missed.">			if(boundaryGrid.isBlank(cell.x, cell.y)) continue;</span>
+<span class="nc" id="L543">			CellSet boundarySet = boundaryGrid.fillContinuousArea(cell.x, cell.y, ' ');</span>
+			//boundarySet.translate( this.getMinX() - 1, this.getMinY() - 1);
+<span class="nc" id="L545">			result.add(boundarySet);</span>
+<span class="nc" id="L546">		}</span>
+<span class="nc" id="L547">		return result;</span>
+	}
+
+
+	/**
+	 * 
+	 * Breaks that: 
+	 * &lt;pre&gt;
+	 *  +-----+
+	 *  |     |
+	 *  +  ---+-------------------
+	 *  |     |
+	 *  +-----+
+	 * &lt;/pre&gt;
+	 * 
+	 * into the following 3:
+	 * 
+	 * &lt;pre&gt;
+	 *  +-----+
+	 *  |     |
+	 *  +     +
+	 *  |     |
+	 *  +-----+
+	 * 
+	 *     ---
+	 *         -------------------
+	 * &lt;/pre&gt;
+	 * 
+	 * @param grid
+	 * @return a list of boundaries that are either open or closed but not mixed
+	 * and they are equivalent to the &lt;code&gt;this&lt;/code&gt;
+	 */
+	public ArrayList&lt;CellSet&gt; breakTrulyMixedBoundaries(TextGrid grid){
+<span class="nc" id="L580">		ArrayList&lt;CellSet&gt; result = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L581">		CellSet visitedEnds = new CellSet();</span>
+		
+<span class="nc" id="L583">		TextGrid workGrid = TextGrid.makeSameSizeAs(grid);</span>
+<span class="nc" id="L584">		grid.copyCellsTo(this, workGrid);</span>
+
+		if (DEBUG){
+			System.out.println(&quot;Breaking truly mixed boundaries below:&quot;);
+			workGrid.printDebug();
+		}
+
+<span class="nc" id="L591">		Iterator&lt;TextGrid.Cell&gt; it = iterator();</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L593">			TextGrid.Cell start = (TextGrid.Cell) it.next();</span>
+<span class="nc bnc" id="L594" title="All 4 branches missed.">			if(workGrid.isLinesEnd(start) &amp;&amp; !visitedEnds.contains(start)){</span>
+				
+				if (DEBUG)
+					System.out.println(&quot;Starting new subshape:&quot;);
+				
+<span class="nc" id="L599">				CellSet set = new CellSet();</span>
+<span class="nc" id="L600">				set.add(start);</span>
+				if(DEBUG) System.out.println(&quot;Added boundary &quot;+start);
+				
+<span class="nc" id="L603">				TextGrid.Cell previous = start;</span>
+<span class="nc" id="L604">				TextGrid.Cell cell = null;</span>
+<span class="nc" id="L605">				CellSet nextCells = workGrid.followCell(previous);</span>
+<span class="nc bnc" id="L606" title="All 2 branches missed.">				if(nextCells.size() == 0)</span>
+<span class="nc" id="L607">					throw new IllegalArgumentException(&quot;This shape is either open but multipart or has only one cell, and cannot be processed by this method&quot;);</span>
+<span class="nc" id="L608">				cell = (TextGrid.Cell) nextCells.getFirst();</span>
+<span class="nc" id="L609">				set.add(cell);</span>
+				if(DEBUG) System.out.println(&quot;Added boundary &quot;+cell);
+				
+<span class="nc" id="L612">				boolean finished = false;</span>
+<span class="nc bnc" id="L613" title="All 2 branches missed.">				if(workGrid.isLinesEnd(cell)){</span>
+<span class="nc" id="L614">					visitedEnds.add(cell);</span>
+<span class="nc" id="L615">					finished = true;					</span>
+				}
+				
+<span class="nc bnc" id="L618" title="All 2 branches missed.">				while(!finished){</span>
+<span class="nc" id="L619">					nextCells = workGrid.followCell(cell, previous);</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">					if(nextCells.size() == 1) {</span>
+<span class="nc" id="L621">						set.add(cell);</span>
+						if(DEBUG) System.out.println(&quot;Added boundary &quot; + cell);
+<span class="nc" id="L623">						previous = cell;</span>
+<span class="nc" id="L624">						cell = (TextGrid.Cell) nextCells.getFirst();</span>
+						//if(!cell.equals(start) &amp;&amp; grid.isPointCell(cell))
+						//	s.addToPoints(makePointForCell(cell, workGrid, cellWidth, cellHeight, allRound));
+<span class="nc bnc" id="L627" title="All 2 branches missed.">						if(workGrid.isLinesEnd(cell)){</span>
+<span class="nc" id="L628">							visitedEnds.add(cell);</span>
+<span class="nc" id="L629">							finished = true;</span>
+						}
+<span class="nc bnc" id="L631" title="All 2 branches missed.">					} else if(nextCells.size() &gt; 1) {</span>
+<span class="nc" id="L632">						finished = true;</span>
+					}
+				}
+<span class="nc" id="L635">				result.add(set);</span>
+			}
+<span class="nc" id="L637">		}</span>
+
+		//substract all boundary sets from this CellSet
+<span class="nc" id="L640">		CellSet whatsLeft = new CellSet(this);</span>
+<span class="nc bnc" id="L641" title="All 2 branches missed.">		for(CellSet set : result) {</span>
+<span class="nc" id="L642">			whatsLeft.subtractSet(set);</span>
+			if(DEBUG) set.printAsGrid();
+<span class="nc" id="L644">		}</span>
+<span class="nc" id="L645">		result.add(whatsLeft);</span>
+		if(DEBUG) whatsLeft.printAsGrid();
+		
+<span class="nc" id="L648">		return result;</span>
+	}
+
+	
+	public TextGrid makeIntoGrid(){
+<span class="nc" id="L653">		TextGrid grid = new TextGrid(getMaxX()+2, getMaxY()+2);</span>
+<span class="nc" id="L654">		grid.fillCellsWith(this, '*');</span>
+<span class="nc" id="L655">		return grid;</span>
+	}
+	
+	public CellSet makeScaledOneThirdEquivalent(){
+<span class="nc" id="L659">		TextGrid gridBig = this.makeIntoGrid();</span>
+<span class="nc" id="L660">		gridBig.fillCellsWith(this, '*');</span>
+		if (VERBOSE_DEBUG){
+			System.out.println(&quot;---&gt; making ScaledOneThirdEquivalent of:&quot;);
+			gridBig.printDebug();
+		}
+
+		
+<span class="nc" id="L667">		TextGrid gridSmall = new TextGrid((getMaxX() + 2) / 3, (getMaxY() + 2) / 3);</span>
+		
+		
+<span class="nc bnc" id="L670" title="All 2 branches missed.">		for(int y = 0; y &lt; gridBig.getHeight(); y++){</span>
+<span class="nc bnc" id="L671" title="All 2 branches missed.">			for(int x = 0; x &lt; gridBig.getWidth(); x++){</span>
+<span class="nc" id="L672">				TextGrid.Cell cell = gridBig.new Cell(x, y);</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">				if(!gridBig.isBlank(cell)) gridSmall.set(x/3, y/3, '*');</span>
+			}
+		}
+		
+		if (VERBOSE_DEBUG){
+			System.out.println(&quot;---&gt; made into grid:&quot;);
+			gridSmall.printDebug();
+		}
+		
+<span class="nc" id="L682">		return gridSmall.getAllNonBlank();</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

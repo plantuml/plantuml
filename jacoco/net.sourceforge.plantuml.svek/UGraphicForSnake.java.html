@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicForSnake.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">UGraphicForSnake.java</span></div><h1>UGraphicForSnake.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
+
+public class UGraphicForSnake extends UGraphicDelegator {
+
+	private final double dx;
+	private final double dy;
+	private final List&lt;PendingSnake&gt; snakes;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L56">		return &quot;UGraphicForSnake &quot; + getUg();</span>
+	}
+
+	public UTranslate getTranslation() {
+<span class="nc" id="L60">		return new UTranslate(dx, dy);</span>
+	}
+
+	static class PendingSnake {
+		private Snake snake;
+		private final UGraphic ug;
+		private final double dx;
+		private final double dy;
+
+<span class="fc" id="L69">		private PendingSnake(Snake snake, UGraphic ug, double dx, double dy) {</span>
+<span class="fc" id="L70">			this.snake = snake;</span>
+<span class="fc" id="L71">			this.ug = ug;</span>
+<span class="fc" id="L72">			this.dx = dx;</span>
+<span class="fc" id="L73">			this.dy = dy;</span>
+<span class="fc" id="L74">		}</span>
+
+		void drawInternal() {
+<span class="fc" id="L77">			snake.drawInternal(ug);</span>
+<span class="fc" id="L78">		}</span>
+
+		void removeEndDecorationIfTouches(List&lt;PendingSnake&gt; snakes) {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (PendingSnake other : snakes) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">				if (moved().touches(other.moved())) {</span>
+<span class="nc" id="L83">					this.snake = this.snake.withoutEndDecoration();</span>
+<span class="nc" id="L84">					return;</span>
+				}
+<span class="fc" id="L86">			}</span>
+<span class="fc" id="L87">		}</span>
+
+		private Snake moved() {
+<span class="fc" id="L90">			return snake.move(dx, dy);</span>
+		}
+
+		@Override
+		public String toString() {
+<span class="nc" id="L95">			return &quot;dx=&quot; + dx + &quot; dy=&quot; + dy + &quot; &quot; + snake.move(dx, dy).toString();</span>
+		}
+
+		public PendingSnake merge(PendingSnake newItem) {
+			// if (snake.isMergeable() == false || newItem.snake.isMergeable() == false) {
+			// return null;
+			// }
+<span class="fc" id="L102">			final Snake s1 = snake.move(dx, dy);</span>
+<span class="fc" id="L103">			final Snake s2 = newItem.snake.move(newItem.dx, newItem.dy);</span>
+<span class="fc" id="L104">			final Snake merge = s1.merge(s2, ug.getStringBounder());</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (merge == null) {</span>
+<span class="fc" id="L106">				return null;</span>
+			}
+<span class="nc" id="L108">			return new PendingSnake(merge.move(-dx, -dy), ug, dx, dy);</span>
+		}
+
+	}
+
+	public UGraphicForSnake(UGraphic ug) {
+<span class="fc" id="L114">		this(ug, 0, 0, new ArrayList&lt;PendingSnake&gt;());</span>
+<span class="fc" id="L115">	}</span>
+
+	private UGraphicForSnake(UGraphic ug, double dx, double dy, List&lt;PendingSnake&gt; snakes) {
+<span class="fc" id="L118">		super(ug);</span>
+<span class="fc" id="L119">		this.dx = dx;</span>
+<span class="fc" id="L120">		this.dy = dy;</span>
+<span class="fc" id="L121">		this.snakes = snakes;</span>
+<span class="fc" id="L122">	}</span>
+
+	public void draw(UShape shape) {
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (shape instanceof Snake) {</span>
+<span class="fc" id="L126">			final Snake snake = (Snake) shape;</span>
+<span class="fc" id="L127">			addPendingSnake(snake);</span>
+<span class="fc" id="L128">		} else {</span>
+<span class="fc" id="L129">			getUg().draw(shape);</span>
+		}
+<span class="fc" id="L131">	}</span>
+
+	private void addPendingSnake(final Snake snake) {
+<span class="fc" id="L134">		final PendingSnake newItem = new PendingSnake(snake, getUg(), dx, dy);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (int pos = 0; pos &lt; snakes.size(); pos++) {</span>
+<span class="fc" id="L136">			final PendingSnake merge = snakes.get(pos).merge(newItem);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (merge != null) {</span>
+<span class="nc" id="L138">				snakes.set(pos, merge);</span>
+<span class="nc" id="L139">				return;</span>
+			}
+		}
+<span class="fc" id="L142">		snakes.add(newItem);</span>
+<span class="fc" id="L143">	}</span>
+
+	@Override
+	public void flushUg() {
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (PendingSnake snake : snakes) {</span>
+<span class="fc" id="L148">			snake.removeEndDecorationIfTouches(snakes);</span>
+<span class="fc" id="L149">			snake.drawInternal();</span>
+<span class="fc" id="L150">		}</span>
+<span class="fc" id="L151">		snakes.clear();</span>
+<span class="fc" id="L152">	}</span>
+
+	public UGraphic apply(UChange change) {
+<span class="fc" id="L155">		double newdx = dx;</span>
+<span class="fc" id="L156">		double newdy = dy;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (change instanceof UTranslate) {</span>
+<span class="fc" id="L158">			newdx += ((UTranslate) change).getDx();</span>
+<span class="fc" id="L159">			newdy += ((UTranslate) change).getDy();</span>
+		}
+<span class="fc" id="L161">		return new UGraphicForSnake(getUg().apply(change), newdx, newdy, snakes);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DriverRectangleG2d.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.g2d</a> &gt; <span class="el_source">DriverRectangleG2d.java</span></div><h1>DriverRectangleG2d.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.g2d;
+
+import java.awt.BasicStroke;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.TexturePaint;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.UPattern;
+import net.sourceforge.plantuml.klimt.UShapeSized;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver&lt;URectangle, Graphics2D&gt; {
+
+	private final double dpiFactor;
+	private final EnsureVisible visible;
+
+<span class="fc" id="L64">	public DriverRectangleG2d(double dpiFactor, EnsureVisible visible) {</span>
+<span class="fc" id="L65">		this.dpiFactor = dpiFactor;</span>
+<span class="fc" id="L66">		this.visible = visible;</span>
+<span class="fc" id="L67">	}</span>
+
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
+<span class="fc" id="L70">		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));</span>
+<span class="fc" id="L71">		final double rx = rect.getRx();</span>
+<span class="fc" id="L72">		final double ry = rect.getRy();</span>
+		final Shape shape;
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">		if (rx == 0 &amp;&amp; ry == 0)</span>
+<span class="fc" id="L75">			shape = new Rectangle2D.Double(x, y, rect.getWidth(), rect.getHeight());</span>
+		else
+<span class="fc" id="L77">			shape = new RoundRectangle2D.Double(x, y, rect.getWidth(), rect.getHeight(), rx, ry);</span>
+
+<span class="fc" id="L79">		visible.ensureVisible(x, y);</span>
+<span class="fc" id="L80">		visible.ensureVisible(x + rect.getWidth(), y + rect.getHeight());</span>
+
+<span class="fc" id="L82">		final HColor back = param.getBackcolor();</span>
+
+		// Shadow
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (rect.getDeltaShadow() != 0) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (back.isTransparent())</span>
+<span class="nc" id="L87">				drawOnlyLineShadowSpecial(g2d, shape, rect.getDeltaShadow(), dpiFactor);</span>
+			else
+<span class="nc" id="L89">				drawShadow(g2d, shape, rect.getDeltaShadow(), dpiFactor);</span>
+		}
+
+<span class="fc" id="L92">		final HColor color = param.getColor();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (color == null) {</span>
+<span class="nc" id="L94">			param.getColor();</span>
+		}
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (back instanceof HColorGradient) {</span>
+<span class="nc" id="L97">			final GradientPaint paint = getPaintGradient(x, y, mapper, rect.getWidth(), rect.getHeight(), back);</span>
+<span class="nc" id="L98">			g2d.setPaint(paint);</span>
+<span class="nc" id="L99">			g2d.fill(shape);</span>
+<span class="nc" id="L100">			drawBorder(param, color, mapper, rect, shape, g2d, x, y);</span>
+<span class="nc" id="L101">		} else {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (param.getBackcolor().isTransparent() == false) {</span>
+<span class="fc" id="L103">				g2d.setColor(param.getBackcolor().toColor(mapper));</span>
+<span class="fc" id="L104">				DriverLineG2d.manageStroke(param, g2d);</span>
+<span class="fc" id="L105">				managePattern(param, g2d);</span>
+<span class="fc" id="L106">				g2d.fill(shape);</span>
+			}
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (color.equals(param.getBackcolor()) == false)</span>
+<span class="fc" id="L109">				drawBorder(param, color, mapper, rect, shape, g2d, x, y);</span>
+
+		}
+<span class="fc" id="L112">	}</span>
+
+	public static void drawBorder(UParam param, HColor color, ColorMapper mapper, UShapeSized sized, Shape shape,
+			Graphics2D g2d, double x, double y) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (color.isTransparent())</span>
+<span class="fc" id="L117">			return;</span>
+
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (color instanceof HColorGradient) {</span>
+<span class="nc" id="L120">			final GradientPaint paint = getPaintGradient(x, y, mapper, sized.getWidth(), sized.getHeight(), color);</span>
+<span class="nc" id="L121">			g2d.setPaint(paint);</span>
+<span class="nc" id="L122">		} else {</span>
+<span class="fc" id="L123">			g2d.setColor(color.toColor(mapper));</span>
+		}
+<span class="fc" id="L125">		DriverLineG2d.manageStroke(param, g2d);</span>
+<span class="fc" id="L126">		g2d.draw(shape);</span>
+<span class="fc" id="L127">	}</span>
+
+	public static GradientPaint getPaintGradient(double x, double y, ColorMapper mapper, double width, double height,
+			final HColor back) {
+<span class="nc" id="L131">		final HColorGradient gr = (HColorGradient) back;</span>
+<span class="nc" id="L132">		final char policy = gr.getPolicy();</span>
+		final GradientPaint paint;
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (policy == '|')</span>
+<span class="nc" id="L135">			paint = new GradientPaint((float) x, (float) (y + height) / 2, gr.getColor1().toColor(mapper),</span>
+<span class="nc" id="L136">					(float) (x + width), (float) (y + height) / 2, gr.getColor2().toColor(mapper));</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		else if (policy == '\\')</span>
+<span class="nc" id="L138">			paint = new GradientPaint((float) x, (float) (y + height), gr.getColor1().toColor(mapper),</span>
+<span class="nc" id="L139">					(float) (x + width), (float) y, gr.getColor2().toColor(mapper));</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		else if (policy == '-')</span>
+<span class="nc" id="L141">			paint = new GradientPaint((float) (x + width) / 2, (float) y, gr.getColor1().toColor(mapper),</span>
+<span class="nc" id="L142">					(float) (x + width) / 2, (float) (y + height), gr.getColor2().toColor(mapper));</span>
+		else
+			// for /
+<span class="nc" id="L145">			paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper), (float) (x + width),</span>
+<span class="nc" id="L146">					(float) (y + height), gr.getColor2().toColor(mapper));</span>
+
+<span class="nc" id="L148">		return paint;</span>
+	}
+
+	public static void managePattern(UParam param, Graphics2D g2d) {
+<span class="fc" id="L152">		final UPattern pattern = param.getPattern();</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (pattern == UPattern.VERTICAL_STRIPE) {</span>
+<span class="nc" id="L154">			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L155">			final Rectangle r = new Rectangle(0, 0, 4, 4);</span>
+<span class="nc" id="L156">			final int rgb = ((HColorSimple) param.getBackcolor()).getAwtColor().getRGB();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			for (int i = 0; i &lt; 4; i++)</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">				for (int j = 0; j &lt; 4; j++)</span>
+<span class="nc bnc" id="L159" title="All 4 branches missed.">					if (i == 0 || i == 1)</span>
+<span class="nc" id="L160">						bi.setRGB(i, j, rgb);</span>
+
+<span class="nc" id="L162">			g2d.setPaint(new TexturePaint(bi, r));</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		} else if (pattern == UPattern.HORIZONTAL_STRIPE) {</span>
+<span class="nc" id="L164">			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L165">			final Rectangle r = new Rectangle(0, 0, 4, 4);</span>
+<span class="nc" id="L166">			final int rgb = ((HColorSimple) param.getBackcolor()).getAwtColor().getRGB();</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			for (int i = 0; i &lt; 4; i++)</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">				for (int j = 0; j &lt; 4; j++)</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">					if (j == 0 || j == 1)</span>
+<span class="nc" id="L170">						bi.setRGB(i, j, rgb);</span>
+
+<span class="nc" id="L172">			g2d.setPaint(new TexturePaint(bi, r));</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		} else if (pattern == UPattern.SMALL_CIRCLE) {</span>
+<span class="nc" id="L174">			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L175">			final Rectangle r = new Rectangle(0, 0, 4, 4);</span>
+<span class="nc" id="L176">			final int rgb = ((HColorSimple) param.getBackcolor()).getAwtColor().getRGB();</span>
+<span class="nc" id="L177">			bi.setRGB(0, 1, rgb);</span>
+<span class="nc" id="L178">			bi.setRGB(1, 0, rgb);</span>
+<span class="nc" id="L179">			bi.setRGB(1, 1, rgb);</span>
+<span class="nc" id="L180">			bi.setRGB(1, 2, rgb);</span>
+<span class="nc" id="L181">			bi.setRGB(2, 1, rgb);</span>
+<span class="nc" id="L182">			g2d.setPaint(new TexturePaint(bi, r));</span>
+		}
+<span class="fc" id="L184">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

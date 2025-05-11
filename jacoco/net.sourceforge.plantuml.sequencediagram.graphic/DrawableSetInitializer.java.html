@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DrawableSetInitializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">DrawableSetInitializer.java</span></div><h1>DrawableSetInitializer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+import net.sourceforge.plantuml.sequencediagram.Delay;
+import net.sourceforge.plantuml.sequencediagram.Divider;
+import net.sourceforge.plantuml.sequencediagram.Doll;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
+import net.sourceforge.plantuml.sequencediagram.GroupingStart;
+import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.HSpace;
+import net.sourceforge.plantuml.sequencediagram.InGroupableList;
+import net.sourceforge.plantuml.sequencediagram.LifeEvent;
+import net.sourceforge.plantuml.sequencediagram.LifeEventType;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.Newpage;
+import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Notes;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
+import net.sourceforge.plantuml.sequencediagram.ParticipantType;
+import net.sourceforge.plantuml.sequencediagram.Reference;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.PaddingParam;
+import net.sourceforge.plantuml.skin.SkinParamBackcolored;
+import net.sourceforge.plantuml.skin.SkinParamBackcoloredReference;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+class DrawableSetInitializer {
+
+	private ComponentType defaultLineType;
+	private final DrawableSet drawableSet;
+	private final boolean showTail;
+
+<span class="fc" id="L84">	private double freeX = 0;</span>
+<span class="fc" id="L85">	private Frontier freeY2 = null;</span>
+<span class="fc" id="L86">	private Frontier lastFreeY2 = null;</span>
+
+	private final double autonewpage;
+
+	private ConstraintSet constraintSet;
+
+	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage,
+<span class="fc" id="L93">			AtomicInteger counter) {</span>
+<span class="fc" id="L94">		this.drawableSet = new DrawableSet(skin, skinParam, counter);</span>
+<span class="fc" id="L95">		this.showTail = showTail;</span>
+<span class="fc" id="L96">		this.autonewpage = autonewpage;</span>
+
+<span class="fc" id="L98">	}</span>
+
+	private boolean useContinueLineBecauseOfDelay() {
+<span class="fc" id="L101">		final String strategy = drawableSet.getSkinParam().getValue(&quot;lifelineStrategy&quot;);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (&quot;nosolid&quot;.equalsIgnoreCase(strategy))</span>
+<span class="fc" id="L103">			return false;</span>
+
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (&quot;solid&quot;.equalsIgnoreCase(strategy))</span>
+<span class="fc" id="L106">			return true;</span>
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (Event ev : drawableSet.getAllEvents())</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			if (ev instanceof Delay)</span>
+<span class="nc" id="L110">				return true;</span>
+
+<span class="fc" id="L112">		return false;</span>
+	}
+
+	private ParticipantRange getFullParticipantRange() {
+<span class="fc" id="L116">		return new ParticipantRange(0, drawableSet.getAllParticipants().size());</span>
+	}
+
+	private ParticipantRange getParticipantRange(Event ev) {
+<span class="fc" id="L120">		return getFullParticipantRange();</span>
+	}
+
+	// private int getParticipantRangeIndex(Participant participant) {
+	// int r = 0;
+	// for (Participant p : drawableSet.getAllParticipants()) {
+	// r++;
+	// if (p == participant) {
+	// return r;
+	// }
+	// }
+	// throw new IllegalArgumentException();
+	// }
+
+	public DrawableSet createDrawableSet(StringBounder stringBounder) {
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (freeY2 != null)</span>
+<span class="nc" id="L136">			throw new IllegalStateException();</span>
+
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		this.defaultLineType = useContinueLineBecauseOfDelay() ? ComponentType.CONTINUE_LINE</span>
+<span class="fc" id="L139">				: ComponentType.PARTICIPANT_LINE;</span>
+
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		for (Participant p : drawableSet.getAllParticipants())</span>
+<span class="fc" id="L142">			prepareParticipant(stringBounder, p);</span>
+
+<span class="fc" id="L144">		this.freeY2 = new FrontierStackImpl(drawableSet.getHeadHeight(stringBounder),</span>
+<span class="fc" id="L145">				drawableSet.getAllParticipants().size());</span>
+
+<span class="fc" id="L147">		this.lastFreeY2 = this.freeY2;</span>
+
+<span class="fc" id="L149">		drawableSet.setTopStartingY(this.freeY2.getFreeY(getFullParticipantRange()));</span>
+
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (Participant p : drawableSet.getAllParticipants()) {</span>
+<span class="fc" id="L152">			final LivingParticipantBox living = drawableSet.getLivingParticipantBox(p);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">			for (int i = 0; i &lt; p.getInitialLife(); i++)</span>
+<span class="fc" id="L154">				living.getLifeLine().addSegmentVariation(LifeSegmentVariation.LARGER,</span>
+<span class="fc" id="L155">						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors(i));</span>
+
+<span class="fc" id="L157">		}</span>
+
+<span class="fc" id="L159">		final List&lt;ParticipantBox&gt; col = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (LivingParticipantBox livingParticipantBox : drawableSet.getAllLivingParticipantBox())</span>
+<span class="fc" id="L161">			col.add(livingParticipantBox.getParticipantBox());</span>
+
+<span class="fc" id="L163">		constraintSet = new ConstraintSet(col, freeX);</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for (Event ev : new ArrayList&lt;&gt;(drawableSet.getAllEvents())) {</span>
+<span class="fc" id="L166">			final ParticipantRange range = getParticipantRange(ev);</span>
+<span class="fc" id="L167">			final double diffY = freeY2.getFreeY(range) - lastFreeY2.getFreeY(range);</span>
+			// final double diffY = freeY2.diff(lastFreeY2);
+<span class="pc bpc" id="L169" title="5 of 6 branches missed.">			if (autonewpage &gt; 0 &amp;&amp; diffY &gt; 0 &amp;&amp; diffY + getTotalHeight(0, stringBounder) &gt; autonewpage)</span>
+<span class="nc" id="L170">				prepareNewpageSpecial(stringBounder, new Newpage(null, null), ev, range);</span>
+
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (ev instanceof MessageExo)</span>
+<span class="nc" id="L173">				prepareMessageExo(stringBounder, (MessageExo) ev, range);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">			else if (ev instanceof Message)</span>
+<span class="fc" id="L175">				prepareMessage(stringBounder, (Message) ev, range);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			else if (ev instanceof Note)</span>
+<span class="nc" id="L177">				prepareNote(stringBounder, (Note) ev, range);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			else if (ev instanceof Notes)</span>
+<span class="nc" id="L179">				prepareNotes(stringBounder, (Notes) ev, range);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			else if (ev instanceof LifeEvent)</span>
+<span class="fc" id="L181">				prepareLiveEvent(stringBounder, (LifeEvent) ev, range);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">			else if (ev instanceof GroupingLeaf)</span>
+<span class="fc" id="L183">				prepareGroupingLeaf(stringBounder, (GroupingLeaf) ev, range);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			else if (ev instanceof GroupingStart)</span>
+<span class="fc" id="L185">				prepareGroupingStart(stringBounder, (GroupingStart) ev, range);</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">			else if (ev instanceof Newpage)</span>
+<span class="fc" id="L187">				prepareNewpage(stringBounder, (Newpage) ev, range);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			else if (ev instanceof Divider)</span>
+<span class="nc" id="L189">				prepareDivider(stringBounder, (Divider) ev, range);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			else if (ev instanceof HSpace)</span>
+<span class="nc" id="L191">				prepareHSpace(stringBounder, (HSpace) ev, range);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			else if (ev instanceof Delay)</span>
+<span class="nc" id="L193">				prepareDelay(stringBounder, (Delay) ev, col, range);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			else if (ev instanceof Reference)</span>
+<span class="nc" id="L195">				prepareReference(stringBounder, (Reference) ev, range);</span>
+			else
+<span class="nc" id="L197">				throw new IllegalStateException();</span>
+
+<span class="fc" id="L199">		}</span>
+
+<span class="fc" id="L201">		takeParticipantEngloberPadding(stringBounder);</span>
+<span class="fc" id="L202">		constraintSet.takeConstraintIntoAccount(stringBounder);</span>
+<span class="fc" id="L203">		takeParticipantEngloberTitleWidth(stringBounder);</span>
+
+<span class="fc" id="L205">		prepareMissingSpace(stringBounder);</span>
+
+<span class="fc" id="L207">		drawableSet.setDimension(</span>
+<span class="fc" id="L208">				new XDimension2D(freeX, getTotalHeight(freeY2.getFreeY(getFullParticipantRange()), stringBounder)));</span>
+<span class="fc" id="L209">		return drawableSet;</span>
+	}
+
+	private void takeParticipantEngloberPadding(StringBounder stringBounder) {
+<span class="fc" id="L213">		final double padding = drawableSet.getSkinParam().getPadding(PaddingParam.BOX);</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (padding == 0)</span>
+<span class="fc" id="L215">			return;</span>
+
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		for (Doll pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {</span>
+<span class="nc" id="L218">			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())</span>
+<span class="nc" id="L219">					.getParticipantBox();</span>
+<span class="nc" id="L220">			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE())</span>
+<span class="nc" id="L221">					.getParticipantBox();</span>
+<span class="nc" id="L222">			constraintSet.pushToLeftParticipantBox(padding, first, true);</span>
+<span class="nc" id="L223">			constraintSet.pushToLeftParticipantBox(padding, last, false);</span>
+<span class="nc" id="L224">		}</span>
+<span class="fc" id="L225">	}</span>
+
+	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		for (Doll doll : drawableSet.getExistingParticipantEnglober(stringBounder)) {</span>
+<span class="nc" id="L229">			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, doll);</span>
+<span class="nc" id="L230">			final ParticipantBox first = drawableSet.getLivingParticipantBox(doll.getFirst2TOBEPRIVATE())</span>
+<span class="nc" id="L231">					.getParticipantBox();</span>
+<span class="nc" id="L232">			final ParticipantBox last = drawableSet.getLivingParticipantBox(doll.getLast2TOBEPRIVATE())</span>
+<span class="nc" id="L233">					.getParticipantBox();</span>
+<span class="nc" id="L234">			final double x1 = drawableSet.getX1(doll);</span>
+<span class="nc" id="L235">			final double x2 = drawableSet.getX2(stringBounder, doll);</span>
+<span class="nc" id="L236">			final double missing = preferredWidth - (x2 - x1);</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">			if (missing &gt; 0) {</span>
+<span class="nc" id="L238">				constraintSet.pushToLeftParticipantBox(missing / 2, first, true);</span>
+<span class="nc" id="L239">				constraintSet.pushToLeftParticipantBox(missing / 2, last, false);</span>
+			}
+<span class="nc" id="L241">		}</span>
+<span class="fc" id="L242">	}</span>
+
+	private double getTotalHeight(double y, StringBounder stringBounder) {
+<span class="fc" id="L245">		final double signature = 0;</span>
+<span class="fc" id="L246">		return y + drawableSet.getTailHeight(stringBounder, showTail) + signature;</span>
+	}
+
+	public double getYposition(StringBounder stringBounder, Newpage newpage) {
+<span class="fc" id="L250">		final GraphicalNewpage graphicalNewpage = (GraphicalNewpage) drawableSet</span>
+<span class="fc" id="L251">				.getEvent(Objects.requireNonNull(newpage));</span>
+<span class="fc" id="L252">		return graphicalNewpage.getStartingY();</span>
+	}
+
+	private void prepareMissingSpace(StringBounder stringBounder) {
+<span class="fc" id="L256">		freeX = constraintSet.getMaxX();</span>
+
+<span class="fc" id="L258">		double missingSpace1 = 0;</span>
+<span class="fc" id="L259">		double missingSpace2 = 0;</span>
+
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		for (GraphicalElement ev : drawableSet.getAllGraphicalElements()) {</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">			if (ev instanceof GraphicalDelayText) {</span>
+<span class="nc" id="L263">				final double missing = ev.getPreferredWidth(stringBounder) - freeX;</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">				if (missing &gt; 0) {</span>
+<span class="nc" id="L265">					missingSpace1 = Math.max(missingSpace1, missing / 2);</span>
+<span class="nc" id="L266">					missingSpace2 = Math.max(missingSpace2, missing / 2);</span>
+				}
+				continue;
+			}
+<span class="fc" id="L270">			final double startX = ev.getStartingX(stringBounder);</span>
+<span class="fc" id="L271">			final double delta1 = -startX;</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">			if (delta1 &gt; missingSpace1)</span>
+<span class="fc" id="L273">				missingSpace1 = delta1;</span>
+
+<span class="fc bfc" id="L275" title="All 2 branches covered.">			if (ev instanceof Arrow) {</span>
+<span class="fc" id="L276">				final Arrow a = (Arrow) ev;</span>
+<span class="fc" id="L277">				a.setMaxX(freeX);</span>
+			}
+<span class="fc" id="L279">			double width = ev.getPreferredWidth(stringBounder);</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">			if (ev instanceof Arrow) {</span>
+<span class="fc" id="L281">				final Arrow a = (Arrow) ev;</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">				if (width &lt; a.getActualWidth(stringBounder))</span>
+<span class="fc" id="L283">					width = a.getActualWidth(stringBounder);</span>
+
+			}
+<span class="fc bfc" id="L286" title="All 2 branches covered.">			if (ev instanceof GroupingGraphicalElementHeader) {</span>
+<span class="fc" id="L287">				final GroupingGraphicalElementHeader gh = (GroupingGraphicalElementHeader) ev;</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">				if (width &lt; gh.getActualWidth(stringBounder))</span>
+<span class="fc" id="L289">					width = gh.getActualWidth(stringBounder);</span>
+
+			}
+<span class="fc" id="L292">			final double endX = startX + width;</span>
+<span class="fc" id="L293">			final double delta2 = endX - freeX;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">			if (delta2 &gt; missingSpace2)</span>
+<span class="fc" id="L295">				missingSpace2 = delta2;</span>
+<span class="fc" id="L296">		}</span>
+
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (missingSpace1 &gt; 0)</span>
+<span class="fc" id="L299">			constraintSet.pushToLeft(missingSpace1);</span>
+
+<span class="fc" id="L301">		freeX = constraintSet.getMaxX() + missingSpace2;</span>
+<span class="fc" id="L302">	}</span>
+
+	private void prepareNewpage(StringBounder stringBounder, Newpage newpage, ParticipantRange range) {
+<span class="fc" id="L305">		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range),</span>
+<span class="fc" id="L306">				drawableSet.getSkin().createComponentNewPage(newpage.getUsedStyles(), drawableSet.getSkinParam()));</span>
+<span class="fc" id="L307">		this.lastFreeY2 = freeY2;</span>
+<span class="fc" id="L308">		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);</span>
+<span class="fc" id="L309">		drawableSet.addEvent(newpage, graphicalNewpage);</span>
+<span class="fc" id="L310">	}</span>
+
+	private void prepareNewpageSpecial(StringBounder stringBounder, Newpage newpage, Event justBefore,
+			ParticipantRange range) {
+<span class="nc" id="L314">		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range),</span>
+<span class="nc" id="L315">				drawableSet.getSkin().createComponentNewPage(newpage.getUsedStyles(), drawableSet.getSkinParam()));</span>
+<span class="nc" id="L316">		this.lastFreeY2 = freeY2;</span>
+<span class="nc" id="L317">		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L318">		drawableSet.addEvent(newpage, graphicalNewpage, justBefore);</span>
+<span class="nc" id="L319">	}</span>
+
+	private void prepareDivider(StringBounder stringBounder, Divider divider, ParticipantRange range) {
+<span class="nc" id="L322">		final GraphicalDivider graphicalDivider = new GraphicalDivider(freeY2.getFreeY(range),</span>
+<span class="nc" id="L323">				drawableSet.getSkin().createComponent(divider.getUsedStyles(), ComponentType.DIVIDER, null,</span>
+<span class="nc" id="L324">						drawableSet.getSkinParam(), divider.getText()));</span>
+<span class="nc" id="L325">		freeY2 = freeY2.add(graphicalDivider.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L326">		drawableSet.addEvent(divider, graphicalDivider);</span>
+<span class="nc" id="L327">	}</span>
+
+	private void prepareHSpace(StringBounder stringBounder, HSpace hspace, ParticipantRange range) {
+<span class="nc" id="L330">		final GraphicalHSpace graphicalHSpace = new GraphicalHSpace(freeY2.getFreeY(range), hspace.getPixel());</span>
+<span class="nc" id="L331">		freeY2 = freeY2.add(graphicalHSpace.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L332">		drawableSet.addEvent(hspace, graphicalHSpace);</span>
+<span class="nc" id="L333">	}</span>
+
+	private void prepareDelay(StringBounder stringBounder, Delay delay, List&lt;ParticipantBox&gt; participants,
+			ParticipantRange range) {
+<span class="nc" id="L337">		final Component compText = drawableSet.getSkin().createComponent(delay.getUsedStyles(),</span>
+<span class="nc" id="L338">				ComponentType.DELAY_TEXT, null, drawableSet.getSkinParam(), delay.getText());</span>
+<span class="nc" id="L339">		final ParticipantBox first = participants.get(0);</span>
+<span class="nc" id="L340">		final ParticipantBox last = participants.get(participants.size() - 1);</span>
+<span class="nc" id="L341">		final GraphicalDelayText graphicalDivider = new GraphicalDelayText(freeY2.getFreeY(range), compText, first,</span>
+				last);
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		for (ParticipantBox p : participants)</span>
+<span class="nc" id="L344">			p.addDelay(graphicalDivider);</span>
+
+<span class="nc" id="L346">		freeY2 = freeY2.add(graphicalDivider.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L347">		drawableSet.addEvent(delay, graphicalDivider);</span>
+<span class="nc" id="L348">	}</span>
+
+<span class="fc" id="L350">	final private InGroupablesStack inGroupableStack = new InGroupablesStack();</span>
+
+	private void prepareGroupingStart(StringBounder stringBounder, GroupingStart start, ParticipantRange range) {
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">		if (start.getType() != GroupingType.START)</span>
+<span class="nc" id="L354">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L356">		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), start.getBackColorElement(),</span>
+<span class="fc" id="L357">				start.getBackColorGeneral());</span>
+
+<span class="fc" id="L359">		final Component comp = drawableSet.getSkin().createComponent(null, ComponentType.GROUPING_SPACE, null,</span>
+<span class="fc" id="L360">				skinParam, Display.create(start.getComment()));</span>
+<span class="fc" id="L361">		final double preferredHeight = comp.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L362">		freeY2 = freeY2.add(preferredHeight, range);</span>
+
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">		final Display strings = start.getTitle().equals(&quot;group&quot;) ? Display.create(start.getComment())</span>
+<span class="pc" id="L365">				: Display.create(start.getTitle(), start.getComment());</span>
+<span class="fc" id="L366">		final Component header = drawableSet.getSkin().createComponent(start.getUsedStyles(),</span>
+				ComponentType.GROUPING_HEADER_LEGACY, null, skinParam, strings);
+<span class="fc" id="L368">		final ParticipantBox veryfirst = drawableSet.getVeryfirst();</span>
+<span class="fc" id="L369">		final InGroupableList inGroupableList = new InGroupableList(veryfirst, start, freeY2.getFreeY(range));</span>
+<span class="fc" id="L370">		inGroupableStack.addList(inGroupableList);</span>
+
+<span class="fc" id="L372">		final GraphicalElement element = new GroupingGraphicalElementHeader(freeY2.getFreeY(range), header,</span>
+<span class="fc" id="L373">				inGroupableList, start.isParallel());</span>
+<span class="fc" id="L374">		inGroupableList.setMinWidth(element.getPreferredWidth(stringBounder));</span>
+<span class="fc" id="L375">		freeY2 = freeY2.add(element.getPreferredHeight(stringBounder), range);</span>
+<span class="fc" id="L376">		drawableSet.addEvent(start, element);</span>
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (start.isParallel())</span>
+<span class="nc" id="L378">			freeY2 = ((FrontierStack) freeY2).openBar();</span>
+
+<span class="fc" id="L380">	}</span>
+
+	private void prepareGroupingLeaf(StringBounder stringBounder, final GroupingLeaf m, ParticipantRange range) {
+		final GraphicalElement element;
+<span class="fc" id="L384">		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), null,</span>
+<span class="fc" id="L385">				m.getBackColorGeneral());</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">		if (m.getType() == GroupingType.ELSE) {</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">			if (m.isParallel())</span>
+<span class="nc" id="L388">				freeY2 = ((FrontierStack) freeY2).restore();</span>
+
+<span class="nc" id="L390">			final Component compElse = drawableSet.getSkin().createComponent(m.getUsedStyles(),</span>
+<span class="nc" id="L391">					ComponentType.GROUPING_ELSE_LEGACY, null, skinParam, Display.create(m.getComment()));</span>
+<span class="nc" id="L392">			final Lazy lazy = new Lazy() {</span>
+				public double getNow() {
+<span class="nc" id="L394">					final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">					if (after == null)</span>
+<span class="nc" id="L396">						return 0;</span>
+
+<span class="nc" id="L398">					return after.getStartingY();</span>
+				}
+			};
+<span class="nc" id="L401">			element = new GroupingGraphicalElementElse(freeY2.getFreeY(range), compElse,</span>
+<span class="nc" id="L402">					inGroupableStack.getTopGroupingStructure(), m.isParallel(), lazy);</span>
+<span class="nc" id="L403">			final double preferredHeight = element.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L404">			freeY2 = freeY2.add(preferredHeight, range);</span>
+			// MODIF42
+<span class="nc" id="L406">			inGroupableStack.addElement((GroupingGraphicalElementElse) element);</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">		} else if (m.getType() == GroupingType.END) {</span>
+<span class="fc" id="L408">			final List&lt;Component&gt; notes = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">			for (Note noteOnMessage : m.getNoteOnMessages()) {</span>
+<span class="nc" id="L410">				final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(drawableSet.getSkinParam());</span>
+<span class="nc" id="L411">				final Component note = drawableSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),</span>
+<span class="nc" id="L412">						noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getDisplay(),</span>
+<span class="nc" id="L413">						noteOnMessage.getColors());</span>
+<span class="nc" id="L414">				notes.add(note);</span>
+<span class="nc" id="L415">			}</span>
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">			if (m.isParallel())</span>
+<span class="nc" id="L417">				freeY2 = ((FrontierStack) freeY2).closeBar();</span>
+
+<span class="fc" id="L419">			final GroupingGraphicalElementHeader groupingHeaderStart = (GroupingGraphicalElementHeader) drawableSet</span>
+<span class="fc" id="L420">					.getEvent(m.getGroupingStart());</span>
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">			if (groupingHeaderStart != null) {</span>
+<span class="fc" id="L422">				groupingHeaderStart.setEndY(freeY2.getFreeY(range));</span>
+<span class="fc" id="L423">				groupingHeaderStart.addNotes(stringBounder, notes);</span>
+			}
+<span class="fc" id="L425">			element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),</span>
+<span class="fc" id="L426">					inGroupableStack.getTopGroupingStructure(), m.isParallel());</span>
+<span class="fc" id="L427">			final Component comp = drawableSet.getSkin().createComponent(null, ComponentType.GROUPING_SPACE, null,</span>
+<span class="fc" id="L428">					skinParam, Display.create(m.getComment()));</span>
+<span class="fc" id="L429">			final double preferredHeight = comp.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L430">			freeY2 = freeY2.add(preferredHeight, range);</span>
+<span class="fc" id="L431">			inGroupableStack.pop();</span>
+<span class="fc" id="L432">		} else</span>
+<span class="nc" id="L433">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L435">		drawableSet.addEvent(m, element);</span>
+
+<span class="fc" id="L437">	}</span>
+
+	private void prepareNote(StringBounder stringBounder, Note n, ParticipantRange range) {
+<span class="nc" id="L440">		final NoteBox noteBox = createNoteBox(stringBounder, n, range);</span>
+<span class="nc" id="L441">		inGroupableStack.addElement(noteBox);</span>
+
+<span class="nc" id="L443">		drawableSet.addEvent(n, noteBox);</span>
+<span class="nc" id="L444">		freeY2 = freeY2.add(noteBox.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L445">	}</span>
+
+	private NoteBox createNoteBox(StringBounder stringBounder, Note n, ParticipantRange range) {
+<span class="nc" id="L448">		LivingParticipantBox p1 = drawableSet.getLivingParticipantBox(n.getParticipant());</span>
+		LivingParticipantBox p2;
+<span class="nc bnc" id="L450" title="All 2 branches missed.">		if (n.getParticipant2() == null)</span>
+<span class="nc" id="L451">			p2 = null;</span>
+		else {
+<span class="nc" id="L453">			p2 = drawableSet.getLivingParticipantBox(n.getParticipant2());</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">			if (p1.getParticipantBox().getCenterX(stringBounder) &gt; p2.getParticipantBox().getCenterX(stringBounder)) {</span>
+<span class="nc" id="L455">				final LivingParticipantBox tmp = p1;</span>
+<span class="nc" id="L456">				p1 = p2;</span>
+<span class="nc" id="L457">				p2 = tmp;</span>
+			}
+		}
+<span class="nc" id="L460">		final ISkinParam skinParam = n.getSkinParamBackcolored(drawableSet.getSkinParam());</span>
+<span class="nc" id="L461">		final ComponentType type = n.getNoteStyle().getNoteComponentType();</span>
+<span class="nc bnc" id="L462" title="All 4 branches missed.">		if (p1 == null &amp;&amp; p2 == null)</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">			for (LivingParticipantBox p : drawableSet.getAllLivingParticipantBox()) {</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">				if (p1 == null)</span>
+<span class="nc" id="L465">					p1 = p;</span>
+
+<span class="nc" id="L467">				p2 = p;</span>
+<span class="nc" id="L468">			}</span>
+
+<span class="nc" id="L470">		final Component component = drawableSet.getSkin().createComponentNote(n.getUsedStyles(), type, skinParam,</span>
+<span class="nc" id="L471">				n.getDisplay(), n.getColors(), n.getPosition());</span>
+<span class="nc" id="L472">		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), component, p1, p2, n.getPosition(), n.getUrl());</span>
+<span class="nc" id="L473">		return noteBox;</span>
+	}
+
+	private void prepareNotes(StringBounder stringBounder, Notes notes, ParticipantRange range) {
+<span class="nc" id="L477">		final NotesBoxes notesBoxes = new NotesBoxes(freeY2.getFreeY(range));</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">		for (Note n : notes) {</span>
+<span class="nc" id="L479">			final NoteBox noteBox = createNoteBox(stringBounder, n, range);</span>
+<span class="nc" id="L480">			final ParticipantBox p1 = drawableSet.getLivingParticipantBox(n.getParticipant()).getParticipantBox();</span>
+<span class="nc bnc" id="L481" title="All 2 branches missed.">			final ParticipantBox p2 = n.getParticipant2() == null ? null</span>
+<span class="nc" id="L482">					: drawableSet.getLivingParticipantBox(n.getParticipant2()).getParticipantBox();</span>
+<span class="nc" id="L483">			notesBoxes.add(noteBox, p1, p2);</span>
+<span class="nc" id="L484">		}</span>
+<span class="nc" id="L485">		notesBoxes.ensureConstraints(stringBounder, constraintSet);</span>
+<span class="nc" id="L486">		inGroupableStack.addElement(notesBoxes);</span>
+
+<span class="nc" id="L488">		drawableSet.addEvent(notes, notesBoxes);</span>
+<span class="nc" id="L489">		freeY2 = freeY2.add(notesBoxes.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L490">	}</span>
+
+	private void prepareLiveEvent(StringBounder stringBounder, LifeEvent lifeEvent, ParticipantRange range) {
+<span class="fc" id="L493">		final double y = freeY2.getFreeY(range);</span>
+<span class="fc" id="L494">		final AbstractMessage message = lifeEvent.getMessage();</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.ACTIVATE) {</span>
+<span class="fc" id="L496">			double pos = 0;</span>
+<span class="fc bfc" id="L497" title="All 2 branches covered.">			if (message != null) {</span>
+<span class="fc" id="L498">				int delta1 = 0;</span>
+<span class="pc bpc" id="L499" title="1 of 2 branches missed.">				if (message.isCreate())</span>
+<span class="nc" id="L500">					delta1 += 10;</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">				else if (OptionFlags.STRICT_SELFMESSAGE_POSITION &amp;&amp; message.isSelfMessage())</span>
+<span class="fc" id="L502">					delta1 += 8;</span>
+
+<span class="fc" id="L504">				pos = message.getPosYstartLevel() + delta1;</span>
+			}
+<span class="fc" id="L506">			final LifeLine line1 = drawableSet.getLivingParticipantBox(lifeEvent.getParticipant()).getLifeLine();</span>
+<span class="fc" id="L507">			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificColors());</span>
+<span class="pc bpc" id="L508" title="1 of 4 branches missed.">		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {</span>
+<span class="fc" id="L509">			double delta = 0;</span>
+<span class="pc bpc" id="L510" title="1 of 4 branches missed.">			if (OptionFlags.STRICT_SELFMESSAGE_POSITION &amp;&amp; message != null &amp;&amp; message.isSelfMessage())</span>
+<span class="fc" id="L511">				delta += 7;</span>
+
+<span class="fc" id="L513">			final Participant p = lifeEvent.getParticipant();</span>
+<span class="fc" id="L514">			final LifeLine line = drawableSet.getLivingParticipantBox(p).getLifeLine();</span>
+<span class="fc" id="L515">			double pos2 = y;</span>
+<span class="pc bpc" id="L516" title="1 of 2 branches missed.">			if (message != null)</span>
+<span class="fc" id="L517">				pos2 = message.getPosYendLevel() - delta;</span>
+
+<span class="fc" id="L519">			line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos2, lifeEvent.getSpecificColors());</span>
+		}
+
+<span class="fc bfc" id="L522" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.DESTROY) {</span>
+<span class="fc" id="L523">			final Style[] style = lifeEvent.getUsedStyle();</span>
+<span class="fc" id="L524">			final Component comp = drawableSet.getSkin().createComponent(style, ComponentType.DESTROY, null,</span>
+<span class="fc" id="L525">					drawableSet.getSkinParam(), null);</span>
+<span class="fc" id="L526">			final double delta = comp.getPreferredHeight(stringBounder) / 2;</span>
+<span class="fc" id="L527">			final LivingParticipantBox livingParticipantBox = drawableSet</span>
+<span class="fc" id="L528">					.getLivingParticipantBox(lifeEvent.getParticipant());</span>
+<span class="fc" id="L529">			double pos2 = y;</span>
+<span class="pc bpc" id="L530" title="1 of 2 branches missed.">			if (message == null) {</span>
+<span class="nc" id="L531">				pos2 = y;</span>
+<span class="nc" id="L532">				freeY2 = freeY2.add(comp.getPreferredHeight(stringBounder), range);</span>
+			} else
+<span class="fc" id="L534">				pos2 = message.getPosYendLevel() - delta;</span>
+
+<span class="fc" id="L536">			final LifeDestroy destroy = new LifeDestroy(pos2, livingParticipantBox.getParticipantBox(), comp);</span>
+<span class="fc" id="L537">			drawableSet.addEvent(lifeEvent, destroy);</span>
+<span class="fc" id="L538">		} else</span>
+<span class="fc" id="L539">			drawableSet.addEvent(lifeEvent, new GraphicalElementLiveEvent(y));</span>
+
+<span class="fc" id="L541">	}</span>
+
+	private void prepareMessageExo(StringBounder stringBounder, MessageExo m, ParticipantRange range) {
+<span class="nc" id="L544">		final Step1MessageExo step1Message = new Step1MessageExo(range, stringBounder, m, drawableSet, freeY2);</span>
+<span class="nc" id="L545">		freeY2 = step1Message.prepareMessage(constraintSet, inGroupableStack);</span>
+<span class="nc" id="L546">	}</span>
+
+	private void prepareMessage(StringBounder stringBounder, Message m, ParticipantRange range) {
+<span class="fc" id="L549">		final Step1Message step1Message = new Step1Message(range, stringBounder, m, drawableSet, freeY2);</span>
+<span class="fc" id="L550">		freeY2 = step1Message.prepareMessage(constraintSet, inGroupableStack);</span>
+<span class="fc" id="L551">	}</span>
+
+	private void prepareReference(StringBounder stringBounder, Reference reference, ParticipantRange range) {
+<span class="nc" id="L554">		final LivingParticipantBox p1 = drawableSet</span>
+<span class="nc" id="L555">				.getLivingParticipantBox(drawableSet.getFirst(reference.getParticipant()));</span>
+<span class="nc" id="L556">		final LivingParticipantBox p2 = drawableSet</span>
+<span class="nc" id="L557">				.getLivingParticipantBox(drawableSet.getLast(reference.getParticipant()));</span>
+<span class="nc" id="L558">		final ISkinParam skinParam = new SkinParamBackcoloredReference(drawableSet.getSkinParam(),</span>
+<span class="nc" id="L559">				reference.getBackColorElement(), reference.getBackColorGeneral());</span>
+
+<span class="nc" id="L561">		Display strings = Display.empty();</span>
+<span class="nc" id="L562">		strings = strings.add(&quot;ref&quot;);</span>
+<span class="nc" id="L563">		strings = strings.addAll(reference.getStrings());</span>
+
+<span class="nc" id="L565">		Component noteLeft = null;</span>
+<span class="nc" id="L566">		Component noteRight = null;</span>
+<span class="nc bnc" id="L567" title="All 2 branches missed.">		for (Note noteOnMessage : reference.getNoteOnMessages()) {</span>
+<span class="nc" id="L568">			final ISkinParam skinParam2 = noteOnMessage.getSkinParamBackcolored(drawableSet.getSkinParam());</span>
+<span class="nc" id="L569">			final Component note = drawableSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),</span>
+<span class="nc" id="L570">					noteOnMessage.getNoteStyle().getNoteComponentType(), skinParam2, noteOnMessage.getDisplay(),</span>
+<span class="nc" id="L571">					noteOnMessage.getColors());</span>
+<span class="nc bnc" id="L572" title="All 2 branches missed.">			if (noteOnMessage.getPosition() == NotePosition.RIGHT)</span>
+<span class="nc" id="L573">				noteRight = note;</span>
+			else
+<span class="nc" id="L575">				noteLeft = note;</span>
+<span class="nc" id="L576">		}</span>
+
+<span class="nc" id="L578">		final Component comp = drawableSet.getSkin().createComponent(reference.getUsedStyles(), ComponentType.REFERENCE,</span>
+				null, skinParam, strings);
+<span class="nc" id="L580">		final GraphicalReference graphicalReference = new GraphicalReference(freeY2.getFreeY(range), comp, p1, p2,</span>
+<span class="nc" id="L581">				reference.getUrl(), noteLeft, noteRight);</span>
+
+<span class="nc" id="L583">		final ParticipantBox pbox1 = p1.getParticipantBox();</span>
+<span class="nc" id="L584">		final ParticipantBox pbox2 = p2.getParticipantBox();</span>
+<span class="nc" id="L585">		final double width = graphicalReference.getPreferredWidth(stringBounder)</span>
+<span class="nc" id="L586">				- pbox1.getPreferredWidth(stringBounder) / 2 - pbox2.getPreferredWidth(stringBounder) / 2;</span>
+
+		final Constraint constraint;
+<span class="nc bnc" id="L589" title="All 2 branches missed.">		if (p1 == p2)</span>
+<span class="nc" id="L590">			constraint = constraintSet.getConstraintAfter(pbox1);</span>
+		else
+<span class="nc" id="L592">			constraint = constraintSet.getConstraint(pbox1, pbox2);</span>
+
+<span class="nc" id="L594">		constraint.ensureValue(width);</span>
+
+<span class="nc" id="L596">		inGroupableStack.addElement(graphicalReference);</span>
+<span class="nc" id="L597">		inGroupableStack.addElement(p1);</span>
+<span class="nc bnc" id="L598" title="All 2 branches missed.">		if (p1 != p2)</span>
+<span class="nc" id="L599">			inGroupableStack.addElement(p2);</span>
+
+<span class="nc" id="L601">		freeY2 = freeY2.add(graphicalReference.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L602">		drawableSet.addEvent(reference, graphicalReference);</span>
+<span class="nc" id="L603">	}</span>
+
+	private void prepareParticipant(StringBounder stringBounder, Participant p) {
+		final ComponentType headType;
+		final ComponentType tailType;
+<span class="fc bfc" id="L608" title="All 2 branches covered.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
+<span class="fc" id="L609">			headType = ComponentType.PARTICIPANT_HEAD;</span>
+<span class="fc" id="L610">			tailType = ComponentType.PARTICIPANT_TAIL;</span>
+<span class="fc bfc" id="L611" title="All 2 branches covered.">		} else if (p.getType() == ParticipantType.ACTOR) {</span>
+<span class="fc" id="L612">			headType = ComponentType.ACTOR_HEAD;</span>
+<span class="fc" id="L613">			tailType = ComponentType.ACTOR_TAIL;</span>
+<span class="fc bfc" id="L614" title="All 2 branches covered.">		} else if (p.getType() == ParticipantType.BOUNDARY) {</span>
+<span class="fc" id="L615">			headType = ComponentType.BOUNDARY_HEAD;</span>
+<span class="fc" id="L616">			tailType = ComponentType.BOUNDARY_TAIL;</span>
+<span class="fc bfc" id="L617" title="All 2 branches covered.">		} else if (p.getType() == ParticipantType.CONTROL) {</span>
+<span class="fc" id="L618">			headType = ComponentType.CONTROL_HEAD;</span>
+<span class="fc" id="L619">			tailType = ComponentType.CONTROL_TAIL;</span>
+<span class="fc bfc" id="L620" title="All 2 branches covered.">		} else if (p.getType() == ParticipantType.ENTITY) {</span>
+<span class="fc" id="L621">			headType = ComponentType.ENTITY_HEAD;</span>
+<span class="fc" id="L622">			tailType = ComponentType.ENTITY_TAIL;</span>
+<span class="fc bfc" id="L623" title="All 2 branches covered.">		} else if (p.getType() == ParticipantType.QUEUE) {</span>
+<span class="fc" id="L624">			headType = ComponentType.QUEUE_HEAD;</span>
+<span class="fc" id="L625">			tailType = ComponentType.QUEUE_TAIL;</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">		} else if (p.getType() == ParticipantType.DATABASE) {</span>
+<span class="fc" id="L627">			headType = ComponentType.DATABASE_HEAD;</span>
+<span class="fc" id="L628">			tailType = ComponentType.DATABASE_TAIL;</span>
+<span class="pc bpc" id="L629" title="1 of 2 branches missed.">		} else if (p.getType() == ParticipantType.COLLECTIONS) {</span>
+<span class="fc" id="L630">			headType = ComponentType.COLLECTIONS_HEAD;</span>
+<span class="fc" id="L631">			tailType = ComponentType.COLLECTIONS_TAIL;</span>
+		} else {
+<span class="nc" id="L633">			throw new IllegalArgumentException();</span>
+		}
+
+<span class="fc" id="L636">		final ISkinParam skinParam = drawableSet.getSkinParam();</span>
+<span class="fc" id="L637">		final Display participantDisplay = p.getDisplay(skinParam.forceSequenceParticipantUnderlined());</span>
+<span class="fc" id="L638">		final Component head = drawableSet.getSkin().createComponentParticipant(p, headType, null, skinParam,</span>
+				participantDisplay);
+<span class="fc" id="L640">		final Component tail = drawableSet.getSkin().createComponentParticipant(p, tailType, null, skinParam,</span>
+				participantDisplay);
+<span class="fc" id="L642">		final Style style = this.defaultLineType.getStyleSignature().withTOBECHANGED(p.getStereotype())</span>
+<span class="fc" id="L643">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L644">		final Component line = drawableSet.getSkin().createComponent(new Style[] { style }, this.defaultLineType, null,</span>
+<span class="fc" id="L645">				drawableSet.getSkinParam(), participantDisplay);</span>
+<span class="fc" id="L646">		final Component delayLine = drawableSet.getSkin().createComponent(new Style[] { style }, ComponentType.DELAY_LINE, null,</span>
+<span class="fc" id="L647">				drawableSet.getSkinParam(), participantDisplay);</span>
+<span class="fc" id="L648">		final ParticipantBox box = new ParticipantBox(skinParam.getPragma(), p.getLocation(), head, line, tail,</span>
+<span class="pc bpc" id="L649" title="1 of 2 branches missed.">				delayLine, this.freeX, skinParam.maxAsciiMessageLength() &gt; 0 ? 1 : 5, p);</span>
+
+<span class="fc" id="L651">		final Component comp = drawableSet.getSkin().createComponent(</span>
+<span class="fc" id="L652">				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()</span>
+<span class="fc" id="L653">						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
+<span class="fc" id="L654">				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, drawableSet.getSkinParam(), participantDisplay);</span>
+
+<span class="fc" id="L656">		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder),</span>
+<span class="fc" id="L657">				drawableSet.getSkinParam().shadowing(p.getStereotype()), participantDisplay);</span>
+<span class="fc" id="L658">		drawableSet.setLivingParticipantBox(p, new LivingParticipantBox(box, lifeLine));</span>
+
+<span class="fc" id="L660">		this.freeX = box.getMaxX(stringBounder);</span>
+<span class="fc" id="L661">	}</span>
+
+	public void addParticipant(Participant p, ParticipantEnglober participantEnglober) {
+<span class="fc" id="L664">		drawableSet.addParticipant(p, participantEnglober);</span>
+<span class="fc" id="L665">	}</span>
+
+	public void addEvent(Event event) {
+<span class="fc" id="L668">		drawableSet.addEvent(event, null);</span>
+<span class="fc" id="L669">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

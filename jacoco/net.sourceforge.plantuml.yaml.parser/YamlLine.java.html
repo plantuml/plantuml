@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>YamlLine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.yaml.parser</a> &gt; <span class="el_source">YamlLine.java</span></div><h1>YamlLine.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.yaml.parser;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.annotation.DuplicateCode;
+
+public class YamlLine {
+
+	private final int indent;
+	private final String key;
+	private final String value;
+	private final List&lt;String&gt; values;
+	private final boolean listItem;
+	private final YamlLineType type;
+
+	public static YamlLine build(String line) {
+<span class="fc" id="L53">		int count = 0;</span>
+<span class="fc" id="L54">		line = line.replaceAll(&quot;\t&quot;, &quot;    &quot;);</span>
+<span class="fc bfc" id="L55" title="All 4 branches covered.">		while (count &lt; line.length() &amp;&amp; line.charAt(count) == ' ')</span>
+<span class="fc" id="L56">			count++;</span>
+
+<span class="fc" id="L58">		String trimmedLine = removeYamlComment(line.substring(count).trim());</span>
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (trimmedLine.isEmpty())</span>
+<span class="fc" id="L61">			return new YamlLine(YamlLineType.EMPTY_LINE, 0, null, null, null, false);</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (trimmedLine.equals(&quot;-&quot;))</span>
+<span class="fc" id="L64">			return new YamlLine(YamlLineType.PLAIN_DASH, count + 1, null, null, null, true);</span>
+
+<span class="fc" id="L66">		final boolean listItem = trimmedLine.startsWith(&quot;- &quot;);</span>
+
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (listItem) {</span>
+<span class="fc" id="L69">			count += 2;</span>
+<span class="fc" id="L70">			trimmedLine = trimmedLine.substring(2);</span>
+		}
+
+<span class="fc" id="L73">		final int colonIndex = trimmedLine.indexOf(':');</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (colonIndex == -1)</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			if (listItem)</span>
+<span class="fc" id="L76">				return new YamlLine(YamlLineType.PLAIN_ELEMENT_LIST, count, null, unquote(trimmedLine), null, listItem);</span>
+			else
+<span class="fc" id="L78">				return new YamlLine(YamlLineType.NO_KEY_ONLY_TEXT, count, null, unquote(trimmedLine), null, false);</span>
+
+<span class="fc" id="L80">		final String rawKey = trimmedLine.substring(0, colonIndex).trim();</span>
+<span class="fc" id="L81">		final String rawValue = trimmedLine.substring(colonIndex + 1).trim();</span>
+
+<span class="fc" id="L83">		YamlLineType type = YamlLineType.KEY_AND_VALUE;</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (rawValue.isEmpty())</span>
+<span class="fc" id="L86">			type = YamlLineType.KEY_ONLY;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		else if (rawValue.equals(&quot;|&quot;))</span>
+<span class="fc" id="L88">			type = YamlLineType.KEY_AND_BLOCK_STYLE;</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		else if (rawValue.equals(&quot;&gt;&quot;))</span>
+<span class="nc" id="L90">			type = YamlLineType.KEY_AND_FOLDED_STYLE;</span>
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">		else if (rawValue.startsWith(&quot;[&quot;) &amp;&amp; rawValue.endsWith(&quot;]&quot;))</span>
+<span class="fc" id="L92">			return new YamlLine(YamlLineType.KEY_AND_FLOW_SEQUENCE, count, unquote(rawKey), null,</span>
+<span class="fc" id="L93">					toList(rawValue.substring(1, rawValue.length() - 1)), listItem);</span>
+
+<span class="fc" id="L95">		return new YamlLine(type, count, unquote(rawKey), unquote(rawValue), null, listItem);</span>
+
+	}
+
+	private static List&lt;String&gt; toList(String rawValue) {
+<span class="fc" id="L100">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L102">		final StringBuilder current = new StringBuilder();</span>
+
+		// Zero if we are not in a quoted state or
+		// represents the quote character if we are in a quoted string
+<span class="fc" id="L106">		char inQuotedString = '\0';</span>
+
+		// Indicates that the current field started with a quote
+<span class="fc" id="L109">		boolean fieldStartWithQuote = false;</span>
+
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		for (int i = 0; i &lt; rawValue.length(); i++) {</span>
+<span class="fc" id="L112">			final char c = rawValue.charAt(i);</span>
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			if (inQuotedString != '\0') {</span>
+				// Processing a quoted string
+<span class="fc bfc" id="L116" title="All 2 branches covered.">				if (c == '\\') {</span>
+					// Handle escaping: append the next character as is if it exists
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">					if (i + 1 &lt; rawValue.length()) {</span>
+<span class="fc" id="L119">						current.append(rawValue.charAt(i + 1));</span>
+<span class="fc" id="L120">						i++; // Skip the escaped character</span>
+					}
+<span class="fc bfc" id="L122" title="All 2 branches covered.">				} else if (c == inQuotedString) {</span>
+					// End of the quoted string
+<span class="fc" id="L124">					inQuotedString = '\0';</span>
+				} else {
+<span class="fc" id="L126">					current.append(c);</span>
+				}
+			} else {
+				// We are not in a quoted string.
+				// If the field contains only spaces and we encounter a quote,
+				// we consider that the field actually starts with a quote.
+<span class="fc bfc" id="L132" title="All 8 branches covered.">				if (fieldStartWithQuote == false &amp;&amp; current.toString().trim().isEmpty() &amp;&amp; (c == '\'' || c == '&quot;')) {</span>
+<span class="fc" id="L133">					inQuotedString = c;</span>
+<span class="fc" id="L134">					fieldStartWithQuote = true;</span>
+<span class="fc" id="L135">					current.setLength(0); // Clear any preliminary spaces</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">				} else if (c == ',') {</span>
+					// The field separator is encountered.
+					// For a quoted field, keep the content as is,
+					// otherwise apply trim.
+<span class="fc bfc" id="L140" title="All 2 branches covered.">					result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());</span>
+					// Reset for the next field
+<span class="fc" id="L142">					current.setLength(0);</span>
+<span class="fc" id="L143">					fieldStartWithQuote = false;</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">				} else if (c == '\\') {</span>
+					// Handle escaping outside of quotes
+<span class="nc bnc" id="L146" title="All 2 branches missed.">					if (i + 1 &lt; rawValue.length()) {</span>
+<span class="nc" id="L147">						current.append(rawValue.charAt(i + 1));</span>
+<span class="nc" id="L148">						i++; // Skip the escaped character</span>
+					}
+				} else {
+<span class="fc" id="L151">					current.append(c);</span>
+				}
+			}
+		}
+		// Add the last field (even if it's empty)
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());</span>
+
+<span class="fc" id="L158">		return result;</span>
+	}
+
+<span class="fc" id="L161">	private YamlLine(YamlLineType type, int indent, String key, String value, List&lt;String&gt; values, boolean listItem) {</span>
+<span class="fc" id="L162">		this.type = type;</span>
+<span class="fc" id="L163">		this.indent = indent;</span>
+<span class="fc" id="L164">		this.key = key;</span>
+<span class="fc" id="L165">		this.value = value;</span>
+<span class="fc" id="L166">		this.values = values;</span>
+<span class="fc" id="L167">		this.listItem = listItem;</span>
+<span class="fc" id="L168">	}</span>
+
+	private static String unquote(String str) {
+<span class="pc bpc" id="L171" title="1 of 4 branches missed.">		if (str == null || str.length() &lt; 2)</span>
+<span class="fc" id="L172">			return str;</span>
+
+<span class="fc" id="L174">		final char first = str.charAt(0);</span>
+<span class="fc" id="L175">		final char last = str.charAt(str.length() - 1);</span>
+<span class="pc bpc" id="L176" title="2 of 8 branches missed.">		if ((first == '&quot;' &amp;&amp; last == '&quot;') || (first == '\'' &amp;&amp; last == '\''))</span>
+<span class="fc" id="L177">			return str.substring(1, str.length() - 1);</span>
+
+<span class="fc" id="L179">		return str;</span>
+	}
+
+	public int getIndent() {
+<span class="fc" id="L183">		return indent;</span>
+	}
+
+	@DuplicateCode(reference = &quot;YamlLines&quot;)
+	private static String removeYamlComment(String s) {
+<span class="pc bpc" id="L188" title="1 of 4 branches missed.">		if (s == null || s.isEmpty())</span>
+<span class="fc" id="L189">			return s;</span>
+
+<span class="fc" id="L191">		char inQuoteChar = '\0';</span>
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (s.charAt(0) == '#')</span>
+<span class="fc" id="L194">			return &quot;&quot;;</span>
+
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L197">			final char c = s.charAt(i);</span>
+
+<span class="fc bfc" id="L199" title="All 4 branches covered.">			if (c == '\'' || c == '&quot;')</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">				if (inQuoteChar == '\0')</span>
+<span class="fc" id="L201">					inQuoteChar = c;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">				else if (c == inQuoteChar)</span>
+<span class="fc" id="L203">					inQuoteChar = '\0';</span>
+
+<span class="fc bfc" id="L205" title="All 8 branches covered.">			if (inQuoteChar == '\0' &amp;&amp; i &lt; s.length() - 1 &amp;&amp; c == ' ' &amp;&amp; s.charAt(i + 1) == '#')</span>
+<span class="fc" id="L206">				return s.substring(0, i);</span>
+
+		}
+
+<span class="fc" id="L210">		return s;</span>
+	}
+
+	public String getKey() {
+<span class="fc" id="L214">		return key;</span>
+	}
+
+	public String getValue() {
+<span class="pc bpc" id="L218" title="2 of 8 branches missed.">		if (type == YamlLineType.KEY_AND_VALUE || type == YamlLineType.KEY_AND_FLOW_SEQUENCE</span>
+				|| type == YamlLineType.PLAIN_ELEMENT_LIST || type == YamlLineType.NO_KEY_ONLY_TEXT)
+<span class="fc" id="L220">			return value;</span>
+<span class="nc" id="L221">		throw new IllegalStateException(type.name());</span>
+	}
+
+	public boolean isListItem() {
+<span class="fc" id="L225">		return listItem;</span>
+	}
+
+	public YamlLineType getType() {
+<span class="fc" id="L229">		return type;</span>
+	}
+
+	public List&lt;String&gt; getValues() {
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (type == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
+<span class="fc" id="L234">			return Collections.unmodifiableList(values);</span>
+<span class="nc" id="L235">		throw new IllegalStateException(type.name());</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L240">		return &quot;YamlLine(&quot; + type + &quot; indent=&quot; + indent + &quot;, key=&quot; + key + &quot;, value=&quot; + value + &quot;)&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

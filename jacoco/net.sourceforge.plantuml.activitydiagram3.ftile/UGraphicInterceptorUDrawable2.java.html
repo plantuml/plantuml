@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicInterceptorUDrawable2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">UGraphicInterceptorUDrawable2.java</span></div><h1>UGraphicInterceptorUDrawable2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import java.util.Map;
+
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.svek.UGraphicForSnake;
+
+public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
+
+	private final Map&lt;String, UTranslate&gt; positions;
+
+	public UGraphicInterceptorUDrawable2(UGraphic ug, Map&lt;String, UTranslate&gt; positions) {
+<span class="fc" id="L59">		super(ug);</span>
+<span class="fc" id="L60">		this.positions = positions;</span>
+<span class="fc" id="L61">	}</span>
+
+	public void draw(UShape shape) {
+		// :: comment when __CORE__
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (shape instanceof Gtile) {</span>
+<span class="nc" id="L66">			final Gtile gtile = (Gtile) shape;</span>
+			// System.err.println(&quot;gtile=&quot; + gtile);
+<span class="nc" id="L68">			gtile.drawU(this);</span>
+<span class="nc" id="L69">		} else</span>
+		// :: done
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (shape instanceof Ftile) {</span>
+<span class="fc" id="L72">			final Ftile ftile = (Ftile) shape;</span>
+			// System.err.println(&quot;ftile=&quot; + ftile);
+<span class="fc" id="L74">			ftile.drawU(this);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (ftile instanceof FtileLabel) {</span>
+<span class="nc" id="L76">				positions.put(((FtileLabel) ftile).getName(), getPosition());</span>
+				// System.err.println(&quot;ug=&quot; + getUg().getClass());
+			}
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			if (ftile instanceof FtileGoto) {</span>
+				// System.err.println(&quot;positions=&quot; + positions);
+<span class="nc" id="L81">				drawGoto((FtileGoto) ftile);</span>
+			}
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		} else if (shape instanceof UDrawable) {</span>
+<span class="fc" id="L84">			final UDrawable drawable = (UDrawable) shape;</span>
+<span class="fc" id="L85">			drawable.drawU(this);</span>
+<span class="fc" id="L86">		} else {</span>
+<span class="fc" id="L87">			getUg().draw(shape);</span>
+		}
+
+<span class="fc" id="L90">	}</span>
+
+	private UTranslate getPosition() {
+<span class="nc" id="L93">		return ((UGraphicForSnake) getUg()).getTranslation();</span>
+	}
+
+	private void drawGoto(FtileGoto ftile) {
+<span class="nc" id="L97">		final HColor gotoColor = HColors.MY_RED;</span>
+
+<span class="nc" id="L99">		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());</span>
+<span class="nc" id="L100">		final XPoint2D pt = geom.getPointIn();</span>
+<span class="nc" id="L101">		UGraphic ugGoto = getUg().apply(gotoColor).apply(gotoColor.bg());</span>
+<span class="nc" id="L102">		ugGoto = ugGoto.apply(UTranslate.point(pt));</span>
+<span class="nc" id="L103">		final UTranslate posNow = getPosition();</span>
+<span class="nc" id="L104">		final UTranslate dest = positions.get(ftile.getName());</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (dest == null)</span>
+<span class="nc" id="L106">			return;</span>
+<span class="nc" id="L107">		final double dx = dest.getDx() - posNow.getDx();</span>
+<span class="nc" id="L108">		final double dy = dest.getDy() - posNow.getDy();</span>
+<span class="nc" id="L109">		ugGoto.draw(UEllipse.build(3, 3));</span>
+<span class="nc" id="L110">		ugGoto.apply(new UTranslate(dx, dy)).draw(UEllipse.build(3, 3));</span>
+<span class="nc" id="L111">		ugGoto.draw(ULine.hline(dx));</span>
+<span class="nc" id="L112">		ugGoto.apply(UTranslate.dx(dx)).draw(ULine.vline(dy));</span>
+		// ugGoto.draw(new ULine(dx, dy));
+<span class="nc" id="L114">	}</span>
+
+	public UGraphic apply(UChange change) {
+<span class="fc" id="L117">		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

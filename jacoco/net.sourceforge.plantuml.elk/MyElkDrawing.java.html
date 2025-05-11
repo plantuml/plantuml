@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyElkDrawing.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.elk</a> &gt; <span class="el_source">MyElkDrawing.java</span></div><h1>MyElkDrawing.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.elk;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.abel.CucaNote;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.decoration.symbol.USymbolFolder;
+import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
+import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.Bibliotekon;
+import net.sourceforge.plantuml.svek.ClusterManager;
+import net.sourceforge.plantuml.svek.GeneralImageBuilder;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.IEntityImageUtils;
+import net.sourceforge.plantuml.svek.SvekNode;
+import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+import net.sourceforge.plantuml.utils.Position;
+
+// The Drawing class does the real drawing
+class MyElkDrawing extends AbstractTextBlock {
+
+	// min and max of all coord
+	private final MinMax minMax;
+
+	private final CucaDiagram diagram;
+
+	private final Map&lt;Entity, ElkNode&gt; clusters;
+	private final Map&lt;Link, ElkEdge&gt; edges;
+	private final Map&lt;Entity, ElkNode&gt; nodes;
+
+	private final ClusterManager clusterManager;
+
+	public MyElkDrawing(ClusterManager clusterManager, CucaDiagram diagram, MinMax minMax,
+<span class="nc" id="L100">			Map&lt;Entity, ElkNode&gt; clusters, Map&lt;Link, ElkEdge&gt; edges, Map&lt;Entity, ElkNode&gt; nodes) {</span>
+<span class="nc" id="L101">		this.clusterManager = clusterManager;</span>
+<span class="nc" id="L102">		this.minMax = minMax;</span>
+<span class="nc" id="L103">		this.diagram = diagram;</span>
+<span class="nc" id="L104">		this.clusters = clusters;</span>
+<span class="nc" id="L105">		this.edges = edges;</span>
+<span class="nc" id="L106">		this.nodes = nodes;</span>
+<span class="nc" id="L107">	}</span>
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L110">		final Map&lt;Entity, MyElkCluster&gt; clusters = drawAllClusters(ug);</span>
+<span class="nc" id="L111">		final Map&lt;Entity, IEntityImage&gt; nodes = drawAllNodes(ug);</span>
+<span class="nc" id="L112">		drawAllEdges(ug, clusters, nodes);</span>
+<span class="nc" id="L113">	}</span>
+
+	private Map&lt;Entity, MyElkCluster&gt; drawAllClusters(UGraphic ug) {
+<span class="nc" id="L116">		final Map&lt;Entity, MyElkCluster&gt; elkClusters = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (Entry&lt;Entity, ElkNode&gt; ent : clusters.entrySet()) {</span>
+<span class="nc" id="L118">			final Entity entity = ent.getKey();</span>
+<span class="nc" id="L119">			final MyElkCluster elkCluster = new MyElkCluster(diagram, entity, ent.getValue());</span>
+<span class="nc" id="L120">			elkCluster.drawSingleCluster(ug);</span>
+<span class="nc" id="L121">			elkClusters.put(entity, elkCluster);</span>
+<span class="nc" id="L122">		}</span>
+<span class="nc" id="L123">		return elkClusters;</span>
+
+	}
+
+	private Map&lt;Entity, IEntityImage&gt; drawAllNodes(UGraphic ug) {
+<span class="nc" id="L128">		final Map&lt;Entity, IEntityImage&gt; elkNodes = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (Entry&lt;Entity, ElkNode&gt; ent : nodes.entrySet()) {</span>
+<span class="nc" id="L130">			final Entity entity = ent.getKey();</span>
+			// Retrieve coord from ELK
+<span class="nc" id="L132">			final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(ent.getValue());</span>
+<span class="nc" id="L133">			final SvekNode svekNode = clusterManager.getBibliotekon().getNode(entity);</span>
+<span class="nc" id="L134">			svekNode.resetMove();</span>
+<span class="nc" id="L135">			svekNode.moveDelta(corner.x, corner.y);</span>
+
+<span class="nc" id="L137">			final IEntityImage image = IEntityImageUtils.translate(printEntityInternal(entity),</span>
+<span class="nc" id="L138">					UTranslate.point(corner));</span>
+
+			// Print the node image at right coord
+<span class="nc" id="L141">			image.drawU(ug);</span>
+
+<span class="nc" id="L143">			elkNodes.put(entity, image);</span>
+<span class="nc" id="L144">		}</span>
+<span class="nc" id="L145">		return elkNodes;</span>
+
+	}
+
+	private void drawAllEdges(UGraphic ug, Map&lt;Entity, MyElkCluster&gt; elkClusters,
+			Map&lt;Entity, IEntityImage&gt; nodeImages) {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (Entry&lt;Link, ElkEdge&gt; ent : edges.entrySet()) {</span>
+<span class="nc" id="L152">			final Link link = ent.getKey();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			if (link.isInvis())</span>
+<span class="nc" id="L154">				continue;</span>
+
+<span class="nc" id="L156">			drawSingleEdge(ug, link, ent.getValue(), elkClusters, nodeImages);</span>
+<span class="nc" id="L157">		}</span>
+<span class="nc" id="L158">	}</span>
+
+	private IEntityImage printEntityInternal(Entity ent) {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="nc" id="L162">			throw new IllegalStateException();</span>
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (ent.getSvekImage() == null) {</span>
+<span class="nc" id="L165">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (skinParam.sameClassWidth())</span>
+<span class="nc" id="L167">				System.err.println(&quot;NOT YET IMPLEMENED&quot;);</span>
+
+<span class="nc" id="L169">			return GeneralImageBuilder.createEntityImageBlock(ent, diagram.isHideEmptyDescriptionForState(), diagram,</span>
+<span class="nc" id="L170">					getBibliotekon(), null, diagram.getLinks());</span>
+		}
+<span class="nc" id="L172">		return ent.getSvekImage();</span>
+	}
+
+	private Bibliotekon getBibliotekon() {
+<span class="nc" id="L176">		return clusterManager.getBibliotekon();</span>
+	}
+
+	private void drawSingleEdge(UGraphic ug, Link link, ElkEdge edge, Map&lt;Entity, MyElkCluster&gt; elkClusters,
+			Map&lt;Entity, IEntityImage&gt; nodeImages) {
+		// Unfortunately, we have to translate &quot;edge&quot; in its own &quot;cluster&quot; coordinate
+<span class="nc" id="L182">		final XPoint2D translate = CucaDiagramFileMakerElk.getPosition(edge.getContainingNode());</span>
+
+<span class="nc" id="L184">		final double magicY2 = 0;</span>
+<span class="nc" id="L185">		final Entity dest = link.getEntity2();</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (dest.getUSymbol() instanceof USymbolFolder) {</span>
+//				System.err.println(&quot;dest=&quot; + dest);
+//				final IEntityImage image = printEntityInternal((ILeaf) dest);
+//				System.err.println(&quot;image=&quot; + image);
+
+		}
+<span class="nc" id="L192">		final TextBlock label = getLabel(ug.getStringBounder(), link);</span>
+<span class="nc" id="L193">		final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);</span>
+<span class="nc" id="L194">		final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);</span>
+<span class="nc" id="L195">		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, quantifier1,</span>
+<span class="nc" id="L196">				quantifier2, magicY2, elkClusters, UTranslate.point(translate), nodeImages);</span>
+<span class="nc" id="L197">		elkPath.drawU(ug);</span>
+<span class="nc" id="L198">	}</span>
+
+	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
+<span class="nc" id="L201">		final SName styleName = skinParam.getUmlDiagramType().getStyleName();</span>
+
+<span class="nc" id="L203">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
+<span class="nc" id="L204">				.getMergedStyle(link.getStyleBuilder());</span>
+<span class="nc" id="L205">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+	}
+
+	// Duplication from SvekEdge
+	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+<span class="nc" id="L210">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L212">			result = result.withTOBECHANGED(stereotype);</span>
+
+<span class="nc" id="L214">		return result;</span>
+	}
+
+	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.STATE)</span>
+<span class="nc" id="L219">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
+
+<span class="nc" id="L221">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
+	}
+
+	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
+<span class="nc" id="L225">		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (visibilityModifier != null) {</span>
+<span class="nc" id="L227">			final Rose rose = new Rose();</span>
+<span class="nc" id="L228">			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
+<span class="nc" id="L229">			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
+<span class="nc" id="L230">			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);</span>
+<span class="nc" id="L231">			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);</span>
+		}
+<span class="nc" id="L233">		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;</span>
+<span class="nc" id="L234">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
+	}
+
+	private TextBlock getLabel(StringBounder stringBounder, Link link) {
+<span class="nc" id="L238">		ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L239">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
+
+		// final FontConfiguration labelFont =
+		// style.getFontConfiguration(skinParam.getIHtmlColorSet());
+//		TextBlock labelOnly = link.getLabel().create(labelFont,
+//				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+
+<span class="nc" id="L246">		final UmlDiagramType type = skinParam.getUmlDiagramType();</span>
+<span class="nc" id="L247">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
+
+		TextBlock labelOnly;
+		// toto2
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (Display.isNull(link.getLabel())) {</span>
+<span class="nc" id="L252">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+//			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL) {
+//				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
+//			}
+
+		} else {
+<span class="nc" id="L258">			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);</span>
+<span class="nc" id="L259">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
+			final TextBlock block;
+			// if (hasSeveralGuideLines)
+			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
+			// alignment, skinParam);
+			// else
+<span class="nc" id="L265">			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),</span>
+					CreoleMode.SIMPLE_LINE, null, null);
+
+<span class="nc" id="L268">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
+//			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {
+//				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
+//			}
+
+		}
+
+<span class="nc" id="L275">		final CucaNote note = link.getNote();</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		if (note == null) {</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)</span>
+<span class="nc" id="L278">				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);</span>
+<span class="nc" id="L279">			return labelOnly;</span>
+		}
+<span class="nc" id="L281">		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
+<span class="nc" id="L282">				link.getStyleBuilder());</span>
+
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		if (note.getPosition() == Position.LEFT)</span>
+<span class="nc" id="L285">			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		else if (note.getPosition() == Position.RIGHT)</span>
+<span class="nc" id="L287">			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		else if (note.getPosition() == Position.TOP)</span>
+<span class="nc" id="L289">			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);</span>
+		else
+<span class="nc" id="L291">			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);</span>
+
+	}
+
+	@DuplicateCode(reference = &quot;CucaDiagramFile&quot;)
+	private TextBlock getQuantifier(StringBounder stringBounder, Link link, int n) {
+<span class="nc bnc" id="L297" title="All 2 branches missed.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L299">			return null;</span>
+
+<span class="nc" id="L301">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L302">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
+<span class="nc" id="L303">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
+<span class="nc" id="L304">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L306">			return null;</span>
+
+<span class="nc" id="L308">		return label;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (minMax == null)</span>
+<span class="nc" id="L313">			throw new UnsupportedOperationException();</span>
+
+<span class="nc" id="L315">		return minMax.getDimension();</span>
+	}
+
+	public HColor getBackcolor() {
+<span class="nc" id="L319">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

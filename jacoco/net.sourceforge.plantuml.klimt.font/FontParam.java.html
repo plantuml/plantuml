@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FontParam.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.font</a> &gt; <span class="el_source">FontParam.java</span></div><h1>FontParam.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.klimt.font;
+
+import java.awt.Font;
+
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+// ::remove file when __HAXE__
+
+interface FontParamConstant {
+	String FAMILY = &quot;SansSerif&quot;;
+	String COLOR = &quot;black&quot;;
+}
+
+<span class="fc" id="L52">public enum FontParam {</span>
+<span class="fc" id="L53">	TIMING(12, Font.PLAIN), //</span>
+<span class="fc" id="L54">	ACTIVITY(12, Font.PLAIN), //</span>
+<span class="fc" id="L55">	ACTIVITY_DIAMOND(11, Font.PLAIN), //</span>
+	// ACTIVITY_ARROW(11, Font.PLAIN), //
+	// GENERIC_ARROW(13, Font.PLAIN), //
+<span class="fc" id="L58">	ARROW(13, Font.PLAIN), //</span>
+<span class="fc" id="L59">	CIRCLED_CHARACTER(17, Font.BOLD, FontParamConstant.COLOR, &quot;Monospaced&quot;), //</span>
+<span class="fc" id="L60">	OBJECT_ATTRIBUTE(10, Font.PLAIN), //</span>
+<span class="fc" id="L61">	OBJECT(12, Font.PLAIN), //</span>
+<span class="fc" id="L62">	OBJECT_STEREOTYPE(12, Font.ITALIC), //</span>
+<span class="fc" id="L63">	CLASS_ATTRIBUTE(10, Font.PLAIN), //</span>
+<span class="fc" id="L64">	CLASS(12, Font.PLAIN), //</span>
+<span class="fc" id="L65">	CLASS_STEREOTYPE(12, Font.ITALIC), //</span>
+<span class="fc" id="L66">	COMPONENT(14, Font.PLAIN), //</span>
+<span class="fc" id="L67">	INTERFACE(14, Font.PLAIN), //</span>
+<span class="fc" id="L68">	INTERFACE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L69">	COMPONENT_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L70">	NOTE(13, Font.PLAIN), //</span>
+<span class="fc" id="L71">	PACKAGE(14, Font.PLAIN), //</span>
+<span class="fc" id="L72">	PACKAGE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L73">	ACTOR(14, Font.PLAIN), //</span>
+<span class="fc" id="L74">	ARTIFACT(14, Font.PLAIN), //</span>
+<span class="fc" id="L75">	CLOUD(14, Font.PLAIN), //</span>
+<span class="fc" id="L76">	FOLDER(14, Font.PLAIN), //</span>
+<span class="fc" id="L77">	FILE(14, Font.PLAIN), //</span>
+<span class="fc" id="L78">	FRAME(14, Font.PLAIN), //</span>
+<span class="fc" id="L79">	STORAGE(14, Font.PLAIN), //</span>
+<span class="fc" id="L80">	BOUNDARY(14, Font.PLAIN), //</span>
+<span class="fc" id="L81">	CONTROL(14, Font.PLAIN), //</span>
+<span class="fc" id="L82">	ENTITY(14, Font.PLAIN), //</span>
+<span class="fc" id="L83">	AGENT(14, Font.PLAIN), //</span>
+<span class="fc" id="L84">	RECTANGLE(14, Font.PLAIN), //</span>
+<span class="fc" id="L85">	LABEL(14, Font.PLAIN), //</span>
+<span class="fc" id="L86">	HEXAGON(14, Font.PLAIN), //</span>
+<span class="fc" id="L87">	PERSON(14, Font.PLAIN), //</span>
+<span class="fc" id="L88">	ARCHIMATE(14, Font.PLAIN), //</span>
+<span class="fc" id="L89">	CARD(14, Font.PLAIN), //</span>
+<span class="fc" id="L90">	NODE(14, Font.PLAIN), //</span>
+<span class="fc" id="L91">	DATABASE(14, Font.PLAIN), //</span>
+<span class="fc" id="L92">	QUEUE(14, Font.PLAIN), //</span>
+<span class="fc" id="L93">	STACK(14, Font.PLAIN), //</span>
+	// SEQUENCE_ARROW(13, Font.PLAIN), //
+<span class="fc" id="L95">	SEQUENCE_BOX(13, Font.BOLD), //</span>
+<span class="fc" id="L96">	SEQUENCE_DIVIDER(13, Font.BOLD), //</span>
+<span class="fc" id="L97">	SEQUENCE_REFERENCE(13, Font.PLAIN), //</span>
+<span class="fc" id="L98">	SEQUENCE_DELAY(11, Font.PLAIN), //</span>
+<span class="fc" id="L99">	SEQUENCE_GROUP(11, Font.BOLD), //</span>
+<span class="fc" id="L100">	SEQUENCE_GROUP_HEADER(13, Font.BOLD), //</span>
+<span class="fc" id="L101">	PARTICIPANT(14, Font.PLAIN), //</span>
+<span class="fc" id="L102">	PARTICIPANT_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L103">	STATE(14, Font.PLAIN), //</span>
+<span class="fc" id="L104">	STATE_ATTRIBUTE(12, Font.PLAIN), //</span>
+<span class="fc" id="L105">	LEGEND(14, Font.PLAIN), //</span>
+<span class="fc" id="L106">	TITLE(18, Font.PLAIN), //</span>
+	// SEQUENCE_TITLE(14, Font.BOLD), //
+<span class="fc" id="L108">	CAPTION(14, Font.PLAIN), //</span>
+<span class="fc" id="L109">	SWIMLANE_TITLE(18, Font.PLAIN), //</span>
+<span class="fc" id="L110">	FOOTER(10, Font.PLAIN, &quot;#888888&quot;, FontParamConstant.FAMILY), //</span>
+<span class="fc" id="L111">	HEADER(10, Font.PLAIN, &quot;#888888&quot;, FontParamConstant.FAMILY), //</span>
+<span class="fc" id="L112">	USECASE(14, Font.PLAIN), //</span>
+<span class="fc" id="L113">	USECASE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L114">	ARTIFACT_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L115">	CLOUD_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L116">	STORAGE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L117">	BOUNDARY_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L118">	CONTROL_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L119">	ENTITY_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L120">	AGENT_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L121">	RECTANGLE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L122">	LABEL_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L123">	PERSON_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L124">	HEXAGON_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L125">	ARCHIMATE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L126">	CARD_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L127">	NODE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L128">	FOLDER_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L129">	FILE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L130">	FRAME_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L131">	DATABASE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L132">	QUEUE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L133">	STACK_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L134">	ACTOR_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L135">	SEQUENCE_STEREOTYPE(14, Font.ITALIC), //</span>
+<span class="fc" id="L136">	PARTITION(14, Font.PLAIN), DESIGNED_DOMAIN(12, Font.PLAIN), //</span>
+<span class="fc" id="L137">	DESIGNED_DOMAIN_STEREOTYPE(12, Font.ITALIC), //</span>
+<span class="fc" id="L138">	DOMAIN(12, Font.PLAIN), //</span>
+<span class="fc" id="L139">	DOMAIN_STEREOTYPE(12, Font.ITALIC), //</span>
+<span class="fc" id="L140">	MACHINE(12, Font.PLAIN), //</span>
+<span class="fc" id="L141">	MACHINE_STEREOTYPE(12, Font.ITALIC), //</span>
+<span class="fc" id="L142">	REQUIREMENT(12, Font.PLAIN), //</span>
+<span class="fc" id="L143">	REQUIREMENT_STEREOTYPE(12, Font.ITALIC); //</span>
+
+	private final int defaultSize;
+	private final int fontStyle;
+	private final String defaultColor;
+	private final String defaultFamily;
+
+<span class="fc" id="L150">	private FontParam(int defaultSize, int fontStyle, String defaultColor, String defaultFamily) {</span>
+<span class="fc" id="L151">		this.defaultSize = defaultSize;</span>
+<span class="fc" id="L152">		this.fontStyle = fontStyle;</span>
+<span class="fc" id="L153">		this.defaultColor = defaultColor;</span>
+<span class="fc" id="L154">		this.defaultFamily = defaultFamily;</span>
+<span class="fc" id="L155">	}</span>
+
+	private FontParam(int defaultSize, int fontStyle) {
+<span class="fc" id="L158">		this(defaultSize, fontStyle, FontParamConstant.COLOR, FontParamConstant.FAMILY);</span>
+<span class="fc" id="L159">	}</span>
+
+	public final int getDefaultSize(ISkinParam skinParam) {
+<span class="pc bpc" id="L162" title="3 of 4 branches missed.">		if (this == ARROW &amp;&amp; skinParam.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {</span>
+<span class="nc" id="L163">			return 11;</span>
+		}
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (this == CLASS_ATTRIBUTE) {</span>
+<span class="nc" id="L166">			return 11;</span>
+		}
+<span class="fc" id="L168">		return defaultSize;</span>
+	}
+
+	public final int getDefaultFontStyle(ISkinParam skinParam, boolean inPackageTitle) {
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (this == STATE) {</span>
+<span class="nc" id="L173">			return fontStyle;</span>
+		}
+<span class="pc bpc" id="L175" title="2 of 4 branches missed.">		if (inPackageTitle || this == PACKAGE) {</span>
+<span class="nc" id="L176">			return Font.BOLD;</span>
+		}
+<span class="fc" id="L178">		return fontStyle;</span>
+	}
+
+	public final String getDefaultColor() {
+<span class="fc" id="L182">		return defaultColor;</span>
+	}
+
+	public String getDefaultFamily() {
+<span class="fc" id="L186">		return defaultFamily;</span>
+	}
+
+	public FontConfiguration getFontConfiguration(ISkinParam skinParam) {
+<span class="nc" id="L190">		return FontConfiguration.create(skinParam, this, null);</span>
+	}
+
+	public StyleSignatureBasic getStyleDefinition(SName diagramType) {
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (this == FOOTER) {</span>
+<span class="fc" id="L195">			return StyleSignatureBasic.of(SName.root, SName.document, SName.footer);</span>
+		}
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (this == HEADER) {</span>
+<span class="fc" id="L198">			return StyleSignatureBasic.of(SName.root, SName.document, SName.header);</span>
+		}
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (this == TITLE) {</span>
+<span class="fc" id="L201">			return StyleSignatureBasic.of(SName.root, SName.document, SName.title);</span>
+		}
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (this == CLASS_ATTRIBUTE) {</span>
+<span class="nc" id="L204">			return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_);</span>
+		}
+<span class="nc bnc" id="L206" title="All 4 branches missed.">		if (this == RECTANGLE || this == NODE) {</span>
+<span class="nc" id="L207">			return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.component);</span>
+		}
+<span class="nc" id="L209">		return StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.component);</span>
+//		System.err.println(&quot;Warning &quot; + this);
+//		throw new UnsupportedOperationException();
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

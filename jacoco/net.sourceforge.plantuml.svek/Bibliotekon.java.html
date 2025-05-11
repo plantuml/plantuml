@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Bibliotekon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">Bibliotekon.java</span></div><h1>Bibliotekon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+
+public class Bibliotekon {
+
+<span class="fc" id="L52">	private final List&lt;Cluster&gt; allCluster = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L54">	private final Map&lt;Entity, SvekNode&gt; nodeMap = new LinkedHashMap&lt;Entity, SvekNode&gt;();</span>
+
+<span class="fc" id="L56">	private final List&lt;SvekEdge&gt; lines0 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">	private final List&lt;SvekEdge&gt; lines1 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">	private final List&lt;SvekEdge&gt; allLines = new ArrayList&lt;&gt;();</span>
+
+	private final Collection&lt;Link&gt; links;
+	private final ColorSequence colorSequence;
+
+<span class="fc" id="L63">	public Bibliotekon(Collection&lt;Link&gt; links) {</span>
+<span class="fc" id="L64">		this.links = links;</span>
+<span class="fc" id="L65">		this.colorSequence = new ColorSequence();</span>
+<span class="fc" id="L66">	}</span>
+
+	public ColorSequence getColorSequence() {
+<span class="fc" id="L69">		return colorSequence;</span>
+	}
+
+	public SvekNode createNode(Entity ent, IEntityImage image, StringBounder stringBounder) {
+<span class="fc" id="L73">		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);</span>
+<span class="fc" id="L74">		nodeMap.put(ent, node);</span>
+		// System.err.println(&quot;createNode &quot; + ent + &quot; &quot; + nodeMap.size());
+<span class="fc" id="L76">		return node;</span>
+	}
+
+	public Cluster getCluster(Entity ent) {
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		for (Cluster cl : allCluster)</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (cl.getGroups().contains(ent))</span>
+<span class="fc" id="L82">				return cl;</span>
+
+<span class="nc" id="L84">		return null;</span>
+	}
+
+	public void addLine(SvekEdge line) {
+<span class="nc" id="L88">		allLines.add(line);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (first(line)) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (line.hasNoteLabelText()) {</span>
+				// lines0.add(0, line);
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				for (int i = 0; i &lt; lines0.size(); i++) {</span>
+<span class="nc" id="L93">					final SvekEdge other = lines0.get(i);</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">					if (other.hasNoteLabelText() == false &amp;&amp; line.sameConnections(other)) {</span>
+<span class="nc" id="L95">						lines0.add(i, line);</span>
+<span class="nc" id="L96">						return;</span>
+					}
+				}
+<span class="nc" id="L99">				lines0.add(line);</span>
+			} else {
+<span class="nc" id="L101">				lines0.add(line);</span>
+			}
+		} else {
+<span class="nc" id="L104">			lines1.add(line);</span>
+		}
+<span class="nc" id="L106">	}</span>
+
+	private static boolean first(SvekEdge line) {
+<span class="nc" id="L109">		final int length = line.getLength();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (length == 1)</span>
+<span class="nc" id="L111">			return true;</span>
+
+<span class="nc" id="L113">		return false;</span>
+	}
+
+	public void addCluster(Cluster current) {
+<span class="fc" id="L117">		allCluster.add(current);</span>
+<span class="fc" id="L118">	}</span>
+
+	public SvekNode getNode(Entity ent) {
+<span class="fc" id="L121">		return nodeMap.get(ent);</span>
+	}
+
+	public String getNodeUid(Entity ent) {
+		// System.err.println(&quot;Getting for &quot; + ent);
+<span class="nc" id="L126">		final SvekNode result = getNode(ent);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (result != null) {</span>
+<span class="nc" id="L128">			String uid = result.getUid();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (result.isShielded())</span>
+<span class="nc" id="L130">				uid = uid + &quot;:h&quot;;</span>
+
+<span class="nc" id="L132">			return uid;</span>
+		}
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (ent.isGroup())</span>
+<span class="nc" id="L135">			return Cluster.getSpecialPointId(ent);</span>
+
+<span class="nc" id="L137">		throw new IllegalStateException();</span>
+	}
+
+	public String getWarningOrError(int warningOrError) {
+<span class="nc" id="L141">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (Map.Entry&lt;Entity, SvekNode&gt; ent : nodeMap.entrySet()) {</span>
+<span class="nc" id="L143">			final SvekNode sh = ent.getValue();</span>
+<span class="nc" id="L144">			final double maxX = sh.getMinX() + sh.getWidth();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (maxX &gt; warningOrError) {</span>
+<span class="nc" id="L146">				final Entity entity = ent.getKey();</span>
+<span class="nc" id="L147">				sb.append(entity.getName() + &quot; is overpassing the width limit.&quot;);</span>
+<span class="nc" id="L148">				sb.append(&quot;\n&quot;);</span>
+			}
+
+<span class="nc" id="L151">		}</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		return sb.length() == 0 ? &quot;&quot; : sb.toString();</span>
+	}
+
+	public Map&lt;String, Double&gt; getMaxX() {
+<span class="nc" id="L156">		final Map&lt;String, Double&gt; result = new HashMap&lt;String, Double&gt;();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		for (Map.Entry&lt;Entity, SvekNode&gt; ent : nodeMap.entrySet()) {</span>
+<span class="nc" id="L158">			final SvekNode sh = ent.getValue();</span>
+<span class="nc" id="L159">			final double maxX = sh.getMinX() + sh.getWidth();</span>
+<span class="nc" id="L160">			final Entity entity = ent.getKey();</span>
+<span class="nc" id="L161">			result.put(entity.getName(), maxX);</span>
+<span class="nc" id="L162">		}</span>
+<span class="nc" id="L163">		return Collections.unmodifiableMap(result);</span>
+	}
+
+	public List&lt;SvekEdge&gt; allLines() {
+<span class="nc" id="L167">		return Collections.unmodifiableList(allLines);</span>
+	}
+
+	public List&lt;SvekEdge&gt; lines0() {
+<span class="nc" id="L171">		return Collections.unmodifiableList(lines0);</span>
+	}
+
+	public List&lt;SvekEdge&gt; lines1() {
+<span class="nc" id="L175">		return Collections.unmodifiableList(lines1);</span>
+	}
+
+	public List&lt;Cluster&gt; allCluster() {
+<span class="nc" id="L179">		return Collections.unmodifiableList(allCluster);</span>
+	}
+
+	public Collection&lt;SvekNode&gt; allNodes() {
+<span class="nc" id="L183">		return Collections.unmodifiableCollection(nodeMap.values());</span>
+	}
+
+	public List&lt;SvekEdge&gt; getAllLineConnectedTo(Entity leaf) {
+<span class="nc" id="L187">		final List&lt;SvekEdge&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		for (SvekEdge line : allLines)</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			if (line.isLinkFromOrTo(leaf))</span>
+<span class="nc" id="L190">				result.add(line);</span>
+
+<span class="nc" id="L192">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public SvekEdge getLine(Link link) {
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (SvekEdge line : allLines)</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			if (line.isLink(link))</span>
+<span class="nc" id="L198">				return line;</span>
+
+<span class="nc" id="L200">		throw new IllegalArgumentException();</span>
+	}
+
+	public Entity getOnlyOther(Entity entity) {
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (Link link : links)</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			if (link.contains(entity)) {</span>
+<span class="nc" id="L206">				final Entity other = link.getOther(entity);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">				if (other != null)</span>
+<span class="nc" id="L208">					return other;</span>
+
+			}
+<span class="nc" id="L211">		return null;</span>
+	}
+
+	public Entity getLeaf(SvekNode node) {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		for (Map.Entry&lt;Entity, SvekNode&gt; ent : nodeMap.entrySet())</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">			if (ent.getValue() == node)</span>
+<span class="nc" id="L217">				return ent.getKey();</span>
+
+<span class="nc" id="L219">		throw new IllegalArgumentException();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

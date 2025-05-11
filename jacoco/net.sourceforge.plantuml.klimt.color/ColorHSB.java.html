@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColorHSB.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">ColorHSB.java</span></div><h1>ColorHSB.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.color;
+
+import java.awt.Color;
+import java.util.Locale;
+
+/**
+ * {@link Color} with hue, saturation and brightness.
+ */
+public class ColorHSB extends Color {
+	// ::remove file when __HAXE__
+	private final float hue;
+	private final float saturation;
+	private final float brightness;
+
+	public ColorHSB(int rgba) {
+<span class="fc" id="L16">		super(rgba, true);</span>
+<span class="fc" id="L17">		final float[] hsb = Color.RGBtoHSB(getRed(), getGreen(), getBlue(), null);</span>
+<span class="fc" id="L18">		hue = hsb[0];</span>
+<span class="fc" id="L19">		saturation = hsb[1];</span>
+<span class="fc" id="L20">		brightness = hsb[2];</span>
+<span class="fc" id="L21">	}</span>
+
+	public ColorHSB(Color other) {
+<span class="nc" id="L24">		this(other.getRGB());</span>
+<span class="nc" id="L25">	}</span>
+
+	public float getHue() {
+<span class="fc" id="L28">		return hue;</span>
+	}
+
+	public float getSaturation() {
+<span class="fc" id="L32">		return saturation;</span>
+	}
+
+	public float getBrightness() {
+<span class="fc" id="L36">		return brightness;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L41">		return String.format(Locale.US, &quot;%s[a=%02X r=%02X g=%02X b=%02X / h=%f s=%f b=%f]&quot;, getClass().getSimpleName(),</span>
+<span class="fc" id="L42">				getAlpha(), getRed(), getGreen(), getBlue(), getHue(), getSaturation(), getBrightness());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

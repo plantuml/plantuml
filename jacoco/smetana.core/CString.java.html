@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">smetana.core</a> &gt; <span class="el_source">CString.java</span></div><h1>CString.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ *
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ *
+ * You may obtain a copy of the License at
+ *
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package smetana.core;
+
+import h.ST_refstr_t;
+
+final public class CString extends UnsupportedC implements __ptr__ {
+
+<span class="fc" id="L43">	private static int UID = 100;</span>
+
+	// private final Throwable creation = new Throwable();
+	private final StringBuilder data;
+	private final int currentStart;
+
+	private final int uid;
+
+	public boolean isSameThan(CString other) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (this.data != other.data) {</span>
+<span class="nc" id="L53">			throw new UnsupportedOperationException();</span>
+		}
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		return this.currentStart == other.currentStart;</span>
+
+	}
+
+	public CString(String string) {
+<span class="fc" id="L60">		this(null, 0);</span>
+<span class="fc" id="L61">		this.data.append(string);</span>
+<span class="fc" id="L62">		this.data.append('\0');</span>
+<span class="fc" id="L63">	}</span>
+
+	public CString duplicate() {
+
+		// return new CString(new ArrayList&lt;&gt;(this.data2), currentStart);
+<span class="fc" id="L68">		return new CString(new StringBuilder(this.data.toString()), currentStart);</span>
+
+	}
+
+	public CString strdup() {
+<span class="fc" id="L73">		return duplicate();</span>
+	}
+
+	public static CString gmalloc(int nbytes) {
+<span class="fc" id="L77">		return new CString(nbytes);</span>
+	}
+
+	public CString(int size) {
+<span class="fc" id="L81">		this(null, 0);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++)</span>
+<span class="fc" id="L83">			data.append('\0');</span>
+
+<span class="fc" id="L85">	}</span>
+
+<span class="fc" id="L87">	private CString(StringBuilder data, int currentStart) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (data == null)</span>
+<span class="fc" id="L89">			this.data = new StringBuilder();</span>
+		else
+<span class="fc" id="L91">			this.data = data;</span>
+<span class="fc" id="L92">		this.currentStart = currentStart;</span>
+<span class="fc" id="L93">		this.uid = UID;</span>
+<span class="fc" id="L94">		UID += 2;</span>
+<span class="fc" id="L95">	}</span>
+
+	public __ptr__ getTheField(FieldOffset bytes) {
+<span class="nc" id="L98">		JUtils.LOG(&quot;CString::addVirtualBytes &quot; + bytes);</span>
+<span class="nc" id="L99">		JUtils.LOG(&quot;AM &quot; + this);</span>
+<span class="nc" id="L100">		throw new UnsupportedOperationException();</span>
+	}
+
+	private ST_refstr_t parent;
+
+	public ST_refstr_t getParent() {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (parent != null) {</span>
+<span class="fc" id="L107">			return parent;</span>
+		}
+<span class="nc" id="L109">		throw new UnsupportedOperationException();</span>
+	}
+
+	public void setParent(ST_refstr_t struct) {
+//		if (parent != null &amp;&amp; parent != struct) {
+//			throw new IllegalStateException();
+//		}
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (struct == null) {</span>
+<span class="nc" id="L117">			throw new IllegalStateException();</span>
+		}
+<span class="fc" id="L119">		this.parent = struct;</span>
+<span class="fc" id="L120">	}</span>
+
+	public CString plus_(int pointerMove) {
+<span class="fc" id="L123">		return new CString(data, currentStart + pointerMove);</span>
+	}
+
+	public int comparePointer(__ptr__ other) {
+<span class="fc" id="L127">		final CString this2 = (CString) other;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (this.data != this2.data)</span>
+<span class="nc" id="L129">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L131">		return this.currentStart - this2.currentStart;</span>
+	}
+
+	@Override
+	public String toString() {
+//		final StringBuilder sb = new StringBuilder();
+//		for (Character c : getData()) {
+//			if (c == '\0') {
+//				sb.append(&quot;(0)&quot;);
+//			} else {
+//				sb.append(c);
+//			}
+//		}
+<span class="fc" id="L144">		return &quot;CString:&quot; + getData2();</span>
+	}
+
+	private String getData2() {
+<span class="fc" id="L148">		return data.toString().substring(currentStart);</span>
+		// return data2.subList(currentStart, data2.size());
+	}
+
+	public String getContent() {
+<span class="fc" id="L153">		String res = getData2();</span>
+<span class="fc" id="L154">		int x = res.indexOf('\0');</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (x == -1)</span>
+<span class="nc" id="L156">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L157">		return res.substring(0, x);</span>
+//		return data.toString().substring(currentStart);
+//		final StringBuilder sb = new StringBuilder();
+//		for (Character c : getData()) {
+//			if (c == '\0') {
+//				return sb.toString();
+//			} else {
+//				sb.append(c);
+//			}
+//		}
+//		throw new UnsupportedOperationException();
+	}
+
+	public char charAt(int i) {
+<span class="fc" id="L171">		return data.charAt(currentStart + i);</span>
+//		if (i &gt;= getData().size()) {
+//			throw new UnsupportedOperationException();
+//			// return '\0';
+//		}
+//		return data2.get(currentStart + i);
+		// when i&lt;0
+		// return data2.subList(currentStart, data2.size()).get(i);
+	}
+
+	public char setCharAt(int i, char c) {
+<span class="fc" id="L182">		data.setCharAt(currentStart + i, c);</span>
+		// getData().set(i, c);
+<span class="fc" id="L184">		return c;</span>
+	}
+
+	public int length() {
+<span class="fc" id="L188">		int len = 0;</span>
+		while (true) {
+<span class="fc bfc" id="L190" title="All 2 branches covered.">			if (charAt(len) == '\0')</span>
+<span class="fc" id="L191">				return len;</span>
+<span class="fc" id="L192">			len++;</span>
+		}
+	}
+
+	public int strcmp(CString other) {
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		for (int i = 0; i &lt; data.length() - currentStart; i++) {</span>
+<span class="fc" id="L198">			final int diff = this.charAt(i) - other.charAt(i);</span>
+<span class="fc bfc" id="L199" title="All 4 branches covered.">			if (this.charAt(i) == '\0' || diff != 0)</span>
+<span class="fc" id="L200">				return diff;</span>
+
+		}
+<span class="nc" id="L203">		throw new IllegalStateException();</span>
+	}
+
+	public int strcmp(CString other, int num) {
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">		for (int i = 0; i &lt; data.length() - currentStart &amp;&amp; i &lt; num; i++) {</span>
+<span class="fc" id="L208">			final int diff = this.charAt(i) - other.charAt(i);</span>
+<span class="pc bpc" id="L209" title="1 of 4 branches missed.">			if (this.charAt(i) == '\0' || diff != 0)</span>
+<span class="fc" id="L210">				return diff;</span>
+
+		}
+<span class="fc" id="L213">		return 0;</span>
+	}
+
+	public void copyFrom(CString source, int nb) {
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">		for (int i = 0; i &lt; source.length() + 1 &amp;&amp; i &lt; nb; i++) {</span>
+<span class="fc" id="L218">			setCharAt(i, source.charAt(i));</span>
+		}
+<span class="fc" id="L220">	}</span>
+
+	public CString strchr(char c) {
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		for (int i = currentStart; i &lt; data.length(); i++)</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">			if (data.charAt(i) == c)</span>
+<span class="nc" id="L225">				return new CString(data, i);</span>
+
+<span class="fc" id="L227">		return null;</span>
+	}
+
+	public boolean isSame(CString other) {
+<span class="fc" id="L231">		return getContent().equals(other.getContent());</span>
+	}
+
+	public int getUid() {
+<span class="fc" id="L235">		return uid;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

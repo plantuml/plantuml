@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphicsPlotCanvas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit</a> &gt; <span class="el_source">GraphicsPlotCanvas.java</span></div><h1>GraphicsPlotCanvas.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+
+import jcckit.graphic.GraphicalElement;
+import jcckit.graphic.Renderer;
+import jcckit.plot.Plot;
+import jcckit.plot.PlotCanvas;
+import jcckit.renderer.Graphics2DRenderer;
+import jcckit.renderer.Transformation;
+import jcckit.util.ConfigParameters;
+import jcckit.util.Factory;
+
+/**
+ * Class which handles plotting into a &lt;tt&gt;Graphics&lt;/tt&gt; context based on the
+ * {link jcckit.renderer.GraphicsRenderer}. This class is not a subclass of
+ * &lt;tt&gt;java.awt.Component&lt;/tt&gt;. The actual AWT component presenting the plot
+ * is an innerclass. Its instance wrapped by &lt;tt&gt;GraphicsPlotCanvas&lt;/tt&gt; can
+ * be obtained with {link #getGraphicsCanvas}.
+ * &lt;p&gt;
+ * The plot is painted by using double-buffering and pre-rendered view of the
+ * coordinate system. That is, the coordinate system is drawn into an off-screen
+ * image. It will be redrawn only if the size of the embedding AWT component is
+ * changed.
+ *
+ * @author Franz-Josef Elmer
+ */
+public class GraphicsPlotCanvas extends PlotCanvas {
+	// ::remove folder when __CORE__
+	// ::remove folder when __HAXE__
+	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+	/** Key of a configuration parameter. */
+	public static final String BACKGROUND_KEY = &quot;background&quot;;
+	public static final String FOREGROUND_KEY = &quot;foreground&quot;;
+	public static final String DOUBLE_BUFFERING_KEY = &quot;doubleBuffering&quot;;
+
+	/**
+	 * Class which does the actual painting. Needs the &lt;tt&gt;Component&lt;/tt&gt; into
+	 * which the plot is painted for some resources like size, background color,
+	 * etc.
+	 *
+	 * @author Franz-Josef Elmer
+	 */
+	private final BufferedImage img3;
+
+	private final Graphics2D g3;
+
+	private Transformation _transformation;
+<span class="nc" id="L71">	private String _renderer = &quot;jcckit.renderer.GraphicsRenderer&quot;;</span>
+
+	private GraphicalElement _marker;
+
+	/**
+	 * Creates an instance from the specified configuration parameters. &lt;table
+	 * border=1 cellpadding=5&gt;
+	 * &lt;tr&gt;
+	 * &lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;
+	 * &lt;th&gt;Type&lt;/th&gt;
+	 * &lt;th&gt;Mandatory&lt;/th&gt;
+	 * &lt;th&gt;Description&lt;/th&gt;
+	 * &lt;/tr&gt;
+	 * &lt;tr&gt;
+	 * &lt;td&gt;&lt;tt&gt;background = &lt;/tt&gt;&lt;i&gt;default background color of the wrapped
+	 * AWT component&lt;/i&gt;&lt;/td&gt;
+	 * &lt;td&gt;&lt;tt&gt;Color&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;no&lt;/td&gt;
+	 * &lt;td&gt;Background color of the wrapped AWT component.&lt;/td&gt;
+	 * &lt;/tr&gt;
+	 * &lt;tr&gt;
+	 * &lt;td&gt;&lt;tt&gt;foreground = &lt;/tt&gt;&lt;i&gt;default foreground color of the wrapped
+	 * AWT component&lt;/i&gt;&lt;/td&gt;
+	 * &lt;td&gt;&lt;tt&gt;Color&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;no&lt;/td&gt;
+	 * &lt;td&gt;Foreground color of the wrapped AWT component.&lt;/td&gt;
+	 * &lt;/tr&gt;
+	 * &lt;tr&gt;
+	 * &lt;td&gt;&lt;tt&gt;doubleBuffering = true&lt;/tt&gt;&lt;/td&gt;
+	 *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+	 *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; the plot will be painted by using
+	 *         double-buffering and pre-rendered view of the coordinate system.
+	 *     &lt;/td&gt;&lt;/tr&gt;
+	 * &lt;/table&gt;
+	 * In addition the configuration parameters of the
+	 * &lt;a href=&quot;plot/PlotCanvas.html#PlotCanvas(jcckit.util.ConfigParameters)&quot;&gt;
+	 * constructor&lt;/a&gt; of the superclass {@link jcckit.plot.PlotCanvas} apply.
+	 */
+	public GraphicsPlotCanvas(ConfigParameters config, BufferedImage img3) {
+<span class="nc" id="L110">		super(config);</span>
+<span class="nc" id="L111">		this.img3 = img3;</span>
+<span class="nc" id="L112">		setRenderer(&quot;jcckit.renderer.Graphics2DRenderer&quot;);</span>
+
+<span class="nc" id="L114">		g3 = img3.createGraphics();</span>
+<span class="nc" id="L115">		g3.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);</span>
+
+		// _doubleBuffering = config.getBoolean(DOUBLE_BUFFERING_KEY, true);
+<span class="nc" id="L118">		background = config.getColor(BACKGROUND_KEY, Color.WHITE);</span>
+<span class="nc" id="L119">		foreground = config.getColor(FOREGROUND_KEY, Color.BLACK);</span>
+<span class="nc" id="L120">	}</span>
+
+	private final Color background;
+	private final Color foreground;
+
+	/**
+	 * Paints the plot. If {link GraphicsPlotCanvas#_doubleBuffering} is set
+	 * double-buffering and pre-rendered view of the coordinate system is used.
+	 */
+	public void paint() {
+<span class="nc" id="L130">		Dimension size = new Dimension(img3.getWidth(), img3.getHeight());</span>
+<span class="nc" id="L131">		g3.setColor(background);</span>
+<span class="nc" id="L132">		g3.fillRect(0, 0, size.width + 1, size.height + 1);</span>
+
+<span class="nc" id="L134">		init(size);</span>
+
+<span class="nc" id="L136">		_transformation.apply(g3);</span>
+<span class="nc" id="L137">		Plot plot = getPlot();</span>
+<span class="nc" id="L138">		drawCoordinateSystem(size, plot);</span>
+<span class="nc" id="L139">		drawPlot(plot);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (_marker != null) {</span>
+<span class="nc" id="L141">			_marker.renderWith(createRenderer());</span>
+		}
+<span class="nc" id="L143">	}</span>
+
+	private void drawPlot(Plot plot) {
+<span class="nc" id="L146">		prepare();</span>
+<span class="nc" id="L147">		Renderer renderer = createRenderer();</span>
+<span class="nc" id="L148">		GraphicalElement[] curves = plot.getCurves();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (int i = 0; i &lt; curves.length; i++) {</span>
+<span class="nc" id="L150">			curves[i].renderWith(renderer);</span>
+		}
+<span class="nc" id="L152">		GraphicalElement annotation = plot.getAnnotation();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (annotation != null) {</span>
+<span class="nc" id="L154">			annotation.renderWith(renderer);</span>
+		}
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (plot.isLegendVisible()) {</span>
+<span class="nc" id="L157">			plot.getLegend().renderWith(renderer);</span>
+		}
+<span class="nc" id="L159">	}</span>
+
+	private void init(Dimension size) {
+<span class="nc" id="L162">		calculateTransformation(size);</span>
+<span class="nc" id="L163">	}</span>
+
+	private void drawCoordinateSystem(Dimension size, Plot plot) {
+<span class="nc" id="L166">		g3.setColor(foreground);</span>
+<span class="nc" id="L167">		plot.getCoordinateSystem().renderWith(createRenderer());</span>
+<span class="nc" id="L168">	}</span>
+
+	/**
+	 * Prepare graphics context before drawing the pre-rendered view of the
+	 * coordinate system. Does nothing but will be used in subclasses.
+	 */
+	protected void prepare() {
+<span class="nc" id="L175">	}</span>
+
+	/**
+	 * Calculate the transformation form device-independent coordinates into
+	 * device-dependent coordinates according to the specified canvas size.
+	 */
+	protected void calculateTransformation(Dimension size) {
+<span class="nc" id="L182">		_transformation = new Transformation(size.width, size.height, getPaper(), getHorizontalAnchor(),</span>
+<span class="nc" id="L183">				getVerticalAnchor());</span>
+<span class="nc" id="L184">	}</span>
+
+	/**
+	 * Creates an appropriated {@link Renderer} for the specified
+	 * &lt;tt&gt;Graphics&lt;/tt&gt; context.
+	 */
+	protected Renderer createRenderer() {
+<span class="nc" id="L191">		return ((Graphics2DRenderer) Factory.create(_renderer)).init(g3);</span>
+		// return ((GraphicsRenderer) Factory.create(_renderer)).init(g, null,
+		// _transformation);
+	}
+
+	/**
+	 * Sets the renderer used to render the plot. The default value is
+	 * {link GraphicsRenderer}.
+	 *
+	 * @param className
+	 *            Fully qualified name of the renderer class.
+	 */
+	public void setRenderer(String className) {
+<span class="nc" id="L204">		_renderer = className;</span>
+<span class="nc" id="L205">	}</span>
+
+	// /**
+	// * Maps the cursor position onto a point in device-independent
+	// coordinates.
+	// *
+	// * @param x
+	// * X-coordinate of the cursor.
+	// * @param y
+	// * Y-coordinate of the cursor.
+	// */
+	// public GraphPoint mapCursorPosition(int x, int y) {
+	// return _transformation.transformBack(x, y);
+	// }
+
+	/**
+	 * Defines a graphical marker which will be drawn on top of the plot. To
+	 * remove the marker call this method with argument &lt;tt&gt;null&lt;/tt&gt;.
+	 *
+	 * @param marker
+	 *            Marker element. Can be &lt;tt&gt;null&lt;/tt&gt;.
+	 */
+	public void setMarker(GraphicalElement marker) {
+<span class="nc" id="L228">		_marker = marker;</span>
+<span class="nc" id="L229">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

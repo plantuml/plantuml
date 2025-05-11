@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtremityDoubleLine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.extremity</a> &gt; <span class="el_source">ExtremityDoubleLine.java</span></div><h1>ExtremityDoubleLine.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.extremity;
+
+import java.awt.geom.AffineTransform;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+
+class ExtremityDoubleLine extends Extremity {
+
+	private final XPoint2D contact;
+	private final double angle;
+<span class="nc" id="L49">	private final double lineHeight = 4;</span>
+
+	@Override
+	public XPoint2D somePoint() {
+<span class="nc" id="L53">		return contact;</span>
+	}
+
+<span class="nc" id="L56">	public ExtremityDoubleLine(XPoint2D p1, double angle) {</span>
+<span class="nc" id="L57">		this.contact = new XPoint2D(p1.getX(), p1.getY());</span>
+<span class="nc" id="L58">		this.angle = manageround(angle + Math.PI / 2);</span>
+<span class="nc" id="L59">	}</span>
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L62">		final int xWing = 4;</span>
+<span class="nc" id="L63">		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);</span>
+<span class="nc" id="L64">		XPoint2D firstLineTop = new XPoint2D(-xWing, -lineHeight);</span>
+<span class="nc" id="L65">		XPoint2D firstLineBottom = new XPoint2D(-xWing, lineHeight);</span>
+<span class="nc" id="L66">		XPoint2D secondLineTop = new XPoint2D(-xWing - 3, -lineHeight);</span>
+<span class="nc" id="L67">		XPoint2D secondLineBottom = new XPoint2D(-xWing - 3, lineHeight);</span>
+
+<span class="nc" id="L69">		XPoint2D middle = new XPoint2D(0, 0);</span>
+<span class="nc" id="L70">		XPoint2D base = new XPoint2D(-xWing - 4, 0);</span>
+
+<span class="nc" id="L72">		middle = middle.transform(rotate);</span>
+<span class="nc" id="L73">		base = base.transform(rotate);</span>
+<span class="nc" id="L74">		firstLineTop = firstLineTop.transform(rotate);</span>
+<span class="nc" id="L75">		firstLineBottom = firstLineBottom.transform(rotate);</span>
+<span class="nc" id="L76">		secondLineTop = secondLineTop.transform(rotate);</span>
+<span class="nc" id="L77">		secondLineBottom = secondLineBottom.transform(rotate);</span>
+
+<span class="nc" id="L79">		drawLine(ug, contact.getX(), contact.getY(), firstLineTop, firstLineBottom);</span>
+<span class="nc" id="L80">		drawLine(ug, contact.getX(), contact.getY(), secondLineTop, secondLineBottom);</span>
+<span class="nc" id="L81">		drawLine(ug, contact.getX(), contact.getY(), base, middle);</span>
+<span class="nc" id="L82">	}</span>
+	
+	@Override
+	public double getDecorationLength() {
+<span class="nc" id="L86">		return 8;</span>
+	}
+
+	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {
+<span class="nc" id="L90">		final double dx = p2.getX() - p1.getX();</span>
+<span class="nc" id="L91">		final double dy = p2.getY() - p1.getY();</span>
+<span class="nc" id="L92">		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));</span>
+<span class="nc" id="L93">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

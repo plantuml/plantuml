@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Movement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.openiconic</a> &gt; <span class="el_source">Movement.java</span></div><h1>Movement.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.openiconic;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+
+public class Movement {
+
+	private final SvgCommandLetter letter;
+	private final List&lt;SvgCommandNumber&gt; arguments;
+
+<span class="nc" id="L49">	public Movement(Iterator&lt;SvgCommand&gt; it) {</span>
+<span class="nc" id="L50">		this.letter = (SvgCommandLetter) it.next();</span>
+<span class="nc" id="L51">		final int nb = letter.argumentNumber();</span>
+<span class="nc" id="L52">		final SvgCommandNumber args[] = new SvgCommandNumber[nb];</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L54">			args[i] = (SvgCommandNumber) it.next();</span>
+		}
+<span class="nc" id="L56">		this.arguments = Arrays.asList(args);</span>
+<span class="nc" id="L57">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L61">		return letter.getLetter() + &quot; &quot; + arguments;</span>
+	}
+
+<span class="nc" id="L64">	private Movement(SvgCommandLetter letter, SvgCommandNumber... args) {</span>
+<span class="nc" id="L65">		this.letter = letter;</span>
+<span class="nc" id="L66">		this.arguments = Arrays.asList(args);</span>
+<span class="nc" id="L67">	}</span>
+
+<span class="nc" id="L69">	private Movement(SvgCommandLetter letter) {</span>
+<span class="nc" id="L70">		this.letter = letter;</span>
+<span class="nc" id="L71">		this.arguments = Collections.emptyList();</span>
+<span class="nc" id="L72">	}</span>
+
+	public char getLetter() {
+<span class="nc" id="L75">		return letter.getLetter();</span>
+	}
+
+<span class="nc" id="L78">	private Movement(SvgCommandLetter letter, SvgPosition... pos) {</span>
+<span class="nc" id="L79">		this.letter = letter;</span>
+<span class="nc" id="L80">		final SvgCommandNumber args[] = new SvgCommandNumber[pos.length * 2];</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (int i = 0; i &lt; pos.length; i++) {</span>
+<span class="nc" id="L82">			args[2 * i] = pos[i].getX();</span>
+<span class="nc" id="L83">			args[2 * i + 1] = pos[i].getY();</span>
+		}
+<span class="nc" id="L85">		this.arguments = Arrays.asList(args);</span>
+<span class="nc" id="L86">	}</span>
+
+	public Movement mutoToC(SvgPosition mirrorControlPoint) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (is('S') == false) {</span>
+<span class="nc" id="L90">			throw new UnsupportedOperationException();</span>
+		}
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (mirrorControlPoint == null) {</span>
+<span class="nc" id="L93">			return new Movement(new SvgCommandLetter(&quot;C&quot;), this.getSvgPosition(0), this.getSvgPosition(0),</span>
+<span class="nc" id="L94">					lastPosition());</span>
+		}
+<span class="nc" id="L96">		return new Movement(new SvgCommandLetter(&quot;C&quot;), mirrorControlPoint, this.getSvgPosition(0), lastPosition());</span>
+	}
+
+	public String toSvg() {
+<span class="nc" id="L100">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L101">		result.append(letter.toSvg());</span>
+<span class="nc" id="L102">		result.append(' ');</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (SvgCommandNumber arg : arguments) {</span>
+<span class="nc" id="L104">			result.append(arg.toSvg());</span>
+<span class="nc" id="L105">			result.append(' ');</span>
+<span class="nc" id="L106">		}</span>
+<span class="nc" id="L107">		return result.toString();</span>
+	}
+
+	public SvgPosition getSvgPosition(int index) {
+<span class="nc" id="L111">		return new SvgPosition(arguments.get(index), arguments.get(index + 1));</span>
+	}
+
+	public double getArgument(int index) {
+<span class="nc" id="L115">		return arguments.get(index).getDouble();</span>
+	}
+
+	public SvgPosition lastPosition() {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (letter.argumentNumber() == 0) {</span>
+<span class="nc" id="L120">			return null;</span>
+		}
+<span class="nc" id="L122">		return getSvgPosition(arguments.size() - 2);</span>
+	}
+
+	public Movement toAbsoluteUpperCase(SvgPosition delta) {
+<span class="nc" id="L126">		Objects.requireNonNull(delta);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (letter.is('H')) {</span>
+<span class="nc" id="L128">			final SvgCommandNumber tmp = arguments.get(0);</span>
+<span class="nc" id="L129">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(tmp, delta.getY()));</span>
+		}
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (letter.is('V')) {</span>
+<span class="nc" id="L132">			final SvgCommandNumber tmp = arguments.get(0);</span>
+<span class="nc" id="L133">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(delta.getX(), tmp));</span>
+		}
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (letter.is('h')) {</span>
+<span class="nc" id="L136">			final SvgCommandNumber tmp = arguments.get(0);</span>
+<span class="nc" id="L137">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(delta.getX().add(tmp), delta.getY()));</span>
+		}
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (letter.is('v')) {</span>
+<span class="nc" id="L140">			final SvgCommandNumber tmp = arguments.get(0);</span>
+<span class="nc" id="L141">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(delta.getX(), delta.getY().add(tmp)));</span>
+		}
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (letter.isUpperCase())</span>
+<span class="nc" id="L145">			return this;</span>
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (letter.is('m'))</span>
+<span class="nc" id="L148">			return new Movement(new SvgCommandLetter(&quot;M&quot;), delta.add(getSvgPosition(0)));</span>
+
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (letter.is('l'))</span>
+<span class="nc" id="L151">			return new Movement(new SvgCommandLetter(&quot;L&quot;), delta.add(getSvgPosition(0)));</span>
+
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (letter.is('t'))</span>
+<span class="nc" id="L154">			return new Movement(new SvgCommandLetter(&quot;T&quot;), delta.add(getSvgPosition(0)));</span>
+
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (letter.is('z'))</span>
+<span class="nc" id="L157">			return new Movement(new SvgCommandLetter(&quot;Z&quot;));</span>
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (letter.is('c'))</span>
+<span class="nc" id="L160">			return new Movement(new SvgCommandLetter(&quot;C&quot;), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)),</span>
+<span class="nc" id="L161">					delta.add(getSvgPosition(4)));</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (letter.is('q'))</span>
+<span class="nc" id="L164">			return new Movement(new SvgCommandLetter(&quot;Q&quot;), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));</span>
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (letter.is('s'))</span>
+<span class="nc" id="L167">			return new Movement(new SvgCommandLetter(&quot;S&quot;), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));</span>
+
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (letter.is('a')) {</span>
+<span class="nc" id="L170">			final SvgPosition last = delta.add(lastPosition());</span>
+			// System.err.println(&quot;LAST=&quot; + last);
+<span class="nc" id="L172">			return new Movement(new SvgCommandLetter(&quot;A&quot;), arguments.get(0), arguments.get(1), arguments.get(2),</span>
+<span class="nc" id="L173">					arguments.get(3), arguments.get(4), last.getX(), last.getY());</span>
+		}
+<span class="nc" id="L175">		throw new UnsupportedOperationException(&quot;Movement::goUpperCase &quot; + letter);</span>
+	}
+
+	public SvgPosition getMirrorControlPoint() {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (letter.is('c')) {</span>
+<span class="nc" id="L180">			throw new IllegalStateException();</span>
+		}
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (letter.is('s')) {</span>
+<span class="nc" id="L183">			throw new IllegalStateException();</span>
+		}
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (letter.is('C')) {</span>
+<span class="nc" id="L186">			final SvgPosition center = lastPosition();</span>
+<span class="nc" id="L187">			final SvgPosition controlPoint = getSvgPosition(2);</span>
+<span class="nc" id="L188">			return center.getMirror(controlPoint);</span>
+		}
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (letter.is('S')) {</span>
+<span class="nc" id="L191">			final SvgPosition center = lastPosition();</span>
+<span class="nc" id="L192">			final SvgPosition controlPoint = getSvgPosition(0);</span>
+<span class="nc" id="L193">			return center.getMirror(controlPoint);</span>
+		}
+<span class="nc" id="L195">		return null;</span>
+	}
+
+	public boolean is(char c) {
+<span class="nc" id="L199">		return letter.is(c);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

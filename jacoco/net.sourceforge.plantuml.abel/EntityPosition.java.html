@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityPosition.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.abel</a> &gt; <span class="el_source">EntityPosition.java</span></div><h1>EntityPosition.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ * 
+ *
+ */
+package net.sourceforge.plantuml.abel;
+
+import java.util.EnumSet;
+
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.svek.ShapeType;
+
+<span class="fc" id="L52">public enum EntityPosition {</span>
+
+<span class="fc" id="L54">	NORMAL, ENTRY_POINT, EXIT_POINT, INPUT_PIN, OUTPUT_PIN, EXPANSION_INPUT, EXPANSION_OUTPUT, PORTIN, PORTOUT;</span>
+
+	public static final double RADIUS = 6;
+
+	public static EnumSet&lt;EntityPosition&gt; getInputs() {
+<span class="nc" id="L59">		return EnumSet.of(ENTRY_POINT, INPUT_PIN, EXPANSION_INPUT, PORTIN);</span>
+	}
+
+	public static EnumSet&lt;EntityPosition&gt; getOutputs() {
+<span class="nc" id="L63">		return EnumSet.of(EXIT_POINT, OUTPUT_PIN, EXPANSION_OUTPUT, PORTOUT);</span>
+	}
+
+	public static EnumSet&lt;EntityPosition&gt; getNormals() {
+<span class="nc" id="L67">		return EnumSet.of(NORMAL);</span>
+	}
+
+	public boolean isNormal() {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		return this == NORMAL;</span>
+	}
+
+	public boolean isInput() {
+<span class="nc" id="L75">		return getInputs().contains(this);</span>
+	}
+
+	public boolean isOutput() {
+<span class="nc" id="L79">		return getOutputs().contains(this);</span>
+	}
+
+	public void drawSymbol(UGraphic ug, Rankdir rankdir) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (this == NORMAL) {</span>
+<span class="nc" id="L84">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">		} else if (this == ENTRY_POINT || this == EXIT_POINT) {</span>
+<span class="nc" id="L86">			final Shadowable circle = UEllipse.build(RADIUS * 2, RADIUS * 2);</span>
+<span class="nc" id="L87">			ug.draw(circle);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (this == EntityPosition.EXIT_POINT) {</span>
+<span class="nc" id="L89">				final double xc = 0 + RADIUS + .5;</span>
+<span class="nc" id="L90">				final double yc = 0 + RADIUS + .5;</span>
+<span class="nc" id="L91">				final double radius = RADIUS - .5;</span>
+<span class="nc" id="L92">				drawLine(ug, getPointOnCircle(xc, yc, Math.PI / 4, radius),</span>
+<span class="nc" id="L93">						getPointOnCircle(xc, yc, Math.PI + Math.PI / 4, radius));</span>
+<span class="nc" id="L94">				drawLine(ug, getPointOnCircle(xc, yc, -Math.PI / 4, radius),</span>
+<span class="nc" id="L95">						getPointOnCircle(xc, yc, Math.PI - Math.PI / 4, radius));</span>
+			}
+<span class="nc bnc" id="L97" title="All 4 branches missed.">		} else if (this == INPUT_PIN || this == OUTPUT_PIN /* || this == PORT */) {</span>
+<span class="nc" id="L98">			final Shadowable rectangle = URectangle.build(RADIUS * 2, RADIUS * 2);</span>
+<span class="nc" id="L99">			ug.draw(rectangle);</span>
+<span class="nc bnc" id="L100" title="All 4 branches missed.">		} else if (this == EXPANSION_INPUT || this == EXPANSION_OUTPUT) {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (rankdir == Rankdir.TOP_TO_BOTTOM) {</span>
+<span class="nc" id="L102">				final Shadowable rectangle = URectangle.build(RADIUS * 2 * 4, RADIUS * 2);</span>
+<span class="nc" id="L103">				ug.draw(rectangle);</span>
+<span class="nc" id="L104">				final ULine vline = ULine.vline(RADIUS * 2);</span>
+<span class="nc" id="L105">				ug.apply(UTranslate.dx(RADIUS * 2)).draw(vline);</span>
+<span class="nc" id="L106">				ug.apply(UTranslate.dx(RADIUS * 2 * 2)).draw(vline);</span>
+<span class="nc" id="L107">				ug.apply(UTranslate.dx(RADIUS * 2 * 3)).draw(vline);</span>
+<span class="nc" id="L108">			} else {</span>
+<span class="nc" id="L109">				final Shadowable rectangle = URectangle.build(RADIUS * 2, RADIUS * 2 * 4);</span>
+<span class="nc" id="L110">				ug.apply(UTranslate.dy(0)).draw(rectangle);</span>
+<span class="nc" id="L111">				final ULine hline = ULine.hline(RADIUS * 2);</span>
+<span class="nc" id="L112">				ug.apply(UTranslate.dy(RADIUS * 2)).draw(hline);</span>
+<span class="nc" id="L113">				ug.apply(UTranslate.dy(RADIUS * 2 * 2)).draw(hline);</span>
+<span class="nc" id="L114">				ug.apply(UTranslate.dy(RADIUS * 2 * 3)).draw(hline);</span>
+			}
+		}
+
+<span class="nc" id="L118">	}</span>
+
+	public XDimension2D getDimension(Rankdir rankdir) {
+<span class="nc bnc" id="L121" title="All 4 branches missed.">		if (this == EXPANSION_INPUT || this == EXPANSION_OUTPUT) {</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (rankdir == Rankdir.TOP_TO_BOTTOM)</span>
+<span class="nc" id="L123">				return new XDimension2D(EntityPosition.RADIUS * 2 * 4, EntityPosition.RADIUS * 2);</span>
+
+<span class="nc" id="L125">			return new XDimension2D(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2 * 4);</span>
+		}
+<span class="nc" id="L127">		return new XDimension2D(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);</span>
+	}
+
+	private XPoint2D getPointOnCircle(double xc, double yc, double angle, double radius) {
+<span class="nc" id="L131">		final double x = xc + radius * Math.cos(angle);</span>
+<span class="nc" id="L132">		final double y = yc + radius * Math.sin(angle);</span>
+<span class="nc" id="L133">		return new XPoint2D(x, y);</span>
+	}
+
+	static private void drawLine(UGraphic ug, XPoint2D p1, XPoint2D p2) {
+<span class="nc" id="L137">		final double dx = p2.getX() - p1.getX();</span>
+<span class="nc" id="L138">		final double dy = p2.getY() - p1.getY();</span>
+<span class="nc" id="L139">		ug.apply(new UTranslate(p1.getX(), p1.getY())).draw(new ULine(dx, dy));</span>
+
+<span class="nc" id="L141">	}</span>
+
+	public ShapeType getShapeType() {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (this == NORMAL)</span>
+<span class="nc" id="L145">			throw new IllegalStateException();</span>
+
+<span class="nc bnc" id="L147" title="All 4 branches missed.">		if (this == ENTRY_POINT || this == EXIT_POINT)</span>
+<span class="nc" id="L148">			return ShapeType.RECTANGLE_PORT;</span>
+
+<span class="nc" id="L150">		return ShapeType.RECTANGLE;</span>
+	}
+
+	public static EntityPosition fromStereotype(String label) {
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (&quot;&lt;&lt;port&gt;&gt;&quot;.equalsIgnoreCase(label))</span>
+<span class="nc" id="L155">			throw new UnsupportedOperationException();</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (&quot;&lt;&lt;entrypoint&gt;&gt;&quot;.equalsIgnoreCase(label))</span>
+<span class="nc" id="L158">			return ENTRY_POINT;</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (&quot;&lt;&lt;exitpoint&gt;&gt;&quot;.equalsIgnoreCase(label))</span>
+<span class="nc" id="L161">			return EXIT_POINT;</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (&quot;&lt;&lt;inputpin&gt;&gt;&quot;.equalsIgnoreCase(label))</span>
+<span class="nc" id="L164">			return INPUT_PIN;</span>
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (&quot;&lt;&lt;outputpin&gt;&gt;&quot;.equalsIgnoreCase(label))</span>
+<span class="nc" id="L167">			return OUTPUT_PIN;</span>
+
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (&quot;&lt;&lt;expansioninput&gt;&gt;&quot;.equalsIgnoreCase(label))</span>
+<span class="nc" id="L170">			return EXPANSION_INPUT;</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (&quot;&lt;&lt;expansionoutput&gt;&gt;&quot;.equalsIgnoreCase(label))</span>
+<span class="nc" id="L173">			return EXPANSION_OUTPUT;</span>
+
+<span class="nc" id="L175">		return EntityPosition.NORMAL;</span>
+	}
+
+//	public static EnumSet&lt;EntityPosition&gt; getSame() {
+//		return EnumSet.of(PORT);
+//	}
+//
+	public boolean isPort() {
+<span class="nc bnc" id="L183" title="All 4 branches missed.">		return /* this == PORT || */ this == PORTIN || this == PORTOUT;</span>
+	}
+
+	public boolean usePortP() {
+<span class="nc bnc" id="L187" title="All 6 branches missed.">		return isPort() || this == EXIT_POINT || this == ENTRY_POINT;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

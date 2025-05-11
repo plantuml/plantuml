@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlockUml.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">BlockUml.java</span></div><h1>BlockUml.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.code.AsciiEncoder;
+import net.sourceforge.plantuml.code.Transcoder;
+import net.sourceforge.plantuml.code.TranscoderUtil;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.TimLoader;
+import net.sourceforge.plantuml.utils.LineLocationImpl;
+import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.version.Version;
+
+public class BlockUml {
+	// ::remove file when __HAXE__
+
+	private final List&lt;StringLocated&gt; rawSource;
+	private final List&lt;StringLocated&gt; data;
+	private List&lt;StringLocated&gt; debug;
+	private Diagram system;
+	private final Defines localDefines;
+	private final Previous previous;
+<span class="fc" id="L78">	private final Set&lt;FileWithSuffix&gt; included = new HashSet&lt;&gt;();</span>
+	private final PreprocessingArtifact preprocessingArtifact;
+
+	public Set&lt;FileWithSuffix&gt; getIncluded() {
+<span class="fc" id="L82">		return Collections.unmodifiableSet(included);</span>
+	}
+
+	@Deprecated
+	BlockUml(String... strings) {
+<span class="nc" id="L87">		this(convert(strings), Defines.createEmpty(), null, null, null);</span>
+<span class="nc" id="L88">	}</span>
+
+	// ::comment when __CORE__
+	public String getEncodedUrl() throws IOException {
+<span class="fc" id="L92">		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();</span>
+<span class="fc" id="L93">		final String source = getDiagram().getSource().getPlainString(&quot;\n&quot;);</span>
+<span class="fc" id="L94">		final String encoded = transcoder.encode(source);</span>
+<span class="fc" id="L95">		return encoded;</span>
+	}
+	// ::done
+
+	public String getFlashData() {
+<span class="nc" id="L100">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (StringLocated line : data) {</span>
+<span class="nc" id="L102">			sb.append(line.getString());</span>
+<span class="nc" id="L103">			sb.append('\r');</span>
+<span class="nc" id="L104">			sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="nc" id="L105">		}</span>
+<span class="nc" id="L106">		return sb.toString();</span>
+	}
+
+	public static List&lt;StringLocated&gt; convert(String... strings) {
+<span class="nc" id="L110">		return convert(Arrays.asList(strings));</span>
+	}
+
+	public static List&lt;StringLocated&gt; convert(List&lt;String&gt; strings) {
+<span class="fc" id="L114">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L115">		LineLocationImpl location = new LineLocationImpl(&quot;block&quot;, null);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for (String s : strings) {</span>
+<span class="fc" id="L117">			location = location.oneLineRead();</span>
+<span class="fc" id="L118">			result.add(new StringLocated(s, location));</span>
+<span class="fc" id="L119">		}</span>
+<span class="fc" id="L120">		return result;</span>
+	}
+
+	private boolean preprocessorError;
+
+//	/**
+//	 * @deprecated being kept for backwards compatibility, perhaps other projects
+//	 *             are using this?
+//	 */
+//	@Deprecated
+//	public BlockUml(List&lt;StringLocated&gt; strings, Defines defines, Map&lt;String, String&gt; skinMap,
+//			DefinitionsContainer definitions) {
+//		this(strings, defines, skinMap, definitions, charsetOrDefault(definitions.getCharset()));
+//	}
+
+	public BlockUml(List&lt;StringLocated&gt; strings, Defines defines, Previous previous,
+<span class="fc" id="L136">			DefinitionsContainer definitions, Charset charset) {</span>
+<span class="fc" id="L137">		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);</span>
+<span class="fc" id="L138">		this.localDefines = defines;</span>
+<span class="fc" id="L139">		this.previous = previous;</span>
+
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (definitions == null) {</span>
+<span class="fc" id="L142">			this.data = new ArrayList&lt;&gt;(this.rawSource);</span>
+<span class="fc" id="L143">			this.preprocessingArtifact = new PreprocessingArtifact();</span>
+		} else {
+<span class="fc" id="L145">			final TimLoader timLoader = new TimLoader(definitions.getImportedFiles(), defines, charset, definitions,</span>
+<span class="fc" id="L146">					this.rawSource.get(0));</span>
+<span class="fc" id="L147">			this.included.addAll(timLoader.load(this.rawSource));</span>
+<span class="fc" id="L148">			List&lt;StringLocated&gt; tmp = timLoader.getResultList();</span>
+<span class="fc" id="L149">			tmp = Jaws.expands0(tmp);</span>
+<span class="fc" id="L150">			tmp = Jaws.expandsJawsForPreprocessor(tmp);</span>
+<span class="fc" id="L151">			this.data = tmp;</span>
+<span class="fc" id="L152">			this.debug = timLoader.getDebug();</span>
+<span class="fc" id="L153">			this.preprocessorError = timLoader.isPreprocessorError();</span>
+<span class="fc" id="L154">			this.preprocessingArtifact = timLoader.getPreprocessingArtifact();</span>
+		}
+<span class="fc" id="L156">	}</span>
+
+	// ::comment when __CORE__
+	public String getFileOrDirname() {
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (OptionFlags.getInstance().isWord())</span>
+<span class="nc" id="L161">			return null;</span>
+
+<span class="fc" id="L163">		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));</span>
+<span class="fc" id="L164">		final boolean ok = m.find();</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (ok == false)</span>
+<span class="fc" id="L166">			return null;</span>
+
+<span class="nc" id="L168">		String result = m.group(1);</span>
+<span class="nc" id="L169">		final int x = result.indexOf(',');</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (x != -1)</span>
+<span class="nc" id="L171">			result = result.substring(0, x);</span>
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (int i = 0; i &lt; result.length(); i++) {</span>
+<span class="nc" id="L174">			final char c = result.charAt(i);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (&quot;&lt;&gt;|&quot;.indexOf(c) != -1)</span>
+<span class="nc" id="L176">				return null;</span>
+
+		}
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (result.startsWith(&quot;file://&quot;))</span>
+<span class="nc" id="L180">			result = result.substring(&quot;file://&quot;.length());</span>
+
+<span class="nc" id="L182">		result = result.replaceAll(&quot;\\.\\w\\w\\w$&quot;, &quot;&quot;);</span>
+<span class="nc" id="L183">		return result;</span>
+	}
+	// ::done
+
+	public Diagram getDiagram() {
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (system == null) {</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			if (preprocessorError)</span>
+<span class="fc" id="L190">				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);</span>
+			else
+<span class="fc" id="L192">				system = new PSystemBuilder().createPSystem(data, rawSource, previous, preprocessingArtifact);</span>
+		}
+<span class="fc" id="L194">		return system;</span>
+	}
+
+	public final List&lt;StringLocated&gt; getData() {
+<span class="fc" id="L198">		return data;</span>
+	}
+
+	// ::comment when __CORE__
+	private String internalEtag() {
+		try {
+<span class="nc" id="L204">			final AsciiEncoder coder = new AsciiEncoder();</span>
+<span class="nc" id="L205">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			for (StringLocated s : data)</span>
+<span class="nc" id="L207">				msgDigest.update(s.getString().getBytes(UTF_8));</span>
+
+<span class="nc" id="L209">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L210">			return coder.encode(digest);</span>
+<span class="nc" id="L211">		} catch (Exception e) {</span>
+<span class="nc" id="L212">			Logme.error(e);</span>
+<span class="nc" id="L213">			return &quot;NOETAG&quot;;</span>
+		}
+	}
+
+	public String etag() {
+<span class="nc" id="L218">		return Version.etag() + internalEtag();</span>
+	}
+	// ::done
+
+	public long lastModified() {
+<span class="nc" id="L223">		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;</span>
+	}
+
+	public boolean isStartDef(String name) {
+<span class="nc" id="L227">		final String signature = &quot;@startdef(id=&quot; + name + &quot;)&quot;;</span>
+<span class="nc" id="L228">		return data.get(0).getString().equalsIgnoreCase(signature);</span>
+	}
+
+	public List&lt;String&gt; getDefinition(boolean withHeader) {
+<span class="nc" id="L232">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		for (StringLocated s : data)</span>
+<span class="nc" id="L234">			result.add(s.getString());</span>
+
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		if (withHeader)</span>
+<span class="nc" id="L237">			return Collections.unmodifiableList(result);</span>
+
+<span class="nc" id="L239">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
+	}
+
+	public Defines getLocalDefines() {
+<span class="nc" id="L243">		return localDefines;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

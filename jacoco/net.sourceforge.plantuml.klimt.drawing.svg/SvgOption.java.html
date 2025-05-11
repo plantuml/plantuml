@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvgOption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.svg</a> &gt; <span class="el_source">SvgOption.java</span></div><h1>SvgOption.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.svg;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.skin.Pragma;
+
+public class SvgOption {
+
+<span class="fc" id="L50">	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();</span>
+<span class="fc" id="L51">	private String preserveAspectRatio = &quot;none&quot;;</span>
+	private String hover;
+<span class="fc" id="L53">	private boolean svgDimensionStyle = true;</span>
+<span class="fc" id="L54">	private XDimension2D minDim = new XDimension2D(0, 0);</span>
+	private HColor backcolor;
+<span class="fc" id="L56">	private double scale = 1.0;</span>
+<span class="fc" id="L57">	private ColorMapper colorMapper = ColorMapper.IDENTITY;</span>
+	private String linkTarget;
+	private String font;
+	private String title;
+	private String interactiveBaseFilename;
+<span class="fc" id="L62">	private final Map&lt;String, String&gt; rootAttributes = new LinkedHashMap&lt;&gt;();</span>
+
+	public String getInteractiveBaseFilename() {
+<span class="fc" id="L65">		return interactiveBaseFilename;</span>
+	}
+
+	public static SvgOption basic() {
+<span class="fc" id="L69">		return new SvgOption();</span>
+	}
+
+<span class="fc" id="L72">	private SvgOption() {</span>
+<span class="fc" id="L73">	}</span>
+
+	// This method will be removed once Pragma SVGNEWDATA will be removed
+	
+	public Pragma pragma;
+
+	@Deprecated
+	public SvgOption withPragma(Pragma pragma) {
+<span class="fc" id="L81">		this.pragma = pragma;</span>
+<span class="fc" id="L82">		return this;</span>
+	}
+
+
+
+	public SvgOption withTitle(Display titleDisplay) {
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (titleDisplay.size() &gt; 0)</span>
+<span class="nc" id="L89">			title = titleDisplay.get(0).toString();</span>
+<span class="fc" id="L90">		return this;</span>
+	}
+
+	public SvgOption withInteractive(String interactiveBaseFilename) {
+<span class="fc" id="L94">		this.interactiveBaseFilename = interactiveBaseFilename;</span>
+<span class="fc" id="L95">		return this;</span>
+	}
+
+	public SvgOption withLengthAdjust(LengthAdjust lengthAdjust) {
+<span class="fc" id="L99">		this.lengthAdjust = lengthAdjust;</span>
+<span class="fc" id="L100">		return this;</span>
+	}
+
+	public SvgOption withPreserveAspectRatio(String preserveAspectRatio) {
+<span class="fc" id="L104">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L105">		return this;</span>
+	}
+
+	public SvgOption withHoverPathColorRGB(String hover) {
+<span class="fc" id="L109">		this.hover = hover;</span>
+<span class="fc" id="L110">		return this;</span>
+	}
+
+	public SvgOption withSvgDimensionStyle(boolean svgDimensionStyle) {
+<span class="fc" id="L114">		this.svgDimensionStyle = svgDimensionStyle;</span>
+<span class="fc" id="L115">		return this;</span>
+	}
+
+	public SvgOption withMinDim(XDimension2D minDim) {
+<span class="fc" id="L119">		this.minDim = minDim;</span>
+<span class="fc" id="L120">		return this;</span>
+	}
+
+	public SvgOption withBackcolor(HColor backcolor) {
+<span class="fc" id="L124">		this.backcolor = backcolor;</span>
+<span class="fc" id="L125">		return this;</span>
+	}
+
+	public SvgOption withScale(double scale) {
+<span class="fc" id="L129">		this.scale = scale;</span>
+<span class="fc" id="L130">		return this;</span>
+	}
+
+	public SvgOption withColorMapper(ColorMapper colorMapper) {
+<span class="fc" id="L134">		this.colorMapper = colorMapper;</span>
+<span class="fc" id="L135">		return this;</span>
+	}
+
+	public SvgOption withLinkTarget(String linkTarget) {
+<span class="fc" id="L139">		this.linkTarget = linkTarget;</span>
+<span class="fc" id="L140">		return this;</span>
+	}
+
+	public SvgOption withFont(String font) {
+<span class="fc" id="L144">		this.font = font;</span>
+<span class="fc" id="L145">		return this;</span>
+	}
+	
+	public Map&lt;String, String&gt; getRootAttributes() {
+<span class="fc" id="L149">		return Collections.unmodifiableMap(rootAttributes);</span>
+	}
+
+	public SvgOption withRootAttribute(String key, String value) {
+<span class="fc" id="L153">		this.rootAttributes.put(key, value);</span>
+<span class="fc" id="L154">		return this;</span>
+	}
+
+	public String getPreserveAspectRatio() {
+<span class="fc" id="L158">		return preserveAspectRatio;</span>
+	}
+
+	public boolean isInteractive() {
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		return interactiveBaseFilename != null;</span>
+	}
+
+	public LengthAdjust getLengthAdjust() {
+<span class="fc" id="L166">		return lengthAdjust;</span>
+	}
+
+	public String getHover() {
+<span class="fc" id="L170">		return hover;</span>
+	}
+
+	public boolean getSvgDimensionStyle() {
+<span class="fc" id="L174">		return svgDimensionStyle;</span>
+	}
+
+	public XDimension2D getMinDim() {
+<span class="fc" id="L178">		return minDim;</span>
+	}
+
+	public HColor getBackcolor() {
+<span class="fc" id="L182">		return backcolor;</span>
+	}
+
+	public double getScale() {
+<span class="fc" id="L186">		return scale;</span>
+	}
+
+	public ColorMapper getColorMapper() {
+<span class="fc" id="L190">		return colorMapper;</span>
+	}
+
+	public String getLinkTarget() {
+<span class="nc" id="L194">		return linkTarget;</span>
+	}
+
+	public String getFont() {
+<span class="nc" id="L198">		return font;</span>
+	}
+
+	public String getTitle() {
+<span class="fc" id="L202">		return title;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageChenAttribute.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageChenAttribute.java</span></div><h1>EntityImageChenAttribute.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockInEllipse;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.url.Url;
+
+public class EntityImageChenAttribute extends AbstractEntityImage {
+
+	final static private int MARGIN = 6;
+
+	final private boolean isKey;
+	final private boolean isMulti;
+	final private boolean isDerived;
+
+	final private TextBlock title;
+	final private Url url;
+
+	public EntityImageChenAttribute(Entity entity) {
+<span class="fc" id="L77">		super(entity);</span>
+
+<span class="fc" id="L79">		isKey = hasStereotype(&quot;&lt;&lt;key&gt;&gt;&quot;);</span>
+<span class="fc" id="L80">		isMulti = hasStereotype(&quot;&lt;&lt;multi&gt;&gt;&quot;);</span>
+<span class="fc" id="L81">		isDerived = hasStereotype(&quot;&lt;&lt;derived&gt;&gt;&quot;);</span>
+
+<span class="fc" id="L83">		FontConfiguration titleFontConfiguration = getStyleTitle(entity, getSkinParam())</span>
+<span class="fc" id="L84">				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (isKey) {</span>
+<span class="fc" id="L86">			titleFontConfiguration = titleFontConfiguration.underline();</span>
+		}
+
+<span class="fc" id="L89">		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(), CreoleMode.FULL,</span>
+<span class="fc" id="L90">				getStyle().wrapWidth());</span>
+
+<span class="fc" id="L92">		url = entity.getUrl99();</span>
+<span class="fc" id="L93">	}</span>
+
+	private boolean hasStereotype(String stereotype) {
+<span class="fc bfc" id="L96" title="All 4 branches covered.">		return getEntity().getStereotype() != null &amp;&amp; getEntity().getStereotype().toString().contains(stereotype);</span>
+	}
+
+	private Style getStyle() {
+<span class="fc" id="L100">		return getStyle(getEntity(), getSkinParam());</span>
+	}
+
+	private static Style getStyle(Entity group, ISkinParam skinParam) {
+<span class="fc" id="L104">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute)</span>
+<span class="fc" id="L105">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
+<span class="fc" id="L109">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute, SName.title)</span>
+<span class="fc" id="L110">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	@Override
+	public ShapeType getShapeType() {
+<span class="fc" id="L115">		return ShapeType.OVAL;</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L120">		final TextBlockInEllipse ellipse = new TextBlockInEllipse(title, stringBounder);</span>
+
+<span class="fc" id="L122">		return ellipse.calculateDimension(stringBounder);</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L127">		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L129">			ug.startUrl(url);</span>
+
+<span class="fc" id="L131">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L132">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+
+<span class="fc" id="L134">		UStroke stroke = getStyle().getStroke(getEntity().getColors());</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (isDerived) {</span>
+<span class="fc" id="L136">			stroke = new UStroke(10, 10, stroke.getThickness());</span>
+		}
+
+<span class="fc" id="L139">		ug = applyColor(ug);</span>
+<span class="fc" id="L140">		ug = ug.apply(stroke);</span>
+<span class="fc" id="L141">		ug.draw(getShape(dimTotal));</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (isMulti) {</span>
+<span class="fc" id="L143">			ug.apply(new UTranslate(3, 3)).draw(getShape(dimTotal.delta(-6)));</span>
+		}
+
+<span class="fc" id="L146">		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;</span>
+<span class="fc" id="L147">		final double yTitle = MARGIN;</span>
+<span class="fc" id="L148">		title.drawU(ug.apply(new UTranslate(xTitle, yTitle)));</span>
+
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L151">			ug.closeUrl();</span>
+
+<span class="fc" id="L153">		ug.closeGroup();</span>
+<span class="fc" id="L154">	}</span>
+
+	final protected UGraphic applyColor(UGraphic ug) {
+<span class="fc" id="L157">		Colors colors = getEntity().getColors();</span>
+
+<span class="fc" id="L159">		HColor border = colors.getColor(ColorType.LINE);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (border == null)</span>
+<span class="fc" id="L161">			border = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L162">		ug = ug.apply(border);</span>
+
+<span class="fc" id="L164">		HColor backcolor = colors.getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (backcolor == null)</span>
+<span class="fc" id="L166">			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L167">		ug = ug.apply(backcolor.bg());</span>
+
+<span class="fc" id="L169">		return ug;</span>
+	}
+
+	private UShape getShape(XDimension2D dimTotal) {
+<span class="fc" id="L173">		return UEllipse.build(dimTotal.getWidth(), dimTotal.getHeight());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

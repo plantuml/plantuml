@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigParameters.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.util</a> &gt; <span class="el_source">ConfigParameters.java</span></div><h1>ConfigParameters.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.util;
+
+import java.awt.Color;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+
+
+/**
+ *  Read-only class for hierarchically organized key-value pairs.
+ *  The key is always a string. The following value types are
+ *  supported:
+ *  &lt;ul&gt;&lt;li&gt;&lt;tt&gt;String&lt;/tt&gt;
+ *      &lt;li&gt;&lt;tt&gt;boolean&lt;/tt&gt;
+ *      &lt;li&gt;&lt;tt&gt;int&lt;/tt&gt;
+ *      &lt;li&gt;&lt;tt&gt;double&lt;/tt&gt;
+ *      &lt;li&gt;&lt;tt&gt;double[]&lt;/tt&gt;
+ *      &lt;li&gt;&lt;tt&gt;Color&lt;/tt&gt;
+ *      &lt;li&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;
+ *  &lt;/ul&gt;
+ *  &lt;p&gt;
+ *  In accordance with the Strategy design pattern the retrieval of
+ *  a key-value pair is delegated to an instance of
+ *  {@link ConfigData}.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class ConfigParameters {
+  private final ConfigData _configData;
+
+  /** Creates an instance from the specified &lt;tt&gt;ConfigData&lt;/tt&gt; object. */
+<span class="nc" id="L52">  public ConfigParameters(ConfigData configData) {</span>
+<span class="nc" id="L53">    _configData = configData;</span>
+<span class="nc" id="L54">  }</span>
+
+  /**
+   * Returns the full key.
+   * @return the path concatenated with &lt;tt&gt;key&lt;/tt&gt;.
+   * @see ConfigData#getFullKey
+   */
+  public String getFullKey(String key) {
+<span class="nc" id="L62">    return _configData.getFullKey(key);</span>
+  }
+
+  /**
+   * Returns the string value associated with the specified key.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the corresponding value. Will always be not &lt;tt&gt;null&lt;/tt&gt;.
+   * @throws IllegalArgumentException if no value exists for &lt;tt&gt;key&lt;/tt&gt;.
+   *         The exception message is the full key.
+   */
+  public String get(String key) {
+<span class="nc" id="L73">    String result = _configData.get(key);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    if (result == null) {</span>
+<span class="nc" id="L75">      throw new IllegalArgumentException(getFullKey(key));</span>
+    }
+<span class="nc" id="L77">    return result;</span>
+  }
+
+  /**
+   * Returns the string value associated with the specified key or
+   * &lt;tt&gt;defaultValue&lt;/tt&gt; if undefined.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @param defaultValue The default value. Can be &lt;tt&gt;null&lt;/tt&gt;.
+   * @return the corresponding value or &lt;tt&gt;defaultValue&lt;/tt&gt;.
+   */
+  public String get(String key, String defaultValue) {
+<span class="nc" id="L88">    String result = _configData.get(key);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">    if (result == null) {</span>
+<span class="nc" id="L90">      result = defaultValue;</span>
+    }
+<span class="nc" id="L92">    return result;</span>
+  }
+
+  /**
+   * Returns the boolean associated with the specified key.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return &lt;tt&gt;true&lt;/tt&gt; if the value is &quot;true&quot; otherwise &lt;tt&gt;false&lt;/tt&gt;.
+   * @throws IllegalArgumentException if no value exists for &lt;tt&gt;key&lt;/tt&gt;.
+   *         The exception message is the full key.
+   * @throws NumberFormatException if the value is neither &quot;true&quot; nor &quot;false&quot;.
+   */
+  public boolean getBoolean(String key) {
+<span class="nc" id="L104">    return parseBoolean(get(key), key);</span>
+  }
+
+  /**
+   * Returns the boolean associated with the specified key.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @param defaultValue The default value. Can be &lt;tt&gt;null&lt;/tt&gt;.
+   * @return &lt;tt&gt;true&lt;/tt&gt; if the value is &quot;true&quot; otherwise &lt;tt&gt;false&lt;/tt&gt;.
+   * @throws NumberFormatException if the value is neither &quot;true&quot; nor &quot;false&quot;.
+   */
+  public boolean getBoolean(String key, boolean defaultValue) {
+<span class="nc" id="L115">    String value = _configData.get(key);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">    return value == null ? defaultValue : parseBoolean(value, key);</span>
+  }
+
+  private boolean parseBoolean(String value, String key) {
+<span class="nc bnc" id="L120" title="All 2 branches missed.">    if (value.equals(&quot;true&quot;)) {</span>
+<span class="nc" id="L121">      return true;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">    } else if (value.equals(&quot;false&quot;)) {</span>
+<span class="nc" id="L123">      return false;</span>
+    } else {
+<span class="nc" id="L125">      throw createNumberFormatException(&quot;boolean&quot;, value, key);</span>
+    }
+  }
+
+  private NumberFormatException createNumberFormatException(String text,
+                                                            String value,
+                                                            String key) {
+<span class="nc" id="L132">    return new NumberFormatException(&quot;Not a &quot; + text + &quot;: &quot; + getFullKey(key)</span>
+                                     + &quot; = &quot; + value);
+  }
+
+  /**
+   * Returns the integer associated with the specified key.
+   * The value can be either
+   * &lt;ul&gt;&lt;li&gt;a decimal number (starting with a non-zero digit),
+   *     &lt;li&gt;a hexadecimal number (starting with &lt;tt&gt;0x&lt;/tt&gt;), or
+   *     &lt;li&gt;an octal number (starting with zero).
+   * &lt;/ul&gt;
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the integer value.
+   * @throws IllegalArgumentException if no value exists for &lt;tt&gt;key&lt;/tt&gt;.
+   *         The exception message is the full key.
+   * @throws NumberFormatException if the value is not a number.
+   *         The exception message contains the full key and the invalid value.
+   */
+  public int getInt(String key) {
+<span class="nc" id="L151">    return parseInt(get(key), key);</span>
+  }
+
+  /**
+   * Returns the integer associated with the specified key or
+   * &lt;tt&gt;defaultValue&lt;/tt&gt; if no key-value pair exists for the specified key.
+   * The value can be either
+   * &lt;ul&gt;&lt;li&gt;a decimal number (starting with a non-zero digit),
+   *     &lt;li&gt;a hexadecimal number (starting with &lt;tt&gt;0x&lt;/tt&gt;), or
+   *     &lt;li&gt;an octal number (starting with zero).
+   * &lt;/ul&gt;
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @param defaultValue The default value. Can be &lt;tt&gt;null&lt;/tt&gt;.
+   * @return the integer value.
+   * @throws NumberFormatException if the value exists but is not a number.
+   *         The exception message contains the full key and the invalid value.
+   */
+  public int getInt(String key, int defaultValue) {
+<span class="nc" id="L169">    String value = _configData.get(key);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">    return value == null ? defaultValue : parseInt(value, key);</span>
+  }
+
+  private int parseInt(String value, String key) {
+    try {
+<span class="nc" id="L175">      return Integer.decode(value).intValue();</span>
+<span class="nc" id="L176">    } catch (NumberFormatException e) {</span>
+<span class="nc" id="L177">      throw createNumberFormatException(&quot;number&quot;, value, key);</span>
+    }
+  }
+
+  /**
+   * Returns the double associated with the specified key.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the double value.
+   * @throws IllegalArgumentException if no value exists for &lt;tt&gt;key&lt;/tt&gt;.
+   *         The exception message is the full key.
+   * @throws NumberFormatException if the value is not a valid number.
+   *         The exception message contains the full key and the invalid value.
+   */
+  public double getDouble(String key) {
+<span class="nc" id="L191">    return parseDouble(get(key), key);</span>
+  }
+
+  /**
+   * Returns the double associated with the specified key or
+   * &lt;tt&gt;defaultValue&lt;/tt&gt; if no key-value pair exists for the specified key.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @param defaultValue The default value. Can be &lt;tt&gt;null&lt;/tt&gt;.
+   * @return the double value.
+   * @throws NumberFormatException if the value exists but is not a valid
+   *         number.
+   *         The exception message contains the full key and the invalid value.
+   */
+  public double getDouble(String key, double defaultValue) {
+<span class="nc" id="L205">    String value = _configData.get(key);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">    return value == null ? defaultValue : parseDouble(value, key);</span>
+  }
+
+  private double parseDouble(String value, String key) {
+    try {
+<span class="nc" id="L211">      return Double.parseDouble(value);</span>
+<span class="nc" id="L212">    } catch (NumberFormatException e) {</span>
+<span class="nc" id="L213">      throw createNumberFormatException(&quot;number&quot;, value, key);</span>
+    }
+  }
+
+  /**
+   * Returns the array of doubles associated with the specified key.
+   * The numbers are separated by whitespaces.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the array of double values.
+   * @throws IllegalArgumentException if no value exists for &lt;tt&gt;key&lt;/tt&gt;.
+   *         The exception message is the full key.
+   * @throws NumberFormatException if the value exists but is not a
+   *         sequence of number. The exception message contains
+   *         the full key and the invalid value.
+   */
+  public double[] getDoubleArray(String key) {
+<span class="nc" id="L229">    return parseDoubleArray(get(key), key);</span>
+  }
+
+  /**
+   * Returns the array of doubles associated with the specified key
+   * or &lt;tt&gt;defaultValue&lt;/tt&gt; if no key-value pair exists for
+   * the specified key. The numbers are separated by whitespaces.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @param defaultValue The default value. Can be &lt;tt&gt;null&lt;/tt&gt;.
+   * @return the array of double values.
+   * @throws NumberFormatException if the value exists but is not a
+   *         sequence of number. The exception message contains
+   *         the full key and the invalid value.
+   */
+  public double[] getDoubleArray(String key, double[] defaultValue) {
+<span class="nc" id="L244">    String value = _configData.get(key);</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">    return value == null ? defaultValue : parseDoubleArray(value, key);</span>
+  }
+
+  private double[] parseDoubleArray(String value, String key) {
+    try {
+<span class="nc" id="L250">      StringTokenizer tokenizer = new StringTokenizer(value);</span>
+<span class="nc" id="L251">      double[] result = new double[tokenizer.countTokens()];</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">      for (int i = 0; i &lt; result.length; i++) {</span>
+<span class="nc" id="L253">        result[i] = Double.parseDouble(tokenizer.nextToken());</span>
+      }
+<span class="nc" id="L255">      return result;</span>
+<span class="nc" id="L256">    } catch (NumberFormatException e) {</span>
+<span class="nc" id="L257">      throw createNumberFormatException(&quot;sequence of numbers&quot;, value, key);</span>
+    }
+  }
+
+  /**
+   * Returns the color associated with the specified key.
+   * The color is coded as
+   * &lt;ul&gt;&lt;li&gt;a decimal number (starting with a non-zero digit),
+   *     &lt;li&gt;a hexadecimal number (starting with &lt;tt&gt;0x&lt;/tt&gt;), or
+   *     &lt;li&gt;an octal number (starting with zero).
+   * &lt;/ul&gt;
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the color.
+   * @throws NumberFormatException if the value exists but is not a number.
+   *         The exception message contains the full key and the invalid value.
+   */
+  public Color getColor(String key) {
+<span class="nc" id="L274">    return parseColor(get(key), key);</span>
+  }
+
+  /**
+   * Returns the color associated with the specified key or the specified
+   * default value if no key-value pair exists for the specified key.
+   * The color is coded as
+   * &lt;ul&gt;&lt;li&gt;a decimal number (starting with a non-zero digit),
+   *     &lt;li&gt;a hexadecimal number (starting with &lt;tt&gt;0x&lt;/tt&gt;), or
+   *     &lt;li&gt;an octal number (starting with zero).
+   * &lt;/ul&gt;
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @param defaultValue The default value. Can be &lt;tt&gt;null&lt;/tt&gt;.
+   * @return the color or &lt;tt&gt;null&lt;/tt&gt; if the value is an empty string.
+   * @throws NumberFormatException if the value exists but is not a number.
+   *         The exception message contains the full key and the invalid value.
+   */
+  public Color getColor(String key, Color defaultValue) {
+<span class="nc" id="L292">    String value = _configData.get(key);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">    return value == null ? defaultValue : parseColor(value, key);</span>
+  }
+
+  private Color parseColor(String value, String key) {
+    try {
+<span class="nc bnc" id="L298" title="All 2 branches missed.">      return value.length() == 0 ? null : decodeInternal(value);</span>
+<span class="nc" id="L299">    } catch (NumberFormatException e) {</span>
+<span class="nc" id="L300">      throw createNumberFormatException(&quot;number&quot;, value, key);</span>
+    }
+  }
+
+<span class="nc" id="L304">static private HColorSet colors = HColorSet.instance();</span>
+private Color decodeInternal(String value) {
+<span class="nc bnc" id="L306" title="All 2 branches missed.">	if (value!=null) {</span>
+		  try {
+<span class="nc" id="L308">			return colors.getColor(value).toColor(ColorMapper.IDENTITY);</span>
+<span class="nc" id="L309">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L310">			return Color.WHITE;</span>
+		}
+	}
+<span class="nc" id="L313">	return Color.decode(value);</span>
+}
+
+  /**
+   * Returns the child node associated with the specified key.
+   * This method returns in any case a non-&lt;tt&gt;null&lt;/tt&gt; result.
+   * @param key The (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the corresponding child node which may be empty.
+   */
+  public ConfigParameters getNode(String key) {
+<span class="nc" id="L323">    return new ConfigParameters(_configData.getNode(key));</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

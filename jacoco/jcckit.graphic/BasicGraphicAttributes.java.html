@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicGraphicAttributes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.graphic</a> &gt; <span class="el_source">BasicGraphicAttributes.java</span></div><h1>BasicGraphicAttributes.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.graphic;
+
+import java.awt.Color;
+
+import jcckit.util.ConfigParameters;
+
+/**
+ * The basic attributes of any {@link BasicGraphicalElement}. This is an
+ * extension of {@link ShapeAttributes} implementing {@link TextAttributes}.
+ *
+ * @author Franz-Josef Elmer
+ */
+public class BasicGraphicAttributes extends ShapeAttributes
+                                    implements TextAttributes {
+  /** Configuration parameter key. */
+  public static final String TEXT_COLOR_KEY = &quot;textColor&quot;,
+                             FONT_NAME_KEY = &quot;fontName&quot;,
+                             FONT_STYLE_KEY = &quot;fontStyle&quot;,
+                             FONT_SIZE_KEY = &quot;fontSize&quot;,
+                             HORIZONTAL_ANCHOR_KEY = &quot;horizontalAnchor&quot;,
+                             VERTICAL_ANCHOR_KEY = &quot;verticalAnchor&quot;,
+                             ORIENTATION_ANGLE_KEY = &quot;orientationAngle&quot;;
+
+  private final Color _textColor;
+  private final String _fontName;
+  private final FontStyle _fontStyle;
+  private final double _fontSize;
+  private final double _orientationAngle;
+  private final Anchor _horizontalAnchor;
+  private final Anchor _verticalAnchor;
+
+  /**
+   * Creates a new instance based on the specified configuration
+   * parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;textColor = &lt;/tt&gt;&lt;i&gt;default foreground color of the
+   *     renderer&lt;/i&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;Color&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The text color.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;fontName = &lt;/tt&gt;&lt;i&gt;default font name of the
+   *     renderer&lt;/i&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The name of the text font. The standard Java font name
+   *         &quot;Serif&quot;, &quot;SansSerif&quot;, and &quot;Monospaced&quot; can be used.
+   *         Other font names depend on the actual {@link Renderer}
+   *         rendering the corresponding {@link BasicGraphicalElement}.
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;fontStyle = normal&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;
+   *     &lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The font style. Possible values are:
+   *     &lt;ul&gt;&lt;li&gt;&lt;tt&gt;normal&lt;/tt&gt;&lt;li&gt;&lt;tt&gt;bold&lt;/tt&gt;&lt;li&gt;&lt;tt&gt;italic&lt;/tt&gt;
+   *     &lt;li&gt;&lt;tt&gt;bold italic&lt;/tt&gt;&lt;/ul&gt;
+   *     &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;fontSize = &lt;/tt&gt;&lt;i&gt;default font size of the
+   *     renderer&lt;/i&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The font size in units of the device-independent
+   *     coordinates.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;orientationAngle = 0&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The orientation angle of the text (in degree).
+   *     Zero means normal orientation whereas a positive value means
+   *     a rotation in counter-clockweise direction.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;horizontalAnchor = left&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;
+   *     &lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Anchor for horizontal text position. Possible values are
+   *     &lt;tt&gt;left&lt;/tt&gt;, &lt;tt&gt;center&lt;/tt&gt;, and &lt;tt&gt;right&lt;/tt&gt;.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;verticalAnchor = center&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;
+   *     &lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Anchor for vertical text position. Possible values are
+   *     &lt;tt&gt;top&lt;/tt&gt;, &lt;tt&gt;center&lt;/tt&gt;, and &lt;tt&gt;bottom&lt;/tt&gt;.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   * Additional configuration parameters are explained in the
+   * {@link ShapeAttributes#ShapeAttributes constructor}
+   * of the superclass {@link ShapeAttributes}.
+   */
+  public BasicGraphicAttributes(ConfigParameters config) {
+<span class="nc" id="L95">    super(config);</span>
+<span class="nc" id="L96">    _textColor = config.getColor(TEXT_COLOR_KEY, null);</span>
+<span class="nc" id="L97">    _fontName = config.get(FONT_NAME_KEY, null);</span>
+<span class="nc" id="L98">    _fontStyle = FontStyle.getFontStyle(config, FONT_STYLE_KEY,</span>
+                                        FontStyle.NORMAL);
+<span class="nc" id="L100">    _fontSize = config.getDouble(FONT_SIZE_KEY, 0);</span>
+<span class="nc" id="L101">    _orientationAngle = config.getDouble(ORIENTATION_ANGLE_KEY, 0);</span>
+
+<span class="nc" id="L103">    _horizontalAnchor = Anchor.getHorizontalAnchor(config,</span>
+                                  HORIZONTAL_ANCHOR_KEY, Anchor.LEFT_BOTTOM);
+<span class="nc" id="L105">    _verticalAnchor = Anchor.getVerticalAnchor(config,</span>
+                                  VERTICAL_ANCHOR_KEY, Anchor.CENTER);
+<span class="nc" id="L107">  }</span>
+
+  /**
+   * Creates a new instance.
+   * @param fillColor The fill color. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param lineColor The line color. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param lineThickness Thickness of the line.
+   *        Negative numbers will be trimmed to zero.
+   * @param linePattern Line pattern. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param textColor The text color. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param fontName The font name. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param fontStyle The font style. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param fontSize The font size in units of the device-independent
+   *        coordinates. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param orientationAngle Orientation angle of the text.
+   * @param horizontalAnchor Horizontal text anchor.
+   * @param verticalAnchor Vertical text anchor.
+   */
+  public BasicGraphicAttributes(Color fillColor, Color lineColor,
+                                double lineThickness,
+                                double[] linePattern, Color textColor,
+                                String fontName, FontStyle fontStyle,
+                                double fontSize, double orientationAngle,
+                                Anchor horizontalAnchor,
+                                Anchor verticalAnchor) {
+<span class="nc" id="L132">    super(fillColor, lineColor, lineThickness, linePattern);</span>
+<span class="nc" id="L133">    _textColor = textColor;</span>
+<span class="nc" id="L134">    _fontName = fontName;</span>
+<span class="nc" id="L135">    _fontStyle = fontStyle;</span>
+<span class="nc" id="L136">    _fontSize = fontSize;</span>
+<span class="nc" id="L137">    _orientationAngle = orientationAngle;</span>
+<span class="nc" id="L138">    _horizontalAnchor = horizontalAnchor;</span>
+<span class="nc" id="L139">    _verticalAnchor = verticalAnchor;</span>
+<span class="nc" id="L140">  }</span>
+
+  /**
+   *  Returns the text color.
+   *  @return &lt;tt&gt;null&lt;/tt&gt; means default color of the renderer.
+   */
+  public Color getTextColor() {
+<span class="nc" id="L147">    return _textColor;</span>
+  }
+
+  /**
+   *  Returns the font name.
+   *  @return &lt;tt&gt;null&lt;/tt&gt; means default font name of the renderer.
+   */
+  public String getFontName() {
+<span class="nc" id="L155">    return _fontName;</span>
+  }
+
+  /**
+   *  Returns the font style.
+   *  @return &lt;tt&gt;null&lt;/tt&gt; means default font style of the renderer.
+   */
+  public FontStyle getFontStyle() {
+<span class="nc" id="L163">    return _fontStyle;</span>
+  }
+
+  /**
+   *  Returns the font size in units of the device-independent coordinates.
+   */
+  public double getFontSize() {
+<span class="nc" id="L170">    return _fontSize;</span>
+  }
+
+  /**
+   *  Returns the orientation angle in degree. Zero means
+   *  normal text orientation. Any positive angle means a
+   *  counter-clockwise rotation of the text.
+   */
+  public double getOrientationAngle() {
+<span class="nc" id="L179">    return _orientationAngle;</span>
+  }
+
+  /**
+   *  Returns the anchor for horizontal position of the text.
+   *  Note, that the anchor is related to the text &lt;em&gt;before&lt;/em&gt;
+   *  it is rotated by the orientation angle.
+   *  @return one of the three instances of &lt;tt&gt;Anchor&lt;/tt&gt;.
+   */
+  public Anchor getHorizontalAnchor() {
+<span class="nc" id="L189">    return _horizontalAnchor;</span>
+  }
+
+  /**
+   *  Returns the anchor for vertical position of the text.
+   *  Note, that the anchor is related to the text &lt;em&gt;before&lt;/em&gt;
+   *  it is rotated by the orientation angle.
+   *  @return one of the three instances of &lt;tt&gt;Anchor&lt;/tt&gt;.
+   */
+  public Anchor getVerticalAnchor() {
+<span class="nc" id="L199">    return _verticalAnchor;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

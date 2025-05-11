@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.ubrex</a> &gt; <span class="el_source">CharSet.java</span></div><h1>CharSet.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package com.plantuml.ubrex;
+
+<span class="fc" id="L37">public class CharSet {</span>
+
+<span class="fc" id="L39">	private final CaseMode mode = CaseMode.CASE_INSENSITIVE;</span>
+
+<span class="fc" id="L41">	private long mask1 = 0L;</span>
+<span class="fc" id="L42">	private long mask2 = 0L;</span>
+
+	public void addChar(char ch) {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (mode == CaseMode.CASE_INSENSITIVE)</span>
+<span class="fc" id="L46">			ch = CaseMode.ensureLowercase(ch);</span>
+<span class="fc" id="L47">		final int offset = getOffset(ch);</span>
+<span class="fc bfc" id="L48" title="All 4 branches covered.">		if (ch &lt; 32 || ch &gt; 128)</span>
+<span class="fc" id="L49">			throw new IllegalArgumentException(&quot;Bad char : &quot; + ch);</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (offset &lt; 64)</span>
+<span class="fc" id="L52">			mask1 |= (1L &lt;&lt; offset);</span>
+		else
+<span class="fc" id="L54">			mask2 |= (1L &lt;&lt; (offset - 64));</span>
+
+<span class="fc" id="L56">	}</span>
+
+	public void addRange(char start, char end) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (start &gt; end)</span>
+<span class="fc" id="L60">			throw new IllegalArgumentException(&quot;Invalid range: '&quot; + start + &quot;' is greater than '&quot; + end + &quot;'.&quot;);</span>
+
+<span class="pc bpc" id="L62" title="2 of 4 branches missed.">		if (start &lt; 32 || end &gt; 128)</span>
+<span class="nc" id="L63">			throw new IllegalArgumentException(&quot;Characters must be in the range 32 to 128.&quot;);</span>
+
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (mode == CaseMode.CASE_INSENSITIVE) {</span>
+<span class="fc" id="L66">			start = CaseMode.ensureLowercase(start);</span>
+<span class="fc" id="L67">			end = CaseMode.ensureLowercase(end);</span>
+		}
+
+<span class="fc" id="L70">		final int startOffset = start - 32;</span>
+<span class="fc" id="L71">		final int endOffset = end - 32;</span>
+
+		// Case 1: Entire range is in mask1 (offsets 0 to 63)
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (endOffset &lt; 64) {</span>
+<span class="fc" id="L75">			int length = endOffset - startOffset + 1;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			long rangeMask = (length == 64 ? -1L : ((1L &lt;&lt; length) - 1)) &lt;&lt; startOffset;</span>
+<span class="fc" id="L77">			mask1 |= rangeMask;</span>
+<span class="fc" id="L78">		}</span>
+		// Case 2: Entire range is in mask2 (offsets 64 and above)
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		else if (startOffset &gt;= 64) {</span>
+<span class="fc" id="L81">			int adjustedStart = startOffset - 64;</span>
+<span class="fc" id="L82">			int adjustedEnd = endOffset - 64;</span>
+<span class="fc" id="L83">			int length = adjustedEnd - adjustedStart + 1;</span>
+<span class="fc" id="L84">			long rangeMask = ((1L &lt;&lt; length) - 1) &lt;&lt; adjustedStart;</span>
+<span class="fc" id="L85">			mask2 |= rangeMask;</span>
+<span class="fc" id="L86">		}</span>
+		// Case 3: Range spans both mask1 and mask2
+		else {
+			// For mask1: add bits from startOffset up to bit 63
+<span class="nc" id="L90">			int length1 = 64 - startOffset;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			long maskPart1 = (length1 == 64 ? -1L : ((1L &lt;&lt; length1) - 1)) &lt;&lt; startOffset;</span>
+<span class="nc" id="L92">			mask1 |= maskPart1;</span>
+
+			// For mask2: add bits from 0 up to (endOffset - 64)
+<span class="nc" id="L95">			int adjustedEnd = endOffset - 64;</span>
+<span class="nc" id="L96">			int length2 = adjustedEnd + 1;</span>
+<span class="nc" id="L97">			long maskPart2 = ((1L &lt;&lt; length2) - 1);</span>
+<span class="nc" id="L98">			mask2 |= maskPart2;</span>
+		}
+<span class="fc" id="L100">	}</span>
+
+	public boolean contains(char ch) {
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (mode == CaseMode.CASE_INSENSITIVE)</span>
+<span class="fc" id="L104">			ch = CaseMode.ensureLowercase(ch);</span>
+
+<span class="fc" id="L106">		final int offset = getOffset(ch);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (offset &gt; 128)</span>
+<span class="nc" id="L108">			return false;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (offset &lt; 64)</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			return (mask1 &amp; (1L &lt;&lt; offset)) != 0;</span>
+		else
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			return (mask2 &amp; (1L &lt;&lt; (offset - 64))) != 0;</span>
+	}
+
+	private int getOffset(char ch) {
+<span class="fc" id="L116">		return ch - 32;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

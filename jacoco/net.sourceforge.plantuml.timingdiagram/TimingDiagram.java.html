@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimingDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram</a> &gt; <span class="el_source">TimingDiagram.java</span></div><h1>TimingDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
+import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
+
+public class TimingDiagram extends UmlDiagram implements Clocks {
+
+	public static final double marginX1 = 5;
+<span class="fc" id="L79">	private final double marginX2 = 5;</span>
+
+<span class="fc" id="L81">	private final Map&lt;String, TimeTick&gt; codes = new HashMap&lt;String, TimeTick&gt;();</span>
+<span class="fc" id="L82">	private final Map&lt;String, Player&gt; players = new LinkedHashMap&lt;String, Player&gt;();</span>
+<span class="fc" id="L83">	private final Map&lt;String, PlayerClock&gt; clocks = new HashMap&lt;String, PlayerClock&gt;();</span>
+<span class="fc" id="L84">	private final List&lt;TimeMessage&gt; messages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L85">	private final List&lt;Highlight&gt; highlights = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L86">	private final TimingRuler ruler = new TimingRuler(getSkinParam());</span>
+	private TimeTick now;
+	private Player lastPlayer;
+<span class="fc" id="L89">	private TimeAxisStategy timeAxisStategy = TimeAxisStategy.AUTOMATIC;</span>
+<span class="fc" id="L90">	private boolean compactByDefault = false;</span>
+
+	public DiagramDescription getDescription() {
+<span class="fc" id="L93">		return new DiagramDescription(&quot;(Timing Diagram)&quot;);</span>
+	}
+
+	public TimingDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L97">		super(source, UmlDiagramType.TIMING, null, preprocessing);</span>
+<span class="fc" id="L98">	}</span>
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="fc" id="L104">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="fc" id="L109">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L112">				drawInternal(ug);</span>
+<span class="fc" id="L113">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L116">				final double withBeforeRuler = getPart1MaxWidth(stringBounder);</span>
+<span class="nc" id="L117">				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;</span>
+<span class="nc" id="L118">				return new XDimension2D(totalWith, getHeightTotal(stringBounder));</span>
+			}
+
+		};
+	}
+
+	private StyleSignatureBasic getStyleSignature() {
+<span class="fc" id="L125">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
+	}
+
+	private HColor black() {
+<span class="fc" id="L129">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L130">		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+	}
+
+	private void drawInternal(UGraphic ug) {
+<span class="fc" id="L135">		ruler.ensureNotEmpty();</span>
+<span class="fc" id="L136">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L137">		final double part1MaxWidth = getPart1MaxWidth(stringBounder);</span>
+
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
+<span class="fc" id="L140">			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));</span>
+<span class="fc" id="L141">			final HColor generalBackgroundColor = player.getGeneralBackgroundColor();</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (generalBackgroundColor != null)</span>
+<span class="nc" id="L143">				ugPlayer.apply(generalBackgroundColor).apply(generalBackgroundColor.bg())</span>
+<span class="nc" id="L144">						.draw(URectangle.build(getWidthTotal(stringBounder), player.getFullHeight(stringBounder)));</span>
+<span class="fc" id="L145">		}</span>
+
+<span class="fc" id="L147">		final UTranslate widthPart1 = UTranslate.dx(part1MaxWidth);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (compactByDefault == false)</span>
+<span class="fc" id="L149">			drawBorder(ug);</span>
+
+<span class="fc" id="L151">		ug = ug.apply(UTranslate.dx(marginX1));</span>
+
+<span class="fc" id="L153">		drawHighlightsBack(ug.apply(widthPart1));</span>
+<span class="fc" id="L154">		ruler.drawVlines(ug.apply(widthPart1), getHeightInner(stringBounder));</span>
+<span class="fc" id="L155">		boolean first = true;</span>
+
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
+<span class="fc" id="L158">			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));</span>
+<span class="fc" id="L159">			final double caption = getHeightForCaptions(stringBounder);</span>
+
+<span class="fc bfc" id="L161" title="All 2 branches covered.">			if (first) {</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">				if (player.isCompact() == false)</span>
+<span class="fc" id="L163">					drawHorizontalSeparator(ugPlayer);</span>
+
+<span class="fc" id="L165">				player.getPart1(part1MaxWidth, caption).drawU(ugPlayer);</span>
+<span class="fc" id="L166">				player.getPart2().drawU(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));</span>
+			} else {
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">				if (player.isCompact() == false)</span>
+<span class="fc" id="L169">					drawHorizontalSeparator(ugPlayer.apply(UTranslate.dy(caption)));</span>
+
+<span class="fc" id="L171">				player.getPart1(part1MaxWidth, 0).drawU(ugPlayer.apply(UTranslate.dy(caption)));</span>
+<span class="fc" id="L172">				player.getPart2().drawU(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));</span>
+			}
+<span class="fc" id="L174">			first = false;</span>
+<span class="fc" id="L175">		}</span>
+<span class="fc" id="L176">		ug = ug.apply(widthPart1);</span>
+<span class="fc" id="L177">		ruler.drawTimeAxis(ug.apply(getLastTranslate(stringBounder)), this.timeAxisStategy, codes);</span>
+
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		for (TimeMessage timeMessage : messages)</span>
+<span class="fc" id="L180">			drawMessages(ug, timeMessage);</span>
+
+<span class="fc" id="L182">		drawHighlightsLines(ug);</span>
+<span class="fc" id="L183">	}</span>
+
+	private void drawHorizontalSeparator(UGraphic ug) {
+<span class="fc" id="L186">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L187">		ug = ug.apply(black());</span>
+<span class="fc" id="L188">		ug = ug.apply(getBorderStroke());</span>
+<span class="fc" id="L189">		ug = ug.apply(UTranslate.dx(-marginX1));</span>
+<span class="fc" id="L190">		ug.draw(ULine.hline(getWidthTotal(stringBounder)));</span>
+<span class="fc" id="L191">	}</span>
+
+	private void drawBorder(UGraphic ug) {
+<span class="fc" id="L194">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L195">		final ULine border = ULine.vline(getLastTranslate(stringBounder).getDy());</span>
+<span class="fc" id="L196">		ug = ug.apply(black()).apply(getBorderStroke());</span>
+<span class="fc" id="L197">		ug.draw(border);</span>
+<span class="fc" id="L198">		ug.apply(UTranslate.dx(getWidthTotal(stringBounder))).draw(border);</span>
+<span class="fc" id="L199">	}</span>
+
+	private UStroke getBorderStroke() {
+<span class="fc" id="L202">		return getStyleSignature().getMergedStyle(getCurrentStyleBuilder()).getStroke();</span>
+	}
+
+	private UTranslate getLastTranslate(final StringBounder stringBounder) {
+<span class="fc" id="L206">		return getUTranslateForPlayer(null, stringBounder).compose(UTranslate.dy(getHeightForCaptions(stringBounder)));</span>
+	}
+
+	private void drawHighlightsBack(UGraphic ug) {
+<span class="fc" id="L210">		final double height = getHeightInner(ug.getStringBounder());</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		for (Highlight highlight : highlights)</span>
+<span class="nc" id="L212">			highlight.drawHighlightsBack(ug, ruler, height);</span>
+
+<span class="fc" id="L214">	}</span>
+
+	private void drawHighlightsLines(UGraphic ug) {
+<span class="fc" id="L217">		final double height = getHeightInner(ug.getStringBounder());</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		for (Highlight highlight : highlights) {</span>
+<span class="nc" id="L219">			highlight.drawHighlightsLines(ug, ruler, height);</span>
+<span class="nc" id="L220">			final double start = ruler.getPosInPixel(highlight.getTickFrom());</span>
+<span class="nc" id="L221">			highlight.getCaption(getSkinParam()).drawU(ug.apply(new UTranslate(start + 3, 2)));</span>
+<span class="nc" id="L222">		}</span>
+<span class="fc" id="L223">	}</span>
+
+	private double getHeightTotal(StringBounder stringBounder) {
+<span class="nc" id="L226">		return getHeightInner(stringBounder) + ruler.getHeight(stringBounder);</span>
+	}
+
+	private double getHeightInner(StringBounder stringBounder) {
+<span class="fc" id="L230">		return getLastTranslate(stringBounder).getDy();</span>
+	}
+
+	private double getHeightForCaptions(StringBounder stringBounder) {
+<span class="fc" id="L234">		double result = 0;</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		for (Highlight highlight : highlights) {</span>
+<span class="nc" id="L236">			final TextBlock caption = highlight.getCaption(getSkinParam());</span>
+<span class="nc" id="L237">			result = Math.max(result, caption.calculateDimension(stringBounder).getHeight());</span>
+<span class="nc" id="L238">		}</span>
+<span class="fc" id="L239">		return result;</span>
+	}
+
+	private double getWidthTotal(final StringBounder stringBounder) {
+<span class="fc" id="L243">		return getPart1MaxWidth(stringBounder) + ruler.getWidth() + marginX1 + marginX2;</span>
+	}
+
+	private double getPart1MaxWidth(StringBounder stringBounder) {
+<span class="fc" id="L247">		double width = 0;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		for (Player player : players.values())</span>
+<span class="fc" id="L249">			width = Math.max(width, player.getPart1(0, 0).calculateDimension(stringBounder).getWidth());</span>
+
+<span class="fc" id="L251">		return width;</span>
+	}
+
+	private void drawMessages(UGraphic ug, TimeMessage message) {
+<span class="fc" id="L255">		final Player player1 = message.getPlayer1();</span>
+<span class="fc" id="L256">		final Player player2 = message.getPlayer2();</span>
+
+<span class="fc" id="L258">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L259">		final UTranslate translate1 = getUTranslateForPlayer(player1, stringBounder)</span>
+<span class="fc" id="L260">				.compose(UTranslate.dy(getHeightForCaptions(stringBounder)));</span>
+<span class="fc" id="L261">		final UTranslate translate2 = getUTranslateForPlayer(player2, stringBounder)</span>
+<span class="fc" id="L262">				.compose(UTranslate.dy(getHeightForCaptions(stringBounder)));</span>
+
+<span class="fc" id="L264">		final IntricatedPoint pt1 = player1.getTimeProjection(stringBounder, message.getTick1());</span>
+<span class="fc" id="L265">		final IntricatedPoint pt2 = player2.getTimeProjection(stringBounder, message.getTick2());</span>
+
+<span class="pc bpc" id="L267" title="2 of 4 branches missed.">		if (pt1 == null || pt2 == null)</span>
+<span class="nc" id="L268">			return;</span>
+
+<span class="fc" id="L270">		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),</span>
+<span class="fc" id="L271">				message.getLabel(), getSkinParam(), message);</span>
+<span class="fc" id="L272">		timeArrow.drawU(ug);</span>
+
+<span class="fc" id="L274">	}</span>
+
+	private UTranslate getUTranslateForPlayer(Player candidat, StringBounder stringBounder) {
+<span class="fc" id="L277">		double y = 0;</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">			if (candidat == player)</span>
+<span class="fc" id="L280">				return UTranslate.dy(y);</span>
+
+//			if (y == 0) {
+//				y += getHeightHighlights(stringBounder);
+//			}
+<span class="fc" id="L285">			y += player.getFullHeight(stringBounder);</span>
+<span class="fc" id="L286">		}</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (candidat == null)</span>
+<span class="fc" id="L288">			return UTranslate.dy(y);</span>
+
+<span class="nc" id="L290">		throw new IllegalArgumentException();</span>
+	}
+
+	public CommandExecutionResult createRobustConcise(String code, String full, TimingStyle type, boolean compact,
+			Stereotype stereotype, HColor backColor) {
+<span class="pc bpc" id="L295" title="2 of 4 branches missed.">		final Player player = new PlayerRobustConcise(type, full, getSkinParam(), ruler, compactByDefault || compact,</span>
+				stereotype, backColor);
+<span class="fc" id="L297">		players.put(code, player);</span>
+<span class="fc" id="L298">		lastPlayer = player;</span>
+<span class="fc" id="L299">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult createClock(String code, String full, int period, int pulse, int offset,
+			boolean compact, Stereotype stereotype) {
+<span class="nc" id="L304">		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset,</span>
+				compactByDefault, stereotype);
+<span class="nc" id="L306">		players.put(code, player);</span>
+<span class="nc" id="L307">		clocks.put(code, player);</span>
+<span class="nc" id="L308">		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);</span>
+<span class="nc" id="L309">		ruler.addTime(tick);</span>
+<span class="nc" id="L310">		return CommandExecutionResult.ok();</span>
+	}
+
+	public PlayerAnalog createAnalog(String code, String full, boolean compact, Stereotype stereotype) {
+<span class="nc" id="L314">		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
+<span class="nc" id="L315">		players.put(code, player);</span>
+<span class="nc" id="L316">		return player;</span>
+	}
+
+	public CommandExecutionResult createBinary(String code, String full, boolean compact, Stereotype stereotype) {
+<span class="nc" id="L320">		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
+<span class="nc" id="L321">		players.put(code, player);</span>
+<span class="nc" id="L322">		return CommandExecutionResult.ok();</span>
+	}
+
+	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
+<span class="fc" id="L326">		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),</span>
+<span class="fc" id="L327">				label, getSkinParam());</span>
+<span class="fc" id="L328">		messages.add(message);</span>
+<span class="fc" id="L329">		return message;</span>
+	}
+
+	public void addTime(TimeTick time, String code) {
+<span class="fc" id="L333">		this.now = time;</span>
+<span class="fc" id="L334">		ruler.addTime(time);</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">		if (code != null)</span>
+<span class="nc" id="L336">			this.codes.put(code, time);</span>
+
+<span class="fc" id="L338">	}</span>
+
+	public TimeTick getCodeValue(String code) {
+<span class="nc" id="L341">		return codes.get(code);</span>
+	}
+
+	public void updateNow(TimeTick time) {
+<span class="fc" id="L345">		this.now = time;</span>
+<span class="fc" id="L346">	}</span>
+
+	public Player getPlayer(String code) {
+<span class="fc" id="L349">		return players.get(code);</span>
+	}
+
+	public TimeTick getNow() {
+<span class="fc" id="L353">		return now;</span>
+	}
+
+	public TimeTick getClockValue(String clockName, int nb) {
+<span class="nc" id="L357">		final PlayerClock clock = clocks.get(clockName);</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">		if (clock == null)</span>
+<span class="nc" id="L359">			return null;</span>
+
+<span class="nc" id="L361">		return new TimeTick(new BigDecimal(nb * clock.getPeriod()), TimingFormat.DECIMAL);</span>
+	}
+
+	public void setLastPlayer(Player player) {
+<span class="fc" id="L365">		this.lastPlayer = player;</span>
+<span class="fc" id="L366">	}</span>
+
+	public Player getLastPlayer() {
+<span class="fc" id="L369">		return lastPlayer;</span>
+	}
+
+	public void scaleInPixels(long tick, long pixel) {
+<span class="nc" id="L373">		ruler.scaleInPixels(tick, pixel);</span>
+<span class="nc" id="L374">	}</span>
+
+	public CommandExecutionResult setTimeAxisStategy(TimeAxisStategy newStrategy) {
+<span class="nc" id="L377">		this.timeAxisStategy = newStrategy;</span>
+<span class="nc" id="L378">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult highlight(TimeTick tickFrom, TimeTick tickTo, Display caption, Colors colors) {
+<span class="nc" id="L382">		this.highlights.add(new Highlight(getSkinParam(), tickFrom, tickTo, caption, colors));</span>
+<span class="nc" id="L383">		return CommandExecutionResult.ok();</span>
+
+	}
+
+	public void goCompactMode() {
+<span class="nc" id="L388">		this.compactByDefault = true;</span>
+<span class="nc" id="L389">	}</span>
+
+	private SimpleDateFormat sdf;
+
+	public CommandExecutionResult useDateFormat(String dateFormat) {
+		try {
+<span class="nc" id="L395">			this.sdf = new SimpleDateFormat(dateFormat, Locale.US);</span>
+<span class="nc" id="L396">		} catch (Exception e) {</span>
+<span class="nc" id="L397">			return CommandExecutionResult.error(&quot;Bad date format&quot;);</span>
+<span class="nc" id="L398">		}</span>
+
+<span class="nc" id="L400">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public TimingFormat getTimingFormatDate() {
+<span class="nc bnc" id="L405" title="All 2 branches missed.">		if (sdf == null)</span>
+<span class="nc" id="L406">			return TimingFormat.DATE;</span>
+<span class="nc" id="L407">		return TimingFormat.create(sdf);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

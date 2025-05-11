@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>obj__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">obj__c.java</span></div><h1>obj__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cgraph.edge__c.agsubedge;
+import static gen.lib.cgraph.node__c.agidnode;
+import static gen.lib.cgraph.pend__c.agrecord_callback;
+import static smetana.core.Macro.AGINEDGE;
+import static smetana.core.Macro.AGNODE;
+import static smetana.core.Macro.AGOUTEDGE;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.CB_UPDATE;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agcbstack_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_Agsym_s;
+import smetana.core.Globals;
+import smetana.core.__ptr__;
+
+<span class="nc" id="L71">public class obj__c {</span>
+
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agdelete&quot;, key=&quot;6wm1l0y857iajfoa6ywpotkld&quot;, definition = &quot;int agdelete(Agraph_t * g, void *obj)&quot;)
+public static Object agdelete(Object... arg_) {
+<span class="nc" id="L76">UNSUPPORTED(&quot;26js2ch8px4mwz3gqvjehanq1&quot;); // int agdelete(Agraph_t * g, void *obj)</span>
+<span class="nc" id="L77">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agmethod_init&quot;, key=&quot;c4ft3rxx9au29a2ns2nhod4dn&quot;, definition = &quot;void agmethod_init(Agraph_t * g, void *obj)&quot;)
+public static void agmethod_init(ST_Agraph_s g, __ptr__ obj) {
+<span class="fc" id="L87">ENTERING(&quot;c4ft3rxx9au29a2ns2nhod4dn&quot;,&quot;agmethod_init&quot;);</span>
+try {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">    if (g.clos.callbacks_enabled)</span>
+<span class="fc" id="L90">	aginitcb(g, obj, g.clos.cb);</span>
+    else
+<span class="nc" id="L92">	agrecord_callback(g, obj, 100, null);</span>
+} finally {
+<span class="fc" id="L94">LEAVING(&quot;c4ft3rxx9au29a2ns2nhod4dn&quot;,&quot;agmethod_init&quot;);</span>
+}
+<span class="fc" id="L96">}</span>
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;aginitcb&quot;, key=&quot;eobcsheti70b9gzoi3z968zev&quot;, definition = &quot;void aginitcb(Agraph_t * g, void *obj, Agcbstack_t * cbstack)&quot;)
+public static void aginitcb(ST_Agraph_s g, __ptr__ obj, ST_Agcbstack_s cbstack) {
+<span class="fc" id="L103">ENTERING(&quot;eobcsheti70b9gzoi3z968zev&quot;,&quot;aginitcb&quot;);</span>
+try {
+    __ptr__ fn;
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">    if (cbstack == null)</span>
+<span class="fc" id="L107">	return;</span>
+<span class="nc" id="L108">UNSUPPORTED(&quot;cv6tr3wc0y2e3s7hrj040fbgz&quot;); //     aginitcb(g, obj, cbstack-&gt;prev);</span>
+<span class="nc" id="L109">UNSUPPORTED(&quot;ugu810574xlbrchajuiqvlbj&quot;); //     fn = ((agobjfn_t)0);</span>
+<span class="nc" id="L110">UNSUPPORTED(&quot;afk5q8b9fd4sednpczh6r1eg9&quot;); //     switch (((((Agobj_t*)(obj))-&gt;tag).objtype)) {</span>
+<span class="nc" id="L111">UNSUPPORTED(&quot;70xjc0sbkjvexfar5luzibcgf&quot;); //     case 0:</span>
+<span class="nc" id="L112">UNSUPPORTED(&quot;33rj0o79bxra63omicn33shh1&quot;); // 	fn = cbstack-&gt;f-&gt;graph.ins;</span>
+<span class="nc" id="L113">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L114">UNSUPPORTED(&quot;d0gk15gzj4wz8nv54zbr285hm&quot;); //     case 1:</span>
+<span class="nc" id="L115">UNSUPPORTED(&quot;43opp5hvwaad6urofp737fx95&quot;); // 	fn = cbstack-&gt;f-&gt;node.ins;</span>
+<span class="nc" id="L116">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L117">UNSUPPORTED(&quot;4u5xz2u3urj13y0aw30fdyup5&quot;); //     case 2:</span>
+<span class="nc" id="L118">UNSUPPORTED(&quot;7k5xv2n0vdcq7e1h7c511n2vt&quot;); // 	fn = cbstack-&gt;f-&gt;edge.ins;</span>
+<span class="nc" id="L119">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L120">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L121">UNSUPPORTED(&quot;b9a2u7luojz68ys0qfhdssxc5&quot;); //     if (fn)</span>
+<span class="nc" id="L122">UNSUPPORTED(&quot;d6swsvu9o2h2ajgawq3fidg54&quot;); // 	fn(g, obj, cbstack-&gt;state);</span>
+<span class="nc" id="L123">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L125">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L127">LEAVING(&quot;eobcsheti70b9gzoi3z968zev&quot;,&quot;aginitcb&quot;);</span>
+}
+}
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agmethod_upd&quot;, key=&quot;29p743rx2pw81slkoaayfeael&quot;, definition = &quot;void agmethod_upd(Agraph_t * g, void *obj, Agsym_t * sym)&quot;)
+public static void agmethod_upd(ST_Agraph_s g, __ptr__ obj, ST_Agsym_s sym) {
+<span class="fc" id="L135">ENTERING(&quot;29p743rx2pw81slkoaayfeael&quot;,&quot;agmethod_upd&quot;);</span>
+try {
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">    if (g.clos.callbacks_enabled)</span>
+<span class="fc" id="L138">	agupdcb(g, obj, sym, g.clos.cb);</span>
+    else
+<span class="nc" id="L140">	agrecord_callback(g, obj, CB_UPDATE, sym);</span>
+} finally {
+<span class="fc" id="L142">LEAVING(&quot;29p743rx2pw81slkoaayfeael&quot;,&quot;agmethod_upd&quot;);</span>
+}
+<span class="fc" id="L144">}</span>
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agupdcb&quot;, key=&quot;8t9rkcpdvmxph6krjvfmz3s51&quot;, definition=&quot;void agupdcb(Agraph_t * g, void *obj, Agsym_t * sym, Agcbstack_t * cbstack)&quot;)
+public static void agupdcb(ST_Agraph_s g, __ptr__ obj, ST_Agsym_s sym, ST_Agcbstack_s cbstack) {
+<span class="fc" id="L151">ENTERING(&quot;8t9rkcpdvmxph6krjvfmz3s51&quot;,&quot;agupdcb&quot;);</span>
+try {
+    __ptr__ fn;
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">    if (cbstack == null)</span>
+<span class="fc" id="L155">	return;</span>
+<span class="nc" id="L156">UNSUPPORTED(&quot;7xps60r7235mbe5tshsk48gqu&quot;); //     agupdcb(g, obj, sym, cbstack-&gt;prev);</span>
+<span class="nc" id="L157">UNSUPPORTED(&quot;coxarw2y9j5pc184wun1hzqh4&quot;); //     fn = ((agobjupdfn_t)0);</span>
+<span class="nc" id="L158">UNSUPPORTED(&quot;afk5q8b9fd4sednpczh6r1eg9&quot;); //     switch (((((Agobj_t*)(obj))-&gt;tag).objtype)) {</span>
+<span class="nc" id="L159">UNSUPPORTED(&quot;70xjc0sbkjvexfar5luzibcgf&quot;); //     case 0:</span>
+<span class="nc" id="L160">UNSUPPORTED(&quot;edztg04z181ml2fb23vg86p4&quot;); // 	fn = cbstack-&gt;f-&gt;graph.mod;</span>
+<span class="nc" id="L161">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L162">UNSUPPORTED(&quot;d0gk15gzj4wz8nv54zbr285hm&quot;); //     case 1:</span>
+<span class="nc" id="L163">UNSUPPORTED(&quot;dt0aez1qarpjppkqak7liv45r&quot;); // 	fn = cbstack-&gt;f-&gt;node.mod;</span>
+<span class="nc" id="L164">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L165">UNSUPPORTED(&quot;4u5xz2u3urj13y0aw30fdyup5&quot;); //     case 2:</span>
+<span class="nc" id="L166">UNSUPPORTED(&quot;dw5h49n9x5t8rmlgpk6lvanem&quot;); // 	fn = cbstack-&gt;f-&gt;edge.mod;</span>
+<span class="nc" id="L167">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+<span class="nc" id="L168">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L169">UNSUPPORTED(&quot;b9a2u7luojz68ys0qfhdssxc5&quot;); //     if (fn)</span>
+<span class="nc" id="L170">UNSUPPORTED(&quot;ecckhw6badvki2tacvj1ch4bu&quot;); // 	fn(g, obj, cbstack-&gt;state, sym);</span>
+<span class="nc" id="L171">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L173">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L175">LEAVING(&quot;8t9rkcpdvmxph6krjvfmz3s51&quot;,&quot;agupdcb&quot;);</span>
+}
+}
+
+
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agroot&quot;, key=&quot;53858x47ifwq7ldf9ukvpdc5r&quot;, definition = &quot;Agraph_t *agroot(void* obj)&quot;)
+public static ST_Agraph_s agroot(ST_Agobj_s obj) {
+<span class="fc" id="L186">ENTERING(&quot;53858x47ifwq7ldf9ukvpdc5r&quot;,&quot;agroot&quot;);</span>
+try {
+<span class="pc bpc" id="L188" title="1 of 4 branches missed.">    switch (obj.tag.objtype) {</span>
+    case AGINEDGE:
+    case AGOUTEDGE:
+<span class="fc" id="L191">	return (ST_Agraph_s) ((ST_Agedge_s)obj).node.root;</span>
+    case AGNODE:
+<span class="fc" id="L193">	return (ST_Agraph_s) ((ST_Agnode_s)obj).root;</span>
+    case AGRAPH:
+<span class="fc" id="L195">	return (ST_Agraph_s) ((ST_Agraph_s)obj).root;</span>
+    default:			/* actually can't occur if only 2 bit tags */
+<span class="nc" id="L197">	throw new UnsupportedOperationException(&quot;agroot of a bad object&quot;);</span>
+    }
+} finally {
+<span class="fc" id="L200">LEAVING(&quot;53858x47ifwq7ldf9ukvpdc5r&quot;,&quot;agroot&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agraphof&quot;, key=&quot;brxx6qho8cw09dg7o27lc7c6z&quot;, definition = &quot;Agraph_t *agraphof(void *obj)&quot;)
+@Reviewed(when = &quot;10/11/2020&quot;)
+public static ST_Agraph_s agraphof(ST_Agobj_s obj) {
+<span class="fc" id="L210">ENTERING(&quot;brxx6qho8cw09dg7o27lc7c6z&quot;,&quot;agraphof&quot;);</span>
+try {
+<span class="pc bpc" id="L212" title="1 of 4 branches missed.">    switch (obj.tag.objtype) {</span>
+    case AGINEDGE:
+    case AGOUTEDGE:
+<span class="fc" id="L215">    return (ST_Agraph_s) ((ST_Agedge_s)obj).node.root;</span>
+    case AGNODE:
+<span class="fc" id="L217">    return (ST_Agraph_s) ((ST_Agnode_s)obj).root;</span>
+    case AGRAPH:
+<span class="fc" id="L219">	return (ST_Agraph_s) obj;</span>
+    default:			/* actually can't occur if only 2 bit tags */
+<span class="nc" id="L221">	System.err.println(&quot;agraphof a bad object&quot;);</span>
+<span class="nc" id="L222">	return null;</span>
+    }
+} finally {
+<span class="fc" id="L225">LEAVING(&quot;brxx6qho8cw09dg7o27lc7c6z&quot;,&quot;agraphof&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agcontains&quot;, key=&quot;91ej8cxcc0kzgkg2yk3pdiifs&quot;, definition = &quot;int agcontains(Agraph_t* g, void* obj)&quot;)
+public static boolean agcontains(Globals zz, ST_Agraph_s g, ST_Agobj_s obj) {
+<span class="fc" id="L235">ENTERING(&quot;91ej8cxcc0kzgkg2yk3pdiifs&quot;,&quot;agcontains&quot;);</span>
+try {
+    ST_Agraph_s subg;
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">    if ((agroot(g) != agroot(obj))) return false;</span>
+<span class="pc bpc" id="L239" title="1 of 3 branches missed.">    switch (obj.tag.objtype) {</span>
+    case AGRAPH:
+<span class="nc" id="L241">UNSUPPORTED(&quot;5fyr1r26q15uog4pl9eo2iohc&quot;); // 	subg = (Agraph_t *) obj;</span>
+<span class="nc" id="L242">UNSUPPORTED(&quot;8vxyvy38lzpbd83cu26nejaan&quot;); // 	do {</span>
+<span class="nc" id="L243">UNSUPPORTED(&quot;dqlpdwxfm3o0e4atzaam04f9m&quot;); // 	    if (subg == g) return 1;</span>
+<span class="nc" id="L244">UNSUPPORTED(&quot;4oqg7vqjjx3n3761fp7f2xld9&quot;); // 	} while ((subg = agparent (subg)));</span>
+<span class="nc" id="L245">UNSUPPORTED(&quot;c9ckhc8veujmwcw0ar3u3zld4&quot;); // 	return 0;</span>
+    case AGNODE: 
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        return (agidnode(zz, g, obj.tag.id, 0) != null);</span>
+    default:
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        return (agsubedge(zz, g, (ST_Agedge_s) obj, false) != null);</span>
+    }
+} finally {
+<span class="fc" id="L252">LEAVING(&quot;91ej8cxcc0kzgkg2yk3pdiifs&quot;,&quot;agcontains&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/obj.c&quot;, name=&quot;agobjkind&quot;, key=&quot;bbe1e9wqmcr8dz9pswpxff0fr&quot;, definition = &quot;int agobjkind(void *arg)&quot;)
+public static int agobjkind(ST_Agobj_s arg) {
+<span class="fc" id="L261">ENTERING(&quot;bbe1e9wqmcr8dz9pswpxff0fr&quot;,&quot;agobjkind&quot;);</span>
+try {
+<span class="fc" id="L263">	return arg.tag.objtype;</span>
+} finally {
+<span class="fc" id="L265">LEAVING(&quot;bbe1e9wqmcr8dz9pswpxff0fr&quot;,&quot;agobjkind&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

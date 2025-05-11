@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WormMutation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">WormMutation.java</span></div><h1>WormMutation.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+
+public class WormMutation {
+
+<span class="nc" id="L46">	private final List&lt;UTranslate&gt; translations = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L48">	private WormMutation() {</span>
+
+<span class="nc" id="L50">	}</span>
+
+	public static WormMutation create(Worm worm, double delta) {
+<span class="nc" id="L53">		final String signature = worm.getDirectionsCode();</span>
+<span class="nc" id="L54">		final String definition = getDefinition(signature);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (definition == null) {</span>
+<span class="nc" id="L56">			return createFromLongSignature(signature, delta);</span>
+		}
+<span class="nc" id="L58">		return new WormMutation(definition, delta);</span>
+	}
+
+	private static WormMutation createFromLongSignature(final String signature, final double delta) {
+<span class="nc" id="L62">		final WormMutation result = new WormMutation();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		for (int i = 0; i &lt; signature.length() - 1; i++) {</span>
+<span class="nc" id="L64">			WormMutation tmp = new WormMutation(getDefinition(signature.substring(i, i + 2)), delta);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (i == 0) {</span>
+<span class="nc" id="L66">				result.translations.add(tmp.translations.get(0));</span>
+			} else {
+<span class="nc" id="L68">				UTranslate last = result.getLast();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">				if (last.isAlmostSame(tmp.translations.get(0)) == false) {</span>
+<span class="nc" id="L70">					tmp = tmp.reverse();</span>
+				}
+			}
+<span class="nc" id="L73">			result.translations.add(tmp.translations.get(1));</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (i == signature.length() - 2) {</span>
+<span class="nc" id="L75">				result.translations.add(tmp.translations.get(2));</span>
+			}
+		}
+<span class="nc" id="L78">		return result;</span>
+	}
+
+	private WormMutation reverse() {
+<span class="nc" id="L82">		final WormMutation result = new WormMutation();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (UTranslate tr : translations) {</span>
+<span class="nc" id="L84">			result.translations.add(tr.reverse());</span>
+<span class="nc" id="L85">		}</span>
+<span class="nc" id="L86">		return result;</span>
+	}
+
+	public UTranslate getLast() {
+<span class="nc" id="L90">		return translations.get(translations.size() - 1);</span>
+	}
+
+	public UTranslate getFirst() {
+<span class="nc" id="L94">		return translations.get(0);</span>
+	}
+
+	public int size() {
+<span class="nc" id="L98">		return translations.size();</span>
+	}
+
+	private static String getDefinition(final String signature) {
+<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (signature.equals(&quot;D&quot;) || signature.equals(&quot;U&quot;)) {</span>
+<span class="nc" id="L103">			return &quot;33&quot;;</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">		} else if (signature.equals(&quot;L&quot;) || signature.equals(&quot;R&quot;)) {</span>
+<span class="nc" id="L105">			return &quot;55&quot;;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		} else if (signature.equals(&quot;RD&quot;)) {</span>
+<span class="nc" id="L107">			return &quot;123&quot;;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		} else if (signature.equals(&quot;RU&quot;)) {</span>
+<span class="nc" id="L109">			return &quot;543&quot;;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		} else if (signature.equals(&quot;LD&quot;)) {</span>
+<span class="nc" id="L111">			return &quot;187&quot;;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		} else if (signature.equals(&quot;DL&quot;)) {</span>
+<span class="nc" id="L113">			return &quot;345&quot;;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (signature.equals(&quot;DR&quot;)) {</span>
+<span class="nc" id="L115">			return &quot;765&quot;;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		} else if (signature.equals(&quot;UL&quot;)) {</span>
+<span class="nc" id="L117">			return &quot;321&quot;;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		} else if (signature.equals(&quot;UR&quot;)) {</span>
+<span class="nc" id="L119">			return &quot;781&quot;;</span>
+			// } else if (signature.equals(&quot;DLD&quot;)) {
+			// return &quot;3443&quot;;
+		}
+<span class="nc" id="L123">		return null;</span>
+	}
+
+<span class="nc" id="L126">	private WormMutation(String definition, double delta) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		for (int i = 0; i &lt; Objects.requireNonNull(definition).length(); i++) {</span>
+<span class="nc" id="L128">			this.translations.add(translation(Integer.parseInt(definition.substring(i, i + 1)), delta));</span>
+		}
+
+<span class="nc" id="L131">	}</span>
+
+	private static UTranslate translation(int type, double delta) {
+<span class="nc bnc" id="L134" title="All 9 branches missed.">		switch (type) {</span>
+		case 1:
+<span class="nc" id="L136">			return UTranslate.dy(-delta);</span>
+		case 2:
+<span class="nc" id="L138">			return new UTranslate(delta, -delta);</span>
+		case 3:
+<span class="nc" id="L140">			return UTranslate.dx(delta);</span>
+		case 4:
+<span class="nc" id="L142">			return new UTranslate(delta, delta);</span>
+		case 5:
+<span class="nc" id="L144">			return UTranslate.dy(delta);</span>
+		case 6:
+<span class="nc" id="L146">			return new UTranslate(-delta, delta);</span>
+		case 7:
+<span class="nc" id="L148">			return UTranslate.dx(-delta);</span>
+		case 8:
+<span class="nc" id="L150">			return new UTranslate(-delta, -delta);</span>
+		}
+<span class="nc" id="L152">		throw new IllegalArgumentException();</span>
+	}
+
+<span class="nc" id="L155">	static private class MinMax {</span>
+
+<span class="nc" id="L157">		private double min = Double.MAX_VALUE;</span>
+<span class="nc" id="L158">		private double max = Double.MIN_VALUE;</span>
+
+		private void append(double v) {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (v &gt; max) {</span>
+<span class="nc" id="L162">				max = v;</span>
+			}
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (v &lt; min) {</span>
+<span class="nc" id="L165">				min = v;</span>
+			}
+<span class="nc" id="L167">		}</span>
+
+		private double getExtreme() {
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (Math.abs(max) &gt; Math.abs(min)) {</span>
+<span class="nc" id="L171">				return max;</span>
+			}
+<span class="nc" id="L173">			return min;</span>
+		}
+
+	}
+
+	public UTranslate getTextTranslate(int size) {
+<span class="nc" id="L179">		final MinMax result = new MinMax();</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (UTranslate tr : translations) {</span>
+<span class="nc" id="L181">			result.append(tr.getDx());</span>
+<span class="nc" id="L182">		}</span>
+<span class="nc" id="L183">		return UTranslate.dx(result.getExtreme() * (size - 1));</span>
+	}
+
+	public boolean isDxNegative() {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		return translations.get(0).getDx() &lt; 0;</span>
+	}
+
+	public Worm mute(Worm original) {
+<span class="nc" id="L191">		final Worm result = original.cloneEmpty();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (int i = 0; i &lt; original.size(); i++) {</span>
+<span class="nc" id="L193">			result.addPoint(translations.get(i).getTranslated(original.get(i)));</span>
+		}
+<span class="nc" id="L195">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

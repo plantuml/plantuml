@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Location.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">Location.java</span></div><h1>Location.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+/**
+ * An immutable object that represents a location in the parsed text.
+ */
+public class Location {
+
+	/**
+	 * The absolute character index, starting at 0.
+	 */
+	public final int offset;
+
+	/**
+	 * The line number, starting at 1.
+	 */
+	public final int line;
+
+	/**
+	 * The column number, starting at 1.
+	 */
+	public final int column;
+
+<span class="fc" id="L47">	Location(int offset, int line, int column) {</span>
+<span class="fc" id="L48">		this.offset = offset;</span>
+<span class="fc" id="L49">		this.column = column;</span>
+<span class="fc" id="L50">		this.line = line;</span>
+<span class="fc" id="L51">	}</span>
+
+	@Override
+	public String toString() {
+<span class="fc" id="L55">		return line + &quot;:&quot; + column;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L60">		return offset;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (this == obj) {</span>
+<span class="nc" id="L66">			return true;</span>
+		}
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (obj == null) {</span>
+<span class="nc" id="L69">			return false;</span>
+		}
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L72">			return false;</span>
+		}
+<span class="nc" id="L74">		Location other = (Location) obj;</span>
+<span class="nc bnc" id="L75" title="All 6 branches missed.">		return offset == other.offset &amp;&amp; column == other.column &amp;&amp; line == other.line;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

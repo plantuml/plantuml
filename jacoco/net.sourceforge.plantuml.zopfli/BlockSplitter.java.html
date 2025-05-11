@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlockSplitter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">BlockSplitter.java</span></div><h1>BlockSplitter.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+<span class="nc" id="L21">class BlockSplitter {</span>
+	// ::remove folder when __CORE__
+
+	static int split(Cookie cookie, byte[] input, int from, int to) {
+<span class="nc" id="L25">		LzStore store = cookie.store1;</span>
+<span class="nc" id="L26">		store.reset();</span>
+<span class="nc" id="L27">		Deflate.greedy(cookie, null, input, from, to, store);</span>
+
+<span class="nc" id="L29">		int nPoints = splitLz(cookie, store.litLens, store.dists, store.size);</span>
+
+<span class="nc" id="L31">		int pos = from;</span>
+<span class="nc" id="L32">		char[] dists = store.dists;</span>
+<span class="nc" id="L33">		char[] litLens = store.litLens;</span>
+<span class="nc" id="L34">		int[] points = cookie.splitPoints;</span>
+
+<span class="nc" id="L36">		points[0] = pos;</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		for (int i = 0, j = 1; j &lt;= nPoints; ++j) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">			for (int pj = points[j]; i &lt; pj; ++i) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">				pos += (dists[i] == 0) ? 1 : litLens[i];</span>
+			}
+<span class="nc" id="L41">			points[j] = pos;</span>
+		}
+<span class="nc" id="L43">		return nPoints;</span>
+	}
+
+	// TODO: May be use some kind of SORTED data-structure for splitPoints?
+	static int splitLz(Cookie cookie, char[] litLens, char[] dists, int llSize) {
+<span class="nc" id="L48">		int[] splitPoints = cookie.splitPoints;</span>
+<span class="nc" id="L49">		int[] splitSize = cookie.splitSize;</span>
+<span class="nc" id="L50">		splitPoints[0] = 0;</span>
+<span class="nc" id="L51">		splitSize[0] = Deflate.calculateBlockSize(cookie, litLens, dists, 0, llSize);</span>
+<span class="nc" id="L52">		splitPoints[1] = llSize;</span>
+<span class="nc" id="L53">		splitSize[1] = -1;</span>
+<span class="nc" id="L54">		int numBlocks = 1;</span>
+<span class="nc" id="L55">		int maxBlocks = cookie.blockSplittingMax;</span>
+
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (llSize &lt; 10) {</span>
+<span class="nc" id="L58">			return numBlocks;</span>
+		}
+
+<span class="nc" id="L61">		int lStart = 0;</span>
+<span class="nc" id="L62">		int lEnd = llSize;</span>
+<span class="nc" id="L63">		int blockN = 0;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		while (numBlocks &lt; maxBlocks) {</span>
+<span class="nc" id="L65">			int llPos = findMinimum(cookie, litLens, dists, lStart, lEnd);</span>
+
+<span class="nc" id="L67">			int splitL = Deflate.calculateBlockSize(cookie, litLens, dists, lStart, llPos);</span>
+<span class="nc" id="L68">			int splitR = Deflate.calculateBlockSize(cookie, litLens, dists, llPos, lEnd);</span>
+
+<span class="nc bnc" id="L70" title="All 6 branches missed.">			if (splitL + splitR &gt; splitSize[blockN] || llPos == lStart + 1 || llPos == lEnd) {</span>
+<span class="nc" id="L71">				splitSize[blockN] = -1;</span>
+			} else {
+<span class="nc" id="L73">				splitSize[blockN] = splitL;</span>
+<span class="nc" id="L74">				numBlocks++;</span>
+<span class="nc" id="L75">				blockN++;</span>
+<span class="nc" id="L76">				System.arraycopy(splitPoints, blockN, splitPoints, blockN + 1, numBlocks - blockN);</span>
+<span class="nc" id="L77">				System.arraycopy(splitSize, blockN, splitSize, blockN + 1, numBlocks - blockN);</span>
+<span class="nc" id="L78">				splitPoints[blockN] = llPos;</span>
+<span class="nc" id="L79">				splitSize[blockN] = splitR;</span>
+			}
+
+<span class="nc" id="L82">			int longest = 0;</span>
+<span class="nc" id="L83">			boolean found = false;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			for (int i = 0; i &lt; numBlocks; i++) {</span>
+<span class="nc" id="L85">				int start = splitPoints[i];</span>
+<span class="nc" id="L86">				int end = splitPoints[i + 1];</span>
+<span class="nc bnc" id="L87" title="All 4 branches missed.">				if ((splitSize[i] != -1) &amp;&amp; end - start &gt; longest) {</span>
+<span class="nc" id="L88">					lStart = start;</span>
+<span class="nc" id="L89">					lEnd = end;</span>
+<span class="nc" id="L90">					found = true;</span>
+<span class="nc" id="L91">					longest = end - start;</span>
+<span class="nc" id="L92">					blockN = i;</span>
+				}
+			}
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (!found) {</span>
+<span class="nc" id="L96">				break;</span>
+			}
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (lEnd - lStart &lt; 10) {</span>
+<span class="nc" id="L100">				break;</span>
+			}
+<span class="nc" id="L102">		}</span>
+
+<span class="nc" id="L104">		return numBlocks;</span>
+	}
+
+	private static int findMinimum(Cookie cookie, char[] litLens, char[] dists, int from, int to) {
+<span class="nc" id="L108">		int start = from + 1;</span>
+<span class="nc" id="L109">		int end = to;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (end - start &lt; 1024) {</span>
+<span class="nc" id="L111">			int best = Integer.MAX_VALUE;</span>
+<span class="nc" id="L112">			int result = start;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			for (int i = start; i &lt; end; i++) {</span>
+<span class="nc" id="L114">				int v = Deflate.calculateBlockSize(cookie, litLens, dists, from, i)</span>
+<span class="nc" id="L115">						+ Deflate.calculateBlockSize(cookie, litLens, dists, i, to);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">				if (v &lt; best) {</span>
+<span class="nc" id="L117">					best = v;</span>
+<span class="nc" id="L118">					result = i;</span>
+				}
+			}
+<span class="nc" id="L121">			return result;</span>
+		} else {
+<span class="nc" id="L123">			int n = Cookie.SPLIT_PARTITIONS;</span>
+<span class="nc" id="L124">			int[] p = cookie.p;</span>
+<span class="nc" id="L125">			int[] vp = cookie.vp;</span>
+<span class="nc" id="L126">			int lastBest = Integer.MAX_VALUE;</span>
+<span class="nc" id="L127">			int pos = start;</span>
+
+			while (true) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">				if (end - start &lt;= n) {</span>
+<span class="nc" id="L131">					break;</span>
+				}
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L135">					p[i] = start + (i + 1) * ((end - start) / (n + 1));</span>
+<span class="nc" id="L136">					vp[i] = Deflate.calculateBlockSize(cookie, litLens, dists, from, p[i])</span>
+<span class="nc" id="L137">							+ Deflate.calculateBlockSize(cookie, litLens, dists, p[i], to);</span>
+				}
+<span class="nc" id="L139">				int bestI = 0;</span>
+<span class="nc" id="L140">				int best = vp[0];</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">				for (int i = 1; i &lt; n; i++) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">					if (vp[i] &lt; best) {</span>
+<span class="nc" id="L143">						best = vp[i];</span>
+<span class="nc" id="L144">						bestI = i;</span>
+					}
+				}
+<span class="nc bnc" id="L147" title="All 2 branches missed.">				if (best &gt; lastBest) {</span>
+<span class="nc" id="L148">					break;</span>
+				}
+
+<span class="nc bnc" id="L151" title="All 2 branches missed.">				start = bestI == 0 ? start : p[bestI - 1];</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">				end = bestI == n - 1 ? end : p[bestI + 1];</span>
+
+<span class="nc" id="L154">				pos = p[bestI];</span>
+<span class="nc" id="L155">				lastBest = best;</span>
+<span class="nc" id="L156">			}</span>
+<span class="nc" id="L157">			return pos;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

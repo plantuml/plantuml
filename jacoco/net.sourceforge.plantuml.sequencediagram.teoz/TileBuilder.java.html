@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TileBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">TileBuilder.java</span></div><h1>TileBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.Delay;
+import net.sourceforge.plantuml.sequencediagram.Divider;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
+import net.sourceforge.plantuml.sequencediagram.GroupingStart;
+import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.HSpace;
+import net.sourceforge.plantuml.sequencediagram.LifeEvent;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.Newpage;
+import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Notes;
+import net.sourceforge.plantuml.sequencediagram.Reference;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+<span class="nc" id="L63">public class TileBuilder {</span>
+
+	public static List&lt;Tile&gt; buildSeveral(Iterator&lt;Event&gt; it, TileArguments tileArguments, Tile parent,
+			YGauge currentY) {
+<span class="fc" id="L67">		final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L69">			final Event ev = it.next();</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent, currentY)) {</span>
+<span class="fc" id="L71">				tiles.add(tile);</span>
+<span class="fc" id="L72">				final Real tmpMax = tile.getMaxX();</span>
+				if (YGauge.USE_ME) {
+					final YGauge gauge = tile.getYGauge();
+					currentY = gauge;
+				}
+<span class="fc" id="L77">			}</span>
+<span class="fc" id="L78">		}</span>
+<span class="fc" id="L79">		return Collections.unmodifiableList(tiles);</span>
+	}
+
+	public static List&lt;Tile&gt; buildOne(Iterator&lt;Event&gt; it, TileArguments tileArguments, final Event ev, Tile parent,
+			YGauge currentY) {
+
+<span class="fc" id="L85">		final StringBounder stringBounder = tileArguments.getStringBounder();</span>
+<span class="fc" id="L86">		final Rose skin = tileArguments.getSkin();</span>
+<span class="fc" id="L87">		final ISkinParam skinParam = tileArguments.getSkinParam();</span>
+<span class="fc" id="L88">		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();</span>
+
+<span class="fc" id="L90">		final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
+		// System.err.println(&quot;TileBuilder::buildOne &quot; + ev);
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (ev instanceof Message) {</span>
+<span class="fc" id="L93">			final Message msg = (Message) ev;</span>
+<span class="fc" id="L94">			final LivingSpace livingSpace1 = livingSpaces.get(msg.getParticipant1());</span>
+<span class="fc" id="L95">			final LivingSpace livingSpace2 = livingSpaces.get(msg.getParticipant2());</span>
+<span class="fc" id="L96">			boolean reverse = false;</span>
+<span class="fc" id="L97">			Tile result = null;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (msg.isSelfMessage()) {</span>
+<span class="fc" id="L99">				result = new CommunicationTileSelf(tileArguments.getStringBounder(), livingSpace1, msg, skin, skinParam,</span>
+						livingSpaces, currentY);
+			} else {
+<span class="fc" id="L102">				result = new CommunicationTile(tileArguments.getStringBounder(), livingSpaces, msg, skin, skinParam,</span>
+						currentY);
+<span class="fc" id="L104">				reverse = ((CommunicationTile) result).isReverse(stringBounder);</span>
+			}
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
+<span class="fc" id="L107">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
+<span class="pc bpc" id="L108" title="1 of 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
+<span class="fc" id="L109">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
+							noteOnMessage, currentY);
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.LEFT)</span>
+<span class="nc" id="L112">					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);</span>
+<span class="pc bpc" id="L114" title="1 of 4 branches missed.">				else if (notePosition == NotePosition.RIGHT &amp;&amp; msg.isSelfMessage())</span>
+<span class="fc" id="L115">					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,</span>
+							noteOnMessage, currentY);
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.RIGHT)</span>
+<span class="fc" id="L118">					result = new CommunicationTileNoteRight(result, msg, skin, skinParam,</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">							reverse ? livingSpace1 : livingSpace2, noteOnMessage, currentY);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">				else if (notePosition == NotePosition.BOTTOM)</span>
+<span class="nc" id="L121">					result = new CommunicationTileNoteBottom(result, msg, skin, skinParam, noteOnMessage, currentY);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				else if (notePosition == NotePosition.TOP)</span>
+<span class="nc" id="L123">					result = new CommunicationTileNoteTop(result, msg, skin, skinParam, noteOnMessage, currentY);</span>
+
+<span class="fc" id="L125">			}</span>
+<span class="fc" id="L126">			tiles.add(result);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		} else if (ev instanceof MessageExo) {</span>
+<span class="fc" id="L128">			final MessageExo exo = (MessageExo) ev;</span>
+<span class="fc" id="L129">			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());</span>
+<span class="fc" id="L130">			Tile result = null;</span>
+<span class="fc" id="L131">			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments, currentY);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			for (Note noteOnMessage : exo.getNoteOnMessages()) {</span>
+<span class="nc" id="L133">				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getPosition();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				if (notePosition == NotePosition.LEFT)</span>
+<span class="nc" id="L135">					result = new CommunicationTileNoteLeft(result, exo, skin, skinParam, livingSpace1, noteOnMessage,</span>
+							currentY);
+<span class="nc bnc" id="L137" title="All 2 branches missed.">				else if (notePosition == NotePosition.RIGHT)</span>
+<span class="nc" id="L138">					result = new CommunicationTileNoteRight(result, exo, skin, skinParam, livingSpace1, noteOnMessage,</span>
+							currentY);
+<span class="nc" id="L140">			}</span>
+<span class="fc" id="L141">			tiles.add(result);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		} else if (ev instanceof Note) {</span>
+<span class="fc" id="L143">			final Note note = (Note) ev;</span>
+<span class="fc" id="L144">			LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note.getParticipant2());</span>
+<span class="pc bpc" id="L146" title="3 of 4 branches missed.">			if (livingSpace1 == null &amp;&amp; livingSpace2 == null) {</span>
+<span class="nc" id="L147">				livingSpace1 = tileArguments.getFirstLivingSpace();</span>
+<span class="nc" id="L148">				livingSpace2 = tileArguments.getLastLivingSpace();</span>
+			}
+<span class="fc" id="L150">			tiles.add(new NoteTile(tileArguments.getStringBounder(), livingSpace1, livingSpace2, note, skin, skinParam,</span>
+					currentY));
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		} else if (ev instanceof Notes) {</span>
+<span class="nc" id="L153">			final Notes notes = (Notes) ev;</span>
+<span class="nc" id="L154">			tiles.add(new NotesTile(tileArguments.getStringBounder(), livingSpaces, notes, skin, skinParam, currentY));</span>
+<span class="pc bfc" id="L155" title="All 2 branches covered.">		} else if (ev instanceof Divider) {</span>
+<span class="fc" id="L156">			final Divider divider = (Divider) ev;</span>
+<span class="fc" id="L157">			tiles.add(new DividerTile(divider, tileArguments, currentY));</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		} else if (ev instanceof GroupingStart) {</span>
+<span class="fc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
+<span class="fc" id="L160">			final GroupingTile groupingTile = new GroupingTile(it, start,</span>
+<span class="fc" id="L161">					tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
+					tileArguments, currentY);
+			if (YGauge.USE_ME == false)
+<span class="fc" id="L164">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+<span class="fc" id="L165">			tiles.add(groupingTile);</span>
+			if (YGauge.USE_ME == false)
+<span class="fc" id="L167">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+
+<span class="pc bpc" id="L169" title="1 of 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
+<span class="fc" id="L170">			final GroupingLeaf anElse = (GroupingLeaf) ev;</span>
+<span class="fc" id="L171">			tiles.add(new ElseTile(anElse, skin, skinParam, parent, currentY));</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		} else if (ev instanceof Reference) {</span>
+<span class="nc" id="L173">			final Reference ref = (Reference) ev;</span>
+<span class="nc" id="L174">			tiles.add(new ReferenceTile(ref, tileArguments.withBackColor(ref), currentY));</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		} else if (ev instanceof Delay) {</span>
+<span class="nc" id="L176">			final Delay delay = (Delay) ev;</span>
+<span class="nc" id="L177">			tiles.add(new DelayTile(delay, tileArguments, currentY));</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		} else if (ev instanceof HSpace) {</span>
+<span class="nc" id="L179">			final HSpace hspace = (HSpace) ev;</span>
+<span class="nc" id="L180">			tiles.add(new HSpaceTile(hspace, tileArguments, currentY));</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		} else if (ev instanceof LifeEvent) {</span>
+<span class="fc" id="L182">			final LifeEvent lifeEvent = (LifeEvent) ev;</span>
+<span class="fc" id="L183">			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());</span>
+<span class="fc" id="L184">			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam, currentY));</span>
+<span class="pc bnc" id="L185" title="All 2 branches missed.">		} else if (ev instanceof Newpage) {</span>
+<span class="nc" id="L186">			final Newpage newpage = (Newpage) ev;</span>
+<span class="nc" id="L187">			tiles.add(new NewpageTile(newpage, tileArguments, currentY));</span>
+<span class="nc" id="L188">		} else {</span>
+<span class="nc" id="L189">			System.err.println(&quot;TileBuilder::Ignoring &quot; + ev.getClass());</span>
+		}
+<span class="fc" id="L191">		return tiles;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

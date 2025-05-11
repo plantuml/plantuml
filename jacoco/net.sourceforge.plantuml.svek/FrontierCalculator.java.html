@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrontierCalculator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">FrontierCalculator.java</span></div><h1>FrontierCalculator.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.Collection;
+
+import net.sourceforge.plantuml.abel.EntityPosition;
+import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class FrontierCalculator {
+
+	private static final double DELTA = 3 * EntityPosition.RADIUS;
+	private RectangleArea core;
+	private final RectangleArea initial;
+
+	public FrontierCalculator(RectangleArea initial, Collection&lt;RectangleArea&gt; insides, Collection&lt;XPoint2D&gt; points,
+<span class="fc" id="L52">			Rankdir rankdir) {</span>
+<span class="fc" id="L53">		this.initial = initial;</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		for (RectangleArea in : insides)</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">			if (core == null)</span>
+<span class="nc" id="L56">				core = in;</span>
+			else
+<span class="nc" id="L58">				core = core.merge(in);</span>
+
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (core == null) {</span>
+<span class="fc" id="L61">			final XPoint2D center = initial.getPointCenter();</span>
+<span class="fc" id="L62">			core = new RectangleArea(center.getX() - 1, center.getY() - 1, center.getX() + 1, center.getY() + 1);</span>
+		}
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (XPoint2D p : points)</span>
+<span class="fc" id="L65">			core = core.merge(p);</span>
+
+<span class="fc" id="L67">		boolean touchMinX = false;</span>
+<span class="fc" id="L68">		boolean touchMaxX = false;</span>
+<span class="fc" id="L69">		boolean touchMinY = false;</span>
+<span class="fc" id="L70">		boolean touchMaxY = false;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (XPoint2D p : points) {</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">			if (p.getX() == core.getMinX())</span>
+<span class="fc" id="L73">				touchMinX = true;</span>
+
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (p.getX() == core.getMaxX())</span>
+<span class="nc" id="L76">				touchMaxX = true;</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			if (p.getY() == core.getMinY())</span>
+<span class="fc" id="L79">				touchMinY = true;</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (p.getY() == core.getMaxY())</span>
+<span class="fc" id="L82">				touchMaxY = true;</span>
+
+<span class="fc" id="L84">		}</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (touchMinX == false)</span>
+<span class="nc" id="L86">			core = core.withMinX(initial.getMinX());</span>
+
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (touchMaxX == false)</span>
+<span class="fc" id="L89">			core = core.withMaxX(initial.getMaxX());</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (touchMinY == false)</span>
+<span class="fc" id="L92">			core = core.withMinY(initial.getMinY());</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (touchMaxY == false)</span>
+<span class="fc" id="L95">			core = core.withMaxY(initial.getMaxY());</span>
+
+<span class="fc" id="L97">		boolean pushMinX = false;</span>
+<span class="fc" id="L98">		boolean pushMaxX = false;</span>
+<span class="fc" id="L99">		boolean pushMinY = false;</span>
+<span class="fc" id="L100">		boolean pushMaxY = false;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (XPoint2D p : points) {</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">			if (p.getY() == core.getMinY() || p.getY() == core.getMaxY()) {</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">				if (Math.abs(p.getX() - core.getMaxX()) &lt; DELTA)</span>
+<span class="nc" id="L104">					pushMaxX = true;</span>
+
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">				if (Math.abs(p.getX() - core.getMinX()) &lt; DELTA)</span>
+<span class="fc" id="L107">					pushMinX = true;</span>
+
+			}
+<span class="pc bpc" id="L110" title="3 of 4 branches missed.">			if (p.getX() == core.getMinX() || p.getX() == core.getMaxX()) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (Math.abs(p.getY() - core.getMaxY()) &lt; DELTA)</span>
+<span class="fc" id="L112">					pushMaxY = true;</span>
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">				if (Math.abs(p.getY() - core.getMinY()) &lt; DELTA)</span>
+<span class="fc" id="L115">					pushMinY = true;</span>
+
+			}
+<span class="fc" id="L118">		}</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		for (XPoint2D p : points) {</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (rankdir == Rankdir.LEFT_TO_RIGHT) {</span>
+<span class="nc bnc" id="L121" title="All 6 branches missed.">				if (p.getX() == core.getMinX() &amp;&amp; (p.getY() == core.getMinY() || p.getY() == core.getMaxY()))</span>
+<span class="nc" id="L122">					pushMinX = false;</span>
+
+<span class="nc bnc" id="L124" title="All 6 branches missed.">				if (p.getX() == core.getMaxX() &amp;&amp; (p.getY() == core.getMinY() || p.getY() == core.getMaxY()))</span>
+<span class="nc" id="L125">					pushMaxX = false;</span>
+			} else {
+
+<span class="pc bpc" id="L128" title="3 of 6 branches missed.">				if (p.getY() == core.getMinY() &amp;&amp; (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))</span>
+<span class="fc" id="L129">					pushMinY = false;</span>
+
+<span class="pc bpc" id="L131" title="3 of 6 branches missed.">				if (p.getY() == core.getMaxY() &amp;&amp; (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))</span>
+<span class="fc" id="L132">					pushMaxY = false;</span>
+			}
+
+<span class="fc" id="L135">		}</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (pushMaxX)</span>
+<span class="nc" id="L137">			core = core.addMaxX(DELTA);</span>
+
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (pushMinX)</span>
+<span class="fc" id="L140">			core = core.addMinX(-DELTA);</span>
+
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (pushMaxY)</span>
+<span class="nc" id="L143">			core = core.addMaxY(DELTA);</span>
+
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (pushMinY)</span>
+<span class="nc" id="L146">			core = core.addMinY(-DELTA);</span>
+
+<span class="fc" id="L148">	}</span>
+
+	public RectangleArea getSuggestedPosition() {
+<span class="fc" id="L151">		return core;</span>
+	}
+
+	public void ensureMinWidth(double minWidth) {
+<span class="fc" id="L155">		final double delta = core.getMaxX() - core.getMinX() - minWidth;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (delta &lt; 0) {</span>
+<span class="nc" id="L157">			double newMinX = core.getMinX() + delta / 2;</span>
+<span class="nc" id="L158">			double newMaxX = core.getMaxX() - delta / 2;</span>
+<span class="nc" id="L159">			final double error = newMinX - initial.getMinX();</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (error &lt; 0) {</span>
+<span class="nc" id="L161">				newMinX -= error;</span>
+<span class="nc" id="L162">				newMaxX -= error;</span>
+			}
+<span class="nc" id="L164">			core = core.withMinX(newMinX);</span>
+<span class="nc" id="L165">			core = core.withMaxX(newMaxX);</span>
+		}
+<span class="fc" id="L167">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

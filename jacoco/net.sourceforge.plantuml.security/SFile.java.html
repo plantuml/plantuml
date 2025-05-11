@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SFile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.security</a> &gt; <span class="el_source">SFile.java</span></div><h1>SFile.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.security;
+
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.ImageIcon;
+
+import net.sourceforge.plantuml.log.Logme;
+
+/**
+ * Secure replacement for java.io.File.
+ * &lt;p&gt;
+ * This class should be used instead of java.io.File. There are few exceptions
+ * (mainly in the Swing part and in the ANT task)
+ * &lt;p&gt;
+ * This class does some control access and in secure mode hide the real path of
+ * file, so that it cannot be printed to end users.
+ *
+ */
+public class SFile implements Comparable&lt;SFile&gt; {
+
+<span class="fc" id="L79">	public static String separator = File.separator;</span>
+
+<span class="fc" id="L81">	public static String pathSeparator = File.pathSeparator;</span>
+
+<span class="fc" id="L83">	public static char separatorChar = File.separatorChar;</span>
+
+	private final File internal;
+
+	@Override
+	public String toString() {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">				|| SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
+<span class="nc" id="L91">			return super.toString();</span>
+		try {
+<span class="fc" id="L93">			return internal.getCanonicalPath();</span>
+<span class="nc" id="L94">		} catch (IOException e) {</span>
+<span class="nc" id="L95">			return internal.getAbsolutePath();</span>
+		}
+	}
+
+	public SFile(String nameOrPath) {
+<span class="fc" id="L100">		this(new File(nameOrPath));</span>
+<span class="fc" id="L101">	}</span>
+
+	public SFile(String dirname, String name) {
+<span class="nc" id="L104">		this(new File(dirname, name));</span>
+<span class="nc" id="L105">	}</span>
+
+	public SFile(SFile basedir, String name) {
+<span class="fc" id="L108">		this(new File(basedir.internal, name));</span>
+<span class="fc" id="L109">	}</span>
+
+	public SFile(URI uri) {
+<span class="fc" id="L112">		this(new File(uri));</span>
+<span class="fc" id="L113">	}</span>
+
+<span class="fc" id="L115">	private SFile(File internal) {</span>
+<span class="fc" id="L116">		this.internal = internal;</span>
+<span class="fc" id="L117">	}</span>
+
+	public static SFile fromFile(File internal) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (internal == null)</span>
+<span class="nc" id="L121">			return null;</span>
+
+<span class="fc" id="L123">		return new SFile(internal);</span>
+	}
+
+	public SFile file(String name) {
+<span class="fc" id="L127">		return new SFile(this, name);</span>
+	}
+
+	public boolean exists() {
+<span class="pc bpc" id="L131" title="1 of 4 branches missed.">		if (internal != null &amp;&amp; isFileOk())</span>
+<span class="fc" id="L132">			return internal.exists();</span>
+<span class="fc" id="L133">		return false;</span>
+	}
+
+	public SFile getCanonicalFile() throws IOException {
+<span class="fc" id="L137">		return new SFile(internal.getCanonicalFile());</span>
+	}
+
+	public boolean isAbsolute() {
+<span class="pc bpc" id="L141" title="2 of 4 branches missed.">		return internal != null &amp;&amp; internal.isAbsolute();</span>
+	}
+
+	public boolean isDirectory() {
+<span class="pc bpc" id="L145" title="1 of 6 branches missed.">		return internal != null &amp;&amp; internal.exists() &amp;&amp; internal.isDirectory();</span>
+	}
+
+	public String getName() {
+<span class="fc" id="L149">		return internal.getName();</span>
+	}
+
+	public boolean isFile() {
+<span class="nc bnc" id="L153" title="All 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
+	}
+
+	public long lastModified() {
+<span class="nc" id="L157">		return internal.lastModified();</span>
+	}
+
+	public int compareTo(SFile other) {
+<span class="nc" id="L161">		return this.internal.compareTo(other.internal);</span>
+	}
+
+	public String getPath() {
+<span class="nc" id="L165">		return internal.getPath();</span>
+	}
+
+	public long length() {
+<span class="fc" id="L169">		return internal.length();</span>
+	}
+
+	public boolean canWrite() {
+<span class="fc" id="L173">		return internal.canWrite();</span>
+	}
+
+	public void setWritable(boolean b) {
+<span class="nc" id="L177">		internal.setWritable(b);</span>
+<span class="nc" id="L178">	}</span>
+
+	public void delete() {
+<span class="fc" id="L181">		internal.delete();</span>
+<span class="fc" id="L182">	}</span>
+
+	public Collection&lt;SFile&gt; listFiles() {
+<span class="nc" id="L185">		final File[] tmp = internal.listFiles();</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L187">			return Collections.emptyList();</span>
+
+<span class="nc" id="L189">		final List&lt;SFile&gt; result = new ArrayList&lt;&gt;(tmp.length);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (File f : tmp)</span>
+<span class="nc" id="L191">			result.add(new SFile(f));</span>
+
+<span class="nc" id="L193">		return Collections.unmodifiableCollection(result);</span>
+	}
+
+	public String[] list() {
+<span class="fc" id="L197">		return internal.list();</span>
+	}
+
+	public SFile getAbsoluteFile() {
+<span class="fc" id="L201">		return new SFile(internal.getAbsoluteFile());</span>
+	}
+
+	public SFile getParentFile() {
+<span class="fc" id="L205">		return new SFile(internal.getParentFile());</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L210">		return internal.hashCode();</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc" id="L215">		return internal.equals(((SFile) obj).internal);</span>
+	}
+
+	public String getAbsolutePath() {
+<span class="fc" id="L219">		return internal.getAbsolutePath();</span>
+	}
+
+	public String getPrintablePath() {
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+			try {
+<span class="nc" id="L225">				return internal.getCanonicalPath();</span>
+<span class="nc" id="L226">			} catch (IOException e) {</span>
+<span class="nc" id="L227">				Logme.error(e);</span>
+			}
+		}
+<span class="fc" id="L230">		return &quot;&quot;;</span>
+	}
+
+	public boolean canRead() {
+<span class="fc" id="L234">		return internal.canRead();</span>
+	}
+
+	public void deleteOnExit() {
+<span class="nc" id="L238">		internal.deleteOnExit();</span>
+<span class="nc" id="L239">	}</span>
+
+	public void mkdirs() {
+<span class="fc" id="L242">		internal.mkdirs();</span>
+<span class="fc" id="L243">	}</span>
+
+	public static SFile createTempFile(String prefix, String suffix) throws IOException {
+<span class="nc" id="L246">		return new SFile(File.createTempFile(prefix, suffix));</span>
+	}
+
+	public URI toURI() {
+<span class="nc" id="L250">		return internal.toURI();</span>
+	}
+
+	public boolean renameTo(SFile dest) {
+<span class="fc" id="L254">		return internal.renameTo(dest.internal);</span>
+	}
+
+	/**
+	 * Check SecurityProfile to see if this file can be open.
+	 */
+	public boolean isFileOk() {
+		// ::comment when __CORE__
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)</span>
+			// In SANDBOX, we cannot read any files
+<span class="nc" id="L264">			return false;</span>
+
+		// In any case SFile should not access the security folders
+		// (the files must be handled internally)
+		try {
+<span class="fc bfc" id="L269" title="All 2 branches covered.">			if (isDenied())</span>
+<span class="fc" id="L270">				return false;</span>
+<span class="nc" id="L271">		} catch (IOException e) {</span>
+<span class="nc" id="L272">			return false;</span>
+<span class="fc" id="L273">		}</span>
+		// Files in &quot;plantuml.include.path&quot; and &quot;plantuml.allowlist.path&quot; are ok.
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)))</span>
+<span class="nc" id="L276">			return true;</span>
+
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.ALLOWLIST_LOCAL_PATHS)))</span>
+<span class="nc" id="L279">			return true;</span>
+
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET)</span>
+<span class="nc" id="L282">			return false;</span>
+
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
+<span class="nc" id="L285">			return false;</span>
+
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE) {</span>
+			// For UNSECURE, we did not do those checks
+<span class="fc" id="L289">			final String path = getCleanPathSecure();</span>
+<span class="pc bpc" id="L290" title="3 of 6 branches missed.">			if (path.startsWith(&quot;/etc/&quot;) || path.startsWith(&quot;/dev/&quot;) || path.startsWith(&quot;/boot/&quot;)</span>
+<span class="pc bpc" id="L291" title="2 of 4 branches missed.">					|| path.startsWith(&quot;/proc/&quot;) || path.startsWith(&quot;/sys/&quot;))</span>
+<span class="nc" id="L292">				return false;</span>
+
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">			if (path.startsWith(&quot;//&quot;))</span>
+<span class="nc" id="L295">				return false;</span>
+
+		}
+		// ::done
+<span class="fc" id="L299">		return true;</span>
+	}
+
+	private boolean isInAllowList(List&lt;SFile&gt; allowlist) {
+<span class="fc" id="L303">		final String path = getCleanPathSecure();</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		for (SFile allow : allowlist)</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">			if (path.startsWith(allow.getCleanPathSecure()))</span>
+				// File directory is in the allowlist
+<span class="nc" id="L307">				return true;</span>
+
+<span class="fc" id="L309">		return false;</span>
+	}
+
+	/**
+	 * Checks, if the SFile is inside the folder (-structure) of the security area.
+	 *
+	 * @return true, if the file is not allowed to read/write
+	 * @throws IOException If an I/O error occurs, which is possible because the
+	 *                     check the pathname may require filesystem queries
+	 */
+	// ::comment when __CORE__
+	private boolean isDenied() throws IOException {
+<span class="fc" id="L321">		SFile securityPath = SecurityUtils.getSecurityPath();</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">		if (securityPath == null)</span>
+<span class="fc" id="L323">			return false;</span>
+<span class="fc" id="L324">		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());</span>
+	}
+	// ::done
+
+	/**
+	 * Returns a sanitized, canonical and normalized Path to a file.
+	 *
+	 * @return the Path
+	 * @throws IOException If an I/O error occurs, which is possible because the
+	 *                     construction of the canonical pathname may require
+	 *                     filesystem queries
+	 * @see #getCleanPathSecure()
+	 * @see File#getCanonicalPath()
+	 * @see Path#normalize()
+	 */
+	private Path getSanitizedPath() throws IOException {
+<span class="fc" id="L340">		return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();</span>
+	}
+
+	private String getCleanPathSecure() {
+<span class="fc" id="L344">		String result = internal.getAbsolutePath();</span>
+<span class="fc" id="L345">		result = result.replace(&quot;\0&quot;, &quot;&quot;);</span>
+<span class="fc" id="L346">		result = result.replace(&quot;\\\\&quot;, &quot;/&quot;);</span>
+<span class="fc" id="L347">		return result;</span>
+	}
+
+	// Reading
+	// http://forum.plantuml.net/9048/img-tag-for-sequence-diagram-participants-does-always-render
+	public BufferedImage readRasterImageFromFile() {
+		// https://www.experts-exchange.com/questions/26171948/Why-are-ImageIO-read-images-losing-their-transparency.html
+		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
+<span class="nc bnc" id="L355" title="All 2 branches missed.">		if (isFileOk())</span>
+			try {
+				// ::comment when __CORE__
+<span class="nc bnc" id="L358" title="All 2 branches missed.">				if (internal.getName().endsWith(&quot;.webp&quot;))</span>
+<span class="nc" id="L359">					return readWebp();</span>
+				else
+					// ::done
+<span class="nc" id="L362">					return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));</span>
+<span class="nc" id="L363">			} catch (Exception e) {</span>
+<span class="nc" id="L364">				Logme.error(e);</span>
+			}
+<span class="nc" id="L366">		return null;</span>
+	}
+
+	// ::comment when __CORE__
+	private BufferedImage readWebp() throws IOException {
+<span class="nc" id="L371">		try (InputStream is = openFile()) {</span>
+<span class="nc" id="L372">			final int riff = read32(is);</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			if (riff != 0x46464952)</span>
+<span class="nc" id="L374">				return null;</span>
+<span class="nc" id="L375">			final int len1 = read32(is);</span>
+<span class="nc" id="L376">			final int webp = read32(is);</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">			if (webp != 0x50424557)</span>
+<span class="nc" id="L378">				return null;</span>
+<span class="nc" id="L379">			final int vp8_ = read32(is);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">			if (vp8_ != 0x20385056)</span>
+<span class="nc" id="L381">				return null;</span>
+<span class="nc" id="L382">			final int len2 = read32(is);</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">			if (len1 != len2 + 12)</span>
+<span class="nc" id="L384">				return null;</span>
+
+<span class="nc" id="L386">			return getBufferedImageFromWebpButHeader(is);</span>
+<span class="nc bnc" id="L387" title="All 8 branches missed.">		}</span>
+	}
+
+	private int read32(InputStream is) throws IOException {
+<span class="nc" id="L391">		return (is.read() &lt;&lt; 0) + (is.read() &lt;&lt; 8) + (is.read() &lt;&lt; 16) + (is.read() &lt;&lt; 24);</span>
+	}
+
+	public static BufferedImage getBufferedImageFromWebpButHeader(InputStream is) {
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L396">			return null;</span>
+		try {
+<span class="nc" id="L398">			final Class&lt;?&gt; clVP8Decoder = Class.forName(&quot;net.sourceforge.plantuml.webp.VP8Decoder&quot;);</span>
+<span class="nc" id="L399">			final Object vp8Decoder = clVP8Decoder.getDeclaredConstructor().newInstance();</span>
+			// final VP8Decoder vp8Decoder = new VP8Decoder();
+<span class="nc" id="L401">			final Method decodeFrame = clVP8Decoder.getMethod(&quot;decodeFrame&quot;, ImageInputStream.class);</span>
+<span class="nc" id="L402">			final ImageInputStream iis = SImageIO.createImageInputStream(is);</span>
+<span class="nc" id="L403">			decodeFrame.invoke(vp8Decoder, iis);</span>
+			// vp8Decoder.decodeFrame(iis);
+<span class="nc" id="L405">			iis.close();</span>
+<span class="nc" id="L406">			final Object frame = clVP8Decoder.getMethod(&quot;getFrame&quot;).invoke(vp8Decoder);</span>
+<span class="nc" id="L407">			return (BufferedImage) frame.getClass().getMethod(&quot;getBufferedImage&quot;).invoke(frame);</span>
+			// final VP8Frame frame = vp8Decoder.getFrame();
+			// return frame.getBufferedImage();
+<span class="nc" id="L410">		} catch (Exception e) {</span>
+<span class="nc" id="L411">			Logme.error(e);</span>
+<span class="nc" id="L412">			return null;</span>
+		}
+	}
+	// ::done
+
+	public BufferedReader openBufferedReader() {
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		if (isFileOk()) {</span>
+			try {
+<span class="nc" id="L420">				return new BufferedReader(new FileReader(internal));</span>
+<span class="nc" id="L421">			} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L422">				Logme.error(e);</span>
+			}
+		}
+<span class="nc" id="L425">		return null;</span>
+	}
+
+	public File conv() {
+<span class="fc" id="L429">		return internal;</span>
+	}
+
+	public InputStream openFile() {
+<span class="pc bpc" id="L433" title="1 of 2 branches missed.">		if (isFileOk())</span>
+			try {
+<span class="fc" id="L435">				return new BufferedInputStream(new FileInputStream(internal));</span>
+<span class="nc" id="L436">			} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L437">				Logme.error(e);</span>
+			}
+<span class="nc" id="L439">		return null;</span>
+	}
+
+	// ::comment when __CORE__
+	// Writing
+	public BufferedOutputStream createBufferedOutputStream() throws FileNotFoundException {
+<span class="fc" id="L445">		return new BufferedOutputStream(new FileOutputStream(internal));</span>
+	}
+
+	public PrintWriter createPrintWriter() throws FileNotFoundException {
+<span class="fc" id="L449">		return new PrintWriter(internal);</span>
+	}
+
+	public PrintWriter createPrintWriter(String charset) throws FileNotFoundException, UnsupportedEncodingException {
+<span class="nc" id="L453">		return new PrintWriter(internal, charset);</span>
+	}
+
+	public FileOutputStream createFileOutputStream() throws FileNotFoundException {
+<span class="nc" id="L457">		return new FileOutputStream(internal);</span>
+	}
+
+	public FileOutputStream createFileOutputStream(boolean append) throws FileNotFoundException {
+<span class="nc" id="L461">		return new FileOutputStream(internal, append);</span>
+	}
+
+	public PrintStream createPrintStream() throws FileNotFoundException {
+<span class="nc" id="L465">		return new PrintStream(internal);</span>
+	}
+
+	public PrintStream createPrintStream(String charset) throws FileNotFoundException, UnsupportedEncodingException {
+<span class="nc" id="L469">		return new PrintStream(internal, charset);</span>
+	}
+
+	public PrintStream createPrintStream(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
+<span class="nc" id="L473">		return new PrintStream(internal, charset.name());</span>
+	}
+	// ::done
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

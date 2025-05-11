@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageClass.java</span></div><h1>EntityImageClass.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.abel.LineConfigurable;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Kal;
+import net.sourceforge.plantuml.svek.Margins;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.svek.WithPorts;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
+
+	final private TextBlock body;
+
+	final private EntityImageClassHeader header;
+	final private Url url;
+	final private double roundCorner;
+
+	final private LineConfigurable lineConfig;
+
+	public EntityImageClass(Entity entity, PortionShower portionShower) {
+<span class="fc" id="L85">		super(entity);</span>
+<span class="fc" id="L86">		this.lineConfig = entity;</span>
+
+<span class="fc" id="L88">		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();</span>
+
+<span class="fc" id="L90">		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);</span>
+<span class="fc" id="L91">		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);</span>
+<span class="fc" id="L92">		this.body = entity.getBodier().getBody(getSkinParam(), showMethods, showFields, entity.getStereotype(),</span>
+<span class="fc" id="L93">				getStyle(), null);</span>
+
+<span class="fc" id="L95">		this.header = new EntityImageClassHeader(entity, portionShower);</span>
+<span class="fc" id="L96">		this.url = entity.getUrl99();</span>
+<span class="fc" id="L97">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L100">		final XDimension2D dimHeader = header.calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		final XDimension2D dimBody = body == null ? new XDimension2D(0, 0) : body.calculateDimension(stringBounder);</span>
+<span class="fc" id="L102">		double width = Math.max(dimBody.getWidth(), dimHeader.getWidth());</span>
+<span class="fc" id="L103">		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (width &lt; minClassWidth)</span>
+<span class="nc" id="L105">			width = minClassWidth;</span>
+
+<span class="fc" id="L107">		final double paramSameClassWidth = getSkinParam().getParamSameClassWidth();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (width &lt; paramSameClassWidth)</span>
+<span class="nc" id="L109">			width = paramSameClassWidth;</span>
+
+<span class="fc" id="L111">		final double height = dimBody.getHeight() + dimHeader.getHeight();</span>
+<span class="fc" id="L112">		return new XDimension2D(Math.max(width, getKalWidth() * 1.3), height);</span>
+		// return new Dimension2DDouble(width + getKalWidth(), height);
+	}
+
+	private double getKalWidth() {
+<span class="fc" id="L117">		double widthUp = 0;</span>
+<span class="fc" id="L118">		double widthDown = 0;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		for (Kal kal : ((Entity) getEntity()).getKals(Direction.UP))</span>
+<span class="nc" id="L120">			widthUp += kal.getDimension().getWidth();</span>
+
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		for (Kal kal : ((Entity) getEntity()).getKals(Direction.DOWN))</span>
+<span class="nc" id="L123">			widthDown += kal.getDimension().getWidth();</span>
+
+<span class="fc" id="L125">		return Math.max(widthUp, widthDown);</span>
+
+	}
+
+	@Override
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L131">		final XRectangle2D result = body.getInnerPosition(member, stringBounder, strategy);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L133">			return result;</span>
+
+<span class="nc" id="L135">		final XDimension2D dimHeader = header.calculateDimension(stringBounder);</span>
+<span class="nc" id="L136">		final UTranslate translate = UTranslate.dy(dimHeader.getHeight());</span>
+<span class="nc" id="L137">		return translate.apply(result);</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="fc" id="L141">		ug.draw(new UComment(&quot;class &quot; + getEntity().getName()));</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L143">			ug.startUrl(url);</span>
+
+<span class="fc" id="L145">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="fc" id="L146">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="fc" id="L147">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="fc" id="L148">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="fc" id="L149">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="fc" id="L150">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="fc" id="L151">		ug.startGroup(group);</span>
+<span class="fc" id="L152">		drawInternal(ug);</span>
+<span class="fc" id="L153">		ug.closeGroup();</span>
+
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L156">			ug.closeUrl();</span>
+
+<span class="fc" id="L158">	}</span>
+
+	private Style getStyle() {
+<span class="fc" id="L161">		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_) //</span>
+<span class="fc" id="L162">				.withTOBECHANGED(getEntity().getStereotype()) //</span>
+<span class="fc" id="L163">				.with(getEntity().getStereostyles()) //</span>
+<span class="fc" id="L164">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	private Style getStyleHeader() {
+<span class="fc" id="L168">		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //</span>
+<span class="fc" id="L169">				.withTOBECHANGED(getEntity().getStereotype()) //</span>
+<span class="fc" id="L170">				.with(getEntity().getStereostyles()) //</span>
+<span class="fc" id="L171">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	private void drawInternal(UGraphic ug) {
+<span class="fc" id="L175">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L176">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="fc" id="L177">		final XDimension2D dimHeader = header.calculateDimension(stringBounder);</span>
+
+<span class="fc" id="L179">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="fc" id="L180">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="fc" id="L181">		final LineLocation location = getEntity().getLocation();</span>
+<span class="fc" id="L182">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner)</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">				.withCommentAndCodeLine(getEntity().getName(), location == null ? null : &quot;&quot; + location);</span>
+
+<span class="fc" id="L185">		double shadow = 0;</span>
+
+<span class="fc" id="L187">		HColor borderColor = lineConfig.getColors().getColor(ColorType.LINE);</span>
+<span class="fc" id="L188">		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);</span>
+<span class="fc" id="L189">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+
+<span class="fc" id="L191">		shadow = getStyle().getShadowing();</span>
+
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if (borderColor == null)</span>
+<span class="fc" id="L194">			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		if (headerBackcolor == null)</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">			headerBackcolor = backcolor == null</span>
+<span class="fc" id="L198">					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())</span>
+<span class="pc" id="L199">					: backcolor;</span>
+
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (backcolor == null)</span>
+<span class="fc" id="L202">			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L204">		rect.setDeltaShadow(shadow);</span>
+
+<span class="fc" id="L206">		ug = ug.apply(borderColor);</span>
+<span class="fc" id="L207">		ug = ug.apply(backcolor.bg());</span>
+
+<span class="fc" id="L209">		final UStroke stroke = getStyle().getStroke(lineConfig.getColors());</span>
+
+<span class="fc" id="L211">		UGraphic ugHeader = ug;</span>
+<span class="pc bpc" id="L212" title="5 of 6 branches missed.">		if (roundCorner == 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
+<span class="nc" id="L213">			ug.apply(stroke).draw(rect);</span>
+<span class="nc" id="L214">			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight());</span>
+<span class="nc" id="L215">			rect2.setDeltaShadow(0);</span>
+<span class="nc" id="L216">			ugHeader = ugHeader.apply(headerBackcolor.bg());</span>
+<span class="nc" id="L217">			ugHeader.apply(stroke).draw(rect2);</span>
+<span class="pc bpc" id="L218" title="3 of 6 branches missed.">		} else if (roundCorner != 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
+<span class="nc" id="L219">			ug.apply(stroke).draw(rect);</span>
+<span class="nc" id="L220">			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight()).rounded(roundCorner);</span>
+<span class="nc" id="L221">			final URectangle rect3 = URectangle.build(widthTotal, roundCorner / 2);</span>
+<span class="nc" id="L222">			rect2.setDeltaShadow(0);</span>
+<span class="nc" id="L223">			rect3.setDeltaShadow(0);</span>
+<span class="nc" id="L224">			ugHeader = ugHeader.apply(headerBackcolor.bg()).apply(headerBackcolor);</span>
+<span class="nc" id="L225">			ugHeader.apply(stroke).draw(rect2);</span>
+<span class="nc" id="L226">			ugHeader.apply(stroke).apply(UTranslate.dy(dimHeader.getHeight() - rect3.getHeight())).draw(rect3);</span>
+<span class="nc" id="L227">			rect.setDeltaShadow(0);</span>
+<span class="nc" id="L228">			ug.apply(stroke).apply(HColors.none().bg()).draw(rect);</span>
+<span class="nc" id="L229">		} else {</span>
+<span class="fc" id="L230">			ug.apply(stroke).draw(rect);</span>
+		}
+<span class="fc" id="L232">		header.drawU(ugHeader, dimTotal.getWidth(), dimHeader.getHeight());</span>
+
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (body != null) {</span>
+<span class="fc" id="L235">			final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);</span>
+<span class="fc" id="L236">			final UTranslate translate = UTranslate.dy(dimHeader.getHeight());</span>
+<span class="fc" id="L237">			body.drawU(ug2.apply(translate));</span>
+		}
+<span class="fc" id="L239">	}</span>
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc" id="L243">		final XDimension2D dimHeader = header.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (body instanceof WithPorts)</span>
+<span class="nc" id="L245">			return ((WithPorts) body).getPorts(stringBounder).translateY(dimHeader.getHeight());</span>
+<span class="nc" id="L246">		return new Ports();</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		if (getEntity().getPortShortNames().size() &gt; 0)</span>
+<span class="nc" id="L251">			return ShapeType.RECTANGLE_HTML_FOR_PORTS;</span>
+
+<span class="fc" id="L253">		return ShapeType.RECTANGLE;</span>
+	}
+
+	@Override
+	public Margins getShield(StringBounder stringBounder) {
+<span class="nc" id="L258">		return getEntity().getMargins();</span>
+	}
+
+	public double getStartingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L262">		return 0;</span>
+	}
+
+	public double getEndingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L266">		return calculateDimension(stringBounder).getWidth();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

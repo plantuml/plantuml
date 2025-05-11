@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyPattern.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.regex</a> &gt; <span class="el_source">MyPattern.java</span></div><h1>MyPattern.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.regex;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.jaws.Jaws;
+
+class MaxSizeHashMap&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; {
+	private final int maxSize;
+
+<span class="fc" id="L47">	public MaxSizeHashMap(int maxSize) {</span>
+<span class="fc" id="L48">		this.maxSize = maxSize;</span>
+<span class="fc" id="L49">	}</span>
+
+	@Override
+	protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		return size() &gt; maxSize;</span>
+	}
+}
+
+// Splitter.java to be finished
+<span class="nc" id="L58">public abstract class MyPattern {</span>
+
+<span class="fc" id="L60">	private static final Map&lt;String, Pattern2&gt; cache = new MaxSizeHashMap&lt;&gt;(512);</span>
+
+<span class="fc" id="L62">	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(&quot;&quot;));</span>
+
+//	static int CPT1;
+//	static int CPT2;
+
+	public static Pattern2 cmpile(final String p) {
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">		if (p == null || p.length() == 0) {</span>
+<span class="fc" id="L69">			return EMPTY;</span>
+		}
+//		CPT1++;
+<span class="fc" id="L72">		Pattern2 result = null;</span>
+<span class="fc" id="L73">		synchronized (cache) {</span>
+<span class="fc" id="L74">			result = cache.get(p);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			if (result != null) {</span>
+<span class="fc" id="L76">				return result;</span>
+			}
+<span class="fc" id="L78">		}</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		assert result == null;</span>
+<span class="fc" id="L80">		result = new Pattern2(Pattern.compile(transform(p), Pattern.CASE_INSENSITIVE));</span>
+
+<span class="fc" id="L82">		synchronized (cache) {</span>
+<span class="fc" id="L83">			cache.put(p, result);</span>
+//			CPT2++;
+//			System.err.println(&quot;CPT= &quot; + CPT1 + &quot; / &quot; + CPT2 + &quot; &quot; + cache.size());
+<span class="fc" id="L86">		}</span>
+
+<span class="fc" id="L88">		return result;</span>
+	}
+
+	private static String transform(String p) {
+		// Replace ReadLineReader.java
+		// p = p.replace(&quot;%pLN&quot;, &quot;\\p{L}0-9&quot;); // Unicode Letter, digit
+<span class="fc" id="L94">		p = p.replace(&quot;%pLN&quot;, &quot;\\p{L}\\p{N}&quot;); // Unicode Letter, digit</span>
+<span class="fc" id="L95">		p = p.replace(&quot;%s&quot;, &quot;\\s\u00A0&quot;); // space</span>
+<span class="fc" id="L96">		p = p.replace(&quot;%q&quot;, &quot;'\u2018\u2019&quot;); // quote</span>
+<span class="fc" id="L97">		p = p.replace(&quot;%g&quot;, &quot;\&quot;\u201c\u201d&quot; + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote</span>
+<span class="fc" id="L98">		return p;</span>
+	}
+
+	public static boolean mtches(CharSequence input, String regex) {
+<span class="fc" id="L102">		return cmpile(regex).matcher(input).matches();</span>
+	}
+
+	public static CharSequence removeAll(CharSequence src, String regex) {
+<span class="nc" id="L106">		return src.toString().replaceAll(transform(regex), &quot;&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

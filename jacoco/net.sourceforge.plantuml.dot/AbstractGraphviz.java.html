@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractGraphviz.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.dot</a> &gt; <span class="el_source">AbstractGraphviz.java</span></div><h1>AbstractGraphviz.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.dot;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.Log;
+
+abstract class AbstractGraphviz implements Graphviz {
+	// ::remove file when __CORE__
+
+	private final File dotExe;
+	private final String dotString;
+	private final String[] type;
+
+	static boolean isWindows() {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		return File.separatorChar == '\\';</span>
+	}
+
+	private static String findExecutableOnPath(String name) {
+<span class="fc" id="L63">		final String path = System.getenv(&quot;PATH&quot;);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (path != null) </span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			for (String dirname : path.split(SFile.pathSeparator)) {</span>
+<span class="fc" id="L66">				final File file = new File(dirname, name);</span>
+<span class="pc bpc" id="L67" title="3 of 4 branches missed.">				if (file.isFile() &amp;&amp; file.canExecute())</span>
+<span class="nc" id="L68">					return file.getAbsolutePath();</span>
+			}
+		
+<span class="fc" id="L71">		return null;</span>
+	}
+
+<span class="fc" id="L74">	AbstractGraphviz(ISkinParam skinParam, String dotString, String... type) {</span>
+<span class="fc" id="L75">		this.dotExe = searchDotExe();</span>
+<span class="fc" id="L76">		this.dotString = dotString;</span>
+<span class="fc" id="L77">		this.type = Objects.requireNonNull(type);</span>
+<span class="fc" id="L78">	}</span>
+
+	protected boolean findExecutableOnPath() {
+<span class="fc" id="L81">		return true;</span>
+	}
+
+	final protected File searchDotExe() {
+<span class="fc" id="L85">		String getenv = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();</span>
+<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		if (findExecutableOnPath() &amp;&amp; getenv == null)</span>
+<span class="fc" id="L87">			getenv = findExecutableOnPath(getExeName());</span>
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (getenv == null)</span>
+<span class="fc" id="L90">			return specificDotExe();</span>
+
+<span class="nc" id="L92">		return new File(getenv);</span>
+	}
+
+	abstract protected File specificDotExe();
+
+	abstract protected String getExeName();
+
+	final public ProcessState createFile3(OutputStream os) {
+<span class="nc" id="L100">		Objects.requireNonNull(dotString);</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (getExeState() != ExeState.OK)</span>
+<span class="nc" id="L103">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L105">		final String cmd[] = getCommandLine();</span>
+<span class="nc" id="L106">		ProcessRunner p = null;</span>
+<span class="nc" id="L107">		ProcessState state = null;</span>
+		try {
+<span class="nc" id="L109">			Log.info(&quot;Starting Graphviz process &quot; + Arrays.asList(cmd));</span>
+<span class="nc" id="L110">			Log.info(&quot;DotString size: &quot; + dotString.length());</span>
+<span class="nc" id="L111">			p = new ProcessRunner(cmd);</span>
+<span class="nc" id="L112">			state = p.run(dotString.getBytes(), os);</span>
+<span class="nc" id="L113">			Log.info(&quot;Ending process ok&quot;);</span>
+<span class="nc" id="L114">		} catch (Throwable e) {</span>
+<span class="nc" id="L115">			Logme.error(e);</span>
+<span class="nc" id="L116">			Log.error(&quot;Error: &quot; + e);</span>
+<span class="nc" id="L117">			Log.error(&quot;The command was &quot; + cmd);</span>
+<span class="nc" id="L118">			Log.error(&quot;&quot;);</span>
+<span class="nc" id="L119">			Log.error(&quot;Try java -jar plantuml.jar -testdot to figure out the issue&quot;);</span>
+<span class="nc" id="L120">			Log.error(&quot;&quot;);</span>
+		} finally {
+<span class="nc" id="L122">			Log.info(&quot;Ending Graphviz process&quot;);</span>
+		}
+//		if (OptionFlags.getInstance().isCheckDotError() &amp;&amp; p != null &amp;&amp; p.getError().length() &gt; 0) {
+//			Log.error(&quot;GraphViz error stream : &quot; + p.getError());
+//			if (OptionFlags.getInstance().isCheckDotError())
+//				throw new IllegalStateException(&quot;Dot error &quot; + p.getError());
+//
+//		}
+//		if (OptionFlags.getInstance().isCheckDotError() &amp;&amp; p != null &amp;&amp; p.getOut().length() &gt; 0) {
+//			Log.error(&quot;GraphViz out stream : &quot; + p.getOut());
+//			if (OptionFlags.getInstance().isCheckDotError())
+//				throw new IllegalStateException(&quot;Dot out &quot; + p.getOut());
+//		}
+<span class="nc" id="L135">		return state;</span>
+	}
+
+	final public ExeState getExeState() {
+<span class="fc" id="L139">		return ExeState.checkFile(dotExe);</span>
+	}
+
+	final public String dotVersion() {
+<span class="nc" id="L143">		final String cmd[] = getCommandLineVersion();</span>
+<span class="nc" id="L144">		return executeCmd(cmd);</span>
+	}
+
+	private String executeCmd(final String cmd[]) {
+<span class="nc" id="L148">		final ProcessRunner p = new ProcessRunner(cmd);</span>
+<span class="nc" id="L149">		final ProcessState state = p.run(null, null);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="nc" id="L151">			return &quot;?&quot;;</span>
+
+<span class="nc" id="L153">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(p.getOut()))</span>
+<span class="nc" id="L155">			sb.append(p.getOut());</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(p.getError())) {</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L159">				sb.append(' ');</span>
+
+<span class="nc" id="L161">			sb.append(p.getError());</span>
+		}
+<span class="nc" id="L163">		return StringUtils.trin(sb.toString().replace('\n', ' '));</span>
+	}
+
+	final String[] getCommandLine() {
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (OptionFlags.ADD_NICE_FOR_DOT) {</span>
+<span class="nc" id="L168">			final String[] result = new String[type.length + 1 + 3];</span>
+<span class="nc" id="L169">			result[0] = &quot;/bin/nice&quot;;</span>
+<span class="nc" id="L170">			result[1] = &quot;-n&quot;;</span>
+<span class="nc" id="L171">			result[2] = &quot;10&quot;;</span>
+<span class="nc" id="L172">			result[3] = getDotExe().getAbsolutePath();</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			for (int i = 0; i &lt; type.length; i++)</span>
+<span class="nc" id="L174">				result[i + 4] = &quot;-T&quot; + type[i];</span>
+
+<span class="nc" id="L176">			return result;</span>
+		}
+<span class="nc" id="L178">		final String[] result = new String[type.length + 1];</span>
+<span class="nc" id="L179">		result[0] = getDotExe().getAbsolutePath();</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (int i = 0; i &lt; type.length; i++)</span>
+<span class="nc" id="L181">			result[i + 1] = &quot;-T&quot; + type[i];</span>
+
+<span class="nc" id="L183">		return result;</span>
+	}
+
+	final String[] getCommandLineVersion() {
+<span class="nc" id="L187">		return new String[] { getDotExe().getAbsolutePath(), &quot;-V&quot; };</span>
+	}
+
+	public final File getDotExe() {
+<span class="fc" id="L191">		return dotExe;</span>
+	}
+
+	public final String getDotString() {
+<span class="nc" id="L195">		return dotString;</span>
+	}
+
+	public final List&lt;String&gt; getType() {
+<span class="nc" id="L199">		return Arrays.asList(type);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

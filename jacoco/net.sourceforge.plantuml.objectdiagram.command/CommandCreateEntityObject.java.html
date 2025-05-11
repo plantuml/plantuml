@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandCreateEntityObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.objectdiagram.command</a> &gt; <span class="el_source">CommandCreateEntityObject.java</span></div><h1>CommandCreateEntityObject.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.objectdiagram.command;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.NameAndCodeParser;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandCreateEntityObject extends SingleLineCommand2&lt;AbstractClassOrObjectDiagram&gt; {
+
+	public CommandCreateEntityObject() {
+<span class="fc" id="L66">		super(getRegexConcat());</span>
+<span class="fc" id="L67">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L70">		return RegexConcat.build(CommandCreateEntityObject.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;TYPE&quot;, &quot;object&quot;), //
+<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L73">				NameAndCodeParser.nameAndCode(), //</span>
+<span class="fc" id="L74">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				ColorParser.exp1(), RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
+			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
+<span class="nc" id="L83">		final String idShort = diagram.cleanId(arg.getLazzy(&quot;CODE&quot;, 0));</span>
+
+<span class="nc" id="L85">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="nc" id="L86">		final String displayString = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L87">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L90">			return CommandExecutionResult.error(&quot;Object already exists : &quot; + quark.getData());</span>
+
+<span class="nc" id="L92">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L94">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
+
+<span class="nc" id="L96">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.OBJECT, null);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L98">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L99">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L100">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+
+<span class="nc" id="L102">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L104">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L105">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L106">			entity.addUrl(url);</span>
+		}
+<span class="nc" id="L108">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L109">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L111">		return CommandExecutionResult.ok();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

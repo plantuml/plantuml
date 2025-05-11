@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>URectangle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.shape</a> &gt; <span class="el_source">URectangle.java</span></div><h1>URectangle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution:  Miguel Esteves
+ *
+ */
+package net.sourceforge.plantuml.klimt.shape;
+
+import net.sourceforge.plantuml.klimt.AbstractShadowable;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UShapeSized;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.compress.CompressionMode;
+import net.sourceforge.plantuml.klimt.compress.UShapeIgnorableForCompression;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+
+public class URectangle extends AbstractShadowable implements UShapeSized, UShapeIgnorableForCompression {
+
+	private final double width;
+	private final double height;
+	private final double rx;
+	private final double ry;
+<span class="fc" id="L56">	private final String comment = null;</span>
+<span class="fc" id="L57">	private final String codeLine = null;</span>
+	private final boolean ignoreForCompressionOnX;
+	private final boolean ignoreForCompressionOnY;
+
+	public URectangle withHeight(double newHeight) {
+<span class="fc" id="L62">		final URectangle result = new URectangle(width, newHeight, rx, ry, comment, ignoreForCompressionOnX,</span>
+				ignoreForCompressionOnY, codeLine);
+<span class="fc" id="L64">		result.setDeltaShadow(this.getDeltaShadow());</span>
+<span class="fc" id="L65">		return result;</span>
+	}
+
+	public URectangle withWidth(double newWidth) {
+<span class="fc" id="L69">		final URectangle result = new URectangle(newWidth, height, rx, ry, comment, ignoreForCompressionOnX,</span>
+				ignoreForCompressionOnY, codeLine);
+<span class="fc" id="L71">		result.setDeltaShadow(this.getDeltaShadow());</span>
+<span class="fc" id="L72">		return result;</span>
+	}
+
+	public URectangle withCommentAndCodeLine(String comment, String codeLine) {
+<span class="fc" id="L76">		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, ignoreForCompressionOnY,</span>
+				codeLine);
+	}
+
+	public URectangle rounded(double round) {
+<span class="fc" id="L81">		return new URectangle(width, height, round, round, comment, ignoreForCompressionOnX, ignoreForCompressionOnY,</span>
+				codeLine);
+	}
+
+	public Shadowable diagonalCorner(double diagonalCorner) {
+<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		if (ignoreForCompressionOnX || ignoreForCompressionOnY)</span>
+<span class="nc" id="L87">			throw new IllegalStateException();</span>
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (diagonalCorner == 0)</span>
+<span class="fc" id="L90">			return this;</span>
+
+<span class="nc" id="L92">		final UPath result = UPath.none();</span>
+<span class="nc" id="L93">		result.moveTo(diagonalCorner, 0);</span>
+<span class="nc" id="L94">		result.lineTo(width - diagonalCorner, 0);</span>
+<span class="nc" id="L95">		result.lineTo(width, diagonalCorner);</span>
+<span class="nc" id="L96">		result.lineTo(width, height - diagonalCorner);</span>
+<span class="nc" id="L97">		result.lineTo(width - diagonalCorner, height);</span>
+<span class="nc" id="L98">		result.lineTo(diagonalCorner, height);</span>
+<span class="nc" id="L99">		result.lineTo(0, height - diagonalCorner);</span>
+<span class="nc" id="L100">		result.lineTo(0, diagonalCorner);</span>
+<span class="nc" id="L101">		result.lineTo(diagonalCorner, 0);</span>
+<span class="nc" id="L102">		return result;</span>
+	}
+
+	public final URectangle ignoreForCompressionOnX() {
+<span class="fc" id="L106">		return new URectangle(width, height, rx, ry, comment, true, ignoreForCompressionOnY, codeLine);</span>
+	}
+
+	public final URectangle ignoreForCompressionOnY() {
+<span class="fc" id="L110">		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, true, codeLine);</span>
+	}
+
+	public static URectangle build(double width, double height) {
+<span class="fc" id="L114">		return new URectangle(width, height, 0, 0, null, false, false, null);</span>
+	}
+
+	public static URectangle build(XDimension2D dim) {
+<span class="fc" id="L118">		return build(dim.getWidth(), dim.getHeight());</span>
+	}
+
+	public Shadowable halfRounded(double roundCorner) {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (roundCorner == 0)</span>
+<span class="nc" id="L123">			return this;</span>
+
+<span class="nc" id="L125">		final UPath path = UPath.none();</span>
+<span class="nc" id="L126">		path.moveTo(roundCorner / 2, 0);</span>
+<span class="nc" id="L127">		path.lineTo(width - roundCorner / 2, 0);</span>
+<span class="nc" id="L128">		path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, width, roundCorner / 2);</span>
+<span class="nc" id="L129">		path.lineTo(width, height);</span>
+<span class="nc" id="L130">		path.lineTo(0, height);</span>
+<span class="nc" id="L131">		path.lineTo(0, roundCorner / 2);</span>
+<span class="nc" id="L132">		path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, roundCorner / 2, 0);</span>
+<span class="nc" id="L133">		return path;</span>
+	}
+
+	private URectangle(double width, double height, double rx, double ry, String comment,
+<span class="fc" id="L137">			boolean ignoreForCompressionOnX, boolean ignoreForCompressionOnY, String codeLine) {</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (height == 0)</span>
+<span class="nc" id="L139">			throw new IllegalArgumentException(&quot;height=&quot; + height);</span>
+
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (width == 0)</span>
+<span class="nc" id="L142">			throw new IllegalArgumentException(&quot;width=&quot; + width);</span>
+
+<span class="fc" id="L144">		this.ignoreForCompressionOnX = ignoreForCompressionOnX;</span>
+<span class="fc" id="L145">		this.ignoreForCompressionOnY = ignoreForCompressionOnY;</span>
+		// this.comment = comment;
+		// this.codeLine = codeLine;
+<span class="fc" id="L148">		this.width = width;</span>
+<span class="fc" id="L149">		this.height = height;</span>
+<span class="fc" id="L150">		this.rx = rx;</span>
+<span class="fc" id="L151">		this.ry = ry;</span>
+<span class="fc" id="L152">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L156">		return &quot;width=&quot; + width + &quot; height=&quot; + height;</span>
+	}
+
+	public double getWidth() {
+<span class="fc" id="L160">		return width;</span>
+	}
+
+	public double getHeight() {
+<span class="fc" id="L164">		return height;</span>
+	}
+
+	public double getRx() {
+<span class="fc" id="L168">		return rx;</span>
+	}
+
+	public double getRy() {
+<span class="fc" id="L172">		return ry;</span>
+	}
+
+	public URectangle clip(UClip clip) {
+<span class="nc" id="L176">		return this;</span>
+	}
+
+	public MinMax getMinMax() {
+<span class="nc" id="L180">		return MinMax.fromMax(width, height);</span>
+	}
+
+//	public final String getComment() {
+//		return comment;
+//	}
+//
+//	public String getCodeLine() {
+//		return codeLine;
+//	}
+
+	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X) {</span>
+<span class="fc" id="L193">			ug.draw(new UEmpty(2, getHeight()));</span>
+<span class="fc" id="L194">			ug.apply(UTranslate.dx(getWidth() - 2)).draw(new UEmpty(2, getHeight()));</span>
+//			drawEmpty(x, y, new UEmpty(2, shape.getHeight()));
+//			drawEmpty(x + shape.getWidth() - 2, y, new UEmpty(2, shape.getHeight()));
+		}
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (mode == CompressionMode.ON_Y) {</span>
+<span class="fc" id="L199">			ug.draw(new UEmpty(getWidth(), 2));</span>
+<span class="fc" id="L200">			ug.apply(UTranslate.dy(getHeight() - 2)).draw(new UEmpty(getWidth(), 2));</span>
+//			drawEmpty(x, y, new UEmpty(shape.getWidth(), 2));
+//			drawEmpty(x, y + shape.getHeight() - 2, new UEmpty(shape.getWidth(), 2));
+		}
+
+<span class="fc" id="L205">	}</span>
+
+	public boolean isIgnoreForCompressionOn(CompressionMode mode) {
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X)</span>
+<span class="fc" id="L209">			return ignoreForCompressionOnX;</span>
+
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (mode == CompressionMode.ON_Y)</span>
+<span class="fc" id="L212">			return ignoreForCompressionOnY;</span>
+
+<span class="nc" id="L214">		throw new IllegalArgumentException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

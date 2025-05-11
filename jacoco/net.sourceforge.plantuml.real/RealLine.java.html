@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RealLine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.real</a> &gt; <span class="el_source">RealLine.java</span></div><h1>RealLine.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.real;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+<span class="fc" id="L45">class RealLine {</span>
+
+<span class="fc" id="L47">	private final List&lt;PositiveForce&gt; forces = new ArrayList&lt;&gt;();</span>
+
+	private double min;
+	private double max;
+<span class="fc" id="L51">	private Set&lt;AbstractReal&gt; all = new HashSet&lt;&gt;();</span>
+
+	void register(double v) {
+		// System.err.println(&quot;RealLine::register &quot; + v);
+		// min = Math.min(min, v);
+		// max = Math.max(max, v);
+<span class="fc" id="L57">	}</span>
+
+	void register2(AbstractReal abstractReal) {
+<span class="fc" id="L60">		all.add(abstractReal);</span>
+<span class="fc" id="L61">	}</span>
+
+	public double getAbsoluteMin() {
+<span class="nc" id="L64">		return min;</span>
+	}
+
+	public double getAbsoluteMax() {
+<span class="nc" id="L68">		return max;</span>
+	}
+
+	public void addForce(PositiveForce force) {
+<span class="fc" id="L72">		this.forces.add(force);</span>
+<span class="fc" id="L73">	}</span>
+
+	static private int CPT;
+
+	public void compile() {
+<span class="fc" id="L78">		int cpt = 0;</span>
+<span class="fc" id="L79">		final Map&lt;PositiveForce, Integer&gt; counter = new HashMap&lt;PositiveForce, Integer&gt;();</span>
+		do {
+<span class="fc" id="L81">			boolean done = true;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			for (PositiveForce f : forces) {</span>
+				// System.err.println(&quot;force=&quot; + f);
+<span class="fc" id="L84">				final boolean change = f.apply();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				if (change) {</span>
+<span class="fc" id="L86">					incCounter(counter, f);</span>
+					// System.err.println(&quot;changed! &quot; + f);
+<span class="fc" id="L88">					done = false;</span>
+				}
+<span class="fc" id="L90">			}</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (done) {</span>
+				// System.err.println(&quot;cpt=&quot; + cpt + &quot; size=&quot; + forces.size());
+<span class="fc" id="L93">				CPT += cpt;</span>
+				// System.err.println(&quot;CPT=&quot; + CPT);
+<span class="fc" id="L95">				min = 0;</span>
+<span class="fc" id="L96">				max = 0;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				for (AbstractReal real : all) {</span>
+<span class="fc" id="L98">					final double v = real.getCurrentValue();</span>
+					// System.err.println(&quot;RealLine::compile v=&quot; + v);
+<span class="fc bfc" id="L100" title="All 2 branches covered.">					if (v &gt; max)</span>
+<span class="fc" id="L101">						max = v;</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">					if (v &lt; min)</span>
+<span class="fc" id="L104">						min = v;</span>
+
+<span class="fc" id="L106">				}</span>
+				// System.err.println(&quot;RealLine::compile min=&quot; + min + &quot; max=&quot; + max);
+<span class="fc" id="L108">				return;</span>
+			}
+<span class="fc" id="L110">			cpt++;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (cpt &gt; 99999) {</span>
+<span class="nc" id="L112">				printCounter(counter);</span>
+<span class="nc" id="L113">				throw new IllegalStateException(&quot;Inifinite Loop?&quot;);</span>
+			}
+<span class="fc" id="L115">		} while (true);</span>
+
+	}
+
+	private void printCounter(Map&lt;PositiveForce, Integer&gt; counter) {
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		for (PositiveForce f : forces)</span>
+<span class="nc" id="L121">			System.err.println(&quot;force=&quot; + f);</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (Map.Entry&lt;PositiveForce, Integer&gt; ent : counter.entrySet())</span>
+<span class="nc" id="L124">			System.err.println(&quot;count=&quot; + ent.getValue() + &quot; for &quot; + ent.getKey());</span>
+
+<span class="nc" id="L126">	}</span>
+
+	private static void incCounter(Map&lt;PositiveForce, Integer&gt; counter, PositiveForce f) {
+<span class="fc" id="L129">		final Integer v = counter.get(f);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		counter.put(f, v == null ? 1 : v + 1);</span>
+<span class="fc" id="L131">	}</span>
+
+	Real asMaxAbsolute() {
+<span class="nc" id="L134">		return new MaxAbsolute();</span>
+	}
+
+	Real asMinAbsolute() {
+<span class="nc" id="L138">		return new MinAbsolute();</span>
+	}
+
+<span class="nc" id="L141">	class MaxAbsolute extends AbstractAbsolute {</span>
+		public double getCurrentValue() {
+<span class="nc" id="L143">			return max;</span>
+		}
+	}
+
+<span class="nc" id="L147">	class MinAbsolute extends AbstractAbsolute {</span>
+		public double getCurrentValue() {
+<span class="nc" id="L149">			return min;</span>
+		}
+	}
+
+<span class="nc" id="L153">	abstract class AbstractAbsolute implements Real {</span>
+
+		public void printCreationStackTrace() {
+<span class="nc" id="L156">		}</span>
+
+		public String getName() {
+<span class="nc" id="L159">			return getClass().getName();</span>
+		}
+
+		public Real addFixed(double delta) {
+<span class="nc" id="L163">			throw new UnsupportedOperationException();</span>
+		}
+
+		public Real addAtLeast(double delta) {
+<span class="nc" id="L167">			throw new UnsupportedOperationException();</span>
+		}
+
+		public void ensureBiggerThan(Real other) {
+<span class="nc" id="L171">			throw new UnsupportedOperationException();</span>
+		}
+
+		public Real getMaxAbsolute() {
+<span class="nc" id="L175">			return asMaxAbsolute();</span>
+		}
+
+		public Real getMinAbsolute() {
+<span class="nc" id="L179">			return asMinAbsolute();</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

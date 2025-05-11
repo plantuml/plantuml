@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>index__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.label</a> &gt; <span class="el_source">index__c.java</span></div><h1>index__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.label;
+import static gen.lib.label.node__c.AddBranch;
+import static gen.lib.label.node__c.DisconBranch;
+import static gen.lib.label.node__c.NodeCover;
+import static gen.lib.label.node__c.PickBranch;
+import static gen.lib.label.node__c.RTreeNewNode;
+import static gen.lib.label.rectangle__c.CombineRect;
+import static gen.lib.label.rectangle__c.Overlap;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_Branch_t;
+import h.ST_LeafList_t;
+import h.ST_Node_t___;
+import h.ST_Node_t___or_object_t;
+import h.ST_RTree;
+import h.ST_Rect_t;
+import smetana.core.Memory;
+import smetana.core.__ptr__;
+
+<span class="nc" id="L69">public class index__c {</span>
+    // ::remove folder when __HAXE__
+
+
+//3 1rfaqe5urty5uyp5xb2r0idce
+// LeafList_t *RTreeNewLeafList(Leaf_t * lp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;&quot;, key=&quot;1rfaqe5urty5uyp5xb2r0idce&quot;, definition=&quot;LeafList_t *RTreeNewLeafList(Leaf_t * lp)&quot;)
+public static ST_LeafList_t RTreeNewLeafList(ST_Branch_t lp) {
+<span class="fc" id="L78">ENTERING(&quot;1rfaqe5urty5uyp5xb2r0idce&quot;,&quot;RTreeNewLeafList&quot;);</span>
+try {
+     ST_LeafList_t llp;
+<span class="fc" id="L81">     llp = new ST_LeafList_t();</span>
+<span class="fc" id="L82">     llp.leaf = lp;</span>
+<span class="fc" id="L83">     llp.next = null;</span>
+<span class="fc" id="L84">          return llp;</span>
+//UNSUPPORTED(&quot;3b215c61vcll0rkorzyelp40j&quot;); //     if ((llp = (LeafList_t*)zmalloc(sizeof(LeafList_t)))) {
+//UNSUPPORTED(&quot;48u04cv4b40c0avzy99mdycx5&quot;); // 	llp-&gt;leaf = lp;
+//UNSUPPORTED(&quot;bbvk7v1s0z6yw1xdoq99v233w&quot;); // 	llp-&gt;next = 0;
+//UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }
+//UNSUPPORTED(&quot;5a1d3zolzdjict0gus6vz04a2&quot;); //     return llp;
+//UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }
+//
+//throw new UnsupportedOperationException();
+} finally {
+<span class="fc" id="L94">LEAVING(&quot;1rfaqe5urty5uyp5xb2r0idce&quot;,&quot;RTreeNewLeafList&quot;);</span>
+}
+}
+
+
+
+
+//3 6pvstz7axi8a7saeqe3nrrmg5
+// LeafList_t *RTreeLeafListAdd(LeafList_t * llp, Leaf_t * lp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;&quot;, key=&quot;6pvstz7axi8a7saeqe3nrrmg5&quot;, definition=&quot;LeafList_t *RTreeLeafListAdd(LeafList_t * llp, Leaf_t * lp)&quot;)
+public static ST_LeafList_t RTreeLeafListAdd(ST_LeafList_t llp, ST_Branch_t lp) {
+<span class="fc" id="L106">ENTERING(&quot;6pvstz7axi8a7saeqe3nrrmg5&quot;,&quot;RTreeLeafListAdd&quot;);</span>
+try {
+     ST_LeafList_t nlp;
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">     if ((lp) == null)</span>
+<span class="nc" id="L110"> 	return llp;</span>
+<span class="fc" id="L111">     nlp = RTreeNewLeafList(lp);</span>
+<span class="fc" id="L112">     nlp.next = llp;</span>
+<span class="fc" id="L113">     return nlp;</span>
+} finally {
+<span class="fc" id="L115">LEAVING(&quot;6pvstz7axi8a7saeqe3nrrmg5&quot;,&quot;RTreeLeafListAdd&quot;);</span>
+}
+}
+
+
+
+
+//3 6zraor7x44vrnm19d2igkvow2
+// void RTreeLeafListFree(LeafList_t * llp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;RTreeLeafListFree&quot;, key=&quot;6zraor7x44vrnm19d2igkvow2&quot;, definition=&quot;void RTreeLeafListFree(LeafList_t * llp)&quot;)
+public static void RTreeLeafListFree(ST_LeafList_t llp) {
+<span class="fc" id="L127">ENTERING(&quot;6zraor7x44vrnm19d2igkvow2&quot;,&quot;RTreeLeafListFree&quot;);</span>
+try {
+     ST_LeafList_t tlp;
+<span class="fc bfc" id="L130" title="All 2 branches covered.">     while (llp.next!=null) {</span>
+<span class="fc" id="L131"> 	tlp = (ST_LeafList_t) llp.next;</span>
+<span class="fc" id="L132"> 	Memory.free(llp);</span>
+<span class="fc" id="L133"> 	llp = tlp;</span>
+     }
+<span class="fc" id="L135">     Memory.free(llp);</span>
+} finally {
+<span class="fc" id="L137">LEAVING(&quot;6zraor7x44vrnm19d2igkvow2&quot;,&quot;RTreeLeafListFree&quot;);</span>
+}
+<span class="fc" id="L139">}</span>
+
+///* Allocate space for a node in the list used in DeletRect to
+// * store Nodes that are too empty.
+// */
+//static struct ListNode *RTreeNewListNode(void)
+//{
+//    return (struct ListNode*)zmalloc(sizeof(struct ListNode));
+//}
+//
+///* Add a node to the reinsertion list.  All its branches will later
+// * be reinserted into the index structure.
+// */
+//3 aa19m7d7qc06m8id896e60lkg
+//static int RTreeReInsert(RTree_t * rtp, Node_t * n, struct ListNode **ee)
+//{
+// WARNING!! STRUCT
+//    register struct ListNode *l;
+//
+//    if (!(l = RTreeNewListNode()))
+//	return -1;
+//    l-&gt;node = n;
+//    l-&gt;next = *ee;
+//    *ee = l;
+//    return 0;
+//}
+//
+//3 aa29m7d7qc06m8id896e60lkg
+//RTree_t *RTreeOpen()
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;&quot;, key=&quot;aa29m7d7qc06m8id896e60lkg&quot;, definition=&quot;Tree_t *RTreeOpen()&quot;)
+public static ST_RTree RTreeOpen() {
+<span class="fc" id="L171">ENTERING(&quot;aa29m7d7qc06m8id896e60lkg&quot;,&quot;RTreeOpen&quot;);</span>
+try {
+	ST_RTree rtp;
+<span class="fc" id="L174">    rtp = new ST_RTree();</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">    if (rtp!=null)</span>
+<span class="fc" id="L176">    	rtp.root = RTreeNewIndex(rtp);</span>
+<span class="fc" id="L177">    return rtp;</span>
+} finally {
+<span class="fc" id="L179">LEAVING(&quot;aa29m7d7qc06m8id896e60lkg&quot;,&quot;RTreeOpen&quot;);</span>
+}
+}
+
+/* Make a new index, empty.  Consists of a single node. */
+//3 aa39m7d7qc06m8id896e60lkg
+//Node_t *RTreeNewIndex(RTree_t * rtp)
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;&quot;, key=&quot;aa39m7d7qc06m8id896e60lkg&quot;, definition=&quot;ode_t *RTreeNewIndex(RTree_t * rtp)&quot;)
+public static ST_Node_t___ RTreeNewIndex(ST_RTree rtp) {
+<span class="fc" id="L189">ENTERING(&quot;aa39m7d7qc06m8id896e60lkg&quot;,&quot;RTreeNewIndex&quot;);</span>
+try {
+	ST_Node_t___ x;
+<span class="fc" id="L192">	x = RTreeNewNode(rtp);</span>
+<span class="fc" id="L193">	x.level = 0; /* leaf */</span>
+<span class="fc" id="L194">	rtp.LeafCount = rtp.LeafCount+1;</span>
+<span class="fc" id="L195">	return x;</span>
+} finally {
+<span class="fc" id="L197">LEAVING(&quot;aa39m7d7qc06m8id896e60lkg&quot;,&quot;RTreeNewIndex&quot;);</span>
+}
+}
+
+//3 aa49m7d7qc06m8id896e60lkg
+//static int RTreeClose2(RTree_t * rtp, Node_t * n)
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;RTreeClose2&quot;, key=&quot;aa49m7d7qc06m8id896e60lkg&quot;, definition=&quot;tatic int RTreeClose2(RTree_t * rtp, Node_t * n)&quot;)
+public static int RTreeClose2(ST_RTree rtp, ST_Node_t___ n) {
+<span class="fc" id="L206">ENTERING(&quot;aa49m7d7qc06m8id896e60lkg&quot;,&quot;RTreeClose2&quot;);</span>
+try {
+    int i;
+
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">    if (n.level &gt; 0) {</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">	for (i = 0; i &lt; 64; i++) {</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">	    if ((n.branch[i].child) == null)</span>
+<span class="nc" id="L213">		continue;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">	    if (RTreeClose2(rtp, (ST_Node_t___) n.branch[i].child) == 0) {</span>
+<span class="nc" id="L215">		Memory.free(n.branch[i].child);</span>
+<span class="nc" id="L216">		DisconBranch(n, i);</span>
+<span class="nc" id="L217">	    rtp.EntryCount = rtp.EntryCount-1;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (rtp.StatFlag!=0)</span>
+<span class="nc" id="L219">		    rtp.ElimCount = rtp.ElimCount+1;</span>
+	    }
+	}
+    } else {
+<span class="fc bfc" id="L223" title="All 2 branches covered.">	for (i = 0; i &lt; 64; i++) {</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if ((n.branch[i].child) == null)</span>
+<span class="fc" id="L225">		continue;</span>
+	    // free(n-&gt;branch[i].child);
+<span class="fc" id="L227">	    DisconBranch(n, i);</span>
+<span class="fc" id="L228">	    rtp.EntryCount = rtp.EntryCount-1;</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">	    if (rtp.StatFlag!=0)</span>
+<span class="nc" id="L230">		    rtp.ElimCount = rtp.ElimCount+1;</span>
+	}
+	//free(n);
+    }
+<span class="fc" id="L234">    return 0;</span>
+} finally {
+<span class="fc" id="L236">LEAVING(&quot;aa49m7d7qc06m8id896e60lkg&quot;,&quot;RTreeClose2&quot;);</span>
+}
+}
+
+//3 aa59m7d7qc06m8id896e60lkg
+//int RTreeClose(RTree_t * rtp)
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;RTreeClose&quot;, key=&quot;aa59m7d7qc06m8id896e60lkg&quot;, definition=&quot;nt RTreeClose(RTree_t * rtp)&quot;)
+public static int RTreeClose(ST_RTree rtp) {
+<span class="fc" id="L245">ENTERING(&quot;aa59m7d7qc06m8id896e60lkg&quot;,&quot;RTreeClose&quot;);</span>
+try {
+<span class="fc" id="L247">    RTreeClose2(rtp, (ST_Node_t___) rtp.root);</span>
+<span class="fc" id="L248">    Memory.free(rtp.root);</span>
+<span class="fc" id="L249">    Memory.free(rtp);</span>
+<span class="fc" id="L250">    return 0;</span>
+} finally {
+<span class="fc" id="L252">LEAVING(&quot;aa59m7d7qc06m8id896e60lkg&quot;,&quot;RTreeClose&quot;);</span>
+}
+}
+
+
+	
+/* RTreeSearch in an index tree or subtree for all data retangles that
+** overlap the argument rectangle.
+** Returns the number of qualifying data rects.
+*/
+//3 aa69m7d7qc06m8id896e60lkg
+//LeafList_t *RTreeSearch(RTree_t * rtp, Node_t * n, Rect_t * r)
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;&quot;, key=&quot;aa69m7d7qc06m8id896e60lkg&quot;, definition=&quot;eafList_t *RTreeSearch(RTree_t * rtp, Node_t * n, Rect_t * r)&quot;)
+public static ST_LeafList_t RTreeSearch(ST_RTree rtp, ST_Node_t___ n, ST_Rect_t r) {
+<span class="fc" id="L267">ENTERING(&quot;aa69m7d7qc06m8id896e60lkg&quot;,&quot;RTreeSearch&quot;);</span>
+try {
+	int i;
+<span class="fc" id="L270">    ST_LeafList_t llp = null;</span>
+
+//    assert(n);
+//    assert(n-&gt;level &gt;= 0);
+//    assert(r);
+
+<span class="fc" id="L276">    rtp.SeTouchCount = rtp.SeTouchCount+1;</span>
+
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">    if (n.level &gt; 0) {		/* this is an internal node in the tree */</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">	for (i = 0; i &lt; 64; i++)</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">	    if (n.branch[i].child!=null &amp;&amp;</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">	    	Overlap(r, n.branch[i].rect)) {</span>
+<span class="nc" id="L282">		ST_LeafList_t tlp = RTreeSearch(rtp, (ST_Node_t___) n.branch[i].child, r);</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">		if (llp!=null) {</span>
+<span class="nc" id="L284">		    ST_LeafList_t xlp = llp;</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">		    while (xlp.next!=null)</span>
+<span class="nc" id="L286">			xlp = (ST_LeafList_t) xlp.next;</span>
+<span class="nc" id="L287">		    xlp.next = tlp;</span>
+<span class="nc" id="L288">		} else</span>
+<span class="nc" id="L289">		    llp = tlp;</span>
+   }
+    } else {			/* this is a leaf node */
+<span class="fc bfc" id="L292" title="All 2 branches covered.">	for (i = 0; i &lt; 64; i++) {</span>
+<span class="fc bfc" id="L293" title="All 4 branches covered.">	    if (n.branch[i].child!=null &amp;&amp; Overlap(r, n.branch[i].rect)) {</span>
+<span class="fc" id="L294">		   llp = RTreeLeafListAdd(llp, /*(Leaf_t *)*/ n.branch[i]);</span>
+	    }
+	}
+    }
+<span class="fc" id="L298">    return llp;</span>
+} finally {
+<span class="fc" id="L300">LEAVING(&quot;aa69m7d7qc06m8id896e60lkg&quot;,&quot;RTreeSearch&quot;);</span>
+}
+}
+
+//}
+//
+///* Insert a data rectangle into an index structure.
+//** RTreeInsert provides for splitting the root;
+//** returns 1 if root was split, 0 if it was not.
+//** The level argument specifies the number of steps up from the leaf
+//** level to insert; e.g. a data rectangle goes in at level = 0.
+//** RTreeInsert2 does the recursion.
+//*/
+//static int RTreeInsert2(RTree_t *, Rect_t *, void *, Node_t *, Node_t **,
+//			int);
+///*static int RTreeInsert2(RTree_t*, Rect_t*, int, Node_t*, Node_t**, int); */
+
+
+
+//3 3wss9r0zgt5k06j8ovjv7hq0d
+// int RTreeInsert(RTree_t * rtp, Rect_t * r, void *data, Node_t ** n, int level) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;RTreeInsert&quot;, key=&quot;3wss9r0zgt5k06j8ovjv7hq0d&quot;, definition=&quot;int RTreeInsert(RTree_t * rtp, Rect_t * r, void *data, Node_t ** n, int level)&quot;)
+public static int RTreeInsert(ST_RTree rtp, ST_Rect_t r, __ptr__ data, ST_Node_t___ n[], int level) {
+<span class="fc" id="L324">ENTERING(&quot;3wss9r0zgt5k06j8ovjv7hq0d&quot;,&quot;RTreeInsert&quot;);</span>
+try {
+     int i;
+     ST_Node_t___ newroot;
+<span class="fc" id="L328">     ST_Node_t___ newnode[] = new ST_Node_t___[1];</span>
+<span class="fc" id="L329">     final ST_Branch_t b = new ST_Branch_t();</span>
+<span class="fc" id="L330">     int result = 0;</span>
+//     assert(r &amp;&amp; n);
+//     assert(level &gt;= 0 &amp;&amp; level &lt;= (*n)-&gt;level);
+//     for (i = 0; i &lt; 2; i++)
+// 	assert(r-&gt;boundary[i] &lt;= r-&gt;boundary[2 + i]);
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">if (rtp.StatFlag!=0) {</span>
+<span class="nc" id="L336">UNSUPPORTED(&quot;akhni40ndam0u9c6i7raxw4mp&quot;); // 	if (rtp-&gt;Deleting)</span>
+<span class="nc" id="L337">UNSUPPORTED(&quot;bzb1oqc35evr96528iv16glb0&quot;); // 	    rtp-&gt;ReInsertCount++;</span>
+<span class="nc" id="L338">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L339">UNSUPPORTED(&quot;3kxquse3qg2crme5dzybg9jxe&quot;); // 	    rtp-&gt;InsertCount++;</span>
+}
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">     if (rtp.Deleting == 0)</span>
+<span class="fc" id="L342"> 	rtp.RectCount = rtp.RectCount+1;</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">     if (RTreeInsert2(rtp, r, data, n[0], newnode, level)!=0) {	/* root was split */</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed."> 	if (rtp.StatFlag!=0) {</span>
+<span class="nc" id="L345">UNSUPPORTED(&quot;2y8kv6b3ysrr61q7tqn76rhhc&quot;); // 	    if (rtp-&gt;Deleting)</span>
+<span class="nc" id="L346">UNSUPPORTED(&quot;dn4oynmx9ugizzs5pkxiyptbi&quot;); // 		rtp-&gt;DeTouchCount++;</span>
+<span class="nc" id="L347">UNSUPPORTED(&quot;5c97f6vfxny0zz35l2bu4maox&quot;); // 	    else</span>
+<span class="nc" id="L348">UNSUPPORTED(&quot;2u8wpa4w1q7rg14t07bny6p8i&quot;); // 		rtp-&gt;InTouchCount++;</span>
+ 	}
+<span class="nc" id="L350"> 	newroot = RTreeNewNode(rtp);	/* grow a new root, make tree taller */</span>
+<span class="nc" id="L351"> 	rtp.NonLeafCount = rtp.NonLeafCount+1;</span>
+<span class="nc" id="L352"> 	newroot.level = n[0].level + 1;</span>
+<span class="nc" id="L353"> 	b.rect.___(NodeCover(n[0]));</span>
+<span class="nc" id="L354"> 	b.child = n[0];</span>
+<span class="nc" id="L355"> 	AddBranch(rtp, b, newroot, null);</span>
+<span class="nc" id="L356"> 	b.rect.___(NodeCover(newnode[0]));</span>
+<span class="nc" id="L357"> 	b.child = newnode[0];</span>
+<span class="nc" id="L358"> 	AddBranch(rtp, b, newroot, null);</span>
+<span class="nc" id="L359"> 	n[0] = newroot;</span>
+ 	// rtp-&gt;root = newroot;
+<span class="nc" id="L361"> 	rtp.EntryCount = rtp.EntryCount + 2;</span>
+<span class="nc" id="L362"> 	result = 1;</span>
+     }
+<span class="fc" id="L364">     return result;</span>
+} finally {
+<span class="fc" id="L366">LEAVING(&quot;3wss9r0zgt5k06j8ovjv7hq0d&quot;,&quot;RTreeInsert&quot;);</span>
+}
+}
+
+
+
+// public static int RTreeInsert(ST_RTree rtp, ST_Rect_t r, __ptr__ data, ST_Node_t___ n[], int level) {
+
+//3 bsc9m7d7qc06m8id896e60lkg
+// static int RTreeInsert2(RTree_t * rtp, Rect_t * r, void *data, 	     Node_t * n, Node_t ** new, int level) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/index.c&quot;, name=&quot;RTreeInsert2&quot;, key=&quot;bsc9m7d7qc06m8id896e60lkg&quot;, definition=&quot;static int RTreeInsert2(RTree_t * rtp, Rect_t * r, void *data, 	     Node_t * n, Node_t ** new, int level)&quot;)
+public static int RTreeInsert2(ST_RTree rtp, ST_Rect_t r, __ptr__ data, ST_Node_t___ n, ST_Node_t___ new_[], int level) {
+<span class="fc" id="L379">ENTERING(&quot;bsc9m7d7qc06m8id896e60lkg&quot;,&quot;RTreeInsert2&quot;);</span>
+try {
+     /*static int */
+     /* RTreeInsert2(RTree_t*rtp, Rect_t*r,
+        int data, Node_t*n, Node_t**new, int level) {
+      */
+<span class="fc" id="L385">     int i=0;</span>
+<span class="fc" id="L386">     final ST_Branch_t b = new ST_Branch_t();</span>
+<span class="fc" id="L387">     ST_Node_t___ n2[]=new ST_Node_t___[1];</span>
+//     assert(r &amp;&amp; n &amp;&amp; new);
+//     assert(level &gt;= 0 &amp;&amp; level &lt;= n-&gt;level);
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">     if (rtp.StatFlag!=0) {</span>
+<span class="nc" id="L391">UNSUPPORTED(&quot;akhni40ndam0u9c6i7raxw4mp&quot;); // 	if (rtp-&gt;Deleting)</span>
+<span class="nc" id="L392">UNSUPPORTED(&quot;8k1kgaoa4b2mcye1xthc3f1kf&quot;); // 	    rtp-&gt;DeTouchCount++;</span>
+<span class="nc" id="L393">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L394">UNSUPPORTED(&quot;1um729vqiy3529kbsrzyl9u3y&quot;); // 	    rtp-&gt;InTouchCount++;</span>
+     }
+/* Still above level for insertion, go down tree recursively */
+<span class="pc bpc" id="L397" title="1 of 2 branches missed.">     if (n.level &gt; level) {</span>
+<span class="nc" id="L398"> 	i = PickBranch(r, n);</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed."> 	if (RTreeInsert2(rtp, r, data, (ST_Node_t___) n.branch[i].child, n2, level) == 0) {</span>
+/* recurse: child was not split */
+<span class="nc" id="L401"> 	    n.branch[i].rect.___(</span>
+<span class="nc" id="L402"> 	    		CombineRect((ST_Rect_t)r, (ST_Rect_t) n.branch[i].rect));</span>
+<span class="nc" id="L403"> 	    return 0;</span>
+ 	} else {		/* child was split */
+<span class="nc" id="L405"> 	    n.branch[i].rect.___(</span>
+<span class="nc" id="L406"> 	    		NodeCover((ST_Node_t___)n.branch[i].child));</span>
+<span class="nc" id="L407"> 	    b.child = n2[0];</span>
+<span class="nc" id="L408"> 	    b.rect.___(NodeCover(n2[0]));</span>
+<span class="nc" id="L409"> 		rtp.EntryCount = rtp.EntryCount+1;</span>
+<span class="nc" id="L410"> 	 	return AddBranch(rtp, b, n, new_);</span>
+ 	}
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">     } else if (n.level == level) {	/* at level for insertion. */</span>
+ 	/*Add rect, split if necessary */
+<span class="fc" id="L414"> 	b.rect.___(r);</span>
+<span class="fc" id="L415"> 	b.child = /*(Node_t *)*/(ST_Node_t___or_object_t) data; // THIS CAST IS A BIG ISSUE</span>
+// UNSUPPORTED(&quot;7w1b5nw2bj3zmo70m9bczwwov&quot;); // 	b.child = (Node_t *) data;
+<span class="fc" id="L417"> 	rtp.EntryCount = rtp.EntryCount+1;</span>
+<span class="fc" id="L418"> 	return AddBranch(rtp, b, n, new_);</span>
+     } else {			/* Not supposed to happen */
+<span class="nc" id="L420">UNSUPPORTED(&quot;22oqraxnqrjall7fj6pooexmi&quot;); // 	assert((0));</span>
+<span class="nc" id="L421">UNSUPPORTED(&quot;c9ckhc8veujmwcw0ar3u3zld4&quot;); // 	return 0;</span>
+     }
+<span class="nc" id="L423">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L425">LEAVING(&quot;bsc9m7d7qc06m8id896e60lkg&quot;,&quot;RTreeInsert2&quot;);</span>
+}
+}
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

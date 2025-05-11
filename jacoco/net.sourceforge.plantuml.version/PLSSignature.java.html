@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PLSSignature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.version</a> &gt; <span class="el_source">PLSSignature.java</span></div><h1>PLSSignature.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.version;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.net.NetworkInterface;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Enumeration;
+import java.util.Random;
+
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.OptionPrint;
+import net.sourceforge.plantuml.dedication.Dedication;
+import net.sourceforge.plantuml.dedication.QBlock;
+import net.sourceforge.plantuml.dedication.TurningBytes;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.SignatureUtils;
+
+public class PLSSignature {
+	// ::remove file when __CORE__
+
+	private final int type;
+	private final byte[] sha;
+	private final long now;
+	private final long exp;
+	private final String owner;
+	private final String context;
+
+<span class="nc" id="L69">	public PLSSignature(int type, byte[] sha, long now, long exp, String owner, String context) {</span>
+<span class="nc" id="L70">		this.type = type;</span>
+<span class="nc" id="L71">		this.sha = sha;</span>
+<span class="nc" id="L72">		this.now = now;</span>
+<span class="nc" id="L73">		this.exp = exp;</span>
+<span class="nc" id="L74">		this.owner = owner;</span>
+<span class="nc" id="L75">		this.context = context;</span>
+<span class="nc" id="L76">	}</span>
+
+	private LicenseInfo toLicenseInfo() {
+<span class="nc" id="L79">		return new LicenseInfo(LicenseType.fromInt(type), now, exp, owner, context, sha);</span>
+	}
+
+	public static byte[] retrieveDistributorImageSignature() throws IOException, NoSuchAlgorithmException {
+<span class="nc" id="L83">		final InputStream dis = PSystemVersion.class.getResourceAsStream(&quot;/distributor.png&quot;);</span>
+<span class="nc" id="L84">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L85">		FileUtils.copyToStream(dis, baos);</span>
+<span class="nc" id="L86">		return SignatureUtils.getSHA512raw(baos.toByteArray());</span>
+	}
+
+	public static PLSSignature fromRaw512(byte[] data) throws NoSuchAlgorithmException, IOException {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (data.length != 512) {</span>
+<span class="nc" id="L91">			throw new IllegalArgumentException();</span>
+		}
+
+<span class="nc" id="L94">		final byte resultA[] = new byte[64];</span>
+<span class="nc" id="L95">		final byte resultB[] = new byte[512 - 64];</span>
+<span class="nc" id="L96">		System.arraycopy(data, 0, resultA, 0, resultA.length);</span>
+<span class="nc" id="L97">		System.arraycopy(data, 64, resultB, 0, resultB.length);</span>
+
+<span class="nc" id="L99">		final byte[] sig = SignatureUtils.getSHA512raw(resultB);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (SignatureUtils.toHexString(resultA).equals(SignatureUtils.toHexString(sig)) == false) {</span>
+<span class="nc" id="L101">			return null;</span>
+			// throw new IOException();
+		}
+
+<span class="nc" id="L105">		final ByteArrayInputStream bais = new ByteArrayInputStream(resultB);</span>
+<span class="nc" id="L106">		final int type = bais.read();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (type == 0) {</span>
+<span class="nc" id="L108">			final int version = bais.read();</span>
+<span class="nc" id="L109">			final byte sha[] = readBytes(bais, 64);</span>
+<span class="nc" id="L110">			final long now = readLong(bais);</span>
+<span class="nc" id="L111">			final long exp = readLong(bais);</span>
+<span class="nc" id="L112">			final String owner = readString(bais);</span>
+<span class="nc" id="L113">			return new PLSSignature(type, sha, now, exp, owner, null);</span>
+		}
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (type == 2) {</span>
+<span class="nc" id="L116">			final int version = bais.read();</span>
+<span class="nc" id="L117">			final byte sha[] = readBytes(bais, 64);</span>
+<span class="nc" id="L118">			final long now = readLong(bais);</span>
+<span class="nc" id="L119">			final long exp = readLong(bais);</span>
+<span class="nc" id="L120">			final String owner = readString(bais);</span>
+<span class="nc" id="L121">			final String context = readString(bais);</span>
+<span class="nc" id="L122">			return new PLSSignature(type, sha, now, exp, owner, context);</span>
+		}
+<span class="nc" id="L124">		return null;</span>
+	}
+
+	// public static byte shrink(byte data[]) {
+	// byte result = 42;
+	// for (byte b : data) {
+	// result ^= b;
+	// }
+	// return result;
+	// }
+
+	private static byte[] readBytes(ByteArrayInputStream bais, int size) throws IOException {
+<span class="nc" id="L136">		byte[] result = new byte[size];</span>
+<span class="nc" id="L137">		final int read = bais.read(result);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (read != size) {</span>
+<span class="nc" id="L139">			throw new IOException();</span>
+		}
+<span class="nc" id="L141">		return result;</span>
+	}
+
+	private static String readString(ByteArrayInputStream bais) throws IOException {
+<span class="nc" id="L145">		final int size = bais.read();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (size &gt; 80) {</span>
+<span class="nc" id="L147">			throw new IOException();</span>
+		}
+<span class="nc" id="L149">		byte[] result = new byte[size];</span>
+<span class="nc" id="L150">		final int read = bais.read(result);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (read != size) {</span>
+<span class="nc" id="L152">			throw new IOException();</span>
+		}
+<span class="nc" id="L154">		return new String(result, UTF_8);</span>
+	}
+
+	private static long readLong(ByteArrayInputStream bais) throws IOException {
+<span class="nc" id="L158">		final byte[] result = new byte[8];</span>
+<span class="nc" id="L159">		final int read = bais.read(result);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (read != 8) {</span>
+<span class="nc" id="L161">			throw new IOException();</span>
+		}
+<span class="nc" id="L163">		long ll = 0;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (int i = 7; i &gt;= 0; i--) {</span>
+<span class="nc" id="L165">			final long mask = ((long) (result[i] &amp; 0xFF)) &lt;&lt; (8 * (7 - i));</span>
+<span class="nc" id="L166">			ll = ll | mask;</span>
+		}
+<span class="nc" id="L168">		return ll;</span>
+	}
+
+	public static LicenseInfo retrieveNamed(String sig, String key, boolean doCheck)
+			throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+<span class="nc" id="L173">		byte[] block = decode(key);</span>
+<span class="nc" id="L174">		xor(block, SignatureUtils.getSHA512raw(SignatureUtils.salting(sig, getSalt(sig))));</span>
+<span class="nc" id="L175">		final PLSSignature sig2 = PLSSignature.fromRaw512(block);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (sig2 == null) {</span>
+<span class="nc" id="L177">			return LicenseInfo.NONE;</span>
+		}
+
+<span class="nc" id="L180">		return sig2.toLicenseInfo();</span>
+	}
+
+	public static LicenseInfo retrieveDistributor(String key) throws IOException, NoSuchAlgorithmException {
+<span class="nc" id="L184">		byte[] block = decode(key);</span>
+<span class="nc" id="L185">		final PLSSignature sig2 = PLSSignature.fromRaw512(block);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (sig2 == null) {</span>
+<span class="nc" id="L187">			return LicenseInfo.NONE;</span>
+		}
+<span class="nc" id="L189">		return sig2.toLicenseInfo();</span>
+	}
+
+	private static byte[] decode(String key) throws IOException {
+<span class="nc" id="L193">		final BigInteger lu = new BigInteger(key, 36);</span>
+<span class="nc" id="L194">		final QBlock qb2 = new QBlock(lu);</span>
+<span class="nc" id="L195">		final QBlock qb3 = qb2.change(Dedication.E, Dedication.N);</span>
+<span class="nc" id="L196">		byte block[] = qb3.getData512();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (block.length != 512) {</span>
+<span class="nc" id="L198">			throw new IOException();</span>
+		}
+<span class="nc" id="L200">		return block;</span>
+	}
+
+	private static void xor(byte buffer[], TurningBytes turningBytes) {
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (int i = 0; i &lt; buffer.length; i++) {</span>
+<span class="nc" id="L205">			buffer[i] ^= turningBytes.nextByte();</span>
+		}
+<span class="nc" id="L207">	}</span>
+
+	public static void xor(byte buffer[], byte[] key) {
+<span class="nc" id="L210">		xor(buffer, new TurningBytes(key));</span>
+<span class="nc" id="L211">	}</span>
+
+	public static byte[] getSalt(final String signature) throws UnsupportedEncodingException {
+<span class="nc" id="L214">		final Random rnd = new Random(getSeed(signature.getBytes(UTF_8)));</span>
+<span class="nc" id="L215">		final byte salt[] = new byte[512];</span>
+<span class="nc" id="L216">		rnd.nextBytes(salt);</span>
+<span class="nc" id="L217">		return salt;</span>
+	}
+
+	private static long getSeed(byte[] bytes) {
+<span class="nc" id="L221">		long result = 19;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		for (byte b : bytes) {</span>
+<span class="nc" id="L223">			result = result * 41 + b;</span>
+		}
+<span class="nc" id="L225">		return result;</span>
+	}
+
+	public static byte[] signature() throws IOException {
+<span class="nc" id="L229">		final String signature = OptionPrint.getHostName() + getMacAddress();</span>
+		try {
+<span class="nc" id="L231">			return SignatureUtils.getSHA512raw(SignatureUtils.salting(signature, getSalt(signature)));</span>
+<span class="nc" id="L232">		} catch (Exception e) {</span>
+<span class="nc" id="L233">			Logme.error(e);</span>
+<span class="nc" id="L234">			throw new IOException();</span>
+		}
+	}
+
+	private static String getMacAddress() throws IOException {
+
+<span class="nc" id="L240">		final Enumeration&lt;NetworkInterface&gt; net = NetworkInterface.getNetworkInterfaces();</span>
+<span class="nc" id="L241">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		while (net.hasMoreElements()) {</span>
+<span class="nc" id="L243">			final NetworkInterface element = net.nextElement();</span>
+<span class="nc" id="L244">			byte[] mac = element.getHardwareAddress();</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">			if (mac != null) {</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">				for (byte b : mac) {</span>
+<span class="nc" id="L247">					result.append(String.format(&quot;%02x&quot;, b));</span>
+				}
+			}
+<span class="nc" id="L250">		}</span>
+<span class="nc" id="L251">		return result.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

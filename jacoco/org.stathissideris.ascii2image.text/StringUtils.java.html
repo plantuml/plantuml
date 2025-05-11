@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.text</a> &gt; <span class="el_source">StringUtils.java</span></div><h1>StringUtils.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.text;
+
+/**
+ * @author sideris
+ *
+ * To change the template for this generated type comment go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+<span class="nc" id="L28">public class StringUtils {</span>
+
+	/**
+	 * The indexOf idiom
+	 * 
+	 * @param big
+	 * @param fragment
+	 * @return
+	 */
+	public static boolean contains(String big, String fragment){
+<span class="nc bnc" id="L38" title="All 2 branches missed.">		return (big.indexOf(fragment) != -1);</span>
+	}
+	
+	public static String repeatString(String string, int repeats){
+<span class="nc bnc" id="L42" title="All 2 branches missed.">		if(repeats == 0) return &quot;&quot;;</span>
+<span class="nc" id="L43">		String buffer = &quot;&quot;;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		for(int i=0; i &lt; repeats; i++){</span>
+<span class="nc" id="L45">			buffer += string;</span>
+		}
+<span class="nc" id="L47">		return buffer;</span>
+	}
+	
+	/*public static String repeatString(String string, int repeats){
+		if(repeats == 0) return &quot;&quot;;
+		StringBuffer buffer = new StringBuffer(&quot;&quot;);
+		for(int i=0; i &lt; repeats; i++){
+			buffer.append(string);
+		}
+		return buffer.toString();
+	}*/
+	
+	public static boolean isBlank(String s){
+<span class="nc bnc" id="L60" title="All 4 branches missed.">		return (s.length() == 0 || s.matches(&quot;^\\s*$&quot;));</span>
+	}
+	
+	/**
+	 * 
+	 * Converts the first character of &lt;code&gt;string&lt;/code&gt; into a capital letter
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static String firstToUpper(String string){
+<span class="nc" id="L71">		return string.substring(0,1).toUpperCase()+string.substring(1);</span>
+	}
+	
+	public static String insertSpaceAtCaps(String string){
+
+<span class="nc" id="L76">		int uppers = 0;</span>
+
+		//first we count
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for(int i=0; i &lt; string.length(); i++){</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if(Character.isUpperCase(string.charAt(i))) uppers++;</span>
+		}
+
+<span class="nc" id="L83">		int[] indexes = null;</span>
+		
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if(Character.isUpperCase(string.charAt(0))){		</span>
+<span class="nc" id="L86">			indexes = new int[uppers];</span>
+		} else {
+<span class="nc" id="L88">			indexes = new int[++uppers];</span>
+		}
+<span class="nc" id="L90">		indexes[0] = 0;		</span>
+<span class="nc" id="L91">		int k = 1;</span>
+
+		//then we find the indexes (we have checked the first char already)
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for(int j =1; j &lt; string.length(); j++){</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if(Character.isUpperCase(string.charAt(j))) indexes[k++] = j;</span>
+		}
+		
+<span class="nc" id="L98">		StringBuffer buffer = new StringBuffer(&quot;&quot;);</span>
+		//and finally we breakup the String
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		for(int i =0; i &lt; indexes.length; i++){</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if(i+1 &lt; indexes.length){</span>
+<span class="nc" id="L102">				buffer.append(string.substring(indexes[i], indexes[i+1]));</span>
+<span class="nc" id="L103">				buffer.append(&quot; &quot;);</span>
+			} else {
+<span class="nc" id="L105">				buffer.append(string.substring(indexes[i]));</span>
+			}			
+		}
+<span class="nc" id="L108">		return buffer.toString();</span>
+	}
+	
+	
+	public static boolean isOneOf(char c, char[] group){
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for(int i = 0; i &lt; group.length; i++)</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if(c == group[i]) return true;</span>
+<span class="nc" id="L115">		return false;</span>
+	}
+
+	public static boolean isOneOf(String str, String[] group){
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for(int i = 0; i &lt; group.length; i++)</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if(str.equals(group[i])) return true;</span>
+<span class="nc" id="L121">		return false;</span>
+	}
+
+	public static String getPath(String fullPath){
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if(fullPath.lastIndexOf(&quot;\\&quot;) != -1)</span>
+<span class="nc" id="L126">			return fullPath.substring(0, fullPath.lastIndexOf(&quot;\\&quot;));</span>
+<span class="nc" id="L127">		else return &quot;&quot;;</span>
+	}
+
+	public static String getBaseFilename(String fullPath){
+<span class="nc bnc" id="L131" title="All 4 branches missed.">		if(fullPath.lastIndexOf(&quot;.&quot;) != -1 &amp;&amp; fullPath.lastIndexOf(&quot;\\&quot;) != -1)</span>
+<span class="nc" id="L132">			return fullPath.substring(fullPath.lastIndexOf(&quot;\\&quot;) + 1, fullPath.lastIndexOf(&quot;.&quot;));</span>
+<span class="nc" id="L133">		else return fullPath; </span>
+	}
+
+	public static String getExtension(String fullPath){
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if(fullPath.lastIndexOf(&quot;.&quot;) != -1)</span>
+<span class="nc" id="L138">			return fullPath.substring(fullPath.lastIndexOf(&quot;.&quot;) + 1);</span>
+<span class="nc" id="L139">		else return &quot;&quot;;</span>
+	}
+
+	
+	public static void main(String[] args){
+<span class="nc" id="L144">		System.out.println(&quot;1 &quot;+StringUtils.firstToUpper(&quot;testing&quot;));</span>
+<span class="nc" id="L145">		System.out.println(&quot;2 &quot;+StringUtils.firstToUpper(&quot; testing&quot;));</span>
+<span class="nc" id="L146">		System.out.println(&quot;3 &quot;+StringUtils.firstToUpper(&quot;_testing&quot;));</span>
+<span class="nc" id="L147">		System.out.println(&quot;4 &quot;+StringUtils.firstToUpper(&quot;Testing&quot;));</span>
+<span class="nc" id="L148">		System.out.println(&quot;5 &quot;+StringUtils.firstToUpper(&quot;ttesting&quot;));</span>
+<span class="nc" id="L149">		String path = &quot;C:\\Files\\test.txt&quot;;</span>
+<span class="nc" id="L150">		System.out.println(path);</span>
+<span class="nc" id="L151">		System.out.println(StringUtils.getPath(path));</span>
+<span class="nc" id="L152">		System.out.println(StringUtils.getBaseFilename(path));</span>
+<span class="nc" id="L153">		System.out.println(StringUtils.getExtension(path));</span>
+		
+<span class="nc" id="L155">		path = &quot;test.txt&quot;;</span>
+<span class="nc" id="L156">		System.out.println(path);</span>
+<span class="nc" id="L157">		System.out.println(StringUtils.getPath(path));</span>
+<span class="nc" id="L158">		System.out.println(StringUtils.getBaseFilename(path));</span>
+<span class="nc" id="L159">		System.out.println(StringUtils.getExtension(path));</span>
+
+<span class="nc" id="L161">		path = &quot;test&quot;;</span>
+<span class="nc" id="L162">		System.out.println(path);</span>
+<span class="nc" id="L163">		System.out.println(&quot;path: &quot;+StringUtils.getPath(path));</span>
+<span class="nc" id="L164">		System.out.println(&quot;base: &quot;+StringUtils.getBaseFilename(path));</span>
+<span class="nc" id="L165">		System.out.println(&quot; ext: &quot;+StringUtils.getExtension(path));</span>
+
+
+<span class="nc" id="L168">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

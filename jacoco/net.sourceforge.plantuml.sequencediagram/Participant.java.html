@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Participant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">Participant.java</span></div><h1>Participant.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.abel.SpecificBackcolorable;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.MergeStrategy;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+// ::remove folder when __HAXE__
+public class Participant implements SpecificBackcolorable, WithStyle {
+
+	private final String code;
+	private Display display;
+	private final ParticipantType type;
+
+<span class="fc" id="L71">	private int initialLife = 0;</span>
+
+	private Stereotype stereotype;
+	private boolean stereotypePositionTop;
+	private final Set&lt;EntityPortion&gt; hiddenPortions;
+	private final int order;
+	private final StyleBuilder styleBuilder;
+	private final LineLocation location;
+	private final String uid;
+
+	// private Style style;
+
+	public StyleSignatureBasic getStyleSignature() {
+<span class="fc" id="L84">		return type.getStyleSignature().addClickable(getUrl());</span>
+	}
+
+	public Style[] getUsedStyles() {
+
+<span class="fc" id="L89">		final StyleSignature signature = getStyleSignature().withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L90">		Style tmp = signature.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L91">		tmp = tmp.eventuallyOverride(getColors());</span>
+<span class="fc" id="L92">		Style stereo = getStyleSignature().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (tmp != null)</span>
+<span class="fc" id="L94">			stereo = tmp.mergeWith(stereo, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+
+<span class="fc" id="L96">		return new Style[] { tmp, stereo };</span>
+	}
+
+	public Participant(LineLocation location, ParticipantType type, String code, Display display,
+<span class="fc" id="L100">			Set&lt;EntityPortion&gt; hiddenPortions, int order, StyleBuilder styleBuilder, String uid) {</span>
+<span class="fc" id="L101">		this.location = location;</span>
+<span class="fc" id="L102">		this.uid = uid;</span>
+<span class="fc" id="L103">		this.hiddenPortions = hiddenPortions;</span>
+<span class="fc" id="L104">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L105">		this.order = order;</span>
+<span class="fc" id="L106">		this.code = Objects.requireNonNull(code);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (code.length() == 0)</span>
+<span class="nc" id="L108">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L110" title="2 of 4 branches missed.">		if (Display.isNull(display) || display.size() == 0)</span>
+<span class="nc" id="L111">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L113">		this.type = Objects.requireNonNull(type);</span>
+<span class="fc" id="L114">		this.display = display;</span>
+<span class="fc" id="L115">	}</span>
+
+	public String getCode() {
+<span class="fc" id="L118">		return code;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L123">		return getCode();</span>
+	}
+
+	public Display getDisplay(boolean underlined) {
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		Display result = underlined ? display.underlined() : display;</span>
+<span class="pc bpc" id="L128" title="3 of 4 branches missed.">		if (stereotype != null &amp;&amp; hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (stereotypePositionTop)</span>
+<span class="nc" id="L130">				result = result.addFirst(stereotype);</span>
+			else
+<span class="nc" id="L132">				result = result.add(stereotype);</span>
+
+		}
+<span class="fc" id="L135">		return result;</span>
+	}
+
+	public ParticipantType getType() {
+<span class="fc" id="L139">		return type;</span>
+	}
+
+	public final void setStereotype(Stereotype stereotype, boolean stereotypePositionTop) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (this.stereotype != null)</span>
+<span class="nc" id="L144">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L146">		this.stereotype = Objects.requireNonNull(stereotype);</span>
+<span class="nc" id="L147">		this.stereotypePositionTop = stereotypePositionTop;</span>
+<span class="nc" id="L148">	}</span>
+
+	public final int getInitialLife() {
+<span class="fc" id="L151">		return initialLife;</span>
+	}
+
+<span class="fc" id="L154">	private List&lt;Fashion&gt; liveBackcolors = new ArrayList&lt;&gt;();</span>
+
+	public final void incInitialLife(Fashion colors) {
+<span class="fc" id="L157">		initialLife++;</span>
+<span class="fc" id="L158">		this.liveBackcolors.add(colors);</span>
+<span class="fc" id="L159">	}</span>
+
+	public Fashion getLiveSpecificBackColors(int which) {
+<span class="fc" id="L162">		return liveBackcolors.get(which);</span>
+	}
+
+	public Colors getColors() {
+<span class="fc" id="L166">		return colors;</span>
+	}
+
+	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (color != null)</span>
+<span class="fc" id="L171">			this.colors = colors.add(type, color);</span>
+
+<span class="fc" id="L173">	}</span>
+
+<span class="fc" id="L175">	private Colors colors = Colors.empty();</span>
+
+	public void setColors(Colors colors) {
+<span class="nc" id="L178">		this.colors = colors;</span>
+<span class="nc" id="L179">	}</span>
+
+	private Url url;
+
+	public final Url getUrl() {
+<span class="fc" id="L184">		return url;</span>
+	}
+
+	public final void setUrl(Url url) {
+<span class="nc" id="L188">		this.url = url;</span>
+<span class="nc" id="L189">	}</span>
+
+	public final Stereotype getStereotype() {
+<span class="fc" id="L192">		return stereotype;</span>
+	}
+
+	public int getOrder() {
+<span class="fc" id="L196">		return order;</span>
+	}
+
+	public LineLocation getLocation() {
+<span class="fc" id="L200">		return location;</span>
+	}
+
+	public UGroup groupTypeTail(Pragma pragma) {
+<span class="fc" id="L204">		final UGroup group = new UGroup();</span>
+<span class="fc" id="L205">		group.put(UGroupType.CLASS, &quot;participant participant-tail&quot;);</span>
+<span class="fc" id="L206">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L207">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L208">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVGNEWDATA))</span>
+<span class="nc" id="L210">			group.put(UGroupType.DATA_UID, uid + &quot;-tail&quot;);</span>
+
+<span class="fc" id="L212">		return group;</span>
+	}
+
+	public UGroup groupTypeHead(Pragma pragma) {
+<span class="fc" id="L216">		final UGroup group = new UGroup();</span>
+<span class="fc" id="L217">		group.put(UGroupType.CLASS, &quot;participant participant-head&quot;);</span>
+<span class="fc" id="L218">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L219">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L220">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVGNEWDATA))</span>
+<span class="nc" id="L222">			group.put(UGroupType.DATA_UID, uid + &quot;-head&quot;);</span>
+<span class="fc" id="L223">		return group;</span>
+	}
+
+	public UGroup groupTypeLifeline(Pragma pragma) {
+<span class="nc" id="L227">		final UGroup group = new UGroup();</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {</span>
+<span class="nc" id="L229">			group.put(UGroupType.CLASS, &quot;participant-lifeline&quot;);</span>
+<span class="nc" id="L230">			group.put(UGroupType.DATA_UID, uid + &quot;-lifeline&quot;);</span>
+<span class="nc" id="L231">			group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="nc" id="L232">			group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="nc" id="L233">			group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+		}
+<span class="nc" id="L235">		return group;</span>
+	}
+
+	public String getUid() {
+<span class="nc" id="L239">		return uid;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

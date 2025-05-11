@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubjectDayOfWeek.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">SubjectDayOfWeek.java</span></div><h1>SubjectDayOfWeek.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+
+public class SubjectDayOfWeek implements Subject&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L52">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectDayOfWeek();</span>
+
+	private SubjectDayOfWeek() {
+	}
+
+	public IRegex toRegex() {
+<span class="fc" id="L58">		return new RegexLeaf(&quot;SUBJECT&quot;, &quot;(&quot; + DayOfWeek.getRegexString() + &quot;)&quot;);</span>
+	}
+
+	public Failable&lt;? extends Object&gt; getMe(GanttDiagram project, RegexResult arg) {
+<span class="fc" id="L62">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="fc" id="L63">		return Failable.ok(DayOfWeek.fromString(s));</span>
+	}
+
+	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
+<span class="fc" id="L67">		return Arrays.asList(new AreClose(), new AreOpen(), new InColor());</span>
+	}
+
+	class AreOpen extends SentenceSimple&lt;GanttDiagram&gt; {
+<span class="fc" id="L71">		public AreOpen() {</span>
+<span class="fc" id="L72">			super(SubjectDayOfWeek.this, Verbs.are, new ComplementOpen());</span>
+<span class="fc" id="L73">		}</span>
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L77">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L78">			project.openDayOfWeek(day, (String) complement);</span>
+<span class="nc" id="L79">			return CommandExecutionResult.ok();</span>
+		}
+	}
+
+	class AreClose extends SentenceSimple&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L85">		public AreClose() {</span>
+<span class="fc" id="L86">			super(SubjectDayOfWeek.this, Verbs.are, new ComplementClose());</span>
+<span class="fc" id="L87">		}</span>
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="fc" id="L91">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="fc" id="L92">			project.closeDayOfWeek(day, (String) complement);</span>
+<span class="fc" id="L93">			return CommandExecutionResult.ok();</span>
+		}
+
+	}
+
+	class InColor extends SentenceSimple&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L100">		public InColor() {</span>
+<span class="fc" id="L101">			super(SubjectDayOfWeek.this, Verbs.isOrAre, new ComplementInColors2());</span>
+<span class="fc" id="L102">		}</span>
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L106">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="nc" id="L107">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L108">			project.colorDay(day, color);</span>
+
+<span class="nc" id="L110">			return CommandExecutionResult.ok();</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

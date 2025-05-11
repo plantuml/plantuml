@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonValue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">JsonValue.java</span></div><h1>JsonValue.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.StringWriter;
+import java.io.Writer;
+
+/**
+ * Represents a JSON value. This can be a JSON &lt;strong&gt;object&lt;/strong&gt;, an
+ * &lt;strong&gt; array&lt;/strong&gt;, a &lt;strong&gt;number&lt;/strong&gt;, a
+ * &lt;strong&gt;string&lt;/strong&gt;, or one of the literals &lt;strong&gt;true&lt;/strong&gt;,
+ * &lt;strong&gt;false&lt;/strong&gt;, and &lt;strong&gt;null&lt;/strong&gt;.
+ * &lt;p&gt;
+ * The literals &lt;strong&gt;true&lt;/strong&gt;, &lt;strong&gt;false&lt;/strong&gt;, and
+ * &lt;strong&gt;null&lt;/strong&gt; are represented by the constants {@link Json#TRUE},
+ * {@link Json#FALSE}, and {@link Json#NULL}.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * JSON &lt;strong&gt;objects&lt;/strong&gt; and &lt;strong&gt;arrays&lt;/strong&gt; are represented by
+ * the subtypes {@link JsonObject} and {@link JsonArray}. Instances of these
+ * types can be created using the public constructors of these classes.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Instances that represent JSON &lt;strong&gt;numbers&lt;/strong&gt;,
+ * &lt;strong&gt;strings&lt;/strong&gt; and &lt;strong&gt;boolean&lt;/strong&gt; values can be created
+ * using the static factory methods {@link Json#value(String)},
+ * {@link Json#value(long)}, {@link Json#value(double)}, etc.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * In order to find out whether an instance of this class is of a certain type,
+ * the methods {@link #isObject()}, {@link #isArray()}, {@link #isString()},
+ * {@link #isNumber()} etc. can be used.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * If the type of a JSON value is known, the methods {@link #asObject()},
+ * {@link #asArray()}, {@link #asString()}, {@link #asInt()}, etc. can be used
+ * to get this value directly in the appropriate target type.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * This class is &lt;strong&gt;not supposed to be extended&lt;/strong&gt; by clients.
+ * &lt;/p&gt;
+ */
+@SuppressWarnings(&quot;serial&quot;) // use default serial UID
+public abstract class JsonValue implements Serializable {
+
+	/**
+	 * Represents the JSON literal &lt;code&gt;true&lt;/code&gt;.
+	 * 
+	 * @deprecated Use &lt;code&gt;Json.TRUE&lt;/code&gt; instead
+	 */
+	@Deprecated
+<span class="fc" id="L77">	public static final JsonValue TRUE = new JsonLiteral(&quot;true&quot;);</span>
+
+	/**
+	 * Represents the JSON literal &lt;code&gt;false&lt;/code&gt;.
+	 * 
+	 * @deprecated Use &lt;code&gt;Json.FALSE&lt;/code&gt; instead
+	 */
+	@Deprecated
+<span class="fc" id="L85">	public static final JsonValue FALSE = new JsonLiteral(&quot;false&quot;);</span>
+
+	/**
+	 * Represents the JSON literal &lt;code&gt;null&lt;/code&gt;.
+	 * 
+	 * @deprecated Use &lt;code&gt;Json.NULL&lt;/code&gt; instead
+	 */
+	@Deprecated
+<span class="fc" id="L93">	public static final JsonValue NULL = new JsonLiteral(&quot;null&quot;);</span>
+
+<span class="fc" id="L95">	JsonValue() {</span>
+		// prevent subclasses outside of this package
+<span class="fc" id="L97">	}</span>
+
+	/**
+	 * Reads a JSON value from the given reader.
+	 * &lt;p&gt;
+	 * Characters are read in chunks and buffered internally, therefore wrapping an
+	 * existing reader in an additional &lt;code&gt;BufferedReader&lt;/code&gt; does
+	 * &lt;strong&gt;not&lt;/strong&gt; improve reading performance.
+	 * &lt;/p&gt;
+	 *
+	 * @param reader the reader to read the JSON value from
+	 * @return the JSON value that has been read
+	 * @throws IOException    if an I/O error occurs in the reader
+	 * @throws ParseException if the input is not valid JSON
+	 * @deprecated Use {@link Json#parse(Reader)} instead
+	 */
+	@Deprecated
+	public static JsonValue readFrom(Reader reader) throws IOException {
+<span class="nc" id="L115">		return Json.parse(reader);</span>
+	}
+
+	/**
+	 * Reads a JSON value from the given string.
+	 *
+	 * @param text the string that contains the JSON value
+	 * @return the JSON value that has been read
+	 * @throws ParseException if the input is not valid JSON
+	 * @deprecated Use {@link Json#parse(String)} instead
+	 */
+	@Deprecated
+	public static JsonValue readFrom(String text) {
+<span class="nc" id="L128">		return Json.parse(text);</span>
+	}
+
+	/**
+	 * Returns a JsonValue instance that represents the given &lt;code&gt;int&lt;/code&gt;
+	 * value.
+	 *
+	 * @param value the value to get a JSON representation for
+	 * @return a JSON value that represents the given value
+	 * @deprecated Use &lt;code&gt;Json.value()&lt;/code&gt; instead
+	 */
+	@Deprecated
+	public static JsonValue valueOf(int value) {
+<span class="nc" id="L141">		return Json.value(value);</span>
+	}
+
+	/**
+	 * Returns a JsonValue instance that represents the given &lt;code&gt;long&lt;/code&gt;
+	 * value.
+	 *
+	 * @param value the value to get a JSON representation for
+	 * @return a JSON value that represents the given value
+	 * @deprecated Use &lt;code&gt;Json.value()&lt;/code&gt; instead
+	 */
+	@Deprecated
+	public static JsonValue valueOf(long value) {
+<span class="nc" id="L154">		return Json.value(value);</span>
+	}
+
+	/**
+	 * Returns a JsonValue instance that represents the given &lt;code&gt;float&lt;/code&gt;
+	 * value.
+	 *
+	 * @param value the value to get a JSON representation for
+	 * @return a JSON value that represents the given value
+	 * @deprecated Use &lt;code&gt;Json.value()&lt;/code&gt; instead
+	 */
+	@Deprecated
+	public static JsonValue valueOf(float value) {
+<span class="nc" id="L167">		return Json.value(value);</span>
+	}
+
+	/**
+	 * Returns a JsonValue instance that represents the given &lt;code&gt;double&lt;/code&gt;
+	 * value.
+	 *
+	 * @param value the value to get a JSON representation for
+	 * @return a JSON value that represents the given value
+	 * @deprecated Use &lt;code&gt;Json.value()&lt;/code&gt; instead
+	 */
+	@Deprecated
+	public static JsonValue valueOf(double value) {
+<span class="nc" id="L180">		return Json.value(value);</span>
+	}
+
+	/**
+	 * Returns a JsonValue instance that represents the given string.
+	 *
+	 * @param string the string to get a JSON representation for
+	 * @return a JSON value that represents the given string
+	 * @deprecated Use &lt;code&gt;Json.value()&lt;/code&gt; instead
+	 */
+	@Deprecated
+	public static JsonValue valueOf(String string) {
+<span class="nc" id="L192">		return Json.value(string);</span>
+	}
+
+	/**
+	 * Returns a JsonValue instance that represents the given &lt;code&gt;boolean&lt;/code&gt;
+	 * value.
+	 *
+	 * @param value the value to get a JSON representation for
+	 * @return a JSON value that represents the given value
+	 * @deprecated Use &lt;code&gt;Json.value()&lt;/code&gt; instead
+	 */
+	@Deprecated
+	public static JsonValue valueOf(boolean value) {
+<span class="nc" id="L205">		return Json.value(value);</span>
+	}
+
+	/**
+	 * Detects whether this value represents a JSON object. If this is the case,
+	 * this value is an instance of {@link JsonObject}.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value is an instance of JsonObject
+	 */
+	public boolean isObject() {
+<span class="fc" id="L215">		return false;</span>
+	}
+
+	/**
+	 * Detects whether this value represents a JSON array. If this is the case, this
+	 * value is an instance of {@link JsonArray}.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value is an instance of JsonArray
+	 */
+	public boolean isArray() {
+<span class="fc" id="L225">		return false;</span>
+	}
+
+	/**
+	 * Detects whether this value represents a JSON number.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value represents a JSON number
+	 */
+	public boolean isNumber() {
+<span class="fc" id="L234">		return false;</span>
+	}
+
+	/**
+	 * Detects whether this value represents a JSON string.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value represents a JSON string
+	 */
+	public boolean isString() {
+<span class="fc" id="L243">		return false;</span>
+	}
+
+	/**
+	 * Detects whether this value represents a boolean value.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value represents either the JSON literal
+	 *         &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;
+	 */
+	public boolean isBoolean() {
+<span class="fc" id="L253">		return false;</span>
+	}
+
+	/**
+	 * Detects whether this value represents the JSON literal &lt;code&gt;true&lt;/code&gt;.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value represents the JSON literal
+	 *         &lt;code&gt;true&lt;/code&gt;
+	 */
+	public boolean isTrue() {
+<span class="nc" id="L263">		return false;</span>
+	}
+
+	/**
+	 * Detects whether this value represents the JSON literal &lt;code&gt;false&lt;/code&gt;.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value represents the JSON literal
+	 *         &lt;code&gt;false&lt;/code&gt;
+	 */
+	public boolean isFalse() {
+<span class="nc" id="L273">		return false;</span>
+	}
+
+	/**
+	 * Detects whether this value represents the JSON literal &lt;code&gt;null&lt;/code&gt;.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this value represents the JSON literal
+	 *         &lt;code&gt;null&lt;/code&gt;
+	 */
+	public boolean isNull() {
+<span class="fc" id="L283">		return false;</span>
+	}
+
+	/**
+	 * Returns this JSON value as {@link JsonObject}, assuming that this value
+	 * represents a JSON object. If this is not the case, an exception is thrown.
+	 *
+	 * @return a JSONObject for this value
+	 * @throws UnsupportedOperationException if this value is not a JSON object
+	 */
+	public JsonObject asObject() {
+<span class="nc" id="L294">		throw new UnsupportedOperationException(&quot;Not an object: &quot; + toString());</span>
+	}
+
+	/**
+	 * Returns this JSON value as {@link JsonArray}, assuming that this value
+	 * represents a JSON array. If this is not the case, an exception is thrown.
+	 *
+	 * @return a JSONArray for this value
+	 * @throws UnsupportedOperationException if this value is not a JSON array
+	 */
+	public JsonArray asArray() {
+<span class="nc" id="L305">		throw new UnsupportedOperationException(&quot;Not an array: &quot; + toString());</span>
+	}
+
+	/**
+	 * Returns this JSON value as an &lt;code&gt;int&lt;/code&gt; value, assuming that this
+	 * value represents a JSON number that can be interpreted as Java
+	 * &lt;code&gt;int&lt;/code&gt;. If this is not the case, an exception is thrown.
+	 * &lt;p&gt;
+	 * To be interpreted as Java &lt;code&gt;int&lt;/code&gt;, the JSON number must neither
+	 * contain an exponent nor a fraction part. Moreover, the number must be in the
+	 * &lt;code&gt;Integer&lt;/code&gt; range.
+	 * &lt;/p&gt;
+	 *
+	 * @return this value as &lt;code&gt;int&lt;/code&gt;
+	 * @throws UnsupportedOperationException if this value is not a JSON number
+	 * @throws NumberFormatException         if this JSON number can not be
+	 *                                       interpreted as &lt;code&gt;int&lt;/code&gt; value
+	 */
+	public int asInt() {
+<span class="nc" id="L324">		throw new UnsupportedOperationException(&quot;Not a number: &quot; + toString());</span>
+	}
+
+	/**
+	 * Returns this JSON value as a &lt;code&gt;long&lt;/code&gt; value, assuming that this
+	 * value represents a JSON number that can be interpreted as Java
+	 * &lt;code&gt;long&lt;/code&gt;. If this is not the case, an exception is thrown.
+	 * &lt;p&gt;
+	 * To be interpreted as Java &lt;code&gt;long&lt;/code&gt;, the JSON number must neither
+	 * contain an exponent nor a fraction part. Moreover, the number must be in the
+	 * &lt;code&gt;Long&lt;/code&gt; range.
+	 * &lt;/p&gt;
+	 *
+	 * @return this value as &lt;code&gt;long&lt;/code&gt;
+	 * @throws UnsupportedOperationException if this value is not a JSON number
+	 * @throws NumberFormatException         if this JSON number can not be
+	 *                                       interpreted as &lt;code&gt;long&lt;/code&gt; value
+	 */
+	public long asLong() {
+<span class="nc" id="L343">		throw new UnsupportedOperationException(&quot;Not a number: &quot; + toString());</span>
+	}
+
+	/**
+	 * Returns this JSON value as a &lt;code&gt;float&lt;/code&gt; value, assuming that this
+	 * value represents a JSON number. If this is not the case, an exception is
+	 * thrown.
+	 * &lt;p&gt;
+	 * If the JSON number is out of the &lt;code&gt;Float&lt;/code&gt; range,
+	 * {@link Float#POSITIVE_INFINITY} or {@link Float#NEGATIVE_INFINITY} is
+	 * returned.
+	 * &lt;/p&gt;
+	 *
+	 * @return this value as &lt;code&gt;float&lt;/code&gt;
+	 * @throws UnsupportedOperationException if this value is not a JSON number
+	 */
+	public float asFloat() {
+<span class="nc" id="L360">		throw new UnsupportedOperationException(&quot;Not a number: &quot; + toString());</span>
+	}
+
+	/**
+	 * Returns this JSON value as a &lt;code&gt;double&lt;/code&gt; value, assuming that this
+	 * value represents a JSON number. If this is not the case, an exception is
+	 * thrown.
+	 * &lt;p&gt;
+	 * If the JSON number is out of the &lt;code&gt;Double&lt;/code&gt; range,
+	 * {@link Double#POSITIVE_INFINITY} or {@link Double#NEGATIVE_INFINITY} is
+	 * returned.
+	 * &lt;/p&gt;
+	 *
+	 * @return this value as &lt;code&gt;double&lt;/code&gt;
+	 * @throws UnsupportedOperationException if this value is not a JSON number
+	 */
+	public double asDouble() {
+<span class="nc" id="L377">		throw new UnsupportedOperationException(&quot;Not a number: &quot; + toString());</span>
+	}
+
+	/**
+	 * Returns this JSON value as String, assuming that this value represents a JSON
+	 * string. If this is not the case, an exception is thrown.
+	 *
+	 * @return the string represented by this value
+	 * @throws UnsupportedOperationException if this value is not a JSON string
+	 */
+	public String asString() {
+<span class="nc" id="L388">		throw new UnsupportedOperationException(&quot;Not a string: &quot; + toString());</span>
+	}
+
+	/**
+	 * Returns this JSON value as a &lt;code&gt;boolean&lt;/code&gt; value, assuming that this
+	 * value is either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;. If this is not the
+	 * case, an exception is thrown.
+	 *
+	 * @return this value as &lt;code&gt;boolean&lt;/code&gt;
+	 * @throws UnsupportedOperationException if this value is neither
+	 *                                       &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;
+	 */
+	public boolean asBoolean() {
+<span class="nc" id="L401">		throw new UnsupportedOperationException(&quot;Not a boolean: &quot; + toString());</span>
+	}
+
+	/**
+	 * Writes the JSON representation of this value to the given writer in its
+	 * minimal form, without any additional whitespace.
+	 * &lt;p&gt;
+	 * Writing performance can be improved by using a {@link java.io.BufferedWriter
+	 * BufferedWriter}.
+	 * &lt;/p&gt;
+	 *
+	 * @param writer the writer to write this value to
+	 * @throws IOException if an I/O error occurs in the writer
+	 */
+	public void writeTo(Writer writer) throws IOException {
+<span class="nc" id="L416">		writeTo(writer, WriterConfig.MINIMAL);</span>
+<span class="nc" id="L417">	}</span>
+
+	/**
+	 * Writes the JSON representation of this value to the given writer using the
+	 * given formatting.
+	 * &lt;p&gt;
+	 * Writing performance can be improved by using a {@link java.io.BufferedWriter
+	 * BufferedWriter}.
+	 * &lt;/p&gt;
+	 *
+	 * @param writer the writer to write this value to
+	 * @param config a configuration that controls the formatting or
+	 *               &lt;code&gt;null&lt;/code&gt; for the minimal form
+	 * @throws IOException if an I/O error occurs in the writer
+	 */
+	public void writeTo(Writer writer, WriterConfig config) throws IOException {
+<span class="pc bpc" id="L433" title="1 of 2 branches missed.">		if (writer == null) {</span>
+<span class="nc" id="L434">			throw new NullPointerException(&quot;writer is null&quot;);</span>
+		}
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">		if (config == null) {</span>
+<span class="nc" id="L437">			throw new NullPointerException(&quot;config is null&quot;);</span>
+		}
+<span class="fc" id="L439">		WritingBuffer buffer = new WritingBuffer(writer, 128);</span>
+<span class="fc" id="L440">		write(config.createWriter(buffer));</span>
+<span class="fc" id="L441">		buffer.flush();</span>
+<span class="fc" id="L442">	}</span>
+
+	/**
+	 * Returns the JSON string for this value in its minimal form, without any
+	 * additional whitespace. The result is guaranteed to be a valid input for the
+	 * method {@link Json#parse(String)} and to create a value that is
+	 * &lt;em&gt;equal&lt;/em&gt; to this object.
+	 *
+	 * @return a JSON string that represents this value
+	 */
+	@Override
+	public String toString() {
+<span class="fc" id="L454">		return toString(WriterConfig.MINIMAL);</span>
+	}
+
+	/**
+	 * Returns the JSON string for this value using the given formatting.
+	 *
+	 * @param config a configuration that controls the formatting or
+	 *               &lt;code&gt;null&lt;/code&gt; for the minimal form
+	 * @return a JSON string that represents this value
+	 */
+	public String toString(WriterConfig config) {
+<span class="fc" id="L465">		StringWriter writer = new StringWriter();</span>
+		try {
+<span class="fc" id="L467">			writeTo(writer, config);</span>
+<span class="nc" id="L468">		} catch (IOException exception) {</span>
+			// StringWriter does not throw IOExceptions
+<span class="nc" id="L470">			throw new RuntimeException(exception);</span>
+<span class="fc" id="L471">		}</span>
+<span class="fc" id="L472">		return writer.toString();</span>
+	}
+
+	/**
+	 * Indicates whether some other object is &quot;equal to&quot; this one according to the
+	 * contract specified in {@link Object#equals(Object)}.
+	 * &lt;p&gt;
+	 * Two JsonValues are considered equal if and only if they represent the same
+	 * JSON text. As a consequence, two given JsonObjects may be different even
+	 * though they contain the same set of names with the same values, but in a
+	 * different order.
+	 * &lt;/p&gt;
+	 *
+	 * @param object the reference object with which to compare
+	 * @return true if this object is the same as the object argument; false
+	 *         otherwise
+	 */
+	@Override
+	public boolean equals(Object object) {
+<span class="nc" id="L491">		return super.equals(object);</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L496">		return super.hashCode();</span>
+	}
+
+	abstract void write(JsonWriter writer) throws IOException;
+	
+	
+	/**
+	 * Added for PlantUML.
+	 * The default implementation works for immutable objects.
+	 * Must be overriden for JsonArray and JsonObject.
+	 */
+	public JsonValue cloneMe() {
+<span class="fc" id="L508">		return this;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

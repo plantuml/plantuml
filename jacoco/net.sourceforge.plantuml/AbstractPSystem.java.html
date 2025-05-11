@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractPSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">AbstractPSystem.java</span></div><h1>AbstractPSystem.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml;
+
+
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Set;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.abel.DisplayPositionned;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.ProtectedCommand;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.InstallationRequirement;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.version.License;
+import net.sourceforge.plantuml.version.Version;
+import net.sourceforge.plantuml.warning.Warning;
+import net.sourceforge.plantuml.warning.WarningHandler;
+
+/**
+ * An abstract class for all diagram classes.
+ * 
+ * &lt;p&gt;
+ * Short for &quot;{@link net.sourceforge.plantuml.plasma plasma} system&quot;, although
+ * most newer diagram types do not use entities stored in a plasma.
+ *
+ * @see PSystemBuilder
+ */
+public abstract class AbstractPSystem implements Diagram, WarningHandler {
+	// ::remove file when __HAXE__
+
+	private final UmlSource source;
+	private Scale scale;
+<span class="fc" id="L92">	private int splitPagesHorizontal = 1;</span>
+<span class="fc" id="L93">	private int splitPagesVertical = 1;</span>
+
+<span class="fc" id="L95">	private String namespaceSeparator = null;</span>
+	private final PreprocessingArtifact preprocessing;
+
+	public void setNamespaceSeparator(String namespaceSeparator) {
+<span class="fc" id="L99">		this.namespaceSeparator = namespaceSeparator;</span>
+<span class="fc" id="L100">	}</span>
+
+	final public String getNamespaceSeparator() {
+<span class="fc" id="L103">		return namespaceSeparator;</span>
+	}
+
+<span class="fc" id="L106">	public AbstractPSystem(UmlSource source, PreprocessingArtifact preprocessing) {</span>
+<span class="fc" id="L107">		this.source = Objects.requireNonNull(source);</span>
+<span class="fc" id="L108">		this.preprocessing = preprocessing;</span>
+<span class="fc" id="L109">	}</span>
+
+	private String getVersion() {
+<span class="fc" id="L112">		final StringBuilder toAppend = new StringBuilder();</span>
+<span class="fc" id="L113">		toAppend.append(&quot;PlantUML version &quot;);</span>
+<span class="fc" id="L114">		toAppend.append(Version.versionString());</span>
+<span class="fc" id="L115">		toAppend.append(&quot;(&quot; + Version.compileTimeString() + &quot;)\n&quot;);</span>
+<span class="fc" id="L116">		toAppend.append(&quot;(&quot; + License.getCurrent() + &quot; source distribution)\n&quot;);</span>
+		// ::comment when __CORE__
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (String name : OptionPrint.interestingProperties()) {</span>
+<span class="fc" id="L119">			toAppend.append(name);</span>
+<span class="fc" id="L120">			toAppend.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="fc" id="L121">		}</span>
+		// ::done
+<span class="fc" id="L123">		return toAppend.toString();</span>
+	}
+
+	final public String getMetadata() {
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L128">			return getVersion();</span>
+
+<span class="fc" id="L130">		final String rawString = source.getRawString(&quot;\n&quot;);</span>
+<span class="fc" id="L131">		final String plainString = source.getPlainString(&quot;\n&quot;);</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		if (rawString != null &amp;&amp; rawString.equals(plainString))</span>
+<span class="fc" id="L133">			return rawString + BackSlash.NEWLINE + getVersion();</span>
+
+<span class="fc" id="L135">		return rawString + BackSlash.NEWLINE + plainString + BackSlash.NEWLINE + getVersion();</span>
+	}
+
+	final public UmlSource getSource() {
+<span class="fc" id="L139">		return source;</span>
+	}
+
+	final public long seed() {
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L144">			return 42;</span>
+
+<span class="fc" id="L146">		return getSource().seed();</span>
+	}
+
+	public int getNbImages() {
+<span class="fc" id="L150">		return 1;</span>
+	}
+
+	@Override
+	public int getSplitPagesHorizontal() {
+<span class="fc" id="L155">		return splitPagesHorizontal;</span>
+	}
+
+	public void setSplitPagesHorizontal(int splitPagesHorizontal) {
+<span class="fc" id="L159">		this.splitPagesHorizontal = splitPagesHorizontal;</span>
+<span class="fc" id="L160">	}</span>
+
+	@Override
+	public int getSplitPagesVertical() {
+<span class="fc" id="L164">		return splitPagesVertical;</span>
+	}
+
+	public void setSplitPagesVertical(int splitPagesVertical) {
+<span class="fc" id="L168">		this.splitPagesVertical = splitPagesVertical;</span>
+<span class="fc" id="L169">	}</span>
+
+	public DisplayPositionned getTitle() {
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L173">			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
+
+<span class="nc" id="L175">		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
+	}
+
+	public String getWarningOrError() {
+<span class="fc" id="L179">		return null;</span>
+	}
+
+	public String checkFinalError() {
+<span class="fc" id="L183">		return null;</span>
+	}
+
+	public void makeDiagramReady() {
+<span class="fc" id="L187">	}</span>
+
+	public boolean isOk() {
+<span class="fc" id="L190">		return true;</span>
+	}
+
+	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
+<span class="fc" id="L194">		cmd = new ProtectedCommand(cmd);</span>
+		try {
+<span class="fc" id="L196">			return cmd.execute(this, lines, currentPass);</span>
+<span class="nc" id="L197">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L198">			return CommandExecutionResult.badColor();</span>
+		}
+	}
+
+	public boolean hasUrl() {
+<span class="nc" id="L203">		return false;</span>
+	}
+
+	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+<span class="fc" id="L208">		final long now = System.currentTimeMillis();</span>
+		try {
+//			if (this instanceof TitledDiagram) {
+//				final TitledDiagram titledDiagram = (TitledDiagram) this;
+//				final StyleBuilder styleBuilder = titledDiagram.getCurrentStyleBuilder();
+//				if (styleBuilder != null) {
+//					styleBuilder.printMe();
+//				}
+//			}
+<span class="fc" id="L217">			return exportDiagramNow(os, index, fileFormatOption);</span>
+		} finally {
+			// ::comment when __CORE__
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			if (OptionFlags.getInstance().isEnableStats())</span>
+<span class="nc" id="L221">				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),</span>
+<span class="nc" id="L222">						fileFormatOption.getFileFormat());</span>
+
+			// ::done
+		}
+	}
+
+	final public void setScale(Scale scale) {
+<span class="fc" id="L229">		this.scale = scale;</span>
+<span class="fc" id="L230">	}</span>
+
+	final public Scale getScale() {
+<span class="fc" id="L233">		return scale;</span>
+	}
+
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+<span class="fc" id="L237">		final ColorMapper init = fileFormatOption.getColorMapper();</span>
+<span class="fc" id="L238">		final ColorMapper newColorMappter = muteColorMapper(init);</span>
+<span class="fc" id="L239">		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));</span>
+	}
+
+	protected ColorMapper muteColorMapper(ColorMapper init) {
+<span class="fc" id="L243">		return init;</span>
+	}
+
+	// TODO &quot;index&quot; isnt really being used
+	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException;
+
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+<span class="fc" id="L251">		return ClockwiseTopRightBottomLeft.same(0);</span>
+	}
+
+	@Override
+	public Display getTitleDisplay() {
+<span class="fc" id="L256">		return Display.NULL;</span>
+	}
+
+	@Override
+	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+<span class="nc" id="L261">		final UFont font = UFont.monospaced(14);</span>
+<span class="nc" id="L262">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
+<span class="nc" id="L263">		final UText text = UText.build(&quot;Not implemented yet for &quot; + getClass().getName(), fc);</span>
+<span class="nc" id="L264">		ug.apply(new UTranslate(10, 10)).draw(text);</span>
+<span class="nc" id="L265">	}</span>
+
+	public Set&lt;ParserPass&gt; getRequiredPass() {
+<span class="fc" id="L268">		return EnumSet.of(ParserPass.ONE);</span>
+	}
+
+	public void startingPass(ParserPass pass) {
+<span class="fc" id="L272">	}</span>
+
+	final public PreprocessingArtifact getPreprocessingArtifact() {
+<span class="fc" id="L275">		return preprocessing;</span>
+	}
+
+	@Override
+	public void addWarning(Warning warning) {
+<span class="nc" id="L280">		throw new UnsupportedOperationException();</span>
+
+	}
+
+	@Override
+	public Collection&lt;Warning&gt; getWarnings() {
+<span class="nc" id="L286">		return preprocessing.getWarnings();</span>
+	}
+	
+	
+	@Override
+	public InstallationRequirement getInstallationRequirement() {
+<span class="nc" id="L292">		return InstallationRequirement.NONE;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

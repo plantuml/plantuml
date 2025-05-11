@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MagicTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.oregon</a> &gt; <span class="el_source">MagicTable.java</span></div><h1>MagicTable.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.oregon;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import net.sourceforge.plantuml.utils.Log;
+
+<span class="nc" id="L45">public class MagicTable {</span>
+    // ::remove folder when __HAXE__
+
+<span class="nc" id="L48">	static enum Oc {</span>
+<span class="nc" id="L49">		USED, NEAR</span>
+	}
+
+<span class="nc" id="L52">	private final Oc number[] = new Oc[10000];</span>
+
+	private static ArrayList&lt;int[]&gt; neighbours;
+
+	static {
+<span class="nc" id="L57">		neighbours = new ArrayList&lt;int[]&gt;();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (int i = 0; i &lt; 10000; i++) {</span>
+<span class="nc" id="L59">			neighbours.add(null);</span>
+		}
+<span class="nc" id="L61">	}</span>
+
+	public static int[] getNeighbours(final int nb) {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (neighbours.get(nb) == null) {</span>
+<span class="nc" id="L65">			neighbours.set(nb, getNeighboursSlow(nb));</span>
+		}
+<span class="nc" id="L67">		return neighbours.get(nb);</span>
+	}
+
+	public static int[] getNeighboursSlow(final int nb) {
+<span class="nc" id="L71">		final int result[] = new int[36];</span>
+
+<span class="nc" id="L73">		final int v1 = nb % 10;</span>
+<span class="nc" id="L74">		int root = nb - v1;</span>
+<span class="nc" id="L75">		int cpt = 0;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
+<span class="nc" id="L77">			final int candidate = root + i;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (candidate == nb) {</span>
+<span class="nc" id="L79">				continue;</span>
+			}
+<span class="nc" id="L81">			result[cpt++] = candidate;</span>
+		}
+<span class="nc" id="L83">		final int v2 = (nb / 10) % 10;</span>
+<span class="nc" id="L84">		root = nb - v2 * 10;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
+<span class="nc" id="L86">			final int candidate = root + i * 10;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (candidate == nb) {</span>
+<span class="nc" id="L88">				continue;</span>
+			}
+<span class="nc" id="L90">			result[cpt++] = candidate;</span>
+		}
+<span class="nc" id="L92">		final int v3 = (nb / 100) % 10;</span>
+<span class="nc" id="L93">		root = nb - v3 * 100;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
+<span class="nc" id="L95">			final int candidate = root + i * 100;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (candidate == nb) {</span>
+<span class="nc" id="L97">				continue;</span>
+			}
+<span class="nc" id="L99">			result[cpt++] = candidate;</span>
+		}
+<span class="nc" id="L101">		final int v4 = nb / 1000;</span>
+<span class="nc" id="L102">		root = nb - v4 * 1000;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
+<span class="nc" id="L104">			final int candidate = root + i * 1000;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (candidate == nb) {</span>
+<span class="nc" id="L106">				continue;</span>
+			}
+<span class="nc" id="L108">			result[cpt++] = candidate;</span>
+		}
+<span class="nc" id="L110">		return result;</span>
+	}
+
+	public List&lt;Integer&gt; getAllFree() {
+<span class="nc" id="L114">		final List&lt;Integer&gt; result = new ArrayList&lt;&gt;(10000);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (int i = 0; i &lt; number.length; i++) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (number[i] == null) {</span>
+<span class="nc" id="L117">				result.add(i);</span>
+			}
+		}
+<span class="nc" id="L120">		return result;</span>
+	}
+
+	public List&lt;Integer&gt; getAllUsed() {
+<span class="nc" id="L124">		final List&lt;Integer&gt; result = new ArrayList&lt;&gt;(10000);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (int i = 0; i &lt; number.length; i++) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (number[i] == Oc.USED) {</span>
+<span class="nc" id="L127">				result.add(i);</span>
+			}
+		}
+<span class="nc" id="L130">		return result;</span>
+	}
+
+	public boolean isUsuable(int nb) {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (number[nb] != null) {</span>
+<span class="nc" id="L135">			return false;</span>
+		}
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (int near : getNeighbours(nb)) {</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (number[near] != null) {</span>
+<span class="nc" id="L139">				return false;</span>
+			}
+		}
+<span class="nc" id="L142">		return true;</span>
+	}
+
+	public void burnNumber(int nb) {
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (number[nb] != null) {</span>
+<span class="nc" id="L147">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L149">		number[nb] = Oc.USED;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		for (int near : getNeighbours(nb)) {</span>
+<span class="nc" id="L151">			number[near] = Oc.NEAR;</span>
+		}
+<span class="nc" id="L153">	}</span>
+
+	public int getRandomFree(Random rnd) {
+<span class="nc" id="L156">		final List&lt;Integer&gt; frees = getAllFree();</span>
+		// final int size = frees.size();
+		// for (int i = 0; i &lt; size; i++) {
+		// final int pos = rnd.nextInt(frees.size());
+		// final int nb = frees.get(pos);
+		// frees.remove(pos);
+		// if (isUsuable(nb)) {
+		// return nb;
+		// }
+		// }
+<span class="nc" id="L166">		Collections.shuffle(frees, rnd);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (int nb : frees) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (isUsuable(nb)) {</span>
+<span class="nc" id="L169">				return nb;</span>
+			}
+<span class="nc" id="L171">		}</span>
+<span class="nc" id="L172">		return -1;</span>
+
+	}
+
+	public static int size(Random rnd, MagicTable mt) {
+<span class="nc" id="L177">		int i = 0;</span>
+		while (true) {
+<span class="nc" id="L179">			final int candidate = mt.getRandomFree(rnd);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (candidate == -1) {</span>
+<span class="nc" id="L181">				break;</span>
+			}
+<span class="nc" id="L183">			mt.burnNumber(candidate);</span>
+<span class="nc" id="L184">			i++;</span>
+<span class="nc" id="L185">		}</span>
+<span class="nc" id="L186">		return i;</span>
+	}
+
+	public static void main(String[] args) {
+<span class="nc" id="L190">		int max = 0;</span>
+<span class="nc" id="L191">		final long start = System.currentTimeMillis();</span>
+<span class="nc" id="L192">		final Random rnd = new Random(49);</span>
+<span class="nc" id="L193">		final int nb = 200000;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (i == 100) {</span>
+<span class="nc" id="L196">				long dur = (System.currentTimeMillis() - start) / 1000L;</span>
+<span class="nc" id="L197">				dur = dur * nb / 100;</span>
+<span class="nc" id="L198">				dur = dur / 3600;</span>
+<span class="nc" id="L199">				Log.println(&quot;Estimated duration = &quot; + dur + &quot; h&quot;);</span>
+			}
+<span class="nc" id="L201">			final MagicTable mt = new MagicTable();</span>
+<span class="nc" id="L202">			final int v = MagicTable.size(rnd, mt);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (v &gt; max) {</span>
+<span class="nc" id="L204">				Log.println(&quot;v=&quot; + v);</span>
+<span class="nc" id="L205">				Log.println(&quot;mt=&quot; + mt.getAllUsed());</span>
+<span class="nc" id="L206">				max = v;</span>
+			}
+		}
+<span class="nc" id="L209">		final long duration = System.currentTimeMillis() - start;</span>
+<span class="nc" id="L210">		Log.println(&quot;Duration = &quot; + duration / 1000L / 60);</span>
+
+<span class="nc" id="L212">	}</span>
+
+	public static void main2(String[] args) {
+<span class="nc" id="L215">		int max = 0;</span>
+<span class="nc" id="L216">		final long start = System.currentTimeMillis();</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		for (int j = 1; j &lt; 100; j++) {</span>
+<span class="nc" id="L218">			final Random rnd = new Random(j);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">			for (int i = 0; i &lt; 1000; i++) {</span>
+<span class="nc" id="L220">				final MagicTable mt = new MagicTable();</span>
+<span class="nc" id="L221">				final int v = MagicTable.size(rnd, mt);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">				if (v &gt; max) {</span>
+<span class="nc" id="L223">					Log.println(&quot;v=&quot; + v);</span>
+<span class="nc" id="L224">					Log.println(&quot;mt=&quot; + mt.getAllUsed());</span>
+<span class="nc" id="L225">					max = v;</span>
+				}
+			}
+		}
+<span class="nc" id="L229">		final long duration = System.currentTimeMillis() - start;</span>
+<span class="nc" id="L230">		Log.println(&quot;Duration = &quot; + duration / 1000L / 60);</span>
+
+<span class="nc" id="L232">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

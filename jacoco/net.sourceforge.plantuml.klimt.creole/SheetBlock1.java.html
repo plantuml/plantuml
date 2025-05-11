@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SheetBlock1.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole</a> &gt; <span class="el_source">SheetBlock1.java</span></div><h1>SheetBlock1.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.klimt.creole;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.atom.Atom;
+import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+
+public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
+    // ::remove folder when __HAXE__
+
+	private final Sheet sheet;
+	private List&lt;Stripe&gt; stripes;
+	private Map&lt;Stripe, Double&gt; heights;
+	private Map&lt;Stripe, Double&gt; widths;
+	private Map&lt;Atom, Position&gt; positions;
+	private MinMax minMax;
+	private final LineBreakStrategy maxWidth;
+	private final ClockwiseTopRightBottomLeft padding;
+	private final double marginX1;
+	private final double marginX2;
+	private Class&lt;? extends StringBounder&gt; lastCaller;
+	private double minimumWidth;
+
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
+<span class="fc" id="L78">		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), 0, 0);</span>
+<span class="fc" id="L79">	}</span>
+
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, Style style) {
+<span class="fc" id="L82">		this(sheet, maxWidth, style.getPadding(), 0, 0);</span>
+<span class="fc" id="L83">		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();</span>
+<span class="fc" id="L84">	}</span>
+
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding, double marginX1, double marginX2) {
+<span class="fc" id="L87">		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), marginX1, marginX2);</span>
+<span class="fc" id="L88">	}</span>
+
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, ClockwiseTopRightBottomLeft padding, double marginX1,
+<span class="fc" id="L91">			double marginX2) {</span>
+<span class="fc" id="L92">		this.sheet = sheet;</span>
+<span class="fc" id="L93">		this.maxWidth = Objects.requireNonNull(maxWidth);</span>
+<span class="fc" id="L94">		this.padding = padding;</span>
+<span class="fc" id="L95">		this.marginX1 = marginX1;</span>
+<span class="fc" id="L96">		this.marginX2 = marginX2;</span>
+<span class="fc" id="L97">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L101">		return sheet.toString();</span>
+	}
+
+	public HorizontalAlignment getCellAlignment() {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (stripes.size() != 1)</span>
+<span class="fc" id="L106">			return HorizontalAlignment.LEFT;</span>
+
+<span class="fc" id="L108">		final Stripe simple = stripes.get(0);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (simple instanceof StripeSimple)</span>
+<span class="fc" id="L110">			return ((StripeSimple) simple).getCellAlignment();</span>
+
+<span class="nc" id="L112">		return HorizontalAlignment.LEFT;</span>
+	}
+
+	public HorizontalAlignment getHorizontalAlignment() {
+<span class="fc" id="L116">		return sheet.getHorizontalAlignment();</span>
+	}
+
+	private void initMap(StringBounder stringBounder) {
+<span class="fc" id="L120">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (lastCaller == currentCaller)</span>
+<span class="fc" id="L122">			return;</span>
+<span class="fc" id="L123">		this.lastCaller = currentCaller;</span>
+<span class="fc" id="L124">		stripes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (Stripe stripe : sheet)</span>
+<span class="fc" id="L126">			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));</span>
+
+<span class="fc" id="L128">		positions = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L129">		widths = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L130">		heights = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L131">		minMax = MinMax.getEmpty(true);</span>
+<span class="fc" id="L132">		double y = 0;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (Stripe stripe : stripes) {</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			if (stripe.getAtoms().size() == 0)</span>
+<span class="nc" id="L135">				continue;</span>
+
+<span class="fc" id="L137">			final Sea sea = new Sea(stringBounder);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms())</span>
+<span class="fc" id="L139">				sea.add(atom);</span>
+
+<span class="fc" id="L141">			sea.doAlign();</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L143">				sea.doAlignTikz();</span>
+			}
+<span class="fc" id="L145">			sea.translateMinYto(y);</span>
+<span class="fc" id="L146">			final double width = sea.getWidth();</span>
+<span class="fc" id="L147">			widths.put(stripe, width);</span>
+<span class="fc" id="L148">			minMax = sea.update(minMax);</span>
+<span class="fc" id="L149">			final double height = sea.getHeight();</span>
+<span class="fc" id="L150">			heights.put(stripe, height);</span>
+<span class="fc" id="L151">			y += height;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L153">				sea.doAlignTikzBaseline();</span>
+			}
+<span class="fc" id="L155">			sea.exportAllPositions(positions);</span>
+<span class="fc" id="L156">		}</span>
+		final int coef;
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (sheet.getHorizontalAlignment() == HorizontalAlignment.CENTER)</span>
+<span class="fc" id="L159">			coef = 2;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		else if (sheet.getHorizontalAlignment() == HorizontalAlignment.RIGHT)</span>
+<span class="fc" id="L161">			coef = 1;</span>
+		else
+<span class="fc" id="L163">			coef = 0;</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (coef != 0) {</span>
+<span class="fc" id="L166">			double maxWidth = 0;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			for (Double v : widths.values())</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">				if (v &gt; maxWidth)</span>
+<span class="fc" id="L169">					maxWidth = v;</span>
+
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			for (Map.Entry&lt;Stripe, Double&gt; ent : widths.entrySet()) {</span>
+				// final double diff = maxWidth - ent.getValue() + this.marginX1 +
+				// this.marginX2;
+<span class="fc" id="L174">				final double diff = maxWidth - ent.getValue();</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">				if (diff &gt; 0) {</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">					for (Atom atom : ent.getKey().getAtoms()) {</span>
+<span class="fc" id="L177">						final Position pos = positions.get(atom);</span>
+<span class="fc" id="L178">						positions.put(atom, pos.translateX(diff / coef));</span>
+<span class="fc" id="L179">					}</span>
+				}
+
+<span class="fc" id="L182">			}</span>
+
+		}
+<span class="fc" id="L185">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L188">		initMap(stringBounder);</span>
+<span class="fc" id="L189">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
+	}
+
+	@Override
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L194">		return null;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L198">		initMap(ug.getStringBounder());</span>
+<span class="pc bpc" id="L199" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
+<span class="fc" id="L200">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
+
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
+<span class="fc" id="L204">				final Position position = positions.get(atom);</span>
+<span class="fc" id="L205">				atom.drawU(position.translate(ug));</span>
+				// position.drawDebug(ug);
+<span class="fc" id="L207">			}</span>
+<span class="fc" id="L208">	}</span>
+
+	public double getStartingAltitude(StringBounder stringBounder) {
+<span class="nc" id="L211">		return 0;</span>
+	}
+
+	public double getStartingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L215">		return -marginX1;</span>
+	}
+
+	public double getEndingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L219">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
+	}
+
+	public final double getMinimumWidth() {
+<span class="fc" id="L223">		return minimumWidth;</span>
+	}
+
+	@Override
+	public List&lt;Neutron&gt; getNeutrons() {
+<span class="nc" id="L228">		throw new UnsupportedOperationException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

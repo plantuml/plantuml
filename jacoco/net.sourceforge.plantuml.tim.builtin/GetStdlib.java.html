@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GetStdlib.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim.builtin</a> &gt; <span class="el_source">GetStdlib.java</span></div><h1>GetStdlib.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim.builtin;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
+
+<span class="fc" id="L54">public class GetStdlib extends SimpleReturnFunction {</span>
+
+	public TFunctionSignature getSignature() {
+<span class="fc" id="L57">		return new TFunctionSignature(&quot;%get_stdlib&quot;, 1);</span>
+	}
+
+	@Override
+	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
+<span class="nc bnc" id="L62" title="All 6 branches missed.">		return nbArg == 0 || nbArg == 1 || nbArg == 2;</span>
+	}
+
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
+			Map&lt;String, TValue&gt; named) throws EaterException {
+
+<span class="nc" id="L69">		final JsonObject result = Json.object();</span>
+		try {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			if (values.size() == 0) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">				for (String folderName : Stdlib.getAllFolderNames()) {</span>
+					// This can be optimized: no need to load the full folder
+<span class="nc" id="L74">					final Stdlib folder = Stdlib.retrieve(folderName);</span>
+<span class="nc" id="L75">					final JsonObject metadata = Json.object();</span>
+					// Key in README.md will be in lowercase anyway
+<span class="nc bnc" id="L77" title="All 2 branches missed.">					for (Entry&lt;String, String&gt; ent : folder.getMetadata().entrySet())</span>
+<span class="nc" id="L78">						metadata.add(ent.getKey().toLowerCase(), ent.getValue());</span>
+
+<span class="nc" id="L80">					result.add(folderName, metadata);</span>
+<span class="nc" id="L81">				}</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			} else if (values.size() == 1) {</span>
+<span class="nc" id="L83">				final String folderName = values.get(0).toString();</span>
+				// This can be optimized: no need to load the full folder
+<span class="nc" id="L85">				final Stdlib folder = Stdlib.retrieve(folderName);</span>
+				// Key in README.md will be in lowercase anyway
+<span class="nc bnc" id="L87" title="All 2 branches missed.">				for (Entry&lt;String, String&gt; ent : folder.getMetadata().entrySet())</span>
+<span class="nc" id="L88">					result.add(ent.getKey().toLowerCase(), ent.getValue());</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			} else if (values.size() == 2) {</span>
+<span class="nc" id="L90">				final String folderName = values.get(0).toString();</span>
+<span class="nc" id="L91">				final String key = values.get(1).toString().toLowerCase();</span>
+<span class="nc" id="L92">				final Stdlib folder = Stdlib.retrieve(folderName);</span>
+<span class="nc" id="L93">				String value = folder.getMetadata().get(key);</span>
+				// Temporary, we check the upercase key if needed
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (value == null)</span>
+<span class="nc" id="L96">					value = folder.getMetadata().get(key.toUpperCase());</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				if (value == null)</span>
+<span class="nc" id="L98">					value = &quot;&quot;;</span>
+<span class="nc" id="L99">				return TValue.fromString(value);</span>
+			}
+<span class="nc" id="L101">		} catch (IOException e) {</span>
+<span class="nc" id="L102">			Logme.error(e);</span>
+<span class="nc" id="L103">		}</span>
+<span class="nc" id="L104">		return TValue.fromJson(result);</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

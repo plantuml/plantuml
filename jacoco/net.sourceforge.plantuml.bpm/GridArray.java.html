@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GridArray.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.bpm</a> &gt; <span class="el_source">GridArray.java</span></div><h1>GridArray.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.bpm;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class GridArray implements UDrawable {
+
+	private final int lines;
+	private final int cols;
+	private final Placeable data[][];
+	private final ISkinParam skinParam;
+
+	// private final List&lt;GridEdge&gt; edges = new ArrayList&lt;&gt;();
+
+<span class="nc" id="L57">	public GridArray(ISkinParam skinParam, int lines, int cols) {</span>
+<span class="nc" id="L58">		this.skinParam = skinParam;</span>
+<span class="nc" id="L59">		this.lines = lines;</span>
+<span class="nc" id="L60">		this.cols = cols;</span>
+<span class="nc" id="L61">		this.data = new Placeable[lines][cols];</span>
+<span class="nc" id="L62">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L66">		return &quot;&quot; + lines + &quot;x&quot; + cols;</span>
+	}
+
+	public void setData(int l, int c, Placeable element) {
+<span class="nc" id="L70">		data[l][c] = element;</span>
+<span class="nc" id="L71">	}</span>
+
+	public Placeable getData(int l, int c) {
+<span class="nc" id="L74">		return data[l][c];</span>
+	}
+
+	public final int getRows() {
+<span class="nc" id="L78">		return cols;</span>
+	}
+
+	public final int getLines() {
+<span class="nc" id="L82">		return lines;</span>
+	}
+
+	private double getHeightOfLine(StringBounder stringBounder, int line) {
+<span class="nc" id="L86">		double height = 0;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		for (int i = 0; i &lt; cols; i++) {</span>
+<span class="nc" id="L88">			final Placeable cell = data[line][i];</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (cell == null) {</span>
+<span class="nc" id="L90">				continue;</span>
+			}
+<span class="nc" id="L92">			height = Math.max(height, cell.getDimension(stringBounder, skinParam).getHeight());</span>
+		}
+<span class="nc" id="L94">		return height;</span>
+	}
+
+	private double getWidthOfCol(StringBounder stringBounder, int col) {
+<span class="nc" id="L98">		double width = 0;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = 0; i &lt; lines; i++) {</span>
+<span class="nc" id="L100">			final Placeable cell = data[i][col];</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (cell == null) {</span>
+<span class="nc" id="L102">				continue;</span>
+			}
+<span class="nc" id="L104">			width = Math.max(width, cell.getDimension(stringBounder, skinParam).getWidth());</span>
+		}
+<span class="nc" id="L106">		return width;</span>
+	}
+
+<span class="nc" id="L109">	private final double margin = 30;</span>
+
+	public void drawU(UGraphic ug) {
+		// printMe();
+
+<span class="nc" id="L114">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+		// for (GridEdge edge : edges) {
+		// // System.err.println(&quot;Drawing &quot; + edge);
+		// final int from[] = getCoord(edge.getFrom());
+		// final int to[] = getCoord(edge.getTo());
+		// final XPoint2D pt1 = getCenterOf(stringBounder, from[0], from[1]);
+		// final XPoint2D pt2 = getCenterOf(stringBounder, to[0], to[1]);
+		// drawArrow(ug, pt1, pt2);
+		// }
+
+<span class="nc" id="L125">		double dy = 0;</span>
+<span class="nc" id="L126">		drawInternalGrid(ug);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc" id="L128">			double dx = 0;</span>
+<span class="nc" id="L129">			final double heightOfLine = getHeightOfLine(stringBounder, l);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			for (int r = 0; r &lt; cols; r++) {</span>
+<span class="nc" id="L131">				final double widthOfCol = getWidthOfCol(stringBounder, r);</span>
+<span class="nc" id="L132">				final Placeable cell = data[l][r];</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">				if (cell != null) {</span>
+<span class="nc" id="L134">					final XDimension2D dim = cell.getDimension(stringBounder, skinParam);</span>
+
+<span class="nc" id="L136">					cell.toTextBlock(skinParam)</span>
+<span class="nc" id="L137">							.drawU(ug.apply(new UTranslate(dx + (widthOfCol + margin - dim.getWidth()) / 2,</span>
+<span class="nc" id="L138">									dy + (heightOfLine + margin - dim.getHeight()) / 2)));</span>
+				}
+<span class="nc" id="L140">				dx += widthOfCol + margin;</span>
+			}
+<span class="nc" id="L142">			dy += heightOfLine + margin;</span>
+		}
+
+<span class="nc" id="L145">	}</span>
+
+	private void drawInternalGrid(UGraphic ug) {
+<span class="nc" id="L148">		double heightMax = 0;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc" id="L150">			heightMax += getHeightOfLine(ug.getStringBounder(), l) + margin;</span>
+		}
+<span class="nc" id="L152">		double widthMax = 0;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L154">			widthMax += getWidthOfCol(ug.getStringBounder(), c) + margin;</span>
+		}
+<span class="nc" id="L156">		ug = ug.apply(HColors.BLACK);</span>
+<span class="nc" id="L157">		double y = 0;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc" id="L159">			ug.apply(UTranslate.dy(y)).draw(ULine.hline(widthMax));</span>
+<span class="nc" id="L160">			y += getHeightOfLine(ug.getStringBounder(), l) + margin;</span>
+		}
+<span class="nc" id="L162">		double x = 0;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L164">			ug.apply(UTranslate.dx(x)).draw(ULine.vline(heightMax));</span>
+<span class="nc" id="L165">			x += getWidthOfCol(ug.getStringBounder(), c) + margin;</span>
+		}
+
+<span class="nc" id="L168">	}</span>
+
+	private void drawArrow(UGraphic ug, XPoint2D pt1, XPoint2D pt2) {
+<span class="nc" id="L171">		ug = ug.apply(HColors.BLUE);</span>
+<span class="nc" id="L172">		final ULine line = new ULine(pt2.getX() - pt1.getX(), pt2.getY() - pt1.getY());</span>
+<span class="nc" id="L173">		ug.apply(UTranslate.point(pt1)).draw(line);</span>
+<span class="nc" id="L174">	}</span>
+
+	private XPoint2D getCenterOf(StringBounder stringBounder, int c, int l) {
+<span class="nc" id="L177">		double x = getWidthOfCol(stringBounder, c) / 2 + margin / 2;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (int i = 0; i &lt; c; i++) {</span>
+<span class="nc" id="L179">			final double widthOfCol = getWidthOfCol(stringBounder, i);</span>
+<span class="nc" id="L180">			x += widthOfCol + margin;</span>
+		}
+<span class="nc" id="L182">		double y = getHeightOfLine(stringBounder, l) / 2 + margin / 2;</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (int i = 0; i &lt; l; i++) {</span>
+<span class="nc" id="L184">			final double heightOfLine = getHeightOfLine(stringBounder, i);</span>
+<span class="nc" id="L185">			y += heightOfLine + margin;</span>
+		}
+<span class="nc" id="L187">		return new XPoint2D(x, y);</span>
+	}
+
+	private int[] getCoord(Cell someCell) {
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L193">				final Placeable cell = data[l][c];</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">				if (cell == someCell.getData()) {</span>
+<span class="nc" id="L195">					return new int[] { c, l };</span>
+				}
+			}
+		}
+<span class="nc" id="L199">		throw new IllegalArgumentException();</span>
+	}
+
+	private void printMe() {
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L205">				final Placeable cell = data[l][c];</span>
+<span class="nc" id="L206">				System.err.print(cell);</span>
+<span class="nc" id="L207">				System.err.print(&quot;  ;  &quot;);</span>
+			}
+<span class="nc" id="L209">			System.err.println();</span>
+		}
+<span class="nc" id="L211">	}</span>
+
+	// void addEdgesInternal(List&lt;GridEdge&gt; edges) {
+	// this.edges.addAll(edges);
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

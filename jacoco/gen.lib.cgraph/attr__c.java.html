@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>attr__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">attr__c.java</span></div><h1>attr__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cdt.dtsize__c.dtsize_;
+import static gen.lib.cdt.dtview__c.dtview;
+import static gen.lib.cgraph.apply__c.agapply;
+import static gen.lib.cgraph.edge__c.agfstout;
+import static gen.lib.cgraph.edge__c.agnxtout;
+import static gen.lib.cgraph.graph__c.agopen;
+import static gen.lib.cgraph.mem__c.agalloc;
+import static gen.lib.cgraph.node__c.agfstnode;
+import static gen.lib.cgraph.node__c.agnxtnode;
+import static gen.lib.cgraph.obj__c.agmethod_upd;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.cgraph.rec__c.agbindrec;
+import static gen.lib.cgraph.rec__c.aggetrec;
+import static gen.lib.cgraph.refstr__c.agstrdup;
+import static gen.lib.cgraph.refstr__c.agstrfree;
+import static gen.lib.cgraph.subg__c.agparent;
+import static gen.lib.cgraph.utils__c.agdtopen;
+import static smetana.core.Macro.AGEDGE;
+import static smetana.core.Macro.AGINEDGE;
+import static smetana.core.Macro.AGNODE;
+import static smetana.core.Macro.AGOUTEDGE;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.dtinsert;
+import static smetana.core.Macro.dtsearch;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import java.util.ArrayList;
+
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agattr_s;
+import h.ST_Agdatadict_s;
+import h.ST_Agdesc_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_Agrec_s;
+import h.ST_Agsym_s;
+import h.ST_Agtag_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.__ptr__;
+import smetana.core.size_t;
+
+<span class="nc" id="L102">public class attr__c {</span>
+
+
+private static final int MINATTR = 4;
+
+
+//1 67blfrj9x850g8ccpo9qjer2
+// static char DataDictName[] = 
+<span class="fc" id="L110">public final static CString DataDictName = new CString(&quot;_AG_datadict&quot;);</span>
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agdatadict&quot;, key=&quot;4bm10isw1qq1eqcse8afbxee3&quot;, definition=&quot;Agdatadict_t *agdatadict(Agraph_t * g, int cflag)&quot;)
+public static ST_Agdatadict_s agdatadict(ST_Agraph_s g, boolean cflag) {
+<span class="fc" id="L116">ENTERING(&quot;4bm10isw1qq1eqcse8afbxee3&quot;,&quot;agdatadict&quot;);</span>
+try {
+    ST_Agdatadict_s rv;
+<span class="fc" id="L119">    rv = (ST_Agdatadict_s) aggetrec(g, DataDictName, false);</span>
+<span class="pc bpc" id="L120" title="3 of 4 branches missed.">    if (rv!=null || !cflag)</span>
+<span class="fc" id="L121">	return rv;</span>
+<span class="nc" id="L122">    init_all_attrs(g);</span>
+<span class="nc" id="L123">    rv = (ST_Agdatadict_s) aggetrec(g, DataDictName, false);</span>
+<span class="nc" id="L124">    return rv;</span>
+} finally {
+<span class="fc" id="L126">LEAVING(&quot;4bm10isw1qq1eqcse8afbxee3&quot;,&quot;agdatadict&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agdictof&quot;, key=&quot;2b2cg0am9e1lwc0nqikl2wczb&quot;, definition=&quot;Dict_t *agdictof(Agraph_t * g, int kind)&quot;)
+public static ST_dt_s agdictof(ST_Agraph_s g, int kind) {
+<span class="fc" id="L135">ENTERING(&quot;2b2cg0am9e1lwc0nqikl2wczb&quot;,&quot;agdictof&quot;);</span>
+try {
+    ST_Agdatadict_s dd;
+    ST_dt_s dict;
+<span class="fc" id="L139">    dd = agdatadict(g, false);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">    if (dd!=null)</span>
+<span class="pc bpc" id="L141" title="1 of 4 branches missed.">	switch (kind) {</span>
+	case AGRAPH:
+<span class="fc" id="L143">	    dict = dd.dict_g;</span>
+<span class="fc" id="L144">	    break;</span>
+	case AGNODE:
+<span class="fc" id="L146">	    dict = dd.dict_n;</span>
+<span class="fc" id="L147">	    break;</span>
+	case AGINEDGE:
+	case AGOUTEDGE:
+<span class="fc" id="L150">	    dict = dd.dict_e;</span>
+<span class="fc" id="L151">	    break;</span>
+	default:
+<span class="nc" id="L153">	    System.err.println(&quot;agdictof: unknown kind &quot;+ kind);</span>
+<span class="nc" id="L154">	    dict = null;</span>
+<span class="nc" id="L155">	    throw new UnsupportedOperationException();</span>
+    } else
+<span class="nc" id="L157">	dict = null;</span>
+<span class="fc" id="L158">    return dict;</span>
+} finally {
+<span class="fc" id="L160">LEAVING(&quot;2b2cg0am9e1lwc0nqikl2wczb&quot;,&quot;agdictof&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agnewsym&quot;, key=&quot;dbhw2q2jfsz9qwawchy0hxj4i&quot;, definition=&quot;Agsym_t *agnewsym(Agraph_t * g, char *name, char *value, int id, int kind)&quot;)
+public static ST_Agsym_s agnewsym(Globals zz, ST_Agraph_s g, CString name, CString value, int id, int kind) {
+<span class="fc" id="L170">ENTERING(&quot;dbhw2q2jfsz9qwawchy0hxj4i&quot;,&quot;agnewsym&quot;);</span>
+try {
+    ST_Agsym_s sym;
+<span class="fc" id="L173">    sym = (ST_Agsym_s) agalloc(g, new size_t(ZType.ST_Agsym_s));</span>
+<span class="fc" id="L174">    sym.kind = kind;</span>
+<span class="fc" id="L175">    sym.name = agstrdup(zz, g, name);</span>
+<span class="fc" id="L176">    sym.defval = agstrdup(zz, g, value);</span>
+<span class="fc" id="L177">    sym.id = id;</span>
+<span class="fc" id="L178">    return sym;</span>
+} finally {
+<span class="fc" id="L180">LEAVING(&quot;dbhw2q2jfsz9qwawchy0hxj4i&quot;,&quot;agnewsym&quot;);</span>
+}
+}
+
+
+
+
+//3 5s4tpjeh3jwf722izjq6cm6rq
+// static void agcopydict(Dict_t * src, Dict_t * dest, Agraph_t * g, int kind) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agcopydict&quot;, key=&quot;5s4tpjeh3jwf722izjq6cm6rq&quot;, definition=&quot;static void agcopydict(Dict_t * src, Dict_t * dest, Agraph_t * g, int kind)&quot;)
+public static Object agcopydict(Object... arg_) {
+<span class="nc" id="L192">UNSUPPORTED(&quot;5x2q9spbx7y0k6l59z6oy8cuc&quot;); // static void agcopydict(Dict_t * src, Dict_t * dest, Agraph_t * g, int kind)</span>
+
+<span class="nc" id="L194">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agmakedatadict&quot;, key=&quot;alb1d5x6huba3q44ms1wt0rr5&quot;, definition=&quot;static Agdatadict_t *agmakedatadict(Agraph_t * g)&quot;)
+public static ST_Agdatadict_s agmakedatadict(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L202">ENTERING(&quot;alb1d5x6huba3q44ms1wt0rr5&quot;,&quot;agmakedatadict&quot;);</span>
+try {
+    ST_Agraph_s par;
+    ST_Agdatadict_s parent_dd, dd;
+<span class="fc" id="L206">    dd = (ST_Agdatadict_s) agbindrec(zz, g, DataDictName, new size_t(ZType.ST_Agdatadict_s),</span>
+				    false);
+<span class="fc" id="L208">    dd.dict_n = agdtopen(zz, g, zz.AgDataDictDisc, zz.Dttree);</span>
+<span class="fc" id="L209">    dd.dict_e = agdtopen(zz, g, zz.AgDataDictDisc,zz. Dttree);</span>
+<span class="fc" id="L210">    dd.dict_g = agdtopen(zz, g, zz.AgDataDictDisc, zz.Dttree);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">    if ((par = agparent(g))!=null) {</span>
+<span class="fc" id="L212">	parent_dd = agdatadict(par, false);</span>
+<span class="fc" id="L213">	dtview((ST_dt_s)dd.dict_n, (ST_dt_s)parent_dd.dict_n);</span>
+<span class="fc" id="L214">	dtview((ST_dt_s)dd.dict_e, (ST_dt_s)parent_dd.dict_e);</span>
+<span class="fc" id="L215">	dtview((ST_dt_s)dd.dict_g, (ST_dt_s)parent_dd.dict_g);</span>
+    } else {
+<span class="pc bpc" id="L217" title="3 of 4 branches missed.">	if (zz.ProtoGraph!=null &amp;&amp; (g != zz.ProtoGraph)) {</span>
+	    /* it's not ok to dtview here for several reasons. the proto
+	       graph could change, and the sym indices don't match */
+<span class="nc" id="L220">	    parent_dd = agdatadict(zz.ProtoGraph, false);</span>
+<span class="nc" id="L221">	    agcopydict(parent_dd.dict_n, dd.dict_n, g, AGNODE);</span>
+<span class="nc" id="L222">	    agcopydict(parent_dd.dict_e, dd.dict_e, g, AGEDGE);</span>
+<span class="nc" id="L223">	    agcopydict(parent_dd.dict_g, dd.dict_g, g, AGRAPH);</span>
+	}
+    }
+<span class="fc" id="L226">    return dd;</span>
+} finally {
+<span class="fc" id="L228">LEAVING(&quot;alb1d5x6huba3q44ms1wt0rr5&quot;,&quot;agmakedatadict&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agdictsym&quot;, key=&quot;50wfzq5wy8wc7vuyvs3mrx5ct&quot;, definition=&quot;Agsym_t *agdictsym(Dict_t * dict, char *name)&quot;)
+public static ST_Agsym_s agdictsym(Globals zz, ST_dt_s dict, CString name) {
+<span class="fc" id="L238">ENTERING(&quot;50wfzq5wy8wc7vuyvs3mrx5ct&quot;,&quot;agdictsym&quot;);</span>
+try {
+<span class="fc" id="L240">    final ST_Agsym_s key = new ST_Agsym_s();</span>
+<span class="fc" id="L241">    key.name = name;</span>
+<span class="fc" id="L242">    return  (ST_Agsym_s) dtsearch(zz, dict, key);</span>
+} finally {
+<span class="fc" id="L244">LEAVING(&quot;50wfzq5wy8wc7vuyvs3mrx5ct&quot;,&quot;agdictsym&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;aglocaldictsym&quot;, key=&quot;4wy4ggu70d7harhix8xnh5w4l&quot;, definition=&quot;Agsym_t *aglocaldictsym(Dict_t * dict, char *name)&quot;)
+public static ST_Agsym_s aglocaldictsym(Globals zz, ST_dt_s dict, CString name) {
+<span class="fc" id="L253">ENTERING(&quot;4wy4ggu70d7harhix8xnh5w4l&quot;,&quot;aglocaldictsym&quot;);</span>
+try {
+    ST_Agsym_s rv;
+    ST_dt_s view;
+<span class="fc" id="L257">    view = dtview(dict, null);</span>
+<span class="fc" id="L258">    rv = agdictsym(zz, dict, name);</span>
+<span class="fc" id="L259">    dtview(dict, view);</span>
+<span class="fc" id="L260">    return rv;</span>
+} finally {
+<span class="fc" id="L262">LEAVING(&quot;4wy4ggu70d7harhix8xnh5w4l&quot;,&quot;aglocaldictsym&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agattrsym&quot;, key=&quot;8hy9sl3zmwobwm960jz466ufe&quot;, definition=&quot;Agsym_t *agattrsym(void *obj, char *name)&quot;)
+public static ST_Agsym_s agattrsym(Globals zz, __ptr__ obj, CString name) {
+<span class="fc" id="L271">ENTERING(&quot;8hy9sl3zmwobwm960jz466ufe&quot;,&quot;agattrsym&quot;);</span>
+try {
+	ST_Agattr_s data;
+    ST_Agsym_s rv;
+<span class="fc" id="L275">    CString arg = name;</span>
+    
+<span class="fc" id="L277">    data = agattrrec(obj);</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">    if (data!=null)</span>
+<span class="fc" id="L279">	rv = agdictsym(zz, (ST_dt_s)data.dict, arg);</span>
+    else
+<span class="nc" id="L281">	rv = null;</span>
+<span class="fc" id="L282">    return rv;</span>
+} finally {
+<span class="fc" id="L284">LEAVING(&quot;8hy9sl3zmwobwm960jz466ufe&quot;,&quot;agattrsym&quot;);</span>
+}
+}
+
+
+//1 covyqfvabl7igx9g5rvlhgngz
+// char *AgDataRecName = 
+<span class="fc" id="L291">public final static CString AgDataRecName = new CString(&quot;_AG_strdata&quot;);</span>
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;topdictsize&quot;, key=&quot;6az8xu0sgu1d6abu0xfpd89hi&quot;, definition=&quot;static int topdictsize(Agobj_t * obj)&quot;)
+public static int topdictsize(ST_Agobj_s obj) {
+<span class="fc" id="L297">ENTERING(&quot;6az8xu0sgu1d6abu0xfpd89hi&quot;,&quot;topdictsize&quot;);</span>
+try {
+    ST_dt_s d;
+<span class="fc" id="L300">    d = agdictof(agroot(agraphof(obj)), obj.tag.objtype);</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">    return d!=null ? dtsize_(d) : 0;</span>
+} finally {
+<span class="fc" id="L303">LEAVING(&quot;6az8xu0sgu1d6abu0xfpd89hi&quot;,&quot;topdictsize&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agmakeattrs&quot;, key=&quot;3wjrlyjdlz8k9nfxenxsfiqmj&quot;, definition=&quot;static Agrec_t *agmakeattrs(Agraph_t * context, void *obj)&quot;)
+public static ST_Agrec_s agmakeattrs(Globals zz, ST_Agraph_s context, ST_Agobj_s obj) {
+<span class="fc" id="L312">ENTERING(&quot;3wjrlyjdlz8k9nfxenxsfiqmj&quot;,&quot;agmakeattrs&quot;);</span>
+try {
+    int sz;
+    ST_Agattr_s rec;
+    ST_Agsym_s sym;
+    ST_dt_s datadict;
+<span class="fc" id="L318">    rec = (ST_Agattr_s) agbindrec(zz, obj, AgDataRecName, new size_t(ZType.ST_Agattr_s), false);</span>
+<span class="fc" id="L319">    datadict = agdictof(context, obj.tag.objtype);</span>
+
+
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">    if (rec.dict == null) {</span>
+<span class="fc" id="L323">	rec.dict = agdictof(agroot(context), obj.tag.objtype);</span>
+	/* don't malloc(0) */
+<span class="fc" id="L325">	sz = topdictsize((ST_Agobj_s) obj);</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">	if (sz &lt; 4)</span>
+<span class="fc" id="L327">	    sz = 4;</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">	rec.str = new ArrayList&lt;CString&gt;(); for (int i=0; i&lt;sz; i++) rec.str.add(null);</span>
+	/* doesn't call agxset() so no obj-modified callbacks occur */
+<span class="fc bfc" id="L330" title="All 2 branches covered.">	for (sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(zz, datadict,null,0000200)); sym!=null;</span>
+<span class="fc" id="L331">	     sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(zz, datadict,sym,0000010)))</span>
+<span class="fc" id="L332">	    rec.str.set(sym.id, agstrdup(zz, agraphof(obj), sym.defval));</span>
+    } else {
+    }
+<span class="fc" id="L335">    return (ST_Agrec_s) rec;</span>
+} finally {
+<span class="fc" id="L337">LEAVING(&quot;3wjrlyjdlz8k9nfxenxsfiqmj&quot;,&quot;agmakeattrs&quot;);</span>
+}
+}
+
+
+<span class="fc" id="L342">public static CFunction freesym = new CFunctionAbstract(&quot;freesym&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L345">		freesym((ST_dt_s)args[0], args[1], (ST_dtdisc_s)args[2]);</span>
+<span class="nc" id="L346">		return null;</span>
+	}};
+	
+
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;freesym&quot;, key=&quot;6b3c2syvj23lbf7kz0aal8vmc&quot;, definition=&quot;static void freesym(Dict_t * d, void * obj, Dtdisc_t * disc)&quot;)
+public static void freesym(ST_dt_s d, Object obj, ST_dtdisc_s disc) {
+<span class="nc" id="L353">ENTERING(&quot;6b3c2syvj23lbf7kz0aal8vmc&quot;,&quot;freesym&quot;);</span>
+try {
+<span class="nc" id="L355">UNSUPPORTED(&quot;bf9av4xbx61835st3og3wfqr8&quot;); // static void freesym(Dict_t * d, void * obj, Dtdisc_t * disc)</span>
+<span class="nc" id="L356">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L357">UNSUPPORTED(&quot;av59ae8c4mws46sf5dumz1k0s&quot;); //     Agsym_t *sym;</span>
+<span class="nc" id="L358">UNSUPPORTED(&quot;6z29omss9ay00bqf6xael7t6t&quot;); //     (void) d;</span>
+<span class="nc" id="L359">UNSUPPORTED(&quot;3wnut6i7v07q7n0fa538dyp7a&quot;); //     sym = (Agsym_t *) obj;</span>
+<span class="nc" id="L360">UNSUPPORTED(&quot;8l8wg6vltx6d7vc9dzqb6n3wi&quot;); //     (void) disc;</span>
+<span class="nc" id="L361">UNSUPPORTED(&quot;aka2fcwk9snppcvd59dzewx38&quot;); //     agstrfree(Ag_G_global, sym-&gt;name);</span>
+<span class="nc" id="L362">UNSUPPORTED(&quot;89enhovojps3wt6zo6s4xqlu7&quot;); //     agstrfree(Ag_G_global, sym-&gt;defval);</span>
+<span class="nc" id="L363">UNSUPPORTED(&quot;2ttw1xr5hp7fxq8w5bofu7cg9&quot;); //     agfree(Ag_G_global, sym);</span>
+<span class="nc" id="L364">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L366">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="nc" id="L368">LEAVING(&quot;6b3c2syvj23lbf7kz0aal8vmc&quot;,&quot;freesym&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agattrrec&quot;, key=&quot;13sfx74lme08ur04vkrqta25j&quot;, definition=&quot;Agattr_t *agattrrec(void *obj)&quot;)
+public static ST_Agattr_s agattrrec(__ptr__ obj) {
+<span class="fc" id="L378">ENTERING(&quot;13sfx74lme08ur04vkrqta25j&quot;,&quot;agattrrec&quot;);</span>
+try {
+<span class="fc" id="L380">    return (ST_Agattr_s) aggetrec(obj, AgDataRecName, false);</span>
+} finally {
+<span class="fc" id="L382">LEAVING(&quot;13sfx74lme08ur04vkrqta25j&quot;,&quot;agattrrec&quot;);</span>
+}
+}
+
+<span class="fc" id="L386">public static CFunction addattr = new CFunctionAbstract(&quot;addattr&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L389">		addattr(zz, (ST_Agraph_s)args[0], (ST_Agobj_s)args[1], (ST_Agsym_s)args[2]);</span>
+<span class="fc" id="L390">		return null;</span>
+	}};
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Difficult
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;addattr&quot;, key=&quot;2io7b26wq70e7kwdlzsh6bw7f&quot;, definition=&quot;static void addattr(Agraph_t * g, Agobj_t * obj, Agsym_t * sym)&quot;)
+public static void addattr(Globals zz, ST_Agraph_s g, ST_Agobj_s obj, ST_Agsym_s sym) {
+<span class="fc" id="L396">ENTERING(&quot;2io7b26wq70e7kwdlzsh6bw7f&quot;,&quot;addattr&quot;);</span>
+try {
+	ST_Agattr_s attr;
+<span class="fc" id="L399">    attr = (ST_Agattr_s) agattrrec(obj);</span>
+
+<span class="fc bfc" id="L401" title="All 2 branches covered.">    if (sym.id &gt;= MINATTR)</span>
+//	attr.str = (StarArrayOfCString) g.clos.disc.mem.call(&quot;resize&quot;, g.clos.state.mem,
+//						     attr.str,
+//						     sizeof(&quot;char*&quot;, sym.id),
+//						     sizeof(&quot;char*&quot;, sym.id + 1));
+<span class="fc" id="L406">    attr.str.add(null);</span>
+<span class="fc" id="L407">	attr.str.set(sym.id, agstrdup(zz, g, sym.defval));</span>
+    /* agmethod_upd(g,obj,sym);  JCE and GN didn't like this. */
+} finally {
+<span class="fc" id="L410">LEAVING(&quot;2io7b26wq70e7kwdlzsh6bw7f&quot;,&quot;addattr&quot;);</span>
+}
+<span class="fc" id="L412">}</span>
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;setattr&quot;, key=&quot;a3qr8ug1rkxp6ocieyp41ly3o&quot;, definition=&quot;static Agsym_t *setattr(Agraph_t * g, int kind, char *name, char *value)&quot;)
+public static ST_Agsym_s setattr(Globals zz, ST_Agraph_s g, int kind, CString name, CString value) {
+<span class="fc" id="L419">ENTERING(&quot;a3qr8ug1rkxp6ocieyp41ly3o&quot;,&quot;setattr&quot;);</span>
+try {
+    ST_Agdatadict_s dd;
+    ST_dt_s ldict, rdict;
+    ST_Agsym_s lsym, psym, rsym, rv;
+    ST_Agraph_s root;
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+   
+<span class="fc" id="L428">    root = agroot(g);</span>
+<span class="fc" id="L429">    dd = agdatadict(g, true);	/* force initialization of string attributes */</span>
+<span class="fc" id="L430">    ldict = agdictof(g, kind);</span>
+<span class="fc" id="L431">    lsym = aglocaldictsym(zz, ldict, name);</span>
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">    if (lsym!=null) {			/* update old local definiton */</span>
+<span class="nc" id="L433">	agstrfree(zz, g, lsym.defval);</span>
+<span class="nc" id="L434">	lsym.defval = agstrdup(zz, g, value);</span>
+<span class="nc" id="L435">	rv = lsym;</span>
+    } else {
+<span class="fc" id="L437">	psym = agdictsym(zz, ldict, name);	/* search with viewpath up to root */</span>
+<span class="pc bpc" id="L438" title="1 of 2 branches missed.">	if (psym!=null) {		/* new local definition */</span>
+<span class="nc" id="L439">	    lsym = agnewsym(zz, g, name, value, psym.id, kind);</span>
+<span class="nc" id="L440">	    dtinsert(zz, ldict, lsym);</span>
+<span class="nc" id="L441">	    rv = lsym;</span>
+	} else {		/* new global definition */
+<span class="fc" id="L443">	    rdict = agdictof(root, kind);</span>
+<span class="fc" id="L444">	    rsym = agnewsym(zz, g, name, value, dtsize_(rdict), kind);</span>
+<span class="fc" id="L445">	    dtinsert(zz, rdict, rsym);</span>
+<span class="pc bpc" id="L446" title="1 of 4 branches missed.">	    switch (kind) {</span>
+	    case AGRAPH:
+<span class="fc" id="L448">		agapply(zz, root, root.base, attr__c.addattr,</span>
+			rsym, true);
+<span class="fc" id="L450">		break;</span>
+	    case AGNODE:
+<span class="fc bfc" id="L452" title="All 2 branches covered.">		for (n = agfstnode(zz, root); n!=null; n = agnxtnode(zz, root, n))</span>
+<span class="fc" id="L453">		    addattr(zz, g, n, rsym);</span>
+		break;
+	    case AGINEDGE:
+	    case AGOUTEDGE:
+<span class="fc bfc" id="L457" title="All 2 branches covered.">		for (n = agfstnode(zz, root); n!=null; n = agnxtnode(zz, root, n))</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">		    for (e = agfstout(zz, root, n); e!=null; e = agnxtout(zz, root, e))</span>
+<span class="fc" id="L459">			addattr(zz, g, e, rsym);</span>
+		break;
+	    }
+<span class="fc" id="L462">	    rv = rsym;</span>
+	}
+    }
+<span class="pc bpc" id="L465" title="1 of 4 branches missed.">    if (rv!=null &amp;&amp; (kind == AGRAPH))</span>
+<span class="fc" id="L466">	agxset(zz, g, rv, value);</span>
+<span class="fc" id="L467">    agmethod_upd(g, g, rv);	/* JCE and GN wanted this */</span>
+<span class="fc" id="L468">    return rv;</span>
+} finally {
+<span class="fc" id="L470">LEAVING(&quot;a3qr8ug1rkxp6ocieyp41ly3o&quot;,&quot;setattr&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;getattr&quot;, key=&quot;8f80aahwb8cqc2t9592v47ttd&quot;, definition=&quot;static Agsym_t *getattr(Agraph_t * g, int kind, char *name)&quot;)
+public static ST_Agsym_s getattr(Globals zz, ST_Agraph_s g, int kind, CString name) {
+<span class="fc" id="L480">ENTERING(&quot;8f80aahwb8cqc2t9592v47ttd&quot;,&quot;getattr&quot;);</span>
+try {
+<span class="fc" id="L482">    ST_Agsym_s rv = null;</span>
+    ST_dt_s dict;
+<span class="fc" id="L484">    dict = agdictof(g, kind);</span>
+<span class="pc bpc" id="L485" title="1 of 2 branches missed.">    if (dict!=null)</span>
+<span class="fc" id="L486">	rv = agdictsym(zz, dict, name);	/* viewpath up to root */</span>
+<span class="fc" id="L487">    return rv;</span>
+} finally {
+<span class="fc" id="L489">LEAVING(&quot;8f80aahwb8cqc2t9592v47ttd&quot;,&quot;getattr&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agattr&quot;, key=&quot;blr3drm2hxuzwd6gpeeb84yyg&quot;, definition=&quot;Agsym_t *agattr(Agraph_t * g, int kind, char *name, char *value)&quot;)
+public static ST_Agsym_s agattr(Globals zz, ST_Agraph_s g, int kind, CString name, CString value) {
+<span class="fc" id="L498">ENTERING(&quot;blr3drm2hxuzwd6gpeeb84yyg&quot;,&quot;agattr&quot;);</span>
+try {
+    ST_Agsym_s rv;
+<span class="fc bfc" id="L501" title="All 2 branches covered.">    if (g == null) {</span>
+<span class="pc bpc" id="L502" title="1 of 2 branches missed.">	if (zz.ProtoGraph == null)</span>
+<span class="fc" id="L503">	    zz.ProtoGraph = agopen(zz, null, (ST_Agdesc_s) zz.ProtoDesc.copy(), null);</span>
+<span class="fc" id="L504">	g = zz.ProtoGraph;</span>
+    }
+<span class="fc bfc" id="L506" title="All 2 branches covered.">    if (value!=null)</span>
+<span class="fc" id="L507">	rv = setattr(zz, g, kind, name, value);</span>
+    else
+<span class="fc" id="L509">	rv = getattr(zz, g, kind, name);</span>
+<span class="fc" id="L510">    return rv;</span>
+} finally {
+<span class="fc" id="L512">LEAVING(&quot;blr3drm2hxuzwd6gpeeb84yyg&quot;,&quot;agattr&quot;);</span>
+}
+}
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agraphattr_init&quot;, key=&quot;ex2qtmuwz0o2e5svkujdbux78&quot;, definition=&quot;void agraphattr_init(Agraph_t * g)&quot;)
+public static void agraphattr_init(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L520">ENTERING(&quot;ex2qtmuwz0o2e5svkujdbux78&quot;,&quot;agraphattr_init&quot;);</span>
+try {
+    /* Agdatadict_t *dd; */
+    /* Agrec_t                      *attr; */
+    ST_Agraph_s context;
+<span class="fc" id="L525">    ((ST_Agdesc_s)g.desc).has_attrs = 1;</span>
+<span class="fc" id="L526">    /* dd = */ agmakedatadict(zz, g);</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">    if ((context = agparent(g)) == null)</span>
+<span class="fc" id="L528">	context = g;</span>
+<span class="fc" id="L529">    /* attr = */ agmakeattrs(zz, context, g);</span>
+} finally {
+<span class="fc" id="L531">LEAVING(&quot;ex2qtmuwz0o2e5svkujdbux78&quot;,&quot;agraphattr_init&quot;);</span>
+}
+<span class="fc" id="L533">}</span>
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agnodeattr_init&quot;, key=&quot;2pp4ot3pqy71jpfvu3g398y4y&quot;, definition=&quot;void agnodeattr_init(Agraph_t * g, Agnode_t * n)&quot;)
+public static void agnodeattr_init(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
+<span class="fc" id="L540">ENTERING(&quot;2pp4ot3pqy71jpfvu3g398y4y&quot;,&quot;agnodeattr_init&quot;);</span>
+try {
+	ST_Agattr_s data;
+<span class="fc" id="L543">    data = (ST_Agattr_s) agattrrec(n);</span>
+<span class="pc bpc" id="L544" title="2 of 4 branches missed.">    if (((data) == null) || ((data.dict) == null))</span>
+<span class="fc" id="L545">	agmakeattrs(zz, g, n);</span>
+} finally {
+<span class="fc" id="L547">LEAVING(&quot;2pp4ot3pqy71jpfvu3g398y4y&quot;,&quot;agnodeattr_init&quot;);</span>
+}
+<span class="fc" id="L549">}</span>
+
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agedgeattr_init&quot;, key=&quot;ckfzmnxfi0jiiayxmq38giw0r&quot;, definition=&quot;void agedgeattr_init(Agraph_t * g, Agedge_t * e)&quot;)
+public static void agedgeattr_init(Globals zz, ST_Agraph_s g, ST_Agedge_s e) {
+<span class="fc" id="L557">ENTERING(&quot;ckfzmnxfi0jiiayxmq38giw0r&quot;,&quot;agedgeattr_init&quot;);</span>
+try {
+	ST_Agattr_s data;
+<span class="fc" id="L560">    data = agattrrec(e);</span>
+<span class="pc bpc" id="L561" title="2 of 4 branches missed.">    if (((data) == null) || ((data.dict) == null))</span>
+<span class="fc" id="L562">	agmakeattrs(zz, g, e);</span>
+} finally {
+<span class="fc" id="L564">LEAVING(&quot;ckfzmnxfi0jiiayxmq38giw0r&quot;,&quot;agedgeattr_init&quot;);</span>
+}
+<span class="fc" id="L566">}</span>
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agget&quot;, key=&quot;eydjyhexv5jr6vi7uhk0cgphv&quot;, definition=&quot;char *agget(void *obj, char *name)&quot;)
+public static CString agget(Globals zz, __ptr__ obj, CString name) {
+<span class="fc" id="L573">ENTERING(&quot;eydjyhexv5jr6vi7uhk0cgphv&quot;,&quot;agget&quot;);</span>
+try {
+    ST_Agsym_s sym;
+    ST_Agattr_s data;
+<span class="fc" id="L577">    CString rv = null;</span>
+    
+<span class="fc" id="L579">    sym = agattrsym(zz, obj, name);</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">    if (sym == null)</span>
+<span class="fc" id="L581">	rv = null;			/* note was &quot;&quot;, but this provides more info */</span>
+    else {
+<span class="fc" id="L583">	data = agattrrec(obj);</span>
+<span class="fc" id="L584">	rv = data.str.get(sym.id);</span>
+    }
+<span class="fc" id="L586">    return rv;</span>
+} finally {
+<span class="fc" id="L588">LEAVING(&quot;eydjyhexv5jr6vi7uhk0cgphv&quot;,&quot;agget&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agxget&quot;, key=&quot;9h5oymhfkp6k34zl0fonn10k9&quot;, definition=&quot;char *agxget(void *obj, Agsym_t * sym)&quot;)
+public static CString agxget(__ptr__ obj,  ST_Agsym_s sym) {
+<span class="fc" id="L597">ENTERING(&quot;9h5oymhfkp6k34zl0fonn10k9&quot;,&quot;agxget&quot;);</span>
+try {
+	ST_Agattr_s data;
+    CString rv;
+<span class="fc" id="L601">    data = agattrrec(obj);</span>
+
+<span class="fc" id="L603">    rv = data.str.get(sym.id);</span>
+<span class="fc" id="L604">    return rv;</span>
+} finally {
+<span class="fc" id="L606">LEAVING(&quot;9h5oymhfkp6k34zl0fonn10k9&quot;,&quot;agxget&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agxset&quot;, key=&quot;4q8xvstvl6fbijhucfd1endxc&quot;, definition=&quot;int agxset(void *obj, Agsym_t * sym, char *value)&quot;)
+public static int agxset(Globals zz, ST_Agobj_s obj, ST_Agsym_s sym, CString value) {
+<span class="fc" id="L615">ENTERING(&quot;4q8xvstvl6fbijhucfd1endxc&quot;,&quot;agxset&quot;);</span>
+try {
+    ST_Agraph_s g;
+    ST_Agobj_s hdr;
+    ST_Agattr_s data;
+    ST_Agsym_s lsym;
+<span class="fc" id="L621">    g = agraphof(obj);</span>
+<span class="fc" id="L622">    hdr = (ST_Agobj_s) obj;</span>
+<span class="fc" id="L623">    data = agattrrec(hdr);</span>
+
+<span class="fc" id="L625">    agstrfree(zz, g, data.str.get(sym.id));</span>
+<span class="fc" id="L626">    data.str.set(sym.id, agstrdup(zz, g, value));</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">    if (((ST_Agtag_s)hdr.tag).objtype == AGRAPH) {</span>
+	/* also update dict default */
+	ST_dt_s dict;
+<span class="fc" id="L630">	dict = (ST_dt_s) agdatadict(g, false).dict_g;</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">	if ((lsym = aglocaldictsym(zz, dict, sym.name))!=null) {</span>
+<span class="fc" id="L632">	    agstrfree(zz, g, lsym.defval);</span>
+<span class="fc" id="L633">	    lsym.defval = agstrdup(zz, g, value);</span>
+	} else {
+<span class="fc" id="L635">	    lsym = agnewsym(zz, g, sym.name, value, sym.id, hdr.tag.objtype);</span>
+<span class="fc" id="L636">	    dict.searchf.exe(zz, dict, lsym, 0000001);</span>
+	}
+    }
+<span class="fc" id="L639">    agmethod_upd(g, obj, sym);</span>
+<span class="fc" id="L640">    return 0;</span>
+} finally {
+<span class="fc" id="L642">LEAVING(&quot;4q8xvstvl6fbijhucfd1endxc&quot;,&quot;agxset&quot;);</span>
+}
+}
+
+
+
+
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;agsafeset&quot;, key=&quot;9b7vn95cin8o7mb2f21exh1qr&quot;, definition=&quot;int agsafeset(void *obj, char *name, char *value, char *def)&quot;)
+public static int agsafeset(Globals zz, ST_Agobj_s obj, CString name, CString value, CString def) {
+<span class="fc" id="L651">ENTERING(&quot;9b7vn95cin8o7mb2f21exh1qr&quot;,&quot;agsafeset&quot;);</span>
+try {
+    ST_Agsym_s a;
+<span class="fc" id="L654">    a = agattr(zz, agraphof(obj), obj.tag.objtype, name, null);</span>
+<span class="fc bfc" id="L655" title="All 2 branches covered.">    if ((a) == null)</span>
+<span class="fc" id="L656">	a = agattr(zz, agraphof(obj), obj.tag.objtype, name, def);</span>
+<span class="fc" id="L657">    return agxset(zz, obj, a, value);</span>
+} finally {
+<span class="fc" id="L659">LEAVING(&quot;9b7vn95cin8o7mb2f21exh1qr&quot;,&quot;agsafeset&quot;);</span>
+}
+}
+
+
+
+
+//3 6gjlgo4s6r0bu7gjazfee6qv8
+// static void init_all_attrs(Agraph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/attr.c&quot;, name=&quot;init_all_attrs&quot;, key=&quot;6gjlgo4s6r0bu7gjazfee6qv8&quot;, definition=&quot;static void init_all_attrs(Agraph_t * g)&quot;)
+public static Object init_all_attrs(Object... arg_) {
+<span class="nc" id="L671">UNSUPPORTED(&quot;bir8xur87cl8inhyrgimkboqq&quot;); // static void init_all_attrs(Agraph_t * g)</span>
+<span class="nc" id="L672">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

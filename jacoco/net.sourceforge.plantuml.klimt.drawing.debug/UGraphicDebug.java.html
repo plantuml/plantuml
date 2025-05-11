@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicDebug.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.debug</a> &gt; <span class="el_source">UGraphicDebug.java</span></div><h1>UGraphicDebug.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.debug;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorMiddle;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UEmpty;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+
+public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContainer {
+
+	private final List&lt;String&gt; output;
+	private final double scaleFactor;
+	private final XDimension2D dim;
+	private final String svgLinkTarget;
+	private final String hoverPathColorRGB;
+	private final long seed;
+	private final String preserveAspectRatio;
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+<span class="fc" id="L83">		final UGraphicDebug result = new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB,</span>
+				seed, preserveAspectRatio);
+<span class="fc" id="L85">		return result;</span>
+	}
+
+	private UGraphicDebug(UGraphicDebug other, List&lt;String&gt; output, double scaleFactor, XDimension2D dim,
+			String svgLinkTarget, String hoverPathColorRGB, long seed, String preserveAspectRatio) {
+<span class="fc" id="L90">		super(other.getStringBounder());</span>
+<span class="fc" id="L91">		basicCopy(other);</span>
+<span class="fc" id="L92">		this.output = output;</span>
+<span class="fc" id="L93">		this.scaleFactor = scaleFactor;</span>
+<span class="fc" id="L94">		this.dim = dim;</span>
+<span class="fc" id="L95">		this.svgLinkTarget = svgLinkTarget;</span>
+<span class="fc" id="L96">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
+<span class="fc" id="L97">		this.seed = seed;</span>
+<span class="fc" id="L98">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L99">	}</span>
+
+	public UGraphicDebug(double scaleFactor, XDimension2D dim, String svgLinkTarget, String hoverPathColorRGB,
+			long seed, String preserveAspectRatio) {
+<span class="fc" id="L103">		super(new StringBounderDebug());</span>
+<span class="fc" id="L104">		basicCopy(HColors.WHITE, ColorMapper.IDENTITY);</span>
+<span class="fc" id="L105">		this.output = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L106">		this.scaleFactor = scaleFactor;</span>
+<span class="fc" id="L107">		this.dim = dim;</span>
+<span class="fc" id="L108">		this.svgLinkTarget = svgLinkTarget;</span>
+<span class="fc" id="L109">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
+<span class="fc" id="L110">		this.seed = seed;</span>
+<span class="fc" id="L111">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L112">	}</span>
+
+	public void draw(UShape shape) {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
+<span class="fc" id="L116">			outLine((ULine) shape);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
+<span class="fc" id="L118">			outRectangle((URectangle) shape);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		} else if (shape instanceof UText) {</span>
+<span class="fc" id="L120">			outText((UText) shape);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
+<span class="fc" id="L122">			outPolygon((UPolygon) shape);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L124">			outEllipse((UEllipse) shape);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		} else if (shape instanceof UEmpty) {</span>
+<span class="fc" id="L126">			outEmpty((UEmpty) shape);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
+<span class="fc" id="L128">			outPath((UPath) shape);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
+<span class="fc" id="L130">			outComment((UComment) shape);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
+<span class="fc" id="L132">			outPath(((DotPath) shape).toUPath());</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="fc" id="L134">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
+		} else {
+<span class="nc" id="L136">			System.err.println(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName());</span>
+<span class="nc" id="L137">			output.add(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName() + &quot; &quot; + new Date());</span>
+		}
+<span class="fc" id="L139">	}</span>
+
+	private void outCenteredCharacter(UCenteredCharacter shape) {
+<span class="fc" id="L142">		output.add(&quot;CENTERED_CHAR:&quot;);</span>
+<span class="fc" id="L143">		output.add(&quot;  char: &quot; + shape.getChar());</span>
+<span class="fc" id="L144">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L145">		output.add(&quot;  font: &quot; + shape.getFont().toStringDebug());</span>
+<span class="fc" id="L146">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L147">		output.add(&quot;&quot;);</span>
+
+<span class="fc" id="L149">	}</span>
+
+	private void outComment(UComment shape) {
+<span class="fc" id="L152">		output.add(&quot;COMMENT: &quot; + shape.getComment());</span>
+<span class="fc" id="L153">	}</span>
+
+	private void outPath(UPath shape) {
+<span class="fc" id="L156">		output.add(&quot;PATH:&quot;);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		for (USegment seg : shape) {</span>
+<span class="fc" id="L158">			final USegmentType type = seg.getSegmentType();</span>
+<span class="fc" id="L159">			final double coord[] = seg.getCoord();</span>
+<span class="fc" id="L160">			output.add(&quot;   - type: &quot; + type);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">			if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="fc" id="L162">				output.add(&quot;     radius: &quot; + pointd(coord[0], coord[1]));</span>
+<span class="fc" id="L163">				output.add(&quot;     angle: &quot; + coord[2]);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">				output.add(&quot;     largeArcFlag: &quot; + (coord[3] != 0));</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">				output.add(&quot;     sweepFlag: &quot; + (coord[4] != 0));</span>
+<span class="fc" id="L166">				output.add(&quot;     dest: &quot; + pointd(coord[5], coord[6]));</span>
+			} else
+<span class="fc bfc" id="L168" title="All 2 branches covered.">				for (int i = 0; i &lt; type.getNbPoints(); i++) {</span>
+<span class="fc" id="L169">					final String key = &quot;     pt&quot; + (i + 1) + &quot;: &quot;;</span>
+<span class="fc" id="L170">					output.add(key + pointd(coord[2 * i], coord[2 * i + 1]));</span>
+				}
+<span class="fc" id="L172">		}</span>
+
+<span class="fc" id="L174">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L175">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L176">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L177">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L178">		output.add(&quot;&quot;);</span>
+
+<span class="fc" id="L180">	}</span>
+
+	private void outPolygon(UPolygon shape) {
+<span class="fc" id="L183">		output.add(&quot;POLYGON:&quot;);</span>
+<span class="fc" id="L184">		output.add(&quot;  points:&quot;);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		for (XPoint2D pt : shape.getPoints()) {</span>
+<span class="fc" id="L186">			final double xp = getTranslateX() + pt.getX();</span>
+<span class="fc" id="L187">			final double yp = getTranslateY() + pt.getY();</span>
+<span class="fc" id="L188">			output.add(&quot;   - &quot; + pointd(xp, yp));</span>
+<span class="fc" id="L189">		}</span>
+<span class="fc" id="L190">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L191">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L192">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L193">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L194">		output.add(&quot;&quot;);</span>
+
+<span class="fc" id="L196">	}</span>
+
+	private void outText(UText shape) {
+<span class="fc" id="L199">		output.add(&quot;TEXT:&quot;);</span>
+<span class="fc" id="L200">		output.add(&quot;  text: &quot; + shape.getText());</span>
+<span class="fc" id="L201">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L202">		output.add(&quot;  orientation: &quot; + shape.getOrientation());</span>
+<span class="fc" id="L203">		output.add(&quot;  font: &quot; + shape.getFontConfiguration().toStringDebug());</span>
+<span class="fc" id="L204">		output.add(&quot;  color: &quot; + colorToString(shape.getFontConfiguration().getColor()));</span>
+<span class="fc" id="L205">		output.add(&quot;  extendedColor: &quot; + colorToString(shape.getFontConfiguration().getExtendedColor()));</span>
+<span class="fc" id="L206">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L207">	}</span>
+
+	private void outEmpty(UEmpty shape) {
+<span class="fc" id="L210">		output.add(&quot;EMPTY:&quot;);</span>
+<span class="fc" id="L211">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L212">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
+<span class="fc" id="L213">		output.add(&quot;&quot;);</span>
+
+<span class="fc" id="L215">	}</span>
+
+	private void outEllipse(UEllipse shape) {
+<span class="fc" id="L218">		output.add(&quot;ELLIPSE:&quot;);</span>
+<span class="fc" id="L219">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L220">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
+<span class="fc" id="L221">		output.add(&quot;  start: &quot; + shape.getStart());</span>
+<span class="fc" id="L222">		output.add(&quot;  extend: &quot; + shape.getExtend());</span>
+<span class="fc" id="L223">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L224">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L225">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L226">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L227">		output.add(&quot;&quot;);</span>
+
+<span class="fc" id="L229">	}</span>
+
+	private void outRectangle(URectangle shape) {
+<span class="fc" id="L232">		output.add(&quot;RECTANGLE:&quot;);</span>
+<span class="fc" id="L233">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L234">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
+<span class="fc" id="L235">		output.add(&quot;  xCorner: &quot; + (int) shape.getRx());</span>
+<span class="fc" id="L236">		output.add(&quot;  yCorner: &quot; + (int) shape.getRy());</span>
+<span class="fc" id="L237">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L238">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L239">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L240">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L241">		output.add(&quot;&quot;);</span>
+
+<span class="fc" id="L243">	}</span>
+
+	private void outLine(ULine shape) {
+<span class="fc" id="L246">		output.add(&quot;LINE:&quot;);</span>
+<span class="fc" id="L247">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L248">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getDX(), getTranslateY() + shape.getDY()));</span>
+<span class="fc" id="L249">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L250">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L251">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L252">		output.add(&quot;&quot;);</span>
+
+<span class="fc" id="L254">	}</span>
+
+	private String pointd(double x, double y) {
+<span class="fc" id="L257">		return String.format(Locale.US, &quot;[ %.4f ; %.4f ]&quot;, x, y);</span>
+	}
+
+	private String colorToString(HColor color) {
+<span class="fc bfc" id="L261" title="All 4 branches covered.">		if (color == null || color.isTransparent())</span>
+<span class="fc" id="L262">			return &quot;NULL_COLOR&quot;;</span>
+
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		if (color instanceof HColorSimple) {</span>
+<span class="fc" id="L265">			final HColorSimple simple = (HColorSimple) color;</span>
+<span class="fc" id="L266">			final Color internal = simple.getAwtColor();</span>
+
+<span class="fc" id="L268">			return Integer.toHexString(internal.getRGB());</span>
+		}
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (color instanceof HColorMiddle) {</span>
+<span class="fc" id="L271">			final HColorMiddle middle = (HColorMiddle) color;</span>
+<span class="fc" id="L272">			return &quot;middle(&quot; + colorToString(middle.getColor1()) + &quot; &amp; &quot; + colorToString(middle.getColor1()) + &quot; )&quot;;</span>
+		}
+<span class="nc" id="L274">		System.err.println(&quot;Error colorToString &quot; + color.getClass().getSimpleName());</span>
+<span class="nc" id="L275">		return color.getClass().getSimpleName() + &quot; &quot; + new Date();</span>
+	}
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+<span class="fc" id="L280">		print(os, &quot;DPI: &quot; + dpi);</span>
+<span class="fc" id="L281">		print(os, &quot;dimension: &quot; + pointd(dim.getWidth(), dim.getHeight()));</span>
+<span class="fc" id="L282">		print(os, &quot;scaleFactor: &quot; + String.format(Locale.US, &quot;%.4f&quot;, scaleFactor));</span>
+<span class="fc" id="L283">		print(os, &quot;seed: &quot; + seed);</span>
+<span class="fc" id="L284">		print(os, &quot;svgLinkTarget: &quot; + svgLinkTarget);</span>
+<span class="fc" id="L285">		print(os, &quot;hoverPathColorRGB: &quot; + hoverPathColorRGB);</span>
+<span class="fc" id="L286">		print(os, &quot;preserveAspectRatio: &quot; + preserveAspectRatio);</span>
+<span class="fc" id="L287">		print(os, &quot;&quot;);</span>
+
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		for (String s : output)</span>
+<span class="fc" id="L290">			print(os, s);</span>
+
+<span class="fc" id="L292">		os.flush();</span>
+<span class="fc" id="L293">	}</span>
+
+	private void print(OutputStream os, String out) throws UnsupportedEncodingException, IOException {
+<span class="fc" id="L296">		os.write(out.getBytes(UTF_8));</span>
+<span class="fc" id="L297">		os.write(&quot;\n&quot;.getBytes(UTF_8));</span>
+<span class="fc" id="L298">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

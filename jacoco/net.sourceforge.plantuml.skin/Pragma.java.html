@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pragma.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">Pragma.java</span></div><h1>Pragma.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin;
+
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.warning.Warning;
+import net.sourceforge.plantuml.warning.WarningHandler;
+
+public class Pragma implements WarningHandler {
+
+<span class="fc" id="L48">	private final EnumMap&lt;PragmaKey, String&gt; values = new EnumMap&lt;&gt;(PragmaKey.class);</span>
+
+<span class="fc" id="L50">	private final Set&lt;Warning&gt; warnings = new LinkedHashSet&lt;&gt;();</span>
+
+<span class="fc" id="L52">	private Pragma() {</span>
+<span class="fc" id="L53">	}</span>
+
+	public static Pragma createEmpty() {
+<span class="fc" id="L56">		return new Pragma();</span>
+	}
+
+	public void define(String keyName, String value) {
+<span class="fc" id="L60">		final PragmaKey key = PragmaKey.lazyFrom(keyName);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (key != null)</span>
+<span class="fc" id="L62">			values.put(key, value);</span>
+<span class="fc" id="L63">	}</span>
+
+	public boolean isDefine(PragmaKey key) {
+<span class="fc" id="L66">		return values.containsKey(key);</span>
+	}
+
+	public void undefine(PragmaKey key) {
+<span class="nc" id="L70">		values.remove(key);</span>
+<span class="nc" id="L71">	}</span>
+
+	public String getValue(PragmaKey key) {
+<span class="fc" id="L74">		return values.get(key);</span>
+	}
+
+	public boolean isTrue(PragmaKey key) {
+<span class="fc" id="L78">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
+	}
+
+	public boolean isFalse(PragmaKey key) {
+<span class="fc" id="L83">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L84" title="2 of 4 branches missed.">		return &quot;false&quot;.equalsIgnoreCase(value) || &quot;off&quot;.equalsIgnoreCase(value);</span>
+	}
+
+	public static boolean legacyReplaceBackslashNByNewline() {
+<span class="fc" id="L88">		return true;</span>
+	}
+
+	@Override
+	public void addWarning(Warning warning) {
+<span class="nc" id="L93">		this.warnings.add(warning);</span>
+<span class="nc" id="L94">	}</span>
+
+	@Override
+	public Collection&lt;Warning&gt; getWarnings() {
+<span class="fc" id="L98">		return this.warnings;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Skeleton2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.salt.element</a> &gt; <span class="el_source">Skeleton2.java</span></div><h1>Skeleton2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.salt.element;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+<span class="nc" id="L46">public class Skeleton2 {</span>
+
+<span class="nc" id="L48">	private final List&lt;Entry&gt; entries = new ArrayList&lt;&gt;();</span>
+	private static final double sizeX = 8;
+
+	static class Entry {
+		private final int level;
+		private final double ypos;
+
+<span class="nc" id="L55">		Entry(int level, double y) {</span>
+			// System.err.println(&quot;level=&quot; + level);
+<span class="nc" id="L57">			this.level = level;</span>
+<span class="nc" id="L58">			this.ypos = y;</span>
+<span class="nc" id="L59">		}</span>
+
+		void drawHline(UGraphic ug) {
+<span class="nc" id="L62">			final double xpos = getXStartForLevel(level);</span>
+<span class="nc" id="L63">			ug.apply(new UTranslate(xpos + sizeX - 1, ypos - 1)).draw(URectangle.build(2, 2));</span>
+<span class="nc" id="L64">			ug.apply(new UTranslate(xpos, ypos)).draw(ULine.hline(sizeX));</span>
+<span class="nc" id="L65">		}</span>
+
+		public void drawVline(UGraphic ug, double lastY) {
+			// System.err.println(&quot;ypos=&quot; + ypos);
+<span class="nc" id="L69">			final double xpos = getXStartForLevel(level);</span>
+<span class="nc" id="L70">			ug.apply(new UTranslate(xpos, lastY)).draw(ULine.vline(ypos - lastY));</span>
+<span class="nc" id="L71">		}</span>
+	}
+
+	public void add(int level, double y) {
+<span class="nc" id="L75">		entries.add(new Entry(level, y));</span>
+<span class="nc" id="L76">	}</span>
+
+	public void draw(UGraphic ug) {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (int i = 0; i &lt; entries.size(); i++) {</span>
+<span class="nc" id="L80">			final Entry en = entries.get(i);</span>
+<span class="nc" id="L81">			en.drawHline(ug);</span>
+<span class="nc" id="L82">			final Entry up = getMotherOrSister(i);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			en.drawVline(ug, up == null ? 0 : up.ypos);</span>
+		}
+<span class="nc" id="L85">	}</span>
+
+	private Entry getMotherOrSister(int idx) {
+<span class="nc" id="L88">		final int currentLevel = entries.get(idx).level;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (int i = idx - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L90">			final int otherLevel = entries.get(i).level;</span>
+<span class="nc bnc" id="L91" title="All 4 branches missed.">			if (otherLevel == currentLevel || otherLevel == currentLevel - 1) {</span>
+<span class="nc" id="L92">				return entries.get(i);</span>
+			}
+		}
+<span class="nc" id="L95">		return null;</span>
+	}
+
+	private static double getXStartForLevel(int level) {
+<span class="nc" id="L99">		return level * sizeX;</span>
+	}
+
+	public double getXEndForLevel(int level) {
+<span class="nc" id="L103">		return getXStartForLevel(level) + sizeX;</span>
+	}
+
+	// public void drawOld(UGraphic ug, double x, double y) {
+	// for (int i = 0; i &lt; entries.size(); i++) {
+	// final Entry en = entries.get(i);
+	// if (i + 1 &lt; entries.size() &amp;&amp; entries.get(i + 1).xpos &gt; en.xpos) {
+	// en.drawRectangle(ug);
+	// }
+	// Entry parent = null;
+	// for (int j = 0; j &lt; i; j++) {
+	// final Entry en0 = entries.get(j);
+	// if (en0.xpos &lt; en.xpos) {
+	// parent = en0;
+	// }
+	// }
+	// if (parent != null) {
+	// drawChild(ug, parent, en);
+	// }
+	// }
+	// }
+	//
+	// private void drawChild(UGraphic ug, Entry parent, Entry child) {
+	// final double dy = child.ypos - parent.ypos - 2;
+	// ug.apply(new UTranslate(parent.xpos + 1, parent.ypos +
+	// 3)).draw(ULine.dy(dy));
+	//
+	// final double dx = child.xpos - parent.xpos - 2;
+	// ug.apply(new UTranslate(parent.xpos + 1, child.ypos + 1)).draw(new ULine(dx,
+	// 0));
+	//
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

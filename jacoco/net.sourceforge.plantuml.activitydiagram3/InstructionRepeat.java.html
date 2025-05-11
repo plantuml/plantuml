@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstructionRepeat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">InstructionRepeat.java</span></div><h1>InstructionRepeat.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileRepeat;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
+
+public class InstructionRepeat extends AbstractInstruction implements Instruction {
+
+	private final InstructionList repeatList;
+	private final Instruction parent;
+	private final LinkRendering nextLinkRenderer;
+	private final Swimlane swimlane;
+	private final Swimlanes swimlanes;
+	private Swimlane swimlaneOut;
+	private Swimlane swimlaneBackward;
+	private BoxStyle boxStyle;
+<span class="fc" id="L75">	private boolean killed = false;</span>
+	private final BoxStyle boxStyleIn;
+
+<span class="fc" id="L78">	private Display backward = Display.NULL;</span>
+
+	private Stereotype stereotypeLoop;
+	private Stereotype stereotypeBack;
+<span class="fc" id="L82">	private LinkRendering incoming1 = LinkRendering.none();</span>
+<span class="fc" id="L83">	private LinkRendering incoming2 = LinkRendering.none();</span>
+<span class="fc" id="L84">	private List&lt;PositionedNote&gt; backwardNotes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L85">	private Display test = Display.NULL;</span>
+<span class="fc" id="L86">	private Display yes = Display.NULL;</span>
+<span class="fc" id="L87">	private Display out = Display.NULL;</span>
+	private final Display startLabel;
+<span class="fc" id="L89">	private boolean testCalled = false;</span>
+<span class="fc" id="L90">	private LinkRendering endRepeatLinkRendering = LinkRendering.none();</span>
+
+	private final Colors colors;
+	private final StyleBuilder currentStyleBuilder;
+
+	public boolean containsBreak() {
+<span class="nc" id="L96">		return repeatList.containsBreak();</span>
+	}
+
+	public InstructionRepeat(Swimlanes swimlanes, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
+<span class="fc" id="L100">			Display startLabel, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {</span>
+<span class="fc" id="L101">		this.currentStyleBuilder = swimlanes.getCurrentStyleBuilder();</span>
+<span class="fc" id="L102">		this.swimlanes = swimlanes;</span>
+<span class="fc" id="L103">		this.swimlane = swimlanes.getCurrentSwimlane();</span>
+<span class="fc" id="L104">		this.repeatList = new InstructionList(this.swimlane);</span>
+<span class="fc" id="L105">		this.boxStyleIn = boxStyleIn;</span>
+<span class="fc" id="L106">		this.startLabel = startLabel;</span>
+<span class="fc" id="L107">		this.parent = parent;</span>
+<span class="fc" id="L108">		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);</span>
+<span class="fc" id="L109">		this.colors = colors;</span>
+<span class="fc" id="L110">		this.stereotypeLoop = stereotype;</span>
+<span class="fc" id="L111">	}</span>
+
+	private boolean isLastOfTheParent() {
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (parent instanceof InstructionList)</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">			return ((InstructionList) parent).getLast() == this;</span>
+
+<span class="nc" id="L117">		return false;</span>
+	}
+
+	public void setBackward(Display label, Swimlane swimlaneBackward, BoxStyle boxStyle, LinkRendering incoming1,
+			LinkRendering incoming2, Stereotype stereotype) {
+<span class="nc" id="L122">		this.backward = label;</span>
+<span class="nc" id="L123">		this.swimlaneBackward = swimlaneBackward;</span>
+<span class="nc" id="L124">		this.boxStyle = boxStyle;</span>
+<span class="nc" id="L125">		this.incoming1 = incoming1;</span>
+<span class="nc" id="L126">		this.incoming2 = incoming2;</span>
+<span class="nc" id="L127">		this.stereotypeBack = stereotype;</span>
+<span class="nc" id="L128">	}</span>
+
+	public boolean hasBackward() {
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		return this.backward != Display.NULL;</span>
+	}
+
+	@Override
+	public CommandExecutionResult add(Instruction ins) {
+<span class="fc" id="L136">		return repeatList.add(ins);</span>
+	}
+
+	// ::comment when __CORE__
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+
+<span class="nc" id="L143">		final Gtile tile = repeatList.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L144">		final Gtile backward = getGtileBackward(skinParam, stringBounder);</span>
+
+<span class="nc" id="L146">		return new GtileRepeat(swimlane, tile, null, test, backward);</span>
+	}
+
+	private Gtile getGtileBackward(ISkinParam skinParam, StringBounder stringBounder) {
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (Display.isNull(backward))</span>
+<span class="nc" id="L151">			return null;</span>
+
+<span class="nc" id="L153">		GtileBox result = GtileBox.create(stringBounder, skinParam, backward, getSwimlaneIn(), boxStyle, null);</span>
+//		if (backwardNotes.size() &gt; 0) {
+//			result = factory.addNote(result, swimlaneOut, backwardNotes);
+//		}
+<span class="nc" id="L157">		return result;</span>
+	}
+	// ::done
+
+	public Ftile createFtile(FtileFactory factory) {
+<span class="fc" id="L162">		final Ftile back = getFtileBackward(factory);</span>
+<span class="fc" id="L163">		Ftile tmp = repeatList.createFtile(factory);</span>
+<span class="fc" id="L164">		tmp = factory.decorateOut(tmp, endRepeatLinkRendering);</span>
+<span class="pc bpc" id="L165" title="3 of 4 branches missed.">		if (this.testCalled == false &amp;&amp; incoming1.isNone())</span>
+<span class="nc" id="L166">			incoming1 = swimlanes.nextLinkRenderer();</span>
+<span class="fc" id="L167">		tmp = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, tmp, test,</span>
+<span class="fc" id="L168">				yes, out, colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);</span>
+<span class="fc" id="L169">		tmp = FtileUtils.withSwimlaneIn(tmp, swimlane);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (killed)</span>
+<span class="nc" id="L171">			return new FtileKilled(tmp);</span>
+
+<span class="fc" id="L173">		return tmp;</span>
+	}
+
+	private Ftile getFtileBackward(FtileFactory factory) {
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (Display.isNull(backward))</span>
+<span class="fc" id="L178">			return null;</span>
+
+<span class="nc" id="L180">		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotypeBack);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (backwardNotes.size() &gt; 0)</span>
+<span class="nc" id="L182">			result = factory.addNote(result, swimlaneBackward, backwardNotes, VerticalAlignment.CENTER);</span>
+
+<span class="nc" id="L184">		return result;</span>
+	}
+
+	public Instruction getParent() {
+<span class="fc" id="L188">		return parent;</span>
+	}
+
+	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering,
+			LinkRendering back, Swimlane swimlaneOut) {
+<span class="fc" id="L193">		this.swimlaneOut = swimlaneOut;</span>
+<span class="fc" id="L194">		this.test = Objects.requireNonNull(test);</span>
+<span class="fc" id="L195">		this.yes = Objects.requireNonNull(yes);</span>
+<span class="fc" id="L196">		this.out = Objects.requireNonNull(out);</span>
+<span class="fc" id="L197">		this.endRepeatLinkRendering = endRepeatLinkRendering;</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (back.isNone() == false)</span>
+<span class="nc" id="L199">			this.incoming1 = back;</span>
+<span class="fc" id="L200">		this.testCalled = true;</span>
+<span class="fc" id="L201">	}</span>
+
+	final public boolean kill() {
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (testCalled) {</span>
+<span class="nc" id="L205">			this.killed = true;</span>
+<span class="nc" id="L206">			return true;</span>
+		}
+<span class="nc" id="L208">		return repeatList.kill();</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="fc" id="L213">		return nextLinkRenderer;</span>
+	}
+
+	@Override
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (Display.isNull(backward))</span>
+<span class="nc" id="L219">			return repeatList.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+
+<span class="nc" id="L221">		this.backwardNotes.add(new PositionedNote(note, position, type, swimlaneNote, colors, stereotype));</span>
+<span class="nc" id="L222">		return true;</span>
+
+	}
+
+	@Override
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L228">		return repeatList.getSwimlanes();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L233">		return parent.getSwimlaneOut();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L238">		return parent.getSwimlaneOut();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

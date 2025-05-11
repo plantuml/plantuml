@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisioLine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.visio</a> &gt; <span class="el_source">VisioLine.java</span></div><h1>VisioLine.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.visio;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class VisioLine implements VisioShape {
+
+	private final int id;
+	private final double x1;
+	private final double y1;
+	private final double x2;
+	private final double y2;
+
+	public static VisioLine createInches(int id, double x1, double y1, double x2, double y2) {
+<span class="nc" id="L50">		return new VisioLine(id, toInches(x1), toInches(y1), toInches(x2), toInches(y2));</span>
+	}
+
+<span class="nc" id="L53">	private VisioLine(int id, double x1, double y1, double x2, double y2) {</span>
+<span class="nc bnc" id="L54" title="All 8 branches missed.">		if (x1 &lt; 0 || y1 &lt; 0 || x2 &lt; 0 || y2 &lt; 0) {</span>
+<span class="nc" id="L55">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L57">		this.id = id;</span>
+<span class="nc" id="L58">		this.x1 = x1;</span>
+<span class="nc" id="L59">		this.y1 = y1;</span>
+<span class="nc" id="L60">		this.x2 = x2;</span>
+<span class="nc" id="L61">		this.y2 = y2;</span>
+<span class="nc" id="L62">	}</span>
+
+	public VisioShape yReverse(double maxY) {
+<span class="nc" id="L65">		return new VisioLine(id, x1, maxY - y1, x2, maxY - y2);</span>
+	}
+
+	private static double toInches(double val) {
+<span class="nc" id="L69">		return val / 72.0;</span>
+	}
+
+	public void print(OutputStream os) throws IOException {
+<span class="nc" id="L73">		out(os, &quot;&lt;Shape ID='&quot; + id + &quot;' Type='Shape' LineStyle='3' FillStyle='3' TextStyle='3'&gt;&quot;);</span>
+<span class="nc" id="L74">		out(os, &quot;&lt;XForm&gt;&quot;);</span>
+<span class="nc" id="L75">		final double ddx = x2 - x1;</span>
+<span class="nc" id="L76">		final double ddy = y2 - y1;</span>
+<span class="nc" id="L77">		out(os, &quot;&lt;PinX F='(BeginX+EndX)/2'&gt;&quot; + ((x1 + x2) / 2) + &quot;&lt;/PinX&gt;&quot;);</span>
+<span class="nc" id="L78">		out(os, &quot;&lt;PinY F='(BeginY+EndY)/2'&gt;&quot; + ((y1 + y2) / 2) + &quot;&lt;/PinY&gt;&quot;);</span>
+<span class="nc" id="L79">		final double len = Math.sqrt(ddx * ddx + ddy * ddy);</span>
+<span class="nc" id="L80">		out(os, &quot;&lt;Width F='Sqrt((EndX-BeginX)^2+(EndY-BeginY)^2)'&gt;&quot; + len + &quot;&lt;/Width&gt;&quot;);</span>
+<span class="nc" id="L81">		out(os, &quot;&lt;Height&gt;0&lt;/Height&gt;&quot;);</span>
+<span class="nc" id="L82">		out(os, &quot;&lt;LocPinX F='Width*0.5'&gt;&quot; + (len / 2) + &quot;&lt;/LocPinX&gt;&quot;);</span>
+<span class="nc" id="L83">		out(os, &quot;&lt;LocPinY F='Height*0.5'&gt;0&lt;/LocPinY&gt;&quot;);</span>
+<span class="nc" id="L84">		final double atan2 = Math.atan2(ddy, ddx);</span>
+<span class="nc" id="L85">		out(os, &quot;&lt;Angle F='ATan2(EndY-BeginY,EndX-BeginX)'&gt;&quot; + atan2 + &quot;&lt;/Angle&gt;&quot;);</span>
+<span class="nc" id="L86">		out(os, &quot;&lt;FlipX&gt;0&lt;/FlipX&gt;&quot;);</span>
+<span class="nc" id="L87">		out(os, &quot;&lt;FlipY&gt;0&lt;/FlipY&gt;&quot;);</span>
+<span class="nc" id="L88">		out(os, &quot;&lt;ResizeMode&gt;0&lt;/ResizeMode&gt;&quot;);</span>
+<span class="nc" id="L89">		out(os, &quot;&lt;/XForm&gt;&quot;);</span>
+<span class="nc" id="L90">		out(os, &quot;&lt;XForm1D&gt;&quot;);</span>
+<span class="nc" id="L91">		out(os, &quot;&lt;BeginX&gt;&quot; + x1 + &quot;&lt;/BeginX&gt;&quot;);</span>
+<span class="nc" id="L92">		out(os, &quot;&lt;BeginY&gt;&quot; + y1 + &quot;&lt;/BeginY&gt;&quot;);</span>
+<span class="nc" id="L93">		out(os, &quot;&lt;EndX&gt;&quot; + x2 + &quot;&lt;/EndX&gt;&quot;);</span>
+<span class="nc" id="L94">		out(os, &quot;&lt;EndY&gt;&quot; + y2 + &quot;&lt;/EndY&gt;&quot;);</span>
+<span class="nc" id="L95">		out(os, &quot;&lt;/XForm1D&gt;&quot;);</span>
+<span class="nc" id="L96">		out(os, &quot;&lt;Geom IX='0'&gt;&quot;);</span>
+<span class="nc" id="L97">		out(os, &quot;&lt;NoFill&gt;1&lt;/NoFill&gt;&quot;);</span>
+<span class="nc" id="L98">		out(os, &quot;&lt;NoLine&gt;0&lt;/NoLine&gt;&quot;);</span>
+<span class="nc" id="L99">		out(os, &quot;&lt;NoShow&gt;0&lt;/NoShow&gt;&quot;);</span>
+<span class="nc" id="L100">		out(os, &quot;&lt;NoSnap&gt;0&lt;/NoSnap&gt;&quot;);</span>
+<span class="nc" id="L101">		out(os, &quot;&lt;MoveTo IX='1'&gt;&quot;);</span>
+<span class="nc" id="L102">		out(os, &quot;&lt;X F='Width*0'&gt;0&lt;/X&gt;&quot;);</span>
+<span class="nc" id="L103">		out(os, &quot;&lt;Y&gt;0&lt;/Y&gt;&quot;);</span>
+<span class="nc" id="L104">		out(os, &quot;&lt;/MoveTo&gt;&quot;);</span>
+<span class="nc" id="L105">		out(os, &quot;&lt;LineTo IX='2'&gt;&quot;);</span>
+<span class="nc" id="L106">		out(os, &quot;&lt;X F='Width*1'&gt;&quot; + len + &quot;&lt;/X&gt;&quot;);</span>
+<span class="nc" id="L107">		out(os, &quot;&lt;Y&gt;0&lt;/Y&gt;&quot;);</span>
+<span class="nc" id="L108">		out(os, &quot;&lt;/LineTo&gt;&quot;);</span>
+<span class="nc" id="L109">		out(os, &quot;&lt;/Geom&gt;&quot;);</span>
+<span class="nc" id="L110">		out(os, &quot;&lt;/Shape&gt;&quot;);</span>
+<span class="nc" id="L111">	}</span>
+
+	private void out(OutputStream os, String s) throws IOException {
+<span class="nc" id="L114">		os.write(s.getBytes());</span>
+<span class="nc" id="L115">		os.write(&quot;\n&quot;.getBytes());</span>
+<span class="nc" id="L116">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

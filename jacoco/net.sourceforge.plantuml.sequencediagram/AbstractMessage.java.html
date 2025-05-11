@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">AbstractMessage.java</span></div><h1>AbstractMessage.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.url.Url;
+
+public abstract class AbstractMessage extends AbstractEvent implements EventWithDeactivate, WithStyle, EventWithNote {
+
+	private Stereotype stereotype;
+
+	public void getStereotype(Stereotype stereotype) {
+<span class="nc" id="L61">		this.stereotype = stereotype;</span>
+<span class="nc" id="L62">	}</span>
+
+	final public Style[] getUsedStyles() {
+<span class="fc" id="L65">		Style style = getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="pc bpc" id="L66" title="1 of 4 branches missed.">		if (style != null &amp;&amp; arrowConfiguration.getColor() != null)</span>
+<span class="fc" id="L67">			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());</span>
+
+<span class="fc" id="L69">		return new Style[] { style };</span>
+	}
+
+	public StyleSignature getStyleSignature() {
+<span class="fc" id="L73">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)</span>
+<span class="fc" id="L74">				.withTOBECHANGED(stereotype);</span>
+	}
+
+	private final Display label;
+	private final ArrowConfiguration arrowConfiguration;
+<span class="fc" id="L79">	private final Set&lt;LifeEventType&gt; lifeEventsType = EnumSet.noneOf(LifeEventType.class);</span>
+
+	private Url url;
+	private final String messageNumber;
+<span class="fc" id="L83">	private boolean parallel = false;</span>
+	private AbstractMessage parallelBrother;
+	private final StyleBuilder styleBuilder;
+
+<span class="fc" id="L87">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
+
+	public AbstractMessage(StyleBuilder styleBuilder, Display label, ArrowConfiguration arrowConfiguration,
+<span class="fc" id="L90">			String messageNumber) {</span>
+<span class="fc" id="L91">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L92">		this.url = null;</span>
+<span class="fc" id="L93">		this.label = label;</span>
+<span class="fc" id="L94">		this.arrowConfiguration = arrowConfiguration;</span>
+<span class="fc" id="L95">		this.messageNumber = messageNumber;</span>
+<span class="fc" id="L96">	}</span>
+
+	public final void setUrl(Url url) {
+<span class="nc" id="L99">		this.url = url;</span>
+<span class="nc" id="L100">	}</span>
+
+	public void goParallel() {
+<span class="fc" id="L103">		this.parallel = true;</span>
+<span class="fc" id="L104">	}</span>
+
+	public void setParallelBrother(AbstractMessage brother) {
+<span class="fc" id="L107">		this.parallelBrother = brother;</span>
+<span class="fc" id="L108">	}</span>
+
+	public boolean isParallel() {
+<span class="fc" id="L111">		return parallel;</span>
+	}
+
+	public boolean isParallelWith(AbstractMessage message) {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		boolean hasParallelBrother = parallelBrother != null;</span>
+<span class="fc bfc" id="L116" title="All 8 branches covered.">		return (this == message)</span>
+				|| (hasParallelBrother &amp;&amp; parallelBrother == message)
+<span class="fc bfc" id="L118" title="All 2 branches covered.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
+	}
+
+	final public Url getUrl() {
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			for (Note n : noteOnMessages)</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">				if (n.getUrl() != null)</span>
+<span class="nc" id="L125">					return n.getUrl();</span>
+
+<span class="fc" id="L127">		return url;</span>
+	}
+
+	public boolean hasUrl() {
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		for (Note n : noteOnMessages)</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">			if (n.hasUrl())</span>
+<span class="nc" id="L133">				return true;</span>
+
+<span class="nc bnc" id="L135" title="All 4 branches missed.">		if (label != null &amp;&amp; label.hasUrl())</span>
+<span class="nc" id="L136">			return true;</span>
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		return getUrl() != null;</span>
+	}
+
+<span class="fc" id="L141">	private boolean firstIsActivate = false;</span>
+<span class="fc" id="L142">	private final Set&lt;Participant&gt; noActivationAuthorized2 = new HashSet&lt;&gt;();</span>
+
+	public final boolean addLifeEvent(LifeEvent lifeEvent) {
+<span class="fc" id="L145">		lifeEvent.setMessage(this);</span>
+
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (this.isSelfMessage()) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (lifeEvent.getParticipant() != this.getParticipant1())</span>
+<span class="fc" id="L149">				return true;</span>
+		}
+
+<span class="fc" id="L152">		lifeEventsType.add(lifeEvent.getType());</span>
+<span class="fc bfc" id="L153" title="All 4 branches covered.">		if (lifeEventsType.size() == 1 &amp;&amp; isActivate())</span>
+<span class="fc" id="L154">			firstIsActivate = true;</span>
+
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.ACTIVATE</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">				&amp;&amp; noActivationAuthorized2.contains(lifeEvent.getParticipant()))</span>
+<span class="nc" id="L158">			return false;</span>
+
+<span class="fc bfc" id="L160" title="All 4 branches covered.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
+<span class="fc" id="L161">			noActivationAuthorized2.add(lifeEvent.getParticipant());</span>
+
+<span class="fc" id="L163">		return true;</span>
+	}
+
+	public final boolean isCreate() {
+<span class="fc" id="L167">		return lifeEventsType.contains(LifeEventType.CREATE);</span>
+	}
+
+	@Deprecated
+	public boolean isActivate() {
+<span class="fc" id="L172">		return lifeEventsType.contains(LifeEventType.ACTIVATE);</span>
+	}
+
+	@Deprecated
+	public boolean isDeactivate() {
+<span class="fc" id="L177">		return lifeEventsType.contains(LifeEventType.DEACTIVATE);</span>
+	}
+
+	public boolean isDestroy() {
+<span class="fc" id="L181">		return lifeEventsType.contains(LifeEventType.DESTROY);</span>
+	}
+
+	@Deprecated
+	private boolean isDeactivateOrDestroy() {
+<span class="pc bpc" id="L186" title="2 of 4 branches missed.">		return isDeactivate() || isDestroy();</span>
+	}
+
+	public final boolean isActivateAndDeactive() {
+<span class="pc bpc" id="L190" title="1 of 4 branches missed.">		return firstIsActivate &amp;&amp; isDeactivateOrDestroy();</span>
+	}
+
+	public final Display getLabel() {
+<span class="fc" id="L194">		return label;</span>
+	}
+
+	public final Display getLabelNumbered() {
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (getMessageNumber() == null)</span>
+<span class="fc" id="L199">			return getLabel();</span>
+
+<span class="fc" id="L201">		Display result = Display.empty();</span>
+<span class="fc" id="L202">		result = result.add(new MessageNumber(getMessageNumber()));</span>
+<span class="fc" id="L203">		result = result.addAll(getLabel());</span>
+<span class="fc" id="L204">		return result;</span>
+	}
+
+	public final ArrowConfiguration getArrowConfiguration() {
+<span class="fc" id="L208">		return arrowConfiguration;</span>
+	}
+
+	public final List&lt;Note&gt; getNoteOnMessages() {
+<span class="fc" id="L212">		return noteOnMessages;</span>
+	}
+
+	@Override
+	public final void addNote(Note note) {
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">		if (note.getPosition() != NotePosition.LEFT &amp;&amp; note.getPosition() != NotePosition.RIGHT</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">				&amp;&amp; note.getPosition() != NotePosition.BOTTOM &amp;&amp; note.getPosition() != NotePosition.TOP)</span>
+<span class="nc" id="L219">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L221">		note = note.withPosition(overrideNotePosition(note.getPosition()));</span>
+<span class="fc" id="L222">		this.noteOnMessages.add(note);</span>
+<span class="fc" id="L223">	}</span>
+
+	protected NotePosition overrideNotePosition(NotePosition notePosition) {
+<span class="fc" id="L226">		return notePosition;</span>
+	}
+
+	public final String getMessageNumber() {
+<span class="fc" id="L230">		return messageNumber;</span>
+	}
+
+	public abstract boolean compatibleForCreate(Participant p);
+
+	public abstract boolean isSelfMessage();
+
+	private double posYendLevel;
+	private double posYstartLevel;
+
+	public double getPosYstartLevel() {
+<span class="fc" id="L241">		return posYstartLevel;</span>
+	}
+
+	public void setPosYstartLevel(double posYstartLevel) {
+<span class="fc" id="L245">		this.posYstartLevel = posYstartLevel;</span>
+<span class="fc" id="L246">	}</span>
+
+	public void setPosYendLevel(double posYendLevel) {
+<span class="fc" id="L249">		this.posYendLevel = posYendLevel;</span>
+<span class="fc" id="L250">	}</span>
+
+	public double getPosYendLevel() {
+<span class="fc" id="L253">		return posYendLevel;</span>
+	}
+
+	private String anchor;
+	private String anchor1;
+	private String anchor2;
+
+	public void setAnchor(String anchor) {
+<span class="fc" id="L261">		this.anchor = anchor;</span>
+<span class="pc bpc" id="L262" title="3 of 4 branches missed.">		if (anchor != null &amp;&amp; anchor.startsWith(&quot;{&quot;))</span>
+<span class="nc" id="L263">			throw new IllegalArgumentException(anchor);</span>
+
+<span class="fc" id="L265">	}</span>
+
+	public void setPart1Anchor(String anchor) {
+<span class="fc" id="L268">		this.anchor1 = anchor;</span>
+<span class="fc" id="L269">	}</span>
+
+	public void setPart2Anchor(String anchor) {
+<span class="fc" id="L272">		this.anchor2 = anchor;</span>
+<span class="fc" id="L273">	}</span>
+
+	public String getAnchor() {
+<span class="nc" id="L276">		return anchor;</span>
+	}
+
+	public String getPart1Anchor() {
+<span class="fc" id="L280">		return this.anchor1;</span>
+	}
+
+	public String getPart2Anchor() {
+<span class="fc" id="L284">		return this.anchor2;</span>
+	}
+
+	public abstract Participant getParticipant1();
+
+	public abstract Participant getParticipant2();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

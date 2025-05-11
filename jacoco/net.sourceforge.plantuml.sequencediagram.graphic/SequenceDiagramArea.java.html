@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SequenceDiagramArea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">SequenceDiagramArea.java</span></div><h1>SequenceDiagramArea.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.png.PngTitler;
+import net.sourceforge.plantuml.utils.MathUtils;
+
+public class SequenceDiagramArea {
+
+	private final double sequenceWidth;
+	private final double sequenceHeight;
+
+	private double headerWidth;
+	private double headerHeight;
+	private double headerMargin;
+
+	private double titleWidth;
+	private double titleHeight;
+
+	private double captionWidth;
+	private double captionHeight;
+
+	private double footerWidth;
+	private double footerHeight;
+	private double footerMargin;
+
+	private double legendWidth;
+	private double legendHeight;
+	private boolean isLegendTop;
+	private HorizontalAlignment legendHorizontalAlignment;
+
+	public void setLegend(XDimension2D dimLegend, boolean isLegendTop, HorizontalAlignment horizontalAlignment) {
+<span class="fc" id="L69">		this.legendHorizontalAlignment = horizontalAlignment;</span>
+<span class="fc" id="L70">		this.legendWidth = dimLegend.getWidth();</span>
+<span class="fc" id="L71">		this.legendHeight = dimLegend.getHeight();</span>
+<span class="fc" id="L72">		this.isLegendTop = isLegendTop;</span>
+<span class="fc" id="L73">	}</span>
+
+	public double getLegendWidth() {
+<span class="fc" id="L76">		return legendWidth;</span>
+	}
+
+	public boolean hasLegend() {
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">		return legendHeight &gt; 0 &amp;&amp; legendWidth &gt; 0;</span>
+	}
+
+	public double getLegendX() {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (legendHorizontalAlignment == HorizontalAlignment.LEFT)</span>
+<span class="nc" id="L85">			return 0;</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		else if (legendHorizontalAlignment == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L87">			return Math.max(0, getWidth() - legendWidth);</span>
+		else
+<span class="fc" id="L89">			return Math.max(0, getWidth() - legendWidth) / 2;</span>
+
+	}
+
+<span class="fc" id="L93">	public SequenceDiagramArea(double width, double height) {</span>
+<span class="fc" id="L94">		this.sequenceWidth = width;</span>
+<span class="fc" id="L95">		this.sequenceHeight = height;</span>
+<span class="fc" id="L96">	}</span>
+
+	public void setTitleArea(double width, double height) {
+<span class="fc" id="L99">		this.titleWidth = width;</span>
+<span class="fc" id="L100">		this.titleHeight = height;</span>
+<span class="fc" id="L101">	}</span>
+
+	private void setCaptionArea(double width, double height) {
+<span class="fc" id="L104">		this.captionWidth = width;</span>
+<span class="fc" id="L105">		this.captionHeight = height;</span>
+<span class="fc" id="L106">	}</span>
+
+	public void setCaptionArea(XDimension2D dim) {
+<span class="fc" id="L109">		setCaptionArea(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L110">	}</span>
+
+	public void setHeaderArea(double headerWidth, double headerHeight, double headerMargin) {
+<span class="fc" id="L113">		this.headerWidth = headerWidth;</span>
+<span class="fc" id="L114">		this.headerHeight = headerHeight;</span>
+<span class="fc" id="L115">		this.headerMargin = headerMargin;</span>
+<span class="fc" id="L116">	}</span>
+
+	public void setFooterArea(double footerWidth, double footerHeight, double footerMargin) {
+<span class="fc" id="L119">		this.footerWidth = footerWidth;</span>
+<span class="fc" id="L120">		this.footerHeight = footerHeight;</span>
+<span class="fc" id="L121">		this.footerMargin = footerMargin;</span>
+<span class="fc" id="L122">	}</span>
+
+	public double getWidth() {
+<span class="fc" id="L125">		return MathUtils.max(sequenceWidth, headerWidth, titleWidth, footerWidth, captionWidth);</span>
+	}
+
+	public double getHeight() {
+<span class="nc" id="L129">		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + footerHeight + captionHeight</span>
+				+ legendHeight;
+	}
+
+	public double getFooterY() {
+<span class="fc" id="L134">		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + captionHeight + legendHeight;</span>
+	}
+
+	public double getCaptionY() {
+<span class="fc" id="L138">		return sequenceHeight + headerHeight + headerMargin + titleHeight + legendHeight;</span>
+	}
+
+	public double getLegendY() {
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (isLegendTop)</span>
+<span class="nc" id="L143">			return titleHeight + headerHeight + headerMargin;</span>
+
+<span class="fc" id="L145">		return sequenceHeight + headerHeight + headerMargin + titleHeight;</span>
+
+	}
+
+	public double getTitleX() {
+<span class="fc" id="L150">		return (getWidth() - titleWidth) / 2;</span>
+	}
+
+	public double getTitleY() {
+<span class="fc" id="L154">		return headerHeight + headerMargin;</span>
+	}
+
+	public double getHeaderHeightMargin() {
+<span class="nc" id="L158">		return headerHeight + headerMargin;</span>
+	}
+
+	public double getCaptionX() {
+<span class="fc" id="L162">		return (getWidth() - captionWidth) / 2;</span>
+	}
+
+	public double getSequenceAreaX() {
+<span class="fc" id="L166">		return (getWidth() - sequenceWidth) / 2;</span>
+	}
+
+	public double getSequenceAreaY() {
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (isLegendTop)</span>
+<span class="nc" id="L171">			return getTitleY() + titleHeight + legendHeight;</span>
+
+<span class="fc" id="L173">		return getTitleY() + titleHeight;</span>
+	}
+
+	public double getHeaderY() {
+<span class="fc" id="L177">		return 0;</span>
+	}
+
+	public double getFooterX(HorizontalAlignment align) {
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.LEFT)</span>
+<span class="nc" id="L182">			return 0;</span>
+
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L185">			return getWidth() - footerWidth;</span>
+
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.CENTER)</span>
+<span class="fc" id="L188">			return (getWidth() - footerWidth) / 2;</span>
+
+<span class="nc" id="L190">		throw new IllegalStateException();</span>
+	}
+
+	public double getHeaderX(HorizontalAlignment align) {
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.LEFT)</span>
+<span class="nc" id="L195">			return 0;</span>
+
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
+<span class="fc" id="L198">			return getWidth() - headerWidth;</span>
+
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (align == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L201">			return (getWidth() - headerWidth) / 2;</span>
+
+<span class="nc" id="L203">		throw new IllegalStateException();</span>
+	}
+
+	public void initFooter(PngTitler pngTitler, StringBounder stringBounder) {
+<span class="fc" id="L207">		final XDimension2D dim = pngTitler.getTextDimension(stringBounder);</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (dim != null)</span>
+<span class="fc" id="L209">			setFooterArea(dim.getWidth(), dim.getHeight(), 0);</span>
+
+<span class="fc" id="L211">	}</span>
+
+	public void initHeader(PngTitler pngTitler, StringBounder stringBounder) {
+<span class="fc" id="L214">		final XDimension2D dim = pngTitler.getTextDimension(stringBounder);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (dim != null)</span>
+<span class="fc" id="L216">			setHeaderArea(dim.getWidth(), dim.getHeight(), 0);</span>
+
+<span class="fc" id="L218">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

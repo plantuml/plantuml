@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockJson.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.jsondiagram</a> &gt; <span class="el_source">TextBlockJson.java</span></div><h1>TextBlockJson.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.jsondiagram;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonObject.Member;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.yaml.Highlighted;
+
+//See TextBlockMap
+public class TextBlockJson extends AbstractTextBlock {
+	// ::remove folder when __HAXE__
+
+	private static final double MIN_WIDTH = 30;
+	private static final double MIN_HEIGHT = 15;
+
+<span class="fc" id="L78">	private final List&lt;Line&gt; lines = new ArrayList&lt;&gt;();</span>
+
+	private final ISkinParam skinParam;
+	private double totalWidth;
+	private final JsonValue root;
+
+	private final StyleBuilder styleBuilder;
+	private final SName diagramType;
+
+	static class Line {
+		final TextBlock b1;
+		final TextBlock b2;
+		final Highlighted highlighted;
+
+<span class="fc" id="L92">		Line(TextBlock b1, TextBlock b2, Highlighted highlighted) {</span>
+<span class="fc" id="L93">			this.b1 = b1;</span>
+<span class="fc" id="L94">			this.b2 = b2;</span>
+<span class="fc" id="L95">			this.highlighted = highlighted;</span>
+<span class="fc" id="L96">		}</span>
+
+		Line(TextBlock b1, Highlighted highlighted) {
+<span class="fc" id="L99">			this(b1, null, highlighted);</span>
+<span class="fc" id="L100">		}</span>
+
+		double getHeightOfRow(StringBounder stringBounder) {
+<span class="fc" id="L103">			final double height = b1.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (b2 == null)</span>
+<span class="fc" id="L105">				return height;</span>
+
+<span class="fc" id="L107">			return Math.max(height, b2.calculateDimension(stringBounder).getHeight());</span>
+		}
+
+	}
+
+<span class="fc" id="L112">	TextBlockJson(ISkinParam skinParam, JsonValue root, List&lt;Highlighted&gt; allHighlighteds) {</span>
+<span class="fc" id="L113">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		this.diagramType = skinParam.getUmlDiagramType() == UmlDiagramType.JSON ? SName.jsonDiagram : SName.yamlDiagram;</span>
+<span class="fc" id="L115">		this.skinParam = skinParam;</span>
+
+<span class="fc" id="L117">		this.root = root;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (root instanceof JsonObject)</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			for (Member member : (JsonObject) root) {</span>
+<span class="fc" id="L120">				final String key = member.getName();</span>
+<span class="fc" id="L121">				final String value = getShortString(member.getValue());</span>
+
+<span class="fc" id="L123">				final Highlighted highlighted = isHighlighted(key, allHighlighteds);</span>
+<span class="fc" id="L124">				final TextBlock block1 = getTextBlock(getStyleToUse(true, highlighted), key);</span>
+<span class="fc" id="L125">				final TextBlock block2 = getTextBlock(getStyleToUse(false, highlighted), value);</span>
+<span class="fc" id="L126">				this.lines.add(new Line(block1, block2, highlighted));</span>
+<span class="fc" id="L127">			}</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (root instanceof JsonArray) {</span>
+<span class="fc" id="L129">			int i = 0;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">			for (JsonValue value : (JsonArray) root) {</span>
+<span class="fc" id="L131">				final Highlighted highlighted = isHighlighted(&quot;&quot; + i, allHighlighteds);</span>
+<span class="fc" id="L132">				final TextBlock block2 = getTextBlock(getStyleToUse(false, highlighted), getShortString(value));</span>
+<span class="fc" id="L133">				this.lines.add(new Line(block2, highlighted));</span>
+<span class="fc" id="L134">				i++;</span>
+<span class="fc" id="L135">			}</span>
+		}
+<span class="fc" id="L137">	}</span>
+
+	private Style getStyleToUse(boolean header, Highlighted highlighted) {
+		final StyleSignature signature;
+<span class="pc bpc" id="L141" title="1 of 4 branches missed.">		if (header &amp;&amp; highlighted != null)</span>
+<span class="nc" id="L142">			signature = StyleSignatureBasic</span>
+<span class="nc" id="L143">					.of(SName.root, SName.element, diagramType, SName.header, SName.node, SName.highlight)</span>
+<span class="nc" id="L144">					.withTOBECHANGED(highlighted.getStereotype());</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		else if (highlighted != null)</span>
+<span class="nc" id="L146">			signature = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.node, SName.highlight)</span>
+<span class="nc" id="L147">					.withTOBECHANGED(highlighted.getStereotype());</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		else if (header)</span>
+<span class="fc" id="L149">			signature = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.header, SName.node);</span>
+		else
+<span class="fc" id="L151">			signature = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.node);</span>
+
+<span class="fc" id="L153">		return signature.getMergedStyle(styleBuilder);</span>
+	}
+
+	private Highlighted isHighlighted(String key, List&lt;Highlighted&gt; highlighted) {
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		for (Highlighted tmp : highlighted)</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (tmp.isKeyHighlight(key))</span>
+<span class="nc" id="L159">				return tmp;</span>
+
+<span class="fc" id="L161">		return null;</span>
+	}
+
+	public int size() {
+<span class="nc" id="L165">		int size = 0;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (root instanceof JsonObject)</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			for (Member member : (JsonObject) root)</span>
+<span class="nc" id="L168">				size++;</span>
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (root instanceof JsonArray)</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			for (JsonValue value : (JsonArray) root)</span>
+<span class="nc" id="L172">				size++;</span>
+
+<span class="nc" id="L174">		return size;</span>
+
+	}
+
+	private String getShortString(JsonValue value) {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (value.isString())</span>
+<span class="fc" id="L180">			return value.asString();</span>
+
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (value.isNull())</span>
+<span class="nc" id="L183">			return &quot;&lt;U+2400&gt;&quot;;</span>
+		// return &quot;&lt;U+2205&gt; null&quot;;
+
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (value.isNumber())</span>
+<span class="nc" id="L187">			return value.toString();</span>
+
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		if (value.isBoolean())</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">			if (value.isTrue())</span>
+<span class="fc" id="L191">				return &quot;&lt;U+2611&gt; true&quot;;</span>
+			else
+<span class="fc" id="L193">				return &quot;&lt;U+2610&gt; false&quot;;</span>
+
+<span class="fc" id="L195">		return &quot;   &quot;;</span>
+	}
+
+	public List&lt;JsonValue&gt; children() {
+<span class="fc" id="L199">		final List&lt;JsonValue&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (root instanceof JsonObject)</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">			for (Member member : (JsonObject) root) {</span>
+<span class="fc" id="L202">				final JsonValue value = member.getValue();</span>
+<span class="fc bfc" id="L203" title="All 4 branches covered.">				if (value instanceof JsonObject || value instanceof JsonArray)</span>
+<span class="fc" id="L204">					result.add(value);</span>
+				else
+<span class="fc" id="L206">					result.add(null);</span>
+<span class="fc" id="L207">			}</span>
+
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (root instanceof JsonArray)</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">			for (JsonValue value : (JsonArray) root)</span>
+<span class="pc bpc" id="L211" title="2 of 4 branches missed.">				if (value instanceof JsonObject || value instanceof JsonArray)</span>
+<span class="nc" id="L212">					result.add(value);</span>
+				else
+<span class="fc" id="L214">					result.add(null);</span>
+
+<span class="fc" id="L216">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public List&lt;String&gt; keys() {
+<span class="fc" id="L220">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		if (root instanceof JsonObject)</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">			for (Member member : (JsonObject) root) {</span>
+<span class="fc" id="L223">				final String key = member.getName();</span>
+<span class="fc" id="L224">				result.add(key);</span>
+<span class="fc" id="L225">			}</span>
+
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (root instanceof JsonArray) {</span>
+<span class="fc" id="L228">			int i = 0;</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			for (JsonValue value : (JsonArray) root) {</span>
+<span class="fc" id="L230">				result.add(&quot;&quot; + i);</span>
+<span class="fc" id="L231">				i++;</span>
+<span class="fc" id="L232">			}</span>
+		}
+<span class="fc" id="L234">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L238">		final double width = getWidthColA(stringBounder) + getWidthColB(stringBounder);</span>
+<span class="fc" id="L239">		final double height = getTotalHeight(stringBounder);</span>
+<span class="fc" id="L240">		return new XDimension2D(width, height);</span>
+	}
+
+	public double getWidthColA(StringBounder stringBounder) {
+<span class="fc" id="L244">		double width = 0;</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		for (Line line : lines)</span>
+<span class="fc" id="L246">			width = Math.max(width, line.b1.calculateDimension(stringBounder).getWidth());</span>
+
+<span class="fc" id="L248">		return width;</span>
+	}
+
+	public double getWidthColB(StringBounder stringBounder) {
+<span class="fc" id="L252">		double width = 0;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		for (Line line : lines)</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">			if (line.b2 != null)</span>
+<span class="fc" id="L255">				width = Math.max(width, line.b2.calculateDimension(stringBounder).getWidth());</span>
+
+<span class="fc" id="L257">		return width;</span>
+	}
+
+	public void drawU(final UGraphic ug) {
+<span class="fc" id="L261">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="fc" id="L263">		final XDimension2D fullDim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L264">		double trueWidth = Math.max(fullDim.getWidth(), totalWidth);</span>
+<span class="fc" id="L265">		final double widthColA = getWidthColA(stringBounder);</span>
+<span class="fc" id="L266">		final double widthColB = getWidthColB(stringBounder);</span>
+
+<span class="fc" id="L268">		double y = 0;</span>
+<span class="fc" id="L269">		final Style styleNode = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.node)</span>
+<span class="fc" id="L270">				.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L271">		final UGraphic ugNode = styleNode.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		for (Line line : lines) {</span>
+<span class="fc" id="L273">			final double heightOfRow = line.getHeightOfRow(stringBounder);</span>
+<span class="fc" id="L274">			y += heightOfRow;</span>
+<span class="fc" id="L275">		}</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (y == 0)</span>
+<span class="nc" id="L277">			y = MIN_HEIGHT;</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (trueWidth == 0)</span>
+<span class="nc" id="L279">			trueWidth = MIN_WIDTH;</span>
+
+<span class="fc" id="L281">		final double round = styleNode.value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L282">		final URectangle fullNodeRectangle = URectangle.build(trueWidth, y).rounded(round);</span>
+<span class="fc" id="L283">		final HColor backColor = styleNode.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L284">		ugNode.apply(backColor.bg()).apply(backColor).draw(fullNodeRectangle);</span>
+
+<span class="fc" id="L286">		final Style styleSeparator = styleNode.getSignature().add(SName.separator)</span>
+<span class="fc" id="L287">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L288">		final UGraphic ugSeparator = styleSeparator.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());</span>
+
+<span class="fc" id="L290">		y = 0;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		for (Line line : lines) {</span>
+<span class="fc" id="L292">			final UGraphic ugline = ugSeparator.apply(UTranslate.dy(y));</span>
+<span class="fc" id="L293">			final double heightOfRow = line.getHeightOfRow(stringBounder);</span>
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">			if (line.highlighted != null) {</span>
+<span class="nc" id="L295">				final URectangle back = URectangle.build(trueWidth - 2, heightOfRow).rounded(4);</span>
+<span class="nc" id="L296">				final Style styleNodeHighlight = StyleSignatureBasic</span>
+<span class="nc" id="L297">						.of(SName.root, SName.element, diagramType, SName.node, SName.highlight)</span>
+<span class="nc" id="L298">						.withTOBECHANGED(line.highlighted.getStereotype()).getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L299">				final HColor cellBackColor = styleNodeHighlight.value(PName.BackGroundColor)</span>
+<span class="nc" id="L300">						.asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L301">				ugline.apply(cellBackColor).apply(cellBackColor.bg()).apply(new UTranslate(1.5, 0)).draw(back);</span>
+			}
+
+<span class="fc bfc" id="L304" title="All 2 branches covered.">			if (y &gt; 0)</span>
+<span class="fc" id="L305">				ugline.draw(ULine.hline(trueWidth));</span>
+
+<span class="fc" id="L307">			final HorizontalAlignment horizontalAlignment = styleNode.getHorizontalAlignment();</span>
+<span class="fc" id="L308">			horizontalAlignment.draw(ugline, line.b1, 0, 0, widthColA);</span>
+
+<span class="fc bfc" id="L310" title="All 2 branches covered.">			if (line.b2 != null) {</span>
+<span class="fc" id="L311">				final UGraphic uglineColB = ugline.apply(UTranslate.dx(widthColA));</span>
+<span class="fc" id="L312">				horizontalAlignment.draw(uglineColB, line.b2, 0, 0, widthColB);</span>
+<span class="fc" id="L313">				uglineColB.draw(ULine.vline(heightOfRow));</span>
+			}
+
+<span class="fc" id="L316">			y += heightOfRow;</span>
+<span class="fc" id="L317">		}</span>
+<span class="fc" id="L318">		ugNode.draw(fullNodeRectangle);</span>
+
+<span class="fc" id="L320">	}</span>
+
+	private double getTotalHeight(StringBounder stringBounder) {
+<span class="fc" id="L323">		double height = 0;</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">		for (Line line : lines)</span>
+<span class="fc" id="L325">			height += line.getHeightOfRow(stringBounder);</span>
+
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">		if (height == 0)</span>
+<span class="nc" id="L328">			return MIN_HEIGHT;</span>
+
+<span class="fc" id="L330">		return height;</span>
+	}
+
+	public double[] getAllHeights(StringBounder stringBounder) {
+<span class="fc" id="L334">		final double result[] = new double[lines.size()];</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++)</span>
+<span class="fc" id="L336">			result[i] = lines.get(i).getHeightOfRow(stringBounder);</span>
+
+<span class="fc" id="L338">		return result;</span>
+	}
+
+	private TextBlock getTextBlock(Style style, String key) {
+<span class="fc" id="L342">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
+<span class="fc" id="L343">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L344">		final LineBreakStrategy wrap = style.wrapWidth();</span>
+<span class="fc" id="L345">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="fc" id="L346">		TextBlock result = display.create0(fontConfiguration, horizontalAlignment, skinParam, wrap,</span>
+				CreoleMode.NO_CREOLE, null, null);
+<span class="fc" id="L348">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="fc" id="L349">		return result;</span>
+	}
+
+	public void setTotalWidth(double totalWidth) {
+<span class="nc" id="L353">		this.totalWidth = totalWidth;</span>
+<span class="nc" id="L354">	}</span>
+
+	public HColor getBackcolor() {
+<span class="nc" id="L357">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

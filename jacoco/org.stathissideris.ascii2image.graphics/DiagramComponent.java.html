@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiagramComponent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.graphics</a> &gt; <span class="el_source">DiagramComponent.java</span></div><h1>DiagramComponent.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.graphics;
+
+import org.stathissideris.ascii2image.text.CellSet;
+import org.stathissideris.ascii2image.text.TextGrid;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+<span class="nc" id="L29">public abstract class DiagramComponent {</span>
+	
+	private static final boolean DEBUG = false;
+	
+	protected static ShapePoint makePointForCell(TextGrid.Cell cell, TextGrid grid, int cellWidth, int cellHeight, boolean allRound){
+		if (DEBUG)
+			System.out.println(&quot;Found point at cell &quot;+cell);
+<span class="nc bnc" id="L36" title="All 4 branches missed.">		if(grid.isCorner(cell) &amp;&amp; allRound){</span>
+<span class="nc" id="L37">			return new ShapePoint(</span>
+							cell.x * cellWidth + cellWidth/2,
+							cell.y * cellHeight + cellHeight/2,
+							ShapePoint.TYPE_ROUND  
+						);
+<span class="nc bnc" id="L42" title="All 2 branches missed.">		} else if(grid.isNormalCorner(cell)){</span>
+<span class="nc" id="L43">			return new ShapePoint(</span>
+							cell.x * cellWidth + cellWidth/2,
+							cell.y * cellHeight + cellHeight/2,
+							ShapePoint.TYPE_NORMAL  
+						);
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		} else if(grid.isRoundCorner(cell)){</span>
+<span class="nc" id="L49">			return new ShapePoint(</span>
+							cell.x * cellWidth + cellWidth/2,
+							cell.y * cellHeight + cellHeight/2,
+							ShapePoint.TYPE_ROUND  
+						);
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		} else if(grid.isLinesEnd(cell)){</span>
+<span class="nc" id="L55">			return new ShapePoint(</span>
+						cell.x * cellWidth + cellWidth/2,
+						cell.y * cellHeight + cellHeight/2,
+						ShapePoint.TYPE_NORMAL  
+					);
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		} else if(grid.isIntersection(cell)){</span>
+<span class="nc" id="L61">			return new ShapePoint(</span>
+					cell.x * cellWidth + cellWidth/2,
+					cell.y * cellHeight + cellHeight/2,
+					ShapePoint.TYPE_NORMAL 
+				);
+		}
+<span class="nc" id="L67">		throw new RuntimeException(&quot;Cannot make point for cell &quot;+cell);</span>
+	}
+
+	public static DiagramComponent createClosedFromBoundaryCells(TextGrid grid, CellSet cells, int cellWidth, int cellHeight){
+<span class="nc" id="L71">		return createClosedFromBoundaryCells(grid, cells, cellWidth, cellHeight, false);</span>
+	}
+
+	public static DiagramComponent createClosedFromBoundaryCells(TextGrid grid, CellSet cells, int cellWidth, int cellHeight, boolean allRound){
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if(cells.getType(grid) == CellSet.TYPE_OPEN) throw new IllegalArgumentException(&quot;CellSet is closed and cannot be handled by this method&quot;);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if(cells.size() &lt; 2) return null;</span>
+		
+<span class="nc" id="L78">		DiagramShape shape = new DiagramShape();</span>
+<span class="nc" id="L79">		shape.setClosed(true);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if(grid.containsAtLeastOneDashedLine(cells)) shape.setStrokeDashed(true);</span>
+		
+<span class="nc" id="L82">		TextGrid workGrid = new TextGrid(grid.getWidth(), grid.getHeight());</span>
+<span class="nc" id="L83">		grid.copyCellsTo(cells, workGrid);</span>
+		
+		if (DEBUG){
+			System.out.println(&quot;Making closed shape from buffer:&quot;);
+			workGrid.printDebug();
+		}
+		
+<span class="nc" id="L90">		TextGrid.Cell start = (TextGrid.Cell) cells.getFirst();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if(workGrid.isCorner(start)) shape.addToPoints(makePointForCell(start, workGrid, cellWidth, cellHeight, allRound));</span>
+<span class="nc" id="L92">		TextGrid.Cell previous = start;</span>
+<span class="nc" id="L93">		TextGrid.Cell cell = null;</span>
+<span class="nc" id="L94">		CellSet nextCells = workGrid.followCell(previous);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if(nextCells.size() == 0) return null;</span>
+<span class="nc" id="L96">		cell = (TextGrid.Cell) nextCells.getFirst();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if(workGrid.isCorner(cell)) shape.addToPoints(makePointForCell(cell, workGrid, cellWidth, cellHeight, allRound));</span>
+		
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		while(!cell.equals(start)){</span>
+<span class="nc" id="L100">			nextCells = workGrid.followCell(cell, previous);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if(nextCells.size() == 1) {</span>
+<span class="nc" id="L102">				previous = cell;</span>
+<span class="nc" id="L103">				cell = (TextGrid.Cell) nextCells.getFirst();</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">				if(!cell.equals(start) &amp;&amp; workGrid.isCorner(cell))</span>
+<span class="nc" id="L105">					shape.addToPoints(makePointForCell(cell, workGrid, cellWidth, cellHeight, allRound));</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			} else if(nextCells.size() &gt; 1) {</span>
+<span class="nc" id="L107">				return null;</span>
+			} else {
+<span class="nc" id="L109">				throw new RuntimeException(&quot;cannot create closed shape from boundary cells, nowhere to go from &quot;</span>
+						  + cell + &quot; coming from &quot; + previous + &quot; in grid:\n&quot; + grid
+						  +&quot;\nmaybe you have an edge pointing nowhere?&quot;);
+			}
+		}
+		
+<span class="nc" id="L115">		return shape;</span>
+		
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

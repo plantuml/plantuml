@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicHandwritten.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.hand</a> &gt; <span class="el_source">UGraphicHandwritten.java</span></div><h1>UGraphicHandwritten.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Adrian Vogt
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.hand;
+
+import java.util.Random;
+
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public class UGraphicHandwritten extends UGraphicDelegator implements UGraphic {
+
+<span class="nc" id="L53">	private final Random rnd = new Random(424242L);</span>
+
+	public UGraphicHandwritten(UGraphic ug) {
+<span class="nc" id="L56">		super(ug);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (ug instanceof UGraphicSvg) {</span>
+<span class="nc" id="L58">			((UGraphicSvg) ug).enlargeClip();</span>
+		}
+<span class="nc" id="L60">	}</span>
+
+	public void draw(UShape shape) {
+		// http://www.ufonts.com/fonts/felt-tip-roman.html
+		// http://webdesignledger.com/freebies/20-amazing-free-handwritten-fonts-for-your-designs
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (shape instanceof ULine) {</span>
+<span class="nc" id="L66">			drawHand((ULine) shape);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		} else if (shape instanceof URectangle) {</span>
+<span class="nc" id="L68">			drawHand((URectangle) shape);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		} else if (shape instanceof UPolygon) {</span>
+<span class="nc" id="L70">			drawHand((UPolygon) shape);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		} else if (shape instanceof UEllipse) {</span>
+<span class="nc" id="L72">			drawHand((UEllipse) shape);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
+<span class="nc" id="L74">			drawHand((DotPath) shape);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		} else if (shape instanceof UPath) {</span>
+<span class="nc" id="L76">			drawHand((UPath) shape);</span>
+		} else {
+<span class="nc" id="L78">			getUg().draw(shape);</span>
+		}
+<span class="nc" id="L80">	}</span>
+
+	private void drawHand(UPath shape) {
+<span class="nc" id="L83">		final UPathHand uline = new UPathHand(shape, rnd);</span>
+<span class="nc" id="L84">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L85">	}</span>
+
+	private void drawHand(DotPath shape) {
+<span class="nc" id="L88">		final UDotPathHand uline = new UDotPathHand(shape, rnd);</span>
+<span class="nc" id="L89">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L90">	}</span>
+
+	private void drawHand(UPolygon shape) {
+<span class="nc" id="L93">		final UPolygonHand hand = new UPolygonHand(shape, rnd);</span>
+<span class="nc" id="L94">		getUg().draw(hand.getHanddrawn());</span>
+<span class="nc" id="L95">	}</span>
+
+	private void drawHand(URectangle shape) {
+<span class="nc" id="L98">		final URectangleHand hand = new URectangleHand(shape, rnd);</span>
+<span class="nc" id="L99">		getUg().draw(hand.getHanddrawn());</span>
+<span class="nc" id="L100">	}</span>
+
+	private void drawHand(ULine shape) {
+<span class="nc" id="L103">		final ULineHand uline = new ULineHand(shape, rnd);</span>
+<span class="nc" id="L104">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L105">	}</span>
+
+	private void drawHand(UEllipse shape) {
+<span class="nc" id="L108">		final UEllipseHand uline = new UEllipseHand(shape, rnd);</span>
+<span class="nc" id="L109">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L110">	}</span>
+
+	public UGraphic apply(UChange change) {
+<span class="nc" id="L113">		return new UGraphicHandwritten(getUg().apply(change));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

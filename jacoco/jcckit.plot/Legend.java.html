@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Legend.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">Legend.java</span></div><h1>Legend.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import java.util.Properties;
+
+import jcckit.graphic.BasicGraphicAttributes;
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.GraphicalComposite;
+import jcckit.graphic.GraphicalElement;
+import jcckit.graphic.Polygon;
+import jcckit.graphic.Rectangle;
+import jcckit.graphic.ShapeAttributes;
+import jcckit.graphic.Text;
+import jcckit.graphic.TextAttributes;
+import jcckit.util.ConfigData;
+import jcckit.util.ConfigParameters;
+import jcckit.util.ConfigParametersBasedConfigData;
+import jcckit.util.Factory;
+import jcckit.util.PropertiesBasedConfigData;
+
+
+/**
+ * Helper class for creating the legend of a {@link Plot}.
+ * 
+ * @author Franz-Josef Elmer
+ */
+public class Legend {
+  /** Configuration parameter key. */
+  public static final String UPPER_RIGHT_CORNER_KEY = &quot;upperRightCorner&quot;,
+                             BOX_WIDTH_KEY = &quot;boxWidth&quot;,
+                             BOX_HEIGHT_KEY = &quot;boxHeight&quot;,
+                             BOX_ATTRIBUTES_KEY = &quot;boxAttributes&quot;,
+                             TITLE_KEY = &quot;title&quot;,
+                             TITLE_DISTANCE_KEY = &quot;titleDistance&quot;,
+                             TITLE_ATTRIBUTES_KEY = &quot;titleAttributes&quot;,
+                             LEFT_DISTANCE_KEY = &quot;leftDistance&quot;,
+                             BOTTOM_DISTANCE_KEY = &quot;bottomDistance&quot;,
+                             TOP_DISTANCE_KEY = &quot;topDistance&quot;,
+                             LINE_LENGTH_KEY = &quot;lineLength&quot;,
+                             SYMBOL_SIZE_KEY = &quot;symbolSize&quot;,
+                             CURVE_TITLE_DISTANCE_KEY = &quot;curveTitleDistance&quot;,
+                             CURVE_TITLE_ATTRIBUTES_KEY
+                                              = &quot;curveTitleAttributes&quot;;
+
+  private final GraphicalComposite _box;
+  private final TextAttributes _curveTitleAttributes;
+  private final double _xSymbol;
+  private final double _xText;
+  private final double _yBase;
+  private final double _yLastRow;
+  private final double _length;
+  private final double _size;
+
+  /**
+   * Creates an instance from the specified configuration parameters.
+   * All numbers (lengths, fontsizes, linethicknesses, etc.) are in
+   * device-independent units.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;bottomDistance = 0.02&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Distance between the last row and the bottom of the legend box.
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;boxAttributes = &lt;/tt&gt;default values of 
+   *         {@link ShapeAttributes} with a white fill color.&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Attributes of the legend box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;boxHeight = 0.1&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Height of the legend box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;boxWidth = 0.2&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Width of the legend box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;curveTitleAttributes = &lt;/tt&gt;default values of 
+   *         {@link BasicGraphicAttributes}&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Text attributes of curve titles printed in the legend.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;curveTitleDistance = 0.005&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Horizontal distance between the line part of the legend symbol
+   *         and the curve title.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;leftDistance = 0.01&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Horizontal distance between the line part of the legend symbol
+   *         and the left border of the legend box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;lineLength = 0.035&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Length of the line part of the legend symbol.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;symbolSize = 0.01&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Size of the symbol part of the legend symbol. Will be the
+   *         &lt;tt&gt;size&lt;/tt&gt; argument of {@link SymbolFactory#createLegendSymbol
+   *         createLegendSymbol} in a {@link SymbolFactory}.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;titleAttributes = &lt;/tt&gt;default values of 
+   *         {@link BasicGraphicAttributes} with a text anchor CENTER 
+   *         TOP.&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Text attributes of the title of the legend box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;title = Legend&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Title of the legend box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;titleDistance = 0.005&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Distance between the center of the upper line of the legend box
+   *         and the anchor of the legend title.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;topDistance = 0.04&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Distance between the first row and the top of the legend box.
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;upperRightCorner = 0.94,&amp;nbsp;0.54&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Position of the upper-right corner of the legend box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+<span class="nc" id="L134">  public Legend(ConfigParameters config) {</span>
+<span class="nc" id="L135">    config = mergeWithDefaultConfig(config);</span>
+<span class="nc" id="L136">    GraphPoint corner</span>
+<span class="nc" id="L137">        = new GraphPoint(config.getDoubleArray(UPPER_RIGHT_CORNER_KEY,</span>
+                                               new double[] {0.94, 0.54}));
+<span class="nc" id="L139">    double width = config.getDouble(BOX_WIDTH_KEY, 0.2);</span>
+<span class="nc" id="L140">    double height = config.getDouble(BOX_HEIGHT_KEY, 0.1);</span>
+<span class="nc" id="L141">    _curveTitleAttributes = (TextAttributes) Factory.create(</span>
+<span class="nc" id="L142">        config.getNode(CURVE_TITLE_ATTRIBUTES_KEY));</span>
+<span class="nc" id="L143">    _xSymbol = corner.getX() - width</span>
+<span class="nc" id="L144">               + config.getDouble(LEFT_DISTANCE_KEY, 0.01);</span>
+<span class="nc" id="L145">    _yBase = corner.getY() - config.getDouble(TOP_DISTANCE_KEY, 0.04);</span>
+<span class="nc" id="L146">    _yLastRow = corner.getY() - height </span>
+<span class="nc" id="L147">                + config.getDouble(BOTTOM_DISTANCE_KEY, 0.02);</span>
+<span class="nc" id="L148">    _length = config.getDouble(LINE_LENGTH_KEY, 0.035);</span>
+<span class="nc" id="L149">    _size = config.getDouble(SYMBOL_SIZE_KEY, 0.01);</span>
+<span class="nc" id="L150">    _xText = _xSymbol + _length</span>
+<span class="nc" id="L151">             + config.getDouble(CURVE_TITLE_DISTANCE_KEY, 0.005);</span>
+
+<span class="nc" id="L153">    _box = new GraphicalComposite(null);</span>
+<span class="nc" id="L154">    double xCenter = corner.getX() - width / 2;</span>
+<span class="nc" id="L155">    _box.addElement(new Rectangle(</span>
+<span class="nc" id="L156">        new GraphPoint(xCenter, corner.getY() - height / 2), width, height,</span>
+<span class="nc" id="L157">        (GraphicAttributes) Factory.create(</span>
+<span class="nc" id="L158">                                config.getNode(BOX_ATTRIBUTES_KEY))));</span>
+<span class="nc" id="L159">    _box.addElement(new Text(</span>
+<span class="nc" id="L160">        new GraphPoint(xCenter, corner.getY()</span>
+<span class="nc" id="L161">                                - config.getDouble(TITLE_DISTANCE_KEY, 0.005)),</span>
+<span class="nc" id="L162">        config.get(TITLE_KEY, &quot;Legend&quot;),</span>
+<span class="nc" id="L163">        (TextAttributes) Factory.create(</span>
+<span class="nc" id="L164">                                config.getNode(TITLE_ATTRIBUTES_KEY))));</span>
+<span class="nc" id="L165">  }</span>
+
+  private ConfigParameters mergeWithDefaultConfig(ConfigParameters config) {
+<span class="nc" id="L168">    Properties p = new Properties();</span>
+<span class="nc" id="L169">    p.put(BOX_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L170">          ShapeAttributes.class.getName());</span>
+<span class="nc" id="L171">    p.put(BOX_ATTRIBUTES_KEY + '/'</span>
+          + ShapeAttributes.FILL_COLOR_KEY, &quot;0xffffff&quot;);
+<span class="nc" id="L173">    p.put(BOX_ATTRIBUTES_KEY + '/'</span>
+          + ShapeAttributes.LINE_COLOR_KEY, &quot;0&quot;);
+<span class="nc" id="L175">    p.put(TITLE_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L176">          BasicGraphicAttributes.class.getName());</span>
+<span class="nc" id="L177">    p.put(TITLE_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.HORIZONTAL_ANCHOR_KEY, &quot;center&quot;);
+<span class="nc" id="L179">    p.put(TITLE_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.VERTICAL_ANCHOR_KEY, &quot;top&quot;);
+<span class="nc" id="L181">    p.put(CURVE_TITLE_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L182">          BasicGraphicAttributes.class.getName());</span>
+<span class="nc" id="L183">    ConfigData cd = new PropertiesBasedConfigData(p);</span>
+<span class="nc" id="L184">    cd = new ConfigParametersBasedConfigData(config, new ConfigParameters(cd));</span>
+<span class="nc" id="L185">    return new ConfigParameters(cd);</span>
+  }
+
+  /** 
+   * Returns the legend box with title but without legend symbols and curve 
+   * titles.
+   */
+  public GraphicalElement getBox() {
+<span class="nc" id="L193">    return _box;</span>
+  }
+
+  /**
+   * Creates the symbol part of a legend symbol.
+   * @param curveIndex Index of the curve. Will be needed to calculate the 
+   *        y-coordinate of the symbol.
+   * @param numberOfCurves Number of curves. Will be needed to calculate the 
+   *        y-coordinate of the symbol.
+   * @param factory Factory for the symbol part of the legend symbol.
+   *        Can be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param withLine &lt;tt&gt;true&lt;/tt&gt; if the line part of the legend symbol
+   *        should be created.
+   * @param lineAttributes Attributes of the line part.
+   */
+  public GraphicalElement createSymbol(int curveIndex, int numberOfCurves,
+                                       SymbolFactory factory,
+                                       boolean withLine,
+                                       GraphicAttributes lineAttributes) {
+<span class="nc" id="L212">    GraphicalComposite result = new GraphicalComposite(null);</span>
+<span class="nc" id="L213">    double y = calculateBaseLine(curveIndex, numberOfCurves);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">    if (withLine) {</span>
+<span class="nc" id="L215">      Polygon line = new Polygon(lineAttributes, false);</span>
+<span class="nc" id="L216">      line.addPoint(new GraphPoint(_xSymbol, y));</span>
+<span class="nc" id="L217">      line.addPoint(new GraphPoint(_xSymbol + _length, y));</span>
+<span class="nc" id="L218">      result.addElement(line);</span>
+    }
+<span class="nc bnc" id="L220" title="All 2 branches missed.">    if (factory != null) {</span>
+<span class="nc" id="L221">      result.addElement(factory.createLegendSymbol(</span>
+                          new GraphPoint(_xSymbol + _length / 2, y), _size));
+    }
+<span class="nc" id="L224">    return result;</span>
+  }
+
+  private double calculateBaseLine(int curveIndex, int numberOfCurves) {
+<span class="nc bnc" id="L228" title="All 2 branches missed.">    if (numberOfCurves &gt; 1) {</span>
+<span class="nc" id="L229">      return _yBase + ((_yLastRow - _yBase) / (numberOfCurves - 1)) </span>
+                      * curveIndex;
+    } else {
+<span class="nc" id="L232">      return 0.5 * (_yBase + _yLastRow);</span>
+    }
+  }
+
+  /**
+   * Creates the title part of a legend symbol.
+   * @param curveIndex Index of the curve. Will be needed to calculate the 
+   *        y-coordinate of the title.
+   * @param numberOfCurves Number of curves. Will be needed to calculate the 
+   *        y-coordinate of the symbol.
+   * @param title Title text.
+   */
+  public GraphicalElement createCurveTitle(int curveIndex, int numberOfCurves,
+                                           String title) {
+<span class="nc" id="L246">    return new Text(new GraphPoint(_xText, calculateBaseLine(curveIndex, </span>
+                                                             numberOfCurves)),
+                    title, _curveTitleAttributes);
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

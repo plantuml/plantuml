@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Snake.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">Snake.java</span></div><h1>Snake.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.decoration.HtmlColorAndStyle;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.compress.PiecewiseAffineTransform;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.utils.Direction;
+
+public class Snake implements UShape {
+
+	static class Text {
+		private final TextBlock textBlock;
+		private final VerticalAlignment verticalAlignment;
+		private final HorizontalAlignment horizontalAlignment;
+
+<span class="fc" id="L71">		Text(TextBlock textBlock, VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment) {</span>
+<span class="fc" id="L72">			this.textBlock = Objects.requireNonNull(textBlock);</span>
+<span class="fc" id="L73">			this.verticalAlignment = verticalAlignment;</span>
+<span class="fc" id="L74">			this.horizontalAlignment = horizontalAlignment;</span>
+<span class="fc" id="L75">		}</span>
+
+		private boolean hasText(StringBounder stringBounder) {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			return TextBlockUtils.isEmpty(this.textBlock, stringBounder) == false;</span>
+		}
+
+	}
+
+	private final Worm worm;
+	private final UPolygon startDecoration;
+	private final UPolygon endDecoration;
+	private final Rainbow color;
+
+	private final List&lt;Text&gt; texts;
+	private final MergeStrategy mergeable;
+	private final Direction emphasizeDirection;
+	private final ISkinParam skinParam;
+
+	public Snake transformX(PiecewiseAffineTransform compressionTransform) {
+<span class="nc" id="L94">		final Snake result = cloneEmpty();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (XPoint2D pt : worm) {</span>
+<span class="nc" id="L96">			final double x = compressionTransform.transform(pt.x);</span>
+<span class="nc" id="L97">			final double y = pt.y;</span>
+<span class="nc" id="L98">			result.addPoint(x, y);</span>
+<span class="nc" id="L99">		}</span>
+<span class="nc" id="L100">		return result;</span>
+	}
+
+	public Snake move(double dx, double dy) {
+<span class="fc" id="L104">		final Snake result = cloneEmpty();</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (XPoint2D pt : worm)</span>
+<span class="fc" id="L106">			result.addPoint(pt.getX() + dx, pt.getY() + dy);</span>
+
+<span class="fc" id="L108">		return result;</span>
+	}
+
+	private Snake cloneEmpty() {
+<span class="fc" id="L112">		return new Snake(skinParam, startDecoration, color, endDecoration, worm.cloneEmpty(), mergeable,</span>
+				emphasizeDirection, texts);
+	}
+
+	public final Snake ignoreForCompression() {
+<span class="nc" id="L117">		this.worm.setIgnoreForCompression();</span>
+<span class="nc" id="L118">		return this;</span>
+	}
+
+	public Snake emphasizeDirection(Direction emphasizeDirection) {
+<span class="fc" id="L122">		return new Snake(skinParam, startDecoration, color, endDecoration, worm, mergeable, emphasizeDirection, texts);</span>
+	}
+
+	public Snake withoutEndDecoration() {
+<span class="nc" id="L126">		return new Snake(skinParam, startDecoration, color, null, worm, mergeable, emphasizeDirection, texts);</span>
+	}
+
+	public Snake withMerge(MergeStrategy mergeable) {
+<span class="nc" id="L130">		return new Snake(skinParam, startDecoration, color, endDecoration, worm, mergeable, emphasizeDirection, texts);</span>
+	}
+
+	public Snake withLabel(TextBlock textBlock, HorizontalAlignment horizontalAlignment) {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (textBlock != null)</span>
+<span class="fc" id="L135">			this.texts.add(new Text(textBlock, null, horizontalAlignment));</span>
+
+<span class="fc" id="L137">		return this;</span>
+	}
+
+	public Snake withLabel(TextBlock textBlock, VerticalAlignment verticalAlignment) {
+<span class="nc bnc" id="L141" title="All 4 branches missed.">		if (textBlock != null &amp;&amp; textBlock != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L142">			this.texts.add(new Text(textBlock, verticalAlignment, null));</span>
+
+<span class="nc" id="L144">		return this;</span>
+	}
+
+	public static Snake create(ISkinParam skinParam, Rainbow color) {
+<span class="nc" id="L148">		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L149">		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,</span>
+				new ArrayList&lt;Text&gt;());
+	}
+
+	public static Snake create(ISkinParam skinParam, Rainbow color, UPolygon endDecoration) {
+<span class="fc" id="L154">		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L155">		return new Snake(skinParam, null, color, endDecoration, new Worm(style, skinParam.arrows()), MergeStrategy.FULL,</span>
+				null, new ArrayList&lt;Text&gt;());
+	}
+
+	public static Snake create(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration) {
+<span class="nc" id="L160">		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L161">		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style, skinParam.arrows()),</span>
+				MergeStrategy.FULL, null, new ArrayList&lt;Text&gt;());
+	}
+
+	private Snake(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration, Worm worm,
+<span class="fc" id="L166">			MergeStrategy mergeable, Direction emphasizeDirection, List&lt;Text&gt; texts) {</span>
+
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (Objects.requireNonNull(color).size() == 0)</span>
+<span class="nc" id="L169">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L171">		this.skinParam = skinParam;</span>
+<span class="fc" id="L172">		this.worm = worm;</span>
+<span class="fc" id="L173">		this.texts = Objects.requireNonNull(texts);</span>
+<span class="fc" id="L174">		this.emphasizeDirection = emphasizeDirection;</span>
+<span class="fc" id="L175">		this.startDecoration = startDecoration;</span>
+<span class="fc" id="L176">		this.endDecoration = endDecoration;</span>
+<span class="fc" id="L177">		this.color = color;</span>
+<span class="fc" id="L178">		this.mergeable = mergeable;</span>
+<span class="fc" id="L179">	}</span>
+
+	public Snake translate(UTranslate translate) {
+<span class="nc" id="L182">		return move(translate.getDx(), translate.getDy());</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L187">		return worm.toString();</span>
+	}
+
+	public void addPoint(double x, double y) {
+<span class="fc" id="L191">		worm.addPoint(x, y);</span>
+<span class="fc" id="L192">	}</span>
+
+	public void addPoint(XPoint2D p) {
+<span class="fc" id="L195">		addPoint(p.getX(), p.getY());</span>
+<span class="fc" id="L196">	}</span>
+
+	public void drawInternal(UGraphic ug) {
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (color.size() &gt; 1) {</span>
+<span class="nc" id="L200">			drawRainbow(ug);</span>
+		} else {
+<span class="fc" id="L202">			worm.drawInternalOneColor(startDecoration, ug, color.getColors().get(0), 1.5, emphasizeDirection,</span>
+					endDecoration);
+<span class="fc" id="L204">			drawInternalLabel(ug);</span>
+		}
+
+<span class="fc" id="L207">	}</span>
+
+	private void drawRainbow(UGraphic ug) {
+<span class="nc" id="L210">		List&lt;HtmlColorAndStyle&gt; colors = color.getColors();</span>
+<span class="nc" id="L211">		final int colorArrowSeparationSpace = color.getColorArrowSeparationSpace();</span>
+<span class="nc" id="L212">		final double move = 2 + colorArrowSeparationSpace;</span>
+<span class="nc" id="L213">		final WormMutation mutation = WormMutation.create(worm, move);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (mutation.isDxNegative()) {</span>
+<span class="nc" id="L215">			colors = new ArrayList&lt;&gt;(colors);</span>
+<span class="nc" id="L216">			Collections.reverse(colors);</span>
+		}
+<span class="nc" id="L218">		final double globalMove = -1.0 * (colors.size() - 1) / 2.0;</span>
+<span class="nc" id="L219">		Worm current = worm.moveFirstPoint(mutation.getFirst().multiplyBy(globalMove));</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (mutation.size() &gt; 2)</span>
+<span class="nc" id="L221">			current = current.moveLastPoint(mutation.getLast().multiplyBy(globalMove));</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		for (int i = 0; i &lt; colors.size(); i++) {</span>
+<span class="nc" id="L224">			double stroke = 1.5;</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">			if (colorArrowSeparationSpace == 0)</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">				stroke = i == colors.size() - 1 ? 2.0 : 3.0;</span>
+
+<span class="nc" id="L228">			current.drawInternalOneColor(startDecoration, ug, colors.get(i), stroke, emphasizeDirection, endDecoration);</span>
+<span class="nc" id="L229">			current = mutation.mute(current);</span>
+		}
+<span class="nc" id="L231">		final UTranslate textTranslate = mutation.getTextTranslate(colors.size());</span>
+<span class="nc" id="L232">		drawInternalLabel(ug.apply(textTranslate));</span>
+<span class="nc" id="L233">	}</span>
+
+	private void drawInternalLabel(UGraphic ug) {
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		for (Text text : texts)</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			if (text.hasText(ug.getStringBounder())) {</span>
+<span class="nc" id="L238">				final XPoint2D position = getTextBlockPosition(ug.getStringBounder(), text);</span>
+<span class="nc" id="L239">				text.textBlock.drawU(ug.apply(UTranslate.point(position)));</span>
+			}
+<span class="fc" id="L241">	}</span>
+
+	public double getMaxX(StringBounder stringBounder) {
+<span class="nc" id="L244">		double result = -Double.MAX_VALUE;</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		for (XPoint2D pt : worm)</span>
+<span class="nc" id="L246">			result = Math.max(result, pt.getX());</span>
+
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		for (Text text : texts) {</span>
+<span class="nc" id="L249">			final XPoint2D position = getTextBlockPosition(stringBounder, text);</span>
+<span class="nc" id="L250">			final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L251">			result = Math.max(result, position.getX() + dim.getWidth());</span>
+<span class="nc" id="L252">		}</span>
+<span class="nc" id="L253">		return result;</span>
+	}
+
+	private XPoint2D getTextBlockPosition(StringBounder stringBounder, Text text) {
+<span class="nc" id="L257">		final XPoint2D pt1 = worm.get(0);</span>
+<span class="nc" id="L258">		final XPoint2D pt2 = worm.get(1);</span>
+<span class="nc" id="L259">		final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L260">		double x = Math.max(pt1.getX(), pt2.getX()) + 4;</span>
+<span class="nc bnc" id="L261" title="All 4 branches missed.">		final boolean zigzag = worm.getDirectionsCode().startsWith(&quot;DLD&quot;) || worm.getDirectionsCode().startsWith(&quot;DRD&quot;);</span>
+<span class="nc" id="L262">		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (text.verticalAlignment == VerticalAlignment.BOTTOM) {</span>
+<span class="nc" id="L264">			x = worm.getMinX();</span>
+<span class="nc" id="L265">			y = worm.getMaxY();</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		} else if (text.verticalAlignment == VerticalAlignment.CENTER) {</span>
+<span class="nc" id="L267">			x = worm.getMinX();</span>
+<span class="nc" id="L268">			y = (worm.getFirst().getY() + worm.getLast().getY() - 10) / 2 - dim.getHeight() / 2;</span>
+<span class="nc bnc" id="L269" title="All 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.CENTER &amp;&amp; zigzag) {</span>
+<span class="nc" id="L270">			final XPoint2D pt3 = worm.get(2);</span>
+<span class="nc" id="L271">			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;</span>
+<span class="nc bnc" id="L272" title="All 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.RIGHT &amp;&amp; zigzag) {</span>
+<span class="nc" id="L273">			x = Math.max(pt1.getX(), pt2.getX()) - dim.getWidth() - 4;</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;RD&quot;)) {</span>
+<span class="nc" id="L275">			x = Math.max(pt1.getX(), pt2.getX());</span>
+<span class="nc" id="L276">			y = (pt1.getY() + worm.get(2).getY()) / 2 - dim.getHeight() / 2;</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;LD&quot;)) {</span>
+<span class="nc" id="L278">			x = Math.min(pt1.getX(), pt2.getX());</span>
+<span class="nc" id="L279">			y = (pt1.getY() + worm.get(2).getY()) / 2 - dim.getHeight() / 2;</span>
+		}
+<span class="nc" id="L281">		return new XPoint2D(x, y);</span>
+	}
+
+	public List&lt;XLine2D&gt; getHorizontalLines() {
+<span class="nc" id="L285">		final List&lt;XLine2D&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		for (int i = 0; i &lt; worm.size() - 1; i++) {</span>
+<span class="nc" id="L287">			final XPoint2D pt1 = worm.get(i);</span>
+<span class="nc" id="L288">			final XPoint2D pt2 = worm.get(i + 1);</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">			if (pt1.getY() == pt2.getY()) {</span>
+<span class="nc" id="L290">				final XLine2D line = XLine2D.line(pt1, pt2);</span>
+<span class="nc" id="L291">				result.add(line);</span>
+			}
+		}
+<span class="nc" id="L294">		return result;</span>
+
+	}
+
+	private XPoint2D getFirst() {
+<span class="fc" id="L299">		return worm.get(0);</span>
+	}
+
+	public XPoint2D getLast() {
+<span class="fc" id="L303">		return worm.get(worm.size() - 1);</span>
+	}
+
+	static boolean same(XPoint2D pt1, XPoint2D pt2) {
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">		return pt1.distance(pt2) &lt; 0.001;</span>
+	}
+
+	public Snake merge(Snake other, StringBounder stringBounder) {
+<span class="fc" id="L311">		final MergeStrategy strategy = this.mergeable.max(other.mergeable);</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">		if (strategy == MergeStrategy.NONE)</span>
+<span class="nc" id="L313">			return null;</span>
+
+<span class="fc bfc" id="L315" title="All 2 branches covered.">		for (Text text : other.texts)</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">			if (text.hasText(stringBounder))</span>
+<span class="nc" id="L317">				return null;</span>
+
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (same(this.getLast(), other.getFirst())) {</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;</span>
+<span class="nc bnc" id="L321" title="All 4 branches missed.">			if (this.startDecoration != null || other.startDecoration != null)</span>
+<span class="nc" id="L322">				throw new UnsupportedOperationException(&quot;Not yet coded: to be done&quot;);</span>
+
+<span class="nc" id="L324">			final ArrayList&lt;Text&gt; mergeTexts = new ArrayList&lt;Text&gt;(this.texts);</span>
+<span class="nc" id="L325">			mergeTexts.addAll(other.texts);</span>
+<span class="nc" id="L326">			final Snake result = new Snake(skinParam, null, color, oneOf, this.worm.merge(other.worm, strategy),</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">					strategy, emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);</span>
+<span class="nc" id="L328">			return result;</span>
+		}
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (same(this.getFirst(), other.getLast()))</span>
+<span class="nc" id="L331">			return other.merge(this, stringBounder);</span>
+
+<span class="fc" id="L333">		return null;</span>
+	}
+
+	public boolean touches(Snake other) {
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">		if (other.mergeable != MergeStrategy.FULL)</span>
+<span class="nc" id="L338">			return false;</span>
+
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		if (other.worm.isPureHorizontal())</span>
+<span class="nc" id="L341">			return false;</span>
+
+<span class="fc" id="L343">		return same(this.getLast(), other.getFirst());</span>
+	}
+
+	public boolean doesHorizontalCross(MinMax minMax) {
+<span class="nc" id="L347">		return worm.doesHorizontalCross(minMax);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

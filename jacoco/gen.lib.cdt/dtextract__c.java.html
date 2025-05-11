@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>dtextract__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cdt</a> &gt; <span class="el_source">dtextract__c.java</span></div><h1>dtextract__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cdt;
+import static smetana.core.Macro.DT_BAG;
+import static smetana.core.Macro.DT_FLATTEN;
+import static smetana.core.Macro.DT_OBAG;
+import static smetana.core.Macro.DT_OSET;
+import static smetana.core.Macro.DT_SET;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.ST_dt_s;
+import h.ST_dtlink_s;
+
+<span class="nc" id="L61">public class dtextract__c {</span>
+
+
+
+/*	Extract objects of a dictionary.
+**
+**	Written by Kiem-Phong Vo (5/25/96).
+*/
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtextract.c&quot;, name=&quot;dtextract&quot;, key=&quot;ar89jjwhuitmbhut1o3ft3zpb&quot;, definition=&quot;Dtlink_t* dtextract(register Dt_t* dt)&quot;)
+public static ST_dtlink_s dtextract(ST_dt_s dt) {
+<span class="fc" id="L72">ENTERING(&quot;ar89jjwhuitmbhut1o3ft3zpb&quot;,&quot;dtextract&quot;);</span>
+try {
+<span class="fc" id="L74">	ST_dtlink_s	list = null;</span>
+	ST_dtlink_s	s[], ends[];
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">	if((dt.data.type&amp;(DT_OSET|DT_OBAG) )!=0)</span>
+<span class="fc" id="L77">		list = dt.data.here;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">	else if((dt.data.type&amp;(DT_SET|DT_BAG))!=0)</span>
+<span class="nc" id="L79">	{	UNSUPPORTED(&quot;list = dtflatten(dt)&quot;);</span>
+<span class="nc" id="L80">UNSUPPORTED(&quot;8i2mufw9f604gvj48u8nbdazp&quot;); // 		for(ends = (s = dt-&gt;data-&gt;hh._htab) + dt-&gt;data-&gt;ntab; s &lt; ends; ++s)</span>
+<span class="nc" id="L81">UNSUPPORTED(&quot;4sml4zdr938yth6x815jt1dlm&quot;); // 			*s = ((Dtlink_t*)0);</span>
+	}
+	else /*if(dt-&gt;data-&gt;type&amp;(DT_LIST|DT_STACK|DT_QUEUE))*/
+<span class="nc" id="L84">	{	list = dt.data._head;</span>
+<span class="nc" id="L85">		dt.data._head = null;</span>
+	}
+	
+<span class="fc" id="L88">	dt.data.type &amp;= ~DT_FLATTEN;</span>
+<span class="fc" id="L89">	dt.data.size = 0;</span>
+<span class="fc" id="L90">	dt.data.here = null;</span>
+<span class="fc" id="L91">	return list;</span>
+} finally {
+<span class="fc" id="L93">LEAVING(&quot;ar89jjwhuitmbhut1o3ft3zpb&quot;,&quot;dtextract&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

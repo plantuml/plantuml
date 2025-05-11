@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicG2d.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.g2d</a> &gt; <span class="el_source">UGraphicG2d.java</span></div><h1>UGraphicG2d.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.g2d;
+
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.klimt.UAntiAliasing;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPixel;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.png.PngIO;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.url.Url;
+
+public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements EnsureVisible {
+
+	private BufferedImage bufferedImage;
+
+	private final double dpiFactor;
+	private final FileFormat format;
+
+<span class="fc" id="L84">	private UAntiAliasing antiAliasing = UAntiAliasing.ANTI_ALIASING_ON;</span>
+
+<span class="fc" id="L86">	private List&lt;Url&gt; urls = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L87">	private Set&lt;Url&gt; allUrls = new HashSet&lt;&gt;();</span>
+
+	public final Set&lt;Url&gt; getAllUrlsEncountered() {
+<span class="fc" id="L90">		return Collections.unmodifiableSet(allUrls);</span>
+	}
+
+	@Override
+	public UGraphic apply(UChange change) {
+<span class="fc" id="L95">		final UGraphicG2d copy = (UGraphicG2d) super.apply(change);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (change instanceof UAntiAliasing)</span>
+<span class="nc" id="L97">			copy.antiAliasing = (UAntiAliasing) change;</span>
+
+<span class="fc" id="L99">		return copy;</span>
+	}
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+<span class="fc" id="L104">		final UGraphicG2d result = new UGraphicG2d(this);</span>
+<span class="fc" id="L105">		return result;</span>
+	}
+
+	private UGraphicG2d(UGraphicG2d other) {
+<span class="fc" id="L109">		super(other.getStringBounder());</span>
+<span class="fc" id="L110">		copy(other);</span>
+<span class="fc" id="L111">		this.dpiFactor = other.dpiFactor;</span>
+<span class="fc" id="L112">		this.bufferedImage = other.bufferedImage;</span>
+<span class="fc" id="L113">		this.urls = other.urls;</span>
+<span class="fc" id="L114">		this.allUrls = other.allUrls;</span>
+<span class="fc" id="L115">		this.antiAliasing = other.antiAliasing;</span>
+<span class="fc" id="L116">		this.format = other.format;</span>
+<span class="fc" id="L117">		register(dpiFactor);</span>
+<span class="fc" id="L118">	}</span>
+
+	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
+			double dpiFactor, FileFormat format) {
+<span class="fc" id="L122">		super(stringBounder);</span>
+<span class="fc" id="L123">		copy(defaultBackground, colorMapper, g2d);</span>
+<span class="fc" id="L124">		this.format = format;</span>
+<span class="fc" id="L125">		this.dpiFactor = dpiFactor;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (dpiFactor != 1.0)</span>
+<span class="nc" id="L127">			g2d.scale(dpiFactor, dpiFactor);</span>
+
+<span class="fc" id="L129">		register(dpiFactor);</span>
+<span class="fc" id="L130">	}</span>
+
+	private void register(double dpiFactor) {
+<span class="fc" id="L133">		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));</span>
+		// ::comment when __CORE__
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (dpiFactor != 1.0)</span>
+<span class="nc" id="L136">			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));</span>
+		else
+			// ::done
+<span class="fc" id="L139">			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));</span>
+
+<span class="fc" id="L141">		registerDriver(ULine.class, new DriverLineG2d(dpiFactor));</span>
+<span class="fc" id="L142">		registerDriver(UPixel.class, new DriverPixelG2d());</span>
+<span class="fc" id="L143">		registerDriver(UPolygon.class, new DriverPolygonG2d(dpiFactor, this));</span>
+<span class="fc" id="L144">		registerDriver(UEllipse.class, new DriverEllipseG2d(dpiFactor, this));</span>
+<span class="fc" id="L145">		ignoreShape(UImageSvg.class);</span>
+<span class="fc" id="L146">		registerDriver(UImage.class, new DriverImageG2d(dpiFactor, this));</span>
+<span class="fc" id="L147">		registerDriver(DotPath.class, new DriverDotPathG2d(this));</span>
+<span class="fc" id="L148">		registerDriver(UPath.class, new DriverPathG2d(dpiFactor));</span>
+<span class="fc" id="L149">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterG2d());</span>
+<span class="fc" id="L150">	}</span>
+
+	@Override
+	protected void beforeDraw() {
+<span class="fc" id="L154">		super.beforeDraw();</span>
+<span class="fc" id="L155">		applyClip();</span>
+<span class="fc" id="L156">		antiAliasing.apply(getGraphicObject());</span>
+<span class="fc" id="L157">	}</span>
+
+	private void applyClip() {
+<span class="fc" id="L160">		final UClip uclip = getClip();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (uclip == null) {</span>
+<span class="fc" id="L162">			getGraphicObject().setClip(null);</span>
+		} else {
+<span class="fc" id="L164">			final Shape clip = new Rectangle2D.Double(uclip.getX(), uclip.getY(), uclip.getWidth(), uclip.getHeight());</span>
+<span class="fc" id="L165">			getGraphicObject().setClip(clip);</span>
+		}
+<span class="fc" id="L167">	}</span>
+
+	protected final double getDpiFactor() {
+<span class="nc" id="L170">		return dpiFactor;</span>
+	}
+
+	@Override
+	public void startUrl(Url url) {
+<span class="fc" id="L175">		Objects.requireNonNull(url);</span>
+		// javascript: security issue
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (SecurityUtils.ignoreThisLink(url.getUrl())) {</span>
+<span class="nc" id="L178">			urls.add(null);</span>
+		} else {
+<span class="fc" id="L180">			urls.add(url);</span>
+<span class="fc" id="L181">			allUrls.add(url);</span>
+		}
+<span class="fc" id="L183">	}</span>
+
+	@Override
+	public void closeUrl() {
+<span class="fc" id="L187">		urls.remove(urls.size() - 1);</span>
+<span class="fc" id="L188">	}</span>
+
+	public void ensureVisible(double x, double y) {
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		for (Url u : urls)</span>
+<span class="pc bpc" id="L192" title="2 of 6 branches missed.">			if (u != null &amp;&amp; (getClip() == null || getClip().isInside(x, y)))</span>
+<span class="fc" id="L193">				u.ensureVisible(x, y);</span>
+
+<span class="fc" id="L195">	}</span>
+
+	public BufferedImage getBufferedImage() {
+<span class="fc" id="L198">		return bufferedImage;</span>
+	}
+
+	public void setBufferedImage(BufferedImage bufferedImage) {
+<span class="fc" id="L202">		this.bufferedImage = bufferedImage;</span>
+<span class="fc" id="L203">	}</span>
+
+	public Graphics2D getGraphics2D() {
+<span class="nc" id="L206">		return getGraphicObject();</span>
+	}
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+<span class="fc" id="L211">		final BufferedImage im = getBufferedImage();</span>
+<span class="fc" id="L212">		PngIO.write(im, getColorMapper(), os, metadata, dpi);</span>
+<span class="fc" id="L213">	}</span>
+
+	@Override
+	public double dpiFactor() {
+<span class="nc" id="L217">		return dpiFactor;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

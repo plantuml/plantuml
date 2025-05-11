@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Splash.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">Splash.java</span></div><h1>Splash.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.net.URI;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.version.PSystemVersion;
+
+public class Splash extends Window implements MouseListener, MouseMotionListener {
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
+
+<span class="nc" id="L61">	private static final Color LINK_NORMAL = Color.BLUE;</span>
+<span class="nc" id="L62">	private static final Color LINK_HOVER = new Color(127, 0, 127);</span>
+
+	private static Splash singleton;
+
+<span class="nc" id="L66">	private final int width = 280;</span>
+<span class="nc" id="L67">	private final int height = 80;</span>
+	private final BufferedImage logo;
+<span class="nc" id="L69">	private final AtomicInteger total = new AtomicInteger();</span>
+<span class="nc" id="L70">	private final AtomicInteger done = new AtomicInteger();</span>
+<span class="nc" id="L71">	private final AtomicInteger errors = new AtomicInteger();</span>
+<span class="nc" id="L72">	private final Font font = new Font(&quot;SansSerif&quot;, Font.BOLD, 12);</span>
+
+	public static void main(String[] args) throws Exception {
+<span class="nc" id="L75">		Splash.createSplash();</span>
+<span class="nc" id="L76">		Splash.incTotal(30);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			Splash.incDone(i &gt; 3);</span>
+<span class="nc" id="L79">			Thread.sleep(1000);</span>
+		}
+<span class="nc" id="L81">	}</span>
+
+	private Splash() {
+<span class="nc" id="L84">		super(null);</span>
+<span class="nc" id="L85">		this.logo = PSystemVersion.getPlantumlImage();</span>
+<span class="nc" id="L86">		final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();</span>
+<span class="nc" id="L87">		final int x = (int) ((dimension.getWidth() - width)) / 2;</span>
+<span class="nc" id="L88">		final int y = (int) ((dimension.getHeight() - height)) / 2;</span>
+
+<span class="nc" id="L90">		this.setBounds(x, y, width, height);</span>
+<span class="nc" id="L91">		this.setVisible(true);</span>
+<span class="nc" id="L92">		this.setAlwaysOnTop(true);</span>
+<span class="nc" id="L93">		this.setFocusable(false);</span>
+<span class="nc" id="L94">		this.setFocusableWindowState(false);</span>
+
+<span class="nc" id="L96">		addMouseListener(this);</span>
+<span class="nc" id="L97">		addMouseMotionListener(this);</span>
+<span class="nc" id="L98">	}</span>
+
+	private int xClicked;
+	private int yClicked;
+	private int limY;
+	private int limX;
+
+	public void mouseDragged(MouseEvent event) {
+<span class="nc" id="L106">		int x = event.getXOnScreen();</span>
+<span class="nc" id="L107">		int y = event.getYOnScreen();</span>
+<span class="nc" id="L108">		this.setBounds(x - xClicked, y - yClicked, width, height);</span>
+
+<span class="nc" id="L110">	}</span>
+
+<span class="nc" id="L112">	private Color link = LINK_NORMAL;</span>
+
+	public void mouseMoved(MouseEvent event) {
+<span class="nc bnc" id="L115" title="All 4 branches missed.">		if (event.getY() &gt; limY &amp;&amp; event.getX() &lt; limX) {</span>
+<span class="nc" id="L116">			updateLinkColor(LINK_HOVER);</span>
+		} else {
+<span class="nc" id="L118">			updateLinkColor(LINK_NORMAL);</span>
+		}
+<span class="nc" id="L120">	}</span>
+
+	private void updateLinkColor(final Color newLink) {
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (link != newLink) {</span>
+<span class="nc" id="L124">			link = newLink;</span>
+<span class="nc" id="L125">			this.setCursor(</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">					link == LINK_NORMAL ? Cursor.getDefaultCursor() : Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L127">			repaint();</span>
+		}
+<span class="nc" id="L129">	}</span>
+
+	public void mouseReleased(MouseEvent event) {
+		// System.err.println(&quot;mouseReleased &quot; + event);
+<span class="nc" id="L133">	}</span>
+
+	public void mousePressed(MouseEvent event) {
+<span class="nc" id="L136">		this.xClicked = event.getX();</span>
+<span class="nc" id="L137">		this.yClicked = event.getY();</span>
+<span class="nc" id="L138">	}</span>
+
+	public void mouseClicked(MouseEvent event) {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (link != LINK_NORMAL) {</span>
+			try {
+<span class="nc" id="L143">				Desktop.getDesktop().browse(new URI(&quot;https://plantuml.com&quot;));</span>
+<span class="nc" id="L144">			} catch (Exception e) {</span>
+<span class="nc" id="L145">				Logme.error(e);</span>
+<span class="nc" id="L146">			}</span>
+<span class="nc" id="L147">			return;</span>
+		}
+<span class="nc" id="L149">		this.xClicked = event.getX();</span>
+<span class="nc" id="L150">		this.yClicked = event.getY();</span>
+<span class="nc" id="L151">	}</span>
+
+	public void mouseExited(MouseEvent event) {
+<span class="nc" id="L154">		updateLinkColor(LINK_NORMAL);</span>
+<span class="nc" id="L155">	}</span>
+
+	public void mouseEntered(MouseEvent event) {
+		// System.err.println(&quot;mouseEntered &quot; + event);
+<span class="nc" id="L159">	}</span>
+
+	private void incTotalInternal(int nb) {
+<span class="nc" id="L162">		this.total.addAndGet(nb);</span>
+		// invalidate();
+<span class="nc" id="L164">		repaint();</span>
+		// System.err.println(&quot;INC TOTAL=&quot; + done + &quot;/&quot; + total);
+<span class="nc" id="L166">	}</span>
+
+	private void incDoneInternal(boolean error) {
+<span class="nc" id="L169">		this.done.incrementAndGet();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (error) {</span>
+<span class="nc" id="L171">			this.errors.incrementAndGet();</span>
+		}
+		// invalidate();
+<span class="nc" id="L174">		repaint();</span>
+		// System.err.println(&quot;INC TOTAL=&quot; + done + &quot;/&quot; + total);
+<span class="nc" id="L176">	}</span>
+
+	@Override
+	public void paint(Graphics g) {
+<span class="nc" id="L180">		super.paint(g);</span>
+<span class="nc" id="L181">		g.setColor(Color.WHITE);</span>
+<span class="nc" id="L182">		g.fillRect(0, 0, width, height);</span>
+<span class="nc" id="L183">		g.setColor(Color.BLACK);</span>
+<span class="nc" id="L184">		g.drawRect(0, 0, width - 1, height - 1);</span>
+<span class="nc" id="L185">		g.drawRect(1, 1, width - 3, height - 3);</span>
+		// g.setColor(Color.RED);
+		// final String status = done + &quot;/&quot; + total;
+		// g.drawString(status, width / 2, height / 2);
+<span class="nc" id="L189">		g.drawImage(logo, width - logo.getWidth() - 4, height - logo.getHeight() - 4, null);</span>
+<span class="nc" id="L190">		drawProgessBar(g, done.intValue(), total.intValue());</span>
+<span class="nc" id="L191">		final int nbErrors = errors.get();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (nbErrors &gt; 0) {</span>
+<span class="nc" id="L193">			g.setColor(Color.RED);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			final String message = &quot;&quot; + nbErrors + (nbErrors &gt; 1 ? &quot; diagrams&quot; : &quot; diagram&quot;) + &quot; contains errors&quot;;</span>
+<span class="nc" id="L195">			g.drawString(message, 10, 20);</span>
+		}
+<span class="nc" id="L197">		g.setColor(link);</span>
+<span class="nc" id="L198">		final String urllink = &quot;https://plantuml.com&quot;;</span>
+<span class="nc" id="L199">		final Rectangle2D rect = getUsed(g, urllink);</span>
+<span class="nc" id="L200">		g.drawString(urllink, 10, (int) (height - rect.getMaxY()));</span>
+<span class="nc" id="L201">		limY = (int) (height - rect.getMaxY() + rect.getMinY());</span>
+<span class="nc" id="L202">		limX = (int) (10 + rect.getMaxX());</span>
+
+<span class="nc" id="L204">	}</span>
+
+	private void drawProgessBar(Graphics g, int intValue, int totalValue) {
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (totalValue == 0) {</span>
+<span class="nc" id="L208">			return;</span>
+		}
+<span class="nc" id="L210">		g.setFont(font);</span>
+<span class="nc" id="L211">		final String label = &quot;&quot; + intValue + &quot;/&quot; + totalValue;</span>
+<span class="nc" id="L212">		final Rectangle2D rect = getUsed(g, label);</span>
+
+<span class="nc" id="L214">		final int x = 10;</span>
+<span class="nc" id="L215">		final int y = 33;</span>
+<span class="nc" id="L216">		final int barWidth = 170;</span>
+<span class="nc" id="L217">		final int barHeight = (int) (rect.getHeight() + 2);</span>
+<span class="nc" id="L218">		final int gray = 230;</span>
+<span class="nc" id="L219">		g.setColor(new Color(gray, gray, gray));</span>
+<span class="nc" id="L220">		final int value = barWidth * intValue / totalValue;</span>
+<span class="nc" id="L221">		g.fillRect(x, y, value, barHeight);</span>
+<span class="nc" id="L222">		g.setColor(Color.BLACK);</span>
+<span class="nc" id="L223">		g.drawRect(x, y, barWidth, barHeight);</span>
+
+<span class="nc" id="L225">		final double xLabel = x + (barWidth - rect.getWidth()) / 2;</span>
+<span class="nc" id="L226">		final double yLabel = y - rect.getY() + (barHeight - rect.getHeight()) / 2;</span>
+<span class="nc" id="L227">		g.drawString(label, (int) xLabel, (int) yLabel);</span>
+<span class="nc" id="L228">	}</span>
+
+	private Rectangle2D getUsed(Graphics g, final String label) {
+<span class="nc" id="L231">		return g.getFontMetrics().getStringBounds(label, g);</span>
+	}
+
+	// Static
+
+	public synchronized static void createSplash() {
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (singleton == null) {</span>
+<span class="nc" id="L238">			singleton = new Splash();</span>
+		}
+<span class="nc" id="L240">	}</span>
+
+	public static void incTotal(int nb) {
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (singleton != null) {</span>
+<span class="nc" id="L244">			singleton.incTotalInternal(nb);</span>
+		}
+<span class="nc" id="L246">	}</span>
+
+	public static void incDone(boolean error) {
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		if (singleton != null) {</span>
+<span class="nc" id="L250">			singleton.incDoneInternal(error);</span>
+		}
+<span class="nc" id="L252">	}</span>
+
+	public synchronized static void disposeSplash() {
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		if (singleton != null) {</span>
+<span class="nc" id="L256">			singleton.setVisible(false);</span>
+<span class="nc" id="L257">			singleton.dispose();</span>
+<span class="nc" id="L258">			singleton = null;</span>
+		}
+<span class="nc" id="L260">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

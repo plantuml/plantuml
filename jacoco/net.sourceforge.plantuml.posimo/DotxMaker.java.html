@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DotxMaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.posimo</a> &gt; <span class="el_source">DotxMaker.java</span></div><h1>DotxMaker.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.posimo;
+
+import java.util.Collection;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.utils.Log;
+
+public class DotxMaker {
+
+	private final Cluster root;
+	private final Collection&lt;Path&gt; paths;
+
+<span class="nc" id="L49">	public DotxMaker(Cluster root, Collection&lt;Path&gt; paths) {</span>
+<span class="nc" id="L50">		this.root = root;</span>
+<span class="nc" id="L51">		this.paths = paths;</span>
+<span class="nc" id="L52">	}</span>
+
+	public String createDotString(String... dotStrings) {
+<span class="nc" id="L55">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L56">		sb.append(&quot;digraph unix {&quot;);</span>
+
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (String s : dotStrings) {</span>
+<span class="nc" id="L59">			sb.append(s);</span>
+		}
+
+<span class="nc" id="L62">		sb.append(&quot;compound=true;&quot;);</span>
+
+<span class="nc" id="L64">		printCluster(sb, root);</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (Path p : paths) {</span>
+<span class="nc" id="L67">			sb.append(getPathString(p) + &quot;;&quot;);</span>
+<span class="nc" id="L68">		}</span>
+
+<span class="nc" id="L70">		sb.append(&quot;}&quot;);</span>
+
+<span class="nc" id="L72">		return sb.toString();</span>
+	}
+
+	private void printCluster(StringBuilder sb, Cluster cl) {
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (cl.getContents().size() == 0 &amp;&amp; cl.getSubClusters().size() == 0) {</span>
+<span class="nc" id="L77">			throw new IllegalStateException(cl.toString());</span>
+		}
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (Cluster sub : cl.getSubClusters()) {</span>
+<span class="nc" id="L80">			sb.append(&quot;subgraph cluster&quot; + sub.getUid() + &quot; {&quot;);</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">			if (sub.getTitleWidth() &gt; 0 &amp;&amp; sub.getTitleHeight() &gt; 0) {</span>
+<span class="nc" id="L82">				sb.append(&quot;label=&lt;&lt;TABLE FIXEDSIZE=\&quot;TRUE\&quot; WIDTH=\&quot;&quot; + sub.getTitleWidth() + &quot;\&quot; HEIGHT=\&quot;&quot;</span>
+<span class="nc" id="L83">						+ sub.getTitleHeight() + &quot;\&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&gt;&quot;);</span>
+			}
+
+<span class="nc" id="L86">			printCluster(sb, sub);</span>
+<span class="nc" id="L87">			sb.append(&quot;}&quot;);</span>
+
+<span class="nc" id="L89">		}</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (Block b : cl.getContents()) {</span>
+<span class="nc" id="L91">			sb.append(&quot;b&quot; + b.getUid() + getNodeAttibute(b) + &quot;;&quot;);</span>
+<span class="nc" id="L92">		}</span>
+
+<span class="nc" id="L94">	}</span>
+
+	private String getPathString(Path p) {
+<span class="nc" id="L97">		Objects.requireNonNull(p);</span>
+<span class="nc" id="L98">		final StringBuilder sb = new StringBuilder(&quot;b&quot; + p.getStart().getUid() + &quot; -&gt; b&quot; + p.getEnd().getUid());</span>
+<span class="nc" id="L99">		sb.append(&quot; [dir=none, arrowhead=none, headclip=true, tailclip=true&quot;);</span>
+<span class="nc" id="L100">		final int len = p.getLength();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (len &gt;= 3) {</span>
+<span class="nc" id="L102">			sb.append(&quot;,minlen=&quot; + (len - 1));</span>
+		}
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (p.getLabel() == null) {</span>
+<span class="nc" id="L105">			sb.append(&quot;]&quot;);</span>
+		} else {
+<span class="nc" id="L107">			final XDimension2D size = p.getLabel().getSize();</span>
+<span class="nc" id="L108">			sb.append(&quot;, label=&lt;&lt;TABLE FIXEDSIZE=\&quot;TRUE\&quot; WIDTH=\&quot;&quot; + size.getWidth() + &quot;\&quot; HEIGHT=\&quot;&quot;</span>
+<span class="nc" id="L109">					+ size.getHeight() + &quot;\&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&gt;]&quot;);</span>
+		}
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (p.getLength() &lt;= 1) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			final boolean samePackage = p.getStart().getParent() == p.getEnd().getParent();</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (samePackage) {</span>
+<span class="nc" id="L115">				sb.append(&quot;{rank=same; b&quot; + p.getStart().getUid() + &quot;; b&quot; + p.getEnd().getUid() + &quot;}&quot;);</span>
+			} else {
+<span class="nc" id="L117">				Log.println(&quot;!!!!!!!!!!!!!!!!!TURNING ARROUND DOT BUG!!!!!!!!!!!!!!!!!!&quot;);</span>
+			}
+		}
+
+<span class="nc" id="L121">		return sb.toString();</span>
+	}
+
+	private String getNodeAttibute(Block b) {
+<span class="nc" id="L125">		final StringBuilder sb = new StringBuilder(&quot;[&quot;);</span>
+<span class="nc" id="L126">		sb.append(&quot;label=\&quot;\&quot;,&quot;);</span>
+<span class="nc" id="L127">		sb.append(&quot;fixedsize=true,&quot;);</span>
+<span class="nc" id="L128">		sb.append(&quot;width=&quot; + b.getSize().getWidth() / 72.0 + &quot;,&quot;);</span>
+<span class="nc" id="L129">		sb.append(&quot;height=&quot; + b.getSize().getHeight() / 72.0 + &quot;,&quot;);</span>
+<span class="nc" id="L130">		sb.append(&quot;shape=rect&quot;);</span>
+<span class="nc" id="L131">		sb.append(&quot;]&quot;);</span>
+<span class="nc" id="L132">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

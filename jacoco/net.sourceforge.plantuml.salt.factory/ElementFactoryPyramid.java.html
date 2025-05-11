@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ElementFactoryPyramid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.salt.factory</a> &gt; <span class="el_source">ElementFactoryPyramid.java</span></div><h1>ElementFactoryPyramid.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.salt.factory;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.salt.DataSource;
+import net.sourceforge.plantuml.salt.Positionner2;
+import net.sourceforge.plantuml.salt.SaltDictionary;
+import net.sourceforge.plantuml.salt.Terminated;
+import net.sourceforge.plantuml.salt.Terminator;
+import net.sourceforge.plantuml.salt.element.Element;
+import net.sourceforge.plantuml.salt.element.ElementPyramid;
+import net.sourceforge.plantuml.salt.element.ElementText;
+import net.sourceforge.plantuml.salt.element.TableStrategy;
+
+<span class="fc" id="L49">public class ElementFactoryPyramid extends AbstractElementFactoryComplex {</span>
+
+	public ElementFactoryPyramid(DataSource dataSource, SaltDictionary dictionary) {
+<span class="fc" id="L52">		super(dataSource, dictionary);</span>
+<span class="fc" id="L53">	}</span>
+
+	public Terminated&lt;Element&gt; create() {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (ready() == false) {</span>
+<span class="nc" id="L57">			throw new IllegalStateException();</span>
+		}
+<span class="fc" id="L59">		final Terminated&lt;String&gt; tmp = getDataSource().next();</span>
+<span class="fc" id="L60">		final String header = tmp.getElement();</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		assert header.startsWith(&quot;{&quot;);</span>
+<span class="fc" id="L62">		String title = null;</span>
+
+<span class="fc" id="L64">		TableStrategy strategy = TableStrategy.DRAW_NONE;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (header.length() == 2) {</span>
+<span class="fc" id="L66">			strategy = TableStrategy.fromChar(header.charAt(1));</span>
+		}
+<span class="pc bpc" id="L68" title="3 of 4 branches missed.">		if (strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE &amp;&amp; tmp.getTerminator() == Terminator.NEWCOL) {</span>
+<span class="nc" id="L69">			title = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getDataSource().next().getElement(), &quot;\&quot;&quot;);</span>
+		}
+
+<span class="fc" id="L72">		final Positionner2 positionner = new Positionner2();</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		while (getDataSource().peek(0).getElement().equals(&quot;}&quot;) == false) {</span>
+<span class="fc" id="L75">			final Terminated&lt;Element&gt; next = getNextElement();</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			if (isStar(next.getElement())) {</span>
+<span class="nc" id="L77">				positionner.mergeLeft(next.getTerminator());</span>
+			} else {
+<span class="fc" id="L79">				positionner.add(next);</span>
+			}
+<span class="fc" id="L81">		}</span>
+<span class="fc" id="L82">		final Terminated&lt;String&gt; next = getDataSource().next();</span>
+<span class="fc" id="L83">		return new Terminated&lt;Element&gt;(new ElementPyramid(positionner, strategy, title, getDictionary()),</span>
+<span class="fc" id="L84">				next.getTerminator());</span>
+	}
+
+	private boolean isStar(Element element) {
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (element instanceof ElementText == false) {</span>
+<span class="nc" id="L89">			return false;</span>
+		}
+<span class="fc" id="L91">		return &quot;*&quot;.equals(((ElementText) element).getText());</span>
+	}
+
+	public boolean ready() {
+<span class="fc" id="L95">		final String text = getDataSource().peek(0).getElement();</span>
+<span class="pc bpc" id="L96" title="6 of 10 branches missed.">		if (text.equals(&quot;{&quot;) || text.equals(&quot;{+&quot;) || text.equals(&quot;{^&quot;) || text.equals(&quot;{#&quot;) || text.equals(&quot;{!&quot;)</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				|| text.equals(&quot;{-&quot;)) {</span>
+<span class="fc" id="L98">			final String text1 = getDataSource().peek(1).getElement();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (text1.matches(&quot;[NSEW]=|T&quot;)) {</span>
+<span class="nc" id="L100">				return false;</span>
+			}
+<span class="fc" id="L102">			return true;</span>
+		}
+<span class="nc" id="L104">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SlotSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.compress</a> &gt; <span class="el_source">SlotSet.java</span></div><h1>SlotSet.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.compress;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+<span class="fc" id="L47">public class SlotSet implements Iterable&lt;Slot&gt; {</span>
+    // ::remove file when __HAXE__
+
+<span class="fc" id="L50">	private final List&lt;Slot&gt; all = new ArrayList&lt;&gt;();</span>
+
+	public SlotSet filter(double start, double end) {
+<span class="nc" id="L53">		final SlotSet result = new SlotSet();</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (Slot slot : all) {</span>
+<span class="nc" id="L55">			final Slot intersec = slot.intersect(start, end);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (intersec != null) </span>
+<span class="nc" id="L57">				result.all.add(intersec);</span>
+			
+<span class="nc" id="L59">		}</span>
+<span class="nc" id="L60">		return result;</span>
+	}
+
+	public void addAll(SlotSet other) {
+<span class="nc" id="L64">		this.all.addAll(other.all);</span>
+<span class="nc" id="L65">	}</span>
+
+	public void addSlot(double start, double end) {
+<span class="fc" id="L68">		final List&lt;Slot&gt; collisions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L69">		Slot newSlot = new Slot(start, end);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (final Iterator&lt;Slot&gt; it = all.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L71">			final Slot s = it.next();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (s.intersect(newSlot)) {</span>
+<span class="fc" id="L73">				it.remove();</span>
+<span class="fc" id="L74">				collisions.add(s);</span>
+			}
+<span class="fc" id="L76">		}</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		for (Slot s : collisions) </span>
+<span class="fc" id="L78">			newSlot = newSlot.merge(s);</span>
+		
+<span class="fc" id="L80">		all.add(newSlot);</span>
+<span class="fc" id="L81">	}</span>
+
+	public SlotSet smaller(double margin) {
+<span class="fc" id="L84">		final SlotSet result = new SlotSet();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (Slot sl : all) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			if (sl.size() &lt;= 2 * margin) </span>
+<span class="fc" id="L87">				continue;</span>
+			
+<span class="fc" id="L89">			result.addSlot(sl.getStart() + margin, sl.getEnd() - margin);</span>
+<span class="fc" id="L90">		}</span>
+<span class="fc" id="L91">		return result;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L96">		return all.toString();</span>
+	}
+
+	public List&lt;Slot&gt; getSlots() {
+<span class="fc" id="L100">		return Collections.unmodifiableList(all);</span>
+	}
+
+	public Iterator&lt;Slot&gt; iterator() {
+<span class="nc" id="L104">		return getSlots().iterator();</span>
+	}
+
+	public SlotSet reverse() {
+<span class="fc" id="L108">		final SlotSet result = new SlotSet();</span>
+<span class="fc" id="L109">		Collections.sort(all);</span>
+<span class="fc" id="L110">		Slot last = null;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		for (Slot slot : all) {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			if (last != null) </span>
+<span class="fc" id="L113">				result.addSlot(last.getEnd(), slot.getStart());</span>
+			
+<span class="fc" id="L115">			last = slot;</span>
+<span class="fc" id="L116">		}</span>
+<span class="fc" id="L117">		return result;</span>
+	}
+
+	public void drawDebugX(UGraphic ug, double size) {
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (Slot slot : all) {</span>
+<span class="nc" id="L122">			final URectangle rect = URectangle.build(slot.getEnd() - slot.getStart(), size);</span>
+<span class="nc" id="L123">			ug.apply(UTranslate.dx(slot.getStart())).draw(rect);</span>
+<span class="nc" id="L124">		}</span>
+<span class="nc" id="L125">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

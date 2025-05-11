@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComponentRoseArrow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin.rose</a> &gt; <span class="el_source">ComponentRoseArrow.java</span></div><h1>ComponentRoseArrow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.skin.rose;
+
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDecoration;
+import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.ArrowDressing;
+import net.sourceforge.plantuml.skin.ArrowHead;
+import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+public class ComponentRoseArrow extends AbstractComponentRoseArrow {
+
+	private final HorizontalAlignment messagePosition;
+	private final boolean niceArrow;
+	private final boolean belowForResponse;
+	private final int inclination1;
+	private final int inclination2;
+
+	public ComponentRoseArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
+			HorizontalAlignment messagePosition, ISkinParam skinParam, LineBreakStrategy maxMessageSize,
+			boolean niceArrow, boolean belowForResponse) {
+<span class="fc" id="L71">		super(style, stringsToDisplay, arrowConfiguration, skinParam, maxMessageSize);</span>
+<span class="fc" id="L72">		this.messagePosition = messagePosition;</span>
+<span class="fc" id="L73">		this.niceArrow = niceArrow;</span>
+<span class="fc" id="L74">		this.belowForResponse = belowForResponse;</span>
+<span class="fc" id="L75">		this.inclination1 = arrowConfiguration.getInclination1();</span>
+<span class="fc" id="L76">		this.inclination2 = arrowConfiguration.getInclination2();</span>
+<span class="fc" id="L77">	}</span>
+
+	public static final double spaceCrossX = 6;
+	public static final double diamCircle = 8;
+	public static final double thinCircle = 1.5;
+
+	@Override
+	public void drawInternalU(UGraphic ug, Area area) {
+<span class="fc" id="L85">		final ArrowConfiguration arrowConfiguration = getArrowConfiguration();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (arrowConfiguration.isHidden())</span>
+<span class="fc" id="L87">			return;</span>
+
+<span class="fc" id="L89">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L90">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L91">		ug = ug.apply(getForegroundColor());</span>
+
+<span class="fc" id="L93">		final ArrowDressing dressing1 = arrowConfiguration.getDressing1();</span>
+<span class="fc" id="L94">		final ArrowDressing dressing2 = arrowConfiguration.getDressing2();</span>
+
+<span class="fc" id="L96">		double start = 0;</span>
+<span class="fc" id="L97">		double len = dimensionToUse.getWidth() - 1;</span>
+<span class="fc" id="L98">		final double lenFull = dimensionToUse.getWidth();</span>
+
+<span class="fc" id="L100">		final double pos1 = start + 1;</span>
+<span class="fc" id="L101">		final double pos2 = len - 1;</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (dressing2.getHead() == ArrowHead.NONE)</span>
+<span class="fc" id="L105">				len -= diamCircle / 2;</span>
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			if (dressing2.getHead() != ArrowHead.NONE)</span>
+<span class="fc" id="L108">				len -= diamCircle / 2 + thinCircle;</span>
+		}
+
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE) {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			if (dressing1.getHead() == ArrowHead.NONE) {</span>
+<span class="fc" id="L113">				start += diamCircle / 2;</span>
+<span class="fc" id="L114">				len -= diamCircle / 2;</span>
+			}
+<span class="fc bfc" id="L116" title="All 2 branches covered.">			if (dressing1.getHead() == ArrowHead.ASYNC) {</span>
+<span class="fc" id="L117">				start += diamCircle / 2 + thinCircle;</span>
+<span class="fc" id="L118">				len -= diamCircle / 2 + thinCircle;</span>
+			}
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (dressing1.getHead() == ArrowHead.NORMAL) {</span>
+<span class="fc" id="L121">				start += diamCircle / 2 + thinCircle;</span>
+<span class="fc" id="L122">				len -= diamCircle / 2 + thinCircle;</span>
+			}
+		}
+
+<span class="fc bfc" id="L126" title="All 4 branches covered.">		if (dressing2.getPart() == ArrowPart.FULL &amp;&amp; dressing2.getHead() == ArrowHead.NORMAL)</span>
+<span class="fc" id="L127">			len -= getArrowDeltaX() / 2;</span>
+
+<span class="fc bfc" id="L129" title="All 4 branches covered.">		if (dressing1.getPart() == ArrowPart.FULL &amp;&amp; dressing1.getHead() == ArrowHead.NORMAL) {</span>
+<span class="fc" id="L130">			start += getArrowDeltaX() / 2;</span>
+<span class="fc" id="L131">			len -= getArrowDeltaX() / 2;</span>
+		}
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (dressing2.getHead() == ArrowHead.CROSSX)</span>
+<span class="fc" id="L135">			len -= 2 * spaceCrossX;</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (dressing1.getHead() == ArrowHead.CROSSX) {</span>
+<span class="fc" id="L138">			start += 2 * spaceCrossX;</span>
+<span class="fc" id="L139">			len -= 2 * spaceCrossX;</span>
+		}
+
+		final double posArrow;
+		final double yText;
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (isBelowForResponse()) {</span>
+<span class="nc" id="L145">			posArrow = 0;</span>
+<span class="nc" id="L146">			yText = getMarginY();</span>
+		} else {
+<span class="fc" id="L148">			posArrow = getTextHeight(stringBounder);</span>
+<span class="fc" id="L149">			yText = 0;</span>
+		}
+
+<span class="fc" id="L152">		drawDressing1(ug.apply(new UTranslate(pos1, posArrow + inclination1)), dressing1,</span>
+<span class="fc" id="L153">				arrowConfiguration.getDecoration1(), lenFull);</span>
+<span class="fc" id="L154">		drawDressing2(ug.apply(new UTranslate(pos2, posArrow + inclination2)), dressing2,</span>
+<span class="fc" id="L155">				arrowConfiguration.getDecoration2(), lenFull);</span>
+
+<span class="pc bpc" id="L157" title="2 of 4 branches missed.">		if (inclination1 == 0 &amp;&amp; inclination2 == 0)</span>
+<span class="fc" id="L158">			arrowConfiguration.applyStroke(ug, getStyle()).apply(new UTranslate(start, posArrow)).draw(new ULine(len, 0));</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		else if (inclination1 != 0)</span>
+<span class="nc" id="L160">			drawLine(arrowConfiguration.applyStroke(ug, getStyle()), start + len, posArrow, 0, posArrow + inclination1);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		else if (inclination2 != 0)</span>
+<span class="nc" id="L162">			drawLine(arrowConfiguration.applyStroke(ug, getStyle()), start, posArrow, pos2, posArrow + inclination2);</span>
+
+<span class="fc" id="L164">		final ArrowDirection direction2 = getDirection2();</span>
+		final double textPos;
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (messagePosition == HorizontalAlignment.CENTER) {</span>
+<span class="nc" id="L167">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L168">			textPos = (dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth) / 2;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		} else if (messagePosition == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L170">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L171">			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getMarginX2()</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);</span>
+<span class="nc" id="L173">		} else {</span>
+<span class="fc" id="L174">			textPos = getMarginX1()</span>
+<span class="fc bfc" id="L175" title="All 4 branches covered.">					+ (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE || direction2 == ArrowDirection.BOTH_DIRECTION</span>
+<span class="fc" id="L176">							? getArrowDeltaX()</span>
+<span class="fc" id="L177">							: 0);</span>
+		}
+<span class="fc" id="L179">		getTextBlock().drawU(ug.apply(new UTranslate(textPos + Math.max(0, area.getTextDeltaX()), yText)));</span>
+<span class="fc" id="L180">	}</span>
+
+	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
+<span class="nc" id="L183">		ug = ug.apply(new UTranslate(x1, y1));</span>
+<span class="nc" id="L184">		ug.draw(new ULine(x2 - x1, y2 - y1));</span>
+
+<span class="nc" id="L186">	}</span>
+
+	public double getPosArrow(StringBounder stringBounder) {
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (isBelowForResponse())</span>
+<span class="nc" id="L190">			return 0;</span>
+
+<span class="fc" id="L192">		return getTextHeight(stringBounder) - 2 * getMarginY();</span>
+	}
+
+	private boolean isBelowForResponse() {
+<span class="pc bpc" id="L196" title="3 of 4 branches missed.">		return belowForResponse &amp;&amp; getArrowConfiguration().isReverseDefine();</span>
+	}
+
+	private void drawDressing1(UGraphic ug, ArrowDressing dressing, ArrowDecoration decoration, double lenFull) {
+
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (decoration == ArrowDecoration.CIRCLE) {</span>
+<span class="fc" id="L202">			final UEllipse circle = UEllipse.build(diamCircle, diamCircle);</span>
+<span class="fc" id="L203">			ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor()).apply(getBackgroundColor().bg())</span>
+<span class="fc" id="L204">					.apply(new UTranslate(-diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">			if (dressing.getHead() != ArrowHead.CROSSX)</span>
+<span class="fc" id="L206">				ug = ug.apply(UTranslate.dx(diamCircle / 2 + thinCircle));</span>
+		}
+
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (dressing.getHead() == ArrowHead.ASYNC) {</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">			if (dressing.getPart() != ArrowPart.BOTTOM_PART)</span>
+<span class="fc" id="L211">				getArrowConfiguration().applyThicknessOnly(ug).draw(</span>
+<span class="fc" id="L212">						new ULine(getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));</span>
+
+<span class="fc bfc" id="L214" title="All 2 branches covered.">			if (dressing.getPart() != ArrowPart.TOP_PART)</span>
+<span class="fc" id="L215">				getArrowConfiguration().applyThicknessOnly(ug)</span>
+<span class="fc" id="L216">						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));</span>
+
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		} else if (dressing.getHead() == ArrowHead.CROSSX) {</span>
+<span class="fc" id="L219">			ug = ug.apply(UStroke.withThickness(2));</span>
+<span class="fc" id="L220">			ug.apply(new UTranslate(spaceCrossX, -getArrowDeltaX() / 2))</span>
+<span class="fc" id="L221">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
+<span class="fc" id="L222">			ug.apply(new UTranslate(spaceCrossX, getArrowDeltaX() / 2))</span>
+<span class="fc" id="L223">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		} else if (dressing.getHead() == ArrowHead.NORMAL) {</span>
+<span class="fc" id="L225">			final UPolygon polygon = getPolygonReverse(dressing.getPart());</span>
+
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">			if (inclination1 != 0)</span>
+<span class="nc" id="L228">				polygon.rotate(Math.atan2(-inclination1, lenFull));</span>
+
+<span class="fc" id="L230">			ug.apply(getForegroundColor().bg()).draw(polygon);</span>
+		}
+
+<span class="fc" id="L233">	}</span>
+
+	private void drawDressing2(UGraphic ug, ArrowDressing dressing, ArrowDecoration decoration, double lenFull) {
+
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (decoration == ArrowDecoration.CIRCLE) {</span>
+<span class="fc" id="L238">			ug = ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor())</span>
+<span class="fc" id="L239">					.apply(getBackgroundColor().bg());</span>
+<span class="fc" id="L240">			final UEllipse circle = UEllipse.build(diamCircle, diamCircle);</span>
+<span class="fc" id="L241">			ug.apply(new UTranslate(-diamCircle / 2 + thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);</span>
+<span class="fc" id="L242">			ug = ug.apply(UStroke.simple());</span>
+<span class="fc" id="L243">			ug = ug.apply(UTranslate.dx(-diamCircle / 2 - thinCircle));</span>
+		}
+
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		if (dressing.getHead() == ArrowHead.ASYNC) {</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			if (dressing.getPart() != ArrowPart.BOTTOM_PART)</span>
+<span class="fc" id="L248">				getArrowConfiguration().applyThicknessOnly(ug).draw(</span>
+<span class="fc" id="L249">						new ULine(-getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));</span>
+
+<span class="fc bfc" id="L251" title="All 2 branches covered.">			if (dressing.getPart() != ArrowPart.TOP_PART)</span>
+<span class="fc" id="L252">				getArrowConfiguration().applyThicknessOnly(ug)</span>
+<span class="fc" id="L253">						.draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));</span>
+
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		} else if (dressing.getHead() == ArrowHead.CROSSX) {</span>
+<span class="fc" id="L256">			ug = ug.apply(UStroke.withThickness(2));</span>
+<span class="fc" id="L257">			ug.apply(new UTranslate(-spaceCrossX - getArrowDeltaX(), -getArrowDeltaX() / 2))</span>
+<span class="fc" id="L258">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
+<span class="fc" id="L259">			ug.apply(new UTranslate(-spaceCrossX - getArrowDeltaX(), getArrowDeltaX() / 2))</span>
+<span class="fc" id="L260">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		} else if (dressing.getHead() == ArrowHead.NORMAL) {</span>
+<span class="fc" id="L262">			final UPolygon polygon = getPolygonNormal(dressing.getPart());</span>
+
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">			if (inclination2 != 0)</span>
+<span class="nc" id="L265">				polygon.rotate(Math.atan2(inclination2, lenFull));</span>
+
+<span class="fc" id="L267">			ug.apply(getForegroundColor().bg()).draw(polygon);</span>
+		}
+
+<span class="fc" id="L270">	}</span>
+
+	private UPolygon getPolygonNormal(ArrowPart part) {
+<span class="fc" id="L273">		UPolygon polygon = new UPolygon();</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (part == ArrowPart.TOP_PART) {</span>
+<span class="fc" id="L275">			polygon.addPoint(-getArrowDeltaX(), -getArrowDeltaY());</span>
+<span class="fc" id="L276">			polygon.addPoint(0, 0);</span>
+<span class="fc" id="L277">			polygon.addPoint(-getArrowDeltaX(), 0);</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">		} else if (part == ArrowPart.BOTTOM_PART) {</span>
+<span class="fc" id="L279">			polygon.addPoint(-getArrowDeltaX(), 0);</span>
+<span class="fc" id="L280">			polygon.addPoint(0, 0);</span>
+<span class="fc" id="L281">			polygon.addPoint(-getArrowDeltaX(), getArrowDeltaY());</span>
+		} else {
+<span class="fc" id="L283">			polygon.addPoint(-getArrowDeltaX(), -getArrowDeltaY());</span>
+<span class="fc" id="L284">			polygon.addPoint(0, 0);</span>
+<span class="fc" id="L285">			polygon.addPoint(-getArrowDeltaX(), +getArrowDeltaY());</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">			if (niceArrow)</span>
+<span class="fc" id="L287">				polygon.addPoint(-getArrowDeltaX() + 4, 0);</span>
+		}
+<span class="fc" id="L289">		return polygon;</span>
+	}
+
+	private UPolygon getPolygonReverse(ArrowPart part) {
+<span class="fc" id="L293">		final UPolygon polygon = new UPolygon();</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">		if (part == ArrowPart.TOP_PART) {</span>
+<span class="fc" id="L295">			polygon.addPoint(getArrowDeltaX(), -getArrowDeltaY());</span>
+<span class="fc" id="L296">			polygon.addPoint(0, 0);</span>
+<span class="fc" id="L297">			polygon.addPoint(getArrowDeltaX(), 0);</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		} else if (part == ArrowPart.BOTTOM_PART) {</span>
+<span class="fc" id="L299">			polygon.addPoint(getArrowDeltaX(), 0);</span>
+<span class="fc" id="L300">			polygon.addPoint(0, 0);</span>
+<span class="fc" id="L301">			polygon.addPoint(getArrowDeltaX(), getArrowDeltaY());</span>
+		} else {
+<span class="fc" id="L303">			polygon.addPoint(getArrowDeltaX(), -getArrowDeltaY());</span>
+<span class="fc" id="L304">			polygon.addPoint(0, 0);</span>
+<span class="fc" id="L305">			polygon.addPoint(getArrowDeltaX(), getArrowDeltaY());</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">			if (niceArrow)</span>
+<span class="fc" id="L307">				polygon.addPoint(getArrowDeltaX() - 4, 0);</span>
+
+		}
+<span class="fc" id="L310">		return polygon;</span>
+	}
+
+	public XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
+<span class="fc" id="L314">		final double y = getYPoint(stringBounder);</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="fc" id="L316">			return new XPoint2D(getPaddingX(), y + inclination2);</span>
+
+<span class="fc" id="L318">		return new XPoint2D(dimensionToUse.getWidth() + getPaddingX(), y + inclination2);</span>
+	}
+
+	public XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
+<span class="fc" id="L322">		final double y = getYPoint(stringBounder);</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="fc" id="L324">			return new XPoint2D(dimensionToUse.getWidth() + getPaddingX(), y);</span>
+
+<span class="fc" id="L326">		return new XPoint2D(getPaddingX(), y);</span>
+	}
+
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		if (isBelowForResponse())</span>
+<span class="nc" id="L332">			return getPaddingY();</span>
+
+<span class="fc" id="L334">		return getTextHeight(stringBounder) + getPaddingY();</span>
+	}
+
+	final private ArrowDirection getDirection2() {
+<span class="fc" id="L338">		return getArrowConfiguration().getArrowDirection();</span>
+	}
+
+	@Override
+	public double getPreferredHeight(StringBounder stringBounder) {
+<span class="fc" id="L343">		return getTextHeight(stringBounder) + getArrowDeltaY() + 2 * getPaddingY() + inclination1 + inclination2;</span>
+	}
+
+	@Override
+	public double getPreferredWidth(StringBounder stringBounder) {
+<span class="fc" id="L348">		return getTextWidth(stringBounder) + getArrowDeltaX();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

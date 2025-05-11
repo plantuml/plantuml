@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpriteMonochrome.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.sprite</a> &gt; <span class="el_source">SpriteMonochrome.java</span></div><h1>SpriteMonochrome.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.sprite;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.atmp.PixelImage;
+import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+
+public class SpriteMonochrome implements Sprite {
+
+	private final int width;
+	private final int height;
+	private final int grayLevel;
+	private final int gray[][];
+
+	public boolean isSameKind(SpriteMonochrome other) {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (this.width != other.width)</span>
+<span class="nc" id="L65">			return false;</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (this.height != other.height)</span>
+<span class="nc" id="L68">			return false;</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (this.grayLevel != other.grayLevel)</span>
+<span class="nc" id="L71">			return false;</span>
+
+<span class="nc" id="L73">		return true;</span>
+	}
+
+	public boolean isSame(SpriteMonochrome other) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (isSameKind(other) == false)</span>
+<span class="nc" id="L78">			return false;</span>
+
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (int i = 0; i &lt; width; i++)</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			for (int j = 0; j &lt; height; j++)</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">				if (this.gray[j][i] != other.gray[j][i])</span>
+<span class="nc" id="L83">					return false;</span>
+
+<span class="nc" id="L85">		return true;</span>
+	}
+
+	public SpriteMonochrome xor(SpriteMonochrome other) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (this.width != other.width)</span>
+<span class="nc" id="L90">			throw new IllegalStateException();</span>
+
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (this.height != other.height)</span>
+<span class="nc" id="L93">			throw new IllegalStateException();</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (this.grayLevel != other.grayLevel)</span>
+<span class="nc" id="L96">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L98">		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = 0; i &lt; width; i++)</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			for (int j = 0; j &lt; height; j++)</span>
+<span class="nc" id="L101">				result.gray[j][i] = this.gray[j][i] ^ other.gray[j][i];</span>
+
+<span class="nc" id="L103">		return result;</span>
+	}
+
+<span class="fc" id="L106">	public SpriteMonochrome(int width, int height, int grayLevel) {</span>
+<span class="pc bpc" id="L107" title="4 of 8 branches missed.">		if (grayLevel != 2 &amp;&amp; grayLevel != 4 &amp;&amp; grayLevel != 8 &amp;&amp; grayLevel != 16)</span>
+<span class="nc" id="L108">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L110">		this.width = width;</span>
+<span class="fc" id="L111">		this.height = height;</span>
+<span class="fc" id="L112">		this.grayLevel = grayLevel;</span>
+<span class="fc" id="L113">		this.gray = new int[height][width];</span>
+<span class="fc" id="L114">	}</span>
+
+	public SpriteMonochrome xSymetric() {
+<span class="nc" id="L117">		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (int i = 0; i &lt; width; i++)</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			for (int j = 0; j &lt; height; j++)</span>
+<span class="nc" id="L120">				result.setGray(i, j, this.getGray(i, j));</span>
+
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (int j = 0; j &lt; height; j++)</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			for (int i = 0; i &lt; width / 2; i++) {</span>
+<span class="nc" id="L124">				final int i2 = width - 1 - i;</span>
+<span class="nc" id="L125">				final int level = result.getGray(i, j) ^ result.getGray(i2, j);</span>
+<span class="nc" id="L126">				result.setGray(i2, j, level);</span>
+			}
+
+<span class="nc" id="L129">		return result;</span>
+	}
+
+	public SpriteMonochrome ySymetric() {
+<span class="nc" id="L133">		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (int i = 0; i &lt; width; i++)</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			for (int j = 0; j &lt; height; j++)</span>
+<span class="nc" id="L136">				result.setGray(i, j, this.getGray(i, j));</span>
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (int i = 0; i &lt; width; i++)</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			for (int j = 0; j &lt; height / 2; j++) {</span>
+<span class="nc" id="L140">				final int j2 = height - 1 - j;</span>
+<span class="nc" id="L141">				final int level = result.getGray(i, j) ^ result.getGray(i, j2);</span>
+<span class="nc" id="L142">				result.setGray(i, j2, level);</span>
+			}
+
+<span class="nc" id="L145">		return result;</span>
+	}
+
+	public void setGray(int x, int y, int level) {
+<span class="pc bpc" id="L149" title="2 of 4 branches missed.">		if (x &lt; 0 || x &gt;= width)</span>
+<span class="nc" id="L150">			return;</span>
+
+<span class="pc bpc" id="L152" title="2 of 4 branches missed.">		if (y &lt; 0 || y &gt;= height)</span>
+<span class="nc" id="L153">			return;</span>
+
+<span class="pc bpc" id="L155" title="2 of 4 branches missed.">		if (level &lt; 0 || level &gt;= grayLevel)</span>
+<span class="nc" id="L156">			throw new IllegalArgumentException(&quot;level=&quot; + level + &quot; grayLevel=&quot; + grayLevel);</span>
+
+<span class="fc" id="L158">		gray[y][x] = level;</span>
+<span class="fc" id="L159">	}</span>
+
+	public int getGray(int x, int y) {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (x &gt;= width)</span>
+<span class="nc" id="L163">			throw new IllegalArgumentException(&quot;x=&quot; + x + &quot; width=&quot; + width);</span>
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (y &gt;= height)</span>
+<span class="nc" id="L166">			throw new IllegalArgumentException(&quot;y=&quot; + y + &quot; height=&quot; + height);</span>
+
+<span class="nc" id="L168">		return gray[y][x];</span>
+	}
+
+	public int getHeight() {
+<span class="fc" id="L172">		return height;</span>
+	}
+
+	public int getWidth() {
+<span class="fc" id="L176">		return width;</span>
+	}
+
+	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
+
+<span class="pc bpc" id="L181" title="1 of 4 branches missed.">		if (backcolor == null || backcolor.isTransparent())</span>
+<span class="fc" id="L182">			backcolor = HColors.WHITE.withDark(HColors.BLACK);</span>
+
+<span class="pc bpc" id="L184" title="1 of 4 branches missed.">		if (color == null || color.isTransparent())</span>
+<span class="fc" id="L185">			color = HColors.BLACK.withDark(HColors.WHITE);</span>
+
+<span class="fc" id="L187">		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L188">		final HColorGradient gradient = HColors.gradient(backcolor, color, '\0');</span>
+<span class="fc" id="L189">		double maxCoef = 0;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		for (int col = 0; col &lt; width; col++)</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			for (int line = 0; line &lt; height; line++)</span>
+<span class="fc" id="L192">				maxCoef = Math.max(maxCoef, 1.0 * gray[line][col] / (grayLevel - 1));</span>
+
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		for (int col = 0; col &lt; width; col++)</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">			for (int line = 0; line &lt; height; line++) {</span>
+<span class="fc" id="L196">				final int grayValue = gray[line][col];</span>
+<span class="fc" id="L197">				final double coef = 1.0 * grayValue / (grayLevel - 1);</span>
+				final int alpha;
+<span class="fc bfc" id="L199" title="All 2 branches covered.">				if (coef &gt; maxCoef / 4)</span>
+<span class="fc" id="L200">					alpha = 255;</span>
+				else
+<span class="fc" id="L202">					alpha = (int) (255 * (coef * 4 / maxCoef));</span>
+<span class="fc" id="L203">				final Color c = gradient.getColor(colorMapper, coef, alpha);</span>
+<span class="fc" id="L204">				im.setRGB(col, line, c.getRGB());</span>
+			}
+
+<span class="fc" id="L207">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
+	}
+
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
+<span class="fc" id="L211">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L214">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">						forcedColor == null ? fontColor : forcedColor);</span>
+<span class="fc" id="L216">				ug.draw(image.scale(scale));</span>
+<span class="fc" id="L217">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L220">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
+			}
+		};
+	}
+
+	public void exportSprite1(OutputStream fos) throws IOException {
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (int y = 0; y &lt; this.getHeight(); y += 2)</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			for (int x = 0; x &lt; this.getWidth(); x += 1) {</span>
+<span class="nc" id="L228">				int b1 = this.getGray(x, y);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">				int b2 = y + 1 &lt; this.getHeight() ? this.getGray(x, y + 1) : b1;</span>
+<span class="nc" id="L230">				fos.write(b1 * 16 + b2);</span>
+			}
+
+<span class="nc" id="L233">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

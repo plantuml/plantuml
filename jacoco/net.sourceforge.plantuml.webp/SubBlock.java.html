@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">SubBlock.java</span></div><h1>SubBlock.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package net.sourceforge.plantuml.webp;
+
+import java.io.IOException;
+
+public class SubBlock {
+<span class="nc" id="L21">	public static enum PLANE {</span>
+<span class="nc" id="L22">		U, V, Y1, Y2</span>
+	};
+
+	public static final int UV = 2;
+	public static final int Y = 3;
+	public static final int Y_AFTER_Y2 = 0;
+	public static final int Y2 = 1;
+
+	public static int planeToType(PLANE plane, Boolean withY2) {
+<span class="nc bnc" id="L31" title="All 5 branches missed.">		switch (plane) {</span>
+		case Y2:
+<span class="nc" id="L33">			return 1;</span>
+		case Y1:
+<span class="nc bnc" id="L35" title="All 2 branches missed.">			if (withY2)</span>
+<span class="nc" id="L36">				return 0;</span>
+			else
+<span class="nc" id="L38">				return 3;</span>
+		case U:
+<span class="nc" id="L40">			return 2;</span>
+		case V:
+<span class="nc" id="L42">			return 2;</span>
+		}
+<span class="nc" id="L44">		return -1;</span>
+
+	}
+
+	private SubBlock above;
+
+	private int[][] dest;
+	private int[][] diff;
+	private boolean hasNoZeroToken;
+	private SubBlock left;
+	private MacroBlock macroBlock;
+	private int mode;
+	private PLANE plane;
+	private int predict[][];
+	private int tokens[];
+
+<span class="nc" id="L60">	public SubBlock(MacroBlock macroBlock, SubBlock above, SubBlock left, SubBlock.PLANE plane) {</span>
+<span class="nc" id="L61">		this.macroBlock = macroBlock;</span>
+<span class="nc" id="L62">		this.plane = plane;</span>
+<span class="nc" id="L63">		this.above = above;</span>
+<span class="nc" id="L64">		this.left = left;</span>
+<span class="nc" id="L65">		mode = 0;</span>
+<span class="nc" id="L66">		tokens = new int[16];</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (int z = 0; z &lt; 16; z++)</span>
+<span class="nc" id="L68">			tokens[z] = 0;</span>
+<span class="nc" id="L69">	}</span>
+
+	private int DCTextra(BoolDecoder bc2, int p[]) throws IOException {
+<span class="nc" id="L72">		int v = 0;</span>
+<span class="nc" id="L73">		int offset = 0;</span>
+		do {
+<span class="nc" id="L75">			v += v + bc2.readBool(p[offset]);</span>
+<span class="nc" id="L76">			offset++;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		} while (p[offset] &gt; 0);</span>
+<span class="nc" id="L78">		return v;</span>
+	}
+
+	public void decodeSubBlock(BoolDecoder bc2, int[][][][] coef_probs, int ilc, int type, boolean withY2)
+			throws IOException {
+<span class="nc" id="L83">		SubBlock sb = this;</span>
+<span class="nc" id="L84">		int startAt = 0;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (withY2)</span>
+<span class="nc" id="L86">			startAt = 1;</span>
+<span class="nc" id="L87">		int lc = ilc;</span>
+<span class="nc" id="L88">		int c = 0;</span>
+<span class="nc" id="L89">		int v = 1;</span>
+
+<span class="nc" id="L91">		boolean skip = false;</span>
+
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		while (!(v == Globals.dct_eob) &amp;&amp; c + startAt &lt; 16) {</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (!skip)</span>
+<span class="nc" id="L96">				v = bc2.readTree(Globals.vp8CoefTree, coef_probs[type][Globals.vp8CoefBands[c + startAt]][lc]);</span>
+			else
+<span class="nc" id="L98">				v = bc2.readTreeSkip(Globals.vp8CoefTree, coef_probs[type][Globals.vp8CoefBands[c + startAt]][lc], 1);</span>
+
+<span class="nc" id="L100">			int dv = decodeToken(bc2, v);</span>
+<span class="nc" id="L101">			lc = 0;</span>
+<span class="nc" id="L102">			skip = false;</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">			if (dv == 1 || dv == -1)</span>
+<span class="nc" id="L104">				lc = 1;</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">			else if (dv &gt; 1 || dv &lt; -1)</span>
+<span class="nc" id="L106">				lc = 2;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			else if (dv == Globals.DCT_0)</span>
+<span class="nc" id="L108">				skip = true;</span>
+
+<span class="nc" id="L110">			int tokens[] = sb.getTokens();</span>
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (v != Globals.dct_eob)</span>
+<span class="nc" id="L113">				tokens[Globals.vp8defaultZigZag1d[c + startAt]] = dv;</span>
+<span class="nc" id="L114">			c++;</span>
+<span class="nc" id="L115">		}</span>
+<span class="nc" id="L116">		hasNoZeroToken = false;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (int x = 0; x &lt; 16; x++)</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (tokens[x] != 0)</span>
+<span class="nc" id="L119">				hasNoZeroToken = true;</span>
+<span class="nc" id="L120">	}</span>
+
+	private int decodeToken(BoolDecoder bc2, int v) throws IOException {
+<span class="nc" id="L123">		int r = v;</span>
+
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (v == Globals.dct_cat1) {</span>
+<span class="nc" id="L126">			r = 5 + DCTextra(bc2, Globals.Pcat1);</span>
+		}
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (v == Globals.dct_cat2) {</span>
+<span class="nc" id="L129">			r = 7 + DCTextra(bc2, Globals.Pcat2);</span>
+		}
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (v == Globals.dct_cat3) {</span>
+<span class="nc" id="L132">			r = 11 + DCTextra(bc2, Globals.Pcat3);</span>
+		}
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (v == Globals.dct_cat4) {</span>
+<span class="nc" id="L135">			r = 19 + DCTextra(bc2, Globals.Pcat4);</span>
+		}
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (v == Globals.dct_cat5) {</span>
+<span class="nc" id="L138">			r = 35 + DCTextra(bc2, Globals.Pcat5);</span>
+		}
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (v == Globals.dct_cat6) {</span>
+<span class="nc" id="L141">			r = 67 + DCTextra(bc2, Globals.Pcat6);</span>
+		}
+<span class="nc bnc" id="L143" title="All 4 branches missed.">		if (v != Globals.DCT_0 &amp;&amp; v != Globals.dct_eob) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (bc2.readBit() &gt; 0)</span>
+<span class="nc" id="L145">				r = -r;</span>
+		}
+
+<span class="nc" id="L148">		return r;</span>
+	}
+
+	public void dequantSubBlock(VP8Frame frame, Integer Dc) {
+<span class="nc" id="L152">		SubBlock sb = this;</span>
+
+<span class="nc" id="L154">		int[] adjustedValues = new int[16];</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (int i = 0; i &lt; 16; i++) {</span>
+			int QValue;
+<span class="nc bnc" id="L157" title="All 4 branches missed.">			if (plane == PLANE.U || plane == PLANE.V) {</span>
+<span class="nc" id="L158">				QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()].getUvac_delta_q();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">				if (i == 0)</span>
+<span class="nc" id="L160">					QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()]</span>
+<span class="nc" id="L161">							.getUvdc_delta_q();</span>
+			} else {
+<span class="nc" id="L163">				QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()].getY1ac();</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if (i == 0)</span>
+<span class="nc" id="L165">					QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()].getY1dc();</span>
+			}
+
+<span class="nc" id="L168">			int inputValue = sb.getTokens()[i];</span>
+<span class="nc" id="L169">			adjustedValues[i] = inputValue * QValue;</span>
+
+		}
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (Dc != null)</span>
+<span class="nc" id="L174">			adjustedValues[0] = Dc;</span>
+
+<span class="nc" id="L176">		int[][] diff = IDCT.idct4x4llm(adjustedValues);</span>
+<span class="nc" id="L177">		sb.setDiff(diff);</span>
+
+<span class="nc" id="L179">	}</span>
+
+	public void drawDebug() {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (dest != null) {</span>
+<span class="nc" id="L183">			dest[0][0] = 128;</span>
+<span class="nc" id="L184">			dest[1][0] = 128;</span>
+<span class="nc" id="L185">			dest[2][0] = 128;</span>
+<span class="nc" id="L186">			dest[3][0] = 128;</span>
+<span class="nc" id="L187">			dest[0][0] = 128;</span>
+<span class="nc" id="L188">			dest[0][1] = 128;</span>
+<span class="nc" id="L189">			dest[0][2] = 128;</span>
+<span class="nc" id="L190">			dest[0][3] = 128;</span>
+		}
+
+<span class="nc" id="L193">	}</span>
+
+	public void drawDebugH() {
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (dest != null) {</span>
+<span class="nc" id="L197">			dest[0][0] = 0;</span>
+<span class="nc" id="L198">			dest[1][0] = 0;</span>
+<span class="nc" id="L199">			dest[2][0] = 0;</span>
+<span class="nc" id="L200">			dest[3][0] = 0;</span>
+		}
+
+<span class="nc" id="L203">	}</span>
+
+	public void drawDebugV() {
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (dest != null) {</span>
+<span class="nc" id="L207">			dest[0][0] = 0;</span>
+<span class="nc" id="L208">			dest[0][1] = 0;</span>
+<span class="nc" id="L209">			dest[0][2] = 0;</span>
+<span class="nc" id="L210">			dest[0][3] = 0;</span>
+		}
+<span class="nc" id="L212">	}</span>
+
+	public SubBlock getAbove() {
+
+<span class="nc" id="L216">		return above;</span>
+	}
+
+	public String getDebugString() {
+<span class="nc" id="L220">		String r = new String();</span>
+<span class="nc" id="L221">		r = r + &quot;  &quot; + plane;</span>
+<span class="nc bnc" id="L222" title="All 4 branches missed.">		if (getMacroBlock().getYMode() == Globals.B_PRED &amp;&amp; plane == SubBlock.PLANE.Y1)</span>
+<span class="nc" id="L223">			r = r + &quot;\n  &quot; + Globals.getSubBlockModeAsString(mode);</span>
+<span class="nc" id="L224">		return r;</span>
+	}
+
+	public int[][] getDest() {
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (dest != null)</span>
+<span class="nc" id="L229">			return dest;</span>
+		else
+<span class="nc" id="L231">			return new int[4][4];</span>
+	}
+
+	public int[][] getDiff() {
+
+<span class="nc" id="L236">		return diff;</span>
+	}
+
+	public SubBlock getLeft() {
+
+<span class="nc" id="L241">		return left;</span>
+	}
+
+	public MacroBlock getMacroBlock() {
+<span class="nc" id="L245">		return macroBlock;</span>
+	}
+
+	public int[][] getMacroBlockPredict(int intra_mode) {
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		if (dest != null)</span>
+<span class="nc" id="L250">			return dest;</span>
+
+		else {
+<span class="nc" id="L253">			int rv = 127;</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">			if (intra_mode == Globals.H_PRED)</span>
+<span class="nc" id="L255">				rv = 129;</span>
+<span class="nc" id="L256">			int r[][] = new int[4][4];</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">			for (int j = 0; j &lt; 4; j++)</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">				for (int i = 0; i &lt; 4; i++)</span>
+<span class="nc" id="L259">					r[i][j] = rv;</span>
+<span class="nc" id="L260">			return r;</span>
+		}
+	}
+
+	public int getMode() {
+<span class="nc" id="L265">		return mode;</span>
+	}
+
+	public PLANE getPlane() {
+<span class="nc" id="L269">		return plane;</span>
+	}
+
+	public int[][] getPredict() {
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (predict != null)</span>
+<span class="nc" id="L274">			return predict;</span>
+<span class="nc" id="L275">		return getPredict(Globals.B_DC_PRED, false);</span>
+	}
+
+	public int[][] getPredict(int intra_bmode, boolean left) {
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (dest != null)</span>
+<span class="nc" id="L280">			return dest;</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (predict != null)</span>
+<span class="nc" id="L282">			return predict;</span>
+		else {
+<span class="nc" id="L284">			int rv = 127;</span>
+
+<span class="nc bnc" id="L286" title="All 16 branches missed.">			if ((intra_bmode == Globals.B_TM_PRED || intra_bmode == Globals.B_DC_PRED</span>
+					|| intra_bmode == Globals.B_VE_PRED || intra_bmode == Globals.B_HE_PRED
+					|| intra_bmode == Globals.B_VR_PRED || intra_bmode == Globals.B_RD_PRED
+					|| intra_bmode == Globals.B_HD_PRED) &amp;&amp; left)
+
+<span class="nc" id="L291">				rv = 129;</span>
+<span class="nc" id="L292">			int r[][] = new int[4][4];</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">			for (int j = 0; j &lt; 4; j++)</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">				for (int i = 0; i &lt; 4; i++)</span>
+<span class="nc" id="L295">					r[i][j] = rv;</span>
+<span class="nc" id="L296">			return r;</span>
+		}
+	}
+
+	int[] getTokens() {
+<span class="nc" id="L301">		return tokens;</span>
+	}
+
+	public boolean hasNoZeroToken() {
+<span class="nc" id="L305">		return hasNoZeroToken;</span>
+	}
+
+	public boolean isDest() {
+<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (dest == null)</span>
+<span class="nc" id="L310">			return false;</span>
+<span class="nc" id="L311">		return true;</span>
+	}
+
+	public void predict(VP8Frame frame) {
+<span class="nc" id="L315">		SubBlock sb = this;</span>
+<span class="nc" id="L316">		SubBlock aboveSb = frame.getAboveSubBlock(sb, sb.getPlane());</span>
+<span class="nc" id="L317">		SubBlock leftSb = frame.getLeftSubBlock(sb, sb.getPlane());</span>
+
+<span class="nc" id="L319">		int[] above = new int[4];</span>
+<span class="nc" id="L320">		int[] left = new int[4];</span>
+
+<span class="nc" id="L322">		above[0] = aboveSb.getPredict(sb.getMode(), false)[0][3];</span>
+<span class="nc" id="L323">		above[1] = aboveSb.getPredict(sb.getMode(), false)[1][3];</span>
+<span class="nc" id="L324">		above[2] = aboveSb.getPredict(sb.getMode(), false)[2][3];</span>
+<span class="nc" id="L325">		above[3] = aboveSb.getPredict(sb.getMode(), false)[3][3];</span>
+<span class="nc" id="L326">		left[0] = leftSb.getPredict(sb.getMode(), true)[3][0];</span>
+<span class="nc" id="L327">		left[1] = leftSb.getPredict(sb.getMode(), true)[3][1];</span>
+<span class="nc" id="L328">		left[2] = leftSb.getPredict(sb.getMode(), true)[3][2];</span>
+<span class="nc" id="L329">		left[3] = leftSb.getPredict(sb.getMode(), true)[3][3];</span>
+<span class="nc" id="L330">		SubBlock AL = frame.getLeftSubBlock(aboveSb, sb.getPlane());</span>
+
+		// for above left if left and above is null use left (129?) else use
+		// above (127?)
+		int al;
+<span class="nc bnc" id="L335" title="All 4 branches missed.">		if (!leftSb.isDest() &amp;&amp; !aboveSb.isDest()) {</span>
+
+<span class="nc" id="L337">			al = AL.getPredict(sb.getMode(), false)[3][3];</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">		} else if (!aboveSb.isDest()) {</span>
+
+<span class="nc" id="L340">			al = AL.getPredict(sb.getMode(), false)[3][3];</span>
+		} else
+<span class="nc" id="L342">			al = AL.getPredict(sb.getMode(), true)[3][3];</span>
+<span class="nc" id="L343">		SubBlock AR = frame.getAboveRightSubBlock(sb, sb.plane);</span>
+<span class="nc" id="L344">		int ar[] = new int[4];</span>
+<span class="nc" id="L345">		ar[0] = AR.getPredict(sb.getMode(), false)[0][3];</span>
+<span class="nc" id="L346">		ar[1] = AR.getPredict(sb.getMode(), false)[1][3];</span>
+<span class="nc" id="L347">		ar[2] = AR.getPredict(sb.getMode(), false)[2][3];</span>
+<span class="nc" id="L348">		ar[3] = AR.getPredict(sb.getMode(), false)[3][3];</span>
+<span class="nc" id="L349">		int[][] p = new int[4][4];</span>
+		int pp[];
+<span class="nc bnc" id="L351" title="All 11 branches missed.">		switch (sb.getMode()) {</span>
+		case Globals.B_DC_PRED:
+			// System.out.println(&quot;B_DC_PRED&quot;);
+<span class="nc" id="L354">			int expected_dc = 0;</span>
+
+<span class="nc bnc" id="L356" title="All 2 branches missed.">			for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L357">				expected_dc += above[i];</span>
+<span class="nc" id="L358">				expected_dc += left[i];</span>
+			}
+<span class="nc" id="L360">			expected_dc = (expected_dc + 4) &gt;&gt; 3;</span>
+
+<span class="nc bnc" id="L362" title="All 2 branches missed.">			for (int y = 0; y &lt; 4; y++)</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">				for (int x = 0; x &lt; 4; x++)</span>
+<span class="nc" id="L364">					p[x][y] = expected_dc;</span>
+
+<span class="nc" id="L366">			break;</span>
+		case Globals.B_TM_PRED:
+
+			// System.out.println(&quot;B_TM_PRED&quot;);
+
+			// prediction similar to true_motion prediction
+
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			for (int r = 0; r &lt; 4; r++) {</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">				for (int c = 0; c &lt; 4; c++) {</span>
+
+<span class="nc" id="L376">					int pred = above[c] - al + left[r];</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">					if (pred &lt; 0)</span>
+<span class="nc" id="L378">						pred = 0;</span>
+
+<span class="nc bnc" id="L380" title="All 2 branches missed.">					if (pred &gt; 255)</span>
+<span class="nc" id="L381">						pred = 255;</span>
+
+<span class="nc" id="L383">					p[c][r] = pred;</span>
+				}
+			}
+<span class="nc" id="L386">			break;</span>
+		case Globals.B_VE_PRED:
+			// System.out.println(&quot;B_VE_PRED&quot;);
+
+<span class="nc" id="L390">			int ap[] = new int[4];</span>
+<span class="nc" id="L391">			ap[0] = (al + 2 * above[0] + above[1] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L392">			ap[1] = (above[0] + 2 * above[1] + above[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L393">			ap[2] = (above[1] + 2 * above[2] + above[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L394">			ap[3] = (above[2] + 2 * above[3] + ar[0] + 2) &gt;&gt; 2;</span>
+
+<span class="nc bnc" id="L396" title="All 2 branches missed.">			for (int r = 0; r &lt; 4; r++) {</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">				for (int c = 0; c &lt; 4; c++) {</span>
+
+<span class="nc" id="L399">					p[c][r] = ap[c];</span>
+
+				}
+			}
+<span class="nc" id="L403">			break;</span>
+		case Globals.B_HE_PRED:
+			// System.out.println(&quot;B_HE_PRED&quot;);
+
+<span class="nc" id="L407">			int lp[] = new int[4];</span>
+<span class="nc" id="L408">			lp[0] = (al + 2 * left[0] + left[1] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L409">			lp[1] = (left[0] + 2 * left[1] + left[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L410">			lp[2] = (left[1] + 2 * left[2] + left[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L411">			lp[3] = (left[2] + 2 * left[3] + left[3] + 2) &gt;&gt; 2;</span>
+
+<span class="nc bnc" id="L413" title="All 2 branches missed.">			for (int r = 0; r &lt; 4; r++) {</span>
+<span class="nc bnc" id="L414" title="All 2 branches missed.">				for (int c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L415">					p[c][r] = lp[r];</span>
+				}
+			}
+<span class="nc" id="L418">			break;</span>
+		case Globals.B_LD_PRED:
+			// System.out.println(&quot;B_LD_PRED&quot;);
+<span class="nc" id="L421">			p[0][0] = (above[0] + above[1] * 2 + above[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L422">			p[1][0] = p[0][1] = (above[1] + above[2] * 2 + above[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L423">			p[2][0] = p[1][1] = p[0][2] = (above[2] + above[3] * 2 + ar[0] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L424">			p[3][0] = p[2][1] = p[1][2] = p[0][3] = (above[3] + ar[0] * 2 + ar[1] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L425">			p[3][1] = p[2][2] = p[1][3] = (ar[0] + ar[1] * 2 + ar[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L426">			p[3][2] = p[2][3] = (ar[1] + ar[2] * 2 + ar[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L427">			p[3][3] = (ar[2] + ar[3] * 2 + ar[3] + 2) &gt;&gt; 2;</span>
+
+<span class="nc" id="L429">			break;</span>
+		case Globals.B_RD_PRED:
+			// System.out.println(&quot;B_RD_PRED&quot;);
+<span class="nc" id="L432">			pp = new int[9];</span>
+
+<span class="nc" id="L434">			pp[0] = left[3];</span>
+<span class="nc" id="L435">			pp[1] = left[2];</span>
+<span class="nc" id="L436">			pp[2] = left[1];</span>
+<span class="nc" id="L437">			pp[3] = left[0];</span>
+<span class="nc" id="L438">			pp[4] = al;</span>
+<span class="nc" id="L439">			pp[5] = above[0];</span>
+<span class="nc" id="L440">			pp[6] = above[1];</span>
+<span class="nc" id="L441">			pp[7] = above[2];</span>
+<span class="nc" id="L442">			pp[8] = above[3];</span>
+
+<span class="nc" id="L444">			p[0][3] = (pp[0] + pp[1] * 2 + pp[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L445">			p[1][3] = p[0][2] = (pp[1] + pp[2] * 2 + pp[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L446">			p[2][3] = p[1][2] = p[0][1] = (pp[2] + pp[3] * 2 + pp[4] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L447">			p[3][3] = p[2][2] = p[1][1] = p[0][0] = (pp[3] + pp[4] * 2 + pp[5] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L448">			p[3][2] = p[2][1] = p[1][0] = (pp[4] + pp[5] * 2 + pp[6] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L449">			p[3][1] = p[2][0] = (pp[5] + pp[6] * 2 + pp[7] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L450">			p[3][0] = (pp[6] + pp[7] * 2 + pp[8] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L451">			break;</span>
+
+		case Globals.B_VR_PRED:
+			// System.out.println(&quot;B_VR_PRED&quot;);
+<span class="nc" id="L455">			pp = new int[9];</span>
+
+<span class="nc" id="L457">			pp[0] = left[3];</span>
+<span class="nc" id="L458">			pp[1] = left[2];</span>
+<span class="nc" id="L459">			pp[2] = left[1];</span>
+<span class="nc" id="L460">			pp[3] = left[0];</span>
+<span class="nc" id="L461">			pp[4] = al;</span>
+<span class="nc" id="L462">			pp[5] = above[0];</span>
+<span class="nc" id="L463">			pp[6] = above[1];</span>
+<span class="nc" id="L464">			pp[7] = above[2];</span>
+<span class="nc" id="L465">			pp[8] = above[3];</span>
+
+<span class="nc" id="L467">			p[0][3] = (pp[1] + pp[2] * 2 + pp[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L468">			p[0][2] = (pp[2] + pp[3] * 2 + pp[4] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L469">			p[1][3] = p[0][1] = (pp[3] + pp[4] * 2 + pp[5] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L470">			p[1][2] = p[0][0] = (pp[4] + pp[5] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L471">			p[2][3] = p[1][1] = (pp[4] + pp[5] * 2 + pp[6] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L472">			p[2][2] = p[1][0] = (pp[5] + pp[6] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L473">			p[3][3] = p[2][1] = (pp[5] + pp[6] * 2 + pp[7] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L474">			p[3][2] = p[2][0] = (pp[6] + pp[7] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L475">			p[3][1] = (pp[6] + pp[7] * 2 + pp[8] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L476">			p[3][0] = (pp[7] + pp[8] + 1) &gt;&gt; 1;</span>
+
+<span class="nc" id="L478">			break;</span>
+		case Globals.B_VL_PRED:
+			// System.out.println(&quot;B_VL_PRED&quot;);
+
+<span class="nc" id="L482">			p[0][0] = (above[0] + above[1] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L483">			p[0][1] = (above[0] + above[1] * 2 + above[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L484">			p[0][2] = p[1][0] = (above[1] + above[2] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L485">			p[1][1] = p[0][3] = (above[1] + above[2] * 2 + above[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L486">			p[1][2] = p[2][0] = (above[2] + above[3] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L487">			p[1][3] = p[2][1] = (above[2] + above[3] * 2 + ar[0] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L488">			p[3][0] = p[2][2] = (above[3] + ar[0] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L489">			p[3][1] = p[2][3] = (above[3] + ar[0] * 2 + ar[1] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L490">			p[3][2] = (ar[0] + ar[1] * 2 + ar[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L491">			p[3][3] = (ar[1] + ar[2] * 2 + ar[3] + 2) &gt;&gt; 2;</span>
+
+<span class="nc" id="L493">			break;</span>
+		case Globals.B_HD_PRED:
+			// System.out.println(&quot;B_HD_PRED&quot;);
+<span class="nc" id="L496">			pp = new int[9];</span>
+<span class="nc" id="L497">			pp[0] = left[3];</span>
+<span class="nc" id="L498">			pp[1] = left[2];</span>
+<span class="nc" id="L499">			pp[2] = left[1];</span>
+<span class="nc" id="L500">			pp[3] = left[0];</span>
+<span class="nc" id="L501">			pp[4] = al;</span>
+<span class="nc" id="L502">			pp[5] = above[0];</span>
+<span class="nc" id="L503">			pp[6] = above[1];</span>
+<span class="nc" id="L504">			pp[7] = above[2];</span>
+<span class="nc" id="L505">			pp[8] = above[3];</span>
+
+<span class="nc" id="L507">			p[0][3] = (pp[0] + pp[1] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L508">			p[1][3] = (pp[0] + pp[1] * 2 + pp[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L509">			p[0][2] = p[2][3] = (pp[1] + pp[2] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L510">			p[1][2] = p[3][3] = (pp[1] + pp[2] * 2 + pp[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L511">			p[2][2] = p[0][1] = (pp[2] + pp[3] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L512">			p[3][2] = p[1][1] = (pp[2] + pp[3] * 2 + pp[4] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L513">			p[2][1] = p[0][0] = (pp[3] + pp[4] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L514">			p[3][1] = p[1][0] = (pp[3] + pp[4] * 2 + pp[5] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L515">			p[2][0] = (pp[4] + pp[5] * 2 + pp[6] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L516">			p[3][0] = (pp[5] + pp[6] * 2 + pp[7] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L517">			break;</span>
+		case Globals.B_HU_PRED:
+			// System.out.println(&quot;B_HU_PRED&quot;);
+
+<span class="nc" id="L521">			p[0][0] = (left[0] + left[1] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L522">			p[1][0] = (left[0] + left[1] * 2 + left[2] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L523">			p[2][0] = p[0][1] = (left[1] + left[2] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L524">			p[3][0] = p[1][1] = (left[1] + left[2] * 2 + left[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L525">			p[2][1] = p[0][2] = (left[2] + left[3] + 1) &gt;&gt; 1;</span>
+<span class="nc" id="L526">			p[3][1] = p[1][2] = (left[2] + left[3] * 2 + left[3] + 2) &gt;&gt; 2;</span>
+<span class="nc" id="L527">			p[2][2] = p[3][2] = p[0][3] = p[1][3] = p[2][3] = p[3][3] = left[3];</span>
+<span class="nc" id="L528">			break;</span>
+
+		default:
+<span class="nc" id="L531">			System.out.println(&quot;TODO: &quot; + sb.getMode());</span>
+<span class="nc" id="L532">			System.exit(0);</span>
+			break;
+		}
+
+<span class="nc" id="L536">		sb.setPredict(p);</span>
+<span class="nc" id="L537">	}</span>
+
+	public void reconstruct() {
+<span class="nc" id="L540">		SubBlock sb = this;</span>
+
+		int r, c;
+<span class="nc" id="L543">		int p[][] = sb.getPredict(1, false);</span>
+
+<span class="nc" id="L545">		int dest[][] = new int[4][4];</span>
+<span class="nc" id="L546">		int diff[][] = sb.getDiff();</span>
+
+<span class="nc bnc" id="L548" title="All 2 branches missed.">		for (r = 0; r &lt; 4; r++) {</span>
+<span class="nc bnc" id="L549" title="All 2 branches missed.">			for (c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L550">				int a = diff[r][c] + p[r][c];</span>
+
+<span class="nc bnc" id="L552" title="All 2 branches missed.">				if (a &lt; 0)</span>
+<span class="nc" id="L553">					a = 0;</span>
+
+<span class="nc bnc" id="L555" title="All 2 branches missed.">				if (a &gt; 255)</span>
+<span class="nc" id="L556">					a = 255;</span>
+
+<span class="nc" id="L558">				dest[r][c] = a;</span>
+
+			}
+
+		}
+
+<span class="nc" id="L564">		sb.setDest(dest);</span>
+<span class="nc bnc" id="L565" title="All 2 branches missed.">		if (!this.getMacroBlock().isKeepDebugInfo()) {</span>
+<span class="nc" id="L566">			sb.diff = null;</span>
+<span class="nc" id="L567">			sb.predict = null;</span>
+<span class="nc" id="L568">			sb.tokens = null;</span>
+		}
+<span class="nc" id="L570">	}</span>
+
+	public void setDest(int[][] dest) {
+<span class="nc" id="L573">		this.dest = dest;</span>
+<span class="nc" id="L574">	}</span>
+
+	public void setDiff(int[][] diff) {
+<span class="nc" id="L577">		this.diff = diff;</span>
+<span class="nc" id="L578">	}</span>
+
+	public void setMode(int mode) {
+<span class="nc" id="L581">		this.mode = mode;</span>
+<span class="nc" id="L582">	}</span>
+
+	public void setPixel(int x, int y, int p) {
+<span class="nc bnc" id="L585" title="All 2 branches missed.">		if (dest == null) {</span>
+<span class="nc" id="L586">			dest = new int[4][4];</span>
+		}
+<span class="nc" id="L588">		dest[x][y] = p;</span>
+<span class="nc" id="L589">	}</span>
+
+	public void setPredict(int[][] predict) {
+<span class="nc" id="L592">		this.predict = predict;</span>
+
+<span class="nc" id="L594">	}</span>
+
+	public String toString() {
+<span class="nc" id="L597">		String r = &quot;[&quot;;</span>
+<span class="nc bnc" id="L598" title="All 2 branches missed.">		for (int x = 0; x &lt; 16; x++)</span>
+<span class="nc" id="L599">			r = r + tokens[x] + &quot; &quot;;</span>
+<span class="nc" id="L600">		r = r + &quot;]&quot;;</span>
+
+<span class="nc" id="L602">		return r;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

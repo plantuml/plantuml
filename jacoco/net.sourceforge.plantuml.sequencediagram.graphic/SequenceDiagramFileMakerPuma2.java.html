@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SequenceDiagramFileMakerPuma2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">SequenceDiagramFileMakerPuma2.java</span></div><h1>SequenceDiagramFileMakerPuma2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.AnnotatedBuilder;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.png.PngTitler;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Newpage;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class SequenceDiagramFileMakerPuma2 implements FileMaker {
+
+	private final SequenceDiagram diagram;
+	private final DrawableSet drawableSet;
+	private final XDimension2D fullDimension;
+	private final List&lt;Page&gt; pages;
+	private final FileFormatOption fileFormatOption;
+	private final StringBounder stringBounder;
+
+<span class="fc" id="L82">	public SequenceDiagramFileMakerPuma2(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption) {</span>
+<span class="fc" id="L83">		this.diagram = diagram;</span>
+<span class="fc" id="L84">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+<span class="fc" id="L85">		this.fileFormatOption = fileFormatOption;</span>
+<span class="fc" id="L86">		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),</span>
+<span class="fc" id="L87">				diagram.isShowFootbox(), diagram.getAutonewpage(), diagram.getCounter());</span>
+
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (Participant p : diagram.participants())</span>
+<span class="fc" id="L90">			initializer.addParticipant(p, diagram.getEnglober(p));</span>
+
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (Event ev : diagram.events()) {</span>
+<span class="fc" id="L93">			initializer.addEvent(ev);</span>
+			// if (ev instanceof Message) {
+			// // TODO mieux faire
+			// final Message m = (Message) ev;
+			// for (LifeEvent lifeEvent : m.getLiveEvents()) {
+			// if (lifeEvent.getType() == LifeEventType.DESTROY
+			// /*
+			// * || lifeEvent.getType() == LifeEventType.CREATE
+			// */) {
+			// initializer.addEvent(lifeEvent);
+			// }
+			// }
+			// }
+<span class="fc" id="L106">		}</span>
+<span class="fc" id="L107">		drawableSet = initializer.createDrawableSet(stringBounder);</span>
+<span class="fc" id="L108">		final List&lt;Newpage&gt; newpages = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (Event ev : drawableSet.getAllEvents())</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (ev instanceof Newpage)</span>
+<span class="fc" id="L111">				newpages.add((Newpage) ev);</span>
+
+<span class="fc" id="L113">		fullDimension = drawableSet.getDimension();</span>
+<span class="fc" id="L114">		final Map&lt;Newpage, Double&gt; positions = new LinkedHashMap&lt;Newpage, Double&gt;();</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (Newpage n : newpages)</span>
+<span class="fc" id="L116">			positions.put(n, initializer.getYposition(stringBounder, n));</span>
+
+<span class="fc" id="L118">		pages = create(drawableSet, positions, diagram.isShowFootbox(), diagram.getTitle().getDisplay()).getPages();</span>
+<span class="fc" id="L119">	}</span>
+
+	public int getNbPages() {
+<span class="fc" id="L122">		return pages.size();</span>
+	}
+
+	private PageSplitter create(DrawableSet drawableSet, Map&lt;Newpage, Double&gt; positions, boolean showFootbox,
+			Display title) {
+
+<span class="fc" id="L128">		final double headerHeight = drawableSet.getHeadHeight(stringBounder);</span>
+<span class="fc" id="L129">		final double tailHeight = drawableSet.getTailHeight(stringBounder, showFootbox);</span>
+<span class="fc" id="L130">		final double signatureHeight = 0;</span>
+<span class="fc" id="L131">		final double newpageHeight = drawableSet.getSkin().createComponentNewPage(</span>
+<span class="fc" id="L132">					new Style[] { ComponentType.NEWPAGE.getStyleSignature()</span>
+<span class="fc" id="L133"> 						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
+<span class="fc" id="L134">					drawableSet.getSkinParam())</span>
+<span class="fc" id="L135">				.getPreferredHeight(stringBounder);</span>
+
+<span class="fc" id="L137">		return new PageSplitter(fullDimension.getHeight(), headerHeight, positions, tailHeight, signatureHeight,</span>
+				newpageHeight, title);
+	}
+
+	@Override
+	public void createOneGraphic(UGraphic ug) {
+<span class="nc" id="L143">		final UDrawable drawable = createUDrawable(0);</span>
+<span class="nc" id="L144">		drawable.drawU(ug);</span>
+
+<span class="nc" id="L146">	}</span>
+
+	@Override
+	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
+<span class="fc" id="L150">		final UDrawable drawable = createUDrawable(index);</span>
+<span class="fc" id="L151">		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);</span>
+	}
+
+	private UDrawable createUDrawable(final int index) {
+<span class="fc" id="L155">		final Page page = pages.get(index);</span>
+<span class="fc" id="L156">		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
+<span class="fc" id="L157">		double pageHeight = page.getHeight();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (builder.hasMainFrame())</span>
+<span class="nc" id="L159">			pageHeight += builder.mainFrameSuppHeight();</span>
+
+<span class="fc" id="L161">		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), pageHeight);</span>
+
+		final TextBlock compTitle;
+<span class="fc" id="L164">		final TextBlock caption = builder.getCaption();</span>
+<span class="fc" id="L165">		area.setCaptionArea(caption.calculateDimension(stringBounder));</span>
+
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (Display.isNull(page.getTitle())) {</span>
+<span class="fc" id="L168">			compTitle = null;</span>
+		} else {
+<span class="fc" id="L170">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
+<span class="fc" id="L171">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L172">			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),</span>
+<span class="fc" id="L173">					diagram.getSkinParam(), Style.ID_TITLE, LineBreakStrategy.NONE);</span>
+<span class="fc" id="L174">			final XDimension2D dimTitle = compTitle.calculateDimension(stringBounder);</span>
+<span class="fc" id="L175">			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());</span>
+		}
+<span class="fc" id="L177">		area.initFooter(getPngTitler(FontParam.FOOTER, index), stringBounder);</span>
+<span class="fc" id="L178">		area.initHeader(getPngTitler(FontParam.HEADER, index), stringBounder);</span>
+
+		final TextBlock legendBlock;
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (diagram.getLegend().isNull()) {</span>
+<span class="fc" id="L182">			legendBlock = TextBlockUtils.empty(0, 0);</span>
+		} else {
+<span class="fc" id="L184">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)</span>
+<span class="fc" id="L185">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L186">			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),</span>
+<span class="fc" id="L187">					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,</span>
+					LineBreakStrategy.NONE);
+		}
+<span class="fc" id="L190">		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L191">		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());</span>
+
+<span class="fc" id="L193">		final UDrawable drawable = new UDrawable() {</span>
+			public void drawU(UGraphic ug) {
+
+<span class="fc" id="L196">				double delta = 0;</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">				if (index &gt; 0)</span>
+<span class="nc" id="L198">					delta = page.getNewpage1() - page.getHeaderHeight();</span>
+
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">				if (delta &lt; 0)</span>
+<span class="nc" id="L201">					delta = 0;</span>
+
+<span class="fc bfc" id="L203" title="All 2 branches covered.">				if (compTitle != null) {</span>
+<span class="fc" id="L204">					final HColor back = diagram.calculateBackColor();</span>
+<span class="fc" id="L205">					compTitle.drawU(ug.apply(back.bg()).apply(new UTranslate(area.getTitleX(), area.getTitleY())));</span>
+				}
+<span class="fc" id="L207">				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));</span>
+
+<span class="fc" id="L209">				final double delta1 = Math.max(0, area.getLegendWidth() - area.getWidth());</span>
+
+<span class="fc" id="L211">				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2,</span>
+<span class="fc" id="L212">						area.getSequenceAreaY());</span>
+<span class="fc" id="L213">				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,</span>
+<span class="fc" id="L214">						diagram.isShowFootbox());</span>
+<span class="fc" id="L215">				core = builder.decoreWithFrame(core);</span>
+<span class="fc" id="L216">				core.drawU(ug.apply(forCore));</span>
+
+<span class="fc" id="L218">				drawHeader(area, ug, index);</span>
+<span class="fc" id="L219">				drawFooter(area, ug, index);</span>
+
+<span class="fc bfc" id="L221" title="All 2 branches covered.">				if (area.hasLegend())</span>
+<span class="fc" id="L222">					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));</span>
+
+<span class="fc" id="L224">			}</span>
+
+		};
+<span class="fc" id="L227">		return drawable;</span>
+	}
+
+	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {
+<span class="fc" id="L231">		final PngTitler pngTitler = getPngTitler(FontParam.FOOTER, page);</span>
+<span class="fc" id="L232">		final TextBlock text = pngTitler.getRibbonBlock();</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (text == null)</span>
+<span class="fc" id="L234">			return;</span>
+
+<span class="fc" id="L236">		text.drawU(ug.apply(</span>
+<span class="fc" id="L237">				new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()), area.getFooterY())));</span>
+<span class="fc" id="L238">	}</span>
+
+	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {
+<span class="fc" id="L241">		final PngTitler pngTitler = getPngTitler(FontParam.HEADER, page);</span>
+<span class="fc" id="L242">		final TextBlock text = pngTitler.getRibbonBlock();</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (text == null)</span>
+<span class="fc" id="L244">			return;</span>
+
+<span class="fc" id="L246">		text.drawU(ug.apply(</span>
+<span class="fc" id="L247">				new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area.getHeaderY())));</span>
+<span class="fc" id="L248">	}</span>
+
+	private PngTitler getPngTitler(final FontParam fontParam, int page) {
+<span class="fc" id="L251">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="fc" id="L252">		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());</span>
+<span class="fc" id="L253">		final StyleSignatureBasic def = fontParam.getStyleDefinition(null);</span>
+<span class="fc" id="L254">		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+<span class="fc" id="L256">		return new PngTitler(display, style, skinParam.getIHtmlColorSet(), skinParam);</span>
+	}
+
+	private boolean isLegendTop() {
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		return diagram.getLegend().isNull() == false</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">				&amp;&amp; diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

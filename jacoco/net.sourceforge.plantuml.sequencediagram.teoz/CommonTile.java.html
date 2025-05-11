@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommonTile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">CommonTile.java</span></div><h1>CommonTile.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+
+public abstract class CommonTile implements Tile, UDrawable {
+
+	private final StringBounder stringBounder;
+<span class="fc" id="L44">	private TimeHook y = new TimeHook(-1);</span>
+
+<span class="fc" id="L46">	public CommonTile(StringBounder stringBounder) {</span>
+<span class="fc" id="L47">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L48">	}</span>
+
+	final public void callbackY(TimeHook y) {
+		if (YGauge.USE_ME) {
+		} else {
+<span class="fc" id="L53">			this.y = y;</span>
+<span class="fc" id="L54">			callbackY_internal(y);</span>
+		}
+<span class="fc" id="L56">	}</span>
+
+	protected void callbackY_internal(TimeHook y) {
+		if (YGauge.USE_ME) {
+			System.err.println(&quot;callbackY_internal::y=&quot; + y + &quot; gauge=&quot; + getYGauge() + &quot; &quot; + getClass());
+		}
+<span class="fc" id="L62">	}</span>
+
+	protected final StringBounder getStringBounder() {
+<span class="fc" id="L65">		return stringBounder;</span>
+	}
+
+	public double getMiddleX() {
+<span class="nc" id="L69">		final double max = getMaxX().getCurrentValue();</span>
+<span class="nc" id="L70">		final double min = getMinX().getCurrentValue();</span>
+<span class="nc" id="L71">		return (min + max) / 2;</span>
+	}
+
+	public final TimeHook getTimeHook() {
+		if (YGauge.USE_ME) {
+			throw new IllegalStateException();
+		}
+<span class="fc" id="L78">		return y;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

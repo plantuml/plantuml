@@ -1,0 +1,1150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DLXEngine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sudoku</a> &gt; <span class="el_source">DLXEngine.java</span></div><h1>DLXEngine.java</h1><pre class="source lang-java linenums">/****************************************************************************
+ * DLXEngine.java
+ *
+ * Created on den 30 december 2005, 01:04
+ *
+ * DLXEngine
+ * Sudoku puzzle generator and solver based on the suexg and suexk by
+ * Gunter Stertenbrink. Suexg and suexk are C implementations of the
+ * Dancing Links algorithm by Donald Knuth and optimized for performance
+ * which means that certain cleanup work has been done. There is still
+ * lots of these activities left to do, however, the code is nasty and
+ * hard to read - but extremely efficient.
+ *
+ * The code is public domain so feel free to use it.
+ *****************************************************************************/
+
+package net.sourceforge.plantuml.sudoku;
+
+import java.util.Random;
+
+/*******************************************************************************
+ * dlx_solver solve any Sudoku in a fraction of a second. Input is a string of
+ * dots and digits representing the puzzle to solve and output is the solved
+ * puzzle.
+ * 
+ * @author Rolf Sandberg
+ ******************************************************************************/
+class dlx_solver {
+	static final int M = 8; // change this for larger grids. Use symbols as in
+							// L[] below
+	static final int M2 = M * M;
+	static final int M4 = M2 * M2;
+
+	/** Pseudo-random number generator */
+	long MWC() {
+<span class="nc" id="L36">		return random.nextLong();</span>
+	}
+
+<span class="nc" id="L39">	int A0[][] = new int[M2 + 9][M2 + 9], A[][] = new int[M2 + 9][M2 + 9], Rows[] = new int[4 * M4 + 9],</span>
+			Cols[] = new int[M2 * M4 + 9], Row[][] = new int[4 * M4 + 9][M2 + 9];
+<span class="nc" id="L41">	int Col[][] = new int[M2 * M4 + 9][5], Ur[] = new int[M2 * M4 + 9], Uc[] = new int[4 * M4 + 9],</span>
+			V[] = new int[M2 * M4 + 9];
+<span class="nc" id="L43">	int C[] = new int[M4 + 9], I[] = new int[M4 + 9], T[] = new int[M2 * M4 + 9], P[] = new int[M2 * M4 + 9];</span>
+<span class="nc" id="L44">	int Mr[] = { 0, 1, 63, 1023, 4095, 16383, 46655, 131071, 262143 };</span>
+<span class="nc" id="L45">	int Mc[] = { 0, 1, 63, 511, 1023, 4095, 8191, 16383, 16383 };</span>
+<span class="nc" id="L46">	int Mw[] = { 0, 1, 3, 15, 15, 31, 63, 63, 63 };</span>
+
+<span class="nc" id="L48">	int nocheck = 0, max, _try_;</span>
+<span class="nc" id="L49">	final int rnd = 0;</span>
+	int min, clues, gu, tries;
+<span class="nc" id="L51">	long Node[] = new long[M4 + 9];</span>
+	long nodes, tnodes, solutions, vmax, smax, time0, time1, t1, x1;
+	double xx, yy;
+<span class="nc" id="L54">	int q, a, p, i, i1, j, k, l, r, r1, c, c1, c2, n, N = 0, N2, N4, m, m0, m1, x, y, s;</span>
+<span class="nc" id="L55">	char L[] = { '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',</span>
+			'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e',
+			'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'#', '*', '~' };
+
+	/** State machine states */
+	static final int M6 = 10;
+	static final int M7 = 11;
+	static final int RESTART = 12;
+	static final int M22 = 13;
+	static final int M3 = 14;
+	static final int M44 = 15;
+	static final int NEXT_TRY = 16;
+	static final int END = 30;
+
+	/**
+	 * Solver function. Input parameter: A puzzle to solve Output: The solved puzzle
+	 */
+	String solve(String puzzle) {
+<span class="nc" id="L74">		String result = new String();</span>
+<span class="nc" id="L75">		int STATE = M6;</span>
+
+<span class="nc" id="L77">		vmax = 4000000;</span>
+<span class="nc" id="L78">		smax = 25;</span>
+<span class="nc" id="L79">		p = 1;</span>
+<span class="nc" id="L80">		q = 0;</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (q &gt; 0) {</span>
+<span class="nc" id="L83">			vmax = 99999999;</span>
+<span class="nc" id="L84">			smax = 99999999;</span>
+		}
+
+<span class="nc" id="L87">		N = 3;</span>
+<span class="nc" id="L88">		N2 = N * N;</span>
+<span class="nc" id="L89">		N4 = N2 * N2;</span>
+<span class="nc" id="L90">		m = 4 * N4;</span>
+<span class="nc" id="L91">		n = N2 * N4;</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (puzzle.length() &lt; N4) {</span>
+<span class="nc" id="L94">			return &quot;Error, puzzle incomplete&quot;;</span>
+		}
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		while (STATE != END) {</span>
+<span class="nc bnc" id="L98" title="All 7 branches missed.">			switch (STATE) {</span>
+			case M6:
+<span class="nc" id="L100">				clues = 0;</span>
+<span class="nc" id="L101">				i = 0;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				for (x = 0; x &lt; N2; x++)</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					for (y = 0; y &lt; N2; y++) {</span>
+<span class="nc" id="L104">						c = puzzle.charAt(x * N2 + y);</span>
+<span class="nc" id="L105">						j = 0;</span>
+
+<span class="nc bnc" id="L107" title="All 8 branches missed.">						if (c == '-' || c == '.' || c == '0' || c == '*') {</span>
+<span class="nc" id="L108">							A0[x][y] = j;</span>
+<span class="nc" id="L109">							i++;</span>
+						} else {
+<span class="nc bnc" id="L111" title="All 4 branches missed.">							while (L[j] != c &amp;&amp; j &lt;= N2)</span>
+<span class="nc" id="L112">								j++;</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">							if (j &lt;= N2) {</span>
+<span class="nc" id="L115">								A0[x][y] = j;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">								if (j &gt; 0)</span>
+<span class="nc" id="L117">									clues++;</span>
+<span class="nc" id="L118">								i++;</span>
+							}
+						}
+					}
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">				if (clues == N4) {</span>
+<span class="nc" id="L124">					clues--;</span>
+<span class="nc" id="L125">					A0[1][1] = 0;</span>
+				}
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				if (p &lt; 8) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">					for (i = 0; i &lt;= N4; i++)</span>
+<span class="nc" id="L130">						Node[i] = 0;</span>
+				}
+<span class="nc" id="L132">				tnodes = 0;</span>
+
+			case RESTART:
+<span class="nc" id="L135">				r = 0;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">				for (x = 1; x &lt;= N2; x++)</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">					for (y = 1; y &lt;= N2; y++)</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">						for (s = 1; s &lt;= N2; s++) {</span>
+<span class="nc" id="L139">							r++;</span>
+<span class="nc" id="L140">							Cols[r] = 4;</span>
+<span class="nc" id="L141">							Col[r][1] = x * N2 - N2 + y;</span>
+<span class="nc" id="L142">							Col[r][4] = (N * ((x - 1) / N) + (y - 1) / N) * N2 + s + N4;</span>
+
+<span class="nc" id="L144">							Col[r][3] = x * N2 - N2 + s + N4 * 2;</span>
+<span class="nc" id="L145">							Col[r][2] = y * N2 - N2 + s + N4 * 3;</span>
+						}
+<span class="nc bnc" id="L147" title="All 2 branches missed.">				for (c = 1; c &lt;= m; c++)</span>
+<span class="nc" id="L148">					Rows[c] = 0;</span>
+
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				for (r = 1; r &lt;= n; r++)</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">					for (c = 1; c &lt;= Cols[r]; c++) {</span>
+<span class="nc" id="L152">						x = Col[r][c];</span>
+<span class="nc" id="L153">						Rows[x]++;</span>
+<span class="nc" id="L154">						Row[x][Rows[x]] = r;</span>
+					}
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">				for (x = 0; x &lt; N2; x++)</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">					for (y = 0; y &lt; N2; y++)</span>
+<span class="nc" id="L159">						A[x][y] = A0[x][y];</span>
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">				for (i = 0; i &lt;= n; i++)</span>
+<span class="nc" id="L162">					Ur[i] = 0;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">				for (i = 0; i &lt;= m; i++)</span>
+<span class="nc" id="L164">					Uc[i] = 0;</span>
+
+<span class="nc" id="L166">				solutions = 0;</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">				for (x = 1; x &lt;= N2; x++)</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">					for (y = 1; y &lt;= N2; y++)</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">						if (A[x - 1][y - 1] &gt; 0) {</span>
+<span class="nc" id="L171">							r = x * N4 - N4 + y * N2 - N2 + A[x - 1][y - 1];</span>
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">							for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L174">								c1 = Col[r][j];</span>
+<span class="nc bnc" id="L175" title="All 4 branches missed.">								if (Uc[c1] &gt; 0 &amp;&amp; nocheck == 0) {</span>
+<span class="nc" id="L176">									STATE = NEXT_TRY;</span>
+<span class="nc" id="L177">									break;</span>
+								}
+
+<span class="nc" id="L180">								Uc[c1]++;</span>
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">								for (k = 1; k &lt;= Rows[c1]; k++) {</span>
+<span class="nc" id="L183">									r1 = Row[c1][k];</span>
+<span class="nc" id="L184">									Ur[r1]++;</span>
+								}
+							}
+<span class="nc bnc" id="L187" title="All 2 branches missed.">							if (STATE == NEXT_TRY)</span>
+<span class="nc" id="L188">								break;</span>
+						}
+<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (STATE == NEXT_TRY)</span>
+<span class="nc" id="L191">					break;</span>
+
+				if (rnd &gt; 0 &amp;&amp; rnd != 17 &amp;&amp; rnd != 18)
+					shuffle();
+
+<span class="nc bnc" id="L196" title="All 2 branches missed.">				for (c = 1; c &lt;= m; c++) {</span>
+<span class="nc" id="L197">					V[c] = 0;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">					for (r = 1; r &lt;= Rows[c]; r++)</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">						if (Ur[Row[c][r]] == 0)</span>
+<span class="nc" id="L200">							V[c]++;</span>
+				}
+
+<span class="nc" id="L203">				i = clues;</span>
+<span class="nc" id="L204">				nodes = 0;</span>
+<span class="nc" id="L205">				m0 = 0;</span>
+<span class="nc" id="L206">				m1 = 0;</span>
+<span class="nc" id="L207">				gu = 0;</span>
+<span class="nc" id="L208">				solutions = 0;</span>
+
+			case M22:
+<span class="nc" id="L211">				i++;</span>
+<span class="nc" id="L212">				I[i] = 0;</span>
+<span class="nc" id="L213">				min = n + 1;</span>
+<span class="nc bnc" id="L214" title="All 4 branches missed.">				if (i &gt; N4 || m0 &gt; 0) {</span>
+<span class="nc" id="L215">					STATE = M44;</span>
+<span class="nc" id="L216">					break;</span>
+				}
+<span class="nc bnc" id="L218" title="All 2 branches missed.">				if (m1 &gt; 0) {</span>
+<span class="nc" id="L219">					C[i] = m1;</span>
+<span class="nc" id="L220">					STATE = M3;</span>
+<span class="nc" id="L221">					break;</span>
+				}
+<span class="nc bnc" id="L223" title="All 2 branches missed.">				for (c = 1; c &lt;= m; c++)</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">					if (Uc[c] == 0) {</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">						if (V[c] &lt;= min)</span>
+<span class="nc" id="L226">							c1 = c;</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">						if (V[c] &lt; min) {</span>
+<span class="nc" id="L228">							min = V[c];</span>
+<span class="nc" id="L229">							C[i] = c;</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">							if (min &lt; 2) {</span>
+<span class="nc" id="L231">								STATE = M3;</span>
+<span class="nc" id="L232">								break;</span>
+							}
+						}
+					}
+<span class="nc bnc" id="L236" title="All 2 branches missed.">				if (STATE == M3)</span>
+<span class="nc" id="L237">					break;</span>
+
+<span class="nc" id="L239">				gu++;</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">				if (min &gt; 2) {</span>
+<span class="nc" id="L241">					STATE = M3;</span>
+<span class="nc" id="L242">					break;</span>
+				}
+
+				if ((rnd &amp; 255) == 18)
+					if ((nodes &amp; 1) &gt; 0) {
+						c = m + 1;
+						c--;
+						while (Uc[c] &gt; 0 || V[c] != 2)
+							c--;
+						C[i] = c;
+					}
+
+				if ((rnd &amp; 255) == 17) {
+					c1 = (int) (MWC() &amp; Mc[N]);
+					while (c1 &gt;= m)
+						c1 = (int) (MWC() &amp; Mc[N]);
+					c1++;
+
+					for (c = c1; c &lt;= m; c++)
+						if (Uc[c] == 0)
+							if (V[c] == 2) {
+								C[i] = c;
+								STATE = M3;
+								break;
+							}
+					for (c = 1; c &lt; c1; c++)
+						if (Uc[c] == 0)
+							if (V[c] == 2) {
+								C[i] = c;
+								STATE = M3;
+								break;
+							}
+				}
+
+			case M3:
+<span class="nc" id="L277">				c = C[i];</span>
+<span class="nc" id="L278">				I[i]++;</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">				if (I[i] &gt; Rows[c]) {</span>
+<span class="nc" id="L280">					STATE = M44;</span>
+<span class="nc" id="L281">					break;</span>
+				}
+
+<span class="nc" id="L284">				r = Row[c][I[i]];</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">				if (Ur[r] &gt; 0) {</span>
+<span class="nc" id="L286">					STATE = M3;</span>
+<span class="nc" id="L287">					break;</span>
+				}
+<span class="nc" id="L289">				m0 = 0;</span>
+<span class="nc" id="L290">				m1 = 0;</span>
+
+<span class="nc bnc" id="L292" title="All 6 branches missed.">				if (q &gt; 0 &amp;&amp; i &gt; 32 &amp;&amp; i &lt; 65)</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">					if ((MWC() &amp; 127) &lt; q) {</span>
+<span class="nc" id="L294">						STATE = M3;</span>
+<span class="nc" id="L295">						break;</span>
+					}
+
+<span class="nc" id="L298">				k = N4;</span>
+<span class="nc" id="L299">				x = (r - 1) / k + 1;</span>
+<span class="nc" id="L300">				y = ((r - 1) % k) / j + 1;</span>
+<span class="nc" id="L301">				s = (r - 1) % j + 1;</span>
+
+<span class="nc bnc" id="L303" title="All 2 branches missed.">				if ((p &amp; 1) &gt; 0) {</span>
+<span class="nc" id="L304">					j = N2;</span>
+<span class="nc" id="L305">					k = N4;</span>
+<span class="nc" id="L306">					x = (r - 1) / k + 1;</span>
+<span class="nc" id="L307">					y = ((r - 1) % k) / j + 1;</span>
+<span class="nc" id="L308">					s = (r - 1) % j + 1;</span>
+<span class="nc" id="L309">					A[x - 1][y - 1] = s;</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">					if (i == k) {</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">						for (x = 0; x &lt; j; x++)</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">							for (y = 0; y &lt; j; y++)</span>
+<span class="nc" id="L313">								result = result.concat(String.valueOf(L[A[x][y]]));</span>
+<span class="nc" id="L314">						result = result.concat(&quot; #\n&quot;);</span>
+					}
+				}
+
+<span class="nc bnc" id="L318" title="All 2 branches missed.">				for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L319">					c1 = Col[r][j];</span>
+<span class="nc" id="L320">					Uc[c1]++;</span>
+				}
+
+<span class="nc bnc" id="L323" title="All 2 branches missed.">				for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L324">					c1 = Col[r][j];</span>
+
+<span class="nc bnc" id="L326" title="All 2 branches missed.">					for (k = 1; k &lt;= Rows[c1]; k++) {</span>
+<span class="nc" id="L327">						r1 = Row[c1][k];</span>
+<span class="nc" id="L328">						Ur[r1]++;</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">						if (Ur[r1] == 1)</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">							for (l = 1; l &lt;= Cols[r1]; l++) {</span>
+<span class="nc" id="L331">								c2 = Col[r1][l];</span>
+<span class="nc" id="L332">								V[c2]--;</span>
+
+<span class="nc bnc" id="L334" title="All 2 branches missed.">								if (Uc[c2] + V[c2] &lt; 1)</span>
+<span class="nc" id="L335">									m0 = c2;</span>
+<span class="nc bnc" id="L336" title="All 4 branches missed.">								if (Uc[c2] == 0 &amp;&amp; V[c2] &lt; 2)</span>
+<span class="nc" id="L337">									m1 = c2;</span>
+							}
+					}
+				}
+<span class="nc" id="L341">				Node[i]++;</span>
+<span class="nc" id="L342">				tnodes++;</span>
+<span class="nc" id="L343">				nodes++;</span>
+				if (rnd &gt; 99 &amp;&amp; nodes &gt; rnd) {
+					STATE = RESTART;
+					break;
+				}
+<span class="nc bnc" id="L348" title="All 2 branches missed.">				if (i == N4)</span>
+<span class="nc" id="L349">					solutions++;</span>
+
+<span class="nc bnc" id="L351" title="All 2 branches missed.">				if (solutions &gt;= smax) {</span>
+<span class="nc" id="L352">					System.out.println(&quot;smax xolutions found&quot;);</span>
+<span class="nc bnc" id="L353" title="All 2 branches missed.">					if (_try_ == 1)</span>
+<span class="nc" id="L354">						System.out.print(&quot;+&quot;);</span>
+<span class="nc" id="L355">					STATE = NEXT_TRY;</span>
+<span class="nc" id="L356">					break;</span>
+				}
+<span class="nc bnc" id="L358" title="All 2 branches missed.">				if (tnodes &gt; vmax) {</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">					if (_try_ == 1)</span>
+<span class="nc" id="L360">						System.out.print(&quot;-&quot;);</span>
+<span class="nc" id="L361">					STATE = NEXT_TRY;</span>
+<span class="nc" id="L362">					break;</span>
+				}
+<span class="nc" id="L364">				STATE = M22;</span>
+<span class="nc" id="L365">				break;</span>
+
+			case M44:
+<span class="nc" id="L368">				i--;</span>
+<span class="nc" id="L369">				c = C[i];</span>
+<span class="nc" id="L370">				r = Row[c][I[i]];</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">				if (i == clues) {</span>
+<span class="nc" id="L372">					STATE = NEXT_TRY;</span>
+<span class="nc" id="L373">					break;</span>
+				}
+
+<span class="nc bnc" id="L376" title="All 2 branches missed.">				for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L377">					c1 = Col[r][j];</span>
+<span class="nc" id="L378">					Uc[c1]--;</span>
+
+<span class="nc bnc" id="L380" title="All 2 branches missed.">					for (k = 1; k &lt;= Rows[c1]; k++) {</span>
+<span class="nc" id="L381">						r1 = Row[c1][k];</span>
+<span class="nc" id="L382">						Ur[r1]--;</span>
+
+<span class="nc bnc" id="L384" title="All 2 branches missed.">						if (Ur[r1] == 0)</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">							for (l = 1; l &lt;= Cols[r1]; l++) {</span>
+<span class="nc" id="L386">								c2 = Col[r1][l];</span>
+<span class="nc" id="L387">								V[c2]++;</span>
+							}
+					}
+				}
+<span class="nc bnc" id="L391" title="All 2 branches missed.">				if (p &gt; 0) {</span>
+<span class="nc" id="L392">					j = N2;</span>
+<span class="nc" id="L393">					k = N4;</span>
+<span class="nc" id="L394">					x = (r - 1) / k + 1;</span>
+<span class="nc" id="L395">					y = ((r - 1) % k) / j + 1;</span>
+<span class="nc" id="L396">					s = (r - 1) % j + 1;</span>
+<span class="nc" id="L397">					A[x - 1][y - 1] = 0;</span>
+				}
+<span class="nc bnc" id="L399" title="All 2 branches missed.">				if (i &gt; clues) {</span>
+<span class="nc" id="L400">					STATE = M3;</span>
+<span class="nc" id="L401">					break;</span>
+				}
+
+			case NEXT_TRY:
+<span class="nc" id="L405">				time1 = System.currentTimeMillis();</span>
+<span class="nc" id="L406">				x1 = time1 - time0;</span>
+
+<span class="nc" id="L408">				time0 = time1;</span>
+
+<span class="nc bnc" id="L410" title="All 2 branches missed.">				if (q &gt; 0) {</span>
+<span class="nc" id="L411">					xx = 128;</span>
+<span class="nc" id="L412">					yy = 128 - q;</span>
+<span class="nc" id="L413">					xx = xx / yy;</span>
+<span class="nc" id="L414">					yy = solutions;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">					for (i = 1; i &lt; 33; i++)</span>
+<span class="nc" id="L416">						yy = yy * xx;</span>
+<span class="nc" id="L417">					System.out.println(&quot;clues: &quot; + clues + &quot; estimated solutions:&quot; + yy + &quot; time &quot; + x1 + &quot;ms&quot;);</span>
+
+<span class="nc" id="L419">					STATE = END;</span>
+<span class="nc" id="L420">					break;</span>
+				}
+<span class="nc bnc" id="L422" title="All 6 branches missed.">				if ((p == 0 || p == 1) &amp;&amp; tnodes &lt;= 999999) {</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">					if (solutions &gt;= smax)</span>
+<span class="nc" id="L424">						result = result.concat(&quot;More than &quot; + solutions + &quot; solutions ( bad sudoku!! ), rating &quot;</span>
+								+ (100 * tnodes / solutions) + &quot;, time &quot; + x1 + &quot; ms&quot;);
+<span class="nc bnc" id="L426" title="All 2 branches missed.">					else if (solutions == 1)</span>
+<span class="nc" id="L427">						result = result</span>
+<span class="nc" id="L428">								.concat(solutions + &quot; solution, rating &quot; + (100 * tnodes) + &quot;, time &quot; + x1 + &quot; ms&quot;);</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">					else if (solutions == 0)</span>
+<span class="nc" id="L430">						result = result.concat(&quot;0 solutions, no rating possible, time &quot; + x1 + &quot; ms&quot;);</span>
+					else
+<span class="nc" id="L432">						result = result.concat(solutions + &quot; solutions ( bad sudoku!! ), rating &quot;</span>
+								+ (100 * tnodes / solutions) + &quot;, time &quot; + x1 + &quot; ms&quot;);
+
+<span class="nc" id="L435">					STATE = END;</span>
+<span class="nc" id="L436">					break;</span>
+				}
+<span class="nc bnc" id="L438" title="All 2 branches missed.">				if (p == 6) {</span>
+<span class="nc" id="L439">					System.out.println(solutions);</span>
+<span class="nc" id="L440">					STATE = END;</span>
+<span class="nc" id="L441">					break;</span>
+				}
+<span class="nc bnc" id="L443" title="All 4 branches missed.">				if (p == 0 || p == 1) {</span>
+<span class="nc" id="L444">					System.out.println(solutions + &quot; solution(s), rating &quot; + (100 * tnodes) + &quot;, time &quot; + x1 + &quot;ms&quot;);</span>
+				}
+<span class="nc bnc" id="L446" title="All 2 branches missed.">				if (p &gt; 5) {</span>
+<span class="nc" id="L447">					x = 0;</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">					for (i = 1; i &lt;= N4; i++) {</span>
+<span class="nc" id="L449">						x += Node[i];</span>
+<span class="nc" id="L450">						System.out.print(Node[i]);</span>
+<span class="nc bnc" id="L451" title="All 2 branches missed.">						if (i % 9 == 0)</span>
+<span class="nc" id="L452">							System.out.println();</span>
+					}
+<span class="nc" id="L454">					System.out.println(x);</span>
+				}
+<span class="nc" id="L456">				STATE = END;</span>
+<span class="nc" id="L457">				break;</span>
+			} // end of switch statement
+		} // end of while loop
+<span class="nc" id="L460">		return result;</span>
+	}
+
+	/**
+	 * Helper function.
+	 */
+	int shuffle() {
+<span class="nc bnc" id="L467" title="All 2 branches missed.">		for (i = 1; i &lt;= m; i++) {</span>
+<span class="nc" id="L468">			a = (int) ((MWC() &gt;&gt; 8) &amp; Mc[N]);</span>
+<span class="nc bnc" id="L469" title="All 2 branches missed.">			while (a &gt;= i)</span>
+<span class="nc" id="L470">				a = (int) ((MWC() &gt;&gt; 8) &amp; Mc[N]);</span>
+<span class="nc" id="L471">			a++;</span>
+<span class="nc" id="L472">			P[i] = P[a];</span>
+<span class="nc" id="L473">			P[a] = i;</span>
+		}
+
+<span class="nc bnc" id="L476" title="All 2 branches missed.">		for (c = 1; c &lt;= m; c++) {</span>
+<span class="nc" id="L477">			Rows[c] = 0;</span>
+<span class="nc" id="L478">			T[c] = Uc[c];</span>
+		}
+
+<span class="nc bnc" id="L481" title="All 2 branches missed.">		for (c = 1; c &lt;= m; c++)</span>
+<span class="nc" id="L482">			Uc[P[c]] = T[c];</span>
+
+<span class="nc bnc" id="L484" title="All 2 branches missed.">		for (r = 1; r &lt;= n; r++)</span>
+<span class="nc bnc" id="L485" title="All 2 branches missed.">			for (i = 1; i &lt;= Cols[r]; i++) {</span>
+<span class="nc" id="L486">				c = P[Col[r][i]];</span>
+<span class="nc" id="L487">				Col[r][i] = c;</span>
+<span class="nc" id="L488">				Rows[c]++;</span>
+<span class="nc" id="L489">				Row[c][Rows[c]] = r;</span>
+			}
+
+<span class="nc bnc" id="L492" title="All 2 branches missed.">		for (i = 1; i &lt;= n; i++) {</span>
+<span class="nc" id="L493">			a = (int) ((MWC() &gt;&gt; 8) &amp; Mr[N]);</span>
+<span class="nc bnc" id="L494" title="All 2 branches missed.">			while (a &gt;= i)</span>
+<span class="nc" id="L495">				a = (int) ((MWC() &gt;&gt; 8) &amp; Mr[N]);</span>
+<span class="nc" id="L496">			a++;</span>
+<span class="nc" id="L497">			P[i] = P[a];</span>
+<span class="nc" id="L498">			P[a] = i;</span>
+		}
+
+<span class="nc bnc" id="L501" title="All 2 branches missed.">		for (r = 1; r &lt;= n; r++) {</span>
+<span class="nc" id="L502">			Cols[r] = 0;</span>
+<span class="nc" id="L503">			T[r] = Ur[r];</span>
+		}
+
+<span class="nc bnc" id="L506" title="All 2 branches missed.">		for (r = 1; r &lt;= n; r++)</span>
+<span class="nc" id="L507">			Ur[P[r]] = T[r];</span>
+
+<span class="nc bnc" id="L509" title="All 2 branches missed.">		for (c = 1; c &lt;= m; c++)</span>
+<span class="nc bnc" id="L510" title="All 2 branches missed.">			for (i = 1; i &lt;= Rows[c]; i++) {</span>
+<span class="nc" id="L511">				r = P[Row[c][i]];</span>
+<span class="nc" id="L512">				Row[c][i] = r;</span>
+<span class="nc" id="L513">				Cols[r]++;</span>
+<span class="nc" id="L514">				Col[r][Cols[r]] = c;</span>
+			}
+
+<span class="nc bnc" id="L517" title="All 2 branches missed.">		for (r = 1; r &lt;= n; r++) {</span>
+<span class="nc bnc" id="L518" title="All 2 branches missed.">			for (i = 1; i &lt;= Cols[r]; i++) {</span>
+<span class="nc" id="L519">				a = (int) ((MWC() &gt;&gt; 8) &amp; 7);</span>
+<span class="nc bnc" id="L520" title="All 2 branches missed.">				while (a &gt;= i)</span>
+<span class="nc" id="L521">					a = (int) ((MWC() &gt;&gt; 8) &amp; 7);</span>
+<span class="nc" id="L522">				a++;</span>
+<span class="nc" id="L523">				P[i] = P[a];</span>
+<span class="nc" id="L524">				P[a] = i;</span>
+			}
+
+<span class="nc bnc" id="L527" title="All 2 branches missed.">			for (i = 1; i &lt;= Cols[r]; i++)</span>
+<span class="nc" id="L528">				T[i] = Col[r][P[i]];</span>
+
+<span class="nc bnc" id="L530" title="All 2 branches missed.">			for (i = 1; i &lt;= Cols[r]; i++)</span>
+<span class="nc" id="L531">				Col[r][i] = T[i];</span>
+		}
+
+<span class="nc bnc" id="L534" title="All 2 branches missed.">		for (c = 1; c &lt;= m; c++) {</span>
+<span class="nc bnc" id="L535" title="All 2 branches missed.">			for (i = 1; i &lt;= Rows[c]; i++) {</span>
+<span class="nc" id="L536">				a = (int) ((MWC() &gt;&gt; 8) &amp; Mw[N]);</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">				while (a &gt;= i)</span>
+<span class="nc" id="L538">					a = (int) ((MWC() &gt;&gt; 8) &amp; Mw[N]);</span>
+<span class="nc" id="L539">				a++;</span>
+<span class="nc" id="L540">				P[i] = P[a];</span>
+<span class="nc" id="L541">				P[a] = i;</span>
+			}
+
+<span class="nc bnc" id="L544" title="All 2 branches missed.">			for (i = 1; i &lt;= Rows[c]; i++)</span>
+<span class="nc" id="L545">				T[i] = Row[c][P[i]];</span>
+
+<span class="nc bnc" id="L547" title="All 2 branches missed.">			for (i = 1; i &lt;= Rows[c]; i++)</span>
+<span class="nc" id="L548">				Row[c][i] = T[i];</span>
+		}
+<span class="nc" id="L550">		return 0;</span>
+	}
+
+	private final Random random;
+
+	/** Creates a new instance of dlx_solver */
+<span class="nc" id="L556">	public dlx_solver(Random random) {</span>
+<span class="nc" id="L557">		this.random = random;</span>
+<span class="nc" id="L558">	}</span>
+}
+
+/*******************************************************************************
+ * dlx_generator generate single solution locally minimized Sudoku puzzles.
+ * Locally minimized means that all keys that can be removed without creating a
+ * degenerate Sudoku (multiple solutions) are removed.
+ ******************************************************************************/
+class dlx_generator {
+	long MWC() {
+<span class="nc" id="L568">		return random.nextLong();</span>
+	}
+
+<span class="nc" id="L571">	int Rows[] = new int[325], Cols[] = new int[730], Row[][] = new int[325][10], Col[][] = new int[730][5],</span>
+			Ur[] = new int[730], Uc[] = new int[325], V[] = new int[325], W[] = new int[325];
+<span class="nc" id="L573">	int P[] = new int[88], A[] = new int[88], C[] = new int[88], I[] = new int[88], Two[] = new int[888];</span>
+<span class="nc" id="L574">	char B[] = { '0', '1', '1', '1', '2', '2', '2', '3', '3', '3', '1', '1', '1', '2', '2', '2', '3', '3', '3', '1',</span>
+			'1', '1', '2', '2', '2', '3', '3', '3', '4', '4', '4', '5', '5', '5', '6', '6', '6', '4', '4', '4', '5',
+			'5', '5', '6', '6', '6', '4', '4', '4', '5', '5', '5', '6', '6', '6', '7', '7', '7', '8', '8', '8', '9',
+			'9', '9', '7', '7', '7', '8', '8', '8', '9', '9', '9', '7', '7', '7', '8', '8', '8', '9', '9', '9' };
+<span class="nc" id="L578">	char H[][] = new char[326][7];</span>
+	long c2, w;
+<span class="nc" id="L580">	int b, f, s1, m0, c1, r1, l, i1, m1, m2, a, p, i, j, k, r, c, d, n = 729, m = 324, x, y, s, z, fi;</span>
+	int mi1, mi2, q7, part, nt, rate, nodes, solutions, min, samples, sam1, clues;
+<span class="nc" id="L582">	char L[] = { '.', '1', '2', '3', '4', '5', '6', '7', '8', '9' };</span>
+
+	/** State machine states */
+	static final int M0S = 10;
+	static final int M0 = 11;
+	static final int MR1 = 12;
+	static final int MR3 = 13;
+	static final int MR4 = 14;
+	static final int M2 = 15;
+	static final int M3 = 16;
+	static final int M4 = 17;
+	static final int M9 = 18;
+	static final int MR = 19;
+	static final int END = 20;
+	static final int M6 = 21;
+
+	/** Set to true to generate debug output */
+<span class="nc" id="L599">	boolean DBG = false;</span>
+
+	/** Output trace messages */
+	void dbg(String s) {
+<span class="nc bnc" id="L603" title="All 2 branches missed.">		if (DBG)</span>
+<span class="nc" id="L604">			System.out.println(s);</span>
+<span class="nc" id="L605">	}</span>
+
+	private final Random random;
+
+<span class="nc" id="L609">	public dlx_generator(Random random) {</span>
+<span class="nc" id="L610">		dbg(&quot;In constructor&quot;);</span>
+<span class="nc" id="L611">		this.random = random;</span>
+<span class="nc" id="L612">	}</span>
+
+	/**
+	 * Initialization code for both generate() and rate()
+	 */
+	void initialize() {
+<span class="nc bnc" id="L618" title="All 2 branches missed.">		for (i = 0; i &lt; 888; i++) {</span>
+<span class="nc" id="L619">			j = 1;</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">			while (j &lt;= i)</span>
+<span class="nc" id="L621">				j += j;</span>
+<span class="nc" id="L622">			Two[i] = j - 1;</span>
+		}
+
+<span class="nc" id="L625">		r = 0;</span>
+<span class="nc bnc" id="L626" title="All 2 branches missed.">		for (x = 1; x &lt;= 9; x++)</span>
+<span class="nc bnc" id="L627" title="All 2 branches missed.">			for (y = 1; y &lt;= 9; y++)</span>
+<span class="nc bnc" id="L628" title="All 2 branches missed.">				for (s = 1; s &lt;= 9; s++) {</span>
+<span class="nc" id="L629">					r++;</span>
+<span class="nc" id="L630">					Cols[r] = 4;</span>
+<span class="nc" id="L631">					Col[r][1] = x * 9 - 9 + y;</span>
+<span class="nc" id="L632">					Col[r][2] = (B[x * 9 - 9 + y] - 48) * 9 - 9 + s + 81;</span>
+<span class="nc" id="L633">					Col[r][3] = x * 9 - 9 + s + 81 * 2;</span>
+<span class="nc" id="L634">					Col[r][4] = y * 9 - 9 + s + 81 * 3;</span>
+				}
+
+<span class="nc bnc" id="L637" title="All 2 branches missed.">		for (c = 1; c &lt;= m; c++)</span>
+<span class="nc" id="L638">			Rows[c] = 0;</span>
+
+<span class="nc bnc" id="L640" title="All 2 branches missed.">		for (r = 1; r &lt;= n; r++)</span>
+<span class="nc bnc" id="L641" title="All 2 branches missed.">			for (c = 1; c &lt;= Cols[r]; c++) {</span>
+<span class="nc" id="L642">				a = Col[r][c];</span>
+<span class="nc" id="L643">				Rows[a]++;</span>
+<span class="nc" id="L644">				Row[a][Rows[a]] = r;</span>
+			}
+
+<span class="nc" id="L647">		c = 0;</span>
+<span class="nc bnc" id="L648" title="All 2 branches missed.">		for (x = 1; x &lt;= 9; x++)</span>
+<span class="nc bnc" id="L649" title="All 2 branches missed.">			for (y = 1; y &lt;= 9; y++) {</span>
+<span class="nc" id="L650">				c++;</span>
+<span class="nc" id="L651">				H[c][0] = 'r';</span>
+<span class="nc" id="L652">				H[c][1] = L[x];</span>
+<span class="nc" id="L653">				H[c][2] = 'c';</span>
+<span class="nc" id="L654">				H[c][3] = L[y];</span>
+<span class="nc" id="L655">				H[c][4] = 0;</span>
+			}
+
+<span class="nc" id="L658">		c = 81;</span>
+<span class="nc bnc" id="L659" title="All 2 branches missed.">		for (b = 1; b &lt;= 9; b++)</span>
+<span class="nc bnc" id="L660" title="All 2 branches missed.">			for (s = 1; s &lt;= 9; s++) {</span>
+<span class="nc" id="L661">				c++;</span>
+<span class="nc" id="L662">				H[c][0] = 'b';</span>
+<span class="nc" id="L663">				H[c][1] = L[b];</span>
+<span class="nc" id="L664">				H[c][2] = 's';</span>
+<span class="nc" id="L665">				H[c][3] = L[s];</span>
+<span class="nc" id="L666">				H[c][4] = 0;</span>
+			}
+
+<span class="nc" id="L669">		c = 81 * 2;</span>
+<span class="nc bnc" id="L670" title="All 2 branches missed.">		for (x = 1; x &lt;= 9; x++)</span>
+<span class="nc bnc" id="L671" title="All 2 branches missed.">			for (s = 1; s &lt;= 9; s++) {</span>
+<span class="nc" id="L672">				c++;</span>
+<span class="nc" id="L673">				H[c][0] = 'r';</span>
+<span class="nc" id="L674">				H[c][1] = L[x];</span>
+<span class="nc" id="L675">				H[c][2] = 's';</span>
+<span class="nc" id="L676">				H[c][3] = L[s];</span>
+<span class="nc" id="L677">				H[c][4] = 0;</span>
+			}
+
+<span class="nc" id="L680">		c = 81 * 3;</span>
+<span class="nc bnc" id="L681" title="All 2 branches missed.">		for (y = 1; y &lt;= 9; y++)</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">			for (s = 1; s &lt;= 9; s++) {</span>
+<span class="nc" id="L683">				c++;</span>
+<span class="nc" id="L684">				H[c][0] = 'c';</span>
+<span class="nc" id="L685">				H[c][1] = L[y];</span>
+<span class="nc" id="L686">				H[c][2] = 's';</span>
+<span class="nc" id="L687">				H[c][3] = L[s];</span>
+<span class="nc" id="L688">				H[c][4] = 0;</span>
+			}
+<span class="nc" id="L690">	}</span>
+
+	/*
+	 * Rating function
+	 */
+	public long rate(String puzzle) {
+<span class="nc" id="L696">		int STATE = M6;</span>
+		int Solutions;
+
+<span class="nc" id="L699">		z = 100;</span>
+<span class="nc" id="L700">		fi = 0;</span>
+<span class="nc" id="L701">		rate = 1;</span>
+
+<span class="nc bnc" id="L703" title="All 2 branches missed.">		for (i = 0; i &lt; 88; i++)</span>
+<span class="nc" id="L704">			A[i] = 0;</span>
+
+<span class="nc" id="L706">		initialize();</span>
+
+<span class="nc bnc" id="L708" title="All 2 branches missed.">		while (STATE != END) {</span>
+<span class="nc bnc" id="L709" title="All 2 branches missed.">			switch (STATE) {</span>
+			case M6:
+<span class="nc" id="L711">				clues = 0;</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed.">				for (i = 1; i &lt;= 81; i++) {</span>
+<span class="nc" id="L713">					c = puzzle.charAt(i - 1);</span>
+<span class="nc" id="L714">					j = 0;</span>
+
+<span class="nc bnc" id="L716" title="All 8 branches missed.">					if (c == '-' || c == '.' || c == '0' || c == '*') {</span>
+<span class="nc" id="L717">						A[i] = j;</span>
+					} else {
+<span class="nc bnc" id="L719" title="All 4 branches missed.">						while (L[j] != c &amp;&amp; j &lt;= 9)</span>
+<span class="nc" id="L720">							j++;</span>
+
+<span class="nc bnc" id="L722" title="All 2 branches missed.">						if (j &lt;= 9) {</span>
+<span class="nc" id="L723">							A[i] = j;</span>
+						}
+					}
+				}
+
+<span class="nc bnc" id="L728" title="All 2 branches missed.">				if (clues == 81) {</span>
+<span class="nc" id="L729">					clues--;</span>
+<span class="nc" id="L730">					A[1] = 0;</span>
+				}
+
+<span class="nc" id="L733">				nt = 0;</span>
+<span class="nc" id="L734">				mi1 = 9999;</span>
+<span class="nc bnc" id="L735" title="All 2 branches missed.">				for (f = 0; f &lt; z; f++) {</span>
+<span class="nc" id="L736">					Solutions = solve();</span>
+<span class="nc bnc" id="L737" title="All 2 branches missed.">					if (Solutions != 1) {</span>
+<span class="nc bnc" id="L738" title="All 2 branches missed.">						if (Solutions &gt; 1)</span>
+<span class="nc" id="L739">							nt = -1 * Solutions;</span>
+<span class="nc" id="L740">						STATE = END;</span>
+<span class="nc" id="L741">						break;</span>
+					}
+<span class="nc" id="L743">					nt += nodes;</span>
+<span class="nc bnc" id="L744" title="All 2 branches missed.">					if (nodes &lt; mi1) {</span>
+<span class="nc" id="L745">						mi1 = nodes;</span>
+<span class="nc" id="L746">						mi2 = C[clues];</span>
+					}
+				}
+<span class="nc bnc" id="L749" title="All 2 branches missed.">				if (STATE == END)</span>
+<span class="nc" id="L750">					break;</span>
+
+<span class="nc bnc" id="L752" title="All 2 branches missed.">				if (fi &gt; 0)</span>
+<span class="nc bnc" id="L753" title="All 2 branches missed.">					if ((nt / z) &gt; fi) {</span>
+<span class="nc bnc" id="L754" title="All 2 branches missed.">						for (i = 1; i &lt;= 81; i++)</span>
+<span class="nc" id="L755">							System.out.println(L[A[i]]);</span>
+<span class="nc" id="L756">						System.out.println();</span>
+<span class="nc" id="L757">						STATE = M6;</span>
+<span class="nc" id="L758">						break;</span>
+					}
+
+<span class="nc bnc" id="L761" title="All 2 branches missed.">				if (fi &gt; 0) {</span>
+<span class="nc" id="L762">					STATE = M6;</span>
+<span class="nc" id="L763">					break;</span>
+				}
+
+<span class="nc bnc" id="L766" title="All 2 branches missed.">				if ((z &amp; 1) &gt; 0) {</span>
+<span class="nc" id="L767">					System.out.println(nt / z);</span>
+<span class="nc" id="L768">					STATE = M6;</span>
+<span class="nc" id="L769">					break;</span>
+				}
+
+<span class="nc bnc" id="L772" title="All 2 branches missed.">				if (rate &gt; 1)</span>
+<span class="nc" id="L773">					System.out.println(&quot;hint: &quot; + H[mi2]);</span>
+
+<span class="nc" id="L775">				STATE = END;</span>
+<span class="nc" id="L776">				break;</span>
+			} // End of switch statement
+		} // End of while loop
+<span class="nc" id="L779">		return (nt);</span>
+	}
+
+	public String[] generate(int Samples, int Rate) {
+<span class="nc" id="L783">		int STATE = M0S;</span>
+<span class="nc" id="L784">		String result[] = new String[Samples];</span>
+
+<span class="nc" id="L786">		dbg(&quot;Entering generate&quot;);</span>
+
+<span class="nc" id="L788">		samples = 1000;</span>
+<span class="nc bnc" id="L789" title="All 2 branches missed.">		if (Samples &gt; 0)</span>
+<span class="nc" id="L790">			samples = Samples;</span>
+
+<span class="nc bnc" id="L792" title="All 2 branches missed.">		for (i = 0; i &lt; samples; i++)</span>
+<span class="nc" id="L793">			result[i] = new String();</span>
+
+		// Set to 1 for rating, set to 2 for rating and hint
+<span class="nc" id="L796">		rate = 0;</span>
+<span class="nc bnc" id="L797" title="All 2 branches missed.">		if (Rate &gt; 0)</span>
+<span class="nc" id="L798">			rate = Rate;</span>
+<span class="nc bnc" id="L799" title="All 2 branches missed.">		if (rate &gt; 2)</span>
+<span class="nc" id="L800">			rate = 2;</span>
+
+<span class="nc" id="L802">		initialize();</span>
+
+<span class="nc" id="L804">		dbg(&quot;Entering state machine&quot;);</span>
+
+<span class="nc" id="L806">		sam1 = -1;</span>
+<span class="nc bnc" id="L807" title="All 2 branches missed.">		while (STATE != END) {</span>
+<span class="nc bnc" id="L808" title="All 6 branches missed.">			switch (STATE) {</span>
+			case M0S:
+<span class="nc" id="L810">				sam1++;</span>
+<span class="nc bnc" id="L811" title="All 2 branches missed.">				if (sam1 &gt;= samples) {</span>
+<span class="nc" id="L812">					STATE = END;</span>
+<span class="nc" id="L813">					break;</span>
+				}
+
+			case M0:
+<span class="nc bnc" id="L817" title="All 2 branches missed.">				for (i = 1; i &lt;= 81; i++)</span>
+<span class="nc" id="L818">					A[i] = 0;</span>
+<span class="nc" id="L819">				part = 0;</span>
+<span class="nc" id="L820">				q7 = 0;</span>
+
+			case MR1:
+<span class="nc" id="L823">				i1 = (int) ((MWC() &gt;&gt; 8) &amp; 127);</span>
+<span class="nc bnc" id="L824" title="All 2 branches missed.">				if (i1 &gt; 80) {</span>
+<span class="nc" id="L825">					STATE = MR1;</span>
+<span class="nc" id="L826">					break;</span>
+				}
+
+<span class="nc" id="L829">				i1++;</span>
+<span class="nc bnc" id="L830" title="All 2 branches missed.">				if (A[i1] &gt; 0) {</span>
+<span class="nc" id="L831">					STATE = MR1;</span>
+<span class="nc" id="L832">					break;</span>
+				}
+
+			case MR3:
+<span class="nc" id="L836">				s = (int) ((MWC() &gt;&gt; 9) &amp; 15);</span>
+<span class="nc bnc" id="L837" title="All 2 branches missed.">				if (s &gt; 8) {</span>
+<span class="nc" id="L838">					STATE = MR3;</span>
+<span class="nc" id="L839">					break;</span>
+				}
+
+<span class="nc" id="L842">				s++;</span>
+<span class="nc" id="L843">				A[i1] = s;</span>
+<span class="nc" id="L844">				m2 = solve();</span>
+<span class="nc" id="L845">				q7++;</span>
+
+<span class="nc bnc" id="L847" title="All 2 branches missed.">				if (m2 &lt; 1)</span>
+<span class="nc" id="L848">					A[i1] = 0;</span>
+
+<span class="nc bnc" id="L850" title="All 2 branches missed.">				if (m2 != 1) {</span>
+<span class="nc" id="L851">					STATE = MR1;</span>
+<span class="nc" id="L852">					break;</span>
+				}
+
+<span class="nc" id="L855">				part++;</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">				if (solve() != 1) {</span>
+<span class="nc" id="L857">					STATE = M0;</span>
+<span class="nc" id="L858">					break;</span>
+				}
+
+			case MR4:
+<span class="nc bnc" id="L862" title="All 2 branches missed.">				for (i = 1; i &lt;= 81; i++) {</span>
+<span class="nc" id="L863">					x = (int) ((MWC() &gt;&gt; 8) &amp; 127);</span>
+<span class="nc bnc" id="L864" title="All 2 branches missed.">					while (x &gt;= i) {</span>
+<span class="nc" id="L865">						x = (int) ((MWC() &gt;&gt; 8) &amp; 127);</span>
+					}
+<span class="nc" id="L867">					x++;</span>
+<span class="nc" id="L868">					P[i] = P[x];</span>
+<span class="nc" id="L869">					P[x] = i;</span>
+				}
+
+<span class="nc bnc" id="L872" title="All 2 branches missed.">				for (i1 = 1; i1 &lt;= 81; i1++) {</span>
+<span class="nc" id="L873">					s1 = A[P[i1]];</span>
+<span class="nc" id="L874">					A[P[i1]] = 0;</span>
+<span class="nc bnc" id="L875" title="All 2 branches missed.">					if (solve() &gt; 1)</span>
+<span class="nc" id="L876">						A[P[i1]] = s1;</span>
+				}
+
+<span class="nc bnc" id="L879" title="All 2 branches missed.">				if (rate &gt; 0) {</span>
+<span class="nc" id="L880">					nt = 0;</span>
+<span class="nc" id="L881">					mi1 = 9999;</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">					for (f = 0; f &lt; 100; f++) {</span>
+<span class="nc" id="L883">						solve();</span>
+<span class="nc" id="L884">						nt += nodes;</span>
+<span class="nc bnc" id="L885" title="All 2 branches missed.">						if (nodes &lt; mi1) {</span>
+<span class="nc" id="L886">							mi1 = nodes;</span>
+<span class="nc" id="L887">							mi2 = C[clues];</span>
+						}
+					}
+<span class="nc" id="L890">					result[sam1] = result[sam1].concat(&quot;Rating:&quot; + nt + &quot;# &quot;);</span>
+<span class="nc bnc" id="L891" title="All 2 branches missed.">					if (rate &gt; 1) {</span>
+<span class="nc" id="L892">						result[sam1] = result[sam1].concat(&quot;hint: &quot; + String.valueOf(H[mi2]).substring(0, 4) + &quot; #\n&quot;);</span>
+					} else
+<span class="nc" id="L894">						result[sam1] = result[sam1].concat(&quot;\n&quot;);</span>
+				}
+
+<span class="nc bnc" id="L897" title="All 2 branches missed.">				for (i = 1; i &lt;= 81; i++) {</span>
+<span class="nc" id="L898">					result[sam1] = result[sam1].concat(String.valueOf(L[A[i]]));</span>
+<span class="nc bnc" id="L899" title="All 2 branches missed.">					if (i % 9 == 0) {</span>
+<span class="nc" id="L900">						result[sam1] = result[sam1].concat(&quot;\n&quot;);</span>
+					}
+				}
+<span class="nc" id="L903">				result[sam1] = result[sam1].concat(&quot;\n&quot;);</span>
+
+			default:
+<span class="nc" id="L906">				dbg(&quot;Default case. New state M0S&quot;);</span>
+<span class="nc" id="L907">				STATE = M0S;</span>
+<span class="nc" id="L908">				break;</span>
+			} // end of switch statement
+		} // end of while loop
+<span class="nc" id="L911">		return result;</span>
+	}
+
+	int solve() {// returns 0 (no solution), 1 (unique sol.), 2 (more than
+					// one sol.)
+<span class="nc" id="L916">		int STATE = M2;</span>
+
+<span class="nc bnc" id="L918" title="All 2 branches missed.">		for (i = 0; i &lt;= n; i++)</span>
+<span class="nc" id="L919">			Ur[i] = 0;</span>
+<span class="nc bnc" id="L920" title="All 2 branches missed.">		for (i = 0; i &lt;= m; i++)</span>
+<span class="nc" id="L921">			Uc[i] = 0;</span>
+<span class="nc" id="L922">		clues = 0;</span>
+
+<span class="nc bnc" id="L924" title="All 2 branches missed.">		for (i = 1; i &lt;= 81; i++)</span>
+<span class="nc bnc" id="L925" title="All 2 branches missed.">			if (A[i] &gt; 0) {</span>
+<span class="nc" id="L926">				clues++;</span>
+<span class="nc" id="L927">				r = i * 9 - 9 + A[i];</span>
+
+<span class="nc bnc" id="L929" title="All 2 branches missed.">				for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L930">					d = Col[r][j];</span>
+<span class="nc bnc" id="L931" title="All 2 branches missed.">					if (Uc[d] &gt; 0)</span>
+<span class="nc" id="L932">						return 0;</span>
+<span class="nc" id="L933">					Uc[d]++;</span>
+
+<span class="nc bnc" id="L935" title="All 2 branches missed.">					for (k = 1; k &lt;= Rows[d]; k++) {</span>
+<span class="nc" id="L936">						Ur[Row[d][k]]++;</span>
+					}
+				}
+			}
+
+<span class="nc bnc" id="L941" title="All 2 branches missed.">		for (c = 1; c &lt;= m; c++) {</span>
+<span class="nc" id="L942">			V[c] = 0;</span>
+<span class="nc bnc" id="L943" title="All 2 branches missed.">			for (r = 1; r &lt;= Rows[c]; r++)</span>
+<span class="nc bnc" id="L944" title="All 2 branches missed.">				if (Ur[Row[c][r]] == 0)</span>
+<span class="nc" id="L945">					V[c]++;</span>
+		}
+
+<span class="nc" id="L948">		i = clues;</span>
+<span class="nc" id="L949">		m0 = 0;</span>
+<span class="nc" id="L950">		m1 = 0;</span>
+<span class="nc" id="L951">		solutions = 0;</span>
+<span class="nc" id="L952">		nodes = 0;</span>
+
+<span class="nc" id="L954">		dbg(&quot;Solve: Entering state machine&quot;);</span>
+
+<span class="nc bnc" id="L956" title="All 2 branches missed.">		while (STATE != END) {</span>
+<span class="nc bnc" id="L957" title="All 6 branches missed.">			switch (STATE) {</span>
+			case M2:
+<span class="nc" id="L959">				i++;</span>
+<span class="nc" id="L960">				I[i] = 0;</span>
+<span class="nc" id="L961">				min = n + 1;</span>
+<span class="nc bnc" id="L962" title="All 4 branches missed.">				if ((i &gt; 81) || (m0 &gt; 0)) {</span>
+<span class="nc" id="L963">					STATE = M4;</span>
+<span class="nc" id="L964">					break;</span>
+				}
+
+<span class="nc bnc" id="L967" title="All 2 branches missed.">				if (m1 &gt; 0) {</span>
+<span class="nc" id="L968">					C[i] = m1;</span>
+<span class="nc" id="L969">					STATE = M3;</span>
+<span class="nc" id="L970">					break;</span>
+				}
+
+<span class="nc" id="L973">				w = 0;</span>
+<span class="nc bnc" id="L974" title="All 2 branches missed.">				for (c = 1; c &lt;= m; c++)</span>
+<span class="nc bnc" id="L975" title="All 2 branches missed.">					if (Uc[c] == 0) {</span>
+<span class="nc bnc" id="L976" title="All 2 branches missed.">						if (V[c] &lt; 2) {</span>
+<span class="nc" id="L977">							C[i] = c;</span>
+<span class="nc" id="L978">							STATE = M3;</span>
+<span class="nc" id="L979">							break;</span>
+						}
+
+<span class="nc bnc" id="L982" title="All 2 branches missed.">						if (V[c] &lt;= min) {</span>
+<span class="nc" id="L983">							w++;</span>
+<span class="nc" id="L984">							W[(int) w] = c;</span>
+						}
+						;
+
+<span class="nc bnc" id="L988" title="All 2 branches missed.">						if (V[c] &lt; min) {</span>
+<span class="nc" id="L989">							w = 1;</span>
+<span class="nc" id="L990">							W[(int) w] = c;</span>
+<span class="nc" id="L991">							min = V[c];</span>
+						}
+					}
+
+<span class="nc bnc" id="L995" title="All 2 branches missed.">				if (STATE == M3) {</span>
+					// break in for loop detected, continue breaking
+<span class="nc" id="L997">					break;</span>
+				}
+
+			case MR:
+<span class="nc" id="L1001">				c2 = (MWC() &amp; Two[(int) w]);</span>
+<span class="nc bnc" id="L1002" title="All 2 branches missed.">				while (c2 &gt;= w) {</span>
+<span class="nc" id="L1003">					c2 = (MWC() &amp; Two[(int) w]);</span>
+				}
+<span class="nc" id="L1005">				C[i] = W[(int) c2 + 1];</span>
+
+			case M3:
+<span class="nc" id="L1008">				c = C[i];</span>
+<span class="nc" id="L1009">				I[i]++;</span>
+<span class="nc bnc" id="L1010" title="All 2 branches missed.">				if (I[i] &gt; Rows[c]) {</span>
+<span class="nc" id="L1011">					STATE = M4;</span>
+<span class="nc" id="L1012">					break;</span>
+				}
+
+<span class="nc" id="L1015">				r = Row[c][I[i]];</span>
+<span class="nc bnc" id="L1016" title="All 2 branches missed.">				if (Ur[r] &gt; 0) {</span>
+<span class="nc" id="L1017">					STATE = M3;</span>
+<span class="nc" id="L1018">					break;</span>
+				}
+<span class="nc" id="L1020">				m0 = 0;</span>
+<span class="nc" id="L1021">				m1 = 0;</span>
+<span class="nc" id="L1022">				nodes++;</span>
+<span class="nc bnc" id="L1023" title="All 2 branches missed.">				for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L1024">					c1 = Col[r][j];</span>
+<span class="nc" id="L1025">					Uc[c1]++;</span>
+				}
+
+<span class="nc bnc" id="L1028" title="All 2 branches missed.">				for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L1029">					c1 = Col[r][j];</span>
+<span class="nc bnc" id="L1030" title="All 2 branches missed.">					for (k = 1; k &lt;= Rows[c1]; k++) {</span>
+<span class="nc" id="L1031">						r1 = Row[c1][k];</span>
+<span class="nc" id="L1032">						Ur[r1]++;</span>
+<span class="nc bnc" id="L1033" title="All 2 branches missed.">						if (Ur[r1] == 1)</span>
+<span class="nc bnc" id="L1034" title="All 2 branches missed.">							for (l = 1; l &lt;= Cols[r1]; l++) {</span>
+<span class="nc" id="L1035">								c2 = Col[r1][l];</span>
+<span class="nc" id="L1036">								V[(int) c2]--;</span>
+<span class="nc bnc" id="L1037" title="All 2 branches missed.">								if (Uc[(int) c2] + V[(int) c2] &lt; 1)</span>
+<span class="nc" id="L1038">									m0 = (int) c2;</span>
+<span class="nc bnc" id="L1039" title="All 4 branches missed.">								if (Uc[(int) c2] == 0 &amp;&amp; V[(int) c2] &lt; 2)</span>
+<span class="nc" id="L1040">									m1 = (int) c2;</span>
+							}
+					}
+				}
+
+<span class="nc bnc" id="L1045" title="All 2 branches missed.">				if (i == 81)</span>
+<span class="nc" id="L1046">					solutions++;</span>
+
+<span class="nc bnc" id="L1048" title="All 2 branches missed.">				if (solutions &gt; 1) {</span>
+<span class="nc" id="L1049">					STATE = M9;</span>
+<span class="nc" id="L1050">					break;</span>
+				}
+<span class="nc" id="L1052">				STATE = M2;</span>
+<span class="nc" id="L1053">				break;</span>
+
+			case M4:
+<span class="nc" id="L1056">				i--;</span>
+<span class="nc bnc" id="L1057" title="All 2 branches missed.">				if (i == clues) {</span>
+<span class="nc" id="L1058">					STATE = M9;</span>
+<span class="nc" id="L1059">					break;</span>
+				}
+<span class="nc" id="L1061">				c = C[i];</span>
+<span class="nc" id="L1062">				r = Row[c][I[i]];</span>
+
+<span class="nc bnc" id="L1064" title="All 2 branches missed.">				for (j = 1; j &lt;= Cols[r]; j++) {</span>
+<span class="nc" id="L1065">					c1 = Col[r][j];</span>
+<span class="nc" id="L1066">					Uc[c1]--;</span>
+<span class="nc bnc" id="L1067" title="All 2 branches missed.">					for (k = 1; k &lt;= Rows[c1]; k++) {</span>
+<span class="nc" id="L1068">						r1 = Row[c1][k];</span>
+<span class="nc" id="L1069">						Ur[r1]--;</span>
+<span class="nc bnc" id="L1070" title="All 2 branches missed.">						if (Ur[r1] == 0)</span>
+<span class="nc bnc" id="L1071" title="All 2 branches missed.">							for (l = 1; l &lt;= Cols[r1]; l++) {</span>
+<span class="nc" id="L1072">								c2 = Col[r1][l];</span>
+<span class="nc" id="L1073">								V[(int) c2]++;</span>
+							}
+					}
+				}
+
+<span class="nc bnc" id="L1078" title="All 2 branches missed.">				if (i &gt; clues) {</span>
+<span class="nc" id="L1079">					STATE = M3;</span>
+<span class="nc" id="L1080">					break;</span>
+				}
+
+			case M9:
+<span class="nc" id="L1084">				STATE = END;</span>
+<span class="nc" id="L1085">				break;</span>
+			default:
+<span class="nc" id="L1087">				STATE = END;</span>
+<span class="nc" id="L1088">				break;</span>
+			} // end of switch statement
+		} // end of while statement
+<span class="nc" id="L1091">		return solutions;</span>
+	}
+}
+
+/**
+ * 
+ * @author Rolf Sandberg
+ */
+
+public class DLXEngine {
+	dlx_generator generator;
+	dlx_solver solver;
+
+<span class="nc" id="L1104">	public DLXEngine(Random random) {</span>
+<span class="nc" id="L1105">		generator = new dlx_generator(random);</span>
+<span class="nc" id="L1106">		solver = new dlx_solver(random);</span>
+<span class="nc" id="L1107">	}</span>
+
+	String generate(int minrating, int maxrating) {
+		// Date t = new Date();
+		// long start = t.getTime();
+		// int tries = 0, i, samples = 5;
+		// long rating = 0;
+<span class="nc" id="L1114">		String ss[] = generator.generate(1, 0);</span>
+<span class="nc" id="L1115">		return ss[0];</span>
+
+		// Generator:
+		// First arg: rand seed
+		// Second arg: #samples, ignored if &lt;= 0
+		// Third arg: rating and hints, ignored if &lt;= 0
+
+		// Task: Find a Sudoku with a rating in a specified interval.
+		// Do it by generating samples and examine them
+		// Continue until an appropriate puzzle is found.
+		// while(tries &lt; 9999999) {
+		// tries++;
+		// t = new Date();
+		// ss = generator.generate(samples, 0);
+		// for(i = 0; i &lt; samples; i++) {
+		// rating = generator.rate(ss[i].replace(&quot;\n&quot;,&quot;&quot;).trim());
+		// if(rating &gt; minrating &amp;&amp; rating &lt; maxrating) {
+		// return ss[i];
+		// }
+		// }
+		// System.out.println(minrating + &quot;, &quot; + maxrating + &quot;, &quot; + rating + &quot;,
+		// looping&quot;);
+		// }
+		// return ss[0];
+	}
+
+	long rate(String s) {
+<span class="nc" id="L1142">		return generator.rate(s);</span>
+	}
+
+	String solve(String s) {
+<span class="nc" id="L1146">		String result = solver.solve(s);</span>
+<span class="nc" id="L1147">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChainImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.bpm</a> &gt; <span class="el_source">ChainImpl.java</span></div><h1>ChainImpl.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.bpm;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ConcurrentModificationException;
+import java.util.List;
+import java.util.Objects;
+
+<span class="nc" id="L44">public class ChainImpl&lt;O&gt; implements Chain&lt;O&gt; {</span>
+
+<span class="nc" id="L46">	private final List&lt;O&gt; positive = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L47">	private final List&lt;O&gt; negative = new ArrayList&lt;&gt;();</span>
+	private int currentVersion;
+
+	public boolean remove(O data) {
+<span class="nc" id="L51">		updateStructuralVersion();</span>
+<span class="nc" id="L52">		boolean result = positive.remove(data);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (result == false) {</span>
+<span class="nc" id="L54">			result = negative.remove(data);</span>
+		}
+<span class="nc" id="L56">		return result;</span>
+	}
+
+	public ChainImpl&lt;O&gt; cloneMe() {
+<span class="nc" id="L60">		final ChainImpl&lt;O&gt; result = new ChainImpl&lt;&gt;();</span>
+<span class="nc" id="L61">		result.currentVersion = this.currentVersion;</span>
+<span class="nc" id="L62">		result.positive.addAll(this.positive);</span>
+<span class="nc" id="L63">		result.negative.addAll(this.negative);</span>
+<span class="nc" id="L64">		return result;</span>
+	}
+
+	public int compare(O a, O b) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (a.equals(b)) {</span>
+<span class="nc" id="L69">			return 0;</span>
+		}
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (int i = negative.size() - 1; i &gt;= 0; i--) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			if (a.equals(negative.get(i))) {</span>
+<span class="nc" id="L73">				return -1;</span>
+			}
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (b.equals(negative.get(i))) {</span>
+<span class="nc" id="L76">				return 1;</span>
+			}
+		}
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (O cur : positive) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (a.equals(cur)) {</span>
+<span class="nc" id="L81">				return -1;</span>
+			}
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (b.equals(cur)) {</span>
+<span class="nc" id="L84">				return 1;</span>
+			}
+<span class="nc" id="L86">		}</span>
+<span class="nc" id="L87">		throw new UnsupportedOperationException();</span>
+	}
+
+	public List&lt;O&gt; toList() {
+<span class="nc" id="L91">		final List&lt;O&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (O element : negative) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (element != null) {</span>
+<span class="nc" id="L94">				result.add(0, element);</span>
+			}
+<span class="nc" id="L96">		}</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (O element : positive) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (element != null) {</span>
+<span class="nc" id="L99">				result.add(element);</span>
+			}
+<span class="nc" id="L101">		}</span>
+<span class="nc" id="L102">		return Collections.unmodifiableList(result);</span>
+	}
+
+<span class="nc" id="L105">	private ChainImpl() {</span>
+<span class="nc" id="L106">	}</span>
+
+<span class="nc" id="L108">	public ChainImpl(O root) {</span>
+<span class="nc" id="L109">		this.positive.add(Objects.requireNonNull(root));</span>
+<span class="nc" id="L110">	}</span>
+
+	private int updateStructuralVersion() {
+<span class="nc" id="L113">		currentVersion++;</span>
+<span class="nc" id="L114">		return currentVersion;</span>
+	}
+
+	public boolean contains(O data) {
+<span class="nc" id="L118">		Objects.requireNonNull(data);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (int i = 0; i &lt; Math.max(positive.size(), negative.size()); i++) {</span>
+<span class="nc bnc" id="L120" title="All 4 branches missed.">			if (i &lt; positive.size() &amp;&amp; data == positive.get(i)) {</span>
+<span class="nc" id="L121">				return true;</span>
+			}
+<span class="nc bnc" id="L123" title="All 4 branches missed.">			if (i &lt; negative.size() &amp;&amp; data == negative.get(i)) {</span>
+<span class="nc" id="L124">				return true;</span>
+			}
+		}
+<span class="nc" id="L127">		return false;</span>
+	}
+
+	public Navigator&lt;O&gt; navigator(O data) {
+<span class="nc" id="L131">		Objects.requireNonNull(data);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		for (int i = 0; i &lt; Math.max(positive.size(), negative.size()); i++) {</span>
+<span class="nc bnc" id="L133" title="All 4 branches missed.">			if (i &lt; positive.size() &amp;&amp; data == positive.get(i)) {</span>
+<span class="nc" id="L134">				final InternalNavigator result = new InternalNavigator(i, currentVersion);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">				assert result.get() == data;</span>
+<span class="nc" id="L136">				return result;</span>
+			}
+<span class="nc bnc" id="L138" title="All 4 branches missed.">			if (i &lt; negative.size() &amp;&amp; data == negative.get(i)) {</span>
+<span class="nc" id="L139">				final InternalNavigator result = new InternalNavigator(-i - 1, currentVersion);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">				assert result.get() == data;</span>
+<span class="nc" id="L141">				return result;</span>
+			}
+		}
+<span class="nc" id="L144">		throw new IllegalArgumentException();</span>
+	}
+
+	private O getInternal(int position) {
+<span class="nc" id="L148">		ensure(position);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (position &gt;= 0) {</span>
+<span class="nc" id="L150">			return positive.get(position);</span>
+		} else {
+<span class="nc" id="L152">			return negative.get(-position - 1);</span>
+		}
+	}
+
+	private void setInternal(int position, O data) {
+<span class="nc" id="L157">		Objects.requireNonNull(data);</span>
+<span class="nc" id="L158">		ensure(position);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (position &gt;= 0) {</span>
+<span class="nc" id="L160">			positive.set(position, data);</span>
+		} else {
+<span class="nc" id="L162">			negative.set(-position - 1, data);</span>
+		}
+<span class="nc" id="L164">	}</span>
+
+	private void insertInternal(int position, O data) {
+<span class="nc" id="L167">		Objects.requireNonNull(data);</span>
+<span class="nc" id="L168">		ensure(position);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (position &gt;= 0) {</span>
+<span class="nc" id="L170">			positive.add(position, data);</span>
+		} else {
+<span class="nc" id="L172">			negative.add(-position - 1, data);</span>
+		}
+<span class="nc" id="L174">	}</span>
+
+	private void ensure(int position) {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (position &gt;= 0) {</span>
+<span class="nc" id="L178">			ensureInternal(position, positive);</span>
+		} else {
+<span class="nc" id="L180">			ensureInternal(-position - 1, negative);</span>
+		}
+<span class="nc" id="L182">	}</span>
+
+	private void ensureInternal(int position, List&lt;O&gt; list) {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		assert position &gt;= 0 : &quot;position=&quot; + position;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		while (list.size() &lt;= position) {</span>
+<span class="nc" id="L187">			list.add(null);</span>
+		}
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		assert list.size() &gt; position;</span>
+		// Just check that list.get(position) does not throw Exception
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		assert list.get(position) != this;</span>
+<span class="nc" id="L192">	}</span>
+
+	class InternalNavigator implements Navigator&lt;O&gt; {
+
+<span class="nc" id="L196">		private int position = 0;</span>
+		private int version;
+
+<span class="nc" id="L199">		private InternalNavigator(int position, int version) {</span>
+<span class="nc" id="L200">			this.position = position;</span>
+<span class="nc" id="L201">			this.version = version;</span>
+<span class="nc" id="L202">		}</span>
+
+		private void checkConsistency() {
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			if (version != currentVersion) {</span>
+<span class="nc" id="L206">				throw new ConcurrentModificationException();</span>
+			}
+<span class="nc" id="L208">		}</span>
+
+		public O next() {
+<span class="nc" id="L211">			checkConsistency();</span>
+<span class="nc" id="L212">			position++;</span>
+<span class="nc" id="L213">			return get();</span>
+		}
+
+		public O previous() {
+<span class="nc" id="L217">			checkConsistency();</span>
+<span class="nc" id="L218">			position--;</span>
+<span class="nc" id="L219">			return get();</span>
+		}
+
+		public O get() {
+<span class="nc" id="L223">			checkConsistency();</span>
+<span class="nc" id="L224">			return getInternal(position);</span>
+		}
+
+		public void set(O data) {
+<span class="nc" id="L228">			checkConsistency();</span>
+<span class="nc" id="L229">			setInternal(position, data);</span>
+<span class="nc" id="L230">		}</span>
+
+		public void insertBefore(O data) {
+<span class="nc" id="L233">			version = updateStructuralVersion();</span>
+<span class="nc" id="L234">			insertInternal(position, data);</span>
+<span class="nc" id="L235">		}</span>
+
+		public void insertAfter(O data) {
+<span class="nc" id="L238">			version = updateStructuralVersion();</span>
+<span class="nc" id="L239">			insertInternal(position + 1, data);</span>
+<span class="nc" id="L240">		}</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

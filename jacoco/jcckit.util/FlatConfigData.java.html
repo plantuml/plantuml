@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FlatConfigData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.util</a> &gt; <span class="el_source">FlatConfigData.java</span></div><h1>FlatConfigData.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.util;
+
+/**
+ *  An implementation of &lt;tt&gt;ConfigData&lt;/tt&gt; based on a flat
+ *  representation of the hierachically organized key-value pairs.
+ *  Concrete subclasses must implement the methods
+ *  {@link #getValue} and {@link #createConfigData} in accordance
+ *  with the Template Method pattern and Factory Method pattern,
+ *  respectively.
+ *  &lt;p&gt;
+ *  In a flat representation of hierachically organized key-value
+ *  pairs all key-value pairs are stored in a single &lt;tt&gt;Hashtable&lt;/tt&gt;.
+ *  Its key is the &lt;em&gt;full key&lt;/em&gt; of the configuration data (i.e. the key
+ *  including its path).
+ *  &lt;p&gt;
+ *  Example (using the notation for a &lt;tt&gt;.properties&lt;/tt&gt; file):
+ *  &lt;pre&gt;
+ *  title = example
+ *  symbolAttributes/className = jcckit.graphic.BasicDrawingAttributes
+ *  symbolAttributes/fillColor = 0xcaffee
+ *  symbolAttributes/lineColor = 0xff0000
+ *  &lt;/pre&gt;
+ *  The following table shows the result of some method calls at a
+ *  &lt;tt&gt;FlatConfigData&lt;/tt&gt; instance prepared with
+ *  this example:
+ *  &lt;p&gt;
+ *  &lt;center&gt;
+ *  &lt;table border=1 cellspacing=1 cellpadding=5&gt;
+ *  &lt;tr&gt;&lt;th&gt;Method call&lt;/th&gt;&lt;th&gt;Result&lt;/th&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;get(&amp;quot;title&amp;quot;)&lt;/td&gt;&lt;td&gt;example&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;getNode(&amp;quot;symbolAttributes&amp;quot;).get(&amp;quot;fillColor&amp;quot;)
+ *      &lt;/td&gt;&lt;td&gt;0xcaffee&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;/table&gt;
+ *  &lt;/center&gt;
+ *  &lt;p&gt;
+ *  In addition &lt;tt&gt;FlatConfigData&lt;/tt&gt; implements &lt;b&gt;inheritance&lt;/b&gt;
+ *  of key-value pairs.
+ *  Basically a node in the tree of key-value pairs
+ *  may extend another node in the tree.
+ *  The extended node inherit all key-value pairs from the extending
+ *  one including the key-value pairs of all descendants.
+ *  The value of a inherited key-value pair may be overridden.
+ *  Also new key-value pairs may be placed in the inherited node or
+ *  anywhere in the subtree.
+ *  Note, that the extending node has to be a node which is not a
+ *  descendant of the extended node (otherwise a circulary chain
+ *  of references occurs). As a consequence not more than 20 inheritance
+ *  levels are allowed.
+ *  &lt;p&gt;
+ *  The implementation of this kind of inheritance in a flat hashtable
+ *  is done by an additional key-value pair of the form
+ *  &lt;pre&gt;
+ *    &lt;i&gt;extending-node&lt;/i&gt;&lt;b&gt;/&lt;/b&gt; = &lt;i&gt;extended-node&lt;/i&gt;&lt;b&gt;/&lt;/b&gt;
+ *  &lt;/pre&gt;
+ *  Example:
+ *  &lt;pre&gt;
+ *  A/a/priority = high
+ *  A/a/alpha/hello = universe
+ *  A/a/alpha/answer = 42
+ *  &lt;b&gt;A/b/1/ = A/a/&lt;/b&gt;
+ *  A/b/1/alpha/hello = world
+ *  A/b/1/alpha/question = 6 * 7
+ *  &lt;/pre&gt;
+ *  The following table shows the result of various method calls
+ *  applied at the node &lt;tt&gt;A/b/1/&lt;/tt&gt; of a &lt;tt&gt;FlatConfigData&lt;/tt&gt; 
+ *  instance prepared with this example:
+ *  &lt;p&gt;
+ *  &lt;center&gt;
+ *  &lt;table border=1 cellspacing=1 cellpadding=5&gt;
+ *  &lt;tr&gt;&lt;th&gt;Method call&lt;/th&gt;&lt;th&gt;Result&lt;/th&gt;&lt;th&gt;Comment&lt;/th&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;get(&amp;quot;priority&amp;quot;)&lt;/td&gt;&lt;td&gt;high&lt;/td&gt;&lt;td&gt;inherited&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;getNode(&amp;quot;alpha&amp;quot;).get(&amp;quot;hello&amp;quot;)
+ *      &lt;/td&gt;&lt;td&gt;world&lt;/td&gt;&lt;td&gt;overridden&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;getNode(&amp;quot;alpha&amp;quot;).get(&amp;quot;question&amp;quot;)
+ *      &lt;/td&gt;&lt;td&gt;6 * 7&lt;/td&gt;&lt;td&gt;added&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;getNode(&amp;quot;alpha&amp;quot;).get(&amp;quot;answer&amp;quot;)
+ *      &lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;inherited&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;/table&gt;
+ *  &lt;/center&gt;
+ *
+ *  @author Franz-Josef Elmer
+ */
+public abstract class FlatConfigData implements ConfigData {
+  private final String _path;
+
+  /** Creates a new instance for the specified path. */
+<span class="nc" id="L105">  public FlatConfigData(String path) {</span>
+<span class="nc" id="L106">    _path = path;</span>
+<span class="nc" id="L107">  }</span>
+
+  /**
+   * Returns the full key.
+   * @param key A (relative) key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the path concatenated with &lt;tt&gt;key&lt;/tt&gt; or &lt;tt&gt;key&lt;/tt&gt;
+   *         if the path is undefined.
+   */
+  public String getFullKey(String key) {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">    return _path == null ? key : _path + key;</span>
+  }
+
+  /**
+   * Returns the value associated with this key.
+   * @param key The relative key. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the associated value. Will be &lt;tt&gt;null&lt;/tt&gt; if no value exists
+   *         for &lt;tt&gt;key&lt;/tt&gt;.
+   */
+  public String get(String key) {
+<span class="nc" id="L126">    return get(_path, key, 0);</span>
+  }
+
+  /** 
+   * Obtains a value in accordance with hierarchy (&lt;tt&gt;path&lt;/tt&gt;) and
+   * inheritance (recursive calls of this routine).
+   */
+  private String get(String path, String key, int numberOfLevels) {
+<span class="nc" id="L134">    String result = null;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">    if (numberOfLevels &lt; 20) {</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">      String fullKey = path == null ? key : path + key;</span>
+<span class="nc" id="L137">      result = getValue(fullKey);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">      if (result == null) {</span>
+        // posAfterDelim is the index in path just after '/'
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        int posAfterDelim = path == null ? -1 : path.length();</span>
+        String replacement;
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        while (posAfterDelim &gt; 0) {</span>
+          // look for a sub-tree
+<span class="nc" id="L144">          replacement = getValue(path.substring(0, posAfterDelim));</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">          if (replacement != null) {</span>
+            // sub-tree found, add last part of the original path
+<span class="nc" id="L147">            result = get(replacement + path.substring(posAfterDelim), key,</span>
+                         numberOfLevels + 1);
+            // break whether result is null or not.
+<span class="nc" id="L150">            break;</span>
+          }
+          // remove last element from the path
+<span class="nc" id="L153">          posAfterDelim = path.lastIndexOf('/', posAfterDelim - 2) + 1;</span>
+        }
+      }
+    }
+<span class="nc" id="L157">    return result;</span>
+  }
+
+  /**
+   * Returns the &lt;tt&gt;ConfigData&lt;/tt&gt; object associated with this key.
+   * @param key The relative key.
+   * @return the associated value. Will never return &lt;tt&gt;null&lt;/tt&gt;.
+   *         Instead an empty &lt;tt&gt;ConfigData&lt;/tt&gt; is returned.
+   */
+  public ConfigData getNode(String key) {
+<span class="nc bnc" id="L167" title="All 2 branches missed.">    String path = (_path == null ? key : _path + key) + '/';</span>
+<span class="nc" id="L168">    return createConfigData(path);</span>
+  }
+
+  /**
+   * Returns the value for the specified full key from the flat
+   * representation of the hierarchically organized key-value pairs.
+   * @param fullKey The full key including path. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the value or &lt;tt&gt;null&lt;/tt&gt; if not found.
+   */
+  protected abstract String getValue(String fullKey);
+
+  /**
+   * Returns the &lt;tt&gt;FlatConfigData&lt;/tt&gt; object for the specified full path.
+   * In general &lt;tt&gt;path&lt;/tt&gt; will be used in the constructor with
+   * path argument.
+   * @param path The full path.
+   * @return a new instance in any case.
+   */
+  protected abstract ConfigData createConfigData(String path);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

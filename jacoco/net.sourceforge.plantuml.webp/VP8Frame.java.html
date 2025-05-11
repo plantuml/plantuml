@@ -1,0 +1,1113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VP8Frame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">VP8Frame.java</span></div><h1>VP8Frame.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+*/
+package net.sourceforge.plantuml.webp;
+
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.imageio.event.IIOReadProgressListener;
+import javax.imageio.stream.ImageInputStream;
+
+import net.sourceforge.plantuml.log.Logme;
+
+public class VP8Frame {
+<span class="nc" id="L30">	private static int BLOCK_TYPES = 4;</span>
+<span class="nc" id="L31">	private static int COEF_BANDS = 8;</span>
+<span class="nc" id="L32">	private static int MAX_ENTROPY_TOKENS = 12;</span>
+<span class="nc" id="L33">	private static int MAX_MODE_LF_DELTAS = 4;</span>
+<span class="nc" id="L34">	private static int MAX_REF_LF_DELTAS = 4;</span>
+<span class="nc" id="L35">	private static int PREV_COEF_CONTEXTS = 3;</span>
+
+<span class="nc" id="L37">	private ArrayList&lt;IIOReadProgressListener&gt; _listeners = new ArrayList&lt;&gt;();</span>
+
+	private int bufferCount;
+<span class="nc" id="L40">	private int buffersToCreate = 1;</span>
+	private int[][][][] coefProbs;
+<span class="nc" id="L42">	private boolean debug = false;</span>
+	private int filterLevel;
+
+	private int filterType;
+
+	private ImageInputStream frame;
+	private int frameType;
+	private int height;
+	private int macroBlockCols;
+	private int macroBlockNoCoeffSkip;
+	private int macroBlockRows;
+
+	private MacroBlock[][] macroBlocks;
+	private int macroBlockSegementAbsoluteDelta;
+	private int[] macroBlockSegmentTreeProbs;
+<span class="nc" id="L57">	private int[] modeLoopFilterDeltas = new int[MAX_MODE_LF_DELTAS];</span>
+	private int modeRefLoopFilterDeltaEnabled;
+	private int modeRefLoopFilterDeltaUpdate;
+<span class="nc" id="L60">	private int multiTokenPartition = 0;</span>
+
+	private long offset;
+<span class="nc" id="L63">	private int[] refLoopFilterDeltas = new int[MAX_REF_LF_DELTAS];</span>
+	private int refreshEntropyProbs;
+	private int refreshLastFrame;
+	private int segmentationIsEnabled;
+	private SegmentQuants segmentQuants;
+	private int sharpnessLevel;
+	private int simpleFilter;
+	private BoolDecoder tokenBoolDecoder;
+	private Vector&lt;BoolDecoder&gt; tokenBoolDecoders;
+	private int updateMacroBlockSegmentationMap;
+	private int updateMacroBlockSegmentatonData;
+	private int width;
+
+<span class="nc" id="L76">	public VP8Frame(ImageInputStream stream) throws IOException {</span>
+<span class="nc" id="L77">		this.frame = stream;</span>
+<span class="nc" id="L78">		offset = frame.getStreamPosition();</span>
+<span class="nc" id="L79">		this.coefProbs = Globals.getDefaultCoefProbs();</span>
+<span class="nc" id="L80">		tokenBoolDecoders = new Vector&lt;&gt;();</span>
+<span class="nc" id="L81">	}</span>
+
+<span class="nc" id="L83">	public VP8Frame(ImageInputStream stream, int[][][][] coefProbs) throws IOException {</span>
+<span class="nc" id="L84">		this.frame = stream;</span>
+<span class="nc" id="L85">		offset = frame.getStreamPosition();</span>
+<span class="nc" id="L86">		this.coefProbs = coefProbs;</span>
+<span class="nc" id="L87">		tokenBoolDecoders = new Vector&lt;&gt;();</span>
+<span class="nc" id="L88">	}</span>
+
+	public void addIIOReadProgressListener(IIOReadProgressListener listener) {
+<span class="nc" id="L91">		_listeners.add(listener);</span>
+<span class="nc" id="L92">	}</span>
+
+	private void createMacroBlocks() {
+<span class="nc" id="L95">		macroBlocks = new MacroBlock[macroBlockCols + 2][macroBlockRows + 2];</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (int x = 0; x &lt; macroBlockCols + 2; x++) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			for (int y = 0; y &lt; macroBlockRows + 2; y++) {</span>
+<span class="nc" id="L98">				macroBlocks[x][y] = new MacroBlock(x, y, debug);</span>
+
+			}
+		}
+
+<span class="nc" id="L103">	}</span>
+
+	public boolean decodeFrame(boolean debug) throws IOException {
+
+<span class="nc" id="L107">		this.debug = debug;</span>
+<span class="nc" id="L108">		segmentQuants = new SegmentQuants();</span>
+		int c;
+<span class="nc" id="L110">		frame.seek(offset++);</span>
+<span class="nc" id="L111">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L112">		frameType = getBitAsInt(c, 0);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (frameType != 0)</span>
+<span class="nc" id="L114">			return false;</span>
+<span class="nc" id="L115">		int versionNumber = getBitAsInt(c, 1) &lt;&lt; 1;</span>
+
+<span class="nc" id="L117">		versionNumber += getBitAsInt(c, 2) &lt;&lt; 1;</span>
+<span class="nc" id="L118">		versionNumber += getBitAsInt(c, 3);</span>
+		int firstPartitionLengthInBytes;
+<span class="nc" id="L120">		firstPartitionLengthInBytes = getBitAsInt(c, 5) &lt;&lt; 0;</span>
+<span class="nc" id="L121">		firstPartitionLengthInBytes += getBitAsInt(c, 6) &lt;&lt; 1;</span>
+<span class="nc" id="L122">		firstPartitionLengthInBytes += getBitAsInt(c, 7) &lt;&lt; 2;</span>
+<span class="nc" id="L123">		frame.seek(offset++);</span>
+<span class="nc" id="L124">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L125">		firstPartitionLengthInBytes += c &lt;&lt; 3;</span>
+<span class="nc" id="L126">		frame.seek(offset++);</span>
+<span class="nc" id="L127">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L128">		firstPartitionLengthInBytes += c &lt;&lt; 11;</span>
+<span class="nc" id="L129">		frame.seek(offset++);</span>
+<span class="nc" id="L130">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L131">		frame.seek(offset++);</span>
+<span class="nc" id="L132">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L133">		frame.seek(offset++);</span>
+<span class="nc" id="L134">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L135">		frame.seek(offset++);</span>
+<span class="nc" id="L136">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L137">		int hBytes = c;</span>
+<span class="nc" id="L138">		frame.seek(offset++);</span>
+<span class="nc" id="L139">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L140">		hBytes += c &lt;&lt; 8;</span>
+<span class="nc" id="L141">		width = (hBytes &amp; 0x3fff);</span>
+<span class="nc" id="L142">		frame.seek(offset++);</span>
+<span class="nc" id="L143">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L144">		int vBytes = c;</span>
+<span class="nc" id="L145">		frame.seek(offset++);</span>
+<span class="nc" id="L146">		c = frame.readUnsignedByte();</span>
+<span class="nc" id="L147">		vBytes += c &lt;&lt; 8;</span>
+<span class="nc" id="L148">		height = (vBytes &amp; 0x3fff);</span>
+<span class="nc" id="L149">		int tWidth = width;</span>
+<span class="nc" id="L150">		int tHeight = height;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if ((tWidth &amp; 0xf) != 0)</span>
+<span class="nc" id="L152">			tWidth += 16 - (tWidth &amp; 0xf);</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if ((tHeight &amp; 0xf) != 0)</span>
+<span class="nc" id="L155">			tHeight += 16 - (tHeight &amp; 0xf);</span>
+<span class="nc" id="L156">		macroBlockRows = tHeight &gt;&gt; 4;</span>
+<span class="nc" id="L157">		macroBlockCols = tWidth &gt;&gt; 4;</span>
+<span class="nc" id="L158">		createMacroBlocks();</span>
+
+<span class="nc" id="L160">		BoolDecoder bc = new BoolDecoder(frame, offset);</span>
+
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (frameType == 0) {</span>
+<span class="nc" id="L163">			int clr_type = bc.readBit();</span>
+<span class="nc" id="L164">			int clamp_type = bc.readBit();</span>
+
+		}
+<span class="nc" id="L167">		segmentationIsEnabled = bc.readBit();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (segmentationIsEnabled &gt; 0) {</span>
+<span class="nc" id="L169">			updateMacroBlockSegmentationMap = bc.readBit();</span>
+<span class="nc" id="L170">			updateMacroBlockSegmentatonData = bc.readBit();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (updateMacroBlockSegmentatonData &gt; 0) {</span>
+
+<span class="nc" id="L173">				macroBlockSegementAbsoluteDelta = bc.readBit();</span>
+				/* For each segmentation feature (Quant and loop filter level) */
+<span class="nc bnc" id="L175" title="All 2 branches missed.">				for (int i = 0; i &lt; Globals.MAX_MB_SEGMENTS; i++) {</span>
+<span class="nc" id="L176">					int value = 0;</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">					if (bc.readBit() &gt; 0) {</span>
+<span class="nc" id="L178">						value = bc.readLiteral(Globals.vp8MacroBlockFeatureDataBits[0]);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">						if (bc.readBit() &gt; 0)</span>
+<span class="nc" id="L180">							value = -value;</span>
+					}
+<span class="nc" id="L182">					this.segmentQuants.getSegQuants()[i].setQindex(value);</span>
+				}
+<span class="nc bnc" id="L184" title="All 2 branches missed.">				for (int i = 0; i &lt; Globals.MAX_MB_SEGMENTS; i++) {</span>
+<span class="nc" id="L185">					int value = 0;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">					if (bc.readBit() &gt; 0) {</span>
+<span class="nc" id="L187">						value = bc.readLiteral(Globals.vp8MacroBlockFeatureDataBits[1]);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">						if (bc.readBit() &gt; 0)</span>
+<span class="nc" id="L189">							value = -value;</span>
+					}
+<span class="nc" id="L191">					this.segmentQuants.getSegQuants()[i].setFilterStrength(value);</span>
+				}
+
+<span class="nc bnc" id="L194" title="All 2 branches missed.">				if (updateMacroBlockSegmentationMap &gt; 0) {</span>
+<span class="nc" id="L195">					macroBlockSegmentTreeProbs = new int[Globals.MB_FEATURE_TREE_PROBS];</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">					for (int i = 0; i &lt; Globals.MB_FEATURE_TREE_PROBS; i++) {</span>
+<span class="nc" id="L197">						int value = 255;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">						if (bc.readBit() &gt; 0) {</span>
+<span class="nc" id="L199">							value = bc.readLiteral(8);</span>
+						} else
+<span class="nc" id="L201">							value = 255;</span>
+<span class="nc" id="L202">						macroBlockSegmentTreeProbs[i] = value;</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L207">		simpleFilter = bc.readBit();</span>
+<span class="nc" id="L208">		filterLevel = bc.readLiteral(6);</span>
+
+<span class="nc" id="L210">		sharpnessLevel = bc.readLiteral(3);</span>
+<span class="nc" id="L211">		modeRefLoopFilterDeltaEnabled = bc.readBit();</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (modeRefLoopFilterDeltaEnabled &gt; 0) {</span>
+			// Do the deltas need to be updated
+<span class="nc" id="L214">			modeRefLoopFilterDeltaUpdate = bc.readBit();</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			if (modeRefLoopFilterDeltaUpdate &gt; 0) {</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">				for (int i = 0; i &lt; MAX_REF_LF_DELTAS; i++) {</span>
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">					if (bc.readBit() &gt; 0) {</span>
+<span class="nc" id="L219">						refLoopFilterDeltas[i] = bc.readLiteral(6);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">						if (bc.readBit() &gt; 0) // Apply sign</span>
+<span class="nc" id="L221">							refLoopFilterDeltas[i] = refLoopFilterDeltas[i] * -1;</span>
+					}
+				}
+<span class="nc bnc" id="L224" title="All 2 branches missed.">				for (int i = 0; i &lt; MAX_MODE_LF_DELTAS; i++) {</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">					if (bc.readBit() &gt; 0) {</span>
+<span class="nc" id="L227">						modeLoopFilterDeltas[i] = bc.readLiteral(6);</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">						if (bc.readBit() &gt; 0) // Apply sign</span>
+<span class="nc" id="L229">							modeLoopFilterDeltas[i] = modeLoopFilterDeltas[i] * -1;</span>
+					}
+				}
+			}
+		}
+
+<span class="nc bnc" id="L235" title="All 4 branches missed.">		filterType = (filterLevel == 0) ? 0 : (simpleFilter &gt; 0) ? 1 : 2;</span>
+<span class="nc" id="L236">		setupTokenDecoder(bc, firstPartitionLengthInBytes, offset);</span>
+<span class="nc" id="L237">		bc.seek();</span>
+
+<span class="nc bnc" id="L239" title="All 4 branches missed.">		segmentQuants.parse(bc, segmentationIsEnabled == 1, macroBlockSegementAbsoluteDelta == 1);</span>
+
+		// Determine if the golden frame or ARF buffer should be updated and
+		// how.
+		// For all non key frames the GF and ARF refresh flags and sign bias
+		// flags must be set explicitly.
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		if (frameType != 0) {</span>
+<span class="nc" id="L246">			throw new IllegalArgumentException(&quot;bad input: not intra&quot;);</span>
+		}
+<span class="nc" id="L248">		refreshEntropyProbs = bc.readBit();</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		if (refreshEntropyProbs &gt; 0) {</span>
+
+		}
+<span class="nc" id="L252">		refreshLastFrame = 0;</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (frameType == 0)</span>
+<span class="nc" id="L254">			refreshLastFrame = 1;</span>
+		else
+<span class="nc" id="L256">			refreshLastFrame = bc.readBit();</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">		for (int i = 0; i &lt; BLOCK_TYPES; i++)</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">			for (int j = 0; j &lt; COEF_BANDS; j++)</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">				for (int k = 0; k &lt; PREV_COEF_CONTEXTS; k++)</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">					for (int l = 0; l &lt; MAX_ENTROPY_TOKENS - 1; l++) {</span>
+
+<span class="nc bnc" id="L262" title="All 2 branches missed.">						if (bc.readBool(Globals.vp8CoefUpdateProbs[i][j][k][l]) &gt; 0) {</span>
+<span class="nc" id="L263">							int newp = bc.readLiteral(8);</span>
+<span class="nc" id="L264">							this.coefProbs[i][j][k][l] = newp;</span>
+						}
+					}
+
+		// Read the mb_no_coeff_skip flag
+<span class="nc" id="L269">		macroBlockNoCoeffSkip = (int) bc.readBit();</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (frameType == 0) {</span>
+<span class="nc" id="L271">			readModes(bc);</span>
+		} else {
+<span class="nc" id="L273">			throw new IllegalArgumentException(&quot;bad input: not intra&quot;);</span>
+		}
+
+<span class="nc" id="L276">		int ibc = 0;</span>
+<span class="nc" id="L277">		int num_part = 1 &lt;&lt; multiTokenPartition;</span>
+
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		for (int mb_row = 0; mb_row &lt; macroBlockRows; mb_row++) {</span>
+
+<span class="nc bnc" id="L281" title="All 2 branches missed.">			if (num_part &gt; 1) {</span>
+
+<span class="nc" id="L283">				tokenBoolDecoder = tokenBoolDecoders.elementAt(ibc);</span>
+<span class="nc" id="L284">				tokenBoolDecoder.seek();</span>
+
+<span class="nc" id="L286">				decodeMacroBlockRow(mb_row);</span>
+
+<span class="nc" id="L288">				ibc++;</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">				if (ibc == num_part)</span>
+<span class="nc" id="L290">					ibc = 0;</span>
+			} else
+<span class="nc" id="L292">				decodeMacroBlockRow(mb_row);</span>
+<span class="nc" id="L293">			fireProgressUpdate(mb_row);</span>
+
+		}
+
+<span class="nc bnc" id="L297" title="All 4 branches missed.">		if (this.getFilterType() &gt; 0 &amp;&amp; this.getFilterLevel() != 0)</span>
+<span class="nc" id="L298">			this.loopFilter();</span>
+<span class="nc" id="L299">		return true;</span>
+	}
+
+	private void decodeMacroBlockRow(int mbRow) throws IOException {
+<span class="nc bnc" id="L303" title="All 2 branches missed.">		for (int mbCol = 0; mbCol &lt; macroBlockCols; mbCol++) {</span>
+
+<span class="nc" id="L305">			MacroBlock mb = getMacroBlock(mbCol, mbRow);</span>
+
+<span class="nc" id="L307">			mb.decodeMacroBlock(this);</span>
+
+<span class="nc" id="L309">			mb.dequantMacroBlock(this);</span>
+
+		}
+<span class="nc" id="L312">	}</span>
+
+	public void fireLFProgressUpdate(float p) {
+<span class="nc" id="L315">		java.util.Iterator&lt;IIOReadProgressListener&gt; listeners = _listeners.iterator();</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">		while (listeners.hasNext()) {</span>
+<span class="nc" id="L317">			((IIOReadProgressListener) listeners.next()).imageProgress(null,</span>
+					(100 / buffersToCreate) + (p / buffersToCreate));
+		}
+<span class="nc" id="L320">	}</span>
+
+	private void fireProgressUpdate(int mb_row) {
+<span class="nc" id="L323">		java.util.Iterator&lt;IIOReadProgressListener&gt; listeners = _listeners.iterator();</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">		while (listeners.hasNext()) {</span>
+<span class="nc" id="L325">			((IIOReadProgressListener) listeners.next()).imageProgress(null,</span>
+<span class="nc" id="L326">					(100.0f * ((float) (mb_row + 1) / (float) getMacroBlockRows())) / buffersToCreate);</span>
+		}
+<span class="nc" id="L328">	}</span>
+
+	public void fireRGBProgressUpdate(float p) {
+<span class="nc" id="L331">		java.util.Iterator&lt;IIOReadProgressListener&gt; listeners = _listeners.iterator();</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">		while (listeners.hasNext()) {</span>
+<span class="nc" id="L333">			((IIOReadProgressListener) listeners.next()).imageProgress(null,</span>
+					((bufferCount + 4) * (100 / buffersToCreate)) + (p / buffersToCreate));
+		}
+<span class="nc" id="L336">	}</span>
+
+	public SubBlock getAboveRightSubBlock(SubBlock sb, SubBlock.PLANE plane) {
+		// this might break at right edge
+		SubBlock r;
+<span class="nc" id="L341">		MacroBlock mb = sb.getMacroBlock();</span>
+<span class="nc" id="L342">		int x = mb.getSubblockX(sb);</span>
+<span class="nc" id="L343">		int y = mb.getSubblockY(sb);</span>
+
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (plane == SubBlock.PLANE.Y1) {</span>
+
+			// top row
+<span class="nc bnc" id="L348" title="All 4 branches missed.">			if (y == 0 &amp;&amp; x &lt; 3) {</span>
+
+<span class="nc" id="L350">				MacroBlock mb2 = this.getMacroBlock(mb.getX(), mb.getY() - 1);</span>
+<span class="nc" id="L351">				r = mb2.getSubBlock(plane, x + 1, 3);</span>
+<span class="nc" id="L352">				return r;</span>
+			}
+			// top right
+<span class="nc bnc" id="L355" title="All 4 branches missed.">			else if (y == 0 &amp;&amp; x == 3) {</span>
+
+<span class="nc" id="L357">				MacroBlock mb2 = this.getMacroBlock(mb.getX() + 1, mb.getY() - 1);</span>
+<span class="nc" id="L358">				r = mb2.getSubBlock(plane, 0, 3);</span>
+
+<span class="nc bnc" id="L360" title="All 2 branches missed.">				if (mb2.getX() == this.getMacroBlockCols()) {</span>
+
+<span class="nc" id="L362">					int dest[][] = new int[4][4];</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">					for (int b = 0; b &lt; 4; b++)</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">						for (int a = 0; a &lt; 4; a++) {</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">							if (mb2.getY() &lt; 0)</span>
+<span class="nc" id="L366">								dest[a][b] = 127;</span>
+							else
+<span class="nc" id="L368">								dest[a][b] = this.getMacroBlock(mb.getX(), mb.getY() - 1)</span>
+<span class="nc" id="L369">										.getSubBlock(SubBlock.PLANE.Y1, 3, 3).getDest()[3][3];</span>
+						}
+<span class="nc" id="L371">					r = new SubBlock(mb2, null, null, SubBlock.PLANE.Y1);</span>
+<span class="nc" id="L372">					r.setDest(dest);</span>
+
+				}
+
+<span class="nc" id="L376">				return r;</span>
+			}
+			// not right edge or top row
+<span class="nc bnc" id="L379" title="All 4 branches missed.">			else if (y &gt; 0 &amp;&amp; x &lt; 3) {</span>
+
+<span class="nc" id="L381">				r = mb.getSubBlock(plane, x + 1, y - 1);</span>
+<span class="nc" id="L382">				return r;</span>
+			}
+			// else use top right
+			else {
+<span class="nc" id="L386">				SubBlock sb2 = mb.getSubBlock(sb.getPlane(), 3, 0);</span>
+<span class="nc" id="L387">				return this.getAboveRightSubBlock(sb2, plane);</span>
+			}
+		} else {
+<span class="nc" id="L390">			throw new IllegalArgumentException(&quot;bad input: getAboveRightSubBlock()&quot;);</span>
+		}
+	}
+
+	public SubBlock getAboveSubBlock(SubBlock sb, SubBlock.PLANE plane) {
+
+<span class="nc" id="L396">		SubBlock r = sb.getAbove();</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		if (r == null) {</span>
+<span class="nc" id="L398">			MacroBlock mb = sb.getMacroBlock();</span>
+<span class="nc" id="L399">			int x = mb.getSubblockX(sb);</span>
+
+<span class="nc" id="L401">			MacroBlock mb2 = getMacroBlock(mb.getX(), mb.getY() - 1);</span>
+			// TODO: SPLIT
+<span class="nc bnc" id="L403" title="All 4 branches missed.">			while (plane == SubBlock.PLANE.Y2 &amp;&amp; mb2.getYMode() == Globals.B_PRED) {</span>
+<span class="nc" id="L404">				mb2 = getMacroBlock(mb2.getX(), mb2.getY() - 1);</span>
+			}
+<span class="nc" id="L406">			r = mb2.getBottomSubBlock(x, sb.getPlane());</span>
+
+		}
+
+<span class="nc" id="L410">		return r;</span>
+	}
+
+	private boolean getBit(int data, int bit) {
+<span class="nc" id="L414">		int r = data &amp; (1 &lt;&lt; bit);</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">		if (r &gt; 0)</span>
+<span class="nc" id="L416">			return true;</span>
+<span class="nc" id="L417">		return false;</span>
+	}
+
+	private int getBitAsInt(int data, int bit) {
+<span class="nc" id="L421">		int r = data &amp; (1 &lt;&lt; bit);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">		if (r &gt; 0)</span>
+<span class="nc" id="L423">			return 1;</span>
+<span class="nc" id="L424">		return 0;</span>
+	}
+
+	public BufferedImage getBufferedImage() {
+<span class="nc" id="L428">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L429">		useBufferedImage(bi);</span>
+<span class="nc" id="L430">		bufferCount++;</span>
+<span class="nc" id="L431">		return bi;</span>
+	}
+
+	public int[][][][] getCoefProbs() {
+<span class="nc" id="L435">		return coefProbs;</span>
+	}
+
+	public BufferedImage getDebugImageDiff() {
+
+<span class="nc" id="L440">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L441">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L444">				int c[] = new int[3];</span>
+				int yy, u, v;
+<span class="nc" id="L446">				yy = 127 + this.getMacroBlock(x / 16, y / 16).getSubBlock(SubBlock.PLANE.Y1, (x % 16) / 4, (y % 16) / 4)</span>
+<span class="nc" id="L447">						.getDiff()[x % 4][y % 4];</span>
+<span class="nc" id="L448">				u = 127 + this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L449">						.getSubBlock(SubBlock.PLANE.U, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L450">						.getDiff()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L451">				v = 127 + this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L452">						.getSubBlock(SubBlock.PLANE.V, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L453">						.getDiff()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L454">				c[0] = (int) (1.164 * (yy - 16) + 1.596 * (v - 128));</span>
+<span class="nc" id="L455">				c[1] = (int) (1.164 * (yy - 16) - 0.813 * (v - 128) - 0.391 * (u - 128));</span>
+<span class="nc" id="L456">				c[2] = (int) (1.164 * (yy - 16) + 2.018 * (u - 128));</span>
+
+<span class="nc bnc" id="L458" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L460">						c[z] = 0;</span>
+<span class="nc bnc" id="L461" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L462">						c[z] = 255;</span>
+				}
+<span class="nc" id="L464">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L466">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L468">		bufferCount++;</span>
+<span class="nc" id="L469">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImagePredict() {
+<span class="nc" id="L473">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L474">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L475" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L476" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L477">				int c[] = new int[3];</span>
+				int yy, u, v;
+<span class="nc" id="L479">				yy = this.getMacroBlock(x / 16, y / 16).getSubBlock(SubBlock.PLANE.Y1, (x % 16) / 4, (y % 16) / 4)</span>
+<span class="nc" id="L480">						.getPredict()[x % 4][y % 4];</span>
+<span class="nc" id="L481">				u = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L482">						.getSubBlock(SubBlock.PLANE.U, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L483">						.getPredict()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L484">				v = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L485">						.getSubBlock(SubBlock.PLANE.V, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L486">						.getPredict()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L487">				c[0] = (int) (1.164 * (yy - 16) + 1.596 * (v - 128));</span>
+<span class="nc" id="L488">				c[1] = (int) (1.164 * (yy - 16) - 0.813 * (v - 128) - 0.391 * (u - 128));</span>
+<span class="nc" id="L489">				c[2] = (int) (1.164 * (yy - 16) + 2.018 * (u - 128));</span>
+
+<span class="nc bnc" id="L491" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L493">						c[z] = 0;</span>
+<span class="nc bnc" id="L494" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L495">						c[z] = 255;</span>
+				}
+<span class="nc" id="L497">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L499">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L501">		bufferCount++;</span>
+<span class="nc" id="L502">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageUBuffer() {
+<span class="nc" id="L506">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L507">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L508" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L510">				int c[] = new int[3];</span>
+				int u;
+<span class="nc" id="L512">				u = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L513">						.getSubBlock(SubBlock.PLANE.U, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L514">						.getDest()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L515">				c[0] = u;</span>
+<span class="nc" id="L516">				c[1] = u;</span>
+<span class="nc" id="L517">				c[2] = u;</span>
+
+<span class="nc bnc" id="L519" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L520" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L521">						c[z] = 0;</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L523">						c[z] = 255;</span>
+				}
+<span class="nc" id="L525">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L527">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L529">		bufferCount++;</span>
+<span class="nc" id="L530">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageUDiffBuffer() {
+<span class="nc" id="L534">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L535">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L538">				int c[] = new int[3];</span>
+				int u;
+<span class="nc" id="L540">				u = 127 + this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L541">						.getSubBlock(SubBlock.PLANE.U, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L542">						.getDiff()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L543">				c[0] = u;</span>
+<span class="nc" id="L544">				c[1] = u;</span>
+<span class="nc" id="L545">				c[2] = u;</span>
+
+<span class="nc bnc" id="L547" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L548" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L549">						c[z] = 0;</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L551">						c[z] = 255;</span>
+				}
+<span class="nc" id="L553">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L555">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L557">		bufferCount++;</span>
+<span class="nc" id="L558">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageUPredBuffer() {
+<span class="nc" id="L562">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L563">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L564" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L565" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L566">				int c[] = new int[3];</span>
+				int u;
+<span class="nc" id="L568">				u = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L569">						.getSubBlock(SubBlock.PLANE.U, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L570">						.getPredict()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L571">				c[0] = u;</span>
+<span class="nc" id="L572">				c[1] = u;</span>
+<span class="nc" id="L573">				c[2] = u;</span>
+
+<span class="nc bnc" id="L575" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L576" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L577">						c[z] = 0;</span>
+<span class="nc bnc" id="L578" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L579">						c[z] = 255;</span>
+				}
+<span class="nc" id="L581">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L583">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L585">		bufferCount++;</span>
+<span class="nc" id="L586">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageVBuffer() {
+<span class="nc" id="L590">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L591">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L593" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L594">				int c[] = new int[3];</span>
+				int v;
+<span class="nc" id="L596">				v = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L597">						.getSubBlock(SubBlock.PLANE.V, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L598">						.getDest()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L599">				c[0] = v;</span>
+<span class="nc" id="L600">				c[1] = v;</span>
+<span class="nc" id="L601">				c[2] = v;</span>
+
+<span class="nc bnc" id="L603" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L604" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L605">						c[z] = 0;</span>
+<span class="nc bnc" id="L606" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L607">						c[z] = 255;</span>
+				}
+<span class="nc" id="L609">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L611">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L613">		bufferCount++;</span>
+<span class="nc" id="L614">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageVDiffBuffer() {
+<span class="nc" id="L618">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L619">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L621" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L622">				int c[] = new int[3];</span>
+				int v;
+<span class="nc" id="L624">				v = 127 + this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L625">						.getSubBlock(SubBlock.PLANE.V, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L626">						.getDiff()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L627">				c[0] = v;</span>
+<span class="nc" id="L628">				c[1] = v;</span>
+<span class="nc" id="L629">				c[2] = v;</span>
+
+<span class="nc bnc" id="L631" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L633">						c[z] = 0;</span>
+<span class="nc bnc" id="L634" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L635">						c[z] = 255;</span>
+				}
+<span class="nc" id="L637">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L639">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L641">		bufferCount++;</span>
+<span class="nc" id="L642">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageVPredBuffer() {
+<span class="nc" id="L646">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L647">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L648" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L649" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L650">				int c[] = new int[3];</span>
+				int v;
+<span class="nc" id="L652">				v = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L653">						.getSubBlock(SubBlock.PLANE.V, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L654">						.getPredict()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L655">				c[0] = v;</span>
+<span class="nc" id="L656">				c[1] = v;</span>
+<span class="nc" id="L657">				c[2] = v;</span>
+
+<span class="nc bnc" id="L659" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L660" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L661">						c[z] = 0;</span>
+<span class="nc bnc" id="L662" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L663">						c[z] = 255;</span>
+				}
+<span class="nc" id="L665">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L667">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L669">		bufferCount++;</span>
+<span class="nc" id="L670">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageYBuffer() {
+<span class="nc" id="L674">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L675">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L676" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L677" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L678">				int c[] = new int[3];</span>
+				int yy;
+<span class="nc" id="L680">				yy = this.getMacroBlock(x / 16, y / 16).getSubBlock(SubBlock.PLANE.Y1, (x % 16) / 4, (y % 16) / 4)</span>
+<span class="nc" id="L681">						.getDest()[x % 4][y % 4];</span>
+<span class="nc" id="L682">				c[0] = yy;</span>
+<span class="nc" id="L683">				c[1] = yy;</span>
+<span class="nc" id="L684">				c[2] = yy;</span>
+
+<span class="nc bnc" id="L686" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L687" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L688">						c[z] = 0;</span>
+<span class="nc bnc" id="L689" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L690">						c[z] = 255;</span>
+				}
+<span class="nc" id="L692">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L694">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L696">		bufferCount++;</span>
+<span class="nc" id="L697">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageYDiffBuffer() {
+<span class="nc" id="L701">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L702">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L703" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L704" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L705">				int c[] = new int[3];</span>
+				int yy;
+<span class="nc" id="L707">				yy = 127 + this.getMacroBlock(x / 16, y / 16).getSubBlock(SubBlock.PLANE.Y1, (x % 16) / 4, (y % 16) / 4)</span>
+<span class="nc" id="L708">						.getDiff()[x % 4][y % 4];</span>
+<span class="nc" id="L709">				c[0] = yy;</span>
+<span class="nc" id="L710">				c[1] = yy;</span>
+<span class="nc" id="L711">				c[2] = yy;</span>
+
+<span class="nc bnc" id="L713" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L714" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L715">						c[z] = 0;</span>
+<span class="nc bnc" id="L716" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L717">						c[z] = 255;</span>
+				}
+<span class="nc" id="L719">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L721">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L723">		bufferCount++;</span>
+<span class="nc" id="L724">		return bi;</span>
+	}
+
+	public BufferedImage getDebugImageYPredBuffer() {
+<span class="nc" id="L728">		BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L729">		WritableRaster imRas = bi.getWritableTile(0, 0);</span>
+<span class="nc bnc" id="L730" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L731" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L732">				int c[] = new int[3];</span>
+				int yy;
+<span class="nc" id="L734">				yy = this.getMacroBlock(x / 16, y / 16).getSubBlock(SubBlock.PLANE.Y1, (x % 16) / 4, (y % 16) / 4)</span>
+<span class="nc" id="L735">						.getPredict()[x % 4][y % 4];</span>
+<span class="nc" id="L736">				c[0] = yy;</span>
+<span class="nc" id="L737">				c[1] = yy;</span>
+<span class="nc" id="L738">				c[2] = yy;</span>
+
+<span class="nc bnc" id="L740" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L741" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L742">						c[z] = 0;</span>
+<span class="nc bnc" id="L743" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L744">						c[z] = 255;</span>
+				}
+<span class="nc" id="L746">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L748">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L750">		bufferCount++;</span>
+<span class="nc" id="L751">		return bi;</span>
+	}
+
+	public int getFilterLevel() {
+<span class="nc" id="L755">		return filterLevel;</span>
+	}
+
+	public int getFilterType() {
+<span class="nc" id="L759">		return filterType;</span>
+	}
+
+	public int getFrameType() {
+<span class="nc" id="L763">		return frameType;</span>
+	}
+
+	public int getHeight() {
+<span class="nc" id="L767">		return height;</span>
+	}
+
+	public SubBlock getLeftSubBlock(SubBlock sb, SubBlock.PLANE plane) {
+<span class="nc" id="L771">		SubBlock r = sb.getLeft();</span>
+<span class="nc bnc" id="L772" title="All 2 branches missed.">		if (r == null) {</span>
+<span class="nc" id="L773">			MacroBlock mb = sb.getMacroBlock();</span>
+<span class="nc" id="L774">			int y = mb.getSubblockY(sb);</span>
+<span class="nc" id="L775">			MacroBlock mb2 = getMacroBlock(mb.getX() - 1, mb.getY());</span>
+			// TODO: SPLIT
+
+<span class="nc bnc" id="L778" title="All 4 branches missed.">			while (plane == SubBlock.PLANE.Y2 &amp;&amp; mb2.getYMode() == Globals.B_PRED)</span>
+<span class="nc" id="L779">				mb2 = getMacroBlock(mb2.getX() - 1, mb2.getY());</span>
+
+<span class="nc" id="L781">			r = mb2.getRightSubBlock(y, sb.getPlane());</span>
+
+		}
+
+<span class="nc" id="L785">		return r;</span>
+	}
+
+	public MacroBlock getMacroBlock(int mbCol, int mbRow) {
+<span class="nc" id="L789">		return macroBlocks[mbCol + 1][mbRow + 1];</span>
+	}
+
+	public int getMacroBlockCols() {
+<span class="nc" id="L793">		return macroBlockCols;</span>
+	}
+
+	public String getMacroBlockDebugString(int mbx, int mby, int sbx, int sby) {
+<span class="nc" id="L797">		String r = new String();</span>
+<span class="nc bnc" id="L798" title="All 4 branches missed.">		if (mbx &lt; this.macroBlockCols &amp;&amp; mby &lt; this.getMacroBlockRows()) {</span>
+<span class="nc" id="L799">			MacroBlock mb = getMacroBlock(mbx, mby);</span>
+<span class="nc" id="L800">			r = r + mb.getDebugString();</span>
+<span class="nc bnc" id="L801" title="All 4 branches missed.">			if (sbx &lt; 4 &amp;&amp; sby &lt; 4) {</span>
+<span class="nc" id="L802">				SubBlock sb = mb.getSubBlock(SubBlock.PLANE.Y1, sbx, sby);</span>
+<span class="nc" id="L803">				r = r + &quot;\n SubBlock &quot; + sbx + &quot;, &quot; + sby + &quot;\n  &quot; + sb.getDebugString();</span>
+<span class="nc" id="L804">				sb = mb.getSubBlock(SubBlock.PLANE.Y2, sbx, sby);</span>
+<span class="nc" id="L805">				r = r + &quot;\n SubBlock &quot; + sbx + &quot;, &quot; + sby + &quot;\n  &quot; + sb.getDebugString();</span>
+<span class="nc" id="L806">				sb = mb.getSubBlock(SubBlock.PLANE.U, sbx / 2, sby / 2);</span>
+<span class="nc" id="L807">				r = r + &quot;\n SubBlock &quot; + sbx / 2 + &quot;, &quot; + sby / 2 + &quot;\n  &quot; + sb.getDebugString();</span>
+<span class="nc" id="L808">				sb = mb.getSubBlock(SubBlock.PLANE.V, sbx / 2, sby / 2);</span>
+<span class="nc" id="L809">				r = r + &quot;\n SubBlock &quot; + sbx / 2 + &quot;, &quot; + sby / 2 + &quot;\n  &quot; + sb.getDebugString();</span>
+			}
+		}
+<span class="nc" id="L812">		return r;</span>
+	}
+
+	public int getMacroBlockRows() {
+<span class="nc" id="L816">		return macroBlockRows;</span>
+	}
+
+	public int getQIndex() {
+<span class="nc" id="L820">		return segmentQuants.getqIndex();</span>
+	}
+
+	public SegmentQuants getSegmentQuants() {
+<span class="nc" id="L824">		return segmentQuants;</span>
+	}
+
+	public int getSharpnessLevel() {
+<span class="nc" id="L828">		return sharpnessLevel;</span>
+	}
+
+	public BoolDecoder getTokenBoolDecoder() throws IOException {
+<span class="nc" id="L832">		tokenBoolDecoder.seek();</span>
+<span class="nc" id="L833">		return tokenBoolDecoder;</span>
+	}
+
+	public int[][] getUBuffer() {
+<span class="nc" id="L837">		int r[][] = new int[macroBlockCols * 8][macroBlockRows * 8];</span>
+<span class="nc bnc" id="L838" title="All 2 branches missed.">		for (int y = 0; y &lt; macroBlockRows; y++) {</span>
+<span class="nc bnc" id="L839" title="All 2 branches missed.">			for (int x = 0; x &lt; macroBlockCols; x++) {</span>
+<span class="nc" id="L840">				MacroBlock mb = macroBlocks[x + 1][y + 1];</span>
+<span class="nc bnc" id="L841" title="All 2 branches missed.">				for (int b = 0; b &lt; 2; b++) {</span>
+<span class="nc bnc" id="L842" title="All 2 branches missed.">					for (int a = 0; a &lt; 2; a++) {</span>
+<span class="nc" id="L843">						SubBlock sb = mb.getUSubBlock(a, b);</span>
+<span class="nc bnc" id="L844" title="All 2 branches missed.">						for (int d = 0; d &lt; 4; d++) {</span>
+<span class="nc bnc" id="L845" title="All 2 branches missed.">							for (int c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L846">								r[(x * 8) + (a * 4) + c][(y * 8) + (b * 4) + d] = sb.getDest()[c][d];</span>
+
+							}
+						}
+					}
+				}
+			}
+		}
+<span class="nc" id="L854">		return r;</span>
+	}
+
+	public int[][] getVBuffer() {
+<span class="nc" id="L858">		int r[][] = new int[macroBlockCols * 8][macroBlockRows * 8];</span>
+<span class="nc bnc" id="L859" title="All 2 branches missed.">		for (int y = 0; y &lt; macroBlockRows; y++) {</span>
+<span class="nc bnc" id="L860" title="All 2 branches missed.">			for (int x = 0; x &lt; macroBlockCols; x++) {</span>
+<span class="nc" id="L861">				MacroBlock mb = macroBlocks[x + 1][y + 1];</span>
+<span class="nc bnc" id="L862" title="All 2 branches missed.">				for (int b = 0; b &lt; 2; b++) {</span>
+<span class="nc bnc" id="L863" title="All 2 branches missed.">					for (int a = 0; a &lt; 2; a++) {</span>
+<span class="nc" id="L864">						SubBlock sb = mb.getVSubBlock(a, b);</span>
+<span class="nc bnc" id="L865" title="All 2 branches missed.">						for (int d = 0; d &lt; 4; d++) {</span>
+<span class="nc bnc" id="L866" title="All 2 branches missed.">							for (int c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L867">								r[(x * 8) + (a * 4) + c][(y * 8) + (b * 4) + d] = sb.getDest()[c][d];</span>
+
+							}
+						}
+					}
+				}
+			}
+		}
+<span class="nc" id="L875">		return r;</span>
+	}
+
+	public int getWidth() {
+<span class="nc" id="L879">		return width;</span>
+	}
+
+	public int[][] getYBuffer() {
+<span class="nc" id="L883">		int r[][] = new int[macroBlockCols * 16][macroBlockRows * 16];</span>
+<span class="nc bnc" id="L884" title="All 2 branches missed.">		for (int y = 0; y &lt; macroBlockRows; y++) {</span>
+<span class="nc bnc" id="L885" title="All 2 branches missed.">			for (int x = 0; x &lt; macroBlockCols; x++) {</span>
+<span class="nc" id="L886">				MacroBlock mb = macroBlocks[x + 1][y + 1];</span>
+<span class="nc bnc" id="L887" title="All 2 branches missed.">				for (int b = 0; b &lt; 4; b++) {</span>
+<span class="nc bnc" id="L888" title="All 2 branches missed.">					for (int a = 0; a &lt; 4; a++) {</span>
+<span class="nc" id="L889">						SubBlock sb = mb.getYSubBlock(a, b);</span>
+<span class="nc bnc" id="L890" title="All 2 branches missed.">						for (int d = 0; d &lt; 4; d++) {</span>
+<span class="nc bnc" id="L891" title="All 2 branches missed.">							for (int c = 0; c &lt; 4; c++) {</span>
+<span class="nc" id="L892">								r[(x * 16) + (a * 4) + c][(y * 16) + (b * 4) + d] = sb.getDest()[c][d];</span>
+
+							}
+						}
+					}
+				}
+			}
+		}
+<span class="nc" id="L900">		return r;</span>
+	}
+
+	public void loopFilter() {
+<span class="nc" id="L904">		LoopFilter.loopFilter(this);</span>
+<span class="nc" id="L905">	}</span>
+
+	private void readModes(BoolDecoder bc) throws IOException {
+<span class="nc" id="L908">		int mb_row = -1;</span>
+<span class="nc" id="L909">		int prob_skip_false = 0;</span>
+
+<span class="nc bnc" id="L911" title="All 2 branches missed.">		if (macroBlockNoCoeffSkip &gt; 0) {</span>
+<span class="nc" id="L912">			prob_skip_false = bc.readLiteral(8);</span>
+		}
+
+<span class="nc bnc" id="L915" title="All 2 branches missed.">		while (++mb_row &lt; macroBlockRows) {</span>
+<span class="nc" id="L916">			int mb_col = -1;</span>
+<span class="nc bnc" id="L917" title="All 2 branches missed.">			while (++mb_col &lt; macroBlockCols) {</span>
+
+				// if (this.segmentation_enabled &gt; 0) {
+				// logger.log(Level.SEVERE, &quot;TODO:&quot;);
+				// throw new IllegalArgumentException(&quot;bad input: segmentation_enabled()&quot;);
+				// }
+				// Read the macroblock coeff skip flag if this feature is in
+				// use, else default to 0
+<span class="nc" id="L925">				MacroBlock mb = getMacroBlock(mb_col, mb_row);</span>
+
+<span class="nc bnc" id="L927" title="All 4 branches missed.">				if ((segmentationIsEnabled &gt; 0) &amp;&amp; (updateMacroBlockSegmentationMap &gt; 0)) {</span>
+<span class="nc" id="L928">					int value = bc.readTree(Globals.macroBlockSegmentTree, this.macroBlockSegmentTreeProbs);</span>
+<span class="nc" id="L929">					mb.setSegmentId(value);</span>
+				}
+
+<span class="nc bnc" id="L932" title="All 2 branches missed.">				if (modeRefLoopFilterDeltaEnabled &gt; 0) {</span>
+<span class="nc" id="L933">					int level = filterLevel;</span>
+<span class="nc" id="L934">					level = level + refLoopFilterDeltas[0];</span>
+<span class="nc bnc" id="L935" title="All 4 branches missed.">					level = (level &lt; 0) ? 0 : (level &gt; 63) ? 63 : level;</span>
+<span class="nc" id="L936">					mb.setFilterLevel(level);</span>
+<span class="nc" id="L937">				} else {</span>
+<span class="nc" id="L938">					mb.setFilterLevel(segmentQuants.getSegQuants()[mb.getSegmentId()].getFilterStrength());</span>
+//					logger.error(&quot;TODO:&quot;);
+				}
+
+<span class="nc" id="L942">				int mb_skip_coeff = 0;</span>
+<span class="nc bnc" id="L943" title="All 2 branches missed.">				if (macroBlockNoCoeffSkip &gt; 0)</span>
+<span class="nc" id="L944">					mb_skip_coeff = bc.readBool(prob_skip_false);</span>
+				else
+<span class="nc" id="L946">					mb_skip_coeff = 0;</span>
+<span class="nc" id="L947">				mb.setSkipCoeff(mb_skip_coeff);</span>
+
+<span class="nc" id="L949">				int y_mode = readYMode(bc);</span>
+
+<span class="nc" id="L951">				mb.setYMode(y_mode);</span>
+
+<span class="nc bnc" id="L953" title="All 2 branches missed.">				if (y_mode == Globals.B_PRED) {</span>
+
+<span class="nc bnc" id="L955" title="All 2 branches missed.">					for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc bnc" id="L956" title="All 2 branches missed.">						for (int j = 0; j &lt; 4; j++) {</span>
+
+<span class="nc" id="L958">							SubBlock sb = mb.getYSubBlock(j, i);</span>
+
+<span class="nc" id="L960">							SubBlock A = getAboveSubBlock(sb, SubBlock.PLANE.Y1);</span>
+
+<span class="nc" id="L962">							SubBlock L = getLeftSubBlock(sb, SubBlock.PLANE.Y1);</span>
+
+<span class="nc" id="L964">							int mode = readSubBlockMode(bc, A.getMode(), L.getMode());</span>
+
+<span class="nc" id="L966">							sb.setMode(mode);</span>
+
+						}
+					}
+<span class="nc bnc" id="L970" title="All 2 branches missed.">					if (modeRefLoopFilterDeltaEnabled &gt; 0) {</span>
+<span class="nc" id="L971">						int level = mb.getFilterLevel();</span>
+<span class="nc" id="L972">						level = level + this.modeLoopFilterDeltas[0];</span>
+<span class="nc bnc" id="L973" title="All 4 branches missed.">						level = (level &lt; 0) ? 0 : (level &gt; 63) ? 63 : level;</span>
+<span class="nc" id="L974">						mb.setFilterLevel(level);</span>
+<span class="nc" id="L975">					}</span>
+				} else {
+					int BMode;
+
+<span class="nc bnc" id="L979" title="All 5 branches missed.">					switch (y_mode) {</span>
+					case Globals.DC_PRED:
+<span class="nc" id="L981">						BMode = Globals.B_DC_PRED;</span>
+<span class="nc" id="L982">						break;</span>
+					case Globals.V_PRED:
+<span class="nc" id="L984">						BMode = Globals.B_VE_PRED;</span>
+<span class="nc" id="L985">						break;</span>
+					case Globals.H_PRED:
+<span class="nc" id="L987">						BMode = Globals.B_HE_PRED;</span>
+<span class="nc" id="L988">						break;</span>
+					case Globals.TM_PRED:
+<span class="nc" id="L990">						BMode = Globals.B_TM_PRED;</span>
+<span class="nc" id="L991">						break;</span>
+					default:
+<span class="nc" id="L993">						BMode = Globals.B_DC_PRED;</span>
+						break;
+					}
+<span class="nc bnc" id="L996" title="All 2 branches missed.">					for (int x = 0; x &lt; 4; x++) {</span>
+<span class="nc bnc" id="L997" title="All 2 branches missed.">						for (int y = 0; y &lt; 4; y++) {</span>
+<span class="nc" id="L998">							SubBlock sb = mb.getYSubBlock(x, y);</span>
+<span class="nc" id="L999">							sb.setMode(BMode);</span>
+						}
+					}
+				}
+<span class="nc" id="L1003">				int mode = readUvMode(bc);</span>
+<span class="nc" id="L1004">				mb.setUvMode(mode);</span>
+<span class="nc" id="L1005">			}</span>
+<span class="nc" id="L1006">		}</span>
+<span class="nc" id="L1007">	}</span>
+
+	private int readPartitionSize(long l) throws IOException {
+<span class="nc" id="L1010">		frame.seek(l);</span>
+<span class="nc" id="L1011">		int size = frame.readUnsignedByte() + (frame.readUnsignedByte() &lt;&lt; 8) + (frame.readUnsignedByte() &lt;&lt; 16);</span>
+<span class="nc" id="L1012">		return size;</span>
+
+	}
+
+	private int readSubBlockMode(BoolDecoder bc, int A, int L) throws IOException {
+<span class="nc" id="L1017">		int i = bc.readTree(Globals.vp8SubBlockModeTree, Globals.vp8KeyFrameSubBlockModeProb[A][L]);</span>
+<span class="nc" id="L1018">		return i;</span>
+	}
+
+	private int readUvMode(BoolDecoder bc) throws IOException {
+<span class="nc" id="L1022">		int i = bc.readTree(Globals.vp8UVModeTree, Globals.vp8KeyFrameUVModeProb);</span>
+<span class="nc" id="L1023">		return i;</span>
+	}
+
+	private int readYMode(BoolDecoder bc) throws IOException {
+<span class="nc" id="L1027">		int i = bc.readTree(Globals.vp8KeyFrameYModeTree, Globals.vp8KeyFrameYModeProb);</span>
+<span class="nc" id="L1028">		return i;</span>
+	}
+
+	public void removeIIOReadProgressListener(IIOReadProgressListener listener) {
+<span class="nc" id="L1032">		_listeners.remove(listener);</span>
+<span class="nc" id="L1033">	}</span>
+
+	public void setBuffersToCreate(int count) {
+<span class="nc" id="L1036">		this.buffersToCreate = 3 + count;</span>
+<span class="nc" id="L1037">		this.bufferCount = 0;</span>
+<span class="nc" id="L1038">	}</span>
+
+	private void setupTokenDecoder(BoolDecoder bc, int first_partition_length_in_bytes, long offset)
+			throws IOException {
+
+<span class="nc" id="L1043">		long partitionSize = 0;</span>
+<span class="nc" id="L1044">		long partitionsStart = offset + first_partition_length_in_bytes;</span>
+<span class="nc" id="L1045">		long partition = partitionsStart;</span>
+<span class="nc" id="L1046">		multiTokenPartition = bc.readLiteral(2);</span>
+<span class="nc" id="L1047">		int num_part = 1 &lt;&lt; multiTokenPartition;</span>
+<span class="nc bnc" id="L1048" title="All 2 branches missed.">		if (num_part &gt; 1) {</span>
+<span class="nc" id="L1049">			partition += 3 * (num_part - 1);</span>
+		}
+<span class="nc bnc" id="L1051" title="All 2 branches missed.">		for (int i = 0; i &lt; num_part; i++) {</span>
+			/*
+			 * Calculate the length of this partition. The last partition size is implicit.
+			 */
+<span class="nc bnc" id="L1055" title="All 2 branches missed.">			if (i &lt; num_part - 1) {</span>
+
+<span class="nc" id="L1057">				partitionSize = readPartitionSize(partitionsStart + (i * 3));</span>
+<span class="nc" id="L1058">				bc.seek();</span>
+			} else {
+<span class="nc" id="L1060">				partitionSize = frame.length() - partition;</span>
+			}
+
+<span class="nc" id="L1063">			tokenBoolDecoders.add(new BoolDecoder(frame, partition));</span>
+<span class="nc" id="L1064">			partition += partitionSize;</span>
+		}
+<span class="nc" id="L1066">		tokenBoolDecoder = tokenBoolDecoders.elementAt(0);</span>
+<span class="nc" id="L1067">	}</span>
+
+	public void useBufferedImage(BufferedImage dst) {
+<span class="nc" id="L1070">		WritableRaster imRas = dst.getWritableTile(0, 0);</span>
+
+<span class="nc bnc" id="L1072" title="All 2 branches missed.">		for (int x = 0; x &lt; getWidth(); x++) {</span>
+<span class="nc bnc" id="L1073" title="All 2 branches missed.">			for (int y = 0; y &lt; getHeight(); y++) {</span>
+<span class="nc" id="L1074">				int c[] = new int[3];</span>
+				int yy, u, v;
+<span class="nc" id="L1076">				yy = this.getMacroBlock(x / 16, y / 16).getSubBlock(SubBlock.PLANE.Y1, (x % 16) / 4, (y % 16) / 4)</span>
+<span class="nc" id="L1077">						.getDest()[x % 4][y % 4];</span>
+<span class="nc" id="L1078">				u = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L1079">						.getSubBlock(SubBlock.PLANE.U, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L1080">						.getDest()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L1081">				v = this.getMacroBlock(x / 16, y / 16)</span>
+<span class="nc" id="L1082">						.getSubBlock(SubBlock.PLANE.V, ((x / 2) % 8) / 4, ((y / 2) % 8) / 4)</span>
+<span class="nc" id="L1083">						.getDest()[(x / 2) % 4][(y / 2) % 4];</span>
+<span class="nc" id="L1084">				c[0] = (int) (1.164 * (yy - 16) + 1.596 * (v - 128));</span>
+<span class="nc" id="L1085">				c[1] = (int) (1.164 * (yy - 16) - 0.813 * (v - 128) - 0.391 * (u - 128));</span>
+<span class="nc" id="L1086">				c[2] = (int) (1.164 * (yy - 16) + 2.018 * (u - 128));</span>
+
+<span class="nc bnc" id="L1088" title="All 2 branches missed.">				for (int z = 0; z &lt; 3; z++) {</span>
+<span class="nc bnc" id="L1089" title="All 2 branches missed.">					if (c[z] &lt; 0)</span>
+<span class="nc" id="L1090">						c[z] = 0;</span>
+<span class="nc bnc" id="L1091" title="All 2 branches missed.">					if (c[z] &gt; 255)</span>
+<span class="nc" id="L1092">						c[z] = 255;</span>
+				}
+<span class="nc" id="L1094">				imRas.setPixel(x, y, c);</span>
+			}
+<span class="nc" id="L1096">			fireRGBProgressUpdate(100.0F * x / getWidth());</span>
+		}
+<span class="nc" id="L1098">	}</span>
+
+	public void setFrame(ImageInputStream frame) {
+		try {
+<span class="nc" id="L1102">			this.frame.flush();</span>
+<span class="nc" id="L1103">			this.frame.close();</span>
+<span class="nc" id="L1104">			this.frame = frame;</span>
+<span class="nc" id="L1105">			offset = frame.getStreamPosition();</span>
+<span class="nc" id="L1106">			this.coefProbs = Globals.getDefaultCoefProbs();</span>
+<span class="nc" id="L1107">			tokenBoolDecoders = new Vector&lt;&gt;();</span>
+<span class="nc" id="L1108">		} catch (IOException e) {</span>
+<span class="nc" id="L1109">			Logme.error(e);</span>
+<span class="nc" id="L1110">		}</span>
+<span class="nc" id="L1111">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

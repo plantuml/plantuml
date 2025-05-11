@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cookie.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">Cookie.java</span></div><h1>Cookie.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+class Cookie {
+
+<span class="nc" id="L23">	static class Node {</span>
+		int weight;
+		Node tail;
+		int count;
+	}
+
+	static final int SPLIT_PARTITIONS = 9;
+	private static final int POOL_MAX = 10240;
+
+<span class="nc" id="L32">	final static int[] intZeroes = new int[65536];</span>
+<span class="nc" id="L33">	final static char[] charZeroes = new char[65536];</span>
+<span class="nc" id="L34">	final static byte[] byteZeroes = new byte[65536];</span>
+<span class="nc" id="L35">	final static int[] intMOnes = new int[65536];</span>
+<span class="nc" id="L36">	final static char[] charOnes = new char[65536];</span>
+<span class="nc" id="L37">	final static long[] costMax = new long[65536];</span>
+
+	static {
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		for (int i = 0; i &lt; 64; ++i) {</span>
+<span class="nc" id="L41">			intMOnes[i] = -1;</span>
+<span class="nc" id="L42">			charOnes[i] = 1;</span>
+<span class="nc" id="L43">			costMax[i] = Long.MAX_VALUE;</span>
+		}
+<span class="nc" id="L45">		expand(intMOnes);</span>
+<span class="nc" id="L46">		expand(charOnes);</span>
+<span class="nc" id="L47">		expand(costMax);</span>
+<span class="nc" id="L48">	}</span>
+
+	static void expand(Object array) {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		for (int i = 64; i &lt; 65536; i = i + i) {</span>
+<span class="nc" id="L52">			System.arraycopy(array, 0, array, i, i);</span>
+		}
+<span class="nc" id="L54">	}</span>
+
+<span class="nc" id="L56">	final Node[] list0 = new Node[15];</span>
+<span class="nc" id="L57">	final Node[] list1 = new Node[15];</span>
+<span class="nc" id="L58">	final Node[] leaves1 = new Node[288];</span>
+<span class="nc" id="L59">	final Node[] leaves2 = new Node[288];</span>
+<span class="nc" id="L60">	private final Node[] nodes = new Node[POOL_MAX];</span>
+	private int nextNode;
+
+	// final Node[] leaves2 = new Node[288];
+
+	/*
+	 * private final static Comparator&lt;Node&gt; wc = new Comparator&lt;&gt;() {
+	 * 
+	 * @Override public int compare(Node node, Node node2) { int r = node.weight -
+	 * node2.weight; return r == 0 ? node.count - node2.count : r; } };
+	 */
+
+<span class="nc" id="L72">	final int[] i320a = new int[320];</span>
+<span class="nc" id="L73">	final int[] i320b = new int[320];</span>
+<span class="nc" id="L74">	final int[] i320c = new int[320];</span>
+<span class="nc" id="L75">	final int[] i288a = new int[288];</span>
+<span class="nc" id="L76">	final int[] i288b = new int[288];</span>
+<span class="nc" id="L77">	final int[] i288c = new int[288];</span>
+<span class="nc" id="L78">	final int[] i289a = new int[289];</span>
+<span class="nc" id="L79">	final char[] c259a = new char[259];</span>
+<span class="nc" id="L80">	final int[] i32a = new int[32];</span>
+<span class="nc" id="L81">	final int[] i32b = new int[32];</span>
+<span class="nc" id="L82">	final int[] i32c = new int[32];</span>
+<span class="nc" id="L83">	final int[] i19a = new int[19];</span>
+<span class="nc" id="L84">	final int[] i19b = new int[19];</span>
+<span class="nc" id="L85">	final int[] i19c = new int[19];</span>
+<span class="nc" id="L86">	final int[] i16a = new int[16];</span>
+<span class="nc" id="L87">	final int[] i16b = new int[16];</span>
+
+<span class="nc" id="L89">	final int[] p = new int[SPLIT_PARTITIONS];</span>
+<span class="nc" id="L90">	final int[] vp = new int[SPLIT_PARTITIONS];</span>
+
+	final char[] lengthArray; // unsigned short, but really values are 0..258 == MAX_MATCH
+	final long[] costs;
+	final char[] path;
+	final int[] splitPoints;
+	final int[] splitSize;
+
+<span class="nc" id="L98">	final SymbolStats stats = new SymbolStats();</span>
+<span class="nc" id="L99">	final SymbolStats bestStats = new SymbolStats();</span>
+<span class="nc" id="L100">	final SymbolStats lastStats = new SymbolStats();</span>
+<span class="nc" id="L101">	final Hash h = new Hash();</span>
+
+	int lenVal;
+	int distVal;
+<span class="nc" id="L105">	int rnd = 42;</span>
+
+	final LzStore store1;
+	final LzStore store2;
+	final LongestMatchCache lmc;
+
+	final int masterBlockSize;
+
+	final Node node(int weight, int count, Node tail) {
+<span class="nc" id="L114">		Node result = nodes[nextNode++];</span>
+<span class="nc" id="L115">		result.weight = weight;</span>
+<span class="nc" id="L116">		result.count = count;</span>
+<span class="nc" id="L117">		result.tail = tail;</span>
+<span class="nc" id="L118">		return result;</span>
+	}
+
+	final void resetPool() {
+<span class="nc" id="L122">		nextNode = 0;</span>
+<span class="nc" id="L123">	}</span>
+
+	static void fill0(int[] array, int length) {
+<span class="nc" id="L126">		int i = 0;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		while (i &lt; length) {</span>
+<span class="nc" id="L128">			int j = i + 65536;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (j &gt; length) {</span>
+<span class="nc" id="L130">				j = length;</span>
+			}
+<span class="nc" id="L132">			System.arraycopy(intZeroes, 0, array, i, j - i);</span>
+<span class="nc" id="L133">			i = j;</span>
+<span class="nc" id="L134">		}</span>
+<span class="nc" id="L135">	}</span>
+
+	static void fill0(char[] array, int length) {
+<span class="nc" id="L138">		int i = 0;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		while (i &lt; length) {</span>
+<span class="nc" id="L140">			int j = i + 65536;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (j &gt; length) {</span>
+<span class="nc" id="L142">				j = length;</span>
+			}
+<span class="nc" id="L144">			System.arraycopy(charZeroes, 0, array, i, j - i);</span>
+<span class="nc" id="L145">			i = j;</span>
+<span class="nc" id="L146">		}</span>
+<span class="nc" id="L147">	}</span>
+
+	static void fillCostMax(long[] array, int length) {
+<span class="nc" id="L150">		int i = 0;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		while (i &lt; length) {</span>
+<span class="nc" id="L152">			int j = i + 65536;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			if (j &gt; length) {</span>
+<span class="nc" id="L154">				j = length;</span>
+			}
+<span class="nc" id="L156">			System.arraycopy(costMax, 0, array, i, j - i);</span>
+<span class="nc" id="L157">			i = j;</span>
+<span class="nc" id="L158">		}</span>
+<span class="nc" id="L159">	}</span>
+
+	/**
+	 * Maximum amount of blocks to split into.
+	 * &lt;p&gt;
+	 * {@code 0} for unlimited.
+	 */
+<span class="nc" id="L166">	final int blockSplittingMax = 15;</span>
+
+<span class="nc" id="L168">	Cookie(int masterBlockSize) { // TODO: + maxBlockSize?</span>
+<span class="nc" id="L169">		this.masterBlockSize = masterBlockSize;</span>
+
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		for (int i = 0; i &lt; POOL_MAX; i++) {</span>
+<span class="nc" id="L172">			nodes[i] = new Node();</span>
+		}
+<span class="nc" id="L174">		splitPoints = new int[blockSplittingMax + 1];</span>
+<span class="nc" id="L175">		splitSize = new int[blockSplittingMax + 1];</span>
+
+<span class="nc" id="L177">		lengthArray = new char[masterBlockSize + 1]; // 2</span>
+<span class="nc" id="L178">		costs = new long[masterBlockSize + 1]; // 8</span>
+<span class="nc" id="L179">		path = new char[masterBlockSize + 1]; // 2</span>
+<span class="nc" id="L180">		lmc = new LongestMatchCache(masterBlockSize); // 28</span>
+<span class="nc" id="L181">		store1 = new LzStore(masterBlockSize); // 4</span>
+<span class="nc" id="L182">		store2 = new LzStore(masterBlockSize); // 4</span>
+		// 2 + 8 + 2 + 28 + 4 + 4 = 48
+<span class="nc" id="L184">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

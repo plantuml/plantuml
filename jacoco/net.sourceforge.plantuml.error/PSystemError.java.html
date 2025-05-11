@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemError.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.error</a> &gt; <span class="el_source">PSystemError.java</span></div><h1>PSystemError.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.error;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import net.atmp.ImageBuilder;
+import net.atmp.PixelImage;
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FileImageData;
+import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.asciiart.UmlCharArea;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.ReportLog;
+import net.sourceforge.plantuml.eggs.PSystemWelcome;
+import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
+import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockRaw;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.version.LicenseInfo;
+import net.sourceforge.plantuml.version.PSystemVersion;
+import net.sourceforge.plantuml.version.Version;
+
+public abstract class PSystemError extends PlainDiagram {
+	// ::remove folder when __HAXE__
+
+	// Dodgy kludge for testing - we will need a different approach if we want to
+	// test addMessageDedication() etc.
+<span class="fc" id="L101">	private static boolean disableTimeBasedErrorDecorations = false;</span>
+
+	public static void disableTimeBasedErrorDecorations() {
+<span class="fc" id="L104">		PSystemError.disableTimeBasedErrorDecorations = true;</span>
+<span class="fc" id="L105">	}</span>
+
+	protected List&lt;StringLocated&gt; trace;
+	protected ErrorUml singleError;
+
+	public PSystemError(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L111">		super(source, preprocessing);</span>
+<span class="fc" id="L112">	}</span>
+
+	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+<span class="fc" id="L116">		return super.createImageBuilder(fileFormatOption).blackBackcolor().randomPixel().status(FileImageData.ERROR);</span>
+	}
+
+	final protected StringLocated getLastLine() {
+<span class="fc" id="L120">		return trace.get(trace.size() - 1);</span>
+	}
+
+	final public LineLocation getLineLocation() {
+<span class="fc" id="L124">		return getLastLine().getLocation();</span>
+	}
+
+	final public Collection&lt;ErrorUml&gt; getErrorsUml() {
+<span class="fc" id="L128">		return Collections.singleton(singleError);</span>
+	}
+
+	final public ErrorUml getFirstError() {
+<span class="fc" id="L132">		return singleError;</span>
+	}
+
+	final public String getWarningOrError() {
+<span class="nc" id="L136">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L137">		sb.append(getDescription());</span>
+<span class="nc" id="L138">		sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (CharSequence t : getTitle().getDisplay()) {</span>
+<span class="nc" id="L140">			sb.append(t);</span>
+<span class="nc" id="L141">			sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="nc" id="L142">		}</span>
+<span class="nc" id="L143">		sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="nc" id="L144">		return sb.toString();</span>
+	}
+
+	private TextBlock getGraphicalFormatted() {
+<span class="fc" id="L148">		final FontConfiguration fc0 = GraphicStrings.sansSerif14(HColors.BLACK).bold();</span>
+<span class="fc" id="L149">		final FontConfiguration fc1 = GraphicStrings.sansSerif14(HColors.MY_GREEN).bold();</span>
+<span class="fc" id="L150">		final FontConfiguration fc2 = GraphicStrings.sansSerif14(HColors.RED).bold();</span>
+<span class="fc" id="L151">		final FontConfiguration fc4 = GraphicStrings.sansSerif12(HColors.MY_GREEN).bold().italic();</span>
+
+<span class="fc" id="L153">		final List&lt;String&gt; fullBody = getTextFullBody();</span>
+<span class="fc" id="L154">		final TextBlock result0 = TextBlockUtils.addBackcolor(</span>
+<span class="fc" id="L155">				TextBlockUtils.withMargin(new TextBlockRaw(getTextFromStack(), fc0), 1, 1, 1, 4), HColors.MY_GREEN);</span>
+<span class="fc" id="L156">		final TextBlock result1 = new TextBlockRaw(allButLast(fullBody), fc1);</span>
+<span class="fc" id="L157">		final TextBlock result2 = new TextBlockRaw(onlyLast(fullBody), fc1.wave(HColors.RED));</span>
+<span class="fc" id="L158">		final TextBlock result3 = new TextBlockRaw(getTextError(), fc2);</span>
+<span class="fc" id="L159">		final TextBlock result4 = TextBlockUtils.withMargin(new TextBlockRaw(header(), fc4), 0, 2, 0, 8);</span>
+<span class="fc" id="L160">		TextBlock result = result0;</span>
+<span class="fc" id="L161">		result = TextBlockUtils.mergeTB(result, result1, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L162">		result = TextBlockUtils.mergeTB(result, result2, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L163">		result = TextBlockUtils.mergeTB(result, result3, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L164">		result = TextBlockUtils.mergeTB(result4, result, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L165">		result = TextBlockUtils.withMargin(result, 5, 5);</span>
+<span class="fc" id="L166">		return TextBlockUtils.addBackcolor(result, HColors.BLACK);</span>
+	}
+
+	private List&lt;String&gt; header() {
+<span class="fc" id="L170">		final ReportLog result = new ReportLog();</span>
+<span class="fc" id="L171">		result.add(&quot;PlantUML &quot; + Version.versionString());</span>
+<span class="fc" id="L172">		result.checkOldVersionWarning();</span>
+<span class="fc" id="L173">		return result.asList();</span>
+	}
+
+	public List&lt;String&gt; getPureAsciiFormatted() {
+<span class="fc" id="L177">		final List&lt;String&gt; result = getTextFromStack();</span>
+<span class="fc" id="L178">		result.addAll(getTextFullBody());</span>
+<span class="fc" id="L179">		result.add(&quot;^^^^^&quot;);</span>
+<span class="fc" id="L180">		result.addAll(getTextError());</span>
+<span class="fc" id="L181">		return result;</span>
+	}
+
+	private List&lt;String&gt; getTextFromStack() {
+<span class="fc" id="L185">		LineLocation lineLocation = getLineLocation();</span>
+<span class="fc" id="L186">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (lineLocation != null) {</span>
+<span class="fc" id="L188">			append(result, lineLocation);</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">			while (lineLocation.getParent() != null) {</span>
+<span class="nc" id="L190">				lineLocation = lineLocation.getParent();</span>
+<span class="nc" id="L191">				append(result, lineLocation);</span>
+			}
+		}
+<span class="fc" id="L194">		return result;</span>
+	}
+
+	protected List&lt;String&gt; getTextFullBody() {
+<span class="fc" id="L198">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L199">		result.add(&quot; &quot;);</span>
+<span class="fc" id="L200">		final int traceSize = trace.size();</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (traceSize &gt; 40) {</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">			for (StringLocated s : trace.subList(0, 5)) {</span>
+<span class="nc" id="L203">				addToResult(result, s);</span>
+<span class="nc" id="L204">			}</span>
+<span class="nc" id="L205">			result.add(&quot;...&quot;);</span>
+<span class="nc" id="L206">			final int skipped = traceSize - 5 - 20;</span>
+<span class="nc" id="L207">			result.add(&quot;... ( skipping &quot; + skipped + &quot; lines )&quot;);</span>
+<span class="nc" id="L208">			result.add(&quot;...&quot;);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			for (StringLocated s : trace.subList(traceSize - 20, traceSize)) {</span>
+<span class="nc" id="L210">				addToResult(result, s);</span>
+<span class="nc" id="L211">			}</span>
+<span class="nc" id="L212">		} else {</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">			for (StringLocated s : trace) {</span>
+<span class="fc" id="L214">				addToResult(result, s);</span>
+<span class="fc" id="L215">			}</span>
+		}
+<span class="fc" id="L217">		return result;</span>
+	}
+
+	private void addToResult(final List&lt;String&gt; result, StringLocated s) {
+<span class="fc" id="L221">		String tmp = s.getString();</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (tmp.length() &gt; 120) {</span>
+<span class="nc" id="L223">			tmp = tmp.substring(0, 120) + &quot; ...&quot;;</span>
+		}
+<span class="fc" id="L225">		result.add(tmp);</span>
+<span class="fc" id="L226">	}</span>
+
+	private List&lt;String&gt; getTextError() {
+<span class="fc" id="L229">		return Arrays.asList(&quot; &quot; + singleError.getError());</span>
+	}
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
+		// ::comment when __CORE__
+<span class="pc bpc" id="L236" title="1 of 4 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
+<span class="fc" id="L237">			final UGraphicTxt ugt = new UGraphicTxt();</span>
+<span class="fc" id="L238">			final UmlCharArea area = ugt.getCharArea();</span>
+<span class="fc" id="L239">			area.drawStringsLRSimple(getPureAsciiFormatted(), 0, 0);</span>
+<span class="fc" id="L240">			area.print(SecurityUtils.createPrintStream(os));</span>
+<span class="fc" id="L241">			return new ImageDataSimple(1, 1);</span>
+
+		}
+		// ::done
+<span class="fc" id="L245">		return super.exportDiagramNow(os, num, fileFormat);</span>
+	}
+
+	@Override
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
+<span class="fc" id="L250">		final TextBlock result = getGraphicalFormatted();</span>
+
+		TextBlock udrawable;
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (getSource().getTotalLineCountLessThan5()) {</span>
+<span class="fc" id="L254">			udrawable = addWelcome(result);</span>
+		} else {
+<span class="nc" id="L256">			udrawable = result;</span>
+		}
+<span class="fc" id="L258">		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
+		// udrawable = addMessageAdopt(udrawable);
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (disableTimeBasedErrorDecorations) {</span>
+			// do nothing
+<span class="pc bpc" id="L262" title="4 of 8 branches missed.">		} else if (min == 1 || min == 8 || min == 13 || min == 55) {</span>
+<span class="nc" id="L263">			udrawable = addMessagePatreon(udrawable);</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		} else if (min == 15) {</span>
+<span class="nc" id="L265">			udrawable = addMessageLiberapay(udrawable);</span>
+<span class="pc bpc" id="L266" title="3 of 6 branches missed.">		} else if (min == 30 || min == 39 || min == 48) {</span>
+<span class="nc" id="L267">			udrawable = addMessageDedication(udrawable);</span>
+			// ::comment when __CORE__
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
+<span class="nc" id="L270">			udrawable = addMessageArecibo(udrawable);</span>
+			// ::done
+		}
+<span class="fc" id="L273">		return udrawable;</span>
+	}
+
+	private void append(List&lt;String&gt; result, LineLocation lineLocation) {
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (lineLocation.getDescription() != null) {</span>
+<span class="fc" id="L278">			result.add(&quot;[From &quot; + lineLocation.getDescription() + &quot; (line &quot; + (lineLocation.getPosition() + 1) + &quot;) ]&quot;);</span>
+		}
+<span class="fc" id="L280">	}</span>
+
+	final public DiagramDescription getDescription() {
+<span class="fc" id="L283">		return new DiagramDescription(&quot;(Error)&quot;);</span>
+	}
+
+	private List&lt;String&gt; allButLast(List&lt;String&gt; full) {
+<span class="fc" id="L287">		return full.subList(0, full.size() - 1);</span>
+	}
+
+	private List&lt;String&gt; onlyLast(List&lt;String&gt; full) {
+<span class="fc" id="L291">		return full.subList(full.size() - 1, full.size());</span>
+	}
+
+	private TextBlock getWelcome() throws IOException {
+<span class="fc" id="L295">		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())</span>
+<span class="fc" id="L296">				.getGraphicStrings();</span>
+	}
+
+	private TextBlock addWelcome(final TextBlock result) throws IOException {
+<span class="fc" id="L300">		final TextBlock welcome = getWelcome();</span>
+<span class="fc" id="L301">		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);</span>
+	}
+
+	private TextBlock addMessageLiberapay(final TextBlock source) throws IOException {
+		// ::comment when __CORE__
+<span class="nc bnc" id="L306" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L307">			return source;</span>
+		// ::done
+
+<span class="nc" id="L310">		final TextBlock message = getMessageLiberapay();</span>
+<span class="nc" id="L311">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L312">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L313">		return result;</span>
+	}
+
+	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
+		// ::comment when __CORE__
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L319">			return source;</span>
+		// ::done
+
+<span class="nc" id="L322">		final TextBlock message = getMessagePatreon();</span>
+<span class="nc" id="L323">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L324">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L325">		return result;</span>
+	}
+
+	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
+		// ::comment when __CORE__
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L331">			return source;</span>
+		// ::done
+
+<span class="nc" id="L334">		final TextBlock message = getMessageDedication();</span>
+<span class="nc" id="L335">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L336">		return result;</span>
+	}
+
+	// ::comment when __CORE__
+	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {</span>
+<span class="nc" id="L342">			return source;</span>
+		}
+<span class="nc" id="L344">		final TextBlock message = getMessageAdopt();</span>
+<span class="nc" id="L345">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L346">		return result;</span>
+	}
+
+	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
+<span class="nc" id="L350">		final UImage message = new UImage(</span>
+<span class="nc" id="L351">				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L352">		TextBlock result = TextBlockUtils.mergeLR(source, TextBlockUtils.fromUImage(message), VerticalAlignment.TOP);</span>
+<span class="nc" id="L353">		return result;</span>
+	}
+	// ::done
+
+	private TextBlock getMessageDedication() {
+<span class="nc" id="L358">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
+
+		// ::comment when __CORE__
+<span class="nc" id="L361">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L362">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, Color.BLACK, backColor.getAwtColor()));</span>
+		// ::done
+<span class="nc" id="L364">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
+				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
+
+<span class="nc" id="L367">		final UFont font = UFont.sansSerif(14);</span>
+<span class="nc" id="L368">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L369">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L370">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+		final TextBlock result;
+		// ::comment when __CORE__
+<span class="nc bnc" id="L373" title="All 2 branches missed.">		if (qrcode == null) {</span>
+			// ::done
+<span class="nc" id="L375">			result = text;</span>
+			// ::comment when __CORE__
+		} else {
+<span class="nc" id="L378">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
+<span class="nc" id="L379">			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);</span>
+		}
+		// ::done
+<span class="nc" id="L382">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+
+	}
+
+	private TextBlock getMessageAdopt() {
+<span class="nc" id="L387">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#eff4d2&quot;);</span>
+
+<span class="nc" id="L389">		final Display disp = Display.create(&quot;&lt;b&gt;Adopt-a-Word and put your message here!&quot;, &quot; &quot;,</span>
+				&quot;Details on &lt;i&gt;[[https://plantuml.com/adopt]]&quot;, &quot; &quot;);
+
+<span class="nc" id="L392">		final UFont font = UFont.sansSerif(14);</span>
+<span class="nc" id="L393">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L394">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L395">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+		final TextBlock result;
+<span class="nc" id="L397">		result = text;</span>
+<span class="nc" id="L398">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+
+	}
+
+	private TextBlock getMessagePatreon() {
+<span class="nc" id="L403">		final UImage message = new UImage(</span>
+<span class="nc" id="L404">				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L405">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
+<span class="nc" id="L406">		final HColor backColor = HColors.simple(back);</span>
+
+		// ::comment when __CORE__
+<span class="nc" id="L409">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L410">				.exportFlashcode(&quot;https://plantuml.com/patreon&quot;, Color.BLACK, Color.WHITE));</span>
+		// ::done
+
+<span class="nc" id="L413">		final int scale = 2;</span>
+
+		final double imWidth;
+		final double imHeight;
+		// ::comment when __CORE__
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		if (qrcode == null) {</span>
+			// ::done
+<span class="nc" id="L420">			imWidth = message.getWidth();</span>
+<span class="nc" id="L421">			imHeight = message.getHeight();</span>
+			// ::comment when __CORE__
+		} else {
+<span class="nc" id="L424">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
+<span class="nc" id="L425">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
+		}
+		// ::done
+<span class="nc" id="L428">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+				// ::comment when __CORE__
+<span class="nc bnc" id="L432" title="All 2 branches missed.">				if (qrcode == null) {</span>
+					// ::done
+<span class="nc" id="L434">					ug.apply(new UTranslate(1, 1)).draw(message);</span>
+					// ::comment when __CORE__
+				} else {
+<span class="nc" id="L437">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
+<span class="nc" id="L438">							.scale(scale);</span>
+<span class="nc" id="L439">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
+<span class="nc" id="L440">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
+				}
+				// ::done
+<span class="nc" id="L443">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L446">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+<span class="nc" id="L450">				return MinMax.fromMax(imWidth + 1, imHeight + 1);</span>
+			}
+
+			public HColor getBackcolor() {
+<span class="nc" id="L454">				return backColor;</span>
+			}
+		};
+
+	}
+
+	private TextBlock getMessageLiberapay() {
+<span class="nc" id="L461">		final UImage message = new UImage(</span>
+<span class="nc" id="L462">				new PixelImage(PSystemVersion.getTime15(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L463">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
+<span class="nc" id="L464">		final HColor backColor = HColors.simple(back);</span>
+
+		// ::comment when __CORE__
+<span class="nc" id="L467">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L468">				.exportFlashcode(&quot;https://plantuml.com/lp&quot;, Color.BLACK, Color.WHITE));</span>
+		// ::done
+
+<span class="nc" id="L471">		final int scale = 2;</span>
+
+		final double imWidth;
+		final double imHeight;
+		// ::comment when __CORE__
+<span class="nc bnc" id="L476" title="All 2 branches missed.">		if (qrcode == null) {</span>
+			// ::done
+<span class="nc" id="L478">			imWidth = message.getWidth();</span>
+<span class="nc" id="L479">			imHeight = message.getHeight();</span>
+			// ::comment when __CORE__
+		} else {
+<span class="nc" id="L482">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
+<span class="nc" id="L483">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
+		}
+		// ::done
+
+<span class="nc" id="L487">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+				// ::comment when __CORE__
+<span class="nc bnc" id="L491" title="All 2 branches missed.">				if (qrcode == null) {</span>
+					// ::done
+<span class="nc" id="L493">					ug.apply(new UTranslate(1, 1)).draw(message);</span>
+					// ::comment when __CORE__
+				} else {
+<span class="nc" id="L496">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
+<span class="nc" id="L497">							.scale(scale);</span>
+<span class="nc" id="L498">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
+<span class="nc" id="L499">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
+				}
+				// ::done
+<span class="nc" id="L502">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L505">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+<span class="nc" id="L509">				return MinMax.fromMax(imWidth + 1, imHeight + 1);</span>
+			}
+
+			public HColor getBackcolor() {
+<span class="nc" id="L513">				return backColor;</span>
+			}
+		};
+
+	}
+
+	public int score() {
+<span class="fc" id="L520">		final int result = trace.size() * 10 + singleError.score();</span>
+<span class="fc" id="L521">		return result;</span>
+	}
+
+	private BufferedImage smaller(BufferedImage im) {
+<span class="nc bnc" id="L525" title="All 2 branches missed.">		if (im == null) {</span>
+<span class="nc" id="L526">			return null;</span>
+		}
+<span class="nc" id="L528">		final int nb = 1;</span>
+<span class="nc" id="L529">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

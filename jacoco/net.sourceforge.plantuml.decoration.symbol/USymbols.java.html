@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>USymbols.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.decoration.symbol</a> &gt; <span class="el_source">USymbols.java</span></div><h1>USymbols.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.decoration.symbol;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.skin.ActorStyle;
+import net.sourceforge.plantuml.skin.ComponentStyle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.svek.PackageStyle;
+
+public abstract class USymbols {
+
+	private USymbols() {
+	}
+
+<span class="fc" id="L53">	private static final Map&lt;String, USymbol&gt; all = new HashMap&lt;String, USymbol&gt;();</span>
+
+	private static USymbol record(String code, USymbol symbol) {
+<span class="fc" id="L56">		all.put(StringUtils.goUpperCase(code), symbol);</span>
+<span class="fc" id="L57">		return symbol;</span>
+	}
+
+<span class="fc" id="L60">	public final static USymbol ACTION = record(&quot;ACTION&quot;, new USymbolAction(SName.action));</span>
+<span class="fc" id="L61">	public final static USymbol ACTOR_AWESOME = record(&quot;ACTOR_AWESOME&quot;, new USymbolActor(ActorStyle.AWESOME));</span>
+<span class="fc" id="L62">	public final static USymbol ACTOR_HOLLOW = record(&quot;ACTOR_HOLLOW&quot;, new USymbolActor(ActorStyle.HOLLOW));</span>
+<span class="fc" id="L63">	public final static USymbol ACTOR_STICKMAN = record(&quot;ACTOR_STICKMAN&quot;, new USymbolActor(ActorStyle.STICKMAN));</span>
+<span class="fc" id="L64">	public final static USymbol ACTOR_STICKMAN_BUSINESS = record(&quot;ACTOR_STICKMAN_BUSINESS&quot;, new USymbolActorBusiness());</span>
+<span class="fc" id="L65">	public final static USymbol AGENT = record(&quot;AGENT&quot;, new USymbolRectangle(SName.agent));</span>
+<span class="fc" id="L66">	public final static USymbol ARCHIMATE = record(&quot;ARCHIMATE&quot;, new USymbolRectangle(SName.archimate));</span>
+<span class="fc" id="L67">	public final static USymbol ARTIFACT = record(&quot;ARTIFACT&quot;, new USymbolArtifact());</span>
+<span class="fc" id="L68">	public final static USymbol BOUNDARY = record(&quot;BOUNDARY&quot;, new USymbolBoundary());</span>
+<span class="fc" id="L69">	public final static USymbol CARD = record(&quot;CARD&quot;, new USymbolCard());</span>
+<span class="fc" id="L70">	public final static USymbol CLOUD = record(&quot;CLOUD&quot;, new USymbolCloud());</span>
+<span class="fc" id="L71">	public final static USymbol COLLECTIONS = record(&quot;COLLECTIONS&quot;, new USymbolCollections());</span>
+<span class="fc" id="L72">	public final static USymbol COMPONENT_RECTANGLE = record(&quot;COMPONENT_RECTANGLE&quot;,	new USymbolRectangle(SName.component));</span>
+<span class="fc" id="L73">	public final static USymbol COMPONENT1 = record(&quot;COMPONENT1&quot;, new USymbolComponent1());</span>
+<span class="fc" id="L74">	public final static USymbol COMPONENT2 = record(&quot;COMPONENT2&quot;, new USymbolComponent2());</span>
+<span class="fc" id="L75">	public final static USymbol CONTROL = record(&quot;CONTROL&quot;, new USymbolControl());</span>
+<span class="fc" id="L76">	public final static USymbol DATABASE = record(&quot;DATABASE&quot;, new USymbolDatabase());</span>
+<span class="fc" id="L77">	public final static USymbol ENTITY_DOMAIN = record(&quot;ENTITY_DOMAIN&quot;, new USymbolEntityDomain());</span>
+<span class="fc" id="L78">	public final static USymbol FILE = record(&quot;FILE&quot;, new USymbolFile());</span>
+<span class="fc" id="L79">	public final static USymbol FOLDER = record(&quot;FOLDER&quot;, new USymbolFolder(SName.folder, false));</span>
+<span class="fc" id="L80">	public final static USymbol FRAME = record(&quot;FRAME&quot;, new USymbolFrame(SName.frame));</span>
+<span class="fc" id="L81">	public final static USymbol GROUP = record(&quot;GROUP&quot;, new USymbolFrame(SName.group));</span>
+<span class="fc" id="L82">	public final static USymbol HEXAGON = record(&quot;HEXAGON&quot;, new USymbolHexagon());</span>
+<span class="fc" id="L83">	public final static USymbol INTERFACE = record(&quot;INTERFACE&quot;, new USymbolInterface());</span>
+<span class="fc" id="L84">	public final static USymbol LABEL = record(&quot;LABEL&quot;, new USymbolLabel());</span>
+<span class="fc" id="L85">	public final static USymbol NODE = record(&quot;NODE&quot;, new USymbolNode());</span>
+<span class="fc" id="L86">	public final static USymbol PACKAGE = record(&quot;PACKAGE&quot;, new USymbolFolder(SName.package_, true));</span>
+<span class="fc" id="L87">	public final static USymbol PARTITION = record(&quot;PARTITION&quot;, new USymbolFrame(SName.partition));</span>
+<span class="fc" id="L88">	public final static USymbol PERSON = record(&quot;PERSON&quot;, new USymbolPerson());</span>
+<span class="fc" id="L89">	public final static USymbol PROCESS = record(&quot;PROCESS&quot;, new USymbolProcess(SName.process));</span>
+<span class="fc" id="L90">	public final static USymbol QUEUE = record(&quot;QUEUE&quot;, new USymbolQueue());</span>
+<span class="fc" id="L91">	public final static USymbol RECTANGLE = record(&quot;RECTANGLE&quot;, new USymbolRectangle(SName.rectangle));</span>
+<span class="fc" id="L92">	public final static USymbol STACK = record(&quot;STACK&quot;, new USymbolStack());</span>
+<span class="fc" id="L93">	public final static USymbol STORAGE = record(&quot;STORAGE&quot;, new USymbolStorage());</span>
+<span class="fc" id="L94">	public final static USymbol USECASE = record(&quot;USECASE&quot;, new USymbolUsecase(false));;</span>
+<span class="fc" id="L95">	public final static USymbol USECASE_BUSINESS = record(&quot;USECASE_BUSINESS&quot;, new USymbolUsecase(true));;</span>
+
+
+	public static USymbol fromString(String s, ActorStyle actorStyle, ComponentStyle componentStyle,
+			PackageStyle packageStyle) {
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L101">			return null;</span>
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;package&quot;))</span>
+<span class="nc" id="L104">			return packageStyle.toUSymbol();</span>
+
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;actor&quot;))</span>
+<span class="nc" id="L107">			return actorStyle.toUSymbol();</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;component&quot;))</span>
+<span class="fc" id="L110">			return componentStyle.toUSymbol();</span>
+
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;entity&quot;))</span>
+<span class="nc" id="L113">			return ENTITY_DOMAIN;</span>
+
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;circle&quot;))</span>
+<span class="nc" id="L116">			return INTERFACE;</span>
+
+<span class="fc" id="L118">		final USymbol result = all.get(StringUtils.goUpperCase(s.replaceAll(&quot;\\W&quot;, &quot;&quot;)));</span>
+<span class="fc" id="L119">		return result;</span>
+	}
+
+	public static USymbol fromString(String symbol, ISkinParam skinParam) {
+<span class="fc" id="L123">		USymbol usymbol = null;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (symbol.equalsIgnoreCase(&quot;artifact&quot;))</span>
+<span class="nc" id="L125">			usymbol = USymbols.ARTIFACT;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;folder&quot;))</span>
+<span class="nc" id="L127">			usymbol = USymbols.FOLDER;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;file&quot;))</span>
+<span class="nc" id="L129">			usymbol = USymbols.FILE;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;package&quot;))</span>
+<span class="nc" id="L131">			usymbol = USymbols.PACKAGE;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;rectangle&quot;))</span>
+<span class="fc" id="L133">			usymbol = USymbols.RECTANGLE;</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;person&quot;))</span>
+<span class="nc" id="L135">			usymbol = USymbols.PERSON;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;hexagon&quot;))</span>
+<span class="nc" id="L137">			usymbol = USymbols.HEXAGON;</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;label&quot;))</span>
+<span class="nc" id="L139">			usymbol = USymbols.LABEL;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;collections&quot;))</span>
+<span class="nc" id="L141">			usymbol = USymbols.COLLECTIONS;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;node&quot;))</span>
+<span class="fc" id="L143">			usymbol = USymbols.NODE;</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;frame&quot;))</span>
+<span class="nc" id="L145">			usymbol = USymbols.FRAME;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;cloud&quot;))</span>
+<span class="nc" id="L147">			usymbol = USymbols.CLOUD;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;action&quot;))</span>
+<span class="nc" id="L149">			usymbol = USymbols.ACTION;</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;process&quot;))</span>
+<span class="nc" id="L151">			usymbol = USymbols.PROCESS;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;database&quot;))</span>
+<span class="nc" id="L153">			usymbol = USymbols.DATABASE;</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;queue&quot;))</span>
+<span class="nc" id="L155">			usymbol = USymbols.QUEUE;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;stack&quot;))</span>
+<span class="nc" id="L157">			usymbol = USymbols.STACK;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;storage&quot;))</span>
+<span class="nc" id="L159">			usymbol = USymbols.STORAGE;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;agent&quot;))</span>
+<span class="nc" id="L161">			usymbol = USymbols.AGENT;</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;actor/&quot;))</span>
+<span class="nc" id="L163">			usymbol = USymbols.ACTOR_STICKMAN_BUSINESS;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;actor&quot;))</span>
+<span class="fc" id="L165">			usymbol = skinParam.actorStyle().toUSymbol();</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;component&quot;))</span>
+<span class="fc" id="L167">			usymbol = skinParam.componentStyle().toUSymbol();</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;boundary&quot;))</span>
+<span class="nc" id="L169">			usymbol = USymbols.BOUNDARY;</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;control&quot;))</span>
+<span class="nc" id="L171">			usymbol = USymbols.CONTROL;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;entity&quot;))</span>
+<span class="nc" id="L173">			usymbol = USymbols.ENTITY_DOMAIN;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;card&quot;))</span>
+<span class="fc" id="L175">			usymbol = USymbols.CARD;</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;interface&quot;))</span>
+<span class="nc" id="L177">			usymbol = USymbols.INTERFACE;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;()&quot;))</span>
+<span class="nc" id="L179">			usymbol = USymbols.INTERFACE;</span>
+
+<span class="fc" id="L181">		return usymbol;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

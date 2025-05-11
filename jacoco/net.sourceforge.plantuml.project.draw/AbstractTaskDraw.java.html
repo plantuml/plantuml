@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractTaskDraw.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.draw</a> &gt; <span class="el_source">AbstractTaskDraw.java</span></div><h1>AbstractTaskDraw.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.draw;
+
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.ToTaskDraw;
+import net.sourceforge.plantuml.project.core.GSide;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.image.Opale;
+import net.sourceforge.plantuml.url.Url;
+
+public abstract class AbstractTaskDraw implements TaskDraw {
+
+	private CenterBorderColor colors;
+
+<span class="fc" id="L75">	private int completion = 100;</span>
+	protected Url url;
+	protected Display note;
+	protected Stereotype noteStereotype;
+	protected final TimeScale timeScale;
+	private Real y;
+	protected final String prettyDisplay;
+	protected final Day start;
+	private final StyleBuilder styleBuilder;
+	private final Task task;
+	private final ToTaskDraw toTaskDraw;
+	private final ISkinSimple skinSimple;
+
+
+	@Override
+	final public String toString() {
+<span class="nc" id="L91">		return super.toString() + &quot; &quot; + task;</span>
+	}
+
+	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note,
+			Stereotype noteStereotype) {
+<span class="fc" id="L96">		this.colors = colors;</span>
+<span class="fc" id="L97">		this.completion = completion;</span>
+<span class="fc" id="L98">		this.url = url;</span>
+<span class="fc" id="L99">		this.note = note;</span>
+<span class="fc" id="L100">		this.noteStereotype = noteStereotype;</span>
+<span class="fc" id="L101">	}</span>
+
+	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
+<span class="fc" id="L104">			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinSimple skinSimple) {</span>
+<span class="fc" id="L105">		this.y = y;</span>
+<span class="fc" id="L106">		this.skinSimple = skinSimple;</span>
+<span class="fc" id="L107">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L108">		this.toTaskDraw = toTaskDraw;</span>
+<span class="fc" id="L109">		this.start = start;</span>
+<span class="fc" id="L110">		this.prettyDisplay = prettyDisplay;</span>
+<span class="fc" id="L111">		this.timeScale = timeScale;</span>
+<span class="fc" id="L112">		this.task = task;</span>
+
+<span class="fc" id="L114">	}</span>
+
+	abstract StyleSignature getStyleSignature();
+
+	private StyleSignatureBasic getStyleSignatureUnstarted() {
+<span class="fc" id="L119">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);</span>
+	}
+
+	final protected HColor getLineColor() {
+<span class="fc" id="L123">		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.LineColor)</span>
+<span class="fc" id="L124">				.asColor(getColorSet());</span>
+<span class="fc" id="L125">		final HColor regular = getStyle().value(PName.LineColor).asColor(getColorSet());</span>
+<span class="fc" id="L126">		return HColors.unlinear(unstarted, regular, completion);</span>
+	}
+
+	final protected HColor getBackgroundColor() {
+<span class="fc" id="L130">		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.BackGroundColor)</span>
+<span class="fc" id="L131">				.asColor(getColorSet());</span>
+<span class="fc" id="L132">		final HColor regular = getStyle().value(PName.BackGroundColor).asColor(getColorSet());</span>
+<span class="fc" id="L133">		return HColors.unlinear(unstarted, regular, completion);</span>
+	}
+
+	final protected FontConfiguration getFontConfiguration() {
+<span class="fc" id="L137">		return getStyle().getFontConfiguration(getColorSet());</span>
+	}
+
+	final protected Style getStyle() {
+<span class="fc" id="L141">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
+	}
+
+	final public double getTitleWidth(StringBounder stringBounder) {
+<span class="nc" id="L145">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="nc" id="L146">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L147">		return margin.getLeft() + getTitle().calculateDimension(stringBounder).getWidth() + margin.getRight();</span>
+	}
+
+	protected abstract TextBlock getTitle();
+
+	abstract protected double getShapeHeight(StringBounder stringBounder);
+
+	final public double getFullHeightTask(StringBounder stringBounder) {
+<span class="fc" id="L155">		final Style style = getStyle();</span>
+<span class="fc" id="L156">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L157">		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();</span>
+	}
+
+	final public TaskDraw getTrueRow() {
+<span class="fc" id="L161">		return toTaskDraw.getTaskDraw(task.getRow());</span>
+	}
+
+	@Override
+	final public Real getY(StringBounder stringBounder) {
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (task.getRow() == null)</span>
+<span class="fc" id="L167">			return y;</span>
+
+<span class="nc" id="L169">		return getTrueRow().getY(stringBounder);</span>
+	}
+
+	public final Task getTask() {
+<span class="fc" id="L173">		return task;</span>
+	}
+
+	@Override
+	public double getY(StringBounder stringBounder, GSide side) {
+<span class="fc" id="L178">		final Style style = getStyle();</span>
+<span class="fc" id="L179">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+
+<span class="fc" id="L181">		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L182">		final double y2 = y1 + getShapeHeight(stringBounder);</span>
+
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (side.isTop())</span>
+<span class="nc" id="L185">			return y1;</span>
+
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (side.isBottom())</span>
+<span class="fc" id="L188">			return y2;</span>
+
+<span class="fc" id="L190">		return (y1 + y2) / 2;</span>
+
+	}
+
+	protected final StyleBuilder getStyleBuilder() {
+<span class="fc" id="L195">		return styleBuilder;</span>
+	}
+
+	protected final HColorSet getColorSet() {
+<span class="fc" id="L199">		return toTaskDraw.getIHtmlColorSet();</span>
+	}
+
+	protected CenterBorderColor getColors() {
+<span class="fc" id="L203">		return colors;</span>
+	}
+
+	protected int getCompletion() {
+<span class="fc" id="L207">		return completion;</span>
+	}
+
+	protected Pragma getPragma() {
+<span class="fc" id="L211">		return styleBuilder.getSkinParam().getPragma();</span>
+	}
+	
+	protected Opale getOpaleNote() {
+<span class="nc" id="L215">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)</span>
+<span class="nc" id="L216">				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());</span>
+
+<span class="nc" id="L218">		final FontConfiguration fc = style.getFontConfiguration(getColorSet());</span>
+
+<span class="nc" id="L220">		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
+<span class="nc" id="L221">		final Sheet sheet = skinSimple.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);</span>
+<span class="nc" id="L222">		final double padding = style.value(PName.Padding).asDouble();</span>
+<span class="nc" id="L223">		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);</span>
+
+<span class="nc" id="L225">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());</span>
+<span class="nc" id="L226">		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());</span>
+<span class="nc" id="L227">		final double shadowing = style.getShadowing();</span>
+
+<span class="nc" id="L229">		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());</span>
+	}
+	
+	protected void drawNote(UGraphic ug) {
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (note == null)</span>
+<span class="fc" id="L234">			return;</span>
+
+<span class="nc" id="L236">		getOpaleNote().drawU(ug);</span>
+
+<span class="nc" id="L238">	}</span>
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

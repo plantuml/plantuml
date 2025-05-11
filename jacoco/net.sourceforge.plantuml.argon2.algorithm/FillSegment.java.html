@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FillSegment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.argon2.algorithm</a> &gt; <span class="el_source">FillSegment.java</span></div><h1>FillSegment.java</h1><pre class="source lang-java linenums">/* 	This file is taken from
+	https://github.com/andreas1327250/argon2-java
+
+	Original Author: Andreas Gadermaier &lt;up.gadermaier@gmail.com&gt;
+ */
+package net.sourceforge.plantuml.argon2.algorithm;
+
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_ADDRESSES_IN_BLOCK;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_VERSION_10;
+
+import net.sourceforge.plantuml.argon2.Constants;
+import net.sourceforge.plantuml.argon2.Util;
+import net.sourceforge.plantuml.argon2.model.Argon2Type;
+import net.sourceforge.plantuml.argon2.model.Block;
+import net.sourceforge.plantuml.argon2.model.Instance;
+import net.sourceforge.plantuml.argon2.model.Position;
+
+<span class="nc" id="L18">class FillSegment {</span>
+
+	static void fillSegment(Instance instance, Position position) {
+
+<span class="nc" id="L22">		Block addressBlock = null, inputBlock = null, zeroBlock = null;</span>
+
+<span class="nc" id="L24">		boolean dataIndependentAddressing = isDataIndependentAddressing(instance, position);</span>
+<span class="nc" id="L25">		int startingIndex = getStartingIndex(position);</span>
+<span class="nc" id="L26">		int currentOffset = position.lane * instance.getLaneLength() + position.slice * instance.getSegmentLength()</span>
+				+ startingIndex;
+<span class="nc" id="L28">		int prevOffset = getPrevOffset(instance, currentOffset);</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">		if (dataIndependentAddressing) {</span>
+<span class="nc" id="L31">			addressBlock = new Block();</span>
+<span class="nc" id="L32">			zeroBlock = new Block();</span>
+<span class="nc" id="L33">			inputBlock = new Block();</span>
+
+<span class="nc" id="L35">			initAddressBlocks(instance, position, zeroBlock, inputBlock, addressBlock);</span>
+		}
+
+<span class="nc" id="L38">		for (position.index = startingIndex; position.index &lt; instance</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">				.getSegmentLength(); position.index++, currentOffset++, prevOffset++) {</span>
+<span class="nc" id="L40">			prevOffset = rotatePrevOffset(instance, currentOffset, prevOffset);</span>
+
+<span class="nc" id="L42">			long pseudoRandom = getPseudoRandom(instance, position, addressBlock, inputBlock, zeroBlock, prevOffset,</span>
+					dataIndependentAddressing);
+<span class="nc" id="L44">			int refLane = getRefLane(instance, position, pseudoRandom);</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">			int refColumn = getRefColumn(instance, position, pseudoRandom, refLane == position.lane);</span>
+
+			/* 2 Creating a new block */
+<span class="nc" id="L48">			Block prevBlock = instance.memory[prevOffset];</span>
+<span class="nc" id="L49">			Block refBlock = instance.memory[((instance.getLaneLength()) * refLane + refColumn)];</span>
+<span class="nc" id="L50">			Block currentBlock = instance.memory[currentOffset];</span>
+
+<span class="nc" id="L52">			boolean withXor = isWithXor(instance, position);</span>
+<span class="nc" id="L53">			FillBlock.fillBlock(prevBlock, refBlock, currentBlock, withXor);</span>
+		}
+<span class="nc" id="L55">	}</span>
+
+	private static boolean isDataIndependentAddressing(Instance instance, Position position) {
+<span class="nc bnc" id="L58" title="All 8 branches missed.">		return (instance.getType() == Argon2Type.Argon2i) || (instance.getType() == Argon2Type.Argon2id</span>
+				&amp;&amp; (position.pass == 0) &amp;&amp; (position.slice &lt; Constants.ARGON2_SYNC_POINTS / 2));
+	}
+
+	private static void initAddressBlocks(Instance instance, Position position, Block zeroBlock, Block inputBlock,
+			Block addressBlock) {
+<span class="nc" id="L64">		inputBlock.v[0] = Util.intToLong(position.pass);</span>
+<span class="nc" id="L65">		inputBlock.v[1] = Util.intToLong(position.lane);</span>
+<span class="nc" id="L66">		inputBlock.v[2] = Util.intToLong(position.slice);</span>
+<span class="nc" id="L67">		inputBlock.v[3] = Util.intToLong(instance.memory.length);</span>
+<span class="nc" id="L68">		inputBlock.v[4] = Util.intToLong(instance.getIterations());</span>
+<span class="nc" id="L69">		inputBlock.v[5] = Util.intToLong(instance.getType().ordinal());</span>
+
+<span class="nc bnc" id="L71" title="All 4 branches missed.">		if ((position.pass == 0) &amp;&amp; (position.slice == 0)) {</span>
+			/* Don't forget to generate the first block of addresses: */
+<span class="nc" id="L73">			nextAddresses(zeroBlock, inputBlock, addressBlock);</span>
+		}
+<span class="nc" id="L75">	}</span>
+
+	private static boolean isWithXor(Instance instance, Position position) {
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		return !(position.pass == 0 || instance.getVersion() == ARGON2_VERSION_10);</span>
+	}
+
+	private static int getPrevOffset(Instance instance, int currentOffset) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (currentOffset % instance.getLaneLength() == 0) {</span>
+			/* Last block in this lane */
+<span class="nc" id="L84">			return currentOffset + instance.getLaneLength() - 1;</span>
+		} else {
+			/* Previous block */
+<span class="nc" id="L87">			return currentOffset - 1;</span>
+		}
+	}
+
+	private static int rotatePrevOffset(Instance instance, int currentOffset, int prevOffset) {
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (currentOffset % instance.getLaneLength() == 1) {</span>
+<span class="nc" id="L93">			prevOffset = currentOffset - 1;</span>
+		}
+<span class="nc" id="L95">		return prevOffset;</span>
+	}
+
+	private static int getStartingIndex(Position position) {
+<span class="nc bnc" id="L99" title="All 4 branches missed.">		if ((position.pass == 0) &amp;&amp; (position.slice == 0)) {</span>
+<span class="nc" id="L100">			return 2; /* we have already generated the first two blocks */</span>
+		} else {
+<span class="nc" id="L102">			return 0;</span>
+		}
+	}
+
+	private static void nextAddresses(Block zeroBlock, Block inputBlock, Block addressBlock) {
+<span class="nc" id="L107">		inputBlock.v[6]++;</span>
+<span class="nc" id="L108">		FillBlock.fillBlock(zeroBlock, inputBlock, addressBlock, false);</span>
+<span class="nc" id="L109">		FillBlock.fillBlock(zeroBlock, addressBlock, addressBlock, false);</span>
+<span class="nc" id="L110">	}</span>
+
+	/* 1.2 Computing the index of the reference block */
+	/* 1.2.1 Taking pseudo-random value from the previous block */
+	private static long getPseudoRandom(Instance instance, Position position, Block addressBlock, Block inputBlock,
+			Block zeroBlock, int prevOffset, boolean dataIndependentAddressing) {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (dataIndependentAddressing) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (position.index % ARGON2_ADDRESSES_IN_BLOCK == 0) {</span>
+<span class="nc" id="L118">				nextAddresses(zeroBlock, inputBlock, addressBlock);</span>
+			}
+<span class="nc" id="L120">			return addressBlock.v[position.index % ARGON2_ADDRESSES_IN_BLOCK];</span>
+		} else {
+<span class="nc" id="L122">			return instance.memory[prevOffset].v[0];</span>
+		}
+	}
+
+	private static int getRefLane(Instance instance, Position position, long pseudoRandom) {
+<span class="nc" id="L127">		int refLane = (int) (((pseudoRandom &gt;&gt;&gt; 32)) % instance.getLanes());</span>
+
+<span class="nc bnc" id="L129" title="All 4 branches missed.">		if ((position.pass == 0) &amp;&amp; (position.slice == 0)) {</span>
+			/* Can not reference other lanes yet */
+<span class="nc" id="L131">			refLane = position.lane;</span>
+		}
+<span class="nc" id="L133">		return refLane;</span>
+	}
+
+	private static int getRefColumn(Instance instance, Position position, long pseudoRandom, boolean sameLane) {
+
+		int referenceAreaSize;
+		int startPosition;
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (position.pass == 0) {</span>
+<span class="nc" id="L142">			startPosition = 0;</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (sameLane) {</span>
+				/* The same lane =&gt; add current segment */
+<span class="nc" id="L146">				referenceAreaSize = position.slice * instance.getSegmentLength() + position.index - 1;</span>
+			} else {
+				/* pass == 0 &amp;&amp; !sameLane =&gt; position.slice &gt; 0 */
+<span class="nc bnc" id="L149" title="All 2 branches missed.">				referenceAreaSize = position.slice * instance.getSegmentLength() + ((position.index == 0) ? (-1) : 0);</span>
+			}
+
+		} else {
+<span class="nc" id="L153">			startPosition = ((position.slice + 1) * instance.getSegmentLength()) % instance.getLaneLength();</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (sameLane) {</span>
+<span class="nc" id="L156">				referenceAreaSize = instance.getLaneLength() - instance.getSegmentLength() + position.index - 1;</span>
+			} else {
+<span class="nc" id="L158">				referenceAreaSize = instance.getLaneLength() - instance.getSegmentLength()</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">						+ ((position.index == 0) ? (-1) : 0);</span>
+			}
+		}
+
+<span class="nc" id="L163">		long relativePosition = pseudoRandom &amp; 0xFFFFFFFFL;</span>
+//        long relativePosition = pseudoRandom &lt;&lt; 32 &gt;&gt;&gt; 32;
+<span class="nc" id="L165">		relativePosition = (relativePosition * relativePosition) &gt;&gt;&gt; 32;</span>
+<span class="nc" id="L166">		relativePosition = referenceAreaSize - 1 - (referenceAreaSize * relativePosition &gt;&gt;&gt; 32);</span>
+
+<span class="nc" id="L168">		return (int) (startPosition + relativePosition) % instance.getLaneLength();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

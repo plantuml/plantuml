@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StateDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.statediagram</a> &gt; <span class="el_source">StateDiagram.java</span></div><h1>StateDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution   :  Serge Wenger
+ *
+ */
+package net.sourceforge.plantuml.statediagram;
+
+import java.util.EnumSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+<span class="fc" id="L55">public class StateDiagram extends AbstractEntityDiagram {</span>
+	// ::remove folder when __HAXE__
+
+	private static final String CONCURRENT_PREFIX = &quot;CONC&quot;;
+
+	public StateDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+<span class="fc" id="L61">		super(source, UmlDiagramType.STATE, previous, preprocessingArtifact);</span>
+<span class="fc" id="L62">		setNamespaceSeparator(&quot;.&quot;);</span>
+<span class="fc" id="L63">	}</span>
+
+	@Override
+	public Set&lt;ParserPass&gt; getRequiredPass() {
+<span class="fc" id="L67">		return EnumSet.of(ParserPass.ONE, ParserPass.TWO, ParserPass.THREE);</span>
+	}
+
+	public boolean checkConcurrentStateOk(Quark&lt;Entity&gt; code) {
+<span class="fc" id="L71">		final boolean result = checkConcurrentStateOkInternal(code);</span>
+<span class="fc" id="L72">		return result;</span>
+	}
+
+	private boolean checkConcurrentStateOkInternal(Quark&lt;Entity&gt; code) {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (code.getData() == null)</span>
+<span class="fc" id="L77">			return true;</span>
+
+<span class="fc" id="L79">		final Entity existing = code.getData();</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_STATE</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">				&amp;&amp; getCurrentGroup() != existing.getParentContainer())</span>
+<span class="nc" id="L82">			return false;</span>
+
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (existing.getParentContainer() != null</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">				&amp;&amp; existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				&amp;&amp; getCurrentGroup() != existing.getParentContainer())</span>
+<span class="nc" id="L87">			return false;</span>
+
+<span class="fc" id="L89">		return true;</span>
+	}
+
+	public Entity getStart(LineLocation location) {
+<span class="fc" id="L93">		final Entity g = getCurrentGroup();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (g.isRoot()) {</span>
+<span class="fc" id="L95">			final String idShort = &quot;*start*&quot;;</span>
+<span class="fc" id="L96">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (quark.getData() == null)</span>
+<span class="fc" id="L98">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_START, null);</span>
+<span class="fc" id="L99">			return quark.getData();</span>
+		}
+<span class="fc" id="L101">		final String idShort = &quot;*start*&quot; + g.getName();</span>
+<span class="fc" id="L102">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="fc" id="L104">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_START, null);</span>
+<span class="fc" id="L105">		return quark.getData();</span>
+	}
+
+	public Entity getEnd(LineLocation location) {
+<span class="fc" id="L109">		final Entity p = getCurrentGroup();</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (p.isRoot()) {</span>
+<span class="fc" id="L111">			final String idShort = &quot;*end*&quot;;</span>
+<span class="fc" id="L112">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (quark.getData() == null)</span>
+<span class="fc" id="L114">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_END, null);</span>
+<span class="fc" id="L115">			return quark.getData();</span>
+		}
+<span class="nc" id="L117">		final String idShort = &quot;*end*&quot; + p.getName();</span>
+<span class="nc" id="L118">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="nc" id="L120">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_END, null);</span>
+<span class="nc" id="L121">		return quark.getData();</span>
+	}
+
+	public Entity getHistorical(LineLocation location) {
+<span class="nc" id="L125">		final Entity g = getCurrentGroup();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (g.isRoot()) {</span>
+<span class="nc" id="L127">			final String idShort = &quot;*historical*&quot;;</span>
+<span class="nc" id="L128">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (quark.getData() == null)</span>
+<span class="nc" id="L130">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.PSEUDO_STATE, null);</span>
+<span class="nc" id="L131">			return quark.getData();</span>
+		}
+<span class="nc" id="L133">		final String idShort = &quot;*historical*&quot; + g.getName();</span>
+<span class="nc" id="L134">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="nc" id="L136">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.PSEUDO_STATE, null);</span>
+<span class="nc" id="L137">		return quark.getData();</span>
+	}
+
+	public Entity getHistorical(LineLocation location, String idShort) {
+<span class="nc" id="L141">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="nc" id="L142">		gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.STATE);</span>
+<span class="nc" id="L143">		final Entity g = getCurrentGroup();</span>
+<span class="nc" id="L144">		final String tmp = &quot;*historical*&quot; + g.getName();</span>
+<span class="nc" id="L145">		final Quark&lt;Entity&gt; ident = quarkInContext(true, tmp);</span>
+		final Entity result;
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (ident.getData() == null)</span>
+<span class="nc" id="L148">			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.PSEUDO_STATE, null);</span>
+		else
+<span class="nc" id="L150">			result = ident.getData();</span>
+<span class="nc" id="L151">		endGroup();</span>
+<span class="nc" id="L152">		return result;</span>
+	}
+
+	public Entity getDeepHistory(LineLocation location) {
+<span class="nc" id="L156">		final Entity g = getCurrentGroup();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (g.isRoot()) {</span>
+<span class="nc" id="L158">			final String idShort = &quot;*deephistory*&quot;;</span>
+<span class="nc" id="L159">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (quark.getData() == null)</span>
+<span class="nc" id="L161">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.DEEP_HISTORY, null);</span>
+<span class="nc" id="L162">			return quark.getData();</span>
+		}
+
+<span class="nc" id="L165">		final String idShort = &quot;*deephistory*&quot; + g.getName();</span>
+<span class="nc" id="L166">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="nc" id="L168">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.DEEP_HISTORY, null);</span>
+<span class="nc" id="L169">		return quark.getData();</span>
+
+	}
+
+	public Entity getDeepHistory(LineLocation location, String idShort) {
+<span class="nc" id="L174">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+
+<span class="nc" id="L176">		gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.STATE);</span>
+<span class="nc" id="L177">		final Entity g = getCurrentGroup();</span>
+<span class="nc" id="L178">		final String tmp = &quot;*deephistory*&quot; + g.getName();</span>
+<span class="nc" id="L179">		final Quark&lt;Entity&gt; ident = quarkInContext(true, cleanId(tmp));</span>
+		final Entity result;
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (ident.getData() == null)</span>
+<span class="nc" id="L182">			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.DEEP_HISTORY, null);</span>
+		else
+<span class="nc" id="L184">			result = ident.getData();</span>
+<span class="nc" id="L185">		endGroup();</span>
+<span class="nc" id="L186">		return result;</span>
+	}
+
+	public boolean concurrentState(LineLocation location, char direction, ParserPass currentPass) {
+<span class="nc" id="L190">		final Entity cur = getCurrentGroup();</span>
+<span class="nc" id="L191">		getCurrentGroup().setConcurrentSeparator(direction);</span>
+
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L194">			super.endGroup();</span>
+
+<span class="nc" id="L196">		final String tmp1 = this.getUniqueSequence2(CONCURRENT_PREFIX);</span>
+<span class="nc" id="L197">		final Quark&lt;Entity&gt; ident1 = quarkInContext(true, cleanId(tmp1));</span>
+
+<span class="nc" id="L199">		gotoGroup(location, ident1, Display.create(&quot;&quot;), GroupType.CONCURRENT_STATE);</span>
+<span class="nc" id="L200">		getCurrentGroup().setConcurrentSeparator(direction);</span>
+
+<span class="nc" id="L202">		return true;</span>
+	}
+
+	@Override
+	public boolean endGroup() {
+<span class="fc" id="L207">		final Entity cur = getCurrentGroup();</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L209">			super.endGroup();</span>
+
+<span class="fc" id="L211">		return super.endGroup();</span>
+	}
+
+<span class="fc" id="L214">	private boolean hideEmptyDescription = false;</span>
+
+	@Override
+	public final void setHideEmptyDescription(boolean hideEmptyDescription) {
+<span class="nc" id="L218">		this.hideEmptyDescription = hideEmptyDescription;</span>
+<span class="nc" id="L219">	}</span>
+
+	@Override
+	public final boolean isHideEmptyDescriptionForState() {
+<span class="fc" id="L223">		return hideEmptyDescription;</span>
+	}
+
+	@Override
+	public String checkFinalError() {
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
+<span class="fc" id="L229">			final Entity parent1 = getGroupParentIfItIsConcurrentState(link.getEntity1());</span>
+<span class="fc" id="L230">			final Entity parent2 = getGroupParentIfItIsConcurrentState(link.getEntity2());</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">			if (isCompatible(parent1, parent2) == false)</span>
+<span class="nc" id="L232">				return &quot;State within concurrent state cannot be linked out of this concurrent state (between &quot;</span>
+<span class="nc" id="L233">						+ link.getEntity1().getName() + &quot; and &quot; + link.getEntity2().getName() + &quot;)&quot;;</span>
+
+<span class="fc" id="L235">		}</span>
+<span class="fc" id="L236">		return super.checkFinalError();</span>
+	}
+
+	private static boolean isCompatible(Entity parent1, Entity parent2) {
+<span class="pc bpc" id="L240" title="2 of 4 branches missed.">		if (parent1 == null &amp;&amp; parent2 == null)</span>
+<span class="fc" id="L241">			return true;</span>
+
+<span class="nc bnc" id="L243" title="All 6 branches missed.">		if (parent1 != null ^ parent2 != null)</span>
+<span class="nc" id="L244">			return false;</span>
+
+<span class="nc bnc" id="L246" title="All 4 branches missed.">		assert parent1 != null &amp;&amp; parent2 != null;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		return parent1 == parent2;</span>
+	}
+
+	private static Entity getGroupParentIfItIsConcurrentState(Entity ent) {
+<span class="fc" id="L251">		Entity parent = ent.getParentContainer();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		while (parent != null) {</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">			if (parent.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L254">				return parent;</span>
+
+<span class="fc" id="L256">			parent = parent.getParentContainer();</span>
+		}
+<span class="fc" id="L258">		return null;</span>
+
+	}
+
+	public void ensureParentState(LineLocation location, Quark&lt;Entity&gt; current) {
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		while (current != null) {</span>
+<span class="fc" id="L264">			final Quark&lt;Entity&gt; parent = current.getParent();</span>
+
+<span class="pc bpc" id="L266" title="2 of 4 branches missed.">			if (parent == null || parent.getData() != null)</span>
+<span class="fc" id="L267">				return;</span>
+
+<span class="nc" id="L269">			final Entity parentGroup = this.createGroup(location, parent, GroupType.STATE);</span>
+<span class="nc" id="L270">			parentGroup.setDisplay(Display.getWithNewlines(parent));</span>
+
+<span class="nc" id="L272">			current = parent;</span>
+<span class="nc" id="L273">		}</span>
+<span class="nc" id="L274">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

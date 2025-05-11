@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberAnalyzed2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.api</a> &gt; <span class="el_source">NumberAnalyzed2.java</span></div><h1>NumberAnalyzed2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License aint with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ */
+package net.sourceforge.plantuml.api;
+
+import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.prefs.Preferences;
+
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
+
+public class NumberAnalyzed2 implements INumberAnalyzed {
+    // ::remove folder when __HAXE__
+
+	private static final int SLIDING_WINDOW = 512;
+
+<span class="nc" id="L43">	private final AtomicLong nb = new AtomicLong();</span>
+<span class="nc" id="L44">	private final AtomicLong sum = new AtomicLong();</span>
+<span class="nc" id="L45">	private final AtomicLong min = new AtomicLong();</span>
+<span class="nc" id="L46">	private final AtomicLong max = new AtomicLong();</span>
+<span class="nc" id="L47">	private final AtomicLong sumOfSquare = new AtomicLong();</span>
+	// See https://fossies.org/linux/haproxy/include/proto/freq_ctr.h
+<span class="nc" id="L49">	private final AtomicLong sliddingSum = new AtomicLong();</span>
+	private final String name;
+
+<span class="nc" id="L52">	public NumberAnalyzed2(String name) {</span>
+<span class="nc" id="L53">		this.name = name;</span>
+<span class="nc" id="L54">	}</span>
+
+	public void reset() {
+<span class="nc" id="L57">		this.nb.set(0);</span>
+<span class="nc" id="L58">		this.sum.set(0);</span>
+<span class="nc" id="L59">		this.min.set(0);</span>
+<span class="nc" id="L60">		this.max.set(0);</span>
+<span class="nc" id="L61">		this.sumOfSquare.set(0);</span>
+<span class="nc" id="L62">		this.sliddingSum.set(0);</span>
+<span class="nc" id="L63">	}</span>
+
+	public NumberAnalyzed2() {
+<span class="nc" id="L66">		this(&quot;&quot;);</span>
+<span class="nc" id="L67">	}</span>
+
+	public final void save(Preferences prefs) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (name.length() == 0) {</span>
+<span class="nc" id="L71">			throw new UnsupportedOperationException();</span>
+		}
+<span class="nc" id="L73">		prefs.put(name + &quot;.saved&quot;, getSavedString());</span>
+<span class="nc" id="L74">	}</span>
+
+	protected String getSavedString() {
+<span class="nc" id="L77">		final String value = longToString(nb) + &quot;;&quot; + longToString(sum) + &quot;;&quot; + longToString(min) + &quot;;&quot;</span>
+<span class="nc" id="L78">				+ longToString(max) + &quot;;&quot; + longToString(sumOfSquare) + &quot;;&quot; + longToString(sliddingSum);</span>
+<span class="nc" id="L79">		return value;</span>
+	}
+
+	protected final String longToString(AtomicLong val) {
+<span class="nc" id="L83">		return Long.toString(val.get(), 36);</span>
+	}
+
+	public static NumberAnalyzed2 load(String name, Preferences prefs) {
+<span class="nc" id="L87">		final String value = prefs.get(name + &quot;.saved&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (value.length() == 0) {</span>
+<span class="nc" id="L89">			System.err.println(&quot;Cannot load &quot; + name);</span>
+<span class="nc" id="L90">			return null;</span>
+		}
+		try {
+<span class="nc" id="L93">			final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
+<span class="nc" id="L94">			return new NumberAnalyzed2(name, Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36),</span>
+<span class="nc" id="L95">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36),</span>
+<span class="nc" id="L96">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36));</span>
+<span class="nc" id="L97">		} catch (Exception e) {</span>
+<span class="nc" id="L98">			Logme.error(e);</span>
+<span class="nc" id="L99">			Log.info(&quot;Error reading &quot; + value);</span>
+<span class="nc" id="L100">			return null;</span>
+		}
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L106">		return &quot;sum=&quot; + sum + &quot; nb=&quot; + nb + &quot; min=&quot; + min + &quot; max=&quot; + max + &quot; mean=&quot; + getMean();</span>
+	}
+
+	protected NumberAnalyzed2(String name, long nb, long sum, long min, long max, long sumOfSquare, long sliddingSum) {
+<span class="nc" id="L110">		this(name);</span>
+<span class="nc" id="L111">		this.nb.set(nb);</span>
+<span class="nc" id="L112">		this.sum.set(sum);</span>
+<span class="nc" id="L113">		this.min.set(min);</span>
+<span class="nc" id="L114">		this.max.set(max);</span>
+<span class="nc" id="L115">		this.sumOfSquare.set(sumOfSquare);</span>
+<span class="nc" id="L116">		this.sliddingSum.set(sliddingSum);</span>
+<span class="nc" id="L117">	}</span>
+
+	public INumberAnalyzed getCopyImmutable() {
+<span class="nc" id="L120">		final NumberAnalyzed2 copy = new NumberAnalyzed2(name, nb.get(), sum.get(), min.get(), max.get(),</span>
+<span class="nc" id="L121">				sumOfSquare.get(), sliddingSum.get());</span>
+<span class="nc" id="L122">		return copy;</span>
+	}
+
+	public void addValue(long v) {
+<span class="nc" id="L126">		nb.incrementAndGet();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (nb.get() == 1) {</span>
+<span class="nc" id="L128">			min.set(v);</span>
+<span class="nc" id="L129">			max.set(v);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (v &gt; max.get()) {</span>
+<span class="nc" id="L131">			max.set(v);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		} else if (v &lt; min.get()) {</span>
+<span class="nc" id="L133">			min.set(v);</span>
+		}
+<span class="nc" id="L135">		sum.addAndGet(v);</span>
+<span class="nc" id="L136">		sumOfSquare.addAndGet(v * v);</span>
+<span class="nc" id="L137">		sliddingSum.set(sliddingSum.get() * (SLIDING_WINDOW - 1) / SLIDING_WINDOW + v);</span>
+<span class="nc" id="L138">	}</span>
+
+	public void add(NumberAnalyzed2 other) {
+<span class="nc" id="L141">		this.sum.addAndGet(other.sum.get());</span>
+<span class="nc" id="L142">		this.nb.addAndGet(other.nb.get());</span>
+<span class="nc" id="L143">		this.min.set(Math.min(this.min.get(), other.min.get()));</span>
+<span class="nc" id="L144">		this.max.set(Math.max(this.max.get(), other.max.get()));</span>
+<span class="nc" id="L145">	}</span>
+
+	public final long getNb() {
+<span class="nc" id="L148">		return nb.get();</span>
+	}
+
+	public final long getSum() {
+<span class="nc" id="L152">		return sum.get();</span>
+	}
+
+	public final long getMin() {
+<span class="nc" id="L156">		return min.get();</span>
+	}
+
+	public final long getMax() {
+<span class="nc" id="L160">		return max.get();</span>
+	}
+
+	public final long getMean() {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (nb.get() == 0) {</span>
+<span class="nc" id="L165">			return 0;</span>
+		}
+		// Bad
+<span class="nc" id="L168">		return sum.get() / nb.get();</span>
+	}
+
+	public final long getSliddingMean() {
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (nb.get() == 0) {</span>
+<span class="nc" id="L173">			return 0;</span>
+		}
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (nb.get() &lt; SLIDING_WINDOW) {</span>
+<span class="nc" id="L176">			return sum.get() / nb.get();</span>
+		}
+		// Bad
+<span class="nc" id="L179">		return sliddingSum.get() / nb.get();</span>
+	}
+
+	final public String getName() {
+<span class="nc" id="L183">		return name;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

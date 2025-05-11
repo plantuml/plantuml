@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>solvers__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.pathplan</a> &gt; <span class="el_source">solvers__c.java</span></div><h1>solvers__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.pathplan;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+
+<span class="nc" id="L53">public class solvers__c {</span>
+
+
+//3 2rap7a11ad4ugnphkh9gbn4xl
+// int solve3(double *coeff, double *roots) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/solvers.c&quot;, name=&quot;solve3&quot;, key=&quot;2rap7a11ad4ugnphkh9gbn4xl&quot;, definition=&quot;int solve3(double *coeff, double *roots)&quot;)
+public static int solve3(double coeff[], double roots[]) {
+<span class="fc" id="L61">ENTERING(&quot;2rap7a11ad4ugnphkh9gbn4xl&quot;,&quot;solve3&quot;);</span>
+try {
+    double a, b, c, d;
+    int rootn, i;
+    double p, q, disc, b_over_3a, c_over_a, d_over_a;
+    double r, theta, temp, alpha, beta;
+<span class="fc" id="L67">    a = coeff[3]; b = coeff[2]; c = coeff[1]; d = coeff[0];</span>
+<span class="fc bfc" id="L68" title="All 4 branches covered.">    if ((((a) &lt; 1E-7) &amp;&amp; ((a) &gt; -1E-7)))</span>
+<span class="fc" id="L69">	return solve2(coeff, roots);</span>
+<span class="fc" id="L70">    b_over_3a = b / (3 * a);</span>
+<span class="fc" id="L71">    c_over_a = c / a;</span>
+<span class="fc" id="L72">    d_over_a = d / a;</span>
+<span class="fc" id="L73">    p = b_over_3a * b_over_3a;</span>
+<span class="fc" id="L74">    q = 2 * b_over_3a * p - b_over_3a * c_over_a + d_over_a;</span>
+<span class="fc" id="L75">    p = c_over_a / 3 - p;</span>
+<span class="fc" id="L76">    disc = q * q + 4 * p * p * p;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">    if (disc &lt; 0) {</span>
+<span class="fc" id="L78">	r = .5 * Math.sqrt(-disc + q * q);</span>
+<span class="fc" id="L79">	theta = Math.atan2(Math.sqrt(-disc), -q);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">	temp = 2 * ((r &lt; 0) ? (-1*Math.pow(-r, 1.0/3.0)) : Math.pow(r, 1.0/3.0));</span>
+<span class="fc" id="L81">	roots[0] = temp * Math.cos(theta / 3);</span>
+<span class="fc" id="L82">	roots[1] = temp * Math.cos((theta + 3.14159265358979323846 + 3.14159265358979323846) / 3);</span>
+<span class="fc" id="L83">	roots[2] = temp * Math.cos((theta - 3.14159265358979323846 - 3.14159265358979323846) / 3);</span>
+<span class="fc" id="L84">	rootn = 3;</span>
+    } else {
+<span class="fc" id="L86">	alpha = .5 * (Math.sqrt(disc) - q);</span>
+<span class="fc" id="L87">	beta = -q - alpha;</span>
+<span class="fc bfc" id="L88" title="All 4 branches covered.">	roots[0] = ((alpha &lt; 0) ? (-1*Math.pow(-alpha, 1.0/3.0)) : Math.pow(alpha, 1.0/3.0)) + ((beta &lt; 0) ? (-1*Math.pow(-beta, 1.0/3.0)) : Math.pow(beta, 1.0/3.0));</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">	if (disc &gt; 0)</span>
+<span class="fc" id="L90">	    rootn = 1;</span>
+	else
+<span class="fc" id="L92">	    {roots[1] = roots[2] = -.5 * roots[0]; rootn = 3;}</span>
+    }
+<span class="fc bfc" id="L94" title="All 2 branches covered.">    for (i = 0; i &lt; rootn; i++)</span>
+<span class="fc" id="L95">	roots[i] -= b_over_3a;</span>
+<span class="fc" id="L96">    return rootn;</span>
+} finally {
+<span class="fc" id="L98">LEAVING(&quot;2rap7a11ad4ugnphkh9gbn4xl&quot;,&quot;solve3&quot;);</span>
+}
+}
+
+
+
+
+//3 9b5238tdddphds1x726z0osdm
+// int solve2(double *coeff, double *roots) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/solvers.c&quot;, name=&quot;solve2&quot;, key=&quot;9b5238tdddphds1x726z0osdm&quot;, definition=&quot;int solve2(double *coeff, double *roots)&quot;)
+public static int solve2(double coeff[], double roots[]) {
+<span class="fc" id="L110">ENTERING(&quot;9b5238tdddphds1x726z0osdm&quot;,&quot;solve2&quot;);</span>
+try {
+    double a, b, c;
+    double disc, b_over_2a, c_over_a;
+<span class="fc" id="L114">    a = coeff[2]; b = coeff[1]; c = coeff[0];</span>
+<span class="pc bpc" id="L115" title="1 of 4 branches missed.">    if ((((a) &lt; 1E-7) &amp;&amp; ((a) &gt; -1E-7)))</span>
+<span class="fc" id="L116">	return solve1(coeff, roots);</span>
+<span class="fc" id="L117">    b_over_2a = b / (2 * a);</span>
+<span class="fc" id="L118">    c_over_a = c / a;</span>
+<span class="fc" id="L119">    disc = b_over_2a * b_over_2a - c_over_a;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">    if (disc &lt; 0)</span>
+<span class="fc" id="L121">	return 0;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">    else if (disc == 0) {</span>
+<span class="nc" id="L123">	roots[0] = -b_over_2a;</span>
+<span class="nc" id="L124">	return 1;</span>
+    } else {
+<span class="fc" id="L126">	roots[0] = -b_over_2a + Math.sqrt(disc);</span>
+<span class="fc" id="L127">	roots[1] = -2 * b_over_2a - roots[0];</span>
+<span class="fc" id="L128">	return 2;</span>
+    }
+} finally {
+<span class="fc" id="L131">LEAVING(&quot;9b5238tdddphds1x726z0osdm&quot;,&quot;solve2&quot;);</span>
+}
+}
+
+
+
+
+//3 8xtqt7j6wyxc1b6tj0qtcu1rd
+// int solve1(double *coeff, double *roots) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/solvers.c&quot;, name=&quot;solve1&quot;, key=&quot;8xtqt7j6wyxc1b6tj0qtcu1rd&quot;, definition=&quot;int solve1(double *coeff, double *roots)&quot;)
+public static int solve1(double coeff[], double roots[]) {
+<span class="fc" id="L143">ENTERING(&quot;8xtqt7j6wyxc1b6tj0qtcu1rd&quot;,&quot;solve1&quot;);</span>
+try {
+    double a, b;
+<span class="fc" id="L146">    a = coeff[1]; b = coeff[0];</span>
+<span class="pc bpc" id="L147" title="2 of 4 branches missed.">    if ((((a) &lt; 1E-7) &amp;&amp; ((a) &gt; -1E-7))) {</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">	if ((((b) &lt; 1E-7) &amp;&amp; ((b) &gt; -1E-7)))</span>
+<span class="nc" id="L149">	    return 4;</span>
+	else
+<span class="fc" id="L151">	    return 0;</span>
+    }
+<span class="nc" id="L153">    roots[0] = -b / a;</span>
+<span class="nc" id="L154">    return 1;</span>
+} finally {
+<span class="fc" id="L156">LEAVING(&quot;8xtqt7j6wyxc1b6tj0qtcu1rd&quot;,&quot;solve1&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

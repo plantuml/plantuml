@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandFactoryNote.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command.note</a> &gt; <span class="el_source">CommandFactoryNote.java</span></div><h1>CommandFactoryNote.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command.note;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+<span class="fc" id="L64">public final class CommandFactoryNote implements SingleMultiFactoryCommand&lt;AbstractEntityDiagram&gt; {</span>
+	// ::remove folder when __HAXE__
+
+	private IRegex getRegexConcatMultiLine() {
+<span class="fc" id="L68">		return RegexConcat.build(CommandFactoryNote.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				new RegexLeaf(&quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L76">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L77">				ColorParser.exp1(), //</span>
+<span class="fc" id="L78">				RegexLeaf.end() //</span>
+		);
+	}
+
+	private IRegex getRegexConcatSingleLine() {
+<span class="fc" id="L83">		return RegexConcat.build(CommandFactoryNote.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L85">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;[%g]&quot;), //
+				new RegexLeaf(&quot;DISPLAY&quot;, &quot;([^%g]+)&quot;), //
+				new RegexLeaf(&quot;[%g]&quot;), //
+<span class="fc" id="L89">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L91">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
+<span class="fc" id="L93">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L94">				new RegexLeaf(&quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L95">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L96">				ColorParser.exp1(), //</span>
+<span class="fc" id="L97">				RegexLeaf.end() //</span>
+		);
+
+	}
+
+	public Command&lt;AbstractEntityDiagram&gt; createSingleLine() {
+<span class="fc" id="L103">		return new SingleLineCommand2&lt;AbstractEntityDiagram&gt;(getRegexConcatSingleLine()) {</span>
+
+			@Override
+			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
+					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
+<span class="nc" id="L108">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc" id="L109">				return executeInternal(location, diagram, arg, display);</span>
+			}
+
+		};
+	}
+
+	public Command&lt;AbstractEntityDiagram&gt; createMultiLine(boolean withBracket) {
+<span class="fc" id="L116">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(getRegexConcatMultiLine(),</span>
+<span class="fc" id="L117">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
+
+			@Override
+			public String getPatternEnd() {
+<span class="fc" id="L121">				return &quot;^[%s]*end[%s]?note$&quot;;</span>
+			}
+
+			@Override
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram diagram, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
+				// StringUtils.trim(lines, false);
+<span class="fc" id="L128">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L129">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L130">				lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L131">				final Display display = lines.toDisplay();</span>
+<span class="fc" id="L132">				return executeInternal(lines.getLocation(), diagram, line0, display);</span>
+			}
+		};
+	}
+
+	private CommandExecutionResult executeInternal(LineLocation location, AbstractEntityDiagram diagram, RegexResult arg, Display display)
+			throws NoSuchColorException {
+<span class="fc" id="L139">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L140">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
+
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L143">			return CommandExecutionResult.error(&quot;Note already created: &quot; + quark.getName());</span>
+
+<span class="fc" id="L145">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);</span>
+
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		assert entity != null;</span>
+<span class="fc" id="L148">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L149">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="fc" id="L151">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L152">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
+<span class="nc" id="L154">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L155">			entity.setStereotype(stereotype);</span>
+		}
+
+<span class="fc" id="L158">		CommandCreateClassMultilines.addTags(entity, arg.get(&quot;TAGS&quot;, 0));</span>
+<span class="fc" id="L159">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

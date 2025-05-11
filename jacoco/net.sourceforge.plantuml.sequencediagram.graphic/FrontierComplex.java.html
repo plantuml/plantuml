@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrontierComplex.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">FrontierComplex.java</span></div><h1>FrontierComplex.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.Arrays;
+import java.util.Objects;
+
+class FrontierComplex implements Frontier {
+
+	private final double freeY[];
+
+	public static FrontierComplex create(double freeY, int rangeEnd) {
+<span class="fc" id="L46">		final FrontierComplex result = new FrontierComplex(new double[rangeEnd + 1]);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		for (int i = 0; i &lt;= rangeEnd; i++)</span>
+<span class="fc" id="L48">			result.freeY[i] = freeY;</span>
+
+<span class="fc" id="L50">		return result;</span>
+	}
+
+<span class="fc" id="L53">	private FrontierComplex(double freeY[]) {</span>
+<span class="fc" id="L54">		this.freeY = freeY;</span>
+<span class="fc" id="L55">	}</span>
+
+	public double getFreeY(ParticipantRange range) {
+<span class="fc" id="L58">		Objects.requireNonNull(range);</span>
+<span class="fc" id="L59">		double result = freeY[range.start()];</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (int i = range.start(); i &lt;= range.end(); i++)</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (freeY[i] &gt; result)</span>
+<span class="nc" id="L62">				result = freeY[i];</span>
+
+<span class="fc" id="L64">		return result;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L69">		return Arrays.toString(freeY);</span>
+	}
+
+	public FrontierComplex add(double delta, ParticipantRange range) {
+<span class="fc" id="L73">		Objects.requireNonNull(range);</span>
+<span class="fc" id="L74">		final FrontierComplex result = new FrontierComplex(freeY.clone());</span>
+<span class="fc" id="L75">		final double newV = result.getFreeY(range) + delta;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		for (int i = range.start(); i &lt;= range.end(); i++)</span>
+<span class="fc" id="L77">			result.freeY[i] = newV;</span>
+<span class="fc" id="L78">		return result;</span>
+	}
+
+	FrontierComplex copy() {
+<span class="nc" id="L82">		return new FrontierComplex(freeY.clone());</span>
+	}
+
+	FrontierComplex mergeMax(FrontierComplex other) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (this.freeY.length != other.freeY.length)</span>
+<span class="nc" id="L87">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L89">		final FrontierComplex result = new FrontierComplex(new double[freeY.length]);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (int i = 0; i &lt; freeY.length; i++)</span>
+<span class="nc" id="L91">			result.freeY[i] = Math.max(this.freeY[i], other.freeY[i]);</span>
+
+<span class="nc" id="L93">		return result;</span>
+	}
+
+	// public double diff(Frontier other) {
+	// return freeY - other.freeY;
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

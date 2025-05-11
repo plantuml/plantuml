@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataPlot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.data</a> &gt; <span class="el_source">DataPlot.java</span></div><h1>DataPlot.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.data;
+
+import java.util.StringTokenizer;
+
+import jcckit.util.ConfigParameters;
+
+/**
+ *  A plot is a {@link DataContainer} of {@link DataCurve DataCurves}.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class DataPlot extends DataContainer {
+  /** Config parameter key. */
+  public static final String CURVES_KEY = &quot;curves&quot;,
+                             DATA_KEY = &quot;data&quot;;
+
+  /** Creates an empty instance. */
+<span class="nc" id="L36">  public DataPlot() {}</span>
+
+  /**
+   * Creates an instance from the specified config parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;curves&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;String[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;yes&lt;/td&gt;
+   *     &lt;td&gt;List of keys denoting data curves. Each key refers to
+   *         config parameters used in the 
+   *         &lt;a href=&quot;DataCurve.html#DataCurve(jcckit.util.ConfigParameters)&quot;&gt;
+   *         constructor&lt;/a&gt; of {@link DataCurve}.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+<span class="nc" id="L50">  public DataPlot(ConfigParameters config) {</span>
+<span class="nc" id="L51">    StringTokenizer tokenizer = new StringTokenizer(config.get(CURVES_KEY));</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">    while (tokenizer.hasMoreTokens()) {</span>
+<span class="nc" id="L53">      addElement(new DataCurve(config.getNode(tokenizer.nextToken())));</span>
+    }
+<span class="nc" id="L55">  }</span>
+
+  /**
+   * Convenient method to create a &lt;tt&gt;DataPlot&lt;/tt&gt; based on the specified
+   * config parameters. It is a short-cut of 
+   * &lt;tt&gt;new DataPlot(config.getNode(&quot;data&quot;))&lt;/tt&gt;.
+   */
+  public static DataPlot create(ConfigParameters config) {
+<span class="nc" id="L63">    return new DataPlot(config.getNode(DATA_KEY));</span>
+  }
+
+  /** 
+   * Returns &lt;tt&gt;true&lt;/tt&gt; if &lt;tt&gt;element&lt;/tt&gt; is an instance of
+   * {@link DataCurve}.
+   */
+  protected boolean isValid(DataElement element) {
+<span class="nc" id="L71">    return element instanceof DataCurve;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

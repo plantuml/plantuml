@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandCreateElementParenthesis.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram.command</a> &gt; <span class="el_source">CommandCreateElementParenthesis.java</span></div><h1>CommandCreateElementParenthesis.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.descdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandCreateElementParenthesis extends SingleLineCommand2&lt;ClassDiagram&gt; {
+
+	public CommandCreateElementParenthesis() {
+<span class="fc" id="L70">		super(getRegexConcat());</span>
+<span class="fc" id="L71">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L74">		return RegexConcat.build(CommandCreateElementParenthesis.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;\\(\\)[%s]+&quot;), //
+<span class="fc" id="L76">				color2().getRegex(), //</span>
+<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOr(//
+						new RegexLeaf(&quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
+								new RegexOptional( //
+										new RegexConcat( //
+<span class="fc" id="L84">												RegexLeaf.spaceOneOrMore(), //</span>
+												new RegexLeaf(&quot;STEREOTYPE2&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;)//
+										)), //
+<span class="fc" id="L87">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L89">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE2&quot;, CommandCreateElementFull.CODE)), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;CODE3&quot;, CommandCreateElementFull.CODE), //
+								new RegexOptional( //
+										new RegexConcat( //
+<span class="fc" id="L95">												RegexLeaf.spaceOneOrMore(), //</span>
+												new RegexLeaf(&quot;STEREOTYPE3&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+										)), //
+<span class="fc" id="L98">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L100">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;DISPLAY3&quot;, CommandCreateElementFull.DISPLAY)), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;DISPLAY4&quot;, CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
+								new RegexOptional( //
+										new RegexConcat( //
+<span class="fc" id="L106">												RegexLeaf.spaceOneOrMore(), //</span>
+												new RegexLeaf(&quot;STEREOTYPE4&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+										)), //
+<span class="fc" id="L109">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L111">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE4&quot;, CommandCreateElementFull.CODE)) //
+				), //
+				new RegexOptional( //
+						new RegexConcat( //
+<span class="fc" id="L116">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;STEREOTYPE&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+						)), //
+<span class="fc" id="L119">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L121">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L122">				color().getRegex(), RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L126">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	private static ColorParser color2() {
+<span class="fc" id="L130">		return ColorParser.simpleColor(ColorType.BACK, &quot;COLOR2&quot;);</span>
+	}
+
+	@Override
+	final protected boolean isForbidden(CharSequence line) {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (line.toString().matches(&quot;^[\\p{L}0-9_.]+$&quot;)) {</span>
+<span class="nc" id="L136">			return true;</span>
+		}
+<span class="nc" id="L138">		return false;</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L144">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L145">		final String displayRaw = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L146">		final String symbol = &quot;interface&quot;;</span>
+		final LeafType type;
+		final USymbol usymbol;
+
+<span class="nc" id="L150">		type = LeafType.DESCRIPTION;</span>
+<span class="nc" id="L151">		usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
+
+<span class="nc" id="L153">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L155">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
+
+<span class="nc" id="L157">		String display = displayRaw;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (display == null)</span>
+<span class="nc" id="L159">			display = quark.getName();</span>
+
+<span class="nc" id="L161">		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);</span>
+<span class="nc" id="L162">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))</span>
+<span class="nc" id="L164">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
+
+<span class="nc" id="L166">		final Entity entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);</span>
+<span class="nc" id="L167">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L170">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L171">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L172">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+
+<span class="nc" id="L174">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L176">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L177">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L178">			entity.addUrl(url);</span>
+		}
+
+<span class="nc" id="L181">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L182">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (lineColor != null)</span>
+<span class="nc" id="L186">			colors = colors.add(ColorType.LINE, lineColor);</span>
+
+<span class="nc" id="L188">		entity.setColors(colors);</span>
+
+		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(&quot;COLOR&quot;,
+		// 0)));
+<span class="nc" id="L193">		return CommandExecutionResult.ok();</span>
+	}
+
+	private char getCharEncoding(final String codeRaw) {
+<span class="nc bnc" id="L197" title="All 4 branches missed.">		return codeRaw != null &amp;&amp; codeRaw.length() &gt; 2 ? codeRaw.charAt(0) : 0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParseException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">ParseException.java</span></div><h1>ParseException.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+/**
+ * An unchecked exception to indicate that an input does not qualify as valid
+ * JSON.
+ */
+@SuppressWarnings(&quot;serial&quot;) // use default serial UID
+public class ParseException extends RuntimeException {
+
+	private final Location location;
+
+	ParseException(String message, Location location) {
+<span class="fc" id="L37">		super(message + &quot; at &quot; + location);</span>
+<span class="fc" id="L38">		this.location = location;</span>
+<span class="fc" id="L39">	}</span>
+
+	/**
+	 * Returns the location at which the error occurred.
+	 *
+	 * @return the error location
+	 */
+	public Location getLocation() {
+<span class="nc" id="L47">		return location;</span>
+	}
+
+	/**
+	 * Returns the absolute character index at which the error occurred. The offset
+	 * of the first character of a document is 0.
+	 *
+	 * @return the character offset at which the error occurred, will be &amp;gt;= 0
+	 * @deprecated Use {@link #getLocation()} instead
+	 */
+	@Deprecated
+	public int getOffset() {
+<span class="nc" id="L59">		return location.offset;</span>
+	}
+
+	/**
+	 * Returns the line number in which the error occurred. The number of the first
+	 * line is 1.
+	 *
+	 * @return the line in which the error occurred, will be &amp;gt;= 1
+	 * @deprecated Use {@link #getLocation()} instead
+	 */
+	@Deprecated
+	public int getLine() {
+<span class="nc" id="L71">		return location.line;</span>
+	}
+
+	/**
+	 * Returns the column number at which the error occurred, i.e. the number of the
+	 * character in its line. The number of the first character of a line is 1.
+	 *
+	 * @return the column in which the error occurred, will be &amp;gt;= 1
+	 * @deprecated Use {@link #getLocation()} instead
+	 */
+	@Deprecated
+	public int getColumn() {
+<span class="nc" id="L83">		return location.column;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

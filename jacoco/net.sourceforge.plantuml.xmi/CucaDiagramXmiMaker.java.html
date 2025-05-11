@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CucaDiagramXmiMaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xmi</a> &gt; <span class="el_source">CucaDiagramXmiMaker.java</span></div><h1>CucaDiagramXmiMaker.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.xmi;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.utils.Log;
+
+public final class CucaDiagramXmiMaker {
+	// ::remove folder when __CORE__
+
+	private final CucaDiagram diagram;
+	private final FileFormat fileFormat;
+
+<span class="fc" id="L59">	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {</span>
+<span class="fc" id="L60">		this.diagram = diagram;</span>
+<span class="fc" id="L61">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L62">	}</span>
+
+	public static String getModel(UmlDiagram classDiagram) {
+<span class="fc" id="L65">		return &quot;model1&quot;;</span>
+	}
+
+	public void createFiles(OutputStream fos) throws IOException {
+		try {
+			final XmlDiagramTransformer xmi;
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			if (diagram instanceof StateDiagram)</span>
+<span class="nc" id="L72">				xmi = createStateDiagram();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			else if (diagram instanceof DescriptionDiagram)</span>
+<span class="fc" id="L74">				xmi = createDescriptionDiagram();</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			else if (diagram instanceof ClassDiagram)</span>
+<span class="fc" id="L76">				xmi = createClassDiagram();</span>
+			else
+<span class="nc" id="L78">				throw new UnsupportedOperationException(</span>
+<span class="nc" id="L79">						&quot;Diagram type &quot; + diagram.getUmlDiagramType() + &quot; is not supported in XMI&quot;);</span>
+
+<span class="fc" id="L81">			xmi.transformerXml(fos);</span>
+<span class="nc" id="L82">		} catch (ParserConfigurationException e) {</span>
+<span class="nc" id="L83">			Log.error(e.toString());</span>
+<span class="nc" id="L84">			Logme.error(e);</span>
+<span class="nc" id="L85">			throw new IOException(e.toString());</span>
+<span class="nc" id="L86">		} catch (TransformerException e) {</span>
+<span class="nc" id="L87">			Log.error(e.toString());</span>
+<span class="nc" id="L88">			Logme.error(e);</span>
+<span class="nc" id="L89">			throw new IOException(e.toString());</span>
+<span class="fc" id="L90">		}</span>
+<span class="fc" id="L91">	}</span>
+
+	private XmlDiagramTransformer createStateDiagram() throws ParserConfigurationException {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (fileFormat == FileFormat.XMI_CUSTOM) {</span>
+<span class="nc" id="L95">			return new XmiCucaDiagramCustom&lt;&gt;(XmiStateDiagramCustom.class, diagram);</span>
+		} else {
+<span class="nc" id="L97">			return new XmiStateDiagram((StateDiagram) diagram);</span>
+		}
+	}
+
+	private XmlDiagramTransformer createClassDiagram() throws ParserConfigurationException {
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.XMI_STANDARD)</span>
+<span class="nc" id="L103">			return new XmiClassDiagramStandard((ClassDiagram) diagram);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		else if (fileFormat == FileFormat.XMI_ARGO)</span>
+<span class="fc" id="L105">			return new XmiClassDiagramArgo((ClassDiagram) diagram);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		else if (fileFormat == FileFormat.XMI_SCRIPT)</span>
+<span class="fc" id="L107">			return new XmiClassDiagramScript((ClassDiagram) diagram);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		else if (fileFormat == FileFormat.XMI_STAR)</span>
+<span class="fc" id="L109">			return new XmiClassDiagramStar((ClassDiagram) diagram);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		else if (fileFormat == FileFormat.XMI_CUSTOM)</span>
+<span class="nc" id="L111">			return new XmiCucaDiagramCustom&lt;&gt;(XmiClassDiagramCustom.class, diagram);</span>
+		else
+<span class="nc" id="L113">			throw new UnsupportedOperationException();</span>
+	}
+
+	private XmlDiagramTransformer createDescriptionDiagram() throws ParserConfigurationException {
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (fileFormat == FileFormat.XMI_SCRIPT) {</span>
+<span class="fc" id="L118">			return new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		} else if (fileFormat == FileFormat.XMI_CUSTOM) {</span>
+<span class="nc" id="L120">			return new XmiCucaDiagramCustom&lt;&gt;(XmiDescriptionDiagramCustom.class, diagram);</span>
+		} else {
+			// dont care about which file format is specified, to keep backwards
+			// compatibility
+<span class="fc" id="L124">			return new XmiDescriptionDiagramStandard((DescriptionDiagram) diagram);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

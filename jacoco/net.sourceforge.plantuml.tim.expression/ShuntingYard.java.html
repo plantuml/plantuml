@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShuntingYard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim.expression</a> &gt; <span class="el_source">ShuntingYard.java</span></div><h1>ShuntingYard.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim.expression;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+
+// https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+// https://en.cppreference.com/w/c/language/operator_precedence
+public class ShuntingYard {
+
+<span class="fc" id="L47">	final private TokenStack ouputQueue = new TokenStack();</span>
+<span class="fc" id="L48">	final private Deque&lt;Token&gt; operatorStack = new ArrayDeque&lt;&gt;();</span>
+
+	private static final boolean TRACE = false;
+
+	private void traceMe() {
+		if (TRACE == false)
+<span class="fc" id="L54">			return;</span>
+		System.err.println(&quot;-------------------&quot;);
+		System.err.println(&quot;operatorStack=&quot; + operatorStack);
+		System.err.println(&quot;ouputQueue=&quot; + ouputQueue);
+		System.err.println(&quot;&quot;);
+	}
+
+<span class="fc" id="L61">	public ShuntingYard(TokenIterator it, Knowledge knowledge, StringLocated location) throws EaterException {</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		while (it.hasMoreTokens()) {</span>
+<span class="fc" id="L64">			final Token token = it.nextToken();</span>
+<span class="fc" id="L65">			traceMe();</span>
+			if (TRACE)
+				System.err.println(&quot;token=&quot; + token);
+<span class="fc bfc" id="L68" title="All 4 branches covered.">			if (token.getTokenType() == TokenType.NUMBER || token.getTokenType() == TokenType.QUOTED_STRING) {</span>
+<span class="fc" id="L69">				ouputQueue.add(token);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.FUNCTION_NAME) {</span>
+<span class="fc" id="L71">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.PLAIN_TEXT) {</span>
+<span class="fc" id="L73">				final String name = token.getSurface();</span>
+<span class="fc" id="L74">				final TValue variable = knowledge.getVariable(name);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">				if (variable == null) {</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">					if (isVariableName(name) == false)</span>
+<span class="nc" id="L77">						throw new EaterException(&quot;Parsing syntax error about &quot; + name, location);</span>
+
+<span class="fc" id="L79">					ouputQueue.add(new Token(name, TokenType.QUOTED_STRING, null));</span>
+				} else {
+<span class="fc" id="L81">					ouputQueue.add(variable.toToken());</span>
+				}
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPERATOR) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">				while ((thereIsAFunctionAtTheTopOfTheOperatorStack() //</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">						|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">						&amp;&amp; theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(token))</span>
+<span class="fc" id="L88">					ouputQueue.add(operatorStack.removeFirst());</span>
+
+				// push it onto the operator stack.
+<span class="fc" id="L91">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {</span>
+<span class="fc" id="L93">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPEN_PAREN_MATH) {</span>
+<span class="fc" id="L95">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_FUNC) {</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">				while (operatorStack.peekFirst() != null</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">						&amp;&amp; operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)</span>
+<span class="fc" id="L99">					ouputQueue.add(operatorStack.removeFirst());</span>
+<span class="fc" id="L100">				final Token first = operatorStack.removeFirst();</span>
+<span class="fc" id="L101">				ouputQueue.add(first);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_MATH) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_MATH)</span>
+<span class="fc" id="L104">					ouputQueue.add(operatorStack.removeFirst());</span>
+
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">				if (operatorStack.peekFirst().getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
+<span class="fc" id="L107">					operatorStack.removeFirst();</span>
+
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			} else if (token.getTokenType() == TokenType.COMMA) {</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				while (operatorStack.peekFirst() != null</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">						&amp;&amp; operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)</span>
+<span class="fc" id="L112">					ouputQueue.add(operatorStack.removeFirst());</span>
+
+			} else {
+<span class="nc" id="L115">				throw new UnsupportedOperationException(token.toString());</span>
+			}
+<span class="fc" id="L117">		}</span>
+
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		while (operatorStack.isEmpty() == false) {</span>
+<span class="fc" id="L120">			final Token token = operatorStack.removeFirst();</span>
+<span class="fc" id="L121">			ouputQueue.add(token);</span>
+<span class="fc" id="L122">		}</span>
+
+		// System.err.println(&quot;ouputQueue=&quot; + ouputQueue);
+<span class="fc" id="L125">	}</span>
+
+	private boolean isVariableName(String name) {
+<span class="fc" id="L128">		return name.matches(&quot;[a-zA-Z0-9.$_]+&quot;);</span>
+	}
+
+	private boolean thereIsAFunctionAtTheTopOfTheOperatorStack() {
+<span class="fc" id="L132">		final Token top = operatorStack.peekFirst();</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">		return top != null &amp;&amp; top.getTokenType() == TokenType.FUNCTION_NAME;</span>
+	}
+
+	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(Token token) {
+<span class="fc" id="L137">		final Token top = operatorStack.peekFirst();</span>
+<span class="fc bfc" id="L138" title="All 4 branches covered.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPERATOR</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">				&amp;&amp; top.getTokenOperator().getPrecedence() &gt; token.getTokenOperator().getPrecedence())</span>
+<span class="fc" id="L140">			return true;</span>
+
+<span class="fc" id="L142">		return false;</span>
+	}
+
+	private boolean theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(Token token) {
+<span class="fc" id="L146">		final Token top = operatorStack.peekFirst();</span>
+<span class="pc bpc" id="L147" title="1 of 6 branches missed.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPERATOR &amp;&amp; top.getTokenOperator().isLeftAssociativity()</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">				&amp;&amp; top.getTokenOperator().getPrecedence() == token.getTokenOperator().getPrecedence())</span>
+<span class="fc" id="L149">			return true;</span>
+
+<span class="fc" id="L151">		return false;</span>
+	}
+
+	private boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(Token token) {
+<span class="fc" id="L155">		final Token top = operatorStack.peekFirst();</span>
+<span class="pc bpc" id="L156" title="2 of 4 branches missed.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
+<span class="nc" id="L157">			return true;</span>
+
+<span class="fc" id="L159">		return true;</span>
+	}
+
+	public TokenStack getQueue() {
+<span class="fc" id="L163">		return this.ouputQueue;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

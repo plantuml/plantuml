@@ -1,0 +1,2392 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>dotsplines__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">dotsplines__c.java</span></div><h1>dotsplines__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.edge__c.agfstout;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agnxtout;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.node__c.agfstnode;
+import static gen.lib.cgraph.node__c.agnxtnode;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.common.routespl__c.makeStraightEdge;
+import static gen.lib.common.routespl__c.routepolylines;
+import static gen.lib.common.routespl__c.routesplines;
+import static gen.lib.common.routespl__c.routesplinesinit;
+import static gen.lib.common.routespl__c.routesplinesterm;
+import static gen.lib.common.routespl__c.simpleSplineRoute;
+import static gen.lib.common.splines__c.add_box;
+import static gen.lib.common.splines__c.beginpath;
+import static gen.lib.common.splines__c.clip_and_install;
+import static gen.lib.common.splines__c.endpath;
+import static gen.lib.common.splines__c.getsplinepoints;
+import static gen.lib.common.splines__c.makeSelfEdge;
+import static gen.lib.common.utils__c.updateBB;
+import static gen.lib.dotgen.cluster__c.mark_lowclusters;
+import static h.ST_pointf.add_pointf;
+import static h.ST_pointf.pointfof;
+import static smetana.core.JUtils.LOG2;
+import static smetana.core.JUtils.qsort;
+import static smetana.core.Macro.BETWEEN;
+import static smetana.core.Macro.BOTTOM;
+import static smetana.core.Macro.EDGETYPEMASK;
+import static smetana.core.Macro.EDGE_LABEL;
+import static smetana.core.Macro.ED_adjacent;
+import static smetana.core.Macro.ED_edge_type;
+import static smetana.core.Macro.ED_head_port;
+import static smetana.core.Macro.ED_label;
+import static smetana.core.Macro.ED_spl;
+import static smetana.core.Macro.ED_tail_port;
+import static smetana.core.Macro.ED_to_orig;
+import static smetana.core.Macro.ED_to_virt;
+import static smetana.core.Macro.ED_tree_index;
+import static smetana.core.Macro.ET_CURVED;
+import static smetana.core.Macro.ET_LINE;
+import static smetana.core.Macro.ET_NONE;
+import static smetana.core.Macro.ET_SPLINE;
+import static smetana.core.Macro.FLATEDGE;
+import static smetana.core.Macro.FLATORDER;
+import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_flags;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_has_labels;
+import static smetana.core.Macro.GD_maxrank;
+import static smetana.core.Macro.GD_minrank;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_nodesep;
+import static smetana.core.Macro.GD_rank;
+import static smetana.core.Macro.GD_ranksep;
+import static smetana.core.Macro.GVSPLINES;
+import static smetana.core.Macro.IGNORED;
+import static smetana.core.Macro.MAKEFWDEDGE;
+import static smetana.core.Macro.M_PI;
+import static smetana.core.Macro.ND_alg;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_coord;
+import static smetana.core.Macro.ND_flat_out;
+import static smetana.core.Macro.ND_ht;
+import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_label;
+import static smetana.core.Macro.ND_lw;
+import static smetana.core.Macro.ND_mval;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_node_type;
+import static smetana.core.Macro.ND_order;
+import static smetana.core.Macro.ND_other;
+import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_rank;
+import static smetana.core.Macro.ND_rw;
+import static smetana.core.Macro.NORMAL;
+import static smetana.core.Macro.REGULAREDGE;
+import static smetana.core.Macro.ROUND;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.VIRTUAL;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agedgepair_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Ppoly_t;
+import h.ST_bezier;
+import h.ST_boxf;
+import h.ST_path;
+import h.ST_pathend_t;
+import h.ST_pointf;
+import h.ST_port;
+import h.ST_rank_t;
+import h.ST_spline_info_t;
+import h.ST_splines;
+import smetana.core.CArray;
+import smetana.core.CArrayOfStar;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.ZType;
+import smetana.core.__ptr__;
+
+<span class="nc" id="L157">public class dotsplines__c {</span>
+
+
+
+
+//3 1vvsta5i8of59frav6uymguav
+// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;boxfof&quot;, key=&quot;1vvsta5i8of59frav6uymguav&quot;, definition=&quot;static inline boxf boxfof(double llx, double lly, double urx, double ury)&quot;)
+public static ST_boxf boxfof(double llx, double lly, double urx, double ury) {
+// WARNING!! STRUCT
+<span class="fc" id="L168">return boxfof_w_(llx, lly, urx, ury).copy();</span>
+}
+private static ST_boxf boxfof_w_(double llx, double lly, double urx, double ury) {
+<span class="fc" id="L171">ENTERING(&quot;1vvsta5i8of59frav6uymguav&quot;,&quot;boxfof&quot;);</span>
+try {
+<span class="fc" id="L173">    final ST_boxf b = new ST_boxf();</span>
+<span class="fc" id="L174">    b.LL.x = llx;</span>
+<span class="fc" id="L175">    b.LL.y = lly;</span>
+<span class="fc" id="L176">    b.UR.x = urx;</span>
+<span class="fc" id="L177">    b.UR.y = ury;</span>
+<span class="fc" id="L178">    return b;</span>
+} finally {
+<span class="fc" id="L180">LEAVING(&quot;1vvsta5i8of59frav6uymguav&quot;,&quot;boxfof&quot;);</span>
+}
+}
+
+
+
+//3 dobhmc46zwtvv8rg3ywntl91j
+// static edge_t* getmainedge(edge_t * e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;getmainedge&quot;, key=&quot;dobhmc46zwtvv8rg3ywntl91j&quot;, definition=&quot;static edge_t* getmainedge(edge_t * e)&quot;)
+public static ST_Agedge_s getmainedge(ST_Agedge_s e) {
+<span class="fc" id="L191">ENTERING(&quot;dobhmc46zwtvv8rg3ywntl91j&quot;,&quot;getmainedge&quot;);</span>
+try {
+<span class="fc" id="L193">    ST_Agedge_s le = e;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">    while (ED_to_virt(le)!=null)</span>
+<span class="fc" id="L195">	le = ED_to_virt(le);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">    while (ED_to_orig(le)!=null)</span>
+<span class="fc" id="L197">	le = ED_to_orig(le);</span>
+<span class="fc" id="L198">    return le;</span>
+} finally {
+<span class="fc" id="L200">LEAVING(&quot;dobhmc46zwtvv8rg3ywntl91j&quot;,&quot;getmainedge&quot;);</span>
+}
+}
+
+
+
+
+<span class="fc" id="L207">public static CFunction spline_merge = new CFunctionAbstract(&quot;spline_merge&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L210">		return spline_merge((ST_Agnode_s)args[0]);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;spline_merge&quot;, key=&quot;ddeny5ht7w8b16ztj5zt840ld&quot;, definition=&quot;static boolean spline_merge(node_t * n)&quot;)
+public static boolean spline_merge(ST_Agnode_s n) {
+<span class="fc" id="L215">ENTERING(&quot;ddeny5ht7w8b16ztj5zt840ld&quot;,&quot;spline_merge&quot;);</span>
+try {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">    return ((ND_node_type(n) == 1)</span>
+<span class="pc bpc" id="L218" title="2 of 4 branches missed.">	    &amp;&amp; ((ND_in(n).size &gt; 1) || (ND_out(n).size &gt; 1)));</span>
+} finally {
+<span class="fc" id="L220">LEAVING(&quot;ddeny5ht7w8b16ztj5zt840ld&quot;,&quot;spline_merge&quot;);</span>
+}
+}
+
+
+
+
+<span class="fc" id="L227">public static CFunction swap_ends_p = new CFunctionAbstract(&quot;swap_ends_p&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L230">		return swap_ends_p((ST_Agedge_s)args[0]);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;swap_ends_p&quot;, key=&quot;36ofw2qfqlh5ci8gc8cfkqgg3&quot;, definition=&quot;static boolean swap_ends_p(edge_t * e)&quot;)
+public static boolean swap_ends_p(ST_Agedge_s e) {
+<span class="fc" id="L235">ENTERING(&quot;36ofw2qfqlh5ci8gc8cfkqgg3&quot;,&quot;swap_ends_p&quot;);</span>
+try {
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">    while (ED_to_orig(e)!=null)</span>
+<span class="nc" id="L238">	e = ED_to_orig(e);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">    if (ND_rank(aghead(e)) &gt; ND_rank(agtail(e)))</span>
+<span class="fc" id="L240">	return false;</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">    if (ND_rank(aghead(e)) &lt; ND_rank(agtail(e)))</span>
+<span class="nc" id="L242">	return true;</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">    if (ND_order(aghead(e)) &gt;= ND_order(agtail(e)))</span>
+<span class="fc" id="L244">	return false;</span>
+<span class="nc" id="L245">    return true;</span>
+} finally {
+<span class="fc" id="L247">LEAVING(&quot;36ofw2qfqlh5ci8gc8cfkqgg3&quot;,&quot;swap_ends_p&quot;);</span>
+}
+}
+
+
+
+
+
+//3 3krohso3quojiv4fveh1en7o6
+// int portcmp(port p0, port p1) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;portcmp&quot;, key=&quot;3krohso3quojiv4fveh1en7o6&quot;, definition=&quot;int portcmp(port p0, port p1)&quot;)
+public static int portcmp(final ST_port p0, final ST_port p1) {
+// WARNING!! STRUCT
+<span class="fc" id="L261">return portcmp_w_(p0.copy(), p1.copy());</span>
+}
+private static int portcmp_w_(final ST_port p0, final ST_port p1) {
+<span class="fc" id="L264">ENTERING(&quot;3krohso3quojiv4fveh1en7o6&quot;,&quot;portcmp&quot;);</span>
+try {
+    int rv;
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">    if (p1.defined == false)</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">	return (p0.defined ? 1 : 0);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">    if (p0.defined == false)</span>
+<span class="nc" id="L270">	return -1;</span>
+<span class="nc" id="L271">    rv = (int) (p0.p.x - p1.p.x);</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">    if (rv == 0)</span>
+<span class="nc" id="L273">	rv = (int) (p0.p.y - p1.p.y);</span>
+<span class="nc" id="L274">    return rv;</span>
+} finally {
+<span class="fc" id="L276">LEAVING(&quot;3krohso3quojiv4fveh1en7o6&quot;,&quot;portcmp&quot;);</span>
+}
+}
+
+
+
+
+//3 10wbtt4gwnxgqutinpj4ymjpk
+// static void swap_bezier(bezier * old, bezier * new) 
+@Unused
+@Difficult
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;swap_bezier&quot;, key=&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;, definition=&quot;static void swap_bezier(bezier * old, bezier * new)&quot;)
+public static void swap_bezier(CArray&lt;ST_bezier&gt; old, CArray&lt;ST_bezier&gt; new_) {
+<span class="nc" id="L290">ENTERING(&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;,&quot;swap_bezier&quot;);</span>
+try {
+	CArray&lt;ST_pointf&gt; list;
+	CArray&lt;ST_pointf&gt; lp;
+	CArray&lt;ST_pointf&gt; olp;
+    int i, sz;
+    
+<span class="nc" id="L297">    sz = old.get__(0).size;</span>
+<span class="nc" id="L298">	list = CArray.&lt;ST_pointf&gt;ALLOC__(sz, ZType.ST_pointf);</span>
+<span class="nc" id="L299">    lp = list;</span>
+<span class="nc" id="L300">    olp = old.get__(0).list.plus_(sz - 1);</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">    for (i = 0; i &lt; sz; i++) {	/* reverse list of points */</span>
+<span class="nc" id="L302">	lp.get__(0).___(olp.get__(0));</span>
+<span class="nc" id="L303">	lp=lp.plus_(1);</span>
+<span class="nc" id="L304">	olp=olp.plus_(-1);</span>
+    }
+    
+<span class="nc" id="L307">    new_.get__(0).list = list;</span>
+<span class="nc" id="L308">    new_.get__(0).size = sz;</span>
+<span class="nc" id="L309">    new_.get__(0).sflag = old.get__(0).eflag;</span>
+<span class="nc" id="L310">    new_.get__(0).eflag = old.get__(0).sflag;</span>
+<span class="nc" id="L311">    new_.get__(0).sp.___(old.get__(0).ep);</span>
+<span class="nc" id="L312">    new_.get__(0).ep.___(old.get__(0).sp);</span>
+} finally {
+<span class="nc" id="L314">LEAVING(&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;,&quot;swap_bezier&quot;);</span>
+}
+<span class="nc" id="L316">}</span>
+
+
+
+
+//3 3256l3e2huarsy29dd97vqj85
+// static void swap_spline(splines * s) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;swap_spline&quot;, key=&quot;3256l3e2huarsy29dd97vqj85&quot;, definition=&quot;static void swap_spline(splines * s)&quot;)
+public static void swap_spline(ST_splines s) {
+<span class="nc" id="L326">ENTERING(&quot;3256l3e2huarsy29dd97vqj85&quot;,&quot;swap_spline&quot;);</span>
+try {
+	CArray&lt;ST_bezier&gt; list;
+	CArray&lt;ST_bezier&gt; lp;
+	CArray&lt;ST_bezier&gt; olp;
+    int i, sz;
+<span class="nc" id="L332">    sz = s.size;</span>
+<span class="nc" id="L333">    list = CArray.&lt;ST_bezier&gt;ALLOC__(sz, ZType.ST_bezier);</span>
+	//list = new CStar&lt;ST_bezier&gt;(sz, ST_bezier.class);
+<span class="nc" id="L335">    lp = list;</span>
+<span class="nc" id="L336">    olp = s.list.plus_(sz - 1);</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">    for (i = 0; i &lt; sz; i++) {	/* reverse and swap list of beziers */</span>
+<span class="nc" id="L338">	swap_bezier(olp, lp);</span>
+<span class="nc" id="L339">	olp = olp.plus_(-1);</span>
+<span class="nc" id="L340">	lp = lp.plus_(1);</span>
+    }
+    /* free old structures */
+<span class="nc bnc" id="L343" title="All 2 branches missed.">    for (i = 0; i &lt; sz; i++)</span>
+<span class="nc" id="L344">	Memory.free(s.list.get__(i).list);</span>
+<span class="nc" id="L345">    Memory.free(s.list);</span>
+<span class="nc" id="L346">    s.list = list;</span>
+} finally {
+<span class="nc" id="L348">LEAVING(&quot;3256l3e2huarsy29dd97vqj85&quot;,&quot;swap_spline&quot;);</span>
+}
+<span class="nc" id="L350">}</span>
+
+
+
+
+//3 dgkssqjj566ifra0xy7m46qsb
+// static void edge_normalize(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;edge_normalize&quot;, key=&quot;dgkssqjj566ifra0xy7m46qsb&quot;, definition=&quot;static void edge_normalize(graph_t * g)&quot;)
+public static void edge_normalize(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L360">ENTERING(&quot;dgkssqjj566ifra0xy7m46qsb&quot;,&quot;edge_normalize&quot;);</span>
+try {
+    ST_Agedge_s e;
+    ST_Agnode_s n;
+<span class="fc bfc" id="L364" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {</span>
+<span class="pc bpc" id="L366" title="3 of 4 branches missed.">	    if ((Boolean)zz.sinfo.swapEnds.exe(zz, e) &amp;&amp; ED_spl(e)!=null)</span>
+<span class="nc" id="L367">		swap_spline(ED_spl(e));</span>
+	}
+    }
+} finally {
+<span class="fc" id="L371">LEAVING(&quot;dgkssqjj566ifra0xy7m46qsb&quot;,&quot;edge_normalize&quot;);</span>
+}
+<span class="fc" id="L373">}</span>
+
+
+
+
+//3 bwzdgdea9suuagzueyw8ztx42
+// static void resetRW (graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;resetRW&quot;, key=&quot;bwzdgdea9suuagzueyw8ztx42&quot;, definition=&quot;static void resetRW (graph_t * g)&quot;)
+public static Object resetRW(Object... arg_) {
+<span class="nc" id="L383">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L384">UNSUPPORTED(&quot;c4vqsmfolc1meewxoebfkyppx&quot;); // resetRW (graph_t * g)</span>
+<span class="nc" id="L385">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L386">UNSUPPORTED(&quot;7ma9kdgag30w5ofv1niitxbro&quot;); //     node_t* n;</span>
+<span class="nc" id="L387">UNSUPPORTED(&quot;7wq24g054kmx3aw25vk5ksj4&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g,n)) {</span>
+<span class="nc" id="L388">UNSUPPORTED(&quot;b83f20tdode2lz5a49mhmn9ei&quot;); // 	if (ND_other(n).list) {</span>
+<span class="nc" id="L389">UNSUPPORTED(&quot;ez6pf4w4vi7z6fqq43v5i3gpv&quot;); // 	    double tmp = ND_rw(n);</span>
+<span class="nc" id="L390">UNSUPPORTED(&quot;24qsh566odunv14qzj2zan7bz&quot;); // 	    ND_rw(n) = ND_mval(n);</span>
+<span class="nc" id="L391">UNSUPPORTED(&quot;cgxuqwflawrd9e6dmnsh3sbwa&quot;); // 	    ND_mval(n) = tmp;</span>
+<span class="nc" id="L392">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L393">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L394">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L396">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+private final static int NSUB = 9;
+private final static int CHUNK = 128;
+
+private final static int MINW = 16;
+private final static int HALFMINW = 8;
+
+private final static int FWDEDGE = 16;
+private final static int BWDEDGE = 32;
+
+private final static int MAINGRAPH = 64;
+private final static int AUXGRAPH = 128;
+
+
+/* _dot_splines:
+ * Main spline routing code.
+ * The normalize parameter allows this function to be called by the
+ * recursive call in make_flat_edge without normalization occurring,
+ * so that the edge will only be normalized once in the top level call
+ * of dot_splines.
+ */
+//3 6agx6m2qof9lg57co232lwakj
+// static void _dot_splines(graph_t * g, int normalize) 
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;_dot_splines&quot;, key=&quot;6agx6m2qof9lg57co232lwakj&quot;, definition=&quot;static void _dot_splines(graph_t * g, int normalize)&quot;)
+static void _dot_splines(Globals zz, ST_Agraph_s g, int normalize)
+{
+<span class="fc" id="L427">ENTERING(&quot;6agx6m2qof9lg57co232lwakj&quot;,&quot;_dot_splines&quot;);</span>
+try {
+    int i, j, k, n_nodes, n_edges, ind, cnt;
+    ST_Agnode_s n;
+<span class="fc" id="L431">    final ST_Agedgeinfo_t fwdedgeai = new ST_Agedgeinfo_t(), fwdedgebi = new ST_Agedgeinfo_t();</span>
+<span class="fc" id="L432">    final ST_Agedgepair_s fwdedgea = new ST_Agedgepair_s(), fwdedgeb = new ST_Agedgepair_s();</span>
+    ST_Agedge_s e, e0, e1, ea, eb, le0, le1;
+    CArrayOfStar&lt;ST_Agedge_s&gt; edges;
+    ST_path P;
+<span class="fc" id="L436">    final ST_spline_info_t sd = new ST_spline_info_t();</span>
+<span class="fc" id="L437">    int et = (GD_flags(g) &amp; (7 &lt;&lt; 1));</span>
+<span class="fc" id="L438">    fwdedgea.out.base.data = fwdedgeai;</span>
+<span class="fc" id="L439">    fwdedgeb.out.base.data = fwdedgebi;</span>
+    
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">    if (et == ET_NONE) return; </span>
+
+<span class="pc bpc" id="L443" title="1 of 2 branches missed.">    if (et == ET_CURVED) {</span>
+<span class="nc" id="L444">	resetRW (g);</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">	if ((GD_has_labels(g) &amp; EDGE_LABEL)!=0) {</span>
+<span class="nc" id="L446">UNSUPPORTED(&quot;4k888z8ymdp2b653twxc1ugbu&quot;); // 	    agerr (AGWARN, &quot;edge labels with splines=curved not supported in dot - use xlabels\n&quot;);</span>
+	}
+<span class="nc bnc" id="L448" title="All 2 branches missed.">	for (n = agfstnode (zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="nc bnc" id="L449" title="All 2 branches missed.">	    for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g,e)) {</span>
+<span class="nc" id="L450">		makeStraightEdge(g, e, et, zz.sinfo);</span>
+	    }
+	}
+<span class="nc" id="L453">UNSUPPORTED(&quot;46btiag50nczzur103eqhjcup&quot;); // 	goto finish;</span>
+    } 
+    
+    
+<span class="fc" id="L457">    mark_lowclusters(zz, g);</span>
+<span class="pc bpc" id="L458" title="1 of 2 branches missed.">    if (routesplinesinit(zz)!=0) return;</span>
+<span class="fc" id="L459">    P = new ST_path();</span>
+    /* FlatHeight = 2 * GD_nodesep(g); */
+<span class="fc" id="L461">    sd.Splinesep = GD_nodesep(g) / 4;</span>
+<span class="fc" id="L462">    sd.Multisep = GD_nodesep(g);</span>
+<span class="fc" id="L463">    edges = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(CHUNK, ZType.ST_Agedge_s);</span>
+    
+    /* compute boundaries and list of splines */
+<span class="fc" id="L466">    sd.RightBound = 0;</span>
+<span class="fc" id="L467">    sd.LeftBound = 0;</span>
+<span class="fc" id="L468">    n_edges = n_nodes = 0;</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
+<span class="fc" id="L470">	n_nodes += GD_rank(g).get__(i).n;</span>
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">	if ((n = GD_rank(g).get__(i).v.get_(0))!=null)</span>
+<span class="fc" id="L472">	    sd.LeftBound = (int)Math.min(sd.LeftBound, (ND_coord(n).x - ND_lw(n)));</span>
+<span class="pc bpc" id="L473" title="2 of 4 branches missed.">	if (GD_rank(g).get__(i).n!=0 &amp;&amp; (n = GD_rank(g).get__(i).v.get_(GD_rank(g).get__(i).n - 1))!=null)</span>
+<span class="fc" id="L474">	    sd.RightBound = (int)Math.max(sd.RightBound, (ND_coord(n).x + ND_rw(n)));</span>
+<span class="fc" id="L475">	sd.LeftBound -= MINW;</span>
+<span class="fc" id="L476">	sd.RightBound += MINW;</span>
+	
+<span class="fc bfc" id="L478" title="All 2 branches covered.">	for (j = 0; j &lt; GD_rank(g).get__(i).n; j++) {</span>
+<span class="fc" id="L479">	    n = GD_rank(g).get__(i).v.get_(j);</span>
+		/* if n is the label of a flat edge, copy its position to
+		 * the label.
+		 */
+<span class="pc bpc" id="L483" title="1 of 2 branches missed.">	    if (ND_alg(n)!=null) {</span>
+<span class="nc" id="L484">		ST_Agedge_s fe = (ST_Agedge_s) ND_alg(n);</span>
+<span class="nc bnc" id="L485" title="All 2 branches missed.">		assert (ED_label(fe)!=null);</span>
+<span class="nc" id="L486">		ED_label(fe).pos.___(ND_coord(n));</span>
+<span class="nc" id="L487">		ED_label(fe).set= false ? 0 : 1;</span>
+	    }
+<span class="fc bfc" id="L489" title="All 2 branches covered.">	    if ((ND_node_type(n) != NORMAL) &amp;&amp;</span>
+<span class="pc bpc" id="L490" title="1 of 2 branches missed.">		((Boolean)zz.sinfo.splineMerge.exe(zz, n) == false))</span>
+<span class="fc" id="L491">		continue;</span>
+<span class="fc bfc" id="L492" title="All 2 branches covered.">	    for (k = 0; (e = ND_out(n).list.get_(k))!=null; k++) {</span>
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">		if ((ED_edge_type(e) == FLATORDER)</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">		    || (ED_edge_type(e) == IGNORED))</span>
+<span class="nc" id="L495">		    continue;</span>
+<span class="fc" id="L496">		setflags(e, REGULAREDGE, FWDEDGE, MAINGRAPH);</span>
+<span class="fc" id="L497">		edges.set_(n_edges++, e);</span>
+<span class="pc bpc" id="L498" title="1 of 2 branches missed.">		if (n_edges % CHUNK == 0)</span>
+<span class="nc" id="L499">		    edges = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);</span>
+	    }
+<span class="pc bpc" id="L501" title="1 of 2 branches missed.">	    if (ND_flat_out(n).list!=null)</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">		for (k = 0; (e = ND_flat_out(n).list.get_(k))!=null; k++) {</span>
+<span class="fc" id="L503">		    setflags(e, FLATEDGE, 0, AUXGRAPH);</span>
+<span class="fc" id="L504">			edges.set_(n_edges++, e);</span>
+<span class="pc bpc" id="L505" title="1 of 2 branches missed.">		    if (n_edges % CHUNK == 0)</span>
+<span class="nc" id="L506">			    edges = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);</span>
+		}
+<span class="pc bpc" id="L508" title="1 of 2 branches missed.">	    if (ND_other(n).list!=null) {</span>
+		/* In position, each node has its rw stored in mval and,
+                 * if a node is part of a loop, rw may be increased to
+                 * reflect the loops and associated labels. We restore
+                 * the original value here. 
+                 */
+<span class="pc bpc" id="L514" title="1 of 2 branches missed.">		if (ND_node_type(n) == NORMAL) {</span>
+<span class="fc" id="L515">		    double tmp = ND_rw(n);</span>
+<span class="fc" id="L516">		    ND_rw(n, ND_mval(n));</span>
+<span class="fc" id="L517">		    ND_mval(n, tmp);</span>
+		}
+<span class="fc bfc" id="L519" title="All 2 branches covered.">		for (k = 0; (e = ND_other(n).list.get_(k))!=null; k++) {</span>
+<span class="fc" id="L520">		    setflags(e, 0, 0, AUXGRAPH);</span>
+<span class="fc" id="L521">			edges.set_(n_edges++, e);</span>
+<span class="pc bpc" id="L522" title="1 of 2 branches missed.">		    if (n_edges % CHUNK == 0)</span>
+<span class="nc" id="L523">			    edges = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);</span>
+		}
+	    }
+	}
+    }
+    /* Sort so that equivalent edges are contiguous. 
+     * Equivalence should basically mean that 2 edges have the
+     * same set {(tailnode,tailport),(headnode,headport)}, or
+     * alternatively, the edges would be routed identically if
+     * routed separately.
+     */
+<span class="fc" id="L534">    LOG2(&quot;_dot_splines::n_edges=&quot;+n_edges);</span>
+<span class="fc" id="L535">    qsort(zz, edges, n_edges,</span>
+    dotsplines__c.edgecmp);
+    
+
+    /* FIXME: just how many boxes can there be? */
+<span class="fc" id="L540">    P.boxes = ST_boxf.malloc(n_nodes + 20 * 2 * NSUB);</span>
+<span class="fc" id="L541">    sd.Rank_box = ST_boxf.malloc(i);</span>
+    
+<span class="pc bpc" id="L543" title="1 of 2 branches missed.">    if (et == ET_LINE) {</span>
+    /* place regular edge labels */
+<span class="nc bnc" id="L545" title="All 2 branches missed.">	for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="nc bnc" id="L546" title="All 4 branches missed.">	    if ((ND_node_type(n) == VIRTUAL) &amp;&amp; (ND_label(n)!=null)) {</span>
+<span class="nc" id="L547">		place_vnlabel(n);</span>
+	    }
+	}
+    }
+    
+<span class="fc bfc" id="L552" title="All 2 branches covered.">    for (i = 0; i &lt; n_edges;) {</span>
+ 	boolean havePorts;
+<span class="fc" id="L554">	ind = i;</span>
+<span class="fc" id="L555">	le0 = getmainedge((e0 = edges.get_(i++)));</span>
+<span class="pc bpc" id="L556" title="1 of 4 branches missed.">	if (ED_tail_port(e0).defined || ED_head_port(e0).defined) {</span>
+<span class="fc" id="L557">	    havePorts = true;</span>
+<span class="fc" id="L558">	    ea = e0;</span>
+	} else {
+<span class="fc" id="L560">	    havePorts = false;</span>
+<span class="fc" id="L561">	    ea =  le0;</span>
+	}
+<span class="pc bpc" id="L563" title="1 of 2 branches missed.">	if ((ED_tree_index(ea) &amp; BWDEDGE)!=0) {</span>
+<span class="nc" id="L564">	    MAKEFWDEDGE(fwdedgea.out, ea);</span>
+<span class="nc" id="L565">	    ea = fwdedgea.out;</span>
+	}
+
+<span class="fc bfc" id="L568" title="All 2 branches covered.">	for (cnt = 1; i &lt; n_edges; cnt++, i++) {</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">	    if ((le0 != (le1 = getmainedge((e1 = edges.get_(i))))))</span>
+<span class="fc" id="L570">		break;</span>
+<span class="pc bpc" id="L571" title="1 of 2 branches missed.">	    if (ED_adjacent(e0)!=0) continue; /* all flat adjacent edges at once */</span>
+<span class="nc bnc" id="L572" title="All 4 branches missed.">	    if (ED_tail_port(e1).defined || ED_head_port(e1).defined) {</span>
+<span class="nc bnc" id="L573" title="All 2 branches missed.">		if (!havePorts) break;</span>
+		else
+<span class="nc" id="L575">		    eb = e1;</span>
+	    } else {
+<span class="nc bnc" id="L577" title="All 2 branches missed.">		if (havePorts) break;</span>
+		else
+<span class="nc" id="L579">		    eb = le1;</span>
+	    }
+<span class="nc bnc" id="L581" title="All 2 branches missed.">	    if ((ED_tree_index(eb) &amp; BWDEDGE)!=0) {</span>
+<span class="nc" id="L582">		MAKEFWDEDGE(fwdedgeb.out, eb);</span>
+<span class="nc" id="L583">		eb = fwdedgeb.out;</span>
+	    }
+<span class="nc bnc" id="L585" title="All 2 branches missed.">	    if (portcmp(ED_tail_port(ea), ED_tail_port(eb))!=0)</span>
+<span class="nc" id="L586">		break;</span>
+<span class="nc bnc" id="L587" title="All 2 branches missed.">	    if (portcmp(ED_head_port(ea), ED_head_port(eb))!=0)</span>
+<span class="nc" id="L588">		break;</span>
+<span class="nc bnc" id="L589" title="All 2 branches missed.">	    if ((ED_tree_index(e0) &amp; EDGETYPEMASK) == FLATEDGE</span>
+<span class="nc bnc" id="L590" title="All 2 branches missed.">		&amp;&amp; (ED_label(e0) != ED_label(e1)))</span>
+<span class="nc" id="L591">		break;</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">	    if ((ED_tree_index(edges.get_(i)) &amp; MAINGRAPH)!=0)	/* Aha! -C is on */</span>
+<span class="nc" id="L593">		break;</span>
+	}
+	
+<span class="fc bfc" id="L596" title="All 2 branches covered.">	if (agtail(e0) == aghead(e0)) {</span>
+	    int b, sizey, r;
+<span class="fc" id="L598">	    n = agtail(e0);</span>
+<span class="fc" id="L599">	    r = ND_rank(n);</span>
+<span class="pc bpc" id="L600" title="1 of 2 branches missed.">	    if (r == GD_maxrank(g)) {</span>
+<span class="pc bpc" id="L601" title="1 of 2 branches missed.">		if (r &gt; 0)</span>
+<span class="nc" id="L602">		    sizey = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
+		else
+<span class="fc" id="L604">		    sizey = (int) ND_ht(n);</span>
+	    }
+<span class="nc bnc" id="L606" title="All 2 branches missed.">	    else if (r == GD_minrank(g)) {</span>
+<span class="nc" id="L607">		sizey = (int)(ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);</span>
+	    }
+	    else {
+<span class="nc" id="L610">		int upy = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
+<span class="nc" id="L611">		int dwny = (int) (ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);</span>
+<span class="nc" id="L612">		sizey = Math.min(upy, dwny);</span>
+	    }
+<span class="fc" id="L614">	    makeSelfEdge(zz, P, edges, ind, cnt, sd.Multisep, sizey/2, zz.sinfo);</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">	    for (b = 0; b &lt; cnt; b++) {</span>
+<span class="fc" id="L616">		e = edges.get_(ind+b);</span>
+<span class="pc bpc" id="L617" title="1 of 2 branches missed.">		if (ED_label(e)!=null)</span>
+<span class="fc" id="L618">		    updateBB(g, ED_label(e));</span>
+	    }
+<span class="fc" id="L620">	}</span>
+<span class="fc bfc" id="L621" title="All 2 branches covered.">	else if (ND_rank(agtail(e0)) == ND_rank(aghead(e0))) {</span>
+<span class="fc" id="L622">	    make_flat_edge(zz, g, sd, P, edges, ind, cnt, et);</span>
+	}
+	else
+<span class="fc" id="L625">	    make_regular_edge(zz, g, sd, P, edges, ind, cnt, et);</span>
+<span class="fc" id="L626">    }</span>
+    /* place regular edge labels */
+<span class="fc bfc" id="L628" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="fc bfc" id="L629" title="All 4 branches covered.">	if ((ND_node_type(n) == VIRTUAL) &amp;&amp; (ND_label(n))!=null) {</span>
+<span class="fc" id="L630">	    place_vnlabel(n);</span>
+<span class="fc" id="L631">	    updateBB(g, ND_label(n));</span>
+	}
+    }
+
+    /* normalize splines so they always go from tail to head */
+    /* place_portlabel relies on this being done first */
+<span class="pc bpc" id="L637" title="1 of 2 branches missed.">    if (normalize!=0)</span>
+<span class="fc" id="L638">	edge_normalize(zz, g);</span>
+finish :
+    /* vladimir: place port labels */
+    /* FIX: head and tail labels are not part of cluster bbox */
+<span class="pc bpc" id="L642" title="3 of 8 branches missed.">    if ((zz.E_headlabel!=null || zz.E_taillabel!=null) &amp;&amp; (zz.E_labelangle!=null || zz.E_labeldistance!=null)) {</span>
+<span class="nc" id="L643">UNSUPPORTED(&quot;attp4bsjqe99xnhi7lr7pszar&quot;); // 	for (n = agfstnode(g); n; n = agnxtnode(g, n)) {</span>
+<span class="nc" id="L644">UNSUPPORTED(&quot;54jm4bbgzyl0txauszo1mappu&quot;); // 	    if (E_headlabel) {</span>
+<span class="nc" id="L645">UNSUPPORTED(&quot;dw8yu56thd0wpolmtby8r5doo&quot;); // 		for (e = agfstin(g, n); e; e = agnxtin(g, e))</span>
+<span class="nc" id="L646">UNSUPPORTED(&quot;4h39n1vkqyqszgmg2o7d2pw7z&quot;); // 		    if (ED_head_label(AGMKOUT(e))) {</span>
+<span class="nc" id="L647">UNSUPPORTED(&quot;ex7h0x60y0l4oi3dsqg7sfk1t&quot;); // 			place_portlabel(AGMKOUT(e), NOT(0));</span>
+<span class="nc" id="L648">UNSUPPORTED(&quot;9u960ou1xs0cdsdn0qe8a13ye&quot;); // 			updateBB(g, ED_head_label(AGMKOUT(e)));</span>
+<span class="nc" id="L649">UNSUPPORTED(&quot;dkxvw03k2gg9anv4dbze06axd&quot;); // 		    }</span>
+<span class="nc" id="L650">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L651">UNSUPPORTED(&quot;cqi8doquf015wo1bw8on36qct&quot;); // 	    if (E_taillabel) {</span>
+<span class="nc" id="L652">UNSUPPORTED(&quot;6gnq0yj07udpwxbuc86k8yysb&quot;); // 		for (e = agfstout(g, n); e; e = agnxtout(g, e)) {</span>
+<span class="nc" id="L653">UNSUPPORTED(&quot;ejz8yrj8mh0l0gdl5zeaht1ex&quot;); // 		    if (ED_tail_label(e)) {</span>
+<span class="nc" id="L654">UNSUPPORTED(&quot;9pdg7peez077ldl84zfh73o1w&quot;); // 			if (place_portlabel(e, 0))</span>
+<span class="nc" id="L655">UNSUPPORTED(&quot;6jup6d9gfnx4b1wptmtw09n6w&quot;); // 			    updateBB(g, ED_tail_label(e));</span>
+<span class="nc" id="L656">UNSUPPORTED(&quot;dkxvw03k2gg9anv4dbze06axd&quot;); // 		    }</span>
+<span class="nc" id="L657">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L658">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L659">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+    /* end vladimir */
+<span class="pc bpc" id="L662" title="1 of 2 branches missed.">    if (et != ET_CURVED) {</span>
+<span class="fc" id="L663">	Memory.free(edges);</span>
+<span class="fc" id="L664">	Memory.free(P.boxes);</span>
+<span class="fc" id="L665">	Memory.free(P);</span>
+<span class="fc" id="L666">	Memory.free(sd.Rank_box);</span>
+<span class="fc" id="L667">	routesplinesterm(zz);</span>
+    } 
+<span class="fc" id="L669">    zz.State = GVSPLINES;</span>
+<span class="fc" id="L670">    zz.EdgeLabelsDone = 1;</span>
+} finally {
+<span class="fc" id="L672">LEAVING(&quot;6agx6m2qof9lg57co232lwakj&quot;,&quot;_dot_splines&quot;);</span>
+}
+<span class="fc" id="L674">}</span>
+
+
+
+
+//3 5n306wbdfjbfnimdo9lg6jjaa
+// void dot_splines(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;dot_splines&quot;, key=&quot;5n306wbdfjbfnimdo9lg6jjaa&quot;, definition=&quot;void dot_splines(graph_t * g)&quot;)
+public static void dot_splines(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L684">ENTERING(&quot;5n306wbdfjbfnimdo9lg6jjaa&quot;,&quot;dot_splines&quot;);</span>
+try {
+<span class="fc" id="L686">    _dot_splines (zz, g, 1);</span>
+} finally {
+<span class="fc" id="L688">LEAVING(&quot;5n306wbdfjbfnimdo9lg6jjaa&quot;,&quot;dot_splines&quot;);</span>
+}
+<span class="fc" id="L690">}</span>
+
+
+
+
+//3 8jja9ukzsq8tlb9yy7uzavg91
+// static void  place_vnlabel(node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;place_vnlabel&quot;, key=&quot;8jja9ukzsq8tlb9yy7uzavg91&quot;, definition=&quot;static void  place_vnlabel(node_t * n)&quot;)
+public static void place_vnlabel(ST_Agnode_s n) {
+<span class="fc" id="L700">ENTERING(&quot;8jja9ukzsq8tlb9yy7uzavg91&quot;,&quot;place_vnlabel&quot;);</span>
+try {
+<span class="fc" id="L702">    final ST_pointf dimen = new ST_pointf();</span>
+    double width;
+    ST_Agedge_s e;
+<span class="pc bpc" id="L705" title="1 of 2 branches missed.">    if (ND_in(n).size == 0)</span>
+<span class="nc" id="L706">	return;			/* skip flat edge labels here */</span>
+<span class="fc bfc" id="L707" title="All 2 branches covered.">    for (e = (ST_Agedge_s) ND_out(n).list.get_(0); ED_edge_type(e) != 0;</span>
+<span class="fc" id="L708">	 e = ED_to_orig(e));</span>
+<span class="fc" id="L709">    dimen.___(ED_label(e).dimen);</span>
+<span class="fc bfc" id="L710" title="All 2 branches covered.">    width = GD_flip(agraphof(n)) ? dimen.y : dimen.x;</span>
+<span class="fc" id="L711">    ED_label(e).pos.x = ND_coord(n).x + width / 2.0;</span>
+<span class="fc" id="L712">    ED_label(e).pos.y = ND_coord(n).y;</span>
+<span class="fc" id="L713">    ED_label(e).set= false ? 0 : 1;</span>
+} finally {
+<span class="fc" id="L715">LEAVING(&quot;8jja9ukzsq8tlb9yy7uzavg91&quot;,&quot;place_vnlabel&quot;);</span>
+}
+<span class="fc" id="L717">}</span>
+
+
+
+
+//3 598jn37hjkm7j0kcg2nmdvlwq
+// static void  setflags(edge_t *e, int hint1, int hint2, int f3) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;setflags&quot;, key=&quot;598jn37hjkm7j0kcg2nmdvlwq&quot;, definition=&quot;static void  setflags(edge_t *e, int hint1, int hint2, int f3)&quot;)
+public static void setflags(ST_Agedge_s e, int hint1, int hint2, int f3) {
+<span class="fc" id="L727">ENTERING(&quot;598jn37hjkm7j0kcg2nmdvlwq&quot;,&quot;setflags&quot;);</span>
+try {
+    int f1, f2;
+<span class="fc bfc" id="L730" title="All 2 branches covered.">    if (hint1 != 0)</span>
+<span class="fc" id="L731">	f1 = hint1;</span>
+    else {
+<span class="fc bfc" id="L733" title="All 2 branches covered.">	if (agtail(e) == aghead(e))</span>
+<span class="pc bpc" id="L734" title="2 of 4 branches missed.">	    if (ED_tail_port(e).defined || ED_head_port(e).defined)</span>
+<span class="nc" id="L735">		f1 = 4;</span>
+	    else
+<span class="fc" id="L737">		f1 = 8;</span>
+<span class="pc bpc" id="L738" title="1 of 2 branches missed.">	else if (ND_rank(agtail(e)) == ND_rank(aghead(e)))</span>
+<span class="fc" id="L739">	    f1 = 2;</span>
+	else
+<span class="nc" id="L741">	    f1 = 1;</span>
+    }
+<span class="fc bfc" id="L743" title="All 2 branches covered.">    if (hint2 != 0)</span>
+<span class="fc" id="L744">	f2 = hint2;</span>
+    else {
+<span class="pc bpc" id="L746" title="1 of 2 branches missed.">	if (f1 == 1)</span>
+<span class="nc bnc" id="L747" title="All 2 branches missed.">	    f2 = (ND_rank(agtail(e)) &lt; ND_rank(aghead(e))) ? 16 : 32;</span>
+<span class="fc bfc" id="L748" title="All 2 branches covered.">	else if (f1 == 2)</span>
+<span class="pc bpc" id="L749" title="1 of 2 branches missed.">	    f2 = (ND_order(agtail(e)) &lt; ND_order(aghead(e))) ?  16 : 32;</span>
+	else			/* f1 == SELF*EDGE */
+<span class="fc" id="L751">	    f2 = 16;</span>
+    }
+<span class="fc" id="L753">    ED_tree_index(e, (f1 | f2 | f3));</span>
+} finally {
+<span class="fc" id="L755">LEAVING(&quot;598jn37hjkm7j0kcg2nmdvlwq&quot;,&quot;setflags&quot;);</span>
+}
+<span class="fc" id="L757">}</span>
+
+
+<span class="fc" id="L760">public static CFunction edgecmp = new CFunctionAbstract(&quot;edgecmp&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L763">		return edgecmp((CArrayOfStar&lt;ST_Agedge_s&gt;)args[0], (CArrayOfStar&lt;ST_Agedge_s&gt;)args[1]);</span>
+	}};
+
+/* edgecmp:
+ * lexicographically order edges by
+ *  - edge type
+ *  - |rank difference of nodes|
+ *  - |x difference of nodes|
+ *  - id of witness edge for equivalence class
+ *  - port comparison
+ *  - graph type
+ *  - labels if flat edges
+ *  - edge id
+ */
+//3 1nf1s6wkn35ptjn884ii56fh
+// static int edgecmp(edge_t** ptr0, edge_t** ptr1) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;edgecmp&quot;, key=&quot;1nf1s6wkn35ptjn884ii56fh&quot;, definition=&quot;static int edgecmp(edge_t** ptr0, edge_t** ptr1)&quot;)
+public static int edgecmp(CArrayOfStar&lt;ST_Agedge_s&gt; ptr0, CArrayOfStar&lt;ST_Agedge_s&gt; ptr1) {
+<span class="fc" id="L782">ENTERING(&quot;1nf1s6wkn35ptjn884ii56fh&quot;,&quot;edgecmp&quot;);</span>
+try {
+<span class="fc" id="L784">    final ST_Agedgeinfo_t fwdedgeai = new ST_Agedgeinfo_t(), fwdedgebi = new ST_Agedgeinfo_t();</span>
+<span class="fc" id="L785">    final ST_Agedgepair_s fwdedgea = new ST_Agedgepair_s(), fwdedgeb = new ST_Agedgepair_s();</span>
+    ST_Agedge_s e0, e1, ea, eb, le0, le1;
+    int et0, et1, v0, v1, rv;
+    double t0, t1;
+<span class="fc" id="L789">    fwdedgea.out.base.data = fwdedgeai;</span>
+<span class="fc" id="L790">    fwdedgeb.out.base.data = fwdedgebi;</span>
+<span class="fc" id="L791">    e0 = ptr0.get_(0);</span>
+<span class="fc" id="L792">    e1 = ptr1.get_(0);</span>
+<span class="fc" id="L793">    et0 = ED_tree_index(e0) &amp; 15;</span>
+<span class="fc" id="L794">    et1 = ED_tree_index(e1) &amp; 15;</span>
+<span class="fc bfc" id="L795" title="All 2 branches covered.">    if (et0 != et1)</span>
+<span class="fc" id="L796">	return (et1 - et0);</span>
+<span class="fc" id="L797">    le0 = getmainedge(e0);</span>
+<span class="fc" id="L798">    le1 = getmainedge(e1);</span>
+<span class="fc" id="L799">    t0 = ND_rank(agtail(le0)) - ND_rank(aghead(le0));</span>
+<span class="fc" id="L800">    t1 = ND_rank(agtail(le1)) - ND_rank(aghead(le1));</span>
+<span class="fc" id="L801">    v0 = Math.abs((int)t0);   /* ugly, but explicit as to how we avoid equality tests on fp numbers */</span>
+<span class="fc" id="L802">    v1 = Math.abs((int)t1);</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">    if (v0 != v1)</span>
+<span class="fc" id="L804">	return (v0 - v1);</span>
+<span class="fc" id="L805">    t0 = ND_coord(agtail(le0)).x - ND_coord(aghead(le0)).x;</span>
+<span class="fc" id="L806">    t1 = ND_coord(agtail(le1)).x - ND_coord(aghead(le1)).x;</span>
+<span class="fc" id="L807">    v0 = Math.abs((int)t0);</span>
+<span class="fc" id="L808">    v1 = Math.abs((int)t1);</span>
+<span class="fc bfc" id="L809" title="All 2 branches covered.">    if (v0 != v1)</span>
+<span class="fc" id="L810">	return (v0 - v1);</span>
+    /* This provides a cheap test for edges having the same set of endpoints.  */
+<span class="fc bfc" id="L812" title="All 2 branches covered.">    if (le0.tag.seq != le1.tag.seq)</span>
+<span class="fc" id="L813">	return (le0.tag.seq - le1.tag.seq);</span>
+<span class="pc bpc" id="L814" title="2 of 4 branches missed.">    ea = (ED_tail_port(e0).defined || ED_head_port(e0).defined) ? e0 : le0;</span>
+<span class="pc bpc" id="L815" title="1 of 2 branches missed.">    if ((ED_tree_index(ea) &amp; 32)!=0) {</span>
+<span class="nc" id="L816">	MAKEFWDEDGE(fwdedgea.out, ea);</span>
+<span class="nc" id="L817">	ea = (ST_Agedge_s) fwdedgea.out;</span>
+    }
+<span class="pc bpc" id="L819" title="2 of 4 branches missed.">    eb = (ED_tail_port(e1).defined || ED_head_port(e1).defined) ? e1 : le1;</span>
+<span class="pc bpc" id="L820" title="1 of 2 branches missed.">    if ((ED_tree_index(eb) &amp; 32)!=0) {</span>
+<span class="nc" id="L821">	MAKEFWDEDGE(fwdedgeb.out, eb);</span>
+<span class="nc" id="L822">	eb = (ST_Agedge_s) fwdedgeb.out;</span>
+    }
+<span class="pc bpc" id="L824" title="1 of 2 branches missed.">    if ((rv = portcmp(ED_tail_port(ea), ED_tail_port(eb)))!=0)</span>
+<span class="nc" id="L825">	return rv;</span>
+<span class="pc bpc" id="L826" title="1 of 2 branches missed.">    if ((rv = portcmp(ED_head_port(ea), ED_head_port(eb)))!=0)</span>
+<span class="nc" id="L827">	return rv;</span>
+<span class="fc" id="L828">    et0 = ED_tree_index(e0) &amp; 192;</span>
+<span class="fc" id="L829">    et1 = ED_tree_index(e1) &amp; 192;</span>
+<span class="pc bpc" id="L830" title="1 of 2 branches missed.">    if (et0 != et1)</span>
+<span class="nc" id="L831">	return (et0 - et1);</span>
+<span class="pc bpc" id="L832" title="3 of 4 branches missed.">    if (et0 == 2 &amp;&amp; (ED_label(e0) != ED_label(e1)))</span>
+<span class="nc" id="L833">	 UNSUPPORTED(&quot;return (int) (ED_label(e0) - ED_label(e1))&quot;);</span>
+<span class="fc" id="L834">    return (e0.tag.seq - e1.tag.seq);</span>
+} finally {
+<span class="fc" id="L836">LEAVING(&quot;1nf1s6wkn35ptjn884ii56fh&quot;,&quot;edgecmp&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L842">public static CFunction edgelblcmpfn = new CFunctionAbstract(&quot;edgelblcmpfn&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L845">		return edgelblcmpfn((CArrayOfStar&lt;ST_Agedge_s&gt;)args[0], (CArrayOfStar&lt;ST_Agedge_s&gt;)args[1]);</span>
+	}};
+
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;edgelblcmpfn&quot;, key=&quot;bmsa24i3avg14po4sp17yh89k&quot;, definition=&quot;static int edgelblcmpfn(edge_t** ptr0, edge_t** ptr1)&quot;)
+public static int edgelblcmpfn(CArrayOfStar&lt;ST_Agedge_s&gt; ptr0, CArrayOfStar&lt;ST_Agedge_s&gt; ptr1) {
+<span class="fc" id="L851">ENTERING(&quot;bmsa24i3avg14po4sp17yh89k&quot;,&quot;edgelblcmpfn&quot;);</span>
+try {
+    ST_Agedge_s e0, e1;
+<span class="fc" id="L854">    final ST_pointf sz0 = new ST_pointf(), sz1 = new ST_pointf();</span>
+<span class="fc" id="L855">    e0 = ptr0.get_(0);</span>
+<span class="fc" id="L856">    e1 = ptr1.get_(0);</span>
+<span class="pc bpc" id="L857" title="1 of 2 branches missed.">    if (ED_label(e0)!=null) {</span>
+<span class="pc bpc" id="L858" title="1 of 2 branches missed.">	if (ED_label(e1)!=null) {</span>
+<span class="fc" id="L859">	    sz0.___(ED_label(e0).dimen);</span>
+<span class="fc" id="L860">	    sz1.___(ED_label(e1).dimen);</span>
+<span class="pc bpc" id="L861" title="1 of 2 branches missed.">	    if (sz0.x &gt; sz1.x) return -1;</span>
+<span class="nc bnc" id="L862" title="All 2 branches missed.">	    else if (sz0.x &lt; sz1.x) return 1;</span>
+<span class="nc bnc" id="L863" title="All 2 branches missed.">	    else if (sz0.y &gt; sz1.y) return -1;</span>
+<span class="nc bnc" id="L864" title="All 2 branches missed.">	    else if (sz0.y &lt; sz1.y) return 1;</span>
+<span class="nc" id="L865">	    else return 0;</span>
+	}
+	else
+<span class="nc" id="L868">	    return -1;</span>
+    }
+<span class="nc bnc" id="L870" title="All 2 branches missed.">    else if (ED_label(e1)!=null) {</span>
+<span class="nc" id="L871"> 	return 1;</span>
+    }
+    else
+<span class="nc" id="L874"> 	return 0;</span>
+} finally {
+<span class="fc" id="L876">LEAVING(&quot;bmsa24i3avg14po4sp17yh89k&quot;,&quot;edgelblcmpfn&quot;);</span>
+}
+}
+
+
+
+/* makeSimpleFlatLabels:
+ * This handles the second simplest case for flat edges between
+ * two adjacent nodes. We still invoke a dot on a rotated problem
+ * to handle edges with ports. This usually works, but fails for
+ * records because of their weird nature.
+ */
+//3 3xmylrnypvoqrj2yrxnomsj5k
+// static void makeSimpleFlatLabels (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et, int n_lbls) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;makeSimpleFlatLabels&quot;, key=&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;, definition=&quot;static void makeSimpleFlatLabels (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et, int n_lbls)&quot;)
+public static void makeSimpleFlatLabels(Globals zz, ST_Agnode_s tn, ST_Agnode_s hn, CArrayOfStar&lt;ST_Agedge_s&gt; edges, int ind, int cnt, int et, int n_lbls) {
+<span class="fc" id="L893">ENTERING(&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;,&quot;makeSimpleFlatLabels&quot;);</span>
+try {
+	CArray&lt;ST_pointf&gt; ps;
+<span class="fc" id="L896">    final ST_Ppoly_t poly = new ST_Ppoly_t();</span>
+<span class="fc" id="L897">    int pn[] = new int[1];</span>
+<span class="fc" id="L898">	ST_Agedge_s e = edges.get_(ind);</span>
+<span class="fc" id="L899">    final CArray&lt;ST_pointf&gt; points = CArray.&lt;ST_pointf&gt;ALLOC__(10, ZType.ST_pointf);</span>
+<span class="fc" id="L900">    final ST_pointf tp = new ST_pointf(), hp = new ST_pointf();</span>
+    int i, pointn;
+<span class="fc" id="L902">    double leftend, rightend, ctrx=0, ctry=0, miny, maxy;</span>
+<span class="fc" id="L903">    double uminx=0, umaxx=0;</span>
+<span class="fc" id="L904">    double lminx=0, lmaxx=0;</span>
+    
+<span class="fc" id="L906">    CArrayOfStar&lt;ST_Agedge_s&gt; earray = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(cnt, ZType.ST_Agedge_s);</span>
+    
+<span class="fc bfc" id="L908" title="All 2 branches covered.">    for (i = 0; i &lt; cnt; i++) {</span>
+<span class="fc" id="L909">	earray.set_(i, edges.get_(ind + i));</span>
+    }
+    
+<span class="fc" id="L912">    qsort(zz, earray,</span>
+    cnt,
+    dotsplines__c.edgelblcmpfn);
+<span class="fc" id="L915">    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).p));</span>
+<span class="fc" id="L916">    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).p));</span>
+    
+<span class="fc" id="L918">    leftend = tp.x+ND_rw(tn);</span>
+<span class="fc" id="L919">    rightend = hp.x-ND_lw(hn);</span>
+<span class="fc" id="L920">    ctrx = (leftend + rightend)/2.0;</span>
+    
+    /* do first edge */
+<span class="fc" id="L923">    e = earray.get_(0);</span>
+<span class="fc" id="L924">    pointn = 0;</span>
+<span class="fc" id="L925">    points.get__(pointn++).___(tp);</span>
+<span class="fc" id="L926">    points.get__(pointn++).___(tp);</span>
+<span class="fc" id="L927">    points.get__(pointn++).___(hp);</span>
+<span class="fc" id="L928">    points.get__(pointn++).___(hp);</span>
+<span class="fc" id="L929">    clip_and_install(zz, e, aghead(e), points, pointn, zz.sinfo);</span>
+<span class="fc" id="L930">    ED_label(e).pos.x = ctrx;</span>
+<span class="fc" id="L931">    ED_label(e).pos.y = (tp.y + (ED_label(e).dimen.y+6)/2.0);</span>
+<span class="fc" id="L932">    ED_label(e).set = 1;</span>
+    
+<span class="fc" id="L934">    miny = tp.y + 6/2.0;</span>
+<span class="fc" id="L935">    maxy = miny + ED_label(e).dimen.y;</span>
+<span class="fc" id="L936">    uminx = ctrx - (ED_label(e).dimen.x)/2.0;</span>
+<span class="fc" id="L937">    umaxx = ctrx + (ED_label(e).dimen.x)/2.0;</span>
+    
+<span class="fc bfc" id="L939" title="All 2 branches covered.">    for (i = 1; i &lt; n_lbls; i++) {</span>
+<span class="fc" id="L940">	e = earray.get_(i);</span>
+<span class="pc bpc" id="L941" title="1 of 2 branches missed.">	if (i%2!=0) {  /* down */</span>
+<span class="pc bpc" id="L942" title="1 of 2 branches missed.">	    if (i == 1) {</span>
+<span class="fc" id="L943">		lminx = ctrx - (ED_label(e).dimen.x)/2.0;</span>
+<span class="fc" id="L944">		lmaxx = ctrx + (ED_label(e).dimen.x)/2.0;</span>
+		}
+<span class="fc" id="L946">	    miny -= 6 + ED_label(e).dimen.y;</span>
+<span class="fc" id="L947">	    points.get__(0).___(tp);</span>
+<span class="fc" id="L948">	    points.get__(1).x = tp.x;</span>
+<span class="fc" id="L949">	    points.get__(1).y = miny - 6;</span>
+<span class="fc" id="L950">	    points.get__(2).x = hp.x;</span>
+<span class="fc" id="L951">	    points.get__(2).y = points.get__(1).y;</span>
+<span class="fc" id="L952">	    points.get__(3).___(hp);</span>
+<span class="fc" id="L953">	    points.get__(4).x = lmaxx;</span>
+<span class="fc" id="L954">	    points.get__(4).y = hp.y;</span>
+<span class="fc" id="L955">	    points.get__(5).x = lmaxx;</span>
+<span class="fc" id="L956">	    points.get__(5).y = miny;</span>
+<span class="fc" id="L957">	    points.get__(6).x = lminx;</span>
+<span class="fc" id="L958">	    points.get__(6).y = miny;</span>
+<span class="fc" id="L959">	    points.get__(7).x = lminx;</span>
+<span class="fc" id="L960">	    points.get__(7).y = tp.y;</span>
+<span class="fc" id="L961">	    ctry = miny + (ED_label(e).dimen.y)/2.0;</span>
+	}
+	else {   /* up */
+<span class="nc" id="L964">	    points.get__(0).___(tp);</span>
+<span class="nc" id="L965">	    points.get__(1).x = uminx;</span>
+<span class="nc" id="L966">	    points.get__(1).y = tp.y;</span>
+<span class="nc" id="L967">	    points.get__(2).x = uminx;</span>
+<span class="nc" id="L968">	    points.get__(2).y = maxy;</span>
+<span class="nc" id="L969">	    points.get__(3).x = umaxx;</span>
+<span class="nc" id="L970">	    points.get__(3).y = maxy;</span>
+<span class="nc" id="L971">	    points.get__(4).x = umaxx;</span>
+<span class="nc" id="L972">	    points.get__(4).y = hp.y;</span>
+<span class="nc" id="L973">	    points.get__(5).x = hp.x;</span>
+<span class="nc" id="L974">	    points.get__(5).y = hp.y;</span>
+<span class="nc" id="L975">	    points.get__(6).x = hp.x;</span>
+<span class="nc" id="L976">	    points.get__(6).y = maxy + 6;</span>
+<span class="nc" id="L977">	    points.get__(7).x = tp.x;</span>
+<span class="nc" id="L978">	    points.get__(7).y = maxy + 6;</span>
+<span class="nc" id="L979">	    ctry =  maxy + (ED_label(e).dimen.y)/2.0 + 6;</span>
+<span class="nc" id="L980">	    maxy += ED_label(e).dimen.y + 6;</span>
+	}
+<span class="fc" id="L982">	poly.pn = 8;</span>
+<span class="fc" id="L983">	poly.ps = points;</span>
+<span class="pc bpc" id="L984" title="1 of 2 branches missed.">	ps = simpleSplineRoute (zz, tp, hp, poly, pn, et == (3 &lt;&lt; 1));</span>
+<span class="pc bpc" id="L985" title="1 of 2 branches missed.">	if (pn[0] == 0) return;</span>
+<span class="fc" id="L986">	ED_label(e).pos.x = ctrx;</span>
+<span class="fc" id="L987">	ED_label(e).pos.y = ctry;</span>
+<span class="fc" id="L988">	ED_label(e).set= false ? 0 : 1;</span>
+<span class="fc" id="L989">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+    }
+    
+    /* edges with no labels */
+<span class="pc bpc" id="L993" title="1 of 2 branches missed.">    for (; i &lt; cnt; i++) {</span>
+<span class="nc" id="L994">	e = earray.get_(i);</span>
+<span class="nc bnc" id="L995" title="All 2 branches missed.">	if (i%2!=0) {  /* down */</span>
+<span class="nc bnc" id="L996" title="All 2 branches missed.">	    if (i == 1) {</span>
+<span class="nc" id="L997">		lminx = (2*leftend + rightend)/3.0;</span>
+<span class="nc" id="L998">		lmaxx = (leftend + 2*rightend)/3.0;</span>
+	    }
+<span class="nc" id="L1000">	    miny -= 6;</span>
+<span class="nc" id="L1001">	    points.get__(0).___(tp);</span>
+<span class="nc" id="L1002">	    points.get__(1).x = tp.x;</span>
+<span class="nc" id="L1003">	    points.get__(1).y = miny - 6;</span>
+<span class="nc" id="L1004">	    points.get__(2).x = hp.x;</span>
+<span class="nc" id="L1005">	    points.get__(2).y = points.get__(1).y;</span>
+<span class="nc" id="L1006">	    points.get__(3).___(hp);</span>
+<span class="nc" id="L1007">	    points.get__(4).x = lmaxx;</span>
+<span class="nc" id="L1008">	    points.get__(4).y = hp.y;</span>
+<span class="nc" id="L1009">	    points.get__(5).x = lmaxx;</span>
+<span class="nc" id="L1010">	    points.get__(5).y = miny;</span>
+<span class="nc" id="L1011">	    points.get__(6).x = lminx;</span>
+<span class="nc" id="L1012">	    points.get__(6).y = miny;</span>
+<span class="nc" id="L1013">	    points.get__(7).x = lminx;</span>
+<span class="nc" id="L1014">	    points.get__(7).y = tp.y;</span>
+	}
+	else {   /* up */
+<span class="nc" id="L1017">	    points.get__(0).___(tp);</span>
+<span class="nc" id="L1018">	    points.get__(1).x = uminx;</span>
+<span class="nc" id="L1019">	    points.get__(1).y = tp.y;</span>
+<span class="nc" id="L1020">	    points.get__(2).x = uminx;</span>
+<span class="nc" id="L1021">	    points.get__(2).y = maxy;</span>
+<span class="nc" id="L1022">	    points.get__(3).x = umaxx;</span>
+<span class="nc" id="L1023">	    points.get__(3).y = maxy;</span>
+<span class="nc" id="L1024">	    points.get__(4).x = umaxx;</span>
+<span class="nc" id="L1025">	    points.get__(4).y = hp.y;</span>
+<span class="nc" id="L1026">	    points.get__(5).x = hp.x;</span>
+<span class="nc" id="L1027">	    points.get__(5).y = hp.y;</span>
+<span class="nc" id="L1028">	    points.get__(6).x = hp.x;</span>
+<span class="nc" id="L1029">	    points.get__(6).y = maxy + 6;</span>
+<span class="nc" id="L1030">	    points.get__(7).x = tp.x;</span>
+<span class="nc" id="L1031">	    points.get__(7).y = maxy + 6;</span>
+<span class="nc" id="L1032">	    maxy += + 6;</span>
+	}
+<span class="nc" id="L1034">	poly.pn = 8;</span>
+<span class="nc" id="L1035">	poly.ps = points;</span>
+<span class="nc bnc" id="L1036" title="All 2 branches missed.">	ps = simpleSplineRoute (zz, tp, hp, poly, pn, et == (3 &lt;&lt; 1));</span>
+<span class="nc bnc" id="L1037" title="All 2 branches missed.">	if (pn[0] == 0) return;</span>
+<span class="nc" id="L1038">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+    }
+    
+<span class="fc" id="L1041">    Memory.free (earray);</span>
+} finally {
+<span class="fc" id="L1043">LEAVING(&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;,&quot;makeSimpleFlatLabels&quot;);</span>
+}
+<span class="fc" id="L1045">}</span>
+
+
+
+
+/* makeSimpleFlat:
+ */
+//3 8kqyzk43ovc2sq6jegua6ytp
+// static void makeSimpleFlat (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;makeSimpleFlat&quot;, key=&quot;8kqyzk43ovc2sq6jegua6ytp&quot;, definition=&quot;static void makeSimpleFlat (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et)&quot;)
+public static void makeSimpleFlat(Globals zz, ST_Agnode_s tn, ST_Agnode_s hn, CArrayOfStar&lt;ST_Agedge_s&gt; edges, int ind, int cnt, int et) {
+<span class="fc" id="L1057">ENTERING(&quot;8kqyzk43ovc2sq6jegua6ytp&quot;,&quot;makeSimpleFlat&quot;);</span>
+try {
+<span class="fc" id="L1059">    ST_Agedge_s e = edges.get_(ind);</span>
+<span class="fc" id="L1060">    final CArray&lt;ST_pointf&gt; points = CArray.&lt;ST_pointf&gt;ALLOC__(10, ZType.ST_pointf);</span>
+<span class="fc" id="L1061">    final ST_pointf tp = new ST_pointf(), hp = new ST_pointf();</span>
+    int i, pointn;
+    double stepy, dy;
+
+<span class="fc" id="L1065">    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).p));</span>
+<span class="fc" id="L1066">    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).p));</span>
+    
+<span class="pc bpc" id="L1068" title="1 of 2 branches missed.">    stepy = (cnt &gt; 1) ? ND_ht(tn) / (double)(cnt - 1) : 0.;</span>
+<span class="pc bpc" id="L1069" title="1 of 2 branches missed.">    dy = tp.y - ((cnt &gt; 1) ? ND_ht(tn) / 2. : 0.);</span>
+    
+<span class="fc bfc" id="L1071" title="All 2 branches covered.">    for (i = 0; i &lt; cnt; i++) {</span>
+<span class="fc" id="L1072">	e = edges.get_(ind + i);</span>
+<span class="fc" id="L1073">	pointn = 0;</span>
+	
+<span class="pc bpc" id="L1075" title="3 of 4 branches missed.">	if ((et == ET_SPLINE) || (et == ET_LINE)) {</span>
+<span class="fc" id="L1076">	    points.get__(pointn++).___(tp);</span>
+<span class="fc" id="L1077">	    points.get__(pointn++).___(pointfof((2 * tp.x + hp.x) / 3, dy));</span>
+<span class="fc" id="L1078">	    points.get__(pointn++).___(pointfof((2 * hp.x + tp.x) / 3, dy));</span>
+<span class="fc" id="L1079">	    points.get__(pointn++).___(hp);</span>
+	}
+	else {   /* ET_PLINE */
+<span class="nc" id="L1082">UNSUPPORTED(&quot;cai7diqq01v8vb92u4mx1xh38&quot;); // 	    points[pointn++] = tp;</span>
+<span class="nc" id="L1083">UNSUPPORTED(&quot;cai7diqq01v8vb92u4mx1xh38&quot;); // 	    points[pointn++] = tp;</span>
+<span class="nc" id="L1084">UNSUPPORTED(&quot;bnd7kao912fmo940u1gz3cmws&quot;); // 	    points[pointn++] = pointfof((2 * tp.x + hp.x) / 3, dy);</span>
+<span class="nc" id="L1085">UNSUPPORTED(&quot;bnd7kao912fmo940u1gz3cmws&quot;); // 	    points[pointn++] = pointfof((2 * tp.x + hp.x) / 3, dy);</span>
+<span class="nc" id="L1086">UNSUPPORTED(&quot;bnd7kao912fmo940u1gz3cmws&quot;); // 	    points[pointn++] = pointfof((2 * tp.x + hp.x) / 3, dy);</span>
+<span class="nc" id="L1087">UNSUPPORTED(&quot;akir2i0ddpv2ombgdzzs9qqqa&quot;); // 	    points[pointn++] = pointfof((2 * hp.x + tp.x) / 3, dy);</span>
+<span class="nc" id="L1088">UNSUPPORTED(&quot;akir2i0ddpv2ombgdzzs9qqqa&quot;); // 	    points[pointn++] = pointfof((2 * hp.x + tp.x) / 3, dy);</span>
+<span class="nc" id="L1089">UNSUPPORTED(&quot;akir2i0ddpv2ombgdzzs9qqqa&quot;); // 	    points[pointn++] = pointfof((2 * hp.x + tp.x) / 3, dy);</span>
+<span class="nc" id="L1090">UNSUPPORTED(&quot;59cwjy3j5e0igp278migykzi&quot;); // 	    points[pointn++] = hp;</span>
+<span class="nc" id="L1091">UNSUPPORTED(&quot;59cwjy3j5e0igp278migykzi&quot;); // 	    points[pointn++] = hp;</span>
+	}
+<span class="fc" id="L1093">	dy += stepy;</span>
+<span class="fc" id="L1094">	clip_and_install(zz, e, aghead(e), points, pointn, zz.sinfo);</span>
+    }
+} finally {
+<span class="fc" id="L1097">LEAVING(&quot;8kqyzk43ovc2sq6jegua6ytp&quot;,&quot;makeSimpleFlat&quot;);</span>
+}
+<span class="fc" id="L1099">}</span>
+
+
+
+
+//3 bhnjospwghq4plid12757c928
+// static void make_flat_adj_edges(graph_t* g, path* P, edge_t** edges, int ind, int cnt, edge_t* e0,                     int et) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;make_flat_adj_edges&quot;, key=&quot;bhnjospwghq4plid12757c928&quot;, definition=&quot;static void make_flat_adj_edges(graph_t* g, path* P, edge_t** edges, int ind, int cnt, edge_t* e0,                     int et)&quot;)
+public static void make_flat_adj_edges(Globals zz, ST_Agraph_s g, ST_path P, CArrayOfStar&lt;ST_Agedge_s&gt; edges, int ind, int cnt, ST_Agedge_s e0, int et) {
+<span class="fc" id="L1109">ENTERING(&quot;bhnjospwghq4plid12757c928&quot;,&quot;make_flat_adj_edges&quot;);</span>
+try {
+    ST_Agnode_s n;
+    ST_Agnode_s tn, hn;
+    ST_Agedge_s e;
+<span class="fc" id="L1114">    int labels = 0, ports = 0;</span>
+    ST_Agraph_s auxg;
+    ST_Agraph_s subg;
+    ST_Agnode_s auxt, auxh;
+    ST_Agedge_s auxe;
+    int     i, j, midx, midy, leftx, rightx;
+<span class="fc" id="L1120">    final ST_pointf del = new ST_pointf();</span>
+<span class="fc" id="L1121">    ST_Agedge_s hvye = null;</span>
+    __ptr__ attrs;
+<span class="fc" id="L1123">    tn = agtail(e0); hn = aghead(e0);</span>
+<span class="fc bfc" id="L1124" title="All 2 branches covered.">    for (i = 0; i &lt; cnt; i++) {</span>
+<span class="fc" id="L1125">	e = edges.get_(ind + i);</span>
+<span class="fc bfc" id="L1126" title="All 2 branches covered.">	if (ED_label(e)!=null) labels++;</span>
+<span class="pc bpc" id="L1127" title="2 of 4 branches missed.">	if (ED_tail_port(e).defined || ED_head_port(e).defined) ports = 1;</span>
+    }
+<span class="pc bpc" id="L1129" title="1 of 2 branches missed.">    if (ports == 0) {</span>
+	/* flat edges without ports and labels can go straight left to right */
+<span class="fc bfc" id="L1131" title="All 2 branches covered.">	if (labels == 0) {</span>
+<span class="fc" id="L1132">	    makeSimpleFlat (zz, tn, hn, edges, ind, cnt, et);</span>
+	}
+	/* flat edges without ports but with labels take more work */
+	else {
+<span class="fc" id="L1136">	    makeSimpleFlatLabels (zz, tn, hn, edges, ind, cnt, et, labels);</span>
+	}
+<span class="fc" id="L1138">	return;</span>
+    }
+<span class="nc" id="L1140">UNSUPPORTED(&quot;3ua0mgcwxnpymnpiv77owaur2&quot;); //     attrs = (attr_state_t*)zmalloc(sizeof(attr_state_t));</span>
+<span class="nc" id="L1141">UNSUPPORTED(&quot;5qcpchn65culafc5t2ibioksb&quot;); //     auxg = cloneGraph (g, attrs);</span>
+<span class="nc" id="L1142">UNSUPPORTED(&quot;cwolismpef6l1w4xj5etx8w09&quot;); //     subg = agsubg (auxg, &quot;xxx&quot;,1);</span>
+<span class="nc" id="L1143">UNSUPPORTED(&quot;eocu0fte9egz381w3t8y5m64t&quot;); //     agbindrec(subg, &quot;Agraphinfo_t&quot;, sizeof(Agraphinfo_t), NOT(0));</span>
+<span class="nc" id="L1144">UNSUPPORTED(&quot;er19m8huvnjjn1v6rreiisdf6&quot;); //     agset (subg, &quot;rank&quot;, &quot;source&quot;);</span>
+<span class="nc" id="L1145">UNSUPPORTED(&quot;du7zwfglureqnv5g2wiammuuu&quot;); //     rightx = ND_coord(hn).x;</span>
+<span class="nc" id="L1146">UNSUPPORTED(&quot;5qa24lmumrg29fbtl0fo4d4z1&quot;); //     leftx = ND_coord(tn).x;</span>
+<span class="nc" id="L1147">UNSUPPORTED(&quot;b2x6j7m1cmmkcmdl5jo9wn0ap&quot;); //     if (GD_flip(g)) {</span>
+<span class="nc" id="L1148">UNSUPPORTED(&quot;2elvc001uux0vbe7sv4098e0c&quot;); //         node_t* n;</span>
+<span class="nc" id="L1149">UNSUPPORTED(&quot;6m8k99c09zmhwgcdsgo33dugz&quot;); //         n = tn;</span>
+<span class="nc" id="L1150">UNSUPPORTED(&quot;cenlfgoeymhe1am5z6632xniq&quot;); //         tn = hn;</span>
+<span class="nc" id="L1151">UNSUPPORTED(&quot;cp2gf6c1xawd2yjbqerw98we3&quot;); //         hn = n;</span>
+<span class="nc" id="L1152">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1153">UNSUPPORTED(&quot;1e98fnf9lsk7hwgjt70gh5r55&quot;); //     auxt = cloneNode(subg, tn, GD_flip(g)); </span>
+<span class="nc" id="L1154">UNSUPPORTED(&quot;a4xa8i1nw83hhnknv84280z00&quot;); //     auxh = cloneNode(auxg, hn, GD_flip(g)); </span>
+<span class="nc" id="L1155">UNSUPPORTED(&quot;1psokm6w9e7qw7fm2g1cayuk7&quot;); //     for (i = 0; i &lt; cnt; i++) {</span>
+<span class="nc" id="L1156">UNSUPPORTED(&quot;8hwholxjp08y4q0zbb561684q&quot;); // 	e = edges[ind + i];</span>
+<span class="nc" id="L1157">UNSUPPORTED(&quot;b3w40fpgfj0j66yi6j582thq2&quot;); // 	for (; ED_edge_type(e) != 0; e = ED_to_orig(e));</span>
+<span class="nc" id="L1158">UNSUPPORTED(&quot;bcu59ji1apn0rvv7aisl6e4pw&quot;); // 	if (agtail(e) == tn)</span>
+<span class="nc" id="L1159">UNSUPPORTED(&quot;4o3mq2ztiyxlbkpgcyygj4lny&quot;); // 	    auxe = cloneEdge (auxg, auxt, auxh, e);</span>
+<span class="nc" id="L1160">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L1161">UNSUPPORTED(&quot;3a7m578mxun4c8zv0jurzh7ox&quot;); // 	    auxe = cloneEdge (auxg, auxh, auxt, e);</span>
+<span class="nc" id="L1162">UNSUPPORTED(&quot;e6khamu7fhu5m7il9r2v06mui&quot;); // 	ED_alg(e) = auxe;</span>
+<span class="nc" id="L1163">UNSUPPORTED(&quot;64u9xrw8iwy3mtuupoktw7xoz&quot;); // 	if (!hvye &amp;&amp; !ED_tail_port(e).defined &amp;&amp; !ED_head_port(e).defined) {</span>
+<span class="nc" id="L1164">UNSUPPORTED(&quot;6t23nfzzldtl419g582pr0wjn&quot;); // 	    hvye = auxe;</span>
+<span class="nc" id="L1165">UNSUPPORTED(&quot;3fi2uxwkmau5664gnhzyosan5&quot;); // 	    ED_alg(hvye) = e;</span>
+<span class="nc" id="L1166">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1167">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1168">UNSUPPORTED(&quot;co4n3cv6ybhgvm341r3re61vu&quot;); //     if (!hvye) {</span>
+<span class="nc" id="L1169">UNSUPPORTED(&quot;a0sxhnruv0ip65j05wt7dciak&quot;); // 	hvye = agedge (auxg, auxt, auxh,NULL,1);</span>
+<span class="nc" id="L1170">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1171">UNSUPPORTED(&quot;26l323zwxztuc6sfnh36x7i9f&quot;); //     agxset (hvye, E_weight, &quot;10000&quot;);</span>
+<span class="nc" id="L1172">UNSUPPORTED(&quot;4pj2d4pwf7wi9fcu4v0byk83z&quot;); //     GD_gvc(auxg) = GD_gvc(g);</span>
+<span class="nc" id="L1173">UNSUPPORTED(&quot;b6dpjp9wgjzgoy0tq7b9kms74&quot;); //     GD_dotroot(auxg) = auxg;</span>
+<span class="nc" id="L1174">UNSUPPORTED(&quot;e08t9bx8ldb1d5e0582wg82sx&quot;); //     setEdgeType (auxg, et);</span>
+<span class="nc" id="L1175">UNSUPPORTED(&quot;8y4433lgybq35f4t7viqsvz5v&quot;); //     dot_init_node_edge(auxg);</span>
+<span class="nc" id="L1176">UNSUPPORTED(&quot;13c2nt4jwumpvtwudz38a4sb3&quot;); //     dot_rank(auxg, 0);</span>
+<span class="nc" id="L1177">UNSUPPORTED(&quot;6onnznyz9fof6r8we5z1e4r63&quot;); //     dot_mincross(auxg, 0);</span>
+<span class="nc" id="L1178">UNSUPPORTED(&quot;4ry85qx5xmahkm0mdv9s65azo&quot;); //     dot_position(auxg, 0);</span>
+<span class="nc" id="L1179">UNSUPPORTED(&quot;9921qakdgil2jvrvinke44xsz&quot;); //     /* reposition */</span>
+<span class="nc" id="L1180">UNSUPPORTED(&quot;ang8wy78872hvqkzvgfjwqwfl&quot;); //     midx = (ND_coord(tn).x - ND_rw(tn) + ND_coord(hn).x + ND_lw(hn))/2;</span>
+<span class="nc" id="L1181">UNSUPPORTED(&quot;2r2ywte92l423tbcdfvbhz3zh&quot;); //     midy = (ND_coord(auxt).x + ND_coord(auxh).x)/2;</span>
+<span class="nc" id="L1182">UNSUPPORTED(&quot;b8juh1dggb6sz4d9df42i150k&quot;); //     for (n = GD_nlist(auxg); n; n = ND_next(n)) {</span>
+<span class="nc" id="L1183">UNSUPPORTED(&quot;4prtyy13ox1fif8vil3g86g87&quot;); // 	if (n == auxt) {</span>
+<span class="nc" id="L1184">UNSUPPORTED(&quot;7gvpia4yo3bfvh5dl7uwr3dbe&quot;); // 	    ND_coord(n).y = rightx;</span>
+<span class="nc" id="L1185">UNSUPPORTED(&quot;2zsspnn0nfrdf9fx8sh3ld8j4&quot;); // 	    ND_coord(n).x = midy;</span>
+<span class="nc" id="L1186">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1187">UNSUPPORTED(&quot;ba2aaoh9ujy4ww9luial39sya&quot;); // 	else if (n == auxh) {</span>
+<span class="nc" id="L1188">UNSUPPORTED(&quot;aoy1ze6hhjuym44mkasdt19qp&quot;); // 	    ND_coord(n).y = leftx;</span>
+<span class="nc" id="L1189">UNSUPPORTED(&quot;2zsspnn0nfrdf9fx8sh3ld8j4&quot;); // 	    ND_coord(n).x = midy;</span>
+<span class="nc" id="L1190">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1191">UNSUPPORTED(&quot;80o8q2qh1hr671ladbyqzglnt&quot;); // 	else ND_coord(n).y = midx;</span>
+<span class="nc" id="L1192">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1193">UNSUPPORTED(&quot;48hn94qz2y2kb6lqc3462vlco&quot;); //     dot_sameports(auxg);</span>
+<span class="nc" id="L1194">UNSUPPORTED(&quot;bglhuc9grqkk9ozb97oeh0m3b&quot;); //     _dot_splines(auxg, 0);</span>
+<span class="nc" id="L1195">UNSUPPORTED(&quot;euvfot8f7xxnibd223qgsylew&quot;); //     dotneato_postprocess(auxg);</span>
+<span class="nc" id="L1196">UNSUPPORTED(&quot;4mg60pszj0s1anwg8zp0tq0ra&quot;); //        /* copy splines */</span>
+<span class="nc" id="L1197">UNSUPPORTED(&quot;b2x6j7m1cmmkcmdl5jo9wn0ap&quot;); //     if (GD_flip(g)) {</span>
+<span class="nc" id="L1198">UNSUPPORTED(&quot;baukf0b2l91bkgnfdc04rvuxe&quot;); // 	del.x = ND_coord(tn).x - ND_coord(auxt).y;</span>
+<span class="nc" id="L1199">UNSUPPORTED(&quot;96sq686mw9bvj7dli7wb241au&quot;); // 	del.y = ND_coord(tn).y + ND_coord(auxt).x;</span>
+<span class="nc" id="L1200">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1201">UNSUPPORTED(&quot;1nyzbeonram6636b1w955bypn&quot;); //     else {</span>
+<span class="nc" id="L1202">UNSUPPORTED(&quot;bxg8i1hqms0izrryxh2at6p7b&quot;); // 	del.x = ND_coord(tn).x - ND_coord(auxt).x;</span>
+<span class="nc" id="L1203">UNSUPPORTED(&quot;3xqgvdcxmu8e4eqtnhaa256tk&quot;); // 	del.y = ND_coord(tn).y - ND_coord(auxt).y;</span>
+<span class="nc" id="L1204">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1205">UNSUPPORTED(&quot;1psokm6w9e7qw7fm2g1cayuk7&quot;); //     for (i = 0; i &lt; cnt; i++) {</span>
+<span class="nc" id="L1206">UNSUPPORTED(&quot;47ogn0fae1yuy3kefpawcgcmx&quot;); // 	bezier* auxbz;</span>
+<span class="nc" id="L1207">UNSUPPORTED(&quot;4mujfxtr0wy7m1rbm57rwigo4&quot;); // 	bezier* bz;</span>
+<span class="nc" id="L1208">UNSUPPORTED(&quot;8hwholxjp08y4q0zbb561684q&quot;); // 	e = edges[ind + i];</span>
+<span class="nc" id="L1209">UNSUPPORTED(&quot;b3w40fpgfj0j66yi6j582thq2&quot;); // 	for (; ED_edge_type(e) != 0; e = ED_to_orig(e));</span>
+<span class="nc" id="L1210">UNSUPPORTED(&quot;3ii7nnxg3x8jpdk6lcijbizvf&quot;); // 	auxe = (edge_t*)ED_alg(e);</span>
+<span class="nc" id="L1211">UNSUPPORTED(&quot;5rc7uvn4xqfetekcci1uwri5v&quot;); // 	if ((auxe == hvye) &amp; !ED_alg(auxe)) continue; /* pseudo-edge */</span>
+<span class="nc" id="L1212">UNSUPPORTED(&quot;52vy3jbu67nebznqkhxxqthih&quot;); // 	auxbz = ED_spl(auxe)-&gt;list;</span>
+<span class="nc" id="L1213">UNSUPPORTED(&quot;azr1tv8blnu3i6b7wstpqv2tc&quot;); // 	bz = new_spline(e, auxbz-&gt;size);</span>
+<span class="nc" id="L1214">UNSUPPORTED(&quot;df84ie4egl6l1i82tz1zp7hg&quot;); // 	bz-&gt;sflag = auxbz-&gt;sflag;</span>
+<span class="nc" id="L1215">UNSUPPORTED(&quot;49bzonc32mbuchcsmw7csexdw&quot;); // 	bz-&gt;sp = transformf(auxbz-&gt;sp, del, GD_flip(g));</span>
+<span class="nc" id="L1216">UNSUPPORTED(&quot;9g1glpjjy5wmh7dyr6u0nb2cn&quot;); // 	bz-&gt;eflag = auxbz-&gt;eflag;</span>
+<span class="nc" id="L1217">UNSUPPORTED(&quot;44tftrsdjjuh1qjmxjpysmee3&quot;); // 	bz-&gt;ep = transformf(auxbz-&gt;ep, del, GD_flip(g));</span>
+<span class="nc" id="L1218">UNSUPPORTED(&quot;w0xl6ghxoii2ze2xmbbunv4d&quot;); // 	for (j = 0; j &lt;  auxbz-&gt;size; ) {</span>
+<span class="nc" id="L1219">UNSUPPORTED(&quot;22zm6ljvhpz7j2kiqee31nx61&quot;); // 	    pointf cp[4];</span>
+<span class="nc" id="L1220">UNSUPPORTED(&quot;4c88sva3ojadip5w3ehu782tp&quot;); // 	    cp[0] = bz-&gt;list[j] = transformf(auxbz-&gt;list[j], del, GD_flip(g));</span>
+<span class="nc" id="L1221">UNSUPPORTED(&quot;5jqtd9htl25cd3if3pjtl8dpo&quot;); // 	    j++;</span>
+<span class="nc" id="L1222">UNSUPPORTED(&quot;duk541biqshfomah8rlxeyigr&quot;); // 	    if ( j &gt;= auxbz-&gt;size ) </span>
+<span class="nc" id="L1223">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+<span class="nc" id="L1224">UNSUPPORTED(&quot;2qrbm7mhicvoxzk91h9x3gq64&quot;); // 	    cp[1] = bz-&gt;list[j] = transformf(auxbz-&gt;list[j], del, GD_flip(g));</span>
+<span class="nc" id="L1225">UNSUPPORTED(&quot;5jqtd9htl25cd3if3pjtl8dpo&quot;); // 	    j++;</span>
+<span class="nc" id="L1226">UNSUPPORTED(&quot;f4x9unnnofgnvy91ejtm90kw&quot;); // 	    cp[2] = bz-&gt;list[j] = transformf(auxbz-&gt;list[j], del, GD_flip(g));</span>
+<span class="nc" id="L1227">UNSUPPORTED(&quot;5jqtd9htl25cd3if3pjtl8dpo&quot;); // 	    j++;</span>
+<span class="nc" id="L1228">UNSUPPORTED(&quot;6pldfj31dg88qzsa012v8auxn&quot;); // 	    cp[3] = transformf(auxbz-&gt;list[j], del, GD_flip(g));</span>
+<span class="nc" id="L1229">UNSUPPORTED(&quot;2xvehdctlpogpd7xhdf1pku00&quot;); // 	    update_bb_bz(&amp;GD_bb(g), cp);</span>
+<span class="nc" id="L1230">UNSUPPORTED(&quot;4mhlpjofolwivhm0tl8cxznly&quot;); //         }</span>
+<span class="nc" id="L1231">UNSUPPORTED(&quot;8bokoh0vcnmvjcahn7de1z0kd&quot;); // 	if (ED_label(e)) {</span>
+<span class="nc" id="L1232">UNSUPPORTED(&quot;8ido4wfhvlqvczqfq5xz33kak&quot;); // 	    ED_label(e)-&gt;pos = transformf(ED_label(auxe)-&gt;pos, del, GD_flip(g));</span>
+<span class="nc" id="L1233">UNSUPPORTED(&quot;3tkba5lhpnujfu8lcz8lewsyn&quot;); // 	    ED_label(e)-&gt;set = NOT(0);</span>
+<span class="nc" id="L1234">UNSUPPORTED(&quot;c62p0r1jj71ceakgzrv2gorvu&quot;); // 	    updateBB(g, ED_label(e));</span>
+<span class="nc" id="L1235">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1236">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1237">UNSUPPORTED(&quot;22prbnbyxmapn1fcer1sktez7&quot;); //     cleanupCloneGraph (auxg, attrs);</span>
+<span class="nc" id="L1238">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1240">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L1242">LEAVING(&quot;bhnjospwghq4plid12757c928&quot;,&quot;make_flat_adj_edges&quot;);</span>
+}
+}
+
+
+
+
+//3 fybar4mljnmkh3kure5k1eod
+// static void makeFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e, pathend_t* endp,              boolean isBegin) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;makeFlatEnd&quot;, key=&quot;fybar4mljnmkh3kure5k1eod&quot;, definition=&quot;static void makeFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e, pathend_t* endp,              boolean isBegin)&quot;)
+public static void makeFlatEnd(Globals zz, ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agnode_s n, ST_Agedge_s e, ST_pathend_t endp, boolean isBegin) {
+<span class="nc" id="L1254">ENTERING(&quot;fybar4mljnmkh3kure5k1eod&quot;,&quot;makeFlatEnd&quot;);</span>
+try {
+<span class="nc" id="L1256">    final ST_boxf b = new ST_boxf();</span>
+<span class="nc" id="L1257">    b.___(maximal_bbox(g, sp, n, null, e));</span>
+<span class="nc" id="L1258">    endp.nb.___(b);</span>
+<span class="nc" id="L1259">    endp.sidemask = (1&lt;&lt;2);</span>
+<span class="nc bnc" id="L1260" title="All 2 branches missed.">    if (isBegin) beginpath(zz, P, e, 2, endp, false);</span>
+<span class="nc" id="L1261">    else endpath(zz, P, e, 2, endp, false);</span>
+<span class="nc" id="L1262">    b.UR.y = endp.boxes[endp.boxn[0] - 1].UR.y;</span>
+<span class="nc" id="L1263">    b.LL.y = endp.boxes[endp.boxn[0] - 1].LL.y;</span>
+<span class="nc" id="L1264">    b.___(makeregularend((ST_boxf) b, (1&lt;&lt;2), ND_coord(n).y + GD_rank(g).get__(ND_rank(n)).ht2));</span>
+<span class="nc bnc" id="L1265" title="All 4 branches missed.">    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="nc" id="L1266">UNSUPPORTED(&quot;cmjm4y40vf7wklmgz0ae4k36v&quot;); // 	endp-&gt;boxes[endp-&gt;boxn++] = b;</span>
+} finally {
+<span class="nc" id="L1268">LEAVING(&quot;fybar4mljnmkh3kure5k1eod&quot;,&quot;makeFlatEnd&quot;);</span>
+}
+<span class="nc" id="L1270">}</span>
+
+
+
+
+//3 w8ptjibydq995d2lexg85mku
+// static void make_flat_labeled_edge(graph_t* g, spline_info_t* sp, path* P, edge_t* e, int et) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;make_flat_labeled_edge&quot;, key=&quot;w8ptjibydq995d2lexg85mku&quot;, definition=&quot;static void make_flat_labeled_edge(graph_t* g, spline_info_t* sp, path* P, edge_t* e, int et)&quot;)
+public static void make_flat_labeled_edge(Globals zz, ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agedge_s e, int et) {
+<span class="nc" id="L1280">ENTERING(&quot;w8ptjibydq995d2lexg85mku&quot;,&quot;make_flat_labeled_edge&quot;);</span>
+try {
+    ST_Agnode_s tn, hn, ln;
+<span class="nc" id="L1283">    CArray&lt;ST_pointf&gt; ps = null;</span>
+<span class="nc" id="L1284">    final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();</span>
+<span class="nc" id="L1285">    final ST_boxf lb = new ST_boxf();</span>
+    int boxn, i, ydelta;
+<span class="nc" id="L1287">    int pn[] = new int[1];</span>
+    ST_Agedge_s f;
+<span class="nc" id="L1289">    final CArray&lt;ST_pointf&gt; points = CArray.&lt;ST_pointf&gt;ALLOC__(7, ZType.ST_pointf);</span>
+<span class="nc" id="L1290">    tn = agtail(e);</span>
+<span class="nc" id="L1291">    hn = aghead(e);</span>
+<span class="nc bnc" id="L1292" title="All 2 branches missed.">    for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));</span>
+<span class="nc" id="L1293">    ln = agtail(f);</span>
+<span class="nc" id="L1294">    ED_label(e).pos.___(ND_coord(ln));</span>
+<span class="nc" id="L1295">    ED_label(e).set= false ? 0 : 1;</span>
+<span class="nc bnc" id="L1296" title="All 2 branches missed.">    if (et == (1 &lt;&lt; 1)) {</span>
+<span class="nc" id="L1297">UNSUPPORTED(&quot;ataaqkehwb736ts2x6olzqokx&quot;); // 	pointf startp, endp, lp;</span>
+<span class="nc" id="L1298">UNSUPPORTED(&quot;48h6vk2e5niep4dmpua377248&quot;); // 	startp = add_pointf(ND_coord(tn), ED_tail_port(e).p);</span>
+<span class="nc" id="L1299">UNSUPPORTED(&quot;8fokfn1629eyiqnzi7mey9o2q&quot;); // 	endp = add_pointf(ND_coord(hn), ED_head_port(e).p);</span>
+<span class="nc" id="L1300">UNSUPPORTED(&quot;8zpih1olxdgp3sxk2br3lezzx&quot;); //         lp = ED_label(e)-&gt;pos;</span>
+<span class="nc" id="L1301">UNSUPPORTED(&quot;1sblcap44288tmc3cr80iqpj5&quot;); // 	lp.y -= (ED_label(e)-&gt;dimen.y)/2.0;</span>
+<span class="nc" id="L1302">UNSUPPORTED(&quot;8ew9p3k3j0b33dnq0ntgbb6x8&quot;); // 	points[1] = points[0] = startp;</span>
+<span class="nc" id="L1303">UNSUPPORTED(&quot;16h577fdghqtaeot735guew4e&quot;); // 	points[2] = points[3] = points[4] = lp;</span>
+<span class="nc" id="L1304">UNSUPPORTED(&quot;9zjfovamhwwehbviws68s5woy&quot;); // 	points[5] = points[6] = endp;</span>
+<span class="nc" id="L1305">UNSUPPORTED(&quot;68ojpcos92c96bc0i5ag1yb6v&quot;); // 	ps = points;</span>
+<span class="nc" id="L1306">UNSUPPORTED(&quot;1uunj4jbr2uhiqxwor6rzmr3j&quot;); // 	pn = 7;</span>
+    }
+    else {
+<span class="nc" id="L1309">	lb.LL.x = ND_coord(ln).x - ND_lw(ln);</span>
+<span class="nc" id="L1310">	lb.UR.x = ND_coord(ln).x + ND_rw(ln);</span>
+<span class="nc" id="L1311">	lb.UR.y = ND_coord(ln).y + ND_ht(ln)/2;</span>
+<span class="nc" id="L1312">	ydelta = (int)(ND_coord(ln).y - GD_rank(g).get__(ND_rank(tn)).ht1 -</span>
+<span class="nc" id="L1313">		ND_coord(tn).y + GD_rank(g).get__(ND_rank(tn)).ht2);</span>
+<span class="nc" id="L1314">	ydelta = (int)(ydelta / 6.);</span>
+<span class="nc" id="L1315">	lb.LL.y = lb.UR.y - Math.max(5.,ydelta); </span>
+<span class="nc" id="L1316">	boxn = 0;</span>
+<span class="nc" id="L1317">	makeFlatEnd (zz, g, sp, P, tn, e,  tend, true);</span>
+<span class="nc" id="L1318">	makeFlatEnd (zz, g, sp, P, hn, e,  hend, false);</span>
+<span class="nc" id="L1319">	zz.boxes[boxn].LL.x = tend.boxes[tend.boxn[0] - 1].LL.x; </span>
+<span class="nc" id="L1320">	zz.boxes[boxn].LL.y = tend.boxes[tend.boxn[0] - 1].UR.y; </span>
+<span class="nc" id="L1321">	zz.boxes[boxn].UR.x = lb.LL.x;</span>
+<span class="nc" id="L1322">	zz.boxes[boxn].UR.y = lb.LL.y;</span>
+<span class="nc" id="L1323">	boxn++;</span>
+<span class="nc" id="L1324">	zz.boxes[boxn].LL.x = tend.boxes[tend.boxn[0] - 1].LL.x; </span>
+<span class="nc" id="L1325">	zz.boxes[boxn].LL.y = lb.LL.y;</span>
+<span class="nc" id="L1326">	zz.boxes[boxn].UR.x = hend.boxes[hend.boxn[0] - 1].UR.x;</span>
+<span class="nc" id="L1327">	zz.boxes[boxn].UR.y = lb.UR.y;</span>
+<span class="nc" id="L1328">	boxn++;</span>
+<span class="nc" id="L1329">	zz.boxes[boxn].LL.x = lb.UR.x;</span>
+<span class="nc" id="L1330">	zz.boxes[boxn].UR.y = lb.LL.y;</span>
+<span class="nc" id="L1331">	zz.boxes[boxn].LL.y = hend.boxes[hend.boxn[0] - 1].UR.y; </span>
+<span class="nc" id="L1332">	zz.boxes[boxn].UR.x = hend.boxes[hend.boxn[0] - 1].UR.x;</span>
+<span class="nc" id="L1333">	boxn++;</span>
+<span class="nc bnc" id="L1334" title="All 2 branches missed.">	for (i = 0; i &lt; tend.boxn[0]; i++) add_box(P, tend.boxes[i]);</span>
+<span class="nc bnc" id="L1335" title="All 2 branches missed.">	for (i = 0; i &lt; boxn; i++) add_box(P, zz.boxes[i]);</span>
+<span class="nc bnc" id="L1336" title="All 2 branches missed.">	for (i = hend.boxn[0] - 1; i &gt;= 0; i--) add_box(P, hend.boxes[i]);</span>
+<span class="nc bnc" id="L1337" title="All 2 branches missed.">	if (et == (5 &lt;&lt; 1)) ps = routesplines(zz, P, pn);</span>
+<span class="nc" id="L1338">	else ps = routepolylines(zz, P, pn);</span>
+<span class="nc bnc" id="L1339" title="All 2 branches missed.">	if (pn[0] == 0) return;</span>
+    }
+<span class="nc" id="L1341">    clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+} finally {
+<span class="nc" id="L1343">LEAVING(&quot;w8ptjibydq995d2lexg85mku&quot;,&quot;make_flat_labeled_edge&quot;);</span>
+}
+<span class="nc" id="L1345">}</span>
+
+
+
+
+//3 d97ga7gm34rs6r0jo494nhhuo
+// static void make_flat_bottom_edges(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int  	ind, int cnt, edge_t* e, int splines) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;make_flat_bottom_edges&quot;, key=&quot;d97ga7gm34rs6r0jo494nhhuo&quot;, definition=&quot;static void make_flat_bottom_edges(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int  	ind, int cnt, edge_t* e, int splines)&quot;)
+public static Object make_flat_bottom_edges(Object... arg_) {
+<span class="nc" id="L1355">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L1356">UNSUPPORTED(&quot;bkp39vt080is6iiqobsw59sk9&quot;); // make_flat_bottom_edges(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int </span>
+<span class="nc" id="L1357">UNSUPPORTED(&quot;2gat0ltxh7j57lspwmm9s9x7j&quot;); // 	ind, int cnt, edge_t* e, int splines)</span>
+<span class="nc" id="L1358">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1359">UNSUPPORTED(&quot;5np4z3gp6cfmicyuz91nownp8&quot;); //     node_t *tn, *hn;</span>
+<span class="nc" id="L1360">UNSUPPORTED(&quot;3zgmm04g7gq65c57gco0id1eb&quot;); //     int j, i, r;</span>
+<span class="nc" id="L1361">UNSUPPORTED(&quot;5wdd96amz7w1sym59mg5nfj51&quot;); //     double stepx, stepy, vspace;</span>
+<span class="nc" id="L1362">UNSUPPORTED(&quot;63ozqzusft8gpehyaqrdjyr1&quot;); //     rank_t* nextr;</span>
+<span class="nc" id="L1363">UNSUPPORTED(&quot;7hps2kejtrotcphg5gymma43b&quot;); //     int pn;</span>
+<span class="nc" id="L1364">UNSUPPORTED(&quot;2rkzhui0essisp5zlw44vx4j9&quot;); //     pointf *ps;</span>
+<span class="nc" id="L1365">UNSUPPORTED(&quot;32b8td88encjfj6yd1sp8bef&quot;); //     pathend_t tend, hend;</span>
+<span class="nc" id="L1366">UNSUPPORTED(&quot;d0x4emyekwlcpua99voy3764p&quot;); //     tn = agtail(e);</span>
+<span class="nc" id="L1367">UNSUPPORTED(&quot;axoua6xpo7xc40u2oj0a8dmr9&quot;); //     hn = aghead(e);</span>
+<span class="nc" id="L1368">UNSUPPORTED(&quot;63jjxtcojh1aq4na9u4w2a6xe&quot;); //     r = ND_rank(tn);</span>
+<span class="nc" id="L1369">UNSUPPORTED(&quot;atjnavwfg3xe4ygorslb4vvtv&quot;); //     if (r &lt; GD_maxrank(g)) {</span>
+<span class="nc" id="L1370">UNSUPPORTED(&quot;6b35lbhficoaf5216p3sdq1cj&quot;); // 	nextr = GD_rank(g) + (r+1);</span>
+<span class="nc" id="L1371">UNSUPPORTED(&quot;bj0cch0dmhpux7wm3fg4zg368&quot;); // 	vspace = ND_coord(tn).y - GD_rank(g)[r].pht1 -</span>
+<span class="nc" id="L1372">UNSUPPORTED(&quot;dqcrkagghulp8u9iuoyckepf7&quot;); // 		(ND_coord(nextr-&gt;v[0]).y + nextr-&gt;pht2);</span>
+<span class="nc" id="L1373">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1374">UNSUPPORTED(&quot;1nyzbeonram6636b1w955bypn&quot;); //     else {</span>
+<span class="nc" id="L1375">UNSUPPORTED(&quot;1sai54q4zfayczfcrklgw4x17&quot;); // 	vspace = GD_ranksep(g);</span>
+<span class="nc" id="L1376">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1377">UNSUPPORTED(&quot;dyxkx5ftlgbeem7089pcu1qo4&quot;); //     stepx = ((double)(sp-&gt;Multisep)) / (cnt+1); </span>
+<span class="nc" id="L1378">UNSUPPORTED(&quot;63qqo8mqbn6alfa5k3gfalz53&quot;); //     stepy = vspace / (cnt+1);</span>
+<span class="nc" id="L1379">UNSUPPORTED(&quot;euw24sa4cgazdf9z7a3sretis&quot;); //     makeBottomFlatEnd (g, sp, P, tn, e, &amp;tend, NOT(0));</span>
+<span class="nc" id="L1380">UNSUPPORTED(&quot;c8ip2hla7pb8tz4fhsj5m34wk&quot;); //     makeBottomFlatEnd (g, sp, P, hn, e, &amp;hend, 0);</span>
+<span class="nc" id="L1381">UNSUPPORTED(&quot;1psokm6w9e7qw7fm2g1cayuk7&quot;); //     for (i = 0; i &lt; cnt; i++) {</span>
+<span class="nc" id="L1382">UNSUPPORTED(&quot;3smlz0a87gj8w58rwau2ewq23&quot;); // 	int boxn;</span>
+<span class="nc" id="L1383">UNSUPPORTED(&quot;bg5tj2hjixth58v04043jb3do&quot;); // 	boxf b;</span>
+<span class="nc" id="L1384">UNSUPPORTED(&quot;8hwholxjp08y4q0zbb561684q&quot;); // 	e = edges[ind + i];</span>
+<span class="nc" id="L1385">UNSUPPORTED(&quot;cpcqkqkhkaviy153h92apd82e&quot;); // 	boxn = 0;</span>
+<span class="nc" id="L1386">UNSUPPORTED(&quot;4wkbaj2424ug9j97efwu1r5mc&quot;); // 	b = tend.boxes[tend.boxn - 1];</span>
+<span class="nc" id="L1387">UNSUPPORTED(&quot;3eyfj1o1bqxlfqw7tq76qiiiz&quot;); //  	boxes[boxn].LL.x = b.LL.x; </span>
+<span class="nc" id="L1388">UNSUPPORTED(&quot;dwlejn7xasxh4yyoq2xodqnyj&quot;); // 	boxes[boxn].UR.y = b.LL.y; </span>
+<span class="nc" id="L1389">UNSUPPORTED(&quot;10o1e4r5ux8d7cr6zg379ss59&quot;); // 	boxes[boxn].UR.x = b.UR.x + (i + 1) * stepx;</span>
+<span class="nc" id="L1390">UNSUPPORTED(&quot;79f4mryzkqqs3t4sxnet9jc7b&quot;); // 	boxes[boxn].LL.y = b.LL.y - (i + 1) * stepy;</span>
+<span class="nc" id="L1391">UNSUPPORTED(&quot;cbrsymd5wpvadg3ziz4dypa50&quot;); // 	boxn++;</span>
+<span class="nc" id="L1392">UNSUPPORTED(&quot;7n7f256w4ewtzexwfxjo28b2&quot;); // 	boxes[boxn].LL.x = tend.boxes[tend.boxn - 1].LL.x; </span>
+<span class="nc" id="L1393">UNSUPPORTED(&quot;6in0ql0upnjg00mgj5k8av2m4&quot;); // 	boxes[boxn].UR.y = boxes[boxn-1].LL.y;</span>
+<span class="nc" id="L1394">UNSUPPORTED(&quot;46ftsiqovpzo9r0mnlc4nf83&quot;); // 	boxes[boxn].UR.x = hend.boxes[hend.boxn - 1].UR.x;</span>
+<span class="nc" id="L1395">UNSUPPORTED(&quot;4bjnn4mhczzd1un9rbib5glch&quot;); // 	boxes[boxn].LL.y = boxes[boxn].UR.y - stepy;</span>
+<span class="nc" id="L1396">UNSUPPORTED(&quot;cbrsymd5wpvadg3ziz4dypa50&quot;); // 	boxn++;</span>
+<span class="nc" id="L1397">UNSUPPORTED(&quot;6oycftap8apw4glb1s5jzineu&quot;); // 	b = hend.boxes[hend.boxn - 1];</span>
+<span class="nc" id="L1398">UNSUPPORTED(&quot;77c1sajrw9kfc7avomly90gm8&quot;); // 	boxes[boxn].UR.x = b.UR.x;</span>
+<span class="nc" id="L1399">UNSUPPORTED(&quot;e94nxsepfdq17q69drbro41je&quot;); // 	boxes[boxn].UR.y = b.LL.y;</span>
+<span class="nc" id="L1400">UNSUPPORTED(&quot;6cipt7th0uv2xfwyh4rvwignj&quot;); // 	boxes[boxn].LL.x = b.LL.x - (i + 1) * stepx;</span>
+<span class="nc" id="L1401">UNSUPPORTED(&quot;50uajtfbvgkrruywpjq9m4zoj&quot;); // 	boxes[boxn].LL.y = boxes[boxn-1].UR.y;</span>
+<span class="nc" id="L1402">UNSUPPORTED(&quot;cbrsymd5wpvadg3ziz4dypa50&quot;); // 	boxn++;</span>
+<span class="nc" id="L1403">UNSUPPORTED(&quot;eu29s7oeoca2yo9trhfhb9juy&quot;); // 	for (j = 0; j &lt; tend.boxn; j++) add_box(P, tend.boxes[j]);</span>
+<span class="nc" id="L1404">UNSUPPORTED(&quot;b8xs00axp4lkksof6hmim3n3x&quot;); // 	for (j = 0; j &lt; boxn; j++) add_box(P, boxes[j]);</span>
+<span class="nc" id="L1405">UNSUPPORTED(&quot;ahci7z910ypoj0e54wchvk54v&quot;); // 	for (j = hend.boxn - 1; j &gt;= 0; j--) add_box(P, hend.boxes[j]);</span>
+<span class="nc" id="L1406">UNSUPPORTED(&quot;7r9nsxbfy7w3csc04nxo97xpq&quot;); // 	if (splines) ps = routesplines(P, &amp;pn);</span>
+<span class="nc" id="L1407">UNSUPPORTED(&quot;dfku80ag90r137s9az9493oow&quot;); // 	else ps = routepolylines(P, &amp;pn);</span>
+<span class="nc" id="L1408">UNSUPPORTED(&quot;919jubmuis4tp1c1f87rvfhog&quot;); // 	if (pn == 0)</span>
+<span class="nc" id="L1409">UNSUPPORTED(&quot;6cprbghvenu9ldc0ez1ifc63q&quot;); // 	    return;</span>
+<span class="nc" id="L1410">UNSUPPORTED(&quot;62oxk9cc5wf0f8gqbothfte1f&quot;); // 	clip_and_install(e, aghead(e), ps, pn, &amp;sinfo);</span>
+<span class="nc" id="L1411">UNSUPPORTED(&quot;l1nh40fo9oar4mz31h14bc9i&quot;); // 	P-&gt;nbox = 0;</span>
+<span class="nc" id="L1412">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1413">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1415">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+/* make_flat_edge:
+ * Construct flat edges edges[ind...ind+cnt-1]
+ * There are 4 main cases:
+ *  - all edges between a and b where a and b are adjacent 
+ *  - one labeled edge
+ *  - all non-labeled edges with identical ports between non-adjacent a and b 
+ *     = connecting bottom to bottom/left/right - route along bottom
+ *     = the rest - route along top
+ */
+//3 6yr3jfkljl5w0z6dv354ryx63
+// static void make_flat_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;make_flat_edge&quot;, key=&quot;6yr3jfkljl5w0z6dv354ryx63&quot;, definition=&quot;static void make_flat_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et)&quot;)
+public static void make_flat_edge(Globals zz, ST_Agraph_s g, ST_spline_info_t sp, ST_path P, CArrayOfStar&lt;ST_Agedge_s&gt; edges, int ind, int cnt, int et) {
+<span class="fc" id="L1435">ENTERING(&quot;6yr3jfkljl5w0z6dv354ryx63&quot;,&quot;make_flat_edge&quot;);</span>
+try {
+    ST_Agnode_s tn, hn;
+<span class="fc" id="L1438">    final ST_Agedgeinfo_t fwdedgei = new ST_Agedgeinfo_t();</span>
+<span class="fc" id="L1439">    final ST_Agedgepair_s fwdedge = new ST_Agedgepair_s();</span>
+    ST_Agedge_s e;
+    int j, i, r, isAdjacent;
+    double stepx, stepy, vspace;
+    int tside, hside;
+<span class="fc" id="L1444">    int pn[] = new int[] {0};</span>
+    CArray&lt;ST_pointf&gt; ps;
+<span class="fc" id="L1446">    final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();</span>
+    
+<span class="fc" id="L1448">    fwdedge.out.base.data = fwdedgei;</span>
+    
+    /* Get sample edge; normalize to go from left to right */
+<span class="fc" id="L1451">    e = edges.get_(ind);</span>
+<span class="fc" id="L1452">    isAdjacent = ED_adjacent(e);</span>
+<span class="pc bpc" id="L1453" title="1 of 2 branches missed.">    if ((ED_tree_index(e) &amp; 32)!=0) {</span>
+<span class="nc" id="L1454">	MAKEFWDEDGE(fwdedge.out, e);</span>
+<span class="nc" id="L1455">	e = (ST_Agedge_s) fwdedge.out;</span>
+    }
+<span class="pc bfc" id="L1457" title="All 2 branches covered.">    for (i = 1; i &lt; cnt; i++) {</span>
+<span class="pc bpc" id="L1458" title="1 of 2 branches missed.">	if (ED_adjacent(edges.get_(ind+i))!=0) {</span>
+<span class="fc" id="L1459">	    isAdjacent = 1;</span>
+<span class="fc" id="L1460">	    break;</span>
+	}
+    }
+    /* The lead edge edges[ind] might not have been marked earlier as adjacent,
+     * so check them all.
+     */
+<span class="pc bpc" id="L1466" title="1 of 2 branches missed.">    if (isAdjacent!=0) {</span>
+<span class="fc" id="L1467">	make_flat_adj_edges (zz, g, P, edges, ind, cnt, e, et);</span>
+<span class="fc" id="L1468">	return;</span>
+    }
+<span class="nc bnc" id="L1470" title="All 2 branches missed.">    if (ED_label(e)!=null) {  /* edges with labels aren't multi-edges */</span>
+<span class="nc" id="L1471">	make_flat_labeled_edge (zz, g, sp, P, e, et);</span>
+<span class="nc" id="L1472">	return;</span>
+    }
+    
+<span class="nc bnc" id="L1475" title="All 2 branches missed.">    if (et == (1 &lt;&lt; 1)) {</span>
+<span class="nc" id="L1476">	makeSimpleFlat (zz, agtail(e), aghead(e), edges, ind, cnt, et);</span>
+<span class="nc" id="L1477">	return;</span>
+    }
+    
+<span class="nc" id="L1480">    tside = ED_tail_port(e).side;</span>
+<span class="nc" id="L1481">    hside = ED_head_port(e).side;</span>
+<span class="nc bnc" id="L1482" title="All 8 branches missed.">    if (((tside == (1&lt;&lt;0)) &amp;&amp; (hside != (1&lt;&lt;2))) ||</span>
+        ((hside == (1&lt;&lt;0)) &amp;&amp; (tside != (1&lt;&lt;2)))) {
+<span class="nc bnc" id="L1484" title="All 2 branches missed.">	make_flat_bottom_edges (g, sp, P, edges, ind, cnt, e, et == (5 &lt;&lt; 1));</span>
+<span class="nc" id="L1485">	return;</span>
+    }
+    
+<span class="nc" id="L1488">    tn = agtail(e);</span>
+<span class="nc" id="L1489">    hn = aghead(e);</span>
+<span class="nc" id="L1490">    r = ND_rank(tn);</span>
+<span class="nc bnc" id="L1491" title="All 2 branches missed.">    if (r &gt; 0) {</span>
+    	CArray&lt;ST_rank_t&gt; prevr;
+<span class="nc bnc" id="L1493" title="All 2 branches missed.">	if ((GD_has_labels(g) &amp; (1 &lt;&lt; 0))!=0)</span>
+<span class="nc" id="L1494">	    prevr = GD_rank(g).plus_(r-2);</span>
+	else
+<span class="nc" id="L1496">	    prevr = GD_rank(g).plus_(r-1);</span>
+<span class="nc" id="L1497">	vspace = ND_coord(prevr.get__(0).v.get_(0)).y - prevr.get__(0).ht1 - ND_coord(tn).y - GD_rank(g).get__(r).ht2;</span>
+<span class="nc" id="L1498">    }</span>
+    else {
+<span class="nc" id="L1500">	vspace = GD_ranksep(g);</span>
+    }
+<span class="nc" id="L1502">    stepx = ((double)sp.Multisep) / (cnt+1); </span>
+<span class="nc" id="L1503">    stepy = vspace / (cnt+1);</span>
+<span class="nc" id="L1504">    makeFlatEnd (zz, g, sp, P, tn, e, tend, true);</span>
+<span class="nc" id="L1505">    makeFlatEnd (zz, g, sp, P, hn, e, hend, false);</span>
+    
+<span class="nc bnc" id="L1507" title="All 2 branches missed.">    for (i = 0; i &lt; cnt; i++) {</span>
+	int boxn;
+<span class="nc" id="L1509">	final ST_boxf b = new ST_boxf();</span>
+<span class="nc" id="L1510">	e = edges.get_(ind + i);</span>
+<span class="nc" id="L1511">	boxn = 0;</span>
+<span class="nc" id="L1512">	b.___(tend.boxes[tend.boxn[0] - 1]);</span>
+<span class="nc" id="L1513"> 	zz.boxes[boxn].LL.x = b.LL.x; </span>
+<span class="nc" id="L1514">	zz.boxes[boxn].LL.y = b.UR.y; </span>
+<span class="nc" id="L1515">	zz.boxes[boxn].UR.x = b.UR.x + (i + 1) * stepx;</span>
+<span class="nc" id="L1516">	zz.boxes[boxn].UR.y = b.UR.y + (i + 1) * stepy;</span>
+<span class="nc" id="L1517">	boxn++;</span>
+<span class="nc" id="L1518">	zz.boxes[boxn].LL.x = (tend.boxes[tend.boxn[0] - 1]).LL.x; </span>
+<span class="nc" id="L1519">	zz.boxes[boxn].LL.y = (zz.boxes[boxn-1]).UR.y;</span>
+<span class="nc" id="L1520">	zz.boxes[boxn].UR.x = (hend.boxes[hend.boxn[0] - 1]).UR.x;</span>
+<span class="nc" id="L1521">	zz.boxes[boxn].UR.y = zz.boxes[boxn].LL.y + stepy;</span>
+<span class="nc" id="L1522">	boxn++;</span>
+<span class="nc" id="L1523">	b.___(hend.boxes[hend.boxn[0] - 1]);</span>
+<span class="nc" id="L1524">	zz.boxes[boxn].UR.x = b.UR.x;</span>
+<span class="nc" id="L1525">	zz.boxes[boxn].LL.y = b.UR.y;</span>
+<span class="nc" id="L1526">	zz.boxes[boxn].LL.x = b.LL.x - (i + 1) * stepx;</span>
+<span class="nc" id="L1527">	zz.boxes[boxn].UR.y = (zz.boxes[boxn-1]).LL.y;</span>
+<span class="nc" id="L1528">	boxn++;</span>
+<span class="nc bnc" id="L1529" title="All 2 branches missed.">	for (j = 0; j &lt; tend.boxn[0]; j++) add_box(P, tend.boxes[j]);</span>
+<span class="nc bnc" id="L1530" title="All 2 branches missed.">	for (j = 0; j &lt; boxn; j++) add_box(P, zz.boxes[j]);</span>
+<span class="nc bnc" id="L1531" title="All 2 branches missed.">	for (j = hend.boxn[0] - 1; j &gt;= 0; j--) add_box(P, hend.boxes[j]);</span>
+<span class="nc bnc" id="L1532" title="All 2 branches missed.">	if (et == (5 &lt;&lt; 1)) ps = routesplines(zz, P, pn);</span>
+<span class="nc" id="L1533">	else ps = routepolylines(zz, P, pn);</span>
+<span class="nc bnc" id="L1534" title="All 2 branches missed.">	if (pn[0] == 0)</span>
+<span class="nc" id="L1535">	    return;</span>
+<span class="nc" id="L1536">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+<span class="nc" id="L1537">	P.nbox = 0;</span>
+    }
+} finally {
+<span class="fc" id="L1540">LEAVING(&quot;6yr3jfkljl5w0z6dv354ryx63&quot;,&quot;make_flat_edge&quot;);</span>
+}
+<span class="nc" id="L1542">}</span>
+
+
+
+//3 2n9bpvx34fnukqu1f9u4v7v6n
+// static int  makeLineEdge(graph_t* g, edge_t* fe, pointf* points, node_t** hp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;makeLineEdge&quot;, key=&quot;2n9bpvx34fnukqu1f9u4v7v6n&quot;, definition=&quot;static int  makeLineEdge(graph_t* g, edge_t* fe, pointf* points, node_t** hp)&quot;)
+public static int makeLineEdge(ST_Agraph_s g, ST_Agedge_s fe, __ptr__ points, __ptr__ hp) {
+<span class="nc" id="L1551">ENTERING(&quot;2n9bpvx34fnukqu1f9u4v7v6n&quot;,&quot;makeLineEdge&quot;);</span>
+try {
+<span class="nc" id="L1553"> UNSUPPORTED(&quot;d9cz56vtrl0ri6hz88cumukuf&quot;); // static int </span>
+<span class="nc" id="L1554">UNSUPPORTED(&quot;1act0rov08v6lg5ydqldks7d1&quot;); // makeLineEdge(graph_t* g, edge_t* fe, pointf* points, node_t** hp)</span>
+<span class="nc" id="L1555">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1556">UNSUPPORTED(&quot;awgar8whid8l1c7lyj8w53w3i&quot;); //     int delr, pn;</span>
+<span class="nc" id="L1557">UNSUPPORTED(&quot;ewlm0dtv1gpudqhfx5nsr9d77&quot;); //     node_t* hn;</span>
+<span class="nc" id="L1558">UNSUPPORTED(&quot;cncpk333257fxnc9w8kfl8m70&quot;); //     node_t* tn;</span>
+<span class="nc" id="L1559">UNSUPPORTED(&quot;etezq0kgy6mttiwr53pna62d7&quot;); //     edge_t* e = fe;</span>
+<span class="nc" id="L1560">UNSUPPORTED(&quot;3ll9r1mvzzbhqrs4dwsduif44&quot;); //     pointf startp, endp, lp;</span>
+<span class="nc" id="L1561">UNSUPPORTED(&quot;bgjjpl6jaaa122twwwd0vif6x&quot;); //     pointf dimen;</span>
+<span class="nc" id="L1562">UNSUPPORTED(&quot;gdtli7sq5cifvdpg3ecrudew&quot;); //     double width, height;</span>
+<span class="nc" id="L1563">UNSUPPORTED(&quot;1pa1p9mnpooqack43qfpnoio2&quot;); //     while (ED_edge_type(e) != 0)</span>
+<span class="nc" id="L1564">UNSUPPORTED(&quot;bdmai1d040qmubf08ds339v9x&quot;); // 	e = ED_to_orig(e);</span>
+<span class="nc" id="L1565">UNSUPPORTED(&quot;axoua6xpo7xc40u2oj0a8dmr9&quot;); //     hn = aghead(e);</span>
+<span class="nc" id="L1566">UNSUPPORTED(&quot;d0x4emyekwlcpua99voy3764p&quot;); //     tn = agtail(e);</span>
+<span class="nc" id="L1567">UNSUPPORTED(&quot;b4x4vd9cei4o3tjifzw7pdec6&quot;); //     delr = ABS(ND_rank(hn)-ND_rank(tn));</span>
+<span class="nc" id="L1568">UNSUPPORTED(&quot;447fk34earndyf1qvvzttsxtk&quot;); //     if ((delr == 1) || ((delr == 2) &amp;&amp; (GD_has_labels(g) &amp; (1 &lt;&lt; 0))))</span>
+<span class="nc" id="L1569">UNSUPPORTED(&quot;c9ckhc8veujmwcw0ar3u3zld4&quot;); // 	return 0;</span>
+<span class="nc" id="L1570">UNSUPPORTED(&quot;cbnarpi971ox21zdds7a60axh&quot;); //     if (agtail(fe) == agtail(e)) {</span>
+<span class="nc" id="L1571">UNSUPPORTED(&quot;o7usaxh5vv7rla55dxzkfmk7&quot;); // 	*hp = hn;</span>
+<span class="nc" id="L1572">UNSUPPORTED(&quot;48h6vk2e5niep4dmpua377248&quot;); // 	startp = add_pointf(ND_coord(tn), ED_tail_port(e).p);</span>
+<span class="nc" id="L1573">UNSUPPORTED(&quot;8fokfn1629eyiqnzi7mey9o2q&quot;); // 	endp = add_pointf(ND_coord(hn), ED_head_port(e).p);</span>
+<span class="nc" id="L1574">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1575">UNSUPPORTED(&quot;1nyzbeonram6636b1w955bypn&quot;); //     else {</span>
+<span class="nc" id="L1576">UNSUPPORTED(&quot;3uxftvwe3olgfi579s8izpl76&quot;); //  	*hp = tn; </span>
+<span class="nc" id="L1577">UNSUPPORTED(&quot;akhrhgryddg74jqispnh1j1nn&quot;); // 	startp = add_pointf(ND_coord(hn), ED_head_port(e).p);</span>
+<span class="nc" id="L1578">UNSUPPORTED(&quot;dqdai9l5thna19ynowkfwstuh&quot;); // 	endp = add_pointf(ND_coord(tn), ED_tail_port(e).p);</span>
+<span class="nc" id="L1579">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1580">UNSUPPORTED(&quot;brrmfllffwlnqxljgrwy8x5pq&quot;); //     if (ED_label(e)) {</span>
+<span class="nc" id="L1581">UNSUPPORTED(&quot;et7phi46cskfaxzpfo97e1s5s&quot;); // 	dimen = ED_label(e)-&gt;dimen;</span>
+<span class="nc" id="L1582">UNSUPPORTED(&quot;z26zaj60vrdy38k1c2vk7law&quot;); // 	if (GD_flip(agraphof(hn))) {</span>
+<span class="nc" id="L1583">UNSUPPORTED(&quot;6mcl7j0bp09d061f0dywd1ru8&quot;); // 	    width = dimen.y;</span>
+<span class="nc" id="L1584">UNSUPPORTED(&quot;eax7dzvpgqzsiffa2dn2idrxe&quot;); // 	    height = dimen.x;</span>
+<span class="nc" id="L1585">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1586">UNSUPPORTED(&quot;8k75h069sv2k9b6tgz77dscwd&quot;); // 	else {</span>
+<span class="nc" id="L1587">UNSUPPORTED(&quot;de3o94hui5i4dbq9moun6h57f&quot;); // 	    width = dimen.x;</span>
+<span class="nc" id="L1588">UNSUPPORTED(&quot;41ge1nnwfokwi43f6tlkgmvb0&quot;); // 	    height = dimen.y;</span>
+<span class="nc" id="L1589">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1590">UNSUPPORTED(&quot;d9umd1qjkl4kkybpd7se993ij&quot;); // 	lp = ED_label(e)-&gt;pos, lp;</span>
+<span class="nc" id="L1591">UNSUPPORTED(&quot;arxilpbzpy5a2s8skwl644jj2&quot;); // 	if (leftOf (endp,startp,lp)) {</span>
+<span class="nc" id="L1592">UNSUPPORTED(&quot;7bfb4rovu9obr4fje0hi95e67&quot;); // 	    lp.x += width/2.0;</span>
+<span class="nc" id="L1593">UNSUPPORTED(&quot;7y2ejp6vr760aqh5qp4v5zdc8&quot;); // 	    lp.y -= height/2.0;</span>
+<span class="nc" id="L1594">UNSUPPORTED(&quot;9l9roc1u8a03ljwm2mmeaiqq2&quot;); // 	}    </span>
+<span class="nc" id="L1595">UNSUPPORTED(&quot;8k75h069sv2k9b6tgz77dscwd&quot;); // 	else {</span>
+<span class="nc" id="L1596">UNSUPPORTED(&quot;a4spf3n199lr00qkdb3vb8i6c&quot;); // 	    lp.x -= width/2.0;</span>
+<span class="nc" id="L1597">UNSUPPORTED(&quot;f15m64yxj1oq475bvrt63d5gf&quot;); // 	    lp.y += height/2.0;</span>
+<span class="nc" id="L1598">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1599">UNSUPPORTED(&quot;8ew9p3k3j0b33dnq0ntgbb6x8&quot;); // 	points[1] = points[0] = startp;</span>
+<span class="nc" id="L1600">UNSUPPORTED(&quot;16h577fdghqtaeot735guew4e&quot;); // 	points[2] = points[3] = points[4] = lp;</span>
+<span class="nc" id="L1601">UNSUPPORTED(&quot;9zjfovamhwwehbviws68s5woy&quot;); // 	points[5] = points[6] = endp;</span>
+<span class="nc" id="L1602">UNSUPPORTED(&quot;1uunj4jbr2uhiqxwor6rzmr3j&quot;); // 	pn = 7;</span>
+<span class="nc" id="L1603">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1604">UNSUPPORTED(&quot;1nyzbeonram6636b1w955bypn&quot;); //     else {</span>
+<span class="nc" id="L1605">UNSUPPORTED(&quot;8ew9p3k3j0b33dnq0ntgbb6x8&quot;); // 	points[1] = points[0] = startp;</span>
+<span class="nc" id="L1606">UNSUPPORTED(&quot;aztkfl5qctibiu6en7xf6xf3e&quot;); // 	points[3] = points[2] = endp;</span>
+<span class="nc" id="L1607">UNSUPPORTED(&quot;5rmgdadjn23z8djo32eh9bhzd&quot;); // 	pn = 4;</span>
+<span class="nc" id="L1608">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1609">UNSUPPORTED(&quot;abnopd2ggrpdb538wf7zsmrhq&quot;); //     return pn;</span>
+<span class="nc" id="L1610">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1612">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="nc" id="L1614">LEAVING(&quot;2n9bpvx34fnukqu1f9u4v7v6n&quot;,&quot;makeLineEdge&quot;);</span>
+}
+}
+
+
+private static final int NUMPTS = 2000;
+
+//3 30wfq1dby4t07hft9io52nq6z
+// static void make_regular_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;make_regular_edge&quot;, key=&quot;30wfq1dby4t07hft9io52nq6z&quot;, definition=&quot;static void make_regular_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et)&quot;)
+public static void make_regular_edge(Globals zz, ST_Agraph_s g, ST_spline_info_t sp, ST_path P, CArrayOfStar&lt;ST_Agedge_s&gt; edges, int ind, int cnt, int et) {
+<span class="fc" id="L1626">ENTERING(&quot;30wfq1dby4t07hft9io52nq6z&quot;,&quot;make_regular_edge&quot;);</span>
+try {
+<span class="fc" id="L1628">    ST_Agnode_s tn, hn = null;</span>
+<span class="fc" id="L1629">    final ST_Agedgeinfo_t fwdedgeai = new ST_Agedgeinfo_t(), fwdedgebi = new ST_Agedgeinfo_t(), fwdedgei = new ST_Agedgeinfo_t();</span>
+<span class="fc" id="L1630">    final ST_Agedgepair_s fwdedgea = new ST_Agedgepair_s(), fwdedgeb = new ST_Agedgepair_s(), fwdedge = new ST_Agedgepair_s();</span>
+    ST_Agedge_s e, fe, le, segfirst;
+<span class="fc" id="L1632">    CArray&lt;ST_pointf&gt; ps = null;</span>
+<span class="fc" id="L1633">    final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();</span>
+<span class="fc" id="L1634">    final ST_boxf b = new ST_boxf();</span>
+    int boxn, sl, si, i, j, dx, hackflag, longedge;
+    boolean smode;
+<span class="fc" id="L1637">    int pn[] = new int[] {0};</span>
+<span class="fc" id="L1638">    int pointn[] = new int[] {0};</span>
+   
+<span class="fc" id="L1640">    fwdedgea.out.base.data = fwdedgeai;</span>
+<span class="fc" id="L1641">    fwdedgeb.out.base.data = fwdedgebi;</span>
+<span class="fc" id="L1642">    fwdedge.out.base.data = fwdedgei;</span>
+    
+<span class="fc bfc" id="L1644" title="All 2 branches covered.">    if ((zz.pointfs) == null) {</span>
+<span class="fc" id="L1645">	zz.pointfs = CArray.&lt;ST_pointf&gt;ALLOC__(NUMPTS, ZType.ST_pointf);</span>
+<span class="fc" id="L1646">   	zz.pointfs2 = CArray.&lt;ST_pointf&gt;ALLOC__(NUMPTS, ZType.ST_pointf);</span>
+<span class="fc" id="L1647">	zz.numpts = NUMPTS;</span>
+<span class="fc" id="L1648">	zz.numpts2 = NUMPTS;</span>
+    }
+<span class="fc" id="L1650">    sl = 0;</span>
+<span class="fc" id="L1651">    e = edges.get_(ind);</span>
+<span class="fc" id="L1652">    hackflag = 0;</span>
+<span class="pc bpc" id="L1653" title="1 of 2 branches missed.">    if (Math.abs(ND_rank(agtail(e)) - ND_rank(aghead(e))) &gt; 1) {</span>
+<span class="nc" id="L1654">UNSUPPORTED(&quot;8f17srpa5iisomehrb4b01h51&quot;); // 	fwdedgeai = *(Agedgeinfo_t*)e-&gt;base.data;</span>
+<span class="nc" id="L1655">UNSUPPORTED(&quot;97znyysf99vzzwpgnqcpp5yek&quot;); // 	fwdedgea.out = *e;</span>
+<span class="nc" id="L1656">UNSUPPORTED(&quot;b6jipryp9p354gtq9lwa35lzj&quot;); // 	fwdedgea.out.base.data = (Agrec_t*)&amp;fwdedgeai;</span>
+<span class="nc" id="L1657">UNSUPPORTED(&quot;568s5ftes1chv9n1s98g9cncf&quot;); // 	if (ED_tree_index(e) &amp; 32) {</span>
+<span class="nc" id="L1658">UNSUPPORTED(&quot;9hw2l0eu91vauhvj3cxf3andc&quot;); // 	    MAKEFWDEDGE(&amp;fwdedgeb.out, e);</span>
+<span class="nc" id="L1659">UNSUPPORTED(&quot;1rql0qzotc0yyozcfkj9p8xkm&quot;); // 	    agtail(&amp;fwdedgea.out) = aghead(e);</span>
+<span class="nc" id="L1660">UNSUPPORTED(&quot;dw3p473qmkgjvxewsr8pimi2h&quot;); // 	    ED_tail_port(&amp;fwdedgea.out) = ED_head_port(e);</span>
+<span class="nc" id="L1661">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L1662">UNSUPPORTED(&quot;2gys0bodxz4fbasfnrvx6ivg2&quot;); // 	    fwdedgebi = *(Agedgeinfo_t*)e-&gt;base.data;</span>
+<span class="nc" id="L1663">UNSUPPORTED(&quot;1qqbo2mfls7xhbdno0no8xq54&quot;); // 	    fwdedgeb.out = *e;</span>
+<span class="nc" id="L1664">UNSUPPORTED(&quot;980ksnsma7kvvr9755ge8bhzh&quot;); // 	    fwdedgeb.out.base.data = (Agrec_t*)&amp;fwdedgebi;</span>
+<span class="nc" id="L1665">UNSUPPORTED(&quot;6le0rehxs2odmv3zg1qg5wvd4&quot;); // 	    agtail(&amp;fwdedgea.out) = agtail(e);</span>
+<span class="nc" id="L1666">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1667">UNSUPPORTED(&quot;3p0d08nntark676jlv1jl0j27&quot;); // 	le = getmainedge(e);</span>
+<span class="nc" id="L1668">UNSUPPORTED(&quot;6tmwmfqoz3y8k44xamrpv82tl&quot;); // 	while (ED_to_virt(le))</span>
+<span class="nc" id="L1669">UNSUPPORTED(&quot;1c19c7ftue4zoibf7d2tm6uxy&quot;); // 	    le = ED_to_virt(le);</span>
+<span class="nc" id="L1670">UNSUPPORTED(&quot;d29k9lzj5g3d8dfxigwogdnoe&quot;); // 	aghead(&amp;fwdedgea.out) = aghead(le);</span>
+<span class="nc" id="L1671">UNSUPPORTED(&quot;36l0czce101bg0wbmu68xjd7z&quot;); // 	ED_head_port(&amp;fwdedgea.out).defined = 0;</span>
+<span class="nc" id="L1672">UNSUPPORTED(&quot;497rb9p6jdgdoyem0y42ecy6c&quot;); // 	ED_edge_type(&amp;fwdedgea.out) = 1;</span>
+<span class="nc" id="L1673">UNSUPPORTED(&quot;4tjj1vbw4mog2qlouazrdirvw&quot;); // 	ED_head_port(&amp;fwdedgea.out).p.x = ED_head_port(&amp;fwdedgea.out).p.y = 0;</span>
+<span class="nc" id="L1674">UNSUPPORTED(&quot;8kdma1vi9aibo7isrge0lunrh&quot;); // 	ED_to_orig(&amp;fwdedgea.out) = e;</span>
+<span class="nc" id="L1675">UNSUPPORTED(&quot;eih8eaai768x1un5mixrtgstp&quot;); // 	e = &amp;fwdedgea.out;</span>
+<span class="nc" id="L1676">UNSUPPORTED(&quot;bxkpl0bp0qhtxaj6rspd19d1k&quot;); // 	hackflag = NOT(0);</span>
+    } else {
+<span class="pc bpc" id="L1678" title="1 of 2 branches missed.">	if ((ED_tree_index(e) &amp; BWDEDGE)!=0) {</span>
+<span class="nc" id="L1679">	    MAKEFWDEDGE(fwdedgea.out, e);</span>
+<span class="nc" id="L1680">	    e = fwdedgea.out;</span>
+	}
+    }
+<span class="fc" id="L1683">    fe = e;</span>
+    
+    /* compute the spline points for the edge */
+    
+<span class="pc bpc" id="L1687" title="3 of 4 branches missed.">    if ((et == ET_LINE) &amp;&amp; (pointn[0] = makeLineEdge (g, fe, zz.pointfs, hn.unsupported()))!=0) {</span>
+    }
+    else {
+<span class="pc bpc" id="L1690" title="1 of 2 branches missed.">	boolean splines = (et == ET_SPLINE);</span>
+<span class="fc" id="L1691">	boxn = 0;</span>
+<span class="fc" id="L1692">	pointn[0] = 0;</span>
+<span class="fc" id="L1693">	segfirst = e;</span>
+<span class="fc" id="L1694">	tn = agtail(e);</span>
+<span class="fc" id="L1695">	hn = aghead(e);</span>
+<span class="fc" id="L1696">	b.___(maximal_bbox(g, sp, tn, null, e));</span>
+<span class="fc" id="L1697">	tend.nb.___(b);</span>
+<span class="fc" id="L1698">	beginpath(zz, P, e, REGULAREDGE, tend, spline_merge(tn));</span>
+<span class="fc" id="L1699">	b.UR.y = tend.boxes[tend.boxn[0] - 1].UR.y;</span>
+<span class="fc" id="L1700">	b.LL.y = tend.boxes[tend.boxn[0] - 1].LL.y;</span>
+<span class="fc" id="L1701">	b.___(makeregularend(b, BOTTOM,</span>
+<span class="fc" id="L1702">	    	   ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));</span>
+<span class="pc bpc" id="L1703" title="2 of 4 branches missed.">	if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="nc" id="L1704">	    tend.boxes[tend.boxn[0]++].___(b);</span>
+<span class="fc" id="L1705">	longedge = 0;</span>
+<span class="fc" id="L1706">	smode = false; si = -1;</span>
+<span class="pc bpc" id="L1707" title="1 of 4 branches missed.">	while (ND_node_type(hn) == VIRTUAL &amp;&amp; !((Boolean)zz.sinfo.splineMerge.exe(zz, hn)).booleanValue()) {</span>
+<span class="fc" id="L1708">	    longedge = 1;</span>
+<span class="fc" id="L1709">	    zz.boxes[boxn++].___(rank_box(sp, g, ND_rank(tn)));</span>
+<span class="fc bfc" id="L1710" title="All 2 branches covered.">	    if (!smode</span>
+<span class="fc" id="L1711">	        &amp;&amp; ((sl = straight_len(hn)) &gt;=</span>
+<span class="fc bfc" id="L1712" title="All 4 branches covered.">	    	((GD_has_labels(g) &amp; EDGE_LABEL)!=0 ? 4 + 1 : 2 + 1))) {</span>
+<span class="fc" id="L1713">	        smode = true;</span>
+<span class="fc" id="L1714">	        si = 1; sl -= 2;</span>
+	    }
+<span class="fc bfc" id="L1716" title="All 4 branches covered.">	    if (!smode || si &gt; 0) {</span>
+<span class="fc" id="L1717">	        si--;</span>
+<span class="fc" id="L1718">	        zz.boxes[boxn++].___(maximal_bbox(g, sp, hn, e, ND_out(hn).list.get_(0)));</span>
+<span class="fc" id="L1719">	        e = ND_out(hn).list.get_(0);</span>
+<span class="fc" id="L1720">	        tn = agtail(e);</span>
+<span class="fc" id="L1721">	        hn = aghead(e);</span>
+<span class="fc" id="L1722">	        continue;</span>
+	    }
+<span class="fc" id="L1724">	    hend.nb.___(maximal_bbox(g, sp, hn, e, ND_out(hn).list.get_(0)));</span>
+<span class="fc" id="L1725">	    endpath(zz, P, e, 1, hend, spline_merge(aghead(e)));</span>
+<span class="fc" id="L1726">	    b.___(makeregularend(hend.boxes[hend.boxn[0] - 1], (1&lt;&lt;2),</span>
+<span class="fc" id="L1727">	    	       ND_coord(hn).y + GD_rank(g).get__(ND_rank(hn)).ht2));</span>
+<span class="pc bpc" id="L1728" title="2 of 4 branches missed.">	    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="nc" id="L1729">UNSUPPORTED(&quot;1crhubfzekx1qi2ti9ajqsfoc&quot;); // 	        hend.boxes[hend.boxn++] = b;</span>
+<span class="fc" id="L1730">	    P.end.theta = M_PI / 2;</span>
+<span class="fc" id="L1731">	    P.end.constrained= true;</span>
+<span class="fc" id="L1732">	    completeregularpath(P, segfirst, e, tend, hend, zz.boxes, boxn, 1);</span>
+<span class="pc bpc" id="L1733" title="1 of 2 branches missed.">	    if (splines) ps = routesplines(zz, P, pn);</span>
+	    else {
+<span class="nc" id="L1735">UNSUPPORTED(&quot;biyp75vm751j3qmqacagfej4b&quot;); // 		ps = routepolylines (P, &amp;pn);</span>
+<span class="nc" id="L1736">UNSUPPORTED(&quot;4fmdmgg43suu7ppgrcaofwqzh&quot;); // 		if ((et == (1 &lt;&lt; 1)) &amp;&amp; (pn &gt; 4)) {</span>
+<span class="nc" id="L1737">UNSUPPORTED(&quot;2ftwbx9nsy10ldzds3ej4hxi7&quot;); // 		    ps[1] = ps[0];</span>
+<span class="nc" id="L1738">UNSUPPORTED(&quot;2fedie0btpk43e74p462n0y4n&quot;); // 		    ps[3] = ps[2] = ps[pn-1];</span>
+<span class="nc" id="L1739">UNSUPPORTED(&quot;3fwatldph3opctz8aieqd214d&quot;); // 		    pn = 4;</span>
+<span class="nc" id="L1740">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+	    }
+<span class="pc bpc" id="L1742" title="1 of 2 branches missed.">	    if (pn[0] == 0)</span>
+<span class="nc" id="L1743">	        return;</span>
+<span class="pc bpc" id="L1744" title="1 of 2 branches missed.">	    if (pointn[0] + pn[0] &gt; zz.numpts) {</span>
+                /* This should be enough to include 3 extra points added by
+                 * straight_path below.
+                 */
+<span class="nc" id="L1748">UNSUPPORTED(&quot;k37sqlxbjikqg4xdonnvefo3&quot;); // 		numpts = 2*(pointn+pn); </span>
+<span class="nc" id="L1749">UNSUPPORTED(&quot;8kbxhk7qirj3tr7hn1ukwar3h&quot;); // 		pointfs = RALLOC(numpts, pointfs, pointf);</span>
+	    }
+<span class="fc bfc" id="L1751" title="All 2 branches covered.">	    for (i = 0; i &lt; pn[0]; i++) {</span>
+<span class="fc" id="L1752">		zz.pointfs.get__(pointn[0]++).___(ps.get__(i));</span>
+	    }
+<span class="fc" id="L1754">	    e = straight_path((ST_Agedge_s)ND_out(hn).list.get_(0), sl, zz.pointfs, pointn);</span>
+<span class="fc" id="L1755">	    recover_slack(zz, segfirst, P);</span>
+<span class="fc" id="L1756">	    segfirst = e;</span>
+<span class="fc" id="L1757">	    tn = agtail(e);</span>
+<span class="fc" id="L1758">	    hn = aghead(e);</span>
+<span class="fc" id="L1759">	    boxn = 0;</span>
+<span class="fc" id="L1760">	    tend.nb.___(maximal_bbox(g, sp, tn, (ST_Agedge_s) ND_in(tn).list.get_(0), e));</span>
+<span class="fc" id="L1761">	    beginpath(zz, P, e, 1, tend, spline_merge(tn));</span>
+<span class="fc" id="L1762">	    b.___(makeregularend(tend.boxes[tend.boxn[0] - 1], (1&lt;&lt;0),</span>
+<span class="fc" id="L1763">	    	       ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));</span>
+<span class="pc bpc" id="L1764" title="2 of 4 branches missed.">	    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="nc" id="L1765">UNSUPPORTED(&quot;cjx6tldge3otk1pk6ks1pkn2w&quot;); // 	        tend.boxes[tend.boxn++] = b;</span>
+<span class="fc" id="L1766">	    P.start.theta = -M_PI / 2;</span>
+<span class="fc" id="L1767">	    P.start.constrained= true;</span>
+<span class="fc" id="L1768">	    smode = false;</span>
+	}
+<span class="fc" id="L1770">	zz.boxes[boxn++].___(rank_box(sp, g, ND_rank(tn)));</span>
+<span class="fc" id="L1771">	b.___(maximal_bbox(g, sp, hn, e, null));</span>
+<span class="fc" id="L1772">	hend.nb.___(b);</span>
+<span class="pc bpc" id="L1773" title="1 of 2 branches missed.">	endpath(zz, P, (ST_Agedge_s) (hackflag!=0 ? fwdedgeb.out : e), 1, hend, spline_merge(aghead(e)));</span>
+<span class="fc" id="L1774">	b.UR.y = hend.boxes[hend.boxn[0] - 1].UR.y;</span>
+<span class="fc" id="L1775">	b.LL.y = hend.boxes[hend.boxn[0] - 1].LL.y;</span>
+<span class="fc" id="L1776">	b.___(makeregularend(b, (1&lt;&lt;2),</span>
+<span class="fc" id="L1777">	    	   ND_coord(hn).y + GD_rank(g).get__(ND_rank(hn)).ht2));</span>
+<span class="pc bpc" id="L1778" title="2 of 4 branches missed.">	if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+	    {
+<span class="nc" id="L1780">	    hend.boxes[hend.boxn[0]].___(b);</span>
+<span class="nc" id="L1781">	    hend.boxn[0] = hend.boxn[0]+1;</span>
+	    }
+<span class="fc" id="L1783">	completeregularpath(P, segfirst, e, tend, hend, zz.boxes, boxn,</span>
+	    		longedge);
+<span class="pc bpc" id="L1785" title="1 of 2 branches missed.">	if (splines) ps = routesplines(zz, P, pn);</span>
+<span class="nc" id="L1786">	else ps = routepolylines (zz, P, pn);</span>
+<span class="pc bpc" id="L1787" title="3 of 4 branches missed.">	if ((et == ET_LINE) &amp;&amp; (pn[0] &gt; 4)) {</span>
+	    /* Here we have used the polyline case to handle
+	     * an edge between two nodes on adjacent ranks. If the
+	     * results really is a polyline, straighten it.
+	     */
+<span class="nc" id="L1792">UNSUPPORTED(&quot;1u7e6lrkiipml54kkm7ylw56t&quot;); // 	    ps[1] = ps[0];</span>
+<span class="nc" id="L1793">UNSUPPORTED(&quot;76bh6z0xok01d0gdybxcx4ful&quot;); // 	    ps[3] = ps[2] = ps[pn-1];</span>
+<span class="nc" id="L1794">UNSUPPORTED(&quot;95b6xp8h5ai070bekyjhmiehh&quot;); // 	    pn = 4;</span>
+        }
+<span class="pc bpc" id="L1796" title="1 of 2 branches missed.">	if (pn[0] == 0)</span>
+<span class="nc" id="L1797">	    return;</span>
+<span class="pc bpc" id="L1798" title="1 of 2 branches missed.">	if (pointn[0] + pn[0] &gt; zz.numpts) {</span>
+<span class="nc" id="L1799">UNSUPPORTED(&quot;c6ux5effs02grz7xh3k8ernda&quot;); // 	    numpts = 2*(pointn+pn); </span>
+<span class="nc" id="L1800">UNSUPPORTED(&quot;bedaqcn9h03q6ia6zbezuee1m&quot;); // 	    pointfs = RALLOC(numpts, pointfs, pointf);</span>
+	}
+<span class="fc bfc" id="L1802" title="All 2 branches covered.">	for (i = 0; i &lt; pn[0]; i++) {</span>
+<span class="fc" id="L1803">	    zz.pointfs.get__(pointn[0]).___(ps.get__(i));</span>
+<span class="fc" id="L1804">	    pointn[0]++;</span>
+	}
+<span class="fc" id="L1806">	recover_slack(zz, segfirst, P);</span>
+<span class="pc bpc" id="L1807" title="1 of 2 branches missed.">	hn = hackflag!=0 ? aghead(fwdedgeb.out) : aghead(e);</span>
+    }
+    /* make copies of the spline points, one per multi-edge */
+<span class="pc bpc" id="L1810" title="1 of 2 branches missed.">    if (cnt == 1) {</span>
+<span class="fc" id="L1811">	clip_and_install(zz, fe, hn, zz.pointfs, pointn[0], zz.sinfo);</span>
+<span class="fc" id="L1812">	return;</span>
+    }
+<span class="nc" id="L1814">    dx = sp.Multisep * (cnt - 1) / 2;</span>
+<span class="nc bnc" id="L1815" title="All 2 branches missed.">    for (i = 1; i &lt; pointn[0] - 1; i++)</span>
+<span class="nc" id="L1816">	zz.pointfs.get__(i).x = zz.pointfs.get__(i).x - dx;</span>
+<span class="nc bnc" id="L1817" title="All 2 branches missed.">    if (zz.numpts &gt; zz.numpts2) {</span>
+<span class="nc" id="L1818">UNSUPPORTED(&quot;9ubr4m7bdv5f5ldk2ta6yw3up&quot;); // 	numpts2 = numpts; </span>
+<span class="nc" id="L1819">UNSUPPORTED(&quot;8qwp7ddy5ztgam63fzfjmu890&quot;); // 	pointfs2 = RALLOC(numpts2, pointfs2, pointf);</span>
+    }
+<span class="nc bnc" id="L1821" title="All 2 branches missed.">    for (i = 0; i &lt; pointn[0]; i++)</span>
+<span class="nc" id="L1822">	zz.pointfs2.get__(i).___(zz.pointfs.get__(i));</span>
+<span class="nc" id="L1823">    clip_and_install(zz, fe, hn, zz.pointfs2, pointn[0], zz.sinfo);</span>
+<span class="nc bnc" id="L1824" title="All 2 branches missed.">    for (j = 1; j &lt; cnt; j++) {</span>
+<span class="nc" id="L1825">	e = edges.get_(ind + j);</span>
+<span class="nc bnc" id="L1826" title="All 2 branches missed.">	if ((ED_tree_index(e) &amp; 32)!=0) {</span>
+<span class="nc" id="L1827">	    MAKEFWDEDGE(fwdedge.out, e);</span>
+<span class="nc" id="L1828">	    e = fwdedge.out;</span>
+	}
+<span class="nc bnc" id="L1830" title="All 2 branches missed.">	for (i = 1; i &lt; pointn[0] - 1; i++)</span>
+<span class="nc" id="L1831">	    zz.pointfs.get__(i).x = zz.pointfs.get__(i).x + sp.Multisep;</span>
+<span class="nc bnc" id="L1832" title="All 2 branches missed.">	for (i = 0; i &lt; pointn[0]; i++)</span>
+<span class="nc" id="L1833">	    zz.pointfs2.get__(i).___(zz.pointfs.get__(i));</span>
+<span class="nc" id="L1834">	clip_and_install(zz, e, aghead(e), zz.pointfs2, pointn[0], zz.sinfo);</span>
+    }
+} finally {
+<span class="fc" id="L1837">LEAVING(&quot;30wfq1dby4t07hft9io52nq6z&quot;,&quot;make_regular_edge&quot;);</span>
+}
+<span class="nc" id="L1839">}</span>
+
+
+
+
+//3 va61hggynvb6z6j34w7otmab
+// static void completeregularpath(path * P, edge_t * first, edge_t * last, 		    pathend_t * tendp, pathend_t * hendp, boxf * boxes, 		    int boxn, int flag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;completeregularpath&quot;, key=&quot;va61hggynvb6z6j34w7otmab&quot;, definition=&quot;static void completeregularpath(path * P, edge_t * first, edge_t * last, 		    pathend_t * tendp, pathend_t * hendp, boxf * boxes, 		    int boxn, int flag)&quot;)
+public static void completeregularpath(ST_path P, ST_Agedge_s first, ST_Agedge_s last, ST_pathend_t tendp, ST_pathend_t hendp, ST_boxf[] boxes, int boxn, int flag) {
+<span class="fc" id="L1849">ENTERING(&quot;va61hggynvb6z6j34w7otmab&quot;,&quot;completeregularpath&quot;);</span>
+try {
+    ST_Agedge_s uleft, uright, lleft, lright;
+    int i, fb, lb;
+    ST_splines spl;
+    CArray&lt;ST_pointf&gt; pp;
+    int pn;
+    
+<span class="fc" id="L1857">    fb = lb = -1;</span>
+<span class="fc" id="L1858">    uleft = uright = null;</span>
+<span class="fc" id="L1859">    uleft = top_bound(first, -1);</span>
+<span class="fc" id="L1860">    uright = top_bound(first, 1);</span>
+<span class="fc bfc" id="L1861" title="All 2 branches covered.">    if (uleft!=null) {</span>
+<span class="pc bpc" id="L1862" title="1 of 2 branches missed.">	if ((spl = getsplinepoints(uleft)) == null) return;</span>
+<span class="fc" id="L1863">	pp = spl.list.get__(0).list;</span>
+<span class="fc" id="L1864">       	pn = spl.list.get__(0).size;</span>
+    }
+<span class="fc bfc" id="L1866" title="All 2 branches covered.">    if (uright!=null) {</span>
+<span class="pc bpc" id="L1867" title="1 of 2 branches missed.">	if ((spl = getsplinepoints(uright)) == null) return;</span>
+<span class="fc" id="L1868">	pp = spl.list.get__(0).list;</span>
+<span class="fc" id="L1869">       	pn = spl.list.get__(0).size;</span>
+    }
+<span class="fc" id="L1871">    lleft = lright = null;</span>
+<span class="fc" id="L1872">    lleft = bot_bound(last, -1);</span>
+<span class="fc" id="L1873">    lright = bot_bound(last, 1);</span>
+<span class="fc bfc" id="L1874" title="All 2 branches covered.">    if (lleft!=null) {</span>
+<span class="pc bpc" id="L1875" title="1 of 2 branches missed.">	if ((spl = getsplinepoints(lleft)) == null) return;</span>
+<span class="fc" id="L1876">	pp = spl.list.get__(spl.size - 1).list;</span>
+<span class="fc" id="L1877">       	pn = spl.list.get__(spl.size - 1).size;</span>
+    }
+<span class="fc bfc" id="L1879" title="All 2 branches covered.">    if (lright!=null) {</span>
+<span class="pc bpc" id="L1880" title="1 of 2 branches missed.">	if ((spl = getsplinepoints(lright)) == null) return;</span>
+<span class="fc" id="L1881">	pp = spl.list.get__(spl.size - 1).list;</span>
+<span class="fc" id="L1882">       	pn = spl.list.get__(spl.size - 1).size;</span>
+    }
+<span class="fc bfc" id="L1884" title="All 2 branches covered.">    for (i = 0; i &lt; tendp.boxn[0]; i++)</span>
+<span class="fc" id="L1885">	add_box(P, (tendp).boxes[i]);</span>
+<span class="fc" id="L1886">    fb = P.nbox + 1;</span>
+<span class="fc" id="L1887">    lb = fb + boxn - 3;</span>
+<span class="fc bfc" id="L1888" title="All 2 branches covered.">    for (i = 0; i &lt; boxn; i++)</span>
+<span class="fc" id="L1889">	add_box(P, boxes[i]);</span>
+<span class="fc bfc" id="L1890" title="All 2 branches covered.">    for (i = hendp.boxn[0] - 1; i &gt;= 0; i--)</span>
+<span class="fc" id="L1891">	add_box(P, (hendp).boxes[i]);</span>
+<span class="fc" id="L1892">    adjustregularpath(P, fb, lb);</span>
+} finally {
+<span class="fc" id="L1894">LEAVING(&quot;va61hggynvb6z6j34w7otmab&quot;,&quot;completeregularpath&quot;);</span>
+}
+<span class="fc" id="L1896">}</span>
+
+
+
+
+//3 3wwhczhpkcnflwr1l9wcga7tq
+// static boxf makeregularend(boxf b, int side, double y) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;makeregularend&quot;, key=&quot;3wwhczhpkcnflwr1l9wcga7tq&quot;, definition=&quot;static boxf makeregularend(boxf b, int side, double y)&quot;)
+public static ST_boxf makeregularend(final ST_boxf b, int side, double y) {
+// WARNING!! STRUCT
+<span class="fc" id="L1907">return makeregularend_w_(b.copy(), side, y).copy();</span>
+}
+private static ST_boxf makeregularend_w_(final ST_boxf b, int side, double y) {
+<span class="fc" id="L1910">ENTERING(&quot;3wwhczhpkcnflwr1l9wcga7tq&quot;,&quot;makeregularend&quot;);</span>
+try {
+<span class="fc" id="L1912">    final ST_boxf newb = new ST_boxf();</span>
+<span class="pc bpc" id="L1913" title="1 of 3 branches missed.">    switch (side) {</span>
+    case (1&lt;&lt;0):
+<span class="fc" id="L1915">	newb.___(boxfof(b.LL.x, y, b.UR.x, b.LL.y));</span>
+<span class="fc" id="L1916">	break;</span>
+    case (1&lt;&lt;2):
+<span class="fc" id="L1918">	newb.___(boxfof(b.LL.x, b.UR.y, b.UR.x, y));</span>
+	break;
+    }
+<span class="fc" id="L1921">    return newb;</span>
+} finally {
+<span class="fc" id="L1923">LEAVING(&quot;3wwhczhpkcnflwr1l9wcga7tq&quot;,&quot;makeregularend&quot;);</span>
+}
+}
+
+
+
+
+//3 88xrlzjovkxcnay9b2y5zyiid
+// static void adjustregularpath(path * P, int fb, int lb) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;adjustregularpath&quot;, key=&quot;88xrlzjovkxcnay9b2y5zyiid&quot;, definition=&quot;static void adjustregularpath(path * P, int fb, int lb)&quot;)
+public static void adjustregularpath(ST_path P, int fb, int lb) {
+<span class="fc" id="L1935">ENTERING(&quot;88xrlzjovkxcnay9b2y5zyiid&quot;,&quot;adjustregularpath&quot;);</span>
+try {
+	ST_boxf bp1, bp2;
+    int i, x;
+<span class="fc bfc" id="L1939" title="All 2 branches covered.">    for (i = fb-1; i &lt; lb+1; i++) {</span>
+<span class="fc" id="L1940">	bp1 = (ST_boxf) P.boxes[i];</span>
+<span class="fc bfc" id="L1941" title="All 2 branches covered.">	if ((i - fb) % 2 == 0) {</span>
+<span class="pc bpc" id="L1942" title="1 of 2 branches missed.">	    if (bp1.LL.x &gt;= bp1.UR.x) {</span>
+<span class="nc" id="L1943">		x = (int)((bp1.LL.x + bp1.UR.x) / 2);</span>
+<span class="nc" id="L1944">		bp1.LL.x = x - 8;</span>
+<span class="nc" id="L1945">		bp1.UR.x = x + 8;</span>
+	    }
+	} else {
+<span class="pc bpc" id="L1948" title="1 of 2 branches missed.">	    if (bp1.LL.x + 16 &gt; bp1.UR.x) {</span>
+<span class="nc" id="L1949">		x = (int)((bp1.LL.x + bp1.UR.x) / 2);</span>
+<span class="nc" id="L1950">		bp1.LL.x = x - 8;</span>
+<span class="nc" id="L1951">		bp1.UR.x = x + 8;</span>
+	    }
+	}
+    }
+<span class="fc bfc" id="L1955" title="All 2 branches covered.">    for (i = 0; i &lt; P.nbox - 1; i++) {</span>
+<span class="fc" id="L1956">	bp1 = (ST_boxf) P.boxes[i];</span>
+<span class="fc" id="L1957">	bp2 = (ST_boxf) P.boxes[i+1];</span>
+<span class="fc bfc" id="L1958" title="All 6 branches covered.">	if (i &gt;= fb &amp;&amp; i &lt;= lb &amp;&amp; (i - fb) % 2 == 0) {</span>
+<span class="pc bpc" id="L1959" title="1 of 2 branches missed.">	    if (bp1.LL.x + 16 &gt; bp2.UR.x)</span>
+<span class="nc" id="L1960">		bp2.UR.x = bp1.LL.x + 16;</span>
+<span class="pc bpc" id="L1961" title="1 of 2 branches missed.">	    if (bp1.UR.x - 16 &lt; bp2.LL.x)</span>
+<span class="nc" id="L1962">		bp2.LL.x = bp1.UR.x - 16;</span>
+<span class="pc bpc" id="L1963" title="1 of 6 branches missed.">	} else if (i + 1 &gt;= fb &amp;&amp; i &lt; lb &amp;&amp; (i + 1 - fb) % 2 == 0) {</span>
+<span class="pc bpc" id="L1964" title="1 of 2 branches missed.">	    if (bp1.LL.x + 16 &gt; bp2.UR.x)</span>
+<span class="nc" id="L1965">		bp1.LL.x = bp2.UR.x - 16;</span>
+<span class="pc bpc" id="L1966" title="1 of 2 branches missed.">	    if (bp1.UR.x - 16 &lt; bp2.LL.x)</span>
+<span class="nc" id="L1967">		bp1.UR.x = bp2.LL.x + 16;</span>
+	} 
+    }
+} finally {
+<span class="fc" id="L1971">LEAVING(&quot;88xrlzjovkxcnay9b2y5zyiid&quot;,&quot;adjustregularpath&quot;);</span>
+}
+<span class="fc" id="L1973">}</span>
+
+
+
+
+//3 bajn5vx0isu427n6dh131b985
+// static boxf rank_box(spline_info_t* sp, graph_t * g, int r) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;rank_box&quot;, key=&quot;bajn5vx0isu427n6dh131b985&quot;, definition=&quot;static boxf rank_box(spline_info_t* sp, graph_t * g, int r)&quot;)
+public static ST_boxf rank_box(ST_spline_info_t sp, ST_Agraph_s g, int r) {
+// WARNING!! STRUCT
+<span class="fc" id="L1984">return rank_box_w_(sp, g, r).copy();</span>
+}
+private static ST_boxf rank_box_w_(ST_spline_info_t sp, ST_Agraph_s g, int r) {
+<span class="fc" id="L1987">ENTERING(&quot;bajn5vx0isu427n6dh131b985&quot;,&quot;rank_box&quot;);</span>
+try {
+<span class="fc" id="L1989">    final ST_boxf b = new ST_boxf();</span>
+    ST_Agnode_s /* *right0, *right1, */  left0, left1;
+<span class="fc" id="L1991">    b.___(sp.Rank_box[r]);</span>
+<span class="fc bfc" id="L1992" title="All 2 branches covered.">    if (b.LL.x == b.UR.x) {</span>
+<span class="fc" id="L1993">	left0 = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(0);</span>
+	/* right0 = GD_rank(g)[r].v[GD_rank(g)[r].n - 1]; */
+<span class="fc" id="L1995">	left1 = (ST_Agnode_s) GD_rank(g).get__(r + 1).v.get_(0);</span>
+	/* right1 = GD_rank(g)[r + 1].v[GD_rank(g)[r + 1].n - 1]; */
+<span class="fc" id="L1997">	b.LL.x = sp.LeftBound;</span>
+<span class="fc" id="L1998">	b.LL.y = ND_coord(left1).y + GD_rank(g).get__(r + 1).ht2;</span>
+<span class="fc" id="L1999">	b.UR.x = sp.RightBound;</span>
+<span class="fc" id="L2000">	b.UR.y = ND_coord(left0).y - GD_rank(g).get__(r).ht1;</span>
+<span class="fc" id="L2001">	sp.Rank_box[r].___(b);</span>
+    }
+<span class="fc" id="L2003">    return b;</span>
+} finally {
+<span class="fc" id="L2005">LEAVING(&quot;bajn5vx0isu427n6dh131b985&quot;,&quot;rank_box&quot;);</span>
+}
+}
+
+
+
+
+//3 6qwcnugx2ytjrvi5rgxzyzg5i
+// static int straight_len(node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;straight_len&quot;, key=&quot;6qwcnugx2ytjrvi5rgxzyzg5i&quot;, definition=&quot;static int straight_len(node_t * n)&quot;)
+public static int straight_len(ST_Agnode_s n) {
+<span class="fc" id="L2017">ENTERING(&quot;6qwcnugx2ytjrvi5rgxzyzg5i&quot;,&quot;straight_len&quot;);</span>
+try {
+<span class="fc" id="L2019">    int cnt = 0;</span>
+    ST_Agnode_s v;
+<span class="fc" id="L2021">    v = n;</span>
+    while (true) {
+<span class="fc" id="L2023">	v = (ST_Agnode_s) aghead(ND_out(v).list.get_(0));</span>
+<span class="fc bfc" id="L2024" title="All 2 branches covered.">	if (ND_node_type(v) != 1)</span>
+<span class="fc" id="L2025">	    break;</span>
+<span class="pc bpc" id="L2026" title="2 of 4 branches missed.">	if ((ND_out(v).size != 1) || (ND_in(v).size != 1))</span>
+<span class="nc" id="L2027">	    break;</span>
+<span class="fc bfc" id="L2028" title="All 2 branches covered.">	if (ND_coord(v).x != ND_coord(n).x)</span>
+<span class="fc" id="L2029">	    break;</span>
+<span class="fc" id="L2030">	cnt++;</span>
+    }
+<span class="fc" id="L2032">    return cnt;</span>
+} finally {
+<span class="fc" id="L2034">LEAVING(&quot;6qwcnugx2ytjrvi5rgxzyzg5i&quot;,&quot;straight_len&quot;);</span>
+}
+}
+
+
+
+
+//3 15pgjjuil2c1rjldu29j07gbz
+// static edge_t *straight_path(edge_t * e, int cnt, pointf * plist, int *np) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;&quot;, key=&quot;15pgjjuil2c1rjldu29j07gbz&quot;, definition=&quot;static edge_t *straight_path(edge_t * e, int cnt, pointf * plist, int *np)&quot;)
+public static ST_Agedge_s straight_path(ST_Agedge_s e, int cnt, CArray&lt;ST_pointf&gt; plist, int np[]) {
+<span class="fc" id="L2046">ENTERING(&quot;15pgjjuil2c1rjldu29j07gbz&quot;,&quot;straight_path&quot;);</span>
+try {
+<span class="fc" id="L2048">    int n = np[0];</span>
+<span class="fc" id="L2049">    ST_Agedge_s f = e;</span>
+<span class="fc bfc" id="L2050" title="All 2 branches covered.">    while ((cnt--)!=0)</span>
+<span class="fc" id="L2051">	f = (ST_Agedge_s) ND_out(aghead(f)).list.get_(0);</span>
+<span class="fc" id="L2052">    plist.get__(np[0]++).___(plist.get__(n - 1));</span>
+<span class="fc" id="L2053">    plist.get__(np[0]++).___(plist.get__(n - 1));</span>
+<span class="fc" id="L2054">    plist.get__(np[0]).___(ND_coord(agtail(f)));  /* will be overwritten by next spline */</span>
+<span class="fc" id="L2055">    return f;</span>
+} finally {
+<span class="fc" id="L2057">LEAVING(&quot;15pgjjuil2c1rjldu29j07gbz&quot;,&quot;straight_path&quot;);</span>
+}
+}
+
+
+
+
+//3 4ilkzqtegd5uffawb4qcjthu1
+// static void recover_slack(edge_t * e, path * p) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;recover_slack&quot;, key=&quot;4ilkzqtegd5uffawb4qcjthu1&quot;, definition=&quot;static void recover_slack(edge_t * e, path * p)&quot;)
+public static void recover_slack(Globals zz, ST_Agedge_s e, ST_path p) {
+<span class="fc" id="L2069">ENTERING(&quot;4ilkzqtegd5uffawb4qcjthu1&quot;,&quot;recover_slack&quot;);</span>
+try {
+    int b;
+    ST_Agnode_s vn;
+<span class="fc" id="L2073">    b = 0;			/* skip first rank box */</span>
+<span class="fc" id="L2074">    for (vn = aghead(e);</span>
+<span class="pc bpc" id="L2075" title="1 of 4 branches missed.">	 ND_node_type(vn) == 1 &amp;&amp; !((Boolean)zz.sinfo.splineMerge.exe(zz, vn)).booleanValue();</span>
+<span class="fc" id="L2076">	 vn = aghead(ND_out(vn).list.get_(0))) {</span>
+<span class="fc bfc" id="L2077" title="All 4 branches covered.">	while ((b &lt; p.nbox) &amp;&amp; (p.boxes[b].LL.y &gt; ND_coord(vn).y))</span>
+<span class="fc" id="L2078">	    b++;</span>
+<span class="fc bfc" id="L2079" title="All 2 branches covered.">	if (b &gt;= p.nbox)</span>
+<span class="fc" id="L2080">	    break;</span>
+<span class="pc bpc" id="L2081" title="1 of 2 branches missed.">	if (p.boxes[b].UR.y &lt; ND_coord(vn).y)</span>
+<span class="nc" id="L2082">	    continue;</span>
+<span class="fc bfc" id="L2083" title="All 2 branches covered.">	if (ND_label(vn)!=null)</span>
+<span class="fc" id="L2084">	    resize_vn(vn, (int)p.boxes[b].LL.x, (int)p.boxes[b].UR.x,</span>
+<span class="fc" id="L2085">		      (int)(p.boxes[b].UR.x + ND_rw(vn)));</span>
+	else
+<span class="fc" id="L2087">	    resize_vn(vn, (int)p.boxes[b].LL.x, (int)((p.boxes[b].LL.x +</span>
+					     p.boxes[b].UR.x) / 2),
+		      (int)p.boxes[b].UR.x);
+    }
+} finally {
+<span class="fc" id="L2092">LEAVING(&quot;4ilkzqtegd5uffawb4qcjthu1&quot;,&quot;recover_slack&quot;);</span>
+}
+<span class="fc" id="L2094">}</span>
+
+
+
+
+//3 3vmg1q1r0eb14etvjdk4cukpd
+// static void resize_vn(vn, lx, cx, rx) node_t *vn
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;resize_vn&quot;, key=&quot;3vmg1q1r0eb14etvjdk4cukpd&quot;, definition=&quot;static void resize_vn(vn, lx, cx, rx) node_t *vn&quot;)
+public static void resize_vn(ST_Agnode_s vn, int lx, int cx, int rx) {
+<span class="fc" id="L2104">ENTERING(&quot;3vmg1q1r0eb14etvjdk4cukpd&quot;,&quot;resize_vn&quot;);</span>
+try {
+<span class="fc" id="L2106">    ND_coord(vn).x = cx;</span>
+<span class="fc" id="L2107">    ND_lw(vn, cx - lx);</span>
+<span class="fc" id="L2108">    ND_rw(vn, rx - cx);</span>
+} finally {
+<span class="fc" id="L2110">LEAVING(&quot;3vmg1q1r0eb14etvjdk4cukpd&quot;,&quot;resize_vn&quot;);</span>
+}
+<span class="fc" id="L2112">}</span>
+
+
+
+
+//3 9t0v5wicmjuc3ij9hko6iawle
+// static edge_t *top_bound(edge_t * e, int side) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;&quot;, key=&quot;9t0v5wicmjuc3ij9hko6iawle&quot;, definition=&quot;static edge_t *top_bound(edge_t * e, int side)&quot;)
+public static ST_Agedge_s top_bound(ST_Agedge_s e, int side) {
+<span class="fc" id="L2122">ENTERING(&quot;9t0v5wicmjuc3ij9hko6iawle&quot;,&quot;top_bound&quot;);</span>
+try {
+<span class="fc" id="L2124">    ST_Agedge_s f, ans = null;</span>
+    int i;
+<span class="fc bfc" id="L2126" title="All 2 branches covered.">    for (i = 0; (f = (ST_Agedge_s) ND_out(agtail(e)).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L2127" title="All 2 branches covered.">	if (side * (ND_order(aghead(f)) - ND_order(aghead(e))) &lt;= 0)</span>
+<span class="fc" id="L2128">	    continue;</span>
+<span class="pc bpc" id="L2129" title="1 of 2 branches missed.">	if ((ED_spl(f) == null)</span>
+<span class="pc bpc" id="L2130" title="1 of 4 branches missed.">	    &amp;&amp; ((ED_to_orig(f) == null) || (ED_spl(ED_to_orig(f)) == null)))</span>
+<span class="fc" id="L2131">	    continue;</span>
+<span class="fc bfc" id="L2132" title="All 2 branches covered.">	if ((ans == null)</span>
+<span class="fc bfc" id="L2133" title="All 2 branches covered.">	    || (side * (ND_order(aghead(ans)) - ND_order(aghead(f))) &gt; 0))</span>
+<span class="fc" id="L2134">	    ans = f;</span>
+    }
+<span class="fc" id="L2136">    return ans;</span>
+} finally {
+<span class="fc" id="L2138">LEAVING(&quot;9t0v5wicmjuc3ij9hko6iawle&quot;,&quot;top_bound&quot;);</span>
+}
+}
+
+
+
+
+//3 9fsg0uiyhtrayd4mimmc0i25e
+// static edge_t *bot_bound(edge_t * e, int side) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;&quot;, key=&quot;9fsg0uiyhtrayd4mimmc0i25e&quot;, definition=&quot;static edge_t *bot_bound(edge_t * e, int side)&quot;)
+public static ST_Agedge_s bot_bound(ST_Agedge_s e, int side) {
+<span class="fc" id="L2150">ENTERING(&quot;9fsg0uiyhtrayd4mimmc0i25e&quot;,&quot;bot_bound&quot;);</span>
+try {
+<span class="fc" id="L2152">    ST_Agedge_s f, ans = null;</span>
+    int i;
+<span class="fc bfc" id="L2154" title="All 2 branches covered.">    for (i = 0; (f = (ST_Agedge_s) ND_in(aghead(e)).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L2155" title="All 2 branches covered.">	if (side * (ND_order(agtail(f)) - ND_order(agtail(e))) &lt;= 0)</span>
+<span class="fc" id="L2156">	    continue;</span>
+<span class="pc bpc" id="L2157" title="1 of 2 branches missed.">	if ((ED_spl(f) == null)</span>
+<span class="pc bpc" id="L2158" title="1 of 4 branches missed.">	    &amp;&amp; ((ED_to_orig(f) == null) || (ED_spl(ED_to_orig(f)) == null)))</span>
+<span class="fc" id="L2159">	    continue;</span>
+<span class="fc bfc" id="L2160" title="All 2 branches covered.">	if ((ans == null)</span>
+<span class="fc bfc" id="L2161" title="All 2 branches covered.">	    || (side * (ND_order(agtail(ans)) - ND_order(agtail(f))) &gt; 0))</span>
+<span class="fc" id="L2162">	    ans = f;</span>
+    }
+<span class="fc" id="L2164">    return ans;</span>
+} finally {
+<span class="fc" id="L2166">LEAVING(&quot;9fsg0uiyhtrayd4mimmc0i25e&quot;,&quot;bot_bound&quot;);</span>
+}
+}
+
+
+
+
+//3 65uvkv1mextaah5m997ibe3qs
+// static int cl_vninside(graph_t * cl, node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;cl_vninside&quot;, key=&quot;65uvkv1mextaah5m997ibe3qs&quot;, definition=&quot;static int cl_vninside(graph_t * cl, node_t * n)&quot;)
+public static boolean cl_vninside(ST_Agraph_s cl, ST_Agnode_s n) {
+<span class="nc" id="L2178">ENTERING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
+try {
+<span class="nc bnc" id="L2180" title="All 2 branches missed.">    return (BETWEEN(GD_bb(cl).LL.x, (double)(ND_coord(n).x), GD_bb(cl).UR.x) &amp;&amp;</span>
+<span class="nc bnc" id="L2181" title="All 2 branches missed.">	    BETWEEN(GD_bb(cl).LL.y, (double)(ND_coord(n).y), GD_bb(cl).UR.y));</span>
+} finally {
+<span class="nc" id="L2183">LEAVING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
+}
+}
+
+
+
+
+//3 dzvvmxkya868w5x78lkvchigk
+// static Agraph_t *cl_bound(graph_t* g,  node_t *n, node_t *adj) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;&quot;, key=&quot;dzvvmxkya868w5x78lkvchigk&quot;, definition=&quot;static Agraph_t *cl_bound(graph_t* g,  node_t *n, node_t *adj)&quot;)
+public static ST_Agraph_s cl_bound(ST_Agraph_s g,  ST_Agnode_s n, ST_Agnode_s adj) {
+<span class="fc" id="L2195">ENTERING(&quot;dzvvmxkya868w5x78lkvchigk&quot;,&quot;cl_bound&quot;);</span>
+try {
+    ST_Agraph_s rv, cl, tcl, hcl;
+    ST_Agedge_s orig;
+<span class="fc" id="L2199">    rv = null;</span>
+<span class="fc bfc" id="L2200" title="All 2 branches covered.">    if (ND_node_type(n) == 0)</span>
+<span class="fc" id="L2201">	tcl = hcl = ND_clust(n);</span>
+    else {
+<span class="fc" id="L2203">	orig = ED_to_orig(ND_out(n).list.get_(0));</span>
+<span class="fc" id="L2204">	tcl = ND_clust(agtail(orig));</span>
+<span class="fc" id="L2205">	hcl = ND_clust(aghead(orig));</span>
+    }
+<span class="fc bfc" id="L2207" title="All 2 branches covered.">    if (ND_node_type(adj) == 0) {</span>
+<span class="fc bfc" id="L2208" title="All 2 branches covered.">	cl = ( ND_clust(adj) == g ? null:ND_clust(adj));</span>
+<span class="pc bpc" id="L2209" title="3 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
+<span class="nc" id="L2210">	    rv = cl;</span>
+    } else {
+<span class="fc" id="L2212">	orig = ED_to_orig(ND_out(adj).list.get_(0));</span>
+<span class="pc bpc" id="L2213" title="1 of 2 branches missed.">	cl = ( ND_clust(agtail(orig)) == g ? null:ND_clust(agtail(orig)));</span>
+<span class="pc bpc" id="L2214" title="7 of 8 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
+<span class="nc" id="L2215">	    rv = cl;</span>
+	else {
+<span class="pc bpc" id="L2217" title="1 of 2 branches missed.">	    cl = ( ND_clust(aghead(orig)) == g ? null:ND_clust(aghead(orig)));</span>
+<span class="pc bpc" id="L2218" title="7 of 8 branches missed.">	    if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
+<span class="nc" id="L2219">		rv = cl;</span>
+	}
+    }
+<span class="fc" id="L2222">    return rv;</span>
+} finally {
+<span class="fc" id="L2224">LEAVING(&quot;dzvvmxkya868w5x78lkvchigk&quot;,&quot;cl_bound&quot;);</span>
+}
+}
+
+
+private final static int FUDGE = 4;
+
+//3 6qwgl36ugfnduc5x59ohuewv1
+// static boxf maximal_bbox(graph_t* g, spline_info_t* sp, node_t* vn, edge_t* ie, edge_t* oe) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;maximal_bbox&quot;, key=&quot;6qwgl36ugfnduc5x59ohuewv1&quot;, definition=&quot;static boxf maximal_bbox(graph_t* g, spline_info_t* sp, node_t* vn, edge_t* ie, edge_t* oe)&quot;)
+public static ST_boxf maximal_bbox(ST_Agraph_s g, ST_spline_info_t sp, ST_Agnode_s vn, ST_Agedge_s ie, ST_Agedge_s oe) {
+// WARNING!! STRUCT
+<span class="fc" id="L2237">return maximal_bbox_w_(g, sp, vn, ie, oe).copy();</span>
+}
+private static ST_boxf maximal_bbox_w_(ST_Agraph_s g, ST_spline_info_t sp, ST_Agnode_s vn, ST_Agedge_s ie, ST_Agedge_s oe) {
+<span class="fc" id="L2240">ENTERING(&quot;6qwgl36ugfnduc5x59ohuewv1&quot;,&quot;maximal_bbox&quot;);</span>
+try {
+    double b, nb;
+    ST_Agraph_s left_cl, right_cl;
+    ST_Agnode_s left, right;
+<span class="fc" id="L2245">    final ST_boxf rv = new ST_boxf();</span>
+    
+<span class="fc" id="L2247">    left_cl = right_cl = null;</span>
+    
+    /* give this node all the available space up to its neighbors */
+<span class="fc" id="L2250">    b = (double)(ND_coord(vn).x - ND_lw(vn) - FUDGE);</span>
+<span class="fc bfc" id="L2251" title="All 2 branches covered.">    if ((left = neighbor(g, vn, ie, oe, -1))!=null) {</span>
+<span class="pc bpc" id="L2252" title="1 of 2 branches missed.">	if ((left_cl = cl_bound(g, vn, left))!=null)</span>
+<span class="nc" id="L2253">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
+	else {
+<span class="fc" id="L2255">	    nb = (double)(ND_coord(left).x + ND_mval(left));</span>
+<span class="fc bfc" id="L2256" title="All 2 branches covered.">	    if (ND_node_type(left) == NORMAL)</span>
+<span class="fc" id="L2257">		nb += GD_nodesep(g) / 2.;</span>
+	    else
+<span class="fc" id="L2259">		nb += (double)(sp.Splinesep);</span>
+	}
+<span class="fc bfc" id="L2261" title="All 2 branches covered.">	if (nb &lt; b)</span>
+<span class="fc" id="L2262">	    b = nb;</span>
+<span class="fc" id="L2263">	rv.LL.x = ROUND(b);</span>
+    } else
+<span class="fc" id="L2265">	rv.LL.x = Math.min(ROUND(b), sp.LeftBound);</span>
+    
+    /* we have to leave room for our own label! */
+<span class="fc bfc" id="L2268" title="All 4 branches covered.">    if ((ND_node_type(vn) == VIRTUAL) &amp;&amp; (ND_label(vn)!=null))</span>
+<span class="fc" id="L2269">	b = (double)(ND_coord(vn).x + 10);</span>
+    else
+<span class="fc" id="L2271">	b = (double)(ND_coord(vn).x + ND_rw(vn) + FUDGE);</span>
+<span class="fc bfc" id="L2272" title="All 2 branches covered.">    if ((right = neighbor(g, vn, ie, oe, 1))!=null) {</span>
+<span class="pc bpc" id="L2273" title="1 of 2 branches missed.">	if ((right_cl = cl_bound(g, vn, right))!=null)</span>
+<span class="nc" id="L2274">	    nb = GD_bb(right_cl).LL.x - (double)(sp.Splinesep);</span>
+	else {
+<span class="fc" id="L2276">	    nb = ND_coord(right).x - ND_lw(right);</span>
+<span class="fc bfc" id="L2277" title="All 2 branches covered.">	    if (ND_node_type(right) == NORMAL)</span>
+<span class="fc" id="L2278">		nb -= GD_nodesep(g) / 2.;</span>
+	    else
+<span class="fc" id="L2280">		nb -= (double)(sp.Splinesep);</span>
+	}
+<span class="fc bfc" id="L2282" title="All 2 branches covered.">	if (nb &gt; b)</span>
+<span class="fc" id="L2283">	    b = nb;</span>
+<span class="fc" id="L2284">	rv.UR.x = ROUND(b);</span>
+    } else
+<span class="fc" id="L2286">	rv.UR.x = Math.max(ROUND(b), sp.RightBound);</span>
+    
+<span class="fc bfc" id="L2288" title="All 4 branches covered.">    if ((ND_node_type(vn) == VIRTUAL) &amp;&amp; (ND_label(vn)!=null)) {</span>
+<span class="fc" id="L2289">	rv.UR.x = rv.UR.x - ND_rw(vn);</span>
+<span class="pc bpc" id="L2290" title="1 of 2 branches missed.">	if (rv.UR.x &lt; rv.LL.x) rv.UR.x = ND_coord(vn).x;</span>
+    }
+    
+<span class="fc" id="L2293">    rv.LL.y = ND_coord(vn).y - GD_rank(g).get__(ND_rank(vn)).ht1;</span>
+<span class="fc" id="L2294">    rv.UR.y = ND_coord(vn).y + GD_rank(g).get__(ND_rank(vn)).ht2;</span>
+<span class="fc" id="L2295">    return rv;</span>
+} finally {
+<span class="fc" id="L2297">LEAVING(&quot;6qwgl36ugfnduc5x59ohuewv1&quot;,&quot;maximal_bbox&quot;);</span>
+}
+}
+
+
+
+
+//3 18pm6r3xcy90f0xi5hpm9jdhk
+// static node_t * neighbor(graph_t* g, node_t *vn, edge_t *ie, edge_t *oe, int dir) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;neighbor&quot;, key=&quot;18pm6r3xcy90f0xi5hpm9jdhk&quot;, definition=&quot;static node_t * neighbor(graph_t* g, node_t *vn, edge_t *ie, edge_t *oe, int dir)&quot;)
+public static ST_Agnode_s neighbor(ST_Agraph_s g, ST_Agnode_s vn, ST_Agedge_s ie, ST_Agedge_s oe, int dir) {
+<span class="fc" id="L2309">ENTERING(&quot;18pm6r3xcy90f0xi5hpm9jdhk&quot;,&quot;neighbor&quot;);</span>
+try {
+    int i;
+<span class="fc" id="L2312">    ST_Agnode_s n, rv = null;</span>
+<span class="fc" id="L2313">    CArray&lt;ST_rank_t&gt; rank = GD_rank(g).plus_(ND_rank(vn));</span>
+<span class="fc bfc" id="L2314" title="All 4 branches covered.">    for (i = ND_order(vn) + dir; ((i &gt;= 0) &amp;&amp; (i &lt; rank.get__(0).n)); i += dir) {</span>
+<span class="fc" id="L2315">	n = rank.get__(0).v.get_(i);</span>
+<span class="fc bfc" id="L2316" title="All 4 branches covered.">	if ((ND_node_type(n) == 1) &amp;&amp; (ND_label(n)!=null)) {</span>
+<span class="fc" id="L2317">	    rv = n;</span>
+<span class="fc" id="L2318">	    break;</span>
+	}
+<span class="fc bfc" id="L2320" title="All 2 branches covered.">	if (ND_node_type(n) == 0) {</span>
+<span class="fc" id="L2321">	    rv = n;</span>
+<span class="fc" id="L2322">	    break;</span>
+	}
+<span class="fc bfc" id="L2324" title="All 2 branches covered.">	if (pathscross(n, vn, ie, oe) == false) {</span>
+<span class="fc" id="L2325">	    rv = n;</span>
+<span class="fc" id="L2326">	    break;</span>
+	}
+    }
+<span class="fc" id="L2329">    return rv;</span>
+} finally {
+<span class="fc" id="L2331">LEAVING(&quot;18pm6r3xcy90f0xi5hpm9jdhk&quot;,&quot;neighbor&quot;);</span>
+}
+}
+
+
+
+
+//3 f4q0oqe165s9pl5k0th5noeyv
+// static boolean pathscross(n0, n1, ie1, oe1) node_t *n0, *n1
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;pathscross&quot;, key=&quot;f4q0oqe165s9pl5k0th5noeyv&quot;, definition=&quot;static boolean pathscross(n0, n1, ie1, oe1) node_t *n0, *n1&quot;)
+public static boolean pathscross(ST_Agnode_s n0, ST_Agnode_s n1, ST_Agedge_s ie1, ST_Agedge_s oe1) {
+<span class="fc" id="L2343">ENTERING(&quot;f4q0oqe165s9pl5k0th5noeyv&quot;,&quot;pathscross&quot;);</span>
+try {
+    ST_Agedge_s e0, e1;
+    ST_Agnode_s na, nb;
+    boolean order;
+    int cnt;
+<span class="fc bfc" id="L2349" title="All 2 branches covered.">    order = (ND_order(n0) &gt; ND_order(n1));</span>
+<span class="pc bpc" id="L2350" title="3 of 4 branches missed.">    if ((ND_out(n0).size != 1) &amp;&amp; (ND_out(n0).size != 1))</span>
+<span class="nc" id="L2351">	return false;</span>
+<span class="fc" id="L2352">    e1 = oe1;</span>
+<span class="pc bpc" id="L2353" title="1 of 4 branches missed.">    if (ND_out(n0).size == 1 &amp;&amp; e1!=null) {</span>
+<span class="fc" id="L2354">	e0 = (ST_Agedge_s) ND_out(n0).list.get_(0);</span>
+<span class="fc bfc" id="L2355" title="All 2 branches covered.">	for (cnt = 0; cnt &lt; 2; cnt++) {</span>
+<span class="fc bfc" id="L2356" title="All 2 branches covered.">	    if ((na = aghead(e0)) == (nb = aghead(e1)))</span>
+<span class="fc" id="L2357">		break;</span>
+<span class="fc bfc" id="L2358" title="All 4 branches covered.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
+<span class="fc" id="L2359">		return true;</span>
+<span class="fc bfc" id="L2360" title="All 4 branches covered.">	    if ((ND_out(na).size != 1) || (ND_node_type(na) == 0))</span>
+<span class="fc" id="L2361">		break;</span>
+<span class="fc" id="L2362">	    e0 = (ST_Agedge_s) ND_out(na).list.get_(0);</span>
+<span class="fc bfc" id="L2363" title="All 4 branches covered.">	    if ((ND_out(nb).size != 1) || (ND_node_type(nb) == 0))</span>
+<span class="fc" id="L2364">		break;</span>
+<span class="fc" id="L2365">	    e1 = (ST_Agedge_s) ND_out(nb).list.get_(0);</span>
+	}
+    }
+<span class="fc" id="L2368">    e1 = ie1;</span>
+<span class="pc bpc" id="L2369" title="1 of 4 branches missed.">    if (ND_in(n0).size == 1 &amp;&amp; e1!=null) {</span>
+<span class="fc" id="L2370">	e0 = (ST_Agedge_s) ND_in(n0).list.get_(0);</span>
+<span class="fc bfc" id="L2371" title="All 2 branches covered.">	for (cnt = 0; cnt &lt; 2; cnt++) {</span>
+<span class="fc bfc" id="L2372" title="All 2 branches covered.">	    if ((na = agtail(e0))== (nb = agtail(e1)))</span>
+<span class="fc" id="L2373">		break;</span>
+<span class="pc bpc" id="L2374" title="1 of 4 branches missed.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
+<span class="nc" id="L2375">		return true;</span>
+<span class="fc bfc" id="L2376" title="All 4 branches covered.">	    if ((ND_in(na).size != 1) || (ND_node_type(na) == 0))</span>
+<span class="fc" id="L2377">		break;</span>
+<span class="fc" id="L2378">	    e0 = (ST_Agedge_s) ND_in(na).list.get_(0);</span>
+<span class="fc bfc" id="L2379" title="All 4 branches covered.">	    if ((ND_in(nb).size != 1) || (ND_node_type(nb) == 0))</span>
+<span class="fc" id="L2380">		break;</span>
+<span class="fc" id="L2381">	    e1 = (ST_Agedge_s) ND_in(nb).list.get_(0);</span>
+	}
+    }
+<span class="fc" id="L2384">    return false;</span>
+} finally {
+<span class="fc" id="L2386">LEAVING(&quot;f4q0oqe165s9pl5k0th5noeyv&quot;,&quot;pathscross&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

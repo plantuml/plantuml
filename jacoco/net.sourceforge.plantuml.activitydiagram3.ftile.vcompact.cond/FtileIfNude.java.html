@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileIfNude.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</a> &gt; <span class="el_source">FtileIfNude.java</span></div><h1>FtileIfNude.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+
+public class FtileIfNude extends FtileDimensionMemoize {
+
+	protected final Ftile tile1;
+	protected final Ftile tile2;
+	private final Swimlane in;
+
+<span class="nc" id="L58">	protected double xDeltaNote = 0;</span>
+<span class="nc" id="L59">	protected double yDeltaNote = 0;</span>
+<span class="nc" id="L60">	protected double suppWidthNode = 0;</span>
+
+	FtileIfNude(Ftile tile1, Ftile tile2, Swimlane in) {
+<span class="nc" id="L63">		super(tile1.skinParam());</span>
+<span class="nc" id="L64">		this.tile1 = tile1;</span>
+<span class="nc" id="L65">		this.tile2 = tile2;</span>
+<span class="nc" id="L66">		this.in = in;</span>
+<span class="nc" id="L67">	}</span>
+
+	@Override
+	public Collection&lt;Ftile&gt; getMyChildren() {
+<span class="nc" id="L71">		return Arrays.asList(tile1, tile2);</span>
+	}
+
+	public boolean hasTwoBranches(StringBounder stringBounder) {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		return tile1.calculateDimension(stringBounder).hasPointOut()</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">				&amp;&amp; tile2.calculateDimension(stringBounder).hasPointOut();</span>
+	}
+
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L80">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (getSwimlaneIn() != null)</span>
+<span class="nc" id="L82">			result.add(getSwimlaneIn());</span>
+
+<span class="nc" id="L84">		result.addAll(tile1.getSwimlanes());</span>
+<span class="nc" id="L85">		result.addAll(tile2.getSwimlanes());</span>
+<span class="nc" id="L86">		return Collections.unmodifiableSet(result);</span>
+	}
+
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L90">		return in;</span>
+	}
+
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L94">		return getSwimlaneIn();</span>
+	}
+
+	protected UTranslate getTranslateBranch1(StringBounder stringBounder) {
+<span class="nc" id="L98">		final double x1 = xDeltaNote;</span>
+<span class="nc" id="L99">		final double y1 = yDeltaNote;</span>
+<span class="nc" id="L100">		return new UTranslate(x1, y1);</span>
+	}
+
+	protected UTranslate getTranslateBranch2(StringBounder stringBounder) {
+<span class="nc" id="L104">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc" id="L105">		final XDimension2D dim2 = tile2.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L107">		final double x2 = dimTotal.getWidth() - dim2.getWidth() - suppWidthNode;</span>
+<span class="nc" id="L108">		final double y2 = yDeltaNote;</span>
+<span class="nc" id="L109">		return new UTranslate(x2, y2);</span>
+
+	}
+
+	@Override
+	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (child == tile1)</span>
+<span class="nc" id="L116">			return getTranslateBranch1(stringBounder);</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (child == tile2)</span>
+<span class="nc" id="L119">			return getTranslateBranch2(stringBounder);</span>
+
+<span class="nc" id="L121">		throw new UnsupportedOperationException();</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L125">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc" id="L127">		ug.apply(getTranslateBranch1(stringBounder)).draw(tile1);</span>
+<span class="nc" id="L128">		ug.apply(getTranslateBranch2(stringBounder)).draw(tile2);</span>
+<span class="nc" id="L129">	}</span>
+
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+<span class="nc" id="L133">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (tile1.calculateDimension(stringBounder).hasPointOut()</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">				|| tile2.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L136">			return dimTotal;</span>
+
+<span class="nc" id="L138">		return dimTotal.withoutPointOut();</span>
+	}
+
+	@Override
+	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
+<span class="nc" id="L143">		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L144">		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L146">		final double innerMargin = widthInner(stringBounder);</span>
+<span class="nc" id="L147">		final double width = xDeltaNote + dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft())</span>
+				+ suppWidthNode;
+
+<span class="nc" id="L150">		final XDimension2D dim12 = dim1.mergeLR(dim2);</span>
+
+<span class="nc" id="L152">		final double height = yDeltaNote + dim12.getHeight();</span>
+<span class="nc" id="L153">		return new FtileGeometry(width, height, xDeltaNote + dim1.getLeft() + innerMargin / 2, yDeltaNote, height);</span>
+	}
+
+	protected double widthInner(StringBounder stringBounder) {
+<span class="nc" id="L157">		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L158">		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L159">		return (dim1.getWidth() - dim1.getLeft()) + dim2.getLeft();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

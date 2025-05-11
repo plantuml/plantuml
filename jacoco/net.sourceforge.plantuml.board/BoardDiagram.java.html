@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoardDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.board</a> &gt; <span class="el_source">BoardDiagram.java</span></div><h1>BoardDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.board;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+public class BoardDiagram extends UmlDiagram {
+
+<span class="nc" id="L63">	private final List&lt;Activity&gt; activities = new ArrayList&lt;&gt;();</span>
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L66">		return new DiagramDescription(&quot;Board&quot;);</span>
+	}
+
+	public BoardDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L70">		super(source, UmlDiagramType.BOARD, null, preprocessing);</span>
+<span class="nc" id="L71">	}</span>
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="nc" id="L77">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L82">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L85">				drawMe(ug);</span>
+<span class="nc" id="L86">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L89">				final double width = 200;</span>
+<span class="nc" id="L90">				final double height = 200;</span>
+<span class="nc" id="L91">				return new XDimension2D(width, height);</span>
+
+			}
+		};
+	}
+
+	private void drawMe(final UGraphic ug) {
+<span class="nc" id="L98">		UGraphic mug = ug;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
+<span class="nc" id="L100">			activity.drawMe(mug);</span>
+<span class="nc" id="L101">			mug = mug.apply(UTranslate.dx(activity.getFullWidth()));</span>
+<span class="nc" id="L102">		}</span>
+
+<span class="nc" id="L104">		final ULine line = ULine.hline(getFullWidth());</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (int i = 0; i &lt; getMaxStage(); i++) {</span>
+<span class="nc" id="L107">			final double dy = (i + 1) * PostIt.getHeight() - 10;</span>
+<span class="nc" id="L108">			ug.apply(HColors.BLACK).apply(new UStroke(5, 5, 0.5)).apply(UTranslate.dy(dy)).draw(line);</span>
+		}
+<span class="nc" id="L110">	}</span>
+
+	private double getFullWidth() {
+<span class="nc" id="L113">		double width = 0;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
+<span class="nc" id="L115">			width += activity.getFullWidth();</span>
+<span class="nc" id="L116">		}</span>
+<span class="nc" id="L117">		return width;</span>
+	}
+
+	private int getMaxStage() {
+<span class="nc" id="L121">		int max = 0;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
+<span class="nc" id="L123">			max = Math.max(max, activity.getMaxStage());</span>
+<span class="nc" id="L124">		}</span>
+<span class="nc" id="L125">		return max;</span>
+	}
+
+	private Activity getLastActivity() {
+<span class="nc" id="L129">		return this.activities.get(this.activities.size() - 1);</span>
+	}
+
+	public CommandExecutionResult addLine(String plus, String label) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (plus.length() == 0) {</span>
+<span class="nc" id="L134">			final Activity activity = new Activity(this, label, getSkinParam());</span>
+<span class="nc" id="L135">			this.activities.add(activity);</span>
+<span class="nc" id="L136">			return CommandExecutionResult.ok();</span>
+		}
+<span class="nc" id="L138">		getLastActivity().addRelease(plus.length(), label);</span>
+<span class="nc" id="L139">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

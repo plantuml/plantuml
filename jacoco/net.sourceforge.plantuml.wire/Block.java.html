@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Block.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.wire</a> &gt; <span class="el_source">Block.java</span></div><h1>Block.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.wire;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.Position;
+
+public class Block extends AbstractTextBlock {
+	// ::remove folder when __CORE__
+
+	static class Pos {
+		final double x;
+		final double y;
+
+<span class="nc" id="L69">		public Pos(double x, double y) {</span>
+<span class="nc" id="L70">			this.x = x;</span>
+<span class="nc" id="L71">			this.y = y;</span>
+<span class="nc" id="L72">		}</span>
+
+		UGraphic move(UGraphic ug) {
+<span class="nc" id="L75">			return ug.apply(new UTranslate(x, y));</span>
+		}
+	}
+
+<span class="nc" id="L79">	private final Map&lt;Block, Pos&gt; children = new LinkedHashMap&lt;Block, Pos&gt;();</span>
+	private final Display display;
+	private final XDimension2D fixedDim;
+	private final ISkinParam skinParam;
+
+<span class="nc" id="L84">	private final List&lt;String&gt; left = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L85">	private final List&lt;String&gt; right = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L86">	private final List&lt;String&gt; top = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L87">	private final List&lt;String&gt; bottom = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L89">	private double x = 10;</span>
+<span class="nc" id="L90">	private double y = 10;</span>
+
+<span class="nc" id="L92">	private MinMax minMax = MinMax.getEmpty(true);</span>
+	private Block parent;
+
+	public Block(ISkinParam skinParam) {
+<span class="nc" id="L96">		this(skinParam, Display.empty(), null);</span>
+<span class="nc" id="L97">	}</span>
+
+<span class="nc" id="L99">	private Block(ISkinParam skinParam, Display display, XDimension2D fixedDim) {</span>
+<span class="nc" id="L100">		this.skinParam = skinParam;</span>
+<span class="nc" id="L101">		this.display = display;</span>
+<span class="nc" id="L102">		this.fixedDim = fixedDim;</span>
+
+<span class="nc" id="L104">	}</span>
+
+	private List&lt;String&gt; getPins(Position position) {
+<span class="nc bnc" id="L107" title="All 5 branches missed.">		switch (position) {</span>
+		case LEFT:
+<span class="nc" id="L109">			return left;</span>
+		case RIGHT:
+<span class="nc" id="L111">			return right;</span>
+		case TOP:
+<span class="nc" id="L113">			return top;</span>
+		case BOTTOM:
+<span class="nc" id="L115">			return bottom;</span>
+		}
+<span class="nc" id="L117">		throw new IllegalArgumentException();</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (fixedDim == null)</span>
+<span class="nc" id="L122">			return minMax.getDimension();</span>
+
+<span class="nc" id="L124">		return fixedDim;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L128">		ug = ug.apply(getBlack());</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (children.size() == 0) {</span>
+<span class="nc" id="L130">			final TextBlock label = display.create(FontConfiguration.create(skinParam, FontParam.COMPONENT, null),</span>
+					HorizontalAlignment.CENTER, skinParam);
+<span class="nc" id="L132">			label.drawU(ug.apply(new UTranslate(10, 10)));</span>
+<span class="nc" id="L133">		} else {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			for (Entry&lt;Block, Pos&gt; ent : children.entrySet()) {</span>
+<span class="nc" id="L135">				ent.getKey().drawU(ent.getValue().move(ug));</span>
+<span class="nc" id="L136">			}</span>
+		}
+<span class="nc" id="L138">		ug.draw(URectangle.build(calculateDimension(ug.getStringBounder())));</span>
+
+<span class="nc" id="L140">		drawPins(Position.BOTTOM, ug);</span>
+<span class="nc" id="L141">		drawPins(Position.TOP, ug);</span>
+<span class="nc" id="L142">		drawPins(Position.LEFT, ug);</span>
+<span class="nc" id="L143">		drawPins(Position.RIGHT, ug);</span>
+
+<span class="nc" id="L145">	}</span>
+
+	private HColor getBlack() {
+<span class="nc" id="L148">		return HColors.BLACK.withDark(HColors.WHITE);</span>
+	}
+
+	private void drawPins(Position pos, UGraphic ug) {
+<span class="nc" id="L152">		double px = -2;</span>
+<span class="nc" id="L153">		double py = 10;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (pos == Position.RIGHT) {</span>
+<span class="nc" id="L155">			px = calculateDimension(ug.getStringBounder()).getWidth() - 2;</span>
+		}
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (pos == Position.TOP) {</span>
+<span class="nc" id="L158">			px = 10;</span>
+<span class="nc" id="L159">			py = -2;</span>
+		}
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (pos == Position.BOTTOM) {</span>
+<span class="nc" id="L162">			px = 10;</span>
+<span class="nc" id="L163">			py = calculateDimension(ug.getStringBounder()).getHeight() - 2;</span>
+		}
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		for (String pin : getPins(pos)) {</span>
+<span class="nc" id="L166">			ug.apply(new UTranslate(px, py)).draw(UEllipse.build(4, 4));</span>
+<span class="nc bnc" id="L167" title="All 4 branches missed.">			if (pos == Position.LEFT || pos == Position.RIGHT) {</span>
+<span class="nc" id="L168">				py += 15;</span>
+			} else {
+<span class="nc" id="L170">				px += 15;</span>
+			}
+<span class="nc" id="L172">		}</span>
+<span class="nc" id="L173">	}</span>
+
+	public Block componentEnd() {
+<span class="nc" id="L176">		parent.minMax = parent.minMax.addPoint(parent.x + this.minMax.getMaxX() + 10,</span>
+<span class="nc" id="L177">				parent.y + this.minMax.getMaxY() + 10);</span>
+<span class="nc" id="L178">		parent.x += this.minMax.getMaxX() + 10;</span>
+<span class="nc" id="L179">		return parent;</span>
+	}
+
+	public Block addNewBlock(String name, int width, int height) {
+<span class="nc" id="L183">		final XDimension2D dim = new XDimension2D(width, height);</span>
+<span class="nc" id="L184">		final Block child = new Block(skinParam, Display.create(name), dim);</span>
+<span class="nc" id="L185">		children.put(child, new Pos(x, y));</span>
+<span class="nc" id="L186">		y += dim.getHeight() + 10;</span>
+<span class="nc" id="L187">		minMax = minMax.addPoint(x + dim.getWidth() + 10, y);</span>
+<span class="nc" id="L188">		return child;</span>
+	}
+
+	public Block createContainer(String name) {
+<span class="nc" id="L192">		final Block result = new Block(skinParam);</span>
+<span class="nc" id="L193">		result.parent = this;</span>
+<span class="nc" id="L194">		children.put(result, new Pos(x, y));</span>
+<span class="nc" id="L195">		return result;</span>
+	}
+
+	public void vspace(int vspace) {
+<span class="nc" id="L199">		y += vspace - 10;</span>
+<span class="nc" id="L200">		minMax = minMax.addPoint(x, y);</span>
+<span class="nc" id="L201">	}</span>
+
+	public void newColumn() {
+<span class="nc" id="L204">		this.x = minMax.getMaxX();</span>
+<span class="nc" id="L205">		this.y = 10;</span>
+<span class="nc" id="L206">	}</span>
+
+	public void addPin(Position position, String pin) {
+<span class="nc" id="L209">		getPins(position).add(pin);</span>
+<span class="nc" id="L210">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

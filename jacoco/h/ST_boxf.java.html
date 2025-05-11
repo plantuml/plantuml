@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ST_boxf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">h</a> &gt; <span class="el_source">ST_boxf.java</span></div><h1>ST_boxf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package h;
+
+import smetana.core.UnsupportedStarStruct;
+import smetana.core.__struct__;
+
+<span class="fc" id="L51">final public class ST_boxf extends UnsupportedStarStruct {</span>
+
+<span class="fc" id="L53">	public final ST_pointf LL = new ST_pointf();</span>
+<span class="fc" id="L54">	public final ST_pointf UR = new ST_pointf();</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L58">		return &quot;LL=&quot; + LL + &quot; UR=&quot; + UR;</span>
+	}
+
+	public static ST_boxf[] malloc(int nb) {
+<span class="fc" id="L62">		final ST_boxf result[] = new ST_boxf[nb];</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (int i = 0; i &lt; nb; i++) {</span>
+<span class="fc" id="L64">			result[i] = new ST_boxf();</span>
+		}
+<span class="fc" id="L66">		return result;</span>
+	}
+
+	@Override
+	public ST_boxf copy() {
+<span class="fc" id="L71">		final ST_boxf result = new ST_boxf();</span>
+<span class="fc" id="L72">		result.LL.___((__struct__) this.LL);</span>
+<span class="fc" id="L73">		result.UR.___((__struct__) this.UR);</span>
+<span class="fc" id="L74">		return result;</span>
+	}
+
+	@Override
+	public void ___(__struct__ value) {
+<span class="fc" id="L79">		final ST_boxf other = (ST_boxf) value;</span>
+<span class="fc" id="L80">		this.LL.___(other.LL);</span>
+<span class="fc" id="L81">		this.UR.___(other.UR);</span>
+<span class="fc" id="L82">	}</span>
+
+}
+
+// typedef struct { pointf LL, UR; } boxf;
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

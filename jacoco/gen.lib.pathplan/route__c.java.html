@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>route__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.pathplan</a> &gt; <span class="el_source">route__c.java</span></div><h1>route__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.pathplan;
+import static gen.lib.pathplan.solvers__c.solve3;
+import static smetana.core.JUtils.setjmp;
+import static smetana.core.Macro.DISTSQ;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Pedge_t;
+import h.ST_Ppoly_t;
+import h.ST_pointf;
+import h.ST_tna_t;
+import smetana.core.CArray;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.jmp_buf;
+
+<span class="nc" id="L66">public class route__c {</span>
+//1 baedz5i9est5csw3epz3cv7z
+// typedef Ppoly_t Ppolyline_t
+
+
+//1 7pb9zum2n4wlgil34lvh8i0ts
+// typedef double COORD
+
+
+//1 540u5gu9i0x1wzoxqqx5n2vwp
+// static jmp_buf jbuf
+<span class="fc" id="L77">private static jmp_buf jbuf = new jmp_buf();</span>
+
+//1 3k2f2er3efsrl0210su710vf
+// static Ppoint_t *ops
+//static private __ptr__ ops;
+
+//1 ds2k0zdfzruet3qxk0duytkjx
+// static int opn, opl
+//private static int opn;
+//private static int opl;
+
+
+
+//3 9stmrdqlmufyk2wutp3totr5j
+// int Proutespline(Pedge_t * edges, int edgen, Ppolyline_t input, 		 Ppoint_t * evs, Ppolyline_t * output) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;Proutespline&quot;, key=&quot;9stmrdqlmufyk2wutp3totr5j&quot;, definition=&quot;int Proutespline(Pedge_t * edges, int edgen, Ppolyline_t input, 		 Ppoint_t * evs, Ppolyline_t * output)&quot;)
+public static int Proutespline(Globals zz, CArray&lt;ST_Pedge_t&gt; edges, int edgen, ST_Ppoly_t input, CArray&lt;ST_pointf&gt; evs, ST_Ppoly_t output) {
+// WARNING!! STRUCT
+<span class="fc" id="L96">return Proutespline_w_(zz, edges, edgen, (ST_Ppoly_t) input.copy(), evs, output);</span>
+}
+private static int Proutespline_w_(Globals zz, CArray&lt;ST_Pedge_t&gt; edges, int edgen, final ST_Ppoly_t input, CArray&lt;ST_pointf&gt; evs, ST_Ppoly_t output) {
+<span class="fc" id="L99">ENTERING(&quot;9stmrdqlmufyk2wutp3totr5j&quot;,&quot;Proutespline&quot;);</span>
+try {
+	CArray&lt;ST_pointf&gt; inps;
+    int inpn;
+    /* unpack into previous format rather than modify legacy code */
+<span class="fc" id="L104">    inps = input.ps;</span>
+<span class="fc" id="L105">    inpn = input.pn;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">    if (setjmp(jbuf)!=0)</span>
+<span class="nc" id="L107">UNSUPPORTED(&quot;8d9xfgejx5vgd6shva5wk5k06&quot;); // 	return -1;</span>
+    /* generate the splines */
+<span class="fc" id="L109">    evs.get__(0).___(normv(evs.get__(0)));</span>
+<span class="fc" id="L110">    evs.get__(1).___(normv(evs.get__(1)));</span>
+<span class="fc" id="L111">    zz.opl = 0;</span>
+<span class="fc" id="L112">    growops(zz, 4);</span>
+<span class="fc" id="L113">    zz.ops_route.get__(zz.opl).___(inps.get__(0));</span>
+<span class="fc" id="L114">    zz.opl++;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">    if (reallyroutespline(zz, edges, edgen, inps, inpn, evs.get__(0), evs.get__(1)) == -1)</span>
+<span class="nc" id="L116">	return -1;</span>
+<span class="fc" id="L117">    output.pn = zz.opl;</span>
+<span class="fc" id="L118">    output.ps = zz.ops_route;</span>
+<span class="fc" id="L119">    return 0;</span>
+} finally {
+<span class="fc" id="L121">LEAVING(&quot;9stmrdqlmufyk2wutp3totr5j&quot;,&quot;Proutespline&quot;);</span>
+}
+}
+
+
+
+
+//3 13dxqzbgtpl4ubnnvw6ehzzi9
+// static int reallyroutespline(Pedge_t * edges, int edgen, 			     Ppoint_t * inps, int inpn, Ppoint_t ev0, 			     Ppoint_t ev1) 
+//private static __ptr__ tnas;
+//private static int tnan;
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;&quot;, key=&quot;&quot;, definition=&quot;&quot;)
+public static int reallyroutespline(Globals zz, CArray&lt;ST_Pedge_t&gt; edges, int edgen, CArray&lt;ST_pointf&gt; inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
+// WARNING!! STRUCT
+<span class="fc" id="L136">return reallyroutespline_w_(zz, edges, edgen, inps, inpn, ev0.copy(), ev1.copy());</span>
+}
+private static int reallyroutespline_w_(Globals zz, CArray&lt;ST_Pedge_t&gt; edges, int edgen, CArray&lt;ST_pointf&gt; inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
+<span class="fc" id="L139">ENTERING(&quot;13dxqzbgtpl4ubnnvw6ehzzi9&quot;,&quot;reallyroutespline&quot;);</span>
+try {
+<span class="fc" id="L141">    final ST_pointf p1 = new ST_pointf(), p2 = new ST_pointf(), cp1 = new ST_pointf(), cp2 = new ST_pointf(), p = new ST_pointf();</span>
+<span class="fc" id="L142">    final ST_pointf v1 = new ST_pointf(), v2 = new ST_pointf(), splitv = new ST_pointf(), splitv1 = new ST_pointf(), splitv2 = new ST_pointf();</span>
+    double maxd, d, t;
+    int maxi, i, spliti;
+<span class="fc bfc" id="L145" title="All 2 branches covered.">    if (zz.tnan &lt; inpn) {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">	if ((zz.tnas) == null) {</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">	    if ((zz.tnas = CArray.&lt;ST_tna_t&gt;ALLOC__(inpn, ZType.ST_tna_t)) == null)</span>
+<span class="nc" id="L148">		return -1;</span>
+	} else {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">	    if (((zz.tnas = CArray.&lt;ST_tna_t&gt;REALLOC__(inpn, zz.tnas, ZType.ST_tna_t)))==null)</span>
+<span class="nc" id="L151">		return -1;</span>
+	}
+<span class="fc" id="L153">	zz.tnan = inpn;</span>
+    }
+<span class="fc" id="L155">    zz.tnas.get__(0).t = 0;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">    for (i = 1; i &lt; inpn; i++)</span>
+<span class="fc" id="L157">	zz.tnas.get__(i).t = (zz.tnas.get__(i-1).t + dist(inps.get__(i), inps.get__(i-1)));</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">    for (i = 1; i &lt; inpn; i++)</span>
+<span class="fc" id="L159">	zz.tnas.get__(i).t = (zz.tnas.get__(i).t / zz.tnas.get__(inpn - 1).t);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">    for (i = 0; i &lt; inpn; i++) {</span>
+<span class="fc" id="L161">	zz.tnas.get__(i).a[0].___(scale(ev0, B1(zz.tnas.get__(i).t)));</span>
+<span class="fc" id="L162">	zz.tnas.get__(i).a[1].___(scale(ev1, B2(zz.tnas.get__(i).t)));</span>
+    }
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">    if (mkspline(inps, inpn, zz.tnas, ev0, ev1, p1, v1, p2, v2) == -1)</span>
+<span class="nc" id="L165">	return -1;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">    if (splinefits(zz, edges, edgen, p1, v1, p2, v2, inps, inpn)!=0)</span>
+<span class="fc" id="L167">	return 0;</span>
+<span class="fc" id="L168">    cp1.___(add(p1, scale(v1, 1 / 3.0)));</span>
+<span class="fc" id="L169">    cp2.___(sub(p2, scale(v2, 1 / 3.0)));</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">    for (maxd = -1, maxi = -1, i = 1; i &lt; inpn - 1; i++) {</span>
+<span class="fc" id="L171">	t = zz.tnas.get__(i).t;</span>
+<span class="fc" id="L172">	p.x = (B0(t) * p1.x + B1(t) * cp1.x + B2(t) * cp2.x + B3(t) * p2.x);</span>
+<span class="fc" id="L173">	p.y = (B0(t) * p1.y + B1(t) * cp1.y + B2(t) * cp2.y + B3(t) * p2.y);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">	if ((d = dist(p, inps.get__(i))) &gt; maxd)</span>
+<span class="fc" id="L175">	    {maxd = d; maxi = i;}</span>
+    }
+<span class="fc" id="L177">    spliti = maxi;</span>
+<span class="fc" id="L178">    splitv1.___(normv(sub(inps.get__(spliti), inps.get__(spliti - 1))));</span>
+<span class="fc" id="L179">    splitv2.___(normv(sub(inps.get__(spliti + 1), inps.get__(spliti))));</span>
+<span class="fc" id="L180">    splitv.___(normv(add(splitv1, splitv2)));</span>
+<span class="fc" id="L181">    reallyroutespline(zz, edges, edgen, inps, spliti + 1, ev0, splitv);</span>
+<span class="fc" id="L182">    reallyroutespline(zz, edges, edgen, inps.plus_(spliti), inpn - spliti, splitv,</span>
+		      ev1);
+<span class="fc" id="L184">    return 0;</span>
+} finally {
+<span class="fc" id="L186">LEAVING(&quot;13dxqzbgtpl4ubnnvw6ehzzi9&quot;,&quot;reallyroutespline&quot;);</span>
+}
+}
+
+
+
+
+//3 29sok6jkfyobf83q130snkhmh
+// static int mkspline(Ppoint_t * inps, int inpn, tna_t * tnas, Ppoint_t ev0, 		    Ppoint_t ev1, Ppoint_t * sp0, Ppoint_t * sv0, 		    Ppoint_t * sp1, Ppoint_t * sv1) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;mkspline&quot;, key=&quot;29sok6jkfyobf83q130snkhmh&quot;, definition=&quot;static int mkspline(Ppoint_t * inps, int inpn, tna_t * tnas, Ppoint_t ev0, 		    Ppoint_t ev1, Ppoint_t * sp0, Ppoint_t * sv0, 		    Ppoint_t * sp1, Ppoint_t * sv1)&quot;)
+public static int mkspline(CArray&lt;ST_pointf&gt; inps, int inpn, CArray&lt;ST_tna_t&gt; tnas, final ST_pointf ev0, final ST_pointf ev1, ST_pointf sp0, ST_pointf sv0, ST_pointf sp1, ST_pointf sv1) {
+// WARNING!! STRUCT
+<span class="fc" id="L199">return mkspline_w_(inps, inpn, tnas, ev0.copy(), ev1.copy(), sp0, sv0, sp1, sv1);</span>
+}
+private static int mkspline_w_(CArray&lt;ST_pointf&gt; inps, int inpn, CArray&lt;ST_tna_t&gt; tnas, final ST_pointf ev0, final ST_pointf ev1, ST_pointf sp0, ST_pointf sv0, ST_pointf sp1, ST_pointf sv1) {
+<span class="fc" id="L202">ENTERING(&quot;29sok6jkfyobf83q130snkhmh&quot;,&quot;mkspline&quot;);</span>
+try {
+<span class="fc" id="L204">    final ST_pointf tmp = new ST_pointf();</span>
+<span class="fc" id="L205">    double c[][] = new double[2][2];</span>
+<span class="fc" id="L206">    double x[] = new double[2];</span>
+    double det01, det0X, detX1;
+    double d01, scale0, scale3;
+    int i;
+<span class="fc" id="L210">    scale0 = scale3 = 0.0;</span>
+<span class="fc" id="L211">    c[0][0] = c[0][1] = c[1][0] = c[1][1] = 0.0;</span>
+<span class="fc" id="L212">    x[0] = x[1] = 0.0;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">    for (i = 0; i &lt; inpn; i++) {</span>
+<span class="fc" id="L214">	c[0][0] += dot(tnas.get__(i).a[0], tnas.get__(i).a[0]);</span>
+<span class="fc" id="L215">	c[0][1] += dot(tnas.get__(i).a[0], tnas.get__(i).a[1]);</span>
+<span class="fc" id="L216">	c[1][0] = c[0][1];</span>
+<span class="fc" id="L217">	c[1][1] += dot(tnas.get__(i).a[1], tnas.get__(i).a[1]);</span>
+<span class="fc" id="L218">	tmp.___(sub(inps.get__(i), add(scale(inps.get__(0), B01(tnas.get__(i).t)),</span>
+<span class="fc" id="L219">			       scale(inps.get__(inpn - 1), B23(tnas.get__(i).t)))));</span>
+<span class="fc" id="L220">	x[0] += dot(tnas.get__(i).a[0], tmp);</span>
+<span class="fc" id="L221">	x[1] += dot(tnas.get__(i).a[1], tmp);</span>
+    }
+<span class="fc" id="L223">    det01 = c[0][0] * c[1][1] - c[1][0] * c[0][1];</span>
+<span class="fc" id="L224">    det0X = c[0][0] * x[1] - c[0][1] * x[0];</span>
+<span class="fc" id="L225">    detX1 = x[0] * c[1][1] - x[1] * c[0][1];</span>
+<span class="pc bpc" id="L226" title="1 of 4 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &gt;= 1e-6) {</span>
+<span class="fc" id="L227">	scale0 = detX1 / det01;</span>
+<span class="fc" id="L228">	scale3 = det0X / det01;</span>
+    }
+<span class="pc bpc" id="L230" title="3 of 8 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &lt; 1e-6 || scale0 &lt;= 0.0 || scale3 &lt;= 0.0) {</span>
+<span class="fc" id="L231">	d01 = dist(inps.get__(0), inps.get__(inpn - 1)) / 3.0;</span>
+<span class="fc" id="L232">	scale0 = d01;</span>
+<span class="fc" id="L233">	scale3 = d01;</span>
+    }
+<span class="fc" id="L235">    sp0.___(inps.get__(0));</span>
+<span class="fc" id="L236">    sv0.___(scale(ev0, scale0));</span>
+<span class="fc" id="L237">    sp1.___(inps.get__(inpn - 1));</span>
+<span class="fc" id="L238">    sv1.___(scale(ev1, scale3));</span>
+<span class="fc" id="L239">    return 0;</span>
+} finally {
+<span class="fc" id="L241">LEAVING(&quot;29sok6jkfyobf83q130snkhmh&quot;,&quot;mkspline&quot;);</span>
+}
+}
+
+
+
+
+//3 ea6jsc0rwfyjtmmuxax6r5ngk
+// static double dist_n(Ppoint_t * p, int n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;dist_n&quot;, key=&quot;ea6jsc0rwfyjtmmuxax6r5ngk&quot;, definition=&quot;static double dist_n(Ppoint_t * p, int n)&quot;)
+public static double dist_n(CArray&lt;ST_pointf&gt; p, int n) {
+<span class="fc" id="L253">ENTERING(&quot;ea6jsc0rwfyjtmmuxax6r5ngk&quot;,&quot;dist_n&quot;);</span>
+try {
+    int i;
+    double rv;
+<span class="fc" id="L257">    rv = 0.0;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">    for (i = 1; i &lt; n; i++) {</span>
+<span class="fc" id="L259">	rv +=</span>
+<span class="fc" id="L260">	    Math.sqrt((p.get__(i).x - p.get__(i - 1).x) * (p.get__(i).x - p.get__(i - 1).x)+</span>
+<span class="fc" id="L261">		 (p.get__(i).y - p.get__(i - 1).y) * (p.get__(i).y - p.get__(i - 1).y));</span>
+    }
+<span class="fc" id="L263">    return rv;</span>
+} finally {
+<span class="fc" id="L265">LEAVING(&quot;ea6jsc0rwfyjtmmuxax6r5ngk&quot;,&quot;dist_n&quot;);</span>
+}
+}
+
+
+
+
+//3 987ednrgu5qo9dzhpiox47mhb
+// static int splinefits(Pedge_t * edges, int edgen, Ppoint_t pa, 		      Pvector_t va, Ppoint_t pb, Pvector_t vb, 		      Ppoint_t * inps, int inpn) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;splinefits&quot;, key=&quot;987ednrgu5qo9dzhpiox47mhb&quot;, definition=&quot;static int splinefits(Pedge_t * edges, int edgen, Ppoint_t pa, 		      Pvector_t va, Ppoint_t pb, Pvector_t vb, 		      Ppoint_t * inps, int inpn)&quot;)
+public static int splinefits(Globals zz, CArray&lt;ST_Pedge_t&gt; edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray&lt;ST_pointf&gt; inps, int inpn) {
+// WARNING!! STRUCT
+<span class="fc" id="L278">return splinefits_w_(zz, edges, edgen, pa.copy(), va.copy(), pb.copy(), vb.copy(), inps, inpn);</span>
+}
+private static int splinefits_w_(Globals zz, CArray&lt;ST_Pedge_t&gt; edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray&lt;ST_pointf&gt; inps, int inpn) {
+<span class="fc" id="L281">ENTERING(&quot;987ednrgu5qo9dzhpiox47mhb&quot;,&quot;splinefits&quot;);</span>
+try {
+<span class="fc" id="L283">    final CArray&lt;ST_pointf&gt; sps = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+    double a, b;
+    int pi;
+    int forceflag;
+<span class="fc" id="L287">    int first = 1;</span>
+    
+<span class="fc bfc" id="L289" title="All 2 branches covered.">    forceflag = inpn == 2 ? 1 : 0;</span>
+    
+<span class="fc" id="L291">    a = b = 4;</span>
+    for (;;) {
+<span class="fc" id="L293">	sps.get__(0).x = pa.x;</span>
+<span class="fc" id="L294">	sps.get__(0).y = pa.y;</span>
+<span class="fc" id="L295">	sps.get__(1).x = pa.x + a * va.x / 3.0;</span>
+<span class="fc" id="L296">	sps.get__(1).y = pa.y + a * va.y / 3.0;</span>
+<span class="fc" id="L297">	sps.get__(2).x = pb.x - b * vb.x / 3.0;</span>
+<span class="fc" id="L298">	sps.get__(2).y = pb.y - b * vb.y / 3.0;</span>
+<span class="fc" id="L299">	sps.get__(3).x = pb.x;</span>
+<span class="fc" id="L300">	sps.get__(3).y = pb.y;</span>
+	
+	/* shortcuts (paths shorter than the shortest path) not allowed -
+	 * they must be outside the constraint polygon.  this can happen
+	 * if the candidate spline intersects the constraint polygon exactly
+	 * on sides or vertices.  maybe this could be more elegant, but
+	 * it solves the immediate problem. we could also try jittering the
+	 * constraint polygon, or computing the candidate spline more carefully,
+	 * for example using the path. SCN */
+	
+<span class="fc bfc" id="L310" title="All 4 branches covered.">	if (first!=0 &amp;&amp; (dist_n(sps, 4) &lt; (dist_n(inps, inpn) - 1E-3)))</span>
+<span class="fc" id="L311">	    return 0;</span>
+<span class="fc" id="L312">	first = 0;</span>
+	
+<span class="fc bfc" id="L314" title="All 2 branches covered.">	if (splineisinside(edges, edgen, sps)) {</span>
+<span class="fc" id="L315">	    growops(zz, zz.opl + 4);</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">	    for (pi = 1; pi &lt; 4; pi++) {</span>
+<span class="fc" id="L317">		zz.ops_route.get__(zz.opl).x = sps.get__(pi).x;</span>
+<span class="fc" id="L318">		zz.ops_route.get__(zz.opl).y = sps.get__(pi).y;</span>
+<span class="fc" id="L319">		zz.opl++;</span>
+		}
+<span class="fc" id="L321">	    return 1;</span>
+	}
+<span class="pc bpc" id="L323" title="1 of 4 branches missed.">	if (a == 0 &amp;&amp; b == 0) {</span>
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">	    if (forceflag!=0) {</span>
+<span class="nc" id="L325">		growops(zz, zz.opl + 4);</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">		for (pi = 1; pi &lt; 4; pi++)</span>
+		{
+<span class="nc" id="L328">			zz.ops_route.get__(zz.opl).x = sps.get__(pi).x;</span>
+<span class="nc" id="L329">			zz.ops_route.get__(zz.opl).y = sps.get__(pi).y;</span>
+<span class="nc" id="L330">		    zz.opl++;</span>
+		}
+<span class="nc" id="L332">		return 1;</span>
+	    }
+	    break;
+	}
+<span class="fc bfc" id="L336" title="All 2 branches covered.">	if (a &gt; .01)</span>
+	{
+<span class="fc" id="L338">	    a /= 2;</span>
+<span class="fc" id="L339">	    b /= 2;</span>
+	}
+	else
+<span class="fc" id="L342">	    a = b = 0;</span>
+    }
+<span class="fc" id="L344">    return 0;</span>
+} finally {
+<span class="fc" id="L346">LEAVING(&quot;987ednrgu5qo9dzhpiox47mhb&quot;,&quot;splinefits&quot;);</span>
+}
+}
+
+
+
+
+//3 b6eghkeu16aum3l778ig52ht1
+// static int splineisinside(Pedge_t * edges, int edgen, Ppoint_t * sps) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;splineisinside&quot;, key=&quot;b6eghkeu16aum3l778ig52ht1&quot;, definition=&quot;static int splineisinside(Pedge_t * edges, int edgen, Ppoint_t * sps)&quot;)
+public static boolean splineisinside(CArray&lt;ST_Pedge_t&gt; edges, int edgen, CArray&lt;ST_pointf&gt; sps) {
+<span class="fc" id="L358">ENTERING(&quot;b6eghkeu16aum3l778ig52ht1&quot;,&quot;splineisinside&quot;);</span>
+try {
+<span class="fc" id="L360">    final double roots[] = new double[4];</span>
+    int rooti, rootn;
+    int ei;
+<span class="fc" id="L363">    final CArray&lt;ST_pointf&gt; lps = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
+<span class="fc" id="L364">    final ST_pointf ip = new ST_pointf();</span>
+    
+    double t, ta, tb, tc, td;
+<span class="fc bfc" id="L367" title="All 2 branches covered.">    for (ei = 0; ei &lt; edgen; ei++) {</span>
+<span class="fc" id="L368">	lps.get__(0).___(edges.get__(ei).a);</span>
+<span class="fc" id="L369">	lps.get__(1).___(edges.get__(ei).b);</span>
+	/* if ((rootn = splineintersectsline (sps, lps, roots)) == 4)
+	   return 1; */
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">	if ((rootn = splineintersectsline(sps, lps, roots)) == 4)</span>
+<span class="nc" id="L373">	    continue;</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">	for (rooti = 0; rooti &lt; rootn; rooti++) {</span>
+<span class="fc bfc" id="L375" title="All 4 branches covered.">	    if (roots[rooti] &lt; 1E-6 || roots[rooti] &gt; 1 - 1E-6)</span>
+<span class="fc" id="L376">		continue;</span>
+<span class="fc" id="L377">	    t = roots[rooti];</span>
+<span class="fc" id="L378">	    td = t * t * t;</span>
+<span class="fc" id="L379">	    tc = 3 * t * t * (1 - t);</span>
+<span class="fc" id="L380">	    tb = 3 * t * (1 - t) * (1 - t);</span>
+<span class="fc" id="L381">	    ta = (1 - t) * (1 - t) * (1 - t);</span>
+<span class="fc" id="L382">	    ip.x = ta * sps.get__(0).x + tb * sps.get__(1).x +</span>
+<span class="fc" id="L383">		tc * sps.get__(2).x + td * sps.get__(3).x;</span>
+<span class="fc" id="L384">	    ip.y = ta * sps.get__(0).y + tb * sps.get__(1).y +</span>
+<span class="fc" id="L385">		tc * sps.get__(2).y + td * sps.get__(3).y;</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">	    if (DISTSQ(ip, lps.get__(0)) &lt; 1E-3 ||</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">		DISTSQ(ip, lps.get__(1)) &lt; 1E-3)</span>
+<span class="nc" id="L388">		continue;</span>
+<span class="fc" id="L389">	    return false;</span>
+	}
+    }
+<span class="fc" id="L392">    return true;</span>
+} finally {
+<span class="fc" id="L394">LEAVING(&quot;b6eghkeu16aum3l778ig52ht1&quot;,&quot;splineisinside&quot;);</span>
+}
+}
+
+
+
+
+//3 32nc8itszi77u36la8npt2870
+// static int splineintersectsline(Ppoint_t * sps, Ppoint_t * lps, 				double *roots) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;splineintersectsline&quot;, key=&quot;32nc8itszi77u36la8npt2870&quot;, definition=&quot;static int splineintersectsline(Ppoint_t * sps, Ppoint_t * lps, 				double *roots)&quot;)
+public static int splineintersectsline(CArray&lt;ST_pointf&gt; sps, CArray&lt;ST_pointf&gt; lps, double roots[]) {
+<span class="fc" id="L406">ENTERING(&quot;32nc8itszi77u36la8npt2870&quot;,&quot;splineintersectsline&quot;);</span>
+try {
+<span class="fc" id="L408">    final double scoeff[] = new double[4];</span>
+<span class="fc" id="L409">    final double xcoeff[] = new double[2];</span>
+<span class="fc" id="L410">    final double ycoeff[] = new double[2];</span>
+<span class="fc" id="L411">    final double xroots[] = new double[3];</span>
+<span class="fc" id="L412">    final double yroots[] = new double[3];</span>
+    double tv, sv, rat;
+<span class="fc" id="L414">    final int rootn[] = new int[]{0};</span>
+    int xrootn, yrootn, i, j;
+    
+<span class="fc" id="L417">    xcoeff[0] = lps.get__(0).x;</span>
+<span class="fc" id="L418">    xcoeff[1] = lps.get__(1).x - lps.get__(0).x;</span>
+<span class="fc" id="L419">    ycoeff[0] = lps.get__(0).y;</span>
+<span class="fc" id="L420">    ycoeff[1] = lps.get__(1).y - lps.get__(0).y;</span>
+<span class="fc" id="L421">    rootn[0] = 0;</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">    if (xcoeff[1] == 0) {</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered."> 	if (ycoeff[1] == 0) {</span>
+<span class="fc" id="L424">	    points2coeff(sps.get__(0).x, sps.get__(1).x, sps.get__(2).x, sps.get__(3).x, scoeff);</span>
+<span class="fc" id="L425">	    scoeff[0] -= xcoeff[0];</span>
+<span class="fc" id="L426">	    xrootn = solve3(scoeff, xroots);</span>
+<span class="fc" id="L427">	    points2coeff(sps.get__(0).y, sps.get__(1).y, sps.get__(2).y, sps.get__(3).y, scoeff);</span>
+<span class="fc" id="L428">	    scoeff[0] -= ycoeff[0];</span>
+<span class="fc" id="L429">	    yrootn = solve3(scoeff, yroots);</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">	    if (xrootn == 4)</span>
+<span class="nc bnc" id="L431" title="All 2 branches missed.">		if (yrootn == 4)</span>
+<span class="nc" id="L432">		    return 4;</span>
+		else
+<span class="nc bnc" id="L434" title="All 2 branches missed.">		    for (j = 0; j &lt; yrootn; j++)</span>
+<span class="nc" id="L435">			addroot(yroots[j], roots, rootn);</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">	    else if (yrootn == 4)</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">		for (i = 0; i &lt; xrootn; i++)</span>
+<span class="nc" id="L438">		    addroot(xroots[i], roots, rootn);</span>
+	    else
+<span class="fc bfc" id="L440" title="All 2 branches covered.">		for (i = 0; i &lt; xrootn; i++)</span>
+<span class="fc bfc" id="L441" title="All 2 branches covered.">		    for (j = 0; j &lt; yrootn; j++)</span>
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">			if (xroots[i] == yroots[j])</span>
+<span class="nc" id="L443">			    addroot(xroots[i], roots, rootn);</span>
+<span class="fc" id="L444">	    return rootn[0];</span>
+	} else {
+<span class="fc" id="L446"> 	    points2coeff(sps.get__(0).x, sps.get__(1).x, sps.get__(2).x, sps.get__(3).x, scoeff);</span>
+<span class="fc" id="L447"> 	    scoeff[0] -= xcoeff[0];</span>
+<span class="fc" id="L448">	    xrootn = solve3(scoeff, xroots);</span>
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">	    if (xrootn == 4)</span>
+<span class="nc" id="L450">		return 4;</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">	    for (i = 0; i &lt; xrootn; i++) {</span>
+<span class="fc" id="L452">		tv = xroots[i];</span>
+<span class="fc bfc" id="L453" title="All 4 branches covered.">		if (tv &gt;= 0 &amp;&amp; tv &lt;= 1) {</span>
+<span class="fc" id="L454">		    points2coeff(sps.get__(0).y, sps.get__(1).y, sps.get__(2).y, sps.get__(3).y,</span>
+				 scoeff);
+<span class="fc" id="L456">		    sv = scoeff[0] + tv * (scoeff[1] + tv *</span>
+					   (scoeff[2] + tv * scoeff[3]));
+<span class="fc" id="L458">		    sv = (sv - ycoeff[0]) / ycoeff[1];</span>
+<span class="fc bfc" id="L459" title="All 4 branches covered.">		    if ((0 &lt;= sv) &amp;&amp; (sv &lt;= 1))</span>
+<span class="fc" id="L460">			addroot(tv, roots, rootn);</span>
+		}
+	    }
+<span class="fc" id="L463">	    return rootn[0];</span>
+	}
+    } else {
+<span class="fc" id="L466">	rat = ycoeff[1] / xcoeff[1];</span>
+<span class="fc" id="L467">	points2coeff(sps.get__(0).y - rat * sps.get__(0).x, sps.get__(1).y - rat * sps.get__(1).x,</span>
+<span class="fc" id="L468">		     sps.get__(2).y - rat * sps.get__(2).x, sps.get__(3).y - rat * sps.get__(3).x,</span>
+		     scoeff);
+<span class="fc" id="L470">	scoeff[0] += rat * xcoeff[0] - ycoeff[0];</span>
+<span class="fc" id="L471">	xrootn = solve3(scoeff, xroots);</span>
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">	if (xrootn == 4)</span>
+<span class="nc" id="L473">	    return 4;</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">	for (i = 0; i &lt; xrootn; i++) {</span>
+<span class="fc" id="L475">	    tv = xroots[i];</span>
+<span class="fc bfc" id="L476" title="All 4 branches covered.">	    if (tv &gt;= 0 &amp;&amp; tv &lt;= 1) {</span>
+<span class="fc" id="L477">		points2coeff(sps.get__(0).x, sps.get__(1).x, sps.get__(2).x, sps.get__(3).x,</span>
+			     scoeff);
+<span class="fc" id="L479">		sv = scoeff[0] + tv * (scoeff[1] +</span>
+				       tv * (scoeff[2] + tv * scoeff[3]));
+<span class="fc" id="L481">		sv = (sv - xcoeff[0]) / xcoeff[1];</span>
+<span class="fc bfc" id="L482" title="All 4 branches covered.">		if ((0 &lt;= sv) &amp;&amp; (sv &lt;= 1))</span>
+<span class="fc" id="L483">		    addroot(tv, roots, rootn);</span>
+	    }
+	}
+<span class="fc" id="L486">	return rootn[0];</span>
+	}
+} finally {
+<span class="fc" id="L489">LEAVING(&quot;32nc8itszi77u36la8npt2870&quot;,&quot;splineintersectsline&quot;);</span>
+}
+}
+
+
+
+
+//3 9011b45d42bhwfxzhgxqnlfhp
+// static void points2coeff(double v0, double v1, double v2, double v3, 			 double *coeff) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;points2coeff&quot;, key=&quot;9011b45d42bhwfxzhgxqnlfhp&quot;, definition=&quot;static void points2coeff(double v0, double v1, double v2, double v3, 			 double *coeff)&quot;)
+public static void points2coeff(double v0, double v1, double v2, double v3, double coeff[]) {
+<span class="fc" id="L501">ENTERING(&quot;9011b45d42bhwfxzhgxqnlfhp&quot;,&quot;points2coeff&quot;);</span>
+try {
+<span class="fc" id="L503">    coeff[3] = v3 + 3 * v1 - (v0 + 3 * v2);</span>
+<span class="fc" id="L504">    coeff[2] = 3 * v0 + 3 * v2 - 6 * v1;</span>
+<span class="fc" id="L505">    coeff[1] = 3 * (v1 - v0);</span>
+<span class="fc" id="L506">    coeff[0] = v0;</span>
+} finally {
+<span class="fc" id="L508">LEAVING(&quot;9011b45d42bhwfxzhgxqnlfhp&quot;,&quot;points2coeff&quot;);</span>
+}
+<span class="fc" id="L510">}</span>
+
+
+
+
+//3 6ldk438jjflh0huxkg4cs8kwu
+@Reviewed(when = &quot;01/12/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;addroot&quot;, key=&quot;6ldk438jjflh0huxkg4cs8kwu&quot;, definition=&quot;static void addroot(double root, double *roots, int *rootnp)&quot;)
+public static void addroot(double root, double roots[], int rootnp[]) {
+<span class="fc" id="L519">ENTERING(&quot;6ldk438jjflh0huxkg4cs8kwu&quot;,&quot;addroot&quot;);</span>
+try {
+<span class="pc bpc" id="L521" title="2 of 4 branches missed.">    if (root &gt;= 0 &amp;&amp; root &lt;= 1) {</span>
+<span class="fc" id="L522">	roots[rootnp[0]] = root;</span>
+<span class="fc" id="L523">	rootnp[0]++;</span>
+	}
+} finally {
+<span class="fc" id="L526">LEAVING(&quot;6ldk438jjflh0huxkg4cs8kwu&quot;,&quot;addroot&quot;);</span>
+}
+<span class="fc" id="L528">}</span>
+
+
+
+
+//3 3i8m1m9fg7qmnt8jloorwlu8e
+// static Pvector_t normv(Pvector_t v) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;normv&quot;, key=&quot;3i8m1m9fg7qmnt8jloorwlu8e&quot;, definition=&quot;static Pvector_t normv(Pvector_t v)&quot;)
+public static ST_pointf normv(final ST_pointf v) {
+// WARNING!! STRUCT
+<span class="fc" id="L539">return normv_w_(v.copy()).copy();</span>
+}
+private static ST_pointf normv_w_(final ST_pointf v) {
+<span class="fc" id="L542">ENTERING(&quot;3i8m1m9fg7qmnt8jloorwlu8e&quot;,&quot;normv&quot;);</span>
+try {
+    double d;
+<span class="fc" id="L545">    d = v.x * v.x + v.y * v.y;</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">    if (d &gt; 1e-6) {</span>
+<span class="fc" id="L547">	d = Math.sqrt(d);</span>
+<span class="fc" id="L548">	v.x = v.x / d;</span>
+<span class="fc" id="L549">	v.y = v.y / d;</span>
+    }
+<span class="fc" id="L551">    return v;</span>
+} finally {
+<span class="fc" id="L553">LEAVING(&quot;3i8m1m9fg7qmnt8jloorwlu8e&quot;,&quot;normv&quot;);</span>
+}
+}
+
+
+
+
+//3 d59jcnpi1y0wr8e9uwxny2fvk
+// static void growops(int newopn) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;growops&quot;, key=&quot;d59jcnpi1y0wr8e9uwxny2fvk&quot;, definition=&quot;static void growops(int newopn)&quot;)
+public static void growops(Globals zz, int newopn) {
+<span class="fc" id="L565">ENTERING(&quot;d59jcnpi1y0wr8e9uwxny2fvk&quot;,&quot;growops&quot;);</span>
+try {
+<span class="fc bfc" id="L567" title="All 2 branches covered.">    if (newopn &lt;= zz.opn_route)</span>
+<span class="fc" id="L568">	return;</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">    if ((zz.ops_route) == null) {</span>
+<span class="pc bpc" id="L570" title="1 of 2 branches missed.">	if ((zz.ops_route = CArray.&lt;ST_pointf&gt;ALLOC__(newopn, ZType.ST_pointf)) == null) {</span>
+<span class="nc" id="L571">UNSUPPORTED(&quot;413an1hqgkb4ezaec6qdsdplx&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\route.c&quot;, 32, (&quot;cannot malloc ops&quot;));</span>
+<span class="nc" id="L572">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    } else {
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">	if (((zz.ops_route = CArray.&lt;ST_pointf&gt;REALLOC__(newopn, zz.ops_route, ZType.ST_pointf)))==null) {</span>
+<span class="nc" id="L576">UNSUPPORTED(&quot;8u0qgahxvk5pplf90thmhwxhl&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\route.c&quot;, 32, (&quot;cannot realloc ops&quot;));</span>
+<span class="nc" id="L577">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    }
+<span class="fc" id="L580">    zz.opn_route = newopn;</span>
+} finally {
+<span class="fc" id="L582">LEAVING(&quot;d59jcnpi1y0wr8e9uwxny2fvk&quot;,&quot;growops&quot;);</span>
+}
+<span class="fc" id="L584">}</span>
+
+
+
+
+//3 f4a7nt247bokdwr2owda050of
+// static Ppoint_t add(Ppoint_t p1, Ppoint_t p2) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;add&quot;, key=&quot;f4a7nt247bokdwr2owda050of&quot;, definition=&quot;static Ppoint_t add(Ppoint_t p1, Ppoint_t p2)&quot;)
+public static ST_pointf add(final ST_pointf p1, final ST_pointf p2) {
+// WARNING!! STRUCT
+<span class="fc" id="L595">return add_w_(p1.copy(), p2.copy()).copy();</span>
+}
+private static ST_pointf add_w_(final ST_pointf p1, final ST_pointf p2) {
+<span class="fc" id="L598">ENTERING(&quot;f4a7nt247bokdwr2owda050of&quot;,&quot;add&quot;);</span>
+try {
+<span class="fc" id="L600">    p1.x = p1.x + p2.x;</span>
+<span class="fc" id="L601">    p1.y = p1.y + p2.y;</span>
+<span class="fc" id="L602">    return p1;</span>
+} finally {
+<span class="fc" id="L604">LEAVING(&quot;f4a7nt247bokdwr2owda050of&quot;,&quot;add&quot;);</span>
+}
+}
+
+
+
+
+//3 c4l1gvlkv2s4mi6os7r9dh89f
+// static Ppoint_t sub(Ppoint_t p1, Ppoint_t p2) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;sub&quot;, key=&quot;c4l1gvlkv2s4mi6os7r9dh89f&quot;, definition=&quot;static Ppoint_t sub(Ppoint_t p1, Ppoint_t p2)&quot;)
+public static ST_pointf sub(final ST_pointf p1, final  ST_pointf p2) {
+// WARNING!! STRUCT
+<span class="fc" id="L617">return sub_w_(p1.copy(), p2.copy()).copy();</span>
+}
+private static ST_pointf sub_w_(final ST_pointf p1, final  ST_pointf p2) {
+<span class="fc" id="L620">ENTERING(&quot;c4l1gvlkv2s4mi6os7r9dh89f&quot;,&quot;sub&quot;);</span>
+try {
+<span class="fc" id="L622">    p1.x = p1.x - p2.x;</span>
+<span class="fc" id="L623">    p1.y = p1.y - p2.y;</span>
+<span class="fc" id="L624">    return p1;</span>
+} finally {
+<span class="fc" id="L626">LEAVING(&quot;c4l1gvlkv2s4mi6os7r9dh89f&quot;,&quot;sub&quot;);</span>
+}
+}
+
+
+
+
+//3 dqnlz0tceriykws4ngudl94w9
+// static double dist(Ppoint_t p1, Ppoint_t p2) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;dist&quot;, key=&quot;dqnlz0tceriykws4ngudl94w9&quot;, definition=&quot;static double dist(Ppoint_t p1, Ppoint_t p2)&quot;)
+public static double dist(final ST_pointf p1, final ST_pointf p2) {
+// WARNING!! STRUCT
+<span class="fc" id="L639">return dist_w_(p1.copy(), p2.copy());</span>
+}
+private static double dist_w_(final ST_pointf p1, final ST_pointf p2) {
+<span class="fc" id="L642">ENTERING(&quot;dqnlz0tceriykws4ngudl94w9&quot;,&quot;dist&quot;);</span>
+try {
+    double dx, dy;
+<span class="fc" id="L645">    dx = p2.x - p1.x;</span>
+<span class="fc" id="L646">    dy = p2.y - p1.y;</span>
+<span class="fc" id="L647">    return Math.sqrt(dx * dx + dy * dy);</span>
+} finally {
+<span class="fc" id="L649">LEAVING(&quot;dqnlz0tceriykws4ngudl94w9&quot;,&quot;dist&quot;);</span>
+}
+}
+
+
+
+
+//3 19149pdllzhplvew0bsh5v6hy
+// static Ppoint_t scale(Ppoint_t p, double c) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;scale&quot;, key=&quot;19149pdllzhplvew0bsh5v6hy&quot;, definition=&quot;static Ppoint_t scale(Ppoint_t p, double c)&quot;)
+public static ST_pointf scale(final ST_pointf p, double c) {
+// WARNING!! STRUCT
+<span class="fc" id="L662">return scale_w_(p.copy(), c).copy();</span>
+}
+private static ST_pointf scale_w_(final ST_pointf p, double c) {
+<span class="fc" id="L665">ENTERING(&quot;19149pdllzhplvew0bsh5v6hy&quot;,&quot;scale&quot;);</span>
+try {
+<span class="fc" id="L667">    p.x = p.x * c;</span>
+<span class="fc" id="L668">    p.y = p.y * c;</span>
+<span class="fc" id="L669">    return p;</span>
+} finally {
+<span class="fc" id="L671">LEAVING(&quot;19149pdllzhplvew0bsh5v6hy&quot;,&quot;scale&quot;);</span>
+}
+}
+
+
+
+
+//3 7ebsa2s1eoopqj1pp43bh5fw
+// static double dot(Ppoint_t p1, Ppoint_t p2) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;dot&quot;, key=&quot;7ebsa2s1eoopqj1pp43bh5fw&quot;, definition=&quot;static double dot(Ppoint_t p1, Ppoint_t p2)&quot;)
+public static double dot(final ST_pointf p1, final ST_pointf p2) {
+// WARNING!! STRUCT
+<span class="fc" id="L684">return dot_w_(p1.copy(), p2.copy());</span>
+}
+private static double dot_w_(final ST_pointf p1, final ST_pointf p2) {
+<span class="fc" id="L687">ENTERING(&quot;7ebsa2s1eoopqj1pp43bh5fw&quot;,&quot;dot&quot;);</span>
+try {
+<span class="fc" id="L689">    return p1.x * p2.x + p1.y * p2.y;</span>
+} finally {
+<span class="fc" id="L691">LEAVING(&quot;7ebsa2s1eoopqj1pp43bh5fw&quot;,&quot;dot&quot;);</span>
+}
+}
+
+
+
+
+//3 73nhv3cuxqa9va0puve0ji2d5
+// static double B0(double t) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B0&quot;, key=&quot;73nhv3cuxqa9va0puve0ji2d5&quot;, definition=&quot;static double B0(double t)&quot;)
+public static double B0(double t) {
+<span class="fc" id="L703">ENTERING(&quot;73nhv3cuxqa9va0puve0ji2d5&quot;,&quot;B0&quot;);</span>
+try {
+<span class="fc" id="L705">    double tmp = 1.0 - t;</span>
+<span class="fc" id="L706">    return tmp * tmp * tmp;</span>
+} finally {
+<span class="fc" id="L708">LEAVING(&quot;73nhv3cuxqa9va0puve0ji2d5&quot;,&quot;B0&quot;);</span>
+}
+}
+
+
+
+
+//3 jkfs4ak0xr5pzwye7qnm6irp
+// static double B1(double t) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B1&quot;, key=&quot;jkfs4ak0xr5pzwye7qnm6irp&quot;, definition=&quot;static double B1(double t)&quot;)
+public static double B1(double t) {
+<span class="fc" id="L720">ENTERING(&quot;jkfs4ak0xr5pzwye7qnm6irp&quot;,&quot;B1&quot;);</span>
+try {
+<span class="fc" id="L722">    double tmp = 1.0 - t;</span>
+<span class="fc" id="L723">    return 3 * t * tmp * tmp;</span>
+} finally {
+<span class="fc" id="L725">LEAVING(&quot;jkfs4ak0xr5pzwye7qnm6irp&quot;,&quot;B1&quot;);</span>
+}
+}
+
+
+
+
+//3 9ziajuqys2xceftdw0vac02g9
+// static double B2(double t) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B2&quot;, key=&quot;9ziajuqys2xceftdw0vac02g9&quot;, definition=&quot;static double B2(double t)&quot;)
+public static double B2(double t) {
+<span class="fc" id="L737">ENTERING(&quot;9ziajuqys2xceftdw0vac02g9&quot;,&quot;B2&quot;);</span>
+try {
+<span class="fc" id="L739">    double tmp = 1.0 - t;</span>
+<span class="fc" id="L740">    return 3 * t * t * tmp;</span>
+} finally {
+<span class="fc" id="L742">LEAVING(&quot;9ziajuqys2xceftdw0vac02g9&quot;,&quot;B2&quot;);</span>
+}
+}
+
+
+
+
+//3 5sjstsgkvoou9grsty3y0cnvg
+// static double B3(double t) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B3&quot;, key=&quot;5sjstsgkvoou9grsty3y0cnvg&quot;, definition=&quot;static double B3(double t)&quot;)
+public static double B3(double t) {
+<span class="fc" id="L754">ENTERING(&quot;5sjstsgkvoou9grsty3y0cnvg&quot;,&quot;B3&quot;);</span>
+try {
+<span class="fc" id="L756">    return t * t * t;</span>
+} finally {
+<span class="fc" id="L758">LEAVING(&quot;5sjstsgkvoou9grsty3y0cnvg&quot;,&quot;B3&quot;);</span>
+}
+}
+
+
+
+
+//3 9hzfapzxcesobeegq4aokksbp
+// static double B01(double t) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B01&quot;, key=&quot;9hzfapzxcesobeegq4aokksbp&quot;, definition=&quot;static double B01(double t)&quot;)
+public static double B01(double t) {
+<span class="fc" id="L770">ENTERING(&quot;9hzfapzxcesobeegq4aokksbp&quot;,&quot;B01&quot;);</span>
+try {
+<span class="fc" id="L772">    double tmp = 1.0 - t;</span>
+<span class="fc" id="L773">    return tmp * tmp * (tmp + 3 * t);</span>
+} finally {
+<span class="fc" id="L775">LEAVING(&quot;9hzfapzxcesobeegq4aokksbp&quot;,&quot;B01&quot;);</span>
+}
+}
+
+
+
+
+//3 571cxp9l20eyvqjwdoy9vnc6t
+// static double B23(double t) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B23&quot;, key=&quot;571cxp9l20eyvqjwdoy9vnc6t&quot;, definition=&quot;static double B23(double t)&quot;)
+public static double B23(double t) {
+<span class="fc" id="L787">ENTERING(&quot;571cxp9l20eyvqjwdoy9vnc6t&quot;,&quot;B23&quot;);</span>
+try {
+<span class="fc" id="L789">    double tmp = 1.0 - t;</span>
+<span class="fc" id="L790">    return t * t * (3 * tmp + t);</span>
+} finally {
+<span class="fc" id="L792">LEAVING(&quot;571cxp9l20eyvqjwdoy9vnc6t&quot;,&quot;B23&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

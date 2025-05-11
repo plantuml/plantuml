@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Upf9Encoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.code</a> &gt; <span class="el_source">Upf9Encoder.java</span></div><h1>Upf9Encoder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.code;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import net.sourceforge.plantuml.log.Logme;
+
+<span class="nc" id="L44">public class Upf9Encoder {</span>
+	// ::remove file when __CORE__
+
+	private Upf9Encoder() {
+
+	}
+
+	public static byte[] encodeChar(char c) {
+<span class="nc" id="L52">		final byte[] result = encodeCharInternal(c);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		assert checkBack(c, result);</span>
+<span class="nc" id="L54">		return result;</span>
+	}
+
+	private static boolean checkBack(char c, byte[] result) {
+		try {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (c == Upf9Decoder.decodeChar(new ByteArrayInputStream(result)))</span>
+<span class="nc" id="L60">				return true;</span>
+<span class="nc" id="L61">		} catch (IOException e) {</span>
+<span class="nc" id="L62">			Logme.error(e);</span>
+<span class="nc" id="L63">		}</span>
+<span class="nc" id="L64">		return false;</span>
+	}
+
+	private static byte[] encodeCharInternal(char c) {
+<span class="nc bnc" id="L68" title="All 6 branches missed.">		if (c == '\n' || c == '\r' || c == '\t') {</span>
+			// Using regular ASCII code for &lt;u+0009&gt; &lt;u+000A&gt; and &lt;u+000D&gt;
+<span class="nc" id="L70">			return new byte[] { (byte) c };</span>
+		}
+<span class="nc bnc" id="L72" title="All 4 branches missed.">		if (c &gt;= '\u000E' &amp;&amp; c &lt;= '\u0012') {</span>
+<span class="nc" id="L73">			return new byte[] { (byte) c };</span>
+		}
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		if (c &gt;= '\u0020' &amp;&amp; c &lt;= '\u007E') {</span>
+			// Using regular ASCII code for ASCII printable char
+<span class="nc" id="L77">			return new byte[] { (byte) c };</span>
+		}
+<span class="nc bnc" id="L79" title="All 4 branches missed.">		if (c &gt;= '\u0080' &amp;&amp; c &lt;= '\u00FF') {</span>
+			// Char from &lt;u+0080&gt; to &lt;u+00FF&gt; are encoded as [0x0B 0x80] to [0x0B 0xFF]
+<span class="nc" id="L81">			return new byte[] { 0x0B, (byte) c };</span>
+		}
+<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (c &gt;= '\u0100' &amp;&amp; c &lt;= '\u08FF') {</span>
+			// Char from &lt;u+0100&gt; to &lt;u+08FF&gt; are encoded as [0x01 0x00] to [0x08 0xFF]
+<span class="nc" id="L85">			return new byte[] { highByte(c), lowByte(c) };</span>
+		}
+<span class="nc bnc" id="L87" title="All 4 branches missed.">		if (c &gt;= '\u2000' &amp;&amp; c &lt;= '\u9FFF') {</span>
+			// Char from &lt;u+2000&gt; to &lt;u+9FFF&gt; are encoded as [0x80 0x00] to [0xFF 0xFF]
+<span class="nc" id="L89">			return new byte[] { (byte) (0x60 + highByte(c)), lowByte(c) };</span>
+		}
+<span class="nc bnc" id="L91" title="All 4 branches missed.">		if (c &gt;= '\uE000' &amp;&amp; c &lt;= '\uE07F') {</span>
+			// Char from &lt;u+E000&gt; to &lt;u+E07F&gt; are encoded as [0x0B 0x00] to [0x0B 0x7F]
+<span class="nc" id="L93">			return new byte[] { 0x0B, lowByte(c) };</span>
+		}
+		// All other char are encoded on 3 bytes, starting with 0x0C
+<span class="nc" id="L96">		return new byte[] { 0x0C, highByte(c), lowByte(c) };</span>
+	}
+
+	private static byte lowByte(char c) {
+<span class="nc" id="L100">		return (byte) (c &amp; 0x00FF);</span>
+	}
+
+	private static byte highByte(char c) {
+<span class="nc" id="L104">		return (byte) ((c &amp; 0xFF00) &gt;&gt; 8);</span>
+	}
+
+	public static byte[] getBytes(String s) throws IOException {
+<span class="nc" id="L108">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L110">			baos.write(encodeChar(s.charAt(i)));</span>
+		}
+<span class="nc" id="L112">		baos.close();</span>
+<span class="nc" id="L113">		final byte[] result = baos.toByteArray();</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		assert s.endsWith(Upf9Decoder.decodeString(result, result.length));</span>
+<span class="nc" id="L115">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

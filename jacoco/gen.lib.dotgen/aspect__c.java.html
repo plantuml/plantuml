@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>aspect__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">aspect__c.java</span></div><h1>aspect__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.attr__c.agget;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agraph_s;
+import h.ST_aspect_t;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+<span class="nc" id="L60">public class aspect__c {</span>
+	
+private static final int DEF_PASSES = 5;
+
+
+
+//3 25p8yyx732fa1dwxany5vkmqv
+// void rank3(graph_t * g, aspect_t * asp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/aspect.c&quot;, name=&quot;rank3&quot;, key=&quot;25p8yyx732fa1dwxany5vkmqv&quot;, definition=&quot;void rank3(graph_t * g, aspect_t * asp)&quot;)
+public static Object rank3(Object... arg_) {
+<span class="nc" id="L71">UNSUPPORTED(&quot;ey9g3c61eb7j5dnz3gbhvflt3&quot;); // void rank3(graph_t * g, aspect_t * asp)</span>
+
+
+<span class="nc" id="L74">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 5srsfxqlego6qiyj5mm8m4ql2
+// aspect_t* setAspect (Agraph_t * g, aspect_t* adata) 
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/aspect.c&quot;, name=&quot;setAspect&quot;, key=&quot;5srsfxqlego6qiyj5mm8m4ql2&quot;, definition=&quot;aspect_t* setAspect (Agraph_t * g, aspect_t* adata)&quot;)
+public static ST_aspect_t setAspect(Globals zz, ST_Agraph_s g, ST_aspect_t adata) {
+<span class="fc" id="L85">ENTERING(&quot;5srsfxqlego6qiyj5mm8m4ql2&quot;,&quot;setAspect&quot;);</span>
+try {
+    double rv;
+    CString p;
+<span class="fc" id="L89">    int r, passes = DEF_PASSES;</span>
+<span class="fc" id="L90">    p = agget (zz, g, new CString(&quot;aspect&quot;));</span>
+<span class="pc bpc" id="L91" title="3 of 4 branches missed.">    if ((p) == null || UNSUPPORTED(&quot;(r = sscanf (p, %lf,%d, &amp;rv, &amp;passes)) &lt;= 0)&quot;)==null) {</span>
+<span class="fc" id="L92">	adata.nextIter = 0;</span>
+<span class="fc" id="L93">	adata.badGraph = 0;</span>
+<span class="fc" id="L94">	return null;</span>
+    }
+<span class="nc" id="L96">UNSUPPORTED(&quot;bq1l9wqiw8bcls8ptb8o9rhqi&quot;); //     agerr (AGWARN, &quot;the aspect attribute has been disabled due to implementation flaws - attribute ignored.\n&quot;);</span>
+<span class="nc" id="L97">UNSUPPORTED(&quot;1hvtnh8r9fb47ewad86tcf0n0&quot;); //     adata-&gt;nextIter = 0;</span>
+<span class="nc" id="L98">UNSUPPORTED(&quot;xx058mix2zyckbi0esnoc56v&quot;); //     adata-&gt;badGraph = 0;</span>
+<span class="nc" id="L99">UNSUPPORTED(&quot;o68dp934ebg4cplebgc5hv4v&quot;); //     return NULL;</span>
+<span class="nc" id="L100">UNSUPPORTED(&quot;ikxv7u2qba6riujs2unqsitx&quot;); //     if (rv &lt; 1.0) rv = 1.0;</span>
+<span class="nc" id="L101">UNSUPPORTED(&quot;acmmvkcaf8bc8wb6kdx9s2d3a&quot;); //     else if (rv &gt; 20.0) rv = 20.0;</span>
+<span class="nc" id="L102">UNSUPPORTED(&quot;18wyf3ih8fg4x4s3c006nx8zx&quot;); //     adata-&gt;targetAR = rv;</span>
+<span class="nc" id="L103">UNSUPPORTED(&quot;2875r01nyy2cpm1c439zwu6tf&quot;); //     adata-&gt;nextIter = -1;</span>
+<span class="nc" id="L104">UNSUPPORTED(&quot;9ssjc7jsfl2jgw01gwnr3ftal&quot;); //     adata-&gt;nPasses = passes;</span>
+<span class="nc" id="L105">UNSUPPORTED(&quot;xx058mix2zyckbi0esnoc56v&quot;); //     adata-&gt;badGraph = 0;</span>
+<span class="nc" id="L106">UNSUPPORTED(&quot;620q0efwdrg8vw3ggwpmxqiwv&quot;); //     if (Verbose) </span>
+<span class="nc" id="L107">UNSUPPORTED(&quot;a7heh0decro63skjh8xq4buo7&quot;); //         fprintf(stderr, &quot;Target AR = %g\n&quot;, adata-&gt;targetAR);</span>
+<span class="nc" id="L108">UNSUPPORTED(&quot;b1cn763x4de1h91cdv3d4o3lb&quot;); //     return adata;</span>
+<span class="nc" id="L109">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L111">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L113">LEAVING(&quot;5srsfxqlego6qiyj5mm8m4ql2&quot;,&quot;setAspect&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

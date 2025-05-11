@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtremityExtendsLike.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.extremity</a> &gt; <span class="el_source">ExtremityExtendsLike.java</span></div><h1>ExtremityExtendsLike.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Creator:  Hisashi Miyashita
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek.extremity;
+
+import net.sourceforge.plantuml.klimt.UBackground;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+
+abstract class ExtremityExtendsLike extends Extremity {
+	private static final double XLEN = -19;// 8 * 2.4;
+	private static final double HALF_WIDTH = 7;// 3 * 2.4;
+
+	private final UPolygon trig;
+	private final UBackground back;
+	private final XPoint2D contact;
+
+	@Override
+	public XPoint2D somePoint() {
+<span class="nc" id="L58">		return contact;</span>
+	}
+
+	private static class Point {
+		public double x;
+		public double y;
+
+		public void rotate(double theta) {
+<span class="nc" id="L66">			double ct = Math.cos(theta);</span>
+<span class="nc" id="L67">			double st = -Math.sin(theta);</span>
+<span class="nc" id="L68">			double nx = x * ct - y * st;</span>
+<span class="nc" id="L69">			y = -x * st - y * ct;</span>
+<span class="nc" id="L70">			x = nx;</span>
+<span class="nc" id="L71">		}</span>
+
+<span class="nc" id="L73">		public Point(double x, double y) {</span>
+<span class="nc" id="L74">			this.x = x;</span>
+<span class="nc" id="L75">			this.y = y;</span>
+<span class="nc" id="L76">		}</span>
+
+		public UTranslate getPos(XPoint2D pt) {
+<span class="nc" id="L79">			return new UTranslate(x + pt.getX(), y + pt.getY());</span>
+		}
+
+		public void translate(XPoint2D pt) {
+<span class="nc" id="L83">			x += pt.getX();</span>
+<span class="nc" id="L84">			y += pt.getY();</span>
+<span class="nc" id="L85">		}</span>
+
+		public void add(UPolygon p) {
+<span class="nc" id="L88">			p.addPoint(x, y);</span>
+<span class="nc" id="L89">		}</span>
+	}
+
+	static class Redefines extends ExtremityExtendsLike {
+		private static final double XSUFFIX = XLEN * 1.2;
+<span class="nc" id="L94">		private final UStroke barStroke = UStroke.withThickness(2.0);</span>
+		private final UTranslate pos;
+		private final ULine bar;
+
+		public Redefines(XPoint2D porig, double angle, HColor backgroundColor) {
+<span class="nc" id="L99">			super(porig, angle, backgroundColor);</span>
+
+<span class="nc" id="L101">			Point p1 = new Point(XSUFFIX, -HALF_WIDTH);</span>
+<span class="nc" id="L102">			Point p2 = new Point(XSUFFIX, +HALF_WIDTH);</span>
+<span class="nc" id="L103">			p1.rotate(angle);</span>
+<span class="nc" id="L104">			p2.rotate(angle);</span>
+<span class="nc" id="L105">			this.bar = new ULine(p2.x - p1.x, p2.y - p1.y);</span>
+<span class="nc" id="L106">			this.pos = p1.getPos(porig);</span>
+<span class="nc" id="L107">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L110">			super.drawU(ug);</span>
+<span class="nc" id="L111">			ug.apply(barStroke).apply(pos).draw(bar);</span>
+<span class="nc" id="L112">		}</span>
+	}
+
+	static class DefinedBy extends ExtremityExtendsLike {
+		private static final double XSUFFIX = XLEN * 1.3;
+		private static final double DOTHSIZE = 2;
+		private final UTranslate pos1, pos2;
+		private final UEllipse dot;
+
+		private static UTranslate getDotPos(double x, double y, double angle, double size, XPoint2D porig) {
+<span class="nc" id="L122">			Point p = new Point(x, y);</span>
+<span class="nc" id="L123">			p.rotate(angle);</span>
+<span class="nc" id="L124">			p.x -= size;</span>
+<span class="nc" id="L125">			p.y -= size;</span>
+<span class="nc" id="L126">			return p.getPos(porig);</span>
+		}
+
+		public DefinedBy(XPoint2D porig, double angle, HColor backgroundColor) {
+<span class="nc" id="L130">			super(porig, angle, backgroundColor);</span>
+<span class="nc" id="L131">			double w = HALF_WIDTH - DOTHSIZE;</span>
+
+<span class="nc" id="L133">			this.pos1 = getDotPos(XSUFFIX, -w, angle, DOTHSIZE, porig);</span>
+<span class="nc" id="L134">			this.pos2 = getDotPos(XSUFFIX, +w, angle, DOTHSIZE, porig);</span>
+
+<span class="nc" id="L136">			double s = DOTHSIZE + DOTHSIZE;</span>
+<span class="nc" id="L137">			this.dot = UEllipse.build(s, s);</span>
+<span class="nc" id="L138">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L141">			super.drawU(ug);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (ug.getParam().getColor() != null) {</span>
+<span class="nc" id="L143">				ug = ug.apply(ug.getParam().getColor().bg());</span>
+			}
+<span class="nc" id="L145">			ug.apply(pos1).draw(dot);</span>
+<span class="nc" id="L146">			ug.apply(pos2).draw(dot);</span>
+<span class="nc" id="L147">		}</span>
+	}
+
+	private static void addTrigPoint(UPolygon up, double x, double y, double angle, XPoint2D porig) {
+<span class="nc" id="L151">		Point p = new Point(x, y);</span>
+<span class="nc" id="L152">		p.rotate(angle);</span>
+<span class="nc" id="L153">		p.translate(porig);</span>
+<span class="nc" id="L154">		p.add(up);</span>
+<span class="nc" id="L155">	}</span>
+
+<span class="nc" id="L157">	private ExtremityExtendsLike(XPoint2D porig, double angle, HColor backgroundColor) {</span>
+<span class="nc" id="L158">		this.back = backgroundColor.bg();</span>
+<span class="nc" id="L159">		this.contact = new XPoint2D(porig.getX(), porig.getY());</span>
+<span class="nc" id="L160">		angle = manageround(angle);</span>
+
+<span class="nc" id="L162">		this.trig = new UPolygon();</span>
+<span class="nc" id="L163">		trig.addPoint(porig);</span>
+<span class="nc" id="L164">		addTrigPoint(trig, XLEN, -HALF_WIDTH, angle, porig);</span>
+<span class="nc" id="L165">		addTrigPoint(trig, XLEN, +HALF_WIDTH, angle, porig);</span>
+<span class="nc" id="L166">		trig.addPoint(porig);</span>
+<span class="nc" id="L167">	}</span>
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L170">		ug.apply(back).draw(trig);</span>
+<span class="nc" id="L171">	}</span>
+	
+	@Override
+	public double getDecorationLength() {
+<span class="nc" id="L175">		return 18;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

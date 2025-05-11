@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SourceFileReaderAbstract.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">SourceFileReaderAbstract.java</span></div><h1>SourceFileReaderAbstract.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.argon2.Constants.Messages;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.file.SuggestedFile;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.version.Version;
+
+public abstract class SourceFileReaderAbstract implements ISourceFileReader {
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
+
+	final private File file;
+
+	private FileFormatOption fileFormatOption;
+	private boolean checkMetadata;
+	private boolean noerror;
+
+	final private Charset charset;
+
+	private final BlockUmlBuilder builder;
+	private int cpt;
+
+	protected final SuggestedFile getSuggestedFile(File outputDirectory, String newName) {
+<span class="fc" id="L88">		final File outFile = new File(outputDirectory, newName);</span>
+<span class="fc" id="L89">		return SuggestedFile.fromOutputFile(outFile, getFileFormatOption().getFileFormat(), cpt++);</span>
+	}
+
+	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List&lt;String&gt; config,
+<span class="fc" id="L93">			String charsetName) throws IOException {</span>
+
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (file.exists() == false)</span>
+<span class="nc" id="L96">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L98">		this.file = file;</span>
+<span class="fc" id="L99">		this.charset = charsetOrDefault(charsetName);</span>
+<span class="fc" id="L100">		this.fileFormatOption = fileFormatOption;</span>
+<span class="fc" id="L101">		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),</span>
+<span class="fc" id="L102">				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));</span>
+<span class="fc" id="L103">	}</span>
+
+	protected final FileFormatOption getFileFormatOption() {
+<span class="fc" id="L106">		return fileFormatOption;</span>
+	}
+
+	public void setCheckMetadata(boolean checkMetadata) {
+<span class="nc" id="L110">		this.checkMetadata = checkMetadata;</span>
+<span class="nc" id="L111">	}</span>
+
+	public boolean hasError() {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		for (final BlockUml b : builder.getBlockUmls())</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (b.getDiagram() instanceof PSystemError)</span>
+<span class="nc" id="L116">				return true;</span>
+<span class="nc" id="L117">		return false;</span>
+	}
+
+	public List&lt;BlockUml&gt; getBlocks() {
+<span class="nc" id="L121">		return builder.getBlockUmls();</span>
+	}
+
+	protected Reader getReader(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
+<span class="fc" id="L125">		return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), charset);</span>
+	}
+
+	public final Set&lt;FileWithSuffix&gt; getIncludedFiles() throws IOException {
+<span class="nc" id="L129">		return builder.getIncludedFiles();</span>
+	}
+
+	@Override
+	public final ISourceFileReader setFileFormatOption(FileFormatOption fileFormatOption) {
+<span class="nc" id="L134">		this.fileFormatOption = fileFormatOption;</span>
+<span class="nc" id="L135">		return this;</span>
+	}
+
+	protected boolean endsWithSlashOrAntislash(String newName) {
+<span class="nc bnc" id="L139" title="All 4 branches missed.">		return newName.endsWith(&quot;/&quot;) || newName.endsWith(&quot;\\&quot;);</span>
+	}
+
+	private List&lt;GeneratedImage&gt; getCrashedImage(BlockUml blockUml, Throwable t, SFile outputFile) throws IOException {
+<span class="nc" id="L143">		final GeneratedImage image = new GeneratedImageImpl(outputFile, &quot;Crash Error&quot;, blockUml, FileImageData.CRASH);</span>
+<span class="nc" id="L144">		try (OutputStream os = outputFile.createBufferedOutputStream()) {</span>
+<span class="nc" id="L145">			final String flash = blockUml.getFlashData();</span>
+<span class="nc" id="L146">			final CrashReportHandler report = new CrashReportHandler(t, null, flash);</span>
+<span class="nc" id="L147">			report.anErrorHasOccured(t, flash);</span>
+<span class="nc" id="L148">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L149">			report.addEmptyLine();</span>
+<span class="nc" id="L150">			report.exportDiagramError(fileFormatOption, (long) 42, os);</span>
+		}
+<span class="nc" id="L152">		return Collections.singletonList(image);</span>
+	}
+
+	protected void exportWarnOrErrIfWord(SFile f, Diagram system) throws FileNotFoundException {
+<span class="pc bpc" id="L156" title="3 of 4 branches missed.">		if (OptionFlags.getInstance().isWord() &amp;&amp; f != null) {</span>
+<span class="nc" id="L157">			final String warnOrError = system.getWarningOrError();</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (warnOrError != null) {</span>
+<span class="nc" id="L159">				final String name = f.getName().substring(0, f.getName().length() - 4) + &quot;.err&quot;;</span>
+<span class="nc" id="L160">				final SFile errorFile = f.getParentFile().file(name);</span>
+<span class="nc" id="L161">				try (PrintStream ps = SecurityUtils.createPrintStream(errorFile.createFileOutputStream())) {</span>
+<span class="nc" id="L162">					ps.print(warnOrError);</span>
+				}
+			}
+		}
+<span class="fc" id="L166">	}</span>
+
+	final public List&lt;GeneratedImage&gt; getGeneratedImages() throws IOException {
+<span class="fc" id="L169">		Log.info(&quot;Reading file: &quot; + file);</span>
+
+<span class="fc" id="L171">		cpt = 0;</span>
+<span class="fc" id="L172">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (BlockUml blockUml : builder.getBlockUmls()) {</span>
+<span class="fc" id="L175">			final SuggestedFile suggested = getSuggestedFile(blockUml);</span>
+
+			final Diagram system;
+			try {
+<span class="fc" id="L179">				system = blockUml.getDiagram();</span>
+<span class="nc" id="L180">			} catch (Throwable t) {</span>
+<span class="nc" id="L181">				Logme.error(t);</span>
+<span class="nc bnc" id="L182" title="All 4 branches missed.">				if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() || noerror)</span>
+<span class="nc" id="L183">					continue;</span>
+
+<span class="nc" id="L185">				return getCrashedImage(blockUml, t, suggested.getFile(0));</span>
+<span class="fc" id="L186">			}</span>
+
+<span class="pc bpc" id="L188" title="3 of 4 branches missed.">			if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() &amp;&amp; system instanceof PSystemError)</span>
+<span class="nc" id="L189">				continue;</span>
+
+<span class="fc" id="L191">			OptionFlags.getInstance().logData(SFile.fromFile(file), system);</span>
+			final List&lt;FileImageData&gt; exportDiagrams;
+<span class="pc bpc" id="L193" title="3 of 4 branches missed.">			if (noerror &amp;&amp; system instanceof PSystemError) {</span>
+<span class="nc" id="L194">				exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
+<span class="nc" id="L195">				exportDiagrams</span>
+<span class="nc" id="L196">						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));</span>
+			} else
+<span class="fc" id="L198">				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);</span>
+
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">			if (exportDiagrams.size() &gt; 1)</span>
+<span class="nc" id="L201">				cpt += exportDiagrams.size() - 1;</span>
+
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			for (FileImageData fdata : exportDiagrams) {</span>
+<span class="fc" id="L204">				final String desc = &quot;[&quot; + file.getName() + &quot;] &quot; + system.getDescription();</span>
+<span class="fc" id="L205">				final SFile f = fdata.getFile();</span>
+<span class="fc" id="L206">				exportWarnOrErrIfWord(f, system);</span>
+<span class="fc" id="L207">				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());</span>
+<span class="fc" id="L208">				result.add(generatedImage);</span>
+<span class="fc" id="L209">			}</span>
+
+<span class="fc" id="L211">		}</span>
+
+<span class="fc" id="L213">		Log.info(&quot;Number of image(s): &quot; + result.size());</span>
+
+<span class="fc" id="L215">		return Collections.unmodifiableList(result);</span>
+	}
+
+	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;
+
+	protected final void setNoerror(boolean noerror) {
+<span class="nc" id="L221">		this.noerror = noerror;</span>
+
+<span class="nc" id="L223">	}</span>
+
+	final protected String getFileName() {
+<span class="fc" id="L226">		return file.getName();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

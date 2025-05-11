@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UBrexCommandIf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram.command</a> &gt; <span class="el_source">UBrexCommandIf.java</span></div><h1>UBrexCommandIf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram.command;
+
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class UBrexCommandIf extends UBrexSingleLineCommand2&lt;ActivityDiagram&gt; {
+
+	public UBrexCommandIf() {
+<span class="fc" id="L65">		super(getRegexConcat());</span>
+<span class="fc" id="L66">	}</span>
+
+	static UnicodeBracketedExpression getRegexConcat() {
+<span class="fc" id="L69">		final UBrexConcat simple = UBrexConcat.build( //</span>
+<span class="fc" id="L70">				UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				new UBrexOptional(UBrexConcat.build( //</span>
+						new UBrexNamed(&quot;ARROW_BODY1&quot;, new UBrexLeaf(&quot;〇+「-.」&quot;)), //
+						new UBrexLeaf(&quot;〇?〘 [ 〶$ARROW_STYLE1=〘&quot; + CommandLinkElement.UBREX_LINE_STYLE + &quot;〙] 〙&quot;), //
+						new UBrexNamed(&quot;ARROW_DIRECTION&quot;,
+								new UBrexLeaf(&quot;〇?【 *┇left┇right┇up┇down┇l〇?e┇r〇?i┇u〇?p┇d〇?o】&quot;)), //
+						new UBrexLeaf(&quot;〇?〘 [  〶$ARROW_STYLE2=〘&quot; + CommandLinkElement.UBREX_LINE_STYLE + &quot;〙] 〙&quot;), //
+						new UBrexNamed(&quot;ARROW_BODY2&quot;, new UBrexLeaf(&quot;〇*「-.」&quot;)), //
+						new UBrexLeaf(&quot;&gt;&quot;) //
+				)), // &quot;02onStart()&quot; --&gt; if &quot;&quot; then
+<span class="fc" id="L80">				UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L81">				new UBrexOptional(new UBrexLeaf(&quot;[ 〶$BRACKET=〘〇+「〤]*」  〇*「〤]」〙 ]&quot;)), UBrexLeaf.spaceZeroOrMore(), //</span>
+				new UBrexOr(//
+						new UBrexLeaf(&quot;if 〇*〴s 〴g  〶$IF1=〇*〴G 〴g 〇*〴s 〇?〘as 〇+〴s 〶$ASIF1=〇+「〴an_.」 〇+〴s 〙〘then〙&quot;), //
+						new UBrexLeaf(&quot;if 〇+〴s 〶$IF2=〇l+〴. 〘then〙 &quot;), //
+						new UBrexLeaf(&quot;if 〇*〴s 〴g  〶$IF1=〇*〴G 〴g 〇*〴s 〇?〘as 〇+〴s 〶$ASIF1=〇+「〴an_.」 〇+〴s 〙&quot;), //
+						new UBrexLeaf(&quot;if 〇+〴s 〶$IF2=〇+〴.&quot;) //
+				));
+
+<span class="fc" id="L89">		return UBrexConcat.build( //</span>
+				new UBrexOr(simple, //
+<span class="fc" id="L91">						UBrexConcat.build(new UBrexNamed(&quot;STAR&quot;, new UBrexLeaf(&quot;(* 〇?〘top〙)&quot;)), simple), //</span>
+<span class="fc" id="L92">						UBrexConcat.build(new UBrexNamed(&quot;BAR&quot;, new UBrexLeaf(&quot;=〇+= 〇*〴s 〇+「〴an_.」〇*〴s =〇+=&quot;)), simple), //</span>
+<span class="fc" id="L93">						UBrexConcat.build(new UBrexLeaf(&quot;〴g 〶$QUOTED1=〇*〴G 〴g 〇?〘〇+〴s as 〇+〴s 〶$QUOTED2=〇+「〴an_.」 〙 &quot;),</span>
+								simple),
+<span class="fc" id="L95">						UBrexConcat.build(new UBrexNamed(&quot;CODE&quot;, new UBrexLeaf(&quot;〇+「〴an_.」&quot;)), simple) //</span>
+				), //
+<span class="fc" id="L97">				UBrexLeaf.end()); //</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L103">		final Entity entity1 = CommandLinkActivity.ubrexGetEntityForIfOnly(location, diagram, arg);</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L105">			return CommandExecutionResult.error(&quot;No if possible at this point&quot;);</span>
+
+		final String ifCode;
+		final String ifLabel;
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (arg.get(&quot;IF2&quot;, 0) == null) {</span>
+<span class="fc" id="L110">			ifCode = arg.get(&quot;ASIF1&quot;, 0);</span>
+<span class="fc" id="L111">			ifLabel = arg.get(&quot;IF1&quot;, 0);</span>
+		} else {
+<span class="nc" id="L113">			ifCode = null;</span>
+<span class="nc" id="L114">			ifLabel = arg.get(&quot;IF2&quot;, 0);</span>
+		}
+<span class="fc" id="L116">		diagram.startIf(location, ifCode);</span>
+
+<span class="fc" id="L118">		int lenght = 2;</span>
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0) != null) {</span>
+//			final String arrow = StringUtils.manageArrowForCuca(arg.get(&quot;ARROW&quot;, 0));
+//			lenght = arrow.length() - 1;
+<span class="nc" id="L123">			final String arrowBody1 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0));</span>
+<span class="nc" id="L124">			final String arrowBody2 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY2&quot;, 0));</span>
+<span class="nc" id="L125">			final String arrowDirection = CommandLinkClass.notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
+
+<span class="nc" id="L127">			final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
+<span class="nc" id="L128">			lenght = arrow.length() - 1;</span>
+		}
+
+<span class="fc" id="L131">		final Entity branch = diagram.getCurrentContext().getBranch();</span>
+
+<span class="fc" id="L133">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0)),</span>
+				lenght);
+<span class="fc" id="L135">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,</span>
+<span class="fc" id="L136">				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)</span>
+<span class="fc" id="L137">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (arg.get(&quot;ARROW&quot;, 0) != null) {</span>
+<span class="nc" id="L139">			final Direction direction = StringUtils.getArrowDirection(arg.get(&quot;ARROW&quot;, 0));</span>
+<span class="nc bnc" id="L140" title="All 4 branches missed.">			if (direction == Direction.LEFT || direction == Direction.UP)</span>
+<span class="nc" id="L141">				link = link.getInv();</span>
+
+		}
+
+<span class="fc" id="L145">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="fc" id="L146">		diagram.addLink(link);</span>
+
+<span class="fc" id="L148">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

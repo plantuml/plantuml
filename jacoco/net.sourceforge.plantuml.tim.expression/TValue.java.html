@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TValue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim.expression</a> &gt; <span class="el_source">TValue.java</span></div><h1>TValue.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim.expression;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonValue;
+
+public final class TValue {
+
+	private final int intValue;
+	private final String stringValue;
+	private final JsonValue jsonValue;
+
+<span class="fc" id="L48">	private TValue(int value) {</span>
+<span class="fc" id="L49">		this.intValue = value;</span>
+<span class="fc" id="L50">		this.stringValue = null;</span>
+<span class="fc" id="L51">		this.jsonValue = null;</span>
+<span class="fc" id="L52">	}</span>
+
+<span class="fc" id="L54">	private TValue(String stringValue) {</span>
+<span class="fc" id="L55">		this.intValue = 0;</span>
+<span class="fc" id="L56">		this.jsonValue = null;</span>
+<span class="fc" id="L57">		this.stringValue = Objects.requireNonNull(stringValue);</span>
+<span class="fc" id="L58">	}</span>
+
+<span class="fc" id="L60">	public TValue(JsonValue json) {</span>
+<span class="fc" id="L61">		this.jsonValue = json;</span>
+<span class="fc" id="L62">		this.intValue = 0;</span>
+<span class="fc" id="L63">		this.stringValue = null;</span>
+<span class="fc" id="L64">	}</span>
+
+	public static TValue fromInt(int v) {
+<span class="fc" id="L67">		return new TValue(v);</span>
+	}
+
+	public static TValue fromBoolean(boolean b) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		return new TValue(b ? 1 : 0);</span>
+	}
+
+	public static TValue fromJson(JsonValue json) {
+<span class="fc" id="L75">		return new TValue(json);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc bfc" id="L80" title="All 4 branches covered.">		if (jsonValue != null &amp;&amp; jsonValue.isString()) {</span>
+<span class="fc" id="L81">			return jsonValue.asString();</span>
+		}
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (jsonValue != null) {</span>
+<span class="fc" id="L84">			return jsonValue.toString();</span>
+		}
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (stringValue == null) {</span>
+<span class="fc" id="L87">			return &quot;&quot; + intValue;</span>
+		}
+<span class="fc" id="L89">		return stringValue;</span>
+	}
+
+	public static TValue fromString(Token token) {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (token.getTokenType() != TokenType.QUOTED_STRING) {</span>
+<span class="nc" id="L94">			throw new IllegalArgumentException();</span>
+		}
+<span class="fc" id="L96">		return new TValue(token.getSurface());</span>
+	}
+
+	public static TValue fromString(String s) {
+<span class="fc" id="L100">		return new TValue(s);</span>
+	}
+
+	public static TValue fromNumber(Token token) {
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (token.getTokenType() != TokenType.NUMBER) {</span>
+<span class="nc" id="L105">			throw new IllegalArgumentException();</span>
+		}
+<span class="fc" id="L107">		return new TValue(Integer.parseInt(token.getSurface()));</span>
+	}
+
+	public TValue add(TValue v2) {
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc" id="L112">			return new TValue(this.intValue + v2.intValue);</span>
+		}
+<span class="fc" id="L114">		return new TValue(toString() + v2.toString());</span>
+	}
+
+	public TValue minus(TValue v2) {
+<span class="pc bpc" id="L118" title="2 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc" id="L119">			return new TValue(this.intValue - v2.intValue);</span>
+		}
+<span class="nc" id="L121">		return new TValue(toString() + v2.toString());</span>
+	}
+
+	public TValue multiply(TValue v2) {
+<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="nc" id="L126">			return new TValue(this.intValue * v2.intValue);</span>
+		}
+<span class="nc" id="L128">		return new TValue(toString() + &quot;*&quot; + v2.toString());</span>
+	}
+
+	public TValue dividedBy(TValue v2) {
+<span class="pc bpc" id="L132" title="2 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc" id="L133">			return new TValue(this.intValue / v2.intValue);</span>
+		}
+<span class="nc" id="L135">		return new TValue(toString() + &quot;/&quot; + v2.toString());</span>
+	}
+
+	public boolean isNumber() {
+<span class="fc bfc" id="L139" title="All 4 branches covered.">		return this.jsonValue == null &amp;&amp; this.stringValue == null;</span>
+	}
+
+	public boolean isJson() {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		return this.jsonValue != null;</span>
+	}
+
+	public boolean isString() {
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		return this.stringValue != null;</span>
+	}
+
+	public Token toToken() {
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (isNumber()) {</span>
+<span class="fc" id="L152">			return new Token(toString(), TokenType.NUMBER, null);</span>
+		}
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (isJson()) {</span>
+<span class="fc" id="L155">			return new Token(toString(), TokenType.JSON_DATA, jsonValue);</span>
+		}
+<span class="fc" id="L157">		return new Token(toString(), TokenType.QUOTED_STRING, null);</span>
+	}
+
+	public TValue greaterThanOrEquals(TValue v2) {
+<span class="pc bpc" id="L161" title="2 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			return fromBoolean(this.intValue &gt;= v2.intValue);</span>
+		}
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		return fromBoolean(toString().compareTo(v2.toString()) &gt;= 0);</span>
+	}
+
+	public TValue greaterThan(TValue v2) {
+<span class="pc bpc" id="L168" title="1 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			return fromBoolean(this.intValue &gt; v2.intValue);</span>
+		}
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		return fromBoolean(toString().compareTo(v2.toString()) &gt; 0);</span>
+	}
+
+	public TValue lessThanOrEquals(TValue v2) {
+<span class="nc bnc" id="L175" title="All 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">			return fromBoolean(this.intValue &lt;= v2.intValue);</span>
+		}
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		return fromBoolean(toString().compareTo(v2.toString()) &lt;= 0);</span>
+	}
+
+	public TValue lessThan(TValue v2) {
+<span class="pc bpc" id="L182" title="1 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">			return fromBoolean(this.intValue &lt; v2.intValue);</span>
+		}
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		return fromBoolean(toString().compareTo(v2.toString()) &lt; 0);</span>
+	}
+
+	public TValue equalsOperation(TValue v2) {
+<span class="pc bpc" id="L189" title="1 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">			return fromBoolean(this.intValue == v2.intValue);</span>
+		}
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		return fromBoolean(toString().compareTo(v2.toString()) == 0);</span>
+	}
+
+	public TValue notEquals(TValue v2) {
+<span class="pc bpc" id="L196" title="3 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			return fromBoolean(this.intValue != v2.intValue);</span>
+		}
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		return fromBoolean(toString().compareTo(v2.toString()) != 0);</span>
+	}
+
+	public boolean toBoolean() {
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (this.isNumber()) {</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">			return this.intValue != 0;</span>
+		}
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		return toString().length() &gt; 0;</span>
+	}
+
+	public int toInt() {
+<span class="fc" id="L210">		return this.intValue;</span>
+	}
+
+	public TValue logicalAnd(TValue v2) {
+<span class="fc bfc" id="L214" title="All 4 branches covered.">		return fromBoolean(this.toBoolean() &amp;&amp; v2.toBoolean());</span>
+	}
+
+	public TValue logicalOr(TValue v2) {
+<span class="fc bfc" id="L218" title="All 4 branches covered.">		return fromBoolean(this.toBoolean() || v2.toBoolean());</span>
+	}
+
+	public JsonValue toJson() {
+<span class="fc" id="L222">		return jsonValue;</span>
+	}
+
+	public JsonValue toJsonValue() {
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (isNumber()) {</span>
+<span class="fc" id="L227">			return Json.value(this.intValue);</span>
+		}
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		if (isString()) {</span>
+<span class="fc" id="L230">			return Json.value(this.stringValue);</span>
+		}
+<span class="fc" id="L232">		return this.jsonValue;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

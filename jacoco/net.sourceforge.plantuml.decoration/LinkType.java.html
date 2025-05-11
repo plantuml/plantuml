@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.decoration</a> &gt; <span class="el_source">LinkType.java</span></div><h1>LinkType.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ * 
+ *
+ */
+package net.sourceforge.plantuml.decoration;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.abel.LinkStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+
+public class LinkType {
+
+	private final LinkDecor decor1;
+	private final LinkStyle linkStyle;
+	private final LinkDecor decor2;
+	private final LinkMiddleDecor middleDecor;
+
+	public boolean isDoubleDecorated() {
+<span class="nc bnc" id="L52" title="All 4 branches missed.">		return decor1 != LinkDecor.NONE &amp;&amp; decor2 != LinkDecor.NONE;</span>
+	}
+
+	public boolean looksLikeRevertedForSvg() {
+<span class="nc bnc" id="L56" title="All 4 branches missed.">		if (this.decor1 == LinkDecor.NONE &amp;&amp; this.decor2 != LinkDecor.NONE)</span>
+<span class="nc" id="L57">			return true;</span>
+
+<span class="nc" id="L59">		return false;</span>
+	}
+
+	public boolean looksLikeNoDecorAtAllSvg() {
+<span class="nc bnc" id="L63" title="All 4 branches missed.">		if (this.decor1 == LinkDecor.NONE &amp;&amp; this.decor2 == LinkDecor.NONE)</span>
+<span class="nc" id="L64">			return true;</span>
+
+<span class="nc bnc" id="L66" title="All 4 branches missed.">		if (this.decor1 != LinkDecor.NONE &amp;&amp; this.decor2 != LinkDecor.NONE)</span>
+<span class="nc" id="L67">			return true;</span>
+
+<span class="nc" id="L69">		return false;</span>
+	}
+
+	public LinkType(LinkDecor decor1, LinkDecor decor2) {
+<span class="fc" id="L73">		this(decor1, decor2, LinkMiddleDecor.NONE, LinkStyle.NORMAL());</span>
+<span class="fc" id="L74">	}</span>
+
+<span class="fc" id="L76">	private LinkType(LinkDecor decor1, LinkDecor decor2, LinkMiddleDecor middleDecor, LinkStyle style) {</span>
+<span class="fc" id="L77">		this.decor1 = decor1;</span>
+<span class="fc" id="L78">		this.decor2 = decor2;</span>
+<span class="fc" id="L79">		this.middleDecor = middleDecor;</span>
+<span class="fc" id="L80">		this.linkStyle = Objects.requireNonNull(style);</span>
+<span class="fc" id="L81">	}</span>
+
+	public LinkType withoutDecors1() {
+<span class="nc" id="L84">		return new LinkType(LinkDecor.NONE, decor2, middleDecor, linkStyle);</span>
+	}
+
+	public LinkType withoutDecors2() {
+<span class="nc" id="L88">		return new LinkType(decor1, LinkDecor.NONE, middleDecor, linkStyle);</span>
+	}
+
+	// public boolean contains(LinkDecor decors) {
+	// return decor1 == decors || decor2 == decors;
+	// }
+
+	@Override
+	public String toString() {
+<span class="nc" id="L97">		return decor1 + &quot;-&quot; + linkStyle + &quot;-&quot; + decor2;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L102">		return toString().hashCode();</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc" id="L107">		final LinkType other = (LinkType) obj;</span>
+<span class="nc bnc" id="L108" title="All 6 branches missed.">		return this.decor1 == other.decor1 &amp;&amp; this.decor2 == other.decor2 &amp;&amp; this.linkStyle == other.linkStyle;</span>
+	}
+
+	public boolean isInvisible() {
+<span class="fc" id="L112">		return linkStyle.isInvisible();</span>
+	}
+
+	public LinkType goDashed() {
+<span class="fc" id="L116">		return new LinkType(decor1, decor2, middleDecor, LinkStyle.DASHED());</span>
+	}
+
+	public LinkType goDotted() {
+<span class="nc" id="L120">		return new LinkType(decor1, decor2, middleDecor, LinkStyle.DOTTED());</span>
+	}
+
+	public LinkType goThickness(double thickness) {
+<span class="nc" id="L124">		return new LinkType(decor1, decor2, middleDecor, linkStyle.goThickness(thickness));</span>
+	}
+
+	public LinkType goBold() {
+<span class="fc" id="L128">		return new LinkType(decor1, decor2, middleDecor, LinkStyle.BOLD());</span>
+	}
+
+	public LinkType getInversed() {
+<span class="fc" id="L132">		return new LinkType(decor2, decor1, middleDecor.getInversed(), linkStyle);</span>
+	}
+
+	public LinkType withMiddleCircle() {
+<span class="nc" id="L136">		return new LinkType(decor1, decor2, LinkMiddleDecor.CIRCLE, linkStyle);</span>
+	}
+
+	public LinkType withMiddleCircleCircled() {
+<span class="nc" id="L140">		return new LinkType(decor1, decor2, LinkMiddleDecor.CIRCLE_CIRCLED, linkStyle);</span>
+	}
+
+	public LinkType withMiddleCircleCircled1() {
+<span class="nc" id="L144">		return new LinkType(decor1, decor2, LinkMiddleDecor.CIRCLE_CIRCLED1, linkStyle);</span>
+	}
+
+	public LinkType withMiddleCircleCircled2() {
+<span class="nc" id="L148">		return new LinkType(decor1, decor2, LinkMiddleDecor.CIRCLE_CIRCLED2, linkStyle);</span>
+	}
+
+	public LinkType withMiddleSubset() {
+<span class="fc" id="L152">		return new LinkType(decor1, decor2, LinkMiddleDecor.SUBSET, linkStyle);</span>
+	}
+
+	public LinkType withMiddleSuperset() {
+<span class="fc" id="L156">		return new LinkType(decor1, decor2, LinkMiddleDecor.SUPERSET, linkStyle);</span>
+	}
+
+	public LinkType getInvisible() {
+<span class="fc" id="L160">		return new LinkType(decor1, decor2, middleDecor, LinkStyle.INVISIBLE());</span>
+	}
+
+	public String getSpecificDecorationSvek(LinkStrategy linkStrategy) {
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (linkStrategy == LinkStrategy.SIMPLIER)</span>
+<span class="nc" id="L166">			return &quot;arrowtail=none,arrowhead=none&quot;;</span>
+
+<span class="nc" id="L168">		final StringBuilder sb = new StringBuilder();</span>
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		final boolean isEmpty1 = decor1 == LinkDecor.NONE;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		final boolean isEmpty2 = decor2 == LinkDecor.NONE;</span>
+
+<span class="nc bnc" id="L173" title="All 4 branches missed.">		if (isEmpty1 &amp;&amp; isEmpty2) {</span>
+<span class="nc" id="L174">			sb.append(&quot;arrowtail=none&quot;);</span>
+<span class="nc" id="L175">			sb.append(&quot;,arrowhead=none&quot;);</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">		} else if (isEmpty1 == false &amp;&amp; isEmpty2 == false) {</span>
+<span class="nc" id="L177">			sb.append(&quot;dir=both,&quot;);</span>
+<span class="nc" id="L178">			sb.append(&quot;arrowtail=empty&quot;);</span>
+<span class="nc" id="L179">			sb.append(&quot;,arrowhead=empty&quot;);</span>
+<span class="nc bnc" id="L180" title="All 4 branches missed.">		} else if (isEmpty1 &amp;&amp; isEmpty2 == false) {</span>
+<span class="nc" id="L181">			sb.append(&quot;arrowtail=empty&quot;);</span>
+<span class="nc" id="L182">			sb.append(&quot;,arrowhead=none&quot;);</span>
+<span class="nc" id="L183">			sb.append(&quot;,dir=back&quot;);</span>
+			// } else if (isEmpty1 == false &amp;&amp; isEmpty2) {
+			// sb.append(&quot;arrowtail=none&quot;);
+			// sb.append(&quot;,arrowhead=empty&quot;);
+		}
+
+<span class="nc" id="L189">		final double arrowsize = Math.max(decor1.getArrowSize(), decor2.getArrowSize());</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (arrowsize &gt; 0) {</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L192">				sb.append(&quot;,&quot;);</span>
+
+<span class="nc" id="L194">			sb.append(&quot;arrowsize=&quot; + arrowsize);</span>
+		}
+<span class="nc" id="L196">		return sb.toString();</span>
+	}
+
+	public final LinkDecor getDecor1() {
+<span class="fc" id="L200">		return decor1;</span>
+	}
+
+	public final LinkStyle getStyle() {
+<span class="fc" id="L204">		return linkStyle;</span>
+	}
+
+	public final LinkDecor getDecor2() {
+<span class="fc" id="L208">		return decor2;</span>
+	}
+
+	private boolean isExtendsOrAggregationOrCompositionOrPlus() {
+<span class="nc bnc" id="L212" title="All 8 branches missed.">		return isExtends() || isAggregationOrComposition() || isPlus() || isOf(LinkDecor.DEFINEDBY)</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">				|| isOf(LinkDecor.REDEFINES);</span>
+	}
+
+	private boolean isExtendsOrPlus() {
+<span class="nc bnc" id="L217" title="All 8 branches missed.">		return isExtends() || isPlus() || isOf(LinkDecor.DEFINEDBY) || isOf(LinkDecor.REDEFINES);</span>
+	}
+
+	private boolean isOf(LinkDecor ld) {
+<span class="nc bnc" id="L221" title="All 4 branches missed.">		return decor1 == ld || decor2 == ld;</span>
+	}
+
+	public boolean isExtends() {
+<span class="nc bnc" id="L225" title="All 4 branches missed.">		return decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS;</span>
+	}
+
+	private boolean isPlus() {
+<span class="nc bnc" id="L229" title="All 4 branches missed.">		return decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS;</span>
+	}
+
+	private boolean isAggregationOrComposition() {
+<span class="nc bnc" id="L233" title="All 8 branches missed.">		return decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION || decor1 == LinkDecor.COMPOSITION</span>
+				|| decor2 == LinkDecor.COMPOSITION;
+	}
+
+	public LinkType getPart1() {
+<span class="nc" id="L238">		return new LinkType(decor1, LinkDecor.NONE, middleDecor, linkStyle);</span>
+	}
+
+	public LinkType getPart2() {
+<span class="nc" id="L242">		return new LinkType(LinkDecor.NONE, decor2, middleDecor, linkStyle);</span>
+	}
+
+	public UStroke getStroke3(UStroke defaultThickness) {
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (linkStyle.isThicknessOverrided())</span>
+<span class="nc" id="L247">			return linkStyle.getStroke3();</span>
+
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (defaultThickness == null)</span>
+<span class="fc" id="L250">			return linkStyle.getStroke3();</span>
+
+<span class="pc bpc" id="L252" title="2 of 4 branches missed.">		if (defaultThickness.getDashVisible() == 0 &amp;&amp; defaultThickness.getDashSpace() == 0)</span>
+<span class="fc" id="L253">			return linkStyle.goThickness(defaultThickness.getThickness()).getStroke3();</span>
+
+<span class="nc" id="L255">		return defaultThickness;</span>
+	}
+
+	public LinkMiddleDecor getMiddleDecor() {
+<span class="fc" id="L259">		return middleDecor;</span>
+	}
+
+	public LinkType withLollipopInterfaceEye2() {
+<span class="nc" id="L263">		return new LinkType(LinkDecor.NONE, decor2, middleDecor, linkStyle);</span>
+	}
+
+	public LinkType withLollipopInterfaceEye1() {
+<span class="nc" id="L267">		return new LinkType(decor1, LinkDecor.NONE, middleDecor, linkStyle);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DarkString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">DarkString.java</span></div><h1>DarkString.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+public class DarkString {
+
+	private final String value1;
+	private final String value2;
+	private final int priority;
+
+<span class="fc" id="L44">	public DarkString(String value1, String value2, int priority) {</span>
+<span class="fc" id="L45">		this.value1 = value1;</span>
+<span class="fc" id="L46">		this.value2 = value2;</span>
+<span class="fc" id="L47">		this.priority = priority;</span>
+<span class="fc" id="L48">	}</span>
+
+	public DarkString mergeWith(DarkString other) {
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (other == null)</span>
+<span class="nc" id="L52">			return this;</span>
+
+<span class="pc bpc" id="L54" title="1 of 8 branches missed.">		if ((this.value2 == null &amp;&amp; other.value2 == null) || this.value1 == null &amp;&amp; other.value1 == null) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (isBigger(this.priority, other.priority))</span>
+<span class="fc" id="L56">				return this;</span>
+<span class="fc" id="L57">			return other;</span>
+		}
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">		if (this.value2 == null &amp;&amp; other.value1 == null)</span>
+<span class="nc" id="L60">			return new DarkString(this.value1, other.value2, this.priority);</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">		if (other.value2 == null &amp;&amp; this.value1 == null)</span>
+<span class="fc" id="L62">			return new DarkString(other.value1, this.value2, other.priority);</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (isBigger(this.priority, other.priority))</span>
+<span class="fc" id="L65">			return this;</span>
+<span class="fc" id="L66">		return other;</span>
+
+//		System.err.println(&quot;this =&quot; + this);
+//		System.err.println(&quot;other=&quot; + other);
+//		throw new UnsupportedOperationException();
+	}
+
+	private static boolean isBigger(int a, int b) {
+//		if (a &gt; StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE)
+//			a = StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
+//		if (b &gt; StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE)
+//			b = StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		return a &gt; b;</span>
+	}
+
+	public DarkString addPriority(int delta) {
+<span class="fc" id="L82">		return new DarkString(value1, value2, delta + priority);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L87">		return value1 + &quot;/&quot; + value2 + &quot; (&quot; + priority + &quot;)&quot;;</span>
+	}
+
+	public final String getValue1() {
+<span class="fc" id="L91">		return value1;</span>
+	}
+
+	public final String getValue2() {
+<span class="fc" id="L95">		return value2;</span>
+	}
+
+	public final int getPriority() {
+<span class="fc" id="L99">		return priority;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

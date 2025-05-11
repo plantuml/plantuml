@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GitCurve.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gitlog</a> &gt; <span class="el_source">GitCurve.java</span></div><h1>GitCurve.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ * 
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package net.sourceforge.plantuml.gitlog;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import h.ST_Agedgeinfo_t;
+import h.ST_bezier;
+import h.ST_pointf;
+import h.ST_splines;
+import net.sourceforge.plantuml.jsondiagram.Arrow;
+import net.sourceforge.plantuml.jsondiagram.Mirror;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class GitCurve {
+
+<span class="nc" id="L50">	private final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+
+	private final Mirror xMirror;
+
+	private final XPoint2D sp;
+	private final XPoint2D ep;
+
+<span class="nc" id="L57">	public GitCurve(ST_Agedgeinfo_t data, Mirror xMirror) {</span>
+<span class="nc" id="L58">		this.xMirror = xMirror;</span>
+<span class="nc" id="L59">		final ST_splines splines = data.spl;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (splines.size != 1)</span>
+<span class="nc" id="L61">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L63">		final ST_bezier beziers = splines.list.get__(0);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (int i = 0; i &lt; beziers.size; i++) {</span>
+<span class="nc" id="L65">			final XPoint2D pt = getPoint(splines, i);</span>
+<span class="nc" id="L66">			points.add(pt);</span>
+		}
+
+<span class="nc bnc" id="L69" title="All 4 branches missed.">		if (beziers.sp.x == 0 &amp;&amp; beziers.sp.y == 0)</span>
+<span class="nc" id="L70">			sp = null;</span>
+		else
+<span class="nc" id="L72">			sp = new XPoint2D(beziers.sp.x, beziers.sp.y);</span>
+
+<span class="nc bnc" id="L74" title="All 4 branches missed.">		if (beziers.ep.x == 0 &amp;&amp; beziers.ep.y == 0)</span>
+<span class="nc" id="L75">			ep = null;</span>
+		else
+<span class="nc" id="L77">			ep = new XPoint2D(beziers.ep.x, beziers.ep.y);</span>
+
+<span class="nc" id="L79">	}</span>
+
+	private XPoint2D getPoint(ST_splines splines, int i) {
+<span class="nc" id="L82">		final ST_bezier beziers = splines.list.get__(0);</span>
+<span class="nc" id="L83">		final ST_pointf pt = beziers.list.get__(i);</span>
+<span class="nc" id="L84">		return new XPoint2D(pt.x, pt.y);</span>
+	}
+
+	public void drawCurve(HColor color, UGraphic ug) {
+<span class="nc" id="L88">		ug = ug.apply(new UStroke(2, 2, 1));</span>
+<span class="nc" id="L89">		final UPath path = UPath.none();</span>
+
+<span class="nc" id="L91">		path.moveTo(xMirror.invGit(points.get(0)));</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i += 3) {</span>
+<span class="nc" id="L94">			final XPoint2D pt2 = xMirror.invGit(points.get(i));</span>
+<span class="nc" id="L95">			final XPoint2D pt3 = xMirror.invGit(points.get(i + 1));</span>
+<span class="nc" id="L96">			final XPoint2D pt4 = xMirror.invGit(points.get(i + 2));</span>
+<span class="nc" id="L97">			path.cubicTo(pt2, pt3, pt4);</span>
+		}
+<span class="nc" id="L99">		ug.draw(path);</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (ep != null) {</span>
+<span class="nc" id="L102">			final XPoint2D last = xMirror.invGit(points.get(points.size() - 1));</span>
+<span class="nc" id="L103">			final XPoint2D trueEp = xMirror.invGit(ep);</span>
+<span class="nc" id="L104">			new Arrow(last, trueEp).drawArrow(ug.apply(color.bg()));</span>
+		}
+<span class="nc" id="L106">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

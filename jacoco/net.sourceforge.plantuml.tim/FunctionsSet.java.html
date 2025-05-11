@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FunctionsSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">FunctionsSet.java</span></div><h1>FunctionsSet.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import net.sourceforge.plantuml.text.StringLocated;
+
+<span class="fc" id="L45">public class FunctionsSet {</span>
+
+<span class="fc" id="L47">	private final Map&lt;TFunctionSignature, TFunction&gt; functions = new HashMap&lt;TFunctionSignature, TFunction&gt;();</span>
+<span class="fc" id="L48">	private final Set&lt;TFunctionSignature&gt; functionsFinal = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L49">	private final Trie functions3 = new TrieImpl();</span>
+	private TFunctionImpl pendingFunction;
+
+	public TFunction getFunctionSmart(TFunctionSignature searched) {
+<span class="fc" id="L53">		final TFunction func = this.functions.get(searched);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (func != null)</span>
+<span class="fc" id="L55">			return func;</span>
+
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		for (TFunction candidate : this.functions.values()) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (candidate.getSignature().sameFunctionNameAs(searched) == false)</span>
+<span class="fc" id="L59">				continue;</span>
+
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (candidate.canCover(searched.getNbArg(), searched.getNamedArguments()))</span>
+<span class="fc" id="L62">				return candidate;</span>
+
+<span class="nc" id="L64">		}</span>
+<span class="nc" id="L65">		return null;</span>
+	}
+
+	public int size() {
+<span class="fc" id="L69">		return functions().size();</span>
+	}
+
+	public Map&lt;TFunctionSignature, TFunction&gt; functions() {
+<span class="fc" id="L73">		return Collections.unmodifiableMap(functions);</span>
+	}
+
+	public String getLonguestMatchStartingIn(String s, int pos) {
+<span class="fc" id="L77">		return functions3.getLonguestMatchStartingIn(s, pos);</span>
+	}
+
+	public TFunctionImpl pendingFunction() {
+<span class="fc" id="L81">		return pendingFunction;</span>
+	}
+
+	public void addFunction(TFunction func) {
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG)</span>
+<span class="nc" id="L86">			((TFunctionImpl) func).finalizeEnddefinelong();</span>
+
+<span class="fc" id="L88">		this.functions.put(func.getSignature(), func);</span>
+<span class="fc" id="L89">		this.functions3.add(func.getSignature().getFunctionName() + &quot;(&quot;);</span>
+<span class="fc" id="L90">	}</span>
+
+	public void executeEndfunction() {
+<span class="fc" id="L93">		this.addFunction(this.pendingFunction);</span>
+<span class="fc" id="L94">		this.pendingFunction = null;</span>
+<span class="fc" id="L95">	}</span>
+
+	public void executeLegacyDefine(TContext context, TMemory memory, StringLocated s)
+			throws EaterException {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L100">			throw new EaterException(&quot;already0048&quot;, s);</span>
+
+<span class="fc" id="L102">		final EaterLegacyDefine legacyDefine = new EaterLegacyDefine(s);</span>
+<span class="fc" id="L103">		legacyDefine.analyze(context, memory);</span>
+<span class="fc" id="L104">		final TFunction function = legacyDefine.getFunction();</span>
+<span class="fc" id="L105">		this.functions.put(function.getSignature(), function);</span>
+<span class="fc" id="L106">		this.functions3.add(function.getSignature().getFunctionName() + &quot;(&quot;);</span>
+<span class="fc" id="L107">	}</span>
+
+	public void executeLegacyDefineLong(TContext context, TMemory memory, StringLocated s)
+			throws EaterException {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L112">			throw new EaterException(&quot;already0068&quot;, s);</span>
+
+<span class="nc" id="L114">		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);</span>
+<span class="nc" id="L115">		legacyDefineLong.analyze(context, memory);</span>
+<span class="nc" id="L116">		this.pendingFunction = legacyDefineLong.getFunction();</span>
+<span class="nc" id="L117">	}</span>
+
+	public void executeDeclareReturnFunction(TContext context, TMemory memory, StringLocated s)
+			throws EaterException {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L122">			throw new EaterException(&quot;already0068&quot;, s);</span>
+
+<span class="fc" id="L124">		final EaterDeclareReturnFunction declareFunction = new EaterDeclareReturnFunction(s);</span>
+<span class="fc" id="L125">		declareFunction.analyze(context, memory);</span>
+<span class="fc" id="L126">		final boolean finalFlag = declareFunction.getFinalFlag();</span>
+<span class="fc" id="L127">		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();</span>
+<span class="fc" id="L128">		final TFunction previous = this.functions.get(declaredSignature);</span>
+<span class="pc bpc" id="L129" title="5 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
+<span class="nc" id="L130">			throw new EaterException(&quot;This function is already defined&quot;, s);</span>
+
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (finalFlag)</span>
+<span class="nc" id="L133">			this.functionsFinal.add(declaredSignature);</span>
+
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (declareFunction.getFunction().hasBody())</span>
+<span class="nc" id="L136">			this.addFunction(declareFunction.getFunction());</span>
+		else
+<span class="fc" id="L138">			this.pendingFunction = declareFunction.getFunction();</span>
+
+<span class="fc" id="L140">	}</span>
+
+	public void executeDeclareProcedure(TContext context, TMemory memory, StringLocated s)
+			throws EaterException {
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L145">			throw new EaterException(&quot;already0068&quot;, s);</span>
+
+<span class="fc" id="L147">		final EaterDeclareProcedure declareFunction = new EaterDeclareProcedure(s);</span>
+<span class="fc" id="L148">		declareFunction.analyze(context, memory);</span>
+<span class="fc" id="L149">		final boolean finalFlag = declareFunction.getFinalFlag();</span>
+<span class="fc" id="L150">		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();</span>
+<span class="fc" id="L151">		final TFunction previous = this.functions.get(declaredSignature);</span>
+<span class="pc bpc" id="L152" title="2 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
+<span class="nc" id="L153">			throw new EaterException(&quot;This function is already defined&quot;, s);</span>
+
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (finalFlag)</span>
+<span class="nc" id="L156">			this.functionsFinal.add(declaredSignature);</span>
+
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (declareFunction.getFunction().hasBody())</span>
+<span class="nc" id="L159">			this.addFunction(declareFunction.getFunction());</span>
+		else
+<span class="fc" id="L161">			this.pendingFunction = declareFunction.getFunction();</span>
+
+<span class="fc" id="L163">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

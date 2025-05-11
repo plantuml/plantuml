@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileSwitchWithDiamonds.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</a> &gt; <span class="el_source">FtileSwitchWithDiamonds.java</span></div><h1>FtileSwitchWithDiamonds.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+
+public class FtileSwitchWithDiamonds extends FtileSwitchNude {
+
+	private static final double SUPP15 = 15;
+
+<span class="nc" id="L55">	static enum Mode {</span>
+<span class="nc" id="L56">		BIG_DIAMOND, SMALL_DIAMOND</span>
+	};
+
+	protected final Ftile diamond1;
+	protected final Ftile diamond2;
+	protected final List&lt;Branch&gt; branches;
+	protected final Mode mode;
+	private final double w13;
+	private final double w9;
+
+	public FtileSwitchWithDiamonds(List&lt;Ftile&gt; tiles, List&lt;Branch&gt; branches, Swimlane in, Ftile diamond1,
+			Ftile diamond2, StringBounder stringBounder) {
+<span class="nc" id="L68">		super(tiles, in);</span>
+<span class="nc" id="L69">		this.branches = branches;</span>
+<span class="nc" id="L70">		this.diamond1 = diamond1;</span>
+<span class="nc" id="L71">		this.diamond2 = diamond2;</span>
+
+<span class="nc" id="L73">		w13 = diamond1.calculateDimension(stringBounder).getWidth()</span>
+<span class="nc" id="L74">				- tiles.get(0).calculateDimension(stringBounder).getRight()</span>
+<span class="nc" id="L75">				- tiles.get(tiles.size() - 1).calculateDimension(stringBounder).getLeft();</span>
+<span class="nc" id="L76">		w9 = getW9(stringBounder);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (w13 &gt; w9)</span>
+<span class="nc" id="L78">			mode = Mode.BIG_DIAMOND;</span>
+		else
+<span class="nc" id="L80">			mode = Mode.SMALL_DIAMOND;</span>
+
+<span class="nc" id="L82">	}</span>
+
+	private double getW9(StringBounder stringBounder) {
+<span class="nc" id="L85">		double result = 0;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (int i = 1; i &lt; tiles.size() - 1; i++)</span>
+<span class="nc" id="L87">			result += tiles.get(i).calculateDimension(stringBounder).getWidth();</span>
+
+<span class="nc" id="L89">		return result;</span>
+	}
+
+	@Override
+	final public Collection&lt;Ftile&gt; getMyChildren() {
+<span class="nc" id="L94">		final Collection&lt;Ftile&gt; result = new ArrayList&lt;&gt;(super.getMyChildren());</span>
+<span class="nc" id="L95">		result.add(diamond1);</span>
+<span class="nc" id="L96">		result.add(diamond2);</span>
+<span class="nc" id="L97">		return Collections.unmodifiableCollection(result);</span>
+	}
+
+	protected double getYdelta1a(StringBounder stringBounder) {
+<span class="nc" id="L101">		return 20;</span>
+	}
+
+	final protected double getYdelta1b(StringBounder stringBounder) {
+<span class="nc" id="L105">		return 10;</span>
+	}
+
+	@Override
+	final protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
+<span class="nc" id="L110">		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L111">		final FtileGeometry dim2 = diamond2.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L113">		final double nudeHeight = super.calculateDimensionInternalSlow(stringBounder).getHeight();</span>
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (mode == Mode.BIG_DIAMOND) {</span>
+<span class="nc" id="L116">			final double height = dim1.getHeight() + nudeHeight + dim2.getHeight() + getYdelta1a(stringBounder)</span>
+<span class="nc" id="L117">					+ getYdelta1b(stringBounder);</span>
+<span class="nc" id="L118">			final FtileGeometry tile0 = tiles.get(0).calculateDimension(stringBounder);</span>
+<span class="nc" id="L119">			final double width = tile0.getWidth() + SUPP15 + w13 + SUPP15</span>
+<span class="nc" id="L120">					+ +tiles.get(tiles.size() - 1).calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L121">			return new FtileGeometry(width, height, tile0.getLeft() + SUPP15 + dim1.getLeft(), 0, height);</span>
+
+		} else {
+<span class="nc" id="L124">			final FtileGeometry dimNude = super.calculateDimensionInternalSlow(stringBounder);</span>
+<span class="nc" id="L125">			final FtileGeometry all = dim1.appendBottom(dimNude).appendBottom(dim2);</span>
+<span class="nc" id="L126">			return all.addDim(0, getYdelta1a(stringBounder) + getYdelta1b(stringBounder));</span>
+		}
+
+	}
+
+	@Override
+	final public void drawU(UGraphic ug) {
+<span class="nc" id="L133">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc" id="L135">		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (mode == Mode.BIG_DIAMOND)</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			for (Ftile tile : tiles)</span>
+<span class="nc" id="L138">				tile.drawU(ug.apply(getTranslateOf(tile, stringBounder)));</span>
+		else
+<span class="nc" id="L140">			super.drawU(ug.apply(getTranslateMain(stringBounder)));</span>
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L143">			ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);</span>
+
+<span class="nc" id="L145">	}</span>
+
+	final protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
+<span class="nc" id="L148">		final UTranslate main = getTranslateMain(stringBounder);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (mode == Mode.BIG_DIAMOND) {</span>
+<span class="nc" id="L150">			double dx = 0;</span>
+<span class="nc" id="L151">			final double suppx = (w13 - w9) / (tiles.size() - 1);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			for (int i = 0; i &lt; tiles.size() - 1; i++) {</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">				if (tile == tiles.get(i))</span>
+<span class="nc" id="L154">					return main.compose(UTranslate.dx(dx));</span>
+
+<span class="nc" id="L156">				dx += tiles.get(i).calculateDimension(stringBounder).getWidth() + suppx;</span>
+			}
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (tile == tiles.get(tiles.size() - 1)) {</span>
+<span class="nc" id="L159">				final double dx9 = tiles.get(0).calculateDimension(stringBounder).getWidth() + w13 + SUPP15 + SUPP15;</span>
+<span class="nc" id="L160">				return main.compose(UTranslate.dx(dx9));</span>
+			}
+<span class="nc" id="L162">			throw new IllegalArgumentException();</span>
+
+		}
+<span class="nc" id="L165">		return getTranslateNude(tile, stringBounder).compose(main);</span>
+	}
+
+	final protected UTranslate getTranslateMain(StringBounder stringBounder) {
+<span class="nc" id="L169">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L170">		final double dy1 = dimDiamond1.getHeight() + getYdelta1a(stringBounder);</span>
+<span class="nc" id="L171">		return UTranslate.dy(dy1);</span>
+	}
+
+	final protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
+<span class="nc" id="L175">		final double y1 = 0;</span>
+<span class="nc" id="L176">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc" id="L177">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L178">		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();</span>
+<span class="nc" id="L179">		return new UTranslate(x1, y1);</span>
+	}
+
+	final protected UTranslate getTranslateDiamond2(StringBounder stringBounder) {
+<span class="nc" id="L183">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc" id="L184">		final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L185">		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();</span>
+<span class="nc" id="L186">		final double x2 = dimTotal.getLeft() - dimDiamond2.getWidth() / 2;</span>
+<span class="nc" id="L187">		return new UTranslate(x2, y2);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

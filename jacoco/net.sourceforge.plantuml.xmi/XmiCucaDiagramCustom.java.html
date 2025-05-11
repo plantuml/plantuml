@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmiCucaDiagramCustom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xmi</a> &gt; <span class="el_source">XmiCucaDiagramCustom.java</span></div><h1>XmiCucaDiagramCustom.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Valentin Vasiu
+ *
+ *
+ */
+package net.sourceforge.plantuml.xmi;
+
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import net.atmp.CucaDiagram;
+
+/**
+ * Generic class for managing a custom XMI transformation, using services
+ * provided by external providers via dependency injection.
+ *
+ * @param &lt;S&gt; the class of the service type.
+ */
+public final class XmiCucaDiagramCustom&lt;S&gt; implements XmlDiagramTransformer {
+
+    private static final String DIAGRAM_TO_XMI_METHOD_NAME = &quot;diagramToXmi&quot;;
+    private static final String TRANSFORMER_XML_METHOD_NAME = &quot;transformerXml&quot;;
+
+    private final Class&lt;S&gt; serviceType;
+    private S service;
+
+    /**
+     * Transform a diagram into a custom XMI format, using dependency injection to
+     * load the external class responsible for the custom transformation.
+     *
+     * @param serviceType the class of the service type.
+     * @param diagram     the diagram to convert.
+     * @throws ParserConfigurationException if the converting fails or the custom
+     *                                      provider for the service type is not
+     *                                      found.
+     */
+    public XmiCucaDiagramCustom(final Class&lt;S&gt; serviceType, final CucaDiagram diagram)
+<span class="nc" id="L74">            throws ParserConfigurationException {</span>
+<span class="nc" id="L75">        this.serviceType = serviceType;</span>
+
+        try {
+<span class="nc" id="L78">            final ServiceLoader&lt;S&gt; serviceLoader = ServiceLoader.load(serviceType);</span>
+
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            for (final S s : serviceLoader) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                if (this.service == null) {</span>
+<span class="nc" id="L82">                    this.service = s;</span>
+                } else {
+<span class="nc" id="L84">                    throw new ParserConfigurationException(</span>
+<span class="nc" id="L85">                            &quot;Multiple providers for service type &quot; + serviceType.getName());</span>
+                }
+<span class="nc" id="L87">            }</span>
+<span class="nc" id="L88">        } catch (ServiceConfigurationError e) {</span>
+<span class="nc" id="L89">            throw new ParserConfigurationException(e.getMessage());</span>
+<span class="nc" id="L90">        }</span>
+
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (this.service == null) {</span>
+<span class="nc" id="L93">            throw new ParserConfigurationException(&quot;No provider for service type &quot; + serviceType.getName());</span>
+        }
+
+        try {
+<span class="nc" id="L97">            final Method builder = serviceType.getMethod(DIAGRAM_TO_XMI_METHOD_NAME, diagram.getClass());</span>
+<span class="nc" id="L98">            builder.invoke(this.service, diagram);</span>
+<span class="nc" id="L99">        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {</span>
+<span class="nc" id="L100">            throw new ParserConfigurationException(e.getMessage());</span>
+<span class="nc" id="L101">        }</span>
+<span class="nc" id="L102">    }</span>
+
+    @Override
+    public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+        try {
+<span class="nc" id="L107">            final Method builder = this.serviceType.getMethod(TRANSFORMER_XML_METHOD_NAME, OutputStream.class);</span>
+<span class="nc" id="L108">            builder.invoke(this.service, os);</span>
+<span class="nc" id="L109">        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {</span>
+<span class="nc" id="L110">            throw new ParserConfigurationException(e.getMessage());</span>
+<span class="nc" id="L111">        }</span>
+<span class="nc" id="L112">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

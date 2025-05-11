@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandCreateElementFull.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram.command</a> &gt; <span class="el_source">CommandCreateElementFull.java</span></div><h1>CommandCreateElementFull.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ * 
+ *
+ */
+package net.sourceforge.plantuml.descdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionDiagram&gt; {
+
+	public static final String ALL_TYPES = &quot;person|artifact|actor/|actor|folder|card|file|package|rectangle|hexagon|label|node|frame|cloud|action|process|database|queue|stack|storage|agent|usecase/|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout&quot;;
+
+	public CommandCreateElementFull() {
+<span class="fc" id="L76">		super(getRegexConcat());</span>
+<span class="fc" id="L77">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L80">		return RegexConcat.build(CommandCreateElementFull.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;SYMBOL&quot;, &quot;(?:(&quot; + ALL_TYPES + &quot;|\\(\\))[%s]+)?&quot;), //
+<span class="fc" id="L82">				color2().getRegex(), //</span>
+<span class="fc" id="L83">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOr(//
+						new RegexLeaf(&quot;CODE1&quot;, CODE_WITH_QUOTE), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;DISPLAY2&quot;, DISPLAY), //
+<span class="fc" id="L88">								StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L90">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE2&quot;, CODE)), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;CODE3&quot;, CODE), //
+<span class="fc" id="L94">								StereotypePattern.optional(&quot;STEREOTYPE3&quot;), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L96">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;DISPLAY3&quot;, DISPLAY)), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;DISPLAY4&quot;, DISPLAY_WITHOUT_QUOTE), //
+<span class="fc" id="L100">								StereotypePattern.optional(&quot;STEREOTYPE4&quot;), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L102">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE4&quot;, CODE)) //
+				), //
+<span class="fc" id="L105">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L106">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L107">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L108">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L109">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L112">				color().getRegex(), RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L116">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	private static ColorParser color2() {
+<span class="fc" id="L120">		return ColorParser.simpleColor(ColorType.BACK, &quot;COLOR2&quot;);</span>
+	}
+
+	private static final String CODE_CORE = &quot;[%pLN_.]+|\\(\\)[%s]*[%pLN_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]&quot;;
+	public static final String CODE = &quot;(&quot; + CODE_CORE + &quot;)&quot;;
+	public static final String CODE_WITH_QUOTE = &quot;(&quot; + CODE_CORE + &quot;|[%g].+?[%g])&quot;;
+
+	private static final String DISPLAY_CORE = &quot;[%g].+?[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]&quot;;
+	public static final String DISPLAY = &quot;(&quot; + DISPLAY_CORE + &quot;)&quot;;
+	public static final String DISPLAY_WITHOUT_QUOTE = &quot;(&quot; + DISPLAY_CORE + &quot;|[%pLN_.]+)&quot;;
+
+	@Override
+	final protected boolean isForbidden(CharSequence line) {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (line.toString().matches(&quot;^[\\p{L}0-9_.]+$&quot;))</span>
+<span class="fc" id="L134">			return true;</span>
+
+<span class="fc" id="L136">		return false;</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="fc" id="L142">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L143">		String displayRaw = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="fc" id="L144">		final char codeChar = getCharEncoding(codeRaw);</span>
+<span class="fc" id="L145">		final char codeDisplay = getCharEncoding(displayRaw);</span>
+		final String symbol;
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (codeRaw.startsWith(&quot;()&quot;)) {</span>
+<span class="nc" id="L148">			symbol = &quot;interface&quot;;</span>
+<span class="nc" id="L149">			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));</span>
+<span class="pc bpc" id="L150" title="2 of 4 branches missed.">		} else if (codeChar == '(' || codeDisplay == '(') {</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;)) {</span>
+<span class="nc" id="L152">				symbol = &quot;usecase/&quot;;</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">			} else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;)/&quot;)) {</span>
+<span class="nc" id="L154">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
+<span class="nc" id="L155">				symbol = &quot;usecase/&quot;;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			} else if (codeRaw.endsWith(&quot;)/&quot;)) {</span>
+<span class="nc" id="L157">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
+<span class="nc" id="L158">				symbol = &quot;usecase/&quot;;</span>
+			} else {
+<span class="nc" id="L160">				symbol = &quot;usecase&quot;;</span>
+			}
+<span class="pc bpc" id="L162" title="1 of 4 branches missed.">		} else if (codeChar == ':' || codeDisplay == ':') {</span>
+<span class="pc bpc" id="L163" title="3 of 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;)) {</span>
+<span class="nc" id="L164">				symbol = &quot;actor/&quot;;</span>
+<span class="pc bpc" id="L165" title="3 of 4 branches missed.">			} else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;:/&quot;)) {</span>
+<span class="nc" id="L166">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
+<span class="nc" id="L167">				symbol = &quot;actor/&quot;;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			} else if (codeRaw.endsWith(&quot;:/&quot;)) {</span>
+<span class="nc" id="L169">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
+<span class="nc" id="L170">				symbol = &quot;actor/&quot;;</span>
+			} else {
+<span class="fc" id="L172">				symbol = &quot;actor&quot;;</span>
+			}
+<span class="pc bpc" id="L174" title="1 of 4 branches missed.">		} else if (codeChar == '[' || codeDisplay == '[') {</span>
+<span class="fc" id="L175">			symbol = &quot;component&quot;;</span>
+		} else {
+<span class="fc" id="L177">			symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
+		}
+
+		final LeafType type;
+		final USymbol usymbol;
+
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (symbol == null) {</span>
+<span class="nc" id="L184">			type = LeafType.DESCRIPTION;</span>
+<span class="nc" id="L185">			usymbol = diagram.getSkinParam().actorStyle().toUSymbol();</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portin&quot;)) {</span>
+<span class="fc" id="L187">			type = LeafType.PORTIN;</span>
+<span class="fc" id="L188">			usymbol = null;</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portout&quot;)) {</span>
+<span class="fc" id="L190">			type = LeafType.PORTOUT;</span>
+<span class="fc" id="L191">			usymbol = null;</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;port&quot;)) {</span>
+<span class="nc" id="L193">			type = LeafType.PORTIN;</span>
+<span class="nc" id="L194">			usymbol = null;</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase&quot;)) {</span>
+<span class="nc" id="L196">			type = LeafType.USECASE;</span>
+<span class="nc" id="L197">			usymbol = null;</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase/&quot;)) {</span>
+<span class="nc" id="L199">			type = LeafType.USECASE_BUSINESS;</span>
+<span class="nc" id="L200">			usymbol = null;</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;circle&quot;)) {</span>
+<span class="nc" id="L202">			type = LeafType.CIRCLE;</span>
+<span class="nc" id="L203">			usymbol = null;</span>
+		} else {
+<span class="fc" id="L205">			type = LeafType.DESCRIPTION;</span>
+<span class="fc" id="L206">			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			if (usymbol == null)</span>
+<span class="nc" id="L208">				throw new IllegalStateException();</span>
+
+		}
+
+<span class="fc" id="L212">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));</span>
+
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		if (diagram.isGroup(quark))</span>
+<span class="nc" id="L215">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
+
+<span class="fc" id="L217">		String display = displayRaw;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (display == null)</span>
+<span class="fc" id="L219">			display = quark.getName();</span>
+
+<span class="fc" id="L221">		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);</span>
+<span class="fc" id="L222">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (existsWithBadType3(diagram, quark, type, usymbol))</span>
+<span class="nc" id="L224">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
+
+<span class="pc bpc" id="L226" title="1 of 6 branches missed.">		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) &amp;&amp; diagram.getCurrentGroup().isRoot())</span>
+<span class="nc" id="L227">			return CommandExecutionResult.error(&quot;Port can only be used inside an element and not at root level&quot;);</span>
+
+<span class="fc" id="L229">		Entity entity = quark.getData();</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (entity == null)</span>
+<span class="fc" id="L231">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);</span>
+
+<span class="fc" id="L233">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L236">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="fc" id="L237">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="fc" id="L238">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+
+<span class="fc" id="L240">		CommandCreateClassMultilines.addTags(entity, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+
+<span class="fc" id="L242">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L244">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L245">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L246">			entity.addUrl(url);</span>
+		}
+
+<span class="fc" id="L249">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L250">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (lineColor != null)</span>
+<span class="nc" id="L254">			colors = colors.add(ColorType.LINE, lineColor);</span>
+
+<span class="fc" id="L256">		entity.setColors(colors);</span>
+
+<span class="fc" id="L258">		return CommandExecutionResult.ok();</span>
+	}
+
+	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Quark&lt;Entity&gt; code, LeafType type,
+			USymbol usymbol) {
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (code.getData() == null)</span>
+<span class="fc" id="L264">			return false;</span>
+
+<span class="fc" id="L266">		final Entity other = code.getData();</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (other.getLeafType() != type)</span>
+<span class="nc" id="L268">			return true;</span>
+
+<span class="pc bpc" id="L270" title="2 of 4 branches missed.">		if (usymbol != null &amp;&amp; other.getUSymbol() != usymbol)</span>
+<span class="nc" id="L271">			return true;</span>
+
+<span class="fc" id="L273">		return false;</span>
+	}
+
+	private char getCharEncoding(final String codeRaw) {
+<span class="fc bfc" id="L277" title="All 4 branches covered.">		return codeRaw != null &amp;&amp; codeRaw.length() &gt; 2 ? codeRaw.charAt(0) : 0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

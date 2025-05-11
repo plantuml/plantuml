@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockVertical2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.shape</a> &gt; <span class="el_source">TextBlockVertical2.java</span></div><h1>TextBlockVertical2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.shape;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
+
+public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
+    // ::remove file when __HAXE__
+
+<span class="fc" id="L55">	private final List&lt;TextBlock&gt; blocks = new ArrayList&lt;&gt;();</span>
+	private final HorizontalAlignment horizontalAlignment;
+
+<span class="fc" id="L58">	TextBlockVertical2(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {</span>
+<span class="fc" id="L59">		this.blocks.add(b1);</span>
+<span class="fc" id="L60">		this.blocks.add(b2);</span>
+<span class="fc" id="L61">		this.horizontalAlignment = horizontalAlignment;</span>
+<span class="fc" id="L62">	}</span>
+
+	TextBlockVertical2(TextBlock b1, final UImage image, HorizontalAlignment horizontalAlignment) {
+<span class="nc" id="L65">		this(b1, convertImage(image), horizontalAlignment);</span>
+<span class="nc" id="L66">	}</span>
+
+	static private AbstractTextBlock convertImage(final UImage image) {
+<span class="nc" id="L69">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L72">				ug.draw(image);</span>
+<span class="nc" id="L73">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L76">				return new XDimension2D(image.getWidth(), image.getHeight());</span>
+			}
+		};
+	}
+
+<span class="fc" id="L81">	public TextBlockVertical2(List&lt;TextBlock&gt; all, HorizontalAlignment horizontalAlignment) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (all.size() &lt; 2)</span>
+<span class="nc" id="L83">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L85">		this.blocks.addAll(all);</span>
+<span class="fc" id="L86">		this.horizontalAlignment = horizontalAlignment;</span>
+<span class="fc" id="L87">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L90">		XDimension2D dim = blocks.get(0).calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (int i = 1; i &lt; blocks.size(); i++)</span>
+<span class="fc" id="L92">			dim = dim.mergeTB(blocks.get(i).calculateDimension(stringBounder));</span>
+
+<span class="fc" id="L94">		return dim;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L98">		double y = 0;</span>
+<span class="fc" id="L99">		final XDimension2D dimtotal = calculateDimension(ug.getStringBounder());</span>
+
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (TextBlock block : blocks) {</span>
+<span class="fc" id="L102">			final XDimension2D dimb = block.calculateDimension(ug.getStringBounder());</span>
+
+<span class="fc" id="L104">			final HColor back = block.getBackcolor();</span>
+<span class="pc bpc" id="L105" title="1 of 4 branches missed.">			if (back != null &amp;&amp; back.isTransparent() == false)</span>
+<span class="fc" id="L106">				ug.apply(UTranslate.dy(y)).apply(back).apply(back.bg())</span>
+<span class="fc" id="L107">						.draw(URectangle.build(dimtotal.getWidth(), dimb.getHeight()));</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (horizontalAlignment == HorizontalAlignment.LEFT) {</span>
+<span class="fc" id="L110">				block.drawU(ug.apply(UTranslate.dy(y)));</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
+<span class="fc" id="L112">				final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;</span>
+<span class="fc" id="L113">				block.drawU(ug.apply(new UTranslate(dx, y)));</span>
+<span class="pc bnc" id="L114" title="All 2 branches missed.">			} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L115">				final double dx = dimtotal.getWidth() - dimb.getWidth();</span>
+<span class="nc" id="L116">				block.drawU(ug.apply(new UTranslate(dx, y)));</span>
+<span class="nc" id="L117">			} else {</span>
+<span class="nc" id="L118">				throw new UnsupportedOperationException();</span>
+			}
+<span class="fc" id="L120">			y += dimb.getHeight();</span>
+<span class="fc" id="L121">		}</span>
+<span class="fc" id="L122">	}</span>
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc" id="L126">		double y = 0;</span>
+		// final Dimension2D dimtotal = calculateDimension(stringBounder);
+<span class="nc" id="L128">		final Ports result = new Ports();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (TextBlock block : blocks) {</span>
+<span class="nc" id="L130">			final XDimension2D dimb = block.calculateDimension(stringBounder);</span>
+<span class="nc" id="L131">			final Ports tmp = ((WithPorts) block).getPorts(stringBounder).translateY(y);</span>
+<span class="nc" id="L132">			result.addThis(tmp);</span>
+<span class="nc" id="L133">			y += dimb.getHeight();</span>
+<span class="nc" id="L134">		}</span>
+<span class="nc" id="L135">		return result;</span>
+	}
+
+	@Override
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L140">		double y = 0;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		for (TextBlock block : blocks) {</span>
+<span class="nc" id="L142">			final XDimension2D dimb = block.calculateDimension(stringBounder);</span>
+<span class="nc" id="L143">			final XRectangle2D result = block.getInnerPosition(member, stringBounder, strategy);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (result != null) {</span>
+<span class="nc" id="L145">				return UTranslate.dy(y).apply(result);</span>
+			}
+<span class="nc" id="L147">			y += dimb.getHeight();</span>
+<span class="nc" id="L148">		}</span>
+<span class="nc" id="L149">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileDiamondInside2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vertical</a> &gt; <span class="el_source">FtileDiamondInside2.java</span></div><h1>FtileDiamondInside2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class FtileDiamondInside2 extends FtileDiamondWIP {
+
+	public FtileDiamondInside2(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
+			Swimlane swimlane) {
+<span class="nc" id="L54">		this(label, skinParam, backColor, borderColor, swimlane, TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),</span>
+<span class="nc" id="L55">				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));</span>
+<span class="nc" id="L56">	}</span>
+
+	public FtileDiamondInside2 withNorth(TextBlock north) {
+<span class="nc" id="L59">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+	}
+
+	public FtileDiamondInside2 withWest(TextBlock west) {
+<span class="nc" id="L63">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+	}
+
+	public FtileDiamondInside2 withEast(TextBlock east) {
+<span class="nc" id="L67">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+	}
+
+	public FtileDiamondInside2 withSouth(TextBlock south) {
+<span class="nc" id="L71">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+	}
+
+	private FtileDiamondInside2(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
+			Swimlane swimlane, TextBlock north, TextBlock south, TextBlock west, TextBlock east) {
+<span class="nc" id="L76">		super(label, skinParam, backColor, borderColor, swimlane, north, south, east, west);</span>
+<span class="nc" id="L77">	}</span>
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L80">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L81">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L82">		final XDimension2D dimTotal = calculateDimensionAlone(stringBounder);</span>
+<span class="nc" id="L83">		ug = ug.apply(borderColor).apply(getThickness(getStyle())).apply(backColor.bg());</span>
+<span class="nc" id="L84">		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));</span>
+
+<span class="nc" id="L86">		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));</span>
+<span class="nc" id="L87">		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));</span>
+
+<span class="nc" id="L89">		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
+<span class="nc" id="L90">		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;</span>
+<span class="nc" id="L91">		label.drawU(ug.apply(new UTranslate(lx, ly)));</span>
+
+<span class="nc" id="L93">		final XDimension2D dimWeat = west.calculateDimension(stringBounder);</span>
+<span class="nc" id="L94">		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2)));</span>
+
+<span class="nc" id="L96">		final XDimension2D dimEast = east.calculateDimension(stringBounder);</span>
+<span class="nc" id="L97">		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + dimTotal.getHeight() / 2)));</span>
+
+<span class="nc" id="L99">	}</span>
+
+	private FtileGeometry calculateDimensionAlone(StringBounder stringBounder) {
+<span class="nc" id="L102">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+		final XDimension2D dim;
+<span class="nc bnc" id="L104" title="All 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
+<span class="nc" id="L105">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>
+		} else {
+<span class="nc" id="L107">			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)</span>
+<span class="nc" id="L108">					.delta(Hexagon.hexagonHalfSize * 2, 0);</span>
+		}
+<span class="nc" id="L110">		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());</span>
+	}
+
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+<span class="nc" id="L115">		final XDimension2D diamond = calculateDimensionAlone(stringBounder);</span>
+<span class="nc" id="L116">		final XDimension2D north = this.north.calculateDimension(stringBounder);</span>
+<span class="nc" id="L117">		final double height = diamond.getHeight() + north.getHeight();</span>
+<span class="nc" id="L118">		final double left = diamond.getWidth() / 2;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		final double width = north.getWidth() &gt; left ? left + north.getWidth() : diamond.getWidth();</span>
+<span class="nc" id="L120">		return new FtileGeometry(width, height, left, 0, diamond.getHeight());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

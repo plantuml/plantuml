@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UFont.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.font</a> &gt; <span class="el_source">UFont.java</span></div><h1>UFont.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.font;
+
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.StringUtils;
+
+public class UFont {
+
+	private final Font font;
+	private final String family;
+
+	// ::comment when __HAXE__
+<span class="fc" id="L51">	private static final Set&lt;String&gt; names = new HashSet&lt;&gt;();</span>
+
+	static {
+//		try {
+//			Roboto.registerFonts();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())</span>
+<span class="fc" id="L60">			names.add(name.toLowerCase());</span>
+<span class="fc" id="L61">	}</span>
+	// ::done
+
+	public String toStringDebug() {
+<span class="fc" id="L65">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L66">		sb.append(getPortableFontName());</span>
+<span class="fc" id="L67">		sb.append(&quot;/&quot;);</span>
+<span class="fc" id="L68">		sb.append(font.getSize());</span>
+<span class="fc" id="L69">		return sb.toString();</span>
+	}
+
+	public static UFont build(String fontFamily, int fontStyle, int fontSize) {
+<span class="fc" id="L73">		final String family = getExistingFontFamily(fontFamily);</span>
+<span class="fc" id="L74">		final Font font = new Font(family, fontStyle, fontSize);</span>
+<span class="fc" id="L75">		return new UFont(font, fontFamily);</span>
+	}
+
+<span class="fc" id="L78">	private UFont(Font font, String family) {</span>
+<span class="fc" id="L79">		this.font = font;</span>
+<span class="fc" id="L80">		this.family = family;</span>
+<span class="fc" id="L81">	}</span>
+
+	public static String getExistingFontFamily(String fontFamily) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (fontFamily.contains(&quot;,&quot;)) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			for (String name : fontFamily.split(&quot;,&quot;)) {</span>
+<span class="nc" id="L86">				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name.trim()).trim();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">				if (doesFamilyExists(name))</span>
+<span class="nc" id="L88">					return name;</span>
+			}
+<span class="nc" id="L90">			return &quot;SansSerif&quot;;</span>
+		}
+<span class="fc" id="L92">		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(fontFamily.trim()).trim();</span>
+	}
+
+	private static boolean doesFamilyExists(String name) {
+		// ::revert when __HAXE__
+<span class="nc" id="L97">		return names.contains(name.toLowerCase());</span>
+		// return true;
+		// ::done
+	}
+
+	public static UFont serif(int size) {
+<span class="fc" id="L103">		return UFont.build(&quot;Serif&quot;, Font.PLAIN, size);</span>
+	}
+
+	public static UFont sansSerif(int size) {
+<span class="fc" id="L107">		return UFont.build(&quot;SansSerif&quot;, Font.PLAIN, size);</span>
+	}
+
+	public static UFont courier(int size) {
+<span class="nc" id="L111">		return UFont.build(&quot;Courier&quot;, Font.PLAIN, size);</span>
+	}
+
+	public static UFont byDefault(int size) {
+<span class="fc" id="L115">		return sansSerif(12);</span>
+	}
+
+	public UFont goTikz(int delta) {
+<span class="nc" id="L119">		return new UFont(new Font(&quot;Serif&quot;, getStyle(), getSize() + delta), &quot;Serif&quot;);</span>
+	}
+
+	public static UFont monospaced(int size) {
+<span class="fc" id="L123">		return UFont.build(&quot;Monospaced&quot;, Font.PLAIN, size);</span>
+	}
+
+	public final Font getUnderlayingFont(UFontContext context) {
+<span class="fc" id="L127">		return font;</span>
+	}
+
+	public UFont withSize(float size) {
+<span class="fc" id="L131">		return new UFont(font.deriveFont(size), family);</span>
+	}
+
+	public UFont withStyle(int style) {
+<span class="fc" id="L135">		return new UFont(font.deriveFont(style), family);</span>
+	}
+
+	public UFont bold() {
+<span class="fc" id="L139">		return withStyle(Font.BOLD);</span>
+	}
+
+	public UFont italic() {
+<span class="nc" id="L143">		return withStyle(Font.ITALIC);</span>
+	}
+
+	public int getStyle() {
+<span class="fc" id="L147">		return font.getStyle();</span>
+	}
+
+	public int getSize() {
+<span class="fc" id="L151">		return font.getSize();</span>
+	}
+
+	public double getSize2D() {
+<span class="fc" id="L155">		return font.getSize2D();</span>
+	}
+
+	public boolean isBold() {
+<span class="fc" id="L159">		return font.isBold();</span>
+	}
+
+	public boolean isItalic() {
+<span class="fc" id="L163">		return font.isItalic();</span>
+	}
+
+	public String getFamily(UFontContext context) {
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (context == UFontContext.EPS) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (family == null)</span>
+<span class="nc" id="L169">				return &quot;Times-Roman&quot;;</span>
+
+<span class="nc" id="L171">			return font.getPSName();</span>
+		}
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (context == UFontContext.SVG) {</span>
+<span class="fc" id="L174">			String result = family.replace('\&quot;', '\'');</span>
+<span class="fc" id="L175">			result = result.replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
+
+<span class="fc" id="L177">			return result;</span>
+		}
+<span class="nc" id="L179">		return family;</span>
+	}
+
+	// Kludge for testing because font names on some machines (only macOS?) do not
+	// end with &lt;DOT&gt;&lt;STYLE&gt;
+	// See https://github.com/plantuml/plantuml/issues/720
+	private String getPortableFontName() {
+<span class="fc" id="L186">		final String name = font.getFontName();</span>
+<span class="pc bpc" id="L187" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		else if (font.isBold())</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		else if (font.isItalic())</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
+		else
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L199">		return font.toString()/* + &quot; &quot; + font.getPSName() */;</span>
+	}
+
+	// ::comment when __HAXE__
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L206">		return font.hashCode();</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (obj instanceof UFont == false)</span>
+<span class="nc" id="L212">			return false;</span>
+
+<span class="fc" id="L214">		return this.font.equals(((UFont) obj).font);</span>
+	}
+	// ::done
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

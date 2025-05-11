@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SequenceDiagramXmiMaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xmi</a> &gt; <span class="el_source">SequenceDiagramXmiMaker.java</span></div><h1>SequenceDiagramXmiMaker.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.xmi;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
+import net.sourceforge.plantuml.xml.XmlFactories;
+
+public final class SequenceDiagramXmiMaker implements FileMaker {
+
+	private final SequenceDiagram diagram;
+	private final FileFormat fileFormat;
+
+<span class="nc" id="L34">	public SequenceDiagramXmiMaker(SequenceDiagram sequenceDiagram, FileFormat fileFormat) {</span>
+<span class="nc" id="L35">		this.diagram = sequenceDiagram;</span>
+<span class="nc" id="L36">		this.fileFormat = fileFormat;</span>
+<span class="nc" id="L37">	}</span>
+
+	@Override
+	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
+		DocumentBuilder builder;
+<span class="nc" id="L42">		ImageData imageData = new ImageDataSimple(0, 0);</span>
+		try {
+<span class="nc" id="L44">			builder = XmlFactories.newDocumentBuilder();</span>
+<span class="nc" id="L45">		} catch (ParserConfigurationException e) {</span>
+<span class="nc" id="L46">			Logme.error(e);</span>
+<span class="nc" id="L47">			return imageData;</span>
+<span class="nc" id="L48">		}</span>
+<span class="nc" id="L49">		Document document = builder.newDocument();</span>
+<span class="nc" id="L50">		document.setXmlVersion(&quot;1.0&quot;);</span>
+<span class="nc" id="L51">		document.setXmlStandalone(true);</span>
+
+		XmiSequenceDiagram xmi;
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (fileFormat == FileFormat.XMI_ARGO)</span>
+<span class="nc" id="L55">			xmi = new XmiSequenceDiagramArgo(diagram, document);</span>
+		else
+<span class="nc" id="L57">			xmi = new XmiSequenceDiagramStandard(diagram, document);</span>
+
+<span class="nc" id="L59">		xmi.build();</span>
+
+		try {
+<span class="nc" id="L62">			writeDocument(document, os);</span>
+<span class="nc" id="L63">		} catch (TransformerException | ParserConfigurationException e) {</span>
+<span class="nc" id="L64">			Logme.error(e);</span>
+<span class="nc" id="L65">		}</span>
+<span class="nc" id="L66">		return imageData;</span>
+	}
+
+	@Override
+	public int getNbPages() {
+<span class="nc" id="L71">		return 1;</span>
+	}
+
+	private void writeDocument(Document document, OutputStream os)
+			throws TransformerException, ParserConfigurationException {
+<span class="nc" id="L76">		final Source source = new DOMSource(document);</span>
+
+<span class="nc" id="L78">		final Result resultat = new StreamResult(os);</span>
+
+<span class="nc" id="L80">		final Transformer transformer = XmlFactories.newTransformer();</span>
+<span class="nc" id="L81">		transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="nc" id="L82">		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());</span>
+<span class="nc" id="L83">		transformer.transform(source, resultat);</span>
+<span class="nc" id="L84">	}</span>
+
+	@Override
+	public void createOneGraphic(UGraphic ug) {
+<span class="nc" id="L88">		throw new UnsupportedOperationException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

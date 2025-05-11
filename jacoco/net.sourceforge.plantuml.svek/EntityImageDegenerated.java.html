@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageDegenerated.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">EntityImageDegenerated.java</span></div><h1>EntityImageDegenerated.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.UEmpty;
+
+public class EntityImageDegenerated implements IEntityImage {
+
+	private final IEntityImage orig;
+<span class="fc" id="L53">	private final double delta = 7;</span>
+	private final HColor backcolor;
+
+<span class="fc" id="L56">	public EntityImageDegenerated(IEntityImage orig, HColor backcolor) {</span>
+<span class="fc" id="L57">		this.orig = orig;</span>
+<span class="fc" id="L58">		this.backcolor = backcolor;</span>
+<span class="fc" id="L59">	}</span>
+
+	public boolean isHidden() {
+<span class="nc" id="L62">		return orig.isHidden();</span>
+	}
+
+	public HColor getBackcolor() {
+		// return orig.getBackcolor();
+<span class="nc" id="L67">		return backcolor;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L71">		return orig.calculateDimension(stringBounder).delta(delta * 2, delta * 2);</span>
+	}
+
+	public MinMax getMinMax(StringBounder stringBounder) {
+<span class="nc" id="L75">		return orig.getMinMax(stringBounder);</span>
+		// return orig.getMinMax(stringBounder).translate(new UTranslate(delta, delta));
+		// return orig.getMinMax(stringBounder).appendToMax(delta, delta);
+	}
+
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L81">		return orig.getInnerPosition(member, stringBounder, strategy);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L85">		orig.drawU(ug.apply(new UTranslate(delta, delta)));</span>
+
+<span class="fc" id="L87">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L88">		ug.apply(new UTranslate(dim.getWidth() - delta, dim.getHeight() - delta)).draw(new UEmpty(delta, delta));</span>
+
+<span class="fc" id="L90">	}</span>
+
+	@Override
+	public MagneticBorder getMagneticBorder() {
+<span class="nc" id="L94">		return new MagneticBorder() {</span>
+			@Override
+			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+<span class="nc" id="L97">				return orig.getMagneticBorder().getForceAt(stringBounder, position.move(delta, delta));</span>
+			}
+		};
+	}
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L103">		return orig.getShapeType();</span>
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+<span class="nc" id="L107">		return orig.getShield(stringBounder);</span>
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+<span class="nc" id="L111">		return orig.getOverscanX(stringBounder);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

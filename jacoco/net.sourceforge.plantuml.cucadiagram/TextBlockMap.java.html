@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">TextBlockMap.java</span></div><h1>TextBlockMap.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
+
+public class TextBlockMap extends AbstractTextBlock implements WithPorts {
+    // ::remove folder when __HAXE__
+
+	private final ISkinParam skinParam;
+	private final FontConfiguration fontConfiguration;
+<span class="nc" id="L70">	private final Map&lt;TextBlock, TextBlock&gt; blocksMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L71">	private final List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
+	private double totalWidth;
+
+	public TextBlockMap(FontConfiguration fontConfiguration, ISkinParam skinParam, Map&lt;String, String&gt; map,
+<span class="nc" id="L75">			LineBreakStrategy wordWrap) {</span>
+<span class="nc" id="L76">		this.skinParam = skinParam;</span>
+<span class="nc" id="L77">		this.fontConfiguration = fontConfiguration;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : map.entrySet()) {</span>
+<span class="nc" id="L79">			String key = ent.getKey();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(key))</span>
+<span class="nc" id="L81">				key = key.substring(1);</span>
+<span class="nc" id="L82">			this.keys.add(key);</span>
+<span class="nc" id="L83">			final String value = ent.getValue();</span>
+<span class="nc" id="L84">			final TextBlock block1 = getTextBlock(key, wordWrap);</span>
+<span class="nc" id="L85">			final TextBlock block2 = getTextBlock(value, wordWrap);</span>
+<span class="nc" id="L86">			this.blocksMap.put(block1, block2);</span>
+<span class="nc" id="L87">		}</span>
+<span class="nc" id="L88">	}</span>
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc" id="L92">		final Ports ports = new Ports();</span>
+<span class="nc" id="L93">		int i = 0;</span>
+<span class="nc" id="L94">		double y = 0;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="nc" id="L96">			final TextBlock key = ent.getKey();</span>
+<span class="nc" id="L97">			final TextBlock value = ent.getValue();</span>
+<span class="nc" id="L98">			final double height = getHeightOfRow(stringBounder, key, value);</span>
+<span class="nc" id="L99">			ports.add(keys.get(i), 100, y, height);</span>
+<span class="nc" id="L100">			y += height;</span>
+<span class="nc" id="L101">			i++;</span>
+<span class="nc" id="L102">		}</span>
+<span class="nc" id="L103">		return ports;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L107">		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),</span>
+<span class="nc" id="L108">				getTotalHeight(stringBounder));</span>
+	}
+
+	private double getWidthColA(StringBounder stringBounder) {
+<span class="nc" id="L112">		return getMaxWidth(stringBounder, blocksMap.keySet());</span>
+	}
+
+	private double getWidthColB(StringBounder stringBounder) {
+<span class="nc" id="L116">		return getMaxWidth(stringBounder, blocksMap.values());</span>
+	}
+
+	private double getMaxWidth(StringBounder stringBounder, Collection&lt;TextBlock&gt; blocks) {
+<span class="nc" id="L120">		double width = 0;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (TextBlock block : blocks)</span>
+<span class="nc" id="L122">			width = Math.max(width, block.calculateDimension(stringBounder).getWidth());</span>
+
+<span class="nc" id="L124">		return width;</span>
+	}
+
+	public void drawU(final UGraphic ug) {
+<span class="nc" id="L128">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L129">		final XDimension2D fullDim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L130">		final double trueWidth = Math.max(fullDim.getWidth(), totalWidth);</span>
+<span class="nc" id="L131">		final double widthColA = getWidthColA(stringBounder);</span>
+<span class="nc" id="L132">		final double widthColB = getWidthColB(stringBounder);</span>
+<span class="nc" id="L133">		double y = 0;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="nc" id="L135">			final TextBlock key = ent.getKey();</span>
+<span class="nc" id="L136">			final TextBlock value = ent.getValue();</span>
+<span class="nc" id="L137">			final UGraphic ugline = ug.apply(UTranslate.dy(y));</span>
+<span class="nc" id="L138">			ugline.draw(ULine.hline(trueWidth));</span>
+<span class="nc" id="L139">			final double heightOfRow = getHeightOfRow(stringBounder, key, value);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (value instanceof Point) {</span>
+<span class="nc" id="L141">				final double posColA = (trueWidth - key.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L142">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
+<span class="nc" id="L143">			} else {</span>
+<span class="nc" id="L144">				final double posColA = (widthColA - key.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L145">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
+<span class="nc" id="L146">				value.drawU(ugline.apply(UTranslate.dx(widthColA)));</span>
+<span class="nc" id="L147">				ugline.apply(UTranslate.dx(widthColA)).draw(ULine.vline(heightOfRow));</span>
+			}
+<span class="nc" id="L149">			y += heightOfRow;</span>
+<span class="nc" id="L150">		}</span>
+<span class="nc" id="L151">	}</span>
+
+	private double getTotalHeight(StringBounder stringBounder) {
+<span class="nc" id="L154">		double height = 0;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="nc" id="L156">			final TextBlock key = ent.getKey();</span>
+<span class="nc" id="L157">			final TextBlock value = ent.getValue();</span>
+<span class="nc" id="L158">			height += getHeightOfRow(stringBounder, key, value);</span>
+<span class="nc" id="L159">		}</span>
+<span class="nc" id="L160">		return height;</span>
+	}
+
+	private double getHeightOfRow(StringBounder stringBounder, TextBlock key, TextBlock value) {
+<span class="nc" id="L164">		return Math.max(key.calculateDimension(stringBounder).getHeight(),</span>
+<span class="nc" id="L165">				value.calculateDimension(stringBounder).getHeight());</span>
+	}
+
+	private TextBlock getTextBlock(String key, LineBreakStrategy wordWrap) {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (key.equals(&quot;\0&quot;))</span>
+<span class="nc" id="L170">			return new Point(fontConfiguration.getColor());</span>
+
+<span class="nc" id="L172">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
+<span class="nc" id="L173">		TextBlock result = display.create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
+				CreoleMode.FULL, null, null);
+<span class="nc" id="L175">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="nc" id="L176">		return result;</span>
+	}
+
+	static class Point extends AbstractTextBlock {
+
+		private final HColor color;
+
+<span class="nc" id="L183">		public Point(HColor color) {</span>
+<span class="nc" id="L184">			this.color = color;</span>
+<span class="nc" id="L185">		}</span>
+
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L188">			return new XDimension2D(getDiameter(), getDiameter());</span>
+		}
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L192">			final UShape point = UEllipse.build(getDiameter(), getDiameter());</span>
+<span class="nc" id="L193">			ug = ug.apply(color).apply(color.bg());</span>
+<span class="nc" id="L194">			ug.draw(point);</span>
+<span class="nc" id="L195">		}</span>
+
+		private double getDiameter() {
+<span class="nc" id="L198">			return 7;</span>
+		}
+
+	}
+
+	public void setTotalWidth(double totalWidth) {
+<span class="nc" id="L204">		this.totalWidth = totalWidth;</span>
+<span class="nc" id="L205">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

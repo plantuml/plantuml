@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">JsonParser.java</span></div><h1>JsonParser.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+
+/**
+ * A streaming parser for JSON text. The parser reports all events to a given
+ * handler.
+ */
+public class JsonParser {
+
+	private static final char END_OF_TEXT = '\u0003';
+
+	private static final int MAX_NESTING_LEVEL = 1000;
+	private static final int MIN_BUFFER_SIZE = 10;
+	private static final int DEFAULT_BUFFER_SIZE = 1024;
+
+	private final JsonHandler&lt;Object, Object&gt; handler;
+	private Reader reader;
+	private char[] buffer;
+	private int bufferOffset;
+	private int index;
+	private int fill;
+	private int line;
+	private int lineOffset;
+	private char current;
+	private StringBuilder captureBuffer;
+	private int captureStart;
+	private int nestingLevel;
+
+	/*
+	 * | bufferOffset v [a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t] &lt; input
+	 * [l|m|n|o|p|q|r|s|t|?|?] &lt; buffer ^ ^ | index fill
+	 */
+
+	/**
+	 * Creates a new JsonParser with the given handler. The parser will report all
+	 * parser events to this handler.
+	 *
+	 * @param handler the handler to process parser events
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L68">	public JsonParser(JsonHandler&lt;?, ?&gt; handler) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (handler == null) {</span>
+<span class="nc" id="L70">			throw new NullPointerException(&quot;handler is null&quot;);</span>
+		}
+<span class="fc" id="L72">		this.handler = (JsonHandler&lt;Object, Object&gt;) handler;</span>
+<span class="fc" id="L73">		handler.parser = this;</span>
+<span class="fc" id="L74">	}</span>
+
+	/**
+	 * Parses the given input string. The input must contain a valid JSON value,
+	 * optionally padded with whitespace.
+	 *
+	 * @param string the input string, must be valid JSON
+	 * @throws ParseException if the input is not valid JSON
+	 */
+	public void parse(String string) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (string == null) {</span>
+<span class="nc" id="L85">			throw new NullPointerException(&quot;string is null&quot;);</span>
+		}
+<span class="fc" id="L87">		int bufferSize = Math.max(MIN_BUFFER_SIZE, Math.min(DEFAULT_BUFFER_SIZE, string.length()));</span>
+		try {
+<span class="fc" id="L89">			parse(new StringReader(string), bufferSize);</span>
+<span class="nc" id="L90">		} catch (IOException exception) {</span>
+			// StringReader does not throw IOException
+<span class="nc" id="L92">			throw new RuntimeException(exception);</span>
+<span class="fc" id="L93">		}</span>
+<span class="fc" id="L94">	}</span>
+
+	/**
+	 * Reads the entire input from the given reader and parses it as JSON. The input
+	 * must contain a valid JSON value, optionally padded with whitespace.
+	 * &lt;p&gt;
+	 * Characters are read in chunks into a default-sized input buffer. Hence,
+	 * wrapping a reader in an additional &lt;code&gt;BufferedReader&lt;/code&gt; likely won't
+	 * improve reading performance.
+	 * &lt;/p&gt;
+	 *
+	 * @param reader the reader to read the input from
+	 * @throws IOException    if an I/O error occurs in the reader
+	 * @throws ParseException if the input is not valid JSON
+	 */
+	public void parse(Reader reader) throws IOException {
+<span class="fc" id="L110">		parse(reader, DEFAULT_BUFFER_SIZE);</span>
+<span class="fc" id="L111">	}</span>
+
+	/**
+	 * Reads the entire input from the given reader and parses it as JSON. The input
+	 * must contain a valid JSON value, optionally padded with whitespace.
+	 * &lt;p&gt;
+	 * Characters are read in chunks into an input buffer of the given size. Hence,
+	 * wrapping a reader in an additional &lt;code&gt;BufferedReader&lt;/code&gt; likely won't
+	 * improve reading performance.
+	 * &lt;/p&gt;
+	 *
+	 * @param reader     the reader to read the input from
+	 * @param buffersize the size of the input buffer in chars
+	 * @throws IOException    if an I/O error occurs in the reader
+	 * @throws ParseException if the input is not valid JSON
+	 */
+	public void parse(Reader reader, int buffersize) throws IOException {
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (reader == null) {</span>
+<span class="nc" id="L129">			throw new NullPointerException(&quot;reader is null&quot;);</span>
+		}
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (buffersize &lt;= 0) {</span>
+<span class="nc" id="L132">			throw new IllegalArgumentException(&quot;buffersize is zero or negative&quot;);</span>
+		}
+<span class="fc" id="L134">		this.reader = reader;</span>
+<span class="fc" id="L135">		buffer = new char[buffersize];</span>
+<span class="fc" id="L136">		bufferOffset = 0;</span>
+<span class="fc" id="L137">		index = 0;</span>
+<span class="fc" id="L138">		fill = 0;</span>
+<span class="fc" id="L139">		line = 1;</span>
+<span class="fc" id="L140">		lineOffset = 0;</span>
+<span class="fc" id="L141">		current = 0;</span>
+<span class="fc" id="L142">		captureStart = -1;</span>
+<span class="fc" id="L143">		read();</span>
+<span class="fc" id="L144">		skipWhiteSpace();</span>
+<span class="fc" id="L145">		readValue();</span>
+<span class="fc" id="L146">		skipWhiteSpace();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (!isEndOfText()) {</span>
+<span class="nc" id="L148">			throw error(&quot;Unexpected character&quot;);</span>
+		}
+<span class="fc" id="L150">	}</span>
+
+	private void readValue() throws IOException {
+<span class="fc bfc" id="L153" title="All 8 branches covered.">		switch (current) {</span>
+		case 'n':
+<span class="fc" id="L155">			readNull();</span>
+<span class="fc" id="L156">			break;</span>
+		case 't':
+<span class="fc" id="L158">			readTrue();</span>
+<span class="fc" id="L159">			break;</span>
+		case 'f':
+<span class="fc" id="L161">			readFalse();</span>
+<span class="fc" id="L162">			break;</span>
+		case '&quot;':
+<span class="fc" id="L164">			readString();</span>
+<span class="fc" id="L165">			break;</span>
+		case '[':
+<span class="fc" id="L167">			readArray();</span>
+<span class="fc" id="L168">			break;</span>
+		case '{':
+<span class="fc" id="L170">			readObject();</span>
+<span class="fc" id="L171">			break;</span>
+		case '-':
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+<span class="fc" id="L183">			readNumber();</span>
+<span class="fc" id="L184">			break;</span>
+		default:
+<span class="fc" id="L186">			throw expected(&quot;value&quot;);</span>
+		}
+<span class="fc" id="L188">	}</span>
+
+	private void readArray() throws IOException {
+<span class="fc" id="L191">		Object array = handler.startArray();</span>
+<span class="fc" id="L192">		read();</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if (++nestingLevel &gt; MAX_NESTING_LEVEL) {</span>
+<span class="nc" id="L194">			throw error(&quot;Nesting too deep&quot;);</span>
+		}
+<span class="fc" id="L196">		skipWhiteSpace();</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (readChar(']')) {</span>
+<span class="fc" id="L198">			nestingLevel--;</span>
+<span class="fc" id="L199">			handler.endArray(array);</span>
+<span class="fc" id="L200">			return;</span>
+		}
+		do {
+<span class="fc" id="L203">			skipWhiteSpace();</span>
+<span class="fc" id="L204">			handler.startArrayValue(array);</span>
+<span class="fc" id="L205">			readValue();</span>
+<span class="fc" id="L206">			handler.endArrayValue(array);</span>
+<span class="fc" id="L207">			skipWhiteSpace();</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		} while (readChar(','));</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (!readChar(']')) {</span>
+<span class="nc" id="L210">			throw expected(&quot;',' or ']'&quot;);</span>
+		}
+<span class="fc" id="L212">		nestingLevel--;</span>
+<span class="fc" id="L213">		handler.endArray(array);</span>
+<span class="fc" id="L214">	}</span>
+
+	private void readObject() throws IOException {
+<span class="fc" id="L217">		Object object = handler.startObject();</span>
+<span class="fc" id="L218">		read();</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (++nestingLevel &gt; MAX_NESTING_LEVEL) {</span>
+<span class="nc" id="L220">			throw error(&quot;Nesting too deep&quot;);</span>
+		}
+<span class="fc" id="L222">		skipWhiteSpace();</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (readChar('}')) {</span>
+<span class="fc" id="L224">			nestingLevel--;</span>
+<span class="fc" id="L225">			handler.endObject(object);</span>
+<span class="fc" id="L226">			return;</span>
+		}
+		do {
+<span class="fc" id="L229">			skipWhiteSpace();</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			if (readChar('/')) {</span>
+<span class="nc" id="L231">				skipComment();</span>
+			}
+<span class="fc" id="L233">			handler.startObjectName(object);</span>
+<span class="fc" id="L234">			String name = readName();</span>
+<span class="fc" id="L235">			handler.endObjectName(object, name);</span>
+<span class="fc" id="L236">			skipWhiteSpace();</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			if (!readChar(':')) {</span>
+<span class="nc" id="L238">				throw expected(&quot;':'&quot;);</span>
+			}
+<span class="fc" id="L240">			skipWhiteSpace();</span>
+<span class="fc" id="L241">			handler.startObjectValue(object, name);</span>
+<span class="fc" id="L242">			readValue();</span>
+<span class="fc" id="L243">			handler.endObjectValue(object, name);</span>
+<span class="fc" id="L244">			skipWhiteSpace();</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">			if (readChar('/')) {</span>
+<span class="nc" id="L246">				skipComment();</span>
+			}
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		} while (readChar(','));</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (!readChar('}')) {</span>
+<span class="nc" id="L250">			throw expected(&quot;',' or '}'&quot;);</span>
+		}
+<span class="fc" id="L252">		nestingLevel--;</span>
+<span class="fc" id="L253">		handler.endObject(object);</span>
+<span class="fc" id="L254">	}</span>
+
+	private void skipComment() throws IOException {
+<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (!readChar('/'))</span>
+<span class="nc" id="L258">			throw expected(&quot;Error in comment&quot;);</span>
+<span class="nc bnc" id="L259" title="All 4 branches missed.">		while (current != '\n' &amp;&amp; current != '\r') {</span>
+<span class="nc" id="L260">			read();</span>
+		}
+<span class="nc" id="L262">		skipWhiteSpace();</span>
+<span class="nc" id="L263">	}</span>
+
+	private String readName() throws IOException {
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (current != '&quot;') {</span>
+<span class="nc" id="L267">			throw expected(&quot;name&quot;);</span>
+		}
+<span class="fc" id="L269">		return readStringInternal();</span>
+	}
+
+	private void readNull() throws IOException {
+<span class="fc" id="L273">		handler.startNull();</span>
+<span class="fc" id="L274">		read();</span>
+<span class="fc" id="L275">		readRequiredChar('u');</span>
+<span class="fc" id="L276">		readRequiredChar('l');</span>
+<span class="fc" id="L277">		readRequiredChar('l');</span>
+<span class="fc" id="L278">		handler.endNull();</span>
+<span class="fc" id="L279">	}</span>
+
+	private void readTrue() throws IOException {
+<span class="fc" id="L282">		handler.startBoolean();</span>
+<span class="fc" id="L283">		read();</span>
+<span class="fc" id="L284">		readRequiredChar('r');</span>
+<span class="fc" id="L285">		readRequiredChar('u');</span>
+<span class="fc" id="L286">		readRequiredChar('e');</span>
+<span class="fc" id="L287">		handler.endBoolean(true);</span>
+<span class="fc" id="L288">	}</span>
+
+	private void readFalse() throws IOException {
+<span class="fc" id="L291">		handler.startBoolean();</span>
+<span class="fc" id="L292">		read();</span>
+<span class="fc" id="L293">		readRequiredChar('a');</span>
+<span class="fc" id="L294">		readRequiredChar('l');</span>
+<span class="fc" id="L295">		readRequiredChar('s');</span>
+<span class="fc" id="L296">		readRequiredChar('e');</span>
+<span class="fc" id="L297">		handler.endBoolean(false);</span>
+<span class="fc" id="L298">	}</span>
+
+	private void readRequiredChar(char ch) throws IOException {
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (!readChar(ch)) {</span>
+<span class="fc" id="L302">			throw expected(&quot;'&quot; + ch + &quot;'&quot;);</span>
+		}
+<span class="fc" id="L304">	}</span>
+
+	private void readString() throws IOException {
+<span class="fc" id="L307">		handler.startString();</span>
+<span class="fc" id="L308">		handler.endString(readStringInternal());</span>
+<span class="fc" id="L309">	}</span>
+
+	private String readStringInternal() throws IOException {
+<span class="fc" id="L312">		read();</span>
+<span class="fc" id="L313">		startCapture();</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">		while (current != '&quot;') {</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">			if (current == '\\') {</span>
+<span class="fc" id="L316">				pauseCapture();</span>
+<span class="fc" id="L317">				readEscape();</span>
+<span class="fc" id="L318">				startCapture();</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">			} else if (current &lt; 0x20) {</span>
+<span class="nc" id="L320">				throw expected(&quot;valid string character&quot;);</span>
+			} else {
+<span class="fc" id="L322">				read();</span>
+			}
+		}
+<span class="fc" id="L325">		String string = endCapture();</span>
+<span class="fc" id="L326">		read();</span>
+<span class="fc" id="L327">		return string;</span>
+	}
+
+	private void readEscape() throws IOException {
+<span class="fc" id="L331">		read();</span>
+<span class="pc bpc" id="L332" title="7 of 8 branches missed.">		switch (current) {</span>
+		case '&quot;':
+		case '/':
+		case '\\':
+<span class="fc" id="L336">			captureBuffer.append((char) current);</span>
+<span class="fc" id="L337">			break;</span>
+		case 'b':
+<span class="nc" id="L339">			captureBuffer.append('\b');</span>
+<span class="nc" id="L340">			break;</span>
+		case 'f':
+<span class="nc" id="L342">			captureBuffer.append('\f');</span>
+<span class="nc" id="L343">			break;</span>
+		case 'n':
+<span class="nc" id="L345">			captureBuffer.append('\n');</span>
+<span class="nc" id="L346">			break;</span>
+		case 'r':
+<span class="nc" id="L348">			captureBuffer.append('\r');</span>
+<span class="nc" id="L349">			break;</span>
+		case 't':
+<span class="nc" id="L351">			captureBuffer.append('\t');</span>
+<span class="nc" id="L352">			break;</span>
+		case 'u':
+<span class="nc" id="L354">			char[] hexChars = new char[4];</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">			for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L356">				read();</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">				if (!isHexDigit()) {</span>
+<span class="nc" id="L358">					throw expected(&quot;hexadecimal digit&quot;);</span>
+				}
+<span class="nc" id="L360">				hexChars[i] = (char) current;</span>
+			}
+<span class="nc" id="L362">			captureBuffer.append((char) Integer.parseInt(new String(hexChars), 16));</span>
+<span class="nc" id="L363">			break;</span>
+		default:
+<span class="nc" id="L365">			throw expected(&quot;valid escape sequence&quot;);</span>
+		}
+<span class="fc" id="L367">		read();</span>
+<span class="fc" id="L368">	}</span>
+
+	private void readNumber() throws IOException {
+<span class="fc" id="L371">		handler.startNumber();</span>
+<span class="fc" id="L372">		startCapture();</span>
+<span class="fc" id="L373">		readChar('-');</span>
+<span class="fc" id="L374">		int firstDigit = current;</span>
+<span class="pc bpc" id="L375" title="1 of 2 branches missed.">		if (!readDigit()) {</span>
+<span class="nc" id="L376">			throw expected(&quot;digit&quot;);</span>
+		}
+<span class="fc bfc" id="L378" title="All 2 branches covered.">		if (firstDigit != '0') {</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">			while (readDigit()) {</span>
+			}
+		}
+<span class="fc" id="L382">		readFraction();</span>
+<span class="fc" id="L383">		readExponent();</span>
+<span class="fc" id="L384">		handler.endNumber(endCapture());</span>
+<span class="fc" id="L385">	}</span>
+
+	private boolean readFraction() throws IOException {
+<span class="fc bfc" id="L388" title="All 2 branches covered.">		if (!readChar('.')) {</span>
+<span class="fc" id="L389">			return false;</span>
+		}
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">		if (!readDigit()) {</span>
+<span class="nc" id="L392">			throw expected(&quot;digit&quot;);</span>
+		}
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		while (readDigit()) {</span>
+		}
+<span class="fc" id="L396">		return true;</span>
+	}
+
+	private boolean readExponent() throws IOException {
+<span class="pc bpc" id="L400" title="2 of 4 branches missed.">		if (!readChar('e') &amp;&amp; !readChar('E')) {</span>
+<span class="fc" id="L401">			return false;</span>
+		}
+<span class="nc bnc" id="L403" title="All 2 branches missed.">		if (!readChar('+')) {</span>
+<span class="nc" id="L404">			readChar('-');</span>
+		}
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		if (!readDigit()) {</span>
+<span class="nc" id="L407">			throw expected(&quot;digit&quot;);</span>
+		}
+<span class="nc bnc" id="L409" title="All 2 branches missed.">		while (readDigit()) {</span>
+		}
+<span class="nc" id="L411">		return true;</span>
+	}
+
+	private boolean readChar(char ch) throws IOException {
+<span class="fc bfc" id="L415" title="All 2 branches covered.">		if (current != ch) {</span>
+<span class="fc" id="L416">			return false;</span>
+		}
+<span class="fc" id="L418">		read();</span>
+<span class="fc" id="L419">		return true;</span>
+	}
+
+	private boolean readDigit() throws IOException {
+<span class="fc bfc" id="L423" title="All 2 branches covered.">		if (!isDigit()) {</span>
+<span class="fc" id="L424">			return false;</span>
+		}
+<span class="fc" id="L426">		read();</span>
+<span class="fc" id="L427">		return true;</span>
+	}
+
+	private void skipWhiteSpace() throws IOException {
+<span class="fc bfc" id="L431" title="All 2 branches covered.">		while (isWhiteSpace()) {</span>
+<span class="fc" id="L432">			read();</span>
+		}
+<span class="fc" id="L434">	}</span>
+
+	private void read() throws IOException {
+<span class="fc bfc" id="L437" title="All 2 branches covered.">		if (index == fill) {</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">			if (captureStart != -1) {</span>
+<span class="fc" id="L439">				captureBuffer.append(buffer, captureStart, fill - captureStart);</span>
+<span class="fc" id="L440">				captureStart = 0;</span>
+			}
+<span class="fc" id="L442">			bufferOffset += fill;</span>
+<span class="fc" id="L443">			fill = reader.read(buffer, 0, buffer.length);</span>
+<span class="fc" id="L444">			index = 0;</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">			if (fill == -1) {</span>
+<span class="fc" id="L446">				current = END_OF_TEXT;</span>
+<span class="fc" id="L447">				index++;</span>
+<span class="fc" id="L448">				return;</span>
+			}
+		}
+<span class="fc bfc" id="L451" title="All 2 branches covered.">		if (current == '\n') {</span>
+<span class="fc" id="L452">			line++;</span>
+<span class="fc" id="L453">			lineOffset = bufferOffset + index;</span>
+		}
+<span class="fc" id="L455">		current = buffer[index++];</span>
+<span class="fc" id="L456">	}</span>
+
+	private void startCapture() {
+<span class="fc bfc" id="L459" title="All 2 branches covered.">		if (captureBuffer == null) {</span>
+<span class="fc" id="L460">			captureBuffer = new StringBuilder();</span>
+		}
+<span class="fc" id="L462">		captureStart = index - 1;</span>
+<span class="fc" id="L463">	}</span>
+
+	private void pauseCapture() {
+<span class="pc bpc" id="L466" title="1 of 2 branches missed.">		int end = current == END_OF_TEXT ? index : index - 1;</span>
+<span class="fc" id="L467">		captureBuffer.append(buffer, captureStart, end - captureStart);</span>
+<span class="fc" id="L468">		captureStart = -1;</span>
+<span class="fc" id="L469">	}</span>
+
+	private String endCapture() {
+<span class="fc" id="L472">		int start = captureStart;</span>
+<span class="fc" id="L473">		int end = index - 1;</span>
+<span class="fc" id="L474">		captureStart = -1;</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">		if (captureBuffer.length() &gt; 0) {</span>
+<span class="fc" id="L476">			captureBuffer.append(buffer, start, end - start);</span>
+<span class="fc" id="L477">			String captured = captureBuffer.toString();</span>
+<span class="fc" id="L478">			captureBuffer.setLength(0);</span>
+<span class="fc" id="L479">			return captured;</span>
+		}
+<span class="fc" id="L481">		return new String(buffer, start, end - start);</span>
+	}
+
+	Location getLocation() {
+<span class="fc" id="L485">		int offset = bufferOffset + index - 1;</span>
+<span class="fc" id="L486">		int column = offset - lineOffset + 1;</span>
+<span class="fc" id="L487">		return new Location(offset, line, column);</span>
+	}
+
+	private ParseException expected(String expected) {
+<span class="fc bfc" id="L491" title="All 2 branches covered.">		if (isEndOfText()) {</span>
+<span class="fc" id="L492">			return error(&quot;Unexpected end of input&quot;);</span>
+		}
+<span class="fc" id="L494">		return error(&quot;Expected &quot; + expected);</span>
+	}
+
+	private ParseException error(String message) {
+<span class="fc" id="L498">		return new ParseException(message, getLocation());</span>
+	}
+
+	private boolean isWhiteSpace() {
+<span class="pc bpc" id="L502" title="2 of 8 branches missed.">		return current == ' ' || current == '\t' || current == '\n' || current == '\r';</span>
+	}
+
+	private boolean isDigit() {
+<span class="fc bfc" id="L506" title="All 4 branches covered.">		return current &gt;= '0' &amp;&amp; current &lt;= '9';</span>
+	}
+
+	private boolean isHexDigit() {
+<span class="nc bnc" id="L510" title="All 12 branches missed.">		return current &gt;= '0' &amp;&amp; current &lt;= '9' || current &gt;= 'a' &amp;&amp; current &lt;= 'f' || current &gt;= 'A' &amp;&amp; current &lt;= 'F';</span>
+	}
+
+	private boolean isEndOfText() {
+<span class="fc bfc" id="L514" title="All 2 branches covered.">		return current == END_OF_TEXT;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

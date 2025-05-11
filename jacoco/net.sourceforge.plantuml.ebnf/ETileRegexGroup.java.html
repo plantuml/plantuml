@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ETileRegexGroup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ebnf</a> &gt; <span class="el_source">ETileRegexGroup.java</span></div><h1>ETileRegexGroup.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ebnf;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+
+public class ETileRegexGroup extends ETile {
+
+	private final List&lt;String&gt; elements;
+	private final FontConfiguration fc;
+	private final Style style;
+	private final HColorSet colorSet;
+	private final ISkinParam skinParam;
+
+	public ETileRegexGroup(List&lt;String&gt; elements, FontConfiguration fc, Style style, HColorSet colorSet,
+<span class="nc" id="L63">			ISkinParam skinParam) {</span>
+<span class="nc" id="L64">		this.skinParam = skinParam;</span>
+<span class="nc" id="L65">		this.elements = elements;</span>
+<span class="nc" id="L66">		this.fc = fc;</span>
+<span class="nc" id="L67">		this.style = style;</span>
+<span class="nc" id="L68">		this.colorSet = colorSet;</span>
+<span class="nc" id="L69">	}</span>
+
+	private double getPureH1(StringBounder stringBounder) {
+<span class="nc" id="L72">		final double height = getTextDim(stringBounder).getHeight();</span>
+<span class="nc" id="L73">		return height / 2;</span>
+	}
+
+	@Override
+	public double getH1(StringBounder stringBounder) {
+<span class="nc" id="L78">		return getPureH1(stringBounder);</span>
+	}
+
+	@Override
+	public double getH2(StringBounder stringBounder) {
+<span class="nc" id="L83">		return getPureH1(stringBounder);</span>
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+<span class="nc" id="L88">		return getTextDim(stringBounder).getWidth() + 10;</span>
+	}
+
+	private XDimension2D getTextDim(StringBounder stringBounder) {
+<span class="nc" id="L92">		double width = 0;</span>
+<span class="nc" id="L93">		double height = 0;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (String element : elements) {</span>
+<span class="nc" id="L95">			final XDimension2D dim = stringBounder.calculateDimension(fc.getFont(), element);</span>
+<span class="nc" id="L96">			width = Math.max(width, dim.getWidth());</span>
+<span class="nc" id="L97">			height += dim.getHeight();</span>
+<span class="nc" id="L98">		}</span>
+<span class="nc" id="L99">		return new XDimension2D(width, height);</span>
+	}
+
+	private XDimension2D getBoxDim(StringBounder stringBounder) {
+<span class="nc" id="L103">		return getTextDim(stringBounder).delta(10, 0);</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L108">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L109">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L110">		final XDimension2D dimText = getTextDim(stringBounder);</span>
+<span class="nc" id="L111">		final XDimension2D dimBox = getBoxDim(stringBounder);</span>
+<span class="nc" id="L112">		final HColor lineColor = style.value(PName.LineColor).asColor(colorSet);</span>
+<span class="nc" id="L113">		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
+
+<span class="nc" id="L115">		final double posxBox = (dim.getWidth() - dimBox.getWidth()) / 2;</span>
+
+<span class="nc" id="L117">		final URectangle rect = URectangle.build(dimBox);</span>
+<span class="nc" id="L118">		ug.apply(new UTranslate(posxBox, 0)).apply(lineColor).apply(new UStroke(5, 5, 1)).draw(rect);</span>
+
+<span class="nc" id="L120">		double y = 0;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (String element : elements) {</span>
+<span class="nc" id="L122">			final UText utext = UText.build(element, fc);</span>
+<span class="nc" id="L123">			final XDimension2D dimElement = utext.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L125">			ug.apply(new UTranslate(5 + posxBox, y + dimElement.getHeight() - utext.getDescent(stringBounder)))</span>
+<span class="nc" id="L126">					.draw(utext);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (y &gt; 0)</span>
+<span class="nc" id="L128">				drawHline(ug.apply(UStroke.withThickness(0.3)), y, 0, dimBox.getWidth());</span>
+<span class="nc" id="L129">			y += dimElement.getHeight();</span>
+<span class="nc" id="L130">		}</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (posxBox &gt; 0) {</span>
+<span class="nc" id="L133">			drawHlineDirected(ug, getH1(stringBounder), 0, posxBox, .5, 25);</span>
+<span class="nc" id="L134">			drawHlineDirected(ug, getH1(stringBounder), posxBox + dimBox.getWidth(), dim.getWidth(), .5, 25);</span>
+		}
+
+<span class="nc" id="L137">	}</span>
+
+	@Override
+	public void push(ETile tile) {
+<span class="nc" id="L141">		throw new UnsupportedOperationException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

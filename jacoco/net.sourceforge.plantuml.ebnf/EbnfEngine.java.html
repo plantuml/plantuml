@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EbnfEngine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ebnf</a> &gt; <span class="el_source">EbnfEngine.java</span></div><h1>EbnfEngine.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ebnf;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+
+public class EbnfEngine {
+
+<span class="nc" id="L56">	private final Deque&lt;ETile&gt; stack = new ArrayDeque&lt;&gt;();</span>
+	private final FontConfiguration fontConfiguration;
+	private final Style style;
+	private final HColorSet colorSet;
+	private final ISkinParam skinParam;
+	private final ConfigurationStore&lt;OptionKey&gt; option;
+	private final HColor lineColor;
+
+<span class="nc" id="L64">	public EbnfEngine(ISkinParam skinParam, ConfigurationStore&lt;OptionKey&gt; option) {</span>
+<span class="nc" id="L65">		this.skinParam = skinParam;</span>
+<span class="nc" id="L66">		this.option = option;</span>
+<span class="nc" id="L67">		this.style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L68">		this.fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L69">		this.colorSet = skinParam.getIHtmlColorSet();</span>
+<span class="nc" id="L70">		this.lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L72">	}</span>
+
+	public void push(Token element) {
+<span class="nc" id="L75">		stack.addFirst(new ETileBox(element.getData(), element.getSymbol(), fontConfiguration, style, colorSet,</span>
+				skinParam, option));
+<span class="nc" id="L77">	}</span>
+
+	public void optional() {
+<span class="nc" id="L80">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L81">		stack.addFirst(new ETileOptional2(arg1, skinParam));</span>
+<span class="nc" id="L82">	}</span>
+
+	public void not() {
+<span class="nc" id="L85">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L86">		stack.addFirst(new ETileNot(arg1, fontConfiguration, style, colorSet, skinParam));</span>
+<span class="nc" id="L87">	}</span>
+
+	public void repetitionZeroOrMore() {
+<span class="nc" id="L90">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L91">		stack.addFirst(new ETileZeroOrMore(arg1, skinParam));</span>
+<span class="nc" id="L92">	}</span>
+
+	public void repetitionOneOrMore() {
+<span class="nc" id="L95">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L96">		stack.addFirst(new ETileOneOrMore(arg1));</span>
+<span class="nc" id="L97">	}</span>
+
+	public void repetitionSymbol() {
+<span class="nc" id="L100">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L101">		final String arg2 = stack.removeFirst().getRepetitionLabel() + &quot;\u00D7&quot;;</span>
+<span class="nc" id="L102">		stack.addFirst(new ETileOneOrMore(arg1, arg2, fontConfiguration.bigger(-2), skinParam));</span>
+
+<span class="nc" id="L104">	}</span>
+
+	public void alternation() {
+<span class="nc" id="L107">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L108">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (arg1 instanceof ETileAlternation) {</span>
+<span class="nc" id="L110">			arg1.push(arg2);</span>
+<span class="nc" id="L111">			stack.addFirst(arg1);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		} else if (arg2 instanceof ETileAlternation) {</span>
+<span class="nc" id="L113">			arg2.push(arg1);</span>
+<span class="nc" id="L114">			stack.addFirst(arg2);</span>
+		} else {
+<span class="nc" id="L116">			final ETile concat = new ETileAlternation();</span>
+<span class="nc" id="L117">			concat.push(arg1);</span>
+<span class="nc" id="L118">			concat.push(arg2);</span>
+<span class="nc" id="L119">			stack.addFirst(concat);</span>
+		}
+<span class="nc" id="L121">	}</span>
+
+	public void concatenation() {
+
+<span class="nc" id="L125">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L126">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (arg1 instanceof ETileConcatenation) {</span>
+<span class="nc" id="L128">			arg1.push(arg2);</span>
+<span class="nc" id="L129">			stack.addFirst(arg1);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (arg2 instanceof ETileConcatenation) {</span>
+<span class="nc" id="L131">			((ETileConcatenation) arg2).pushLast(arg1);</span>
+<span class="nc" id="L132">			stack.addFirst(arg2);</span>
+		} else {
+<span class="nc" id="L134">			final ETile concat = new ETileConcatenation();</span>
+<span class="nc" id="L135">			concat.push(arg1);</span>
+<span class="nc" id="L136">			concat.push(arg2);</span>
+<span class="nc" id="L137">			stack.addFirst(concat);</span>
+		}
+<span class="nc" id="L139">	}</span>
+
+	public TextBlock getTextBlock() {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (stack.size() != 1)</span>
+<span class="nc" id="L143">			return syntaxError(fontConfiguration, skinParam);</span>
+<span class="nc" id="L144">		return new ETileWithCircles(stack.peekFirst(), lineColor);</span>
+	}
+
+	public static TextBlock syntaxError(FontConfiguration fontConfiguration, ISkinSimple spriteContainer) {
+<span class="nc" id="L148">		final Display msg = Display.create(&quot;Syntax error!&quot;);</span>
+<span class="nc" id="L149">		return msg.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);</span>
+	}
+
+	public void commentBelow(String comment) {
+<span class="nc" id="L153">		final ETile arg1 = stack.peekFirst();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (arg1 == null)</span>
+<span class="nc" id="L155">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L157">		arg1.addCommentBelow(comment);</span>
+<span class="nc" id="L158">	}</span>
+
+	public void commentAbove(String comment) {
+<span class="nc" id="L161">		final ETile arg1 = stack.peekFirst();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (arg1 == null)</span>
+<span class="nc" id="L163">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L165">		arg1.addCommentAbove(comment);</span>
+<span class="nc" id="L166">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractTextualComponent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">AbstractTextualComponent.java</span></div><h1>AbstractTextualComponent.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin;
+
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+
+public abstract class AbstractTextualComponent extends AbstractComponent {
+
+	private final int marginX1;
+	private final int marginX2;
+	private final int marginY;
+
+	private final TextBlock textBlock;
+
+	private final UFont font;
+	private final HColor fontColor;
+	private final HorizontalAlignment alignment;
+
+	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
+			int marginY, ISkinParam skinParam, CharSequence label) {
+<span class="fc" id="L69">		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam,</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">				Display.getWithNewlines(skinParam.getPragma(), label == null ? &quot;&quot; : label.toString()), false);</span>
+<span class="fc" id="L71">	}</span>
+
+	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
+			int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
+<span class="fc" id="L75">		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam, display, enhanced);</span>
+<span class="fc" id="L76">	}</span>
+
+	public AbstractTextualComponent(Style style, Style stereo, LineBreakStrategy maxMessageSize, int marginX1,
+			int marginX2, int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
+<span class="fc" id="L80">		super(style, skinParam);</span>
+
+<span class="fc" id="L82">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="fc" id="L83">		this.font = style.getUFont();</span>
+<span class="fc" id="L84">		this.fontColor = style.value(PName.FontColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L85">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="fc" id="L86">		final UFont fontForStereotype = stereo.getUFont();</span>
+<span class="fc" id="L87">		final HColor htmlColorForStereotype = stereo.value(PName.FontColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L88">		display = display.withoutStereotypeIfNeeded(style);</span>
+
+<span class="fc" id="L90">		this.marginX1 = marginX1;</span>
+<span class="fc" id="L91">		this.marginX2 = marginX2;</span>
+<span class="fc" id="L92">		this.marginY = marginY;</span>
+
+<span class="fc bfc" id="L94" title="All 4 branches covered.">		if (display.size() == 1 &amp;&amp; display.get(0).length() == 0)</span>
+<span class="fc" id="L95">			textBlock = new TextBlockEmpty();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		else if (enhanced)</span>
+<span class="fc" id="L97">			textBlock = BodyFactory.create3(display, skinParam, horizontalAlignment, fc, maxMessageSize, style);</span>
+		else
+<span class="fc" id="L99">			textBlock = display.create0(fc, horizontalAlignment, skinParam, maxMessageSize, CreoleMode.FULL,</span>
+					fontForStereotype, htmlColorForStereotype, marginX1, marginX2);
+
+<span class="fc" id="L102">		this.alignment = horizontalAlignment;</span>
+<span class="fc" id="L103">	}</span>
+
+	protected TextBlock getTextBlock() {
+<span class="fc" id="L106">		return textBlock;</span>
+	}
+
+	protected double getPureTextWidth(StringBounder stringBounder) {
+<span class="fc" id="L110">		final TextBlock textBlock = getTextBlock();</span>
+<span class="fc" id="L111">		final XDimension2D size = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L112">		return size.getWidth();</span>
+	}
+
+	final public double getTextWidth(StringBounder stringBounder) {
+<span class="fc" id="L116">		return getPureTextWidth(stringBounder) + marginX1 + marginX2;</span>
+	}
+
+	final protected double getTextHeight(StringBounder stringBounder) {
+<span class="fc" id="L120">		final TextBlock textBlock = getTextBlock();</span>
+<span class="fc" id="L121">		final XDimension2D size = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L122">		return size.getHeight() + 2 * marginY;</span>
+	}
+
+	final protected int getMarginX1() {
+<span class="fc" id="L126">		return marginX1;</span>
+	}
+
+	final protected int getMarginX2() {
+<span class="nc" id="L130">		return marginX2;</span>
+	}
+
+	final protected int getMarginY() {
+<span class="fc" id="L134">		return marginY;</span>
+	}
+
+	final protected UFont getFont() {
+<span class="nc" id="L138">		return font;</span>
+	}
+
+	protected HColor getFontColor() {
+<span class="nc" id="L142">		return fontColor;</span>
+	}
+
+	public final HorizontalAlignment getHorizontalAlignment() {
+<span class="nc" id="L146">		return alignment;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

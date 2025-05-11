@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Segment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">Segment.java</span></div><h1>Segment.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+<span class="fc" id="L44">public class Segment {</span>
+
+	final private double pos1;
+	final private double pos2;
+
+<span class="fc" id="L49">	public Segment(double pos1, double pos2) {</span>
+<span class="fc" id="L50">		this.pos1 = pos1;</span>
+<span class="fc" id="L51">		this.pos2 = pos2;</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (pos2 &lt; pos1) {</span>
+<span class="nc" id="L53">			throw new IllegalArgumentException();</span>
+		}
+<span class="fc" id="L55">	}</span>
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc" id="L59">		final Segment this2 = (Segment) obj;</span>
+<span class="nc bnc" id="L60" title="All 4 branches missed.">		return pos1 == this2.pos1 &amp;&amp; pos2 == this2.pos2;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L65">		return Double.valueOf(pos1).hashCode() + Double.valueOf(pos2).hashCode();</span>
+	}
+
+	final public boolean contains(double y) {
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">		return y &gt;= pos1 &amp;&amp; y &lt;= pos2;</span>
+	}
+
+	final public boolean contains(Segment other) {
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">		return contains(other.pos1) &amp;&amp; contains(other.pos2);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L78">		return &quot;&quot; + pos1 + &quot; - &quot; + pos2;</span>
+	}
+
+	final public double getLength() {
+<span class="fc" id="L82">		return pos2 - pos1;</span>
+	}
+
+	final public double getPos1() {
+<span class="fc" id="L86">		return pos1;</span>
+	}
+
+	final public double getPos2() {
+<span class="fc" id="L90">		return pos2;</span>
+	}
+
+	public Segment merge(Segment this2) {
+<span class="fc" id="L94">		return new Segment(Math.min(this.pos1, this2.pos1), Math.max(this.pos2, this2.pos2));</span>
+	}
+
+	public Collection&lt;Segment&gt; cutSegmentIfNeed(Collection&lt;Segment&gt; allDelays) {
+<span class="fc" id="L98">		final List&lt;Segment&gt; sortedDelay = new ArrayList&lt;&gt;(allDelays);</span>
+<span class="fc" id="L99">		Collections.sort(sortedDelay, new SortPos1());</span>
+<span class="fc" id="L100">		final List&lt;Segment&gt; result2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L101">		double pendingStart = pos1;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		for (Segment pause : sortedDelay) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (Math.abs(pause.pos1 - pendingStart) &lt; 0.001) {</span>
+<span class="fc" id="L104">				pendingStart = pause.pos2;</span>
+<span class="fc" id="L105">				continue;</span>
+			}
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">			if (pause.pos1 &lt; pendingStart)</span>
+<span class="nc" id="L108">				continue;</span>
+
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (pause.pos1 &gt; this.pos2) {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (pendingStart &lt; this.pos2)</span>
+<span class="nc" id="L112">					result2.add(new Segment(pendingStart, this.pos2));</span>
+<span class="nc" id="L113">				return Collections.unmodifiableCollection(result2);</span>
+			}
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (this.contains(pause)) {</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">				assert pendingStart &lt; pause.pos1;</span>
+<span class="fc" id="L117">				result2.add(new Segment(pendingStart, pause.pos1));</span>
+<span class="fc" id="L118">				pendingStart = pause.pos2;</span>
+			}
+<span class="fc" id="L120">		}</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (pendingStart &lt; this.pos2)</span>
+<span class="fc" id="L122">			result2.add(new Segment(pendingStart, this.pos2));</span>
+
+<span class="fc" id="L124">		return Collections.unmodifiableCollection(result2);</span>
+	}
+
+<span class="fc" id="L127">	static class SortPos1 implements Comparator&lt;Segment&gt; {</span>
+		public int compare(Segment segA, Segment segB) {
+<span class="fc" id="L129">			return (int) Math.signum(segA.pos1 - segB.pos1);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

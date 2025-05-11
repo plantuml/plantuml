@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SmetanaForGit.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gitlog</a> &gt; <span class="el_source">SmetanaForGit.java</span></div><h1>SmetanaForGit.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.gitlog;
+
+import static gen.lib.cgraph.attr__c.agsafeset;
+import static gen.lib.cgraph.edge__c.agedge;
+import static gen.lib.cgraph.graph__c.agopen;
+import static gen.lib.cgraph.node__c.agnode;
+import static gen.lib.gvc.gvc__c.gvContext;
+import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agraph_s;
+import h.ST_GVC_s;
+import net.sourceforge.plantuml.jsondiagram.Mirror;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+public class SmetanaForGit {
+
+	private final UGraphic ug;
+	private final ISkinParam skinParam;
+	private int num;
+	private ST_Agraph_s g;
+	private StringBounder stringBounder;
+
+<span class="nc" id="L79">	private final Map&lt;GNode, ST_Agnode_s&gt; nodes = new LinkedHashMap&lt;GNode, ST_Agnode_s&gt;();</span>
+<span class="nc" id="L80">	private final List&lt;ST_Agedge_s&gt; edges = new ArrayList&lt;&gt;();</span>
+	private Mirror yMirror;
+
+<span class="nc" id="L83">	public SmetanaForGit(UGraphic ug, ISkinParam skinParam) {</span>
+<span class="nc" id="L84">		this.stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L85">		this.skinParam = skinParam;</span>
+<span class="nc" id="L86">		this.ug = getStyle().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L87">	}</span>
+
+	private Style getStyle() {
+<span class="nc" id="L90">		return StyleSignatureBasic.of(SName.root, SName.element, SName.gitDiagram)</span>
+<span class="nc" id="L91">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	private HColor arrowColor() {
+<span class="nc" id="L95">		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+	}
+
+	public void drawMe(Collection&lt;GNode&gt; gnodes) {
+<span class="nc" id="L99">		initGraph(gnodes);</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (Entry&lt;GNode, ST_Agnode_s&gt; ent : nodes.entrySet()) {</span>
+<span class="nc" id="L102">			final ST_Agnode_s node = ent.getValue();</span>
+<span class="nc" id="L103">			final UTranslate pos = getPosition(node);</span>
+
+<span class="nc" id="L105">			final MagicBox magicBox = new MagicBox(skinParam, ent.getKey());</span>
+<span class="nc" id="L106">			magicBox.drawBorder(ug.apply(pos), getSize(node));</span>
+<span class="nc" id="L107">		}</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (ST_Agedge_s edge : edges) {</span>
+<span class="nc" id="L110">			final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;</span>
+<span class="nc" id="L111">			new GitCurve(data, yMirror).drawCurve(arrowColor(), ug);</span>
+<span class="nc" id="L112">		}</span>
+<span class="nc" id="L113">	}</span>
+
+	private XDimension2D getSize(ST_Agnode_s node) {
+<span class="nc" id="L116">		final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) node.data;</span>
+<span class="nc" id="L117">		final double width = data.width * 72;</span>
+<span class="nc" id="L118">		final double height = data.height * 72;</span>
+<span class="nc" id="L119">		return new XDimension2D(width, height);</span>
+	}
+
+	private UTranslate getPosition(ST_Agnode_s node) {
+<span class="nc" id="L123">		final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) node.data;</span>
+<span class="nc" id="L124">		final double width = data.width * 72;</span>
+<span class="nc" id="L125">		final double height = data.height * 72;</span>
+<span class="nc" id="L126">		final double x = data.coord.x;</span>
+<span class="nc" id="L127">		final double y = data.coord.y;</span>
+<span class="nc" id="L128">		return new UTranslate(x - width / 2, yMirror.inv(y + height / 2));</span>
+	}
+
+	private void initGraph(Collection&lt;GNode&gt; gnodes) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (g != null)</span>
+<span class="nc" id="L133">			return;</span>
+
+<span class="nc" id="L135">		Globals zz = Globals.open();</span>
+		try {
+<span class="nc" id="L137">			g = agopen(zz, new CString(&quot;g&quot;), zz.Agdirected, null);</span>
+<span class="nc" id="L138">			agsafeset(zz, g, new CString(&quot;ranksep&quot;), new CString(&quot;0.35&quot;), new CString(&quot;&quot;));</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			for (GNode gnode : gnodes) {</span>
+<span class="nc" id="L140">				final XDimension2D dim = new MagicBox(skinParam, gnode).getBigDim(stringBounder);</span>
+<span class="nc" id="L141">				nodes.put(gnode, createNode(zz, dim));</span>
+<span class="nc" id="L142">			}</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			for (GNode gnode : nodes.keySet()) {</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">				for (GNode parent : gnode.getDowns()) {</span>
+<span class="nc" id="L146">					final ST_Agedge_s edge = createEdge(zz, gnode, parent);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">					if (edge != null)</span>
+<span class="nc" id="L148">						edges.add(edge);</span>
+
+<span class="nc" id="L150">				}</span>
+<span class="nc" id="L151">			}</span>
+
+<span class="nc" id="L153">			final ST_GVC_s gvc = gvContext(zz);</span>
+<span class="nc" id="L154">			gvLayoutJobs(zz, gvc, g);</span>
+
+<span class="nc" id="L156">			double max = 0;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			for (ST_Agnode_s node : nodes.values()) {</span>
+<span class="nc" id="L158">				final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) node.data;</span>
+<span class="nc" id="L159">				final double height = data.height * 72;</span>
+<span class="nc" id="L160">				final double y = data.coord.y;</span>
+<span class="nc" id="L161">				max = Math.max(max, y + height);</span>
+<span class="nc" id="L162">			}</span>
+<span class="nc" id="L163">			yMirror = new Mirror(max);</span>
+
+		} finally {
+<span class="nc" id="L166">			Globals.close();</span>
+		}
+
+<span class="nc" id="L169">	}</span>
+
+	private ST_Agedge_s createEdge(Globals zz, GNode node0, GNode node1) {
+<span class="nc" id="L172">		final ST_Agnode_s a0 = nodes.get(node0);</span>
+<span class="nc" id="L173">		final ST_Agnode_s a1 = nodes.get(node1);</span>
+<span class="nc bnc" id="L174" title="All 4 branches missed.">		if (a0 == null || a1 == null) {</span>
+<span class="nc" id="L175">			return null;</span>
+		}
+
+<span class="nc" id="L178">		final ST_Agedge_s edge = agedge(zz, g, a0, a1, null, true);</span>
+<span class="nc" id="L179">		agsafeset(zz, edge, new CString(&quot;arrowsize&quot;), new CString(&quot;.7&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L180">		agsafeset(zz, edge, new CString(&quot;arrowtail&quot;), new CString(&quot;none&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L181">		agsafeset(zz, edge, new CString(&quot;arrowhead&quot;), new CString(&quot;normal&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L182">		return edge;</span>
+	}
+
+	private ST_Agnode_s createNode(Globals zz, XDimension2D dim) {
+<span class="nc" id="L186">		final String width = &quot;&quot; + (dim.getWidth() / 72);</span>
+<span class="nc" id="L187">		final String height = &quot;&quot; + (dim.getHeight() / 72);</span>
+
+<span class="nc" id="L189">		final ST_Agnode_s node = agnode(zz, g, new CString(&quot;N&quot; + num), true);</span>
+<span class="nc" id="L190">		node.NAME = &quot;N &quot; + num;</span>
+<span class="nc" id="L191">		num++;</span>
+
+<span class="nc" id="L193">		agsafeset(zz, node, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L194">		agsafeset(zz, node, new CString(&quot;height&quot;), new CString(&quot;&quot; + height), new CString(&quot;&quot;));</span>
+<span class="nc" id="L195">		agsafeset(zz, node, new CString(&quot;width&quot;), new CString(&quot;&quot; + width), new CString(&quot;&quot;));</span>
+
+<span class="nc" id="L197">		return node;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

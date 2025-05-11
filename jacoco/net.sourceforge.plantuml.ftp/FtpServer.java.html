@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtpServer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ftp</a> &gt; <span class="el_source">FtpServer.java</span></div><h1>FtpServer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ftp;
+
+// server
+
+// FtpServer.java
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.log.Logme;
+
+public class FtpServer {
+
+<span class="nc" id="L57">	private final Map&lt;String, FtpConnexion&gt; datas = new TreeMap&lt;String, FtpConnexion&gt;();</span>
+<span class="nc" id="L58">	private final ExecutorService exeImage = Executors.newFixedThreadPool(2);</span>
+
+	private final int listenPort;
+
+<span class="nc" id="L62">	private int portFree = 10042;</span>
+	private String ip;
+	private final FileFormat defaultfileFormat;
+
+<span class="nc" id="L66">	public FtpServer(int listenPort, FileFormat defaultfileFormat) {</span>
+<span class="nc" id="L67">		this.listenPort = listenPort;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		this.defaultfileFormat = defaultfileFormat == null ? FileFormat.PNG : defaultfileFormat;</span>
+<span class="nc" id="L69">	}</span>
+
+	public synchronized int getFreePort() {
+<span class="nc" id="L72">		portFree++;</span>
+		// Log.println(&quot;port=&quot; + portFree);
+<span class="nc" id="L74">		return portFree;</span>
+	}
+
+	public void go() throws IOException {
+<span class="nc" id="L78">		final ServerSocket s = new ServerSocket(listenPort);</span>
+<span class="nc" id="L79">		final ExecutorService exe = Executors.newCachedThreadPool();</span>
+		while (true) {
+<span class="nc" id="L81">			final Socket incoming = s.accept();</span>
+<span class="nc" id="L82">			ip = incoming.getLocalAddress().getHostAddress();</span>
+<span class="nc" id="L83">			System.out.println(&quot;New Client Connected from &quot; + incoming.getInetAddress().getHostName() + &quot;... &quot;);</span>
+<span class="nc" id="L84">			exe.submit(new FtpLoop(incoming, this));</span>
+<span class="nc" id="L85">		}</span>
+	}
+
+	public String getIpServer() {
+<span class="nc" id="L89">		return ip;</span>
+	}
+
+	public synchronized FtpConnexion getFtpConnexion(String user) {
+<span class="nc" id="L93">		FtpConnexion data = datas.get(Objects.requireNonNull(user));</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (data == null) {</span>
+<span class="nc" id="L95">			data = new FtpConnexion(user, defaultfileFormat);</span>
+<span class="nc" id="L96">			datas.put(user, data);</span>
+		}
+<span class="nc" id="L98">		return data;</span>
+	}
+
+	public static void main(String[] args) throws IOException {
+<span class="nc" id="L102">		System.out.println(&quot;****************************** ************************************************** &quot;);</span>
+<span class="nc" id="L103">		System.out.println(&quot;****************************** FTP SERVER***********************************&quot;);</span>
+
+<span class="nc" id="L105">		System.out.println(&quot;****************************** ************************************************** &quot;);</span>
+<span class="nc" id="L106">		System.out.println(&quot;Server Started...&quot;);</span>
+<span class="nc" id="L107">		System.out.println(&quot;Waiting for connections...&quot;);</span>
+<span class="nc" id="L108">		System.out.println(&quot; &quot;);</span>
+<span class="nc" id="L109">		new FtpServer(4242, FileFormat.PNG).go();</span>
+<span class="nc" id="L110">	}</span>
+
+	public void processImage(final FtpConnexion connexion, final String name) {
+<span class="nc" id="L113">		exeImage.submit(new Runnable() {</span>
+			public void run() {
+				try {
+<span class="nc" id="L116">					connexion.processImage(name);</span>
+<span class="nc" id="L117">				} catch (IOException e) {</span>
+<span class="nc" id="L118">					Logme.error(e);</span>
+<span class="nc" id="L119">				}</span>
+<span class="nc" id="L120">			}</span>
+		});
+<span class="nc" id="L122">	}</span>
+
+	public final String getCharset() {
+<span class="nc" id="L125">		return UTF_8.name();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

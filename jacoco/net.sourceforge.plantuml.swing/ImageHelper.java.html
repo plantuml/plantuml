@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImageHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.swing</a> &gt; <span class="el_source">ImageHelper.java</span></div><h1>ImageHelper.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Zane D. Purvis
+ *
+ *
+ */
+package net.sourceforge.plantuml.swing;
+
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Transparency;
+import java.awt.image.BufferedImage;
+
+/**
+ * A collection of methods to help with processing images. A majority of this
+ * code was originally found online.
+ */
+<span class="nc" id="L49">public class ImageHelper {</span>
+	/**
+	 * Returns a scaled instance of a {@code BufferedImage}.
+	 * 
+	 * Modified from:
+	 * https://today.java.net/pub/a/today/2007/04/03/perils-of-image-getscaledinstance.html
+	 * 
+	 * @param img           the original image to be scaled
+	 * @param targetDim     the desired dimensions of the scaled instance, in pixels
+	 * @param hints         RenderingHints used when scaling the image
+	 * @param higherQuality if true, this method will use a multi-step scaling
+	 *                      technique that provides higher quality than the usual
+	 *                      one-step technique (only useful in downscaling cases,
+	 *                      targetDim is smaller than the original dimensions, and
+	 *                      generally only when the {@code BILINEAR} hint is
+	 *                      specified)
+	 * @return a scaled version of the original {@code BufferedImage}
+	 */
+	public static BufferedImage getScaledInstance(BufferedImage img, Dimension targetDim, RenderingHints hints,
+			boolean higherQuality) {
+<span class="nc" id="L69">		final int targetWidth = targetDim.width;</span>
+<span class="nc" id="L70">		final int targetHeight = targetDim.height;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		final int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB</span>
+<span class="nc" id="L72">				: BufferedImage.TYPE_INT_ARGB;</span>
+<span class="nc" id="L73">		BufferedImage ret = (BufferedImage) img;</span>
+		int w;
+		int h;
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (higherQuality) {</span>
+			// Use multi-step technique: start with original size, then
+			// scale down in multiple passes with drawImage()
+			// until the target size is reached
+<span class="nc" id="L80">			w = img.getWidth();</span>
+<span class="nc" id="L81">			h = img.getHeight();</span>
+		} else {
+			// Use one-step technique: scale directly from original
+			// size to target size with a single drawImage() call
+<span class="nc" id="L85">			w = targetWidth;</span>
+<span class="nc" id="L86">			h = targetHeight;</span>
+		}
+
+		do {
+<span class="nc bnc" id="L90" title="All 4 branches missed.">			if (higherQuality &amp;&amp; w &gt; targetWidth) {</span>
+<span class="nc" id="L91">				w /= 2;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (w &lt; targetWidth) {</span>
+<span class="nc" id="L93">					w = targetWidth;</span>
+				}
+			}
+
+<span class="nc bnc" id="L97" title="All 4 branches missed.">			if (higherQuality &amp;&amp; h &gt; targetHeight) {</span>
+<span class="nc" id="L98">				h /= 2;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (h &lt; targetHeight) {</span>
+<span class="nc" id="L100">					h = targetHeight;</span>
+				}
+			}
+
+<span class="nc" id="L104">			final BufferedImage tmp = new BufferedImage(w, h, type);</span>
+<span class="nc" id="L105">			final Graphics2D g2 = tmp.createGraphics();</span>
+<span class="nc" id="L106">			g2.setRenderingHints(hints);</span>
+<span class="nc" id="L107">			g2.drawImage(ret, 0, 0, w, h, null);</span>
+<span class="nc" id="L108">			g2.dispose();</span>
+
+<span class="nc" id="L110">			ret = tmp;</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">		} while (w != targetWidth || h != targetHeight);</span>
+
+<span class="nc" id="L113">		return ret;</span>
+	}
+
+	/**
+	 * Converts an Image to a BufferedImage.
+	 * 
+	 * From:
+	 * http://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
+	 */
+	public static BufferedImage toBufferedImage(Image img) {
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (img instanceof BufferedImage) {</span>
+<span class="nc" id="L124">			return (BufferedImage) img;</span>
+		}
+		// Create a buffered image with transparency
+<span class="nc" id="L127">		final BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null),</span>
+				BufferedImage.TYPE_INT_ARGB);
+
+		// Draw the image on to the buffered image
+<span class="nc" id="L131">		final Graphics2D bGr = bimage.createGraphics();</span>
+<span class="nc" id="L132">		bGr.drawImage(img, 0, 0, null);</span>
+<span class="nc" id="L133">		bGr.dispose();</span>
+
+<span class="nc" id="L135">		return bimage;</span>
+	}
+
+	/**
+	 * Calculates the dimensions of a scaled image given the dimensions of an image
+	 * and the area it is to be drawn in while preserving aspect ratio.
+	 * 
+	 * From:
+	 * http://stackoverflow.com/questions/10245220/java-image-resize-maintain-aspect-ratio
+	 * 
+	 * @param imgSize  dimensions of the original image.
+	 * @param boundary dimensions of the area the image is to be drawn in.
+	 */
+	public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
+<span class="nc" id="L149">		final int originalWidth = imgSize.width;</span>
+<span class="nc" id="L150">		final int originaHeight = imgSize.height;</span>
+<span class="nc" id="L151">		final int boundWidth = boundary.width;</span>
+<span class="nc" id="L152">		final int boundHeight = boundary.height;</span>
+<span class="nc" id="L153">		int newWidth = originalWidth;</span>
+<span class="nc" id="L154">		int newHeight = originaHeight;</span>
+
+		// first check if we need to scale width
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (originalWidth &gt; boundWidth) {</span>
+			// scale width to fit
+<span class="nc" id="L159">			newWidth = boundWidth;</span>
+			// scale height to maintain aspect ratio
+<span class="nc" id="L161">			newHeight = (newWidth * originaHeight) / originalWidth;</span>
+		}
+
+		// then check if we need to scale even with the new height
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (newHeight &gt; boundHeight) {</span>
+			// scale height to fit instead
+<span class="nc" id="L167">			newHeight = boundHeight;</span>
+			// scale width to maintain aspect ratio
+<span class="nc" id="L169">			newWidth = (newHeight * originalWidth) / originaHeight;</span>
+		}
+
+<span class="nc" id="L172">		return new Dimension(newWidth, newHeight);</span>
+	}
+
+	public static Dimension getScaledDimensionWidthFit(Dimension imgSize, Dimension boundary) {
+<span class="nc" id="L176">		final int originalWidth = imgSize.width;</span>
+<span class="nc" id="L177">		final int originaHeight = imgSize.height;</span>
+<span class="nc" id="L178">		final int boundWidth = boundary.width;</span>
+<span class="nc" id="L179">		final int boundHeight = boundary.height;</span>
+<span class="nc" id="L180">		int newWidth = originalWidth;</span>
+<span class="nc" id="L181">		int newHeight = originaHeight;</span>
+
+		// first check if we need to scale width
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (originalWidth != boundWidth) {</span>
+			// scale width to fit
+<span class="nc" id="L186">			newWidth = boundWidth;</span>
+			// scale height to maintain aspect ratio
+<span class="nc" id="L188">			newHeight = (newWidth * originaHeight) / originalWidth;</span>
+		}
+
+<span class="nc" id="L191">		return new Dimension(newWidth, newHeight);</span>
+	}
+
+	public static Dimension getScaledDimension(Dimension dim, double zoom) {
+<span class="nc" id="L195">		return new Dimension((int) (dim.getWidth() * zoom), (int) (dim.getHeight() * zoom));</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

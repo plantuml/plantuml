@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CodeIteratorForeach.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim.iterator</a> &gt; <span class="el_source">CodeIteratorForeach.java</span></div><h1>CodeIteratorForeach.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim.iterator;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.text.TLineType;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterForeach;
+import net.sourceforge.plantuml.tim.ExecutionContextForeach;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.TVariableScope;
+import net.sourceforge.plantuml.tim.expression.TValue;
+
+public class CodeIteratorForeach extends AbstractCodeIterator {
+
+	private final TContext context;
+	private final TMemory memory;
+	private final List&lt;StringLocated&gt; logs;
+
+	public CodeIteratorForeach(CodeIterator source, TContext context, TMemory memory, List&lt;StringLocated&gt; logs) {
+<span class="fc" id="L57">		super(source);</span>
+<span class="fc" id="L58">		this.context = context;</span>
+<span class="fc" id="L59">		this.memory = memory;</span>
+<span class="fc" id="L60">		this.logs = logs;</span>
+<span class="fc" id="L61">	}</span>
+
+	public StringLocated peek() throws EaterException {
+<span class="fc" id="L64">		int level = 0;</span>
+		while (true) {
+<span class="fc" id="L66">			final StringLocated result = source.peek();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			if (result == null)</span>
+<span class="fc" id="L68">				return null;</span>
+
+<span class="fc" id="L70">			final ExecutionContextForeach foreach = memory.peekForeach();</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">			if (foreach != null &amp;&amp; foreach.isSkipMe()) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">				if (result.getType() == TLineType.FOREACH) {</span>
+<span class="nc" id="L73">					level++;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				} else if (result.getType() == TLineType.ENDFOREACH) {</span>
+<span class="nc" id="L75">					level--;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">					if (level == -1) {</span>
+<span class="nc" id="L77">						memory.pollForeach();</span>
+<span class="nc" id="L78">						level = 0;</span>
+					}
+				}
+<span class="nc" id="L81">				next();</span>
+<span class="nc" id="L82">				continue;</span>
+			}
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (result.getType() == TLineType.FOREACH) {</span>
+<span class="fc" id="L86">				logs.add(result);</span>
+<span class="fc" id="L87">				executeForeach(memory, result.getTrimmed());</span>
+<span class="fc" id="L88">				next();</span>
+<span class="fc" id="L89">				continue;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			} else if (result.getType() == TLineType.ENDFOREACH) {</span>
+<span class="fc" id="L91">				logs.add(result);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				if (foreach == null)</span>
+<span class="nc" id="L93">					throw new EaterException(&quot;No foreach related to this endforeach&quot;, result);</span>
+
+<span class="fc" id="L95">				foreach.inc();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">				if (foreach.isSkipMe()) {</span>
+<span class="fc" id="L97">					memory.pollForeach();</span>
+				} else {
+<span class="fc" id="L99">					setLoopVariable(memory, foreach, result);</span>
+<span class="fc" id="L100">					source.jumpToCodePosition(foreach.getStartForeach(), result);</span>
+				}
+<span class="fc" id="L102">				next();</span>
+<span class="fc" id="L103">				continue;</span>
+			}
+
+<span class="fc" id="L106">			return result;</span>
+		}
+	}
+
+	private void executeForeach(TMemory memory, StringLocated s) throws EaterException {
+<span class="fc" id="L111">		final EaterForeach condition = new EaterForeach(s);</span>
+<span class="fc" id="L112">		condition.analyze(context, memory);</span>
+<span class="fc" id="L113">		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),</span>
+<span class="fc" id="L114">				condition.getJsonValue(), source.getCodePosition());</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (condition.isSkip())</span>
+<span class="nc" id="L116">			foreach.skipMeNow();</span>
+		else
+<span class="fc" id="L118">			setLoopVariable(memory, foreach, s);</span>
+
+<span class="fc" id="L120">		memory.addForeach(foreach);</span>
+<span class="fc" id="L121">	}</span>
+
+	private void setLoopVariable(TMemory memory, ExecutionContextForeach foreach, StringLocated position)
+			throws EaterException {
+<span class="fc" id="L125">		final JsonValue first = foreach.currentValue();</span>
+<span class="fc" id="L126">		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);</span>
+<span class="fc" id="L127">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

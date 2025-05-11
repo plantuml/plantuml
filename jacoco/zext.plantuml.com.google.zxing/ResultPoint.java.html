@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResultPoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing</a> &gt; <span class="el_source">ResultPoint.java</span></div><h1>ResultPoint.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2007 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing;
+
+/**
+ * &lt;p&gt;Encapsulates a point of interest in an image containing a barcode. Typically, this
+ * would be the location of a finder pattern or the corner of the barcode, for example.&lt;/p&gt;
+ *
+ * @author Sean Owen
+ */
+public class ResultPoint {
+
+  private final float x;
+  private final float y;
+
+<span class="nc" id="L30">  public ResultPoint(float x, float y) {</span>
+<span class="nc" id="L31">    this.x = x;</span>
+<span class="nc" id="L32">    this.y = y;</span>
+<span class="nc" id="L33">  }</span>
+
+  public final float getX() {
+<span class="nc" id="L36">    return x;</span>
+  }
+
+  public final float getY() {
+<span class="nc" id="L40">    return y;</span>
+  }
+
+  public boolean equals(Object other) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">    if (other instanceof ResultPoint) {</span>
+<span class="nc" id="L45">      ResultPoint otherPoint = (ResultPoint) other;</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">      return x == otherPoint.x &amp;&amp; y == otherPoint.y;</span>
+    }
+<span class="nc" id="L48">    return false;</span>
+  }
+
+  public int hashCode() {
+<span class="nc" id="L52">    return 31 * Float.floatToIntBits(x) + Float.floatToIntBits(y);</span>
+  }
+
+  public String toString() {
+<span class="nc" id="L56">    StringBuilder result = new StringBuilder(25);</span>
+<span class="nc" id="L57">    result.append('(');</span>
+<span class="nc" id="L58">    result.append(x);</span>
+<span class="nc" id="L59">    result.append(',');</span>
+<span class="nc" id="L60">    result.append(y);</span>
+<span class="nc" id="L61">    result.append(')');</span>
+<span class="nc" id="L62">    return result.toString();</span>
+  }
+
+  /**
+   * &lt;p&gt;Orders an array of three ResultPoints in an order [A,B,C] such that AB is less than AC
+   * and BC is less than AC and the angle between BC and BA is less than 180 degrees.
+   */
+  public static void orderBestPatterns(ResultPoint[] patterns) {
+
+    // Find distances between pattern centers
+<span class="nc" id="L72">    float zeroOneDistance = distance(patterns[0], patterns[1]);</span>
+<span class="nc" id="L73">    float oneTwoDistance = distance(patterns[1], patterns[2]);</span>
+<span class="nc" id="L74">    float zeroTwoDistance = distance(patterns[0], patterns[2]);</span>
+
+    ResultPoint pointA, pointB, pointC;
+    // Assume one closest to other two is B; A and C will just be guesses at first
+<span class="nc bnc" id="L78" title="All 4 branches missed.">    if (oneTwoDistance &gt;= zeroOneDistance &amp;&amp; oneTwoDistance &gt;= zeroTwoDistance) {</span>
+<span class="nc" id="L79">      pointB = patterns[0];</span>
+<span class="nc" id="L80">      pointA = patterns[1];</span>
+<span class="nc" id="L81">      pointC = patterns[2];</span>
+<span class="nc bnc" id="L82" title="All 4 branches missed.">    } else if (zeroTwoDistance &gt;= oneTwoDistance &amp;&amp; zeroTwoDistance &gt;= zeroOneDistance) {</span>
+<span class="nc" id="L83">      pointB = patterns[1];</span>
+<span class="nc" id="L84">      pointA = patterns[0];</span>
+<span class="nc" id="L85">      pointC = patterns[2];</span>
+    } else {
+<span class="nc" id="L87">      pointB = patterns[2];</span>
+<span class="nc" id="L88">      pointA = patterns[0];</span>
+<span class="nc" id="L89">      pointC = patterns[1];</span>
+    }
+
+    // Use cross product to figure out whether A and C are correct or flipped.
+    // This asks whether BC x BA has a positive z component, which is the arrangement
+    // we want for A, B, C. If it's negative, then we've got it flipped around and
+    // should swap A and C.
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    if (crossProductZ(pointA, pointB, pointC) &lt; 0.0f) {</span>
+<span class="nc" id="L97">      ResultPoint temp = pointA;</span>
+<span class="nc" id="L98">      pointA = pointC;</span>
+<span class="nc" id="L99">      pointC = temp;</span>
+    }
+
+<span class="nc" id="L102">    patterns[0] = pointA;</span>
+<span class="nc" id="L103">    patterns[1] = pointB;</span>
+<span class="nc" id="L104">    patterns[2] = pointC;</span>
+<span class="nc" id="L105">  }</span>
+
+
+  /**
+   * @return distance between two points
+   */
+  public static float distance(ResultPoint pattern1, ResultPoint pattern2) {
+<span class="nc" id="L112">    float xDiff = pattern1.getX() - pattern2.getX();</span>
+<span class="nc" id="L113">    float yDiff = pattern1.getY() - pattern2.getY();</span>
+<span class="nc" id="L114">    return (float) Math.sqrt((double) (xDiff * xDiff + yDiff * yDiff));</span>
+  }
+
+  /**
+   * Returns the z component of the cross product between vectors BC and BA.
+   */
+  private static float crossProductZ(ResultPoint pointA, ResultPoint pointB, ResultPoint pointC) {
+<span class="nc" id="L121">    float bX = pointB.x;</span>
+<span class="nc" id="L122">    float bY = pointB.y;</span>
+<span class="nc" id="L123">    return ((pointC.x - bX) * (pointA.y - bY)) - ((pointC.y - bY) * (pointA.x - bX));</span>
+  }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

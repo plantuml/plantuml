@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OptionFlags.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">OptionFlags.java</span></div><h1>OptionFlags.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.utils.Log;
+
+public class OptionFlags {
+	// ::remove file when __HAXE__
+
+<span class="fc" id="L53">	private static final OptionFlags singleton = new OptionFlags();</span>
+	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
+	static public final boolean USE_INTERFACE_EYE1 = false;
+	static public final boolean USE_INTERFACE_EYE2 = false;
+	static public final boolean FORCE_TEOZ = false;
+
+	private boolean replaceWhiteBackgroundByTransparent;
+
+	public static OptionFlags getInstance() {
+<span class="fc" id="L62">		return singleton;</span>
+	}
+
+	public final boolean isReplaceWhiteBackgroundByTransparent() {
+<span class="fc" id="L66">		return replaceWhiteBackgroundByTransparent;</span>
+	}
+
+	public final void setReplaceWhiteBackgroundByTransparent(boolean replaceWhiteBackgroundByTransparent) {
+<span class="nc" id="L70">		this.replaceWhiteBackgroundByTransparent = replaceWhiteBackgroundByTransparent;</span>
+<span class="nc" id="L71">	}</span>
+
+	// ::comment when __CORE__
+	// static public final boolean PBBACK = false;
+	// static public boolean GRAPHVIZCACHE = false;
+	// static public final boolean TRACE_DOT = false;
+
+//	static public boolean ALLOW_INCLUDE = true;
+//
+//	static public void setAllowIncludeFalse() {
+//		ALLOW_INCLUDE = false;
+//	}
+
+	static public void setMaxPixel(int max) {
+<span class="nc" id="L85">	}</span>
+
+	// static public final boolean USE_HECTOR = false;
+<span class="fc" id="L88">	static public boolean ADD_NICE_FOR_DOT = false;</span>
+
+	// static public final boolean USE_IF_VERTICAL = true;
+	// static public final boolean SWI2 = false;
+	// static public final boolean USE_COMPOUND = false;
+	// static public final boolean OMEGA_CROSSING = false;
+
+	// static public final boolean LINK_BETWEEN_FIELDS = true;
+
+	public void reset() {
+<span class="nc" id="L98">		reset(false);</span>
+<span class="nc" id="L99">		GraphvizRuntimeEnvironment.getInstance().setDotExecutable(null);</span>
+<span class="nc" id="L100">	}</span>
+
+	public final void setDotExecutable(String dotExecutable) {
+<span class="nc" id="L103">		GraphvizRuntimeEnvironment.getInstance().setDotExecutable(dotExecutable);</span>
+<span class="nc" id="L104">	}</span>
+
+<span class="fc" id="L106">	private OptionFlags() {</span>
+<span class="fc" id="L107">		reset(true);</span>
+<span class="fc" id="L108">	}</span>
+
+	private void reset(boolean exit) {
+<span class="fc" id="L111">		verbose = false;</span>
+<span class="fc" id="L112">		extractFromMetadata = false;</span>
+<span class="fc" id="L113">		word = false;</span>
+<span class="fc" id="L114">		systemExit = exit;</span>
+<span class="fc" id="L115">		gui = false;</span>
+<span class="fc" id="L116">		quiet = false;</span>
+		// checkDotError = false;
+<span class="fc" id="L118">		printFonts = false;</span>
+		// failOnError = false;
+<span class="fc" id="L120">		encodesprite = false;</span>
+		// PIC_LINE = false;
+<span class="fc" id="L122">	}</span>
+
+	public boolean useJavaInsteadOfDot() {
+<span class="nc" id="L125">		return false;</span>
+	}
+
+	private boolean verbose;
+	private boolean extractFromMetadata;
+	private boolean word;
+	private boolean systemExit;
+	private boolean gui;
+	private boolean quiet;
+	// private boolean checkDotError;
+	private boolean printFonts;
+	private boolean encodesprite;
+	private boolean dumpHtmlStats;
+	private boolean dumpStats;
+	private boolean loopStats;
+	private boolean overwrite;
+<span class="fc" id="L141">	private boolean enableStats = defaultForStats();</span>
+	private boolean stdLib;
+	private boolean silentlyCompletelyIgnoreErrors;
+	private boolean extractStdLib;
+	private boolean clipboardLoop;
+	private boolean clipboard;
+<span class="fc" id="L147">	private String fileSeparator = &quot;_&quot;;</span>
+<span class="fc" id="L148">	private long timeoutMs = 15 * 60 * 1000L; // 15 minutes</span>
+	private SFile logData;
+
+	public final boolean isVerbose() {
+<span class="fc" id="L152">		return verbose;</span>
+	}
+
+	public final void setVerbose(boolean verbose) {
+<span class="nc" id="L156">		this.verbose = verbose;</span>
+<span class="nc" id="L157">	}</span>
+
+	public final boolean isExtractFromMetadata() {
+<span class="nc" id="L160">		return extractFromMetadata;</span>
+	}
+
+	public final void setExtractFromMetadata(boolean extractFromMetadata) {
+<span class="nc" id="L164">		this.extractFromMetadata = extractFromMetadata;</span>
+<span class="nc" id="L165">	}</span>
+
+	public final boolean isWord() {
+<span class="fc" id="L168">		return word;</span>
+	}
+
+	public final void setWord(boolean word) {
+<span class="nc" id="L172">		this.word = word;</span>
+<span class="nc" id="L173">	}</span>
+
+	public final boolean isSystemExit() {
+<span class="nc" id="L176">		return systemExit;</span>
+	}
+
+	public final void setSystemExit(boolean systemExit) {
+<span class="nc" id="L180">		this.systemExit = systemExit;</span>
+<span class="nc" id="L181">	}</span>
+
+	public final boolean isGui() {
+<span class="nc" id="L184">		return gui;</span>
+	}
+
+	public final void setGui(boolean gui) {
+<span class="nc" id="L188">		this.gui = gui;</span>
+<span class="nc" id="L189">	}</span>
+
+	public final boolean isQuiet() {
+<span class="nc" id="L192">		return quiet;</span>
+	}
+
+	public final void setQuiet(boolean quiet) {
+<span class="fc" id="L196">		this.quiet = quiet;</span>
+<span class="fc" id="L197">	}</span>
+
+//	public final boolean isCheckDotError() {
+//		return checkDotError;
+//	}
+
+	public final void setCheckDotError(boolean checkDotError) {
+//		this.checkDotError = checkDotError;
+<span class="nc" id="L205">	}</span>
+
+<span class="fc" id="L207">	private final AtomicBoolean logDataInitized = new AtomicBoolean(false);</span>
+
+	public void logData(final SFile file, Diagram system) {
+<span class="fc" id="L210">		final String warnOrError = system.getWarningOrError();</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (warnOrError == null) {</span>
+<span class="fc" id="L212">			return;</span>
+		}
+<span class="nc" id="L214">		synchronized (logDataInitized) {</span>
+<span class="nc bnc" id="L215" title="All 4 branches missed.">			if (logData == null &amp;&amp; logDataInitized.get() == false) {</span>
+<span class="nc" id="L216">				final String s = GraphvizUtils.getenvLogData();</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">				if (s != null) {</span>
+<span class="nc" id="L218">					setLogData(new SFile(s));</span>
+				}
+<span class="nc" id="L220">				logDataInitized.set(true);</span>
+			}
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (logData == null) {</span>
+<span class="nc" id="L224">				return;</span>
+			}
+			// final PSystemError systemError = (PSystemError) system;
+<span class="nc" id="L227">			try (PrintStream ps = SecurityUtils.createPrintStream(logData.createFileOutputStream(true))) {</span>
+<span class="nc" id="L228">				ps.println(&quot;Start of &quot; + file.getName());</span>
+<span class="nc" id="L229">				ps.println(warnOrError);</span>
+<span class="nc" id="L230">				ps.println(&quot;End of &quot; + file.getName());</span>
+<span class="nc" id="L231">				ps.println();</span>
+<span class="nc" id="L232">			} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L233">				Log.error(&quot;Cannot open &quot; + logData);</span>
+<span class="nc" id="L234">				Logme.error(e);</span>
+<span class="nc" id="L235">			}</span>
+<span class="nc" id="L236">		}</span>
+<span class="nc" id="L237">	}</span>
+
+	public final void setLogData(SFile logData) {
+<span class="nc" id="L240">		this.logData = logData;</span>
+<span class="nc" id="L241">		logData.delete();</span>
+<span class="nc" id="L242">		try (PrintStream ps = SecurityUtils.createPrintStream(logData.createFileOutputStream())) {</span>
+<span class="nc" id="L243">			ps.println();</span>
+<span class="nc" id="L244">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L245">			Log.error(&quot;Cannot open &quot; + logData);</span>
+<span class="nc" id="L246">			Logme.error(e);</span>
+<span class="nc" id="L247">		}</span>
+<span class="nc" id="L248">	}</span>
+
+	public final boolean isPrintFonts() {
+<span class="nc" id="L251">		return printFonts;</span>
+	}
+
+	public final void setPrintFonts(boolean printFonts) {
+<span class="nc" id="L255">		this.printFonts = printFonts;</span>
+<span class="nc" id="L256">	}</span>
+
+	public final boolean isUseSuggestEngine2() {
+<span class="nc" id="L259">		return false;</span>
+	}
+
+	public final boolean isEncodesprite() {
+<span class="nc" id="L263">		return encodesprite;</span>
+	}
+
+	public final void setEncodesprite(boolean encodesprite) {
+<span class="nc" id="L267">		this.encodesprite = encodesprite;</span>
+<span class="nc" id="L268">	}</span>
+
+	public final boolean isOverwrite() {
+<span class="nc" id="L271">		return overwrite;</span>
+	}
+
+	public final void setOverwrite(boolean overwrite) {
+<span class="nc" id="L275">		this.overwrite = overwrite;</span>
+<span class="nc" id="L276">	}</span>
+
+	public final String getFileSeparator() {
+<span class="fc" id="L279">		return fileSeparator;</span>
+	}
+
+	public final void setFileSeparator(String fileSeparator) {
+<span class="nc" id="L283">		this.fileSeparator = fileSeparator;</span>
+<span class="nc" id="L284">	}</span>
+
+	public final boolean isDumpHtmlStats() {
+<span class="nc" id="L287">		return dumpHtmlStats;</span>
+	}
+
+	public final void setDumpHtmlStats(boolean value) {
+<span class="nc" id="L291">		this.dumpHtmlStats = value;</span>
+<span class="nc" id="L292">	}</span>
+
+	public final boolean isDumpStats() {
+<span class="nc" id="L295">		return dumpStats;</span>
+	}
+
+	public final void setDumpStats(boolean dumpStats) {
+<span class="nc" id="L299">		this.dumpStats = dumpStats;</span>
+<span class="nc" id="L300">	}</span>
+
+	public final boolean isLoopStats() {
+<span class="nc" id="L303">		return loopStats;</span>
+	}
+
+	public final void setLoopStats(boolean loopStats) {
+<span class="nc" id="L307">		this.loopStats = loopStats;</span>
+<span class="nc" id="L308">	}</span>
+
+	private static boolean defaultForStats() {
+<span class="pc bpc" id="L311" title="2 of 4 branches missed.">		return isTrue(System.getProperty(&quot;PLANTUML_STATS&quot;)) || isTrue(System.getenv(&quot;PLANTUML_STATS&quot;));</span>
+	}
+
+	private static boolean isTrue(final String value) {
+<span class="pc bpc" id="L315" title="2 of 4 branches missed.">		return &quot;on&quot;.equalsIgnoreCase(value) || &quot;true&quot;.equalsIgnoreCase(value);</span>
+	}
+
+	public boolean isEnableStats() {
+<span class="fc" id="L319">		return enableStats;</span>
+	}
+
+	public void setEnableStats(boolean enableStats) {
+<span class="nc" id="L323">		this.enableStats = enableStats;</span>
+<span class="nc" id="L324">	}</span>
+
+	public final long getTimeoutMs() {
+<span class="nc" id="L327">		return timeoutMs;</span>
+	}
+
+	public final void setTimeoutMs(long timeoutMs) {
+<span class="nc" id="L331">		this.timeoutMs = timeoutMs;</span>
+<span class="nc" id="L332">	}</span>
+
+	public void setExtractStdLib(boolean extractStdLib) {
+<span class="nc" id="L335">		this.extractStdLib = extractStdLib;</span>
+<span class="nc" id="L336">	}</span>
+
+	public boolean isExtractStdLib() {
+<span class="nc" id="L339">		return extractStdLib;</span>
+	}
+
+	public final boolean isClipboardLoop() {
+<span class="nc" id="L343">		return clipboardLoop;</span>
+	}
+
+	public final void setClipboardLoop(boolean clipboardLoop) {
+<span class="nc" id="L347">		this.clipboardLoop = clipboardLoop;</span>
+<span class="nc" id="L348">	}</span>
+
+	public final boolean isClipboard() {
+<span class="nc" id="L351">		return clipboard;</span>
+	}
+
+	public final void setClipboard(boolean clipboard) {
+<span class="nc" id="L355">		this.clipboard = clipboard;</span>
+<span class="nc" id="L356">	}</span>
+
+	public final boolean isStdLib() {
+<span class="nc" id="L359">		return stdLib;</span>
+	}
+
+	public final void setStdLib(boolean stdLib) {
+<span class="nc" id="L363">		this.stdLib = stdLib;</span>
+<span class="nc" id="L364">	}</span>
+
+	public final boolean isSilentlyCompletelyIgnoreErrors() {
+<span class="fc" id="L367">		return silentlyCompletelyIgnoreErrors;</span>
+	}
+
+	public final void setSilentlyCompletelyIgnoreErrors(boolean silentlyCompletelyIgnoreErrors) {
+<span class="nc" id="L371">		this.silentlyCompletelyIgnoreErrors = silentlyCompletelyIgnoreErrors;</span>
+<span class="nc" id="L372">	}</span>
+
+	// ::done
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

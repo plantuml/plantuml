@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeHeaderQuarterly.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.draw</a> &gt; <span class="el_source">TimeHeaderQuarterly.java</span></div><h1>TimeHeaderQuarterly.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.draw;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.MonthYear;
+import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+
+public class TimeHeaderQuarterly extends TimeHeaderCalendar {
+
+	@Override
+	public double getTimeHeaderHeight(StringBounder stringBounder) {
+<span class="nc" id="L53">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L54">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L55">		return h1 + h2 + 5;</span>
+	}
+
+	@Override
+	public double getTimeFooterHeight(StringBounder stringBounder) {
+<span class="nc" id="L60">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L61">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L62">		return h1 + h2 + 5;</span>
+	}
+
+	@Override
+	public double getFullHeaderHeight(StringBounder stringBounder) {
+<span class="nc" id="L67">		return getTimeHeaderHeight(stringBounder);</span>
+	}
+
+	public TimeHeaderQuarterly(StringBounder stringBounder, TimeHeaderParameters thParam, Day printStart) {
+<span class="nc" id="L71">		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),</span>
+<span class="nc" id="L72">				thParam.getScale(), printStart));</span>
+<span class="nc" id="L73">	}</span>
+
+	@Override
+	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+<span class="nc" id="L77">		drawTextsBackground(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L78">		drawYears(ug);</span>
+<span class="nc" id="L79">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L80">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L81">		drawQuarters(ug.apply(UTranslate.dy(h1 + 2)));</span>
+<span class="nc" id="L82">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L83">		drawHline(ug, 0);</span>
+<span class="nc" id="L84">		drawHline(ug, h1 + 2);</span>
+<span class="nc" id="L85">		drawHline(ug, h1 + 2 + h2 + 2);</span>
+		// drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
+<span class="nc" id="L87">	}</span>
+
+	@Override
+	public void drawTimeFooter(UGraphic ug) {
+<span class="nc" id="L91">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L92">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
+		// ug = ug.apply(UTranslate.dy(3));
+<span class="nc" id="L94">		drawQuarters(ug);</span>
+<span class="nc" id="L95">		drawYears(ug.apply(UTranslate.dy(h2 + 2)));</span>
+<span class="nc" id="L96">		drawHline(ug, 0);</span>
+<span class="nc" id="L97">		drawHline(ug, h2 + 2);</span>
+<span class="nc" id="L98">		drawHline(ug, h1 + 2 + h2 + 2);</span>
+//		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));
+<span class="nc" id="L100">	}</span>
+
+	private void drawYears(final UGraphic ug) {
+<span class="nc" id="L103">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L104">		MonthYear last = null;</span>
+<span class="nc" id="L105">		double lastChange = -1;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
+<span class="nc" id="L107">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">			if (last == null || wink.monthYear().year() != last.year()) {</span>
+<span class="nc" id="L109">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L111">					printYear(ug, last, lastChange, x1);</span>
+
+<span class="nc" id="L113">				lastChange = x1;</span>
+<span class="nc" id="L114">				last = wink.monthYear();</span>
+			}
+		}
+<span class="nc" id="L117">		final double x1 = getTimeScale().getStartingPosition(getMax().increment());</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L119">			printYear(ug, last, lastChange, x1);</span>
+
+<span class="nc" id="L121">		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h1 + 2);</span>
+<span class="nc" id="L122">	}</span>
+
+	private void drawQuarters(UGraphic ug) {
+<span class="nc" id="L125">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L126">		String last = null;</span>
+<span class="nc" id="L127">		double lastChange = -1;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
+<span class="nc" id="L129">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (quarter(wink).equals(last) == false) {</span>
+<span class="nc" id="L131">				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L133">					printQuarter(ug, last, lastChange, x1);</span>
+
+<span class="nc" id="L135">				lastChange = x1;</span>
+<span class="nc" id="L136">				last = quarter(wink);</span>
+			}
+		}
+<span class="nc" id="L139">		final double x1 = getTimeScale().getStartingPosition(getMax().increment());</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L141">			printQuarter(ug, last, lastChange, x1);</span>
+
+<span class="nc" id="L143">		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h2 + 2);</span>
+<span class="nc" id="L144">	}</span>
+
+	private String quarter(Day day) {
+<span class="nc" id="L147">		return &quot;Q&quot; + ((day.month().ordinal() + 3) / 3);</span>
+	}
+
+	private void printYear(UGraphic ug, MonthYear monthYear, double start, double end) {
+<span class="nc" id="L151">		final TextBlock small = getTextBlock(SName.month, &quot;&quot; + monthYear.year(), true, openFontColor());</span>
+<span class="nc" id="L152">		printCentered(ug, false, start, end, small);</span>
+<span class="nc" id="L153">	}</span>
+
+	private void printQuarter(UGraphic ug, String quarter, double start, double end) {
+<span class="nc" id="L156">		final TextBlock small = getTextBlock(SName.day, quarter, false, openFontColor());</span>
+<span class="nc" id="L157">		printCentered(ug, false, start, end, small);</span>
+<span class="nc" id="L158">	}</span>
+
+	private void printLeft(UGraphic ug, TextBlock text, double start) {
+<span class="nc" id="L161">		text.drawU(ug.apply(UTranslate.dx(start)));</span>
+<span class="nc" id="L162">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

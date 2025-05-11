@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageChenRelationship.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageChenRelationship.java</span></div><h1>EntityImageChenRelationship.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import java.util.Arrays;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.url.Url;
+
+public class EntityImageChenRelationship extends AbstractEntityImage {
+
+	final private boolean isIdentifying;
+
+	final private TextBlock title;
+	final private Url url;
+
+	public EntityImageChenRelationship(Entity entity) {
+<span class="fc" id="L75">		super(entity);</span>
+
+<span class="fc" id="L77">		isIdentifying = hasStereotype(&quot;&lt;&lt;identifying&gt;&gt;&quot;);</span>
+
+<span class="fc" id="L79">		final FontConfiguration titleFontConfiguration = getStyleTitle(entity, getSkinParam())</span>
+<span class="fc" id="L80">				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());</span>
+
+<span class="fc" id="L82">		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(), CreoleMode.FULL,</span>
+<span class="fc" id="L83">				getStyle().wrapWidth());</span>
+
+<span class="fc" id="L85">		url = entity.getUrl99();</span>
+<span class="fc" id="L86">	}</span>
+
+	private boolean hasStereotype(String stereotype) {
+<span class="pc bpc" id="L89" title="1 of 4 branches missed.">		return getEntity().getStereotype() != null &amp;&amp; getEntity().getStereotype().toString().contains(stereotype);</span>
+	}
+
+	private Style getStyle() {
+<span class="fc" id="L93">		return getStyle(getEntity(), getSkinParam());</span>
+	}
+
+	private static Style getStyle(Entity group, ISkinParam skinParam) {
+<span class="fc" id="L97">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship)</span>
+<span class="fc" id="L98">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
+<span class="fc" id="L102">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship, SName.title)</span>
+<span class="fc" id="L103">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	@Override
+	public ShapeType getShapeType() {
+<span class="fc" id="L108">		return ShapeType.DIAMOND;</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L113">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+
+		// Fit a diamond with aspect ratio 2 around the text
+		// diagonal = dimTitle dot ([1, 2] / sqrt(5)) + 2 * MARGIN
+		// dimTotal = diagonal * [sqrt(5), sqrt(5) / 2]
+
+<span class="fc" id="L119">		final double diagonal = (dimTitle.getWidth() + 2 * dimTitle.getHeight()) / Math.sqrt(5) + 2 * MARGIN;</span>
+<span class="fc" id="L120">		return new XDimension2D(diagonal * Math.sqrt(5), diagonal * Math.sqrt(5) / 2);</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L125">		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L127">			ug.startUrl(url);</span>
+
+<span class="fc" id="L129">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L130">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+
+<span class="fc" id="L132">		final UStroke stroke = getStyle().getStroke(getEntity().getColors());</span>
+<span class="fc" id="L133">		ug = applyColor(ug);</span>
+<span class="fc" id="L134">		ug = ug.apply(stroke);</span>
+<span class="fc" id="L135">		ug.draw(getShape(dimTotal));</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (isIdentifying) {</span>
+<span class="fc" id="L137">			ug.apply(new UTranslate(10, 5)).draw(getShape(dimTotal.delta(-20, -10)));</span>
+		}
+
+<span class="fc" id="L140">		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;</span>
+<span class="fc" id="L141">		final double yTitle = (dimTotal.getHeight() - dimTitle.getHeight()) / 2;</span>
+<span class="fc" id="L142">		title.drawU(ug.apply(new UTranslate(xTitle, yTitle)));</span>
+
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L145">			ug.closeUrl();</span>
+
+<span class="fc" id="L147">		ug.closeGroup();</span>
+<span class="fc" id="L148">	}</span>
+
+	final protected UGraphic applyColor(UGraphic ug) {
+<span class="fc" id="L151">		Colors colors = getEntity().getColors();</span>
+
+<span class="fc" id="L153">		HColor border = colors.getColor(ColorType.LINE);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (border == null)</span>
+<span class="fc" id="L155">			border = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L156">		ug = ug.apply(border);</span>
+
+<span class="fc" id="L158">		HColor backcolor = colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (backcolor == null)</span>
+<span class="fc" id="L160">			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L161">		ug = ug.apply(backcolor.bg());</span>
+
+<span class="fc" id="L163">		return ug;</span>
+	}
+
+	private UShape getShape(XDimension2D dimTotal) {
+<span class="fc" id="L167">		final double width = dimTotal.getWidth();</span>
+<span class="fc" id="L168">		final double height = dimTotal.getHeight();</span>
+
+<span class="fc" id="L170">		final XPoint2D p1 = new XPoint2D(0, height / 2);</span>
+<span class="fc" id="L171">		final XPoint2D p2 = new XPoint2D(width / 2, 0);</span>
+<span class="fc" id="L172">		final XPoint2D p3 = new XPoint2D(width, height / 2);</span>
+<span class="fc" id="L173">		final XPoint2D p4 = new XPoint2D(width / 2, height);</span>
+
+<span class="fc" id="L175">		return new UPolygon(Arrays.asList(p1, p2, p3, p4));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

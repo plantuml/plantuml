@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WBSLink.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.wbs</a> &gt; <span class="el_source">WBSLink.java</span></div><h1>WBSLink.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.wbs;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
+
+class WBSLink implements UDrawable {
+
+	private final WElement element1;
+	private final WElement element2;
+	private final HColor color;
+
+<span class="fc" id="L54">	public WBSLink(WElement element1, WElement element2, HColor color) {</span>
+<span class="fc" id="L55">		this.element1 = element1;</span>
+<span class="fc" id="L56">		this.element2 = element2;</span>
+<span class="fc" id="L57">		this.color = color;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L59">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L60">	}</span>
+
+	public final WElement getElement1() {
+<span class="fc" id="L63">		return element1;</span>
+	}
+
+	public final WElement getElement2() {
+<span class="fc" id="L67">		return element2;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L71">		final WElement element1 = getElement1();</span>
+<span class="fc" id="L72">		final WElement element2 = getElement2();</span>
+<span class="fc" id="L73">		final UTranslate position1 = element1.getPosition();</span>
+<span class="fc" id="L74">		final UTranslate position2 = element2.getPosition();</span>
+<span class="fc" id="L75">		final XDimension2D dim1 = element1.getDimension();</span>
+<span class="fc" id="L76">		final XDimension2D dim2 = element2.getDimension();</span>
+<span class="pc bpc" id="L77" title="2 of 4 branches missed.">		if (position1 != null &amp;&amp; position2 != null) {</span>
+
+<span class="fc" id="L79">			final XRectangle2D rect1 = new XRectangle2D(position1.getDx(), position1.getDy(), dim1.getWidth(),</span>
+<span class="fc" id="L80">					dim1.getHeight());</span>
+<span class="fc" id="L81">			final XRectangle2D rect2 = new XRectangle2D(position2.getDx(), position2.getDy(), dim2.getWidth(),</span>
+<span class="fc" id="L82">					dim2.getHeight());</span>
+
+<span class="fc" id="L84">			XLine2D line = new XLine2D(rect1.getCenterX(), rect1.getCenterY(), rect2.getCenterX(), rect2.getCenterY());</span>
+
+<span class="fc" id="L86">			final XPoint2D c1 = rect1.intersect(line);</span>
+<span class="fc" id="L87">			final XPoint2D c2 = rect2.intersect(line);</span>
+
+<span class="fc" id="L89">			line = XLine2D.line(c1, c2);</span>
+<span class="fc" id="L90">			ug = ug.apply(color);</span>
+<span class="fc" id="L91">			line.drawU(ug);</span>
+
+<span class="fc" id="L93">			final double angle = line.getAngle();</span>
+<span class="fc" id="L94">			final ExtremityArrow arrow = new ExtremityArrow(c2, angle);</span>
+<span class="fc" id="L95">			arrow.drawU(ug);</span>
+
+		}
+
+<span class="fc" id="L99">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

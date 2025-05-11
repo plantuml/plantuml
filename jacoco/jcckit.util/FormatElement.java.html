@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FormatElement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.util</a> &gt; <span class="el_source">FormatElement.java</span></div><h1>FormatElement.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.util;
+
+/**
+ * 
+ * 
+ * @author Franz-Josef Elmer
+ */
+class FormatElement {
+  /** All descriptor characters. */
+  static final String DESCRIPTORS = &quot;doxfeEgG&quot;;
+  private static final String INT_DESCRIPTORS = &quot;dox&quot;;
+  private static final int INT_DESCRIPTOR = 0;
+  private static final int FLOAT_DESCRIPTOR = 1;
+  /**
+   *  Calculate the integer power of a floating point number.
+   *  @param n Exponent.
+   *  @param x Number.
+   *  @return &lt;tt&gt;x^n&lt;/tt&gt;.
+   */
+  private static final double power(double x, int n) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">    return n &lt; 0 ? 1.0 / power2(x, -n) : power2(x, n);</span>
+  }
+
+  /** Calculate &lt;tt&gt;x^n&lt;/tt&gt; recursively assuming &lt;tt&gt;n &gt; 0&lt;/tt&gt;. */
+  private static final double power2(double x, int n) {
+<span class="nc bnc" id="L44" title="All 3 branches missed.">    switch (n) {</span>
+<span class="nc" id="L45">    case 0: return 1;</span>
+<span class="nc" id="L46">    case 1: return x;</span>
+    default:
+<span class="nc" id="L48">      double p = power2(x, n / 2);</span>
+<span class="nc" id="L49">      return p * p * power2(x, n % 2);</span>
+    }
+  }
+
+  private final char _descriptor;
+  private final int _descriptorType;
+  private final double _tenToPrecision;
+  private boolean _decimalPoint;
+  private boolean _flushLeft;
+  private boolean _leadingZeros;
+  private boolean _alwaysSign;
+  private int _width;
+  private int _precision;
+
+  /** Creates an instance for the specified format string. */
+<span class="nc" id="L64">  FormatElement(String formatString) {</span>
+<span class="nc" id="L65">    int len = formatString.length() - 1;</span>
+<span class="nc" id="L66">    _descriptor = formatString.charAt(len);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">    if (DESCRIPTORS.indexOf(_descriptor) &lt; 0) {</span>
+<span class="nc" id="L68">      throw new IllegalArgumentException(&quot;Format element '&quot; + formatString</span>
+          + &quot;' does not ends with one of the following characters: &quot;
+          + DESCRIPTORS);
+    }
+<span class="nc bnc" id="L72" title="All 2 branches missed.">    _descriptorType = INT_DESCRIPTORS.indexOf(_descriptor) &gt;= 0</span>
+<span class="nc" id="L73">                                ? INT_DESCRIPTOR : FLOAT_DESCRIPTOR;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    if (formatString.length() &gt; 1) {</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">      switch (formatString.charAt(0)) {</span>
+      case '-':
+<span class="nc" id="L77">        _flushLeft = true;</span>
+<span class="nc" id="L78">        formatString = formatString.substring(1);</span>
+<span class="nc" id="L79">        break;</span>
+      case '0':
+<span class="nc" id="L81">        _leadingZeros = true;</span>
+<span class="nc" id="L82">        formatString = formatString.substring(1);</span>
+<span class="nc" id="L83">        break;</span>
+      case '+':
+<span class="nc" id="L85">        _alwaysSign = true;</span>
+<span class="nc" id="L86">        formatString = formatString.substring(1);</span>
+        break;
+      }
+<span class="nc" id="L89">      len = formatString.length() - 1;</span>
+<span class="nc" id="L90">      int index = formatString.indexOf('.');</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">      _decimalPoint = index &gt;= 0;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">      int last = _decimalPoint ? index : len;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">      if (last &gt; 0) {</span>
+<span class="nc" id="L94">        _width = Integer.parseInt(formatString.substring(0, last));</span>
+      }
+<span class="nc bnc" id="L96" title="All 2 branches missed.">      if (_decimalPoint) {</span>
+<span class="nc" id="L97">        index++;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (index &lt; len) {</span>
+<span class="nc" id="L99">          _precision = Integer.parseInt(formatString.substring(index, len));</span>
+        }
+      }
+    }
+<span class="nc" id="L103">    _tenToPrecision = power(10, _precision);</span>
+<span class="nc" id="L104">  }</span>
+
+  /**
+   *  Format a number in accordance of the format string
+   *  given at the initialisation of this instance.
+   *  @param buffer Buffer to which the formated output will be appended.
+   *  @param number Number to be formated.
+   */
+  public void form(StringBuffer buffer, long number) {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">    if (_descriptorType == FLOAT_DESCRIPTOR) {</span>
+<span class="nc" id="L114">      form(buffer, (double) number);</span>
+    } else {
+      // Format absolut value in the right base
+<span class="nc bnc" id="L117" title="All 2 branches missed.">      buffer.append(form(number &lt; 0,</span>
+<span class="nc" id="L118">                         Long.toString(Math.abs(number),</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                                _descriptor == 'o' ? 8</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                                          : (_descriptor == 'x' ? 16 : 10)),</span>
+                         &quot;&quot;));
+    }
+<span class="nc" id="L123">  }</span>
+
+  /**
+   *  Format a number in accordance of the format string
+   *  given at the initialisation of this instance.
+   *  @param buffer Buffer to which the formated output will be appended.
+   *  @param number Number to be formated.
+   */
+  public void form(StringBuffer buffer, double number) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">    if (_descriptorType == INT_DESCRIPTOR) {</span>
+<span class="nc" id="L133">      form(buffer, (long) Math.floor(number + 0.5));</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">    } else if (_descriptor == 'f') {</span>
+<span class="nc" id="L135">      buffer.append(formF(number));</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">    } else if (_descriptor == 'e' || _descriptor == 'E') {</span>
+<span class="nc" id="L137">      buffer.append(formE(number));</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">    } else if (_descriptor == 'g' || _descriptor == 'G') {</span>
+<span class="nc" id="L139">      String formF = formF(number);</span>
+<span class="nc" id="L140">      String formE = formE(number);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">      buffer.append(formF.length() &gt; formE.length() ? formE : formF);</span>
+    } 
+<span class="nc" id="L143">  }</span>
+
+  private String form(boolean negativeValue, String intPart, String fracPart) {
+<span class="nc" id="L146">    int len = intPart.length() + fracPart.length();</span>
+
+    // Buffer holding the result
+<span class="nc" id="L149">    StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L150">    int count = 0;</span>
+
+    // add sign if necessary
+<span class="nc bnc" id="L153" title="All 4 branches missed.">    if (_alwaysSign || negativeValue) {</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">      result.append(negativeValue ? '-' : '+');</span>
+<span class="nc" id="L155">      count++;</span>
+    }
+
+    // add zeros  if necessary
+<span class="nc bnc" id="L159" title="All 2 branches missed.">    if (_leadingZeros) {</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">      for (int i = count + len; i &lt; _width; i++) {</span>
+<span class="nc" id="L161">        result.append('0');</span>
+<span class="nc" id="L162">        count++;</span>
+      }
+    }
+
+    // add number
+<span class="nc" id="L167">    result.append(intPart).append(fracPart);</span>
+<span class="nc" id="L168">    count += len;</span>
+
+    // add spaces if necessary
+<span class="nc bnc" id="L171" title="All 2 branches missed.">    if (_flushLeft) {</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">      for (; count &lt; _width; count++) {</span>
+<span class="nc" id="L173">        result.append(' ');</span>
+      }
+    } else {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">      for (; count &lt; _width; count++) {</span>
+<span class="nc" id="L177">        result.insert(0, ' ');</span>
+      }
+    }
+
+<span class="nc" id="L181">    return new String(result);</span>
+  }
+
+  /** Format floating point number with exponent. */
+  private String formE(double number) {
+    // format absolute mantisse
+<span class="nc" id="L187">    int exponent = 0;</span>
+<span class="nc" id="L188">    String zeros = &quot;00000000000000000000000&quot;.substring(0, _precision + 1);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">    if (number != 0) {</span>
+<span class="nc" id="L190">      exponent = (int) Math.floor(Math.log(Math.abs(number)) / Math.log(10));</span>
+<span class="nc" id="L191">      double mantisse = Math.floor(Math.abs(number * power(10.0,</span>
+                                            _precision - exponent)) + 0.5);
+<span class="nc bnc" id="L193" title="All 2 branches missed.">      if (mantisse &gt;= 10 * _tenToPrecision) {</span>
+<span class="nc" id="L194">        exponent++;</span>
+<span class="nc" id="L195">        mantisse = Math.floor(Math.abs(number * power(10.0,</span>
+                                          _precision - exponent)) + 0.5);
+      }
+<span class="nc" id="L198">      zeros = Long.toString((long) mantisse);</span>
+    }
+
+    // make fractional part
+<span class="nc" id="L202">    StringBuffer fracPart = new StringBuffer();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">    if (_decimalPoint) {</span>
+<span class="nc" id="L204">      fracPart.append('.').append(zeros.substring(1));</span>
+    }
+
+    // make exponent
+<span class="nc bnc" id="L208" title="All 2 branches missed.">    fracPart.append(Character.isLowerCase(_descriptor) ? 'e': 'E')</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">            .append(exponent &lt; 0 ? '-' : '+');</span>
+<span class="nc" id="L210">    exponent = Math.abs(exponent);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">    for (int i = 0, n = fracPart.length(); i &lt; 3; i++) {</span>
+<span class="nc" id="L212">      fracPart.insert(n, Character.forDigit(exponent % 10, 10));</span>
+<span class="nc" id="L213">      exponent /= 10;</span>
+    }
+
+<span class="nc bnc" id="L216" title="All 2 branches missed.">    return form(number &lt; 0, zeros.substring(0, 1), new String(fracPart));</span>
+  }
+
+  /** Format floating point number. */
+  private String formF(double number) {
+    // Format absolut value
+<span class="nc bnc" id="L222" title="All 2 branches missed.">    double multiplier = number &lt; 0 ? - _tenToPrecision : _tenToPrecision;</span>
+<span class="nc" id="L223">    String digits </span>
+<span class="nc" id="L224">        = Long.toString((long) Math.floor(number * multiplier + 0.5));</span>
+<span class="nc" id="L225">    String intPart = digits;</span>
+<span class="nc" id="L226">    StringBuffer fracPart = new StringBuffer();</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">    if (_decimalPoint) {</span>
+<span class="nc" id="L228">      int len = digits.length() - _precision;</span>
+<span class="nc" id="L229">      fracPart.append('.').append(digits.substring(Math.max(0, len)));</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">      if (len &gt; 0) {</span>
+<span class="nc" id="L231">        intPart = digits.substring(0, len);</span>
+      } else {
+<span class="nc" id="L233">        intPart = &quot;0&quot;;</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">        for (; len &lt; 0; len++) {</span>
+<span class="nc" id="L235">          fracPart.insert(1, '0');</span>
+        }
+      }
+    }
+
+<span class="nc bnc" id="L240" title="All 2 branches missed.">    return form(number &lt; 0, intPart, new String(fracPart));</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

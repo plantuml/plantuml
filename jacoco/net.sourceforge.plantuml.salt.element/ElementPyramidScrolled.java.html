@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ElementPyramidScrolled.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.salt.element</a> &gt; <span class="el_source">ElementPyramidScrolled.java</span></div><h1>ElementPyramidScrolled.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.salt.element;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.salt.Positionner2;
+import net.sourceforge.plantuml.salt.factory.ScrollStrategy;
+import net.sourceforge.plantuml.style.ISkinSimple;
+
+public class ElementPyramidScrolled extends ElementPyramid {
+
+<span class="nc" id="L51">	private final double v1 = 15;</span>
+<span class="nc" id="L52">	private final double v2 = 12;</span>
+	private final ScrollStrategy scrollStrategy;
+
+	public ElementPyramidScrolled(Positionner2 positionner, ISkinSimple spriteContainer,
+			ScrollStrategy scrollStrategy) {
+<span class="nc" id="L57">		super(positionner, TableStrategy.DRAW_OUTSIDE, null, spriteContainer);</span>
+<span class="nc" id="L58">		this.scrollStrategy = scrollStrategy;</span>
+<span class="nc" id="L59">	}</span>
+
+	@Override
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+<span class="nc" id="L63">		final XDimension2D result = super.getPreferredDimension(stringBounder, x, y);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (scrollStrategy == ScrollStrategy.HORIZONTAL_ONLY)</span>
+<span class="nc" id="L65">			return result.delta(0, 30);</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (scrollStrategy == ScrollStrategy.VERTICAL_ONLY)</span>
+<span class="nc" id="L68">			return result.delta(30, 0);</span>
+
+<span class="nc" id="L70">		return result.delta(30);</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
+<span class="nc" id="L75">		super.drawU(ug, zIndex, dimToUse);</span>
+<span class="nc" id="L76">		ug = ug.apply(getBlack());</span>
+<span class="nc" id="L77">		final XDimension2D dim = super.getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		if (scrollStrategy == ScrollStrategy.BOTH || scrollStrategy == ScrollStrategy.VERTICAL_ONLY)</span>
+<span class="nc" id="L79">			drawV(ug.apply(UTranslate.dx(dim.getWidth() + 4)), v1, dim.getHeight());</span>
+
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		if (scrollStrategy == ScrollStrategy.BOTH || scrollStrategy == ScrollStrategy.HORIZONTAL_ONLY)</span>
+<span class="nc" id="L82">			drawH(ug.apply(UTranslate.dy(dim.getHeight() + 4)), dim.getWidth(), v1);</span>
+
+<span class="nc" id="L84">	}</span>
+
+	private UPath getTr0() {
+<span class="nc" id="L87">		final UPath poly = UPath.none();</span>
+<span class="nc" id="L88">		poly.moveTo(3, 0);</span>
+<span class="nc" id="L89">		poly.lineTo(6, 5);</span>
+<span class="nc" id="L90">		poly.lineTo(0, 5);</span>
+<span class="nc" id="L91">		poly.lineTo(3, 0);</span>
+<span class="nc" id="L92">		poly.closePath();</span>
+<span class="nc" id="L93">		return poly;</span>
+	}
+
+	private UPath getTr180() {
+<span class="nc" id="L97">		final UPath poly = UPath.none();</span>
+<span class="nc" id="L98">		poly.moveTo(3, 5);</span>
+<span class="nc" id="L99">		poly.lineTo(6, 0);</span>
+<span class="nc" id="L100">		poly.lineTo(0, 0);</span>
+<span class="nc" id="L101">		poly.lineTo(3, 5);</span>
+<span class="nc" id="L102">		poly.closePath();</span>
+<span class="nc" id="L103">		return poly;</span>
+	}
+
+	private UPath getTr90() {
+<span class="nc" id="L107">		final UPath poly = UPath.none();</span>
+<span class="nc" id="L108">		poly.moveTo(0, 3);</span>
+<span class="nc" id="L109">		poly.lineTo(5, 6);</span>
+<span class="nc" id="L110">		poly.lineTo(5, 0);</span>
+<span class="nc" id="L111">		poly.lineTo(0, 3);</span>
+<span class="nc" id="L112">		poly.closePath();</span>
+<span class="nc" id="L113">		return poly;</span>
+	}
+
+	private UPath getTr270() {
+<span class="nc" id="L117">		final UPath poly = UPath.none();</span>
+<span class="nc" id="L118">		poly.moveTo(5, 3);</span>
+<span class="nc" id="L119">		poly.lineTo(0, 6);</span>
+<span class="nc" id="L120">		poly.lineTo(0, 0);</span>
+<span class="nc" id="L121">		poly.lineTo(5, 3);</span>
+<span class="nc" id="L122">		poly.closePath();</span>
+<span class="nc" id="L123">		return poly;</span>
+	}
+
+	private void drawV(UGraphic ug, double width, double height) {
+<span class="nc" id="L127">		ug.draw(URectangle.build(width, height));</span>
+<span class="nc" id="L128">		ug.apply(UTranslate.dy(v2)).draw(ULine.hline(width));</span>
+<span class="nc" id="L129">		ug.apply(UTranslate.dy(height - v2)).draw(ULine.hline(width));</span>
+<span class="nc" id="L130">		ug.apply(new UTranslate(4, 4)).apply(getBlack().bg()).draw(getTr0());</span>
+<span class="nc" id="L131">		ug.apply(new UTranslate(4, height - v2 + 4)).apply(getBlack().bg()).draw(getTr180());</span>
+<span class="nc" id="L132">	}</span>
+
+	private void drawH(UGraphic ug, double width, double height) {
+<span class="nc" id="L135">		ug.draw(URectangle.build(width, height));</span>
+<span class="nc" id="L136">		ug.apply(UTranslate.dx(v2)).draw(ULine.vline(height));</span>
+<span class="nc" id="L137">		ug.apply(UTranslate.dx(width - v2)).draw(ULine.vline(height));</span>
+<span class="nc" id="L138">		ug.apply(new UTranslate(4, 4)).apply(getBlack().bg()).draw(getTr90());</span>
+<span class="nc" id="L139">		ug.apply(new UTranslate(width - v2 + 4, 4)).apply(getBlack().bg()).draw(getTr270());</span>
+<span class="nc" id="L140">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

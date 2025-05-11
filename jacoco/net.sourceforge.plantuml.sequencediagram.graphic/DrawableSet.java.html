@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DrawableSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">DrawableSet.java</span></div><h1>DrawableSet.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.AbstractCollection;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.sequencediagram.Doll;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Newpage;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.LineParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.skin.SimpleContext2D;
+import net.sourceforge.plantuml.skin.SkinParamBackcolored;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.url.Url;
+
+<span class="fc" id="L79">public class DrawableSet {</span>
+
+<span class="fc" id="L81">	private final Map&lt;Participant, LivingParticipantBox&gt; participants = new LinkedHashMap&lt;Participant, LivingParticipantBox&gt;();</span>
+<span class="fc" id="L82">	private final Map&lt;Event, GraphicalElement&gt; events = new HashMap&lt;Event, GraphicalElement&gt;();</span>
+<span class="fc" id="L83">	private final Map&lt;Participant, ParticipantEnglober&gt; participantEnglobers2 = new LinkedHashMap&lt;Participant, ParticipantEnglober&gt;();</span>
+
+<span class="fc" id="L85">	private final List&lt;Event&gt; eventsList = new ArrayList&lt;&gt;();</span>
+	private final Rose skin;
+	private final ISkinParam skinParam;
+	private XDimension2D dimension;
+	private double topStartingY;
+	private final AtomicInteger counter;
+
+	public AtomicInteger getCounter() {
+<span class="fc" id="L93">		return counter;</span>
+	}
+
+<span class="fc" id="L96">	DrawableSet(Rose skin, ISkinParam skinParam, AtomicInteger counter) {</span>
+<span class="fc" id="L97">		this.skin = Objects.requireNonNull(skin);</span>
+<span class="fc" id="L98">		this.skinParam = Objects.requireNonNull(skinParam);</span>
+<span class="fc" id="L99">		this.counter = counter;</span>
+<span class="fc" id="L100">	}</span>
+
+	public ParticipantBox getVeryfirst() {
+<span class="fc" id="L103">		return participants.values().iterator().next().getParticipantBox();</span>
+	}
+
+	public final Rose getSkin() {
+<span class="fc" id="L107">		return skin;</span>
+	}
+
+	public final ISkinParam getSkinParam() {
+<span class="fc" id="L111">		return skinParam;</span>
+	}
+
+	public Collection&lt;Event&gt; getAllEvents() {
+<span class="fc" id="L115">		return Collections.unmodifiableCollection(eventsList);</span>
+	}
+
+	public Set&lt;Participant&gt; getAllParticipants() {
+<span class="fc" id="L119">		return Collections.unmodifiableSet(participants.keySet());</span>
+	}
+
+	public Collection&lt;LivingParticipantBox&gt; getAllLivingParticipantBox() {
+<span class="fc" id="L123">		return Collections.unmodifiableCollection(participants.values());</span>
+	}
+
+//	public Collection&lt;GraphicalElement&gt; getAllGraphicalElements() {
+//		final Collection&lt;GraphicalElement&gt; result = new ArrayList&lt;&gt;();
+//		for (Event ev : eventsList)
+//			result.add(events.get(ev));
+//
+//		return Collections.unmodifiableCollection(result);
+//	}
+
+	public Collection&lt;GraphicalElement&gt; getAllGraphicalElements() {
+<span class="fc" id="L135">		return new AbstractCollection&lt;GraphicalElement&gt;() {</span>
+			@Override
+			public Iterator&lt;GraphicalElement&gt; iterator() {
+<span class="fc" id="L138">				return new Iterator&lt;GraphicalElement&gt;() {</span>
+<span class="fc" id="L139">					private final Iterator&lt;Event&gt; eventIterator = eventsList.iterator();</span>
+
+					@Override
+					public boolean hasNext() {
+<span class="fc" id="L143">						return eventIterator.hasNext();</span>
+					}
+
+					@Override
+					public GraphicalElement next() {
+<span class="fc" id="L148">						return events.get(eventIterator.next());</span>
+					}
+				};
+			}
+
+			@Override
+			public int size() {
+<span class="nc" id="L155">				return eventsList.size();</span>
+			}
+		};
+	}
+
+	public LivingParticipantBox getLivingParticipantBox(Participant p) {
+<span class="fc" id="L161">		return participants.get(p);</span>
+	}
+
+	public GraphicalElement getEvent(Event ev) {
+<span class="fc" id="L165">		return events.get(ev);</span>
+	}
+
+	public double getHeadHeight(StringBounder stringBounder) {
+<span class="fc" id="L169">		double r = 0;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		for (Participant p : participants.keySet()) {</span>
+<span class="fc" id="L171">			final double y = getHeadAndEngloberHeight(p, stringBounder);</span>
+<span class="fc" id="L172">			r = Math.max(r, y);</span>
+<span class="fc" id="L173">		}</span>
+<span class="fc" id="L174">		return r;</span>
+	}
+
+	public double getHeadAndEngloberHeight(Participant p, StringBounder stringBounder) {
+<span class="fc" id="L178">		final LivingParticipantBox box = participants.get(p);</span>
+<span class="fc" id="L179">		final double height = box.getParticipantBox().getHeadHeight(stringBounder);</span>
+<span class="fc" id="L180">		final Doll doll = getParticipantEnglober(p, stringBounder);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (doll == null)</span>
+<span class="fc" id="L182">			return height;</span>
+
+<span class="nc" id="L184">		final Component comp = skin.createComponent(doll.getUsedStyles(), ComponentType.ENGLOBER, null, skinParam,</span>
+<span class="nc" id="L185">				doll.getParticipantEnglober().getTitle());</span>
+<span class="nc" id="L186">		final double heightEnglober = comp.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L187">		return height + heightEnglober;</span>
+	}
+
+	public List&lt;Doll&gt; getExistingParticipantEnglober(StringBounder stringBounder) {
+<span class="fc" id="L191">		final List&lt;Doll&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L192">		Doll pending = null;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		for (Map.Entry&lt;Participant, ParticipantEnglober&gt; ent : participantEnglobers2.entrySet()) {</span>
+<span class="fc" id="L194">			final ParticipantEnglober englober = ent.getValue();</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">			if (englober == null) {</span>
+<span class="fc" id="L196">				pending = null;</span>
+<span class="fc" id="L197">				continue;</span>
+			}
+<span class="nc bnc" id="L199" title="All 2 branches missed.">			assert englober != null;</span>
+<span class="nc bnc" id="L200" title="All 4 branches missed.">			if (pending != null &amp;&amp; englober == pending.getParticipantEnglober()) {</span>
+<span class="nc" id="L201">				pending.addParticipant(ent.getKey());</span>
+<span class="nc" id="L202">				continue;</span>
+			}
+<span class="nc" id="L204">			pending = Doll.createPuma(englober, ent.getKey(), getSkinParam(), skin, stringBounder,</span>
+<span class="nc" id="L205">					skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L206">			result.add(pending);</span>
+<span class="nc" id="L207">		}</span>
+<span class="fc" id="L208">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public double getOffsetForEnglobers(StringBounder stringBounder) {
+<span class="nc" id="L212">		double result = 0;</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		for (Doll englober : getExistingParticipantEnglober(stringBounder)) {</span>
+<span class="nc" id="L214">			final Component comp = skin.createComponent(null, ComponentType.ENGLOBER, null, skinParam,</span>
+<span class="nc" id="L215">					englober.getParticipantEnglober().getTitle());</span>
+<span class="nc" id="L216">			final double height = comp.getPreferredHeight(stringBounder);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (height &gt; result)</span>
+<span class="nc" id="L218">				result = height;</span>
+
+<span class="nc" id="L220">		}</span>
+<span class="nc" id="L221">		return result;</span>
+	}
+
+	static private final int MARGIN_FOR_ENGLOBERS = 4;
+	static private final int MARGIN_FOR_ENGLOBERS1 = 2;
+
+	public double getTailHeight(StringBounder stringBounder, boolean showTail) {
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		final double marginForEnglobers = getExistingParticipantEnglober(stringBounder).size() &gt; 0</span>
+<span class="nc" id="L229">				? MARGIN_FOR_ENGLOBERS</span>
+<span class="fc" id="L230">				: 0;</span>
+
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (showTail == false)</span>
+<span class="nc" id="L233">			return 1 + marginForEnglobers;</span>
+
+<span class="fc" id="L235">		double r = 0;</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		for (LivingParticipantBox livingParticipantBox : participants.values()) {</span>
+<span class="fc" id="L237">			final double y = livingParticipantBox.getParticipantBox().getTailHeight(stringBounder);</span>
+<span class="fc" id="L238">			r = Math.max(r, y);</span>
+<span class="fc" id="L239">		}</span>
+<span class="fc" id="L240">		return r + marginForEnglobers;</span>
+	}
+
+	public void addParticipant(Participant p, ParticipantEnglober participantEnglober) {
+<span class="fc" id="L244">		participants.put(p, null);</span>
+<span class="fc" id="L245">		participantEnglobers2.put(p, participantEnglober);</span>
+<span class="fc" id="L246">	}</span>
+
+	public void setLivingParticipantBox(Participant p, LivingParticipantBox box) {
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (participants.containsKey(p) == false)</span>
+<span class="nc" id="L250">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L252">		participants.put(p, box);</span>
+<span class="fc" id="L253">	}</span>
+
+	public void addEvent(Event event, GraphicalElement object) {
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (events.keySet().contains(event) == false)</span>
+<span class="fc" id="L257">			eventsList.add(event);</span>
+
+<span class="fc" id="L259">		events.put(event, object);</span>
+<span class="fc" id="L260">	}</span>
+
+	public void addEvent(Newpage newpage, GraphicalNewpage object, Event justBefore) {
+<span class="nc" id="L263">		final int idx = eventsList.indexOf(justBefore);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (idx == -1)</span>
+<span class="nc" id="L265">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L267">		eventsList.add(idx, newpage);</span>
+<span class="nc" id="L268">		events.put(newpage, object);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">		assert events.size() == eventsList.size();</span>
+<span class="nc" id="L270">	}</span>
+
+	void setDimension(XDimension2D dim) {
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">		if (dimension != null)</span>
+<span class="nc" id="L274">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L276">		this.dimension = dim;</span>
+<span class="fc" id="L277">	}</span>
+
+	public XDimension2D getDimension() {
+<span class="fc" id="L280">		return dimension;</span>
+	}
+
+	TextBlock asTextBlock(final double delta, final double width, final Page page, final boolean showTail) {
+<span class="fc" id="L284">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L287">				drawU22(ug, delta, width, page, showTail);</span>
+<span class="fc" id="L288">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L291">				final double height = page.getHeight();</span>
+<span class="nc" id="L292">				return new XDimension2D(width, height);</span>
+			}
+
+		};
+
+	}
+
+	void drawU22(final UGraphic ug, final double delta, double width, Page page, boolean showTail) {
+<span class="fc" id="L300">		final double height = page.getHeight();</span>
+
+<span class="fc" id="L302">		final UGraphic ugTranslated = clipAndTranslate2(delta, width, page, ug);</span>
+<span class="fc" id="L303">		final SimpleContext2D context = new SimpleContext2D(true);</span>
+<span class="fc" id="L304">		this.drawDolls(ug, height - MARGIN_FOR_ENGLOBERS1, context);</span>
+<span class="fc" id="L305">		this.drawPlaygroundU(ugTranslated, context);</span>
+
+<span class="fc" id="L307">		this.drawLineU22(ug, showTail, page);</span>
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);</span>
+
+<span class="fc" id="L310">		this.drawPlaygroundU(ugTranslated, new SimpleContext2D(false));</span>
+<span class="fc" id="L311">	}</span>
+
+	private UGraphic clipAndTranslate2(final double delta, double width, Page p, UGraphic ug) {
+<span class="fc" id="L314">		ug = ug.apply(new UClip(0, p.getBodyRelativePosition(), width, p.getBodyHeight() + 1));</span>
+<span class="fc" id="L315">		ug = ug.apply(getTranslate4(delta));</span>
+<span class="fc" id="L316">		return ug;</span>
+	}
+
+	private UTranslate getTranslate4(final double delta) {
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
+<span class="nc" id="L321">			return UTranslate.dy(-delta);</span>
+
+<span class="fc" id="L323">		return UTranslate.none();</span>
+	}
+
+	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {
+		// http://plantuml.sourceforge.net/qa/?qa=4826/lifelines-broken-for-txt-seq-diagrams-when-create-is-used
+		// ::revert when __CORE__
+<span class="fc" id="L329">		final boolean isTxt = ug instanceof UGraphicTxt;</span>
+		// final boolean isTxt = false;
+		// ::done
+<span class="fc bfc" id="L332" title="All 2 branches covered.">		for (LivingParticipantBox box : getAllLivingParticipantBox()) {</span>
+<span class="fc" id="L333">			final double create = box.getCreate();</span>
+<span class="fc" id="L334">			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());</span>
+<span class="fc" id="L335">			final double endMax = startMin + page.getBodyHeight() + 2 * box.magicMargin(ug.getStringBounder());</span>
+<span class="fc" id="L336">			double start = startMin;</span>
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">			if (create &gt; 0) {</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">				if (create &gt; page.getNewpage2())</span>
+<span class="nc" id="L339">					continue;</span>
+
+<span class="nc bnc" id="L341" title="All 4 branches missed.">				if (create &gt;= page.getNewpage1() &amp;&amp; create &lt; page.getNewpage2()) {</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">					if (isTxt)</span>
+<span class="nc" id="L343">						start = (int) create;</span>
+					else
+<span class="nc" id="L345">						start += create - page.getNewpage1() + 2 * box.magicMargin(ug.getStringBounder());</span>
+				}
+			}
+<span class="fc" id="L348">			final double myDelta = page.getNewpage1() - page.getHeaderHeight();</span>
+
+<span class="fc" id="L350">			final Participant p = box.getParticipant();</span>
+
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))</span>
+<span class="nc" id="L353">				ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));</span>
+			
+<span class="fc" id="L355">			box.drawLineU22(ug, start, endMax, showTail, myDelta);</span>
+			
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))</span>
+<span class="nc" id="L358">				ug.closeGroup();</span>
+
+<span class="fc" id="L360">		}</span>
+<span class="fc" id="L361">	}</span>
+
+	private void drawHeadTailU(UGraphic ug, Page page, double positionTail) {
+<span class="fc bfc" id="L364" title="All 2 branches covered.">		for (Map.Entry&lt;Participant, LivingParticipantBox&gt; ent : participants.entrySet()) {</span>
+<span class="fc" id="L365">			final Participant p = ent.getKey();</span>
+<span class="fc" id="L366">			final LivingParticipantBox box = ent.getValue();</span>
+<span class="fc" id="L367">			final double create = box.getCreate();</span>
+<span class="fc" id="L368">			boolean showHead = true;</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">			if (create &gt; 0) {</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">				if (create &gt; page.getNewpage2())</span>
+<span class="nc" id="L371">					continue;</span>
+
+<span class="nc bnc" id="L373" title="All 4 branches missed.">				if (create &gt;= page.getNewpage1() &amp;&amp; create &lt; page.getNewpage2())</span>
+<span class="nc" id="L374">					showHead = false;</span>
+
+			}
+<span class="fc" id="L377">			final Url url = p.getUrl();</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L379">				ug.startUrl(url);</span>
+
+<span class="fc" id="L381">			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);</span>
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L383">				ug.closeUrl();</span>
+
+<span class="fc" id="L385">		}</span>
+<span class="fc" id="L386">	}</span>
+
+	private double getMaxX() {
+<span class="fc" id="L389">		return dimension.getWidth();</span>
+	}
+
+	private double getMaxY() {
+<span class="fc" id="L393">		return dimension.getHeight();</span>
+	}
+
+	private void drawPlaygroundU(UGraphic ug, Context2D context) {
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		for (Participant p : getAllParticipants())</span>
+<span class="fc" id="L398">			drawLifeLineU(ug, p);</span>
+
+<span class="fc bfc" id="L400" title="All 2 branches covered.">		for (GraphicalElement element : getAllGraphicalElements())</span>
+<span class="fc" id="L401">			element.drawU(ug, getMaxX(), context);</span>
+
+<span class="fc" id="L403">	}</span>
+
+	private void drawDolls(UGraphic ug, double height, Context2D context) {
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">		for (Doll doll : getExistingParticipantEnglober(ug.getStringBounder())) {</span>
+<span class="nc" id="L407">			double x1 = getX1(doll);</span>
+<span class="nc" id="L408">			final double x2 = getX2(ug.getStringBounder(), doll);</span>
+
+<span class="nc" id="L410">			final Component comp = getEngloberComponent(doll);</span>
+
+<span class="nc" id="L412">			final double width = x2 - x1;</span>
+<span class="nc" id="L413">			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(), doll);</span>
+<span class="nc bnc" id="L414" title="All 2 branches missed.">			if (preferedWidth &gt; width) {</span>
+				// if (englober.getFirst2() == englober.getLast2()) {
+<span class="nc" id="L416">				x1 -= (preferedWidth - width) / 2;</span>
+				// }
+<span class="nc" id="L418">				final XDimension2D dim = new XDimension2D(preferedWidth, height);</span>
+<span class="nc" id="L419">				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
+<span class="nc" id="L420">			} else {</span>
+<span class="nc" id="L421">				final XDimension2D dim = new XDimension2D(width, height);</span>
+<span class="nc" id="L422">				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
+			}
+<span class="nc" id="L424">		}</span>
+<span class="fc" id="L425">	}</span>
+
+	public double getEngloberPreferedWidth(StringBounder stringBounder, Doll doll) {
+<span class="nc" id="L428">		return getEngloberComponent(doll).getPreferredWidth(stringBounder);</span>
+	}
+
+	private Component getEngloberComponent(Doll doll) {
+<span class="nc" id="L432">		final ParticipantEnglober participantEnglober = doll.getParticipantEnglober();</span>
+<span class="nc bnc" id="L433" title="All 2 branches missed.">		final ISkinParam s = participantEnglober.getBoxColor() == null ? skinParam</span>
+<span class="nc" id="L434">				: new SkinParamBackcolored(skinParam, participantEnglober.getBoxColor());</span>
+<span class="nc" id="L435">		return skin.createComponent(doll.getUsedStyles(), ComponentType.ENGLOBER, null, s,</span>
+<span class="nc" id="L436">				participantEnglober.getTitle());</span>
+	}
+
+	public double getX1(Doll doll) {
+<span class="nc" id="L440">		final Participant first = doll.getFirst2TOBEPRIVATE();</span>
+<span class="nc" id="L441">		final ParticipantBox firstBox = participants.get(first).getParticipantBox();</span>
+<span class="nc" id="L442">		return firstBox.getStartingX() + 1;</span>
+	}
+
+	public double getX2(StringBounder stringBounder, Doll doll) {
+<span class="nc" id="L446">		final Participant last = doll.getLast2TOBEPRIVATE();</span>
+<span class="nc" id="L447">		final ParticipantBox lastBox = participants.get(last).getParticipantBox();</span>
+<span class="nc" id="L448">		return lastBox.getMaxX(stringBounder) - 1;</span>
+	}
+
+	private void drawLifeLineU(UGraphic ug, Participant p) {
+<span class="fc" id="L452">		final LifeLine line = getLivingParticipantBox(p).getLifeLine();</span>
+
+<span class="fc" id="L454">		line.finish(getMaxY());</span>
+<span class="fc" id="L455">		line.drawU(ug, getSkin(), skinParam);</span>
+<span class="fc" id="L456">	}</span>
+
+	private Doll getParticipantEnglober(Participant p, StringBounder stringBounder) {
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">		for (Doll pe : getExistingParticipantEnglober(stringBounder))</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">			if (pe.contains(p))</span>
+<span class="nc" id="L461">				return pe;</span>
+
+<span class="fc" id="L463">		return null;</span>
+	}
+
+	public void setTopStartingY(double topStartingY) {
+<span class="fc" id="L467">		this.topStartingY = topStartingY;</span>
+<span class="fc" id="L468">	}</span>
+
+	Participant getFirst(Collection&lt;Participant&gt; someParticipants) {
+<span class="nc" id="L471">		final List&lt;Participant&gt; list = new ArrayList&lt;&gt;(participants.keySet());</span>
+<span class="nc" id="L472">		int min = -1;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
+<span class="nc" id="L474">			final int n = list.indexOf(p);</span>
+<span class="nc bnc" id="L475" title="All 2 branches missed.">			assert n != -1;</span>
+<span class="nc bnc" id="L476" title="All 4 branches missed.">			if (min == -1 || min &gt; n)</span>
+<span class="nc" id="L477">				min = n;</span>
+
+<span class="nc" id="L479">		}</span>
+<span class="nc" id="L480">		return list.get(min);</span>
+	}
+
+	Participant getLast(Collection&lt;Participant&gt; someParticipants) {
+<span class="nc" id="L484">		final List&lt;Participant&gt; list = new ArrayList&lt;&gt;(participants.keySet());</span>
+<span class="nc" id="L485">		int max = -1;</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
+<span class="nc" id="L487">			final int n = list.indexOf(p);</span>
+<span class="nc bnc" id="L488" title="All 2 branches missed.">			assert n != -1;</span>
+<span class="nc bnc" id="L489" title="All 4 branches missed.">			if (max == -1 || max &lt; n)</span>
+<span class="nc" id="L490">				max = n;</span>
+
+<span class="nc" id="L492">		}</span>
+<span class="nc" id="L493">		return list.get(max);</span>
+	}
+
+	public double getArrowThickness() {
+<span class="fc" id="L497">		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);</span>
+<span class="pc bpc" id="L498" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L499">			return 1;</span>
+
+<span class="nc" id="L501">		return result.getThickness();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

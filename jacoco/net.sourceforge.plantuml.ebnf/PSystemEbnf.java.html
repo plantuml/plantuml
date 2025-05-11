@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemEbnf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ebnf</a> &gt; <span class="el_source">PSystemEbnf.java</span></div><h1>PSystemEbnf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ebnf;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.CharInspector;
+
+public class PSystemEbnf extends TitledDiagram {
+
+<span class="fc" id="L67">	private final List&lt;TextBlockable&gt; expressions = new ArrayList&lt;&gt;();</span>
+
+	public PSystemEbnf(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L70">		super(source, UmlDiagramType.EBNF, null, preprocessing);</span>
+<span class="fc" id="L71">	}</span>
+
+	public DiagramDescription getDescription() {
+<span class="fc" id="L74">		return new DiagramDescription(&quot;(EBNF)&quot;);</span>
+	}
+
+	public CommandExecutionResult addBlocLines(BlocLines blines, String commentAbove, String commentBelow) {
+<span class="fc" id="L78">		final boolean isCompact = getPragma().isDefine(PragmaKey.COMPACT);</span>
+<span class="fc" id="L79">		final CharInspector it = blines.inspector();</span>
+<span class="fc" id="L80">		final EbnfExpression tmp1 = EbnfExpression.create(it, isCompact, commentAbove, commentBelow);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (tmp1.isEmpty())</span>
+<span class="nc" id="L82">			return CommandExecutionResult.error(&quot;Unparsable expression&quot;);</span>
+<span class="fc" id="L83">		expressions.add(tmp1);</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
+
+	}
+
+	public CommandExecutionResult addNote(final Display note, Colors colors) {
+<span class="nc" id="L89">		expressions.add(new TextBlockable() {</span>
+			@Override
+			public TextBlock getUDrawable(ISkinParam skinParam, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L92">				final FloatingNote f = FloatingNote.create(note, skinParam, SName.ebnf);</span>
+<span class="nc" id="L93">				return TextBlockUtils.withMargin(f, 0, 0, 5, 15);</span>
+			}
+		});
+<span class="nc" id="L96">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+<span class="nc" id="L102">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (expressions.size() == 0) {</span>
+<span class="nc" id="L108">			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L109">			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc" id="L111">			final TextBlock tmp = EbnfEngine.syntaxError(fc, getSkinParam());</span>
+<span class="nc" id="L112">			return TextBlockUtils.addBackcolor(tmp, null);</span>
+		}
+
+<span class="nc" id="L115">		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (int i = 1; i &lt; expressions.size(); i++)</span>
+<span class="nc" id="L117">			result = TextBlockUtils.mergeTB(result,</span>
+<span class="nc" id="L118">					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),</span>
+					HorizontalAlignment.LEFT);
+<span class="nc" id="L120">		return TextBlockUtils.addBackcolor(result, null);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

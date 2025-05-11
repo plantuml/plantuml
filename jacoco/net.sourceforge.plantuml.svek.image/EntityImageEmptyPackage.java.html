@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageEmptyPackage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageEmptyPackage.java</span></div><h1>EntityImageEmptyPackage.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ClusterDecoration;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.url.Url;
+
+public class EntityImageEmptyPackage extends AbstractEntityImage {
+
+	private final TextBlock desc;
+	private final static int MARGIN = 10;
+
+	private final Stereotype stereotype;
+	private final TextBlock stereoBlock;
+	private final Url url;
+
+	private final double shadowing;
+	private final HColor borderColor;
+	private final UStroke stroke;
+	private final double roundCorner;
+	private final double diagonalCorner;
+	private final HColor back;
+
+	private Style getStyle() {
+<span class="nc" id="L86">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.package_, SName.title)</span>
+<span class="nc" id="L87">				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	public EntityImageEmptyPackage(Entity entity, PortionShower portionShower) {
+<span class="nc" id="L91">		super(entity);</span>
+
+<span class="nc" id="L93">		final Colors colors = entity.getColors();</span>
+<span class="nc" id="L94">		final HColor specificBackColor = colors.getColor(ColorType.BACK);</span>
+<span class="nc" id="L95">		this.stereotype = entity.getStereotype();</span>
+<span class="nc" id="L96">		this.url = entity.getUrl99();</span>
+
+<span class="nc" id="L98">		Style style = getStyle();</span>
+<span class="nc" id="L99">		style = style.eventuallyOverride(colors);</span>
+<span class="nc" id="L100">		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L101">		this.shadowing = style.getShadowing();</span>
+<span class="nc" id="L102">		this.stroke = style.getStroke(colors);</span>
+<span class="nc" id="L103">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L104">		this.diagonalCorner = style.value(PName.DiagonalCorner).asDouble();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (specificBackColor == null)</span>
+<span class="nc" id="L106">			this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+		else
+<span class="nc" id="L108">			this.back = specificBackColor;</span>
+
+<span class="nc" id="L110">		final FontConfiguration titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L111">		final HorizontalAlignment titleHorizontalAlignment = style.getHorizontalAlignment();</span>
+
+<span class="nc" id="L113">		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, getSkinParam());</span>
+
+<span class="nc" id="L115">		final DisplayPositioned legend = ((Entity) entity).getLegend();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (legend != null) {</span>
+<span class="nc" id="L117">			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), getSkinParam());</span>
+<span class="nc" id="L118">			stereoBlock = legendBlock;</span>
+<span class="nc" id="L119">		} else {</span>
+<span class="nc bnc" id="L120" title="All 4 branches missed.">			if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">					|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)</span>
+<span class="nc" id="L122">				stereoBlock = TextBlockUtils.empty(0, 0);</span>
+			else
+<span class="nc" id="L124">				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(getSkinParam().guillemet()))</span>
+<span class="nc" id="L125">						.create(FontConfiguration.create(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L126">								titleHorizontalAlignment, getSkinParam()),</span>
+						1, 0);
+		}
+
+<span class="nc" id="L130">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L133">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L134">		XDimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)</span>
+<span class="nc" id="L135">				.calculateDimension(stringBounder);</span>
+<span class="nc" id="L136">		dim = dim.atLeast(0, 2 * dimDesc.getHeight());</span>
+<span class="nc" id="L137">		return dim.delta(MARGIN * 2, MARGIN * 2);</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L142">			ug.startUrl(url);</span>
+
+<span class="nc" id="L144">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L145">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L147">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L148">		final double heightTotal = dimTotal.getHeight();</span>
+
+<span class="nc" id="L150">		final RectangleArea rectangleArea = new RectangleArea(0, 0, widthTotal, heightTotal);</span>
+<span class="nc" id="L151">		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,</span>
+				stereoBlock, rectangleArea, stroke);
+
+<span class="nc" id="L154">		final HorizontalAlignment horizontalAlignment = getSkinParam()</span>
+<span class="nc" id="L155">				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);</span>
+<span class="nc" id="L156">		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();</span>
+
+<span class="nc" id="L158">		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment,</span>
+				diagonalCorner);
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L162">			ug.closeUrl();</span>
+
+<span class="nc" id="L164">	}</span>
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L167">		return ShapeType.RECTANGLE;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

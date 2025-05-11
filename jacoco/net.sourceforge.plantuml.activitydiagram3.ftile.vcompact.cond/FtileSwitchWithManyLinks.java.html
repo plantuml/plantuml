@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileSwitchWithManyLinks.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</a> &gt; <span class="el_source">FtileSwitchWithManyLinks.java</span></div><h1>FtileSwitchWithManyLinks.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.utils.Direction;
+
+public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
+
+	private final Rainbow arrowColor;
+<span class="nc" id="L63">	private final double margin = 10;</span>
+
+	public FtileSwitchWithManyLinks(List&lt;Ftile&gt; tiles, List&lt;Branch&gt; branches, Swimlane in, Ftile diamond1,
+			Ftile diamond2, StringBounder stringBounder, Rainbow arrowColor) {
+<span class="nc" id="L67">		super(tiles, branches, in, diamond1, diamond2, stringBounder);</span>
+<span class="nc" id="L68">		this.arrowColor = arrowColor;</span>
+<span class="nc" id="L69">	}</span>
+
+	class ConnectionHorizontalThenVertical extends AbstractConnection {
+
+		private final Branch branch;
+
+<span class="nc" id="L75">		public ConnectionHorizontalThenVertical(Ftile tile, Branch branch) {</span>
+<span class="nc" id="L76">			super(diamond1, tile);</span>
+<span class="nc" id="L77">			this.branch = branch;</span>
+<span class="nc" id="L78">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L81">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L82">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L83">			final XPoint2D p2 = getP2(stringBounder);</span>
+
+<span class="nc" id="L85">			final double x1 = p1.getX();</span>
+<span class="nc" id="L86">			final double y1 = p1.getY();</span>
+<span class="nc" id="L87">			final double x2 = p2.getX();</span>
+<span class="nc" id="L88">			final double y2 = p2.getY();</span>
+
+<span class="nc" id="L90">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())</span>
+<span class="nc" id="L91">					.withLabel(branch.getTextBlockPositive(), arrowHorizontalAlignment());</span>
+<span class="nc" id="L92">			snake.addPoint(x1, y1);</span>
+
+<span class="nc bnc" id="L94" title="All 4 branches missed.">			if (isLast() &amp;&amp; p1.getX() &gt; p2.getX()) {</span>
+<span class="nc" id="L95">				final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L96">				snake.addPoint(x1 + Hexagon.hexagonHalfSize, y1);</span>
+<span class="nc" id="L97">				snake.addPoint(x1 + Hexagon.hexagonHalfSize, y1 + dimDiamond1.getHeight());</span>
+<span class="nc" id="L98">				snake.addPoint(x2, y1 + dimDiamond1.getHeight());</span>
+<span class="nc" id="L99">			} else {</span>
+<span class="nc" id="L100">				snake.addPoint(x2, y1);</span>
+			}
+
+<span class="nc" id="L103">			snake.addPoint(x2, y2);</span>
+
+<span class="nc" id="L105">			ug.draw(snake);</span>
+<span class="nc" id="L106">		}</span>
+
+		private XPoint2D getP1(StringBounder stringBounder) {
+<span class="nc" id="L109">			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+			final XPoint2D pt;
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (getFtile2() == tiles.get(0))</span>
+<span class="nc" id="L112">				pt = dimDiamond1.getPointD();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			else if (isLast())</span>
+<span class="nc" id="L114">				pt = dimDiamond1.getPointB();</span>
+			else
+<span class="nc" id="L116">				throw new IllegalStateException();</span>
+
+<span class="nc" id="L118">			return getTranslateDiamond1(stringBounder).getTranslated(pt);</span>
+		}
+
+		private boolean isLast() {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			return getFtile2() == tiles.get(tiles.size() - 1);</span>
+		}
+
+		private XPoint2D getP2(final StringBounder stringBounder) {
+<span class="nc" id="L126">			return getTranslateOf(getFtile2(), stringBounder)</span>
+<span class="nc" id="L127">					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());</span>
+		}
+
+	}
+
+	class ConnectionVerticalThenHorizontal extends AbstractConnection {
+
+		private final TextBlock outLabel;
+
+<span class="nc" id="L136">		public ConnectionVerticalThenHorizontal(Ftile tile, TextBlock outLabel) {</span>
+<span class="nc" id="L137">			super(tile, diamond2);</span>
+<span class="nc" id="L138">			this.outLabel = outLabel;</span>
+<span class="nc" id="L139">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L142">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L143">			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (geo.hasPointOut() == false)</span>
+<span class="nc" id="L145">				return;</span>
+
+<span class="nc" id="L147">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L148">			final double x1 = p1.getX();</span>
+<span class="nc" id="L149">			final double y1 = p1.getY();</span>
+
+<span class="nc" id="L151">			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L152">			final XPoint2D ptA = getTranslateDiamond2(stringBounder).getTranslated(dimDiamond2.getPointA());</span>
+<span class="nc" id="L153">			final XPoint2D ptB = getTranslateDiamond2(stringBounder).getTranslated(dimDiamond2.getPointB());</span>
+<span class="nc" id="L154">			final XPoint2D ptD = getTranslateDiamond2(stringBounder).getTranslated(dimDiamond2.getPointD());</span>
+			final XPoint2D p2;
+			final UPolygon arrow;
+			final Direction direction;
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (x1 &lt; ptD.getX()) {</span>
+<span class="nc" id="L159">				p2 = ptD;</span>
+<span class="nc" id="L160">				arrow = skinParam().arrows().asToRight();</span>
+<span class="nc" id="L161">				direction = Direction.RIGHT;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			} else if (x1 &gt; ptB.getX()) {</span>
+<span class="nc" id="L163">				p2 = ptB;</span>
+<span class="nc" id="L164">				arrow = skinParam().arrows().asToLeft();</span>
+<span class="nc" id="L165">				direction = Direction.LEFT;</span>
+			} else {
+<span class="nc" id="L167">				p2 = ptA;</span>
+<span class="nc" id="L168">				arrow = skinParam().arrows().asToDown();</span>
+<span class="nc" id="L169">				direction = Direction.DOWN;</span>
+			}
+
+<span class="nc" id="L172">			final double x2 = p2.getX();</span>
+<span class="nc" id="L173">			final double y2 = p2.getY();</span>
+
+<span class="nc" id="L175">			final Snake snake = Snake.create(skinParam(), arrowColor, arrow).withLabel(outLabel,</span>
+					VerticalAlignment.CENTER);
+<span class="nc" id="L177">			snake.addPoint(x1, y1);</span>
+<span class="nc bnc" id="L178" title="All 4 branches missed.">			if (direction == Direction.LEFT &amp;&amp; x2 &gt; x1 - 10) {</span>
+<span class="nc" id="L179">				snake.addPoint(x1, y2 - 8);</span>
+<span class="nc" id="L180">				snake.addPoint(x1 + 12, y2 - 8);</span>
+<span class="nc" id="L181">				snake.addPoint(x1 + 12, y2);</span>
+			} else {
+<span class="nc" id="L183">				snake.addPoint(x1, y2);</span>
+			}
+<span class="nc" id="L185">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L186">			ug.draw(snake);</span>
+<span class="nc" id="L187">		}</span>
+
+		private XPoint2D getP1(StringBounder stringBounder) {
+<span class="nc" id="L190">			return getTranslateOf(getFtile1(), stringBounder)</span>
+<span class="nc" id="L191">					.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());</span>
+		}
+
+	}
+
+	class ConnectionVerticalTop extends AbstractConnection {
+
+		private final Branch branch;
+
+<span class="nc" id="L200">		public ConnectionVerticalTop(Ftile tile, Branch branch) {</span>
+<span class="nc" id="L201">			super(diamond1, tile);</span>
+<span class="nc" id="L202">			this.branch = branch;</span>
+<span class="nc" id="L203">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L206">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L207">			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L208">			final UTranslate translateDiamond1 = getTranslateDiamond1(stringBounder);</span>
+<span class="nc" id="L209">			final XPoint2D p1b = translateDiamond1.getTranslated(dimDiamond1.getPointB());</span>
+<span class="nc" id="L210">			final XPoint2D p1c = translateDiamond1.getTranslated(dimDiamond1.getPointC());</span>
+<span class="nc" id="L211">			final XPoint2D p1d = translateDiamond1.getTranslated(dimDiamond1.getPointD());</span>
+
+<span class="nc" id="L213">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L214">			final double x2 = p2.getX();</span>
+<span class="nc" id="L215">			final double y2 = p2.getY();</span>
+
+<span class="nc" id="L217">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())</span>
+<span class="nc" id="L218">					.withLabel(branch.getTextBlockPositive(), VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L219" title="All 4 branches missed.">			if (x2 &lt; p1d.getX() - margin || x2 &gt; p1b.getX() + margin) {</span>
+<span class="nc" id="L220">				snake.addPoint(x2, p1d.getY());</span>
+<span class="nc" id="L221">				snake.addPoint(x2, y2);</span>
+			} else {
+<span class="nc" id="L223">				final double x1 = p1c.getX();</span>
+<span class="nc" id="L224">				final double y1 = p1c.getY();</span>
+
+<span class="nc" id="L226">				final double ym = (y1 * 2 + y2) / 3;</span>
+<span class="nc" id="L227">				snake.addPoint(x1, y1);</span>
+<span class="nc" id="L228">				snake.addPoint(x1, ym);</span>
+<span class="nc" id="L229">				snake.addPoint(x2, ym);</span>
+<span class="nc" id="L230">				snake.addPoint(x2, y2);</span>
+			}
+<span class="nc" id="L232">			ug.draw(snake);</span>
+<span class="nc" id="L233">		}</span>
+
+		private XPoint2D getP2(final StringBounder stringBounder) {
+<span class="nc" id="L236">			return getTranslateOf(getFtile2(), stringBounder)</span>
+<span class="nc" id="L237">					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());</span>
+		}
+
+	}
+
+	class ConnectionVerticalBottom extends AbstractConnection {
+
+		final private TextBlock outLabel;
+
+<span class="nc" id="L246">		public ConnectionVerticalBottom(Ftile tile, TextBlock textBlock) {</span>
+<span class="nc" id="L247">			super(tile, diamond2);</span>
+<span class="nc" id="L248">			this.outLabel = textBlock;</span>
+<span class="nc" id="L249">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L252">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L253">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L254">			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L255">			final UTranslate translateDiamond2 = getTranslateDiamond2(stringBounder);</span>
+<span class="nc" id="L256">			final XPoint2D p2a = translateDiamond2.getTranslated(dimDiamond2.getPointA());</span>
+<span class="nc" id="L257">			final XPoint2D p2b = translateDiamond2.getTranslated(dimDiamond2.getPointB());</span>
+<span class="nc" id="L258">			final XPoint2D p2d = translateDiamond2.getTranslated(dimDiamond2.getPointD());</span>
+
+<span class="nc" id="L260">			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L261">			final UTranslate translateDiamond1 = getTranslateDiamond1(stringBounder);</span>
+<span class="nc" id="L262">			final XPoint2D p1b = translateDiamond1.getTranslated(dimDiamond1.getPointB());</span>
+<span class="nc" id="L263">			final XPoint2D p1c = translateDiamond1.getTranslated(dimDiamond1.getPointC());</span>
+<span class="nc" id="L264">			final XPoint2D p1d = translateDiamond1.getTranslated(dimDiamond1.getPointD());</span>
+
+<span class="nc" id="L266">			final double x1 = p1.getX();</span>
+<span class="nc" id="L267">			final double y1 = p1.getY();</span>
+<span class="nc" id="L268">			final double x2 = p2a.getX();</span>
+<span class="nc" id="L269">			final double y2 = p2a.getY();</span>
+
+<span class="nc" id="L271">			final double ym = (y1 + y2) / 2;</span>
+
+<span class="nc" id="L273">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())</span>
+<span class="nc" id="L274">					.withLabel(outLabel, VerticalAlignment.CENTER);</span>
+
+<span class="nc bnc" id="L276" title="All 4 branches missed.">			if (x1 &lt; p1d.getX() - margin || x1 &gt; p1b.getX() + margin) {</span>
+<span class="nc" id="L277">				snake.addPoint(x1, y1);</span>
+<span class="nc" id="L278">				snake.addPoint(x1, p2d.getY());</span>
+			} else {
+<span class="nc" id="L280">				snake.addPoint(x1, y1);</span>
+<span class="nc" id="L281">				snake.addPoint(x1, ym);</span>
+<span class="nc" id="L282">				snake.addPoint(x2, ym);</span>
+<span class="nc" id="L283">				snake.addPoint(x2, y2);</span>
+			}
+
+<span class="nc" id="L286">			ug.draw(snake);</span>
+<span class="nc" id="L287">		}</span>
+
+		private XPoint2D getP1(StringBounder stringBounder) {
+<span class="nc" id="L290">			return getTranslateOf(getFtile1(), stringBounder)</span>
+<span class="nc" id="L291">					.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());</span>
+		}
+
+	}
+
+	@Override
+	protected double getYdelta1a(StringBounder stringBounder) {
+<span class="nc" id="L298">		double max = 10;</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">		for (Branch branch : branches)</span>
+<span class="nc" id="L300">			max = Math.max(max, branch.getTextBlockPositive().calculateDimension(stringBounder).getHeight());</span>
+
+<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (mode == Mode.BIG_DIAMOND) {</span>
+<span class="nc" id="L303">			final double diamondHeight = diamond1.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L304">			max += diamondHeight / 2;</span>
+		}
+<span class="nc" id="L306">		return max + 10;</span>
+	}
+
+	public Ftile addLinks(StringBounder stringBounder) {
+<span class="nc" id="L310">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L311">		addIngoingArrows(conns);</span>
+<span class="nc" id="L312">		addOutgoingArrows(stringBounder, conns);</span>
+<span class="nc" id="L313">		return FtileUtils.addConnection(this, conns);</span>
+	}
+
+	private void addIngoingArrows(final List&lt;Connection&gt; conns) {
+<span class="nc" id="L317">		conns.add(new ConnectionHorizontalThenVertical(tiles.get(0), branches.get(0)));</span>
+<span class="nc" id="L318">		conns.add(new ConnectionHorizontalThenVertical(tiles.get(tiles.size() - 1), branches.get(tiles.size() - 1)));</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		for (int i = 1; i &lt; tiles.size() - 1; i++) {</span>
+<span class="nc" id="L320">			final Ftile tile = tiles.get(i);</span>
+<span class="nc" id="L321">			conns.add(new ConnectionVerticalTop(tile, branches.get(i)));</span>
+		}
+<span class="nc" id="L323">	}</span>
+
+	private void addOutgoingArrows(StringBounder stringBounder, final List&lt;Connection&gt; conns) {
+<span class="nc" id="L326">		final int firstOutgoingArrow = getFirstOutgoingArrow(stringBounder);</span>
+<span class="nc" id="L327">		final int lastOutgoingArrow = getLastOutgoingArrow(stringBounder);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">		if (firstOutgoingArrow &lt; tiles.size())</span>
+<span class="nc" id="L329">			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(firstOutgoingArrow),</span>
+<span class="nc" id="L330">					branches.get(firstOutgoingArrow).getTextBlockSpecial()));</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">		if (lastOutgoingArrow &gt; 0)</span>
+<span class="nc" id="L332">			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(lastOutgoingArrow),</span>
+<span class="nc" id="L333">					branches.get(lastOutgoingArrow).getTextBlockSpecial()));</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">		for (int i = firstOutgoingArrow + 1; i &lt; lastOutgoingArrow; i++) {</span>
+<span class="nc" id="L335">			final Ftile tile = tiles.get(i);</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L337">				conns.add(new ConnectionVerticalBottom(tile, branches.get(i).getTextBlockSpecial()));</span>
+
+		}
+<span class="nc" id="L340">	}</span>
+
+	private int getFirstOutgoingArrow(StringBounder stringBounder) {
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size() - 1; i++) {</span>
+<span class="nc" id="L344">			final Ftile tile = tiles.get(i);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L346">				return i;</span>
+
+		}
+<span class="nc" id="L349">		return tiles.size();</span>
+	}
+
+	private int getLastOutgoingArrow(StringBounder stringBounder) {
+<span class="nc bnc" id="L353" title="All 2 branches missed.">		for (int i = tiles.size() - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L354">			final Ftile tile = tiles.get(i);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L356">				return i;</span>
+
+		}
+<span class="nc" id="L359">		return -1;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.jsondiagram</a> &gt; <span class="el_source">JsonDiagram.java</span></div><h1>JsonDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.jsondiagram;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.CommandControl;
+import net.sourceforge.plantuml.command.CommandScale;
+import net.sourceforge.plantuml.command.CommandScaleMaxHeight;
+import net.sourceforge.plantuml.command.CommandScaleMaxWidth;
+import net.sourceforge.plantuml.command.CommandScaleMaxWidthAndHeight;
+import net.sourceforge.plantuml.command.CommandScaleWidthAndHeight;
+import net.sourceforge.plantuml.command.CommandScaleWidthOrHeight;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.yaml.Highlighted;
+
+public class JsonDiagram extends TitledDiagram {
+
+	private final JsonValue root;
+	private final List&lt;Highlighted&gt; highlighted;
+	private final boolean handwritten;
+
+	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List&lt;Highlighted&gt; highlighted,
+			StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L83">		super(source, type, null, preprocessing);</span>
+<span class="fc" id="L84">		this.handwritten = styleExtractor.isHandwritten();</span>
+<span class="pc bpc" id="L85" title="5 of 10 branches missed.">		if (json != null &amp;&amp; (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {</span>
+<span class="nc" id="L86">			this.root = new JsonArray();</span>
+<span class="nc" id="L87">			((JsonArray) this.root).add(json);</span>
+<span class="pc bpc" id="L88" title="4 of 6 branches missed.">		} else if (json != null &amp;&amp; ((json.isArray() &amp;&amp; json.asArray().isEmpty())</span>
+<span class="pc bpc" id="L89" title="2 of 4 branches missed.">									|| (json.isObject() &amp;&amp; json.asObject().isEmpty()))) {</span>
+<span class="nc" id="L90">			this.root = new JsonArray();</span>
+<span class="nc" id="L91">			((JsonArray) this.root).add(&quot;&quot;);</span>
+		} else {
+<span class="fc" id="L93">			this.root = json;</span>
+		}
+<span class="fc" id="L95">		this.highlighted = highlighted;</span>
+<span class="fc" id="L96">		final String scale = styleExtractor.getScale();</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (scale != null) {</span>
+<span class="nc" id="L98">			final List&lt;SingleLineCommand2&lt;AbstractPSystem&gt;&gt; cmds = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L99">			cmds.add(CommandScale.ME);</span>
+<span class="nc" id="L100">			cmds.add(CommandScaleWidthAndHeight.ME);</span>
+<span class="nc" id="L101">			cmds.add(CommandScaleWidthOrHeight.ME);</span>
+<span class="nc" id="L102">			cmds.add(CommandScaleMaxWidth.ME);</span>
+<span class="nc" id="L103">			cmds.add(CommandScaleMaxHeight.ME);</span>
+<span class="nc" id="L104">			cmds.add(CommandScaleMaxWidthAndHeight.ME);</span>
+<span class="nc" id="L105">			final BlocLines lines = BlocLines.singleString(scale);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			for (SingleLineCommand2&lt;AbstractPSystem&gt; cmd : cmds)</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">				if (cmd.isValid(lines) == CommandControl.OK)</span>
+<span class="nc" id="L108">					cmd.execute(this, lines, ParserPass.ONE);</span>
+		}
+<span class="fc" id="L110">	}</span>
+
+	public DiagramDescription getDescription() {
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (getUmlDiagramType() == UmlDiagramType.YAML)</span>
+<span class="nc" id="L114">			return new DiagramDescription(&quot;(Yaml)&quot;);</span>
+
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (getUmlDiagramType() == UmlDiagramType.HCL)</span>
+<span class="nc" id="L117">			return new DiagramDescription(&quot;(HCL)&quot;);</span>
+
+<span class="fc" id="L119">		return new DiagramDescription(&quot;(Json)&quot;);</span>
+	}
+
+	@Override
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="fc" id="L126">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+	}
+
+	private void drawInternal(UGraphic ug) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (handwritten)</span>
+<span class="nc" id="L131">			ug = new UGraphicHandwritten(ug);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (root == null) {</span>
+<span class="nc" id="L133">			final Display display = Display</span>
+<span class="nc" id="L134">					.getWithNewlines(getSkinParam().getPragma(), &quot;Your data does not sound like &quot; + getUmlDiagramType() + &quot; data&quot;);</span>
+<span class="nc" id="L135">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));</span>
+<span class="nc" id="L136">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
+<span class="nc" id="L137">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="nc" id="L138">			result.drawU(ug);</span>
+<span class="nc" id="L139">		} else {</span>
+<span class="fc" id="L140">			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);</span>
+		}
+<span class="fc" id="L142">	}</span>
+
+	@Override
+	protected TextBlock getTextMainBlock(final FileFormatOption fileFormatOption) {
+<span class="fc" id="L146">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L149">				drawInternal(ug);</span>
+<span class="fc" id="L150">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L153">				return TextBlockUtils.getMinMax(getTextMainBlock(fileFormatOption), stringBounder, true).getDimension();</span>
+			}
+		};
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

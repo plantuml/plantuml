@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ULine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.shape</a> &gt; <span class="el_source">ULine.java</span></div><h1>ULine.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.shape;
+
+//::comment when __HAXE__
+import java.awt.geom.AffineTransform;
+//::done
+
+import net.sourceforge.plantuml.klimt.AbstractShadowable;
+import net.sourceforge.plantuml.klimt.UShapeSized;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class ULine extends AbstractShadowable implements UShapeSized {
+
+	private final double dx;
+	private final double dy;
+
+	public static ULine create(XPoint2D p1, XPoint2D p2) {
+<span class="fc" id="L52">		return new ULine(p2.getX() - p1.getX(), p2.getY() - p1.getY());</span>
+	}
+
+<span class="fc" id="L55">	public ULine(double dx, double dy) {</span>
+<span class="fc" id="L56">		this.dx = dx;</span>
+<span class="fc" id="L57">		this.dy = dy;</span>
+<span class="fc" id="L58">	}</span>
+
+	// ::comment when __HAXE__
+	public ULine rotate(double theta) {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (theta == 0)</span>
+<span class="fc" id="L63">			return this;</span>
+<span class="nc" id="L64">		final AffineTransform rot = AffineTransform.getRotateInstance(theta);</span>
+<span class="nc" id="L65">		final XPoint2D tmp = new XPoint2D(dx, dy).transform(rot);</span>
+<span class="nc" id="L66">		return new ULine(tmp.getX(), tmp.getY());</span>
+	}
+	// ::done
+
+	public static ULine hline(double dx) {
+<span class="fc" id="L71">		return new ULine(dx, 0);</span>
+	}
+
+	public static ULine vline(double dy) {
+<span class="fc" id="L75">		return new ULine(0, dy);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L80">		return &quot;ULine dx=&quot; + dx + &quot; dy=&quot; + dy;</span>
+	}
+
+	public double getDX() {
+<span class="fc" id="L84">		return dx;</span>
+	}
+
+	public double getDY() {
+<span class="fc" id="L88">		return dy;</span>
+	}
+
+	public double getLength() {
+<span class="nc" id="L92">		return Math.sqrt(dx * dx + dy * dy);</span>
+	}
+
+	public double getWidth() {
+<span class="nc" id="L96">		return dx;</span>
+	}
+
+	public double getHeight() {
+<span class="nc" id="L100">		return dy;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

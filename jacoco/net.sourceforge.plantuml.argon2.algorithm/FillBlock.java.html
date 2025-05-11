@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FillBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.argon2.algorithm</a> &gt; <span class="el_source">FillBlock.java</span></div><h1>FillBlock.java</h1><pre class="source lang-java linenums">/* 	This file is taken from
+	https://github.com/andreas1327250/argon2-java
+
+	Original Author: Andreas Gadermaier &lt;up.gadermaier@gmail.com&gt;
+ */
+package net.sourceforge.plantuml.argon2.algorithm;
+
+import net.sourceforge.plantuml.argon2.model.Block;
+
+<span class="nc" id="L10">class FillBlock {</span>
+
+	static void fillBlock(Block X, Block Y, Block currentBlock, boolean withXor) {
+
+<span class="nc" id="L14">		Block R = new Block();</span>
+<span class="nc" id="L15">		Block Z = new Block();</span>
+
+<span class="nc" id="L17">		R.xor(X, Y);</span>
+<span class="nc" id="L18">		Z.copyBlock(R);</span>
+
+		/*
+		 * Apply Blake2 on columns of 64-bit words: (0,1,...,15) , then (16,17,..31)...
+		 * finally (112,113,...127)
+		 */
+<span class="nc bnc" id="L24" title="All 2 branches missed.">		for (int i = 0; i &lt; 8; i++) {</span>
+
+<span class="nc" id="L26">			Functions.roundFunction(Z, 16 * i, 16 * i + 1, 16 * i + 2, 16 * i + 3, 16 * i + 4, 16 * i + 5, 16 * i + 6,</span>
+					16 * i + 7, 16 * i + 8, 16 * i + 9, 16 * i + 10, 16 * i + 11, 16 * i + 12, 16 * i + 13, 16 * i + 14,
+					16 * i + 15);
+		}
+
+		/*
+		 * Apply Blake2 on rows of 64-bit words: (0,1,16,17,...112,113), then
+		 * (2,3,18,19,...,114,115).. finally (14,15,30,31,...,126,127)
+		 */
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		for (int i = 0; i &lt; 8; i++) {</span>
+
+<span class="nc" id="L37">			Functions.roundFunction(Z, 2 * i, 2 * i + 1, 2 * i + 16, 2 * i + 17, 2 * i + 32, 2 * i + 33, 2 * i + 48,</span>
+					2 * i + 49, 2 * i + 64, 2 * i + 65, 2 * i + 80, 2 * i + 81, 2 * i + 96, 2 * i + 97, 2 * i + 112,
+					2 * i + 113);
+
+		}
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (withXor) {</span>
+<span class="nc" id="L44">			currentBlock.xor(R, Z, currentBlock);</span>
+		} else {
+<span class="nc" id="L46">			currentBlock.xor(R, Z);</span>
+		}
+<span class="nc" id="L48">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

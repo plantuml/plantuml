@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FlowDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.flowdiagram</a> &gt; <span class="el_source">FlowDiagram.java</span></div><h1>FlowDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.flowdiagram;
+
+
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.atmp.ImageBuilder;
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.golem.MinMaxGolem;
+import net.sourceforge.plantuml.golem.Path;
+import net.sourceforge.plantuml.golem.Position;
+import net.sourceforge.plantuml.golem.Tile;
+import net.sourceforge.plantuml.golem.TileArea;
+import net.sourceforge.plantuml.golem.TileGeometry;
+import net.sourceforge.plantuml.golem.TilesField;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+
+public class FlowDiagram extends UmlDiagram implements TextBlock {
+    // ::remove folder when __HAXE__
+
+<span class="nc" id="L81">	private static double SINGLE_SIZE_X = 100;</span>
+<span class="nc" id="L82">	private static double SINGLE_SIZE_Y = 35;</span>
+
+	private TilesField field;
+<span class="nc" id="L85">	private final Map&lt;Tile, ActivityBox&gt; tilesBoxes = new HashMap&lt;Tile, ActivityBox&gt;();</span>
+	private Tile lastTile;
+
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L89">		throw new UnsupportedOperationException();</span>
+	}
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L93">		return new DiagramDescription(&quot;Flow Diagram&quot;);</span>
+	}
+
+	public FlowDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L97">		super(source, UmlDiagramType.FLOW, null, preprocessing);</span>
+<span class="nc" id="L98">	}</span>
+
+	public void lineSimple(TileGeometry orientation, String idDest, String label) {
+		final Tile newTile;
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (field == null) {</span>
+<span class="nc" id="L103">			field = new TilesField();</span>
+<span class="nc" id="L104">			tilesBoxes.clear();</span>
+<span class="nc" id="L105">			newTile = field.getRoot();</span>
+		} else {
+<span class="nc" id="L107">			newTile = field.createTile(lastTile, orientation);</span>
+		}
+<span class="nc" id="L109">		final ActivityBox box = new ActivityBox(newTile, idDest, label);</span>
+<span class="nc" id="L110">		tilesBoxes.put(newTile, box);</span>
+<span class="nc" id="L111">		lastTile = newTile;</span>
+<span class="nc" id="L112">		return;</span>
+	}
+
+	public void linkSimple(TileGeometry orientation, String idDest) {
+<span class="nc" id="L116">		final Tile tile = getTileById(idDest);</span>
+<span class="nc" id="L117">		field.addPath(lastTile, tile, orientation);</span>
+<span class="nc" id="L118">	}</span>
+
+	private Tile getTileById(String id) {
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, ActivityBox&gt; ent : tilesBoxes.entrySet()) {</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (ent.getValue().getId().equals(id)) {</span>
+<span class="nc" id="L123">				return ent.getKey();</span>
+			}
+<span class="nc" id="L125">		}</span>
+<span class="nc" id="L126">		throw new IllegalArgumentException(id);</span>
+	}
+
+	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L131">		return ImageBuilder.create(fileFormatOption)</span>
+<span class="nc" id="L132">				.dimension(calculateDimension(fileFormatOption.getDefaultStringBounder(getSkinParam())))</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">				.margin(getDefaultMargins()).metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)</span>
+<span class="nc" id="L134">				.seed(seed());</span>
+	}
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="nc" id="L141">		return createImageBuilder(fileFormatOption).drawable(this).write(os);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L145">		double x = 0;</span>
+<span class="nc" id="L146">		double y = 0;</span>
+<span class="nc" id="L147">		final MinMaxGolem minMax = getMinMax();</span>
+<span class="nc" id="L148">		x -= minMax.getMinX() * SINGLE_SIZE_X;</span>
+<span class="nc" id="L149">		y -= minMax.getMinY() * SINGLE_SIZE_Y;</span>
+<span class="nc" id="L150">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, ActivityBox&gt; ent : tilesBoxes.entrySet()) {</span>
+<span class="nc" id="L152">			final Tile tile = ent.getKey();</span>
+<span class="nc" id="L153">			final Position pos = field.getPosition(tile);</span>
+<span class="nc" id="L154">			final int xmin = pos.getXmin();</span>
+<span class="nc" id="L155">			final int ymin = pos.getYmin();</span>
+<span class="nc" id="L156">			final ActivityBox box = ent.getValue();</span>
+<span class="nc" id="L157">			final XDimension2D dimBox = box.calculateDimension(stringBounder);</span>
+<span class="nc" id="L158">			final double deltaX = SINGLE_SIZE_X * 2 - dimBox.getWidth();</span>
+<span class="nc" id="L159">			final double deltaY = SINGLE_SIZE_Y * 2 - dimBox.getHeight();</span>
+<span class="nc" id="L160">			box.drawU(ug.apply(</span>
+					new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2), (y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
+<span class="nc" id="L162">		}</span>
+<span class="nc" id="L163">		ug = ug.apply(HColors.MY_RED);</span>
+<span class="nc" id="L164">		ug = ug.apply(HColors.MY_RED.bg());</span>
+<span class="nc" id="L165">		final UShape arrow = UEllipse.build(7, 7);</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (Path p : field.getPaths()) {</span>
+<span class="nc" id="L167">			final TileArea start = p.getStart();</span>
+<span class="nc" id="L168">			final TileArea dest = p.getDest();</span>
+<span class="nc" id="L169">			final XPoint2D pStart = movePoint(getCenter(start), start.getTile(), start.getGeometry(), stringBounder);</span>
+<span class="nc" id="L170">			final XPoint2D pDest = movePoint(getCenter(dest), dest.getTile(), dest.getGeometry(), stringBounder);</span>
+<span class="nc" id="L171">			final ULine line = new ULine(pDest.getX() - pStart.getX(), pDest.getY() - pStart.getY());</span>
+<span class="nc" id="L172">			ug.apply(new UTranslate(x + pStart.getX(), y + pStart.getY())).draw(line);</span>
+<span class="nc" id="L173">			ug.apply(new UTranslate(x + pDest.getX() - 3, y + pDest.getY() - 3)).draw(arrow);</span>
+
+<span class="nc" id="L175">		}</span>
+<span class="nc" id="L176">	}</span>
+
+	private XPoint2D getCenter(TileArea area) {
+<span class="nc" id="L179">		final Tile tile = area.getTile();</span>
+<span class="nc" id="L180">		final Position position = field.getPosition(tile);</span>
+<span class="nc" id="L181">		final double x = position.getCenterX();</span>
+<span class="nc" id="L182">		final double y = position.getCenterY();</span>
+<span class="nc" id="L183">		return new XPoint2D(x * SINGLE_SIZE_X, y * SINGLE_SIZE_Y);</span>
+	}
+
+	private XPoint2D movePoint(XPoint2D pt, Tile tile, TileGeometry tileGeometry, StringBounder stringBounder) {
+<span class="nc" id="L187">		final XDimension2D dim = tilesBoxes.get(tile).calculateDimension(stringBounder);</span>
+<span class="nc" id="L188">		final double width = dim.getWidth();</span>
+<span class="nc" id="L189">		final double height = dim.getHeight();</span>
+<span class="nc" id="L190">		double x = pt.getX();</span>
+<span class="nc" id="L191">		double y = pt.getY();</span>
+<span class="nc bnc" id="L192" title="All 5 branches missed.">		switch (tileGeometry) {</span>
+		case SOUTH:
+<span class="nc" id="L194">			y += height / 2;</span>
+<span class="nc" id="L195">			break;</span>
+		case NORTH:
+<span class="nc" id="L197">			y -= height / 2;</span>
+<span class="nc" id="L198">			break;</span>
+		case EAST:
+<span class="nc" id="L200">			x += width / 2;</span>
+<span class="nc" id="L201">			break;</span>
+		case WEST:
+<span class="nc" id="L203">			x -= width / 2;</span>
+<span class="nc" id="L204">			break;</span>
+		default:
+<span class="nc" id="L206">			throw new IllegalStateException();</span>
+		}
+<span class="nc" id="L208">		return new XPoint2D(x, y);</span>
+	}
+
+	private MinMaxGolem getMinMax() {
+<span class="nc" id="L212">		final MinMaxGolem minMax = new MinMaxGolem();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		for (Tile tile : tilesBoxes.keySet()) {</span>
+<span class="nc" id="L214">			minMax.manage(field.getPosition(tile));</span>
+<span class="nc" id="L215">		}</span>
+<span class="nc" id="L216">		return minMax;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L220">		final MinMaxGolem minMax = getMinMax();</span>
+<span class="nc" id="L221">		return new XDimension2D(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);</span>
+	}
+
+	public MinMax getMinMax(StringBounder stringBounder) {
+<span class="nc" id="L225">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+<span class="nc" id="L230">		return ClockwiseTopRightBottomLeft.same(0);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L235">		return this;</span>
+	}
+
+	@Override
+	public MagneticBorder getMagneticBorder() {
+<span class="nc" id="L240">		return new MagneticBorderNone();</span>
+	}
+
+	@Override
+	public HColor getBackcolor() {
+<span class="nc" id="L245">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

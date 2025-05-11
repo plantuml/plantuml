@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DriverPathG2d.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.g2d</a> &gt; <span class="el_source">DriverPathG2d.java</span></div><h1>DriverPathG2d.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.g2d;
+
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+
+public class DriverPathG2d extends DriverShadowedG2d implements UDriver&lt;UPath, Graphics2D&gt; {
+
+	private final double dpiFactor;
+
+<span class="fc" id="L55">	public DriverPathG2d(double dpiFactor) {</span>
+<span class="fc" id="L56">		this.dpiFactor = dpiFactor;</span>
+<span class="fc" id="L57">	}</span>
+
+	public void draw(UPath shape, final double x, final double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
+<span class="fc" id="L60">		DriverLineG2d.manageStroke(param, g2d);</span>
+
+<span class="fc" id="L62">		final HColor back = param.getBackcolor();</span>
+
+<span class="fc" id="L64">		final ExtendedGeneralPath p = new ExtendedGeneralPath();</span>
+<span class="fc" id="L65">		MinMax minMax = MinMax.getEmpty(false);</span>
+<span class="fc" id="L66">		minMax = minMax.addPoint(x, y);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		for (USegment seg : shape) {</span>
+<span class="fc" id="L68">			final USegmentType type = seg.getSegmentType();</span>
+<span class="fc" id="L69">			final double coord[] = seg.getCoord();</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="fc" id="L71">				p.moveTo(x + coord[0], y + coord[1]);</span>
+<span class="fc" id="L72">				minMax = minMax.addPoint(x + coord[0], y + coord[1]);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="fc" id="L74">				p.lineTo(x + coord[0], y + coord[1]);</span>
+<span class="fc" id="L75">				minMax = minMax.addPoint(x + coord[0], y + coord[1]);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="fc" id="L77">				p.curveTo(x + coord[0], y + coord[1], x + coord[2], y + coord[3], x + coord[4], y + coord[5]);</span>
+<span class="fc" id="L78">				minMax = minMax.addPoint(x + coord[4], y + coord[5]);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="pc bpc" id="L80" title="2 of 4 branches missed.">				p.arcTo(coord[0], coord[1], coord[2], coord[3] != 0, coord[4] != 0, x + coord[5], y + coord[6]);</span>
+			} else {
+<span class="nc" id="L82">				throw new UnsupportedOperationException();</span>
+			}
+<span class="fc" id="L84">		}</span>
+
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (shape.isOpenIconic()) {</span>
+<span class="nc" id="L87">			p.closePath();</span>
+<span class="nc" id="L88">			g2d.setColor(param.getColor().toColor(mapper));</span>
+<span class="nc" id="L89">			g2d.fill(p);</span>
+<span class="nc" id="L90">			return;</span>
+		}
+
+		// Shadow
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (shape.getDeltaShadow() != 0)</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">			if (back == null || back.isTransparent())</span>
+<span class="nc" id="L96">				drawOnlyLineShadowSpecial(g2d, p, shape.getDeltaShadow(), dpiFactor);</span>
+			else
+<span class="nc" id="L98">				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);</span>
+
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (back instanceof HColorGradient) {</span>
+<span class="nc" id="L101">			final HColorGradient gr = (HColorGradient) back;</span>
+<span class="nc" id="L102">			final char policy = gr.getPolicy();</span>
+			final GradientPaint paint;
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (policy == '|') {</span>
+<span class="nc" id="L105">				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,</span>
+<span class="nc" id="L106">						gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,</span>
+<span class="nc" id="L107">						gr.getColor2().toColor(mapper));</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			} else if (policy == '\\') {</span>
+<span class="nc" id="L109">				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(),</span>
+<span class="nc" id="L110">						gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMinY(),</span>
+<span class="nc" id="L111">						gr.getColor2().toColor(mapper));</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			} else if (policy == '-') {</span>
+<span class="nc" id="L113">				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),</span>
+<span class="nc" id="L114">						gr.getColor1().toColor(mapper), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),</span>
+<span class="nc" id="L115">						gr.getColor2().toColor(mapper));</span>
+			} else {
+				// for /
+<span class="nc" id="L118">				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper),</span>
+<span class="nc" id="L119">						(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper));</span>
+			}
+<span class="nc" id="L121">			g2d.setPaint(paint);</span>
+<span class="nc" id="L122">			g2d.fill(p);</span>
+<span class="pc bfc" id="L123" title="All 2 branches covered.">		} else if (back.isTransparent() == false) {</span>
+<span class="fc" id="L124">			g2d.setColor(back.toColor(mapper));</span>
+<span class="fc" id="L125">			g2d.fill(p);</span>
+		}
+
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
+<span class="fc" id="L129">			g2d.setColor(param.getColor().toColor(mapper));</span>
+<span class="fc" id="L130">			g2d.draw(p);</span>
+		}
+<span class="fc" id="L132">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

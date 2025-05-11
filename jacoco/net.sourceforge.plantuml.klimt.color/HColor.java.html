@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">HColor.java</span></div><h1>HColor.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.color;
+
+import java.awt.Color;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.UBackground;
+import net.sourceforge.plantuml.klimt.UChange;
+
+class Back implements UBackground {
+
+	private final HColor hColor;
+
+<span class="fc" id="L47">	public Back(HColor hColor) {</span>
+<span class="fc" id="L48">		this.hColor = hColor;</span>
+<span class="fc" id="L49">	}</span>
+
+	@Override
+	public HColor getBackColor() {
+<span class="fc" id="L53">		return hColor;</span>
+	}
+}
+
+<span class="fc" id="L57">public abstract class HColor implements UChange {</span>
+
+<span class="fc" id="L59">	public enum TransparentFillBehavior {</span>
+<span class="fc" id="L60">		WITH_FILL_NONE,</span>
+<span class="fc" id="L61">		WITH_FILL_OPACITY</span>
+	}
+
+	public UBackground bg() {
+<span class="fc" id="L65">		return new Back(this);</span>
+	}
+
+	public Color toColor(ColorMapper mapper) {
+<span class="nc" id="L69">		throw new UnsupportedOperationException();</span>
+	}
+
+	final public String toRGB(ColorMapper mapper) {
+<span class="fc" id="L73">		final Color color = toColor(mapper);</span>
+<span class="fc" id="L74">		return StringUtils.sharp000000(color.getRGB());</span>
+	}
+
+	final public String toSvg(ColorMapper mapper) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (this.isTransparent())</span>
+<span class="fc" id="L79">			return &quot;#00000000&quot;;</span>
+
+<span class="fc" id="L81">		final Color color = toColor(mapper);</span>
+<span class="fc" id="L82">		final int alpha = color.getAlpha();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (alpha == 255)</span>
+<span class="fc" id="L84">			return toRGB(mapper);</span>
+
+<span class="fc" id="L86">		String s = &quot;0&quot; + Integer.toHexString(alpha).toUpperCase();</span>
+<span class="fc" id="L87">		s = s.substring(s.length() - 2);</span>
+<span class="fc" id="L88">		return toRGB(mapper) + s;</span>
+	}
+
+	public HColor lighten(int ratio) {
+<span class="nc" id="L92">		return this;</span>
+	}
+
+	public HColor darken(int ratio) {
+<span class="nc" id="L96">		return this;</span>
+	}
+
+	public HColor reverseHsluv() {
+<span class="nc" id="L100">		return this;</span>
+	}
+
+	public HColor reverse() {
+<span class="nc" id="L104">		return this;</span>
+	}
+
+	public boolean isDark() {
+<span class="nc" id="L108">		return true;</span>
+	}
+
+	public TransparentFillBehavior transparentFillBehavior() {
+<span class="nc" id="L112">		return TransparentFillBehavior.WITH_FILL_NONE;</span>
+	}
+
+	// ::comment when __HAXE__
+	public String asString() {
+<span class="nc" id="L117">		return &quot;?&quot; + getClass().getSimpleName();</span>
+	}
+	// ::done
+
+	public HColor darkSchemeTheme() {
+<span class="nc" id="L122">		return this;</span>
+	}
+
+	public HColor getAppropriateColor(HColor back) {
+<span class="fc" id="L126">		return this;</span>
+	}
+
+	public HColor withDark(HColor dark) {
+<span class="nc" id="L130">		throw new UnsupportedOperationException();</span>
+	}
+
+	public HColor withTransparentFillBehavior(TransparentFillBehavior transparentFillBehavior) {
+<span class="nc" id="L134">		throw new UnsupportedOperationException();</span>
+	}
+
+	public HColor opposite() {
+<span class="nc" id="L138">		throw new UnsupportedOperationException();</span>
+	}
+
+	public boolean isTransparent() {
+<span class="fc" id="L142">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

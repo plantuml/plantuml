@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicLabelMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">TicLabelMap.java</span></div><h1>TicLabelMap.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import java.util.StringTokenizer;
+
+import jcckit.util.ConfigParameters;
+import jcckit.util.TicLabelFormat;
+
+/**
+ * Map of number intervals onto a text label. The map is defined by a
+ * map description string provided by configuration data.
+ * &lt;p&gt;
+ * The map description is a list
+ * of conditions separated by ';'. The conditions are tested from left to
+ * right until a condition is fulfilled for the tic value. If no condition
+ * is fullfilled a '?' will be returned.
+ * &lt;p&gt;
+ * A condition description has one of the following forms:
+ * &lt;pre&gt;&lt;tt&gt;&lt;i&gt;&amp;lt;label&amp;gt;&lt;/i&gt;&lt;/tt&gt;&lt;/pre&gt;
+ * &lt;pre&gt;&lt;tt&gt;&lt;i&gt;&amp;lt;number&amp;gt;&lt;/i&gt;=&lt;i&gt;&amp;lt;label&amp;gt;&lt;/i&gt;&lt;/tt&gt;&lt;/pre&gt;
+ * &lt;pre&gt;&lt;tt&gt;&lt;i&gt;&amp;lt;number1&amp;gt;&lt;/i&gt;:&lt;i&gt;&amp;lt;number2&amp;gt;&lt;/i&gt;=&lt;i&gt;&amp;lt;label&amp;gt;&lt;/i&gt;&lt;/tt&gt;&lt;/pre&gt;
+ * &lt;p&gt;
+ * The first type of condition is always fulfilled. It will return
+ * &lt;tt&gt;&lt;i&gt;&amp;lt;label&amp;gt;&lt;/i&gt;&lt;/tt&gt;. This is a kind of else condtion
+ * which is put at the end of the condition list.
+ * &lt;p&gt;
+ * The second form maps a particular number onto a label. In order to be
+ * equal with the sepcified number the tic value should not deviate more
+ * than 1 ppm (part per millions) from &lt;tt&gt;&lt;i&gt;&amp;lt;number&amp;gt;&lt;/i&gt;&lt;/tt&gt;.
+ * &lt;p&gt;
+ * The third form maps an interval onto a label. The condition reads
+ * &lt;p&gt;
+ * &lt;tt&gt;&lt;i&gt;&amp;lt;number1&amp;gt;&lt;/i&gt;&lt;/tt&gt;&amp;nbsp;&amp;lt;=&amp;nbsp;tic&amp;nbsp;label&amp;nbsp;&amp;lt;&amp;nbsp;&lt;tt&gt;&lt;i&gt;&amp;lt;number2&amp;gt;&lt;/i&gt;&lt;/tt&gt;
+ * &lt;p&gt;
+ * Examples:
+ * &lt;pre&gt;&lt;tt&gt;
+ * 1=monday;2=tuesday;3=wednesday;4=thursday;5=friday;6=saturday;7=sunday
+ * 0.5:1.5=I; 1.5:2.5 = II; 2.5:3.5 = III; the rest
+ * &lt;/tt&gt;&lt;/pre&gt;
+ *
+ * @author Franz-Josef Elmer
+ */
+public class TicLabelMap implements TicLabelFormat {
+  public static final String MAP_KEY = &quot;map&quot;;
+
+  private static class MapItem {
+<span class="nc" id="L64">    private double _min = Double.MIN_VALUE;</span>
+<span class="nc" id="L65">    private double _max = Double.MAX_VALUE;</span>
+    private final String label;
+<span class="nc" id="L67">    public MapItem(String item) {</span>
+<span class="nc" id="L68">      int index = item.indexOf('=');</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">      if (index &lt; 0) {</span>
+<span class="nc" id="L70">        label = item;</span>
+      } else {
+<span class="nc" id="L72">        label = item.substring(index + 1).trim();</span>
+<span class="nc" id="L73">        item = item.substring(0, index).trim();</span>
+<span class="nc" id="L74">        index = item.indexOf(':');</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (index &lt; 0) {</span>
+<span class="nc" id="L76">          _min = Double.parseDouble(item);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">          _max = _min == 0 ? Double.MIN_VALUE : _min * 1.000001d;</span>
+<span class="nc" id="L78">          _min = _min * 0.999999d;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">          if (_min &gt; _max) {</span>
+<span class="nc" id="L80">            double z = _min;</span>
+<span class="nc" id="L81">            _min = _max;</span>
+<span class="nc" id="L82">            _max = z;</span>
+<span class="nc" id="L83">          }</span>
+        } else {
+<span class="nc" id="L85">          _min = Double.parseDouble(item.substring(0, index));</span>
+<span class="nc" id="L86">          _max = Double.parseDouble(item.substring(index + 1));</span>
+        }
+      }
+<span class="nc" id="L89">    }</span>
+    public boolean isInside(double value) {
+<span class="nc bnc" id="L91" title="All 4 branches missed.">      return value &gt;= _min &amp;&amp; value &lt; _max;</span>
+    }
+  }
+
+  private final MapItem[] _map;
+
+  /**
+   * Creates an instance from the specified configuration parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;map&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;yes&lt;/td&gt;
+   *     &lt;td&gt;Map description as explained above.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+<span class="nc" id="L107">  public TicLabelMap(ConfigParameters config) {</span>
+<span class="nc" id="L108">    StringTokenizer tokenizer = new StringTokenizer(config.get(MAP_KEY), &quot;;&quot;);</span>
+<span class="nc" id="L109">    _map = new MapItem[tokenizer.countTokens()];</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">    for (int i = 0; i &lt; _map.length; i++)</span>
+    {
+<span class="nc" id="L112">      String item = tokenizer.nextToken();</span>
+      try {
+<span class="nc" id="L114">        _map[i] = new MapItem(item.trim());</span>
+<span class="nc" id="L115">      } catch (NumberFormatException e) {</span>
+<span class="nc" id="L116">        throw new NumberFormatException(&quot;Item '&quot; + item + &quot;' of &quot;</span>
+<span class="nc" id="L117">            + config.getFullKey(MAP_KEY) + &quot; has an invalid number.&quot;);</span>
+<span class="nc" id="L118">      }</span>
+    }
+<span class="nc" id="L120">  }</span>
+
+  /**
+   * Maps the specified tic value onto a text label in accordance
+   * with the map description.
+   */
+  public String form(double ticValue) {
+<span class="nc" id="L127">    String result = &quot;?&quot;;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">    for (int i = 0; i &lt; _map.length; i++) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">      if (_map[i].isInside(ticValue)) {</span>
+<span class="nc" id="L130">        result = _map[i].label;</span>
+<span class="nc" id="L131">        break;</span>
+      }
+    }
+<span class="nc" id="L134">    return result;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

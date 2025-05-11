@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandArchimate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram.command</a> &gt; <span class="el_source">CommandArchimate.java</span></div><h1>CommandArchimate.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.descdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandArchimate extends SingleLineCommand2&lt;DescriptionDiagram&gt; {
+
+	public CommandArchimate() {
+<span class="fc" id="L65">		super(getRegexConcat());</span>
+<span class="fc" id="L66">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L69">		return RegexConcat.build(CommandArchimate.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;SYMBOL&quot;, &quot;archimate&quot;), //
+<span class="fc" id="L71">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L72">				color().getRegex(), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOr(//
+						new RegexLeaf(&quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
+<span class="fc" id="L78">								StereotypePattern.optionalArchimate(&quot;STEREOTYPE2&quot;), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L80">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE2&quot;, CommandCreateElementFull.CODE)), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;CODE3&quot;, CommandCreateElementFull.CODE), //
+<span class="fc" id="L84">								StereotypePattern.optionalArchimate(&quot;STEREOTYPE3&quot;), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L86">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;DISPLAY3&quot;, CommandCreateElementFull.DISPLAY)), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;DISPLAY4&quot;, CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
+<span class="fc" id="L90">								StereotypePattern.optionalArchimate(&quot;STEREOTYPE4&quot;), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L92">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE4&quot;, CommandCreateElementFull.CODE)) //
+				), //
+<span class="fc" id="L95">				StereotypePattern.optionalArchimate(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L96">				RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L100">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L106">		final String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+
+<span class="nc" id="L108">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(codeRaw));</span>
+
+<span class="nc" id="L110">		String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (display == null)</span>
+<span class="nc" id="L112">			display = quark.getName();</span>
+
+<span class="nc" id="L114">		Entity entity = quark.getData();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (entity == null)</span>
+<span class="nc" id="L116">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), LeafType.DESCRIPTION,</span>
+					USymbols.ARCHIMATE);
+
+<span class="nc" id="L119">		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy(&quot;STEREOTYPE&quot;, 0));</span>
+
+<span class="nc" id="L121">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (icon != null)</span>
+<span class="nc" id="L124">			entity.setStereotype(</span>
+<span class="nc" id="L125">					Stereotype.build(&quot;&lt;&lt;$archimate/&quot; + icon + &quot;&gt;&gt;&quot;, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L126">							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L127">							diagram.getSkinParam().getIHtmlColorSet()));</span>
+
+<span class="nc" id="L129">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L130">		entity.setColors(colors);</span>
+
+<span class="nc" id="L132">		return CommandExecutionResult.ok();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

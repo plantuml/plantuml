@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Idea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.mindmap</a> &gt; <span class="el_source">Idea.java</span></div><h1>Idea.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.mindmap;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.MergeStrategy;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.wbs.WElement;
+
+class Idea {
+
+	private final Display label;
+	private final int level;
+	private final Idea parent;
+<span class="fc" id="L59">	private final List&lt;Idea&gt; children = new ArrayList&lt;&gt;();</span>
+	private final IdeaShape shape;
+	private final HColor backColor;
+	private final StyleBuilder styleBuilder;
+	private final Stereotype stereotype;
+
+	@DuplicateCode(reference = &quot;WElement&quot;)
+	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
+<span class="fc" id="L67">		final String depth = SName.depth(level);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (level == 0)</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (shape == IdeaShape.NONE)</span>
+<span class="nc" id="L70">				return StyleSignatureBasic</span>
+<span class="nc" id="L71">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)</span>
+<span class="nc" id="L72">						.addS(stereotype).add(depth);</span>
+			else
+<span class="fc" id="L74">				return StyleSignatureBasic</span>
+<span class="fc" id="L75">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)</span>
+<span class="fc" id="L76">						.addS(stereotype).add(depth);</span>
+
+<span class="pc bpc" id="L78" title="3 of 4 branches missed.">		if (shape == IdeaShape.NONE &amp;&amp; children.size() == 0)</span>
+<span class="nc" id="L79">			return StyleSignatureBasic</span>
+<span class="nc" id="L80">					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)</span>
+<span class="nc" id="L81">					.addS(stereotype).add(depth);</span>
+
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (shape == IdeaShape.NONE)</span>
+<span class="nc" id="L84">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)</span>
+<span class="nc" id="L85">					.addS(stereotype).add(depth);</span>
+
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (children.size() == 0)</span>
+<span class="fc" id="L88">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)</span>
+<span class="fc" id="L89">					.addS(stereotype).add(depth);</span>
+
+<span class="fc" id="L91">		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).addS(stereotype)</span>
+<span class="fc" id="L92">				.add(depth);</span>
+	}
+
+	private static final int STEP_BY_PARENT = WElement.STEP_BY_PARENT;
+
+	public Style getStyle() {
+<span class="fc" id="L98">		int deltaPriority = STEP_BY_PARENT * 1000;</span>
+<span class="fc" id="L99">		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (Idea up = parent; up != null; up = up.parent) {</span>
+<span class="fc" id="L101">			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();</span>
+<span class="fc" id="L102">			deltaPriority -= STEP_BY_PARENT;</span>
+<span class="fc" id="L103">			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);</span>
+<span class="fc" id="L104">			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+		}
+<span class="fc" id="L106">		return result;</span>
+	}
+
+	public Style getStyleArrow() {
+<span class="fc" id="L110">		final String depth = SName.depth(level);</span>
+<span class="fc" id="L111">		final StyleSignatureBasic defaultStyleDefinitionArrow = StyleSignatureBasic</span>
+<span class="fc" id="L112">				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addS(stereotype).add(depth);</span>
+<span class="fc" id="L113">		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);</span>
+	}
+
+	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,
+			Stereotype stereotype) {
+<span class="fc" id="L118">		return new Idea(styleBuilder, backColor, 0, null, label, shape, stereotype);</span>
+	}
+
+	public Idea createIdea(StyleBuilder styleBuilder, HColor backColor, int newLevel, Display newDisplay,
+			IdeaShape newShape, Stereotype stereotype) {
+<span class="fc" id="L123">		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape, stereotype);</span>
+<span class="fc" id="L124">		this.children.add(result);</span>
+<span class="fc" id="L125">		return result;</span>
+	}
+
+	private Idea(StyleBuilder styleBuilder, HColor backColor, int level, Idea parent, Display label, IdeaShape shape,
+<span class="fc" id="L129">			Stereotype stereotype) {</span>
+<span class="fc" id="L130">		this.backColor = backColor;</span>
+<span class="fc" id="L131">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L132">		this.label = label;</span>
+<span class="fc" id="L133">		this.level = level;</span>
+<span class="fc" id="L134">		this.parent = parent;</span>
+<span class="fc" id="L135">		this.shape = shape;</span>
+<span class="fc" id="L136">		this.stereotype = stereotype;</span>
+<span class="fc" id="L137">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L141">		return label.toString();</span>
+	}
+
+	public final int getLevel() {
+<span class="fc" id="L145">		return level;</span>
+	}
+
+	public final Display getLabel() {
+<span class="fc" id="L149">		return label;</span>
+	}
+
+	public Collection&lt;Idea&gt; getChildren() {
+<span class="fc" id="L153">		return Collections.unmodifiableList(children);</span>
+	}
+
+	public boolean hasChildren() {
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		return children.size() &gt; 0;</span>
+	}
+
+	public Idea getParent() {
+<span class="fc" id="L161">		return parent;</span>
+	}
+
+	public final IdeaShape getShape() {
+<span class="fc" id="L165">		return shape;</span>
+	}
+
+	public final HColor getBackColor() {
+<span class="fc" id="L169">		return backColor;</span>
+	}
+
+	public final StyleBuilder getStyleBuilder() {
+<span class="nc" id="L173">		return styleBuilder;</span>
+	}
+
+	public final Stereotype getStereotype1() {
+<span class="nc" id="L177">		return stereotype;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

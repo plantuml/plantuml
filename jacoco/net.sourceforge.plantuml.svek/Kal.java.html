@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Kal.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">Kal.java</span></div><h1>Kal.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.utils.Direction;
+
+public class Kal implements UDrawable {
+
+	private final TextBlock textBlock;
+	private final Direction position;
+	private XDimension2D dim;
+	private UTranslate translate;
+	private final SvekEdge SvekEdge;
+	private final Entity entity;
+	private final Link link;
+	private final ISkinParam skinParam;
+	private final Style style;
+
+	public UTranslate getTranslateForDecoration() {
+<span class="nc bnc" id="L73" title="All 5 branches missed.">		switch (position) {</span>
+		case RIGHT:
+<span class="nc" id="L75">			return UTranslate.dx(dim.getWidth());</span>
+		case LEFT:
+<span class="nc" id="L77">			return UTranslate.dx(-dim.getWidth());</span>
+		case DOWN:
+<span class="nc" id="L79">			return UTranslate.dy(dim.getHeight());</span>
+		case UP:
+<span class="nc" id="L81">			return UTranslate.dy(-dim.getHeight());</span>
+		default:
+<span class="nc" id="L83">			throw new IllegalStateException();</span>
+		}
+	}
+
+	public Kal(SvekEdge SvekEdge, String text, ISkinParam skinParam, Entity entity, Link link,
+<span class="nc" id="L88">			StringBounder stringBounder) {</span>
+<span class="nc" id="L89">		this.SvekEdge = SvekEdge;</span>
+<span class="nc" id="L90">		this.entity = entity;</span>
+<span class="nc" id="L91">		this.link = link;</span>
+<span class="nc" id="L92">		this.skinParam = skinParam;</span>
+<span class="nc" id="L93">		this.style = StyleSignatureBasic</span>
+<span class="nc" id="L94">				.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified) //</span>
+<span class="nc" id="L95">				.withTOBECHANGED(entity.getStereotype()) //</span>
+<span class="nc" id="L96">				.with(entity.getStereostyles()) //</span>
+<span class="nc" id="L97">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+<span class="nc" id="L99">		final FontConfiguration font = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L101">		this.textBlock = Display.getWithNewlines(skinParam.getPragma(), text).create7(font, HorizontalAlignment.LEFT, skinParam,</span>
+				CreoleMode.SIMPLE_LINE);
+
+<span class="nc" id="L104">		this.dim = this.textBlock.calculateDimension(stringBounder).delta(4, 2);</span>
+
+<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (link.getLength() == 1 &amp;&amp; link.getEntity1() == entity) {</span>
+<span class="nc" id="L107">			this.position = Direction.RIGHT;</span>
+<span class="nc" id="L108">			entity.ensureMargins(new Margins(0, dim.getWidth(), 0, 0));</span>
+
+<span class="nc bnc" id="L110" title="All 4 branches missed.">		} else if (link.getLength() == 1 &amp;&amp; link.getEntity2() == entity) {</span>
+<span class="nc" id="L111">			this.position = Direction.LEFT;</span>
+<span class="nc" id="L112">			entity.ensureMargins(new Margins(dim.getWidth(), 0, 0, 0));</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (link.getEntity1() == entity) {</span>
+<span class="nc" id="L115">			this.position = Direction.DOWN;</span>
+<span class="nc" id="L116">			entity.ensureMargins(new Margins(0, 0, 0, dim.getHeight()));</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		} else if (link.getEntity2() == entity) {</span>
+<span class="nc" id="L119">			this.position = Direction.UP;</span>
+<span class="nc" id="L120">			entity.ensureMargins(new Margins(0, 0, dim.getHeight(), 0));</span>
+
+		} else {
+<span class="nc" id="L123">			throw new IllegalStateException();</span>
+		}
+
+<span class="nc" id="L126">		entity.addKal(this);</span>
+
+<span class="nc" id="L128">	}</span>
+
+	public XDimension2D getDimension() {
+<span class="nc" id="L131">		return dim;</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L136">		final URectangle rect = URectangle.build(dim);</span>
+
+<span class="nc" id="L138">		final HColor classBackground = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L139">		final HColor classBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L141">		ug = ug.apply(getTranslate());</span>
+<span class="nc" id="L142">		ug.apply(classBackground.bg()).apply(classBorder).apply(UStroke.withThickness(0.5)).draw(rect);</span>
+<span class="nc" id="L143">		textBlock.drawU(ug.apply(new UTranslate(2, 1)));</span>
+<span class="nc" id="L144">	}</span>
+
+	private UTranslate getTranslate() {
+<span class="nc" id="L147">		return getTextDelta().compose(translate);</span>
+
+	}
+
+	public double getX1() {
+<span class="nc" id="L152">		return getTranslate().getDx() - 5;</span>
+	}
+
+	public double getX2() {
+<span class="nc" id="L156">		return getX1() + dim.getWidth() + 10;</span>
+	}
+
+	private UTranslate getTextDelta() {
+<span class="nc bnc" id="L160" title="All 5 branches missed.">		switch (position) {</span>
+		case RIGHT:
+<span class="nc" id="L162">			return UTranslate.dy(-dim.getHeight() / 2);</span>
+		case LEFT:
+<span class="nc" id="L164">			return new UTranslate(-dim.getWidth() + 0.5, -dim.getHeight() / 2);</span>
+		case DOWN:
+<span class="nc" id="L166">			return UTranslate.dx(-dim.getWidth() / 2);</span>
+		case UP:
+<span class="nc" id="L168">			return new UTranslate(-dim.getWidth() / 2, -dim.getHeight() + 0.5);</span>
+		default:
+<span class="nc" id="L170">			throw new IllegalStateException();</span>
+		}
+
+	}
+
+	public final Direction getPosition() {
+<span class="nc" id="L176">		return position;</span>
+	}
+
+	public void setTranslate(UTranslate translate, UDrawable decoration) {
+<span class="nc" id="L180">		this.translate = translate;</span>
+//		if (decoration instanceof Extremity) {
+//			final Extremity extremity = (Extremity) decoration;
+//			final UTranslate deltaForKal = extremity.getDeltaForKal();
+//			// this.translate = this.translate.compose(deltaForKal);
+//		}
+<span class="nc" id="L186">	}</span>
+
+	public double overlapx(Kal other) {
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (this.position != other.position)</span>
+<span class="nc" id="L190">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L191" title="All 4 branches missed.">		if (other.getX1() &gt;= this.getX1() &amp;&amp; other.getX1() &lt;= this.getX2())</span>
+<span class="nc" id="L192">			return this.getX2() - other.getX1();</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">		if (other.getX2() &gt;= this.getX1() &amp;&amp; other.getX2() &lt;= this.getX2())</span>
+<span class="nc" id="L194">			return this.getX1() - other.getX2();</span>
+
+<span class="nc bnc" id="L196" title="All 4 branches missed.">		if (this.getX1() &gt;= other.getX1() &amp;&amp; this.getX1() &lt;= other.getX2())</span>
+<span class="nc" id="L197">			return other.getX2() - this.getX1();</span>
+<span class="nc bnc" id="L198" title="All 4 branches missed.">		if (this.getX2() &gt;= other.getX1() &amp;&amp; this.getX2() &lt;= other.getX2())</span>
+<span class="nc" id="L199">			return other.getX1() - this.getX2();</span>
+
+<span class="nc" id="L201">		return 0;</span>
+	}
+
+	public void moveX(double dx) {
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (dx == 0)</span>
+<span class="nc" id="L206">			return;</span>
+<span class="nc" id="L207">		this.translate = this.translate.compose(UTranslate.dx(dx));</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (link.getEntity1() == entity)</span>
+<span class="nc" id="L209">			SvekEdge.moveStartPoint(dx, 0);</span>
+
+<span class="nc" id="L211">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

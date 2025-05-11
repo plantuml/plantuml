@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberAnalyzedDated.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.api</a> &gt; <span class="el_source">NumberAnalyzedDated.java</span></div><h1>NumberAnalyzedDated.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License aint with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ */
+package net.sourceforge.plantuml.api;
+
+import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.prefs.Preferences;
+
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
+
+public class NumberAnalyzedDated extends NumberAnalyzed {
+
+<span class="nc" id="L40">	private final AtomicLong created = new AtomicLong();</span>
+<span class="nc" id="L41">	private final AtomicLong modified = new AtomicLong();</span>
+	private String comment;
+
+	private NumberAnalyzedDated(String name, long nb, long sum, long min, long max, long sumOfSquare, long sliddingSum,
+			long created, long modified, String comment) {
+<span class="nc" id="L46">		super(name, nb, sum, min, max, sumOfSquare, sliddingSum);</span>
+<span class="nc" id="L47">		this.created.set(created);</span>
+<span class="nc" id="L48">		this.modified.set(modified);</span>
+<span class="nc" id="L49">		this.comment = comment;</span>
+<span class="nc" id="L50">	}</span>
+
+	@Override
+	public synchronized void reset() {
+<span class="nc" id="L54">		super.reset();</span>
+<span class="nc" id="L55">		resetCreatedModifiedComment();</span>
+<span class="nc" id="L56">	}</span>
+
+	public NumberAnalyzedDated() {
+<span class="nc" id="L59">		super();</span>
+<span class="nc" id="L60">		resetCreatedModifiedComment();</span>
+<span class="nc" id="L61">	}</span>
+
+	public NumberAnalyzedDated(String name) {
+<span class="nc" id="L64">		super(name);</span>
+<span class="nc" id="L65">		resetCreatedModifiedComment();</span>
+<span class="nc" id="L66">	}</span>
+
+	private void resetCreatedModifiedComment() {
+<span class="nc" id="L69">		final long now = System.currentTimeMillis();</span>
+<span class="nc" id="L70">		this.created.set(now);</span>
+<span class="nc" id="L71">		this.modified.set(now);</span>
+<span class="nc" id="L72">		this.comment = &quot; &quot;;</span>
+<span class="nc" id="L73">	};</span>
+
+	@Override
+	public void addValue(long v) {
+<span class="nc" id="L77">		super.addValue(v);</span>
+<span class="nc" id="L78">		this.modified.set(System.currentTimeMillis());</span>
+<span class="nc" id="L79">	}</span>
+
+	@Override
+	public void add(NumberAnalyzed other) {
+<span class="nc" id="L83">		super.add(other);</span>
+<span class="nc" id="L84">		this.modified.set(System.currentTimeMillis());</span>
+<span class="nc" id="L85">	}</span>
+
+	@Override
+	protected String getSavedSupplementatyData() {
+<span class="nc" id="L89">		return longToString(created.get()) + &quot;;&quot; + longToString(modified.get()) + &quot;;&quot; + comment;</span>
+	}
+
+	public static NumberAnalyzedDated load(String name, Preferences prefs) {
+<span class="nc" id="L93">		final String value = prefs.get(name + &quot;.saved&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (value.length() == 0) {</span>
+<span class="nc" id="L95">			Log.info(&quot;Cannot load &quot; + name);</span>
+<span class="nc" id="L96">			return null;</span>
+		}
+		try {
+<span class="nc" id="L99">			final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
+<span class="nc" id="L100">			return new NumberAnalyzedDated(name, Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36),</span>
+<span class="nc" id="L101">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36),</span>
+<span class="nc" id="L102">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36),</span>
+<span class="nc" id="L103">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36), st.nextToken());</span>
+<span class="nc" id="L104">		} catch (Exception e) {</span>
+<span class="nc" id="L105">			Logme.error(e);</span>
+<span class="nc" id="L106">			Log.info(&quot;Error reading &quot; + value);</span>
+<span class="nc" id="L107">			return null;</span>
+		}
+	}
+
+	final public long getCreationTime() {
+<span class="nc" id="L112">		return created.get();</span>
+	}
+
+	final public long getModificationTime() {
+<span class="nc" id="L116">		return modified.get();</span>
+	}
+
+	final public synchronized String getComment() {
+<span class="nc" id="L120">		return comment;</span>
+	}
+
+	final public synchronized void setComment(String comment) {
+<span class="nc" id="L124">		this.comment = comment;</span>
+<span class="nc" id="L125">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

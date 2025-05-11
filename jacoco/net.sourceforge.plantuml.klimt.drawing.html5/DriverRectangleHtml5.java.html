@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DriverRectangleHtml5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.html5</a> &gt; <span class="el_source">DriverRectangleHtml5.java</span></div><h1>DriverRectangleHtml5.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.html5;
+
+import java.awt.geom.Rectangle2D;
+
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public class DriverRectangleHtml5 implements UDriver&lt;URectangle, Html5Drawer&gt; {
+
+	private final ClipContainer clipContainer;
+
+<span class="nc" id="L52">	public DriverRectangleHtml5(ClipContainer clipContainer) {</span>
+<span class="nc" id="L53">		this.clipContainer = clipContainer;</span>
+<span class="nc" id="L54">	}</span>
+
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, Html5Drawer html) {
+<span class="nc" id="L57">		double width = rect.getWidth();</span>
+<span class="nc" id="L58">		double height = rect.getHeight();</span>
+
+<span class="nc" id="L60">		final UClip clip = clipContainer.getClip();</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (clip != null) {</span>
+<span class="nc" id="L62">			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));</span>
+<span class="nc" id="L63">			x = r.x;</span>
+<span class="nc" id="L64">			y = r.y;</span>
+<span class="nc" id="L65">			width = r.width;</span>
+<span class="nc" id="L66">			height = r.height;</span>
+		}
+
+<span class="nc" id="L69">		final double rx = rect.getRx();</span>
+<span class="nc" id="L70">		final double ry = rect.getRy();</span>
+
+//		// Shadow
+//		if (rect.getDeltaShadow() != 0) {
+//			eps.epsRectangleShadow(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow());
+//		}
+
+<span class="nc" id="L77">		final HColor back = param.getBackcolor();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (back instanceof HColorGradient) {</span>
+//			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
+//			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, (HtmlColorGradient) back, mapper);
+		} else {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			final String color = param.getColor() == null ? null : param.getColor().toRGB(mapper);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			final String backcolor = param.getColor() == null ? null : param.getBackcolor().toRGB(mapper);</span>
+
+<span class="nc" id="L85">			html.setStrokeColor(color);</span>
+<span class="nc" id="L86">			html.setFillColor(backcolor);</span>
+//			eps.setStrokeWidth(&quot;&quot; + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
+//					.getStroke().getDashSpace());
+<span class="nc" id="L89">			html.htmlRectangle(x, y, width, height, rx / 2, ry / 2);</span>
+		}
+<span class="nc" id="L91">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

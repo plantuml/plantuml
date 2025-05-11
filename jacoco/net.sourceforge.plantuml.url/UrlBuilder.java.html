@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UrlBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.url</a> &gt; <span class="el_source">UrlBuilder.java</span></div><h1>UrlBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.url;
+
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+
+public class UrlBuilder {
+    // ::remove file when __HAXE__
+
+<span class="fc" id="L48">	public static final IRegex MANDATORY = new RegexLeaf(&quot;URL&quot;, &quot;(&quot; + UrlBuilder.getRegexp() + &quot;)&quot;);</span>
+<span class="fc" id="L49">	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);</span>
+
+	private static final String START_PART = &quot;\\[\\[[%s]*&quot;;
+	private static final String END_PART = &quot;[%s]*\\]\\]&quot;;
+
+	private static final String S_QUOTED = START_PART + //
+			&quot;[%g]([^%g]+)[%g]&quot; + // Quoted part
+			&quot;(?:[%s]*\\{([^{}]*)\\})?&quot; + // Optional tooltip
+			&quot;(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?&quot; + // Optional label
+			END_PART;
+
+	private static final String S_ONLY_TOOLTIP = START_PART + //
+			&quot;\\{(.*)\\}&quot; + // Tooltip
+			END_PART;
+
+	private static final String S_ONLY_TOOLTIP_AND_LABEL = START_PART + //
+			&quot;\\{([^{}]*)\\}&quot; + // Tooltip
+			&quot;[%s]*&quot; + //
+			&quot;([^\\[%s\\{\\}\\[\\]][^\\[\\]]*)&quot; // Label
+			+ END_PART;
+
+	private static final String S_LINK_TOOLTIP_NOLABEL = START_PART + //
+			&quot;([^\\s%g{}\\[\\]]+?)&quot; + // Link
+			&quot;[%s]*&quot; + //
+			&quot;\\{(.+)\\}&quot; + // Tooltip
+			END_PART;
+
+	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //
+			&quot;([^%s%g\\[\\]]+?)&quot; + // Link
+			&quot;(?:[%s]*\\{([^{}]*)\\})?&quot; + // Optional tooltip
+			&quot;(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?&quot; + // Optional label
+			END_PART;
+
+	public static String getRegexp() {
+<span class="fc" id="L83">		return S_QUOTED + &quot;|&quot; + //</span>
+				S_ONLY_TOOLTIP + &quot;|&quot; + //
+				S_ONLY_TOOLTIP_AND_LABEL + &quot;|&quot; + //
+				S_LINK_TOOLTIP_NOLABEL + &quot;|&quot; + //
+				S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL;
+	}
+
+<span class="fc" id="L90">	private static final Pattern2 QUOTED = MyPattern.cmpile(S_QUOTED);</span>
+<span class="fc" id="L91">	private static final Pattern2 ONLY_TOOLTIP = MyPattern.cmpile(S_ONLY_TOOLTIP);</span>
+<span class="fc" id="L92">	private static final Pattern2 ONLY_TOOLTIP_AND_LABEL = MyPattern.cmpile(S_ONLY_TOOLTIP_AND_LABEL);</span>
+<span class="fc" id="L93">	private static final Pattern2 LINK_TOOLTIP_NOLABEL = MyPattern.cmpile(S_LINK_TOOLTIP_NOLABEL);</span>
+<span class="fc" id="L94">	private static final Pattern2 LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = MyPattern</span>
+<span class="fc" id="L95">			.cmpile(S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL);</span>
+
+	private final String topurl;
+	private UrlMode mode;
+
+<span class="fc" id="L100">	public UrlBuilder(String topurl, UrlMode mode) {</span>
+<span class="fc" id="L101">		this.topurl = topurl;</span>
+<span class="fc" id="L102">		this.mode = mode;</span>
+<span class="fc" id="L103">	}</span>
+
+	public Url getUrl(String s) {
+		Matcher2 m;
+<span class="fc" id="L107">		m = QUOTED.matcher(s);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L109">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
+
+<span class="fc" id="L111">		m = ONLY_TOOLTIP.matcher(s);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L113">			return new Url(&quot;&quot;, m.group(1), null);</span>
+
+<span class="fc" id="L115">		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L117">			return new Url(&quot;&quot;, m.group(1), m.group(2));</span>
+
+<span class="fc" id="L119">		m = LINK_TOOLTIP_NOLABEL.matcher(s);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L121">			return new Url(withTopUrl(m.group(1)), m.group(2), null);</span>
+
+<span class="fc" id="L123">		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L125">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
+
+<span class="fc" id="L127">		return null;</span>
+
+	}
+
+	private boolean matchesOrFind(Matcher2 m) {
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
+<span class="fc" id="L133">			return m.matches();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		else if (mode == UrlMode.ANYWHERE)</span>
+<span class="fc" id="L135">			return m.find();</span>
+		else
+<span class="nc" id="L137">			throw new IllegalStateException();</span>
+
+	}
+
+	private String withTopUrl(String url) {
+<span class="pc bpc" id="L142" title="2 of 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
+				&amp;&amp; topurl != null)
+<span class="nc" id="L144">			return topurl + url;</span>
+
+<span class="fc" id="L146">		return url;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

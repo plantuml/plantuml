@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmiClassDiagramScript.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xmi</a> &gt; <span class="el_source">XmiClassDiagramScript.java</span></div><h1>XmiClassDiagramScript.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.xmi;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.utils.Log;
+
+public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements XmlDiagramTransformer {
+
+	private static class MemberData {
+		public final String name;
+		public final String id;
+		public final String kind;
+
+		public MemberData(String name, String id, String kind) {
+<span class="fc" id="L63">			super();</span>
+<span class="fc" id="L64">			this.name = name;</span>
+<span class="fc" id="L65">			this.id = id;</span>
+<span class="fc" id="L66">			this.kind = kind;</span>
+<span class="fc" id="L67">		}</span>
+
+	}
+
+<span class="fc" id="L71">	protected final Map&lt;String, List&lt;MemberData&gt;&gt; members = new HashMap&lt;&gt;();</span>
+
+	public XmiClassDiagramScript(ClassDiagram classDiagram) throws ParserConfigurationException {
+<span class="fc" id="L74">		super(classDiagram);</span>
+
+<span class="fc" id="L76">		addPackage(ownedElementRoot, classDiagram.getRootGroup());</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (final Link link : classDiagram.getLinks())</span>
+<span class="fc" id="L79">			addLink(link);</span>
+
+<span class="fc" id="L81">	}</span>
+
+	final protected Element createElementPackage(Entity group) {
+<span class="nc" id="L84">		final Element umlPackage = document.createElement(&quot;UML:Package&quot;);</span>
+
+<span class="nc" id="L86">		umlPackage.setAttribute(&quot;xmi.id&quot;, group.getUid());</span>
+<span class="nc" id="L87">		umlPackage.setAttribute(&quot;name&quot;, group.getDisplay().get(0).toString());</span>
+
+<span class="nc" id="L89">		final Element namespaceOwnedElement = document.createElement(&quot;UML:Namespace.ownedElement&quot;);</span>
+<span class="nc" id="L90">		umlPackage.appendChild(namespaceOwnedElement);</span>
+
+<span class="nc" id="L92">		addPackage(namespaceOwnedElement, group);</span>
+
+<span class="nc" id="L94">		return umlPackage;</span>
+
+	}
+
+	private void addPackage(Element element, Entity group) {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (final Entity ent : group.leafs()) {</span>
+<span class="fc" id="L100">			final Element cla = createEntityNode(ent);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (cla == null)</span>
+<span class="nc" id="L102">				continue;</span>
+
+<span class="fc" id="L104">			element.appendChild(cla);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (members.containsKey(ent.getUid()) == false)</span>
+<span class="fc" id="L106">				members.put(ent.getUid(), new ArrayList&lt;MemberData&gt;());</span>
+
+<span class="fc" id="L108">			NodeList attrs = cla.getElementsByTagName(&quot;UML:Attribute&quot;);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			for (int i = 0; i &lt; attrs.getLength(); i++) {</span>
+<span class="fc" id="L110">				Element child = (Element) attrs.item(i);</span>
+<span class="fc" id="L111">				members.get(ent.getUid()).add(</span>
+<span class="fc" id="L112">						new MemberData(child.getAttribute(&quot;name&quot;), child.getAttribute(&quot;xmi.id&quot;), child.getTagName()));</span>
+			}
+<span class="fc" id="L114">			NodeList ops = cla.getElementsByTagName(&quot;UML:Operation&quot;);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">			for (int i = 0; i &lt; ops.getLength(); i++) {</span>
+<span class="fc" id="L116">				Element child = (Element) ops.item(i);</span>
+<span class="fc" id="L117">				members.get(ent.getUid()).add(</span>
+<span class="fc" id="L118">						new MemberData(child.getAttribute(&quot;name&quot;), child.getAttribute(&quot;xmi.id&quot;), child.getTagName()));</span>
+			}
+<span class="fc" id="L120">			done.add(ent);</span>
+<span class="fc" id="L121">		}</span>
+
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		for (final Entity childGroup : group.groups()) {</span>
+<span class="nc" id="L124">			final Element result = createElementPackage(childGroup);</span>
+<span class="nc" id="L125">			element.appendChild(result);</span>
+<span class="nc" id="L126">			done.add(childGroup);</span>
+<span class="nc" id="L127">		}</span>
+
+<span class="fc" id="L129">	}</span>
+
+	private void addLink(Link link) {
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		if (link.isHidden() || link.isInvis())</span>
+<span class="fc" id="L133">			return;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (!link.getType().getStyle().isNormal()) {</span>
+			// this is some kind of dashed line, which means it is a dependency
+<span class="fc" id="L136">			Element dependency = createDependency(link);</span>
+<span class="fc" id="L137">			ownedElementRoot.appendChild(dependency);</span>
+<span class="fc" id="L138">			return;</span>
+		}
+
+<span class="fc" id="L141">		final String assId = classDiagram.getUniqueSequence(&quot;ass&quot;);</span>
+<span class="pc bpc" id="L142" title="2 of 4 branches missed.">		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {</span>
+<span class="nc" id="L143">			addExtension(link, assId);</span>
+<span class="nc" id="L144">			return;</span>
+		}
+
+<span class="fc" id="L147">		UMLAggregationKind aggregation = UMLAggregationKind.None;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION) {</span>
+<span class="nc" id="L149">			aggregation = UMLAggregationKind.Composite;</span>
+		}
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION) {</span>
+<span class="nc" id="L152">			aggregation = UMLAggregationKind.Composite;</span>
+		}
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGREGATION) {</span>
+<span class="nc" id="L155">			aggregation = UMLAggregationKind.Aggregation;</span>
+		}
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGREGATION) {</span>
+<span class="nc" id="L158">			aggregation = UMLAggregationKind.Aggregation;</span>
+		}
+
+<span class="fc" id="L161">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
+<span class="fc" id="L162">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
+		// association.setAttribute(&quot;namespace&quot;,
+		// CucaDiagramXmiMaker.getModel(classDiagram));
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
+<span class="nc" id="L166">			association.setAttribute(&quot;name&quot;, forXMI(link.getLabel()));</span>
+
+<span class="fc" id="L168">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
+<span class="fc" id="L169">		final Element end1 = createAssociationEnd(assId, link.getType().getDecor2(), link.getQuantifier1(),</span>
+<span class="fc" id="L170">				link.getEntity1(), aggregation);</span>
+
+<span class="fc" id="L172">		connection.appendChild(end1);</span>
+<span class="fc" id="L173">		final Element end2 = createAssociationEnd(assId, link.getType().getDecor1(), link.getQuantifier2(),</span>
+<span class="fc" id="L174">				link.getEntity2(), aggregation);</span>
+<span class="fc" id="L175">		connection.appendChild(end2);</span>
+
+<span class="fc" id="L177">		association.appendChild(connection);</span>
+
+<span class="fc" id="L179">		ownedElementRoot.appendChild(association);</span>
+<span class="fc" id="L180">	}</span>
+
+	private Element createAssociationEnd(final String assId, final LinkDecor decor, final String quantifier,
+			Entity entity, UMLAggregationKind aggregation) {
+<span class="fc" id="L184">		final Element end = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="fc" id="L185">		end.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="fc" id="L186">		end.setAttribute(&quot;association&quot;, assId);</span>
+
+//		end1.setAttribute(&quot;type&quot;, link.getEntity1().getUid());
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (quantifier != null)</span>
+<span class="nc" id="L190">			end.setAttribute(&quot;name&quot;, forXMI(quantifier));</span>
+		// TODO this is the multiplicity, handle that correctly
+
+<span class="fc" id="L193">		end.setAttribute(&quot;participant&quot;, entity.getUid());</span>
+
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (aggregation != UMLAggregationKind.None)</span>
+<span class="nc" id="L196">			end.setAttribute(&quot;aggregation&quot;, aggregation.name);</span>
+
+<span class="pc bpc" id="L198" title="1 of 4 branches missed.">		boolean navigable = decor != LinkDecor.NOT_NAVIGABLE &amp;&amp; decor != LinkDecor.NONE;</span>
+<span class="fc" id="L199">		end.setAttribute(&quot;isNavigable&quot;, Boolean.toString(navigable));</span>
+
+<span class="fc" id="L201">		return end;</span>
+	}
+
+	private void addExtension(Link link, String assId) {
+<span class="nc" id="L205">		final Element association = document.createElement(&quot;UML:Generalization&quot;);</span>
+<span class="nc" id="L206">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (link.getLabel() != null)</span>
+<span class="nc" id="L208">			association.setAttribute(&quot;name&quot;, forXMI(link.getLabel()));</span>
+
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.EXTENDS)</span>
+<span class="nc" id="L211">			generalizationChildParent(association, link.getEntity1().getUid(), link.getEntity2().getUid());</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		else if (link.getType().getDecor2() == LinkDecor.EXTENDS)</span>
+<span class="nc" id="L213">			generalizationChildParent(association, link.getEntity2().getUid(), link.getEntity1().getUid());</span>
+		else
+<span class="nc" id="L215">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L217">		ownedElementRoot.appendChild(association);</span>
+<span class="nc" id="L218">	}</span>
+
+	private Element createDependency(Link link) {
+		// determine kind and direction
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (link.isInverted()) {</span>
+<span class="nc" id="L223">			return createDependencyClientSupplier(link.getEntity2(), link.getPortName2(), link.getEntity1(),</span>
+<span class="nc" id="L224">					link.getPortName1());</span>
+		} else {
+<span class="fc" id="L226">			return createDependencyClientSupplier(link.getEntity1(), link.getPortName1(), link.getEntity2(),</span>
+<span class="fc" id="L227">					link.getPortName2());</span>
+		}
+	}
+
+	private Element createRef(Entity entity, String member) {
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (member == null) {</span>
+			// directly to entity
+<span class="fc" id="L234">			Element ref = document.createElement(&quot;UML:Class&quot;);</span>
+<span class="fc" id="L235">			ref.setAttribute(&quot;xmi.idref&quot;, entity.getUid());</span>
+<span class="fc" id="L236">			return ref;</span>
+		}
+<span class="nc" id="L238">		List&lt;MemberData&gt; mbers = members.get(entity.getUid());</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (mbers == null) {</span>
+<span class="nc" id="L240">			Log.info(String.format(&quot;Could not find entity %s in member list&quot;, entity.getName()));</span>
+<span class="nc" id="L241">			return null;</span>
+		}
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		for (MemberData m : mbers) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">			if (m.name.contains(member)) {</span>
+<span class="nc" id="L245">				Element ref = document.createElement(m.kind);</span>
+<span class="nc" id="L246">				ref.setAttribute(&quot;xmi.idref&quot;, m.id);</span>
+<span class="nc" id="L247">				return ref;</span>
+			}
+<span class="nc" id="L249">		}</span>
+		// All members must have been added to the map
+<span class="nc" id="L251">		Log.error(String.format(&quot;Could not find the member %s in the object %s&quot;, member, entity.getName()));</span>
+<span class="nc" id="L252">		return null;</span>
+	}
+
+	private Element createDependencyClientSupplier(Entity clientEntity, String clientPort, Entity supplierEntity,
+			String supplierPort) {
+<span class="fc" id="L257">		String depID = classDiagram.getUniqueSequence(&quot;dep&quot;);</span>
+<span class="fc" id="L258">		Element dependency = document.createElement(&quot;UML:Dependency&quot;);</span>
+<span class="fc" id="L259">		dependency.setAttribute(&quot;xmi.id&quot;, depID);</span>
+<span class="fc" id="L260">		Element client = document.createElement(&quot;UML:Dependency.client&quot;);</span>
+<span class="fc" id="L261">		Element supplier = document.createElement(&quot;UML:Dependency.supplier&quot;);</span>
+<span class="fc" id="L262">		Element clientRef = createRef(clientEntity, clientPort);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (clientRef != null)</span>
+<span class="fc" id="L264">			client.appendChild(clientRef);</span>
+<span class="fc" id="L265">		Element supplierRef = createRef(supplierEntity, supplierPort);</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (supplierRef != null)</span>
+<span class="fc" id="L267">			supplier.appendChild(supplierRef);</span>
+<span class="fc" id="L268">		dependency.appendChild(client);</span>
+<span class="fc" id="L269">		dependency.appendChild(supplier);</span>
+<span class="fc" id="L270">		return dependency;</span>
+	}
+
+	private void generalizationChildParent(Element association, String uidChild, String uidParent) {
+<span class="nc" id="L274">		final Element child = document.createElement(&quot;UML:Generalization.child&quot;);</span>
+<span class="nc" id="L275">		final Element parent = document.createElement(&quot;UML:Generalization.parent&quot;);</span>
+
+<span class="nc" id="L277">		final Element classChild = document.createElement(&quot;UML:Class&quot;);</span>
+<span class="nc" id="L278">		classChild.setAttribute(&quot;xmi.idref&quot;, uidChild);</span>
+<span class="nc" id="L279">		final Element classParent = document.createElement(&quot;UML:Class&quot;);</span>
+<span class="nc" id="L280">		classParent.setAttribute(&quot;xmi.idref&quot;, uidParent);</span>
+
+<span class="nc" id="L282">		parent.appendChild(classParent);</span>
+<span class="nc" id="L283">		child.appendChild(classChild);</span>
+
+<span class="nc" id="L285">		association.appendChild(child);</span>
+<span class="nc" id="L286">		association.appendChild(parent);</span>
+//		association.setAttribute(&quot;child&quot;, uidChild);
+//		association.setAttribute(&quot;parent&quot;, uidParent);
+
+<span class="nc" id="L290">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

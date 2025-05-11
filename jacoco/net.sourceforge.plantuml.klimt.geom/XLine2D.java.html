@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XLine2D.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">XLine2D.java</span></div><h1>XLine2D.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.geom;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+
+public class XLine2D implements UDrawable {
+
+	final public double x1;
+	final public double y1;
+	final public double x2;
+	final public double y2;
+
+<span class="fc" id="L15">	public XLine2D(double x1, double y1, double x2, double y2) {</span>
+<span class="fc" id="L16">		this.x1 = x1;</span>
+<span class="fc" id="L17">		this.y1 = y1;</span>
+<span class="fc" id="L18">		this.x2 = x2;</span>
+<span class="fc" id="L19">		this.y2 = y2;</span>
+<span class="fc" id="L20">	}</span>
+
+	public static XLine2D line(XPoint2D p1, XPoint2D p2) {
+<span class="fc" id="L23">		return new XLine2D(p1.getX(), p1.getY(), p2.getX(), p2.getY());</span>
+	}
+
+	public XPoint2D getMiddle() {
+<span class="nc" id="L27">		final double mx = (this.x1 + this.x2) / 2;</span>
+<span class="nc" id="L28">		final double my = (this.y1 + this.y2) / 2;</span>
+<span class="nc" id="L29">		return new XPoint2D(mx, my);</span>
+	}
+
+	public final double getX1() {
+<span class="fc" id="L33">		return x1;</span>
+	}
+
+	public final double getY1() {
+<span class="fc" id="L37">		return y1;</span>
+	}
+
+	public final double getX2() {
+<span class="fc" id="L41">		return x2;</span>
+	}
+
+	public final double getY2() {
+<span class="fc" id="L45">		return y2;</span>
+	}
+
+	public XPoint2D getP1() {
+<span class="fc" id="L49">		return new XPoint2D(x1, y1);</span>
+	}
+
+	public XPoint2D getP2() {
+<span class="fc" id="L53">		return new XPoint2D(x2, y2);</span>
+	}
+
+	public XLine2D withPoint1(XPoint2D other) {
+<span class="nc" id="L57">		return new XLine2D(other.x, other.y, x2, y2);</span>
+	}
+
+	public XLine2D withPoint2(XPoint2D other) {
+<span class="nc" id="L61">		return new XLine2D(x1, y1, other.x, other.y);</span>
+	}
+
+	/**
+	 * Returns the square of the distance from a point to a line segment. The
+	 * distance measured is the distance between the specified point and the closest
+	 * point between the specified end points. If the specified point intersects the
+	 * line segment in between the end points, this method returns 0.0.
+	 *
+	 * @param x1 the X coordinate of the start point of the specified line segment
+	 * @param y1 the Y coordinate of the start point of the specified line segment
+	 * @param x2 the X coordinate of the end point of the specified line segment
+	 * @param y2 the Y coordinate of the end point of the specified line segment
+	 * @param px the X coordinate of the specified point being measured against the
+	 *           specified line segment
+	 * @param py the Y coordinate of the specified point being measured against the
+	 *           specified line segment
+	 * @return a double value that is the square of the distance from the specified
+	 *         point to the specified line segment.
+	 *
+	 * @since 1.2
+	 */
+	public static double ptSegDistSq(double x1, double y1, double x2, double y2, double px, double py) {
+		// Adjust vectors relative to x1,y1
+		// x2,y2 becomes relative vector from x1,y1 to end of segment
+<span class="nc" id="L86">		x2 -= x1;</span>
+<span class="nc" id="L87">		y2 -= y1;</span>
+		// px,py becomes relative vector from x1,y1 to test point
+<span class="nc" id="L89">		px -= x1;</span>
+<span class="nc" id="L90">		py -= y1;</span>
+<span class="nc" id="L91">		double dotprod = px * x2 + py * y2;</span>
+		double projlenSq;
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (dotprod &lt;= 0.0) {</span>
+			// px,py is on the side of x1,y1 away from x2,y2
+			// distance to segment is length of px,py vector
+			// &quot;length of its (clipped) projection&quot; is now 0.0
+<span class="nc" id="L97">			projlenSq = 0.0;</span>
+		} else {
+			// switch to backwards vectors relative to x2,y2
+			// x2,y2 are already the negative of x1,y1=&gt;x2,y2
+			// to get px,py to be the negative of px,py=&gt;x2,y2
+			// the dot product of two negated vectors is the same
+			// as the dot product of the two normal vectors
+<span class="nc" id="L104">			px = x2 - px;</span>
+<span class="nc" id="L105">			py = y2 - py;</span>
+<span class="nc" id="L106">			dotprod = px * x2 + py * y2;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (dotprod &lt;= 0.0) {</span>
+				// px,py is on the side of x2,y2 away from x1,y1
+				// distance to segment is length of (backwards) px,py vector
+				// &quot;length of its (clipped) projection&quot; is now 0.0
+<span class="nc" id="L111">				projlenSq = 0.0;</span>
+			} else {
+				// px,py is between x1,y1 and x2,y2
+				// dotprod is the length of the px,py vector
+				// projected on the x2,y2=&gt;x1,y1 vector times the
+				// length of the x2,y2=&gt;x1,y1 vector
+<span class="nc" id="L117">				projlenSq = dotprod * dotprod / (x2 * x2 + y2 * y2);</span>
+			}
+		}
+		// Distance to line is now the length of the relative point
+		// vector minus the length of its projection onto the line
+		// (which is zero if the projection falls outside the range
+		// of the line segment).
+<span class="nc" id="L124">		double lenSq = px * px + py * py - projlenSq;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (lenSq &lt; 0) {</span>
+<span class="nc" id="L126">			lenSq = 0;</span>
+		}
+<span class="nc" id="L128">		return lenSq;</span>
+	}
+
+	public XPoint2D intersect(XLine2D line2) {
+
+<span class="fc" id="L133">		final double s1x = this.x2 - this.x1;</span>
+<span class="fc" id="L134">		final double s1y = this.y2 - this.y1;</span>
+
+<span class="fc" id="L136">		final double s2x = line2.x2 - line2.x1;</span>
+<span class="fc" id="L137">		final double s2y = line2.y2 - line2.y1;</span>
+
+<span class="fc" id="L139">		final double s = (-s1y * (this.x1 - line2.x1) + s1x * (this.y1 - line2.y1)) / (-s2x * s1y + s1x * s2y);</span>
+<span class="fc" id="L140">		final double t = (s2x * (this.y1 - line2.y1) - s2y * (this.x1 - line2.x1)) / (-s2x * s1y + s1x * s2y);</span>
+
+<span class="pc bpc" id="L142" title="2 of 8 branches missed.">		if (s &gt;= 0 &amp;&amp; s &lt;= 1 &amp;&amp; t &gt;= 0 &amp;&amp; t &lt;= 1)</span>
+<span class="fc" id="L143">			return new XPoint2D(this.x1 + (t * s1x), this.y1 + (t * s1y));</span>
+
+<span class="fc" id="L145">		return null;</span>
+	}
+
+	// ::comment when __HAXE__
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L150">		ug = ug.apply(new UTranslate(x1, y1));</span>
+<span class="fc" id="L151">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="fc" id="L152">		ug.draw(line);</span>
+<span class="fc" id="L153">	}</span>
+	// ::done
+
+	public double getAngle() {
+<span class="fc" id="L157">		return Math.atan2(y2 - y1, x2 - x1);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UBrexSingleLineCommand2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command</a> &gt; <span class="el_source">UBrexSingleLineCommand2.java</span></div><h1>UBrexSingleLineCommand2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command;
+
+import java.util.Objects;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+<span class="fc" id="L51">public abstract class UBrexSingleLineCommand2&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
+
+	private final UnicodeBracketedExpression pattern;
+	private final boolean doTrim;
+
+	public UBrexSingleLineCommand2(UnicodeBracketedExpression pattern) {
+<span class="fc" id="L57">		this(true, pattern);</span>
+<span class="fc" id="L58">	}</span>
+
+<span class="fc" id="L60">	public UBrexSingleLineCommand2(boolean doTrim, UnicodeBracketedExpression pattern) {</span>
+<span class="fc" id="L61">		this.doTrim = doTrim;</span>
+<span class="fc" id="L62">		this.pattern = Objects.requireNonNull(pattern);</span>
+<span class="fc" id="L63">	}</span>
+
+	public boolean syntaxWithFinalBracket() {
+<span class="fc" id="L66">		return false;</span>
+	}
+
+	public String[] getDescription() {
+<span class="nc" id="L70">		return new String[] { pattern.getClass().getName() };</span>
+	}
+
+	private String myTrim(StringLocated s) {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (doTrim)</span>
+<span class="fc" id="L75">			return s.getTrimmed().getString();</span>
+
+<span class="nc" id="L77">		return s.getString();</span>
+	}
+
+	private StringLocated myTrim2(StringLocated s) {
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (doTrim)</span>
+<span class="fc" id="L82">			return s.getTrimmed();</span>
+<span class="nc" id="L83">		return s;</span>
+
+	}
+
+	final public CommandControl isValid(BlocLines lines) {
+<span class="pc bpc" id="L88" title="3 of 4 branches missed.">		if (lines.size() == 2 &amp;&amp; syntaxWithFinalBracket())</span>
+<span class="nc" id="L89">			return isValidBracket(lines);</span>
+
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (lines.size() != 1)</span>
+<span class="nc" id="L92">			return CommandControl.NOT_OK;</span>
+
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc" id="L95">			return CommandControl.NOT_OK;</span>
+
+<span class="fc" id="L97">		final StringLocated line2 = myTrim2(lines.getFirst());</span>
+<span class="pc bpc" id="L98" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; line2.getString().endsWith(&quot;{&quot;) == false) {</span>
+<span class="nc" id="L99">			final String vline = lines.getAt(0).getString() + &quot; {&quot;;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (isValid(BlocLines.singleString(vline)) == CommandControl.OK)</span>
+<span class="nc" id="L101">				return CommandControl.OK_PARTIAL;</span>
+
+<span class="nc" id="L103">			return CommandControl.NOT_OK;</span>
+		}
+
+<span class="fc" id="L106">		final UMatcher result = pattern.match(line2.getString());</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (result.exactMatch())</span>
+<span class="fc" id="L108">			return finalVerification();</span>
+
+<span class="fc" id="L110">		return CommandControl.NOT_OK;</span>
+	}
+
+	private CommandControl isValidBracket(BlocLines lines) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		assert lines.size() == 2;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		assert syntaxWithFinalBracket();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (myTrim(lines.getAt(1)).equals(&quot;{&quot;) == false)</span>
+<span class="nc" id="L117">			return CommandControl.NOT_OK;</span>
+
+<span class="nc" id="L119">		final String vline = lines.getAt(0).getString() + &quot; {&quot;;</span>
+<span class="nc" id="L120">		return isValid(BlocLines.singleString(vline));</span>
+	}
+
+	protected boolean isCommandForbidden() {
+<span class="fc" id="L124">		return false;</span>
+	}
+
+	protected CommandControl finalVerification() {
+<span class="fc" id="L128">		return CommandControl.OK;</span>
+	}
+
+	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
+<span class="pc bpc" id="L132" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; lines.size() == 2) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			assert myTrim(lines.getAt(1)).equals(&quot;{&quot;);</span>
+<span class="nc" id="L134">			lines = BlocLines.singleString(lines.getFirst().getString() + &quot; {&quot;);</span>
+		}
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (lines.size() != 1)</span>
+<span class="nc" id="L137">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L139">		final StringLocated first = lines.getFirst();</span>
+<span class="fc" id="L140">		final String line = myTrim(first);</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (isForbidden(line))</span>
+<span class="nc" id="L142">			return CommandExecutionResult.error(&quot;Syntax error: &quot; + line);</span>
+
+		// final RegexResult arg = pattern.matcher(line);
+<span class="fc" id="L145">		final UMatcher result = pattern.match(line);</span>
+
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (result.exactMatch() == false)</span>
+<span class="nc" id="L148">			return CommandExecutionResult.error(&quot;Cannot parse line &quot; + line);</span>
+
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (system instanceof PSystemError)</span>
+<span class="nc" id="L151">			return CommandExecutionResult.error(&quot;PSystemError cannot be cast&quot;);</span>
+
+		try {
+<span class="fc" id="L154">			return executeArg(system, first.getLocation(), new RegexResult(result), currentPass);</span>
+<span class="nc" id="L155">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L156">			return CommandExecutionResult.badColor();</span>
+		}
+	}
+
+	protected boolean isForbidden(CharSequence line) {
+<span class="fc" id="L161">		return false;</span>
+	}
+
+	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException;
+
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

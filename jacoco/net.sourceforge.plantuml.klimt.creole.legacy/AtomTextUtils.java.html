@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AtomTextUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.legacy</a> &gt; <span class="el_source">AtomTextUtils.java</span></div><h1>AtomTextUtils.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.creole.legacy;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Parser;
+import net.sourceforge.plantuml.klimt.creole.atom.Atom;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomHorizontalTexts;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomImg;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomOpenIcon;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomSprite;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomVerticalTexts;
+import net.sourceforge.plantuml.klimt.creole.command.Splitter;
+import net.sourceforge.plantuml.klimt.creole.legacy.AtomText.DelayedDouble;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.ImgValign;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
+import net.sourceforge.plantuml.openiconic.OpenIcon;
+import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.url.Url;
+
+<span class="nc" id="L62">public class AtomTextUtils {</span>
+
+<span class="fc" id="L64">	protected static DelayedDouble ZERO = new DelayedDouble() {</span>
+		public double getDouble(StringBounder stringBounder) {
+<span class="fc" id="L66">			return 0;</span>
+		}
+	};
+
+	public static Atom createLegacy(String text, FontConfiguration fontConfiguration) {
+<span class="fc" id="L71">		return new AtomText(text, fontConfiguration, null, ZERO, ZERO, true);</span>
+	}
+
+	public static Atom create(String text, FontConfiguration fontConfiguration) {
+<span class="nc" id="L75">		return new AtomText(text, fontConfiguration, null, ZERO, ZERO, false);</span>
+	}
+
+	public static Atom createUrl(Url url, FontConfiguration fontConfiguration, ISkinSimple skinSimple) {
+<span class="fc" id="L79">		fontConfiguration = fontConfiguration.hyperlink();</span>
+<span class="fc" id="L80">		final Display display = Display.getWithNewlines(skinSimple.getPragma(), url.getLabel());</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (display.size() &gt; 1) {</span>
+<span class="fc" id="L82">			final List&lt;Atom&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			for (CharSequence s : display.asList())</span>
+<span class="fc" id="L84">				all.add(createAtomText(s.toString(), url, fontConfiguration, skinSimple));</span>
+
+<span class="fc" id="L86">			return new AtomVerticalTexts(all);</span>
+
+		}
+<span class="fc" id="L89">		return createAtomText(url.getLabel(), url, fontConfiguration, skinSimple);</span>
+	}
+
+<span class="fc" id="L92">	private static final Pattern p = Pattern.compile(Splitter.openiconPattern + &quot;|&quot; + Splitter.spritePattern2 + &quot;|&quot;</span>
+			+ Splitter.imgPatternNoSrcColon + &quot;|&quot; + Splitter.emojiPattern);
+
+	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
+			ISkinSimple skinSimple) {
+<span class="fc" id="L97">		final Matcher m = p.matcher(text);</span>
+<span class="fc" id="L98">		final List&lt;Atom&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		while (m.find()) {</span>
+<span class="nc" id="L100">			final StringBuffer sb = new StringBuffer();</span>
+<span class="nc" id="L101">			m.appendReplacement(sb, &quot;&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L103">				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO, true));</span>
+
+<span class="nc" id="L105">			final String valOpenicon = m.group(1);</span>
+<span class="nc" id="L106">			final String valSprite = m.group(3);</span>
+<span class="nc" id="L107">			final String valImg = m.group(5);</span>
+<span class="nc" id="L108">			final String valEmoji = m.group(7);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (valEmoji != null)</span>
+<span class="nc" id="L110">				throw new UnsupportedOperationException();</span>
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (valOpenicon != null) {</span>
+<span class="nc" id="L113">				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (openIcon != null) {</span>
+<span class="nc" id="L115">					final double scale = Parser.getScale(m.group(2), 1);</span>
+<span class="nc" id="L116">					result.add(new AtomOpenIcon(null, scale, openIcon, fontConfiguration, url));</span>
+				}
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			} else if (valSprite != null) {</span>
+<span class="nc" id="L119">				final Sprite sprite = skinSimple.getSprite(valSprite);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">				if (sprite != null) {</span>
+<span class="nc" id="L121">					final double scale = Parser.getScale(m.group(4), 1);</span>
+<span class="nc" id="L122">					result.add(new AtomSprite(fontConfiguration.getColor(), null, scale, sprite, url));</span>
+				}
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			} else if (valImg != null) {</span>
+<span class="nc" id="L125">				final double scale = Parser.getScale(m.group(6), 1);</span>
+<span class="nc" id="L126">				result.add(AtomImg.create(valImg, ImgValign.TOP, 0, scale, url));</span>
+
+			}
+<span class="nc" id="L129">		}</span>
+<span class="fc" id="L130">		final StringBuffer sb = new StringBuffer();</span>
+<span class="fc" id="L131">		m.appendTail(sb);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (sb.length() &gt; 0)</span>
+<span class="fc" id="L133">			result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO, true));</span>
+
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (result.size() == 1)</span>
+<span class="fc" id="L136">			return result.get(0);</span>
+
+<span class="nc" id="L138">		return new AtomHorizontalTexts(result);</span>
+	}
+
+	public static Atom createListNumber(final FontConfiguration fontConfiguration, final int order, int localNumber) {
+<span class="nc" id="L142">		final DelayedDouble left = new DelayedDouble() {</span>
+			public double getDouble(StringBounder stringBounder) {
+<span class="nc" id="L144">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;9. &quot;);</span>
+<span class="nc" id="L145">				return dim.getWidth() * order;</span>
+			}
+		};
+<span class="nc" id="L148">		final DelayedDouble right = new DelayedDouble() {</span>
+			public double getDouble(StringBounder stringBounder) {
+<span class="nc" id="L150">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;.&quot;);</span>
+<span class="nc" id="L151">				return dim.getWidth();</span>
+			}
+		};
+<span class="nc" id="L154">		return new AtomText(&quot;&quot; + (localNumber + 1) + &quot;.&quot;, fontConfiguration, null, left, right, true);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

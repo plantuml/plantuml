@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Decompressor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.code.deflate</a> &gt; <span class="el_source">Decompressor.java</span></div><h1>Decompressor.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.code.deflate;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.zip.DataFormatException;
+
+/**
+ * Decompresses raw DEFLATE data (without zlib or gzip container) into bytes.
+ */
+public final class Decompressor {
+
+	/*---- Public functions ----*/
+
+	/**
+	 * Reads from the specified input stream, decompress the data, and returns a new
+	 * byte array.
+	 * 
+	 * @param in the bit input stream to read from (not {@code null})
+	 * @throws NullPointerException if the input stream is {@code null}
+	 * @throws DataFormatException  if the DEFLATE data is malformed
+	 */
+	public static byte[] decompress(BitInputStream in) throws IOException, DataFormatException {
+<span class="fc" id="L25">		OutputStreamProtected out = new OutputStreamProtected();</span>
+<span class="fc" id="L26">		decompress(in, out);</span>
+<span class="fc" id="L27">		return out.toByteArray();</span>
+	}
+
+	/**
+	 * Reads from the specified input stream, decompress the data, and writes to the
+	 * specified output stream.
+	 * 
+	 * @param in  the bit input stream to read from (not {@code null})
+	 * @param out the byte output stream to write to (not {@code null})
+	 * @throws NullPointerException if the input or output stream is {@code null}
+	 * @throws DataFormatException  if the DEFLATE data is malformed
+	 */
+	public static void decompress(BitInputStream in, OutputStreamProtected out)
+			throws IOException, DataFormatException {
+<span class="fc" id="L41">		new Decompressor(in, out);</span>
+<span class="fc" id="L42">	}</span>
+
+	/*---- Private implementation ----*/
+
+	private BitInputStream input;
+
+	private OutputStreamProtected output;
+
+	private ByteHistory dictionary;
+
+	// Constructor, which immediately performs decompression
+<span class="fc" id="L53">	private Decompressor(BitInputStream in, OutputStreamProtected out) throws IOException, DataFormatException {</span>
+		// Initialize fields
+<span class="fc" id="L55">		input = Objects.requireNonNull(in);</span>
+<span class="fc" id="L56">		output = Objects.requireNonNull(out);</span>
+<span class="fc" id="L57">		dictionary = new ByteHistory(32 * 1024);</span>
+
+		// Process the stream of blocks
+		boolean isFinal;
+		do {
+			// Read the block header
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">			isFinal = in.readNoEof() == 1; // bfinal</span>
+<span class="fc" id="L64">			int type = readInt(2); // btype</span>
+
+			// Decompress rest of block based on the type
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (type == 0)</span>
+<span class="nc" id="L68">				decompressUncompressedBlock();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			else if (type == 1)</span>
+<span class="nc" id="L70">				decompressHuffmanBlock(FIXED_LITERAL_LENGTH_CODE, FIXED_DISTANCE_CODE);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			else if (type == 2) {</span>
+<span class="fc" id="L72">				CanonicalCode[] litLenAndDist = decodeHuffmanCodes();</span>
+<span class="fc" id="L73">				decompressHuffmanBlock(litLenAndDist[0], litLenAndDist[1]);</span>
+<span class="pc bnc" id="L74" title="All 2 branches missed.">			} else if (type == 3)</span>
+<span class="nc" id="L75">				throw new DataFormatException(&quot;Reserved block type&quot;);</span>
+			else
+<span class="nc" id="L77">				throw new IllegalStateException(&quot;Impossible value&quot;);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		} while (!isFinal);</span>
+<span class="fc" id="L79">	}</span>
+
+	/*-- The constant code trees for static Huffman codes (btype = 1) --*/
+
+	private static final CanonicalCode FIXED_LITERAL_LENGTH_CODE;
+	private static final CanonicalCode FIXED_DISTANCE_CODE;
+
+	static { // Make temporary tables of canonical code lengths
+<span class="fc" id="L87">		int[] llcodelens = new int[288];</span>
+<span class="fc" id="L88">		Arrays.fill(llcodelens, 0, 144, 8);</span>
+<span class="fc" id="L89">		Arrays.fill(llcodelens, 144, 256, 9);</span>
+<span class="fc" id="L90">		Arrays.fill(llcodelens, 256, 280, 7);</span>
+<span class="fc" id="L91">		Arrays.fill(llcodelens, 280, 288, 8);</span>
+<span class="fc" id="L92">		FIXED_LITERAL_LENGTH_CODE = new CanonicalCode(llcodelens);</span>
+
+<span class="fc" id="L94">		int[] distcodelens = new int[32];</span>
+<span class="fc" id="L95">		Arrays.fill(distcodelens, 5);</span>
+<span class="fc" id="L96">		FIXED_DISTANCE_CODE = new CanonicalCode(distcodelens);</span>
+<span class="fc" id="L97">	}</span>
+
+	/*-- Method for reading and decoding dynamic Huffman codes (btype = 2) --*/
+
+	// Reads from the bit input stream, decodes the Huffman code
+	// specifications into code trees, and returns the trees.
+	private CanonicalCode[] decodeHuffmanCodes() throws IOException, DataFormatException {
+<span class="fc" id="L104">		int numLitLenCodes = readInt(5) + 257; // hlit + 257</span>
+<span class="fc" id="L105">		int numDistCodes = readInt(5) + 1; // hdist + 1</span>
+
+		// Read the code length code lengths
+<span class="fc" id="L108">		int numCodeLenCodes = readInt(4) + 4; // hclen + 4</span>
+<span class="fc" id="L109">		int[] codeLenCodeLen = new int[19]; // This array is filled in a strange order</span>
+<span class="fc" id="L110">		codeLenCodeLen[16] = readInt(3);</span>
+<span class="fc" id="L111">		codeLenCodeLen[17] = readInt(3);</span>
+<span class="fc" id="L112">		codeLenCodeLen[18] = readInt(3);</span>
+<span class="fc" id="L113">		codeLenCodeLen[0] = readInt(3);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (int i = 0; i &lt; numCodeLenCodes - 4; i++) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">			int j = (i % 2 == 0) ? (8 + i / 2) : (7 - i / 2);</span>
+<span class="fc" id="L116">			codeLenCodeLen[j] = readInt(3);</span>
+		}
+
+		// Create the code length code
+		CanonicalCode codeLenCode;
+		try {
+<span class="fc" id="L122">			codeLenCode = new CanonicalCode(codeLenCodeLen);</span>
+<span class="nc" id="L123">		} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L124">			throw new DataFormatException(e.getMessage());</span>
+<span class="fc" id="L125">		}</span>
+
+		// Read the main code lengths and handle runs
+<span class="fc" id="L128">		int[] codeLens = new int[numLitLenCodes + numDistCodes];</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (int codeLensIndex = 0; codeLensIndex &lt; codeLens.length;) {</span>
+<span class="fc" id="L130">			int sym = codeLenCode.decodeNextSymbol(input);</span>
+<span class="pc bpc" id="L131" title="1 of 4 branches missed.">			if (0 &lt;= sym &amp;&amp; sym &lt;= 15) {</span>
+<span class="fc" id="L132">				codeLens[codeLensIndex] = sym;</span>
+<span class="fc" id="L133">				codeLensIndex++;</span>
+			} else {
+				int runLen;
+<span class="fc" id="L136">				int runVal = 0;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">				if (sym == 16) {</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">					if (codeLensIndex == 0)</span>
+<span class="nc" id="L139">						throw new DataFormatException(&quot;No code length value to copy&quot;);</span>
+<span class="nc" id="L140">					runLen = readInt(2) + 3;</span>
+<span class="nc" id="L141">					runVal = codeLens[codeLensIndex - 1];</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">				} else if (sym == 17)</span>
+<span class="fc" id="L143">					runLen = readInt(3) + 3;</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">				else if (sym == 18)</span>
+<span class="fc" id="L145">					runLen = readInt(7) + 11;</span>
+				else
+<span class="nc" id="L147">					throw new IllegalStateException(&quot;Symbol out of range&quot;);</span>
+<span class="fc" id="L148">				int end = codeLensIndex + runLen;</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">				if (end &gt; codeLens.length)</span>
+<span class="nc" id="L150">					throw new DataFormatException(&quot;Run exceeds number of codes&quot;);</span>
+<span class="fc" id="L151">				Arrays.fill(codeLens, codeLensIndex, end, runVal);</span>
+<span class="fc" id="L152">				codeLensIndex = end;</span>
+			}
+<span class="fc" id="L154">		}</span>
+
+		// Create literal-length code tree
+<span class="fc" id="L157">		int[] litLenCodeLen = Arrays.copyOf(codeLens, numLitLenCodes);</span>
+		CanonicalCode litLenCode;
+		try {
+<span class="fc" id="L160">			litLenCode = new CanonicalCode(litLenCodeLen);</span>
+<span class="nc" id="L161">		} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L162">			throw new DataFormatException(e.getMessage());</span>
+<span class="fc" id="L163">		}</span>
+
+		// Create distance code tree with some extra processing
+<span class="fc" id="L166">		int[] distCodeLen = Arrays.copyOfRange(codeLens, numLitLenCodes, codeLens.length);</span>
+		CanonicalCode distCode;
+<span class="pc bpc" id="L168" title="3 of 4 branches missed.">		if (distCodeLen.length == 1 &amp;&amp; distCodeLen[0] == 0)</span>
+<span class="nc" id="L169">			distCode = null; // Empty distance code; the block shall be all literal symbols</span>
+		else {
+			// Get statistics for upcoming logic
+<span class="fc" id="L172">			int oneCount = 0;</span>
+<span class="fc" id="L173">			int otherPositiveCount = 0;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">			for (int x : distCodeLen) {</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">				if (x == 1)</span>
+<span class="fc" id="L176">					oneCount++;</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				else if (x &gt; 1)</span>
+<span class="nc" id="L178">					otherPositiveCount++;</span>
+			}
+
+			// Handle the case where only one distance code is defined
+<span class="pc bpc" id="L182" title="3 of 4 branches missed.">			if (oneCount == 1 &amp;&amp; otherPositiveCount == 0) {</span>
+				// Add a dummy invalid code to make the Huffman tree complete
+<span class="nc" id="L184">				distCodeLen = Arrays.copyOf(distCodeLen, 32);</span>
+<span class="nc" id="L185">				distCodeLen[31] = 1;</span>
+			}
+			try {
+<span class="fc" id="L188">				distCode = new CanonicalCode(distCodeLen);</span>
+<span class="nc" id="L189">			} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L190">				throw new DataFormatException(e.getMessage());</span>
+<span class="fc" id="L191">			}</span>
+		}
+
+<span class="fc" id="L194">		return new CanonicalCode[] { litLenCode, distCode };</span>
+	}
+
+	/*-- Block decompression methods --*/
+
+	// Handles and copies an uncompressed block from the bit input stream.
+	private void decompressUncompressedBlock() throws IOException, DataFormatException {
+		// Discard bits to align to byte boundary
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		while (input.getBitPosition() != 0)</span>
+<span class="nc" id="L203">			input.readNoEof();</span>
+
+		// Read length
+<span class="nc" id="L206">		int len = readInt(16);</span>
+<span class="nc" id="L207">		int nlen = readInt(16);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if ((len ^ 0xFFFF) != nlen)</span>
+<span class="nc" id="L209">			throw new DataFormatException(&quot;Invalid length in uncompressed block&quot;);</span>
+
+		// Copy bytes
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (int i = 0; i &lt; len; i++) {</span>
+<span class="nc" id="L213">			int b = input.readByte();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (b == -1)</span>
+<span class="nc" id="L215">				throw new EOFException();</span>
+<span class="nc" id="L216">			output.write(b);</span>
+<span class="nc" id="L217">			dictionary.append(b);</span>
+		}
+<span class="nc" id="L219">	}</span>
+
+	// Decompresses a Huffman-coded block from the bit input stream based on the
+	// given Huffman codes.
+	private void decompressHuffmanBlock(CanonicalCode litLenCode, CanonicalCode distCode)
+			throws IOException, DataFormatException {
+<span class="fc" id="L225">		Objects.requireNonNull(litLenCode);</span>
+		// distCode is allowed to be null
+
+		while (true) {
+<span class="fc" id="L229">			int sym = litLenCode.decodeNextSymbol(input);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (sym == 256) // End of block</span>
+<span class="fc" id="L231">				break;</span>
+
+<span class="fc bfc" id="L233" title="All 2 branches covered.">			if (sym &lt; 256) { // Literal byte</span>
+<span class="fc" id="L234">				output.write(sym);</span>
+<span class="fc" id="L235">				dictionary.append(sym);</span>
+			} else { // Length and distance for copying
+<span class="fc" id="L237">				int run = decodeRunLength(sym);</span>
+<span class="pc bpc" id="L238" title="2 of 4 branches missed.">				if (run &lt; 3 || run &gt; 258)</span>
+<span class="nc" id="L239">					throw new IllegalStateException(&quot;Invalid run length&quot;);</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">				if (distCode == null)</span>
+<span class="nc" id="L241">					throw new DataFormatException(&quot;Length symbol encountered with empty distance code&quot;);</span>
+<span class="fc" id="L242">				int distSym = distCode.decodeNextSymbol(input);</span>
+<span class="fc" id="L243">				int dist = decodeDistance(distSym);</span>
+<span class="pc bpc" id="L244" title="2 of 4 branches missed.">				if (dist &lt; 1 || dist &gt; 32768)</span>
+<span class="nc" id="L245">					throw new IllegalStateException(&quot;Invalid distance&quot;);</span>
+<span class="fc" id="L246">				dictionary.copy(dist, run, output);</span>
+			}
+<span class="fc" id="L248">		}</span>
+<span class="fc" id="L249">	}</span>
+
+	/*-- Symbol decoding methods --*/
+
+	// Returns the run length based on the given symbol and possibly reading more
+	// bits.
+	private int decodeRunLength(int sym) throws IOException, DataFormatException {
+<span class="pc bpc" id="L256" title="2 of 4 branches missed.">		if (sym &lt; 257 || sym &gt; 287) // Cannot occur in the bit stream; indicates the decompressor is buggy</span>
+<span class="nc" id="L257">			throw new IllegalStateException(&quot;Invalid run length symbol: &quot; + sym);</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		else if (sym &lt;= 264)</span>
+<span class="nc" id="L259">			return sym - 254;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		else if (sym &lt;= 284) {</span>
+<span class="fc" id="L261">			int numExtraBits = (sym - 261) / 4;</span>
+<span class="fc" id="L262">			return (((sym - 265) % 4 + 4) &lt;&lt; numExtraBits) + 3 + readInt(numExtraBits);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		} else if (sym == 285)</span>
+<span class="fc" id="L264">			return 258;</span>
+		else // sym is 286 or 287
+<span class="nc" id="L266">			throw new DataFormatException(&quot;Reserved length symbol: &quot; + sym);</span>
+	}
+
+	// Returns the distance based on the given symbol and possibly reading more
+	// bits.
+	private int decodeDistance(int sym) throws IOException, DataFormatException {
+<span class="pc bpc" id="L272" title="2 of 4 branches missed.">		if (sym &lt; 0 || sym &gt; 31) // Cannot occur in the bit stream; indicates the decompressor is buggy</span>
+<span class="nc" id="L273">			throw new IllegalStateException(&quot;Invalid distance symbol: &quot; + sym);</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (sym &lt;= 3)</span>
+<span class="fc" id="L275">			return sym + 1;</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		else if (sym &lt;= 29) {</span>
+<span class="nc" id="L277">			int numExtraBits = sym / 2 - 1;</span>
+<span class="nc" id="L278">			return ((sym % 2 + 2) &lt;&lt; numExtraBits) + 1 + readInt(numExtraBits);</span>
+		} else // sym is 30 or 31
+<span class="nc" id="L280">			throw new DataFormatException(&quot;Reserved distance symbol: &quot; + sym);</span>
+	}
+
+	/*-- Utility method --*/
+
+	// Reads the given number of bits from the bit input stream as a single integer,
+	// packed in little endian.
+	private int readInt(int numBits) throws IOException {
+<span class="pc bpc" id="L288" title="2 of 4 branches missed.">		if (numBits &lt; 0 || numBits &gt; 31)</span>
+<span class="nc" id="L289">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L290">		int result = 0;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		for (int i = 0; i &lt; numBits; i++)</span>
+<span class="fc" id="L292">			result |= input.readNoEof() &lt;&lt; i;</span>
+<span class="fc" id="L293">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

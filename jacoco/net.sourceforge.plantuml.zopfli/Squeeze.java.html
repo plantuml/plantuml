@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Squeeze.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">Squeeze.java</span></div><h1>Squeeze.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+<span class="nc" id="L21">class Squeeze {</span>
+
+	static LzStore optimal(Cookie cookie, int numIterations, LongestMatchCache lmc, byte[] input, int from, int to) {
+<span class="nc" id="L24">		LzStore currentStore = cookie.store1;</span>
+<span class="nc" id="L25">		currentStore.reset();</span>
+<span class="nc" id="L26">		LzStore store = cookie.store2;</span>
+<span class="nc" id="L27">		Deflate.greedy(cookie, lmc, input, from, to, currentStore);</span>
+<span class="nc" id="L28">		SymbolStats stats = cookie.stats;</span>
+<span class="nc" id="L29">		SymbolStats bestStats = cookie.bestStats;</span>
+<span class="nc" id="L30">		SymbolStats lastStats = cookie.lastStats;</span>
+<span class="nc" id="L31">		stats.getFreqs(currentStore);</span>
+
+<span class="nc" id="L33">		char[] lengthArray = cookie.lengthArray;</span>
+<span class="nc" id="L34">		long[] costs = cookie.costs;</span>
+
+		int cost;
+<span class="nc" id="L37">		int bestCost = Integer.MAX_VALUE;</span>
+<span class="nc" id="L38">		int lastCost = 0;</span>
+<span class="nc" id="L39">		int lastRandomStep = -1;</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		for (int i = 0; i &lt; numIterations; i++) {</span>
+<span class="nc" id="L42">			currentStore.reset();</span>
+<span class="nc" id="L43">			bestLengths(cookie, lmc, from, input, from, to, stats.minCost(), stats, lengthArray, costs);</span>
+<span class="nc" id="L44">			optimalRun(cookie, lmc, input, from, to, lengthArray, currentStore);</span>
+<span class="nc" id="L45">			cost = Deflate.calculateBlockSize(cookie, currentStore.litLens, currentStore.dists, 0, currentStore.size);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">			if (cost &lt; bestCost) {</span>
+<span class="nc" id="L47">				store.copy(currentStore);</span>
+<span class="nc" id="L48">				bestStats.copy(stats);</span>
+<span class="nc" id="L49">				bestCost = cost;</span>
+			}
+<span class="nc" id="L51">			lastStats.copy(stats);</span>
+<span class="nc" id="L52">			stats.getFreqs(currentStore);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			if (lastRandomStep != -1) {</span>
+<span class="nc" id="L54">				stats.alloy(lastStats);</span>
+<span class="nc" id="L55">				stats.calculate();</span>
+			}
+<span class="nc bnc" id="L57" title="All 4 branches missed.">			if (i &gt; 5 &amp;&amp; cost == lastCost) {</span>
+<span class="nc" id="L58">				stats.copy(bestStats);</span>
+<span class="nc" id="L59">				cookie.rnd = stats.randomizeFreqs(cookie.rnd);</span>
+<span class="nc" id="L60">				stats.calculate();</span>
+<span class="nc" id="L61">				lastRandomStep = i;</span>
+			}
+<span class="nc" id="L63">			lastCost = cost;</span>
+		}
+<span class="nc" id="L65">		return store;</span>
+	}
+
+	static void optimalRun(Cookie cookie, LongestMatchCache lmc, byte[] input, int from, int to, char[] lengthArray,
+			LzStore store) {
+		// assert from != to
+<span class="nc" id="L71">		char[] path = cookie.path;</span>
+<span class="nc" id="L72">		int pathSize = 0;</span>
+<span class="nc" id="L73">		int size = to - from;</span>
+		do {
+<span class="nc" id="L75">			char las = lengthArray[size];</span>
+<span class="nc" id="L76">			path[pathSize++] = las;</span>
+<span class="nc" id="L77">			size -= las;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		} while (size != 0);</span>
+
+<span class="nc" id="L80">		int windowStart = Math.max(from - 0x8000, 0);</span>
+<span class="nc" id="L81">		Hash h = cookie.h;</span>
+<span class="nc" id="L82">		h.init(input, windowStart, from, to);</span>
+<span class="nc" id="L83">		int pos = from;</span>
+
+		do {
+<span class="nc" id="L86">			h.updateHash(input, pos, to);</span>
+<span class="nc" id="L87">			int length = path[--pathSize];</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (length &gt;= 3) {</span>
+<span class="nc" id="L89">				Deflate.findLongestMatch(cookie, lmc, from, h, input, pos, to, length, null);</span>
+<span class="nc" id="L90">				store.append((char) length, (char) cookie.distVal);</span>
+			} else {
+<span class="nc" id="L92">				length = 1;</span>
+<span class="nc" id="L93">				store.append((char) (input[pos] &amp; 0xFF), (char) 0);</span>
+			}
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			for (int j = 1; j &lt; length; ++j) {</span>
+<span class="nc" id="L97">				h.updateHash(input, pos + j, to);</span>
+			}
+<span class="nc" id="L99">			pos += length;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		} while (pathSize != 0);</span>
+<span class="nc" id="L101">	}</span>
+
+	private static long fixedCost(int litLen, int dist) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (dist == 0) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (litLen &lt;= 143) {</span>
+<span class="nc" id="L106">				return 8;</span>
+			}
+<span class="nc" id="L108">			return 9;</span>
+		} else {
+<span class="nc" id="L110">			long cost = 12</span>
+<span class="nc bnc" id="L111" title="All 6 branches missed.">					+ (dist &lt; 4097 ? Util.CACHED_DIST_EXTRA_BITS[dist] : dist &lt; 16385 ? dist &lt; 8193 ? 11 : 12 : 13)</span>
+					+ Util.LENGTH_EXTRA_BITS[litLen];
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (Util.LENGTH_SYMBOL[litLen] &gt; 279) {</span>
+<span class="nc" id="L114">				return cost + 1;</span>
+			}
+<span class="nc" id="L116">			return cost;</span>
+		}
+	}
+
+	private static void bestLengths(Cookie cookie, LongestMatchCache lmc, int blockStart, byte[] input, int from,
+			int to, long minCost, SymbolStats stats, char[] lengthArray, long[] costs) {
+		// # WINDOW_SIZE = 0x8000
+		// # WINDOW_MASK = 0x7FFF
+		// # MAX_MATCH = 258
+
+<span class="nc" id="L126">		int windowStart = Math.max(from - 0x8000, 0);</span>
+<span class="nc" id="L127">		Hash h = cookie.h;</span>
+<span class="nc" id="L128">		h.init(input, windowStart, from, to);</span>
+<span class="nc" id="L129">		Cookie.fillCostMax(costs, to - from + 1);</span>
+<span class="nc" id="L130">		costs[0] = 0L;</span>
+<span class="nc" id="L131">		lengthArray[0] = 0;</span>
+<span class="nc" id="L132">		int[] same = h.same;</span>
+
+<span class="nc" id="L134">		char[] subLen = cookie.c259a;</span>
+<span class="nc" id="L135">		System.arraycopy(Cookie.charZeroes, 0, subLen, 0, 259);</span>
+
+<span class="nc" id="L137">		long[] slLiterals = stats.lLiterals;</span>
+<span class="nc" id="L138">		long[] slLengths = stats.lLengths;</span>
+<span class="nc" id="L139">		long[] sdSymbols = stats.dSymbols;</span>
+<span class="nc" id="L140">		long stepCost = slLengths[258] + sdSymbols[0];</span>
+
+<span class="nc" id="L142">		int[] cachedDistSymbol = Util.CACHED_DIST_SYMBOL;</span>
+
+<span class="nc" id="L144">		int i = from;</span>
+<span class="nc" id="L145">		int j = 0;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		while (i &lt; to) {</span>
+<span class="nc" id="L147">			h.updateHash(input, i, to);</span>
+
+<span class="nc bnc" id="L149" title="All 8 branches missed.">			if (same[i &amp; 0x7FFF] &gt; 516 &amp;&amp; i &gt; from + 259 &amp;&amp; i + 517 &lt; to &amp;&amp; same[(i - 258) &amp; 0x7FFF] &gt; 258) {</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				for (int k = 0; k &lt; 258; ++k) {</span>
+<span class="nc" id="L151">					costs[j + 258] = costs[j] + stepCost;</span>
+<span class="nc" id="L152">					lengthArray[j + 258] = 258;</span>
+<span class="nc" id="L153">					i++;</span>
+<span class="nc" id="L154">					j++;</span>
+<span class="nc" id="L155">					h.updateHash(input, i, to);</span>
+				}
+			}
+
+<span class="nc" id="L159">			Deflate.findLongestMatch(cookie, lmc, blockStart, h, input, i, to, 258, subLen);</span>
+
+<span class="nc" id="L161">			long costsJ = costs[j];</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (i + 1 &lt;= to) {</span>
+<span class="nc" id="L163">				long newCost = costsJ + slLiterals[input[i] &amp; 0xFF];</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if (newCost &lt; costs[j + 1]) {</span>
+<span class="nc" id="L165">					costs[j + 1] = newCost;</span>
+<span class="nc" id="L166">					lengthArray[j + 1] = 1;</span>
+				}
+			}
+<span class="nc" id="L169">			int lenValue = cookie.lenVal;</span>
+<span class="nc" id="L170">			long baseCost = minCost + costsJ;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (lenValue &gt; to - i) {</span>
+<span class="nc" id="L172">				lenValue = to - i;</span>
+			}
+<span class="nc" id="L174">			int jpk = j + 3;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			for (char k = 3; k &lt;= lenValue; k++, jpk++) {</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">				if (costs[jpk] &gt; baseCost) {</span>
+<span class="nc" id="L177">					long newCost = costsJ + (slLengths[k] + sdSymbols[cachedDistSymbol[subLen[k]]]);</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">					if (costs[jpk] &gt; newCost) {</span>
+<span class="nc" id="L179">						costs[jpk] = newCost;</span>
+<span class="nc" id="L180">						lengthArray[jpk] = k;</span>
+					}
+				}
+			}
+
+<span class="nc" id="L185">			i++;</span>
+<span class="nc" id="L186">			j++;</span>
+<span class="nc" id="L187">		}</span>
+<span class="nc" id="L188">	}</span>
+
+	static void bestFixedLengths(Cookie cookie, LongestMatchCache lmc, byte[] input, int from, int to,
+			char[] lengthArray, long[] costs) {
+<span class="nc" id="L192">		int windowStart = Math.max(from - 0x8000, 0);</span>
+<span class="nc" id="L193">		Hash h = cookie.h;</span>
+<span class="nc" id="L194">		h.init(input, windowStart, from, to);</span>
+<span class="nc" id="L195">		Cookie.fillCostMax(costs, to - from + 1);</span>
+<span class="nc" id="L196">		costs[0] = 0L;</span>
+<span class="nc" id="L197">		lengthArray[0] = 0;</span>
+
+<span class="nc" id="L199">		char[] subLen = cookie.c259a;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (int i = from; i &lt; to; i++) {</span>
+<span class="nc" id="L201">			int j = i - from;</span>
+<span class="nc" id="L202">			h.updateHash(input, i, to);</span>
+
+<span class="nc bnc" id="L204" title="All 8 branches missed.">			if (h.same[i &amp; 0x7FFF] &gt; 258 * 2 &amp;&amp; i &gt; from + 258 + 1 &amp;&amp; i + 258 * 2 + 1 &lt; to</span>
+					&amp;&amp; h.same[(i - 258) &amp; 0x7FFF] &gt; 258) {
+<span class="nc" id="L206">				long symbolCost = fixedCost(258, 1);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">				for (int k = 0; k &lt; 258; k++) {</span>
+<span class="nc" id="L208">					costs[j + 258] = costs[j] + symbolCost;</span>
+<span class="nc" id="L209">					lengthArray[j + 258] = 258;</span>
+<span class="nc" id="L210">					i++;</span>
+<span class="nc" id="L211">					j++;</span>
+<span class="nc" id="L212">					h.updateHash(input, i, to);</span>
+				}
+			}
+
+<span class="nc" id="L216">			Deflate.findLongestMatch(cookie, lmc, from, h, input, i, to, 258, subLen);</span>
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">			if (i + 1 &lt;= to) {</span>
+<span class="nc" id="L219">				long newCost = costs[j] + fixedCost(input[i] &amp; 0xFF, 0);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">				if (newCost &lt; costs[j + 1]) {</span>
+<span class="nc" id="L221">					costs[j + 1] = newCost;</span>
+<span class="nc" id="L222">					lengthArray[j + 1] = 1;</span>
+				}
+			}
+<span class="nc" id="L225">			int lenValue = cookie.lenVal;</span>
+<span class="nc bnc" id="L226" title="All 4 branches missed.">			for (char k = 3; k &lt;= lenValue &amp;&amp; i + k &lt;= to; k++) {</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">				if (costs[j + k] - costs[j] &lt;= 12.0) {</span>
+<span class="nc" id="L228">					continue;</span>
+				}
+
+<span class="nc" id="L231">				long newCost = costs[j] + fixedCost(k, subLen[k]);</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">				if (newCost &lt; costs[j + k]) {</span>
+<span class="nc" id="L233">					costs[j + k] = newCost;</span>
+<span class="nc" id="L234">					lengthArray[j + k] = k;</span>
+				}
+			}
+		}
+<span class="nc" id="L238">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlotCanvas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">PlotCanvas.java</span></div><h1>PlotCanvas.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import jcckit.data.DataPlot;
+import jcckit.graphic.Anchor;
+import jcckit.graphic.ClippingRectangle;
+import jcckit.util.ConfigParameters;
+
+/**
+ * An abstract canvas containg a single {@link Plot}. The canvas is specified
+ * by a {@link ClippingRectangle}, called &lt;em&gt;paper&lt;/em&gt;. A horizontal and
+ * vertical {@link Anchor} determine the position of the paper on the actual
+ * device.
+ * 
+ * @author Franz-Josef Elmer
+ */
+public class PlotCanvas implements PlotListener {
+	/** Configuration parameter key. */
+	public static final String PAPER_KEY = &quot;paper&quot;, HORIZONTAL_ANCHOR_KEY = &quot;horizontalAnchor&quot;,
+			VERTICAL_ANCHOR_KEY = &quot;verticalAnchor&quot;, PLOT_KEY = &quot;plot&quot;;
+	private final ClippingRectangle _paper;
+	private final Anchor _horizontalAnchor;
+	private final Anchor _verticalAnchor;
+	private final Plot _plot;
+
+	/**
+	 * Creates an instance from the specified configuration parameters. &lt;table
+	 * border=1 cellpadding=5&gt;
+	 * &lt;tr&gt;
+	 * &lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;
+	 * &lt;th&gt;Type&lt;/th&gt;
+	 * &lt;th&gt;Mandatory&lt;/th&gt;
+	 * &lt;th&gt;Description&lt;/th&gt;
+	 * &lt;/tr&gt;
+	 * &lt;tr&gt;
+	 * &lt;td&gt;&lt;tt&gt;horizontalAnchor = center&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;no&lt;/td&gt;
+	 * &lt;td&gt;Horizontal position of the paper relative to the device border.
+	 * Possible values are &lt;tt&gt;left&lt;/tt&gt;, &lt;tt&gt;center&lt;/tt&gt;, and
+	 * &lt;tt&gt;right&lt;/tt&gt;.&lt;/td&gt;
+	 * &lt;/tr&gt;
+	 * &lt;tr&gt;
+	 * &lt;td&gt;&lt;tt&gt;paper = 0,&amp;nbsp;0,&amp;nbsp;1,&amp;nbsp;0.6&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;no&lt;/td&gt;
+	 * &lt;td&gt;Rectangle defining the paper. The first two values determine the x-
+	 * and y- coordinates (in device-independent units) of the lower-left
+	 * corner. The last two values determine the upper-right corner.&lt;/td&gt;
+	 * &lt;/tr&gt;
+	 * &lt;tr&gt;
+	 * &lt;td&gt;&lt;tt&gt;plot = &lt;/tt&gt;default values of {@link Plot}&lt;/td&gt;
+	 * &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;no&lt;/td&gt;
+	 * &lt;td&gt;Definition of the {@link Plot}.&lt;/td&gt;
+	 * &lt;/tr&gt;
+	 * &lt;tr&gt;
+	 * &lt;td&gt;&lt;tt&gt;verticalAnchor = center&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;
+	 * &lt;td&gt;no&lt;/td&gt;
+	 * &lt;td&gt;Vertical position of the paper relative to the device border.
+	 * Possible values are &lt;tt&gt;top&lt;/tt&gt;, &lt;tt&gt;center&lt;/tt&gt;, and
+	 * &lt;tt&gt;bottom&lt;/tt&gt;.&lt;/td&gt;
+	 * &lt;/tr&gt;
+	 * &lt;/table&gt;
+	 * &lt;p&gt;
+	 * Note, that this instance registers itself at the wrapped {@link Plot}
+	 * instance.
+	 */
+<span class="nc" id="L87">	public PlotCanvas(ConfigParameters config) {</span>
+<span class="nc" id="L88">		double[] paper = config.getDoubleArray(PAPER_KEY, new double[] { 0, 0, 1, 0.6 });</span>
+<span class="nc" id="L89">		_paper = new ClippingRectangle(paper[0], paper[1], paper[2], paper[3]);</span>
+<span class="nc" id="L90">		_horizontalAnchor = Anchor.getHorizontalAnchor(config, HORIZONTAL_ANCHOR_KEY, Anchor.CENTER);</span>
+<span class="nc" id="L91">		_verticalAnchor = Anchor.getVerticalAnchor(config, VERTICAL_ANCHOR_KEY, Anchor.CENTER);</span>
+<span class="nc" id="L92">		_plot = new Plot(config.getNode(PLOT_KEY));</span>
+<span class="nc" id="L93">		_plot.addPlotListener(this);</span>
+<span class="nc" id="L94">	}</span>
+
+	/** Returns the paper definition. */
+	public ClippingRectangle getPaper() {
+<span class="nc" id="L98">		return _paper;</span>
+	}
+
+	/** Returns the horizontal anchor. */
+	public Anchor getHorizontalAnchor() {
+<span class="nc" id="L103">		return _horizontalAnchor;</span>
+	}
+
+	/** Returns the vertical anchor. */
+	public Anchor getVerticalAnchor() {
+<span class="nc" id="L108">		return _verticalAnchor;</span>
+	}
+
+	/** Returns the plot. */
+	public Plot getPlot() {
+<span class="nc" id="L113">		return _plot;</span>
+	}
+
+	/**
+	 * Connects the wrapped {@link Plot} instance with the specified
+	 * {@link DataPlot}.
+	 * 
+	 * @param dataPlot
+	 *            Data to be connected with this plot canvas. Can be
+	 *            &lt;tt&gt;null&lt;/tt&gt; in order to disconnect this instance from a
+	 *            &lt;tt&gt;DataPlot&lt;/tt&gt;.
+	 */
+	public void connect(DataPlot dataPlot) {
+<span class="nc" id="L126">		_plot.connect(dataPlot);</span>
+<span class="nc" id="L127">	}</span>
+
+	/**
+	 * Handles the spcified event. Here nothing is done. But subclass may
+	 * override this method.
+	 */
+	public void plotChanged(PlotEvent event) {
+<span class="nc" id="L134">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

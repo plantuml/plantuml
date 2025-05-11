@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>mem__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">mem__c.java</span></div><h1>mem__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agdisc_s;
+import h.ST_Agraph_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.Globals;
+import smetana.core.__ptr__;
+import smetana.core.size_t;
+
+<span class="nc" id="L62">public class mem__c {</span>
+
+<span class="fc" id="L64">public static CFunction memopen = new CFunctionAbstract(&quot;memopen&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L67">		return memopen((ST_Agdisc_s)args[0]);</span>
+	}};
+	
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/mem.c&quot;, name=&quot;memopen&quot;, key=&quot;akq0jgwdspf75ypeatgcnfn8w&quot;, definition=&quot;static void *memopen(Agdisc_t* disc)&quot;)
+public static Object memopen(ST_Agdisc_s disc) {
+<span class="fc" id="L72">ENTERING(&quot;akq0jgwdspf75ypeatgcnfn8w&quot;,&quot;memopen&quot;);</span>
+try {
+<span class="fc" id="L74">	return null;</span>
+} finally {
+<span class="fc" id="L76">LEAVING(&quot;akq0jgwdspf75ypeatgcnfn8w&quot;,&quot;memopen&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L82">public static CFunction memalloc = new CFunctionAbstract(&quot;memalloc&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L85">		return memalloc((__ptr__)args[0], (size_t)args[1]);</span>
+	}};
+	
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/mem.c&quot;, name=&quot;memalloc&quot;, key=&quot;9mtjrx0vjzwuecjwpxylr9tag&quot;, definition=&quot;static void *memalloc(void *heap, size_t request)&quot;)
+public static __ptr__ memalloc(__ptr__ heap, size_t request) {
+<span class="fc" id="L91">ENTERING(&quot;9mtjrx0vjzwuecjwpxylr9tag&quot;,&quot;memalloc&quot;);</span>
+try {
+    __ptr__ rv;
+<span class="fc" id="L94">    rv = (__ptr__) request.malloc();</span>
+<span class="fc" id="L95">    return rv;</span>
+} finally {
+<span class="fc" id="L97">LEAVING(&quot;9mtjrx0vjzwuecjwpxylr9tag&quot;,&quot;memalloc&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L103">public static CFunction memresize = new CFunctionAbstract(&quot;memresize&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L106">		return memresize((__ptr__)args[0], (__ptr__)args[1], (size_t)args[2], (size_t)args[3]);</span>
+	}};
+	
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/mem.c&quot;, name=&quot;memresize&quot;, key=&quot;18v2hhjculhnb3b7fc4tx3yjw&quot;, definition=&quot;static void *memresize(void *heap, void *ptr, size_t oldsize, 		       size_t request)&quot;)
+public static __ptr__ memresize(__ptr__ heap, __ptr__ ptr, size_t oldsize, size_t request) {
+<span class="nc" id="L111">ENTERING(&quot;18v2hhjculhnb3b7fc4tx3yjw&quot;,&quot;memresize&quot;);</span>
+try {
+<span class="nc" id="L113">	request.realloc(ptr);</span>
+<span class="nc" id="L114">	return ptr;</span>
+} finally {
+<span class="nc" id="L116">LEAVING(&quot;18v2hhjculhnb3b7fc4tx3yjw&quot;,&quot;memresize&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L122">public static CFunction memfree = new CFunctionAbstract(&quot;memfree&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L125">		return memfree(args);</span>
+	}};
+	
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/mem.c&quot;, name=&quot;memfree&quot;, key=&quot;c320bstcg5nctel3onh2pserl&quot;, definition=&quot;static void memfree(void *heap, void *ptr)&quot;)
+public static Object memfree(Object... arg_) {
+<span class="nc" id="L131">UNSUPPORTED(&quot;5yxdf2sc5xnic9d5j24m0a7yf&quot;); // static void memfree(void *heap, void *ptr)</span>
+<span class="nc" id="L132">throw new UnsupportedOperationException();</span>
+}
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/mem.c&quot;, name=&quot;agalloc&quot;, key=&quot;7newv1hmzvt4vtttc9cxdxfpn&quot;, definition=&quot;void *agalloc(Agraph_t * g, size_t size)&quot;)
+public static __ptr__ agalloc(ST_Agraph_s g, size_t size) {
+<span class="fc" id="L140">ENTERING(&quot;7newv1hmzvt4vtttc9cxdxfpn&quot;,&quot;agalloc&quot;);</span>
+try {
+<span class="fc" id="L142">	return (__ptr__) size.malloc();</span>
+//	__ptr__ mem;
+//    mem =  (__ptr__) g.clos.disc.mem.alloc.exe(g.clos.state.mem, size);
+//    if (mem == null)
+//	 System.err.println(&quot;memory allocation failure&quot;);
+//    return mem;
+} finally {
+<span class="fc" id="L149">LEAVING(&quot;7newv1hmzvt4vtttc9cxdxfpn&quot;,&quot;agalloc&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

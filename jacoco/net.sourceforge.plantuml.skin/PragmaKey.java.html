@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PragmaKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">PragmaKey.java</span></div><h1>PragmaKey.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin;
+
+<span class="fc" id="L38">public enum PragmaKey {</span>
+	
+	// Temporary pragma
+<span class="fc" id="L41">	SVGNEWDATA,</span>
+	
+	// For debug
+<span class="fc" id="L44">	EMULATE_NO_GRAPHVIZ_INSTALLATION,</span>
+<span class="fc" id="L45">	EMULATE_GRAPHVIZ_CRASH,</span>
+<span class="fc" id="L46">	EMULATE_GRAPHVIZ_244_ON_WINDOWS,</span>
+
+<span class="fc" id="L48">	ASPECT, //</span>
+<span class="fc" id="L49">	COMPACT, //</span>
+<span class="fc" id="L50">	DEFAULT_LABEL_ANGLE, //</span>
+<span class="fc" id="L51">	DEFAULT_LABEL_DISTANCE, //</span>
+<span class="fc" id="L52">	GRAPH_ATTRIBUTES, //</span>
+<span class="fc" id="L53">	HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED, //</span>
+<span class="fc" id="L54">	KERMOR, //</span>
+<span class="fc" id="L55">	LABEL_ANGLE, //</span>
+<span class="fc" id="L56">	LABEL_DISTANCE, //</span>
+<span class="fc" id="L57">	RATIO, //</span>
+<span class="fc" id="L58">	SHOW_DEPRECATION, //</span>
+<span class="fc" id="L59">	SVG_FONT, //</span>
+<span class="fc" id="L60">	SVG_INTERACTIVE, //</span>
+<span class="fc" id="L61">	SVEK_TRACE, //</span>
+<span class="fc" id="L62">	TEOZ, //</span>
+<span class="fc" id="L63">	TEX_SYSTEM, //</span>
+<span class="fc" id="L64">	TEX_PREAMBLE, //</span>
+<span class="fc" id="L65">	USE_INTERMEDIATE_PACKAGES, //</span>
+<span class="fc" id="L66">	USE_VERTICAL_IF;</span>
+
+	private static String simplify(String s) {
+<span class="fc" id="L69">		final StringBuilder result = new StringBuilder();</span>
+
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (char c : s.toCharArray())</span>
+<span class="pc bpc" id="L72" title="1 of 8 branches missed.">			if ((c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z'))</span>
+<span class="fc" id="L73">				result.append(Character.toLowerCase(c));</span>
+
+<span class="fc" id="L75">		return result.toString();</span>
+	}
+
+	public static PragmaKey lazyFrom(String s) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		for (PragmaKey key : values())</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			if (simplify(s).equals(simplify(key.name())))</span>
+<span class="fc" id="L81">				return key;</span>
+<span class="fc" id="L82">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

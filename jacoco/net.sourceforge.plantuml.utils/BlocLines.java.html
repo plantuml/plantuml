@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlocLines.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.utils</a> &gt; <span class="el_source">BlocLines.java</span></div><h1>BlocLines.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.utils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.text.StringLocated;
+
+public class BlocLines implements Iterable&lt;StringLocated&gt; {
+	// ::remove file when __HAXE__
+
+	private List&lt;StringLocated&gt; lines;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L63">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (StringLocated line : lines) {</span>
+<span class="nc" id="L65">			sb.append(&quot;[&quot;);</span>
+<span class="nc" id="L66">			sb.append(line);</span>
+<span class="nc" id="L67">			sb.append(&quot;]&quot;);</span>
+<span class="nc" id="L68">		}</span>
+<span class="nc" id="L69">		return sb.toString();</span>
+	}
+
+	@JawsStrange
+	public BlocLines expandsNewline(boolean reallyExpands) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (reallyExpands == false)</span>
+<span class="fc" id="L75">			return this;</span>
+
+<span class="fc" id="L77">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (StringLocated sl : lines)</span>
+<span class="fc" id="L79">			copy.addAll(sl.expandsNewline());</span>
+
+<span class="fc" id="L81">		return new BlocLines(copy);</span>
+	}
+
+	public static BlocLines load(SFile f, LineLocation location) throws IOException {
+<span class="nc" id="L85">		final BufferedReader br = f.openBufferedReader();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (br == null)</span>
+<span class="nc" id="L87">			return null;</span>
+
+<span class="nc" id="L89">		return loadInternal(br, location);</span>
+	}
+
+	public static BlocLines load(InputStream is, LineLocation location) throws IOException {
+<span class="fc" id="L93">		final BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
+<span class="fc" id="L94">		return loadInternal(br, location);</span>
+	}
+
+	public static BlocLines from(List&lt;StringLocated&gt; lines) {
+<span class="fc" id="L98">		return new BlocLines(lines);</span>
+	}
+
+	private static BlocLines loadInternal(final BufferedReader br, LineLocation location) throws IOException {
+<span class="fc" id="L102">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+		String s;
+		try {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			while ((s = br.readLine()) != null)</span>
+<span class="fc" id="L106">				result.add(new StringLocated(s, location));</span>
+		} finally {
+<span class="fc" id="L108">			br.close();</span>
+		}
+<span class="fc" id="L110">		return new BlocLines(result);</span>
+	}
+
+<span class="fc" id="L113">	private BlocLines(List&lt;StringLocated&gt; lines) {</span>
+<span class="fc" id="L114">		this.lines = Collections.unmodifiableList(lines);</span>
+<span class="fc" id="L115">	}</span>
+
+	public Display toDisplay() throws NoSuchColorException {
+		if (Jaws.TRACE)
+			System.err.println(&quot;BlocLines::toDisplay &quot; + lines);
+<span class="fc" id="L120">		return Display.createFoo(lines);</span>
+	}
+
+	public static BlocLines single(StringLocated single) {
+<span class="fc" id="L124">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L125">		result.add(single);</span>
+<span class="fc" id="L126">		return new BlocLines(result);</span>
+	}
+
+	public static BlocLines singleString(String single) {
+<span class="fc" id="L130">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L131">		result.add(new StringLocated(single, null));</span>
+<span class="fc" id="L132">		return new BlocLines(result);</span>
+	}
+
+	public static BlocLines fromArray(String[] array) {
+<span class="nc" id="L136">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (String single : array)</span>
+<span class="nc" id="L138">			result.add(new StringLocated(single, null));</span>
+
+<span class="nc" id="L140">		return new BlocLines(result);</span>
+	}
+
+	public static BlocLines getWithNewlines(String s) {
+<span class="nc" id="L144">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (String cs : Display.getWithNewlines3(s))</span>
+<span class="nc" id="L146">			result.add(new StringLocated(cs, null));</span>
+
+<span class="nc" id="L148">		return new BlocLines(result);</span>
+	}
+
+	public static BlocLines create() {
+<span class="fc" id="L152">		return new BlocLines(new ArrayList&lt;StringLocated&gt;());</span>
+	}
+
+	public BlocLines add(StringLocated s) {
+<span class="fc" id="L156">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc" id="L157">		copy.add(s);</span>
+<span class="fc" id="L158">		return new BlocLines(copy);</span>
+	}
+
+	public BlocLines addString(String s) {
+<span class="fc" id="L162">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc" id="L163">		copy.add(new StringLocated(s, null));</span>
+<span class="fc" id="L164">		return new BlocLines(copy);</span>
+	}
+
+	public List&lt;String&gt; getLinesAsStringForSprite() {
+<span class="fc" id="L168">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		for (StringLocated s : lines)</span>
+<span class="fc" id="L170">			result.add(s.getString());</span>
+
+<span class="fc" id="L172">		return result;</span>
+	}
+
+	public int size() {
+<span class="fc" id="L176">		return lines.size();</span>
+	}
+
+	public StringLocated getAt(int i) {
+<span class="fc" id="L180">		return lines.get(i);</span>
+	}
+
+	public StringLocated getFirst() {
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (lines.size() == 0)</span>
+<span class="nc" id="L185">			return null;</span>
+
+<span class="fc" id="L187">		return lines.get(0);</span>
+	}
+
+	public StringLocated getLast() {
+<span class="fc" id="L191">		return lines.get(lines.size() - 1);</span>
+	}
+
+	public BlocLines cleanList(MultilinesStrategy strategy) {
+<span class="fc" id="L195">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc" id="L196">		strategy.cleanList(copy);</span>
+<span class="fc" id="L197">		return new BlocLines(copy);</span>
+	}
+
+	public BlocLines trim() {
+<span class="fc" id="L201">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		for (int i = 0; i &lt; copy.size(); i++) {</span>
+<span class="fc" id="L203">			final StringLocated s = copy.get(i);</span>
+<span class="fc" id="L204">			copy.set(i, s.getTrimmed());</span>
+		}
+<span class="fc" id="L206">		return new BlocLines(copy);</span>
+	}
+
+	public BlocLines removeEmptyLines() {
+<span class="fc" id="L210">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (final Iterator&lt;StringLocated&gt; it = copy.iterator(); it.hasNext();)</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">			if (it.next().getString().length() == 0)</span>
+<span class="nc" id="L213">				it.remove();</span>
+
+<span class="fc" id="L215">		return new BlocLines(copy);</span>
+	}
+
+//	public BlocLines trimRight() {
+//		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);
+//		for (int i = 0; i &lt; copy.size(); i++) {
+//			final StringLocated s = copy.get(i);
+//			copy.set(i, s.getTrimmedRight());
+//		}
+//		return new BlocLines(copy);
+//	}
+
+	public BlocLines removeEmptyColumns() {
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (firstColumnRemovable(lines) == false)</span>
+<span class="fc" id="L229">			return this;</span>
+
+<span class="fc" id="L231">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+		do {
+<span class="fc bfc" id="L233" title="All 2 branches covered.">			for (int i = 0; i &lt; copy.size(); i++) {</span>
+<span class="fc" id="L234">				final StringLocated s = copy.get(i);</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">				if (s.getString().length() &gt; 0)</span>
+<span class="fc" id="L236">					copy.set(i, s.substring(1, s.getString().length()));</span>
+
+			}
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		} while (firstColumnRemovable(copy));</span>
+<span class="fc" id="L240">		return new BlocLines(copy);</span>
+	}
+
+	@JawsStrange
+	private static boolean firstColumnRemovable(List&lt;StringLocated&gt; data) {
+<span class="fc" id="L245">		boolean allEmpty = true;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		for (StringLocated s : data) {</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">			if (s.getString().length() == 0)</span>
+<span class="nc" id="L248">				continue;</span>
+
+<span class="fc" id="L250">			allEmpty = false;</span>
+<span class="fc" id="L251">			final char c = s.getString().charAt(0);</span>
+<span class="pc bpc" id="L252" title="1 of 4 branches missed.">			if (c != ' ' &amp;&amp; c != '\t')</span>
+<span class="fc" id="L253">				return false;</span>
+
+<span class="fc" id="L255">		}</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		return allEmpty == false;</span>
+	}
+
+	public char getLastChar() {
+<span class="nc" id="L260">		final StringLocated s = lines.get(lines.size() - 1);</span>
+<span class="nc" id="L261">		return s.getString().charAt(s.getString().length() - 1);</span>
+	}
+
+	public BlocLines removeStartingAndEnding(String data, int removeAtEnd) {
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (lines.size() == 0)</span>
+<span class="nc" id="L266">			return this;</span>
+
+<span class="fc" id="L268">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc" id="L269">		copy.set(0, new StringLocated(data, null));</span>
+<span class="fc" id="L270">		final int n = copy.size() - 1;</span>
+<span class="fc" id="L271">		final StringLocated s = copy.get(n);</span>
+<span class="fc" id="L272">		copy.set(n, s.substring(0, s.getString().length() - removeAtEnd));</span>
+<span class="fc" id="L273">		return new BlocLines(copy);</span>
+	}
+
+	public BlocLines overrideLastLine(String last) {
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		if (lines.size() == 0)</span>
+<span class="nc" id="L278">			return this;</span>
+
+<span class="nc" id="L280">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="nc" id="L281">		final int n = copy.size() - 1;</span>
+<span class="nc" id="L282">		final StringLocated currentLast = copy.get(n);</span>
+<span class="nc" id="L283">		copy.set(n, new StringLocated(last, currentLast.getLocation()));</span>
+<span class="nc" id="L284">		return new BlocLines(copy);</span>
+	}
+
+	public BlocLines toSingleLineWithHiddenNewLine() {
+<span class="fc" id="L288">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		for (StringLocated line : lines) {</span>
+<span class="fc" id="L290">			sb.append(line.getString());</span>
+<span class="fc" id="L291">			sb.append(BackSlash.hiddenNewLine());</span>
+<span class="fc" id="L292">		}</span>
+<span class="fc" id="L293">		return singleString(sb.substring(0, sb.length() - 1).toString());</span>
+	}
+
+	public BlocLines trimSmart(int referenceLine) {
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (lines.size() &lt;= referenceLine)</span>
+<span class="nc" id="L298">			return this;</span>
+
+<span class="fc" id="L300">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc" id="L301">		final int nbStartingSpace = nbStartingSpace(copy.get(referenceLine).getString());</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">		for (int i = referenceLine; i &lt; copy.size(); i++) {</span>
+<span class="fc" id="L303">			final StringLocated s = copy.get(i);</span>
+<span class="fc" id="L304">			copy.set(i, removeStartingSpaces(s, nbStartingSpace));</span>
+		}
+<span class="fc" id="L306">		return new BlocLines(copy);</span>
+	}
+
+	public static int nbStartingSpace(CharSequence s) {
+<span class="fc" id="L310">		int nb = 0;</span>
+<span class="pc bpc" id="L311" title="1 of 4 branches missed.">		while (nb &lt; s.length() &amp;&amp; isSpaceOrTab(s.charAt(nb)))</span>
+<span class="fc" id="L312">			nb++;</span>
+
+<span class="fc" id="L314">		return nb;</span>
+	}
+
+	public static boolean isSpaceOrTab(char c) {
+<span class="pc bpc" id="L318" title="1 of 4 branches missed.">		return c == ' ' || c == '\t';</span>
+	}
+
+	private static StringLocated removeStartingSpaces(StringLocated arg, int nbStartingSpace) {
+<span class="fc bfc" id="L322" title="All 2 branches covered.">		if (arg.getString().length() == 0)</span>
+<span class="fc" id="L323">			return arg;</span>
+
+<span class="fc" id="L325">		int i = 0;</span>
+<span class="pc bpc" id="L326" title="1 of 6 branches missed.">		while (i &lt; nbStartingSpace &amp;&amp; i &lt; arg.getString().length() &amp;&amp; isSpaceOrTab(arg.getString().charAt(i)))</span>
+<span class="fc" id="L327">			i++;</span>
+
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (i == 0)</span>
+<span class="fc" id="L330">			return arg;</span>
+
+<span class="fc" id="L332">		return arg.substring(i, arg.getString().length());</span>
+	}
+
+	public BlocLines subExtract(int margeStart, int margeEnd) {
+<span class="fc" id="L336">		List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="fc" id="L337">		copy = copy.subList(margeStart, copy.size() - margeEnd);</span>
+<span class="fc" id="L338">		return new BlocLines(copy);</span>
+	}
+
+	public BlocLines subList(int start, int end) {
+<span class="nc" id="L342">		return new BlocLines(lines.subList(start, end));</span>
+	}
+
+	public Iterator&lt;StringLocated&gt; iterator() {
+<span class="fc" id="L346">		return lines.iterator();</span>
+	}
+
+	public BlocLines eventuallyMoveBracket() {
+<span class="fc bfc" id="L350" title="All 2 branches covered.">		if (size() &lt; 2)</span>
+<span class="fc" id="L351">			return this;</span>
+
+<span class="fc" id="L353">		final String first = getFirst().getTrimmed().getString();</span>
+<span class="fc" id="L354">		final String second = getAt(1).getTrimmed().getString();</span>
+<span class="pc bpc" id="L355" title="1 of 4 branches missed.">		if (first.endsWith(&quot;{&quot;) == false &amp;&amp; second.equals(&quot;{&quot;)) {</span>
+<span class="nc" id="L356">			final StringLocated vline = getFirst().append(&quot; {&quot;);</span>
+<span class="nc" id="L357">			final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L358">			result.add(vline);</span>
+<span class="nc" id="L359">			result.addAll(this.lines.subList(2, this.lines.size()));</span>
+<span class="nc" id="L360">			return new BlocLines(result);</span>
+		}
+<span class="fc" id="L362">		return this;</span>
+	}
+
+	public BlocLines eventuallyMoveAllEmptyBracket() {
+<span class="nc" id="L366">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">		for (StringLocated line : lines)</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">			if (line.getTrimmed().toString().equals(&quot;{&quot;)) {</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">				if (result.size() &gt; 0) {</span>
+<span class="nc" id="L370">					final int pos = result.size() - 1;</span>
+<span class="nc" id="L371">					StringLocated last = result.get(pos);</span>
+<span class="nc" id="L372">					result.set(pos, last.append(&quot; {&quot;));</span>
+<span class="nc" id="L373">				}</span>
+			} else {
+<span class="nc" id="L375">				result.add(line);</span>
+			}
+
+<span class="nc" id="L378">		return new BlocLines(result);</span>
+	}
+
+	public BlocLines removeFewChars(int nb) {
+<span class="nc" id="L382">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L383">		result.add(getFirst().substring(nb).getTrimmed());</span>
+<span class="nc" id="L384">		result.addAll(this.lines.subList(1, this.lines.size() - 1));</span>
+<span class="nc" id="L385">		final StringLocated last = getLast();</span>
+<span class="nc" id="L386">		result.add(last.substring(0, last.length() - nb).getTrimmed());</span>
+<span class="nc" id="L387">		return new BlocLines(result);</span>
+	}
+
+	public CharInspector inspector() {
+<span class="fc" id="L391">		return new CharInspectorImpl(this, false);</span>
+	}
+
+	public CharInspector inspectorWithNewlines() {
+<span class="fc" id="L395">		return new CharInspectorImpl(this, true);</span>
+	}
+
+	public LineLocation getLocation() {
+<span class="fc bfc" id="L399" title="All 2 branches covered.">		if (lines.size() == 0)</span>
+<span class="fc" id="L400">			return null;</span>
+<span class="fc" id="L401">		return lines.get(0).getLocation();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

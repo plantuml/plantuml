@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubjectTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">SubjectTask.java</span></div><h1>SubjectTask.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskCode;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+
+public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L57">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectTask();</span>
+	public static final String REGEX_TASK_CODE = &quot;\\[([^\\[\\]]+?)\\]&quot;;
+
+	private SubjectTask() {
+	}
+
+	public Failable&lt;Task&gt; getMe(GanttDiagram gantt, RegexResult arg) {
+		final Task result;
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
+<span class="nc" id="L66">			result = gantt.getIt();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L68">				return Failable.error(&quot;Not sure what are you refering to?&quot;);</span>
+		} else {
+<span class="fc" id="L70">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="fc" id="L71">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
+<span class="fc" id="L72">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
+<span class="fc" id="L73">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+
+<span class="fc" id="L75">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			result = gantt.getOrCreateTask(code, then != null);</span>
+
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (stereotype != null)</span>
+<span class="nc" id="L79">				result.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
+
+<span class="fc" id="L81">			gantt.setIt(result);</span>
+		}
+
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L85">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L87">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (resource != null) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
+<span class="nc" id="L90">				final String part = st.nextToken().trim();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">				if (part.length() &gt; 0) {</span>
+<span class="nc" id="L92">					final boolean ok = gantt.affectResource(result, part);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">					if (ok == false)</span>
+<span class="nc" id="L94">						return Failable.error(&quot;Bad argument for resource&quot;);</span>
+
+				}
+<span class="nc" id="L97">			}</span>
+
+		}
+<span class="fc" id="L100">		return Failable.ok(result);</span>
+	}
+
+	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
+<span class="fc" id="L104">		return Arrays.asList(new SentenceRequire(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),</span>
+				new SentenceTaskStartsOnlyRelative(), new SentenceTaskStartsAbsolute(), new SentenceHappens(),
+				new SentenceHappensDate(), new SentenceEnds(), new SentenceTaskEndsOnlyRelative(),
+				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsColoredForCompletion(),
+				new SentenceIsDeleted(), new SentenceIsForTask(), new SentenceLinksTo(), new SentenceOccurs(),
+				new SentenceDisplayOnSameRowAs(), new SentencePausesAbsoluteDate(),
+				new SentencePausesAbsoluteIntervals(), new SentencePausesAbsoluteIntervalsSmart(),
+				new SentencePausesDayOfWeek(), new SentenceIsDisplayedAs());
+	}
+
+	public IRegex toRegex() {
+<span class="fc" id="L115">		return new RegexOr( //</span>
+				new RegexLeaf(&quot;IT&quot;, &quot;(it)&quot;), //
+				new RegexConcat(new RegexLeaf(&quot;THEN&quot;, &quot;(then[%s]+)?&quot;), //
+						new RegexLeaf(&quot;SUBJECT&quot;, REGEX_TASK_CODE), //
+<span class="fc" id="L119">						StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+						new RegexOptional(new RegexConcat(//
+<span class="fc" id="L121">								Words.exactly(Words.AS), //</span>
+<span class="fc" id="L122">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;SHORTNAME&quot;, REGEX_TASK_CODE))), //
+						new RegexOptional(new RegexConcat( //
+<span class="fc" id="L125">								Words.exactly(Words.ON), //</span>
+<span class="fc" id="L126">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;RESOURCE&quot;, &quot;((?:\\{[^{}]+\\}[%s]*)+)&quot;) //
+						))));
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

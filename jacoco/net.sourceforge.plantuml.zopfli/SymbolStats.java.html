@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SymbolStats.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">SymbolStats.java</span></div><h1>SymbolStats.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+<span class="nc" id="L21">final class SymbolStats {</span>
+	private final static double INV_LOG_2 = 1.4426950408889 * 0x10000L; /* 1.0 / log(2.0) */
+<span class="nc" id="L23">	private final int[] litLens = new int[288];</span>
+<span class="nc" id="L24">	private final int[] dists = new int[32]; // Why 32? Expect 30.</span>
+<span class="nc" id="L25">	final long[] lLiterals = new long[288];</span>
+<span class="nc" id="L26">	final long[] lLengths = new long[259];</span>
+<span class="nc" id="L27">	final long[] dSymbols = new long[32];</span>
+
+	void getFreqs(LzStore store) {
+<span class="nc" id="L30">		int[] sLitLens = this.litLens;</span>
+<span class="nc" id="L31">		int[] sDists = this.dists;</span>
+<span class="nc" id="L32">		System.arraycopy(Cookie.intZeroes, 0, sLitLens, 0, 288);</span>
+<span class="nc" id="L33">		System.arraycopy(Cookie.intZeroes, 0, sDists, 0, 32);</span>
+
+<span class="nc" id="L35">		int size = store.size;</span>
+<span class="nc" id="L36">		char[] litLens = store.litLens;</span>
+<span class="nc" id="L37">		char[] dists = store.dists;</span>
+<span class="nc" id="L38">		int[] lengthSymbol = Util.LENGTH_SYMBOL;</span>
+<span class="nc" id="L39">		int[] cachedDistSymbol = Util.CACHED_DIST_SYMBOL;</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L41">			int d = dists[i];</span>
+<span class="nc" id="L42">			int l = litLens[i];</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">			if (d == 0) {</span>
+<span class="nc" id="L44">				sLitLens[l]++;</span>
+			} else {
+<span class="nc" id="L46">				sLitLens[lengthSymbol[l]]++;</span>
+<span class="nc" id="L47">				sDists[cachedDistSymbol[d]]++;</span>
+			}
+		}
+<span class="nc" id="L50">		sLitLens[256] = 1;</span>
+<span class="nc" id="L51">		calculate();</span>
+<span class="nc" id="L52">	}</span>
+
+	final void copy(final SymbolStats source) {
+<span class="nc" id="L55">		System.arraycopy(source.litLens, 0, litLens, 0, 288);</span>
+<span class="nc" id="L56">		System.arraycopy(source.dists, 0, dists, 0, 32);</span>
+<span class="nc" id="L57">		System.arraycopy(source.lLiterals, 0, lLiterals, 0, 288);</span>
+<span class="nc" id="L58">		System.arraycopy(source.lLengths, 0, lLengths, 0, 259);</span>
+<span class="nc" id="L59">		System.arraycopy(source.dSymbols, 0, dSymbols, 0, 32);</span>
+<span class="nc" id="L60">	}</span>
+
+	final void calculate() {
+<span class="nc" id="L63">		calculateLens();</span>
+<span class="nc" id="L64">		calculateDists();</span>
+<span class="nc" id="L65">	}</span>
+
+	final void calculateLens() {
+<span class="nc" id="L68">		int sum = 0;</span>
+<span class="nc" id="L69">		int[] litLens = this.litLens;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (int i = 0; i &lt; 288; ++i) {</span>
+<span class="nc" id="L71">			sum += litLens[i];</span>
+		}
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		double log2sum = (sum == 0 ? Math.log(288) : Math.log(sum)) * INV_LOG_2;</span>
+<span class="nc" id="L74">		long[] lLiterals = this.lLiterals;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (int i = 0; i &lt; 288; ++i) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (litLens[i] == 0) {</span>
+<span class="nc" id="L77">				lLiterals[i] = (long) log2sum;</span>
+			} else {
+<span class="nc" id="L79">				lLiterals[i] = (long) (log2sum - Math.log(litLens[i]) * INV_LOG_2);</span>
+			}
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (lLiterals[i] &lt; 0) {</span>
+<span class="nc" id="L82">				lLiterals[i] = 0;</span>
+			}
+		}
+<span class="nc" id="L85">		long[] lLengths = this.lLengths;</span>
+<span class="nc" id="L86">		int[] lengthSymbol = Util.LENGTH_SYMBOL;</span>
+<span class="nc" id="L87">		int[] lengthExtraBits = Util.LENGTH_EXTRA_BITS;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (int i = 0; i &lt; 259; ++i) {</span>
+<span class="nc" id="L89">			lLengths[i] = lLiterals[lengthSymbol[i]] + (lengthExtraBits[i] * 0x10000L);</span>
+		}
+<span class="nc" id="L91">	}</span>
+
+	final void calculateDists() {
+<span class="nc" id="L94">		int sum = 0;</span>
+<span class="nc" id="L95">		int[] dists = this.dists;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (int i = 0; i &lt; 32; ++i) {</span>
+<span class="nc" id="L97">			sum += dists[i];</span>
+		}
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		double log2sum = (sum == 0 ? Math.log(32) : Math.log(sum)) * INV_LOG_2;</span>
+<span class="nc" id="L100">		long[] dSymbols = this.dSymbols;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (int i = 0; i &lt; 32; ++i) {</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (dists[i] == 0) {</span>
+<span class="nc" id="L103">				dSymbols[i] = (long) log2sum;</span>
+			} else {
+<span class="nc" id="L105">				dSymbols[i] = (long) (log2sum - Math.log(dists[i]) * INV_LOG_2);</span>
+			}
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (dSymbols[i] &lt; 0) {</span>
+<span class="nc" id="L108">				dSymbols[i] = 0;</span>
+			}
+		}
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (int i = 4; i &lt; 30; ++i) {</span>
+<span class="nc" id="L112">			dSymbols[i] += 0x10000L * ((i / 2) - 1);</span>
+		}
+<span class="nc" id="L114">	}</span>
+
+	final void alloy(final SymbolStats ligand) {
+<span class="nc" id="L117">		int[] ligandLitLens = ligand.litLens;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (int i = 0; i &lt; 288; i++) {</span>
+<span class="nc" id="L119">			litLens[i] += ligandLitLens[i] / 2;</span>
+		}
+<span class="nc" id="L121">		litLens[256] = 1;</span>
+
+<span class="nc" id="L123">		int[] ligandDists = ligand.dists;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (int i = 0; i &lt; 32; i++) {</span>
+<span class="nc" id="L125">			dists[i] += ligandDists[i] / 2;</span>
+		}
+<span class="nc" id="L127">	}</span>
+
+	final int randomizeFreqs(int z) {
+<span class="nc" id="L130">		int[] data = litLens;</span>
+<span class="nc" id="L131">		int n = data.length;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L133">			z = 0x7FFFFFFF &amp; (1103515245 * z + 12345);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			if ((z &gt;&gt;&gt; 4) % 3 == 0) {</span>
+<span class="nc" id="L135">				z = 0x7FFFFFFF &amp; (1103515245 * z + 12345);</span>
+<span class="nc" id="L136">				int p = z % n;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">				if (data[i] &lt; data[p]) {</span>
+<span class="nc" id="L138">					data[i] = data[p];</span>
+				}
+			}
+		}
+<span class="nc" id="L142">		data[256] = 1;</span>
+
+<span class="nc" id="L144">		data = dists;</span>
+<span class="nc" id="L145">		n = data.length;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L147">			z = 0x7FFFFFFF &amp; (1103515245 * z + 12345);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			if ((z &gt;&gt;&gt; 4) % 3 == 0) {</span>
+<span class="nc" id="L149">				z = 0x7FFFFFFF &amp; (1103515245 * z + 12345);</span>
+<span class="nc" id="L150">				int p = z % n;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">				if (data[i] &lt; data[p]) {</span>
+<span class="nc" id="L152">					data[i] = data[p];</span>
+				}
+			}
+		}
+
+<span class="nc" id="L157">		return z;</span>
+	}
+
+	final long minCost() {
+<span class="nc" id="L161">		long[] lLengths = this.lLengths;</span>
+<span class="nc" id="L162">		long minLengthCost = lLengths[3];</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		for (int i = 4; i &lt; 259; i++) {</span>
+<span class="nc" id="L164">			long c = lLengths[i];</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			if (c &lt; minLengthCost) {</span>
+<span class="nc" id="L166">				minLengthCost = c;</span>
+			}
+		}
+
+<span class="nc" id="L170">		long[] dSymbols = this.dSymbols;</span>
+<span class="nc" id="L171">		long minDistCost = dSymbols[0];</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		for (int i = 1; i &lt; 30; i++) {</span>
+<span class="nc" id="L173">			long c = dSymbols[i];</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (c &lt; minDistCost) {</span>
+<span class="nc" id="L175">				minDistCost = c;</span>
+			}
+		}
+
+<span class="nc" id="L179">		return minDistCost + minLengthCost;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

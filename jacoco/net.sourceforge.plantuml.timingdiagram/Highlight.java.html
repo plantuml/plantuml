@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Highlight.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram</a> &gt; <span class="el_source">Highlight.java</span></div><h1>Highlight.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class Highlight {
+
+	private final TimeTick tickFrom;
+	private final TimeTick tickTo;
+	private final Display caption;
+	private final Colors colors;
+	private final ISkinParam skinParam;
+
+<span class="nc" id="L65">	public Highlight(ISkinParam skinParam, TimeTick tickFrom, TimeTick tickTo, Display caption, Colors colors) {</span>
+<span class="nc" id="L66">		this.tickFrom = tickFrom;</span>
+<span class="nc" id="L67">		this.tickTo = tickTo;</span>
+<span class="nc" id="L68">		this.caption = caption;</span>
+<span class="nc" id="L69">		this.colors = colors;</span>
+<span class="nc" id="L70">		this.skinParam = skinParam;</span>
+<span class="nc" id="L71">	}</span>
+
+	private StyleSignatureBasic getStyleSignature() {
+<span class="nc" id="L74">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.highlight);</span>
+	}
+
+	private Style getStyle() {
+<span class="nc" id="L78">		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+	}
+
+	private HColor getBackColor() {
+<span class="nc" id="L83">		final HColor result = colors.getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L85">			return getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L87">		return result;</span>
+	}
+
+	private HColor getLineColor() {
+<span class="nc" id="L91">		final HColor result = colors.getColor(ColorType.LINE);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L93">			return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L95">		return result;</span>
+	}
+
+	private UStroke getUStroke() {
+<span class="nc" id="L99">		return getStyle().getStroke();</span>
+	}
+
+	public final TimeTick getTickFrom() {
+<span class="nc" id="L103">		return tickFrom;</span>
+	}
+
+	public final TimeTick getTickTo() {
+<span class="nc" id="L107">		return tickTo;</span>
+	}
+
+	public final Display getCaption() {
+<span class="nc" id="L111">		return caption;</span>
+	}
+
+	public TextBlock getCaption(ISkinParam skinParam) {
+<span class="nc" id="L115">		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.TIMING, null);</span>
+<span class="nc" id="L116">		return caption.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+	}
+
+	public void drawHighlightsBack(UGraphic ug, TimingRuler ruler, double height) {
+<span class="nc" id="L120">		ug = ug.apply(HColors.none()).apply(getBackColor().bg());</span>
+<span class="nc" id="L121">		final double start = ruler.getPosInPixel(this.getTickFrom());</span>
+<span class="nc" id="L122">		final double end = ruler.getPosInPixel(this.getTickTo());</span>
+<span class="nc" id="L123">		final URectangle rect = URectangle.build(end - start, height);</span>
+<span class="nc" id="L124">		ug.apply(UTranslate.dx(start)).draw(rect);</span>
+<span class="nc" id="L125">	}</span>
+
+	public void drawHighlightsLines(UGraphic ug, TimingRuler ruler, double height) {
+<span class="nc" id="L128">		ug = ug.apply(getUStroke());</span>
+<span class="nc" id="L129">		ug = ug.apply(getLineColor());</span>
+<span class="nc" id="L130">		final ULine line = ULine.vline(height);</span>
+<span class="nc" id="L131">		final double start = ruler.getPosInPixel(this.getTickFrom());</span>
+<span class="nc" id="L132">		final double end = ruler.getPosInPixel(this.getTickTo());</span>
+<span class="nc" id="L133">		ug.apply(UTranslate.dx(start)).draw(line);</span>
+<span class="nc" id="L134">		ug.apply(UTranslate.dx(end)).draw(line);</span>
+<span class="nc" id="L135">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandFactoryNoteOnEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command.note</a> &gt; <span class="el_source">CommandFactoryNoteOnEntity.java</span></div><h1>CommandFactoryNoteOnEntity.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command.note;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.Position;
+
+public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryCommand&lt;AbstractEntityDiagram&gt; {
+
+	private final IRegex partialPattern;
+	private final String key;
+	private final ParserPass selectedPass;
+
+<span class="fc" id="L83">	public CommandFactoryNoteOnEntity(String key, IRegex partialPattern, ParserPass selectedPass) {</span>
+<span class="fc" id="L84">		this.partialPattern = partialPattern;</span>
+<span class="fc" id="L85">		this.key = key;</span>
+<span class="fc" id="L86">		this.selectedPass = selectedPass;</span>
+<span class="fc" id="L87">	}</span>
+
+	private IRegex getRegexConcatSingleLine(IRegex partialPattern) {
+<span class="fc" id="L90">		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;single&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L92">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
+				new RegexOr(//
+<span class="fc" id="L95">						new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;of&quot;), //
+<span class="fc" id="L97">								RegexLeaf.spaceOneOrMore(), partialPattern), //</span>
+						new RegexLeaf(&quot;&quot;)), //
+<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L100">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L101">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L102">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L103">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L104">				color().getRegex(), //</span>
+<span class="fc" id="L105">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L107">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L109">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L111">				RegexLeaf.end() //</span>
+		);
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L116">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	private IRegex getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (withBracket) {</span>
+<span class="fc" id="L121">			return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;multi&quot; + withBracket,</span>
+<span class="fc" id="L122">					RegexLeaf.start(), //</span>
+					new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L124">					RegexLeaf.spaceOneOrMore(), //</span>
+					new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
+					new RegexOr(//
+<span class="fc" id="L127">							new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
+									new RegexLeaf(&quot;of&quot;), //
+<span class="fc" id="L129">									RegexLeaf.spaceOneOrMore(), //</span>
+									partialPattern), //
+							new RegexLeaf(&quot;&quot;)), //
+<span class="fc" id="L132">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L133">					new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L134">					StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L135">					new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L136">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L137">					color().getRegex(), //</span>
+<span class="fc" id="L138">					RegexLeaf.spaceZeroOrMore(), //</span>
+					UrlBuilder.OPTIONAL, //
+<span class="fc" id="L140">					RegexLeaf.spaceZeroOrMore(), //</span>
+					new RegexLeaf(&quot;\\{&quot;), //
+<span class="fc" id="L142">					RegexLeaf.end() //</span>
+			);
+		}
+<span class="fc" id="L145">		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;multi&quot; + withBracket,</span>
+<span class="fc" id="L146">				RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L148">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
+				new RegexOr(//
+<span class="fc" id="L151">						new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;of&quot;), //
+<span class="fc" id="L153">								RegexLeaf.spaceOneOrMore(), //</span>
+								partialPattern), //
+						new RegexLeaf(&quot;&quot;)), //
+<span class="fc" id="L156">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L157">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L158">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L159">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L160">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L161">				color().getRegex(), //</span>
+<span class="fc" id="L162">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L164">				RegexLeaf.end() //</span>
+		);
+	}
+
+	public Command&lt;AbstractEntityDiagram&gt; createSingleLine() {
+<span class="fc" id="L169">		return new SingleLineCommand2&lt;AbstractEntityDiagram&gt;(getRegexConcatSingleLine(partialPattern)) {</span>
+
+			@Override
+			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
+					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
+<span class="fc" id="L174">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="fc" id="L175">				return executeInternal(location, arg, diagram, null, display);</span>
+			}
+
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">				return selectedPass == pass;</span>
+			}
+		};
+	}
+
+	public Command&lt;AbstractEntityDiagram&gt; createMultiLine(final boolean withBracket) {
+<span class="fc" id="L186">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(getRegexConcatMultiLine(partialPattern, withBracket),</span>
+<span class="fc" id="L187">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
+
+			@Override
+			public String getPatternEnd() {
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">				if (withBracket)</span>
+<span class="nc" id="L192">					return &quot;^(\\})$&quot;;</span>
+
+<span class="fc" id="L194">				return &quot;^[%s]*(end[%s]?note)$&quot;;</span>
+			}
+
+			@Override
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
+				// StringUtils.trim(lines, false);
+<span class="fc" id="L201">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L202">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L203">				lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L204">				final Display display = lines.toDisplay();</span>
+
+<span class="fc" id="L206">				Url url = null;</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">				if (line0.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc" id="L208">					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue(&quot;topurl&quot;),</span>
+							UrlMode.STRICT);
+<span class="nc" id="L210">					url = urlBuilder.getUrl(line0.get(&quot;URL&quot;, 0));</span>
+				}
+
+<span class="fc" id="L213">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>
+			}
+
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">				return selectedPass == pass;</span>
+			}
+
+		};
+	}
+
+	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0, AbstractEntityDiagram diagram, Url url,
+			Display display) throws NoSuchColorException {
+<span class="fc" id="L226">		final String pos = line0.get(&quot;POSITION&quot;, 0);</span>
+<span class="fc" id="L227">		final String idShort = diagram.cleanId(line0.get(&quot;CODE&quot;, 0));</span>
+		final Entity cl1;
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		if (idShort == null) {</span>
+<span class="fc" id="L230">			cl1 = diagram.getLastEntity();</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">			if (cl1 == null)</span>
+<span class="nc" id="L232">				return CommandExecutionResult.error(&quot;Nothing to note to&quot;);</span>
+
+		} else {
+<span class="fc" id="L235">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="fc" id="L236">			cl1 = quark.getData();</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			if (cl1 == null)</span>
+<span class="nc" id="L238">				return CommandExecutionResult.error(&quot;Not known: &quot; + idShort);</span>
+		}
+
+<span class="fc" id="L241">		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))</span>
+<span class="fc" id="L242">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
+<span class="fc" id="L243">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L245">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L246">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
+<span class="nc" id="L248">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L249">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
+					ColorParam.noteBorder);
+		}
+
+<span class="pc bpc" id="L253" title="3 of 4 branches missed.">		if (diagram.getPragma().isTrue(PragmaKey.KERMOR) &amp;&amp; cl1.isGroup()) {</span>
+<span class="nc" id="L254">			cl1.addNote(display, position, colors);</span>
+<span class="nc" id="L255">			return CommandExecutionResult.ok();</span>
+		}
+
+<span class="fc" id="L258">		final String tmp = diagram.getUniqueSequence(&quot;GMN&quot;);</span>
+<span class="fc" id="L259">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, tmp);</span>
+<span class="fc" id="L260">		final Entity note = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);</span>
+
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L263">			note.setStereotype(stereotype);</span>
+
+<span class="fc" id="L265">		note.setColors(colors);</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L267">			note.addUrl(url);</span>
+
+<span class="fc" id="L269">		CommandCreateClassMultilines.addTags(note, line0.getLazzy(&quot;TAGS&quot;, 0));</span>
+
+		final Link link;
+
+<span class="fc" id="L273">		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (position == Position.RIGHT) {</span>
+<span class="nc" id="L275">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,</span>
+<span class="nc" id="L276">					LinkArg.noDisplay(1));</span>
+<span class="nc" id="L277">			link.setHorizontalSolitary(true);</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">		} else if (position == Position.LEFT) {</span>
+<span class="fc" id="L279">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type,</span>
+<span class="fc" id="L280">					LinkArg.noDisplay(1));</span>
+<span class="fc" id="L281">			link.setHorizontalSolitary(true);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">		} else if (position == Position.BOTTOM) {</span>
+<span class="fc" id="L283">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,</span>
+<span class="fc" id="L284">					LinkArg.noDisplay(2));</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">		} else if (position == Position.TOP) {</span>
+<span class="fc" id="L286">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type,</span>
+<span class="fc" id="L287">					LinkArg.noDisplay(2));</span>
+		} else {
+<span class="nc" id="L289">			throw new IllegalArgumentException();</span>
+		}
+<span class="fc" id="L291">		diagram.addLink(link);</span>
+<span class="fc" id="L292">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

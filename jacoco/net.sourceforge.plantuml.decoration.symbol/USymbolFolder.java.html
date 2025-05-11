@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>USymbolFolder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.decoration.symbol</a> &gt; <span class="el_source">USymbolFolder.java</span></div><h1>USymbolFolder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.decoration.symbol;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.style.SName;
+
+public class USymbolFolder extends USymbol {
+
+	private final static int marginTitleX1 = 3;
+	private final static int marginTitleX2 = 3;
+	private final static int marginTitleX3 = 7;
+	private final static int marginTitleY0 = 0;
+	private final static int marginTitleY1 = 3;
+	private final static int marginTitleY2 = 3;
+
+	private final SName sname;
+	private final boolean showTitle;
+
+<span class="fc" id="L70">	public USymbolFolder(SName sname, boolean showTitle) {</span>
+<span class="fc" id="L71">		this.showTitle = showTitle;</span>
+<span class="fc" id="L72">		this.sname = sname;</span>
+<span class="fc" id="L73">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L77">		return super.toString() + &quot; &quot; + showTitle;</span>
+	}
+
+	@Override
+	public SName[] getSNames() {
+<span class="fc" id="L82">		return new SName[] { sname };</span>
+	}
+
+	private void drawFolder(UGraphic ug, double width, double height, XDimension2D dimName, double shadowing,
+			double roundCorner) {
+
+<span class="fc" id="L88">		final double wtitle = getWTitle(width, dimName);</span>
+<span class="fc" id="L89">		final double htitle = getHTitle(dimName);</span>
+
+		final Shadowable shape;
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (roundCorner == 0) {</span>
+<span class="nc" id="L93">			final UPolygon poly = new UPolygon();</span>
+<span class="nc" id="L94">			poly.addPoint(0, 0);</span>
+<span class="nc" id="L95">			poly.addPoint(wtitle, 0);</span>
+
+<span class="nc" id="L97">			poly.addPoint(wtitle + marginTitleX3, htitle);</span>
+<span class="nc" id="L98">			poly.addPoint(width, htitle);</span>
+<span class="nc" id="L99">			poly.addPoint(width, height);</span>
+<span class="nc" id="L100">			poly.addPoint(0, height);</span>
+<span class="nc" id="L101">			poly.addPoint(0, 0);</span>
+<span class="nc" id="L102">			shape = poly;</span>
+<span class="nc" id="L103">		} else {</span>
+<span class="fc" id="L104">			final UPath path = UPath.none();</span>
+<span class="fc" id="L105">			path.moveTo(roundCorner / 2, 0);</span>
+<span class="fc" id="L106">			path.lineTo(wtitle - roundCorner / 2, 0);</span>
+			// path.lineTo(wtitle, roundCorner / 2);
+<span class="fc" id="L108">			path.arcTo(new XPoint2D(wtitle, roundCorner / 2), roundCorner / 2 * 1.5, 0, 1);</span>
+<span class="fc" id="L109">			path.lineTo(wtitle + marginTitleX3, htitle);</span>
+<span class="fc" id="L110">			path.lineTo(width - roundCorner / 2, htitle);</span>
+<span class="fc" id="L111">			path.arcTo(new XPoint2D(width, htitle + roundCorner / 2), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L112">			path.lineTo(width, height - roundCorner / 2);</span>
+<span class="fc" id="L113">			path.arcTo(new XPoint2D(width - roundCorner / 2, height), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L114">			path.lineTo(roundCorner / 2, height);</span>
+<span class="fc" id="L115">			path.arcTo(new XPoint2D(0, height - roundCorner / 2), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L116">			path.lineTo(0, roundCorner / 2);</span>
+<span class="fc" id="L117">			path.arcTo(new XPoint2D(roundCorner / 2, 0), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L118">			path.closePath();</span>
+<span class="fc" id="L119">			shape = path;</span>
+		}
+<span class="fc" id="L121">		shape.setDeltaShadow(shadowing);</span>
+
+<span class="fc" id="L123">		ug.draw(shape);</span>
+<span class="fc" id="L124">		ug.apply(UTranslate.dy(htitle)).draw(ULine.hline(wtitle + marginTitleX3));</span>
+<span class="fc" id="L125">	}</span>
+
+	private double getWTitle(double width, XDimension2D dimTitle) {
+		final double wtitle;
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
+<span class="nc" id="L130">			wtitle = Math.max(30, width / 4);</span>
+		else
+<span class="fc" id="L132">			wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;</span>
+<span class="fc" id="L133">		return wtitle;</span>
+	}
+
+	private double getHTitle(XDimension2D dimTitle) {
+		final double htitle;
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
+<span class="nc" id="L139">			htitle = 10;</span>
+		else
+<span class="fc" id="L141">			htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;</span>
+
+<span class="fc" id="L143">		return htitle;</span>
+	}
+
+	private Margin getMargin() {
+<span class="nc" id="L147">		return new Margin(10, 10 + 10, 10 + 3, 10);</span>
+	}
+
+	@Override
+	public TextBlock asSmall(final TextBlock title, final TextBlock label, final TextBlock stereotype,
+			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
+<span class="nc" id="L153">		Objects.requireNonNull(title);</span>
+<span class="nc" id="L154">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L157">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L158">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="nc" id="L159">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L160">				final XDimension2D dimTitle = getDimTitle(ug.getStringBounder());</span>
+<span class="nc" id="L161">				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.getDeltaShadow(),</span>
+<span class="nc" id="L162">						symbolContext.getRoundCorner());</span>
+<span class="nc" id="L163">				final Margin margin = getMargin();</span>
+<span class="nc" id="L164">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">				if (showTitle)</span>
+<span class="nc" id="L166">					title.drawU(ug.apply(new UTranslate(4, 3)));</span>
+
+<span class="nc" id="L168">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + dimTitle.getHeight())));</span>
+<span class="nc" id="L169">			}</span>
+
+			private XDimension2D getDimTitle(StringBounder stringBounder) {
+<span class="nc bnc" id="L172" title="All 2 branches missed.">				return showTitle ? title.calculateDimension(stringBounder) : new XDimension2D(40, 15);</span>
+			}
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L176">				final XDimension2D dimName = getDimTitle(stringBounder);</span>
+<span class="nc" id="L177">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L178">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="nc" id="L179">				return getMargin().addDimension(dimName.mergeTB(dimStereo, dimLabel));</span>
+			}
+
+			@Override
+			public MagneticBorder getMagneticBorder() {
+<span class="nc" id="L184">				return new MagneticBorder() {</span>
+
+					@Override
+					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+<span class="nc" id="L188">						final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L189">						final XDimension2D dimTitle = getDimTitle(stringBounder);</span>
+<span class="nc" id="L190">						final double wtitle = getWTitle(dim.getWidth(), dimTitle);</span>
+<span class="nc" id="L191">						final double htitle = getHTitle(dimTitle);</span>
+
+<span class="nc bnc" id="L193" title="All 6 branches missed.">						if (position.getX() &gt;= wtitle &amp;&amp; position.getY() &gt;= 0 &amp;&amp; position.getY() &lt;= htitle)</span>
+<span class="nc" id="L194">							return new UTranslate(0, htitle);</span>
+
+<span class="nc bnc" id="L196" title="All 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle + marginTitleX3)</span>
+<span class="nc" id="L197">							return new UTranslate(0, htitle);</span>
+
+<span class="nc bnc" id="L199" title="All 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle - marginTitleX3) {</span>
+<span class="nc" id="L200">							final double delta = position.getX() - (wtitle - marginTitleX3);</span>
+<span class="nc" id="L201">							final double how = delta / (2 * marginTitleX3);</span>
+<span class="nc" id="L202">							return new UTranslate(0, htitle * how);</span>
+						}
+
+<span class="nc" id="L205">						return UTranslate.none();</span>
+					}
+				};
+
+			}
+		};
+	}
+
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final Fashion symbolContext,
+			final HorizontalAlignment stereoAlignment) {
+<span class="fc" id="L217">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L220">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L221">				final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L222">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L223">				final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L224">				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.getDeltaShadow(),</span>
+<span class="fc" id="L225">						symbolContext.getRoundCorner());</span>
+<span class="fc" id="L226">				title.drawU(ug.apply(new UTranslate(4, 2)));</span>
+<span class="fc" id="L227">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="fc" id="L228">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
+
+<span class="fc" id="L230">				stereotype.drawU(ug.apply(new UTranslate(4 + posStereo, 2 + getHTitle(dimTitle))));</span>
+<span class="fc" id="L231">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L234">				return new XDimension2D(width, height);</span>
+			}
+
+			@Override
+			public MagneticBorder getMagneticBorder() {
+<span class="nc" id="L239">				return new MagneticBorder() {</span>
+
+					@Override
+					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+<span class="nc" id="L243">						final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L244">						final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L245">						final double wtitle = getWTitle(dim.getWidth(), dimTitle);</span>
+<span class="nc" id="L246">						final double htitle = getHTitle(dimTitle);</span>
+
+<span class="nc bnc" id="L248" title="All 6 branches missed.">						if (position.getX() &gt;= wtitle &amp;&amp; position.getY() &gt;= 0 &amp;&amp; position.getY() &lt;= htitle)</span>
+<span class="nc" id="L249">							return new UTranslate(0, htitle);</span>
+
+<span class="nc bnc" id="L251" title="All 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle + marginTitleX3)</span>
+<span class="nc" id="L252">							return new UTranslate(0, htitle);</span>
+
+<span class="nc bnc" id="L254" title="All 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle - marginTitleX3) {</span>
+<span class="nc" id="L255">							final double delta = position.getX() - (wtitle - marginTitleX3);</span>
+<span class="nc" id="L256">							final double how = delta / (2 * marginTitleX3);</span>
+<span class="nc" id="L257">							return new UTranslate(0, htitle * how);</span>
+						}
+<span class="nc" id="L259">						return UTranslate.none();</span>
+					}
+				};
+
+			}
+
+		};
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

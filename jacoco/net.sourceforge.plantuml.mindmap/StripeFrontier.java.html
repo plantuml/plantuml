@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StripeFrontier.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.mindmap</a> &gt; <span class="el_source">StripeFrontier.java</span></div><h1>StripeFrontier.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.mindmap;
+
+import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+<span class="fc" id="L42">public class StripeFrontier {</span>
+
+<span class="fc" id="L44">	private final SortedSet&lt;Stripe&gt; stripes = new TreeSet&lt;&gt;();</span>
+
+<span class="fc" id="L46">	public StripeFrontier() {</span>
+<span class="fc" id="L47">		this.stripes.add(new Stripe(-Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE));</span>
+<span class="fc" id="L48">	}</span>
+
+	public boolean isEmpty() {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		return stripes.size() == 1;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L56">		return stripes.toString();</span>
+	}
+
+	public boolean contains(double x, double y) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (Stripe stripe : stripes)</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (stripe.contains(x))</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">				return y &lt;= stripe.getValue();</span>
+
+<span class="nc" id="L64">		throw new UnsupportedOperationException();</span>
+	}
+
+	public double getContact(double x1, double x2) {
+<span class="fc" id="L68">		final SortedSet&lt;Stripe&gt; collisions = collisionning(x1, x2);</span>
+<span class="fc" id="L69">		double result = -Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (Stripe strip : collisions)</span>
+<span class="fc" id="L71">			result = Math.max(result, strip.getValue());</span>
+
+<span class="fc" id="L73">		return result;</span>
+
+	}
+
+	public void addSegment(double x1, double x2, double value) {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (x2 &lt;= x1) {</span>
+<span class="nc" id="L79">			System.err.println(&quot;x1=&quot; + x1);</span>
+<span class="nc" id="L80">			System.err.println(&quot;x2=&quot; + x2);</span>
+<span class="nc" id="L81">			throw new IllegalArgumentException();</span>
+		}
+<span class="fc" id="L83">		final SortedSet&lt;Stripe&gt; collisions = collisionning(x1, x2);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (collisions.size() &gt; 1) {</span>
+<span class="fc" id="L85">			final Iterator&lt;Stripe&gt; it = collisions.iterator();</span>
+<span class="fc" id="L86">			it.next();</span>
+<span class="fc" id="L87">			double x = x1;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			while (it.hasNext()) {</span>
+<span class="fc" id="L89">				final Stripe tmp = it.next();</span>
+<span class="fc" id="L90">				addSegment(x, tmp.getStart(), value);</span>
+<span class="fc" id="L91">				x = tmp.getStart();</span>
+<span class="fc" id="L92">			}</span>
+<span class="fc" id="L93">			addSegment(x, x2, value);</span>
+			// System.err.println(&quot;x1=&quot; + x1);
+			// System.err.println(&quot;x2=&quot; + x2);
+			// System.err.println(&quot;All=&quot; + stripes);
+			// System.err.println(&quot;collisions&quot; + collisions);
+			// throw new UnsupportedOperationException();
+<span class="fc" id="L99">		} else {</span>
+<span class="fc" id="L100">			final Stripe touch = collisions.iterator().next();</span>
+<span class="fc" id="L101">			addSingleInternal(x1, x2, value, touch);</span>
+		}
+<span class="fc" id="L103">	}</span>
+
+	private void addSingleInternal(double x1, double x2, double value, final Stripe touch) {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (value &lt;= touch.getValue())</span>
+<span class="nc" id="L107">			return;</span>
+
+<span class="fc" id="L109">		final boolean ok = this.stripes.remove(touch);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		assert ok;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (touch.getStart() != x1)</span>
+<span class="fc" id="L112">			this.stripes.add(new Stripe(touch.getStart(), x1, touch.getValue()));</span>
+
+<span class="fc" id="L114">		this.stripes.add(new Stripe(x1, x2, value));</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (x2 != touch.getEnd())</span>
+<span class="fc" id="L116">			this.stripes.add(new Stripe(x2, touch.getEnd(), touch.getValue()));</span>
+
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		assert checkConsistent();</span>
+<span class="fc" id="L119">	}</span>
+
+	private boolean checkConsistent() {
+<span class="fc" id="L122">		Stripe last = null;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (Stripe stripe : stripes) {</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			if (last == null &amp;&amp; stripe.getStart() != -Double.MAX_VALUE)</span>
+<span class="nc" id="L125">				return false;</span>
+
+<span class="pc bpc" id="L127" title="1 of 4 branches missed.">			if (last != null &amp;&amp; last.getEnd() != stripe.getStart())</span>
+<span class="nc" id="L128">				return false;</span>
+
+<span class="fc" id="L130">			last = stripe;</span>
+<span class="fc" id="L131">		}</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (last.getEnd() != Double.MAX_VALUE)</span>
+<span class="nc" id="L133">			return false;</span>
+
+<span class="fc" id="L135">		return true;</span>
+	}
+
+	private SortedSet&lt;Stripe&gt; collisionning(double x1, double x2) {
+<span class="fc" id="L139">		final SortedSet&lt;Stripe&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		for (Iterator&lt;Stripe&gt; it = stripes.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L141">			Stripe stripe = it.next();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			if (x1 &gt;= stripe.getEnd())</span>
+<span class="fc" id="L143">				continue;</span>
+
+<span class="fc" id="L145">			result.add(stripe);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (x2 &lt;= stripe.getEnd())</span>
+<span class="fc" id="L147">				return result;</span>
+
+<span class="fc" id="L149">		}</span>
+<span class="nc" id="L150">		throw new UnsupportedOperationException();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

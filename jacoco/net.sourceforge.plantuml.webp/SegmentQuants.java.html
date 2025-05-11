@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SegmentQuants.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">SegmentQuants.java</span></div><h1>SegmentQuants.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package net.sourceforge.plantuml.webp;
+
+import java.io.IOException;
+
+public class SegmentQuants {
+
+	private static DeltaQ get_delta_q(BoolDecoder bc, int prev) throws IOException {
+<span class="nc" id="L23">		DeltaQ ret = new DeltaQ();</span>
+<span class="nc" id="L24">		ret.v = 0;</span>
+<span class="nc" id="L25">		ret.update = false;</span>
+
+<span class="nc bnc" id="L27" title="All 2 branches missed.">		if (bc.readBit() &gt; 0) {</span>
+<span class="nc" id="L28">			ret.v = bc.readLiteral(4);</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">			if (bc.readBit() &gt; 0)</span>
+<span class="nc" id="L31">				ret.v = -ret.v;</span>
+		}
+
+		/* Trigger a quantizer update if the delta-q value has changed */
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		if (ret.v != prev)</span>
+<span class="nc" id="L36">			ret.update = true;</span>
+
+<span class="nc" id="L38">		return ret;</span>
+	}
+
+	private int qIndex;
+
+<span class="nc" id="L43">	private SegmentQuant[] segQuants = new SegmentQuant[Globals.MAX_MB_SEGMENTS];</span>
+
+<span class="nc" id="L45">	public SegmentQuants() {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		for (int x = 0; x &lt; Globals.MAX_MB_SEGMENTS; x++)</span>
+<span class="nc" id="L47">			segQuants[x] = new SegmentQuant();</span>
+<span class="nc" id="L48">	}</span>
+
+	public int getqIndex() {
+<span class="nc" id="L51">		return qIndex;</span>
+	}
+
+	public SegmentQuant[] getSegQuants() {
+<span class="nc" id="L55">		return segQuants;</span>
+	}
+
+	public void parse(BoolDecoder bc, boolean segmentation_enabled, boolean mb_segement_abs_delta) throws IOException {
+<span class="nc" id="L59">		qIndex = bc.readLiteral(7);</span>
+<span class="nc" id="L60">		boolean q_update = false;</span>
+<span class="nc" id="L61">		DeltaQ v = get_delta_q(bc, 0);</span>
+<span class="nc" id="L62">		int y1dc_delta_q = v.v;</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">		q_update = q_update || v.update;</span>
+<span class="nc" id="L64">		v = get_delta_q(bc, 0);</span>
+<span class="nc" id="L65">		int y2dc_delta_q = v.v;</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">		q_update = q_update || v.update;</span>
+<span class="nc" id="L67">		v = get_delta_q(bc, 0);</span>
+<span class="nc" id="L68">		int y2ac_delta_q = v.v;</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">		q_update = q_update || v.update;</span>
+<span class="nc" id="L70">		v = get_delta_q(bc, 0);</span>
+<span class="nc" id="L71">		int uvdc_delta_q = v.v;</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">		q_update = q_update || v.update;</span>
+<span class="nc" id="L73">		v = get_delta_q(bc, 0);</span>
+<span class="nc" id="L74">		int uvac_delta_q = v.v;</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		q_update = q_update || v.update;</span>
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (SegmentQuant s : segQuants) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (!segmentation_enabled) {</span>
+<span class="nc" id="L79">				s.setQindex(qIndex);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			} else if (!mb_segement_abs_delta) {</span>
+<span class="nc" id="L81">				s.setQindex(s.getQindex() + qIndex);</span>
+			}
+
+<span class="nc" id="L84">			s.setY1dc(y1dc_delta_q);</span>
+<span class="nc" id="L85">			s.setY2dc(y2dc_delta_q);</span>
+<span class="nc" id="L86">			s.setY2ac_delta_q(y2ac_delta_q);</span>
+<span class="nc" id="L87">			s.setUvdc_delta_q(uvdc_delta_q);</span>
+<span class="nc" id="L88">			s.setUvac_delta_q(uvac_delta_q);</span>
+
+		}
+<span class="nc" id="L91">	}</span>
+
+	public void setSegQuants(SegmentQuant[] segQuants) {
+<span class="nc" id="L94">		this.segQuants = segQuants;</span>
+<span class="nc" id="L95">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataCurve.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.data</a> &gt; <span class="el_source">DataCurve.java</span></div><h1>DataCurve.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.data;
+
+import jcckit.util.ConfigParameters;
+
+/**
+ *  A curve is a {@link DataContainer} of {@link DataPoint DataPoints}.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class DataCurve extends DataContainer implements DataElement {
+    // ::remove folder when __HAXE__
+  /** Config parameter key. */
+  public static final String X_KEY = &quot;x&quot;,
+                             Y_KEY = &quot;y&quot;,
+                             TITLE_KEY = &quot;title&quot;;
+
+  private final String _title;
+  private DataContainer _container;
+
+  /** Creates an empty instance with the specified title. */
+<span class="nc" id="L39">  public DataCurve(String title) {</span>
+<span class="nc" id="L40">    _title = title;</span>
+<span class="nc" id="L41">  }</span>
+
+  /**
+   * Creates an instance from the specified config parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;title = &lt;/tt&gt;&lt;i&gt;empty string&lt;/i&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Curve title.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;x&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;yes&lt;/td&gt;
+   *     &lt;td&gt;x-coordinates of the curve points.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;y&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;yes&lt;/td&gt;
+   *     &lt;td&gt;y-coordinates of the curve points.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+  public DataCurve(ConfigParameters config) {
+<span class="nc" id="L58">    this(config.get(TITLE_KEY, &quot;&quot;));</span>
+<span class="nc" id="L59">    double[] xPoints = config.getDoubleArray(X_KEY);</span>
+<span class="nc" id="L60">    double[] yPoints = config.getDoubleArray(Y_KEY);</span>
+<span class="nc" id="L61">    int n = Math.min(xPoints.length, yPoints.length);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L63">      addElement(new DataPoint(xPoints[i], yPoints[i]));</span>
+    }
+<span class="nc" id="L65">  }</span>
+
+  /**
+   * Returns the {@link DataPlot} containing this curve.
+   */
+  public DataContainer getContainer() {
+<span class="nc" id="L71">    return _container;</span>
+  }
+
+
+  /**
+   * Sets the {@link DataPlot} where this is a curve of.
+   */
+  public void setContainer(DataContainer container) {
+<span class="nc" id="L79">    _container = container;</span>
+<span class="nc" id="L80">  }</span>
+
+  /** Returns the title of this curve. */
+  public String getTitle() {
+<span class="nc" id="L84">    return _title;</span>
+  }
+
+  /** 
+   * Returns &lt;tt&gt;true&lt;/tt&gt; if &lt;tt&gt;element&lt;/tt&gt; is an instance of
+   * {@link DataPoint}.
+   */
+  protected boolean isValid(DataElement element) {
+<span class="nc" id="L92">    return element instanceof DataPoint;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

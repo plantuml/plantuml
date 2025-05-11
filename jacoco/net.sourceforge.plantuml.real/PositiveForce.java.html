@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PositiveForce.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.real</a> &gt; <span class="el_source">PositiveForce.java</span></div><h1>PositiveForce.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.real;
+
+import net.sourceforge.plantuml.log.Logme;
+
+class PositiveForce {
+
+	private final Real fixedPoint;
+	private final RealMoveable movingPoint;
+	private final double minimunDistance;
+<span class="fc" id="L45">	private final boolean trace = false;</span>
+	private final Throwable creationPoint;
+
+<span class="fc" id="L48">	public PositiveForce(Real fixedPoint, RealMoveable movingPoint, double minimunDistance) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (fixedPoint == movingPoint) {</span>
+<span class="nc" id="L50">			throw new IllegalArgumentException();</span>
+		}
+<span class="fc" id="L52">		this.fixedPoint = fixedPoint;</span>
+<span class="fc" id="L53">		this.movingPoint = movingPoint;</span>
+<span class="fc" id="L54">		this.minimunDistance = minimunDistance;</span>
+<span class="fc" id="L55">		this.creationPoint = new Throwable();</span>
+<span class="fc" id="L56">		this.creationPoint.fillInStackTrace();</span>
+<span class="fc" id="L57">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L61">		return &quot;PositiveForce fixed=&quot; + fixedPoint + &quot; moving=&quot; + movingPoint + &quot; min=&quot; + minimunDistance;</span>
+	}
+
+	public boolean apply() {
+		if (trace) {
+			System.err.println(&quot;apply &quot; + this);
+		}
+<span class="fc" id="L68">		final double movingPointValue = movingPoint.getCurrentValue();</span>
+		final double fixedPointValue;
+		try {
+<span class="fc" id="L71">			fixedPointValue = fixedPoint.getCurrentValue();</span>
+<span class="nc" id="L72">		} catch (IllegalStateException e) {</span>
+<span class="nc" id="L73">			System.err.println(&quot;Pb with force &quot; + this);</span>
+<span class="nc" id="L74">			System.err.println(&quot;This force has been created here:&quot;);</span>
+<span class="nc" id="L75">			Logme.error(creationPoint);</span>
+<span class="nc" id="L76">			System.err.println(&quot;The fixed point has been created here: &quot; + fixedPoint);</span>
+<span class="nc" id="L77">			fixedPoint.printCreationStackTrace();</span>
+<span class="nc" id="L78">			throw e;</span>
+<span class="fc" id="L79">		}</span>
+<span class="fc" id="L80">		final double distance = movingPointValue - fixedPointValue;</span>
+<span class="fc" id="L81">		final double diff = distance - minimunDistance;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (diff &gt;= 0) {</span>
+			if (trace) {
+				System.err.println(&quot;Not using &quot;);
+			}
+<span class="fc" id="L86">			return false;</span>
+		}
+		if (trace) {
+			System.err.println(&quot;moving &quot; + (-diff) + &quot; &quot; + movingPoint);
+		}
+<span class="fc" id="L91">		movingPoint.move(-diff);</span>
+<span class="fc" id="L92">		return true;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

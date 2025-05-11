@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Mode.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.qrcode.decoder</a> &gt; <span class="el_source">Mode.java</span></div><h1>Mode.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2007 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.qrcode.decoder;
+
+/**
+ * &lt;p&gt;See ISO 18004:2006, 6.4.1, Tables 2 and 3. This enum encapsulates the various modes in which
+ * data can be encoded to bits in the QR code standard.&lt;/p&gt;
+ *
+ * @author Sean Owen
+ */
+public final class Mode {
+
+  // No, we can't use an enum here. J2ME doesn't support it.
+
+<span class="nc" id="L29">  public static final Mode TERMINATOR = new Mode(new int[]{0, 0, 0}, 0x00, &quot;TERMINATOR&quot;); // Not really a mode...</span>
+<span class="nc" id="L30">  public static final Mode NUMERIC = new Mode(new int[]{10, 12, 14}, 0x01, &quot;NUMERIC&quot;);</span>
+<span class="nc" id="L31">  public static final Mode ALPHANUMERIC = new Mode(new int[]{9, 11, 13}, 0x02, &quot;ALPHANUMERIC&quot;);</span>
+<span class="nc" id="L32">  public static final Mode STRUCTURED_APPEND = new Mode(new int[]{0, 0, 0}, 0x03, &quot;STRUCTURED_APPEND&quot;); // Not supported</span>
+<span class="nc" id="L33">  public static final Mode BYTE = new Mode(new int[]{8, 16, 16}, 0x04, &quot;BYTE&quot;);</span>
+<span class="nc" id="L34">  public static final Mode ECI = new Mode(null, 0x07, &quot;ECI&quot;); // character counts don't apply</span>
+<span class="nc" id="L35">  public static final Mode KANJI = new Mode(new int[]{8, 10, 12}, 0x08, &quot;KANJI&quot;);</span>
+<span class="nc" id="L36">  public static final Mode FNC1_FIRST_POSITION = new Mode(null, 0x05, &quot;FNC1_FIRST_POSITION&quot;);</span>
+<span class="nc" id="L37">  public static final Mode FNC1_SECOND_POSITION = new Mode(null, 0x09, &quot;FNC1_SECOND_POSITION&quot;);</span>
+
+  private final int[] characterCountBitsForVersions;
+  private final int bits;
+  private final String name;
+
+<span class="nc" id="L43">  private Mode(int[] characterCountBitsForVersions, int bits, String name) {</span>
+<span class="nc" id="L44">    this.characterCountBitsForVersions = characterCountBitsForVersions;</span>
+<span class="nc" id="L45">    this.bits = bits;</span>
+<span class="nc" id="L46">    this.name = name;</span>
+<span class="nc" id="L47">  }</span>
+
+  /**
+   * @param bits four bits encoding a QR Code data mode
+   * @return {@link Mode} encoded by these bits
+   * @throws IllegalArgumentException if bits do not correspond to a known mode
+   */
+  public static Mode forBits(int bits) {
+<span class="nc bnc" id="L55" title="All 10 branches missed.">    switch (bits) {</span>
+      case 0x0:
+<span class="nc" id="L57">        return TERMINATOR;</span>
+      case 0x1:
+<span class="nc" id="L59">        return NUMERIC;</span>
+      case 0x2:
+<span class="nc" id="L61">        return ALPHANUMERIC;</span>
+      case 0x3:
+<span class="nc" id="L63">        return STRUCTURED_APPEND;</span>
+      case 0x4:
+<span class="nc" id="L65">        return BYTE;</span>
+      case 0x5:
+<span class="nc" id="L67">        return FNC1_FIRST_POSITION;</span>
+      case 0x7:
+<span class="nc" id="L69">        return ECI;</span>
+      case 0x8:
+<span class="nc" id="L71">        return KANJI;</span>
+      case 0x9:
+<span class="nc" id="L73">        return FNC1_SECOND_POSITION;</span>
+      default:
+<span class="nc" id="L75">        throw new IllegalArgumentException();</span>
+    }
+  }
+
+  /**
+   * @param version version in question
+   * @return number of bits used, in this QR Code symbol {@link Version}, to encode the
+   *         count of characters that will follow encoded in this {@link Mode}
+   */
+  public int getCharacterCountBits(Version version) {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">    if (characterCountBitsForVersions == null) {</span>
+<span class="nc" id="L86">      throw new IllegalArgumentException(&quot;Character count doesn't apply to this mode&quot;);</span>
+    }
+<span class="nc" id="L88">    int number = version.getVersionNumber();</span>
+    int offset;
+<span class="nc bnc" id="L90" title="All 2 branches missed.">    if (number &lt;= 9) {</span>
+<span class="nc" id="L91">      offset = 0;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">    } else if (number &lt;= 26) {</span>
+<span class="nc" id="L93">      offset = 1;</span>
+    } else {
+<span class="nc" id="L95">      offset = 2;</span>
+    }
+<span class="nc" id="L97">    return characterCountBitsForVersions[offset];</span>
+  }
+
+  public int getBits() {
+<span class="nc" id="L101">    return bits;</span>
+  }
+
+  public String getName() {
+<span class="nc" id="L105">    return name;</span>
+  }
+
+  public String toString() {
+<span class="nc" id="L109">    return name;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

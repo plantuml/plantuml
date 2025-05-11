@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TMemoryLocal.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">TMemoryLocal.java</span></div><h1>TMemoryLocal.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
+
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.utils.Log;
+
+public class TMemoryLocal extends ExecutionContexts implements TMemory {
+
+	private final TMemoryGlobal memoryGlobal;
+	private TrieImpl overridenVariables00;
+<span class="fc" id="L51">	private final Map&lt;String, TValue&gt; overridenVariables01 = new HashMap&lt;String, TValue&gt;();</span>
+<span class="fc" id="L52">	private final TrieImpl localVariables00 = new TrieImpl();</span>
+<span class="fc" id="L53">	private final Map&lt;String, TValue&gt; localVariables01 = new HashMap&lt;String, TValue&gt;();</span>
+
+<span class="fc" id="L55">	public TMemoryLocal(TMemoryGlobal global, Map&lt;String, TValue&gt; input) {</span>
+<span class="fc" id="L56">		this.memoryGlobal = global;</span>
+<span class="fc" id="L57">		this.overridenVariables01.putAll(input);</span>
+<span class="fc" id="L58">	}</span>
+
+	public void dumpDebug(String message) {
+<span class="nc" id="L61">		Log.error(&quot;[MemLocal] Start of memory_dump &quot; + message);</span>
+<span class="nc" id="L62">		memoryGlobal.dumpMemoryInternal();</span>
+<span class="nc" id="L63">		final TreeMap&lt;String, TValue&gt; over = new TreeMap&lt;String, TValue&gt;(overridenVariables01);</span>
+<span class="nc" id="L64">		Log.error(&quot;[MemLocal] Number of overriden variable(s) : &quot; + over.size());</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (Entry&lt;String, TValue&gt; ent : over.entrySet()) {</span>
+<span class="nc" id="L66">			final String name = ent.getKey();</span>
+<span class="nc" id="L67">			final TValue value = ent.getValue();</span>
+<span class="nc" id="L68">			Log.error(&quot;[MemLocal] &quot; + name + &quot; = &quot; + value);</span>
+<span class="nc" id="L69">		}</span>
+<span class="nc" id="L70">		final TreeMap&lt;String, TValue&gt; local = new TreeMap&lt;String, TValue&gt;(localVariables01);</span>
+<span class="nc" id="L71">		Log.error(&quot;[MemLocal] Number of local variable(s) : &quot; + local.size());</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (Entry&lt;String, TValue&gt; ent : local.entrySet()) {</span>
+<span class="nc" id="L73">			final String name = ent.getKey();</span>
+<span class="nc" id="L74">			final TValue value = ent.getValue();</span>
+<span class="nc" id="L75">			Log.error(&quot;[MemLocal] &quot; + name + &quot; = &quot; + value);</span>
+<span class="nc" id="L76">		}</span>
+<span class="nc" id="L77">		Log.error(&quot;[MemGlobal] End of memory_dump&quot;);</span>
+<span class="nc" id="L78">	}</span>
+
+	@Override
+	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
+			throws EaterException {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (scope == TVariableScope.GLOBAL) {</span>
+<span class="fc" id="L84">			memoryGlobal.putVariable(varname, value, scope, location);</span>
+<span class="fc" id="L85">			return;</span>
+		}
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		if (scope == TVariableScope.LOCAL || overridenVariables01.containsKey(varname)) {</span>
+<span class="fc" id="L88">			this.overridenVariables01.put(varname, value);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (this.overridenVariables00 != null)</span>
+<span class="fc" id="L90">				this.overridenVariables00.add(varname);</span>
+
+<span class="fc" id="L92">			Log.info(&quot;[MemLocal/overrriden] Setting &quot; + varname);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		} else if (memoryGlobal.getVariable(varname) != null) {</span>
+<span class="fc" id="L94">			memoryGlobal.putVariable(varname, value, scope, location);</span>
+		} else {
+<span class="fc" id="L96">			this.localVariables01.put(varname, value);</span>
+<span class="fc" id="L97">			this.localVariables00.add(varname);</span>
+<span class="fc" id="L98">			Log.info(&quot;[MemLocal/local] Setting &quot; + varname);</span>
+		}
+<span class="fc" id="L100">	}</span>
+
+	@Override
+	public void removeVariable(String varname) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (overridenVariables01.containsKey(varname)) {</span>
+<span class="nc" id="L105">			this.overridenVariables01.remove(varname);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (this.overridenVariables00 != null)</span>
+<span class="nc" id="L107">				this.overridenVariables00.remove(varname);</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		} else if (memoryGlobal.getVariable(varname) != null) {</span>
+<span class="nc" id="L110">			memoryGlobal.removeVariable(varname);</span>
+		} else {
+<span class="nc" id="L112">			this.localVariables01.remove(varname);</span>
+<span class="nc" id="L113">			this.localVariables00.remove(varname);</span>
+		}
+<span class="nc" id="L115">	}</span>
+
+	@Override
+	public TValue getVariable(String varname) {
+<span class="fc" id="L119">		TValue result = overridenVariables01.get(varname);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L121">			return result;</span>
+
+<span class="fc" id="L123">		result = memoryGlobal.getVariable(varname);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L125">			return result;</span>
+
+<span class="fc" id="L127">		result = localVariables01.get(varname);</span>
+<span class="fc" id="L128">		return result;</span>
+	}
+
+	@Override
+	public Trie variablesNames3() {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (overridenVariables00 == null) {</span>
+<span class="fc" id="L134">			overridenVariables00 = new TrieImpl();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			for (String name : overridenVariables01.keySet())</span>
+<span class="fc" id="L136">				overridenVariables00.add(name);</span>
+
+		}
+<span class="fc" id="L139">		return new Trie() {</span>
+			public void add(String s) {
+<span class="nc" id="L141">				throw new UnsupportedOperationException();</span>
+			}
+
+			public String getLonguestMatchStartingIn(String s, int pos) {
+<span class="fc" id="L145">				final String s1 = memoryGlobal.variablesNames3().getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc" id="L146">				final String s2 = overridenVariables00.getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc" id="L147">				final String s3 = localVariables00.getLonguestMatchStartingIn(s, pos);</span>
+
+<span class="fc bfc" id="L149" title="All 4 branches covered.">				if (s1.length() &gt;= s2.length() &amp;&amp; s1.length() &gt;= s3.length())</span>
+<span class="fc" id="L150">					return s1;</span>
+
+<span class="pc bpc" id="L152" title="1 of 4 branches missed.">				if (s2.length() &gt;= s3.length() &amp;&amp; s2.length() &gt;= s1.length())</span>
+<span class="fc" id="L153">					return s2;</span>
+
+<span class="fc" id="L155">				return s3;</span>
+			}
+		};
+		// final Trie result = new TrieImpl();
+		// for (String name : overridenVariables.keySet()) {
+		// result.add(name);
+		// }
+		// for (String name : memoryGlobal.variablesNames()) {
+		// result.add(name);
+		// }
+		// for (String name : localVariables.keySet()) {
+		// result.add(name);
+		// }
+		// return result;
+	}
+
+	@Override
+	public boolean isEmpty() {
+<span class="pc bpc" id="L173" title="2 of 6 branches missed.">		return memoryGlobal.isEmpty() &amp;&amp; localVariables01.isEmpty() &amp;&amp; overridenVariables01.isEmpty();</span>
+	}
+
+	@Override
+	public Set&lt;String&gt; variablesNames() {
+<span class="nc" id="L178">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public TMemory forkFromGlobal(Map&lt;String, TValue&gt; input) {
+<span class="fc" id="L183">		return new TMemoryLocal(memoryGlobal, input);</span>
+	}
+
+	// public final TMemoryGlobal getGlobalForInternalUseOnly() {
+	// return memoryGlobal;
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

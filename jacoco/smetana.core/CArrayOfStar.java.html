@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CArrayOfStar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">smetana.core</a> &gt; <span class="el_source">CArrayOfStar.java</span></div><h1>CArrayOfStar.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ * 
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package smetana.core;
+
+import com.plantuml.api.cheerpj.WasmLog;
+
+final public class CArrayOfStar&lt;O&gt; extends UnsupportedC {
+
+	private final Object[] data;
+	private final int offset;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L48">		return &quot;*Array offset=&quot; + offset + &quot; [&quot; + data.length + &quot;]&quot; + data;</span>
+	}
+
+<span class="fc" id="L51">	private CArrayOfStar(Object data[], int offset) {</span>
+<span class="fc" id="L52">		this.data = data;</span>
+<span class="fc" id="L53">		this.offset = offset;</span>
+<span class="fc" id="L54">	}</span>
+
+	public static &lt;O&gt; CArrayOfStar&lt;O&gt; ALLOC(int size, ZType type) {
+<span class="fc" id="L57">		final CArrayOfStar&lt;O&gt; result = new CArrayOfStar&lt;O&gt;(new Object[size], 0);</span>
+<span class="fc" id="L58">		return result;</span>
+	}
+
+	public static &lt;O&gt; CArrayOfStar&lt;O&gt; REALLOC(int size, CArrayOfStar&lt;O&gt; old, ZType type) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (old == null)</span>
+<span class="fc" id="L63">			return ALLOC(size, type);</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (size &lt;= old.data.length)</span>
+<span class="fc" id="L66">			return old;</span>
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (old.offset != 0)</span>
+<span class="nc" id="L69">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L71">		WasmLog.log(&quot;Realloc* from &quot; + old.data.length + &quot; to &quot; + size);</span>
+
+<span class="fc" id="L73">		final CArrayOfStar&lt;O&gt; result = ALLOC(size, type);</span>
+<span class="fc" id="L74">		System.arraycopy(old.data, 0, result.data, 0, old.data.length);</span>
+<span class="fc" id="L75">		return result;</span>
+	}
+
+	public int comparePointer_(CArrayOfStar&lt;O&gt; other) {
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (this.data != other.data)</span>
+<span class="nc" id="L80">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L82">		return this.offset - other.offset;</span>
+	}
+
+	public O get_(int i) {
+<span class="fc" id="L86">		return (O) data[i + offset];</span>
+	}
+
+	public void set_(int i, O value) {
+<span class="fc" id="L90">		data[i + offset] = value;</span>
+<span class="fc" id="L91">	}</span>
+
+	public CArrayOfStar&lt;O&gt; plus_(int delta) {
+<span class="fc" id="L94">		return new CArrayOfStar&lt;O&gt;(data, offset + delta);</span>
+	}
+
+	public void _swap(int i, int j) {
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (offset != 0)</span>
+<span class="nc" id="L99">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L101">		final Object tmp = data[i];</span>
+<span class="fc" id="L102">		data[i] = data[j];</span>
+<span class="fc" id="L103">		data[j] = tmp;</span>
+<span class="fc" id="L104">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

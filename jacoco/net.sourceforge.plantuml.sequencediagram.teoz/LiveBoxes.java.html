@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LiveBoxes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">LiveBoxes.java</span></div><h1>LiveBoxes.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.LifeEvent;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.SimpleContext2D;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+<span class="fc" id="L60">public class LiveBoxes {</span>
+
+	private final Rose skin;
+	private final ISkinParam skinParam;
+<span class="fc" id="L64">	private final Map&lt;Double, Double&gt; delays = new TreeMap&lt;Double, Double&gt;();</span>
+	private final Participant p;
+	private final List&lt;Event&gt; events;
+<span class="fc" id="L67">	private final Map&lt;Event, Double&gt; eventsStep = new HashMap&lt;Event, Double&gt;();</span>
+
+<span class="fc" id="L69">	public LiveBoxes(Participant p, List&lt;Event&gt; events, Rose skin, ISkinParam skinParam) {</span>
+<span class="fc" id="L70">		this.p = p;</span>
+<span class="fc" id="L71">		this.events = events;</span>
+<span class="fc" id="L72">		this.skin = skin;</span>
+<span class="fc" id="L73">		this.skinParam = skinParam;</span>
+<span class="fc" id="L74">	}</span>
+
+	public void addStep(Event event, double y) {
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (event.dealWith(p)) {</span>
+<span class="fc bfc" id="L78" title="All 6 branches covered.">			if (event instanceof LifeEvent &amp;&amp; ((LifeEvent) event).isDeactivate() &amp;&amp; eventsStep.containsValue(y))</span>
+<span class="fc" id="L79">				y += 5.0;</span>
+
+<span class="fc" id="L81">			eventsStep.put(event, y);</span>
+<span class="fc" id="L82">			event.setY(y);</span>
+		}
+<span class="fc" id="L84">	}</span>
+
+	public Participant getParticipant() {
+<span class="nc" id="L87">		return p;</span>
+	}
+
+	public int getLevelAt(Event event, EventsHistoryMode mode) {
+<span class="fc" id="L91">		return getLevelAtInternal(event, mode);</span>
+	}
+
+	private int getLevelAtInternal(Event event, EventsHistoryMode mode) {
+<span class="fc" id="L95">		int level = 0; // p.getInitialLife();</span>
+		// System.err.println(&quot;---&gt;EventsHistory for &quot; + p + &quot; &quot; + event);
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		for (Iterator&lt;Event&gt; it = events.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L98">			final Event current = it.next();</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">			if (current instanceof LifeEvent) {</span>
+<span class="fc" id="L100">				final LifeEvent le = (LifeEvent) current;</span>
+<span class="fc bfc" id="L101" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
+<span class="fc" id="L102">					level++;</span>
+
+<span class="fc bfc" id="L104" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
+<span class="fc" id="L105">					level = Math.max(0,level - 1);</span>
+
+			}
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (event == current) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">				if (current instanceof AbstractMessage) {</span>
+<span class="fc" id="L110">					boolean seenActivate = false;</span>
+<span class="fc" id="L111">					boolean seenDeactivate = false;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">					while (it.hasNext()) {</span>
+<span class="fc" id="L113">						final Event next = nextButSkippingNotes(it);</span>
+<span class="fc bfc" id="L114" title="All 4 branches covered.">						if (!(next instanceof LifeEvent || next instanceof AbstractMessage)) break;</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">						if (!(next instanceof LifeEvent)) continue;</span>
+
+<span class="fc" id="L117">						final LifeEvent le = (LifeEvent) next;</span>
+<span class="fc" id="L118">						final AbstractMessage msg = (AbstractMessage) current;</span>
+
+<span class="fc bfc" id="L120" title="All 2 branches covered.">						final boolean sameMessage = msg == le.getMessage()</span>
+<span class="pc bpc" id="L121" title="1 of 4 branches missed.">								|| (le.getMessage() != null &amp;&amp; le.getMessage().isParallelWith(msg));</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">						if (!sameMessage)</span>
+<span class="fc" id="L123">							continue;</span>
+
+<span class="pc bpc" id="L125" title="1 of 6 branches missed.">						if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE &amp;&amp; le.isActivate() &amp;&amp; msg.dealWith(p)</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">								&amp;&amp; le.getParticipant() == p) {</span>
+<span class="fc" id="L127">							seenActivate = true;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">							if (seenDeactivate) break;</span>
+<span class="fc" id="L129">							level++;</span>
+						}
+
+<span class="fc bfc" id="L132" title="All 4 branches covered.">						if (mode == EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE &amp;&amp; le.isDeactivateOrDestroy()</span>
+<span class="pc bpc" id="L133" title="1 of 4 branches missed.">								&amp;&amp; msg.dealWith(p) &amp;&amp; le.getParticipant() == p) {</span>
+<span class="fc" id="L134">							seenDeactivate = true;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">							if (seenActivate) break;</span>
+<span class="fc" id="L136">							level = Math.max(0,level - 1);</span>
+						}
+
+						// System.err.println(&quot;Warning, this is message &quot; + current + &quot; next=&quot; + next);
+<span class="fc" id="L140">					}</span>
+
+				}
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">				if (level &lt; 0)</span>
+<span class="nc" id="L144">					return 0;</span>
+
+				// System.err.println(&quot;&lt;-result1 is &quot; + level);
+<span class="fc" id="L147">				return level;</span>
+			}
+<span class="fc" id="L149">		}</span>
+<span class="nc" id="L150">		throw new IllegalArgumentException();</span>
+		// return level;
+	}
+
+	private boolean isNextEventADestroy(Event event) {
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		for (Iterator&lt;Event&gt; it = events.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L156">			final Event current = it.next();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			if (event != current)</span>
+<span class="fc" id="L158">				continue;</span>
+
+<span class="fc bfc" id="L160" title="All 2 branches covered.">			if (current instanceof Message) {</span>
+<span class="fc" id="L161">				final Event next = nextButSkippingNotes(it);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">				if (next instanceof LifeEvent) {</span>
+<span class="fc" id="L163">					final LifeEvent le = (LifeEvent) next;</span>
+<span class="fc" id="L164">					return le.isDestroy(p);</span>
+				}
+			}
+<span class="fc" id="L167">			return false;</span>
+		}
+<span class="nc" id="L169">		return false;</span>
+	}
+
+	private Fashion getActivateColor(Event event) {
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (event instanceof LifeEvent) {</span>
+<span class="fc" id="L174">			final LifeEvent le = (LifeEvent) event;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (le.isActivate())</span>
+<span class="fc" id="L176">				return le.getSpecificColors();</span>
+
+		}
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		for (Iterator&lt;Event&gt; it = events.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L180">			final Event current = it.next();</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			if (event != current)</span>
+<span class="fc" id="L182">				continue;</span>
+
+<span class="fc bfc" id="L184" title="All 4 branches covered.">			if (current instanceof Message || current instanceof MessageExo) {</span>
+<span class="fc" id="L185">				Event next = nextButSkippingNotes(it);</span>
+<span class="pc bpc" id="L186" title="1 of 4 branches missed.">				while (next instanceof LifeEvent &amp;&amp; ((LifeEvent) next).getMessage() ==current) {</span>
+<span class="fc" id="L187">					final LifeEvent le = (LifeEvent) next;</span>
+<span class="fc bfc" id="L188" title="All 4 branches covered.">					if (le.isActivate() &amp;&amp; le.getParticipant() == p)</span>
+<span class="fc" id="L189">						return le.getSpecificColors();</span>
+
+<span class="fc" id="L191">					next = nextButSkippingNotes(it);</span>
+<span class="fc" id="L192">				}</span>
+			}
+<span class="fc" id="L194">			return null;</span>
+		}
+<span class="nc" id="L196">		return null;</span>
+	}
+
+	private Event nextButSkippingNotes(Iterator&lt;Event&gt; it) {
+		while (true) {
+<span class="fc bfc" id="L201" title="All 2 branches covered.">			if (it.hasNext() == false)</span>
+<span class="fc" id="L202">				return null;</span>
+
+<span class="fc" id="L204">			final Event next = it.next();</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">			if (next instanceof Note)</span>
+<span class="fc" id="L206">				continue;</span>
+
+			// System.err.println(&quot;nextButSkippingNotes=&quot; + next);
+<span class="fc" id="L209">			return next;</span>
+		}
+	}
+
+	public Stairs getStairs(double createY, double totalHeight) {
+<span class="fc" id="L214">		final Stairs stair = new Stairs();</span>
+<span class="fc" id="L215">		int indent = 0;</span>
+<span class="fc" id="L216">		AbstractMessage lastMessage = null;</span>
+<span class="fc" id="L217">		Double position = null;</span>
+<span class="fc" id="L218">		boolean seenActivate = false;</span>
+<span class="fc" id="L219">		boolean seenDeactivate = false;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		for (Event event : events) {</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">			if (event instanceof Note) {</span>
+				// This would be a participant positioned Note, not a Message based Note
+<span class="fc" id="L223">				lastMessage = null;</span>
+<span class="fc" id="L224">				seenActivate = false;</span>
+<span class="fc" id="L225">				seenDeactivate = false;</span>
+			}
+
+<span class="fc" id="L228">			final Double potentialPosition = eventsStep.get(event);</span>
+
+<span class="fc bfc" id="L230" title="All 4 branches covered.">			if (position == null || lastMessage == null)</span>
+<span class="fc" id="L231">				position = potentialPosition;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">			else if (event instanceof LifeEvent) { // &amp;&amp; event.dealWith(p)) {</span>
+<span class="fc" id="L233">				LifeEvent le = (LifeEvent) event;</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">				if (le.dealWith(p)) {</span>
+<span class="pc bpc" id="L235" title="2 of 4 branches missed.">					if (le.getMessage() == null || !(le.getMessage().isParallelWith(lastMessage))) {</span>
+<span class="nc" id="L236">						position = potentialPosition;</span>
+<span class="pc bpc" id="L237" title="1 of 8 branches missed.">					} else if ((le.isActivate() &amp;&amp; seenDeactivate) || (le.isDeactivate() &amp;&amp; seenActivate)) {</span>
+<span class="fc" id="L238">						position = potentialPosition;</span>
+					}
+<span class="fc" id="L240">					seenActivate |= le.isActivate();</span>
+<span class="fc" id="L241">					seenDeactivate |= le.isDeactivate();</span>
+				} else
+						continue;
+<span class="fc" id="L244">			} else</span>
+<span class="fc" id="L245">				position = potentialPosition;</span>
+
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			if (event instanceof AbstractMessage) {</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">				if (((AbstractMessage) event).isParallelWith(lastMessage))</span>
+<span class="fc" id="L249">					continue;</span>
+			  else {
+<span class="fc" id="L251">					seenActivate = false;</span>
+<span class="fc" id="L252">					seenDeactivate = false;</span>
+<span class="fc" id="L253">					lastMessage = (AbstractMessage) event;</span>
+				}
+			}
+
+<span class="fc bfc" id="L257" title="All 2 branches covered.">			if (position != null ) {</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">				assert position &lt;= totalHeight : &quot;position=&quot; + position + &quot; totalHeight=&quot; + totalHeight;</span>
+<span class="fc" id="L259">				indent = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L260">				final Fashion activateColor = getActivateColor(event);</span>
+<span class="fc" id="L261">				final Step step = new Step(Math.max(createY, position), isNextEventADestroy(event), indent,</span>
+						activateColor);
+<span class="fc" id="L263">				stair.addStep(step);</span>
+			}
+<span class="fc" id="L265">		}</span>
+<span class="fc" id="L266">		stair.addStep(new Step(totalHeight, false, indent, null));</span>
+<span class="fc" id="L267">		return stair;</span>
+	}
+
+	private boolean isActivateAnDeactivate(Event event) {
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (event instanceof AbstractMessage) {</span>
+<span class="nc" id="L272">			final AbstractMessage msg = (AbstractMessage) event;</span>
+<span class="nc bnc" id="L273" title="All 4 branches missed.">			return msg.isActivate() &amp;&amp; msg.isDeactivate();</span>
+		}
+<span class="nc" id="L275">		return false;</span>
+	}
+
+	public int getMaxValue() {
+<span class="fc" id="L279">		int max = 0;</span>
+<span class="fc" id="L280">		int level = 0;</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">		for (Event current : events) {</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">			if (current instanceof LifeEvent) {</span>
+<span class="fc" id="L283">				final LifeEvent le = (LifeEvent) current;</span>
+<span class="fc bfc" id="L284" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
+<span class="fc" id="L285">					level++;</span>
+
+<span class="fc bfc" id="L287" title="All 2 branches covered.">				if (level &gt; max)</span>
+<span class="fc" id="L288">					max = level;</span>
+
+<span class="fc bfc" id="L290" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
+<span class="fc" id="L291">					level--;</span>
+
+			}
+<span class="fc" id="L294">		}</span>
+<span class="fc" id="L295">		return max;</span>
+	}
+
+	public double getMaxPosition(StringBounder stringBounder) {
+<span class="fc" id="L299">		final int max = getMaxValue();</span>
+<span class="fc" id="L300">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(new SimpleContext2D(true), skin, skinParam, delays);</span>
+<span class="fc" id="L301">		return drawer.getWidth(stringBounder) / 2.0 * max;</span>
+	}
+
+	public void drawBoxes(UGraphic ug, Context2D context, double createY, double endY) {
+<span class="fc" id="L305">		final Stairs stairs = getStairs(createY, endY);</span>
+<span class="fc" id="L306">		final int max = stairs.getMaxIndent();</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">		if (max == 0)</span>
+<span class="fc" id="L308">			drawDestroys(ug, stairs, context);</span>
+
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		for (int i = 1; i &lt;= max; i++)</span>
+<span class="fc" id="L311">			drawOneLevel(ug, i, stairs, context);</span>
+
+<span class="fc" id="L313">	}</span>
+
+	private void drawDestroys(UGraphic ug, Stairs stairs, Context2D context) {
+<span class="fc" id="L316">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays);</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">		for (Step yposition : stairs.getSteps())</span>
+<span class="fc" id="L318">			drawer.drawDestroyIfNeeded(ug, yposition);</span>
+
+<span class="fc" id="L320">	}</span>
+
+	private void drawOneLevel(UGraphic ug, int levelToDraw, Stairs stairs, Context2D context) {
+<span class="fc" id="L323">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays);</span>
+<span class="fc" id="L324">		ug = ug.apply(UTranslate.dx((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0));</span>
+
+<span class="fc" id="L326">		boolean pending = true;</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		for (Iterator&lt;Step&gt; it = stairs.getSteps().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L328">			final Step yposition = it.next();</span>
+<span class="fc" id="L329">			final int indent = yposition.getIndent();</span>
+<span class="fc bfc" id="L330" title="All 4 branches covered.">			if (pending &amp;&amp; indent == levelToDraw) {</span>
+<span class="fc" id="L331">				drawer.addStart(yposition.getValue(), yposition.getColors());</span>
+<span class="fc" id="L332">				pending = false;</span>
+<span class="fc bfc" id="L333" title="All 6 branches covered.">			} else if (pending == false &amp;&amp; (it.hasNext() == false || indent &lt; levelToDraw)) {</span>
+<span class="fc" id="L334">				drawer.doDrawing(ug, yposition.getValue());</span>
+<span class="fc" id="L335">				drawer.drawDestroyIfNeeded(ug, yposition);</span>
+<span class="fc" id="L336">				pending = true;</span>
+			}
+<span class="fc" id="L338">		}</span>
+<span class="fc" id="L339">	}</span>
+
+	public void delayOn(double y, double height) {
+<span class="nc" id="L342">		delays.put(y, height);</span>
+<span class="nc" id="L343">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

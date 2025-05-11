@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageProtected.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">EntityImageProtected.java</span></div><h1>EntityImageProtected.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.dot.Neighborhood;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+
+public class EntityImageProtected extends AbstractTextBlock implements IEntityImage, Untranslated, WithPorts {
+
+	private final IEntityImage orig;
+	private final double border;
+	private final Bibliotekon bibliotekon;
+	private final Neighborhood neighborhood;
+
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L56">		final XRectangle2D result = orig.getInnerPosition(member, stringBounder, strategy);</span>
+<span class="nc" id="L57">		return new XRectangle2D(result.getMinX() + border, result.getMinY() + border, result.getWidth(),</span>
+<span class="nc" id="L58">				result.getHeight());</span>
+	}
+
+<span class="nc" id="L61">	public EntityImageProtected(IEntityImage orig, double border, Neighborhood neighborhood, Bibliotekon bibliotekon) {</span>
+<span class="nc" id="L62">		this.orig = orig;</span>
+<span class="nc" id="L63">		this.border = border;</span>
+<span class="nc" id="L64">		this.bibliotekon = bibliotekon;</span>
+<span class="nc" id="L65">		this.neighborhood = neighborhood;</span>
+<span class="nc" id="L66">	}</span>
+
+	public boolean isHidden() {
+<span class="nc" id="L69">		return orig.isHidden();</span>
+	}
+
+	public HColor getBackcolor() {
+<span class="nc" id="L73">		return orig.getBackcolor();</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L77">		return orig.calculateDimension(stringBounder).delta(2 * border);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L81">		orig.drawU(ug.apply(new UTranslate(border, border)));</span>
+<span class="nc" id="L82">	}</span>
+
+	public void drawUntranslated(UGraphic ug, double minX, double minY) {
+<span class="nc" id="L85">		final XDimension2D dim = orig.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L86">		neighborhood.drawU(ug, minX + border, minY + border, bibliotekon, dim);</span>
+<span class="nc" id="L87">	}</span>
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L90">		return orig.getShapeType();</span>
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+<span class="nc" id="L94">		return orig.getShield(stringBounder);</span>
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+<span class="nc" id="L98">		return orig.getOverscanX(stringBounder);</span>
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc" id="L103">		return ((WithPorts) orig).getPorts(stringBounder);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

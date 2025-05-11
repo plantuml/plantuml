@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileWithNotes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> &gt; <span class="el_source">FtileWithNotes.java</span></div><h1>FtileWithNotes.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
+
+import java.util.Collection;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
+import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock2;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.image.Opale;
+import net.sourceforge.plantuml.utils.MathUtils;
+
+public class FtileWithNotes extends AbstractFtile {
+
+	private final Ftile tile;
+
+	private TextBlock left;
+	private TextBlock right;
+	private final VerticalAlignment verticalAlignment;
+
+<span class="fc" id="L81">	private final double suppSpace = 20;</span>
+
+	public StyleSignatureBasic getStyleSignature() {
+<span class="fc" id="L84">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);</span>
+	}
+
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="fc" id="L88">		return tile.getSwimlanes();</span>
+	}
+
+	public Swimlane getSwimlaneIn() {
+<span class="fc" id="L92">		return tile.getSwimlaneIn();</span>
+	}
+
+	public Swimlane getSwimlaneOut() {
+<span class="fc" id="L96">		return tile.getSwimlaneOut();</span>
+	}
+
+	public FtileWithNotes(Ftile tile, Collection&lt;PositionedNote&gt; notes, VerticalAlignment verticalAlignment) {
+<span class="fc" id="L100">		super(tile.skinParam());</span>
+<span class="fc" id="L101">		this.verticalAlignment = verticalAlignment;</span>
+<span class="fc" id="L102">		this.tile = tile;</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (PositionedNote note : notes) {</span>
+<span class="fc" id="L105">			ISkinParam skinParam2 = skinParam();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (note.getColors() != null)</span>
+<span class="fc" id="L107">				skinParam2 = note.getColors().mute(skinParam2);</span>
+
+<span class="fc" id="L109">			final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder())</span>
+<span class="fc" id="L110">					.eventuallyOverride(note.getColors());</span>
+<span class="fc" id="L111">			final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L112">			final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L113">			final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="fc" id="L114">			final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L115">			final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="fc" id="L116">			final UStroke stroke = style.getStroke();</span>
+
+<span class="fc" id="L118">			final Sheet sheet = skinParam()</span>
+<span class="fc" id="L119">					.sheet(fc, skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
+<span class="fc" id="L120">					.createSheet(note.getDisplay());</span>
+<span class="fc" id="L121">			final SheetBlock1 sheet1 = new SheetBlock1(sheet, wrapWidth, skinParam().getPadding());</span>
+<span class="fc" id="L122">			final SheetBlock2 sheet2 = new SheetBlock2(sheet1, new Stencil() {</span>
+				// -6 and 15 value comes from Opale: this is very ugly!
+				public double getStartingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L125">					return -6;</span>
+				}
+
+				public double getEndingX(StringBounder stringBounder, double y) {
+<span class="fc" id="L129">					return sheet1.getEndingX(stringBounder, y) + 15;</span>
+				}
+<span class="fc" id="L131">			}, UStroke.simple());</span>
+
+<span class="fc" id="L133">			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet2, false, stroke);</span>
+<span class="fc" id="L134">			final TextBlock opaleMarged = TextBlockUtils.withMargin(opale, 10, 10);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (note.getNotePosition() == NotePosition.LEFT) {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">				if (left == null) {</span>
+<span class="fc" id="L137">					left = opaleMarged;</span>
+				} else {
+<span class="nc" id="L139">					left = TextBlockUtils.mergeTB(left, opaleMarged, HorizontalAlignment.CENTER);</span>
+				}
+			} else {
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">				if (right == null) {</span>
+<span class="fc" id="L143">					right = opaleMarged;</span>
+				} else {
+<span class="nc" id="L145">					right = TextBlockUtils.mergeTB(right, opaleMarged, HorizontalAlignment.CENTER);</span>
+				}
+			}
+<span class="fc" id="L148">		}</span>
+
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (left == null)</span>
+<span class="nc" id="L151">			left = TextBlockUtils.empty(0, 0);</span>
+
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (right == null)</span>
+<span class="nc" id="L154">			right = TextBlockUtils.empty(0, 0);</span>
+
+<span class="fc" id="L156">	}</span>
+
+	private UTranslate getTranslate(StringBounder stringBounder) {
+<span class="fc" id="L159">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L160">		final XDimension2D dimTile = tile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L161">		final double xDelta = left.calculateDimension(stringBounder).getWidth();</span>
+		final double yDelta;
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.TOP)</span>
+<span class="nc" id="L164">			yDelta = 0;</span>
+		else
+<span class="fc" id="L166">			yDelta = (dimTotal.getHeight() - dimTile.getHeight()) / 2;</span>
+<span class="fc" id="L167">		return new UTranslate(xDelta, yDelta);</span>
+	}
+
+	private UTranslate getTranslateForLeft(StringBounder stringBounder) {
+<span class="fc" id="L171">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L172">		final XDimension2D dimLeft = left.calculateDimension(stringBounder);</span>
+<span class="fc" id="L173">		final double xDelta = 0;</span>
+		final double yDelta;
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.TOP)</span>
+<span class="nc" id="L176">			yDelta = 0;</span>
+		else
+<span class="fc" id="L178">			yDelta = (dimTotal.getHeight() - dimLeft.getHeight()) / 2;</span>
+<span class="fc" id="L179">		return new UTranslate(xDelta, yDelta);</span>
+	}
+
+	private UTranslate getTranslateForRight(StringBounder stringBounder) {
+<span class="fc" id="L183">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L184">		final XDimension2D dimRight = right.calculateDimension(stringBounder);</span>
+<span class="fc" id="L185">		final double xDelta = dimTotal.getWidth() - dimRight.getWidth();</span>
+		final double yDelta;
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.TOP)</span>
+<span class="nc" id="L188">			yDelta = 0;</span>
+		else
+<span class="fc" id="L190">			yDelta = (dimTotal.getHeight() - dimRight.getHeight()) / 2;</span>
+<span class="fc" id="L191">		return new UTranslate(xDelta, yDelta);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L195">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L196">		left.drawU(ug.apply(getTranslateForLeft(stringBounder)));</span>
+<span class="fc" id="L197">		right.drawU(ug.apply(getTranslateForRight(stringBounder)));</span>
+<span class="fc" id="L198">		ug.apply(getTranslate(stringBounder)).draw(tile);</span>
+<span class="fc" id="L199">	}</span>
+
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+<span class="fc" id="L203">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L204">		final FtileGeometry orig = tile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L205">		final UTranslate translate = getTranslate(stringBounder);</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (orig.hasPointOut())</span>
+<span class="fc" id="L207">			return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy(),</span>
+<span class="fc" id="L208">					orig.getOutY() + translate.getDy());</span>
+
+<span class="nc" id="L210">		return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy());</span>
+	}
+
+	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
+<span class="fc" id="L214">		final XDimension2D dimTile = tile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L215">		final XDimension2D dimLeft = left.calculateDimension(stringBounder);</span>
+<span class="fc" id="L216">		final XDimension2D dimRight = right.calculateDimension(stringBounder);</span>
+<span class="fc" id="L217">		final double height = MathUtils.max(dimLeft.getHeight(), dimRight.getHeight(), dimTile.getHeight());</span>
+<span class="fc" id="L218">		return new XDimension2D(dimTile.getWidth() + dimLeft.getWidth() + dimRight.getWidth(), height);</span>
+	}
+
+	@Override
+	final public LinkRendering getInLinkRendering() {
+<span class="fc" id="L223">		return tile.getInLinkRendering();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FingerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.mindmap</a> &gt; <span class="el_source">FingerImpl.java</span></div><h1>FingerImpl.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.mindmap;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.skin.SkinParamColors;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+
+<span class="fc" id="L63">public class FingerImpl implements Finger, UDrawable {</span>
+
+	private final Idea idea;
+	private final ISkinParam skinParam;
+	private final int direction;
+<span class="fc" id="L68">	private boolean drawPhalanx = true;</span>
+
+<span class="fc" id="L70">	private final List&lt;FingerImpl&gt; nail = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L71">	private Tetris tetris = null;</span>
+
+	public static FingerImpl build(Idea idea, ISkinParam skinParam, boolean direction) {
+<span class="fc" id="L74">		final FingerImpl result = new FingerImpl(idea, skinParam, direction);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (Idea child : idea.getChildren())</span>
+<span class="fc" id="L76">			result.addInNail(build(child, skinParam, direction));</span>
+
+<span class="fc" id="L78">		return result;</span>
+	}
+
+	private boolean isTopToBottom() {
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		return skinParam.getRankdir() == Rankdir.TOP_TO_BOTTOM;</span>
+	}
+
+	public void addInNail(FingerImpl child) {
+<span class="fc" id="L86">		nail.add(child);</span>
+<span class="fc" id="L87">	}</span>
+
+<span class="fc" id="L89">	private FingerImpl(Idea idea, ISkinParam skinParam, boolean direction) {</span>
+<span class="fc" id="L90">		this.idea = idea;</span>
+<span class="fc" id="L91">		this.skinParam = skinParam;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		this.direction = direction ? 1 : -1;</span>
+<span class="fc" id="L93">	}</span>
+
+	private ClockwiseTopRightBottomLeft getMargin() {
+<span class="fc" id="L96">		return getStyle().getMargin();</span>
+	}
+
+	public void drawU(final UGraphic ug) {
+<span class="fc" id="L100">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L101">		final TextBlock phalanx = getPhalanx();</span>
+<span class="fc" id="L102">		final XDimension2D dimPhalanx = phalanx.calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (drawPhalanx) {</span>
+			final double posX;
+			final double posY;
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (isTopToBottom()) {</span>
+<span class="nc" id="L107">				posX = -getPhalanxThickness(stringBounder) / 2;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">				posY = direction == 1 ? 0 : -dimPhalanx.getHeight();</span>
+			} else {
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				posX = direction == 1 ? 0 : -dimPhalanx.getWidth();</span>
+<span class="fc" id="L111">				posY = -getPhalanxThickness(stringBounder) / 2;</span>
+			}
+<span class="fc" id="L113">			phalanx.drawU(ug.apply(new UTranslate(posX, posY)));</span>
+		}
+		final XPoint2D p1;
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (isTopToBottom())</span>
+<span class="nc" id="L117">			p1 = new XPoint2D(0, direction * dimPhalanx.getHeight());</span>
+		else
+<span class="fc" id="L119">			p1 = new XPoint2D(direction * dimPhalanx.getWidth(), 0);</span>
+
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (int i = 0; i &lt; nail.size(); i++) {</span>
+<span class="fc" id="L122">			final FingerImpl child = nail.get(i);</span>
+<span class="fc" id="L123">			final SymetricalTeePositioned stp = getTetris(stringBounder).getElements().get(i);</span>
+			final XPoint2D p2;
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (isTopToBottom())</span>
+<span class="nc" id="L126">				p2 = new XPoint2D(stp.getY(), direction * (dimPhalanx.getHeight() + getX12()));</span>
+			else
+<span class="fc" id="L128">				p2 = new XPoint2D(direction * (dimPhalanx.getWidth() + getX12()), stp.getY());</span>
+
+<span class="fc" id="L130">			child.drawU(ug.apply(UTranslate.point(p2)));</span>
+<span class="fc" id="L131">			final HColor linkColor = getLinkColor();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			if (linkColor.isTransparent() == false)</span>
+<span class="fc" id="L133">				drawLine(ug.apply(linkColor).apply(getUStroke()), p1, p2);</span>
+		}
+
+<span class="fc" id="L136">	}</span>
+
+	private HColor getLinkColor() {
+<span class="fc" id="L139">		final Style styleArrow = getStyleArrow();</span>
+<span class="fc" id="L140">		return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+	}
+
+	private UStroke getUStroke() {
+<span class="fc" id="L144">		final Style styleArrow = getStyleArrow();</span>
+<span class="fc" id="L145">		return styleArrow.getStroke();</span>
+	}
+
+	private void drawLine(UGraphic ug, XPoint2D p1, XPoint2D p2) {
+<span class="fc" id="L149">		final UPath path = UPath.none();</span>
+<span class="fc" id="L150">		path.moveTo(p1);</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (isTopToBottom()) {</span>
+<span class="nc" id="L152">			final double delta1 = direction * 3;</span>
+<span class="nc" id="L153">			final double delta2 = direction * 10;</span>
+<span class="nc" id="L154">			path.lineTo(p1.getX(), p1.getY() + delta1);</span>
+<span class="nc" id="L155">			path.cubicTo(p1.getX(), p1.getY() + delta2, p2.getX(), p2.getY() - delta2, p2.getX(), p2.getY() - delta1);</span>
+<span class="nc" id="L156">		} else {</span>
+<span class="fc" id="L157">			final double delta1 = direction * 10;</span>
+<span class="fc" id="L158">			final double delta2 = direction * 25;</span>
+<span class="fc" id="L159">			path.lineTo(p1.getX() + delta1, p1.getY());</span>
+<span class="fc" id="L160">			path.cubicTo(p1.getX() + delta2, p1.getY(), p2.getX() - delta2, p2.getY(), p2.getX() - delta1, p2.getY());</span>
+		}
+<span class="fc" id="L162">		path.lineTo(p2);</span>
+<span class="fc" id="L163">		ug.draw(path);</span>
+<span class="fc" id="L164">	}</span>
+
+	private Tetris getTetris(StringBounder stringBounder) {
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (tetris == null) {</span>
+<span class="fc" id="L168">			tetris = new Tetris(idea.getLabel().toString());</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			for (FingerImpl child : nail)</span>
+<span class="fc" id="L170">				tetris.add(child.asSymetricalTee(stringBounder));</span>
+
+<span class="fc" id="L172">			tetris.balance();</span>
+		}
+<span class="fc" id="L174">		return tetris;</span>
+	}
+
+	private SymetricalTee asSymetricalTee(StringBounder stringBounder) {
+<span class="fc" id="L178">		final double thickness1 = getPhalanxThickness(stringBounder);</span>
+<span class="fc" id="L179">		final double elongation1 = getPhalanxElongation(stringBounder);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (nail.size() == 0)</span>
+<span class="fc" id="L181">			return new SymetricalTee(thickness1, elongation1, 0, 0);</span>
+
+<span class="fc" id="L183">		final double thickness2 = getNailThickness(stringBounder);</span>
+<span class="fc" id="L184">		final double elongation2 = getNailElongation(stringBounder);</span>
+<span class="fc" id="L185">		return new SymetricalTee(thickness1, elongation1 + getX1(), thickness2, getX2() + elongation2);</span>
+	}
+
+	private double getX1() {
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (isTopToBottom())</span>
+<span class="nc" id="L190">			return getMargin().getTop();</span>
+		else
+<span class="fc" id="L192">			return getMargin().getLeft();</span>
+	}
+
+	private double getX2() {
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		if (isTopToBottom())</span>
+<span class="nc" id="L197">			return getMargin().getBottom() + 5;</span>
+		else
+<span class="fc" id="L199">			return getMargin().getRight() + 30;</span>
+	}
+
+	public double getX12() {
+<span class="fc" id="L203">		return getX1() + getX2();</span>
+	}
+
+	public double getPhalanxThickness(StringBounder stringBounder) {
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (isTopToBottom())</span>
+<span class="nc" id="L208">			return getPhalanx().calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L209">		return getPhalanx().calculateDimension(stringBounder).getHeight();</span>
+	}
+
+	public double getPhalanxElongation(StringBounder stringBounder) {
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (isTopToBottom())</span>
+<span class="nc" id="L214">			return getPhalanx().calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L215">		return getPhalanx().calculateDimension(stringBounder).getWidth();</span>
+	}
+
+	private TextBlock getPhalanx() {
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (drawPhalanx == false)</span>
+<span class="nc" id="L220">			return TextBlockUtils.empty(0, 0);</span>
+
+<span class="fc" id="L222">		final Style style = getStyle();</span>
+
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (idea.getShape() == IdeaShape.BOX) {</span>
+<span class="fc" id="L225">			final ISkinParam foo = new SkinParamColors(skinParam,</span>
+<span class="fc" id="L226">					Colors.empty().add(ColorType.BACK, idea.getBackColor()));</span>
+<span class="fc" id="L227">			final TextBlock box = FtileBoxOld.createMindMap(style, foo, idea.getLabel());</span>
+<span class="fc" id="L228">			final ClockwiseTopRightBottomLeft margin = getMargin();</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">			if (isTopToBottom())</span>
+<span class="nc" id="L230">				return TextBlockUtils.withMargin(box, margin.getLeft(), margin.getRight(), 0, 0);</span>
+			else
+<span class="fc" id="L232">				return TextBlockUtils.withMargin(box, 0, 0, margin.getTop(), margin.getBottom());</span>
+		}
+
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		assert idea.getShape() == IdeaShape.NONE;</span>
+<span class="nc" id="L236">		final TextBlock text = idea.getLabel().create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
+<span class="nc" id="L237">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (direction == 1)</span>
+<span class="nc" id="L239">			return TextBlockUtils.withMargin(text, 3, 0, 1, 1);</span>
+
+<span class="nc" id="L241">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
+	}
+
+	private Style getStyle() {
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (nail.size() != idea.getChildren().size())</span>
+<span class="nc" id="L246">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L248">		return idea.getStyle();</span>
+	}
+
+	private Style getStyleArrow() {
+<span class="fc" id="L252">		return idea.getStyleArrow();</span>
+	}
+
+	public double getNailThickness(StringBounder stringBounder) {
+<span class="fc" id="L256">		return getTetris(stringBounder).getHeight();</span>
+	}
+
+	public double getNailElongation(StringBounder stringBounder) {
+<span class="fc" id="L260">		return getTetris(stringBounder).getWidth();</span>
+	}
+
+	public double getFullThickness(StringBounder stringBounder) {
+<span class="fc" id="L264">		final double thickness1 = getPhalanxThickness(stringBounder);</span>
+<span class="fc" id="L265">		final double thickness2 = getNailThickness(stringBounder);</span>
+<span class="fc" id="L266">		return Math.max(thickness1, thickness2);</span>
+	}
+
+	public double getFullElongation(StringBounder stringBounder) {
+<span class="fc" id="L270">		return getPhalanxElongation(stringBounder) + getNailElongation(stringBounder);</span>
+	}
+
+	public void doNotDrawFirstPhalanx() {
+<span class="nc" id="L274">		this.drawPhalanx = false;</span>
+<span class="nc" id="L275">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

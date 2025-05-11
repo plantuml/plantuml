@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DottedNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">DottedNumber.java</span></div><h1>DottedNumber.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class DottedNumber {
+
+	private final List&lt;Integer&gt; nums;
+	private final List&lt;String&gt; separators;
+
+<span class="fc" id="L48">	private DottedNumber(List&lt;Integer&gt; nums, List&lt;String&gt; separators) {</span>
+<span class="fc" id="L49">		this.nums = nums;</span>
+<span class="fc" id="L50">		this.separators = separators;</span>
+<span class="fc" id="L51">	}</span>
+
+	public static DottedNumber create(String value) {
+<span class="fc" id="L54">		final Pattern p = Pattern.compile(&quot;(\\d+)|(\\D+)&quot;);</span>
+<span class="fc" id="L55">		final Matcher m = p.matcher(value);</span>
+<span class="fc" id="L56">		final List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">		final List&lt;String&gt; separators = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L59">			final String part = m.group();</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (isDigit(part.charAt(0))) {</span>
+<span class="fc" id="L61">				nums.add(Integer.parseInt(part));</span>
+			} else {
+<span class="nc" id="L63">				separators.add(part);</span>
+			}
+<span class="fc" id="L65">		}</span>
+<span class="fc" id="L66">		return new DottedNumber(nums, separators);</span>
+	}
+
+	private static boolean isDigit(final char c) {
+<span class="pc bpc" id="L70" title="2 of 4 branches missed.">		return c &gt;= '0' &amp;&amp; c &lt;= '9';</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L75">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int i = 0; i &lt; nums.size(); i++) {</span>
+<span class="nc" id="L77">			sb.append(nums.get(i));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (i &lt; separators.size()) {</span>
+<span class="nc" id="L79">				sb.append(separators.get(i));</span>
+			}
+		}
+<span class="nc" id="L82">		return sb.toString();</span>
+	}
+
+	public void incrementMinor(int step) {
+<span class="fc" id="L86">		final int last = nums.size() - 1;</span>
+<span class="fc" id="L87">		final int newValue = nums.get(last) + step;</span>
+<span class="fc" id="L88">		nums.set(last, newValue);</span>
+<span class="fc" id="L89">	}</span>
+
+	public void incrementIntermediate() {
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		final int intermediate = nums.size() == 1 ? 0 : nums.size() - 2;</span>
+<span class="nc" id="L93">		incrementIntermediate(intermediate);</span>
+<span class="nc" id="L94">	}</span>
+
+	public void incrementIntermediate(int position) {
+<span class="nc" id="L97">		final int intermediate = position;</span>
+<span class="nc" id="L98">		final int newValue = nums.get(intermediate) + 1;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = intermediate + 1; i &lt; nums.size(); i++) {</span>
+<span class="nc" id="L100">			nums.set(i, 1);</span>
+		}
+<span class="nc" id="L102">		nums.set(intermediate, newValue);</span>
+<span class="nc" id="L103">	}</span>
+
+	public String format(DecimalFormat format) {
+<span class="pc bpc" id="L106" title="2 of 4 branches missed.">		if (nums.size() == 1 &amp;&amp; separators.size() == 0) {</span>
+<span class="fc" id="L107">			return format.format(nums.get(0));</span>
+		}
+<span class="nc" id="L109">		return &quot;&lt;b&gt;&quot; + toString() + &quot;&lt;/b&gt;&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

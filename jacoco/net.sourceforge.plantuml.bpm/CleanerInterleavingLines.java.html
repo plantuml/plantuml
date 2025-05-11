@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CleanerInterleavingLines.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.bpm</a> &gt; <span class="el_source">CleanerInterleavingLines.java</span></div><h1>CleanerInterleavingLines.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.bpm;
+
+import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
+
+<span class="nc" id="L40">public class CleanerInterleavingLines implements GridCleaner {</span>
+
+	public boolean clean(Grid grid) {
+		// System.err.println(&quot;running CleanerInterleavingLines&quot;);
+<span class="nc" id="L44">		boolean result = false;</span>
+<span class="nc" id="L45">		Line previous = null;</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		for (Line line : grid.lines().toList()) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">			if (previous != null) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">				if (mergeable(grid, previous, line)) {</span>
+					// System.err.println(&quot;MERGEABLE! &quot; + previous + &quot; &quot; + line);
+<span class="nc" id="L50">					mergeLines(grid, previous, line);</span>
+<span class="nc" id="L51">					return true;</span>
+				}
+			}
+<span class="nc" id="L54">			previous = line;</span>
+<span class="nc" id="L55">		}</span>
+<span class="nc" id="L56">		return result;</span>
+	}
+
+	private void mergeLines(Grid grid, Line line1, Line line2) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (Col col : grid.cols().toList()) {</span>
+<span class="nc" id="L61">			final Cell cell1 = grid.getCell(line1, col);</span>
+<span class="nc" id="L62">			final Cell cell2 = grid.getCell(line2, col);</span>
+<span class="nc" id="L63">			cell1.setData(merge(cell1.getData(), cell2.getData()));</span>
+<span class="nc" id="L64">			cell2.setData(null);</span>
+<span class="nc" id="L65">		}</span>
+<span class="nc" id="L66">		grid.removeLine(line2);</span>
+
+<span class="nc" id="L68">	}</span>
+
+	private boolean mergeable(Grid grid, Line line1, Line line2) {
+		// int c = 0;
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (Col col : grid.cols().toList()) {</span>
+			// System.err.println(&quot;c=&quot; + c);
+			// c++;
+<span class="nc" id="L75">			final Placeable cell1 = grid.getCell(line1, col).getData();</span>
+<span class="nc" id="L76">			final Placeable cell2 = grid.getCell(line2, col).getData();</span>
+			// System.err.println(&quot;cells=&quot; + cell1 + &quot; &quot; + cell2 + &quot; &quot; + mergeable(cell1,
+			// cell2));
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (mergeable(cell1, cell2) == false) {</span>
+<span class="nc" id="L80">				return false;</span>
+			}
+<span class="nc" id="L82">		}</span>
+<span class="nc" id="L83">		return true;</span>
+	}
+
+	private Placeable merge(Placeable data1, Placeable data2) {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (data1 == null) {</span>
+<span class="nc" id="L88">			return data2;</span>
+		}
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (data2 == null) {</span>
+<span class="nc" id="L91">			return data1;</span>
+		}
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		assert data1 != null &amp;&amp; data2 != null;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (data1 instanceof BpmElement) {</span>
+<span class="nc" id="L95">			return data1;</span>
+		}
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (data2 instanceof BpmElement) {</span>
+<span class="nc" id="L98">			final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (puz1.checkDirections(&quot;SW&quot;)) {</span>
+<span class="nc" id="L100">				((BpmElement) data2).remove(Where.NORTH);</span>
+<span class="nc" id="L101">				((BpmElement) data2).append(Where.WEST);</span>
+			}
+<span class="nc" id="L103">			return data2;</span>
+		}
+<span class="nc bnc" id="L105" title="All 4 branches missed.">		assert data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof ConnectorPuzzleEmpty;</span>
+<span class="nc" id="L106">		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;</span>
+<span class="nc" id="L107">		final ConnectorPuzzleEmpty puz2 = (ConnectorPuzzleEmpty) data2;</span>
+<span class="nc" id="L108">		return puz2;</span>
+	}
+
+	private boolean mergeable(Placeable data1, Placeable data2) {
+<span class="nc bnc" id="L112" title="All 4 branches missed.">		if (data1 == null || data2 == null) {</span>
+<span class="nc" id="L113">			return true;</span>
+		}
+<span class="nc bnc" id="L115" title="All 4 branches missed.">		assert data1 != null &amp;&amp; data2 != null;</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">		if (data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof ConnectorPuzzleEmpty) {</span>
+<span class="nc" id="L117">			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);</span>
+		}
+<span class="nc bnc" id="L119" title="All 4 branches missed.">		if (data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof BpmElement) {</span>
+<span class="nc" id="L120">			final boolean result = mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);</span>
+			// System.err.println(&quot;OTHER2=&quot; + data2 + &quot; &quot; + data1 + &quot; &quot; + result);
+<span class="nc" id="L122">			return result;</span>
+		}
+<span class="nc bnc" id="L124" title="All 4 branches missed.">		if (data2 instanceof ConnectorPuzzleEmpty &amp;&amp; data1 instanceof BpmElement) {</span>
+<span class="nc" id="L125">			final boolean result = mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);</span>
+			// System.err.println(&quot;OTHER1=&quot; + data1 + &quot; &quot; + data2 + &quot; &quot; + result);
+<span class="nc" id="L127">			return result;</span>
+		}
+<span class="nc" id="L129">		return false;</span>
+	}
+
+	private boolean mergeablePuzzleSingle(ConnectorPuzzleEmpty data1, BpmElement data2) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (data1.checkDirections(&quot;NS&quot;)) {</span>
+<span class="nc" id="L134">			return true;</span>
+		}
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (data1.checkDirections(&quot;SW&quot;)) {</span>
+<span class="nc" id="L137">			return true;</span>
+		}
+<span class="nc" id="L139">		return false;</span>
+	}
+
+	private boolean mergeablePuzzleSingle(BpmElement data1, ConnectorPuzzleEmpty data2) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (data2.checkDirections(&quot;NS&quot;)) {</span>
+<span class="nc" id="L144">			return true;</span>
+		}
+<span class="nc" id="L146">		return false;</span>
+	}
+
+	private boolean mergeableCC(ConnectorPuzzleEmpty puz1, ConnectorPuzzleEmpty puz2) {
+<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NS&quot;)) {</span>
+<span class="nc" id="L151">			return true;</span>
+		}
+<span class="nc bnc" id="L153" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NE&quot;)) {</span>
+<span class="nc" id="L154">			return true;</span>
+		}
+<span class="nc bnc" id="L156" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NW&quot;)) {</span>
+<span class="nc" id="L157">			return true;</span>
+		}
+<span class="nc" id="L159">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

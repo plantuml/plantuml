@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockLineBefore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.shape</a> &gt; <span class="el_source">TextBlockLineBefore.java</span></div><h1>TextBlockLineBefore.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.shape;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
+
+public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock, WithPorts {
+    // ::remove file when __HAXE__
+
+	private final TextBlock textBlock;
+	private final char separator;
+	private final TextBlock title;
+	private final double defaultThickness;
+
+<span class="fc" id="L56">	public TextBlockLineBefore(double defaultThickness, TextBlock textBlock, char separator, TextBlock title) {</span>
+<span class="fc" id="L57">		this.textBlock = textBlock;</span>
+<span class="fc" id="L58">		this.separator = separator;</span>
+<span class="fc" id="L59">		this.title = title;</span>
+<span class="fc" id="L60">		this.defaultThickness = defaultThickness;</span>
+<span class="fc" id="L61">	}</span>
+
+	public TextBlockLineBefore(double defaultThickness, TextBlock textBlock, char separator) {
+<span class="fc" id="L64">		this(defaultThickness, textBlock, separator, null);</span>
+<span class="fc" id="L65">	}</span>
+
+	public TextBlockLineBefore(double defaultThickness, TextBlock textBlock) {
+<span class="fc" id="L68">		this(defaultThickness, textBlock, '\0');</span>
+<span class="fc" id="L69">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L72">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (title != null) {</span>
+<span class="fc" id="L74">			final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L75">			return dim.atLeast(dimTitle.getWidth() + 8, dimTitle.getHeight());</span>
+		}
+<span class="fc" id="L77">		return dim;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L81">		final HColor color = ug.getParam().getColor();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (title == null)</span>
+<span class="fc" id="L83">			UHorizontalLine.infinite(defaultThickness, 1, 1, separator).drawMe(ug);</span>
+
+<span class="fc" id="L85">		textBlock.drawU(ug);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L87">			ug = ug.apply(HColors.none());</span>
+		else
+<span class="fc" id="L89">			ug = ug.apply(color);</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L92">			UHorizontalLine.infinite(defaultThickness, 1, 1, title, separator).drawMe(ug);</span>
+
+<span class="fc" id="L94">	}</span>
+
+	@Override
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L98">		return textBlock.getInnerPosition(member, stringBounder, strategy);</span>
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (textBlock instanceof WithPorts)</span>
+<span class="nc" id="L104">			return ((WithPorts) textBlock).getPorts(stringBounder);</span>
+<span class="nc" id="L105">		return new Ports();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

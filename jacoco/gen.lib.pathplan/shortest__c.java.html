@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>shortest__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.pathplan</a> &gt; <span class="el_source">shortest__c.java</span></div><h1>shortest__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.pathplan;
+import static smetana.core.JUtils.LOG2;
+import static smetana.core.JUtils.setjmp;
+import static smetana.core.Macro.HUGE_VAL;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_Ppoly_t;
+import h.ST_pointf;
+import h.ST_pointnlink_t;
+import h.ST_triangle_t;
+import smetana.core.CArray;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.__ptr__;
+import smetana.core.jmp_buf;
+
+<span class="nc" id="L66">public class shortest__c {</span>
+    // ::remove folder when __HAXE__
+//1 baedz5i9est5csw3epz3cv7z
+// typedef Ppoly_t Ppolyline_t
+
+
+//1 7pb9zum2n4wlgil34lvh8i0ts
+// typedef double COORD
+
+
+//1 540u5gu9i0x1wzoxqqx5n2vwp
+// static jmp_buf jbuf
+<span class="fc" id="L78">private static jmp_buf jbuf = new jmp_buf();</span>
+
+
+
+/* Pshortestpath:
+ * Find a shortest path contained in the polygon polyp going between the
+ * points supplied in eps. The resulting polyline is stored in output.
+ * Return 0 on success, -1 on bad input, -2 on memory allocation problem. 
+ */
+//3 2gub5b19vo2qexn56nw23wage
+// int Pshortestpath(Ppoly_t * polyp, Ppoint_t * eps, Ppolyline_t * output) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;Pshortestpath&quot;, key=&quot;2gub5b19vo2qexn56nw23wage&quot;, definition=&quot;int Pshortestpath(Ppoly_t * polyp, Ppoint_t * eps, Ppolyline_t * output)&quot;)
+public static int Pshortestpath(Globals zz, ST_Ppoly_t polyp, CArray&lt;ST_pointf&gt; eps, ST_Ppoly_t output) {
+<span class="fc" id="L92">ENTERING(&quot;2gub5b19vo2qexn56nw23wage&quot;,&quot;Pshortestpath&quot;);</span>
+try {
+    int pi, minpi;
+    double minx;
+<span class="fc" id="L96">    final ST_pointf p1 = new ST_pointf(), p2 = new ST_pointf(), p3 = new ST_pointf();</span>
+    int trii, trij, ftrii, ltrii;
+    int ei;
+<span class="fc" id="L99">    final ST_pointnlink_t[]  epnls = new ST_pointnlink_t[] {new ST_pointnlink_t(),new ST_pointnlink_t()};</span>
+<span class="fc" id="L100">    ST_pointnlink_t lpnlp=null, rpnlp=null, pnlp=null;</span>
+    CArray&lt;ST_triangle_t&gt; trip;
+    int splitindex;
+    
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">    if (setjmp(jbuf)!=0)</span>
+<span class="nc" id="L105">	return -2;</span>
+    /* make space */
+<span class="fc" id="L107">    growpnls(zz, polyp.pn);</span>
+<span class="fc" id="L108">    zz.pnll = 0;</span>
+<span class="fc" id="L109">    zz.tril = 0;</span>
+<span class="fc" id="L110">    growdq(zz, polyp.pn * 2);</span>
+<span class="fc" id="L111">    zz.dq.fpnlpi = zz.dq.pnlpn / 2;</span>
+<span class="fc" id="L112">    zz.dq.lpnlpi = zz.dq.fpnlpi - 1;</span>
+    
+    
+    /* make sure polygon is CCW and load pnls array */
+<span class="fc bfc" id="L116" title="All 2 branches covered.">    for (pi = 0, minx = HUGE_VAL, minpi = -1; pi &lt; polyp.pn; pi++) {</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">	if (minx &gt; polyp.ps.get__(pi).x)</span>
+<span class="fc" id="L118">	    { minx = polyp.ps.get__(pi).x;</span>
+<span class="fc" id="L119">		minpi = pi; }</span>
+    }
+<span class="fc" id="L121">    p2.___(polyp.ps.get__(minpi));</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">    p1.___(polyp.ps.get__(((minpi == 0) ? polyp.pn - 1 : minpi - 1)));</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">    p3.___(polyp.ps.get__(((minpi == polyp.pn - 1) ? 0 : minpi + 1)));</span>
+<span class="pc bpc" id="L124" title="5 of 6 branches missed.">    if (((p1.x == p2.x &amp;&amp; p2.x == p3.x) &amp;&amp; (p3.y &gt; p2.y)) ||</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">	ccw(p1, p2, p3) != 1) {</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">	for (pi = polyp.pn - 1; pi &gt;= 0; pi--) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">	    if (pi &lt; polyp.pn - 1</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		&amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi+1).x</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		&amp;&amp; polyp.ps.get__(pi).y == polyp.ps.get__(pi+1).y)</span>
+<span class="fc" id="L130">		continue;</span>
+<span class="fc" id="L131">	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);</span>
+<span class="fc" id="L132">	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];</span>
+<span class="fc" id="L133">	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];</span>
+<span class="fc" id="L134">	    zz.pnll++;</span>
+	}
+    } else {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">	for (pi = 0; pi &lt; polyp.pn; pi++) {</span>
+<span class="fc bfc" id="L138" title="All 4 branches covered.">	    if (pi &gt; 0 &amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi - 1).x &amp;&amp;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		polyp.ps.get__(pi).y == polyp.ps.get__(pi - 1).y)</span>
+<span class="nc" id="L140">		continue;</span>
+<span class="fc" id="L141">	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);</span>
+<span class="fc" id="L142">	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];</span>
+<span class="fc" id="L143">	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];</span>
+<span class="fc" id="L144">	    zz.pnll++;</span>
+	}
+    }
+    
+    
+    /* generate list of triangles */
+<span class="fc" id="L150">    triangulate(zz, zz.pnlps, zz.pnll);</span>
+    
+    /* connect all pairs of triangles that share an edge */
+<span class="fc bfc" id="L153" title="All 2 branches covered.">    for (trii = 0; trii &lt; zz.tril; trii++)</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">	for (trij = trii + 1; trij &lt; zz.tril; trij++)</span>
+<span class="fc" id="L155">	    connecttris(zz, trii, trij);</span>
+    
+    /* find first and last triangles */
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">    for (trii = 0; trii &lt; zz.tril; trii++)</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">	if (pointintri(zz, trii, eps.get__(0)))</span>
+<span class="fc" id="L160">	    break;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">    if (trii == zz.tril) {</span>
+<span class="nc" id="L162">UNSUPPORTED(&quot;4ma3y8l4lmjcsw49kmsgknig6&quot;); // 	fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;source point not in any triangle&quot;));</span>
+<span class="nc" id="L163">UNSUPPORTED(&quot;8d9xfgejx5vgd6shva5wk5k06&quot;); // 	return -1;</span>
+    }
+<span class="fc" id="L165">    ftrii = trii;</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">    for (trii = 0; trii &lt; zz.tril; trii++)</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">	if (pointintri(zz, trii, eps.get__(1)))</span>
+<span class="fc" id="L168">	    break;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">    if (trii == zz.tril) {</span>
+<span class="nc" id="L170">        System.err.println(&quot;libpath/%s:%d: %s\n&quot; + &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot; + 26 + (&quot;destination point not in any triangle&quot;));</span>
+<span class="nc" id="L171">        return -1;</span>
+    }
+<span class="fc" id="L173">    ltrii = trii;</span>
+    
+    /* mark the strip of triangles from eps[0] to eps[1] */
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">    if (!marktripath(zz, ftrii, ltrii)) {</span>
+<span class="nc" id="L177">	System.err.println(&quot;libpath/%s:%d: %s&quot; + &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot; + 26 + (&quot;cannot find triangle path&quot;));</span>
+	/* a straight line is better than failing */
+<span class="nc" id="L179">	growops(zz, 2);</span>
+<span class="nc" id="L180">	output.pn = 2;</span>
+<span class="nc" id="L181">	zz.ops_shortest.get__(0).___(eps.get__(0));</span>
+<span class="nc" id="L182">	zz.ops_shortest.get__(1).___(eps.get__(1));</span>
+<span class="nc" id="L183">	output.ps = zz.ops_shortest;</span>
+<span class="nc" id="L184">	return 0;</span>
+    }
+    
+    /* if endpoints in same triangle, use a single line */
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">    if (ftrii == ltrii) {</span>
+<span class="nc" id="L189">UNSUPPORTED(&quot;2nnkwrdxg0ma2m482dqarlbz6&quot;); // 	growops(2);</span>
+<span class="nc" id="L190">UNSUPPORTED(&quot;5penbn9ky80i7jw02belk2zoj&quot;); // 	output-&gt;pn = 2;</span>
+<span class="nc" id="L191">UNSUPPORTED(&quot;8i925e1tnbqn909027lqcg3fi&quot;); // 	ops[0] = eps[0], ops[1] = eps[1];</span>
+<span class="nc" id="L192">UNSUPPORTED(&quot;3rcg6c9s9nmostq9c3r5n6x4h&quot;); // 	output-&gt;ps = ops;</span>
+<span class="nc" id="L193">UNSUPPORTED(&quot;c9ckhc8veujmwcw0ar3u3zld4&quot;); // 	return 0;</span>
+    }
+    
+    /* build funnel and shortest path linked list (in add2dq) */
+<span class="fc" id="L197">    epnls[0].pp = eps.get__(0);</span>
+<span class="fc" id="L198">    epnls[0].link = null;</span>
+<span class="fc" id="L199">    epnls[1].pp = eps.get__(1);</span>
+<span class="fc" id="L200">    epnls[1].link = null;</span>
+<span class="fc" id="L201">    add2dq(zz, 1, epnls[0]);</span>
+<span class="fc" id="L202">    zz.dq.apex = zz.dq.fpnlpi;</span>
+<span class="fc" id="L203">    trii = ftrii;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">    while (trii != -1) {</span>
+<span class="fc" id="L205">	trip = zz.tris.plus_(trii);</span>
+<span class="fc" id="L206">	trip.get__(0).mark = 2;</span>
+	
+	/* find the left and right points of the exiting edge */
+<span class="fc bfc" id="L209" title="All 2 branches covered.">	for (ei = 0; ei &lt; 3; ei++)</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">	    if (trip.get__(0).e[ei].rtp!=null &amp;&amp;</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">	    		trip.get__(0).e[ei].rtp.get__(0).mark == 1)</span>
+<span class="fc" id="L212">		break;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">	if (ei == 3) {		/* in last triangle */</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">	    if (ccw(eps.get__(1), zz.dq.pnlps[zz.dq.fpnlpi].pp,</span>
+		    zz.dq.pnlps[zz.dq.lpnlpi].pp) == 1)
+		{
+<span class="fc" id="L217">		lpnlp = zz.dq.pnlps[zz.dq.lpnlpi];</span>
+<span class="fc" id="L218">		rpnlp = epnls[1];</span>
+	    } else {
+<span class="nc" id="L220">		lpnlp = epnls[1];</span>
+<span class="nc" id="L221">		rpnlp = zz.dq.pnlps[zz.dq.lpnlpi];</span>
+		}
+	} else {
+<span class="fc" id="L224">	    pnlp = trip.get__(0).e[(ei + 1) % 3].pnl1p;</span>
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">	    if (ccw(trip.get__(0).e[ei].pnl0p.pp, pnlp.pp,</span>
+<span class="fc" id="L226">	    		trip.get__(0).e[ei].pnl1p.pp) == 1)</span>
+<span class="nc" id="L227">UNSUPPORTED(&quot;2cii65lhw4wb8nyvjv702v7md&quot;); // 		lpnlp = trip-&gt;e[ei].pnl1p, rpnlp = trip-&gt;e[ei].pnl0p;</span>
+	    else
+		{
+<span class="fc" id="L230">		  lpnlp = trip.get__(0).e[ei].pnl0p;</span>
+<span class="fc" id="L231">		  rpnlp = trip.get__(0).e[ei].pnl1p;</span>
+		}
+	}
+	
+	/* update deque */
+<span class="fc bfc" id="L236" title="All 2 branches covered.">	if (trii == ftrii) {</span>
+<span class="fc" id="L237">	    add2dq(zz, 2, lpnlp);</span>
+<span class="fc" id="L238">	    add2dq(zz, 1, rpnlp);</span>
+	} else {
+<span class="pc bpc" id="L240" title="1 of 4 branches missed.">	    if ((zz.dq.pnlps[zz.dq.fpnlpi] != rpnlp)</span>
+		&amp;&amp; (zz.dq.pnlps[zz.dq.lpnlpi] != rpnlp)) {
+		/* add right point to deque */
+<span class="fc" id="L243">		splitindex = finddqsplit(zz, rpnlp);</span>
+<span class="fc" id="L244">		splitdq(zz, 2, splitindex);</span>
+<span class="fc" id="L245">		add2dq(zz, 1, rpnlp);</span>
+		/* if the split is behind the apex, then reset apex */
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		if (splitindex &gt; zz.dq.apex)</span>
+<span class="fc" id="L248">		    zz.dq.apex = splitindex;</span>
+	    } else {
+		/* add left point to deque */
+<span class="fc" id="L251">		splitindex = finddqsplit(zz, lpnlp);</span>
+<span class="fc" id="L252">		splitdq(zz, 1, splitindex);</span>
+<span class="fc" id="L253">		add2dq(zz, 2, lpnlp);</span>
+		/* if the split is in front of the apex, then reset apex */
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (splitindex &lt; zz.dq.apex)</span>
+<span class="fc" id="L256">		    zz.dq.apex = splitindex;</span>
+	    }
+	}
+<span class="fc" id="L259">	trii = -1;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">	for (ei = 0; ei &lt; 3; ei++)</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">	    if (trip.get__(0).e[ei].rtp!=null &amp;&amp; </span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">	    		trip.get__(0).e[ei].rtp.get__(0).mark == 1) {</span>
+<span class="fc" id="L263">		trii = trip.get__(0).e[ei].rtp.minus_(zz.tris);</span>
+<span class="fc" id="L264">		break;</span>
+	    }
+    }
+    
+    
+<span class="fc bfc" id="L269" title="All 2 branches covered.">    for (pi = 0, pnlp = epnls[1]; pnlp!=null; pnlp = pnlp.link)</span>
+<span class="fc" id="L270">	pi++;</span>
+<span class="fc" id="L271">    growops(zz, pi);</span>
+<span class="fc" id="L272">    output.pn = pi;</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">    for (pi = pi - 1, pnlp = epnls[1]; pnlp!=null; pi--, pnlp = pnlp.link)</span>
+<span class="fc" id="L274">	zz.ops_shortest.get__(pi).___(pnlp.pp);</span>
+<span class="fc" id="L275">    output.ps = zz.ops_shortest;</span>
+    
+<span class="fc" id="L277">    return 0;</span>
+} finally {
+<span class="fc" id="L279">LEAVING(&quot;2gub5b19vo2qexn56nw23wage&quot;,&quot;Pshortestpath&quot;);</span>
+}
+}
+
+
+
+
+//3 73cr7m3mqvtuotpzrmaw2y8zm
+// static void triangulate(pointnlink_t ** pnlps, int pnln) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;triangulate&quot;, key=&quot;73cr7m3mqvtuotpzrmaw2y8zm&quot;, definition=&quot;static void triangulate(pointnlink_t ** pnlps, int pnln)&quot;)
+public static void triangulate(Globals zz, ST_pointnlink_t pnlps[], int pnln) {
+<span class="fc" id="L291">ENTERING(&quot;73cr7m3mqvtuotpzrmaw2y8zm&quot;,&quot;triangulate&quot;);</span>
+try {
+    int pnli, pnlip1, pnlip2;
+<span class="fc" id="L294">    LOG2(&quot;triangulate &quot;+pnln);</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">	if (pnln &gt; 3) </span>
+	{
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		for (pnli = 0; pnli &lt; pnln; pnli++) </span>
+		{
+<span class="fc" id="L299">			pnlip1 = (pnli + 1) % pnln;</span>
+<span class="fc" id="L300">			pnlip2 = (pnli + 2) % pnln;</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">			if (isdiagonal(pnli, pnlip2, pnlps, pnln)) </span>
+			{
+<span class="fc" id="L303">				loadtriangle(zz, pnlps[pnli], pnlps[pnlip1], pnlps[pnlip2]);</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">				for (pnli = pnlip1; pnli &lt; pnln - 1; pnli++)</span>
+<span class="fc" id="L305">					pnlps[pnli] = pnlps[pnli + 1];</span>
+<span class="fc" id="L306">				triangulate(zz, pnlps, pnln - 1);</span>
+<span class="fc" id="L307">				return;</span>
+			}
+		}
+<span class="nc" id="L310">		throw new IllegalStateException(&quot;libpath/%s:%d: %s\n&quot; + &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot; + 26 + (&quot;triangulation failed&quot;));</span>
+    } 
+	else
+<span class="fc" id="L313">		loadtriangle(zz, pnlps[0], pnlps[1], pnlps[2]);</span>
+} finally {
+<span class="fc" id="L315">LEAVING(&quot;73cr7m3mqvtuotpzrmaw2y8zm&quot;,&quot;triangulate&quot;);</span>
+}
+<span class="fc" id="L317">}</span>
+
+
+
+
+//3 72of3cd7shtwokglxapw04oe9
+// static int isdiagonal(int pnli, int pnlip2, pointnlink_t ** pnlps, 		      int pnln) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;isdiagonal&quot;, key=&quot;72of3cd7shtwokglxapw04oe9&quot;, definition=&quot;static int isdiagonal(int pnli, int pnlip2, pointnlink_t ** pnlps, 		      int pnln)&quot;)
+public static boolean isdiagonal(int pnli, int pnlip2, ST_pointnlink_t[] pnlps, int pnln) {
+<span class="fc" id="L327">ENTERING(&quot;72of3cd7shtwokglxapw04oe9&quot;,&quot;isdiagonal&quot;);</span>
+try {
+    int pnlip1, pnlim1, pnlj, pnljp1;
+    boolean res;
+    /* neighborhood test */
+<span class="fc" id="L332">    pnlip1 = (pnli + 1) % pnln;</span>
+<span class="fc" id="L333">    pnlim1 = (pnli + pnln - 1) % pnln;</span>
+    /* If P[pnli] is a convex vertex [ pnli+1 left of (pnli-1,pnli) ]. */
+<span class="fc bfc" id="L335" title="All 2 branches covered.">    if (ccw(pnlps[pnlim1].pp, pnlps[pnli].pp, pnlps[pnlip1].pp) ==</span>
+	1)
+<span class="fc" id="L337">	res =</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">	    (ccw(pnlps[pnli].pp, pnlps[pnlip2].pp, pnlps[pnlim1].pp) ==</span>
+	     1)
+<span class="fc bfc" id="L340" title="All 2 branches covered.">	    &amp;&amp; (ccw(pnlps[pnlip2].pp, pnlps[pnli].pp, pnlps[pnlip1].pp)</span>
+		== 1);
+    /* Assume (pnli - 1, pnli, pnli + 1) not collinear. */
+    else
+<span class="fc bfc" id="L344" title="All 2 branches covered.">	res = ccw(pnlps[pnli].pp, pnlps[pnlip2].pp,</span>
+		   pnlps[pnlip1].pp) == 2;
+<span class="fc bfc" id="L346" title="All 2 branches covered.">    if (!res)</span>
+<span class="fc" id="L347">	return false;</span>
+    /* check against all other edges */
+<span class="fc bfc" id="L349" title="All 2 branches covered.">    for (pnlj = 0; pnlj &lt; pnln; pnlj++) {</span>
+<span class="fc" id="L350">	pnljp1 = (pnlj + 1) % pnln;</span>
+<span class="fc bfc" id="L351" title="All 8 branches covered.">	if (!((pnlj == pnli) || (pnljp1 == pnli) ||</span>
+	  (pnlj == pnlip2) || (pnljp1 == pnlip2)))
+<span class="fc bfc" id="L353" title="All 2 branches covered.">	    if (intersects(pnlps[pnli].pp, pnlps[pnlip2].pp,</span>
+			   pnlps[pnlj].pp, pnlps[pnljp1].pp))
+<span class="fc" id="L355">		return false;</span>
+    }
+<span class="fc" id="L357">    return true;</span>
+} finally {
+<span class="fc" id="L359">LEAVING(&quot;72of3cd7shtwokglxapw04oe9&quot;,&quot;isdiagonal&quot;);</span>
+}
+}
+
+
+
+
+//3 7vf9jtj9i8rg0cxrstbqswuck
+// static void loadtriangle(pointnlink_t * pnlap, pointnlink_t * pnlbp, 			 pointnlink_t * pnlcp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;loadtriangle&quot;, key=&quot;7vf9jtj9i8rg0cxrstbqswuck&quot;, definition=&quot;static void loadtriangle(pointnlink_t * pnlap, pointnlink_t * pnlbp, 			 pointnlink_t * pnlcp)&quot;)
+public static void loadtriangle(Globals zz, __ptr__ pnlap, __ptr__ pnlbp, __ptr__ pnlcp) {
+<span class="fc" id="L371">ENTERING(&quot;7vf9jtj9i8rg0cxrstbqswuck&quot;,&quot;loadtriangle&quot;);</span>
+try {
+	CArray&lt;ST_triangle_t&gt; trip;
+    int ei;
+    /* make space */
+<span class="fc bfc" id="L376" title="All 2 branches covered.">    if (zz.tril &gt;= zz.trin)</span>
+<span class="fc" id="L377">	growtris(zz, zz.trin + 20);</span>
+<span class="fc" id="L378">    trip = zz.tris.plus_(zz.tril++);</span>
+<span class="fc" id="L379">    trip.get__(0).mark = 0;</span>
+<span class="fc" id="L380">    trip.get__(0).e[0].pnl0p = (ST_pointnlink_t) pnlap;</span>
+<span class="fc" id="L381">    trip.get__(0).e[0].pnl1p = (ST_pointnlink_t) pnlbp;</span>
+<span class="fc" id="L382">    trip.get__(0).e[0].rtp = null;</span>
+<span class="fc" id="L383">    trip.get__(0).e[1].pnl0p = (ST_pointnlink_t) pnlbp;</span>
+<span class="fc" id="L384">    trip.get__(0).e[1].pnl1p = (ST_pointnlink_t) pnlcp;</span>
+<span class="fc" id="L385">    trip.get__(0).e[1].rtp = null;</span>
+<span class="fc" id="L386">    trip.get__(0).e[2].pnl0p = (ST_pointnlink_t) pnlcp;</span>
+<span class="fc" id="L387">    trip.get__(0).e[2].pnl1p = (ST_pointnlink_t) pnlap;</span>
+<span class="fc" id="L388">    trip.get__(0).e[2].rtp = null;</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">    for (ei = 0; ei &lt; 3; ei++)</span>
+<span class="fc" id="L390">	trip.get__(0).e[ei].lrp = trip;</span>
+} finally {
+<span class="fc" id="L392">LEAVING(&quot;7vf9jtj9i8rg0cxrstbqswuck&quot;,&quot;loadtriangle&quot;);</span>
+}
+<span class="fc" id="L394">}</span>
+
+
+
+
+//3 6coujw0qksrgu5sxj0r39qm1u
+// static void connecttris(int tri1, int tri2) 
+/* connect a pair of triangles at their common edge (if any) */
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;connecttris&quot;, key=&quot;6coujw0qksrgu5sxj0r39qm1u&quot;, definition=&quot;static void connecttris(int tri1, int tri2)&quot;)
+public static void connecttris(Globals zz, int tri1, int tri2) {
+<span class="fc" id="L405">ENTERING(&quot;6coujw0qksrgu5sxj0r39qm1u&quot;,&quot;connecttris&quot;);</span>
+try {
+	CArray&lt;ST_triangle_t&gt; tri1p;
+	CArray&lt;ST_triangle_t&gt; tri2p;
+    int ei, ej;
+<span class="fc bfc" id="L410" title="All 2 branches covered.">    for (ei = 0; ei &lt; 3; ei++) {</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">	for (ej = 0; ej &lt; 3; ej++) {</span>
+<span class="fc" id="L412">	    tri1p = zz.tris.plus_(tri1);</span>
+<span class="fc" id="L413">	    tri2p = zz.tris.plus_(tri2);</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">	    if ((tri1p.get__(0).e[ei].pnl0p.pp == tri2p.get__(0).e[ej].pnl0p.pp &amp;&amp;</span>
+<span class="pc bpc" id="L415" title="1 of 2 branches missed.">		 tri1p.get__(0).e[ei].pnl1p.pp == tri2p.get__(0).e[ej].pnl1p.pp) ||</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">		(tri1p.get__(0).e[ei].pnl0p.pp == tri2p.get__(0).e[ej].pnl1p.pp &amp;&amp;</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">		 tri1p.get__(0).e[ei].pnl1p.pp == tri2p.get__(0).e[ej].pnl0p.pp))</span>
+		 {
+<span class="fc" id="L419">	    	tri1p.get__(0).e[ei].rtp = tri2p;</span>
+<span class="fc" id="L420">	    	tri2p.get__(0).e[ej].rtp = tri1p;</span>
+		 }
+	}
+    }
+} finally {
+<span class="fc" id="L425">LEAVING(&quot;6coujw0qksrgu5sxj0r39qm1u&quot;,&quot;connecttris&quot;);</span>
+}
+<span class="fc" id="L427">}</span>
+
+
+
+
+//3 3waxf5wy3mwt12wpg5hxg3o9c
+// static int marktripath(int trii, int trij) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;marktripath&quot;, key=&quot;3waxf5wy3mwt12wpg5hxg3o9c&quot;, definition=&quot;static int marktripath(int trii, int trij)&quot;)
+public static boolean marktripath(Globals zz, int trii, int trij) {
+<span class="fc" id="L437">ENTERING(&quot;3waxf5wy3mwt12wpg5hxg3o9c&quot;,&quot;marktripath&quot;);</span>
+try {
+    int ei;
+    
+<span class="fc bfc" id="L441" title="All 2 branches covered.">    if (zz.tris.get__(trii).mark!=0)</span>
+<span class="fc" id="L442">	return false;</span>
+<span class="fc" id="L443">    zz.tris.get__(trii).mark = 1;</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">    if (trii == trij)</span>
+<span class="fc" id="L445">	return true;</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">    for (ei = 0; ei &lt; 3; ei++)</span>
+<span class="fc bfc" id="L447" title="All 2 branches covered.">	if ((zz.tris.get__(trii).e[ei].rtp!=null &amp;&amp;</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">	    marktripath(zz, zz.tris.get__(trii).e[ei].rtp.minus_(zz.tris), trij)))</span>
+<span class="fc" id="L449">	    return true;</span>
+<span class="fc" id="L450">    zz.tris.get__(trii).mark = 0;</span>
+<span class="fc" id="L451">    return false;</span>
+} finally {
+<span class="fc" id="L453">LEAVING(&quot;3waxf5wy3mwt12wpg5hxg3o9c&quot;,&quot;marktripath&quot;);</span>
+}
+}
+
+
+
+
+//3 44szdl31mg8mt5qrfj70kb2sn
+// static void add2dq(int side, pointnlink_t * pnlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;add2dq&quot;, key=&quot;44szdl31mg8mt5qrfj70kb2sn&quot;, definition=&quot;static void add2dq(int side, pointnlink_t * pnlp)&quot;)
+public static void add2dq(Globals zz, int side, ST_pointnlink_t pnlp) {
+<span class="fc" id="L465">ENTERING(&quot;44szdl31mg8mt5qrfj70kb2sn&quot;,&quot;add2dq&quot;);</span>
+try {
+<span class="fc bfc" id="L467" title="All 2 branches covered.">    if (side == 1) {</span>
+<span class="fc bfc" id="L468" title="All 2 branches covered.">	if (zz.dq.lpnlpi - zz.dq.fpnlpi &gt;= 0)</span>
+<span class="fc" id="L469">	    pnlp.link = zz.dq.pnlps[zz.dq.fpnlpi];</span>
+	    /* shortest path links */
+<span class="fc" id="L471">	zz.dq.fpnlpi = zz.dq.fpnlpi-1;</span>
+<span class="fc" id="L472">	zz.dq.pnlps[zz.dq.fpnlpi] = pnlp;</span>
+    } else {
+<span class="pc bpc" id="L474" title="1 of 2 branches missed.">	if (zz.dq.lpnlpi - zz.dq.fpnlpi &gt;= 0)</span>
+<span class="fc" id="L475">	    pnlp.link = zz.dq.pnlps[zz.dq.lpnlpi];</span>
+	    /* shortest path links */
+<span class="fc" id="L477">	zz.dq.lpnlpi = zz.dq.lpnlpi+1;</span>
+<span class="fc" id="L478">	zz.dq.pnlps[zz.dq.lpnlpi] = pnlp;</span>
+    }
+} finally {
+<span class="fc" id="L481">LEAVING(&quot;44szdl31mg8mt5qrfj70kb2sn&quot;,&quot;add2dq&quot;);</span>
+}
+<span class="fc" id="L483">}</span>
+
+
+
+
+//3 572sssdz1se16w790xceiy5vr
+// static void splitdq(int side, int index) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;splitdq&quot;, key=&quot;572sssdz1se16w790xceiy5vr&quot;, definition=&quot;static void splitdq(int side, int index)&quot;)
+public static void splitdq(Globals zz, int side, int index) {
+<span class="fc" id="L493">ENTERING(&quot;572sssdz1se16w790xceiy5vr&quot;,&quot;splitdq&quot;);</span>
+try {
+<span class="fc bfc" id="L495" title="All 2 branches covered.">    if (side == 1)</span>
+<span class="fc" id="L496">	zz.dq.lpnlpi = index;</span>
+    else
+<span class="fc" id="L498">	zz.dq.fpnlpi = index;</span>
+} finally {
+<span class="fc" id="L500">LEAVING(&quot;572sssdz1se16w790xceiy5vr&quot;,&quot;splitdq&quot;);</span>
+}
+<span class="fc" id="L502">}</span>
+
+
+
+
+//3 9dnrc8vqpffp5t3bmsackgqtl
+// static int finddqsplit(pointnlink_t * pnlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;finddqsplit&quot;, key=&quot;9dnrc8vqpffp5t3bmsackgqtl&quot;, definition=&quot;static int finddqsplit(pointnlink_t * pnlp)&quot;)
+public static int finddqsplit(Globals zz, ST_pointnlink_t pnlp) {
+<span class="fc" id="L512">ENTERING(&quot;9dnrc8vqpffp5t3bmsackgqtl&quot;,&quot;finddqsplit&quot;);</span>
+try {
+    int index;
+<span class="fc bfc" id="L515" title="All 2 branches covered.">    for (index = zz.dq.fpnlpi; index &lt; zz.dq.apex; index++)</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">	if (ccw(zz.dq.pnlps[index + 1].pp, zz.dq.pnlps[index].pp, pnlp.pp) ==</span>
+	    1)
+<span class="fc" id="L518">	    return index;</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">    for (index = zz.dq.lpnlpi; index &gt; zz.dq.apex; index--)</span>
+<span class="fc bfc" id="L520" title="All 2 branches covered.">	if (ccw(zz.dq.pnlps[index - 1].pp, zz.dq.pnlps[index].pp, pnlp.pp) ==</span>
+	    2)
+<span class="fc" id="L522">	    return index;</span>
+<span class="fc" id="L523">    return zz.dq.apex;</span>
+} finally {
+<span class="fc" id="L525">LEAVING(&quot;9dnrc8vqpffp5t3bmsackgqtl&quot;,&quot;finddqsplit&quot;);</span>
+}
+}
+
+
+
+
+//3 72h03s8inxtto2ekvmuqjtj3d
+// static int ccw(Ppoint_t * p1p, Ppoint_t * p2p, Ppoint_t * p3p) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;ccw&quot;, key=&quot;72h03s8inxtto2ekvmuqjtj3d&quot;, definition=&quot;static int ccw(Ppoint_t * p1p, Ppoint_t * p2p, Ppoint_t * p3p)&quot;)
+public static int ccw(ST_pointf p1p, ST_pointf p2p, ST_pointf p3p) {
+<span class="fc" id="L537">ENTERING(&quot;72h03s8inxtto2ekvmuqjtj3d&quot;,&quot;ccw&quot;);</span>
+try {
+    double d;
+<span class="fc" id="L540">    d = ((p1p.y - p2p.y) * (p3p.x - p2p.x)) -</span>
+	((p3p.y - p2p.y) * (p1p.x - p2p.x));
+<span class="fc bfc" id="L542" title="All 4 branches covered.">    return (d &gt; 0) ? 1 : ((d &lt; 0) ? 2 : 3);</span>
+} finally {
+<span class="fc" id="L544">LEAVING(&quot;72h03s8inxtto2ekvmuqjtj3d&quot;,&quot;ccw&quot;);</span>
+}
+}
+
+
+
+
+//3 22a9ajg9t8ovqsigk3tyu3rkd
+// static int intersects(Ppoint_t * pap, Ppoint_t * pbp, 		      Ppoint_t * pcp, Ppoint_t * pdp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;intersects&quot;, key=&quot;22a9ajg9t8ovqsigk3tyu3rkd&quot;, definition=&quot;static int intersects(Ppoint_t * pap, Ppoint_t * pbp, 		      Ppoint_t * pcp, Ppoint_t * pdp)&quot;)
+public static boolean intersects(ST_pointf pap, ST_pointf pbp, ST_pointf pcp, ST_pointf pdp) {
+<span class="fc" id="L556">ENTERING(&quot;22a9ajg9t8ovqsigk3tyu3rkd&quot;,&quot;intersects&quot;);</span>
+try {
+    int ccw1, ccw2, ccw3, ccw4;
+<span class="fc bfc" id="L559" title="All 4 branches covered.">    if (ccw(pap, pbp, pcp) == 3 || ccw(pap, pbp, pdp) == 3 ||</span>
+<span class="fc bfc" id="L560" title="All 4 branches covered.">	ccw(pcp, pdp, pap) == 3 || ccw(pcp, pdp, pbp) == 3) {</span>
+<span class="pc bpc" id="L561" title="1 of 4 branches missed.">	if (between(pap, pbp, pcp) || between(pap, pbp, pdp) ||</span>
+<span class="pc bpc" id="L562" title="2 of 4 branches missed.">	    between(pcp, pdp, pap) || between(pcp, pdp, pbp))</span>
+<span class="fc" id="L563">	    return ((!(false)));</span>
+    } else {
+<span class="fc bfc" id="L565" title="All 2 branches covered.">	ccw1 = (ccw(pap, pbp, pcp) == 1) ? 1 : 0;</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered.">	ccw2 = (ccw(pap, pbp, pdp) == 1) ? 1 : 0;</span>
+<span class="fc bfc" id="L567" title="All 2 branches covered.">	ccw3 = (ccw(pcp, pdp, pap) == 1) ? 1 : 0;</span>
+<span class="fc bfc" id="L568" title="All 2 branches covered.">	ccw4 = (ccw(pcp, pdp, pbp) == 1) ? 1 : 0;</span>
+<span class="fc bfc" id="L569" title="All 4 branches covered.">	return (ccw1 ^ ccw2)!=0 &amp;&amp; (ccw3 ^ ccw4)!=0;</span>
+    }
+<span class="fc" id="L571">    return false;</span>
+} finally {
+<span class="fc" id="L573">LEAVING(&quot;22a9ajg9t8ovqsigk3tyu3rkd&quot;,&quot;intersects&quot;);</span>
+}
+}
+
+
+
+
+//3 uh5n18rzyevtb4cwpni70qpc
+// static int between(Ppoint_t * pap, Ppoint_t * pbp, Ppoint_t * pcp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;between&quot;, key=&quot;uh5n18rzyevtb4cwpni70qpc&quot;, definition=&quot;static int between(Ppoint_t * pap, Ppoint_t * pbp, Ppoint_t * pcp)&quot;)
+public static boolean between(ST_pointf pap, ST_pointf pbp, ST_pointf pcp) {
+<span class="fc" id="L585">ENTERING(&quot;uh5n18rzyevtb4cwpni70qpc&quot;,&quot;between&quot;);</span>
+try {
+<span class="fc" id="L587">    final ST_pointf p1 = new ST_pointf(), p2 = new ST_pointf();</span>
+<span class="fc" id="L588">    p1.x = pbp.x - pap.x;</span>
+<span class="fc" id="L589">    p1.y = pbp.y - pap.y;</span>
+<span class="fc" id="L590">    p2.x = pcp.x - pap.x;</span>
+<span class="fc" id="L591">    p2.y = pcp.y - pap.y;</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">    if (ccw(pap, pbp, pcp) != 3)</span>
+<span class="fc" id="L593">	return false;</span>
+<span class="fc bfc" id="L594" title="All 4 branches covered.">    return (p2.x * p1.x + p2.y * p1.y &gt;= 0) &amp;&amp;</span>
+	(p2.x * p2.x + p2.y * p2.y &lt;= p1.x * p1.x + p1.y * p1.y);
+} finally {
+<span class="fc" id="L597">LEAVING(&quot;uh5n18rzyevtb4cwpni70qpc&quot;,&quot;between&quot;);</span>
+}
+}
+
+
+
+
+//3 zti1mzm2m7tr2xwnbf7e8u3d
+// static int pointintri(int trii, Ppoint_t * pp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;pointintri&quot;, key=&quot;zti1mzm2m7tr2xwnbf7e8u3d&quot;, definition=&quot;static int pointintri(int trii, Ppoint_t * pp)&quot;)
+public static boolean pointintri(Globals zz, int trii, ST_pointf pp) {
+<span class="fc" id="L609">ENTERING(&quot;zti1mzm2m7tr2xwnbf7e8u3d&quot;,&quot;pointintri&quot;);</span>
+try {
+    int ei, sum;
+<span class="fc bfc" id="L612" title="All 2 branches covered.">    for (ei = 0, sum = 0; ei &lt; 3; ei++)</span>
+<span class="fc bfc" id="L613" title="All 2 branches covered.">	if (ccw(zz.tris.get__(trii).e[ei].pnl0p.pp,</span>
+<span class="fc" id="L614">			zz.tris.get__(trii).e[ei].pnl1p.pp, pp) != 2)</span>
+<span class="fc" id="L615">	    sum++;</span>
+<span class="pc bpc" id="L616" title="1 of 4 branches missed.">    return (sum == 3 || sum == 0);</span>
+} finally {
+<span class="fc" id="L618">LEAVING(&quot;zti1mzm2m7tr2xwnbf7e8u3d&quot;,&quot;pointintri&quot;);</span>
+}
+}
+
+
+
+
+//3 85wstb60jkjd0kbh9tyninm4h
+// static void growpnls(int newpnln) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;growpnls&quot;, key=&quot;85wstb60jkjd0kbh9tyninm4h&quot;, definition=&quot;static void growpnls(int newpnln)&quot;)
+public static void growpnls(Globals zz, int newpnln) {
+<span class="fc" id="L630">ENTERING(&quot;85wstb60jkjd0kbh9tyninm4h&quot;,&quot;growpnls&quot;);</span>
+try {
+<span class="fc bfc" id="L632" title="All 2 branches covered.">    if (newpnln &lt;= zz.pnln)</span>
+<span class="fc" id="L633">	return;</span>
+<span class="fc bfc" id="L634" title="All 2 branches covered.">    if ((zz.pnls) == null) {</span>
+<span class="pc bpc" id="L635" title="1 of 2 branches missed.">	if ((zz.pnls = malloc(newpnln)) == null) {</span>
+<span class="nc" id="L636">UNSUPPORTED(&quot;9zyfc4bjg3i6rrna9vqf8doys&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc pnls&quot;));</span>
+<span class="nc" id="L637">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+<span class="pc bpc" id="L639" title="1 of 2 branches missed.">	if ((zz.pnlps = malloc(newpnln)) == null) {</span>
+<span class="nc" id="L640">UNSUPPORTED(&quot;1etar0wd2cbbvqo4jnmbvjiz4&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc pnlps&quot;));</span>
+<span class="nc" id="L641">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    } else {
+<span class="pc bpc" id="L644" title="1 of 2 branches missed.">	if (((zz.pnls = realloc(zz.pnls, newpnln)))==null) {</span>
+<span class="nc" id="L645">UNSUPPORTED(&quot;105nogpkt0qqut0yu4alvkk1u&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc pnls&quot;));</span>
+<span class="nc" id="L646">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+<span class="pc bpc" id="L648" title="1 of 2 branches missed.">	if (((zz.pnlps = realloc(zz.pnlps, newpnln)))==null) {</span>
+<span class="nc" id="L649">UNSUPPORTED(&quot;be84alh84ub40x4um989aj20d&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc pnlps&quot;));</span>
+<span class="nc" id="L650">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    }
+<span class="fc" id="L653">    zz.pnln = newpnln;</span>
+} finally {
+<span class="fc" id="L655">LEAVING(&quot;85wstb60jkjd0kbh9tyninm4h&quot;,&quot;growpnls&quot;);</span>
+}
+<span class="fc" id="L657">}</span>
+
+private static ST_pointnlink_t[] malloc(int nb) {
+<span class="fc" id="L660">	ST_pointnlink_t result[] = new ST_pointnlink_t[nb];</span>
+<span class="fc bfc" id="L661" title="All 2 branches covered.">	for (int i = 0; i &lt; result.length; i++) {</span>
+<span class="fc" id="L662">		result[i] = new ST_pointnlink_t();</span>
+	}
+<span class="fc" id="L664">	return result;</span>
+}
+private static ST_pointnlink_t[] realloc(ST_pointnlink_t orig[], int nb) {
+<span class="pc bpc" id="L667" title="1 of 2 branches missed.">	if (orig.length &gt;= nb) {</span>
+<span class="nc" id="L668">		return orig;</span>
+	}
+<span class="fc" id="L670">	ST_pointnlink_t result[] = malloc(nb);</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">	for (int i = 0; i &lt; orig.length; i++) {</span>
+<span class="fc" id="L672">		result[i] = orig[i];</span>
+	}
+<span class="fc" id="L674">	return result;</span>
+}
+
+
+
+//3 c5q8ult6w26jppe5ifzgcoq82
+// static void growtris(int newtrin) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;growtris&quot;, key=&quot;c5q8ult6w26jppe5ifzgcoq82&quot;, definition=&quot;static void growtris(int newtrin)&quot;)
+public static void growtris(Globals zz, int newtrin) {
+<span class="fc" id="L684">ENTERING(&quot;c5q8ult6w26jppe5ifzgcoq82&quot;,&quot;growtris&quot;);</span>
+try {
+<span class="pc bpc" id="L686" title="1 of 2 branches missed.">    if (newtrin &lt;= zz.trin)</span>
+<span class="nc" id="L687">	return;</span>
+<span class="fc bfc" id="L688" title="All 2 branches covered.">    if ((zz.tris) == null) {</span>
+<span class="pc bpc" id="L689" title="1 of 2 branches missed.">	if ((zz.tris = CArray.&lt;ST_triangle_t&gt;ALLOC__(newtrin, ZType.ST_triangle_t)) == null) {</span>
+<span class="nc" id="L690">	UNSUPPORTED(&quot;5782e28cjpaa3dpf8up4zmtq7&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc tris&quot;));</span>
+<span class="nc" id="L691">	UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    } else {
+<span class="pc bpc" id="L694" title="1 of 2 branches missed.">	if (((zz.tris = CArray.&lt;ST_triangle_t&gt;REALLOC__(newtrin, zz.tris, ZType.ST_triangle_t)))==null) {</span>
+<span class="nc" id="L695">	UNSUPPORTED(&quot;d3fgu54pn5tydfhn7z73v73ra&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc tris&quot;));</span>
+<span class="nc" id="L696">	UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    }
+<span class="fc" id="L699">    zz.trin = newtrin;</span>
+} finally {
+<span class="fc" id="L701">LEAVING(&quot;c5q8ult6w26jppe5ifzgcoq82&quot;,&quot;growtris&quot;);</span>
+}
+<span class="fc" id="L703">}</span>
+
+
+private static ST_triangle_t[] malloc2(int nb) {
+<span class="nc" id="L707">	ST_triangle_t result[] = new ST_triangle_t[nb];</span>
+<span class="nc bnc" id="L708" title="All 2 branches missed.">	for (int i = 0; i &lt; result.length; i++) {</span>
+<span class="nc" id="L709">		result[i] = new ST_triangle_t();</span>
+	}
+<span class="nc" id="L711">	return result;</span>
+}
+private static ST_triangle_t[] realloc2(ST_triangle_t orig[], int nb) {
+<span class="nc bnc" id="L714" title="All 2 branches missed.">	if (orig.length &gt;= nb) {</span>
+<span class="nc" id="L715">		return orig;</span>
+	}
+<span class="nc" id="L717">	ST_triangle_t result[] = malloc2(nb);</span>
+<span class="nc bnc" id="L718" title="All 2 branches missed.">	for (int i = 0; i &lt; orig.length; i++) {</span>
+<span class="nc" id="L719">		result[i] = orig[i];</span>
+	}
+<span class="nc" id="L721">	return result;</span>
+}
+
+
+
+//3 bzym9u6dtatii1vp4hcmofc80
+// static void growdq(int newdqn) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;growdq&quot;, key=&quot;bzym9u6dtatii1vp4hcmofc80&quot;, definition=&quot;static void growdq(int newdqn)&quot;)
+public static void growdq(Globals zz, int newdqn) {
+<span class="fc" id="L731">ENTERING(&quot;bzym9u6dtatii1vp4hcmofc80&quot;,&quot;growdq&quot;);</span>
+try {
+<span class="fc bfc" id="L733" title="All 2 branches covered.">    if (newdqn &lt;= zz.dq.pnlpn)</span>
+<span class="fc" id="L734">	return;</span>
+<span class="fc bfc" id="L735" title="All 2 branches covered.">    if ((zz.dq.pnlps) == null) {</span>
+<span class="pc bpc" id="L736" title="1 of 2 branches missed.">	if (!zz.dq.malloc(newdqn)) {</span>
+<span class="nc" id="L737">UNSUPPORTED(&quot;88fwpb40wz9jc8jiz7u032s4t&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc dq.pnls&quot;));</span>
+<span class="nc" id="L738">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    } else {
+<span class="pc bpc" id="L741" title="1 of 2 branches missed.">	if (!zz.dq.realloc(newdqn)) {</span>
+<span class="nc" id="L742">UNSUPPORTED(&quot;exqx4ck7h15m8whgip6xpnhoo&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc dq.pnls&quot;));</span>
+<span class="nc" id="L743">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    }
+<span class="fc" id="L746">    zz.dq.pnlpn = newdqn;</span>
+} finally {
+<span class="fc" id="L748">LEAVING(&quot;bzym9u6dtatii1vp4hcmofc80&quot;,&quot;growdq&quot;);</span>
+}
+<span class="fc" id="L750">}</span>
+
+
+
+
+//3 d7vtt8xqxbdnx9kwtt1zzof75
+// static void growops(int newopn) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/shortest.c&quot;, name=&quot;growops&quot;, key=&quot;d7vtt8xqxbdnx9kwtt1zzof75&quot;, definition=&quot;static void growops(int newopn)&quot;)
+public static void growops(Globals zz, int newopn) {
+<span class="fc" id="L760">ENTERING(&quot;d7vtt8xqxbdnx9kwtt1zzof75&quot;,&quot;growops&quot;);</span>
+try {
+<span class="fc bfc" id="L762" title="All 2 branches covered.">    if (newopn &lt;= zz.opn_shortest)</span>
+<span class="fc" id="L763">	return;</span>
+<span class="fc bfc" id="L764" title="All 2 branches covered.">    if ((zz.ops_shortest) == null) {</span>
+<span class="pc bpc" id="L765" title="1 of 2 branches missed.">	if ((zz.ops_shortest = CArray.&lt;ST_pointf&gt;ALLOC__(newopn, ZType.ST_pointf)) == null) {</span>
+<span class="nc" id="L766">UNSUPPORTED(&quot;7wxgcgah7iy6vetj5yszoq4k4&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc ops&quot;));</span>
+<span class="nc" id="L767">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+	}
+    } else {
+<span class="pc bpc" id="L770" title="1 of 2 branches missed.">	if (((zz.ops_shortest = CArray.&lt;ST_pointf&gt;REALLOC__(newopn, zz.ops_shortest, ZType.ST_pointf)))==null) {</span>
+<span class="nc" id="L771">UNSUPPORTED(&quot;7azrdo5s3kc44taqmtmeu1s33&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc ops&quot;));</span>
+<span class="nc" id="L772">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
+    }
+    }
+<span class="fc" id="L775">    zz.opn_shortest = newopn;</span>
+} finally {
+<span class="fc" id="L777">LEAVING(&quot;d7vtt8xqxbdnx9kwtt1zzof75&quot;,&quot;growops&quot;);</span>
+}
+<span class="fc" id="L779">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

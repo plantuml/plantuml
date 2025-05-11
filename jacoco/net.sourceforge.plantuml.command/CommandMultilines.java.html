@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandMultilines.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command</a> &gt; <span class="el_source">CommandMultilines.java</span></div><h1>CommandMultilines.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command;
+
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.utils.BlocLines;
+
+public abstract class CommandMultilines&lt;S extends Diagram&gt; implements Command&lt;S&gt; {
+
+	private final Pattern2 starting;
+
+<span class="fc" id="L48">	public CommandMultilines(String patternStart) {</span>
+<span class="pc bpc" id="L49" title="2 of 4 branches missed.">		if (patternStart.startsWith(&quot;^&quot;) == false || patternStart.endsWith(&quot;$&quot;) == false) {</span>
+<span class="nc" id="L50">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart);</span>
+		}
+<span class="fc" id="L52">		this.starting = MyPattern.cmpile(patternStart);</span>
+<span class="fc" id="L53">	}</span>
+
+	public abstract String getPatternEnd();
+
+	public String[] getDescription() {
+<span class="nc" id="L58">		return new String[] { &quot;START: &quot; + starting.pattern(), &quot;END: &quot; + getPatternEnd() };</span>
+	}
+
+	final public CommandControl isValid(BlocLines lines) {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc" id="L63">			return CommandControl.NOT_OK;</span>
+
+<span class="fc" id="L65">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L67">			return CommandControl.NOT_OK;</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (lines.size() == 1)</span>
+<span class="fc" id="L70">			return CommandControl.OK_PARTIAL;</span>
+
+<span class="fc" id="L72">		m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.getLast().getTrimmed().getString());</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L74">			return CommandControl.OK_PARTIAL;</span>
+
+<span class="fc" id="L76">		return finalVerification();</span>
+	}
+
+	protected boolean isCommandForbidden() {
+<span class="fc" id="L80">		return false;</span>
+	}
+
+	protected CommandControl finalVerification() {
+<span class="fc" id="L84">		return CommandControl.OK;</span>
+	}
+
+	protected final Pattern2 getStartingPattern() {
+<span class="nc" id="L88">		return starting;</span>
+	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

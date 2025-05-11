@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirectDraw.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.api.cheerpj.v1</a> &gt; <span class="el_source">DirectDraw.java</span></div><h1>DirectDraw.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package com.plantuml.api.cheerpj.v1;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.awt.Color;
+import java.awt.Frame;
+import java.awt.Graphics2D;
+import java.io.StringReader;
+import java.util.Collections;
+import java.util.List;
+
+import com.plantuml.api.cheerpj.JsonResult;
+import com.plantuml.api.cheerpj.StringBounderCanvas;
+import com.plantuml.api.cheerpj.Utils;
+import com.plantuml.api.cheerpj.WasmLog;
+
+import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.BlockUmlBuilder;
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.preproc.Defines;
+
+<span class="nc" id="L67">public class DirectDraw {</span>
+
+	public static Frame frame;
+	public static Graphics2D g2d;
+	private static int frameWidth;
+	private static int frameHeight;
+
+	public static Object initArea(int width, int height) {
+<span class="nc" id="L75">		final long start = System.currentTimeMillis();</span>
+<span class="nc" id="L76">		WasmLog.start = start;</span>
+<span class="nc" id="L77">		WasmLog.log(&quot;initCanvas&quot;);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (g2d == null) {</span>
+<span class="nc" id="L79">			frameWidth = width;</span>
+<span class="nc" id="L80">			frameHeight = height;</span>
+<span class="nc" id="L81">			frame = new Frame();</span>
+<span class="nc" id="L82">			frame.setUndecorated(true);</span>
+<span class="nc" id="L83">			frame.setSize(frameWidth, frameHeight);</span>
+<span class="nc" id="L84">			frame.setLayout(null);</span>
+<span class="nc" id="L85">			frame.setVisible(true);</span>
+<span class="nc" id="L86">			g2d = (Graphics2D) frame.getGraphics();</span>
+<span class="nc" id="L87">			WasmLog.log(&quot;initCanvas done = &quot; + frame);</span>
+<span class="nc" id="L88">			return 45;</span>
+		}
+<span class="nc" id="L90">		WasmLog.log(&quot;initCanvas skipped because it has already been done&quot;);</span>
+<span class="nc" id="L91">		return 47;</span>
+	}
+
+	public static Object draw(String mode, String text) {
+<span class="nc" id="L95">		final long start = System.currentTimeMillis();</span>
+<span class="nc" id="L96">		WasmLog.start = start;</span>
+
+		try {
+<span class="nc" id="L99">			text = Utils.cleanText(text);</span>
+
+<span class="nc" id="L101">			final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.&lt;String&gt;emptyList(), UTF_8,</span>
+<span class="nc" id="L102">					Defines.createEmpty(), new StringReader(text), null, &quot;string&quot;);</span>
+<span class="nc" id="L103">			List&lt;BlockUml&gt; blocks = builder.getBlockUmls();</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (blocks.size() == 0)</span>
+<span class="nc" id="L106">				return JsonResult.noDataFound(start);</span>
+
+<span class="nc" id="L108">			WasmLog.log(&quot;...loading data...&quot;);</span>
+
+<span class="nc" id="L110">			final Diagram system = blocks.get(0).getDiagram();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (system instanceof PSystemError) {</span>
+<span class="nc" id="L112">				final ErrorUml error = ((PSystemError) system).getFirstError();</span>
+<span class="nc" id="L113">				WasmLog.log(&quot;[&quot; + error.getPosition() + &quot;] &quot; + error.getError());</span>
+<span class="nc" id="L114">				return JsonResult.fromError(start, (PSystemError) system);</span>
+			}
+
+<span class="nc" id="L117">			WasmLog.log(&quot;...processing...&quot;);</span>
+
+<span class="nc" id="L119">			final HColor back = HColors.simple(Color.WHITE);</span>
+<span class="nc" id="L120">			final StringBounder stringBounder = new StringBounderCanvas(g2d);</span>
+<span class="nc" id="L121">			final UGraphicG2d ug = new UGraphicG2d(back, ColorMapper.IDENTITY, stringBounder, g2d, 1.0, FileFormat.PNG);</span>
+<span class="nc" id="L122">			WasmLog.log(&quot;...cleaning...&quot;);</span>
+<span class="nc" id="L123">			ug.apply(back).apply(back.bg()).draw(URectangle.build(frameWidth, frameHeight));</span>
+<span class="nc" id="L124">			WasmLog.log(&quot;...drawing...&quot;);</span>
+
+<span class="nc" id="L126">			system.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.PNG));</span>
+
+<span class="nc" id="L128">			WasmLog.log(&quot;done!&quot;);</span>
+
+<span class="nc" id="L130">			return JsonResult.ok(start, null, system);</span>
+
+<span class="nc" id="L132">		} catch (Throwable t) {</span>
+<span class="nc" id="L133">			WasmLog.log(&quot;Fatal error &quot; + t);</span>
+<span class="nc" id="L134">			return JsonResult.fromCrash(start, t);</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

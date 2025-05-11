@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileNoteAlone.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> &gt; <span class="el_source">FtileNoteAlone.java</span></div><h1>FtileNoteAlone.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock2;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.svek.image.Opale;
+
+public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable {
+
+	private final Opale opale;
+	private final boolean withOutPoint;
+	private final Swimlane swimlane;
+
+	public StyleSignatureBasic getStyleSignature() {
+<span class="nc" id="L77">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);</span>
+	}
+
+	@Override
+	public Collection&lt;Ftile&gt; getMyChildren() {
+<span class="nc" id="L82">		return Collections.emptyList();</span>
+	}
+
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (swimlane == null) {</span>
+<span class="nc" id="L87">			return Collections.emptySet();</span>
+		}
+<span class="nc" id="L89">		return Collections.singleton(swimlane);</span>
+	}
+
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L93">		return swimlane;</span>
+	}
+
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L97">		return swimlane;</span>
+	}
+
+	public FtileNoteAlone(boolean shadow, Display note, ISkinParam skinParam, boolean withOutPoint, Swimlane swimlane) {
+<span class="nc" id="L101">		super(skinParam);</span>
+<span class="nc" id="L102">		this.swimlane = swimlane;</span>
+<span class="nc" id="L103">		this.withOutPoint = withOutPoint;</span>
+
+<span class="nc" id="L105">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L106">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L107">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L108">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L109">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="nc" id="L110">		final UStroke stroke = style.getStroke();</span>
+
+<span class="nc" id="L112">		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);</span>
+
+<span class="nc" id="L114">		final Sheet sheet = skinParam</span>
+<span class="nc" id="L115">				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
+<span class="nc" id="L116">				.createSheet(note);</span>
+<span class="nc" id="L117">		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this, stroke);</span>
+<span class="nc" id="L118">		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, false, stroke);</span>
+
+<span class="nc" id="L120">	}</span>
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L123">		opale.drawU(ug);</span>
+<span class="nc" id="L124">	}</span>
+
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+<span class="nc" id="L128">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (withOutPoint) {</span>
+<span class="nc" id="L130">			return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());</span>
+		}
+<span class="nc" id="L132">		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);</span>
+	}
+
+	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
+<span class="nc" id="L136">		return opale.calculateDimension(stringBounder);</span>
+	}
+
+	public double getStartingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L140">		return -opale.getMarginX1();</span>
+	}
+
+	public double getEndingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L144">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

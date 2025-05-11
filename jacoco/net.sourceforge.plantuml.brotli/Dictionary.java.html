@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dictionary.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.brotli</a> &gt; <span class="el_source">Dictionary.java</span></div><h1>Dictionary.java</h1><pre class="source lang-java linenums">/* Copyright 2015 Google Inc. All Rights Reserved.
+
+   https://github.com/google/brotli/blob/master/LICENSE
+
+   Distributed under MIT license.
+   See file LICENSE for detail or copy at https://opensource.org/licenses/MIT
+*/
+
+package net.sourceforge.plantuml.brotli;
+
+import java.nio.ByteBuffer;
+
+/**
+ * Collection of static dictionary words.
+ *
+ * &lt;p&gt;
+ * Dictionary content is loaded from binary resource when {@link #getData()} is
+ * executed for the first time. Consequently, it saves memory and CPU in case
+ * dictionary is not required.
+ *
+ * &lt;p&gt;
+ * One possible drawback is that multiple threads that need dictionary data may
+ * be blocked (only once in each classworld). To avoid this, it is enough to
+ * call {@link #getData()} proactively.
+ */
+<span class="nc" id="L26">public final class Dictionary {</span>
+	private static volatile ByteBuffer data;
+
+	private static class DataLoader {
+		static final boolean OK;
+
+		static {
+<span class="fc" id="L33">			boolean ok = true;</span>
+			try {
+<span class="fc" id="L35">				Class.forName(Dictionary.class.getPackage().getName() + &quot;.DictionaryData&quot;);</span>
+<span class="nc" id="L36">			} catch (Throwable ex) {</span>
+<span class="nc" id="L37">				ok = false;</span>
+<span class="fc" id="L38">			}</span>
+<span class="fc" id="L39">			OK = ok;</span>
+<span class="fc" id="L40">		}</span>
+	}
+
+	public static void setData(ByteBuffer data) {
+<span class="pc bpc" id="L44" title="2 of 4 branches missed.">		if (!data.isDirect() || !data.isReadOnly()) {</span>
+<span class="nc" id="L45">			throw new BrotliRuntimeException(&quot;data must be a direct read-only byte buffer&quot;);</span>
+		}
+<span class="fc" id="L47">		Dictionary.data = data;</span>
+<span class="fc" id="L48">	}</span>
+
+	public static ByteBuffer getData() {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (data != null) {</span>
+<span class="fc" id="L52">			return data;</span>
+		}
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (!DataLoader.OK) {</span>
+<span class="nc" id="L55">			throw new BrotliRuntimeException(&quot;brotli dictionary is not set&quot;);</span>
+		}
+		/* Might have been set when {@link DictionaryData} was loaded. */
+<span class="fc" id="L58">		return data;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

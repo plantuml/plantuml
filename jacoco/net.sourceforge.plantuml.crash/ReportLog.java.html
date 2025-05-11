@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportLog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.crash</a> &gt; <span class="el_source">ReportLog.java</span></div><h1>ReportLog.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.crash;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.OptionPrint;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.eggs.QuoteUtils;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.version.Version;
+
+<span class="fc" id="L50">public class ReportLog implements Iterable&lt;String&gt; {</span>
+
+<span class="fc" id="L52">	private final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+
+	public void add(String s) {
+<span class="fc" id="L55">		this.strings.add(s);</span>
+<span class="fc" id="L56">	}</span>
+
+	public void addAll(Collection&lt;String&gt; list) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (String s : list)</span>
+<span class="nc" id="L60">			add(s);</span>
+
+<span class="nc" id="L62">	}</span>
+
+	@Override
+	public Iterator&lt;String&gt; iterator() {
+<span class="nc" id="L66">		return Collections.unmodifiableList(strings).iterator();</span>
+	}
+
+	public List&lt;String&gt; asList() {
+<span class="fc" id="L70">		return Collections.unmodifiableList(strings);</span>
+	}
+
+	public void youShouldSendThisDiagram() {
+<span class="nc" id="L74">		add(&quot;You should send this diagram and this image to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; or&quot;);</span>
+<span class="nc" id="L75">		add(&quot;post to &lt;b&gt;https://plantuml.com/qa&lt;/b&gt; to solve this issue.&quot;);</span>
+<span class="nc" id="L76">		add(&quot;You can try to turn around this issue by simplifing your diagram.&quot;);</span>
+<span class="nc" id="L77">	}</span>
+
+	public void checkOldVersionWarning() {
+<span class="fc" id="L80">		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (days &gt;= 90) {</span>
+<span class="fc" id="L82">			addEmptyLine();</span>
+<span class="fc" id="L83">			add(&quot;&lt;b&gt;This version of PlantUML is &quot; + days + &quot; days old, so you should&quot;);</span>
+<span class="fc" id="L84">			add(&quot;&lt;b&gt;consider upgrading from https://plantuml.com/download&quot;);</span>
+		}
+<span class="fc" id="L86">	}</span>
+
+	public void addEmptyLine() {
+<span class="fc" id="L89">		add(&quot; &quot;);</span>
+<span class="fc" id="L90">	}</span>
+
+	public void anErrorHasOccured(Throwable exception, String fullDiagramText) {
+		
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (exception == null)</span>
+<span class="nc" id="L95">			add(&quot;An error has occured!&quot;);</span>
+		else
+<span class="nc" id="L97">			add(&quot;An error has occured : &quot; + exception);</span>
+<span class="nc" id="L98">		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());</span>
+<span class="nc" id="L99">		add(&quot;&lt;i&gt;&quot; + quote);</span>
+<span class="nc" id="L100">		addEmptyLine();</span>
+
+<span class="nc" id="L102">		add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) has crashed.&quot;);</span>
+<span class="nc" id="L103">		addEmptyLine();</span>
+<span class="nc" id="L104">		checkOldVersionWarning();</span>
+<span class="nc" id="L105">		add(&quot;Diagram size: &quot; + lines(fullDiagramText) + &quot; lines / &quot; + fullDiagramText.length() + &quot; characters.&quot;);</span>
+<span class="nc" id="L106">		addEmptyLine();</span>
+<span class="nc" id="L107">	}</span>
+
+	private int lines(String text) {
+<span class="nc" id="L110">		int result = 0;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (int i = 0; i &lt; text.length(); i++)</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (text.charAt(i) == BackSlash.CHAR_NEWLINE)</span>
+<span class="nc" id="L113">				result++;</span>
+
+<span class="nc" id="L115">		return result;</span>
+	}
+
+	public void pleaseCheckYourGraphVizVersion() {
+<span class="nc" id="L119">		addEmptyLine();</span>
+<span class="nc" id="L120">		add(&quot;Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.&quot;);</span>
+<span class="nc" id="L121">		addEmptyLine();</span>
+<span class="nc" id="L122">	}</span>
+
+	public void thisMayBeCaused() {
+<span class="nc" id="L125">		add(&quot;This may be caused by :&quot;);</span>
+<span class="nc" id="L126">		add(&quot; - a bug in PlantUML&quot;);</span>
+<span class="nc" id="L127">		add(&quot; - a problem in GraphViz&quot;);</span>
+<span class="nc" id="L128">	}</span>
+
+	public void addDecodeHint() {
+<span class="nc" id="L131">		addEmptyLine();</span>
+<span class="nc" id="L132">		add(&quot; Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)&quot;);</span>
+<span class="nc" id="L133">	}</span>
+
+	public void addProperties() {
+		// ::comment when __CORE__
+<span class="nc" id="L137">		addAll(OptionPrint.interestingProperties());</span>
+<span class="nc" id="L138">		addAll(OptionPrint.interestingValues());</span>
+		// ::done
+<span class="nc" id="L140">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

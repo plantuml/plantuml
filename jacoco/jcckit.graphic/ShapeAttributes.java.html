@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShapeAttributes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.graphic</a> &gt; <span class="el_source">ShapeAttributes.java</span></div><h1>ShapeAttributes.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.graphic;
+
+import java.awt.Color;
+
+import jcckit.util.ConfigParameters;
+
+/**
+ *  Basic attributes for shapes.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class ShapeAttributes implements LineAttributes, FillAttributes {
+  /** Configuration parameter key. */
+  public static final String FILL_COLOR_KEY = &quot;fillColor&quot;,
+                             LINE_COLOR_KEY = &quot;lineColor&quot;,
+                             LINE_THICKNESS_KEY = &quot;lineThickness&quot;,
+                             LINE_PATTERN_KEY = &quot;linePattern&quot;;
+
+  private final Color _fillColor;
+  private final Color _lineColor;
+  private final double _lineThickness;
+  private final double[] _linePattern;
+
+  /**
+   * Creates a new instance based on the specified configuration
+   * parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;fillColor = &lt;i&gt;no filling&lt;/i&gt;&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;Color&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;no&lt;/td&gt;&lt;td&gt;The fill color of the shape.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;lineColor = &lt;i&gt;no line&lt;/i&gt;&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;Color&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;no&lt;/td&gt;&lt;td&gt;The color of a line, a polygon, or the border of a shape.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;lineThickness = 0&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The thickness of a line. A thickness of zero means that
+   *     the renderer will draw the thinest line possible.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;linePattern = &lt;/tt&gt;&lt;i&gt;solid line&lt;/i&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;A sequence of lengths where the pen is alternatively
+   *     down or up. For example, &lt;tt&gt;0.1 0.1&lt;/tt&gt; will lead to a dashed
+   *     line whereas &lt;tt&gt;0.02 0.02&lt;/tt&gt; is the pattern of a dotted
+   *     line and &lt;tt&gt;0.02 0.02 0.1 0.02&lt;/tt&gt; of a dashed-dotted
+   *     line.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+  public ShapeAttributes(ConfigParameters config) {
+<span class="nc" id="L66">    this(config.getColor(FILL_COLOR_KEY, null),</span>
+<span class="nc" id="L67">         config.getColor(LINE_COLOR_KEY, null),</span>
+<span class="nc" id="L68">         config.getDouble(LINE_THICKNESS_KEY, 0),</span>
+<span class="nc" id="L69">         config.getDoubleArray(LINE_PATTERN_KEY, null));</span>
+<span class="nc" id="L70">  }</span>
+
+  /**
+   * Creates a new instance.
+   * @param fillColor The fill color. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param lineColor The line color. May be &lt;tt&gt;null&lt;/tt&gt;.
+   * @param lineThickness Thickness of the line.
+   *        Negative numbers will be trimmed to zero.
+   * @param linePattern Line pattern. May be &lt;tt&gt;null&lt;/tt&gt;.
+   */
+  public ShapeAttributes(Color fillColor, Color lineColor,
+<span class="nc" id="L81">                         double lineThickness, double[] linePattern) {</span>
+<span class="nc" id="L82">    _fillColor = fillColor;</span>
+<span class="nc" id="L83">    _lineColor = lineColor;</span>
+<span class="nc" id="L84">    _lineThickness = Math.max(0, lineThickness);</span>
+<span class="nc" id="L85">    _linePattern = linePattern;</span>
+<span class="nc" id="L86">  }</span>
+
+  public Color getFillColor() {
+<span class="nc" id="L89">    return _fillColor;</span>
+  }
+
+  public Color getLineColor() {
+<span class="nc" id="L93">    return _lineColor;</span>
+  }
+
+  public double getLineThickness() {
+<span class="nc" id="L97">    return _lineThickness;</span>
+  }
+
+  public double[] getLinePattern() {
+<span class="nc" id="L101">    return _linePattern;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

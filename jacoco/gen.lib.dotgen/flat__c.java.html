@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>flat__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">flat__c.java</span></div><h1>flat__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.dotgen.dotinit__c.dot_root;
+import static gen.lib.dotgen.fastgr__c.virtual_edge;
+import static gen.lib.dotgen.fastgr__c.virtual_node;
+import static gen.lib.dotgen.mincross__c.rec_reset_vlists;
+import static gen.lib.dotgen.mincross__c.rec_save_vlists;
+import static smetana.core.Macro.ED_adjacent;
+import static smetana.core.Macro.ED_dist;
+import static smetana.core.Macro.ED_edge_type;
+import static smetana.core.Macro.ED_head_port;
+import static smetana.core.Macro.ED_label;
+import static smetana.core.Macro.ED_tail_port;
+import static smetana.core.Macro.ED_to_virt;
+import static smetana.core.Macro.FLATORDER;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_maxrank;
+import static smetana.core.Macro.GD_minrank;
+import static smetana.core.Macro.GD_n_cluster;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_rank;
+import static smetana.core.Macro.GD_ranksep;
+import static smetana.core.Macro.ND_alg;
+import static smetana.core.Macro.ND_coord;
+import static smetana.core.Macro.ND_flat_in;
+import static smetana.core.Macro.ND_flat_out;
+import static smetana.core.Macro.ND_ht;
+import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_label;
+import static smetana.core.Macro.ND_lw;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_node_type;
+import static smetana.core.Macro.ND_order;
+import static smetana.core.Macro.ND_other;
+import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_rank;
+import static smetana.core.Macro.ND_rw;
+import static smetana.core.Macro.NORMAL;
+import static smetana.core.Macro.VIRTUAL;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Difficult;
+import gen.annotation.HasND_Rank;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_pointf;
+import h.ST_rank_t;
+import smetana.core.CArray;
+import smetana.core.CArrayOfStar;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.debug.SmetanaDebug;
+
+<span class="pc" id="L105">public class flat__c {</span>
+
+
+
+
+
+
+//3 e0gtvsxlvztmwu8yy44wfvf97
+// static node_t *make_vn_slot(graph_t * g, int r, int pos) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;&quot;, key=&quot;e0gtvsxlvztmwu8yy44wfvf97&quot;, definition=&quot;static node_t *make_vn_slot(graph_t * g, int r, int pos)&quot;)
+public static ST_Agnode_s make_vn_slot(ST_Agraph_s g, int r, int pos) {
+<span class="nc" id="L118">ENTERING(&quot;e0gtvsxlvztmwu8yy44wfvf97&quot;,&quot;make_vn_slot&quot;);</span>
+try {
+    int i;
+    CArrayOfStar&lt;ST_Agnode_s&gt; v;
+    
+    ST_Agnode_s n;
+<span class="nc" id="L124">	v = CArrayOfStar.&lt;ST_Agnode_s&gt;REALLOC(GD_rank(g).get__(r).n + 2, GD_rank(g).get__(r).v, ZType.ST_Agnode_s);</span>
+<span class="nc" id="L125">    GD_rank(g).get__(r).v = v;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">    for (i = GD_rank(g).get__(r).n; i &gt; pos; i--) {</span>
+<span class="nc" id="L127">	v.set_(i, v.get_(i - 1));</span>
+<span class="nc" id="L128">	ND_order(v.get_(i), ND_order(v.get_(i))+1);</span>
+    }
+<span class="nc" id="L130">    n = virtual_node(g);</span>
+<span class="nc" id="L131">    v.set_(pos, n);</span>
+<span class="nc" id="L132">    ND_order(n, pos);</span>
+<span class="nc" id="L133">    ND_rank(n, r);</span>
+<span class="nc" id="L134">    v.set_(++GD_rank(g).get__(r).n, null);</span>
+<span class="nc" id="L135">    return v.get_(pos);</span>
+} finally {
+<span class="nc" id="L137">LEAVING(&quot;e0gtvsxlvztmwu8yy44wfvf97&quot;,&quot;make_vn_slot&quot;);</span>
+}
+}
+
+
+
+
+//3 d64wt9oqphauv3hp4axbg2ep3
+// static void findlr(node_t * u, node_t * v, int *lp, int *rp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;findlr&quot;, key=&quot;d64wt9oqphauv3hp4axbg2ep3&quot;, definition=&quot;static void findlr(node_t * u, node_t * v, int *lp, int *rp)&quot;)
+public static void findlr(ST_Agnode_s u, ST_Agnode_s v, int lp[], int rp[]) {
+<span class="nc" id="L149">ENTERING(&quot;d64wt9oqphauv3hp4axbg2ep3&quot;,&quot;findlr&quot;);</span>
+try {
+    int l, r;
+<span class="nc" id="L152">    l = ND_order(u);</span>
+<span class="nc" id="L153">    r = ND_order(v);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">    if (l &gt; r) {</span>
+<span class="nc" id="L155">	int t = l;</span>
+<span class="nc" id="L156">	l = r;</span>
+<span class="nc" id="L157">	r = t;</span>
+    }
+<span class="nc" id="L159">    lp[0] = l;</span>
+<span class="nc" id="L160">    rp[0] = r;</span>
+} finally {
+<span class="nc" id="L162">LEAVING(&quot;d64wt9oqphauv3hp4axbg2ep3&quot;,&quot;findlr&quot;);</span>
+}
+<span class="nc" id="L164">}</span>
+
+
+
+
+//3 bwjjmaydx5a2fnpeoligkha0r
+// static void setbounds(node_t * v, int *bounds, int lpos, int rpos) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;setbounds&quot;, key=&quot;bwjjmaydx5a2fnpeoligkha0r&quot;, definition=&quot;static void setbounds(node_t * v, int *bounds, int lpos, int rpos)&quot;)
+public static void setbounds(ST_Agnode_s v, int bounds[], int lpos[], int rpos[]) {
+<span class="nc" id="L174">ENTERING(&quot;bwjjmaydx5a2fnpeoligkha0r&quot;,&quot;setbounds&quot;);</span>
+try {
+    int i, ord;
+<span class="nc" id="L177">    int[] l = new int[1], r = new int[1];</span>
+    ST_Agedge_s f;
+<span class="nc bnc" id="L179" title="All 2 branches missed.">    if (ND_node_type(v) == 1) {</span>
+<span class="nc" id="L180">	ord = ND_order(v);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">	if (ND_in(v).size == 0) {	/* flat */</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">	    assert(ND_out(v).size == 2);</span>
+<span class="nc" id="L183">	    findlr((ST_Agnode_s) aghead(ND_out(v).list.get_(0)), (ST_Agnode_s) aghead(ND_out(v).list.get_(1)), l,</span>
+		   r);
+	    /* the other flat edge could be to the left or right */
+<span class="nc bnc" id="L186" title="All 2 branches missed.">	    if (r[0] &lt;= lpos[0])</span>
+<span class="nc" id="L187">		bounds[2] = bounds[0] = ord;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">	    else if (l[0] &gt;= rpos[0])</span>
+<span class="nc" id="L189">		bounds[3] = bounds[1] = ord;</span>
+	    /* could be spanning this one */
+<span class="nc bnc" id="L191" title="All 4 branches missed.">	    else if ((l[0] &lt; lpos[0]) &amp;&amp; (r[0] &gt; rpos[0]));	/* ignore */</span>
+	    /* must have intersecting ranges */
+	    else {
+<span class="nc bnc" id="L194" title="All 6 branches missed.">		if ((l[0] &lt; lpos[0]) || ((l[0] == lpos[0]) &amp;&amp; (r[0] &lt; rpos[0])))</span>
+<span class="nc" id="L195">		    bounds[2] = ord;</span>
+<span class="nc bnc" id="L196" title="All 6 branches missed.">		if ((r[0] &gt; rpos[0]) || ((r[0] == rpos[0]) &amp;&amp; (l[0] &gt; lpos[0])))</span>
+<span class="nc" id="L197">		    bounds[3] = ord;</span>
+	    }
+	} else {		/* forward */
+	    boolean onleft, onright;
+<span class="nc" id="L201">	    onleft = onright = false;</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">	    for (i = 0; (f = (ST_Agedge_s) ND_out(v).list.get_(i))!=null; i++) {</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (ND_order(aghead(f)) &lt;= lpos[0]) {</span>
+<span class="nc" id="L204">		    onleft = true;</span>
+<span class="nc" id="L205">		    continue;</span>
+		}
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (ND_order(aghead(f)) &gt;= rpos[0]) {</span>
+<span class="nc" id="L208">		    onright = true;</span>
+		    continue;
+		}
+	    }
+<span class="nc bnc" id="L212" title="All 4 branches missed.">	    if (onleft &amp;&amp; (onright == false))</span>
+<span class="nc" id="L213">		bounds[0] = ord + 1;</span>
+<span class="nc bnc" id="L214" title="All 4 branches missed.">	    if (onright &amp;&amp; (onleft == false))</span>
+<span class="nc" id="L215">		bounds[1] = ord - 1;</span>
+	}
+    }
+} finally {
+<span class="nc" id="L219">LEAVING(&quot;bwjjmaydx5a2fnpeoligkha0r&quot;,&quot;setbounds&quot;);</span>
+}
+<span class="nc" id="L221">}</span>
+
+
+private static final int HLB = 0;	/* hard left bound */
+private static final int HRB = 1;	/* hard right bound */
+private static final int SLB = 2;	/* soft left bound */
+private static final int SRB = 3;	/* soft right bound */
+
+
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;flat_limits&quot;, key=&quot;3bc4otcsxj1dujj49ydbb19oa&quot;, definition=&quot;static int flat_limits(graph_t * g, edge_t * e)&quot;)
+public static int flat_limits(ST_Agraph_s g, ST_Agedge_s e) {
+<span class="nc" id="L233">ENTERING(&quot;3bc4otcsxj1dujj49ydbb19oa&quot;,&quot;flat_limits&quot;);</span>
+try {
+    int lnode, rnode, r, pos;
+<span class="nc" id="L236">    int[] lpos = new int[1], rpos = new int[1];</span>
+<span class="nc" id="L237">    int bounds[] = new int[4];</span>
+    CArrayOfStar&lt;ST_Agnode_s&gt; rank;
+    
+<span class="nc" id="L240">    r = ND_rank(agtail(e)) - 1;</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">    if (r&lt;0) {</span>
+<span class="nc" id="L242">    	SmetanaDebug.LOG(&quot;flat_limits r=&quot;+r); // Set xt07</span>
+    }
+<span class="nc" id="L244">    rank = GD_rank(g).get__(r).v;</span>
+<span class="nc" id="L245">    lnode = 0;</span>
+<span class="nc" id="L246">    rnode = GD_rank(g).get__(r).n - 1;</span>
+<span class="nc" id="L247">    bounds[HLB] = bounds[SLB] = lnode - 1;</span>
+<span class="nc" id="L248">    bounds[HRB] = bounds[SRB] = rnode + 1;</span>
+<span class="nc" id="L249">    findlr(agtail(e), aghead(e), lpos, rpos);</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">    while (lnode &lt;= rnode) {</span>
+<span class="nc" id="L251">	setbounds(rank.get_(lnode), bounds, lpos, rpos);</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">	if (lnode != rnode)</span>
+<span class="nc" id="L253">	    setbounds(rank.get_(rnode), bounds, lpos, rpos);</span>
+<span class="nc" id="L254">	lnode++;</span>
+<span class="nc" id="L255">	rnode--;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">	if (bounds[HRB] - bounds[HLB] &lt;= 1)</span>
+<span class="nc" id="L257">	    break;</span>
+    }
+<span class="nc bnc" id="L259" title="All 2 branches missed.">    if (bounds[HLB] &lt;= bounds[HRB])</span>
+<span class="nc" id="L260">	pos = (bounds[HLB] + bounds[HRB] + 1) / 2;</span>
+    else
+<span class="nc" id="L262">	pos = (bounds[SLB] + bounds[SRB] + 1) / 2;</span>
+<span class="nc" id="L263">    return pos;</span>
+} finally {
+<span class="nc" id="L265">LEAVING(&quot;3bc4otcsxj1dujj49ydbb19oa&quot;,&quot;flat_limits&quot;);</span>
+}
+}
+
+
+
+
+/* flat_node:
+ * Create virtual node representing edge label between
+ * actual ends of edge e. 
+ * This node is characterized by being virtual and having a non-NULL
+ * ND_alg pointing to e.
+ */
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Difficult
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;flat_node&quot;, key=&quot;4cw9yo9ap8ze1r873v6jat4yc&quot;, definition=&quot;static void  flat_node(edge_t * e)&quot;)
+public static void flat_node(ST_Agedge_s e) {
+<span class="nc" id="L282">ENTERING(&quot;4cw9yo9ap8ze1r873v6jat4yc&quot;,&quot;flat_node&quot;);</span>
+try {
+    int r, place, ypos, h2;
+    ST_Agraph_s g;
+    ST_Agnode_s n, vn;
+    ST_Agedge_s ve;
+<span class="nc" id="L288">    final ST_pointf dimen = new ST_pointf();</span>
+    
+<span class="nc" id="L290">    SmetanaDebug.LOG(&quot;Flat node for &quot;+e.NAME);</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">    if (ED_label(e) == null)</span>
+<span class="nc" id="L292">	return;</span>
+<span class="nc" id="L293">    g = dot_root(agtail(e));</span>
+<span class="nc" id="L294">    r = ND_rank(agtail(e));</span>
+    
+<span class="nc" id="L296">    place = flat_limits(g, e);</span>
+    /* grab ypos = LL.y of label box before make_vn_slot() */
+<span class="nc bnc" id="L298" title="All 2 branches missed.">    if ((n = GD_rank(g).get__(r - 1).v.get_(0))!=null)</span>
+<span class="nc" id="L299">	ypos = (int)(ND_coord(n).y - GD_rank(g).get__(r - 1).ht1);</span>
+    else {
+<span class="nc" id="L301">	n = GD_rank(g).get__(r).v.get_(0);</span>
+<span class="nc" id="L302">	ypos = (int)(ND_coord(n).y + GD_rank(g).get__(r).ht2 + GD_ranksep(g));</span>
+    }
+<span class="nc" id="L304">    vn = make_vn_slot(g, r - 1, place);</span>
+<span class="nc" id="L305">    dimen.___(ED_label(e).dimen);</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">    if (GD_flip(g)) {</span>
+<span class="nc" id="L307">	double f = dimen.x;</span>
+<span class="nc" id="L308">	dimen.x = dimen.y;</span>
+<span class="nc" id="L309">	dimen.y = f;</span>
+    }
+<span class="nc" id="L311">    ND_ht(vn, dimen.y);</span>
+<span class="nc" id="L312">    h2 = (int)(ND_ht(vn) / 2);</span>
+<span class="nc" id="L313">    ND_rw(vn, dimen.x / 2);</span>
+<span class="nc" id="L314">    ND_lw(vn, dimen.x / 2);</span>
+<span class="nc" id="L315">    ND_label(vn, ED_label(e));</span>
+<span class="nc" id="L316">    ND_coord(vn).y = ypos + h2;</span>
+<span class="nc" id="L317">    ve = virtual_edge(vn, agtail(e), e);	/* was NULL? */</span>
+<span class="nc" id="L318">    ED_tail_port(ve).p.x = -ND_lw(vn);</span>
+<span class="nc" id="L319">    ED_head_port(ve).p.x = ND_rw(agtail(e));</span>
+<span class="nc" id="L320">    ED_edge_type(ve, FLATORDER);</span>
+<span class="nc" id="L321">    ve = virtual_edge(vn, aghead(e), e);</span>
+<span class="nc" id="L322">    ED_tail_port(ve).p.x = ND_rw(vn);</span>
+<span class="nc" id="L323">    ED_head_port(ve).p.x = ND_lw(aghead(e));</span>
+<span class="nc" id="L324">    ED_edge_type(ve, FLATORDER);</span>
+    /* another assumed symmetry of ht1/ht2 of a label node */
+<span class="nc bnc" id="L326" title="All 2 branches missed.">    if (GD_rank(g).get__(r - 1).ht1 &lt; h2)</span>
+<span class="nc" id="L327">	GD_rank(g).get__(r - 1).ht1 = h2;</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">    if (GD_rank(g).get__(r - 1).ht2 &lt; h2)</span>
+<span class="nc" id="L329">	GD_rank(g).get__(r - 1).ht2 = h2;</span>
+<span class="nc" id="L330">    ND_alg(vn, e);</span>
+} finally {
+<span class="nc" id="L332">LEAVING(&quot;4cw9yo9ap8ze1r873v6jat4yc&quot;,&quot;flat_node&quot;);</span>
+}
+<span class="nc" id="L334">}</span>
+
+
+
+
+//3 1lopavodoru6ee52snd5l6swd
+// static void abomination(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;abomination&quot;, key=&quot;1lopavodoru6ee52snd5l6swd&quot;, definition=&quot;static void abomination(graph_t * g)&quot;)
+public static void abomination(ST_Agraph_s g) {
+<span class="nc" id="L344">ENTERING(&quot;1lopavodoru6ee52snd5l6swd&quot;,&quot;abomination&quot;);</span>
+try {
+    int r;
+    CArray&lt;ST_rank_t&gt; rptr;
+    
+<span class="nc bnc" id="L349" title="All 2 branches missed.">    assert(GD_minrank(g) == 0);</span>
+    /* 3 = one for new rank, one for sentinel, one for off-by-one */
+<span class="nc" id="L351">    r = GD_maxrank(g) + 3;</span>
+    
+<span class="nc" id="L353">    rptr = CArray.&lt;ST_rank_t&gt; REALLOC__(r, GD_rank(g), ZType.ST_rank_t);</span>
+<span class="nc" id="L354">    GD_rank(g, rptr.plus_(1));</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">    for (r = GD_maxrank(g); r &gt;= 0; r--)</span>
+<span class="nc" id="L356">	GD_rank(g).get__(r).___(GD_rank(g).get__(r - 1));</span>
+<span class="nc" id="L357">    GD_rank(g).get__(r).n = 0;</span>
+<span class="nc" id="L358">    GD_rank(g).get__(r).an = 0;</span>
+<span class="nc" id="L359">    GD_rank(g).get__(r).v = CArrayOfStar.&lt;ST_Agnode_s&gt;ALLOC(2, ZType.ST_Agnode_s);</span>
+<span class="nc" id="L360">    GD_rank(g).get__(r).av = GD_rank(g).get__(r).v;</span>
+<span class="nc" id="L361">    GD_rank(g).get__(r).flat = null;</span>
+<span class="nc" id="L362">    GD_rank(g).get__(r).ht1 = 1;</span>
+<span class="nc" id="L363">    GD_rank(g).get__(r).ht2 = 1;</span>
+<span class="nc" id="L364">    GD_rank(g).get__(r).pht1 = 1;</span>
+<span class="nc" id="L365">    GD_rank(g).get__(r).pht2 = 1;</span>
+<span class="nc" id="L366">    GD_minrank(g, GD_minrank(g)-1);</span>
+} finally {
+<span class="nc" id="L368">LEAVING(&quot;1lopavodoru6ee52snd5l6swd&quot;,&quot;abomination&quot;);</span>
+}
+<span class="nc" id="L370">}</span>
+
+
+
+
+/* checkFlatAdjacent:
+ * Check if tn and hn are adjacent. 
+ * If so, set adjacent bit on all related edges.
+ * Assume e is flat.
+ */
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Difficult
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;checkFlatAdjacent&quot;, key=&quot;ctujx6e8k3rzv08h6gswdcaqs&quot;, definition=&quot;static void checkFlatAdjacent (edge_t* e)&quot;)
+public static void checkFlatAdjacent(ST_Agedge_s e) {
+<span class="fc" id="L384">ENTERING(&quot;ctujx6e8k3rzv08h6gswdcaqs&quot;,&quot;checkFlatAdjacent&quot;);</span>
+try {
+<span class="fc" id="L386">	SmetanaDebug.LOG(&quot;checkFlatAdjacent &quot;+e.NAME);</span>
+<span class="fc" id="L387">    ST_Agnode_s tn = agtail(e);</span>
+<span class="fc" id="L388">    ST_Agnode_s hn = aghead(e);</span>
+    int i, lo, hi;
+    ST_Agnode_s n;
+    CArray&lt;ST_rank_t&gt; rank;
+    
+<span class="fc bfc" id="L393" title="All 2 branches covered.">    if (ND_order(tn) &lt; ND_order(hn)) {</span>
+<span class="fc" id="L394">	lo = ND_order(tn);</span>
+<span class="fc" id="L395">	hi = ND_order(hn);</span>
+    }
+    else {
+<span class="fc" id="L398">	lo = ND_order(hn);</span>
+<span class="fc" id="L399">	hi = ND_order(tn);</span>
+    }
+<span class="fc" id="L401">    rank = GD_rank(dot_root(tn)).plus_(ND_rank(tn));</span>
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">    for (i = lo + 1; i &lt; hi; i++) {</span>
+<span class="nc" id="L403">	n = rank.get__(0).v.get_(i);</span>
+<span class="nc bnc" id="L404" title="All 4 branches missed.">	if ((ND_node_type(n) == VIRTUAL &amp;&amp; ND_label(n)!=null) || </span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">             ND_node_type(n) == NORMAL)</span>
+<span class="nc" id="L406">	    break;</span>
+    }
+<span class="fc bfc" id="L408" title="All 2 branches covered.">    if (i == hi) {  /* adjacent edge */</span>
+	do {
+<span class="fc" id="L410">	    ED_adjacent(e, 1);</span>
+<span class="fc" id="L411">	    e = ED_to_virt(e);</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">	} while (e!=null); </span>
+    }
+} finally {
+<span class="fc" id="L415">LEAVING(&quot;ctujx6e8k3rzv08h6gswdcaqs&quot;,&quot;checkFlatAdjacent&quot;);</span>
+}
+<span class="fc" id="L417">}</span>
+
+
+
+
+/* flat_edges:
+ * Process flat edges.
+ * First, mark flat edges as having adjacent endpoints or not.
+ *
+ * Second, if there are edge labels, nodes are placed on ranks 0,2,4,...
+ * If we have a labeled flat edge on rank 0, add a rank -1.
+ *
+ * Finally, create label information. Add a virtual label node in the 
+ * previous rank for each labeled, non-adjacent flat edge. If this is 
+ * done for any edge, return true, so that main code will reset y coords.
+ * For labeled adjacent flat edges, store label width in representative edge.
+ * FIX: We should take into account any extra height needed for the latter
+ * labels.
+ * 
+ * We leave equivalent flat edges in ND_other. Their ED_virt field should
+ * still point to the class representative.
+ */
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/flat.c&quot;, name=&quot;flat_edges&quot;, key=&quot;bjwwj6ftkm0gv04cf1edqeaw6&quot;, definition=&quot;int  flat_edges(graph_t * g)&quot;)
+public static boolean flat_edges(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L442">ENTERING(&quot;bjwwj6ftkm0gv04cf1edqeaw6&quot;,&quot;flat_edges&quot;);</span>
+try {
+<span class="fc" id="L444">    int i, j; boolean reset = false;</span>
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+<span class="fc" id="L447">    boolean found = false;</span>
+    
+<span class="fc bfc" id="L449" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">	if (ND_flat_out(n).list!=null) {</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">	    for (j = 0; (e = ND_flat_out(n).list.get_(j))!=null; j++) {</span>
+<span class="fc" id="L452">		checkFlatAdjacent (e);</span>
+	    }
+	}
+<span class="fc bfc" id="L455" title="All 2 branches covered.">	for (j = 0; j &lt; ND_other(n).size; j++) {</span>
+<span class="fc" id="L456">	    e = ND_other(n).list.get_(j);</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">	    if (ND_rank(aghead(e)) == ND_rank(agtail(e)))</span>
+<span class="fc" id="L458">		checkFlatAdjacent (e);</span>
+	}
+    }
+    
+<span class="fc bfc" id="L462" title="All 4 branches covered.">    if ((GD_rank(g).get__(0).flat!=null) || (GD_n_cluster(g) &gt; 0)) {</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">	for (i = 0; (n = GD_rank(g).get__(0).v.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">	    for (j = 0; (e = ND_flat_in(n).list.get_(j))!=null; j++) {</span>
+<span class="pc bpc" id="L465" title="1 of 4 branches missed.">		if ((ED_label(e)!=null) &amp;&amp; ED_adjacent(e) == 0) {</span>
+<span class="nc" id="L466">		    abomination(g);</span>
+<span class="nc" id="L467">		    found = true;</span>
+<span class="nc" id="L468">		    break;</span>
+		}
+	    }
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">	    if (found)</span>
+<span class="nc" id="L472">		break;</span>
+	}
+    }
+    
+<span class="fc" id="L476">    rec_save_vlists(g);</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+          /* if n is the tail of any flat edge, one will be in flat_out */
+<span class="fc bfc" id="L479" title="All 2 branches covered.">	if (ND_flat_out(n).list!=null) {</span>
+<span class="fc bfc" id="L480" title="All 2 branches covered.">	    for (i = 0; (e = ND_flat_out(n).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L481" title="All 2 branches covered.">		if (ED_label(e)!=null) {</span>
+<span class="fc" id="L482">			SmetanaDebug.LOG(&quot;Aie1 for &quot;+e.NAME+&quot; &quot;+ED_adjacent(e));</span>
+<span class="pc bpc" id="L483" title="1 of 2 branches missed.">		    if (ED_adjacent(e)!=0) {</span>
+<span class="pc bpc" id="L484" title="1 of 2 branches missed.">			if (GD_flip(g)) ED_dist(e, ED_label(e).dimen.y);</span>
+<span class="fc" id="L485">			else ED_dist(e, ED_label(e).dimen.x); </span>
+		    }
+		    else {
+<span class="nc" id="L488">		    	SmetanaDebug.LOG(&quot;reset1 true&quot;);</span>
+<span class="nc" id="L489">			reset = true;</span>
+<span class="nc" id="L490">			flat_node(e);</span>
+		    }
+		}
+	    }
+		/* look for other flat edges with labels */
+<span class="fc bfc" id="L495" title="All 2 branches covered.">	    for (j = 0; j &lt; ND_other(n).size; j++) {</span>
+		ST_Agedge_s le;
+<span class="fc" id="L497">		e = ND_other(n).list.get_(j);</span>
+<span class="fc" id="L498">		SmetanaDebug.LOG(&quot;e=&quot;+e.NAME);</span>
+<span class="pc bpc" id="L499" title="1 of 2 branches missed.">		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">		if (agtail(e) == aghead(e)) continue; /* skip loops */</span>
+<span class="fc" id="L501">		le = e;</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">		while (ED_to_virt(le)!=null) le = ED_to_virt(le);</span>
+<span class="fc" id="L503">		ED_adjacent(e, ED_adjacent(le)); </span>
+<span class="pc bpc" id="L504" title="1 of 2 branches missed.">		if (ED_label(e)!=null) {</span>
+<span class="fc" id="L505">			SmetanaDebug.LOG(&quot;Aie2 for &quot;+e.NAME+&quot; &quot;+ED_adjacent(e));</span>
+<span class="fc" id="L506">			SmetanaDebug.LOG(&quot;e2=&quot;+le.NAME);</span>
+<span class="fc" id="L507">			SmetanaDebug.LOG(&quot;le2=&quot;+le.NAME);</span>
+<span class="pc bpc" id="L508" title="1 of 2 branches missed.">		    if (ED_adjacent(e)!=0) {</span>
+			double lw;
+<span class="pc bpc" id="L510" title="1 of 2 branches missed.">			if (GD_flip(g)) lw = ED_label(e).dimen.y;</span>
+<span class="fc" id="L511">			else lw = ED_label(e).dimen.x; </span>
+<span class="fc" id="L512">			ED_dist(le, Math.max(lw,ED_dist(le)));</span>
+<span class="fc" id="L513">		    }</span>
+		    else {
+<span class="nc" id="L515">		    	SmetanaDebug.LOG(&quot;reset2 true&quot;);</span>
+<span class="nc" id="L516">			reset = true;</span>
+<span class="nc" id="L517">			flat_node(e);</span>
+		    }
+		}
+	    }
+	}
+    }
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">    if (reset)</span>
+<span class="nc" id="L524">	rec_reset_vlists(zz, g);</span>
+<span class="fc" id="L525">    return reset;</span>
+} finally {
+<span class="fc" id="L527">LEAVING(&quot;bjwwj6ftkm0gv04cf1edqeaw6&quot;,&quot;flat_edges&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

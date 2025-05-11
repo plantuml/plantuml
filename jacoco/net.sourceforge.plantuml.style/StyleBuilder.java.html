@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">StyleBuilder.java</span></div><h1>StyleBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.utils.Log;
+
+public class StyleBuilder implements AutomaticCounter {
+    // ::remove file when __HAXE__
+
+<span class="fc" id="L51">	private final Map&lt;StyleSignatureBasic, Style&gt; stylesMap = new LinkedHashMap&lt;StyleSignatureBasic, Style&gt;();</span>
+	private final Set&lt;StyleSignatureBasic&gt; printedForLog;
+	private final SkinParam skinParam;
+	private int counter;
+
+	public void printMe() {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (Entry&lt;StyleSignatureBasic, Style&gt; ent : stylesMap.entrySet())</span>
+<span class="nc" id="L58">			ent.getValue().printMe();</span>
+
+<span class="nc" id="L60">	}</span>
+
+<span class="fc" id="L62">	private StyleBuilder(SkinParam skinParam, Set&lt;StyleSignatureBasic&gt; printedForLog) {</span>
+<span class="fc" id="L63">		this.skinParam = skinParam;</span>
+<span class="fc" id="L64">		this.printedForLog = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L65">	}</span>
+
+	public StyleBuilder(SkinParam skinParam) {
+<span class="fc" id="L68">		this(skinParam, new LinkedHashSet&lt;StyleSignatureBasic&gt;());</span>
+<span class="fc" id="L69">	}</span>
+
+	public final SkinParam getSkinParam() {
+<span class="fc" id="L72">		return skinParam;</span>
+	}
+
+	public Style createStyle(String name) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (name.contains(StyleSignatureBasic.STAR))</span>
+<span class="nc" id="L77">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L79">		name = name.toLowerCase();</span>
+<span class="nc" id="L80">		final StyleSignatureBasic signature = new StyleSignatureBasic(name);</span>
+<span class="nc" id="L81">		final Style result = stylesMap.get(signature);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L83">			return new Style(signature, new EnumMap&lt;PName, Value&gt;(PName.class));</span>
+
+<span class="nc" id="L85">		return result;</span>
+	}
+
+	public StyleBuilder muteStyle(Style modifiedStyle) {
+<span class="fc" id="L89">		final Map&lt;StyleSignatureBasic, Style&gt; copy = new LinkedHashMap&lt;StyleSignatureBasic, Style&gt;(stylesMap);</span>
+<span class="fc" id="L90">		final StyleSignatureBasic signature = modifiedStyle.getSignature();</span>
+<span class="fc" id="L91">		final Style orig = copy.get(signature);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (orig == null) {</span>
+<span class="fc" id="L93">			copy.put(signature, modifiedStyle);</span>
+		} else {
+<span class="fc" id="L95">			final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L96">			copy.put(signature, tmp);</span>
+		}
+<span class="fc" id="L98">		final StyleBuilder result = new StyleBuilder(skinParam, this.printedForLog);</span>
+<span class="fc" id="L99">		result.stylesMap.putAll(copy);</span>
+<span class="fc" id="L100">		result.counter = this.counter;</span>
+<span class="fc" id="L101">		return result;</span>
+	}
+
+	public void loadInternal(StyleSignatureBasic signature, Style newStyle) {
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (signature.isStarred())</span>
+<span class="nc" id="L106">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L108">		final Style orig = this.stylesMap.get(signature);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (orig == null) {</span>
+<span class="fc" id="L110">			this.stylesMap.put(signature, newStyle);</span>
+		} else {
+<span class="fc" id="L112">			final Style tmp = orig.mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L113">			this.stylesMap.put(signature, tmp);</span>
+		}
+<span class="fc" id="L115">	}</span>
+
+	public int getNextInt() {
+<span class="fc" id="L118">		return ++counter;</span>
+	}
+
+	public Style getMergedStyle(StyleSignatureBasic signature) {
+<span class="fc" id="L122">		boolean added = this.printedForLog.add(signature);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (added)</span>
+<span class="fc" id="L124">			Log.info(&quot;Using style &quot; + signature);</span>
+
+<span class="fc" id="L126">		Style result = null;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		for (Entry&lt;StyleSignatureBasic, Style&gt; ent : stylesMap.entrySet()) {</span>
+<span class="fc" id="L128">			final StyleSignatureBasic key = ent.getKey();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if (key.matchAll(signature) == false)</span>
+<span class="fc" id="L130">				continue;</span>
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">			if (result == null)</span>
+<span class="fc" id="L133">				result = ent.getValue();</span>
+			else
+<span class="fc" id="L135">				result = result.mergeWith(ent.getValue(), MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+
+<span class="fc" id="L137">		}</span>
+<span class="fc" id="L138">		return result;</span>
+	}
+
+	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int deltaPriority) {
+<span class="fc" id="L142">		boolean added = this.printedForLog.add(signature);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (added)</span>
+<span class="fc" id="L144">			Log.info(&quot;Using style &quot; + signature);</span>
+
+<span class="fc" id="L146">		Style result = null;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (Entry&lt;StyleSignatureBasic, Style&gt; ent : stylesMap.entrySet()) {</span>
+<span class="fc" id="L148">			final StyleSignatureBasic key = ent.getKey();</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (key.matchAll(signature) == false)</span>
+<span class="fc" id="L150">				continue;</span>
+
+<span class="fc" id="L152">			Style tmp = ent.getValue();</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			if (key.isStarred())</span>
+<span class="nc" id="L154">				tmp = tmp.deltaPriority(deltaPriority);</span>
+
+<span class="fc bfc" id="L156" title="All 2 branches covered.">			if (result == null)</span>
+<span class="fc" id="L157">				result = tmp;</span>
+			else
+<span class="fc" id="L159">				result = result.mergeWith(tmp, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+
+<span class="fc" id="L161">		}</span>
+<span class="fc" id="L162">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

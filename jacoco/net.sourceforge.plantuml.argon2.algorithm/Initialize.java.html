@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Initialize.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.argon2.algorithm</a> &gt; <span class="el_source">Initialize.java</span></div><h1>Initialize.java</h1><pre class="source lang-java linenums">/* 	This file is taken from
+	https://github.com/andreas1327250/argon2-java
+
+	Original Author: Andreas Gadermaier &lt;up.gadermaier@gmail.com&gt;
+ */
+package net.sourceforge.plantuml.argon2.algorithm;
+
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_BLOCK_SIZE;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_PREHASH_DIGEST_LENGTH;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_PREHASH_SEED_LENGTH;
+
+import net.sourceforge.plantuml.argon2.Argon2;
+import net.sourceforge.plantuml.argon2.Util;
+import net.sourceforge.plantuml.argon2.model.Instance;
+
+<span class="nc" id="L16">public class Initialize {</span>
+    // ::remove folder when __HAXE__
+
+	public static void initialize(Instance instance, Argon2 argon2) {
+<span class="nc" id="L20">		byte[] initialHash = Functions.initialHash(Util.intToLittleEndianBytes(argon2.getLanes()),</span>
+<span class="nc" id="L21">				Util.intToLittleEndianBytes(argon2.getOutputLength()), Util.intToLittleEndianBytes(argon2.getMemory()),</span>
+<span class="nc" id="L22">				Util.intToLittleEndianBytes(argon2.getIterations()), Util.intToLittleEndianBytes(argon2.getVersion()),</span>
+<span class="nc" id="L23">				Util.intToLittleEndianBytes(argon2.getType().ordinal()),</span>
+<span class="nc" id="L24">				Util.intToLittleEndianBytes(argon2.getPasswordLength()), argon2.getPassword(),</span>
+<span class="nc" id="L25">				Util.intToLittleEndianBytes(argon2.getSaltLength()), argon2.getSalt(),</span>
+<span class="nc" id="L26">				Util.intToLittleEndianBytes(argon2.getSecretLength()), argon2.getSecret(),</span>
+<span class="nc" id="L27">				Util.intToLittleEndianBytes(argon2.getAdditionalLength()), argon2.getAdditional());</span>
+<span class="nc" id="L28">		fillFirstBlocks(instance, initialHash);</span>
+<span class="nc" id="L29">	}</span>
+
+	/**
+	 * (H0 || 0 || i) 72 byte -&gt; 1024 byte (H0 || 1 || i) 72 byte -&gt; 1024 byte
+	 */
+	private static void fillFirstBlocks(Instance instance, byte[] initialHash) {
+
+<span class="nc" id="L36">		final byte[] zeroBytes = { 0, 0, 0, 0 };</span>
+<span class="nc" id="L37">		final byte[] oneBytes = { 1, 0, 0, 0 };</span>
+
+<span class="nc" id="L39">		byte[] initialHashWithZeros = getInitialHashLong(initialHash, zeroBytes);</span>
+<span class="nc" id="L40">		byte[] initialHashWithOnes = getInitialHashLong(initialHash, oneBytes);</span>
+
+<span class="nc bnc" id="L42" title="All 2 branches missed.">		for (int i = 0; i &lt; instance.getLanes(); i++) {</span>
+
+<span class="nc" id="L44">			byte[] iBytes = Util.intToLittleEndianBytes(i);</span>
+
+<span class="nc" id="L46">			System.arraycopy(iBytes, 0, initialHashWithZeros, ARGON2_PREHASH_DIGEST_LENGTH + 4, 4);</span>
+<span class="nc" id="L47">			System.arraycopy(iBytes, 0, initialHashWithOnes, ARGON2_PREHASH_DIGEST_LENGTH + 4, 4);</span>
+
+<span class="nc" id="L49">			byte[] blockhashBytes = Functions.blake2bLong(initialHashWithZeros, ARGON2_BLOCK_SIZE);</span>
+<span class="nc" id="L50">			instance.memory[i * instance.getLaneLength() + 0].fromBytes(blockhashBytes);</span>
+
+<span class="nc" id="L52">			blockhashBytes = Functions.blake2bLong(initialHashWithOnes, ARGON2_BLOCK_SIZE);</span>
+<span class="nc" id="L53">			instance.memory[i * instance.getLaneLength() + 1].fromBytes(blockhashBytes);</span>
+		}
+<span class="nc" id="L55">	}</span>
+
+	private static byte[] getInitialHashLong(byte[] initialHash, byte[] appendix) {
+<span class="nc" id="L58">		byte[] initialHashLong = new byte[ARGON2_PREHASH_SEED_LENGTH];</span>
+
+<span class="nc" id="L60">		System.arraycopy(initialHash, 0, initialHashLong, 0, ARGON2_PREHASH_DIGEST_LENGTH);</span>
+<span class="nc" id="L61">		System.arraycopy(appendix, 0, initialHashLong, ARGON2_PREHASH_DIGEST_LENGTH, 4);</span>
+
+<span class="nc" id="L63">		return initialHashLong;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

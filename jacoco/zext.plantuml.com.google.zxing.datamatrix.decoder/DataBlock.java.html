@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.datamatrix.decoder</a> &gt; <span class="el_source">DataBlock.java</span></div><h1>DataBlock.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2008 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.datamatrix.decoder;
+
+/**
+ * &lt;p&gt;Encapsulates a block of data within a Data Matrix Code. Data Matrix Codes may split their data into
+ * multiple blocks, each of which is a unit of data and error-correction codewords. Each
+ * is represented by an instance of this class.&lt;/p&gt;
+ *
+ * @author bbrown@google.com (Brian Brown)
+ */
+final class DataBlock {
+
+  private final int numDataCodewords;
+  private final byte[] codewords;
+
+<span class="nc" id="L31">  private DataBlock(int numDataCodewords, byte[] codewords) {</span>
+<span class="nc" id="L32">    this.numDataCodewords = numDataCodewords;</span>
+<span class="nc" id="L33">    this.codewords = codewords;</span>
+<span class="nc" id="L34">  }</span>
+
+  /**
+   * &lt;p&gt;When Data Matrix Codes use multiple data blocks, they actually interleave the bytes of each of them.
+   * That is, the first byte of data block 1 to n is written, then the second bytes, and so on. This
+   * method will separate the data into original blocks.&lt;/p&gt;
+   *
+   * @param rawCodewords bytes as read directly from the Data Matrix Code
+   * @param version version of the Data Matrix Code
+   * @return {@link DataBlock}s containing original bytes, &quot;de-interleaved&quot; from representation in the
+   *         Data Matrix Code
+   */
+  static DataBlock[] getDataBlocks(byte[] rawCodewords,
+                                   Version version) {
+    // Figure out the number and size of data blocks used by this version
+<span class="nc" id="L49">    Version.ECBlocks ecBlocks = version.getECBlocks();</span>
+
+    // First count the total number of data blocks
+<span class="nc" id="L52">    int totalBlocks = 0;</span>
+<span class="nc" id="L53">    Version.ECB[] ecBlockArray = ecBlocks.getECBlocks();</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">    for (int i = 0; i &lt; ecBlockArray.length; i++) {</span>
+<span class="nc" id="L55">      totalBlocks += ecBlockArray[i].getCount();</span>
+    }
+
+    // Now establish DataBlocks of the appropriate size and number of data codewords
+<span class="nc" id="L59">    DataBlock[] result = new DataBlock[totalBlocks];</span>
+<span class="nc" id="L60">    int numResultBlocks = 0;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">    for (int j = 0; j &lt; ecBlockArray.length; j++) {</span>
+<span class="nc" id="L62">      Version.ECB ecBlock = ecBlockArray[j];</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">      for (int i = 0; i &lt; ecBlock.getCount(); i++) {</span>
+<span class="nc" id="L64">        int numDataCodewords = ecBlock.getDataCodewords();</span>
+<span class="nc" id="L65">        int numBlockCodewords = ecBlocks.getECCodewords() + numDataCodewords;</span>
+<span class="nc" id="L66">        result[numResultBlocks++] = new DataBlock(numDataCodewords, new byte[numBlockCodewords]);</span>
+      }
+    }
+
+    // All blocks have the same amount of data, except that the last n
+    // (where n may be 0) have 1 less byte. Figure out where these start.
+    // TODO(bbrown): There is only one case where there is a difference for Data Matrix for size 144
+<span class="nc" id="L73">    int longerBlocksTotalCodewords = result[0].codewords.length;</span>
+    //int shorterBlocksTotalCodewords = longerBlocksTotalCodewords - 1;
+
+<span class="nc" id="L76">    int longerBlocksNumDataCodewords = longerBlocksTotalCodewords - ecBlocks.getECCodewords();</span>
+<span class="nc" id="L77">    int shorterBlocksNumDataCodewords = longerBlocksNumDataCodewords - 1;</span>
+    // The last elements of result may be 1 element shorter for 144 matrix
+    // first fill out as many elements as all of them have minus 1
+<span class="nc" id="L80">    int rawCodewordsOffset = 0;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">    for (int i = 0; i &lt; shorterBlocksNumDataCodewords; i++) {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">      for (int j = 0; j &lt; numResultBlocks; j++) {</span>
+<span class="nc" id="L83">        result[j].codewords[i] = rawCodewords[rawCodewordsOffset++];</span>
+      }
+    }
+    
+    // Fill out the last data block in the longer ones
+<span class="nc bnc" id="L88" title="All 2 branches missed.">    boolean specialVersion = version.getVersionNumber() == 24;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">    int numLongerBlocks = specialVersion ? 8 : numResultBlocks;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">    for (int j = 0; j &lt; numLongerBlocks; j++) {</span>
+<span class="nc" id="L91">      result[j].codewords[longerBlocksNumDataCodewords - 1] = rawCodewords[rawCodewordsOffset++];</span>
+    }
+    
+    // Now add in error correction blocks
+<span class="nc" id="L95">    int max = result[0].codewords.length;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    for (int i = longerBlocksNumDataCodewords; i &lt; max; i++) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">      for (int j = 0; j &lt; numResultBlocks; j++) {</span>
+<span class="nc bnc" id="L98" title="All 4 branches missed.">        int iOffset = (specialVersion &amp;&amp; j &gt; 7) ? i - 1 : i;</span>
+<span class="nc" id="L99">        result[j].codewords[iOffset] = rawCodewords[rawCodewordsOffset++];</span>
+      }
+    }
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">    if (rawCodewordsOffset != rawCodewords.length) {</span>
+<span class="nc" id="L104">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc" id="L107">    return result;</span>
+  }
+
+  int getNumDataCodewords() {
+<span class="nc" id="L111">    return numDataCodewords;</span>
+  }
+
+  byte[] getCodewords() {
+<span class="nc" id="L115">    return codewords;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

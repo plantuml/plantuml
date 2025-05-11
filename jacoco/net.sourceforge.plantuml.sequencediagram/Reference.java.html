@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Reference.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">Reference.java</span></div><h1>Reference.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.url.Url;
+
+public class Reference extends AbstractEvent implements EventWithNote {
+
+	private final List&lt;Participant&gt; participants;
+	private final Url url;
+	private final HColor backColorGeneral;
+	private final HColor backColorElement;
+
+	private final Display strings;
+
+	final private Style style;
+	final private Style styleHeader;
+
+	public StyleSignatureBasic getDefaultStyleDefinition() {
+<span class="nc" id="L65">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.reference);</span>
+	}
+
+	private StyleSignatureBasic getHeaderStyleDefinition() {
+<span class="nc" id="L69">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);</span>
+	}
+
+	public Style[] getUsedStyles() {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		return new Style[] { style, styleHeader == null ? styleHeader</span>
+<span class="nc" id="L74">				: styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };</span>
+	}
+
+	public Reference(List&lt;Participant&gt; participants, Url url, Display strings, HColor backColorGeneral,
+<span class="nc" id="L78">			HColor backColorElement, StyleBuilder styleBuilder) {</span>
+<span class="nc" id="L79">		this.participants = uniq(participants);</span>
+<span class="nc" id="L80">		this.url = url;</span>
+<span class="nc" id="L81">		this.strings = strings;</span>
+<span class="nc" id="L82">		this.backColorGeneral = backColorGeneral;</span>
+<span class="nc" id="L83">		this.backColorElement = backColorElement;</span>
+<span class="nc" id="L84">		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L85">		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L86">	}</span>
+
+	static private List&lt;Participant&gt; uniq(List&lt;Participant&gt; all) {
+<span class="nc" id="L89">		final List&lt;Participant&gt; result = new ArrayList&lt;Participant&gt;();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (Participant p : all)</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (result.contains(p) == false)</span>
+<span class="nc" id="L92">				result.add(p);</span>
+<span class="nc" id="L93">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public List&lt;Participant&gt; getParticipant() {
+<span class="nc" id="L97">		return participants;</span>
+	}
+
+	public Display getStrings() {
+<span class="nc" id="L101">		return strings;</span>
+	}
+
+	public boolean dealWith(Participant someone) {
+<span class="nc" id="L105">		return participants.contains(someone);</span>
+	}
+
+	public final Url getUrl() {
+<span class="nc" id="L109">		return url;</span>
+	}
+
+	public boolean hasUrl() {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		return url != null;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L118">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (final Iterator&lt;Participant&gt; it = participants.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L120">			sb.append(it.next().getCode());</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (it.hasNext())</span>
+<span class="nc" id="L122">				sb.append(&quot;-&quot;);</span>
+
+		}
+<span class="nc" id="L125">		return sb.toString();</span>
+	}
+
+	public final HColor getBackColorGeneral() {
+<span class="nc" id="L129">		return backColorGeneral;</span>
+	}
+
+	public final HColor getBackColorElement() {
+<span class="nc" id="L133">		return backColorElement;</span>
+	}
+
+<span class="nc" id="L136">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
+
+	@Override
+	public final void addNote(Note note) {
+<span class="nc bnc" id="L140" title="All 4 branches missed.">		if (note.getPosition() != NotePosition.LEFT &amp;&amp; note.getPosition() != NotePosition.RIGHT)</span>
+<span class="nc" id="L141">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L143">		this.noteOnMessages.add(note);</span>
+<span class="nc" id="L144">	}</span>
+
+	public final List&lt;Note&gt; getNoteOnMessages() {
+<span class="nc" id="L147">		return noteOnMessages;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

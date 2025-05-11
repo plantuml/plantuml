@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TokenStack.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim.expression</a> &gt; <span class="el_source">TokenStack.java</span></div><h1>TokenStack.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim.expression;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.Eater;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TMemory;
+
+<span class="fc" id="L51">public class TokenStack {</span>
+
+	final private List&lt;Token&gt; tokens;
+
+	public TokenStack() {
+<span class="fc" id="L56">		this(new ArrayList&lt;Token&gt;());</span>
+<span class="fc" id="L57">	}</span>
+
+<span class="fc" id="L59">	private TokenStack(List&lt;Token&gt; list) {</span>
+<span class="fc" id="L60">		this.tokens = list;</span>
+<span class="fc" id="L61">	}</span>
+
+	public int size() {
+<span class="fc" id="L64">		return tokens.size();</span>
+	}
+
+	public TokenStack subTokenStack(int i) {
+<span class="fc" id="L68">		return new TokenStack(Collections.unmodifiableList(tokens.subList(i, tokens.size())));</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L73">		return tokens.toString();</span>
+	}
+
+	public void add(Token token) {
+<span class="fc" id="L77">		this.tokens.add(token);</span>
+<span class="fc" id="L78">	}</span>
+
+	public TokenStack withoutSpace() {
+<span class="fc" id="L81">		final TokenStack result = new TokenStack();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (Token token : tokens)</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (token.getTokenType() != TokenType.SPACES)</span>
+<span class="fc" id="L84">				result.add(token);</span>
+
+<span class="fc" id="L86">		return result;</span>
+	}
+
+	static public TokenStack eatUntilCloseParenthesisOrComma(Eater eater) throws EaterException {
+<span class="fc" id="L90">		final TokenStack result = new TokenStack();</span>
+<span class="fc" id="L91">		int level = 0;</span>
+<span class="fc" id="L92">		Token lastToken = null;</span>
+		while (true) {
+<span class="fc" id="L94">			eater.skipSpaces();</span>
+<span class="fc" id="L95">			final char ch = eater.peekChar();</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			if (ch == 0)</span>
+<span class="nc" id="L97">				throw new EaterException(&quot;until001&quot;, eater.getStringLocated());</span>
+
+<span class="fc bfc" id="L99" title="All 6 branches covered.">			if (level == 0 &amp;&amp; (ch == ',' || ch == ')'))</span>
+<span class="fc" id="L100">				return result;</span>
+
+<span class="fc" id="L102">			final Token token = TokenType.eatOneToken(lastToken, eater, false);</span>
+<span class="fc" id="L103">			final TokenType type = token.getTokenType();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (type == TokenType.OPEN_PAREN_MATH)</span>
+<span class="fc" id="L105">				level++;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			else if (type == TokenType.CLOSE_PAREN_MATH)</span>
+<span class="fc" id="L107">				level--;</span>
+
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			if (token.getTokenType() != TokenType.SPACES)</span>
+<span class="fc" id="L110">				lastToken = token;</span>
+<span class="fc" id="L111">			result.add(token);</span>
+<span class="fc" id="L112">		}</span>
+	}
+
+	static public void eatUntilCloseParenthesisOrComma(TokenIterator it, StringLocated location)
+			throws EaterException {
+<span class="fc" id="L117">		int level = 0;</span>
+		while (true) {
+<span class="fc" id="L119">			final Token ch = it.peekToken();</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (ch == null)</span>
+<span class="nc" id="L121">				throw new EaterException(&quot;until002&quot;, location);</span>
+
+<span class="fc" id="L123">			final TokenType typech = ch.getTokenType();</span>
+<span class="pc bpc" id="L124" title="1 of 8 branches missed.">			if (level == 0 &amp;&amp; (typech == TokenType.COMMA || typech == TokenType.CLOSE_PAREN_MATH)</span>
+					|| typech == TokenType.CLOSE_PAREN_FUNC)
+<span class="fc" id="L126">				return;</span>
+
+<span class="fc" id="L128">			final Token token = it.nextToken();</span>
+<span class="fc" id="L129">			final TokenType type = token.getTokenType();</span>
+<span class="pc bpc" id="L130" title="1 of 4 branches missed.">			if (type == TokenType.OPEN_PAREN_MATH || type == TokenType.OPEN_PAREN_FUNC)</span>
+<span class="fc" id="L131">				level++;</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">			else if (type == TokenType.CLOSE_PAREN_MATH || type == TokenType.CLOSE_PAREN_FUNC)</span>
+<span class="fc" id="L133">				level--;</span>
+
+<span class="fc" id="L135">		}</span>
+	}
+
+	private int countFunctionArg(TokenIterator it, StringLocated location) throws EaterException {
+		// return 42;
+<span class="fc" id="L140">		final TokenType type1 = it.peekToken().getTokenType();</span>
+<span class="pc bpc" id="L141" title="1 of 4 branches missed.">		if (type1 == TokenType.CLOSE_PAREN_MATH || type1 == TokenType.CLOSE_PAREN_FUNC)</span>
+<span class="fc" id="L142">			return 0;</span>
+
+<span class="fc" id="L144">		int result = 1;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		while (it.hasMoreTokens()) {</span>
+<span class="fc" id="L146">			eatUntilCloseParenthesisOrComma(it, location);</span>
+<span class="fc" id="L147">			final Token token = it.nextToken();</span>
+<span class="fc" id="L148">			final TokenType type = token.getTokenType();</span>
+<span class="pc bpc" id="L149" title="1 of 4 branches missed.">			if (type == TokenType.CLOSE_PAREN_MATH || type == TokenType.CLOSE_PAREN_FUNC)</span>
+<span class="fc" id="L150">				return result;</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			else if (type == TokenType.COMMA)</span>
+<span class="fc" id="L152">				result++;</span>
+			else
+<span class="nc" id="L154">				throw new EaterException(&quot;count13&quot;, location);</span>
+
+<span class="fc" id="L156">		}</span>
+<span class="nc" id="L157">		throw new EaterException(&quot;count12&quot;, location);</span>
+	}
+
+	public void guessFunctions(StringLocated location) throws EaterException {
+<span class="fc" id="L161">		final Deque&lt;Integer&gt; open = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L162">		final Map&lt;Integer, Integer&gt; parens = new HashMap&lt;Integer, Integer&gt;();</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		for (int i = 0; i &lt; tokens.size(); i++) {</span>
+<span class="fc" id="L164">			final Token token = tokens.get(i);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			if (token.getTokenType().equals(TokenType.OPEN_PAREN_MATH))</span>
+<span class="fc" id="L166">				open.addFirst(i);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			else if (token.getTokenType().equals(TokenType.CLOSE_PAREN_MATH))</span>
+<span class="fc" id="L168">				parens.put(open.pollFirst(), i);</span>
+
+		}
+		// System.err.println(&quot;before=&quot; + toString());
+		// System.err.println(&quot;guessFunctions2&quot; + parens);
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (Map.Entry&lt;Integer, Integer&gt; ids : parens.entrySet()) {</span>
+<span class="fc" id="L174">			final int iopen = ids.getKey();</span>
+<span class="fc" id="L175">			final int iclose = ids.getValue();</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			assert tokens.get(iopen).getTokenType() == TokenType.OPEN_PAREN_MATH;</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">			assert tokens.get(iclose).getTokenType() == TokenType.CLOSE_PAREN_MATH;</span>
+<span class="fc bfc" id="L178" title="All 4 branches covered.">			if (iopen &gt; 0 &amp;&amp; tokens.get(iopen - 1).getTokenType() == TokenType.PLAIN_TEXT) {</span>
+<span class="fc" id="L179">				tokens.set(iopen - 1, new Token(tokens.get(iopen - 1).getSurface(), TokenType.FUNCTION_NAME, null));</span>
+<span class="fc" id="L180">				final int nbArg = countFunctionArg(subTokenStack(iopen + 1).tokenIterator(), location);</span>
+<span class="fc" id="L181">				tokens.set(iopen, new Token(&quot;&quot; + nbArg, TokenType.OPEN_PAREN_FUNC, null));</span>
+<span class="fc" id="L182">				tokens.set(iclose, new Token(&quot;)&quot;, TokenType.CLOSE_PAREN_FUNC, null));</span>
+			}
+<span class="fc" id="L184">		}</span>
+		// System.err.println(&quot;after=&quot; + toString());
+<span class="fc" id="L186">	}</span>
+
+<span class="fc" id="L188">	class InternalIterator implements TokenIterator {</span>
+
+<span class="fc" id="L190">		private int pos = 0;</span>
+
+		public Token peekToken() {
+<span class="fc" id="L193">			return tokens.get(pos);</span>
+		}
+
+		public Token nextToken() {
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">			if (hasMoreTokens() == false)</span>
+<span class="nc" id="L198">				return null;</span>
+
+<span class="fc" id="L200">			return tokens.get(pos++);</span>
+		}
+
+		public boolean hasMoreTokens() {
+<span class="fc bfc" id="L204" title="All 2 branches covered.">			return pos &lt; tokens.size();</span>
+		}
+
+	}
+
+	public TokenIterator tokenIterator() {
+<span class="fc" id="L210">		return new InternalIterator();</span>
+	}
+
+	public TValue getResult(StringLocated location, TContext context, TMemory memory) throws EaterException {
+<span class="fc" id="L214">		final Knowledge knowledge = context.asKnowledge(memory, location.getLocation());</span>
+<span class="fc" id="L215">		final TokenStack tmp = withoutSpace();</span>
+<span class="fc" id="L216">		tmp.guessFunctions(location);</span>
+<span class="fc" id="L217">		final TokenIterator it = tmp.tokenIterator();</span>
+<span class="fc" id="L218">		final ShuntingYard shuntingYard = new ShuntingYard(it, knowledge, location);</span>
+<span class="fc" id="L219">		final ReversePolishInterpretor rpn = new ReversePolishInterpretor(location, shuntingYard.getQueue(), knowledge,</span>
+				memory, context);
+<span class="fc" id="L221">		return rpn.getResult();</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

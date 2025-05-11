@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Arrow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.jsondiagram</a> &gt; <span class="el_source">Arrow.java</span></div><h1>Arrow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ * 
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package net.sourceforge.plantuml.jsondiagram;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+
+public class Arrow {
+
+	private final XPoint2D p1;
+	private final XPoint2D p2;
+
+<span class="fc" id="L44">	public Arrow(XPoint2D p1, XPoint2D p2) {</span>
+<span class="fc" id="L45">		this.p1 = p1;</span>
+<span class="fc" id="L46">		this.p2 = p2;</span>
+<span class="fc" id="L47">	}</span>
+
+	public void drawArrow(UGraphic ug) {
+<span class="fc" id="L50">		ug = ug.apply(UStroke.simple());</span>
+
+<span class="fc" id="L52">		final ULine p1p2 = ULine.create(p1, p2);</span>
+<span class="fc" id="L53">		final double dist = p1.distance(p2);</span>
+
+<span class="fc" id="L55">		final double alpha = Math.atan2(p1p2.getDX(), p1p2.getDY());</span>
+
+<span class="fc" id="L57">		final double factor = .4;</span>
+<span class="fc" id="L58">		final double factor2 = .3;</span>
+
+<span class="fc" id="L60">		final XPoint2D p3 = getPoint(p1, alpha + Math.PI / 2, dist * factor);</span>
+<span class="fc" id="L61">		final XPoint2D p4 = getPoint(p1, alpha - Math.PI / 2, dist * factor);</span>
+<span class="fc" id="L62">		final XPoint2D p11 = getPoint(p1, alpha, dist * factor2);</span>
+
+<span class="fc" id="L64">		final UPath path = UPath.none();</span>
+<span class="fc" id="L65">		path.moveTo(p4);</span>
+<span class="fc" id="L66">		path.lineTo(p11);</span>
+<span class="fc" id="L67">		path.lineTo(p3);</span>
+<span class="fc" id="L68">		path.lineTo(p2);</span>
+<span class="fc" id="L69">		path.lineTo(p4);</span>
+<span class="fc" id="L70">		path.closePath();</span>
+
+<span class="fc" id="L72">		ug.draw(path);</span>
+
+<span class="fc" id="L74">	}</span>
+
+	private XPoint2D getPoint(XPoint2D center, double alpha, double len) {
+<span class="fc" id="L77">		final double x = center.getX() + len * Math.sin(alpha);</span>
+<span class="fc" id="L78">		final double y = center.getY() + len * Math.cos(alpha);</span>
+<span class="fc" id="L79">		return new XPoint2D(x, y);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

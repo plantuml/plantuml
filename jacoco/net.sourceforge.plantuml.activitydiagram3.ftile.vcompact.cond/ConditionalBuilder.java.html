@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConditionalBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</a> &gt; <span class="el_source">ConditionalBuilder.java</span></div><h1>ConditionalBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
+
+import java.util.Collection;
+
+import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidthCentered;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileWithUrl;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileIfDown;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondSquare;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock2;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.ConditionEndStyle;
+import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.url.Url;
+
+public class ConditionalBuilder {
+
+	private final Swimlane swimlane;
+	private final HColor borderColor;
+	private final HColor backColor;
+	private final LineBreakStrategy diamondLineBreak;
+	private final LineBreakStrategy labelLineBreak;
+	private final Rainbow arrowColor;
+	private final FtileFactory ftileFactory;
+	private final ConditionStyle conditionStyle;
+	private final ConditionEndStyle conditionEndStyle;
+	private final Branch branch1;
+	private final Branch branch2;
+	private final ISkinParam skinParam;
+	private final StringBounder stringBounder;
+	private final FontConfiguration fontArrow;
+	private final FontConfiguration styleDiamonFont;
+
+	private final Ftile tile1;
+	private final Ftile tile2;
+	private final Url url;
+	private final Collection&lt;PositionedNote&gt; notes;
+	private final Style styleDiamond;
+
+	private StyleSignatureBasic getStyleSignatureDiamond() {
+<span class="nc" id="L102">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
+	}
+
+	private StyleSignatureBasic getStyleSignatureArrow() {
+<span class="nc" id="L106">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	}
+
+	public ConditionalBuilder(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,
+			ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond,
+<span class="nc" id="L112">			Collection&lt;PositionedNote&gt; notes) {</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (backColor == null)</span>
+<span class="nc" id="L115">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L117">		this.styleDiamond = styleDiamond;</span>
+<span class="nc" id="L118">		this.styleDiamonFont = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L119">		this.fontArrow = styleArrow.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L120">		this.diamondLineBreak = styleDiamond.wrapWidth();</span>
+<span class="nc" id="L121">		this.labelLineBreak = styleArrow.wrapWidth();</span>
+<span class="nc" id="L122">		this.backColor = backColor;</span>
+<span class="nc" id="L123">		this.notes = notes;</span>
+
+<span class="nc" id="L125">		this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L126">		this.arrowColor = Rainbow.build(styleArrow, skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L128">		this.ftileFactory = ftileFactory;</span>
+<span class="nc" id="L129">		this.swimlane = swimlane;</span>
+<span class="nc" id="L130">		this.conditionStyle = conditionStyle;</span>
+<span class="nc" id="L131">		this.conditionEndStyle = conditionEndStyle;</span>
+<span class="nc" id="L132">		this.branch1 = branch1;</span>
+<span class="nc" id="L133">		this.branch2 = branch2;</span>
+<span class="nc" id="L134">		this.skinParam = skinParam;</span>
+<span class="nc" id="L135">		this.stringBounder = stringBounder;</span>
+<span class="nc" id="L136">		this.url = url;</span>
+
+<span class="nc" id="L138">		this.tile1 = new FtileMinWidthCentered(branch1.getFtile(), 30);</span>
+<span class="nc" id="L139">		this.tile2 = new FtileMinWidthCentered(branch2.getFtile(), 30);</span>
+
+<span class="nc" id="L141">	}</span>
+
+	static public Ftile create(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,
+			ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond,
+			Collection&lt;PositionedNote&gt; notes) {
+<span class="nc" id="L147">		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, backColor, ftileFactory, conditionStyle,</span>
+				conditionEndStyle, branch1, branch2, skinParam, stringBounder, url, styleArrow, styleDiamond, notes);
+<span class="nc bnc" id="L149" title="All 4 branches missed.">		if (isEmptyOrOnlySingleStopOrSpot(branch2) &amp;&amp; isEmptyOrOnlySingleStopOrSpot(branch1) == false)</span>
+<span class="nc" id="L150">			return builder.createDown(builder.branch1, builder.branch2);</span>
+
+<span class="nc bnc" id="L152" title="All 4 branches missed.">		if (branch1.isEmpty() &amp;&amp; branch2.isOnlySingleStopOrSpot())</span>
+<span class="nc" id="L153">			return builder.createDown(builder.branch1, builder.branch2);</span>
+
+<span class="nc bnc" id="L155" title="All 4 branches missed.">		if (isEmptyOrOnlySingleStopOrSpot(branch1) &amp;&amp; isEmptyOrOnlySingleStopOrSpot(branch2) == false)</span>
+<span class="nc" id="L156">			return builder.createDown(builder.branch2, builder.branch1);</span>
+
+<span class="nc bnc" id="L158" title="All 4 branches missed.">		if (branch2.isEmpty() &amp;&amp; branch1.isOnlySingleStopOrSpot())</span>
+<span class="nc" id="L159">			return builder.createDown(builder.branch2, builder.branch1);</span>
+
+<span class="nc" id="L161">		return builder.createWithLinks();</span>
+		// return builder.createWithDiamonds();
+		// return builder.createNude();
+	}
+
+	private static boolean isEmptyOrOnlySingleStopOrSpot(Branch branch) {
+<span class="nc bnc" id="L167" title="All 4 branches missed.">		return branch.isEmpty() || branch.isOnlySingleStopOrSpot();</span>
+	}
+
+	private Ftile createDown(Branch branch1, Branch branch2) {
+<span class="nc" id="L171">		final Ftile tile1 = new FtileMinWidthCentered(branch1.getFtile(), 30);</span>
+<span class="nc" id="L172">		final Ftile tile2 = new FtileMinWidthCentered(branch2.getFtile(), 30);</span>
+<span class="nc" id="L173">		final TextBlock tb1 = getLabelPositive(branch1);</span>
+<span class="nc" id="L174">		final TextBlock tb2 = getLabelPositive(branch2);</span>
+<span class="nc" id="L175">		final Ftile diamond1 = getShape1(false, tb1, tb2);</span>
+<span class="nc" id="L176">		final Ftile diamond2 = getShape2(branch1, branch2, true);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (branch2.isOnlySingleStopOrSpot())</span>
+<span class="nc" id="L178">			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10),</span>
+<span class="nc" id="L179">					arrowColor, conditionEndStyle, ftileFactory, branch2.getFtile(), branch2.getOut(), notes);</span>
+
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (branch1.isOnlySingleStopOrSpot())</span>
+<span class="nc" id="L182">			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),</span>
+<span class="nc" id="L183">					arrowColor, conditionEndStyle, ftileFactory, branch1.getFtile(), branch1.getOut(), notes);</span>
+
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (branch1.isEmpty())</span>
+<span class="nc" id="L186">			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),</span>
+					arrowColor, conditionEndStyle, ftileFactory, null, null, notes);
+
+<span class="nc" id="L189">		return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10), arrowColor,</span>
+<span class="nc" id="L190">				conditionEndStyle, ftileFactory, null, branch2.getOut(), notes);</span>
+	}
+
+	private Ftile createNude() {
+<span class="nc" id="L194">		return new FtileIfNude(tile1, tile2, swimlane);</span>
+
+	}
+
+	private Ftile createWithDiamonds() {
+<span class="nc" id="L199">		final Ftile diamond1 = getDiamond1(true);</span>
+<span class="nc" id="L200">		final Ftile diamond2 = getShape2(branch1, branch2, false);</span>
+<span class="nc" id="L201">		final FtileIfWithDiamonds ftile = new FtileIfWithDiamonds(diamond1, tile1, tile2, diamond2, swimlane,</span>
+				stringBounder, notes);
+<span class="nc" id="L203">		final XDimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);</span>
+<span class="nc" id="L204">		final XDimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);</span>
+<span class="nc" id="L205">		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);</span>
+<span class="nc" id="L206">		final double diff2 = ftile.computeMarginNeedForBranchLabe2(stringBounder, label2);</span>
+<span class="nc" id="L207">		Ftile result = FtileUtils.addHorizontalMargin(ftile, diff1, diff2);</span>
+<span class="nc" id="L208">		final double suppHeight = ftile.computeVerticalMarginNeedForBranchs(stringBounder, label1, label2);</span>
+<span class="nc" id="L209">		result = FtileUtils.addVerticalMargin(result, suppHeight, 0);</span>
+<span class="nc" id="L210">		return result;</span>
+	}
+
+	private Ftile createWithLinks() {
+<span class="nc" id="L214">		Ftile diamond1 = getDiamond1(true);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L216">			diamond1 = new FtileWithUrl(diamond1, url);</span>
+
+<span class="nc" id="L218">		final Ftile diamond2 = getShape2(branch1, branch2, false);</span>
+<span class="nc" id="L219">		final Ftile tmp1 = FtileUtils.addHorizontalMargin(tile1, 10);</span>
+<span class="nc" id="L220">		final Ftile tmp2 = FtileUtils.addHorizontalMargin(tile2, 10);</span>
+<span class="nc" id="L221">		final FtileIfWithLinks ftile = new FtileIfWithLinks(diamond1, tmp1, tmp2, diamond2, swimlane, arrowColor,</span>
+				conditionEndStyle, stringBounder, notes);
+<span class="nc" id="L223">		final XDimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);</span>
+<span class="nc" id="L224">		final XDimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);</span>
+<span class="nc" id="L225">		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);</span>
+<span class="nc" id="L226">		final double diff2 = ftile.computeMarginNeedForBranchLabe2(stringBounder, label2);</span>
+<span class="nc" id="L227">		final double suppHeight = ftile.computeVerticalMarginNeedForBranchs(stringBounder, label1, label2);</span>
+<span class="nc" id="L228">		Ftile result = ftile.addLinks(branch1, branch2, stringBounder);</span>
+<span class="nc" id="L229">		result = FtileUtils.addHorizontalMargin(result, diff1, diff2);</span>
+<span class="nc" id="L230">		result = FtileUtils.addVerticalMargin(result, suppHeight, 0);</span>
+<span class="nc" id="L231">		return result;</span>
+	}
+
+	private Ftile getDiamond1(boolean eastWest) {
+<span class="nc" id="L235">		return getShape1(eastWest, getLabelPositive(branch1), getLabelPositive(branch2));</span>
+	}
+
+	private Ftile getShape1(boolean eastWest, TextBlock tb1, TextBlock tb2) {
+<span class="nc" id="L239">		final Display labelTest = branch1.getLabelTest();</span>
+
+<span class="nc" id="L241">		final HorizontalAlignment horizontalAlignment = styleDiamond.getHorizontalAlignment();</span>
+<span class="nc" id="L242">		final Sheet sheet = skinParam.sheet(styleDiamonFont, horizontalAlignment, CreoleMode.FULL)</span>
+<span class="nc" id="L243">				.createSheet(labelTest);</span>
+<span class="nc" id="L244">		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());</span>
+
+<span class="nc" id="L246">		final UStroke thickness = tile1</span>
+<span class="nc" id="L247">				.getThickness(getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
+<span class="nc" id="L248">		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), thickness);</span>
+
+		final Ftile shape1;
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (eastWest)</span>
+<span class="nc" id="L253">				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L254">						.withWestAndEast(tb1, tb2);</span>
+			else
+<span class="nc" id="L256">				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L257">						.withSouth(tb1).withEast(tb2);</span>
+
+<span class="nc bnc" id="L259" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">			if (eastWest)</span>
+<span class="nc" id="L261">				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)</span>
+<span class="nc" id="L262">						.withWestAndEast(tb1, tb2);</span>
+			else
+<span class="nc" id="L264">				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)</span>
+<span class="nc" id="L265">						.withSouth(tb1).withEast(tb2);</span>
+
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">			if (eastWest)</span>
+<span class="nc" id="L269">				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L270">						.withWestAndEast(tb1, tb2);</span>
+			else
+<span class="nc" id="L272">				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L273">						.withSouth(tb1).withEast(tb2);</span>
+		} else {
+<span class="nc" id="L275">			throw new IllegalStateException();</span>
+		}
+<span class="nc" id="L277">		return shape1;</span>
+	}
+
+	private TextBlock getLabelPositive(Branch branch) {
+<span class="nc" id="L281">		return branch.getDisplayPositive().create0(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
+				labelLineBreak, CreoleMode.SIMPLE_LINE, null, null);
+	}
+
+	private Ftile getShape2(Branch branch1, Branch branch2, boolean useNorth) {
+		final Ftile shape2;
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (conditionEndStyle == ConditionEndStyle.HLINE)</span>
+<span class="nc" id="L288">			return new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize, swimlane);</span>
+
+		// else use default ConditionEndStyle.DIAMOND
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		if (hasTwoBranches()) {</span>
+<span class="nc" id="L292">			final Display out1 = branch1.getFtile().getOutLinkRendering().getDisplay();</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">			final TextBlock tbout1 = out1 == null ? null</span>
+<span class="nc" id="L294">					: out1.create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
+							CreoleMode.SIMPLE_LINE);
+<span class="nc" id="L296">			final Display out2 = branch2.getFtile().getOutLinkRendering().getDisplay();</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">			final TextBlock tbout2 = out2 == null ? null</span>
+<span class="nc" id="L298">					: out2.create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
+							CreoleMode.SIMPLE_LINE);
+<span class="nc" id="L300">			FtileDiamond tmp = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane);</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			tmp = useNorth ? tmp.withNorth(tbout1) : tmp.withWest(tbout1);</span>
+<span class="nc" id="L302">			tmp = tmp.withEast(tbout2);</span>
+<span class="nc" id="L303">			shape2 = tmp;</span>
+<span class="nc" id="L304">		} else {</span>
+<span class="nc" id="L305">			shape2 = new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize / 2, swimlane);</span>
+		}
+<span class="nc" id="L307">		return shape2;</span>
+	}
+
+	public boolean hasTwoBranches() {
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		return tile1.calculateDimension(stringBounder).hasPointOut()</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">				&amp;&amp; tile2.calculateDimension(stringBounder).hasPointOut();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>postproc__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">postproc__c.java</span></div><h1>postproc__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static gen.lib.cgraph.attr__c.agattr;
+import static gen.lib.cgraph.edge__c.agfstout;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agnxtout;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.graph__c.agnnodes;
+import static gen.lib.cgraph.id__c.agnameof;
+import static gen.lib.cgraph.node__c.agfstnode;
+import static gen.lib.cgraph.node__c.agnxtnode;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.common.geom__c.ccwrotatepf;
+import static gen.lib.common.splines__c.edgeMidpoint;
+import static gen.lib.common.splines__c.getsplinepoints;
+import static gen.lib.common.utils__c.gv_nodesize;
+import static gen.lib.common.utils__c.late_bool;
+import static gen.lib.common.utils__c.updateBB;
+import static gen.lib.label.xlabels__c.placeLabels;
+import static h.ST_pointf.pointfof;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.EDGE_LABEL;
+import static smetana.core.Macro.EDGE_XLABEL;
+import static smetana.core.Macro.ED_edge_type;
+import static smetana.core.Macro.ED_head_label;
+import static smetana.core.Macro.ED_label;
+import static smetana.core.Macro.ED_spl;
+import static smetana.core.Macro.ED_tail_label;
+import static smetana.core.Macro.ED_xlabel;
+import static smetana.core.Macro.ET_NONE;
+import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_border;
+import static smetana.core.Macro.GD_clust;
+import static smetana.core.Macro.GD_flags;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_has_labels;
+import static smetana.core.Macro.GD_label;
+import static smetana.core.Macro.GD_label_pos;
+import static smetana.core.Macro.GD_n_cluster;
+import static smetana.core.Macro.GD_rankdir;
+import static smetana.core.Macro.GRAPH_LABEL;
+import static smetana.core.Macro.HEAD_LABEL;
+import static smetana.core.Macro.IGNORED;
+import static smetana.core.Macro.INCH2PS;
+import static smetana.core.Macro.INT_MAX;
+import static smetana.core.Macro.LABEL_AT_LEFT;
+import static smetana.core.Macro.LABEL_AT_RIGHT;
+import static smetana.core.Macro.LABEL_AT_TOP;
+import static smetana.core.Macro.LEFT_IX;
+import static smetana.core.Macro.ND_coord;
+import static smetana.core.Macro.ND_height;
+import static smetana.core.Macro.ND_width;
+import static smetana.core.Macro.ND_xlabel;
+import static smetana.core.Macro.NODE_XLABEL;
+import static smetana.core.Macro.RANKDIR_BT;
+import static smetana.core.Macro.RANKDIR_LR;
+import static smetana.core.Macro.RANKDIR_RL;
+import static smetana.core.Macro.RANKDIR_TB;
+import static smetana.core.Macro.RIGHT_IX;
+import static smetana.core.Macro.TAIL_LABEL;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agsym_s;
+import h.ST_bezier;
+import h.ST_boxf;
+import h.ST_cinfo_t;
+import h.ST_label_params_t;
+import h.ST_object_t;
+import h.ST_pointf;
+import h.ST_splines;
+import h.ST_textlabel_t;
+import h.ST_xlabel_t;
+import smetana.core.CArray;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.ZType;
+
+<span class="nc" id="L131">public class postproc__c {</span>
+
+//3 dajapw16wus3rwimkrk5ihi2b
+// static pointf map_point(pointf p) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;map_point&quot;, key=&quot;dajapw16wus3rwimkrk5ihi2b&quot;, definition=&quot;static pointf map_point(pointf p)&quot;)
+public static ST_pointf map_point(Globals zz, final ST_pointf p) {
+// WARNING!! STRUCT
+<span class="fc" id="L139">return map_point_w_(zz, p.copy()).copy();</span>
+}
+private static ST_pointf map_point_w_(Globals zz, final ST_pointf p) {
+<span class="fc" id="L142">ENTERING(&quot;dajapw16wus3rwimkrk5ihi2b&quot;,&quot;map_point&quot;);</span>
+try {
+<span class="fc" id="L144">    p.___(ccwrotatepf(p, zz.Rankdir * 90));</span>
+<span class="fc" id="L145">    p.x -= zz.Offset.x;</span>
+<span class="fc" id="L146">    p.y -= zz.Offset.y;</span>
+<span class="fc" id="L147">    return p;</span>
+} finally {
+<span class="fc" id="L149">LEAVING(&quot;dajapw16wus3rwimkrk5ihi2b&quot;,&quot;map_point&quot;);</span>
+}
+}
+
+
+
+
+//3 bvq3vvonvotn47mfe5zsvchie
+// static void map_edge(edge_t * e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;map_edge&quot;, key=&quot;bvq3vvonvotn47mfe5zsvchie&quot;, definition=&quot;static void map_edge(edge_t * e)&quot;)
+public static void map_edge(Globals zz, ST_Agedge_s e) {
+<span class="fc" id="L161">ENTERING(&quot;bvq3vvonvotn47mfe5zsvchie&quot;,&quot;map_edge&quot;);</span>
+try {
+    int j, k;
+<span class="fc" id="L164">    final ST_bezier bz = new ST_bezier();</span>
+    
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">    if (ED_spl(e) == null) {</span>
+<span class="nc bnc" id="L167" title="All 4 branches missed.">	if ((zz.Concentrate == false) &amp;&amp; (ED_edge_type(e) != IGNORED))</span>
+<span class="nc" id="L168">	    System.err.println(&quot;lost %s %s edge\n&quot;+ agnameof(zz, agtail(e))+</span>
+<span class="nc" id="L169">		  agnameof(zz, aghead(e)));</span>
+<span class="nc" id="L170">	return;</span>
+    }
+<span class="fc bfc" id="L172" title="All 2 branches covered.">    for (j = 0; j &lt; ED_spl(e).size; j++) {</span>
+<span class="fc" id="L173">	bz.___(ED_spl(e).list.get__(j));</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">	for (k = 0; k &lt; bz.size; k++) {</span>
+<span class="fc" id="L175">	    bz.list.get__(k).___(map_point(zz, bz.list.get__(k)));</span>
+	}
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">	if (bz.sflag!=0)</span>
+<span class="nc" id="L178">	    ED_spl(e).list.get__(j).sp.___(map_point(zz, ED_spl(e).list.get__(j).sp));</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">	if (bz.eflag!=0) {</span>
+<span class="fc" id="L180">	    ED_spl(e).list.get__(j).ep.___(map_point(zz, ED_spl(e).list.get__(j).ep));</span>
+    }
+    }
+<span class="fc bfc" id="L183" title="All 2 branches covered.">    if (ED_label(e)!=null)</span>
+<span class="fc" id="L184">	ED_label(e).pos.___(map_point(zz, ED_label(e).pos));</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">    if (ED_xlabel(e)!=null)</span>
+<span class="nc" id="L186">UNSUPPORTED(&quot;al3tnq9zjjqeq1ll7qdxyu3ja&quot;); // 	ED_xlabel(e)-&gt;pos = map_point(ED_xlabel(e)-&gt;pos);</span>
+    /* vladimir */
+<span class="fc bfc" id="L188" title="All 2 branches covered.">    if (ED_head_label(e)!=null)</span>
+<span class="fc" id="L189">    	ED_head_label(e).pos.___(map_point(zz, ED_head_label(e).pos));</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">    if (ED_tail_label(e)!=null)</span>
+<span class="nc" id="L191">    	ED_tail_label(e).pos.___(map_point(zz, ED_tail_label(e).pos));</span>
+} finally {
+<span class="fc" id="L193">LEAVING(&quot;bvq3vvonvotn47mfe5zsvchie&quot;,&quot;map_edge&quot;);</span>
+}
+<span class="fc" id="L195">}</span>
+
+
+
+
+//3 a3hf82rxsojxbunj6p8a6bkse
+// void translate_bb(graph_t * g, int rankdir) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;translate_bb&quot;, key=&quot;a3hf82rxsojxbunj6p8a6bkse&quot;, definition=&quot;void translate_bb(graph_t * g, int rankdir)&quot;)
+public static void translate_bb(Globals zz, ST_Agraph_s g, int rankdir) {
+<span class="fc" id="L205">ENTERING(&quot;a3hf82rxsojxbunj6p8a6bkse&quot;,&quot;translate_bb&quot;);</span>
+try {
+    int c;
+<span class="fc" id="L208">    final ST_boxf bb = new ST_boxf(), new_bb = new ST_boxf();</span>
+<span class="fc" id="L209">    bb.___(GD_bb(g));</span>
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">    if (rankdir == RANKDIR_LR || rankdir == RANKDIR_BT) {</span>
+<span class="fc" id="L211">    	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.UR.y)));</span>
+<span class="fc" id="L212">    	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.LL.y)));</span>
+    } else {
+<span class="fc" id="L214">	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.LL.y)));</span>
+<span class="fc" id="L215">	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.UR.y)));</span>
+    }
+<span class="fc" id="L217">    GD_bb(g).___(new_bb);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">    if (GD_label(g)!=null) {</span>
+<span class="fc" id="L219">	GD_label(g).pos.___(map_point(zz, GD_label(g).pos));</span>
+    }
+<span class="fc bfc" id="L221" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L222">	translate_bb(zz, (ST_Agraph_s) GD_clust(g).get_(c), rankdir);</span>
+} finally {
+<span class="fc" id="L224">LEAVING(&quot;a3hf82rxsojxbunj6p8a6bkse&quot;,&quot;translate_bb&quot;);</span>
+}
+<span class="fc" id="L226">}</span>
+
+
+
+
+//3 h4i5qxnd7hlrew919abswd13
+// static void translate_drawing(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;translate_drawing&quot;, key=&quot;h4i5qxnd7hlrew919abswd13&quot;, definition=&quot;static void translate_drawing(graph_t * g)&quot;)
+public static void translate_drawing(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L236">ENTERING(&quot;h4i5qxnd7hlrew919abswd13&quot;,&quot;translate_drawing&quot;);</span>
+try {
+    ST_Agnode_s v;
+    ST_Agedge_s e;
+<span class="pc bpc" id="L240" title="1 of 4 branches missed.">    boolean shift = (zz.Offset.x!=0.0 || zz.Offset.y!=0.0);</span>
+<span class="pc bpc" id="L241" title="3 of 4 branches missed.">    if (!shift &amp;&amp; zz.Rankdir == 0)</span>
+<span class="nc" id="L242">	return;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">    for (v = agfstnode(zz, g); v!=null; v = agnxtnode(zz, g, v)) {</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">	if (zz.Rankdir!=0)</span>
+<span class="fc" id="L245">	    gv_nodesize(v, false);</span>
+<span class="fc" id="L246">	ND_coord(v).___(map_point(zz, ND_coord(v)));</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">	if (ND_xlabel(v)!=null)</span>
+<span class="nc" id="L248">UNSUPPORTED(&quot;3fy0l7w2v24hzrvlpstpknwl7&quot;); // 	    ND_xlabel(v)-&gt;pos = map_point(ND_xlabel(v)-&gt;pos);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">	if (zz.State == 1)</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">	    for (e = agfstout(zz, g, v); e!=null; e = agnxtout(zz, g, e))</span>
+<span class="fc" id="L251">		map_edge(zz, e);</span>
+    }
+<span class="fc" id="L253">    translate_bb(zz, g, GD_rankdir(g));</span>
+} finally {
+<span class="fc" id="L255">LEAVING(&quot;h4i5qxnd7hlrew919abswd13&quot;,&quot;translate_drawing&quot;);</span>
+}
+<span class="fc" id="L257">}</span>
+
+
+
+
+
+
+/* centerPt:
+ * Calculate the center point of the xlabel. The returned positions for
+ * xlabels always correspond to the lower left corner. 
+ */
+//3 2i713kmewjct2igf3lwm80462
+// static pointf centerPt (xlabel_t* xlp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;centerPt&quot;, key=&quot;2i713kmewjct2igf3lwm80462&quot;, definition=&quot;static pointf centerPt (xlabel_t* xlp)&quot;)
+public static ST_pointf centerPt(CArray&lt;ST_xlabel_t&gt; xlp) {
+<span class="fc" id="L273">ENTERING(&quot;2i713kmewjct2igf3lwm80462&quot;,&quot;centerPt&quot;);</span>
+try {
+<span class="fc" id="L275">   final ST_pointf p = new ST_pointf();</span>
+<span class="fc" id="L276">   p.___(xlp.get__(0).pos);</span>
+<span class="fc" id="L277">   p.x += (xlp.get__(0).sz.x)/2.0;</span>
+<span class="fc" id="L278">   p.y += (xlp.get__(0).sz.y)/2.0;</span>
+<span class="fc" id="L279">   return p;</span>
+} finally {
+<span class="fc" id="L281">LEAVING(&quot;2i713kmewjct2igf3lwm80462&quot;,&quot;centerPt&quot;);</span>
+}
+}
+
+
+
+//3 95pnpuiq4khinrz2bqkci9nfg
+// static pointf edgeTailpoint (Agedge_t* e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;edgeTailpoint&quot;, key=&quot;95pnpuiq4khinrz2bqkci9nfg&quot;, definition=&quot;static pointf edgeTailpoint (Agedge_t* e)&quot;)
+public static ST_pointf edgeTailpoint(ST_Agedge_s e) {
+<span class="nc" id="L292">ENTERING(&quot;95pnpuiq4khinrz2bqkci9nfg&quot;,&quot;edgeTailpoint&quot;);</span>
+try {
+<span class="nc" id="L294">	return edgeTailpoint_(e).copy();</span>
+} finally {
+<span class="nc" id="L296">LEAVING(&quot;95pnpuiq4khinrz2bqkci9nfg&quot;,&quot;edgeTailpoint&quot;);</span>
+}
+}
+private static ST_pointf edgeTailpoint_(ST_Agedge_s e) {
+	ST_splines spl;
+	ST_bezier bez;
+<span class="nc" id="L302">	spl = getsplinepoints(e);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">	if (spl == null) {</span>
+<span class="nc" id="L304">UNSUPPORTED(&quot;9wdrv4uc4c7ssn0qpmxgz5eu1&quot;); // 	pointf p;</span>
+<span class="nc" id="L305">UNSUPPORTED(&quot;ezy0ey6dn5uqp6peuorn615x6&quot;); // 	p.x = p.y = 0;</span>
+<span class="nc" id="L306">UNSUPPORTED(&quot;68kasxgknec72r19lohbk6n3q&quot;); // 	return p;</span>
+    }
+<span class="nc" id="L308">	bez = spl.list.get__(0);</span>
+    //     bez = &amp;spl-&gt;list[0];
+<span class="nc bnc" id="L310" title="All 2 branches missed.">if (bez.sflag!=0) {</span>
+<span class="nc" id="L311">	return bez.sp;</span>
+} else {
+<span class="nc" id="L313">	return bez.list.get__(0);</span>
+   // 	return bez-&gt;list[0];
+ }
+
+}
+
+
+
+
+//3 av67wf2xi70ncgl90j1ttrjjs
+// static pointf edgeHeadpoint (Agedge_t* e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;edgeHeadpoint&quot;, key=&quot;av67wf2xi70ncgl90j1ttrjjs&quot;, definition=&quot;static pointf edgeHeadpoint (Agedge_t* e)&quot;)
+public static ST_pointf edgeHeadpoint(ST_Agedge_s e) {
+<span class="fc" id="L327">ENTERING(&quot;av67wf2xi70ncgl90j1ttrjjs&quot;,&quot;edgeHeadpoint&quot;);</span>
+try {
+<span class="fc" id="L329">	return edgeHeadpoint_(e).copy();</span>
+} finally {
+<span class="fc" id="L331">LEAVING(&quot;av67wf2xi70ncgl90j1ttrjjs&quot;,&quot;edgeHeadpoint&quot;);</span>
+}
+}
+private static ST_pointf edgeHeadpoint_(ST_Agedge_s e) {
+	ST_splines spl;
+	ST_bezier bez;
+<span class="fc" id="L337">	spl = getsplinepoints(e);</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">if (spl == null) {</span>
+<span class="nc" id="L339">UNSUPPORTED(&quot;9wdrv4uc4c7ssn0qpmxgz5eu1&quot;); // 	pointf p;</span>
+<span class="nc" id="L340">UNSUPPORTED(&quot;ezy0ey6dn5uqp6peuorn615x6&quot;); // 	p.x = p.y = 0;</span>
+<span class="nc" id="L341">UNSUPPORTED(&quot;68kasxgknec72r19lohbk6n3q&quot;); // 	return p;</span>
+}
+<span class="fc" id="L343">bez = spl.list.get__(spl.size - 1);</span>
+//     bez = &amp;spl-&gt;list[spl-&gt;size - 1];
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">if (bez.eflag!=0) {</span>
+<span class="nc" id="L346">	return bez.ep;</span>
+} else {
+<span class="fc" id="L348">	return bez.list.get__(bez.size - 1);</span>
+// 	return bez-&gt;list[bez-&gt;size - 1];
+}
+}
+
+
+
+
+//3 1ca6fh8ns5bgzfzcz8al4eh4k
+// static boxf adjustBB (object_t* objp, boxf bb) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;adjustBB&quot;, key=&quot;1ca6fh8ns5bgzfzcz8al4eh4k&quot;, definition=&quot;static boxf adjustBB (object_t* objp, boxf bb)&quot;)
+public static ST_boxf adjustBB(CArray&lt;ST_object_t&gt; objp, ST_boxf bb) {
+<span class="fc" id="L361">ENTERING(&quot;1ca6fh8ns5bgzfzcz8al4eh4k&quot;,&quot;adjustBB&quot;);</span>
+try {
+<span class="fc" id="L363">	return adjustBB_(objp, bb.copy()).copy();</span>
+} finally {
+<span class="fc" id="L365">LEAVING(&quot;1ca6fh8ns5bgzfzcz8al4eh4k&quot;,&quot;adjustBB&quot;);</span>
+}
+}
+private static ST_boxf adjustBB_(CArray&lt;ST_object_t&gt; objp, ST_boxf bb) {
+<span class="fc" id="L369">	final ST_pointf ur = new ST_pointf();</span>
+	/* Adjust bounding box */
+<span class="fc" id="L371">	bb.LL.x = Math.min(bb.LL.x, objp.get__(0).pos.x);</span>
+<span class="fc" id="L372">	bb.LL.y = Math.min(bb.LL.y, objp.get__(0).pos.y);</span>
+<span class="fc" id="L373">	ur.x = objp.get__(0).pos.x + objp.get__(0).sz.x;</span>
+<span class="fc" id="L374">	ur.y = objp.get__(0).pos.y + objp.get__(0).sz.y;</span>
+<span class="fc" id="L375">	bb.UR.x = Math.max(bb.UR.x, ur.x);</span>
+<span class="fc" id="L376">	bb.UR.y = Math.max(bb.UR.y, ur.y);</span>
+<span class="fc" id="L377">	return bb;</span>
+}
+
+
+
+
+//3 3mefe722uemyoa0czmkkw6hjb
+// static void addXLabel (textlabel_t* lp, object_t* objp, xlabel_t* xlp, int initObj, pointf pos) 
+/* addXLabel:
+ * Set up xlabel_t object and connect with related object.
+ * If initObj is set, initialize the object.
+ */
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;addXLabel&quot;, key=&quot;3mefe722uemyoa0czmkkw6hjb&quot;, definition=&quot;static void addXLabel (textlabel_t* lp, object_t* objp, xlabel_t* xlp, int initObj, pointf pos)&quot;)
+public static void addXLabel(Globals zz, ST_textlabel_t lp, CArray&lt;ST_object_t&gt; objp, CArray&lt;ST_xlabel_t&gt; xlp, int initObj, ST_pointf pos) {
+<span class="fc" id="L392">ENTERING(&quot;3mefe722uemyoa0czmkkw6hjb&quot;,&quot;addXLabel&quot;);</span>
+try {
+<span class="fc" id="L394">	addXLabel_(zz, lp, objp, xlp, initObj, pos.copy());</span>
+} finally {
+<span class="fc" id="L396">LEAVING(&quot;3mefe722uemyoa0czmkkw6hjb&quot;,&quot;addXLabel&quot;);</span>
+}
+<span class="fc" id="L398">}</span>
+private static void addXLabel_(Globals zz, ST_textlabel_t lp, CArray&lt;ST_object_t&gt; objp, CArray&lt;ST_xlabel_t&gt; xlp, int initObj, ST_pointf pos) {
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">	if (initObj!=0) {</span>
+<span class="fc" id="L401">		objp.get__(0).sz.x = 0;</span>
+<span class="fc" id="L402">		objp.get__(0).sz.y = 0;</span>
+<span class="fc" id="L403">		objp.get__(0).pos.___(pos);</span>
+	}
+	
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">	if (zz.Flip) {</span>
+<span class="nc" id="L407">	xlp.get__(0).sz.x = lp.dimen.y;</span>
+<span class="nc" id="L408">	xlp.get__(0).sz.y = lp.dimen.x;</span>
+	}
+	else {
+<span class="fc" id="L411">	xlp.get__(0).sz.___(lp.dimen);</span>
+	}
+<span class="fc" id="L413">	xlp.get__(0).lbl = lp;</span>
+<span class="fc" id="L414">	xlp.get__(0).set = 0;</span>
+<span class="fc" id="L415">	objp.get__(0).lbl = xlp;</span>
+<span class="fc" id="L416">}</span>
+
+
+
+
+/* addLabelObj:
+ * Set up obstacle object based on set external label.
+ * This includes dot edge labels.
+ * Use label information to determine size and position of object.
+ * Then adjust given bounding box bb to include label and return new bb.
+ */
+//3 dwxd5kvlanbcxqfuncjg0ea54
+// static boxf addLabelObj (textlabel_t* lp, object_t* objp, boxf bb) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;addLabelObj&quot;, key=&quot;dwxd5kvlanbcxqfuncjg0ea54&quot;, definition=&quot;static boxf addLabelObj (textlabel_t* lp, object_t* objp, boxf bb)&quot;)
+public static ST_boxf addLabelObj(Globals zz, ST_textlabel_t lp, CArray&lt;ST_object_t&gt; objp, final ST_boxf bb) {
+	// WARNING!! STRUCT
+<span class="fc" id="L433">	return addLabelObj_(zz, lp, objp, bb.copy()).copy();</span>
+}
+private static ST_boxf addLabelObj_(Globals zz, ST_textlabel_t lp, CArray&lt;ST_object_t&gt; objp, final ST_boxf bb) {
+<span class="fc" id="L436">ENTERING(&quot;dwxd5kvlanbcxqfuncjg0ea54&quot;,&quot;addLabelObj&quot;);</span>
+try {
+<span class="pc bpc" id="L438" title="1 of 2 branches missed.">	if (zz.Flip) {</span>
+<span class="nc" id="L439">	objp.get__(0).sz.x = lp.dimen.y; </span>
+<span class="nc" id="L440">	objp.get__(0).sz.y = lp.dimen.x;</span>
+	}
+	else {
+<span class="fc" id="L443">	objp.get__(0).sz.x = lp.dimen.x; </span>
+<span class="fc" id="L444">	objp.get__(0).sz.y = lp.dimen.y;</span>
+	}
+<span class="fc" id="L446">	objp.get__(0).pos.___(lp.pos);</span>
+<span class="fc" id="L447">	objp.get__(0).pos.x -= (objp.get__(0).sz.x) / 2.0;</span>
+<span class="fc" id="L448">	objp.get__(0).pos.y -= (objp.get__(0).sz.y) / 2.0;</span>
+
+<span class="fc" id="L450">	return adjustBB(objp, bb);</span>
+} finally {
+<span class="fc" id="L452">	LEAVING(&quot;dwxd5kvlanbcxqfuncjg0ea54&quot;,&quot;addLabelObj&quot;);</span>
+}
+}
+
+
+
+
+//3 b8tjygxnwny5qoiir1mha1d62
+// static boxf addNodeObj (node_t* np, object_t* objp, boxf bb) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;addNodeObj&quot;, key=&quot;b8tjygxnwny5qoiir1mha1d62&quot;, definition=&quot;static boxf addNodeObj (node_t* np, object_t* objp, boxf bb)&quot;)
+public static ST_boxf addNodeObj(Globals zz, ST_Agnode_s np, CArray&lt;ST_object_t&gt; objp, final ST_boxf bb) {
+	// WARNING!! STRUCT
+<span class="fc" id="L465">	return addNodeObj_(zz, np, objp, bb.copy()).copy();</span>
+}
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;&quot;, key=&quot;&quot;, definition=&quot;&quot;)
+public static ST_boxf addNodeObj_(Globals zz, ST_Agnode_s np, CArray&lt;ST_object_t&gt; objp, final ST_boxf bb) {
+<span class="fc" id="L470">ENTERING(&quot;b8tjygxnwny5qoiir1mha1d62&quot;,&quot;addNodeObj&quot;);</span>
+try {
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">	if (zz.Flip) {</span>
+<span class="nc" id="L473">		objp.get__(0).sz.x = INCH2PS(ND_height(np));</span>
+<span class="nc" id="L474">		objp.get__(0).sz.y = INCH2PS(ND_width(np));</span>
+	}
+	else {
+<span class="fc" id="L477">		  objp.get__(0).sz.x = INCH2PS(ND_width(np));</span>
+<span class="fc" id="L478">		  objp.get__(0).sz.y = INCH2PS(ND_height(np));</span>
+	}
+<span class="fc" id="L480">	objp.get__(0).pos.___(ND_coord(np));</span>
+<span class="fc" id="L481">	objp.get__(0).pos.x -= (objp.get__(0).sz.x) / 2.0;</span>
+<span class="fc" id="L482">	objp.get__(0).pos.y -= (objp.get__(0).sz.y) / 2.0;</span>
+
+<span class="fc" id="L484">	return adjustBB(objp, bb);</span>
+} finally {
+<span class="fc" id="L486">	LEAVING(&quot;b8tjygxnwny5qoiir1mha1d62&quot;,&quot;addNodeObj&quot;);</span>
+}
+}
+
+
+
+
+//3 6kx3lin2ig9o2otk2bqzdvd4t
+// static cinfo_t addClusterObj (Agraph_t* g, cinfo_t info) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;addClusterObj&quot;, key=&quot;6kx3lin2ig9o2otk2bqzdvd4t&quot;, definition=&quot;static cinfo_t addClusterObj (Agraph_t* g, cinfo_t info)&quot;)
+public static ST_cinfo_t addClusterObj(Globals zz, ST_Agraph_s g, ST_cinfo_t info) {
+<span class="nc" id="L498">ENTERING(&quot;6kx3lin2ig9o2otk2bqzdvd4t&quot;,&quot;addClusterObj&quot;);</span>
+try {
+<span class="nc" id="L500">	return addClusterObj_(zz, g, info.copy()).copy();</span>
+} finally {
+<span class="nc" id="L502">LEAVING(&quot;6kx3lin2ig9o2otk2bqzdvd4t&quot;,&quot;addClusterObj&quot;);</span>
+}
+}
+private static ST_cinfo_t addClusterObj_(Globals zz, ST_Agraph_s g, ST_cinfo_t info) {
+     int c;
+<span class="nc bnc" id="L507" title="All 2 branches missed.">     for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="nc" id="L508"> 	info.___(addClusterObj (zz, GD_clust(g).get_(c), info));</span>
+<span class="nc bnc" id="L509" title="All 6 branches missed.">     if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set!=0) {</span>
+<span class="nc" id="L510">    	 CArray&lt;ST_object_t&gt; objp = info.objp;</span>
+<span class="nc" id="L511">    	 info.bb.___(addLabelObj (zz, GD_label(g), objp, info.bb));</span>
+<span class="nc" id="L512">    	 info.objp = info.objp.plus_(1);</span>
+//UNSUPPORTED(&quot;dcgq2zlh4t0m1gno12t6h7ouy&quot;); // 	object_t* objp = info.objp;
+//UNSUPPORTED(&quot;ddz79zm5235krd6smukq1gza0&quot;); // 	info.bb = addLabelObj (GD_label(g), objp, info.bb);
+//UNSUPPORTED(&quot;be25qc3x3muxo4l87ji01t3kd&quot;); // 	info.objp++;
+     }
+<span class="nc" id="L517">     return info;</span>
+}
+
+
+
+
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;countClusterLabels&quot;, key=&quot;2tdbzvdtkwxp75kj0iufsynm5&quot;, definition=&quot;static int countClusterLabels (Agraph_t* g)&quot;)
+public static int countClusterLabels(ST_Agraph_s g) {
+<span class="nc" id="L526">ENTERING(&quot;2tdbzvdtkwxp75kj0iufsynm5&quot;,&quot;countClusterLabels&quot;);</span>
+try {
+<span class="nc" id="L528">	int c, i = 0;</span>
+<span class="nc bnc" id="L529" title="All 6 branches missed.">	if ((g != agroot(g)) &amp;&amp; GD_label(g)!=null &amp;&amp; GD_label(g).set!=0)</span>
+<span class="nc" id="L530">	i++;</span>
+<span class="nc bnc" id="L531" title="All 2 branches missed.">	for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="nc" id="L532">	i += countClusterLabels(GD_clust(g).get_(c));</span>
+<span class="nc" id="L533">	return i;</span>
+} finally {
+<span class="nc" id="L535">LEAVING(&quot;2tdbzvdtkwxp75kj0iufsynm5&quot;,&quot;countClusterLabels&quot;);</span>
+}
+
+}
+
+
+
+private static boolean HAVE_EDGE(ST_Agedge_s ep, int et) {
+<span class="pc bpc" id="L543" title="2 of 4 branches missed.">	return (et != ET_NONE) &amp;&amp; (ED_spl(ep) != null);</span>
+}
+
+//3 d4215jd9wukfn6t0iknwzjcof
+// static void addXLabels(Agraph_t * gp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;addXLabels&quot;, key=&quot;d4215jd9wukfn6t0iknwzjcof&quot;, definition=&quot;static void addXLabels(Agraph_t * gp)&quot;)
+public static void addXLabels(Globals zz, ST_Agraph_s gp) {
+<span class="fc" id="L551">ENTERING(&quot;d4215jd9wukfn6t0iknwzjcof&quot;,&quot;addXLabels&quot;);</span>
+try {
+    ST_Agnode_s np;
+    ST_Agedge_s ep;
+    int cnt, i, n_objs, n_lbls;
+<span class="fc" id="L556">    int n_nlbls = 0;		/* # of unset node xlabels */</span>
+<span class="fc" id="L557">    int n_elbls = 0;		/* # of unset edge labels or xlabels */</span>
+<span class="fc" id="L558">    int n_set_lbls = 0;		/* # of set xlabels and edge labels */</span>
+<span class="fc" id="L559">    int n_clbls = 0;		/* # of set cluster labels */</span>
+<span class="fc" id="L560">    final ST_boxf bb = new ST_boxf();</span>
+<span class="fc" id="L561">    final ST_pointf ur = new ST_pointf();</span>
+    ST_textlabel_t lp;
+<span class="fc" id="L563">    final ST_label_params_t params = new ST_label_params_t();</span>
+    CArray&lt;ST_object_t&gt; objs;
+    CArray&lt;ST_xlabel_t&gt; lbls;
+    CArray&lt;ST_object_t&gt; objp;
+    CArray&lt;ST_xlabel_t&gt; xlp;
+    ST_Agsym_s force;
+<span class="fc" id="L569">    int et = (GD_flags(gp) &amp; (7 &lt;&lt; 1));</span>
+    
+<span class="pc bpc" id="L571" title="1 of 2 branches missed.">    if ((GD_has_labels(gp) &amp; NODE_XLABEL) == 0 &amp;&amp;</span>
+<span class="pc bpc" id="L572" title="1 of 2 branches missed.">	(GD_has_labels(gp) &amp; EDGE_XLABEL) == 0 &amp;&amp;</span>
+<span class="pc bpc" id="L573" title="1 of 2 branches missed.">	(GD_has_labels(gp) &amp; TAIL_LABEL) == 0 &amp;&amp;</span>
+<span class="fc bfc" id="L574" title="All 2 branches covered.">	(GD_has_labels(gp) &amp; HEAD_LABEL) == 0 &amp;&amp;</span>
+<span class="pc bpc" id="L575" title="1 of 4 branches missed.">	((GD_has_labels(gp) &amp; EDGE_LABEL) == 0 || zz.EdgeLabelsDone!=0))</span>
+<span class="fc" id="L576">	return;</span>
+    
+<span class="fc bfc" id="L578" title="All 2 branches covered.">	for (np = agfstnode(zz, gp); np!=null; np = agnxtnode(zz, gp, np)) {</span>
+<span class="pc bpc" id="L579" title="1 of 2 branches missed.">	if (ND_xlabel(np)!=null) {</span>
+<span class="nc" id="L580">UNSUPPORTED(&quot;6oje33bnpp4jv5mclsrrhl005&quot;); // 	    if (ND_xlabel(np)-&gt;set)</span>
+<span class="nc" id="L581">UNSUPPORTED(&quot;cfkrw6t4lrs7dfgx86sgrz26&quot;); // 		n_set_lbls++;</span>
+<span class="nc" id="L582">UNSUPPORTED(&quot;5c97f6vfxny0zz35l2bu4maox&quot;); // 	    else</span>
+<span class="nc" id="L583">UNSUPPORTED(&quot;26eewzzknvqt2nbcrqds5fmti&quot;); // 		n_nlbls++;</span>
+	}
+<span class="fc bfc" id="L585" title="All 2 branches covered.">	for (ep = agfstout(zz, gp, np); ep!=null; ep = agnxtout(zz, gp, ep)) {</span>
+<span class="pc bpc" id="L586" title="1 of 2 branches missed.">		if (ED_xlabel(ep)!=null) {</span>
+<span class="nc" id="L587">UNSUPPORTED(&quot;appkettxihy2o612jk6fahbnh&quot;); // 		if (ED_xlabel(ep)-&gt;set)</span>
+<span class="nc" id="L588">UNSUPPORTED(&quot;8k2rclvg6eaoph9r2pz4620xq&quot;); // 		    n_set_lbls++;</span>
+<span class="nc" id="L589">UNSUPPORTED(&quot;14y6caappoxe17mogr979qf75&quot;); // 		else if (((et != (0 &lt;&lt; 1)) &amp;&amp; (ED_spl(ep) != NULL)))</span>
+<span class="nc" id="L590">UNSUPPORTED(&quot;q3t8uxncrxc4n8rtuabtzxya&quot;); // 		    n_elbls++;</span>
+		}
+<span class="fc bfc" id="L592" title="All 2 branches covered.">		if (ED_head_label(ep)!=null) {</span>
+<span class="pc bpc" id="L593" title="1 of 2 branches missed.">			if (ED_head_label(ep).set!=0)</span>
+<span class="nc" id="L594">				n_set_lbls++;</span>
+<span class="pc bpc" id="L595" title="1 of 2 branches missed.">			else if (HAVE_EDGE(ep, et))</span>
+<span class="fc" id="L596">				n_elbls++;</span>
+		}
+<span class="pc bpc" id="L598" title="1 of 2 branches missed.">		if (ED_tail_label(ep)!=null) {</span>
+<span class="nc bnc" id="L599" title="All 2 branches missed.">			if (ED_tail_label(ep).set!=0)</span>
+<span class="nc" id="L600">				n_set_lbls++;</span>
+<span class="nc bnc" id="L601" title="All 2 branches missed.">			else if (HAVE_EDGE(ep, et))</span>
+<span class="nc" id="L602">				n_elbls++;</span>
+		}
+<span class="fc bfc" id="L604" title="All 2 branches covered.">		if (ED_label(ep)!=null) {</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">			if (ED_label(ep).set!=0)</span>
+<span class="fc" id="L606">				n_set_lbls++;</span>
+<span class="pc bpc" id="L607" title="1 of 2 branches missed.">			else if (HAVE_EDGE(ep, et))</span>
+<span class="fc" id="L608">				n_elbls++;</span>
+		}
+		}
+	}
+<span class="pc bpc" id="L612" title="1 of 2 branches missed.">	if ((GD_has_labels(gp) &amp; GRAPH_LABEL)!=0)</span>
+<span class="nc" id="L613">		n_clbls = countClusterLabels (gp);</span>
+	/* A label for each unpositioned external label */
+<span class="fc" id="L615">	n_lbls = n_nlbls + n_elbls;</span>
+<span class="pc bpc" id="L616" title="1 of 2 branches missed.">	if (n_lbls == 0) return;</span>
+	/* An object for each node, each positioned external label, any cluster label, 
+	 * and all unset edge labels and xlabels.
+	 */
+<span class="fc" id="L620">	n_objs = agnnodes(gp) + n_set_lbls + n_clbls + n_elbls;</span>
+<span class="fc" id="L621">	objs = CArray.&lt;ST_object_t&gt;ALLOC__(n_objs, ZType.ST_object_t);</span>
+<span class="fc" id="L622">	objp = objs;</span>
+<span class="fc" id="L623">	lbls = CArray.&lt;ST_xlabel_t&gt;ALLOC__(n_lbls, ZType.ST_xlabel_t);</span>
+<span class="fc" id="L624">	xlp = lbls;</span>
+<span class="fc" id="L625">	bb.LL.___(pointfof(INT_MAX, INT_MAX));</span>
+<span class="fc" id="L626">	bb.UR.___(pointfof(-INT_MAX, -INT_MAX));</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">	for (np = agfstnode(zz, gp); np!=null; np = agnxtnode(zz, gp, np)) {</span>
+<span class="fc" id="L628">		bb.___(addNodeObj (zz, np, objp, bb));</span>
+<span class="fc" id="L629">		lp = ND_xlabel(np);</span>
+<span class="pc bpc" id="L630" title="1 of 2 branches missed.">		if (lp != null) {</span>
+<span class="nc" id="L631">UNSUPPORTED(&quot;d5pjy3dwui27jfdz550cy0cln&quot;); // 	    if (lp-&gt;set) {</span>
+<span class="nc" id="L632">UNSUPPORTED(&quot;cls7z8l7wi371a4wrec0viqil&quot;); // 		objp++;</span>
+<span class="nc" id="L633">UNSUPPORTED(&quot;3zy3jhlqyioeyh9mlrspjjgc6&quot;); // 		bb = addLabelObj (lp, objp, bb);</span>
+<span class="nc" id="L634">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L635">UNSUPPORTED(&quot;6q044im7742qhglc4553noina&quot;); // 	    else {</span>
+<span class="nc" id="L636">UNSUPPORTED(&quot;2msn58w2dse7pbq2esv7awk4r&quot;); // 		addXLabel (lp, objp, xlp, 0, ur); </span>
+<span class="nc" id="L637">UNSUPPORTED(&quot;1zpq9rd3nn9kjrmun8ivs9zx5&quot;); // 		xlp++;</span>
+<span class="nc" id="L638">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+    }
+<span class="fc" id="L640">	objp = objp.plus_(1);</span>
+<span class="fc bfc" id="L641" title="All 2 branches covered.">    for (ep = agfstout(zz, gp, np); ep!=null; ep = agnxtout(zz, gp, ep)) {</span>
+<span class="fc" id="L642">    	lp = ED_label(ep);</span>
+<span class="fc bfc" id="L643" title="All 2 branches covered.">    	if (lp != null) {</span>
+<span class="fc bfc" id="L644" title="All 2 branches covered.">    		if (lp.set!=0) {</span>
+<span class="fc" id="L645">    			bb.___(addLabelObj (zz, lp, objp, bb));</span>
+    	    }
+<span class="pc bpc" id="L647" title="1 of 2 branches missed.">    		else if (HAVE_EDGE(ep, et)) {</span>
+<span class="fc" id="L648"> 		    addXLabel (zz, lp, objp, xlp, 1, edgeMidpoint(gp, ep)); </span>
+<span class="fc" id="L649"> 		    xlp = xlp.plus_(1);</span>
+}
+else {
+<span class="nc" id="L652">UNSUPPORTED(&quot;3ia66n3hqrwmh3hybkoh6f8wa&quot;); // 		    agerr(AGWARN, &quot;no position for edge with label %s&quot;,</span>
+<span class="nc" id="L653">UNSUPPORTED(&quot;9npeksy1st7v005znerttzzzv&quot;); // 			    ED_label(ep)-&gt;text);</span>
+<span class="nc" id="L654">UNSUPPORTED(&quot;2yi9az7ibt7j9bwztjilyo0v2&quot;); // 		    continue;</span>
+}
+<span class="fc" id="L656">objp = objp.plus_(1);</span>
+    	}
+<span class="fc" id="L658">    	lp = ED_tail_label(ep);</span>
+<span class="pc bpc" id="L659" title="1 of 2 branches missed.">    	if (lp != null) {</span>
+<span class="nc bnc" id="L660" title="All 2 branches missed.">if (lp.set!=0) {</span>
+<span class="nc" id="L661">UNSUPPORTED(&quot;7rwrlod7lkgin3rnnzy3iw2rw&quot;); // 		    bb = addLabelObj (lp, objp, bb);</span>
+}
+<span class="nc bnc" id="L663" title="All 2 branches missed."> 		else if (HAVE_EDGE(ep, et)) {</span>
+<span class="nc" id="L664"> 		    addXLabel (zz, lp, objp, xlp, 1, edgeTailpoint(ep)); </span>
+<span class="nc" id="L665"> 		    xlp = xlp.plus_(1);</span>
+ 		}
+ 		else {
+<span class="nc" id="L668">UNSUPPORTED(&quot;5ixexxcbcix5hrfl43td7pj4s&quot;); // 		    agerr(AGWARN, &quot;no position for edge with tail label %s&quot;,</span>
+<span class="nc" id="L669">UNSUPPORTED(&quot;cf9qaysecgkvv4165la4uu6cb&quot;); // 			    ED_tail_label(ep)-&gt;text);</span>
+<span class="nc" id="L670">UNSUPPORTED(&quot;2yi9az7ibt7j9bwztjilyo0v2&quot;); // 		    continue;</span>
+ 		}
+<span class="nc" id="L672">			objp = objp.plus_(1);</span>
+    	}
+<span class="fc" id="L674">    	lp = ED_head_label(ep);</span>
+<span class="fc bfc" id="L675" title="All 2 branches covered.">    	if (lp != null) {</span>
+<span class="pc bpc" id="L676" title="1 of 2 branches missed.">if (lp.set!=0) {</span>
+<span class="nc" id="L677">UNSUPPORTED(&quot;7rwrlod7lkgin3rnnzy3iw2rw&quot;); // 		    bb = addLabelObj (lp, objp, bb);</span>
+}
+<span class="pc bpc" id="L679" title="1 of 2 branches missed.">else if (HAVE_EDGE(ep, et)) {</span>
+<span class="fc" id="L680">addXLabel (zz, lp, objp, xlp, 1, edgeHeadpoint(ep));</span>
+<span class="fc" id="L681">xlp = xlp.plus_(1);</span>
+}
+else {
+<span class="nc" id="L684">UNSUPPORTED(&quot;8nrkavpg9ifts9yylhfijn9rp&quot;); // 		    agerr(AGWARN, &quot;no position for edge with head label %s&quot;,</span>
+<span class="nc" id="L685">UNSUPPORTED(&quot;a5omwtwd411hsfrc37d8t6m8b&quot;); // 			    ED_head_label(ep)-&gt;text);</span>
+<span class="nc" id="L686">UNSUPPORTED(&quot;2yi9az7ibt7j9bwztjilyo0v2&quot;); // 		    continue;</span>
+}
+<span class="fc" id="L688">		objp = objp.plus_(1);</span>
+    }
+<span class="fc" id="L690">    lp = ED_xlabel(ep);</span>
+<span class="pc bpc" id="L691" title="1 of 2 branches missed.">    if (lp != null) {</span>
+<span class="nc" id="L692">UNSUPPORTED(&quot;5dapykbxjvnhw0dpi7jfpcazk&quot;); // 		if (lp-&gt;set) {</span>
+<span class="nc" id="L693">UNSUPPORTED(&quot;7rwrlod7lkgin3rnnzy3iw2rw&quot;); // 		    bb = addLabelObj (lp, objp, bb);</span>
+<span class="nc" id="L694">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L695">UNSUPPORTED(&quot;dfnmpe0hri6ksye0gnxssi4zz&quot;); // 		else if (((et != (0 &lt;&lt; 1)) &amp;&amp; (ED_spl(ep) != NULL))) {</span>
+<span class="nc" id="L696">UNSUPPORTED(&quot;9ffmrymv8cg4h4b3ea97t9qbp&quot;); // 		    addXLabel (lp, objp, xlp, 1, edgeMidpoint(gp, ep)); </span>
+<span class="nc" id="L697">UNSUPPORTED(&quot;808184nt3k6cxj5dsg27yvpvg&quot;); // 		    xlp++;</span>
+<span class="nc" id="L698">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L699">UNSUPPORTED(&quot;d28blrbmwwqp80cyksuz7dwx9&quot;); // 		else {</span>
+<span class="nc" id="L700">UNSUPPORTED(&quot;dbskad3xgu5oqqhwl1cr9f88g&quot;); // 		    agerr(AGWARN, &quot;no position for edge with xlabel %s&quot;,</span>
+<span class="nc" id="L701">UNSUPPORTED(&quot;dtpynjioyrbt2xfca2o46eb0j&quot;); // 			    ED_xlabel(ep)-&gt;text);</span>
+<span class="nc" id="L702">UNSUPPORTED(&quot;2yi9az7ibt7j9bwztjilyo0v2&quot;); // 		    continue;</span>
+<span class="nc" id="L703">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L704">UNSUPPORTED(&quot;cls7z8l7wi371a4wrec0viqil&quot;); // 		objp++;</span>
+    	}
+    }
+}
+<span class="pc bpc" id="L708" title="1 of 2 branches missed.">if (n_clbls!=0) {</span>
+<span class="nc" id="L709">    final ST_cinfo_t info = new ST_cinfo_t();</span>
+<span class="nc" id="L710">    info.bb.___(bb);</span>
+<span class="nc" id="L711">    info.objp = objp;</span>
+<span class="nc" id="L712">    info.___(addClusterObj (zz, gp, info));</span>
+<span class="nc" id="L713">    bb.___(info.bb);</span>
+}
+<span class="fc" id="L715">force = (agattr(zz, gp,AGRAPH,new CString(&quot;forcelabels&quot;),null));</span>
+<span class="fc" id="L716">params.force = late_bool(gp, force, 1);</span>
+<span class="fc" id="L717">params.bb.___(bb);</span>
+<span class="fc" id="L718">placeLabels(zz, objs, n_objs, lbls, n_lbls, params);</span>
+//     if (Verbose)
+// 	printData(objs, n_objs, lbls, n_lbls, &amp;params);
+<span class="fc" id="L721">     xlp = lbls;</span>
+<span class="fc" id="L722">     cnt = 0;</span>
+<span class="fc bfc" id="L723" title="All 2 branches covered.">     for (i = 0; i &lt; n_lbls; i++) {</span>
+<span class="pc bpc" id="L724" title="1 of 2 branches missed."> 	if (xlp.get__(0).set!=0) {</span>
+<span class="fc" id="L725"> 	    cnt++;</span>
+<span class="fc" id="L726"> 	    lp = xlp.get__(0).lbl;</span>
+<span class="fc" id="L727"> 	    lp.set = 1;</span>
+<span class="fc" id="L728"> 	    lp.pos.___(centerPt(xlp));</span>
+<span class="fc" id="L729"> 	    updateBB (gp, lp);</span>
+ 	}
+<span class="fc" id="L731"> 	xlp = xlp.plus_(1);</span>
+     }
+//     if (Verbose)
+// 	fprintf (stderr, &quot;%d out of %d labels positioned.\n&quot;, cnt, n_lbls);
+<span class="pc bpc" id="L735" title="1 of 2 branches missed.">if (cnt != n_lbls)</span>
+<span class="nc" id="L736">UNSUPPORTED(&quot;9hqu9h8q1a2xl4ty48ct0fdyp&quot;); // 	agerr(AGWARN, &quot;%d out of %d exterior labels positioned.\n&quot;, cnt, n_lbls);</span>
+<span class="fc" id="L737">	 Memory.free(objs);</span>
+<span class="fc" id="L738">     Memory.free(lbls);</span>
+} finally {
+<span class="fc" id="L740">LEAVING(&quot;d4215jd9wukfn6t0iknwzjcof&quot;,&quot;addXLabels&quot;);</span>
+}
+<span class="fc" id="L742">}</span>
+
+
+
+
+
+
+//3 8fc0zxg8y7hec3n4evx3jw6cq
+// void gv_postprocess(Agraph_t * g, int allowTranslation) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;gv_postprocess&quot;, key=&quot;8fc0zxg8y7hec3n4evx3jw6cq&quot;, definition=&quot;void gv_postprocess(Agraph_t * g, int allowTranslation)&quot;)
+public static void gv_postprocess(Globals zz, ST_Agraph_s g, int allowTranslation) {
+<span class="fc" id="L754">ENTERING(&quot;8fc0zxg8y7hec3n4evx3jw6cq&quot;,&quot;gv_postprocess&quot;);</span>
+try {
+    double diff;
+<span class="fc" id="L757">    final ST_pointf dimen = new ST_pointf();</span>
+<span class="fc" id="L758">    zz.Rankdir = GD_rankdir(g);</span>
+<span class="fc" id="L759">    zz.Flip = GD_flip(g);</span>
+    /* Handle cluster labels */
+<span class="fc bfc" id="L761" title="All 2 branches covered.">    if (zz.Flip)</span>
+<span class="fc" id="L762">   	place_flip_graph_label(g);</span>
+    else
+<span class="fc" id="L764">	place_graph_label(g);</span>
+    /* Everything has been placed except the root graph label, if any.
+     * The graph positions have not yet been rotated back if necessary.
+     */
+<span class="fc" id="L768">    addXLabels(zz, g);</span>
+    /* Add space for graph label if necessary */
+<span class="pc bpc" id="L770" title="3 of 4 branches missed.">    if (GD_label(g)!=null &amp;&amp; GD_label(g).set == 0) {</span>
+<span class="nc" id="L771">UNSUPPORTED(&quot;crj0py2wme4b5l8apvbxqcmqa&quot;); // 	dimen = GD_label(g)-&gt;dimen;</span>
+<span class="nc" id="L772">UNSUPPORTED(&quot;22jhn709g4c5wh0gb6v40rh19&quot;); // 	{((dimen).x += 4*4); ((dimen).y += 2*4);};</span>
+<span class="nc" id="L773">UNSUPPORTED(&quot;9k69y89jybam5elefg45va3ey&quot;); // 	if (Flip) {</span>
+<span class="nc" id="L774">UNSUPPORTED(&quot;andsvpqa42ef9h5dkn3uyv6tj&quot;); // 	    if (GD_label_pos(g) &amp; 1) {</span>
+<span class="nc" id="L775">UNSUPPORTED(&quot;65ggem18g4zgz2yx552vi2n4v&quot;); // 		GD_bb(g).UR.x += dimen.y;</span>
+<span class="nc" id="L776">UNSUPPORTED(&quot;175pyfe8j8mbhdwvrbx3gmew9&quot;); // 	    } else {</span>
+<span class="nc" id="L777">UNSUPPORTED(&quot;9dm14vohn1tuwqrwprpdywylr&quot;); // 		GD_bb(g).LL.x -= dimen.y;</span>
+<span class="nc" id="L778">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L779">UNSUPPORTED(&quot;94nnj9ien92542qanqtyo8qzq&quot;); // 	    if (dimen.x &gt; (GD_bb(g).UR.y - GD_bb(g).LL.y)) {</span>
+<span class="nc" id="L780">UNSUPPORTED(&quot;awekuk9gokwsbb49j41hvhqt4&quot;); // 		diff = dimen.x - (GD_bb(g).UR.y - GD_bb(g).LL.y);</span>
+<span class="nc" id="L781">UNSUPPORTED(&quot;5856jxlve8fb2pennnazjjkij&quot;); // 		diff = diff / 2.;</span>
+<span class="nc" id="L782">UNSUPPORTED(&quot;3t8m6fustsc50cpggxiadcjax&quot;); // 		GD_bb(g).LL.y -= diff;</span>
+<span class="nc" id="L783">UNSUPPORTED(&quot;7c25kl7mn9jd5x5x2uflcql86&quot;); // 		GD_bb(g).UR.y += diff;</span>
+<span class="nc" id="L784">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L785">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L786">UNSUPPORTED(&quot;andsvpqa42ef9h5dkn3uyv6tj&quot;); // 	    if (GD_label_pos(g) &amp; 1) {</span>
+<span class="nc" id="L787">UNSUPPORTED(&quot;7x8evhhttjy9mwgcpfpb3l7lm&quot;); // 		if (Rankdir == 0)</span>
+<span class="nc" id="L788">UNSUPPORTED(&quot;45a42yl5qj83sj5mzdd6k6wcj&quot;); // 		    GD_bb(g).UR.y += dimen.y;</span>
+<span class="nc" id="L789">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L790">UNSUPPORTED(&quot;6i55hrio04eg5ilg5i01jw8vv&quot;); // 		    GD_bb(g).LL.y -= dimen.y;</span>
+<span class="nc" id="L791">UNSUPPORTED(&quot;175pyfe8j8mbhdwvrbx3gmew9&quot;); // 	    } else {</span>
+<span class="nc" id="L792">UNSUPPORTED(&quot;7x8evhhttjy9mwgcpfpb3l7lm&quot;); // 		if (Rankdir == 0)</span>
+<span class="nc" id="L793">UNSUPPORTED(&quot;6i55hrio04eg5ilg5i01jw8vv&quot;); // 		    GD_bb(g).LL.y -= dimen.y;</span>
+<span class="nc" id="L794">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L795">UNSUPPORTED(&quot;45a42yl5qj83sj5mzdd6k6wcj&quot;); // 		    GD_bb(g).UR.y += dimen.y;</span>
+<span class="nc" id="L796">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L797">UNSUPPORTED(&quot;p1mrpzvl0adzwcw3lialn8v3&quot;); // 	    if (dimen.x &gt; (GD_bb(g).UR.x - GD_bb(g).LL.x)) {</span>
+<span class="nc" id="L798">UNSUPPORTED(&quot;3ie0x59qavcqpnvy7kci31lgc&quot;); // 		diff = dimen.x - (GD_bb(g).UR.x - GD_bb(g).LL.x);</span>
+<span class="nc" id="L799">UNSUPPORTED(&quot;5856jxlve8fb2pennnazjjkij&quot;); // 		diff = diff / 2.;</span>
+<span class="nc" id="L800">UNSUPPORTED(&quot;anqdsrkl2qs1pqbuivrdz6fnt&quot;); // 		GD_bb(g).LL.x -= diff;</span>
+<span class="nc" id="L801">UNSUPPORTED(&quot;c0ah0pvnkczqdg5jt0u955wns&quot;); // 		GD_bb(g).UR.x += diff;</span>
+<span class="nc" id="L802">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L803">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+<span class="pc bpc" id="L805" title="1 of 2 branches missed.">    if (allowTranslation!=0) {</span>
+<span class="pc bpc" id="L806" title="3 of 5 branches missed.">	switch (zz.Rankdir) {</span>
+	case RANKDIR_TB:
+<span class="fc" id="L808">	    zz.Offset.___(GD_bb(g).LL);</span>
+<span class="fc" id="L809">	    break;</span>
+	case RANKDIR_LR:
+<span class="fc" id="L811">	    zz.Offset.___(pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x));</span>
+<span class="fc" id="L812">	    break;</span>
+	case RANKDIR_BT:
+<span class="nc" id="L814">UNSUPPORTED(&quot;96ajwnh79ja9g57xmut6dmh9d&quot;); // 	    Offset = pointfof(GD_bb(g).LL.x, -GD_bb(g).UR.y);</span>
+<span class="nc" id="L815">	    break;</span>
+	case RANKDIR_RL:
+<span class="nc" id="L817">UNSUPPORTED(&quot;3xtu7zkpqq7nsx9oe68oi6ebt&quot;); // 	    Offset = pointfof(GD_bb(g).LL.y, GD_bb(g).LL.x);</span>
+	    break;
+	}
+<span class="fc" id="L820">	translate_drawing(zz, g);</span>
+    }
+<span class="pc bpc" id="L822" title="3 of 4 branches missed.">    if (GD_label(g)!=null &amp;&amp; GD_label(g).set == 0)</span>
+<span class="nc" id="L823">UNSUPPORTED(&quot;6dds0zsvqw48u510zcy954fh1&quot;); // 	place_root_label(g, dimen);</span>
+<span class="pc bpc" id="L824" title="1 of 2 branches missed.">    if (zz.Show_boxes!=null) {</span>
+<span class="nc" id="L825">UNSUPPORTED(&quot;8c7x8di5w36ib05qan9z4sl9&quot;); // 	char buf[BUFSIZ];</span>
+<span class="nc" id="L826">UNSUPPORTED(&quot;83qqprhiseoxlwtwi991aag0c&quot;); // 	if (Flip)</span>
+<span class="nc" id="L827">UNSUPPORTED(&quot;86tova7pv19alt02nlk0d17oj&quot;); // 	    sprintf(buf, &quot;/pathbox {\n    /X exch neg %.5g sub def\n    /Y exch %.5g sub def\n    /x exch neg %.5g sub def\n    /y exch %.5g sub def\n    newpath x y moveto\n    X y lineto\n    X Y lineto\n    x Y lineto\n    closepath stroke\n} def\n&quot;, Offset.x, Offset.y, Offset.x, Offset.y);</span>
+<span class="nc" id="L828">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L829">UNSUPPORTED(&quot;79tu9xkxv4v48uko4cxz7v04t&quot;); // 	    sprintf(buf, &quot;/pathbox {\n    /Y exch %.5g sub def\n    /X exch %.5g sub def\n    /y exch %.5g sub def\n    /x exch %.5g sub def\n    newpath x y moveto\n    X y lineto\n    X Y lineto\n    x Y lineto\n    closepath stroke\n } def\n/dbgstart { gsave %.5g %.5g translate } def\n/arrowlength 10 def\n/arrowwidth arrowlength 2 div def\n/arrowhead {\n    gsave\n    rotate\n    currentpoint\n    newpath\n    moveto\n    arrowlength arrowwidth 2 div rlineto\n    0 arrowwidth neg rlineto\n    closepath fill\n    grestore\n} bind def\n/makearrow {\n    currentpoint exch pop sub exch currentpoint pop sub atan\n    arrowhead\n} bind def\n/point {    newpath    2 0 360 arc fill} def/makevec {\n    /Y exch def\n    /X exch def\n    /y exch def\n    /x exch def\n    newpath x y moveto\n    X Y lineto stroke\n    X Y moveto\n    x y makearrow\n} def\n&quot;, Offset.y, Offset.x, Offset.y, Offset.x,</span>
+<span class="nc" id="L830">UNSUPPORTED(&quot;aow79vde4xjqtwexymr5ocjl6&quot;); // 		    -Offset.x, -Offset.y);</span>
+<span class="nc" id="L831">UNSUPPORTED(&quot;6g3g36v7l0tyfootyy8mzv3t8&quot;); // 	Show_boxes[0] = strdup(buf);</span>
+    }
+} finally {
+<span class="fc" id="L834">LEAVING(&quot;8fc0zxg8y7hec3n4evx3jw6cq&quot;,&quot;gv_postprocess&quot;);</span>
+}
+<span class="fc" id="L836">}</span>
+
+
+
+
+//3 3qbbvlnq1b06ylgr0yj2slbhm
+// void dotneato_postprocess(Agraph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;dotneato_postprocess&quot;, key=&quot;3qbbvlnq1b06ylgr0yj2slbhm&quot;, definition=&quot;void dotneato_postprocess(Agraph_t * g)&quot;)
+public static void dotneato_postprocess(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L846">ENTERING(&quot;3qbbvlnq1b06ylgr0yj2slbhm&quot;,&quot;dotneato_postprocess&quot;);</span>
+try {
+<span class="fc" id="L848">    gv_postprocess(zz, g, 1);</span>
+} finally {
+<span class="fc" id="L850">LEAVING(&quot;3qbbvlnq1b06ylgr0yj2slbhm&quot;,&quot;dotneato_postprocess&quot;);</span>
+}
+<span class="fc" id="L852">}</span>
+
+
+
+
+/* place_flip_graph_label:
+ * Put cluster labels recursively in the flip case.
+ */
+//3 ehe7n8wkl4thn86tisjzdotpq
+//static void place_flip_graph_label(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;place_flip_graph_label&quot;, key=&quot;ehe7n8wkl4thn86tisjzdotpq&quot;, definition=&quot;static void place_flip_graph_label(graph_t * g)&quot;)
+public static void place_flip_graph_label(ST_Agraph_s g) {
+<span class="fc" id="L865">	ENTERING(&quot;3zsjtcmcfxhkmaagi0on4dy20&quot;,&quot;place_flip_graph_label&quot;);</span>
+	try {
+	    int c;
+<span class="fc" id="L868">	    final ST_pointf p = new ST_pointf(), d = new ST_pointf();</span>
+
+<span class="pc bpc" id="L870" title="5 of 6 branches missed.">	    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set==0) {</span>
+<span class="nc bnc" id="L871" title="All 2 branches missed.">	    	if ((GD_label_pos(g) &amp; LABEL_AT_TOP)!=0) {</span>
+<span class="nc" id="L872">	    	    d.___(GD_border(g)[RIGHT_IX]);</span>
+<span class="nc" id="L873">	    	    p.x = GD_bb(g).UR.x - d.x / 2;</span>
+	    	} else {
+<span class="nc" id="L875">	    	    d.___(GD_border(g)[LEFT_IX]);</span>
+<span class="nc" id="L876">	    	    p.x = GD_bb(g).LL.x + d.x / 2;</span>
+	    	}
+
+<span class="nc bnc" id="L879" title="All 2 branches missed.">	    	if ((GD_label_pos(g) &amp; LABEL_AT_RIGHT)!=0) {</span>
+<span class="nc" id="L880">	    	    p.y = GD_bb(g).LL.y + d.y / 2;</span>
+<span class="nc bnc" id="L881" title="All 2 branches missed.">	    	} else if ((GD_label_pos(g) &amp; LABEL_AT_LEFT)!=0) {</span>
+<span class="nc" id="L882">	    	    p.y = GD_bb(g).UR.y - d.y / 2;</span>
+	    	} else {
+<span class="nc" id="L884">	    	    p.y = (GD_bb(g).LL.y + GD_bb(g).UR.y) / 2;</span>
+	    	}
+<span class="nc" id="L886">	    	GD_label(g).pos.___(p);</span>
+<span class="nc" id="L887">	    	GD_label(g).set = 1;</span>
+	        }
+	    
+<span class="pc bpc" id="L890" title="1 of 2 branches missed.">	    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="nc" id="L891">	    	place_flip_graph_label(GD_clust(g).get_(c));</span>
+	} finally {
+<span class="fc" id="L893">		LEAVING(&quot;72zw1alhd5vd0g6mhum507rvx&quot;, &quot;place_graph_label&quot;);</span>
+	}
+<span class="fc" id="L895">}</span>
+
+
+
+
+
+
+//3 72zw1alhd5vd0g6mhum507rvx
+// void place_graph_label(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;place_graph_label&quot;, key=&quot;72zw1alhd5vd0g6mhum507rvx&quot;, definition=&quot;void place_graph_label(graph_t * g)&quot;)
+public static void place_graph_label(ST_Agraph_s g) {
+<span class="fc" id="L907">ENTERING(&quot;72zw1alhd5vd0g6mhum507rvx&quot;,&quot;place_graph_label&quot;);</span>
+try {
+    int c;
+<span class="fc" id="L910">    final ST_pointf p = new ST_pointf(), d = new ST_pointf();</span>
+<span class="pc bpc" id="L911" title="2 of 6 branches missed.">    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set == 0) {</span>
+<span class="pc bpc" id="L912" title="1 of 2 branches missed.">	if ((GD_label_pos(g) &amp; 1)!=0) {</span>
+<span class="fc" id="L913">	    d.___(GD_border(g)[2]);</span>
+<span class="fc" id="L914">	    p.y = GD_bb(g).UR.y - d.y / 2;</span>
+	} else {
+<span class="nc" id="L916">UNSUPPORTED(&quot;1w38no4welthbwa0i10hei16b&quot;); // 	    d = GD_border(g)[0];</span>
+<span class="nc" id="L917">UNSUPPORTED(&quot;2xa4n9ca16xpf1kahaycmkl4r&quot;); // 	    p.y = GD_bb(g).LL.y + d.y / 2;</span>
+	}
+<span class="pc bpc" id="L919" title="1 of 2 branches missed.">	if ((GD_label_pos(g) &amp; 4)!=0) {</span>
+<span class="nc" id="L920">UNSUPPORTED(&quot;cgv3bcg9c274cdwxi1y0sja3p&quot;); // 	    p.x = GD_bb(g).UR.x - d.x / 2;</span>
+<span class="pc bpc" id="L921" title="1 of 2 branches missed.">	} else if ((GD_label_pos(g) &amp; 2)!=0) {</span>
+<span class="nc" id="L922">UNSUPPORTED(&quot;7ictv9eqmjvxjii5lqlyw8nu&quot;); // 	    p.x = GD_bb(g).LL.x + d.x / 2;</span>
+	} else {
+<span class="fc" id="L924">	    p.x = ((GD_bb(g).LL.x + GD_bb(g).UR.x) / 2);</span>
+	}
+<span class="fc" id="L926">	GD_label(g).pos.___(p);</span>
+<span class="fc" id="L927">	GD_label(g).set= false ? 0 : 1;</span>
+    }
+<span class="fc bfc" id="L929" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L930">	place_graph_label((ST_Agraph_s) GD_clust(g).get_(c));</span>
+} finally {
+<span class="fc" id="L932">LEAVING(&quot;72zw1alhd5vd0g6mhum507rvx&quot;,&quot;place_graph_label&quot;);</span>
+}
+<span class="fc" id="L934">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

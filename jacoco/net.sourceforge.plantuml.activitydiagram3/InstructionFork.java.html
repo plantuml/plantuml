@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstructionFork.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">InstructionFork.java</span></div><h1>InstructionFork.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileSplit;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtiles;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class InstructionFork extends WithNote implements Instruction {
+
+<span class="nc" id="L64">	private final List&lt;InstructionList&gt; forks = new ArrayList&lt;&gt;();</span>
+	private final Instruction parent;
+	private final LinkRendering inlinkRendering;
+	private final ISkinParam skinParam;
+	private final Swimlane swimlaneIn;
+	private Swimlane swimlaneOut;
+<span class="nc" id="L70">	private ForkStyle style = ForkStyle.FORK;</span>
+	private String label;
+<span class="nc" id="L72">	boolean finished = false;</span>
+
+	@Override
+	public boolean containsBreak() {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (InstructionList fork : forks)</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (fork.containsBreak())</span>
+<span class="nc" id="L78">				return true;</span>
+
+<span class="nc" id="L80">		return false;</span>
+	}
+
+<span class="nc" id="L83">	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam, Swimlane swimlane) {</span>
+<span class="nc" id="L84">		this.parent = parent;</span>
+<span class="nc" id="L85">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="nc" id="L86">		this.skinParam = skinParam;</span>
+<span class="nc" id="L87">		this.swimlaneIn = swimlane;</span>
+<span class="nc" id="L88">		this.swimlaneOut = swimlane;</span>
+<span class="nc" id="L89">		this.forks.add(InstructionList.empty());</span>
+<span class="nc" id="L90">	}</span>
+
+	private InstructionList getLastList() {
+<span class="nc" id="L93">		return forks.get(forks.size() - 1);</span>
+	}
+
+	@Override
+	public CommandExecutionResult add(Instruction ins) {
+<span class="nc" id="L98">		return getLastList().add(ins);</span>
+	}
+
+	// ::comment when __CORE__
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+<span class="nc" id="L104">		final List&lt;Gtile&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (InstructionList list : forks) {</span>
+<span class="nc" id="L106">			Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L107">			tmp = Gtiles.withIncomingArrow(tmp, 20);</span>
+<span class="nc" id="L108">			tmp = Gtiles.withOutgoingArrow(tmp, 20);</span>
+<span class="nc" id="L109">			all.add(tmp);</span>
+<span class="nc" id="L110">		}</span>
+
+<span class="nc" id="L112">		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());</span>
+	}
+	// ::done
+
+	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
+		Rainbow color;
+<span class="nc" id="L118">		color = Rainbow.build(skinParam);</span>
+<span class="nc" id="L119">		return color;</span>
+	}
+
+	@Override
+	public Ftile createFtile(FtileFactory factory) {
+<span class="nc" id="L124">		final List&lt;Ftile&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (InstructionList list : forks)</span>
+<span class="nc" id="L126">			all.add(list.createFtile(factory));</span>
+
+<span class="nc" id="L128">		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (getPositionedNotes().size() &gt; 0)</span>
+<span class="nc" id="L130">			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);</span>
+
+<span class="nc" id="L132">		return result;</span>
+	}
+
+	public Instruction getParent() {
+<span class="nc" id="L136">		return parent;</span>
+	}
+
+	public void forkAgain(Swimlane swimlane) {
+<span class="nc" id="L140">		this.swimlaneOut = swimlane;</span>
+<span class="nc" id="L141">		this.forks.add(InstructionList.empty());</span>
+<span class="nc" id="L142">	}</span>
+
+	@Override
+	final public boolean kill() {
+<span class="nc" id="L146">		return getLastList().kill();</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="nc" id="L151">		return inlinkRendering;</span>
+	}
+
+	@Override
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (finished)</span>
+<span class="nc" id="L157">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (getLastList().getLast() == null)</span>
+<span class="nc" id="L160">			return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+
+<span class="nc" id="L162">		return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	}
+
+	@Override
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L167">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;(InstructionList.getSwimlanes2(forks));</span>
+<span class="nc" id="L168">		result.add(swimlaneIn);</span>
+<span class="nc" id="L169">		result.add(swimlaneOut);</span>
+<span class="nc" id="L170">		return result;</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L175">		return swimlaneIn;</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L180">		return swimlaneOut;</span>
+	}
+
+	public void manageOutRendering(LinkRendering nextLinkRenderer, boolean endFork) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (endFork)</span>
+<span class="nc" id="L185">			this.finished = true;</span>
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (nextLinkRenderer == null)</span>
+<span class="nc" id="L188">			return;</span>
+
+<span class="nc" id="L190">		getLastList().setOutRendering(nextLinkRenderer);</span>
+<span class="nc" id="L191">	}</span>
+
+	public void setStyle(ForkStyle style, String label, Swimlane swimlane) {
+<span class="nc" id="L194">		this.style = style;</span>
+<span class="nc" id="L195">		this.label = label;</span>
+<span class="nc" id="L196">		this.swimlaneOut = swimlane;</span>
+<span class="nc" id="L197">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

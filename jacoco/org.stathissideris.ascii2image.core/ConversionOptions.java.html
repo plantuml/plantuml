@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConversionOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.core</a> &gt; <span class="el_source">ConversionOptions.java</span></div><h1>ConversionOptions.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.core;
+
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+public class ConversionOptions {
+	
+<span class="nc" id="L29">	public ProcessingOptions processingOptions =</span>
+		new ProcessingOptions();
+<span class="nc" id="L31">	public RenderingOptions renderingOptions =</span>
+		new RenderingOptions();
+		
+	public void setDebug(boolean value){
+<span class="nc" id="L35">		processingOptions.setPrintDebugOutput(value);</span>
+<span class="nc" id="L36">		renderingOptions.setRenderDebugLines(value);</span>
+<span class="nc" id="L37">	}</span>
+	
+<span class="nc" id="L39">	public ConversionOptions(){}</span>
+	
+	public void setDropShadows(boolean dropShadows) {
+<span class="nc" id="L42">		renderingOptions.setDropShadows(dropShadows);</span>
+<span class="nc" id="L43">	}</span>
+
+
+//    /** Parse a color from a 6- or 8-digit hex string.  For example, FF0000 is red.
+//     *  If eight digits, last two digits are alpha. */
+//    public static Color parseColor(String hexString) {
+//        if(hexString.length() == 6) {
+//            return new Color(Integer.parseInt(hexString, 16));
+//        } else if(hexString.length() == 8) {
+//            return new Color(
+//                Integer.parseInt(hexString.substring(0,2), 16),
+//                Integer.parseInt(hexString.substring(2,4), 16),
+//                Integer.parseInt(hexString.substring(4,6), 16),
+//                Integer.parseInt(hexString.substring(6,8), 16)
+//            );
+//        } else {
+//            throw new IllegalArgumentException(&quot;Cannot interpret \&quot;&quot;+hexString+&quot;\&quot; as background colour. It needs to be a 6- or 8-digit hex number, depending on whether you have transparency or not (same as HTML).&quot;);
+//        }
+//    }
+//	
+//	public ConversionOptions(CommandLine cmdLine) throws UnsupportedEncodingException{
+//		
+//		processingOptions.setVerbose(cmdLine.hasOption(&quot;verbose&quot;));
+//		renderingOptions.setDropShadows(!cmdLine.hasOption(&quot;no-shadows&quot;));
+//		this.setDebug(cmdLine.hasOption(&quot;debug&quot;));
+//		processingOptions.setOverwriteFiles(cmdLine.hasOption(&quot;overwrite&quot;));
+//		
+//		if(cmdLine.hasOption(&quot;scale&quot;)){
+//			Float scale = Float.parseFloat(cmdLine.getOptionValue(&quot;scale&quot;));
+//			renderingOptions.setScale(scale.floatValue());
+//		}
+//		
+//		processingOptions.setAllCornersAreRound(cmdLine.hasOption(&quot;round-corners&quot;));
+//		processingOptions.setPerformSeparationOfCommonEdges(!cmdLine.hasOption(&quot;no-separation&quot;));
+//		renderingOptions.setAntialias(!cmdLine.hasOption(&quot;no-antialias&quot;));
+//		renderingOptions.setFixedSlope(cmdLine.hasOption(&quot;fixed-slope&quot;));
+//
+//		if(cmdLine.hasOption(&quot;background&quot;)) {
+//			String b = cmdLine.getOptionValue(&quot;background&quot;);
+//            Color background = parseColor(b);
+//			renderingOptions.setBackgroundColor(background);
+//		}
+//		
+//		if(cmdLine.hasOption(&quot;transparent&quot;)) {
+//			renderingOptions.setBackgroundColor(new Color(0,0,0,0));
+//		}
+//
+//		if(cmdLine.hasOption(&quot;tabs&quot;)){
+//			Integer tabSize = Integer.parseInt(cmdLine.getOptionValue(&quot;tabs&quot;));
+//			int tabSizeValue = tabSize.intValue();
+//			if(tabSizeValue &lt; 0) tabSizeValue = 0;
+//			processingOptions.setTabSize(tabSizeValue);
+//		}
+//
+//		String encoding = (String) cmdLine.getOptionValue(&quot;encoding&quot;);
+//		if(encoding != null){
+//			new String(new byte[2], encoding);
+//			processingOptions.setCharacterEncoding(encoding);
+//		}
+//		
+//		if (cmdLine.hasOption(&quot;svg&quot;)){
+//			renderingOptions.setImageType(RenderingOptions.ImageType.SVG);
+//		}
+//
+//		if (cmdLine.hasOption(&quot;svg-font-url&quot;)){
+//			renderingOptions.setFontURL(cmdLine.getOptionValue(&quot;svg-font-url&quot;));
+//		}
+//
+//		ConfigurationParser configParser = new ConfigurationParser();
+//		try {
+//			for (Option curOption : cmdLine.getOptions()) {
+//				if(curOption.getLongOpt().equals(&quot;config&quot;)) {
+//					String configFilename = curOption.getValue();
+//					System.out.println(&quot;Parsing configuration file &quot;+configFilename);
+//					File file = new File(configFilename);
+//					if(file.exists()){
+//						configParser.parseFile(file);
+//						HashMap&lt;String, CustomShapeDefinition&gt; shapes = configParser.getShapeDefinitionsHash();
+//						processingOptions.putAllInCustomShapes(shapes);
+//					} else {
+//						System.err.println(&quot;File &quot;+file+&quot; does not exist, skipping&quot;);
+//					}
+//				}
+//			}
+//		} catch (ParserConfigurationException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (SAXException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+}
+
+
+// may be supported at a later date:
+//String exportFormat = (String) cmdLine.getOptionValue(&quot;format&quot;);
+//if(exportFormat != null){
+//	exportFormat = exportFormat.toLowerCase();
+//	if(exportFormat == &quot;jpeg&quot; || exportFormat == &quot;jpg&quot;){
+//		processingOptions.setExportFormat(ProcessingOptions.FORMAT_JPEG);
+//	} else if(exportFormat == &quot;png&quot;){
+//		processingOptions.setExportFormat(ProcessingOptions.FORMAT_PNG);
+//	} else if(exportFormat == &quot;gif&quot;){
+//		processingOptions.setExportFormat(ProcessingOptions.FORMAT_GIF);
+//	}
+//}
+//
+//String colorCodeMode = (String) cmdLine.getOptionValue(&quot;color-codes&quot;);
+//if(colorCodeMode != null){
+//	if(colorCodeMode.equals(&quot;use&quot;))
+//		processingOptions.setColorCodesProcessingMode(ProcessingOptions.USE_COLOR_CODES);
+//	else if(colorCodeMode.equals(&quot;ignore&quot;))
+//		processingOptions.setColorCodesProcessingMode(ProcessingOptions.IGNORE_COLOR_CODES);
+//	else if(colorCodeMode.equals(&quot;render&quot;))
+//		processingOptions.setColorCodesProcessingMode(ProcessingOptions.RENDER_COLOR_CODES);
+//}
+//
+//String tagsMode = (String) cmdLine.getOptionValue(&quot;tags&quot;);
+//if(tagsMode != null){
+//	if(tagsMode.equals(&quot;use&quot;))
+//		processingOptions.setTagProcessingMode(ProcessingOptions.USE_TAGS);
+//	else if(tagsMode.equals(&quot;ignore&quot;))
+//		processingOptions.setTagProcessingMode(ProcessingOptions.IGNORE_TAGS);
+//	else if(tagsMode.equals(&quot;render&quot;))
+//		processingOptions.setTagProcessingMode(ProcessingOptions.RENDER_TAGS);
+//}
+//
+//
+//String markupMode = (String) cmdLine.getOptionValue(&quot;markup&quot;);
+//if(markupMode != null){
+//	if(markupMode.equals(&quot;use&quot;)){
+//		processingOptions.setColorCodesProcessingMode(ProcessingOptions.USE_COLOR_CODES);
+//		processingOptions.setTagProcessingMode(ProcessingOptions.USE_TAGS);
+//	} else if(markupMode.equals(&quot;ignore&quot;)){
+//		processingOptions.setColorCodesProcessingMode(ProcessingOptions.IGNORE_COLOR_CODES);
+//		processingOptions.setTagProcessingMode(ProcessingOptions.IGNORE_TAGS);
+//	} else if(markupMode.equals(&quot;render&quot;)){
+//		processingOptions.setColorCodesProcessingMode(ProcessingOptions.RENDER_COLOR_CODES);
+//		processingOptions.setTagProcessingMode(ProcessingOptions.RENDER_TAGS);
+//	}
+//}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

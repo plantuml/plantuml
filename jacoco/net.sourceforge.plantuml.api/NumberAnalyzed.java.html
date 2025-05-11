@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberAnalyzed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.api</a> &gt; <span class="el_source">NumberAnalyzed.java</span></div><h1>NumberAnalyzed.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License aint with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ */
+package net.sourceforge.plantuml.api;
+
+import java.util.StringTokenizer;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.prefs.Preferences;
+
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
+
+public class NumberAnalyzed implements INumberAnalyzed {
+
+	private static final int SLIDING_WINDOW = 1024;
+
+	private long nb;
+	private long sum;
+	private long min;
+	private long max;
+	private long sumOfSquare;
+	// See https://fossies.org/linux/haproxy/include/proto/freq_ctr.h
+	private long sliddingSum;
+	private final String name;
+
+<span class="nc" id="L52">	private final Lock saveLock = new ReentrantLock();</span>
+
+<span class="nc" id="L54">	public NumberAnalyzed(String name) {</span>
+<span class="nc" id="L55">		this.name = name;</span>
+<span class="nc" id="L56">	}</span>
+
+	public synchronized void reset() {
+<span class="nc" id="L59">		this.nb = 0;</span>
+<span class="nc" id="L60">		this.sum = 0;</span>
+<span class="nc" id="L61">		this.min = 0;</span>
+<span class="nc" id="L62">		this.max = 0;</span>
+<span class="nc" id="L63">		this.sumOfSquare = 0;</span>
+<span class="nc" id="L64">		this.sliddingSum = 0;</span>
+<span class="nc" id="L65">	}</span>
+
+	public NumberAnalyzed() {
+<span class="nc" id="L68">		this(&quot;&quot;);</span>
+<span class="nc" id="L69">	}</span>
+
+	public final void save(Preferences prefs) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (name.length() == 0) {</span>
+<span class="nc" id="L73">			throw new UnsupportedOperationException();</span>
+		}
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (saveLock.tryLock())</span>
+			try {
+<span class="nc" id="L77">				prefs.put(name + &quot;.saved&quot;, getSavedString());</span>
+			} finally {
+<span class="nc" id="L79">				saveLock.unlock();</span>
+			}
+<span class="nc" id="L81">	}</span>
+
+	private String getSavedString() {
+		final long nb1;
+		final long sum1;
+		final long min1;
+		final long max1;
+		final long sumOfSquare1;
+		final long sliddingSum1;
+		final String supp1;
+<span class="nc" id="L91">		synchronized (this) {</span>
+<span class="nc" id="L92">			nb1 = nb;</span>
+<span class="nc" id="L93">			sum1 = sum;</span>
+<span class="nc" id="L94">			min1 = min;</span>
+<span class="nc" id="L95">			max1 = max;</span>
+<span class="nc" id="L96">			sumOfSquare1 = sumOfSquare;</span>
+<span class="nc" id="L97">			sliddingSum1 = sliddingSum;</span>
+<span class="nc" id="L98">		}</span>
+<span class="nc" id="L99">		supp1 = getSavedSupplementatyData();</span>
+<span class="nc" id="L100">		return longToString(nb1) + &quot;;&quot; + longToString(sum1) + &quot;;&quot; + longToString(min1) + &quot;;&quot; + longToString(max1) + &quot;;&quot;</span>
+<span class="nc" id="L101">				+ longToString(sumOfSquare1) + &quot;;&quot; + longToString(sliddingSum1) + &quot;;&quot; + supp1 + &quot;;&quot;;</span>
+	}
+
+	protected String getSavedSupplementatyData() {
+<span class="nc" id="L105">		return &quot;&quot;;</span>
+	}
+
+	protected final String longToString(long val) {
+<span class="nc" id="L109">		return Long.toString(val, 36);</span>
+	}
+
+	public static NumberAnalyzed load(String name, Preferences prefs) {
+<span class="nc" id="L113">		final String value = prefs.get(name + &quot;.saved&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (value.length() == 0) {</span>
+<span class="nc" id="L115">			Log.info(&quot;Cannot load &quot; + name);</span>
+<span class="nc" id="L116">			return null;</span>
+		}
+		try {
+<span class="nc" id="L119">			final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
+<span class="nc" id="L120">			return new NumberAnalyzed(name, Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36),</span>
+<span class="nc" id="L121">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36),</span>
+<span class="nc" id="L122">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36));</span>
+<span class="nc" id="L123">		} catch (Exception e) {</span>
+<span class="nc" id="L124">			Logme.error(e);</span>
+<span class="nc" id="L125">			Log.info(&quot;Error reading &quot; + value);</span>
+<span class="nc" id="L126">			return null;</span>
+		}
+	}
+
+	@Override
+	public synchronized String toString() {
+<span class="nc" id="L132">		return &quot;sum=&quot; + sum + &quot; nb=&quot; + nb + &quot; min=&quot; + min + &quot; max=&quot; + max + &quot; mean=&quot; + getMean();</span>
+	}
+
+	protected NumberAnalyzed(String name, long nb, long sum, long min, long max, long sumOfSquare, long sliddingSum) {
+<span class="nc" id="L136">		this(name);</span>
+<span class="nc" id="L137">		this.nb = nb;</span>
+<span class="nc" id="L138">		this.sum = sum;</span>
+<span class="nc" id="L139">		this.min = min;</span>
+<span class="nc" id="L140">		this.max = max;</span>
+<span class="nc" id="L141">		this.sumOfSquare = sumOfSquare;</span>
+<span class="nc" id="L142">		this.sliddingSum = sliddingSum;</span>
+<span class="nc" id="L143">	}</span>
+
+	public synchronized INumberAnalyzed getCopyImmutable() {
+<span class="nc" id="L146">		final NumberAnalyzed copy = new NumberAnalyzed(name, nb, sum, min, max, sumOfSquare, sliddingSum);</span>
+<span class="nc" id="L147">		return copy;</span>
+	}
+
+	public synchronized void addValue(long v) {
+<span class="nc" id="L151">		nb++;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (nb == 1) {</span>
+<span class="nc" id="L153">			min = v;</span>
+<span class="nc" id="L154">			max = v;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		} else if (v &gt; max) {</span>
+<span class="nc" id="L156">			max = v;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		} else if (v &lt; min) {</span>
+<span class="nc" id="L158">			min = v;</span>
+		}
+<span class="nc" id="L160">		sum += v;</span>
+<span class="nc" id="L161">		sumOfSquare += v * v;</span>
+<span class="nc" id="L162">		sliddingSum = sliddingSum * (SLIDING_WINDOW - 1) / SLIDING_WINDOW + v;</span>
+<span class="nc" id="L163">	}</span>
+
+	public void add(NumberAnalyzed other) {
+		final long nb1;
+		final long sum1;
+		final long min1;
+		final long max1;
+		final long sumOfSquare1;
+		final long sliddingSum1;
+<span class="nc" id="L172">		synchronized (other) {</span>
+<span class="nc" id="L173">			nb1 = other.nb;</span>
+<span class="nc" id="L174">			sum1 = other.sum;</span>
+<span class="nc" id="L175">			min1 = other.min;</span>
+<span class="nc" id="L176">			max1 = other.max;</span>
+<span class="nc" id="L177">			sumOfSquare1 = other.sumOfSquare;</span>
+<span class="nc" id="L178">			sliddingSum1 = other.sliddingSum;</span>
+<span class="nc" id="L179">		}</span>
+<span class="nc" id="L180">		synchronized (this) {</span>
+<span class="nc" id="L181">			this.sum += sum1;</span>
+<span class="nc" id="L182">			this.nb += nb1;</span>
+<span class="nc" id="L183">			this.min = Math.min(this.min, min1);</span>
+<span class="nc" id="L184">			this.max = Math.max(this.max, max1);</span>
+<span class="nc" id="L185">			this.sumOfSquare += sumOfSquare1;</span>
+			// Not good!
+<span class="nc" id="L187">			this.sliddingSum += sliddingSum1;</span>
+<span class="nc" id="L188">		}</span>
+<span class="nc" id="L189">	}</span>
+
+	synchronized public final long getNb() {
+<span class="nc" id="L192">		return nb;</span>
+	}
+
+	synchronized public final long getSum() {
+<span class="nc" id="L196">		return sum;</span>
+	}
+
+	synchronized public final long getMin() {
+<span class="nc" id="L200">		return min;</span>
+	}
+
+	synchronized public final long getMax() {
+<span class="nc" id="L204">		return max;</span>
+	}
+
+	synchronized public final long getMean() {
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (nb == 0) {</span>
+<span class="nc" id="L209">			return 0;</span>
+		}
+<span class="nc" id="L211">		return sum / nb;</span>
+	}
+
+	synchronized public final long getSliddingMean() {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (nb == 0) {</span>
+<span class="nc" id="L216">			return 0;</span>
+		}
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (nb &lt; SLIDING_WINDOW) {</span>
+<span class="nc" id="L219">			return sum / nb;</span>
+		}
+<span class="nc" id="L221">		return sliddingSum / nb;</span>
+	}
+
+	public final long getStandardDeviation() {
+		final long sum1;
+		final long sumOfSquare1;
+		final long nb1;
+<span class="nc" id="L228">		synchronized (this) {</span>
+<span class="nc" id="L229">			sum1 = this.sum;</span>
+<span class="nc" id="L230">			sumOfSquare1 = this.sumOfSquare;</span>
+<span class="nc" id="L231">			nb1 = this.nb;</span>
+<span class="nc" id="L232">		}</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (nb1 == 0) {</span>
+<span class="nc" id="L234">			return 0;</span>
+		}
+<span class="nc" id="L236">		final long mean = sum1 / nb1;</span>
+<span class="nc" id="L237">		return Math.round(Math.sqrt(sumOfSquare1 / nb1 - mean * mean));</span>
+	}
+
+	final public String getName() {
+<span class="nc" id="L241">		return name;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">JsonWriter.java</span></div><h1>JsonWriter.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+import java.io.IOException;
+import java.io.Writer;
+
+class JsonWriter {
+
+	private static final int CONTROL_CHARACTERS_END = 0x001f;
+
+<span class="fc" id="L34">	private static final char[] QUOT_CHARS = { '\\', '&quot;' };</span>
+<span class="fc" id="L35">	private static final char[] BS_CHARS = { '\\', '\\' };</span>
+<span class="fc" id="L36">	private static final char[] LF_CHARS = { '\\', 'n' };</span>
+<span class="fc" id="L37">	private static final char[] CR_CHARS = { '\\', 'r' };</span>
+<span class="fc" id="L38">	private static final char[] TAB_CHARS = { '\\', 't' };</span>
+	// In JavaScript, U+2028 and U+2029 characters count as line endings and must be
+	// encoded.
+	// http://stackoverflow.com/questions/2965293/javascript-parse-error-on-u2028-unicode-character
+<span class="fc" id="L42">	private static final char[] UNICODE_2028_CHARS = { '\\', 'u', '2', '0', '2', '8' };</span>
+<span class="fc" id="L43">	private static final char[] UNICODE_2029_CHARS = { '\\', 'u', '2', '0', '2', '9' };</span>
+<span class="fc" id="L44">	private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',</span>
+			'e', 'f' };
+
+	protected final Writer writer;
+
+<span class="fc" id="L49">	JsonWriter(Writer writer) {</span>
+<span class="fc" id="L50">		this.writer = writer;</span>
+<span class="fc" id="L51">	}</span>
+
+	protected void writeLiteral(String value) throws IOException {
+<span class="fc" id="L54">		writer.write(value);</span>
+<span class="fc" id="L55">	}</span>
+
+	protected void writeNumber(String string) throws IOException {
+<span class="fc" id="L58">		writer.write(string);</span>
+<span class="fc" id="L59">	}</span>
+
+	protected void writeString(String string) throws IOException {
+<span class="fc" id="L62">		writer.write('&quot;');</span>
+<span class="fc" id="L63">		writeJsonString(string);</span>
+<span class="fc" id="L64">		writer.write('&quot;');</span>
+<span class="fc" id="L65">	}</span>
+
+	protected void writeArrayOpen() throws IOException {
+<span class="fc" id="L68">		writer.write('[');</span>
+<span class="fc" id="L69">	}</span>
+
+	protected void writeArrayClose() throws IOException {
+<span class="fc" id="L72">		writer.write(']');</span>
+<span class="fc" id="L73">	}</span>
+
+	protected void writeArraySeparator() throws IOException {
+<span class="fc" id="L76">		writer.write(',');</span>
+<span class="fc" id="L77">	}</span>
+
+	protected void writeObjectOpen() throws IOException {
+<span class="fc" id="L80">		writer.write('{');</span>
+<span class="fc" id="L81">	}</span>
+
+	protected void writeObjectClose() throws IOException {
+<span class="fc" id="L84">		writer.write('}');</span>
+<span class="fc" id="L85">	}</span>
+
+	protected void writeMemberName(String name) throws IOException {
+<span class="fc" id="L88">		writer.write('&quot;');</span>
+<span class="fc" id="L89">		writeJsonString(name);</span>
+<span class="fc" id="L90">		writer.write('&quot;');</span>
+<span class="fc" id="L91">	}</span>
+
+	protected void writeMemberSeparator() throws IOException {
+<span class="fc" id="L94">		writer.write(':');</span>
+<span class="fc" id="L95">	}</span>
+
+	protected void writeObjectSeparator() throws IOException {
+<span class="fc" id="L98">		writer.write(',');</span>
+<span class="fc" id="L99">	}</span>
+
+	protected void writeJsonString(String string) throws IOException {
+<span class="fc" id="L102">		int length = string.length();</span>
+<span class="fc" id="L103">		int start = 0;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int index = 0; index &lt; length; index++) {</span>
+<span class="fc" id="L105">			char[] replacement = getReplacementChars(string.charAt(index));</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if (replacement != null) {</span>
+<span class="fc" id="L107">				writer.write(string, start, index - start);</span>
+<span class="fc" id="L108">				writer.write(replacement);</span>
+<span class="fc" id="L109">				start = index + 1;</span>
+			}
+		}
+<span class="fc" id="L112">		writer.write(string, start, length - start);</span>
+<span class="fc" id="L113">	}</span>
+
+	private static char[] getReplacementChars(char ch) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (ch &gt; '\\') {</span>
+<span class="pc bpc" id="L117" title="3 of 4 branches missed.">			if (ch &lt; '\u2028' || ch &gt; '\u2029') {</span>
+				// The lower range contains 'a' .. 'z'. Only 2 checks required.
+<span class="fc" id="L119">				return null;</span>
+			}
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			return ch == '\u2028' ? UNICODE_2028_CHARS : UNICODE_2029_CHARS;</span>
+		}
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (ch == '\\') {</span>
+<span class="nc" id="L124">			return BS_CHARS;</span>
+		}
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (ch &gt; '&quot;') {</span>
+			// This range contains '0' .. '9' and 'A' .. 'Z'. Need 3 checks to get here.
+<span class="fc" id="L128">			return null;</span>
+		}
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (ch == '&quot;') {</span>
+<span class="fc" id="L131">			return QUOT_CHARS;</span>
+		}
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (ch &gt; CONTROL_CHARACTERS_END) {</span>
+<span class="fc" id="L134">			return null;</span>
+		}
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (ch == '\n') {</span>
+<span class="nc" id="L137">			return LF_CHARS;</span>
+		}
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (ch == '\r') {</span>
+<span class="nc" id="L140">			return CR_CHARS;</span>
+		}
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (ch == '\t') {</span>
+<span class="nc" id="L143">			return TAB_CHARS;</span>
+		}
+<span class="nc" id="L145">		return new char[] { '\\', 'u', '0', '0', HEX_DIGITS[ch &gt;&gt; 4 &amp; 0x000f], HEX_DIGITS[ch &amp; 0x000f] };</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

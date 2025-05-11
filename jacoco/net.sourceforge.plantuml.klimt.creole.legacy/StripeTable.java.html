@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StripeTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.legacy</a> &gt; <span class="el_source">StripeTable.java</span></div><h1>StripeTable.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.creole.legacy;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleContext;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.creole.Stripe;
+import net.sourceforge.plantuml.klimt.creole.StripeStyle;
+import net.sourceforge.plantuml.klimt.creole.StripeStyleType;
+import net.sourceforge.plantuml.klimt.creole.atom.Atom;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomTable;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomWithMargin;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.text.BackSlash;
+
+public class StripeTable implements Stripe {
+
+<span class="fc" id="L65">	static enum Mode {</span>
+<span class="fc" id="L66">		HEADER, NORMAL</span>
+	};
+
+	final private FontConfiguration fontConfiguration;
+	final private ISkinSimple skinParam;
+	final private AtomTable table;
+	final private Atom marged;
+<span class="fc" id="L73">	final private StripeStyle stripeStyle = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');</span>
+
+<span class="fc" id="L75">	public StripeTable(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {</span>
+<span class="fc" id="L76">		this.skinParam = skinParam;</span>
+<span class="fc" id="L77">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L78">		HColor lineColor = getBackOrFrontColor(line, 1);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (lineColor == null)</span>
+<span class="fc" id="L80">			lineColor = fontConfiguration.getColor();</span>
+
+<span class="fc" id="L82">		this.table = new AtomTable(lineColor);</span>
+<span class="fc" id="L83">		this.marged = new AtomWithMargin(table, 2, 2);</span>
+<span class="fc" id="L84">		analyzeAndAddInternal(line);</span>
+<span class="fc" id="L85">	}</span>
+
+	public List&lt;Atom&gt; getAtoms() {
+<span class="fc" id="L88">		return Collections.&lt;Atom&gt;singletonList(marged);</span>
+	}
+
+	public Atom getLHeader() {
+<span class="nc" id="L92">		return null;</span>
+	}
+
+	static Atom asAtom(List&lt;StripeSimple&gt; cells, double padding) {
+<span class="fc" id="L96">		final Sheet sheet = new Sheet(HorizontalAlignment.LEFT);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		for (StripeSimple cell : cells)</span>
+<span class="fc" id="L98">			sheet.add(cell);</span>
+
+<span class="fc" id="L100">		return new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);</span>
+	}
+
+	private HColor getBackOrFrontColor(String line, int idx) {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (CreoleParser.doesStartByColor(line)) {</span>
+<span class="fc" id="L105">			final int idx1 = line.indexOf('#');</span>
+<span class="fc" id="L106">			final int idx2 = line.indexOf('&gt;');</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">			if (idx2 == -1)</span>
+<span class="nc" id="L108">				throw new IllegalStateException();</span>
+
+<span class="fc" id="L110">			final String[] color = line.substring(idx1, idx2).split(&quot;,&quot;);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (idx &lt; color.length) {</span>
+<span class="fc" id="L112">				final String s = color[idx];</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">				return s == null ? null : skinParam.getIHtmlColorSet().getColorOrWhite(s);</span>
+			}
+		}
+<span class="fc" id="L116">		return null;</span>
+	}
+
+	private String withouBackColor(String line) {
+<span class="fc" id="L120">		final int idx2 = line.indexOf('&gt;');</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (idx2 == -1)</span>
+<span class="nc" id="L122">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L124">		return line.substring(idx2 + 1);</span>
+	}
+
+	private static final String hiddenBar = &quot;\uE000&quot;;
+
+	@JawsStrange
+	private void analyzeAndAddInternal(String line) {
+<span class="fc" id="L131">		line = line.replace(&quot;\\|&quot;, hiddenBar);</span>
+<span class="fc" id="L132">		HColor lineBackColor = getBackOrFrontColor(line, 0);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (lineBackColor != null)</span>
+<span class="fc" id="L134">			line = withouBackColor(line);</span>
+
+<span class="fc" id="L136">		table.newLine(lineBackColor);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		for (final StringTokenizer st = new StringTokenizer(line, &quot;|&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L138">			Mode mode = Mode.NORMAL;</span>
+<span class="fc" id="L139">			String v = st.nextToken().replace(hiddenBar.charAt(0), '|');</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (v.startsWith(&quot;=&quot;)) {</span>
+<span class="fc" id="L141">				v = v.substring(1);</span>
+<span class="fc" id="L142">				mode = Mode.HEADER;</span>
+			}
+<span class="fc" id="L144">			HColor cellBackColor = getBackOrFrontColor(v, 0);</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">			if (cellBackColor != null)</span>
+<span class="fc" id="L146">				v = withouBackColor(v);</span>
+
+<span class="fc" id="L148">			final List&lt;String&gt; lines = getWithNewlinesInternal(v);</span>
+<span class="fc" id="L149">			final List&lt;StripeSimple&gt; cells = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			for (String s : lines) {</span>
+<span class="fc" id="L151">				final StripeSimple cell = new StripeSimple(getFontConfiguration(mode), stripeStyle, new CreoleContext(),</span>
+						skinParam, CreoleMode.FULL);
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">				if (s.startsWith(&quot;&lt;r&gt;&quot;)) {</span>
+<span class="nc" id="L154">					cell.setCellAlignment(HorizontalAlignment.RIGHT);</span>
+<span class="nc" id="L155">					s = s.substring(&quot;&lt;r&gt;&quot;.length());</span>
+				}
+<span class="fc" id="L157">				cell.analyzeAndAdd(s);</span>
+<span class="fc" id="L158">				cells.add(cell);</span>
+<span class="fc" id="L159">			}</span>
+<span class="fc" id="L160">			table.addCell(asAtom(cells, skinParam.getPadding()), cellBackColor);</span>
+<span class="fc" id="L161">		}</span>
+<span class="fc" id="L162">	}</span>
+
+	@JawsStrange
+	static List&lt;String&gt; getWithNewlinesInternal(String s) {
+<span class="fc" id="L166">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (Pragma.legacyReplaceBackslashNByNewline()) {</span>
+<span class="fc" id="L168">			final StringBuilder current = new StringBuilder();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L170">				final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L171" title="1 of 4 branches missed.">				if (c == '\\' &amp;&amp; i &lt; s.length() - 1) {</span>
+<span class="fc" id="L172">					final char c2 = s.charAt(i + 1);</span>
+<span class="fc" id="L173">					i++;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">					if (c2 == 'n') {</span>
+<span class="fc" id="L175">						result.add(current.toString());</span>
+<span class="fc" id="L176">						current.setLength(0);</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">					} else if (c2 == '\\') {</span>
+<span class="fc" id="L178">						current.append(c2);</span>
+					} else {
+<span class="nc" id="L180">						current.append(c);</span>
+<span class="nc" id="L181">						current.append(c2);</span>
+					}
+<span class="fc bfc" id="L183" title="All 2 branches covered.">				} else if (c == BackSlash.hiddenNewLine()) {</span>
+<span class="fc" id="L184">					result.add(current.toString());</span>
+<span class="fc" id="L185">					current.setLength(0);</span>
+				} else {
+<span class="fc" id="L187">					current.append(c);</span>
+				}
+			}
+<span class="fc" id="L190">			result.add(current.toString());</span>
+<span class="fc" id="L191">		} else {</span>
+<span class="nc" id="L192">			final StringBuilder current = new StringBuilder();</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">			for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L194">				final char c = s.charAt(i);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">				if (c == Jaws.BLOCK_E1_NEWLINE) {</span>
+<span class="nc" id="L196">					result.add(current.toString());</span>
+<span class="nc" id="L197">					current.setLength(0);</span>
+				} else {
+<span class="nc" id="L199">					current.append(c);</span>
+				}
+			}
+<span class="nc" id="L202">			result.add(current.toString());</span>
+		}
+<span class="fc" id="L204">		return result;</span>
+	}
+
+	private FontConfiguration getFontConfiguration(Mode mode) {
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (mode == Mode.NORMAL)</span>
+<span class="fc" id="L209">			return fontConfiguration;</span>
+
+<span class="fc" id="L211">		return fontConfiguration.bold();</span>
+	}
+
+	public void analyzeAndAddLine(String line) {
+<span class="fc" id="L215">		analyzeAndAddInternal(line);</span>
+<span class="fc" id="L216">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

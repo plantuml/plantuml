@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShapePoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.graphics</a> &gt; <span class="el_source">ShapePoint.java</span></div><h1>ShapePoint.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.graphics;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+public class ShapePoint extends java.awt.geom.Point2D.Float {
+
+	public static final int TYPE_NORMAL = 0;
+	public static final int TYPE_ROUND = 1;
+
+<span class="nc" id="L31">	private boolean locked = false;</span>
+	
+<span class="nc" id="L33">	private int type = 0;</span>
+
+	public ShapePoint() {
+<span class="nc" id="L36">		super();</span>
+<span class="nc" id="L37">	}</span>
+
+	public ShapePoint(float x, float y) {
+<span class="nc" id="L40">		super(x, y);</span>
+<span class="nc" id="L41">		this.type = TYPE_NORMAL;</span>
+<span class="nc" id="L42">	}</span>
+
+	public ShapePoint(float x, float y, int type) {
+<span class="nc" id="L45">		super(x, y);</span>
+<span class="nc" id="L46">		this.type = type;</span>
+<span class="nc" id="L47">	}</span>
+
+	public ShapePoint(ShapePoint other){
+<span class="nc" id="L50">		this(other.x, other.y, other.type);</span>
+<span class="nc" id="L51">	}</span>
+	
+	/**
+	 * @return
+	 */
+	public int getType() {
+<span class="nc" id="L57">		return type;</span>
+	}
+
+	/**
+	 * @param i
+	 */
+	public void setType(int i) {
+<span class="nc" id="L64">		type = i;</span>
+<span class="nc" id="L65">	}</span>
+	
+	public boolean isInLineWith(ShapePoint point){
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if(this.x == point.x) return true;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if(this.y == point.y) return true;</span>
+<span class="nc" id="L70">		return false;</span>
+	}
+	
+	public boolean isWithinEdge(ShapeEdge edge) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if(edge.isHorizontal()) {</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">			if(x &gt;= edge.getStartPoint().x &amp;&amp; x &lt;= edge.getEndPoint().x) return true;</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">			if(x &gt;= edge.getEndPoint().x &amp;&amp; x &lt;= edge.getStartPoint().x) return true;</span>
+<span class="nc" id="L77">			return false;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		} else if(edge.isVertical()) {</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">			if(y &gt;= edge.getStartPoint().y &amp;&amp; y &lt;= edge.getEndPoint().y) return true;</span>
+<span class="nc bnc" id="L80" title="All 4 branches missed.">			if(y &gt;= edge.getEndPoint().y &amp;&amp; y &lt;= edge.getStartPoint().y) return true;			</span>
+<span class="nc" id="L81">			return false;</span>
+		}
+<span class="nc" id="L83">		throw new RuntimeException(&quot;Cannot calculate is ShapePoint is within sloped edge&quot;);</span>
+	}
+	
+	public boolean isNorthOf(ShapePoint point){
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		return (this.y &lt; point.y);</span>
+	}
+
+	public boolean isSouthOf(ShapePoint point){
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		return (this.y &gt; point.y);</span>
+	}
+
+	public boolean isWestOf(ShapePoint point){
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		return (this.x &lt; point.x);</span>
+	}
+
+	public boolean isEastOf(ShapePoint point){
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		return (this.x &gt; point.x);</span>
+	}
+
+	public String toString(){
+<span class="nc" id="L103">		return &quot;(&quot;+x+&quot;, &quot;+y+&quot;)&quot;;</span>
+	}
+	
+	public void assign(ShapePoint point){
+<span class="nc" id="L107">		this.x = point.x;</span>
+<span class="nc" id="L108">		this.y = point.y;</span>
+<span class="nc" id="L109">	}</span>
+
+	/**
+	 * Does the same as assign, but respects the
+	 * locked attribute 
+	 * 
+	 * @param point
+	 */
+	public void moveTo(ShapePoint point){
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if(locked) return;</span>
+<span class="nc" id="L119">		this.x = point.x;</span>
+<span class="nc" id="L120">		this.y = point.y;</span>
+<span class="nc" id="L121">	}</span>
+
+
+	/**
+	 * @return
+	 */
+	public boolean isLocked() {
+<span class="nc" id="L128">		return locked;</span>
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setLocked(boolean b) {
+<span class="nc" id="L135">		locked = b;</span>
+<span class="nc" id="L136">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

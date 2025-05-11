@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockSimple.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.shape</a> &gt; <span class="el_source">TextBlockSimple.java</span></div><h1>TextBlockSimple.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.shape;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.sprite.SpriteContainer;
+import net.sourceforge.plantuml.regex.MyPattern;
+
+public final class TextBlockSimple extends AbstractTextBlock implements TextBlock {
+    // ::remove file when __HAXE__
+
+	private List&lt;Line&gt; lines;
+
+	private final Display texts;
+	private final FontConfiguration fontConfiguration;
+	private final HorizontalAlignment horizontalAlignment;
+	private final SpriteContainer spriteContainer;
+	private final double maxMessageSize;
+
+	public TextBlockSimple(Display texts, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+<span class="nc" id="L64">			SpriteContainer spriteContainer, double maxMessageSize) {</span>
+<span class="nc" id="L65">		this.texts = texts;</span>
+<span class="nc" id="L66">		this.fontConfiguration = fontConfiguration;</span>
+<span class="nc" id="L67">		this.horizontalAlignment = horizontalAlignment;</span>
+<span class="nc" id="L68">		this.spriteContainer = spriteContainer;</span>
+<span class="nc" id="L69">		this.maxMessageSize = maxMessageSize;</span>
+<span class="nc" id="L70">	}</span>
+
+	private List&lt;Line&gt; getLines(StringBounder stringBounder) {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (lines == null) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (stringBounder == null)</span>
+<span class="nc" id="L75">				throw new IllegalStateException();</span>
+
+<span class="nc" id="L77">			this.lines = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			for (CharSequence s : texts)</span>
+<span class="nc" id="L79">				addInLines(stringBounder, s.toString());</span>
+
+		}
+<span class="nc" id="L82">		return lines;</span>
+	}
+
+	private void addInLines(StringBounder stringBounder, String s) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (maxMessageSize == 0) {</span>
+<span class="nc" id="L87">			addSingleLine(s);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		} else if (maxMessageSize &gt; 0) {</span>
+<span class="nc" id="L89">			final StringTokenizer st = new StringTokenizer(s, &quot; &quot;, true);</span>
+<span class="nc" id="L90">			final StringBuilder currentLine = new StringBuilder();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L92">				final String token = st.nextToken();</span>
+<span class="nc" id="L93">				final double w = getTextWidth(stringBounder, currentLine + token);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (w &gt; maxMessageSize) {</span>
+<span class="nc" id="L95">					addSingleLineNoSpace(currentLine.toString());</span>
+<span class="nc" id="L96">					currentLine.setLength(0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">					if (token.startsWith(&quot; &quot;) == false)</span>
+<span class="nc" id="L98">						currentLine.append(token);</span>
+				} else
+<span class="nc" id="L100">					currentLine.append(token);</span>
+
+<span class="nc" id="L102">			}</span>
+<span class="nc" id="L103">			addSingleLineNoSpace(currentLine.toString());</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		} else if (maxMessageSize &lt; 0) {</span>
+<span class="nc" id="L105">			final StringBuilder currentLine = new StringBuilder();</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L107">				final char c = s.charAt(i);</span>
+<span class="nc" id="L108">				final double w = getTextWidth(stringBounder, currentLine.toString() + c);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (w &gt; -maxMessageSize) {</span>
+<span class="nc" id="L110">					addSingleLineNoSpace(currentLine.toString());</span>
+<span class="nc" id="L111">					currentLine.setLength(0);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">					if (c != ' ')</span>
+<span class="nc" id="L113">						currentLine.append(c);</span>
+
+				} else {
+<span class="nc" id="L116">					currentLine.append(c);</span>
+				}
+			}
+<span class="nc" id="L119">			addSingleLineNoSpace(currentLine.toString());</span>
+		}
+<span class="nc" id="L121">	}</span>
+
+	private void addSingleLineNoSpace(String s) {
+<span class="nc bnc" id="L124" title="All 4 branches missed.">		if (s.length() == 0 || MyPattern.mtches(s, &quot;^[%s]*$ &quot;)) {</span>
+<span class="nc" id="L125">			return;</span>
+		}
+<span class="nc" id="L127">		lines.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));</span>
+<span class="nc" id="L128">	}</span>
+
+	private void addSingleLine(String s) {
+<span class="nc" id="L131">		lines.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));</span>
+<span class="nc" id="L132">	}</span>
+
+	private double getTextWidth(StringBounder stringBounder, String s) {
+<span class="nc" id="L135">		final Line line = SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer);</span>
+<span class="nc" id="L136">		return line.calculateDimension(stringBounder).getWidth();</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L140">		return getTextDimension(stringBounder);</span>
+	}
+
+	protected final XDimension2D getTextDimension(StringBounder stringBounder) {
+<span class="nc" id="L144">		double width = 0;</span>
+<span class="nc" id="L145">		double height = 0;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		for (Line line : getLines(stringBounder)) {</span>
+<span class="nc" id="L147">			final XDimension2D size2D = line.calculateDimension(stringBounder);</span>
+<span class="nc" id="L148">			height += size2D.getHeight();</span>
+<span class="nc" id="L149">			width = Math.max(width, size2D.getWidth());</span>
+<span class="nc" id="L150">		}</span>
+<span class="nc" id="L151">		return new XDimension2D(width, height);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L155">		double y = 0;</span>
+<span class="nc" id="L156">		final XDimension2D dimText = getTextDimension(ug.getStringBounder());</span>
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		for (Line line : getLines(ug.getStringBounder())) {</span>
+<span class="nc" id="L159">			final HorizontalAlignment lineHorizontalAlignment = line.getHorizontalAlignment();</span>
+<span class="nc" id="L160">			double deltaX = 0;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (lineHorizontalAlignment == HorizontalAlignment.CENTER) {</span>
+<span class="nc" id="L162">				final double diff = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc" id="L163">				deltaX = diff / 2.0;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			} else if (lineHorizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L165">				final double diff = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc" id="L166">				deltaX = diff;</span>
+			}
+<span class="nc" id="L168">			line.drawU(ug.apply(new UTranslate(deltaX, y)));</span>
+<span class="nc" id="L169">			y += line.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L170">		}</span>
+<span class="nc" id="L171">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BpmDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.bpm</a> &gt; <span class="el_source">BpmDiagram.java</span></div><h1>BpmDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.bpm;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+public class BpmDiagram extends UmlDiagram {
+	// ::remove folder when __CORE__
+
+	private void cleanGrid(Grid grid) {
+		while (true) {
+<span class="nc" id="L62">			final boolean v1 = new CleanerEmptyLine().clean(grid);</span>
+<span class="nc" id="L63">			final boolean v2 = new CleanerInterleavingLines().clean(grid);</span>
+<span class="nc" id="L64">			final boolean v3 = new CleanerMoveBlock().clean(grid);</span>
+<span class="nc bnc" id="L65" title="All 6 branches missed.">			if (v1 == false &amp;&amp; v2 == false &amp;&amp; v3 == false) {</span>
+<span class="nc" id="L66">				return;</span>
+			}
+<span class="nc" id="L68">		}</span>
+	}
+
+<span class="nc" id="L71">	private final BpmElement start = new BpmElement(null, BpmElementType.START);</span>
+
+<span class="nc" id="L73">	private List&lt;BpmEvent&gt; events = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L74">	private Deque&lt;BpmBranch&gt; branches = new ArrayDeque&lt;&gt;();</span>
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L77">		return new DiagramDescription(&quot;(Bpm Diagram)&quot;);</span>
+	}
+
+	public BpmDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L81">		super(source, UmlDiagramType.BPM, null, preprocessing);</span>
+<span class="nc" id="L82">	}</span>
+
+	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L86">		return super.createImageBuilder(fileFormatOption).annotations(false);</span>
+	}
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="nc" id="L93">		return createImageBuilder(fileFormatOption).drawable(getUDrawable()).write(os);</span>
+	}
+
+	private UDrawable getUDrawable() {
+<span class="nc" id="L97">		final Grid grid = createGrid();</span>
+<span class="nc" id="L98">		cleanGrid(grid);</span>
+<span class="nc" id="L99">		final GridArray gridArray = grid.toArray(SkinParam.create(getUmlDiagramType(), getPragma(), getPreprocessingArtifact().getOption()));</span>
+		// gridArray.addEdges(edges);
+		// System.err.println(&quot;gridArray=&quot; + gridArray);
+<span class="nc" id="L102">		return gridArray;</span>
+	}
+
+	public CommandExecutionResult addEvent(BpmEvent event) {
+<span class="nc" id="L106">		this.events.add(event);</span>
+<span class="nc" id="L107">		return CommandExecutionResult.ok();</span>
+	}
+
+	private Coord current;
+	private Cell last;
+
+	private Grid createGrid() {
+<span class="nc" id="L114">		final Grid grid = new Grid();</span>
+<span class="nc" id="L115">		this.current = grid.getRoot();</span>
+		// this.edges.clear();
+<span class="nc" id="L117">		last = grid.getCell(current);</span>
+<span class="nc" id="L118">		grid.getCell(current).setData(start);</span>
+
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		for (BpmEvent event : events) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (event instanceof BpmEventAdd) {</span>
+<span class="nc" id="L122">				final BpmEventAdd tmp = (BpmEventAdd) event;</span>
+<span class="nc" id="L123">				addInGrid(grid, tmp.getElement());</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			} else if (event instanceof BpmEventResume) {</span>
+<span class="nc" id="L125">				final String idDestination = ((BpmEventResume) event).getId();</span>
+<span class="nc" id="L126">				current = grid.getById(idDestination);</span>
+<span class="nc" id="L127">				last = grid.getCell(current);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				if (last == null) {</span>
+<span class="nc" id="L129">					throw new IllegalStateException();</span>
+				}
+<span class="nc" id="L131">				final Navigator&lt;Line&gt; nav = grid.linesOf(current);</span>
+<span class="nc" id="L132">				final Line newLine = new Line();</span>
+<span class="nc" id="L133">				nav.insertAfter(newLine);</span>
+<span class="nc" id="L134">				final Col row = current.getCol();</span>
+<span class="nc" id="L135">				current = new Coord(newLine, row);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			} else if (event instanceof BpmEventGoto) {</span>
+<span class="nc" id="L137">				final BpmEventGoto tmp = (BpmEventGoto) event;</span>
+<span class="nc" id="L138">				final String idDestination = tmp.getId();</span>
+<span class="nc" id="L139">				current = grid.getById(idDestination);</span>
+<span class="nc" id="L140">				final Cell src = last;</span>
+<span class="nc" id="L141">				last = grid.getCell(current);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">				if (last == null) {</span>
+<span class="nc" id="L143">					throw new IllegalStateException();</span>
+				}
+<span class="nc" id="L145">				final Navigator&lt;Line&gt; nav = grid.linesOf(current);</span>
+<span class="nc" id="L146">				final Line newLine = new Line();</span>
+<span class="nc" id="L147">				nav.insertAfter(newLine);</span>
+<span class="nc" id="L148">				final Col row = current.getCol();</span>
+<span class="nc" id="L149">				current = new Coord(newLine, row);</span>
+<span class="nc" id="L150">				src.addConnectionTo2(last.getData());</span>
+<span class="nc" id="L151">			} else {</span>
+<span class="nc" id="L152">				throw new IllegalStateException();</span>
+			}
+<span class="nc" id="L154">		}</span>
+<span class="nc" id="L155">		grid.addConnections();</span>
+		// for (GridEdge edge : edges) {
+		// System.err.println(&quot;EDGE=&quot; + edge.getEdgeDirection());
+		// edge.addLineIn(grid);
+		// }
+		// grid.addEdge(edges);
+<span class="nc" id="L161">		return grid;</span>
+	}
+
+	private void addInGrid(Grid grid, BpmElement element) {
+<span class="nc" id="L165">		final Navigator&lt;Col&gt; nav = grid.colsOf(current);</span>
+<span class="nc" id="L166">		final Col newRow = new Col();</span>
+<span class="nc" id="L167">		nav.insertAfter(newRow);</span>
+<span class="nc" id="L168">		current = new Coord(current.getLine(), newRow);</span>
+<span class="nc" id="L169">		grid.getCell(current).setData(element);</span>
+<span class="nc" id="L170">		last.addConnectionTo2(grid.getCell(current).getData());</span>
+<span class="nc" id="L171">		last = grid.getCell(current);</span>
+
+<span class="nc" id="L173">	}</span>
+
+	public CommandExecutionResult newBranch() {
+<span class="nc" id="L176">		final BpmBranch branch = new BpmBranch(events.size());</span>
+<span class="nc" id="L177">		branches.addLast(branch);</span>
+<span class="nc" id="L178">		return addEvent(new BpmEventAdd(branch.getEntryElement()));</span>
+	}
+
+	public CommandExecutionResult elseBranch() {
+<span class="nc" id="L182">		final BpmBranch branch = branches.getLast();</span>
+<span class="nc" id="L183">		final int counter = branch.incAndGetCounter();</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (counter == 2) {</span>
+<span class="nc" id="L185">			addEvent(new BpmEventAdd(branch.getElseElement()));</span>
+<span class="nc" id="L186">			return addEvent(branch.getResumeEntryEvent());</span>
+		}
+<span class="nc" id="L188">		addEvent(branch.getGoToEndEvent());</span>
+<span class="nc" id="L189">		return addEvent(branch.getResumeEntryEvent());</span>
+	}
+
+	public CommandExecutionResult endBranch() {
+<span class="nc" id="L193">		final BpmBranch branch = branches.removeLast();</span>
+<span class="nc" id="L194">		return addEvent(branch.getGoToEndEvent());</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L199">		throw new UnsupportedOperationException();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

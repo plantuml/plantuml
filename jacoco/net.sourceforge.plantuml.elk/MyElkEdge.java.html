@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyElkEdge.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.elk</a> &gt; <span class="el_source">MyElkEdge.java</span></div><h1>MyElkEdge.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.elk;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+
+/*
+ * You can choose between real &quot;org.eclipse.elk...&quot; classes or proxied &quot;net.sourceforge.plantuml.elk.proxy...&quot;
+ *
+ * Using proxied classes allows to compile PlantUML without having ELK available on the classpath.
+ * Since GraphViz is the default layout engine up to now, we do not want to enforce the use of ELK just for compilation.
+ * (for people not using maven)
+ *
+ * If you are debugging, you should probably switch to &quot;org.eclipse.elk...&quot; classes
+ *
+ */
+
+/*
+import org.eclipse.elk.graph.ElkBendPoint;
+import org.eclipse.elk.graph.ElkEdge;
+import org.eclipse.elk.graph.ElkEdgeSection;
+import org.eclipse.elk.graph.ElkLabel;
+*/
+
+import net.sourceforge.plantuml.elk.proxy.graph.ElkBendPoint;
+import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
+import net.sourceforge.plantuml.elk.proxy.graph.ElkEdgeSection;
+import net.sourceforge.plantuml.elk.proxy.graph.ElkLabel;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.skin.LineParam;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
+
+public class MyElkEdge implements UDrawable {
+	// ::remove folder when __HAXE__
+
+	private final Link link;
+	private final ElkEdge edge;
+
+	private final CucaDiagram diagram;
+	private final TextBlock centerLabel;
+	private final TextBlock headLabel;
+	private final TextBlock tailLabel;
+
+	private final SName styleName;
+
+	private final Map&lt;Entity, MyElkCluster&gt; elkClusters;
+
+	private final Map&lt;Entity, IEntityImage&gt; nodeImages;
+
+	private final double magicY2;
+
+	private final UTranslate translate;
+
+	public MyElkEdge(CucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
+			TextBlock tailLabel, TextBlock headLabel, double magicY2, Map&lt;Entity, MyElkCluster&gt; elkClusters,
+<span class="nc" id="L117">			UTranslate translate, Map&lt;Entity, IEntityImage&gt; nodeImages) {</span>
+<span class="nc" id="L118">		this.link = link;</span>
+<span class="nc" id="L119">		this.edge = edge;</span>
+<span class="nc" id="L120">		this.translate = translate;</span>
+<span class="nc" id="L121">		this.nodeImages = nodeImages;</span>
+
+<span class="nc" id="L123">		this.diagram = diagram;</span>
+<span class="nc" id="L124">		this.centerLabel = centerLabel;</span>
+<span class="nc" id="L125">		this.tailLabel = tailLabel;</span>
+<span class="nc" id="L126">		this.headLabel = headLabel;</span>
+<span class="nc" id="L127">		this.styleName = styleName;</span>
+<span class="nc" id="L128">		this.magicY2 = magicY2;</span>
+<span class="nc" id="L129">		this.elkClusters = elkClusters;</span>
+
+<span class="nc" id="L131">	}</span>
+
+	private Style getStyle() {
+<span class="nc" id="L134">		final StyleSignature result = StyleSignatureBasic</span>
+<span class="nc" id="L135">				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)</span>
+<span class="nc" id="L136">				.withTOBECHANGED(link.getStereotype());</span>
+<span class="nc" id="L137">		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	@DuplicateCode(reference = &quot;SvekEdge&quot;)
+	public void drawU(UGraphic ug) {
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (link.isHidden())</span>
+<span class="nc" id="L144">			return;</span>
+
+<span class="nc" id="L146">		ug = ug.apply(translate);</span>
+<span class="nc" id="L147">		UGraphic ugOrig = ug;</span>
+
+<span class="nc" id="L149">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L150">		final Style styleLine = getStyle();</span>
+
+<span class="nc" id="L152">		HColor color = styleLine.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (this.link.getColors() != null) {</span>
+<span class="nc" id="L155">			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (newColor != null)</span>
+<span class="nc" id="L157">				color = newColor;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		} else if (this.link.getSpecificColor() != null) {</span>
+<span class="nc" id="L159">			color = this.link.getSpecificColor();</span>
+		}
+
+<span class="nc" id="L162">		final LinkType linkType = link.getType();</span>
+<span class="nc" id="L163">		final UStroke suggestedStroke = styleLine.getStroke();</span>
+<span class="nc" id="L164">		final UStroke defaultThickness = diagram.getSkinParam().getThickness(LineParam.arrow, null);</span>
+
+		UStroke stroke;
+<span class="nc bnc" id="L167" title="All 4 branches missed.">		if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
+<span class="nc" id="L168">			stroke = linkType.getStroke3(defaultThickness);</span>
+		else
+<span class="nc" id="L170">			stroke = linkType.getStroke3(suggestedStroke);</span>
+
+<span class="nc bnc" id="L172" title="All 4 branches missed.">		if (link.getColors() != null &amp;&amp; link.getColors().getSpecificLineStroke() != null)</span>
+<span class="nc" id="L173">			stroke = link.getColors().getSpecificLineStroke();</span>
+
+<span class="nc" id="L175">		final MyElkCluster elkCluster1 = elkClusters.get(link.getEntity1());</span>
+<span class="nc" id="L176">		final MyElkCluster elkCluster2 = elkClusters.get(link.getEntity2());</span>
+<span class="nc" id="L177">		final IEntityImage elkNode1 = nodeImages.get(link.getEntity1());</span>
+<span class="nc" id="L178">		final IEntityImage elkNode2 = nodeImages.get(link.getEntity2());</span>
+<span class="nc" id="L179">		MagneticBorder magneticBorder1 = new MagneticBorderNone();</span>
+<span class="nc" id="L180">		MagneticBorder magneticBorder2 = new MagneticBorderNone();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (elkNode1 != null)</span>
+<span class="nc" id="L182">			magneticBorder1 = elkNode1.getMagneticBorder();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		else if (elkCluster1 != null)</span>
+<span class="nc" id="L184">			magneticBorder1 = elkCluster1.getMagneticBorder(ug.getStringBounder());</span>
+
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (elkNode2 != null)</span>
+<span class="nc" id="L187">			magneticBorder2 = elkNode2.getMagneticBorder();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (elkCluster2 != null)</span>
+<span class="nc" id="L189">			magneticBorder2 = elkCluster2.getMagneticBorder(ug.getStringBounder());</span>
+
+<span class="nc" id="L191">		ug = ug.apply(stroke).apply(color);</span>
+
+<span class="nc" id="L193">		final List&lt;ElkEdgeSection&gt; sections = edge.getSections();</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (sections.size() == 0) {</span>
+<span class="nc" id="L195">			System.err.println(&quot;Strange: no section?&quot;);</span>
+<span class="nc" id="L196">			System.err.println(&quot;Maybe a 'Long hierarchical edge' &quot; + edge.isHierarchical());</span>
+<span class="nc" id="L197">			return;</span>
+		} else {
+<span class="nc" id="L199">			drawSections(ug, sections, magneticBorder1, magneticBorder2);</span>
+		}
+
+<span class="nc" id="L202">		final UDrawable extremityFactory1 = getDecors(link.getType().getDecor1(), Math.PI / 2, HColors.WHITE);</span>
+<span class="nc" id="L203">		final UDrawable extremityFactory2 = getDecors(link.getType().getDecor2(), -Math.PI / 2, HColors.WHITE);</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (extremityFactory1 != null) {</span>
+<span class="nc" id="L206">			final double x = sections.get(0).getEndX();</span>
+<span class="nc" id="L207">			final double y = sections.get(0).getEndY();</span>
+<span class="nc" id="L208">			final UTranslate force = magneticBorder2.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));</span>
+<span class="nc" id="L209">			extremityFactory1.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));</span>
+		}
+
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (extremityFactory2 != null) {</span>
+<span class="nc" id="L213">			final double x = sections.get(0).getStartX();</span>
+<span class="nc" id="L214">			final double y = sections.get(0).getStartY();</span>
+<span class="nc" id="L215">			final UTranslate force = magneticBorder1.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));</span>
+<span class="nc" id="L216">			extremityFactory2.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));</span>
+		}
+
+<span class="nc" id="L219">		drawLabels(ugOrig);</span>
+<span class="nc" id="L220">	}</span>
+
+	private UDrawable getDecors(LinkDecor decors, double angle, HColor backColor) {
+		// For legacy reason, extends are treated differently
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (decors == LinkDecor.EXTENDS)</span>
+<span class="nc" id="L225">			return new ExtremityFactoryExtends(backColor).createUDrawable(new XPoint2D(0, 0), angle, null);</span>
+
+<span class="nc" id="L227">		final ExtremityFactory extremityFactory = decors.getExtremityFactoryLegacy(backColor);</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (extremityFactory == null)</span>
+<span class="nc" id="L229">			return null;</span>
+
+<span class="nc" id="L231">		return extremityFactory.createUDrawable(new XPoint2D(0, 0), angle, null);</span>
+	}
+
+	private void drawLabels(UGraphic ug) {
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (ElkLabel label : edge.getLabels()) {</span>
+<span class="nc" id="L236">			final double x = label.getX();</span>
+<span class="nc" id="L237">			final double y = label.getY();</span>
+			final TextBlock labelLink;
+			// Nasty trick: we store the type of label (center/head/tail) in the text
+<span class="nc" id="L240">			final String type = label.getText();</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (&quot;X&quot;.equals(type))</span>
+<span class="nc" id="L242">				labelLink = centerLabel;</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">			else if (&quot;1&quot;.equals(type))</span>
+<span class="nc" id="L244">				labelLink = tailLabel;</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">			else if (&quot;2&quot;.equals(type))</span>
+<span class="nc" id="L246">				labelLink = headLabel;</span>
+			else
+				continue;
+
+<span class="nc" id="L250">			labelLink.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="nc" id="L251">		}</span>
+<span class="nc" id="L252">	}</span>
+
+	private void drawSections(UGraphic ug, final Collection&lt;ElkEdgeSection&gt; sections, MagneticBorder magneticBorder1,
+			MagneticBorder magneticBorder2) {
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		for (ElkEdgeSection section : sections) {</span>
+<span class="nc" id="L257">			final Collection&lt;ElkBendPoint&gt; points = section.getBendPoints();</span>
+
+<span class="nc" id="L259">			double x1 = section.getStartX();</span>
+<span class="nc" id="L260">			double y1 = section.getStartY();</span>
+
+<span class="nc" id="L262">			final XPoint2D tmpStart = new XPoint2D(x1, y1);</span>
+<span class="nc" id="L263">			final UTranslate force1 = magneticBorder1.getForceAt(ug.getStringBounder(),</span>
+<span class="nc" id="L264">					translate.getTranslated(tmpStart));</span>
+<span class="nc" id="L265">			final XPoint2D start = force1.getTranslated(tmpStart);</span>
+<span class="nc" id="L266">			x1 = start.x;</span>
+<span class="nc" id="L267">			y1 = start.y;</span>
+
+<span class="nc bnc" id="L269" title="All 2 branches missed.">			for (ElkBendPoint pt : points) {</span>
+<span class="nc" id="L270">				drawLine(ug, x1, y1, pt.getX(), pt.getY());</span>
+<span class="nc" id="L271">				x1 = pt.getX();</span>
+<span class="nc" id="L272">				y1 = pt.getY();</span>
+<span class="nc" id="L273">			}</span>
+
+<span class="nc" id="L275">			final XPoint2D tmpEnd = new XPoint2D(section.getEndX(), section.getEndY() + magicY2);</span>
+<span class="nc" id="L276">			final UTranslate force2 = magneticBorder2.getForceAt(ug.getStringBounder(),</span>
+<span class="nc" id="L277">					translate.getTranslated(tmpEnd));</span>
+<span class="nc" id="L278">			final XPoint2D end = force2.getTranslated(tmpEnd);</span>
+
+<span class="nc" id="L280">			drawLine(ug, x1, y1, end.x, end.y);</span>
+<span class="nc" id="L281">		}</span>
+<span class="nc" id="L282">	}</span>
+
+	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
+<span class="nc" id="L285">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="nc" id="L286">		ug.apply(new UTranslate(x1, y1)).draw(line);</span>
+<span class="nc" id="L287">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

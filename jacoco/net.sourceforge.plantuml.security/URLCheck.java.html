@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>URLCheck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.security</a> &gt; <span class="el_source">URLCheck.java</span></div><h1>URLCheck.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.security;
+
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.UnknownHostException;
+
+<span class="nc" id="L44">public class URLCheck {</span>
+
+	public static boolean isURLforbidden(String full) {
+		// Thanks to Agasthya Kasturi
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (full.contains(&quot;@&quot;))</span>
+<span class="nc" id="L49">			return true;</span>
+<span class="nc bnc" id="L50" title="All 4 branches missed.">		if (full.startsWith(&quot;https://&quot;) == false &amp;&amp; full.startsWith(&quot;http://&quot;) == false)</span>
+<span class="nc" id="L51">			return true;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (full.matches(&quot;^https?://[-#.0-9:\\[\\]+]+/.*&quot;))</span>
+<span class="nc" id="L53">			return true;</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (full.matches(&quot;^https?://[^.]+/.*&quot;))</span>
+<span class="nc" id="L55">			return true;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (full.matches(&quot;^https?://[^.]+$&quot;))</span>
+<span class="nc" id="L57">			return true;</span>
+
+		try {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (isURLforbidden(new URL(full)))</span>
+<span class="nc" id="L61">				return true;</span>
+<span class="nc" id="L62">		} catch (Exception e) {</span>
+<span class="nc" id="L63">			return true;</span>
+<span class="nc" id="L64">		}</span>
+
+<span class="nc" id="L66">		return false;</span>
+
+	}
+
+	public static boolean isURLforbidden(URL url) throws UnsupportedEncodingException, UnknownHostException {
+
+		// Check for '@' in the authority part (user info)
+<span class="nc" id="L73">		final String userInfo = url.getUserInfo();</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">		if (userInfo != null &amp;&amp; !userInfo.isEmpty())</span>
+<span class="nc" id="L75">			return true;</span>
+
+		// Check protocol
+<span class="nc" id="L78">		final String protocol = url.getProtocol();</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">		if (!protocol.equals(&quot;http&quot;) &amp;&amp; !protocol.equals(&quot;https&quot;))</span>
+<span class="nc" id="L80">			return true;</span>
+
+		// Check host for invalid patterns
+<span class="nc" id="L83">		final String host = url.getHost();</span>
+<span class="nc bnc" id="L84" title="All 6 branches missed.">		if (host == null || host.isEmpty() || !host.contains(&quot;.&quot;))</span>
+<span class="nc" id="L85">			return true;</span>
+
+		// When UNSECURE, we allow localhost
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE) {</span>
+			// Additional check for IP addresses or invalid host patterns
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (host.matches(&quot;^[-#.0-9:\\[\\]+]+$&quot;))</span>
+<span class="nc" id="L91">				return true;</span>
+
+<span class="nc" id="L93">			final InetAddress inetAddress = InetAddress.getByName(host);</span>
+			// Check host address
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (isInnerAddress(inetAddress))</span>
+<span class="nc" id="L96">				return true;</span>
+		}
+
+		// Additional checks (e.g., encoding)
+<span class="nc" id="L100">		final String decodedHost = URLDecoder.decode(host, &quot;UTF-8&quot;);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (!host.equals(decodedHost))</span>
+<span class="nc" id="L102">			return true;</span>
+
+<span class="nc" id="L104">		return false;</span>
+	}
+
+	private static boolean isInnerAddress(InetAddress inetAddress) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		return inetAddress.isAnyLocalAddress() //</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				|| inetAddress.isLoopbackAddress() //</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				|| inetAddress.isLinkLocalAddress() //</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">				|| inetAddress.isSiteLocalAddress();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

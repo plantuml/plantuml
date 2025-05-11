@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LookAround.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.ubrex</a> &gt; <span class="el_source">LookAround.java</span></div><h1>LookAround.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package com.plantuml.ubrex;
+
+<span class="fc" id="L37">public enum LookAround {</span>
+<span class="fc" id="L38">	LOOK_AHEAD_POSITIVE(&quot;(=)&quot;), //</span>
+<span class="fc" id="L39">	LOOK_AHEAD_NEGATIVE(&quot;(!)&quot;), //</span>
+<span class="fc" id="L40">	LOOK_BEHIND_POSITIVE(&quot;(&lt;=)&quot;), //</span>
+<span class="fc" id="L41">	LOOK_BEHIND_NEGATIVE(&quot;(&lt;!)&quot;), //</span>
+<span class="fc" id="L42">	END_OF_TEXT(&quot;($)&quot;);</span>
+
+	private final String definition;
+
+<span class="fc" id="L46">	LookAround(String definition) {</span>
+<span class="fc" id="L47">		this.definition = definition;</span>
+<span class="fc" id="L48">	}</span>
+
+	public static LookAround from(CharSequence input) {
+<span class="fc" id="L51">		final char ch0 = input.charAt(0);</span>
+<span class="fc" id="L52">		final char ch1 = input.charAt(1);</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (ch0 != '(')</span>
+<span class="nc" id="L54">			return null;</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (ch1 == '$')</span>
+<span class="fc" id="L57">			return END_OF_TEXT;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (ch1 == '=')</span>
+<span class="fc" id="L59">			return LOOK_AHEAD_POSITIVE;</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (ch1 == '!')</span>
+<span class="fc" id="L61">			return LOOK_AHEAD_NEGATIVE;</span>
+
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (ch1 == '&lt;') {</span>
+<span class="fc" id="L64">			final char ch2 = input.charAt(2);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (ch2 == '=')</span>
+<span class="fc" id="L66">				return LOOK_BEHIND_POSITIVE;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (ch2 == '!')</span>
+<span class="fc" id="L68">				return LOOK_BEHIND_NEGATIVE;</span>
+		}
+
+<span class="nc" id="L71">		return null;</span>
+	}
+
+	public boolean isLookBehind() {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		switch (this) {</span>
+		case LOOK_BEHIND_POSITIVE:
+		case LOOK_BEHIND_NEGATIVE:
+<span class="fc" id="L78">			return true;</span>
+		}
+<span class="fc" id="L80">		return false;</span>
+	}
+
+	public boolean isLookAhead() {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		switch (this) {</span>
+		case LOOK_AHEAD_POSITIVE:
+		case LOOK_AHEAD_NEGATIVE:
+<span class="fc" id="L87">			return true;</span>
+		}
+<span class="nc" id="L89">		return false;</span>
+	}
+
+	public int getDefinitionSize() {
+<span class="fc" id="L93">		return definition.length();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

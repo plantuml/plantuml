@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Katajainen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">Katajainen.java</span></div><h1>Katajainen.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+import net.sourceforge.plantuml.zopfli.Cookie.Node;
+
+<span class="nc" id="L23">class Katajainen {</span>
+    // ::remove folder when __HAXE__
+
+	static void lengthLimitedCodeLengths(Cookie cookie, int[] frequencies, int maxBits, int[] bitLengths) {
+<span class="nc" id="L27">		cookie.resetPool();</span>
+<span class="nc" id="L28">		int n = frequencies.length;</span>
+<span class="nc" id="L29">		int nn = 0;</span>
+<span class="nc" id="L30">		Node[] leaves = cookie.leaves1;</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">			if (frequencies[i] != 0) {</span>
+<span class="nc" id="L33">				leaves[nn] = cookie.node(frequencies[i], i, null);</span>
+<span class="nc" id="L34">				nn++;</span>
+			}
+		}
+
+<span class="nc bnc" id="L38" title="All 2 branches missed.">		if (nn == 0) {</span>
+<span class="nc" id="L39">			return;</span>
+		}
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		if (nn == 1) {</span>
+<span class="nc" id="L42">			bitLengths[leaves[0].count] = 1;</span>
+<span class="nc" id="L43">			return;</span>
+		}
+
+<span class="nc" id="L46">		Node[] leaves2 = cookie.leaves2;</span>
+<span class="nc" id="L47">		System.arraycopy(leaves, 0, leaves2, 0, nn);</span>
+<span class="nc" id="L48">		sort(leaves2, leaves, 0, nn);</span>
+
+<span class="nc" id="L50">		Node[] list0 = cookie.list0;</span>
+<span class="nc" id="L51">		Node node0 = cookie.node(leaves[0].weight, 1, null);</span>
+
+<span class="nc" id="L53">		Node[] list1 = cookie.list1;</span>
+<span class="nc" id="L54">		Node node1 = cookie.node(leaves[1].weight, 2, null);</span>
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (int i = 0; i &lt; maxBits; ++i) {</span>
+<span class="nc" id="L57">			list0[i] = node0;</span>
+<span class="nc" id="L58">			list1[i] = node1;</span>
+		}
+
+<span class="nc" id="L61">		int numBoundaryPmRuns = 2 * nn - 4;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (int i = 0; i &lt; numBoundaryPmRuns; i++) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			boolean last = i == numBoundaryPmRuns - 1;</span>
+<span class="nc" id="L64">			boundaryPm(cookie, leaves, list0, list1, nn, maxBits - 1, last);</span>
+		}
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (Node node = list1[maxBits - 1]; node != null; node = node.tail) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			for (int i = node.count - 1; i &gt;= 0; --i) {</span>
+<span class="nc" id="L69">				bitLengths[leaves[i].count]++;</span>
+			}
+		}
+<span class="nc" id="L72">	}</span>
+
+	private static void boundaryPm(Cookie cookie, Node[] leaves, Node[] list0, Node[] list1, int numSymbols, int index,
+			boolean last) {
+<span class="nc" id="L76">		int lastCount = list1[index].count;</span>
+
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		if (index == 0 &amp;&amp; lastCount &gt;= numSymbols) {</span>
+<span class="nc" id="L79">			return;</span>
+		}
+
+<span class="nc" id="L82">		list0[index] = list1[index];</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (index == 0) {</span>
+<span class="nc" id="L85">			list1[index] = cookie.node(leaves[lastCount].weight, lastCount + 1, null);</span>
+		} else {
+<span class="nc" id="L87">			int sum = list0[index - 1].weight + list1[index - 1].weight;</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">			if (lastCount &lt; numSymbols &amp;&amp; sum &gt; leaves[lastCount].weight) {</span>
+<span class="nc" id="L89">				list1[index] = cookie.node(leaves[lastCount].weight, lastCount + 1, list1[index].tail);</span>
+			} else {
+<span class="nc" id="L91">				list1[index] = cookie.node(sum, lastCount, list1[index - 1]);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (!last) {</span>
+<span class="nc" id="L93">					boundaryPm(cookie, leaves, list0, list1, numSymbols, index - 1, false);</span>
+<span class="nc" id="L94">					boundaryPm(cookie, leaves, list0, list1, numSymbols, index - 1, false);</span>
+				}
+			}
+		}
+<span class="nc" id="L98">	}</span>
+
+	private static void sort(Node[] src, Node[] dest, int low, int high) {
+<span class="nc" id="L101">		int length = high - low;</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (length &lt; 7) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			for (int i = low + 1; i &lt; high; i++)</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">				for (int j = i, k = i - 1; j &gt; low &amp;&amp; (dest[k].weight &gt; dest[j].weight); --j, --k) {</span>
+<span class="nc" id="L106">					Node t = dest[j];</span>
+<span class="nc" id="L107">					dest[j] = dest[k];</span>
+<span class="nc" id="L108">					dest[k] = t;</span>
+				}
+<span class="nc" id="L110">			return;</span>
+		}
+
+<span class="nc" id="L113">		int mid = (low + high) &gt;&gt;&gt; 1;</span>
+<span class="nc" id="L114">		sort(dest, src, low, mid);</span>
+<span class="nc" id="L115">		sort(dest, src, mid, high);</span>
+
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (int i = low, p = low, q = mid; i &lt; high; i++) {</span>
+<span class="nc bnc" id="L118" title="All 6 branches missed.">			if (q &gt;= high || p &lt; mid &amp;&amp; (src[p].weight &lt;= src[q].weight))</span>
+<span class="nc" id="L119">				dest[i] = src[p++];</span>
+			else
+<span class="nc" id="L121">				dest[i] = src[q++];</span>
+		}
+<span class="nc" id="L123">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

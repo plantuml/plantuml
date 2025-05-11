@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Hexagon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">Hexagon.java</span></div><h1>Hexagon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+
+<span class="nc" id="L44">public class Hexagon {</span>
+
+	final static public double hexagonHalfSize = 12;
+
+	public static UPolygon asPolygon(double shadowing) {
+<span class="fc" id="L49">		final UPolygon diams = new UPolygon();</span>
+
+<span class="fc" id="L51">		diams.addPoint(hexagonHalfSize, 0);</span>
+<span class="fc" id="L52">		diams.addPoint(hexagonHalfSize * 2, hexagonHalfSize);</span>
+<span class="fc" id="L53">		diams.addPoint(hexagonHalfSize, hexagonHalfSize * 2);</span>
+<span class="fc" id="L54">		diams.addPoint(0, hexagonHalfSize);</span>
+<span class="fc" id="L55">		diams.addPoint(hexagonHalfSize, 0);</span>
+
+		// if (shadowing) {
+		// diams.setDeltaShadow(3);
+		// }
+<span class="fc" id="L60">		diams.setDeltaShadow(shadowing);</span>
+
+<span class="fc" id="L62">		return diams;</span>
+	}
+
+	public static UPolygon asPolygon(double shadowing, double width, double height) {
+<span class="fc" id="L66">		final UPolygon diams = new UPolygon();</span>
+
+<span class="fc" id="L68">		diams.addPoint(hexagonHalfSize, 0);</span>
+<span class="fc" id="L69">		diams.addPoint(width - hexagonHalfSize, 0);</span>
+<span class="fc" id="L70">		diams.addPoint(width, height / 2);</span>
+<span class="fc" id="L71">		diams.addPoint(width - hexagonHalfSize, height);</span>
+<span class="fc" id="L72">		diams.addPoint(hexagonHalfSize, height);</span>
+<span class="fc" id="L73">		diams.addPoint(0, height / 2);</span>
+<span class="fc" id="L74">		diams.addPoint(hexagonHalfSize, 0);</span>
+
+		// if (shadowing) {
+		// diams.setDeltaShadow(3);
+		// }
+<span class="fc" id="L79">		diams.setDeltaShadow(shadowing);</span>
+
+<span class="fc" id="L81">		return diams;</span>
+	}
+
+	public static Stencil asStencil(final TextBlock tb) {
+<span class="nc" id="L85">		return new Stencil() {</span>
+
+			private final double getDeltaX(double height, double y) {
+<span class="nc" id="L88">				final double p = y / height * 2;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">				if (p &lt;= 1)</span>
+<span class="nc" id="L90">					return hexagonHalfSize * p;</span>
+
+<span class="nc" id="L92">				return hexagonHalfSize * (2 - p);</span>
+			}
+
+			public double getStartingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L96">				final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L97">				return -getDeltaX(dim.getHeight(), y);</span>
+			}
+
+			public double getEndingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L101">				final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L102">				return dim.getWidth() + getDeltaX(dim.getHeight(), y);</span>
+			}
+		};
+	}
+
+	public static UPolygon asPolygonSquare(double shadowing, double width, double height) {
+<span class="nc" id="L108">		final UPolygon diams = new UPolygon();</span>
+
+<span class="nc" id="L110">		diams.addPoint(width / 2, 0);</span>
+<span class="nc" id="L111">		diams.addPoint(width, height / 2);</span>
+<span class="nc" id="L112">		diams.addPoint(width / 2, height);</span>
+<span class="nc" id="L113">		diams.addPoint(0, height / 2);</span>
+
+<span class="nc" id="L115">		diams.setDeltaShadow(shadowing);</span>
+
+<span class="nc" id="L117">		return diams;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

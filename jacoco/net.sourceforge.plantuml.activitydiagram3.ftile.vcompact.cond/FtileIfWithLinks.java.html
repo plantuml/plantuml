@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileIfWithLinks.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</a> &gt; <span class="el_source">FtileIfWithLinks.java</span></div><h1>FtileIfWithLinks.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
+import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
+import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.svek.ConditionEndStyle;
+import net.sourceforge.plantuml.utils.Direction;
+
+public class FtileIfWithLinks extends FtileIfWithDiamonds {
+
+	private final ConditionEndStyle conditionEndStyle;
+	private final Rainbow arrowColor;
+
+	public FtileIfWithLinks(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in, Rainbow arrowColor,
+			ConditionEndStyle conditionEndStyle, StringBounder stringBounder, Collection&lt;PositionedNote&gt; notes) {
+<span class="nc" id="L74">		super(diamond1, tile1, tile2, diamond2, in, stringBounder, notes);</span>
+<span class="nc" id="L75">		this.arrowColor = arrowColor;</span>
+<span class="nc" id="L76">		this.conditionEndStyle = conditionEndStyle;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (arrowColor.size() == 0)</span>
+<span class="nc" id="L78">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L80">	}</span>
+
+	@Override
+	protected double getYdeltaForLabels(StringBounder stringBounder) {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (diamond2 instanceof FtileDiamond)</span>
+<span class="nc" id="L85">			return ((FtileDiamond) diamond2).getWestEastLabelHeight(stringBounder);</span>
+
+<span class="nc" id="L87">		return 0;</span>
+	}
+
+	class ConnectionHorizontalThenVertical extends AbstractConnection implements ConnectionTranslatable {
+
+		private final Rainbow color;
+		private final UPolygon usingArrow;
+
+<span class="nc" id="L95">		public ConnectionHorizontalThenVertical(Ftile tile, Branch branch) {</span>
+<span class="nc" id="L96">			super(diamond1, tile);</span>
+<span class="nc" id="L97">			color = branch.getInColor(arrowColor);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (color.size() == 0)</span>
+<span class="nc" id="L99">				throw new IllegalArgumentException();</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			usingArrow = branch.isEmpty() ? null : skinParam().arrows().asToDown();</span>
+<span class="nc" id="L102">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L105">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L106">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L107">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L108">			final double x1 = p1.getX();</span>
+<span class="nc" id="L109">			final double y1 = p1.getY();</span>
+<span class="nc" id="L110">			final double x2 = p2.getX();</span>
+<span class="nc" id="L111">			final double y2 = p2.getY();</span>
+
+<span class="nc" id="L113">			final Snake snake = Snake.create(skinParam(), color, usingArrow);</span>
+<span class="nc" id="L114">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L115">			snake.addPoint(x2, y1);</span>
+<span class="nc" id="L116">			snake.addPoint(x2, y2);</span>
+
+<span class="nc" id="L118">			ug.draw(snake);</span>
+<span class="nc" id="L119">		}</span>
+
+		private XPoint2D getP1(StringBounder stringBounder) {
+<span class="nc" id="L122">			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+			final XPoint2D pt;
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (getFtile2() == tile1)</span>
+<span class="nc" id="L125">				pt = dimDiamond1.getPointD();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			else if (getFtile2() == tile2)</span>
+<span class="nc" id="L127">				pt = dimDiamond1.getPointB();</span>
+			else
+<span class="nc" id="L129">				throw new IllegalStateException();</span>
+
+<span class="nc" id="L131">			return getTranslateDiamond1(stringBounder).getTranslated(pt);</span>
+		}
+
+		private XPoint2D getP2(final StringBounder stringBounder) {
+<span class="nc" id="L135">			return translate(stringBounder).getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());</span>
+		}
+
+		private UTranslate translate(StringBounder stringBounder) {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (getFtile2() == tile1)</span>
+<span class="nc" id="L140">				return getTranslateBranch1(stringBounder);</span>
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (getFtile2() == tile2)</span>
+<span class="nc" id="L143">				return getTranslateBranch2(stringBounder);</span>
+
+<span class="nc" id="L145">			throw new IllegalStateException();</span>
+		}
+
+		@Override
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+<span class="nc" id="L150">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L151">			XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L152">			XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L153">			final Direction originalDirection = Direction.leftOrRight(p1, p2);</span>
+<span class="nc" id="L154">			p1 = translate1.getTranslated(p1);</span>
+<span class="nc" id="L155">			p2 = translate2.getTranslated(p2);</span>
+<span class="nc" id="L156">			final Direction newDirection = Direction.leftOrRight(p1, p2);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (originalDirection != newDirection) {</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">				final double delta = (originalDirection == Direction.RIGHT ? -1 : 1) * Hexagon.hexagonHalfSize;</span>
+<span class="nc" id="L159">				final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L160">				final Snake small = Snake.create(skinParam(), color);</span>
+<span class="nc" id="L161">				small.addPoint(p1);</span>
+<span class="nc" id="L162">				small.addPoint(p1.getX() + delta, p1.getY());</span>
+<span class="nc" id="L163">				small.addPoint(p1.getX() + delta, p1.getY() + dimDiamond1.getHeight() * .75);</span>
+<span class="nc" id="L164">				ug.draw(small);</span>
+<span class="nc" id="L165">				p1 = small.getLast();</span>
+			}
+<span class="nc" id="L167">			final Snake snake = Snake.create(skinParam(), color, usingArrow).withMerge(MergeStrategy.LIMITED);</span>
+<span class="nc" id="L168">			snake.addPoint(p1);</span>
+<span class="nc" id="L169">			snake.addPoint(p2.getX(), p1.getY());</span>
+<span class="nc" id="L170">			snake.addPoint(p2);</span>
+<span class="nc" id="L171">			ug.draw(snake);</span>
+
+<span class="nc" id="L173">		}</span>
+
+	}
+
+	class ConnectionVerticalThenHorizontal extends AbstractConnection implements ConnectionTranslatable {
+		private final Rainbow myArrowColor;
+		private final boolean branchEmpty;
+
+<span class="nc" id="L181">		public ConnectionVerticalThenHorizontal(Ftile tile, Rainbow myArrowColor, boolean branchEmpty) {</span>
+<span class="nc" id="L182">			super(tile, diamond2);</span>
+<span class="nc bnc" id="L183" title="All 4 branches missed.">			this.myArrowColor = myArrowColor == null || myArrowColor.size() == 0 ? arrowColor : myArrowColor;</span>
+<span class="nc" id="L184">			this.branchEmpty = branchEmpty;</span>
+<span class="nc" id="L185">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L188">			final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc" id="L190">			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			if (geo.hasPointOut() == false)</span>
+<span class="nc" id="L192">				return;</span>
+
+<span class="nc" id="L194">			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();</span>
+<span class="nc" id="L195">			final XPoint2D p2 = getP2(stringBounder);</span>
+
+<span class="nc" id="L197">			final double x1 = p1.getX();</span>
+<span class="nc" id="L198">			final double y1 = p1.getY();</span>
+<span class="nc" id="L199">			final double x2 = p2.getX();</span>
+<span class="nc" id="L200">			final double y2 = p2.getY();</span>
+
+<span class="nc bnc" id="L202" title="All 2 branches missed.">			final UPolygon arrow = x2 &gt; x1 ? skinParam().arrows().asToRight() : skinParam().arrows().asToLeft();</span>
+<span class="nc" id="L203">			Snake snake = Snake.create(skinParam(), myArrowColor, arrow);</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			if (branchEmpty)</span>
+<span class="nc" id="L205">				snake = snake.emphasizeDirection(Direction.DOWN);</span>
+
+<span class="nc" id="L207">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L208">			snake.addPoint(x1, y2);</span>
+<span class="nc" id="L209">			snake.addPoint(x2, y2);</span>
+
+<span class="nc" id="L211">			ug.draw(snake);</span>
+<span class="nc" id="L212">		}</span>
+
+		private XPoint2D getP2(StringBounder stringBounder) {
+<span class="nc" id="L215">			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+			final XPoint2D pt;
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (getFtile1() == tile1)</span>
+<span class="nc" id="L218">				pt = dimDiamond2.getPointD();</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">			else if (getFtile1() == tile2)</span>
+<span class="nc" id="L220">				pt = dimDiamond2.getPointB();</span>
+			else
+<span class="nc" id="L222">				throw new IllegalStateException();</span>
+
+<span class="nc" id="L224">			return getTranslateDiamond2(stringBounder).getTranslated(pt);</span>
+		}
+
+		private UTranslate translate(StringBounder stringBounder) {
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (getFtile1() == tile1)</span>
+<span class="nc" id="L229">				return getTranslateBranch1(stringBounder);</span>
+
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (getFtile1() == tile2)</span>
+<span class="nc" id="L232">				return getTranslateBranch2(stringBounder);</span>
+
+<span class="nc" id="L234">			throw new IllegalStateException();</span>
+		}
+
+		@Override
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+<span class="nc" id="L239">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L240">			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (geo.hasPointOut() == false)</span>
+<span class="nc" id="L242">				return;</span>
+
+<span class="nc" id="L244">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L245">			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();</span>
+<span class="nc" id="L246">			final Direction originalDirection = Direction.leftOrRight(p1, p2);</span>
+
+<span class="nc" id="L248">			final double x1 = p1.getX();</span>
+<span class="nc" id="L249">			final double x2 = p2.getX();</span>
+<span class="nc" id="L250">			final XPoint2D mp1a = translate1.getTranslated(p1);</span>
+<span class="nc" id="L251">			final XPoint2D mp2b = translate2.getTranslated(p2);</span>
+<span class="nc" id="L252">			final Direction newDirection = Direction.leftOrRight(mp1a, mp2b);</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">			final UPolygon arrow = x2 &gt; x1 ? skinParam().arrows().asToRight() : skinParam().arrows().asToLeft();</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">			if (originalDirection == newDirection) {</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">				final double delta = (x2 &gt; x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;</span>
+<span class="nc" id="L256">				final XPoint2D mp2bc = new XPoint2D(mp2b.getX() + delta, mp2b.getY());</span>
+<span class="nc" id="L257">				final Snake snake = Snake.create(skinParam(), myArrowColor).withMerge(MergeStrategy.LIMITED);</span>
+<span class="nc" id="L258">				final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;</span>
+<span class="nc" id="L259">				snake.addPoint(mp1a);</span>
+<span class="nc" id="L260">				snake.addPoint(mp1a.getX(), middle);</span>
+<span class="nc" id="L261">				snake.addPoint(mp2bc.getX(), middle);</span>
+<span class="nc" id="L262">				snake.addPoint(mp2bc);</span>
+<span class="nc" id="L263">				ug.draw(snake);</span>
+<span class="nc" id="L264">				final Snake small = Snake.create(skinParam(), myArrowColor, arrow).withMerge(MergeStrategy.LIMITED);</span>
+<span class="nc" id="L265">				small.addPoint(mp2bc);</span>
+<span class="nc" id="L266">				small.addPoint(mp2bc.getX(), mp2b.getY());</span>
+<span class="nc" id="L267">				small.addPoint(mp2b);</span>
+<span class="nc" id="L268">				ug.draw(small);</span>
+<span class="nc" id="L269">			} else {</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">				final double delta = (x2 &gt; x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;</span>
+<span class="nc" id="L271">				final XPoint2D mp2bb = new XPoint2D(mp2b.getX() + delta, mp2b.getY() - 1.5 * Hexagon.hexagonHalfSize);</span>
+<span class="nc" id="L272">				final Snake snake = Snake.create(skinParam(), myArrowColor).withMerge(MergeStrategy.LIMITED);</span>
+<span class="nc" id="L273">				snake.addPoint(mp1a);</span>
+<span class="nc" id="L274">				snake.addPoint(mp1a.getX(), mp2bb.getY());</span>
+<span class="nc" id="L275">				snake.addPoint(mp2bb);</span>
+<span class="nc" id="L276">				ug.draw(snake);</span>
+<span class="nc" id="L277">				final Snake small = Snake.create(skinParam(), myArrowColor, arrow).withMerge(MergeStrategy.LIMITED);</span>
+<span class="nc" id="L278">				small.addPoint(mp2bb);</span>
+<span class="nc" id="L279">				small.addPoint(mp2bb.getX(), mp2b.getY());</span>
+<span class="nc" id="L280">				small.addPoint(mp2b);</span>
+<span class="nc" id="L281">				ug.draw(small);</span>
+
+			}
+
+<span class="nc" id="L285">		}</span>
+	}
+
+	class ConnectionVerticalThenHorizontalDirect extends AbstractConnection implements ConnectionTranslatable {
+		private final Rainbow myArrowColor;
+		private final boolean branchEmpty;
+
+<span class="nc" id="L292">		public ConnectionVerticalThenHorizontalDirect(Ftile tile, Rainbow myArrowColor, boolean branchEmpty) {</span>
+<span class="nc" id="L293">			super(tile, diamond2);</span>
+<span class="nc bnc" id="L294" title="All 4 branches missed.">			this.myArrowColor = myArrowColor == null || myArrowColor.size() == 0 ? arrowColor : myArrowColor;</span>
+<span class="nc" id="L295">			this.branchEmpty = branchEmpty;</span>
+<span class="nc" id="L296">		}</span>
+
+		public void drawU(UGraphic ug) {
+
+<span class="nc" id="L300">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L301">			final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+
+<span class="nc" id="L303">			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">			if (geo.hasPointOut() == false)</span>
+<span class="nc" id="L305">				return;</span>
+
+<span class="nc" id="L307">			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();</span>
+<span class="nc" id="L308">			final XPoint2D p2 = new XPoint2D(dimTotal.getLeft(), dimTotal.getHeight());</span>
+
+<span class="nc" id="L310">			final double x1 = p1.getX();</span>
+<span class="nc" id="L311">			final double y1 = p1.getY();</span>
+<span class="nc" id="L312">			final double x2 = p2.getX();</span>
+<span class="nc" id="L313">			final double y2 = p2.getY();</span>
+
+<span class="nc" id="L315">			Snake snake = Snake.create(skinParam(), myArrowColor);</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">			if (branchEmpty)</span>
+<span class="nc" id="L317">				snake = snake.emphasizeDirection(Direction.DOWN);</span>
+
+<span class="nc" id="L319">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L320">			snake.addPoint(x1, y2);</span>
+<span class="nc" id="L321">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L322">			snake.addPoint(x2, dimTotal.getHeight());</span>
+
+<span class="nc" id="L324">			ug.draw(snake);</span>
+<span class="nc" id="L325">		}</span>
+
+		@Override
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+<span class="nc" id="L329">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L330">			final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+
+<span class="nc" id="L332">			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">			if (geo.hasPointOut() == false)</span>
+<span class="nc" id="L334">				return;</span>
+
+<span class="nc" id="L336">			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();</span>
+<span class="nc" id="L337">			final XPoint2D p2 = new XPoint2D(dimTotal.getLeft(), dimTotal.getHeight() - Hexagon.hexagonHalfSize);</span>
+
+<span class="nc" id="L339">			final XPoint2D mp1a = translate1.getTranslated(p1);</span>
+<span class="nc" id="L340">			final XPoint2D mp2b = translate2.getTranslated(p2);</span>
+
+<span class="nc" id="L342">			final Snake snake = Snake.create(skinParam(), myArrowColor).withMerge(MergeStrategy.LIMITED);</span>
+
+<span class="nc" id="L344">			final double x1 = mp1a.getX();</span>
+<span class="nc" id="L345">			final double x2 = mp2b.getX();</span>
+<span class="nc" id="L346">			final double y2 = mp2b.getY();</span>
+
+<span class="nc" id="L348">			snake.addPoint(mp1a);</span>
+<span class="nc" id="L349">			snake.addPoint(x1, y2);</span>
+<span class="nc" id="L350">			snake.addPoint(mp2b);</span>
+<span class="nc" id="L351">			snake.addPoint(x2, dimTotal.getHeight());</span>
+
+<span class="nc" id="L353">			ug.draw(snake);</span>
+<span class="nc" id="L354">		}</span>
+
+		private UTranslate translate(StringBounder stringBounder) {
+<span class="nc bnc" id="L357" title="All 2 branches missed.">			if (getFtile1() == tile1)</span>
+<span class="nc" id="L358">				return getTranslateBranch1(stringBounder);</span>
+
+<span class="nc bnc" id="L360" title="All 2 branches missed.">			if (getFtile1() == tile2)</span>
+<span class="nc" id="L361">				return getTranslateBranch2(stringBounder);</span>
+
+<span class="nc" id="L363">			throw new IllegalStateException();</span>
+		}
+
+	}
+
+	// copied from FtileIfLongHorizontal to use with ConditionEndStyle.HLINE
+	class ConnectionVerticalOut extends AbstractConnection {
+
+		private final Rainbow color;
+		private final TextBlock out2;
+
+<span class="nc" id="L374">		public ConnectionVerticalOut(Ftile tile, Rainbow color, TextBlock out2) {</span>
+<span class="nc" id="L375">			super(tile, null);</span>
+<span class="nc" id="L376">			this.color = color;</span>
+<span class="nc" id="L377">			this.out2 = out2;</span>
+<span class="nc" id="L378">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L381">			final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc" id="L383">			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">			if (geo.hasPointOut() == false)</span>
+<span class="nc" id="L385">				return;</span>
+
+<span class="nc" id="L387">			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();</span>
+
+<span class="nc" id="L389">			final double totalHeight = calculateDimensionInternal(stringBounder).getHeight();</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">			if (p1 == null)</span>
+<span class="nc" id="L391">				return;</span>
+
+<span class="nc" id="L393">			final XPoint2D p2 = new XPoint2D(p1.getX(), totalHeight);</span>
+
+<span class="nc" id="L395">			final Snake snake = Snake.create(skinParam(), color, skinParam().arrows().asToDown()).withLabel(out2,</span>
+<span class="nc" id="L396">					arrowHorizontalAlignment());</span>
+<span class="nc" id="L397">			snake.addPoint(p1);</span>
+<span class="nc" id="L398">			snake.addPoint(p2);</span>
+<span class="nc" id="L399">			ug.draw(snake);</span>
+<span class="nc" id="L400">		}</span>
+
+		private UTranslate translate(StringBounder stringBounder) {
+<span class="nc bnc" id="L403" title="All 2 branches missed.">			if (getFtile1() == tile1)</span>
+<span class="nc" id="L404">				return getTranslateBranch1(stringBounder);</span>
+
+<span class="nc bnc" id="L406" title="All 2 branches missed.">			if (getFtile1() == tile2)</span>
+<span class="nc" id="L407">				return getTranslateBranch2(stringBounder);</span>
+
+<span class="nc" id="L409">			throw new IllegalStateException();</span>
+		}
+		/*
+		 * private XPoint2D getP1(StringBounder stringBounder) {
+		 * 
+		 * final FtileGeometry geo = getFtile1().calculateDimension(stringBounder); if
+		 * (geo.hasPointOut() == false) { return null; } final XPoint2D p =
+		 * geo.getPointOut(); return getTranslate1(stringBounder).getTranslated(p); }
+		 */
+	}
+
+	// copied from FtileIfLongHorizontal to use with ConditionEndStyle.HLINE
+	class ConnectionHline extends AbstractConnection {
+
+		private final Rainbow arrowColor;
+
+<span class="nc" id="L425">		public ConnectionHline(Rainbow arrowColor) {</span>
+<span class="nc" id="L426">			super(null, null);</span>
+<span class="nc" id="L427">			this.arrowColor = arrowColor;</span>
+<span class="nc" id="L428">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L431">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L432">			final XDimension2D totalDim = calculateDimensionInternal(stringBounder);</span>
+
+<span class="nc" id="L434">			final List&lt;Ftile&gt; allTiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L435">			allTiles.add(tile1);</span>
+<span class="nc" id="L436">			allTiles.add(tile2);</span>
+
+			final double[] minmax;
+<span class="nc bnc" id="L439" title="All 2 branches missed.">			if (ug instanceof UGraphicInterceptorOneSwimlane) {</span>
+<span class="nc" id="L440">				final UGraphicInterceptorOneSwimlane interceptor = (UGraphicInterceptorOneSwimlane) ug;</span>
+<span class="nc" id="L441">				final List&lt;Swimlane&gt; allSwimlanes = interceptor.getOrderedListOfAllSwimlanes();</span>
+<span class="nc" id="L442">				minmax = getMinmax(stringBounder, totalDim.getWidth(), allTiles, interceptor.getSwimlane(),</span>
+						allSwimlanes);
+<span class="nc" id="L444">			} else {</span>
+<span class="nc" id="L445">				minmax = getMinmaxSimple(stringBounder, totalDim.getWidth(), allTiles);</span>
+			}
+
+<span class="nc" id="L448">			final double minX = minmax[0];</span>
+<span class="nc" id="L449">			final double maxX = minmax[1];</span>
+<span class="nc bnc" id="L450" title="All 4 branches missed.">			if (Double.isNaN(minX) || Double.isNaN(maxX))</span>
+<span class="nc" id="L451">				return;</span>
+
+<span class="nc" id="L453">			final Snake s = Snake.create(skinParam(), arrowColor).withMerge(MergeStrategy.NONE);</span>
+<span class="nc" id="L454">			s.addPoint(minX, totalDim.getHeight());</span>
+<span class="nc" id="L455">			s.addPoint(maxX, totalDim.getHeight());</span>
+<span class="nc" id="L456">			ug.draw(s);</span>
+<span class="nc" id="L457">		}</span>
+
+		private double[] getMinmax(StringBounder stringBounder, double width, List&lt;Ftile&gt; allTiles, Swimlane intoSw,
+				List&lt;Swimlane&gt; allSwimlanes) {
+<span class="nc" id="L461">			final int current = allSwimlanes.indexOf(intoSw);</span>
+
+<span class="nc bnc" id="L463" title="All 2 branches missed.">			if (current == -1)</span>
+<span class="nc" id="L464">				throw new IllegalStateException();</span>
+
+<span class="nc" id="L466">			final int first = getFirstSwimlane(stringBounder, allTiles, allSwimlanes);</span>
+<span class="nc" id="L467">			final int last = getLastSwimlane(stringBounder, allTiles, allSwimlanes);</span>
+<span class="nc bnc" id="L468" title="All 4 branches missed.">			if (current &lt; first || current &gt; last)</span>
+<span class="nc" id="L469">				return new double[] { Double.NaN, Double.NaN };</span>
+<span class="nc bnc" id="L470" title="All 2 branches missed.">			double minX = current != first ? 0 : width;</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">			double maxX = current != last ? width : 0;</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">			for (Ftile tmp : allTiles) {</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">				if (tmp.calculateDimension(stringBounder).hasPointOut() == false)</span>
+<span class="nc" id="L474">					continue;</span>
+
+<span class="nc bnc" id="L476" title="All 2 branches missed.">				if (ftileDoesOutcomeInThatSwimlane(tmp, intoSw) == false)</span>
+<span class="nc" id="L477">					continue;</span>
+
+<span class="nc" id="L479">				final UTranslate ut = getTranslateFor(tmp, stringBounder);</span>
+<span class="nc" id="L480">				final double out = tmp.calculateDimension(stringBounder).translate(ut).getLeft();</span>
+<span class="nc" id="L481">				minX = Math.min(minX, out);</span>
+<span class="nc" id="L482">				maxX = Math.max(maxX, out);</span>
+<span class="nc" id="L483">			}</span>
+<span class="nc" id="L484">			return new double[] { minX, maxX };</span>
+		}
+
+		private double[] getMinmaxSimple(StringBounder stringBounder, double width, List&lt;Ftile&gt; allTiles) {
+<span class="nc" id="L488">			double minX = width / 2;</span>
+<span class="nc" id="L489">			double maxX = width / 2;</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">			for (Ftile tmp : allTiles) {</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">				if (tmp.calculateDimension(stringBounder).hasPointOut() == false)</span>
+<span class="nc" id="L492">					continue;</span>
+
+<span class="nc" id="L494">				final UTranslate ut = getTranslateFor(tmp, stringBounder);</span>
+<span class="nc" id="L495">				final double out = tmp.calculateDimension(stringBounder).translate(ut).getLeft();</span>
+<span class="nc" id="L496">				minX = Math.min(minX, out);</span>
+<span class="nc" id="L497">				maxX = Math.max(maxX, out);</span>
+<span class="nc" id="L498">			}</span>
+<span class="nc" id="L499">			return new double[] { minX, maxX };</span>
+		}
+
+		private int getFirstSwimlane(StringBounder stringBounder, List&lt;Ftile&gt; allTiles, List&lt;Swimlane&gt; allSwimlanes) {
+<span class="nc bnc" id="L503" title="All 2 branches missed.">			for (int i = 0; i &lt; allSwimlanes.size(); i++)</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">				if (atLeastOne(stringBounder, allSwimlanes.get(i), allTiles))</span>
+<span class="nc" id="L505">					return i;</span>
+
+<span class="nc" id="L507">			throw new IllegalStateException();</span>
+		}
+
+		private int getLastSwimlane(StringBounder stringBounder, List&lt;Ftile&gt; allTiles, List&lt;Swimlane&gt; allSwimlanes) {
+<span class="nc bnc" id="L511" title="All 2 branches missed.">			for (int i = allSwimlanes.size() - 1; i &gt;= 0; i--)</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">				if (atLeastOne(stringBounder, allSwimlanes.get(i), allTiles))</span>
+<span class="nc" id="L513">					return i;</span>
+
+<span class="nc" id="L515">			throw new IllegalStateException();</span>
+		}
+
+		private boolean atLeastOne(StringBounder stringBounder, Swimlane intoSw, List&lt;Ftile&gt; allTiles) {
+<span class="nc bnc" id="L519" title="All 2 branches missed.">			for (Ftile tmp : allTiles)</span>
+<span class="nc bnc" id="L520" title="All 4 branches missed.">				if (tmp.calculateDimension(stringBounder).hasPointOut() &amp;&amp; ftileDoesOutcomeInThatSwimlane(tmp, intoSw))</span>
+<span class="nc" id="L521">					return true;</span>
+<span class="nc" id="L522">			return false;</span>
+		}
+
+		private boolean ftileDoesOutcomeInThatSwimlane(Ftile ftile, Swimlane swimlane) {
+<span class="nc bnc" id="L526" title="All 4 branches missed.">			return ftile.getSwimlaneOut() == swimlane &amp;&amp; ftile.getSwimlanes().contains(swimlane);</span>
+		}
+
+	}
+
+	public Ftile addLinks(Branch branch1, Branch branch2, StringBounder stringBounder) {
+<span class="nc" id="L532">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L533">		conns.add(new ConnectionHorizontalThenVertical(tile1, branch1));</span>
+<span class="nc" id="L534">		conns.add(new ConnectionHorizontalThenVertical(tile2, branch2));</span>
+<span class="nc" id="L535">		final boolean hasPointOut1 = tile1.calculateDimension(stringBounder).hasPointOut();</span>
+<span class="nc" id="L536">		final boolean hasPointOut2 = tile2.calculateDimension(stringBounder).hasPointOut();</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">		if (conditionEndStyle == ConditionEndStyle.DIAMOND) {</span>
+<span class="nc bnc" id="L538" title="All 4 branches missed.">			if (hasPointOut1 &amp;&amp; hasPointOut2) {</span>
+<span class="nc" id="L539">				conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getOut(), branch1.isEmpty()));</span>
+<span class="nc" id="L540">				conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getOut(), branch2.isEmpty()));</span>
+<span class="nc bnc" id="L541" title="All 4 branches missed.">			} else if (hasPointOut1 &amp;&amp; hasPointOut2 == false) {</span>
+<span class="nc" id="L542">				conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getOut(), branch1.isEmpty()));</span>
+<span class="nc bnc" id="L543" title="All 4 branches missed.">			} else if (hasPointOut1 == false &amp;&amp; hasPointOut2) {</span>
+<span class="nc" id="L544">				conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getOut(), branch2.isEmpty()));</span>
+			}
+<span class="nc bnc" id="L546" title="All 2 branches missed.">		} else if (conditionEndStyle == ConditionEndStyle.HLINE) {</span>
+<span class="nc bnc" id="L547" title="All 4 branches missed.">			if (hasPointOut1 &amp;&amp; hasPointOut2) {</span>
+<span class="nc" id="L548">				conns.add(new ConnectionVerticalOut(tile1, arrowColor, null));</span>
+<span class="nc" id="L549">				conns.add(new ConnectionVerticalOut(tile2, arrowColor, null));</span>
+<span class="nc" id="L550">				conns.add(new ConnectionHline(arrowColor));</span>
+<span class="nc bnc" id="L551" title="All 4 branches missed.">			} else if (hasPointOut1 &amp;&amp; hasPointOut2 == false) {</span>
+				// this is called when the &quot;else&quot; has a break statement
+<span class="nc" id="L553">				conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getOut(), branch1.isEmpty()));</span>
+<span class="nc bnc" id="L554" title="All 4 branches missed.">			} else if (hasPointOut1 == false &amp;&amp; hasPointOut2) {</span>
+				// this is called when the &quot;if&quot; has a break statement
+<span class="nc" id="L556">				conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getOut(), branch2.isEmpty()));</span>
+			}
+		}
+<span class="nc" id="L559">		return FtileUtils.addConnection(this, conns);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

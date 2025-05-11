@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>split_q__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.label</a> &gt; <span class="el_source">split_q__c.java</span></div><h1>split_q__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.label;
+import static gen.lib.label.node__c.AddBranch;
+import static gen.lib.label.node__c.InitNode;
+import static gen.lib.label.node__c.RTreeNewNode;
+import static gen.lib.label.rectangle__c.CombineRect;
+import static gen.lib.label.rectangle__c.NullRect;
+import static gen.lib.label.rectangle__c.RectArea;
+import static smetana.core.Macro.NODECARD;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Branch_t;
+import h.ST_Node_t___;
+import h.ST_PartitionVars;
+import h.ST_RTree;
+import h.ST_Rect_t;
+
+<span class="nc" id="L67">public class split_q__c {</span>
+
+
+
+
+//3 6vl3snxd6k95gamfkwfsfdguc
+// void SplitNode(RTree_t * rtp, Node_t * n, Branch_t * b, Node_t ** nn) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/split_q.c&quot;, name=&quot;SplitNode&quot;, key=&quot;6vl3snxd6k95gamfkwfsfdguc&quot;, definition=&quot;void SplitNode(RTree_t * rtp, Node_t * n, Branch_t * b, Node_t ** nn)&quot;)
+public static void SplitNode(ST_RTree rtp, ST_Node_t___ n, ST_Branch_t b, ST_Node_t___ nn[]) {
+<span class="nc" id="L77">ENTERING(&quot;6vl3snxd6k95gamfkwfsfdguc&quot;,&quot;SplitNode&quot;);</span>
+try {
+     ST_PartitionVars p;
+     int level;
+     int area;
+//     assert(n);
+//     assert(b);
+<span class="nc bnc" id="L84" title="All 2 branches missed.">     if (rtp.StatFlag!=0) {</span>
+<span class="nc" id="L85">UNSUPPORTED(&quot;akhni40ndam0u9c6i7raxw4mp&quot;); // 	if (rtp-&gt;Deleting)</span>
+<span class="nc" id="L86">UNSUPPORTED(&quot;4g80zdlbvunm838x8g3ic9tex&quot;); // 	    rtp-&gt;DeSplitCount++;</span>
+<span class="nc" id="L87">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L88">UNSUPPORTED(&quot;2cjo6wz1rmxfm5k7u7rw5dqpj&quot;); // 	    rtp-&gt;InSplitCount++;</span>
+     }
+     /* load all the branches into a buffer, initialize old node */
+<span class="nc" id="L91">     level = n.level;</span>
+<span class="nc" id="L92">     GetBranches(rtp, n, b);</span>
+     /* find partition */
+<span class="nc" id="L94">     p = rtp.split.Partitions[0];</span>
+<span class="nc" id="L95">     MethodZero(rtp);</span>
+<span class="nc" id="L96">     area = RectArea((ST_Rect_t)p.cover[0]) + RectArea((ST_Rect_t)p.cover[1]);</span>
+     /* record how good the split was for statistics */
+<span class="nc bnc" id="L98" title="All 6 branches missed.">     if (rtp.StatFlag!=0 &amp;&amp; rtp.Deleting == 0 &amp;&amp; area!=0)</span>
+<span class="nc" id="L99">UNSUPPORTED(&quot;z7xk6s3hzi3qcoiq2exj9hpv&quot;); // 	rtp-&gt;SplitMeritSum += (float) rtp-&gt;split.CoverSplitArea / area;</span>
+     /* put branches from buffer into 2 nodes according to chosen partition */
+<span class="nc" id="L101">     nn[0] = RTreeNewNode(rtp);</span>
+<span class="nc" id="L102">     n.level = level;</span>
+<span class="nc" id="L103">     nn[0].level = level;</span>
+<span class="nc" id="L104">     LoadNodes(rtp, n, nn[0], p);</span>
+//     assert(n-&gt;count + (*nn)-&gt;count == 64 + 1);
+} finally {
+<span class="nc" id="L107">LEAVING(&quot;6vl3snxd6k95gamfkwfsfdguc&quot;,&quot;SplitNode&quot;);</span>
+}
+<span class="nc" id="L109">}</span>
+
+
+
+
+//3 al7lyin008m7kvrvuxhcuvn61
+// static void GetBranches(RTree_t * rtp, Node_t * n, Branch_t * b) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/split_q.c&quot;, name=&quot;GetBranches&quot;, key=&quot;al7lyin008m7kvrvuxhcuvn61&quot;, definition=&quot;static void GetBranches(RTree_t * rtp, Node_t * n, Branch_t * b)&quot;)
+public static void GetBranches(ST_RTree rtp, ST_Node_t___ n, ST_Branch_t b) {
+<span class="nc" id="L119">ENTERING(&quot;al7lyin008m7kvrvuxhcuvn61&quot;,&quot;GetBranches&quot;);</span>
+try {
+     int i;
+//     assert(n);
+//     assert(b);
+     /* load the branch buffer */
+<span class="nc bnc" id="L125" title="All 2 branches missed.">     for (i = 0; i &lt; 64; i++) {</span>
+       // 	assert(n-&gt;branch[i].child);	/* node should have every entry full */
+<span class="nc" id="L127">    	 rtp.split.BranchBuf[i].___(n.branch[i]);</span>
+     }
+<span class="nc" id="L129">     rtp.split.BranchBuf[64].___(b);</span>
+     /* calculate rect containing all in the set */
+<span class="nc" id="L131">     rtp.split.CoverSplit.___(rtp.split.BranchBuf[0].rect);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">     for (i = 1; i &lt; 64 + 1; i++) {</span>
+<span class="nc" id="L133">    	 rtp.split.CoverSplit.___(</span>
+<span class="nc" id="L134">    	 CombineRect((ST_Rect_t)rtp.split.CoverSplit,</span>
+    			 (ST_Rect_t)rtp.split.BranchBuf[i].rect));
+     }
+<span class="nc" id="L137">     rtp.split.CoverSplitArea = RectArea((ST_Rect_t)rtp.split.CoverSplit);</span>
+<span class="nc" id="L138">     InitNode(n);</span>
+} finally {
+<span class="nc" id="L140">LEAVING(&quot;al7lyin008m7kvrvuxhcuvn61&quot;,&quot;GetBranches&quot;);</span>
+}
+<span class="nc" id="L142">}</span>
+
+
+
+
+//3 4woz5xy4gjlahoj7no3ljxmex
+// static void MethodZero(RTree_t * rtp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/split_q.c&quot;, name=&quot;MethodZero&quot;, key=&quot;4woz5xy4gjlahoj7no3ljxmex&quot;, definition=&quot;static void MethodZero(RTree_t * rtp)&quot;)
+public static void MethodZero(ST_RTree rtp) {
+<span class="nc" id="L152">ENTERING(&quot;4woz5xy4gjlahoj7no3ljxmex&quot;,&quot;MethodZero&quot;);</span>
+try {
+     ST_Rect_t r;
+     int i, growth0, growth1, diff, biggestDiff;
+<span class="nc" id="L156">     int group, chosen=0, betterGroup=0;</span>
+<span class="nc" id="L157">     InitPVars(rtp);</span>
+<span class="nc" id="L158">     PickSeeds(rtp);</span>
+<span class="nc bnc" id="L159" title="All 6 branches missed.">     while (rtp.split.Partitions[0].count[0] +</span>
+    		 rtp.split.Partitions[0].count[1] &lt; 64 + 1 &amp;&amp;
+ 	  rtp.split.Partitions[0].count[0] &lt; 64 + 1 - rtp.MinFill
+ 	   &amp;&amp; rtp.split.Partitions[0].count[1] &lt;
+ 	   64 + 1 - rtp.MinFill) {
+<span class="nc" id="L164"> 	biggestDiff = -1;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed."> 	for (i = 0; i &lt; 64 + 1; i++) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed."> 	    if (rtp.split.Partitions[0].taken[i] == 0) {</span>
+<span class="nc" id="L167"> 		final ST_Rect_t rect = new ST_Rect_t();</span>
+<span class="nc" id="L168"> 		r = (ST_Rect_t) rtp.split.BranchBuf[i].rect;</span>
+ 		/* growth0 = RectArea(&amp;CombineRect(r,
+ 		   &amp;rtp-&gt;split.Partitions[0].cover[0])) -
+ 		   rtp-&gt;split.Partitions[0].area[0];
+ 		 */
+ 		/* growth1 = RectArea(&amp;CombineRect(r,
+ 		   &amp;rtp-&gt;split.Partitions[0].cover[1])) -
+ 		   rtp-&gt;split.Partitions[0].area[1];
+ 		 */
+<span class="nc" id="L177"> 		rect.___(CombineRect(r, (ST_Rect_t) rtp.split.Partitions[0].cover[0]));</span>
+<span class="nc" id="L178"> 		growth0 =</span>
+<span class="nc" id="L179"> 		    RectArea((ST_Rect_t)rect) - rtp.split.Partitions[0].area[0];</span>
+<span class="nc" id="L180"> 		rect.___(CombineRect(r, (ST_Rect_t) rtp.split.Partitions[0].cover[1]));</span>
+<span class="nc" id="L181"> 		growth1 =</span>
+<span class="nc" id="L182"> 		    RectArea((ST_Rect_t)rect) - rtp.split.Partitions[0].area[1];</span>
+<span class="nc" id="L183"> 		diff = growth1 - growth0;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed."> 		if (diff &gt;= 0)</span>
+<span class="nc" id="L185"> 		    group = 0;</span>
+ 		else {
+<span class="nc" id="L187"> 		    group = 1;</span>
+<span class="nc" id="L188"> 		    diff = -diff;</span>
+ 		}
+<span class="nc bnc" id="L190" title="All 2 branches missed."> 		if (diff &gt; biggestDiff) {</span>
+<span class="nc" id="L191"> 		    biggestDiff = diff;</span>
+<span class="nc" id="L192"> 		    chosen = i;</span>
+<span class="nc" id="L193"> 		    betterGroup = group;</span>
+<span class="nc bnc" id="L194" title="All 4 branches missed."> 		} else if (diff == biggestDiff &amp;&amp;</span>
+ 				rtp.split.Partitions[0].count[group] &lt;
+ 				rtp.split.Partitions[0].count[betterGroup]) {
+<span class="nc" id="L197"> 		    chosen = i;</span>
+<span class="nc" id="L198"> 		    betterGroup = group;</span>
+ 		}
+ 	    }
+ 	}
+<span class="nc" id="L202"> 	Classify(rtp, chosen, betterGroup);</span>
+     }
+     /* if one group too full, put remaining rects in the other */
+<span class="nc bnc" id="L205" title="All 2 branches missed.">     if (rtp.split.Partitions[0].count[0] +</span>
+    		 rtp.split.Partitions[0].count[1] &lt; 64 + 1) {
+<span class="nc" id="L207"> 	group = 0;</span>
+<span class="nc" id="L208">UNSUPPORTED(&quot;4edp65b21liyii0fj1ikco7o0&quot;); // 	if (rtp-&gt;split.Partitions[0].count[0] &gt;=</span>
+<span class="nc" id="L209">UNSUPPORTED(&quot;20lpsuiyepr2ujozaf6gp4cc&quot;); // 	    64 + 1 - rtp-&gt;MinFill)</span>
+<span class="nc" id="L210">UNSUPPORTED(&quot;9qtt6i40h8vtjp2cvqyb8ycaz&quot;); // 	    group = 1;</span>
+<span class="nc" id="L211">UNSUPPORTED(&quot;2x1nx9nsne4x3ygmcywl1m3og&quot;); // 	for (i = 0; i &lt; 64 + 1; i++) {</span>
+<span class="nc" id="L212">UNSUPPORTED(&quot;jdepsnmrs3ghh78ql301sfvu&quot;); // 	    if (!rtp-&gt;split.Partitions[0].taken[i])</span>
+<span class="nc" id="L213">UNSUPPORTED(&quot;gqfhorilvtlogp6f2ozx5akf&quot;); // 		Classify(rtp, i, group);</span>
+<span class="nc" id="L214">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+     }
+ //     assert(rtp-&gt;split.Partitions[0].count[0] +
+ // 	   rtp-&gt;split.Partitions[0].count[1] == 64 + 1);
+ //     assert(rtp-&gt;split.Partitions[0].count[0] &gt;= rtp-&gt;MinFill
+ // 	   &amp;&amp; rtp-&gt;split.Partitions[0].count[1] &gt;= rtp-&gt;MinFill);
+} finally {
+<span class="nc" id="L221">LEAVING(&quot;4woz5xy4gjlahoj7no3ljxmex&quot;,&quot;MethodZero&quot;);</span>
+}
+<span class="nc" id="L223">}</span>
+
+
+
+
+//3 8rui4cun4tvq5xy6ke6r3p55e
+// static void PickSeeds(RTree_t * rtp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/split_q.c&quot;, name=&quot;PickSeeds&quot;, key=&quot;8rui4cun4tvq5xy6ke6r3p55e&quot;, definition=&quot;static void PickSeeds(RTree_t * rtp)&quot;)
+public static void PickSeeds(ST_RTree rtp) {
+<span class="nc" id="L233">ENTERING(&quot;8rui4cun4tvq5xy6ke6r3p55e&quot;,&quot;PickSeeds&quot;);</span>
+try {
+   int i, j;
+   int waste, worst;
+<span class="nc" id="L237">   int seed0=0, seed1=0;</span>
+<span class="nc" id="L238">   int area[] = new int[64 + 1];</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">     for (i = 0; i &lt; 64 + 1; i++)</span>
+<span class="nc" id="L240"> 	area[i] = RectArea((ST_Rect_t) rtp.split.BranchBuf[i].rect);</span>
+     //worst = -rtp-&gt;split.CoverSplitArea - 1;
+<span class="nc" id="L242">     worst=0;</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">     for (i = 0; i &lt; 64; i++) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed."> 	for (j = i + 1; j &lt; 64 + 1; j++) {</span>
+<span class="nc" id="L245"> 	    final ST_Rect_t rect = new ST_Rect_t();</span>
+ 	    /* waste = RectArea(&amp;CombineRect(&amp;rtp-&gt;split.BranchBuf[i].rect,
+ 	                         &amp;rtp-&gt;split.BranchBuf[j].rect)) - area[i] - area[j];
+ 	     */
+<span class="nc" id="L249"> 	    rect.___(</span>
+<span class="nc" id="L250">   	 CombineRect((ST_Rect_t)rtp.split.BranchBuf[i].rect,</span>
+			 (ST_Rect_t)rtp.split.BranchBuf[j].rect));
+<span class="nc" id="L252"> 	    waste = RectArea((ST_Rect_t)rect) - area[i] - area[j];</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed."> 	    if (waste &gt; worst) {</span>
+<span class="nc" id="L254"> 		worst = waste;</span>
+<span class="nc" id="L255"> 		seed0 = i;</span>
+<span class="nc" id="L256"> 		seed1 = j;</span>
+ 	    }
+ 	}
+     }
+<span class="nc" id="L260">     Classify(rtp, seed0, 0);</span>
+<span class="nc" id="L261">     Classify(rtp, seed1, 1);</span>
+} finally {
+<span class="nc" id="L263">LEAVING(&quot;8rui4cun4tvq5xy6ke6r3p55e&quot;,&quot;PickSeeds&quot;);</span>
+}
+<span class="nc" id="L265">}</span>
+
+
+
+
+//3 4qyy2dpbkziuubssvfwb8u1sh
+// static void Classify(RTree_t * rtp, int i, int group) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/split_q.c&quot;, name=&quot;Classify&quot;, key=&quot;4qyy2dpbkziuubssvfwb8u1sh&quot;, definition=&quot;static void Classify(RTree_t * rtp, int i, int group)&quot;)
+public static void Classify(ST_RTree rtp, int i, int group) {
+<span class="nc" id="L275">ENTERING(&quot;4qyy2dpbkziuubssvfwb8u1sh&quot;,&quot;Classify&quot;);</span>
+try {
+//     assert(!rtp-&gt;split.Partitions[0].taken[i]);
+<span class="nc" id="L278">	rtp.split.Partitions[0].partition[i]=group;</span>
+<span class="nc" id="L279">	rtp.split.Partitions[0].taken[i]=1;</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">	if (rtp.split.Partitions[0].count[group] == 0)</span>
+<span class="nc" id="L281">		rtp.split.Partitions[0].cover[group].___(</span>
+				rtp.split.BranchBuf[i].rect);
+     else
+<span class="nc" id="L284">    	 rtp.split.Partitions[0].cover[group].___(</span>
+<span class="nc" id="L285"> 	    CombineRect((ST_Rect_t)rtp.split.BranchBuf[i].rect,</span>
+ 	    		(ST_Rect_t)rtp.split.Partitions[0].cover[group]));
+<span class="nc" id="L287">	rtp.split.Partitions[0].area[group]=</span>
+<span class="nc" id="L288"> 	RectArea((ST_Rect_t)rtp.split.Partitions[0].cover[group]);</span>
+
+<span class="nc" id="L290">	rtp.split.Partitions[0].count[group]=</span>
+	rtp.split.Partitions[0].count[group]+1;
+} finally {
+<span class="nc" id="L293">LEAVING(&quot;4qyy2dpbkziuubssvfwb8u1sh&quot;,&quot;Classify&quot;);</span>
+}
+<span class="nc" id="L295">}</span>
+
+
+
+
+/*-----------------------------------------------------------------------------
+| Copy branches from the buffer into two nodes according to the partition.
+-----------------------------------------------------------------------------*/
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/split_q.c&quot;, name=&quot;LoadNodes&quot;, key=&quot;ay7l4setwyl3hbx4o2jpa7vyz&quot;, definition=&quot;static void LoadNodes(RTree_t * rtp, Node_t * n, Node_t * q, 		      struct PartitionVars *p)&quot;)
+public static void LoadNodes(ST_RTree rtp, ST_Node_t___ n, ST_Node_t___ q, ST_PartitionVars p) {
+<span class="nc" id="L306">ENTERING(&quot;ay7l4setwyl3hbx4o2jpa7vyz&quot;,&quot;LoadNodes&quot;);</span>
+try {
+     int i;
+<span class="nc bnc" id="L309" title="All 2 branches missed.">     assert(n!=null);</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">     assert(q!=null);</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">     assert(p!=null);</span>
+     
+<span class="nc bnc" id="L313" title="All 2 branches missed.">     for (i = 0; i &lt; NODECARD + 1; i++) {</span>
+<span class="nc bnc" id="L314" title="All 4 branches missed."> 	assert(rtp.split.Partitions[0].partition[i] == 0 ||</span>
+ 	       rtp.split.Partitions[0].partition[i] == 1);
+<span class="nc bnc" id="L316" title="All 2 branches missed."> 	if (rtp.split.Partitions[0].partition[i] == 0)</span>
+<span class="nc" id="L317"> 	    AddBranch(rtp, rtp.split.BranchBuf[i], n, null);</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed."> 	else if (rtp.split.Partitions[0].partition[i] == 1)</span>
+<span class="nc" id="L319"> 	    AddBranch(rtp, rtp.split.BranchBuf[i], q, null);</span>
+     }
+} finally {
+<span class="nc" id="L322">LEAVING(&quot;ay7l4setwyl3hbx4o2jpa7vyz&quot;,&quot;LoadNodes&quot;);</span>
+}
+<span class="nc" id="L324">}</span>
+
+
+
+
+//3 dvgjc83sogjhzf5kxpir405rh
+// static void InitPVars(RTree_t * rtp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/split_q.c&quot;, name=&quot;InitPVars&quot;, key=&quot;dvgjc83sogjhzf5kxpir405rh&quot;, definition=&quot;static void InitPVars(RTree_t * rtp)&quot;)
+public static void InitPVars(ST_RTree rtp) {
+<span class="nc" id="L334">ENTERING(&quot;dvgjc83sogjhzf5kxpir405rh&quot;,&quot;InitPVars&quot;);</span>
+     int i;
+<span class="nc" id="L336">     rtp.split.Partitions[0].count[0]=0;</span>
+<span class="nc" id="L337">     rtp.split.Partitions[0].count[1]=0;</span>
+<span class="nc" id="L338">     rtp.split.Partitions[0].cover[0].___(NullRect());</span>
+<span class="nc" id="L339">     rtp.split.Partitions[0].cover[1].___(NullRect());</span>
+<span class="nc" id="L340">     rtp.split.Partitions[0].area[0]=0;</span>
+<span class="nc" id="L341">     rtp.split.Partitions[0].area[1]=0;</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">     for (i = 0; i &lt; 64 + 1; i++) {</span>
+<span class="nc" id="L343">         rtp.split.Partitions[0].taken[i]=0;</span>
+<span class="nc" id="L344">         rtp.split.Partitions[0].partition[i]=-1;</span>
+     }
+try {
+} finally {
+<span class="nc" id="L348">LEAVING(&quot;dvgjc83sogjhzf5kxpir405rh&quot;,&quot;InitPVars&quot;);</span>
+}
+<span class="nc" id="L350">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

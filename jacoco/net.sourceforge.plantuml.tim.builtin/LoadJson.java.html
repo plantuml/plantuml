@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoadJson.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim.builtin</a> &gt; <span class="el_source">LoadJson.java</span></div><h1>LoadJson.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2021, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim.builtin;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.json.ParseException;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
+
+/**
+ * Loads JSON data from file or URL source.
+ * &lt;p&gt;
+ * Supports three parameters for datasource, default JSON value and charset. The
+ * datasource will be checked against the security rules.
+ * &lt;p&gt;
+ * Examples:&lt;br/&gt;
+ * 
+ * &lt;pre&gt;
+ *     &amp;#64; startuml
+ *     ' loads a local file
+ *     !$JSON_LOCAL_RELATIVE=%load_json(&quot;file.json&quot;)
+ *
+ *     ' loads a local file from an absolute file path
+ *     !$JSON_LOCAL_ABS=%load_json(&quot;c:/loaded/data/file.json&quot;)
+ *
+ *     ' tries to load a local file and returns an empty JSON
+ *     !$JSON_LOCAL_REL_EMPTY=%load_json(&quot;file-not-existing.json&quot;)
+ *
+ *     ' tries to load a local file and returns an default JSON
+ *     !$DEF_JSON={&quot;status&quot;:&quot;No data found&quot;}
+ *     !$JSON_LOCAL_REL_DEF=%load_json(&quot;file-not-existing.json&quot;, $DEF_JSON)
+ *
+ *     ' loads a local file with a specific charset (default is UTF-8)
+ *     !$JSON_LOCAL_RELATIVE_CHARSET=%load_json(&quot;file.json&quot;, &quot;{}&quot;, &quot;iso-8859-1&quot;)
+ *
+ *     ' loads a remote JSON from an endpoint (and default, if not reachable)
+ *     !$STATUS_NO_CONNECTION={&quot;status&quot;: &quot;No connection&quot;}
+ *     !$JSON_REMOTE_DEF=%load_json(&quot;https://localhost:7778/management/health&quot;, $STATUS_NO_CONNECTION)
+ *     status -&amp;gt; $JSON_REMOTE_DEF.status
+ *     &amp;#64; enduml
+ * &lt;/pre&gt;
+ * 
+ * @author Aljoscha Rittner
+ */
+<span class="fc" id="L94">public class LoadJson extends SimpleReturnFunction {</span>
+
+	private static final String VALUE_CHARSET_DEFAULT = &quot;UTF-8&quot;;
+
+	private static final String VALUE_DEFAULT_DEFAULT = &quot;{}&quot;;
+
+	public TFunctionSignature getSignature() {
+<span class="fc" id="L101">		return new TFunctionSignature(&quot;%load_json&quot;, 3);</span>
+	}
+
+	@Override
+	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
+<span class="pc bpc" id="L106" title="3 of 6 branches missed.">		return nbArg == 1 || nbArg == 2 || nbArg == 3;</span>
+	}
+
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
+			Map&lt;String, TValue&gt; named) throws EaterException {
+<span class="fc" id="L112">		final String path = values.get(0).toString();</span>
+		try {
+<span class="fc" id="L114">			String data = loadStringData(path, getCharset(values));</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">			if (data == null)</span>
+<span class="fc" id="L116">				data = getDefaultJson(values);</span>
+
+<span class="fc" id="L118">			JsonValue jsonValue = Json.parse(data);</span>
+<span class="fc" id="L119">			return TValue.fromJson(jsonValue);</span>
+<span class="nc" id="L120">		} catch (ParseException pe) {</span>
+<span class="nc" id="L121">			Logme.error(pe);</span>
+<span class="nc" id="L122">			throw new EaterException(&quot;JSON parse issue in source &quot; + path + &quot; on location &quot; + pe.getLocation(), location);</span>
+<span class="nc" id="L123">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L124">			Logme.error(e);</span>
+<span class="nc" id="L125">			throw new EaterException(&quot;JSON encoding issue in source &quot; + path + &quot;: &quot; + e.getMessage(), location);</span>
+		}
+	}
+
+	/**
+	 * Returns the JSON default, if the data source contains no data.
+	 * 
+	 * @param values value parameters
+	 * @return the defined default JSON or {@code &quot;{}&quot;}
+	 */
+	private String getDefaultJson(List&lt;TValue&gt; values) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (values.size() &gt; 1)</span>
+<span class="fc" id="L137">			return values.get(1).toString();</span>
+
+<span class="fc" id="L139">		return VALUE_DEFAULT_DEFAULT;</span>
+	}
+
+	/**
+	 * Returns the charset name (if set)
+	 * 
+	 * @param values value parameters
+	 * @return defined charset or {@code &quot;UTF-8&quot;}
+	 */
+	private String getCharset(List&lt;TValue&gt; values) {
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (values.size() == 3)</span>
+<span class="nc" id="L150">			return values.get(2).toString();</span>
+
+<span class="fc" id="L152">		return VALUE_CHARSET_DEFAULT;</span>
+	}
+
+	/**
+	 * Loads String data from a data source {@code path} (file or URL) and expects
+	 * the data encoded in {@code charset}.
+	 * 
+	 * @param path    path to data source (http(s)-URL or file).
+	 * @param charset character set to encode the string data
+	 * @return the decoded String from the data source
+	 * @throws EaterException if something went wrong on reading data
+	 */
+	private String loadStringData(String path, String charset)
+			throws EaterException, UnsupportedEncodingException {
+
+<span class="fc" id="L167">		byte[] byteData = null;</span>
+<span class="pc bpc" id="L168" title="2 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
+<span class="nc" id="L169">			final SURL url = SURL.create(path);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L171">				byteData = url.getBytes();</span>
+			// ::comment when __CORE__
+<span class="nc" id="L173">		} else {</span>
+			try {
+<span class="fc" id="L175">				final SFile file = FileSystem.getInstance().getFile(path);</span>
+<span class="pc bpc" id="L176" title="3 of 8 branches missed.">				if (file != null &amp;&amp; file.exists() &amp;&amp; file.canRead() &amp;&amp; !file.isDirectory()) {</span>
+<span class="fc" id="L177">					final ByteArrayOutputStream out = new ByteArrayOutputStream(1024 * 8);</span>
+<span class="fc" id="L178">					FileUtils.copyToStream(file, out);</span>
+<span class="fc" id="L179">					byteData = out.toByteArray();</span>
+				}
+<span class="nc" id="L181">			} catch (IOException e) {</span>
+<span class="nc" id="L182">				Logme.error(e);</span>
+<span class="fc" id="L183">			}</span>
+			// ::done
+		}
+
+<span class="pc bpc" id="L187" title="1 of 4 branches missed.">		if (byteData == null || byteData.length == 0)</span>
+<span class="fc" id="L188">			return null; // no length, no data (we want the default)</span>
+
+<span class="fc" id="L190">		return new String(byteData, charset);</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

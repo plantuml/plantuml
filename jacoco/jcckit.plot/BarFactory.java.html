@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BarFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">BarFactory.java</span></div><h1>BarFactory.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import jcckit.graphic.ClippingShape;
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.GraphicalElement;
+import jcckit.graphic.Rectangle;
+import jcckit.util.ConfigParameters;
+
+/**
+ * A factory of bars. The bars are {@link Rectangle Rectangles}. 
+ * Depending on the configuration parameters the bars can be 
+ * horizontal or vertical. Bars of several curves can be side by side or
+ * stacked. The bar length is determined by the x or y value of the 
+ * curve point in device-independent coordinates. If the value is negative 
+ * the bar goes into the negative direction. For stacked bars the values
+ * should always be positive.
+ * &lt;p&gt;
+ * When used inside a {@link SimpleCurve} soft clipping should always be
+ * switched off (see 
+ * {@link SimpleCurve#SimpleCurve(ConfigParameters, int, int, ClippingShape, Legend)}). 
+ *
+ * @author Franz-Josef Elmer
+ */
+public class BarFactory extends AbstractSymbolFactory {
+  /** Configuration parameter key. */
+  public static final String STACKED_KEY = &quot;stacked&quot;,
+                             HORIZONTAL_BARS_KEY = &quot;horizontalBars&quot;;
+
+  private final boolean _stacked;
+  private final boolean _horizontalBars;
+
+  /**
+   * Creates an instance from the specified configuration parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;horizontalBars = false&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; horizontal bars will be drawn. Otherwise 
+   *         vertical bars are drawn.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;stacked = false&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; the bars of several curves will be 
+   *         stacked.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   * In addition the configuration parameters of the
+   * &lt;a href=&quot;AbstractSymbolFactory.html#AbstractSymbolFactory(jcckit.util.ConfigParameters)&quot;&gt;
+   * constructor&lt;/a&gt; of the superclass {@link AbstractSymbolFactory} apply.
+   */
+  public BarFactory(ConfigParameters config) {
+<span class="nc" id="L70">    super(config);</span>
+<span class="nc" id="L71">    _horizontalBars = config.getBoolean(HORIZONTAL_BARS_KEY, false);</span>
+<span class="nc" id="L72">    _stacked = config.getBoolean(STACKED_KEY, false);</span>
+<span class="nc" id="L73">  }</span>
+
+  /**
+   * Creates a bar at the specified point.
+   * If &lt;tt&gt;hintFromPreviousCurve&lt;/tt&gt;
+   * is not an instance of {@link PositionHint} the values of 
+   * origin and position will be (0,0).
+   * @param hintFromPreviousCurve Hint from previous curve. Will be used
+   *        to calculate symbol shape and hint for the next curve.
+   */
+  protected Symbol createSymbol(GraphPoint point, GraphicAttributes attributes,
+                             Hint hintForNextPoint,
+                             Hint hintFromPreviousCurve) {
+<span class="nc" id="L86">    GraphPoint origin = new GraphPoint(null);</span>
+<span class="nc" id="L87">    GraphPoint position = origin;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">    if (hintFromPreviousCurve instanceof PositionHint) {</span>
+<span class="nc" id="L89">      origin = ((PositionHint) hintFromPreviousCurve).getOrigin();</span>
+<span class="nc" id="L90">      position = ((PositionHint) hintFromPreviousCurve).getPosition();</span>
+    }
+<span class="nc" id="L92">    double px = position.getX();</span>
+<span class="nc" id="L93">    double py = position.getY();</span>
+<span class="nc" id="L94">    double x = point.getX() - origin.getX();</span>
+<span class="nc" id="L95">    double y = point.getY() - origin.getY();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    if (_horizontalBars) {</span>
+<span class="nc" id="L97">      y = _size;</span>
+<span class="nc" id="L98">      position = new GraphPoint(px + 0.5 * x, point.getY() + py);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">      px += _stacked ? x : 0;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">      py += _stacked ? 0 : _size;</span>
+    } else {
+<span class="nc" id="L102">      x = _size;</span>
+<span class="nc" id="L103">      position = new GraphPoint(point.getX() + px, py + 0.5 * y);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">      px += _stacked ? 0 : _size;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">      py += _stacked ? y : 0;</span>
+    }
+<span class="nc" id="L107">    Hint hintForNextCurve = new PositionHint(origin, new GraphPoint(px, py));</span>
+<span class="nc" id="L108">    return new Symbol(new Rectangle(position, Math.abs(x), Math.abs(y), </span>
+                                    attributes),
+                      hintForNextPoint, hintForNextCurve);
+  }
+
+  /**
+   *  Creates a symbol for the legend at the specified position.
+   *  @param centerPosition Center position of the symbol.
+   *  @param size The size of the symbol.
+   */
+  public GraphicalElement createLegendSymbol(GraphPoint centerPosition,
+                                             double size) {
+<span class="nc" id="L120">    return new Rectangle(centerPosition, size, size, _attributes);</span>
+  }
+  
+  /** 
+   * Returns &lt;tt&gt;null&lt;/tt&gt; because this method isn't needed but has to be
+   * implemented.
+   */
+  protected GraphicalElement createPlainSymbol(
+      GraphPoint centerPosition, double size, GraphicAttributes attributes) {
+<span class="nc" id="L129">    return null;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

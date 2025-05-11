@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CucaDiagramFileMakerSvek.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">CucaDiagramFileMakerSvek.java</span></div><h1>CucaDiagramFileMakerSvek.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.AnnotatedBuilder;
+import net.sourceforge.plantuml.AnnotatedWorker;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
+import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
+import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
+import net.sourceforge.plantuml.dot.DotData;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
+	// ::remove file when __CORE__
+
+	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
+<span class="fc" id="L63">		super(diagram);</span>
+
+<span class="fc" id="L65">	}</span>
+
+	public ImageData createFile(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+			throws IOException {
+		try {
+<span class="fc" id="L70">			return createFileInternal(os, dotStrings, fileFormatOption);</span>
+<span class="nc" id="L71">		} catch (InterruptedException e) {</span>
+<span class="nc" id="L72">			Logme.error(e);</span>
+<span class="nc" id="L73">			throw new IOException(e);</span>
+		}
+	}
+
+	@Override
+	public void createOneGraphic(UGraphic ug) {
+<span class="nc" id="L79">		throw new UnsupportedOperationException();</span>
+	}
+
+	private ImageData createFileInternal(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+
+<span class="fc" id="L85">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)</span>
+<span class="nc" id="L88">			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)</span>
+<span class="nc" id="L90">			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
+
+<span class="fc" id="L92">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),</span>
+<span class="fc" id="L93">				diagram.getUmlDiagramType(), diagram.getSkinParam());</span>
+
+<span class="fc" id="L95">		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),</span>
+				diagram, diagram);
+
+<span class="fc" id="L98">		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
+<span class="fc" id="L99">				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
+<span class="fc" id="L100">		BaseFile basefile = null;</span>
+<span class="pc bpc" id="L101" title="3 of 4 branches missed.">		if (fileFormatOption.isDebugSvek() &amp;&amp; os instanceof NamedOutputStream)</span>
+<span class="nc" id="L102">			basefile = ((NamedOutputStream) os).getBasefile();</span>
+
+<span class="fc" id="L104">		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
+<span class="fc" id="L105">				fileFormatOption.isDebugSvek());</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (result instanceof GraphvizCrash) {</span>
+<span class="nc" id="L107">			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
+<span class="nc" id="L108">					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,</span>
+					clusterManager);
+<span class="nc" id="L110">			result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
+<span class="nc" id="L111">					fileFormatOption.isDebugSvek());</span>
+		}
+		// TODO There is something strange with the left margin of mainframe, I think
+		// because AnnotatedWorker is used here
+		// It can be looked at in another PR
+<span class="fc" id="L116">		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
+<span class="fc" id="L117">		result = new AnnotatedWorker(diagram, builder).addAdd(result);</span>
+
+		// TODO UmlDiagram.getWarningOrError() looks similar so this might be
+		// simplified? - will leave for a separate PR
+<span class="fc" id="L121">		final String widthwarning = diagram.getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="fc" id="L122">		String warningOrError = null;</span>
+<span class="pc bpc" id="L123" title="3 of 4 branches missed.">		if (widthwarning != null &amp;&amp; widthwarning.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L124">			warningOrError = imageBuilder.getWarningOrError(Integer.parseInt(widthwarning));</span>
+
+		// Sorry about this hack. There is a side effect in
+		// SvekResult::calculateDimension()
+<span class="fc" id="L128">		result.calculateDimension(stringBounder); // Ensure text near the margins is not cut off</span>
+
+<span class="fc" id="L130">		return diagram.createImageBuilder(fileFormatOption).annotations(false) // backwards compatibility</span>
+																				// (AnnotatedWorker is used above)
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">				.drawable(result).status(result instanceof GraphvizCrash ? 503 : 0).warningOrError(warningOrError)</span>
+<span class="fc" id="L133">				.write(os);</span>
+	}
+
+	private List&lt;Link&gt; getOrderedLinks() {
+<span class="fc" id="L137">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		for (Link l : diagram.getLinks())</span>
+<span class="nc" id="L139">			addLinkNew(result, l);</span>
+
+<span class="fc" id="L141">		return result;</span>
+	}
+
+	private void addLinkNew(List&lt;Link&gt; result, Link link) {
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L146">			final Link other = result.get(i);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (other.sameConnections(link)) {</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">				while (i &lt; result.size() &amp;&amp; result.get(i).sameConnections(link))</span>
+<span class="nc" id="L149">					i++;</span>
+
+<span class="nc bnc" id="L151" title="All 2 branches missed.">				if (i == result.size())</span>
+<span class="nc" id="L152">					result.add(link);</span>
+				else
+<span class="nc" id="L154">					result.add(i, link);</span>
+
+<span class="nc" id="L156">				return;</span>
+			}
+		}
+<span class="nc" id="L159">		result.add(link);</span>
+<span class="nc" id="L160">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

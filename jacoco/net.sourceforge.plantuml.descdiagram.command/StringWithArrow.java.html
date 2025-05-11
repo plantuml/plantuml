@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringWithArrow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram.command</a> &gt; <span class="el_source">StringWithArrow.java</span></div><h1>StringWithArrow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ *
+ */
+package net.sourceforge.plantuml.descdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.LinkArrow;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockArrow2;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.svek.GuideLine;
+
+public class StringWithArrow {
+
+	private final String label;
+	private final LinkArrow linkArrow;
+
+<span class="fc" id="L56">	public StringWithArrow(String completeLabel) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (completeLabel == null) {</span>
+<span class="fc" id="L58">			this.linkArrow = LinkArrow.NONE_OR_SEVERAL;</span>
+<span class="fc" id="L59">			this.label = null;</span>
+<span class="fc" id="L60">			return;</span>
+		}
+<span class="fc" id="L62">		completeLabel = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(completeLabel, &quot;\&quot;&quot;);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (Display.hasSeveralGuideLines(completeLabel)) {</span>
+<span class="nc" id="L64">			this.linkArrow = LinkArrow.NONE_OR_SEVERAL;</span>
+<span class="nc" id="L65">			this.label = completeLabel;</span>
+		} else {
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (&quot;&lt;&quot;.equals(completeLabel)) {</span>
+<span class="nc" id="L69">				this.linkArrow = LinkArrow.BACKWARD;</span>
+<span class="nc" id="L70">				this.label = null;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			} else if (&quot;&gt;&quot;.equals(completeLabel)) {</span>
+<span class="nc" id="L72">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
+<span class="nc" id="L73">				this.label = null;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			} else if (completeLabel.startsWith(&quot;&lt; &quot;)) {</span>
+<span class="fc" id="L75">				this.linkArrow = LinkArrow.BACKWARD;</span>
+<span class="fc" id="L76">				this.label = StringUtils.trin(completeLabel.substring(2));</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			} else if (completeLabel.startsWith(&quot;&gt; &quot;)) {</span>
+<span class="fc" id="L78">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
+<span class="fc" id="L79">				this.label = StringUtils.trin(completeLabel.substring(2));</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			} else if (completeLabel.endsWith(&quot; &gt;&quot;)) {</span>
+<span class="nc" id="L81">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
+<span class="nc" id="L82">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			} else if (completeLabel.endsWith(&quot; &lt;&quot;)) {</span>
+<span class="nc" id="L84">				this.linkArrow = LinkArrow.BACKWARD;</span>
+<span class="nc" id="L85">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>
+			} else {
+<span class="fc" id="L87">				this.linkArrow = LinkArrow.NONE_OR_SEVERAL;</span>
+<span class="fc" id="L88">				this.label = completeLabel;</span>
+			}
+		}
+<span class="fc" id="L91">	}</span>
+
+	public final String getLabel() {
+<span class="fc" id="L94">		return label;</span>
+	}
+
+	public final LinkArrow getLinkArrow() {
+<span class="fc" id="L98">		return linkArrow;</span>
+	}
+
+	public final Display getDisplay(Pragma pragma) {
+<span class="fc" id="L102">		return Display.getWithNewlines(pragma, label);</span>
+	}
+
+	static public TextBlock addMagicArrow(TextBlock label, GuideLine guide, FontConfiguration font) {
+<span class="nc" id="L106">		final TextBlock arrow = new TextBlockArrow2(guide, font);</span>
+<span class="nc" id="L107">		return TextBlockUtils.mergeLR(arrow, label, VerticalAlignment.CENTER);</span>
+	}
+
+	static private TextBlock addMagicArrow2(TextBlock label, GuideLine guide, FontConfiguration font) {
+<span class="nc" id="L111">		final TextBlock arrow = new TextBlockArrow2(guide, font);</span>
+<span class="nc" id="L112">		return TextBlockUtils.mergeLR(arrow, label, VerticalAlignment.CENTER);</span>
+	}
+
+	public static TextBlock addSeveralMagicArrows(Display label, GuideLine guide, FontConfiguration font,
+			HorizontalAlignment alignment, ISkinParam skinParam) {
+<span class="nc" id="L117">		TextBlock result = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (CharSequence cs : label) {</span>
+<span class="nc" id="L119">			StringWithArrow tmp = new StringWithArrow(cs.toString());</span>
+<span class="nc" id="L120">			TextBlock block = tmp.getDisplay(skinParam.getPragma()).create9(font, alignment, skinParam, skinParam.maxMessageSize());</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (tmp.getLinkArrow() != LinkArrow.NONE_OR_SEVERAL)</span>
+<span class="nc" id="L122">				block = StringWithArrow.addMagicArrow2(block, tmp.getLinkArrow().mute(guide), font);</span>
+
+<span class="nc" id="L124">			result = TextBlockUtils.mergeTB(result, block, alignment);</span>
+<span class="nc" id="L125">		}</span>
+<span class="nc" id="L126">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

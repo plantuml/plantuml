@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmiSequenceDiagramStandard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xmi</a> &gt; <span class="el_source">XmiSequenceDiagramStandard.java</span></div><h1>XmiSequenceDiagramStandard.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.xmi;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Stack;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Grouping;
+import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.LifeEvent;
+import net.sourceforge.plantuml.sequencediagram.LifeEventType;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+public class XmiSequenceDiagramStandard extends XmiSequenceDiagram {
+
+	private Stack&lt;HashSet&lt;String&gt;&gt; covered;
+	private HashMap&lt;Participant, Stack&lt;Element&gt;&gt; activeParticipants;
+
+	public XmiSequenceDiagramStandard(SequenceDiagram diagram, Document document) {
+<span class="nc" id="L31">		super(diagram, document);</span>
+
+<span class="nc" id="L33">		covered = new Stack&lt;&gt;();</span>
+<span class="nc" id="L34">		covered.push(new HashSet&lt;String&gt;());</span>
+
+<span class="nc" id="L36">		activeParticipants = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L37">	}</span>
+
+	@Override
+	public void build() {
+<span class="nc" id="L41">		Node packagedElement = document</span>
+<span class="nc" id="L42">				.appendChild(createElement(&quot;uml:Model&quot;,</span>
+						new String[][] { { &quot;xmlns:uml&quot;, &quot;http://www.omg.org/spec/UML/20110701&quot; },
+								{ &quot;xmlns:xmi&quot;, &quot;http://schema.omg.org/spec/XMI/2.1&quot; }, { &quot;xmi:version&quot;, &quot;2.1&quot; },
+<span class="nc" id="L45">								{ &quot;xmi:id&quot;, getXmiId(&quot;uml:Model&quot;, diagram) } }))</span>
+<span class="nc" id="L46">				.appendChild(createUmlElement(diagram, &quot;packagedElement&quot;, &quot;Interaction&quot;));</span>
+<span class="nc" id="L47">		packagedElement.appendChild(createUmlElement(diagram, &quot;nestedClassifier&quot;, &quot;Collaboration&quot;));</span>
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (Participant participant : diagram.participants()) {</span>
+<span class="nc" id="L50">			packagedElement.appendChild(createElement(participant, &quot;lifeline&quot;,</span>
+<span class="nc" id="L51">					new String[][] { { &quot;name&quot;, getDisplayString(participant.getDisplay(false)) } }));</span>
+<span class="nc" id="L52">		}</span>
+
+<span class="nc" id="L54">		Node currentFragment = packagedElement;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (Event event : diagram.events()) {</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (event instanceof Note) {</span>
+<span class="nc" id="L57">				buildNoteEvent(packagedElement, (Note) event);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">			} else if (event instanceof LifeEvent) {</span>
+<span class="nc" id="L59">				buildLifeEvent(packagedElement, (LifeEvent) event);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			} else if (event instanceof AbstractMessage) {</span>
+<span class="nc" id="L61">				buildMessage(packagedElement, currentFragment, (AbstractMessage) event);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">			} else if (event instanceof Grouping) {</span>
+<span class="nc" id="L63">				currentFragment = buildGrouping(currentFragment, (Grouping) event);</span>
+			}
+<span class="nc" id="L65">		}</span>
+<span class="nc" id="L66">	}</span>
+
+	private void buildLifeEvent(Node packagedElement, LifeEvent event) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (event.getType() == LifeEventType.ACTIVATE) {</span>
+<span class="nc" id="L70">			Element execution = createUmlElement(event, &quot;fragment&quot;, &quot;BehaviorExecutionSpecification&quot;);</span>
+<span class="nc" id="L71">			execution.setAttribute(&quot;covered&quot;, getXmiId(&quot;lifeline&quot;, event.getParticipant()));</span>
+<span class="nc" id="L72">			execution.setAttribute(&quot;start&quot;, getLifeEventOccurrenceId(event));</span>
+<span class="nc" id="L73">			packagedElement.appendChild(execution);</span>
+<span class="nc" id="L74">			activeParticipants.putIfAbsent(event.getParticipant(), new Stack&lt;Element&gt;());</span>
+<span class="nc" id="L75">			activeParticipants.get(event.getParticipant()).push(execution);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		} else if (event.getType() == LifeEventType.DEACTIVATE) {</span>
+<span class="nc" id="L77">			activeParticipants.get(event.getParticipant()).pop().setAttribute(&quot;finish&quot;,</span>
+<span class="nc" id="L78">					getLifeEventOccurrenceId(event));</span>
+		}
+<span class="nc" id="L80">	}</span>
+
+	private Participant getReceiver(AbstractMessage message) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (message instanceof Message) {</span>
+<span class="nc" id="L84">			return message.getParticipant2();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		} else if (message instanceof MessageExo) {</span>
+<span class="nc" id="L86">			MessageExo exo = (MessageExo) message;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (exo.getType().toString().startsWith(&quot;FROM_&quot;)) {</span>
+<span class="nc" id="L88">				return message.getParticipant1();</span>
+			}
+		}
+<span class="nc" id="L91">		return null;</span>
+	}
+
+	private String getLifeEventOccurrenceId(LifeEvent event) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (event.getParticipant() == getReceiver(event.getMessage())) {</span>
+<span class="nc" id="L96">			return getXmiId(&quot;receiveEvent&quot;, event.getMessage());</span>
+		} else {
+<span class="nc" id="L98">			return getXmiId(&quot;sendEvent&quot;, event.getMessage());</span>
+		}
+	}
+
+	private void buildMessage(Node packagedElement, Node currentFragment, AbstractMessage message) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (message instanceof Message) {</span>
+<span class="nc" id="L104">			buildMessage(packagedElement, currentFragment, (Message) message);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		} else if (message instanceof MessageExo) {</span>
+<span class="nc" id="L106">			buildMessageExo(packagedElement, currentFragment, (MessageExo) message);</span>
+		}
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (message.getParticipant1() != null) {</span>
+<span class="nc" id="L110">			covered.peek().add(getXmiId(&quot;lifeline&quot;, message.getParticipant1()));</span>
+		}
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (message.getParticipant2() != null) {</span>
+<span class="nc" id="L113">			covered.peek().add(getXmiId(&quot;lifeline&quot;, message.getParticipant2()));</span>
+		}
+<span class="nc" id="L115">	}</span>
+
+	private void buildNoteEvent(Node packagedElement, Note note) {
+<span class="nc" id="L118">		HashSet&lt;String&gt; annotated = new HashSet&lt;String&gt;();</span>
+
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (note.getParticipant() != null) {</span>
+<span class="nc" id="L121">			annotated.add(getXmiId(&quot;lifeline&quot;, note.getParticipant()));</span>
+		}
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (note.getParticipant2() != null) {</span>
+<span class="nc" id="L125">			annotated.add(getXmiId(&quot;lifeline&quot;, note.getParticipant2()));</span>
+		}
+
+<span class="nc" id="L128">		buildNote(packagedElement, note, annotated);</span>
+<span class="nc" id="L129">	}</span>
+
+	private HashSet&lt;String&gt; getAnnotatedElements(Note note, Message message) {
+<span class="nc" id="L132">		HashSet&lt;String&gt; annotated = new HashSet&lt;String&gt;();</span>
+<span class="nc" id="L133">		int p1 = getParticipantNumber(message.getParticipant1());</span>
+<span class="nc" id="L134">		int p2 = getParticipantNumber(message.getParticipant2());</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		NotePosition senderPosition = p1 &lt; p2 ? NotePosition.LEFT : NotePosition.RIGHT;</span>
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (note.getPosition() == senderPosition) {</span>
+<span class="nc" id="L138">			annotated.add(getXmiId(&quot;sendEvent&quot;, message));</span>
+<span class="nc" id="L139">			annotated.add(getXmiId(&quot;lifeline&quot;, message.getParticipant1()));</span>
+		} else {
+<span class="nc" id="L141">			annotated.add(getXmiId(&quot;receiveEvent&quot;, message));</span>
+<span class="nc" id="L142">			annotated.add(getXmiId(&quot;lifeline&quot;, message.getParticipant2()));</span>
+		}
+<span class="nc" id="L144">		return annotated;</span>
+	}
+
+	private void buildNote(Node packagedElement, Note note, HashSet&lt;String&gt; annotated) {
+<span class="nc" id="L148">		Element comment = createUmlElement(note, &quot;ownedComment&quot;, &quot;Comment&quot;);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (!annotated.isEmpty()) {</span>
+<span class="nc" id="L150">			comment.setAttribute(&quot;annotatedElement&quot;, String.join(&quot; &quot;, annotated));</span>
+		}
+<span class="nc" id="L152">		comment.appendChild(document.createElement(&quot;body&quot;))</span>
+<span class="nc" id="L153">				.appendChild(document.createTextNode(getDisplayString(note.getDisplay())));</span>
+<span class="nc" id="L154">		packagedElement.appendChild(comment);</span>
+<span class="nc" id="L155">	}</span>
+
+	private int getParticipantNumber(Participant participant) {
+<span class="nc" id="L158">		return Arrays.asList(diagram.participants().toArray()).indexOf(participant);</span>
+	}
+
+	private void buildMessageExo(Node packagedElement, Node currentFragment, MessageExo message) {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		String messageEvent = message.getType().toString().startsWith(&quot;TO_&quot;) ? &quot;sendEvent&quot; : &quot;receiveEvent&quot;;</span>
+<span class="nc" id="L163">		String messageEventId = getXmiId(messageEvent, message);</span>
+<span class="nc" id="L164">		currentFragment.appendChild(createMessageOccurrence(message, messageEvent, message.getParticipant1()));</span>
+<span class="nc" id="L165">		packagedElement.appendChild(setAttributes(createUmlElement(message, &quot;message&quot;, &quot;Message&quot;),</span>
+<span class="nc" id="L166">				new String[][] { { &quot;name&quot;, getDisplayString(message.getLabel()) }, { messageEvent, messageEventId } }));</span>
+
+<span class="nc" id="L168">		HashSet&lt;String&gt; annotated = new HashSet&lt;String&gt;();</span>
+<span class="nc" id="L169">		annotated.add(messageEventId);</span>
+<span class="nc" id="L170">		annotated.add(getXmiId(&quot;lifeline&quot;, message.getParticipant1()));</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		for (Note note : message.getNoteOnMessages()) {</span>
+<span class="nc" id="L172">			buildNote(packagedElement, note, annotated);</span>
+<span class="nc" id="L173">		}</span>
+<span class="nc" id="L174">	}</span>
+
+	private void buildMessage(Node packagedElement, Node currentFragment, Message message) {
+<span class="nc" id="L177">		currentFragment.appendChild(createMessageOccurrence(message, &quot;sendEvent&quot;, message.getParticipant1()));</span>
+<span class="nc" id="L178">		currentFragment.appendChild(createMessageOccurrence(message, &quot;receiveEvent&quot;, message.getParticipant2()));</span>
+<span class="nc" id="L179">		packagedElement.appendChild(setAttributes(createUmlElement(message, &quot;message&quot;, &quot;Message&quot;),</span>
+<span class="nc" id="L180">				new String[][] { { &quot;name&quot;, getDisplayString(message.getLabel()) },</span>
+<span class="nc" id="L181">						{ &quot;receiveEvent&quot;, getXmiId(&quot;receiveEvent&quot;, message) },</span>
+<span class="nc" id="L182">						{ &quot;sendEvent&quot;, getXmiId(&quot;sendEvent&quot;, message) } }));</span>
+
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		for (Note note : message.getNoteOnMessages()) {</span>
+<span class="nc" id="L185">			buildNote(packagedElement, note, getAnnotatedElements(note, message));</span>
+<span class="nc" id="L186">		}</span>
+<span class="nc" id="L187">	}</span>
+
+	private Node buildGrouping(Node currentFragment, Grouping grouping) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (grouping.getType() == GroupingType.START) {</span>
+<span class="nc" id="L191">			Element group = createUmlElement(grouping, &quot;fragment&quot;, &quot;CombinedFragment&quot;);</span>
+<span class="nc" id="L192">			group.setAttribute(&quot;interactionOperator&quot;, grouping.getTitle());</span>
+<span class="nc" id="L193">			currentFragment.appendChild(group);</span>
+
+<span class="nc" id="L195">			currentFragment = group.appendChild(createElement(grouping, &quot;operand&quot;));</span>
+<span class="nc" id="L196">			currentFragment.appendChild(createGuardElement(grouping));</span>
+<span class="nc" id="L197">			covered.push(new HashSet&lt;String&gt;());</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		} else if (grouping.getType() == GroupingType.ELSE) {</span>
+<span class="nc" id="L199">			currentFragment = currentFragment.getParentNode().appendChild(createElement(grouping, &quot;operand&quot;));</span>
+<span class="nc" id="L200">			currentFragment.appendChild(createGuardElement(grouping));</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		} else if (grouping.getType() == GroupingType.END) {</span>
+<span class="nc" id="L202">			Node coveredAttr = document.createAttribute(&quot;covered&quot;);</span>
+<span class="nc" id="L203">			HashSet&lt;String&gt; topCovered = covered.pop();</span>
+<span class="nc" id="L204">			coveredAttr.setTextContent(String.join(&quot; &quot;, topCovered));</span>
+<span class="nc" id="L205">			currentFragment.getParentNode().getAttributes().setNamedItem(coveredAttr);</span>
+<span class="nc" id="L206">			covered.peek().addAll(topCovered);</span>
+<span class="nc" id="L207">			currentFragment = currentFragment.getParentNode().getParentNode();</span>
+		}
+<span class="nc" id="L209">		return currentFragment;</span>
+	}
+
+	private Node createGuardElement(Grouping grouping) {
+<span class="nc" id="L213">		Node guard = createElement(grouping, &quot;guard&quot;);</span>
+<span class="nc" id="L214">		guard.appendChild(setAttribute(createUmlElement(grouping, &quot;specification&quot;, &quot;LiteralString&quot;), &quot;value&quot;,</span>
+<span class="nc" id="L215">				grouping.getComment()));</span>
+<span class="nc" id="L216">		return guard;</span>
+	}
+
+	private Element createElement(Object object, String tag) {
+<span class="nc" id="L220">		return createElement(tag, new String[][] { { &quot;xmi:id&quot;, getXmiId(tag, object) } });</span>
+	}
+
+	private Element createElement(Object object, String tag, String[][] attributes) {
+<span class="nc" id="L224">		return setAttributes(createElement(tag, new String[][] { { &quot;xmi:id&quot;, getXmiId(tag, object) } }), attributes);</span>
+	}
+
+	private Element createUmlElement(Object object, String tag, String type) {
+<span class="nc" id="L228">		return createElement(tag,</span>
+<span class="nc" id="L229">				new String[][] { { &quot;xmi:type&quot;, &quot;uml:&quot; + type }, { &quot;xmi:id&quot;, getXmiId(type, object) } });</span>
+	}
+
+	private Node createMessageOccurrence(Object event, String type, Participant participant) {
+<span class="nc" id="L233">		return setAttributes(createUmlElement(event, &quot;fragment&quot;, &quot;MessageOccurrenceSpecification&quot;),</span>
+<span class="nc" id="L234">				new String[][] { { &quot;xmi:id&quot;, getXmiId(type, event) }, { &quot;covered&quot;, getXmiId(&quot;lifeline&quot;, participant) },</span>
+<span class="nc" id="L235">						{ &quot;message&quot;, getXmiId(&quot;Message&quot;, event) }, });</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandCreateElementFull2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.classdiagram.command</a> &gt; <span class="el_source">CommandCreateElementFull2.java</span></div><h1>CommandCreateElementFull2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ * 
+ *
+ */
+package net.sourceforge.plantuml.classdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandCreateElementFull2 extends SingleLineCommand2&lt;ClassDiagram&gt; {
+
+	private final Mode mode;
+
+<span class="fc" id="L71">	public static enum Mode {</span>
+<span class="fc" id="L72">		NORMAL_KEYWORD, WITH_MIX_PREFIX</span>
+	}
+
+	public CommandCreateElementFull2(Mode mode) {
+<span class="fc" id="L76">		super(getRegexConcat(mode));</span>
+<span class="fc" id="L77">		this.mode = mode;</span>
+<span class="fc" id="L78">	}</span>
+
+	private static RegexConcat getRegexConcat(Mode mode) {
+<span class="fc" id="L81">		String regex = &quot;(state|&quot; + CommandCreateElementFull.ALL_TYPES + &quot;)&quot;;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (mode == Mode.WITH_MIX_PREFIX) {</span>
+<span class="fc" id="L83">			return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //</span>
+<span class="fc" id="L84">					RegexLeaf.start(), //</span>
+					new RegexLeaf(&quot;mix_&quot;), //
+					new RegexLeaf(&quot;SYMBOL&quot;, regex), //
+<span class="fc" id="L87">					RegexLeaf.spaceOneOrMore(), //</span>
+					new RegexOr(//
+							new RegexLeaf(&quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
+							new RegexConcat(//
+									new RegexLeaf(&quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
+<span class="fc" id="L92">									StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+									new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L94">									RegexLeaf.spaceOneOrMore(), //</span>
+									new RegexLeaf(&quot;CODE2&quot;, CommandCreateElementFull.CODE)) //
+					), //
+<span class="fc" id="L97">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L98">					new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L99">					StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L100">					new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L101">					RegexLeaf.spaceZeroOrMore(), //</span>
+					UrlBuilder.OPTIONAL, //
+<span class="fc" id="L103">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L104">					ColorParser.exp1(), //</span>
+<span class="fc" id="L105">					RegexLeaf.end());</span>
+		}
+<span class="fc" id="L107">		return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //</span>
+<span class="fc" id="L108">				RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;SYMBOL&quot;, regex), //
+<span class="fc" id="L110">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOr(//
+						new RegexLeaf(&quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexConcat(//
+								new RegexLeaf(&quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
+<span class="fc" id="L115">								StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L117">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE2&quot;, CommandCreateElementFull.CODE)) //
+				), //
+<span class="fc" id="L120">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L121">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L122">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L123">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L124">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L126">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L127">				ColorParser.exp1(), //</span>
+<span class="fc" id="L128">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	final protected boolean isForbidden(CharSequence line) {
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (line.toString().matches(&quot;^[\\p{L}0-9_.]+$&quot;))</span>
+<span class="nc" id="L134">			return true;</span>
+
+<span class="fc" id="L136">		return false;</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="pc bpc" id="L142" title="2 of 4 branches missed.">		if (mode == Mode.NORMAL_KEYWORD &amp;&amp; diagram.isAllowMixing() == false)</span>
+<span class="fc" id="L143">			return CommandExecutionResult.error(&quot;Use 'allowmixing' if you want to mix classes and other UML elements.&quot;);</span>
+
+<span class="nc" id="L145">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L146">		final String displayRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc" id="L147">		final char codeChar = getCharEncoding(codeRaw);</span>
+<span class="nc" id="L148">		final char codeDisplay = getCharEncoding(displayRaw);</span>
+		final String symbol;
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (codeRaw.startsWith(&quot;()&quot;)) {</span>
+<span class="nc" id="L151">			symbol = &quot;interface&quot;;</span>
+<span class="nc" id="L152">			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">		} else if (codeChar == '(' || codeDisplay == '(') {</span>
+<span class="nc" id="L154">			symbol = &quot;usecase&quot;;</span>
+<span class="nc bnc" id="L155" title="All 4 branches missed.">		} else if (codeChar == ':' || codeDisplay == ':') {</span>
+<span class="nc" id="L156">			symbol = &quot;actor&quot;;</span>
+<span class="nc bnc" id="L157" title="All 4 branches missed.">		} else if (codeChar == '[' || codeDisplay == '[') {</span>
+<span class="nc" id="L158">			symbol = &quot;component&quot;;</span>
+		} else {
+<span class="nc" id="L160">			symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
+		}
+
+		final LeafType type;
+		final USymbol usymbol;
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (symbol == null) {</span>
+<span class="nc" id="L167">			type = LeafType.DESCRIPTION;</span>
+<span class="nc" id="L168">			usymbol = diagram.getSkinParam().actorStyle().toUSymbol();</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;port&quot;)) {</span>
+<span class="nc" id="L170">			type = LeafType.PORTIN;</span>
+<span class="nc" id="L171">			usymbol = null;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;portin&quot;)) {</span>
+<span class="nc" id="L173">			type = LeafType.PORTIN;</span>
+<span class="nc" id="L174">			usymbol = null;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;portout&quot;)) {</span>
+<span class="nc" id="L176">			type = LeafType.PORTOUT;</span>
+<span class="nc" id="L177">			usymbol = null;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase&quot;)) {</span>
+<span class="nc" id="L179">			type = LeafType.USECASE;</span>
+<span class="nc" id="L180">			usymbol = null;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase/&quot;)) {</span>
+<span class="nc" id="L182">			type = LeafType.USECASE_BUSINESS;</span>
+<span class="nc" id="L183">			usymbol = null;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;state&quot;)) {</span>
+<span class="nc" id="L185">			type = LeafType.STATE;</span>
+<span class="nc" id="L186">			usymbol = null;</span>
+		} else {
+<span class="nc" id="L188">			type = LeafType.DESCRIPTION;</span>
+<span class="nc" id="L189">			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			if (usymbol == null)</span>
+<span class="nc" id="L191">				throw new IllegalStateException();</span>
+		}
+
+<span class="nc" id="L194">		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		final Display display = Display.getWithNewlines(diagram.getPragma(), displayRaw == null ? idShort : displayRaw);</span>
+<span class="nc" id="L196">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc" id="L197">		Entity entity = quark.getData();</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (entity == null)</span>
+<span class="nc" id="L199">			entity = diagram.reallyCreateLeaf(location, quark, display, type, usymbol);</span>
+
+<span class="nc" id="L201">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+
+<span class="nc" id="L203">		entity.setDisplay(display);</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L206">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L207">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L208">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+
+<span class="nc" id="L210">		CommandCreateClassMultilines.addTags(entity, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+
+<span class="nc" id="L212">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L214">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L215">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L216">			entity.addUrl(url);</span>
+		}
+<span class="nc" id="L218">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+
+<span class="nc" id="L220">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L222">		return CommandExecutionResult.ok();</span>
+	}
+
+	private char getCharEncoding(final String codeRaw) {
+<span class="nc bnc" id="L226" title="All 4 branches missed.">		return codeRaw != null &amp;&amp; codeRaw.length() &gt; 2 ? codeRaw.charAt(0) : 0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CountRate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.api</a> &gt; <span class="el_source">CountRate.java</span></div><h1>CountRate.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.api;
+
+<span class="nc" id="L38">public final class CountRate {</span>
+
+<span class="nc" id="L40">	private final MagicArray lastMinute = new MagicArray(60);</span>
+<span class="nc" id="L41">	private final MagicArray lastHour = new MagicArray(60);</span>
+<span class="nc" id="L42">	private final MagicArray lastDay = new MagicArray(140);</span>
+
+	public void increment() {
+<span class="nc" id="L45">		final long now = System.currentTimeMillis();</span>
+<span class="nc" id="L46">		lastMinute.incKey(now / 1000L);</span>
+<span class="nc" id="L47">		lastHour.incKey(now / (60 * 1000L));</span>
+<span class="nc" id="L48">		lastDay.incKey(now / (10 * 60 * 1000L));</span>
+<span class="nc" id="L49">	}</span>
+
+	public void increment(int value) {
+<span class="nc" id="L52">		final long now = System.currentTimeMillis();</span>
+<span class="nc" id="L53">		lastMinute.incKey(now / 1000L, value);</span>
+<span class="nc" id="L54">		lastHour.incKey(now / (60 * 1000L), value);</span>
+<span class="nc" id="L55">		lastDay.incKey(now / (10 * 60 * 1000L), value);</span>
+<span class="nc" id="L56">	}</span>
+
+	public long perMinute() {
+<span class="nc" id="L59">		return lastMinute.getSum();</span>
+	}
+
+	public long perHour() {
+<span class="nc" id="L63">		return lastHour.getSum();</span>
+	}
+
+	public long perDay() {
+<span class="nc" id="L67">		return lastDay.getSum();</span>
+	}
+
+	public long perMinuteMax() {
+<span class="nc" id="L71">		return lastMinute.getMaxSum();</span>
+	}
+
+	public long perHourMax() {
+<span class="nc" id="L75">		return lastHour.getMaxSum();</span>
+	}
+
+	public long perDayMax() {
+<span class="nc" id="L79">		return lastDay.getMaxSum();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

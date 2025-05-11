@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Eater.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">Eater.java</span></div><h1>Eater.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.text.TLineType;
+import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.tim.expression.Token;
+import net.sourceforge.plantuml.tim.expression.TokenStack;
+import net.sourceforge.plantuml.tim.expression.TokenType;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+<span class="fc" id="L50">public abstract class Eater {</span>
+
+<span class="fc" id="L52">	private int i = 0;</span>
+	private final StringLocated stringLocated;
+
+<span class="fc" id="L55">	public Eater(StringLocated stringLocated) {</span>
+<span class="fc" id="L56">		this.stringLocated = stringLocated;</span>
+<span class="fc" id="L57">	}</span>
+
+	public final LineLocation getLineLocation() {
+<span class="fc" id="L60">		return stringLocated.getLocation();</span>
+	}
+
+	public final StringLocated getStringLocated() {
+<span class="fc" id="L64">		return stringLocated;</span>
+	}
+
+	public abstract void analyze(TContext context, TMemory memory) throws EaterException;
+
+	public int getCurrentPosition() {
+<span class="fc" id="L70">		return i;</span>
+	}
+
+	final protected String eatAllToEnd() throws EaterException {
+<span class="fc" id="L74">		final String result = stringLocated.getString().substring(i);</span>
+<span class="fc" id="L75">		i = stringLocated.length();</span>
+<span class="fc" id="L76">		return result;</span>
+	}
+
+	final public TValue eatExpression(TContext context, TMemory memory) throws EaterException {
+<span class="fc" id="L80">		final char ch = peekChar();</span>
+<span class="fc bfc" id="L81" title="All 4 branches covered.">		if (ch == '{' || ch == '[') {</span>
+<span class="fc" id="L82">			final String data = eatAllToEnd();</span>
+			// System.err.println(&quot;data=&quot; + data);
+<span class="fc" id="L84">			final JsonValue json = Json.parse(data);</span>
+			// System.err.println(&quot;json=&quot; + json);
+<span class="fc" id="L86">			return TValue.fromJson(json);</span>
+		}
+<span class="fc" id="L88">		final TokenStack tokenStack = eatTokenStack();</span>
+<span class="fc" id="L89">		return tokenStack.getResult(getStringLocated(), context, memory);</span>
+	}
+
+	final protected TokenStack eatTokenStack() throws EaterException {
+<span class="fc" id="L93">		final TokenStack tokenStack = new TokenStack();</span>
+<span class="fc" id="L94">		addIntoTokenStack(tokenStack, false);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (tokenStack.size() == 0)</span>
+<span class="nc" id="L96">			throw new EaterException(&quot;Missing expression&quot;, stringLocated);</span>
+
+<span class="fc" id="L98">		return tokenStack;</span>
+	}
+
+	final protected TValue eatExpressionStopAtColon(TContext context, TMemory memory) throws EaterException {
+<span class="nc" id="L102">		final TokenStack tokenStack = new TokenStack();</span>
+<span class="nc" id="L103">		addIntoTokenStack(tokenStack, true);</span>
+<span class="nc" id="L104">		return tokenStack.getResult(getStringLocated(), context, memory);</span>
+	}
+
+	final protected void addIntoTokenStack(TokenStack tokenStack, boolean stopAtColon) throws EaterException {
+<span class="fc" id="L108">		Token lastToken = null;</span>
+		while (true) {
+<span class="fc" id="L110">			final Token token = TokenType.eatOneToken(lastToken, this, stopAtColon);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			if (token == null)</span>
+<span class="fc" id="L112">				return;</span>
+
+<span class="fc" id="L114">			tokenStack.add(token);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">			if (token.getTokenType() != TokenType.SPACES)</span>
+<span class="fc" id="L116">				lastToken = token;</span>
+<span class="fc" id="L117">		}</span>
+	}
+
+	final public String eatAndGetQuotedString() throws EaterException {
+<span class="fc" id="L121">		final char separator = peekChar();</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (TLineType.isQuote(separator) == false)</span>
+<span class="nc" id="L123">			throw new EaterException(&quot;quote10&quot;, stringLocated);</span>
+
+<span class="fc" id="L125">		checkAndEatChar(separator);</span>
+<span class="fc" id="L126">		final StringBuilder value = new StringBuilder();</span>
+<span class="fc" id="L127">		addUpTo(separator, value);</span>
+<span class="fc" id="L128">		checkAndEatChar(separator);</span>
+<span class="fc" id="L129">		return value.toString();</span>
+	}
+
+	final protected String eatAndGetOptionalQuotedString() throws EaterException {
+<span class="fc" id="L133">		final char quote = peekChar();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (TLineType.isQuote(quote))</span>
+<span class="fc" id="L135">			return eatAndGetQuotedString();</span>
+
+<span class="fc" id="L137">		final StringBuilder value = new StringBuilder();</span>
+		// DEPLICATE eatUntilCloseParenthesisOrComma
+
+<span class="fc" id="L140">		int level = 0;</span>
+		while (true) {
+<span class="fc" id="L142">			char ch = peekChar();</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">			if (ch == 0)</span>
+<span class="nc" id="L144">				throw new EaterException(&quot;until001&quot;, stringLocated);</span>
+
+<span class="fc bfc" id="L146" title="All 6 branches covered.">			if (level == 0 &amp;&amp; (ch == ',' || ch == ')'))</span>
+<span class="fc" id="L147">				return value.toString().trim();</span>
+
+<span class="fc" id="L149">			ch = eatOneChar();</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (ch == '(')</span>
+<span class="fc" id="L151">				level++;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			else if (ch == ')')</span>
+<span class="fc" id="L153">				level--;</span>
+
+<span class="fc" id="L155">			value.append(ch);</span>
+<span class="fc" id="L156">		}</span>
+
+		// addUpTo(',', ')', value);
+		// return value.toString();
+	}
+
+	final public String eatAndGetNumber() throws EaterException {
+<span class="fc" id="L163">		final StringBuilder result = new StringBuilder();</span>
+		while (true) {
+<span class="fc" id="L165">			final char ch = peekChar();</span>
+<span class="pc bpc" id="L166" title="1 of 4 branches missed.">			if (result.length() == 0 &amp;&amp; ch == '-') {</span>
+<span class="nc" id="L167">				result.append(eatOneChar());</span>
+<span class="nc" id="L168">				continue;</span>
+			}
+
+<span class="fc bfc" id="L171" title="All 4 branches covered.">			if (ch == 0 || TLineType.isLatinDigit(ch) == false)</span>
+<span class="fc" id="L172">				return result.toString();</span>
+
+<span class="fc" id="L174">			result.append(eatOneChar());</span>
+<span class="fc" id="L175">		}</span>
+	}
+
+	final public String eatAndGetSpaces() throws EaterException {
+<span class="fc" id="L179">		final StringBuilder result = new StringBuilder();</span>
+		while (true) {
+<span class="fc" id="L181">			final char ch = peekChar();</span>
+<span class="fc bfc" id="L182" title="All 4 branches covered.">			if (ch == 0 || TLineType.isSpaceChar(ch) == false)</span>
+<span class="fc" id="L183">				return result.toString();</span>
+
+<span class="fc" id="L185">			result.append(eatOneChar());</span>
+<span class="fc" id="L186">		}</span>
+	}
+
+	final protected String eatAndGetVarname() throws EaterException {
+<span class="fc" id="L190">		final StringBuilder varname = new StringBuilder(&quot;&quot; + eatOneChar());</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (TLineType.isLetterOrEmojiOrUnderscoreOrDollar(varname.charAt(0)) == false)</span>
+<span class="nc" id="L192">			throw new EaterException(&quot;a002&quot;, stringLocated);</span>
+
+<span class="fc" id="L194">		addUpToLastLetterOrEmojiOrUnderscoreOrDigit(varname);</span>
+<span class="fc" id="L195">		return varname.toString();</span>
+	}
+
+	final protected String eatAndGetFunctionName() throws EaterException {
+<span class="fc" id="L199">		final StringBuilder varname = new StringBuilder(&quot;&quot; + eatOneChar());</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (TLineType.isLetterOrEmojiOrUnderscoreOrDollar(varname.charAt(0)) == false)</span>
+<span class="nc" id="L201">			throw new EaterException(&quot;a003&quot;, stringLocated);</span>
+
+<span class="fc" id="L203">		addUpToLastLetterOrEmojiOrUnderscoreOrDigit(varname);</span>
+<span class="fc" id="L204">		return varname.toString();</span>
+	}
+
+	final public void skipSpaces() {
+<span class="fc bfc" id="L208" title="All 4 branches covered.">		while (i &lt; stringLocated.length() &amp;&amp; Character.isWhitespace(stringLocated.charAt(i)))</span>
+<span class="fc" id="L209">			i++;</span>
+
+<span class="fc" id="L211">	}</span>
+
+	final protected void skipUntilChar(char ch) {
+<span class="pc bpc" id="L214" title="1 of 4 branches missed.">		while (i &lt; stringLocated.length() &amp;&amp; stringLocated.charAt(i) != ch)</span>
+<span class="fc" id="L215">			i++;</span>
+
+<span class="fc" id="L217">	}</span>
+
+	final public char peekChar() {
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (i &gt;= stringLocated.length())</span>
+<span class="fc" id="L221">			return 0;</span>
+
+<span class="fc" id="L223">		return stringLocated.charAt(i);</span>
+	}
+
+	final public boolean matchAffectation() {
+<span class="fc" id="L227">		final String tmp = stringLocated.getString().substring(i);</span>
+<span class="fc" id="L228">		final boolean result = tmp.matches(&quot;^\\$?[_\\p{L}][_\\p{L}0-9]*\\s*=.*&quot;);</span>
+<span class="fc" id="L229">		return result;</span>
+	}
+
+	final public char peekCharN2() {
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (i + 1 &gt;= stringLocated.length())</span>
+<span class="fc" id="L234">			return 0;</span>
+
+<span class="fc" id="L236">		return stringLocated.charAt(i + 1);</span>
+	}
+
+	final protected boolean hasNextChar() {
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		return i &lt; stringLocated.length();</span>
+	}
+
+	final public char eatOneChar() {
+<span class="fc" id="L244">		final char ch = stringLocated.charAt(i);</span>
+<span class="fc" id="L245">		i++;</span>
+<span class="fc" id="L246">		return ch;</span>
+	}
+
+	final protected void checkAndEatChar(char ch) throws EaterException {
+<span class="pc bpc" id="L250" title="2 of 4 branches missed.">		if (i &gt;= stringLocated.length() || stringLocated.charAt(i) != ch)</span>
+<span class="nc" id="L251">			throw new EaterException(&quot;a001&quot;, stringLocated);</span>
+
+<span class="fc" id="L253">		i++;</span>
+<span class="fc" id="L254">	}</span>
+
+	final protected boolean safeCheckAndEatChar(char ch) throws EaterException {
+<span class="pc bpc" id="L257" title="2 of 4 branches missed.">		if (i &gt;= stringLocated.length() || stringLocated.charAt(i) != ch)</span>
+<span class="nc" id="L258">			return false;</span>
+
+<span class="fc" id="L260">		i++;</span>
+<span class="fc" id="L261">		return true;</span>
+	}
+
+	final protected void optionallyEatChar(char ch) throws EaterException {
+<span class="nc bnc" id="L265" title="All 4 branches missed.">		if (i &gt;= stringLocated.length() || stringLocated.charAt(i) != ch)</span>
+<span class="nc" id="L266">			return;</span>
+
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		assert stringLocated.charAt(i) == ch;</span>
+<span class="nc" id="L269">		i++;</span>
+<span class="nc" id="L270">	}</span>
+
+	final protected void checkAndEatChar(String s) throws EaterException {
+<span class="fc bfc" id="L273" title="All 2 branches covered.">		for (int j = 0; j &lt; s.length(); j++)</span>
+<span class="fc" id="L274">			checkAndEatChar(s.charAt(j));</span>
+
+<span class="fc" id="L276">	}</span>
+
+	final protected void addUpToLastLetterOrEmojiOrUnderscoreOrDigit(StringBuilder sb) {
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		while (i &lt; stringLocated.length()) {</span>
+<span class="fc" id="L280">			final char ch = stringLocated.charAt(i);</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">			if (TLineType.isLetterOrEmojiOrUnderscoreOrDigit(ch) == false)</span>
+<span class="fc" id="L282">				return;</span>
+
+<span class="fc" id="L284">			i++;</span>
+<span class="fc" id="L285">			sb.append(ch);</span>
+<span class="fc" id="L286">		}</span>
+<span class="fc" id="L287">	}</span>
+
+	final protected void addUpTo(char separator, StringBuilder sb) {
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">		while (i &lt; stringLocated.length()) {</span>
+<span class="fc" id="L291">			final char ch = peekChar();</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			if (ch == separator)</span>
+<span class="fc" id="L293">				return;</span>
+
+<span class="fc" id="L295">			i++;</span>
+<span class="fc" id="L296">			sb.append(ch);</span>
+<span class="fc" id="L297">		}</span>
+<span class="nc" id="L298">	}</span>
+
+	final protected TFunctionImpl eatDeclareFunction(TContext context, TMemory memory, boolean unquoted,
+			StringLocated location, boolean allowNoParenthesis, TFunctionType type) throws EaterException {
+<span class="fc" id="L302">		final List&lt;TFunctionArgument&gt; args = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L303">		final String functionName = eatAndGetFunctionName();</span>
+<span class="fc" id="L304">		skipSpaces();</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (safeCheckAndEatChar('(') == false) {</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">			if (allowNoParenthesis)</span>
+<span class="nc" id="L307">				return new TFunctionImpl(functionName, args, unquoted, type);</span>
+
+<span class="nc" id="L309">			throw new EaterException(&quot;Missing opening parenthesis&quot;, stringLocated);</span>
+		}
+		while (true) {
+<span class="fc" id="L312">			skipSpaces();</span>
+<span class="fc" id="L313">			char ch = peekChar();</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">			if (TLineType.isLetterOrEmojiOrUnderscoreOrDollar(ch)) {</span>
+<span class="fc" id="L315">				final String varname = eatAndGetVarname();</span>
+<span class="fc" id="L316">				skipSpaces();</span>
+				final TValue defValue;
+<span class="fc bfc" id="L318" title="All 2 branches covered.">				if (peekChar() == '=') {</span>
+<span class="fc" id="L319">					eatOneChar();</span>
+<span class="fc" id="L320">					final TokenStack def = TokenStack.eatUntilCloseParenthesisOrComma(this);</span>
+<span class="fc" id="L321">					def.guessFunctions(location);</span>
+<span class="fc" id="L322">					defValue = def.getResult(getStringLocated(), context, memory);</span>
+					// System.err.println(&quot;result=&quot; + defValue);
+<span class="fc" id="L324">				} else {</span>
+<span class="fc" id="L325">					defValue = null;</span>
+				}
+<span class="fc" id="L327">				args.add(new TFunctionArgument(varname, defValue));</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">			} else if (ch == ',') {</span>
+<span class="fc" id="L329">				checkAndEatChar(',');</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">			} else if (ch == ')') {</span>
+<span class="fc" id="L331">				checkAndEatChar(&quot;)&quot;);</span>
+<span class="fc" id="L332">				break;</span>
+			} else {
+<span class="nc" id="L334">				throw new EaterException(&quot;Error in function definition&quot;, stringLocated);</span>
+			}
+<span class="fc" id="L336">		}</span>
+<span class="fc" id="L337">		skipSpaces();</span>
+<span class="fc" id="L338">		return new TFunctionImpl(functionName, args, unquoted, type);</span>
+	}
+
+	final protected TFunctionImpl eatDeclareReturnFunctionWithOptionalReturn(TContext context, TMemory memory,
+			boolean unquoted, StringLocated location) throws EaterException {
+<span class="fc" id="L343">		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false,</span>
+				TFunctionType.RETURN_FUNCTION);
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">		if (peekChar() == 'r') {</span>
+<span class="nc" id="L346">			checkAndEatChar(&quot;return&quot;);</span>
+<span class="nc" id="L347">			skipSpaces();</span>
+<span class="nc" id="L348">			final String line = &quot;!return &quot; + eatAllToEnd();</span>
+<span class="nc" id="L349">			result.addBody(new StringLocated(line, location.getLocation()));</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">		} else if (peekChar() == '!') {</span>
+<span class="nc" id="L351">			checkAndEatChar(&quot;!return&quot;);</span>
+<span class="nc" id="L352">			skipSpaces();</span>
+<span class="nc" id="L353">			final String line = &quot;!return &quot; + eatAllToEnd();</span>
+<span class="nc" id="L354">			result.addBody(new StringLocated(line, location.getLocation()));</span>
+		}
+<span class="fc" id="L356">		return result;</span>
+	}
+
+	final protected TFunctionImpl eatDeclareProcedure(TContext context, TMemory memory, boolean unquoted,
+			StringLocated location) throws EaterException {
+<span class="fc" id="L361">		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false,</span>
+				TFunctionType.PROCEDURE);
+<span class="fc" id="L363">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HSLColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">HSLColor.java</span></div><h1>HSLColor.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.color;
+
+import java.awt.Color;
+
+/**
+ * Taken from http://www.camick.com/java/source/HSLColor.java
+ * 
+ * The HSLColor class provides methods to manipulate HSL (Hue, Saturation
+ * Luminance) values to create a corresponding Color object using the RGB
+ * ColorSpace.
+ *
+ * The HUE is the color, the Saturation is the purity of the color (with respect
+ * to grey) and Luminance is the brightness of the color (with respect to black
+ * and white)
+ *
+ * The Hue is specified as an angel between 0 - 360 degrees where red is 0,
+ * green is 120 and blue is 240. In between you have the colors of the rainbow.
+ * Saturation is specified as a percentage between 0 - 100 where 100 is fully
+ * saturated and 0 approaches gray. Luminance is specified as a percentage
+ * between 0 - 100 where 0 is black and 100 is white.
+ *
+ * In particular the HSL color space makes it easier change the Tone or Shade of
+ * a color by adjusting the luminance value.
+ */
+public class HSLColor {
+	// ::remove file when __HAXE__
+	private Color rgb;
+	private float[] hsl;
+	private float alpha;
+
+	/**
+	 * Create a HSLColor object using an RGB Color object.
+	 *
+	 * @param rgb the RGB Color object
+	 */
+<span class="fc" id="L36">	public HSLColor(Color rgb) {</span>
+<span class="fc" id="L37">		this.rgb = rgb;</span>
+<span class="fc" id="L38">		hsl = fromRGB(rgb);</span>
+<span class="fc" id="L39">		alpha = rgb.getAlpha() / 255.0f;</span>
+<span class="fc" id="L40">	}</span>
+
+	/**
+	 * Create a HSLColor object using individual HSL values and a default alpha
+	 * value of 1.0.
+	 *
+	 * @param h is the Hue value in degrees between 0 - 360
+	 * @param s is the Saturation percentage between 0 - 100
+	 * @param l is the Lumanance percentage between 0 - 100
+	 */
+	public HSLColor(float h, float s, float l) {
+<span class="fc" id="L51">		this(h, s, l, 1.0f);</span>
+<span class="fc" id="L52">	}</span>
+
+	/**
+	 * Create a HSLColor object using individual HSL values.
+	 *
+	 * @param h     the Hue value in degrees between 0 - 360
+	 * @param s     the Saturation percentage between 0 - 100
+	 * @param l     the Lumanance percentage between 0 - 100
+	 * @param alpha the alpha value between 0 - 1
+	 */
+<span class="fc" id="L62">	public HSLColor(float h, float s, float l, float alpha) {</span>
+<span class="fc" id="L63">		hsl = new float[] { h, s, l };</span>
+<span class="fc" id="L64">		this.alpha = alpha;</span>
+<span class="fc" id="L65">		rgb = toRGB(hsl, alpha);</span>
+<span class="fc" id="L66">	}</span>
+
+	/**
+	 * Create a HSLColor object using an an array containing the individual HSL
+	 * values and with a default alpha value of 1.
+	 *
+	 * @param hsl array containing HSL values
+	 */
+	public HSLColor(float[] hsl) {
+<span class="fc" id="L75">		this(hsl, 1.0f);</span>
+<span class="fc" id="L76">	}</span>
+
+	/**
+	 * Create a HSLColor object using an an array containing the individual HSL
+	 * values.
+	 *
+	 * @param hsl   array containing HSL values
+	 * @param alpha the alpha value between 0 - 1
+	 */
+<span class="fc" id="L85">	public HSLColor(float[] hsl, float alpha) {</span>
+<span class="fc" id="L86">		this.hsl = hsl;</span>
+<span class="fc" id="L87">		this.alpha = alpha;</span>
+<span class="fc" id="L88">		rgb = toRGB(hsl, alpha);</span>
+<span class="fc" id="L89">	}</span>
+
+	/**
+	 * Create a RGB Color object based on this HSLColor with a different Hue value.
+	 * The degrees specified is an absolute value.
+	 *
+	 * @param degrees - the Hue value between 0 - 360
+	 * @return the RGB Color object
+	 */
+	public Color adjustHue(float degrees) {
+<span class="nc" id="L99">		return toRGB(degrees, hsl[1], hsl[2], alpha);</span>
+	}
+
+	/**
+	 * Create a RGB Color object based on this HSLColor with a different Luminance
+	 * value. The percent specified is an absolute value.
+	 *
+	 * @param percent - the Luminance value between 0 - 100
+	 * @return the RGB Color object
+	 */
+	public Color adjustLuminance(float percent) {
+<span class="nc" id="L110">		return toRGB(hsl[0], hsl[1], percent, alpha);</span>
+	}
+
+	/**
+	 * Create a RGB Color object based on this HSLColor with a different Saturation
+	 * value. The percent specified is an absolute value.
+	 *
+	 * @param percent - the Saturation value between 0 - 100
+	 * @return the RGB Color object
+	 */
+	public Color adjustSaturation(float percent) {
+<span class="nc" id="L121">		return toRGB(hsl[0], percent, hsl[2], alpha);</span>
+	}
+
+	/**
+	 * Create a RGB Color object based on this HSLColor with a different Shade.
+	 * Changing the shade will return a darker color. The percent specified is a
+	 * relative value.
+	 *
+	 * @param percent - the value between 0 - 100
+	 * @return the RGB Color object
+	 */
+	public Color adjustShade(float percent) {
+<span class="nc" id="L133">		float multiplier = (100.0f - percent) / 100.0f;</span>
+<span class="nc" id="L134">		float l = Math.max(0.0f, hsl[2] * multiplier);</span>
+
+<span class="nc" id="L136">		return toRGB(hsl[0], hsl[1], l, alpha);</span>
+	}
+
+	/**
+	 * Create a RGB Color object based on this HSLColor with a different Tone.
+	 * Changing the tone will return a lighter color. The percent specified is a
+	 * relative value.
+	 *
+	 * @param percent - the value between 0 - 100
+	 * @return the RGB Color object
+	 */
+	public Color adjustTone(float percent) {
+<span class="nc" id="L148">		float multiplier = (100.0f + percent) / 100.0f;</span>
+<span class="nc" id="L149">		float l = Math.min(100.0f, hsl[2] * multiplier);</span>
+
+<span class="nc" id="L151">		return toRGB(hsl[0], hsl[1], l, alpha);</span>
+	}
+
+	/**
+	 * Get the Alpha value.
+	 *
+	 * @return the Alpha value.
+	 */
+	public float getAlpha() {
+<span class="nc" id="L160">		return alpha;</span>
+	}
+
+	/**
+	 * Create a RGB Color object that is the complementary color of this HSLColor.
+	 * This is a convenience method. The complementary color is determined by adding
+	 * 180 degrees to the Hue value.
+	 * 
+	 * @return the RGB Color object
+	 */
+	public Color getComplementary() {
+<span class="nc" id="L171">		float hue = (hsl[0] + 180.0f) % 360.0f;</span>
+<span class="nc" id="L172">		return toRGB(hue, hsl[1], hsl[2]);</span>
+	}
+
+	/**
+	 * Get the Hue value.
+	 *
+	 * @return the Hue value.
+	 */
+	public float getHue() {
+<span class="nc" id="L181">		return hsl[0];</span>
+	}
+
+	/**
+	 * Get the HSL values.
+	 *
+	 * @return the HSL values.
+	 */
+	public float[] getHSL() {
+<span class="fc" id="L190">		return hsl;</span>
+	}
+
+	/**
+	 * Get the Luminance value.
+	 *
+	 * @return the Luminance value.
+	 */
+	public float getLuminance() {
+<span class="nc" id="L199">		return hsl[2];</span>
+	}
+
+	/**
+	 * Get the RGB Color object represented by this HDLColor.
+	 *
+	 * @return the RGB Color object.
+	 */
+	public Color getRGB() {
+<span class="fc" id="L208">		return rgb;</span>
+	}
+
+	/**
+	 * Get the Saturation value.
+	 *
+	 * @return the Saturation value.
+	 */
+	public float getSaturation() {
+<span class="nc" id="L217">		return hsl[1];</span>
+	}
+
+	public String toString() {
+<span class="nc" id="L221">		String toString = &quot;HSLColor[h=&quot; + hsl[0] + &quot;,s=&quot; + hsl[1] + &quot;,l=&quot; + hsl[2] + &quot;,alpha=&quot; + alpha + &quot;]&quot;;</span>
+
+<span class="nc" id="L223">		return toString;</span>
+	}
+
+	/**
+	 * Convert a RGB Color to it corresponding HSL values.
+	 *
+	 * @return an array containing the 3 HSL values.
+	 */
+	public static float[] fromRGB(Color color) {
+		// Get RGB values in the range 0 - 1
+
+<span class="fc" id="L234">		float[] rgb = color.getRGBColorComponents(null);</span>
+<span class="fc" id="L235">		float r = rgb[0];</span>
+<span class="fc" id="L236">		float g = rgb[1];</span>
+<span class="fc" id="L237">		float b = rgb[2];</span>
+
+		// Minimum and Maximum RGB values are used in the HSL calculations
+
+<span class="fc" id="L241">		float min = Math.min(r, Math.min(g, b));</span>
+<span class="fc" id="L242">		float max = Math.max(r, Math.max(g, b));</span>
+
+		// Calculate the Hue
+
+<span class="fc" id="L246">		float h = 0;</span>
+
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (max == min)</span>
+<span class="fc" id="L249">			h = 0;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		else if (max == r)</span>
+<span class="fc" id="L251">			h = ((60 * (g - b) / (max - min)) + 360) % 360;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		else if (max == g)</span>
+<span class="fc" id="L253">			h = (60 * (b - r) / (max - min)) + 120;</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		else if (max == b)</span>
+<span class="fc" id="L255">			h = (60 * (r - g) / (max - min)) + 240;</span>
+
+		// Calculate the Luminance
+
+<span class="fc" id="L259">		float l = (max + min) / 2;</span>
+
+		// Calculate the Saturation
+
+<span class="fc" id="L263">		float s = 0;</span>
+
+<span class="fc bfc" id="L265" title="All 2 branches covered.">		if (max == min)</span>
+<span class="fc" id="L266">			s = 0;</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		else if (l &lt;= .5f)</span>
+<span class="fc" id="L268">			s = (max - min) / (max + min);</span>
+		else
+<span class="fc" id="L270">			s = (max - min) / (2 - max - min);</span>
+
+<span class="fc" id="L272">		return new float[] { h, s * 100, l * 100 };</span>
+	}
+
+	/**
+	 * Convert HSL values to a RGB Color with a default alpha value of 1. H (Hue) is
+	 * specified as degrees in the range 0 - 360. S (Saturation) is specified as a
+	 * percentage in the range 1 - 100. L (Lumanance) is specified as a percentage
+	 * in the range 1 - 100.
+	 *
+	 * @param hsl an array containing the 3 HSL values
+	 *
+	 * @return the RGB Color object
+	 */
+	public static Color toRGB(float[] hsl) {
+<span class="nc" id="L286">		return toRGB(hsl, 1.0f);</span>
+	}
+
+	/**
+	 * Convert HSL values to a RGB Color. H (Hue) is specified as degrees in the
+	 * range 0 - 360. S (Saturation) is specified as a percentage in the range 1 -
+	 * 100. L (Lumanance) is specified as a percentage in the range 1 - 100.
+	 *
+	 * @param hsl   an array containing the 3 HSL values
+	 * @param alpha the alpha value between 0 - 1
+	 *
+	 * @return the RGB Color object
+	 */
+	public static Color toRGB(float[] hsl, float alpha) {
+<span class="fc" id="L300">		return toRGB(hsl[0], hsl[1], hsl[2], alpha);</span>
+	}
+
+	/**
+	 * Convert HSL values to a RGB Color with a default alpha value of 1.
+	 *
+	 * @param h Hue is specified as degrees in the range 0 - 360.
+	 * @param s Saturation is specified as a percentage in the range 1 - 100.
+	 * @param l Lumanance is specified as a percentage in the range 1 - 100.
+	 *
+	 * @return the RGB Color object
+	 */
+	public static Color toRGB(float h, float s, float l) {
+<span class="nc" id="L313">		return toRGB(h, s, l, 1.0f);</span>
+	}
+
+	/**
+	 * Convert HSL values to a RGB Color.
+	 *
+	 * @param h     Hue is specified as degrees in the range 0 - 360.
+	 * @param s     Saturation is specified as a percentage in the range 1 - 100.
+	 * @param l     Lumanance is specified as a percentage in the range 1 - 100.
+	 * @param alpha the alpha value between 0 - 1
+	 *
+	 * @return the RGB Color object
+	 */
+	public static Color toRGB(float h, float s, float l, float alpha) {
+
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (s &lt; 0)</span>
+<span class="nc" id="L329">			s = 0;</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (s &gt; 100)</span>
+<span class="nc" id="L331">			s = 100;</span>
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		if (l &lt; 0)</span>
+<span class="nc" id="L333">			l = 0;</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (l &gt; 100)</span>
+<span class="fc" id="L335">			l = 100;</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (alpha &lt; 0)</span>
+<span class="nc" id="L337">			alpha = 0;</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (alpha &gt; 1)</span>
+<span class="nc" id="L339">			alpha = 1;</span>
+
+		// Formula needs all values between 0 - 1.
+
+<span class="fc" id="L343">		h = h % 360.0f;</span>
+<span class="fc" id="L344">		h /= 360f;</span>
+<span class="fc" id="L345">		s /= 100f;</span>
+<span class="fc" id="L346">		l /= 100f;</span>
+
+<span class="fc" id="L348">		float q = 0;</span>
+
+<span class="fc bfc" id="L350" title="All 2 branches covered.">		if (l &lt; 0.5)</span>
+<span class="fc" id="L351">			q = l * (1 + s);</span>
+		else
+<span class="fc" id="L353">			q = (l + s) - (s * l);</span>
+
+<span class="fc" id="L355">		float p = 2 * l - q;</span>
+
+<span class="fc" id="L357">		float r = Math.max(0, HueToRGB(p, q, h + (1.0f / 3.0f)));</span>
+<span class="fc" id="L358">		float g = Math.max(0, HueToRGB(p, q, h));</span>
+<span class="fc" id="L359">		float b = Math.max(0, HueToRGB(p, q, h - (1.0f / 3.0f)));</span>
+
+<span class="fc" id="L361">		r = Math.min(r, 1.0f);</span>
+<span class="fc" id="L362">		g = Math.min(g, 1.0f);</span>
+<span class="fc" id="L363">		b = Math.min(b, 1.0f);</span>
+
+<span class="fc" id="L365">		return new Color(r, g, b, alpha);</span>
+	}
+
+	private static float HueToRGB(float p, float q, float h) {
+<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (h &lt; 0)</span>
+<span class="fc" id="L370">			h += 1;</span>
+
+<span class="fc bfc" id="L372" title="All 2 branches covered.">		if (h &gt; 1)</span>
+<span class="fc" id="L373">			h -= 1;</span>
+
+<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (6 * h &lt; 1)</span>
+<span class="fc" id="L376">			return p + ((q - p) * 6 * h);</span>
+
+<span class="fc bfc" id="L378" title="All 2 branches covered.">		if (2 * h &lt; 1)</span>
+<span class="fc" id="L379">			return q;</span>
+
+<span class="fc bfc" id="L381" title="All 2 branches covered.">		if (3 * h &lt; 2)</span>
+<span class="fc" id="L382">			return p + ((q - p) * 6 * ((2.0f / 3.0f) - h));</span>
+
+<span class="fc" id="L384">		return p;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

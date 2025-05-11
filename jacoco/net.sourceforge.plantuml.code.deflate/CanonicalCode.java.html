@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CanonicalCode.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.code.deflate</a> &gt; <span class="el_source">CanonicalCode.java</span></div><h1>CanonicalCode.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.code.deflate;
+
+/* 
+ * Simple DEFLATE decompressor
+ * Copyright (c) Project Nayuki
+ * 
+ * https://www.nayuki.io/page/simple-deflate-decompressor
+ * https://github.com/nayuki/Simple-DEFLATE-decompressor
+ */
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
+
+/**
+ * A canonical Huffman code, where the code values for each symbol is derived
+ * from a given sequence of code lengths. This data structure is immutable. This
+ * could be transformed into an explicit Huffman code tree.
+ * &lt;p&gt;
+ * Example:
+ * &lt;/p&gt;
+ * 
+ * &lt;pre&gt;
+ *   Code lengths (canonical code):
+ *    Symbol A: 1
+ *    Symbol B: 0 (no code)
+ *    Symbol C: 3
+ *    Symbol D: 2
+ *    Symbol E: 3
+ *  
+ *  Generated Huffman codes:
+ *    Symbol A: 0
+ *    Symbol B: (Absent)
+ *    Symbol C: 110
+ *    Symbol D: 10
+ *    Symbol E: 111
+ *  
+ *  Huffman code tree:
+ *      .
+ *     / \
+ *    A   .
+ *       / \
+ *      D   .
+ *         / \
+ *        C   E
+ * &lt;/pre&gt;
+ */
+final class CanonicalCode {
+
+	/*
+	 * These arrays store the Huffman codes and values necessary for decoding.
+	 * symbolCodeBits contains Huffman codes, each padded with a 1 bit at the
+	 * beginning to disambiguate codes of different lengths (e.g. otherwise we can't
+	 * distinguish 0b01 from 0b0001). Each symbolCodeBits[i] decodes to its
+	 * corresponding symbolValues[i]. Values in symbolCodeBits are strictly
+	 * increasing.
+	 * 
+	 * For the example of codeLengths=[1,0,3,2,3], we would have: i |
+	 * symbolCodeBits[i] | symbolValues[i] --+-------------------+---------------- 0
+	 * | 0b1_0 | 0 1 | 0b1_10 | 3 2 | 0b1_110 | 2 3 | 0b1_111 | 4
+	 */
+	private int[] symbolCodeBits;
+	private int[] symbolValues;
+
+	/**
+	 * Constructs a canonical Huffman code from the specified array of symbol code
+	 * lengths. Each code length must be non-negative. Code length 0 means no code
+	 * for the symbol. The collection of code lengths must represent a proper full
+	 * Huffman code tree.
+	 * &lt;p&gt;
+	 * Examples of code lengths that result in correct full Huffman code trees:
+	 * &lt;/p&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;[1, 1] (result: A=0, B=1)&lt;/li&gt;
+	 * &lt;li&gt;[2, 2, 1, 0, 0, 0] (result: A=10, B=11, C=0)&lt;/li&gt;
+	 * &lt;li&gt;[3, 3, 3, 3, 3, 3, 3, 3] (result: A=000, B=001, C=010, ..., H=111)&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;p&gt;
+	 * Examples of code lengths that result in under-full Huffman code trees:
+	 * &lt;/p&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;[0, 2, 0] (result: B=00, unused=01, unused=1)&lt;/li&gt;
+	 * &lt;li&gt;[0, 1, 0, 2] (result: B=0, D=10, unused=11)&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;p&gt;
+	 * Examples of code lengths that result in over-full Huffman code trees:
+	 * &lt;/p&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;[1, 1, 1] (result: A=0, B=1, C=overflow)&lt;/li&gt;
+	 * &lt;li&gt;[1, 1, 2, 2, 3, 3, 3, 3] (result: A=0, B=1, C=overflow, ...)&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param codeLengths array of symbol code lengths (not {@code null})
+	 * @throws NullPointerException     if the array is {@code null}
+	 * @throws IllegalArgumentException if any element is negative, any value
+	 *                                  exceeds MAX_CODE_LENGTH, or the collection
+	 *                                  of code lengths would yield an under-full or
+	 *                                  over-full Huffman code tree
+	 */
+<span class="fc" id="L100">	public CanonicalCode(int[] codeLengths) {</span>
+		// Check argument values
+<span class="fc" id="L102">		Objects.requireNonNull(codeLengths);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int x : codeLengths) {</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if (x &lt; 0)</span>
+<span class="nc" id="L105">				throw new IllegalArgumentException(&quot;Negative code length&quot;);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (x &gt; MAX_CODE_LENGTH)</span>
+<span class="nc" id="L107">				throw new IllegalArgumentException(&quot;Maximum code length exceeded&quot;);</span>
+		}
+
+		// Allocate code values to symbols. Symbols are processed in the order
+		// of shortest code length first, breaking ties by lowest symbol value.
+<span class="fc" id="L112">		symbolCodeBits = new int[codeLengths.length];</span>
+<span class="fc" id="L113">		symbolValues = new int[codeLengths.length];</span>
+<span class="fc" id="L114">		int numSymbolsAllocated = 0;</span>
+<span class="fc" id="L115">		int nextCode = 0;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for (int codeLength = 1; codeLength &lt;= MAX_CODE_LENGTH; codeLength++) {</span>
+<span class="fc" id="L117">			nextCode &lt;&lt;= 1;</span>
+<span class="fc" id="L118">			int startBit = 1 &lt;&lt; codeLength;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			for (int symbol = 0; symbol &lt; codeLengths.length; symbol++) {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">				if (codeLengths[symbol] != codeLength)</span>
+<span class="fc" id="L121">					continue;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">				if (nextCode &gt;= startBit)</span>
+<span class="nc" id="L123">					throw new IllegalArgumentException(&quot;This canonical code produces an over-full Huffman code tree&quot;);</span>
+
+<span class="fc" id="L125">				symbolCodeBits[numSymbolsAllocated] = startBit | nextCode;</span>
+<span class="fc" id="L126">				symbolValues[numSymbolsAllocated] = symbol;</span>
+<span class="fc" id="L127">				numSymbolsAllocated++;</span>
+<span class="fc" id="L128">				nextCode++;</span>
+			}
+		}
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (nextCode != 1 &lt;&lt; MAX_CODE_LENGTH)</span>
+<span class="nc" id="L132">			throw new IllegalArgumentException(&quot;This canonical code produces an under-full Huffman code tree&quot;);</span>
+
+		// Trim unused trailing elements
+<span class="fc" id="L135">		symbolCodeBits = Arrays.copyOf(symbolCodeBits, numSymbolsAllocated);</span>
+<span class="fc" id="L136">		symbolValues = Arrays.copyOf(symbolValues, numSymbolsAllocated);</span>
+<span class="fc" id="L137">	}</span>
+
+	/**
+	 * Decodes the next symbol from the specified bit input stream based on this
+	 * canonical code. The returned symbol value is in the range [0,
+	 * codeLengths.length).
+	 * 
+	 * @param in the bit input stream to read from
+	 * @return the next decoded symbol
+	 * @throws IOException if an I/O exception occurred
+	 */
+	public int decodeNextSymbol(BitInputStream in) throws IOException {
+<span class="fc" id="L149">		Objects.requireNonNull(in);</span>
+<span class="fc" id="L150">		int codeBits = 1; // The start bit</span>
+		while (true) {
+			// Accumulate one bit at a time on the right side until a match is
+			// found in the symbolCodeBits array. Because the Huffman code tree is
+			// full, this loop must terminate after at most MAX_CODE_LENGTH iterations.
+<span class="fc" id="L155">			codeBits = codeBits &lt;&lt; 1 | in.readNoEof();</span>
+<span class="fc" id="L156">			int index = Arrays.binarySearch(symbolCodeBits, codeBits);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			if (index &gt;= 0)</span>
+<span class="fc" id="L158">				return symbolValues[index];</span>
+<span class="fc" id="L159">		}</span>
+	}
+
+	/**
+	 * Returns a string representation of this canonical code, useful for debugging
+	 * only, and the format is subject to change.
+	 * 
+	 * @return a string representation of this canonical code
+	 */
+	public String toString() {
+<span class="nc" id="L169">		StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		for (int i = 0; i &lt; symbolCodeBits.length; i++) {</span>
+<span class="nc" id="L171">			sb.append(String.format(&quot;Code %s: Symbol %d%n&quot;, Integer.toBinaryString(symbolCodeBits[i]).substring(1),</span>
+<span class="nc" id="L172">					symbolValues[i]));</span>
+		}
+<span class="nc" id="L174">		return sb.toString();</span>
+	}
+
+	// The maximum Huffman code length allowed in the DEFLATE standard.
+	private static final int MAX_CODE_LENGTH = 15;
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

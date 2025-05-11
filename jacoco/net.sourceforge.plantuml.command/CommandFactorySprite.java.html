@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandFactorySprite.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command</a> &gt; <span class="el_source">CommandFactorySprite.java</span></div><h1>CommandFactorySprite.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command;
+
+import java.util.Arrays;
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.WithSprite;
+import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
+import net.sourceforge.plantuml.klimt.sprite.SpriteColorBuilder4096;
+import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+<span class="fc" id="L55">public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;WithSprite&gt; {</span>
+
+	private IRegex getRegexConcatMultiLine() {
+<span class="fc" id="L58">		return RegexConcat.build(CommandFactorySprite.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;sprite&quot;), //
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;\\$?&quot;), //
+				new RegexLeaf(&quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;DIM&quot;, &quot;\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]&quot;)), //
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
+	}
+
+	private IRegex getRegexConcatSingleLine() {
+<span class="fc" id="L70">		return RegexConcat.build(CommandFactorySprite.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;sprite&quot;), //
+<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;\\$?&quot;), //
+				new RegexLeaf(&quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;DIM&quot;, &quot;\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]&quot;)), //
+<span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L78">				new RegexLeaf(&quot;DATA&quot;, &quot;([-_A-Za-z0-9]+)&quot;), RegexLeaf.end());</span>
+	}
+
+	public Command&lt;WithSprite&gt; createSingleLine() {
+<span class="fc" id="L82">		return new SingleLineCommand2&lt;WithSprite&gt;(getRegexConcatSingleLine()) {</span>
+
+			@Override
+			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location,
+					RegexResult arg, ParserPass currentPass) {
+<span class="nc" id="L87">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
+			}
+
+		};
+	}
+
+	public Command&lt;WithSprite&gt; createMultiLine(boolean withBracket) {
+<span class="fc" id="L94">		return new CommandMultilines2&lt;WithSprite&gt;(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE,</span>
+<span class="fc" id="L95">				Trim.BOTH) {</span>
+
+			@Override
+			public String getPatternEnd() {
+<span class="fc" id="L99">				return &quot;^end[%s]?sprite|\\}$&quot;;</span>
+			}
+
+			@Override
+			protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines, ParserPass currentPass) {
+<span class="fc" id="L104">				lines = lines.trim().removeEmptyLines();</span>
+<span class="fc" id="L105">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+
+<span class="fc" id="L107">				lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L108">				lines = lines.removeEmptyColumns();</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				if (lines.size() == 0)</span>
+<span class="nc" id="L110">					return CommandExecutionResult.error(&quot;No sprite defined.&quot;);</span>
+
+<span class="fc" id="L112">				return executeInternal(system, line0, lines.getLinesAsStringForSprite());</span>
+			}
+
+		};
+	}
+
+	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0, final List&lt;String&gt; strings) {
+		final Sprite sprite;
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (line0.get(&quot;DIM&quot;, 0) == null) {</span>
+<span class="nc" id="L121">			sprite = SpriteGrayLevel.GRAY_16.buildSprite(-1, -1, strings);</span>
+		} else {
+<span class="fc" id="L123">			final int width = Integer.parseInt(line0.get(&quot;DIM&quot;, 0));</span>
+<span class="fc" id="L124">			final int height = Integer.parseInt(line0.get(&quot;DIM&quot;, 1));</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (line0.get(&quot;DIM&quot;, 4) == null) {</span>
+<span class="fc" id="L126">				final int nbLevel = Integer.parseInt(line0.get(&quot;DIM&quot;, 2));</span>
+<span class="pc bpc" id="L127" title="3 of 6 branches missed.">				if (nbLevel != 4 &amp;&amp; nbLevel != 8 &amp;&amp; nbLevel != 16)</span>
+<span class="nc" id="L128">					return CommandExecutionResult.error(&quot;Only 4, 8 or 16 graylevel are allowed.&quot;);</span>
+
+<span class="fc" id="L130">				final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) == null) {</span>
+<span class="fc" id="L132">					sprite = level.buildSprite(width, height, strings);</span>
+				} else {
+<span class="nc" id="L134">					sprite = level.buildSpriteZ(width, height, concat(strings));</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">					if (sprite == null)</span>
+<span class="nc" id="L136">						return CommandExecutionResult.error(&quot;Cannot decode sprite.&quot;);</span>
+
+				}
+<span class="fc" id="L139">			} else {</span>
+<span class="nc" id="L140">				sprite = SpriteColorBuilder4096.buildSprite(strings);</span>
+			}
+		}
+<span class="fc" id="L143">		system.addSprite(line0.get(&quot;NAME&quot;, 0), sprite);</span>
+<span class="fc" id="L144">		return CommandExecutionResult.ok();</span>
+	}
+
+	private String concat(final List&lt;String&gt; strings) {
+<span class="nc" id="L148">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (String s : strings)</span>
+<span class="nc" id="L150">			sb.append(StringUtils.trin(s));</span>
+
+<span class="nc" id="L152">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

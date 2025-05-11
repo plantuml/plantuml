@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstructionList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">InstructionList.java</span></div><h1>InstructionList.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileAssembly;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class InstructionList extends WithNote implements Instruction, InstructionCollection {
+
+<span class="fc" id="L65">	private final List&lt;Instruction&gt; all = new ArrayList&lt;&gt;();</span>
+	private final Swimlane defaultSwimlane;
+
+	@Override
+	public boolean containsBreak() {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (Instruction ins : all)</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			if (ins.containsBreak())</span>
+<span class="nc" id="L72">				return true;</span>
+
+<span class="nc" id="L74">		return false;</span>
+	}
+
+	public static InstructionList empty() {
+<span class="fc" id="L78">		return new InstructionList(null);</span>
+	}
+
+<span class="fc" id="L81">	public InstructionList(Swimlane defaultSwimlane) {</span>
+<span class="fc" id="L82">		this.defaultSwimlane = defaultSwimlane;</span>
+<span class="fc" id="L83">	}</span>
+
+	public boolean isEmpty() {
+<span class="nc" id="L86">		return all.isEmpty();</span>
+	}
+
+	public boolean isOnlySingleStopOrSpot() {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (all.size() != 1)</span>
+<span class="nc" id="L91">			return false;</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (getLast() instanceof InstructionSpot)</span>
+<span class="nc" id="L94">			return true;</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (getLast() instanceof InstructionStop)</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			return ((InstructionStop) getLast()).hasNotes() == false;</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (getLast() instanceof InstructionEnd)</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			return ((InstructionEnd) getLast()).hasNotes() == false;</span>
+
+<span class="nc" id="L102">		return false;</span>
+	}
+
+	@Override
+	public CommandExecutionResult add(Instruction ins) {
+<span class="fc" id="L107">		all.add(ins);</span>
+<span class="fc" id="L108">		return CommandExecutionResult.ok();</span>
+	}
+
+	// ::comment when __CORE__
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (all.size() == 0)</span>
+<span class="nc" id="L115">			return new GtileEmpty(stringBounder, skinParam, defaultSwimlane);</span>
+
+<span class="nc" id="L117">		Gtile result = null;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (Instruction ins : all) {</span>
+<span class="nc" id="L119">			final Gtile cur = ins.createGtile(skinParam, stringBounder);</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L122">				result = cur;</span>
+			else
+<span class="nc" id="L124">				result = new GtileAssembly(result, cur, ins.getInLinkRendering());</span>
+
+<span class="nc" id="L126">		}</span>
+<span class="nc" id="L127">		return result;</span>
+	}
+	// ::done
+
+	@Override
+	public Ftile createFtile(FtileFactory factory) {
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (all.size() == 0) {</span>
+<span class="nc" id="L134">			Ftile result = new FtileEmpty(factory.skinParam(), defaultSwimlane);</span>
+			// Not a typo, in that case, we decide to decorate the entry link.
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (outlinkRendering != null)</span>
+<span class="nc" id="L137">				result = factory.decorateIn(result, outlinkRendering);</span>
+<span class="nc" id="L138">			return result;</span>
+		}
+
+<span class="fc" id="L141">		final List&lt;WeldingPoint&gt; breaks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L142">		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn(), VerticalAlignment.CENTER);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		for (Instruction ins : all) {</span>
+<span class="fc" id="L144">			Ftile cur = ins.createFtile(factory);</span>
+<span class="fc" id="L145">			breaks.addAll(cur.getWeldingPoints());</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (ins.getInLinkRendering().isNone() == false)</span>
+<span class="nc" id="L147">				cur = factory.decorateIn(cur, ins.getInLinkRendering());</span>
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (result == null)</span>
+<span class="fc" id="L150">				result = cur;</span>
+			else
+<span class="fc" id="L152">				result = factory.assembly(result, cur);</span>
+<span class="fc" id="L153">		}</span>
+
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (outlinkRendering != null)</span>
+<span class="nc" id="L156">			result = factory.decorateOut(result, outlinkRendering);</span>
+
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (breaks.size() &gt; 0)</span>
+<span class="nc" id="L159">			result = new FtileDecorateWelding(result, breaks);</span>
+
+<span class="fc" id="L161">		return result;</span>
+	}
+
+	@Override
+	final public boolean kill() {
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (all.size() == 0)</span>
+<span class="nc" id="L167">			return false;</span>
+
+<span class="nc" id="L169">		return getLast().kill();</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="nc" id="L174">		return all.iterator().next().getInLinkRendering();</span>
+	}
+
+	@Override
+	public Instruction getLast() {
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (all.size() == 0)</span>
+<span class="nc" id="L180">			return null;</span>
+
+<span class="fc" id="L182">		return all.get(all.size() - 1);</span>
+	}
+
+	@Override
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (getLast() == null)</span>
+<span class="nc" id="L188">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+
+<span class="fc" id="L190">		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	}
+
+	@Override
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L195">		return getSwimlanes2(all);</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneIn() {
+<span class="fc" id="L200">		return defaultSwimlane;</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L205">		final Set&lt;Swimlane&gt; swimlanes = getSwimlanes();</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (swimlanes.size() == 0)</span>
+<span class="nc" id="L207">			return null;</span>
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (swimlanes.size() == 1)</span>
+<span class="nc" id="L210">			return swimlanes.iterator().next();</span>
+
+<span class="nc" id="L212">		return getLast().getSwimlaneOut();</span>
+	}
+
+	public static Set&lt;Swimlane&gt; getSwimlanes2(List&lt;? extends Instruction&gt; list) {
+<span class="nc" id="L216">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		for (Instruction ins : list)</span>
+<span class="nc" id="L218">			result.addAll(ins.getSwimlanes());</span>
+
+<span class="nc" id="L220">		return Collections.unmodifiableSet(result);</span>
+	}
+
+	private LinkRendering outlinkRendering;
+
+	public void setOutRendering(LinkRendering outlinkRendering) {
+<span class="nc" id="L226">		this.outlinkRendering = outlinkRendering;</span>
+<span class="nc" id="L227">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

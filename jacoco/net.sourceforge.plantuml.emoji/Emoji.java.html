@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Emoji.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.emoji</a> &gt; <span class="el_source">Emoji.java</span></div><h1>Emoji.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.emoji;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import net.sourceforge.plantuml.emoji.data.Dummy;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.log.Logme;
+
+// Emojji from https://twemoji.twitter.com/
+// Shorcut from https://api.github.com/emojis
+
+// ::uncomment when __CORE__
+//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
+//import java.io.FileInputStream;
+// ::done
+
+public class Emoji {
+	// ::remove folder when __HAXE__
+<span class="fc" id="L64">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
+
+	static {
+<span class="fc" id="L67">		final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (is != null)</span>
+<span class="fc" id="L69">			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="fc" id="L70">				String s = null;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">				while ((s = br.readLine()) != null)</span>
+<span class="fc" id="L72">					new Emoji(s);</span>
+
+<span class="nc" id="L74">			} catch (IOException e) {</span>
+<span class="nc" id="L75">				Logme.error(e);</span>
+<span class="fc" id="L76">			}</span>
+<span class="fc" id="L77">	}</span>
+
+	public static Map&lt;String, Emoji&gt; getAll() {
+<span class="nc" id="L80">		return Collections.unmodifiableMap(new TreeMap&lt;&gt;(ALL));</span>
+	}
+
+	private SvgNanoParser nano;
+
+	private final String unicode;
+	private final String shortcut;
+
+<span class="fc" id="L88">	private Emoji(String unicode) {</span>
+<span class="fc" id="L89">		final int x = unicode.indexOf(';');</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (x == -1) {</span>
+<span class="fc" id="L91">			this.shortcut = null;</span>
+		} else {
+<span class="fc" id="L93">			this.shortcut = unicode.substring(x + 1);</span>
+<span class="fc" id="L94">			ALL.put(this.shortcut, this);</span>
+<span class="fc" id="L95">			unicode = unicode.substring(0, x);</span>
+		}
+<span class="fc" id="L97">		this.unicode = unicode;</span>
+<span class="fc" id="L98">		ALL.put(unicode, this);</span>
+<span class="fc" id="L99">	}</span>
+
+	public static String pattern() {
+<span class="fc" id="L102">		final StringBuilder sb = new StringBuilder(&quot;\\&lt;(#\\w+)?:(&quot;);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (String s : ALL.keySet()) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (sb.toString().endsWith(&quot;(&quot;) == false)</span>
+<span class="fc" id="L105">				sb.append(&quot;|&quot;);</span>
+<span class="fc" id="L106">			sb.append(s);</span>
+<span class="fc" id="L107">		}</span>
+<span class="fc" id="L108">		sb.append(&quot;):\\&gt;&quot;);</span>
+<span class="fc" id="L109">		return sb.toString();</span>
+	}
+
+	public static Emoji retrieve(String name) {
+<span class="nc" id="L113">		return ALL.get(name.toLowerCase());</span>
+	}
+
+	private synchronized void loadIfNeed() throws IOException {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (nano != null)</span>
+<span class="nc" id="L118">			return;</span>
+
+<span class="nc" id="L120">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
+		// ::uncomment when __CORE__
+//		final String fullpath = cheerpjPath + &quot;emoji/&quot; + unicode + &quot;.svg&quot;;
+//		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullpath)))) {
+		// ::done
+		// ::comment when __CORE__
+<span class="nc" id="L126">		try (BufferedReader br = new BufferedReader(</span>
+<span class="nc" id="L127">				new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
+			// ::done
+<span class="nc" id="L129">			final String singleLine = br.readLine();</span>
+<span class="nc" id="L130">			data.add(singleLine);</span>
+		}
+<span class="nc" id="L132">		this.nano = new SvgNanoParser(data);</span>
+<span class="nc" id="L133">	}</span>
+
+	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
+		try {
+<span class="nc" id="L137">			loadIfNeed();</span>
+<span class="nc" id="L138">		} catch (IOException e) {</span>
+<span class="nc" id="L139">			Logme.error(e);</span>
+<span class="nc" id="L140">		}</span>
+<span class="nc" id="L141">		nano.drawU(ug, scale, colorForMonochrome);</span>
+<span class="nc" id="L142">	}</span>
+
+	public String getShortcut() {
+<span class="nc" id="L145">		return shortcut;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

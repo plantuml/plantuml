@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringLocated.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.text</a> &gt; <span class="el_source">StringLocated.java</span></div><h1>StringLocated.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.text;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
+import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+final public class StringLocated {
+	// ::remove folder when __HAXE__
+
+	private final String s;
+	private final LineLocation location;
+	private final String preprocessorError;
+
+	private StringLocated trimmed;
+<span class="fc" id="L59">	private long fox = -1;</span>
+	private TLineType type;
+
+//	public StringLocated jawsPatchNewlines() {
+//	return new StringLocated(s.replace(&quot;\\n&quot;, &quot;%n()&quot;), location, preprocessorError);
+//}
+//
+//public BlocLines expandsJaws() {
+//	BlocLines result = BlocLines.create();
+//	for (String part : s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE))
+//		result = result.add(new StringLocated(part, location, preprocessorError));
+//	return result;
+//}
+
+	public List&lt;StringLocated&gt; expandsJawsForPreprocessor() {
+		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_MARKS) {
+			final int x = searchMultilineTripleSeparators();
+			if (x == -1)
+				return Arrays.asList(this);
+			final String s1 = s.substring(0, x);
+			final String s2 = s.substring(x + 3);
+			return Arrays.asList(new StringLocated(s1, location, preprocessorError).jawsHideBackslash(),
+					new StringLocated(s2, location, preprocessorError).jawsHideBackslash());
+		}
+<span class="fc" id="L83">		return Arrays.asList(this);</span>
+	}
+
+<span class="fc" id="L86">	private static final Pattern TRIPLE_PATTERN = Pattern.compile(&quot;!!!|'''|\&quot;\&quot;\&quot;&quot;);</span>
+
+	private int searchMultilineTripleSeparators() {
+<span class="nc" id="L89">		final Matcher matcher = TRIPLE_PATTERN.matcher(s);</span>
+
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (matcher.find())</span>
+<span class="nc" id="L92">			return matcher.start();</span>
+
+<span class="nc" id="L94">		return -1;</span>
+	}
+
+	public List&lt;StringLocated&gt; expandsNewline() {
+<span class="fc" id="L98">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (String s : Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE)))</span>
+<span class="fc" id="L100">			copy.add(new StringLocated(s, location, preprocessorError));</span>
+<span class="fc" id="L101">		return copy;</span>
+	}
+
+	public List&lt;StringLocated&gt; expandsBreaklineButEmbedded() {
+<span class="fc" id="L105">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L106">		int level = 0;</span>
+<span class="fc" id="L107">		StringBuilder pending = new StringBuilder();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (s.substring(i).startsWith(&quot;{{&quot;))</span>
+<span class="fc" id="L110">				level++;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			else if (s.substring(i).startsWith(&quot;}}&quot;))</span>
+<span class="fc" id="L112">				level--;</span>
+
+<span class="fc" id="L114">			final char ch = s.charAt(i);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">			if (level &gt; 0) {</span>
+<span class="fc" id="L116">				pending.append(ch);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {</span>
+<span class="nc" id="L118">				copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
+<span class="nc" id="L119">				pending.setLength(0);</span>
+			} else {
+<span class="fc" id="L121">				pending.append(ch);</span>
+			}
+		}
+<span class="fc" id="L124">		copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
+
+<span class="fc" id="L126">		return copy;</span>
+	}
+
+//	public List&lt;StringLocated&gt; expandsJaws51() {
+//		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;();
+//		for (String s : expandsJaws31())
+//			copy.add(new StringLocated(s, location, preprocessorError));
+//		return copy;
+//	}
+
+//	public List&lt;StringLocated&gt; expandsJaws51() {
+//		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;();
+//		for (String s : expandsJaws31())
+//			copy.add(new StringLocated(s, location, preprocessorError));
+//		return copy;
+//	}
+//
+
+//	public List&lt;String&gt; expandsJaws31() {
+//		final List&lt;String&gt; result = new ArrayList&lt;&gt;();
+//		boolean inGuillement = false;
+//		StringBuilder pending = new StringBuilder();
+//		for (char ch : s.toCharArray()) {
+//			if (ch == '&quot;')
+//				inGuillement = !inGuillement;
+//			if (inGuillement) {
+//				pending.append(ch);
+//			} else if (ch == Jaws.BLOCK_E1_NEWLINE) {
+//				result.add(pending.toString());
+//				pending.setLength(0);
+//			} else {
+//				pending.append(ch);
+//			}
+//		}
+//		result.add(pending.toString());
+//
+//		return result;
+//	}
+//
+//	public static String expandsJaws32(String s) {
+//		boolean inGuillement = false;
+//		final StringBuilder pending = new StringBuilder();
+//		for (char ch : s.toCharArray()) {
+//			if (ch == '&quot;')
+//				inGuillement = !inGuillement;
+//			if (inGuillement)
+//				pending.append(ch);
+//			else if (ch == Jaws.BLOCK_E1_NEWLINE)
+//				pending.append('\n');
+//			else
+//				pending.append(ch);
+//
+//		}
+//		return pending.toString();
+//	}
+
+	public StringLocated jawsHideBackslash() {
+<span class="nc" id="L183">		return new StringLocated(s.replace('\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);</span>
+	}
+
+	public static List&lt;String&gt; expandsNewline(String s) {
+<span class="fc" id="L187">		return Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE));</span>
+	}
+
+	public StringLocated(String s, LineLocation location) {
+<span class="fc" id="L191">		this(s, location, null);</span>
+<span class="fc" id="L192">	}</span>
+
+<span class="fc" id="L194">	public StringLocated(String s, LineLocation location, String preprocessorError) {</span>
+<span class="fc" id="L195">		this.s = Objects.requireNonNull(s);</span>
+<span class="fc" id="L196">		this.location = location;</span>
+<span class="fc" id="L197">		this.preprocessorError = preprocessorError;</span>
+<span class="fc" id="L198">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L202">		return s;</span>
+	}
+
+	public StringLocated append(String endOfLine) {
+<span class="fc" id="L206">		return new StringLocated(s + endOfLine, location, preprocessorError);</span>
+	}
+
+	public StringLocated append(char endOfLine) {
+<span class="nc" id="L210">		return new StringLocated(s + endOfLine, location, preprocessorError);</span>
+	}
+
+	public StringLocated mergeEndBackslash(StringLocated next) {
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		if (StringUtils.endsWithBackslash(s) == false)</span>
+<span class="nc" id="L215">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L217">		return new StringLocated(s.substring(0, s.length() - 1) + next.s, location, preprocessorError);</span>
+	}
+
+	public StringLocated withErrorPreprocessor(String preprocessorError) {
+<span class="fc" id="L221">		return new StringLocated(s, location, preprocessorError);</span>
+	}
+
+	public StringLocated substring(int start, int end) {
+<span class="fc" id="L225">		return new StringLocated(this.getString().substring(start, end), this.getLocation(),</span>
+<span class="fc" id="L226">				this.getPreprocessorError());</span>
+	}
+
+	public StringLocated substring(int start) {
+<span class="nc" id="L230">		return new StringLocated(this.getString().substring(start), this.getLocation(), this.getPreprocessorError());</span>
+	}
+
+	public StringLocated getTrimmed() {
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (trimmed == null) {</span>
+<span class="fc" id="L235">			this.trimmed = new StringLocated(StringUtils.trin(this.getString()), location, preprocessorError);</span>
+<span class="fc" id="L236">			trimmed.fox = this.fox;</span>
+<span class="fc" id="L237">			trimmed.trimmed = trimmed;</span>
+		}
+<span class="fc" id="L239">		return trimmed;</span>
+	}
+
+	@JawsStrange
+	public StringLocated removeInnerComment() {
+<span class="fc" id="L244">		final String string = s.toString();</span>
+<span class="fc" id="L245">		final String trim = string.replace('\t', ' ').trim();</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (trim.startsWith(&quot;/'&quot;)) {</span>
+<span class="nc" id="L247">			final int idx = string.indexOf(&quot;'/&quot;);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">			if (idx != -1)</span>
+<span class="nc" id="L249">				return new StringLocated(removeSpecialInnerComment(s.substring(idx + 2, s.length())), location,</span>
+						preprocessorError);
+
+		}
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (trim.endsWith(&quot;'/&quot;)) {</span>
+<span class="nc" id="L254">			final int idx = string.lastIndexOf(&quot;/'&quot;);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">			if (idx != -1)</span>
+<span class="nc" id="L256">				return new StringLocated(removeSpecialInnerComment(s.substring(0, idx)), location, preprocessorError);</span>
+
+		}
+<span class="pc bpc" id="L259" title="3 of 4 branches missed.">		if (trim.contains(&quot;/'''&quot;) &amp;&amp; trim.contains(&quot;'''/&quot;))</span>
+<span class="nc" id="L260">			return new StringLocated(removeSpecialInnerComment(s), location, preprocessorError);</span>
+
+<span class="fc" id="L262">		return this;</span>
+	}
+
+	private String removeSpecialInnerComment(String s) {
+<span class="nc bnc" id="L266" title="All 4 branches missed.">		if (s.contains(&quot;/'''&quot;) &amp;&amp; s.contains(&quot;'''/&quot;))</span>
+<span class="nc" id="L267">			return s.replaceAll(&quot;/'''[-\\w]*'''/&quot;, &quot;&quot;);</span>
+
+<span class="nc" id="L269">		return s;</span>
+	}
+
+	public String getString() {
+<span class="fc" id="L273">		return s;</span>
+	}
+
+	public LineLocation getLocation() {
+<span class="fc" id="L277">		return location;</span>
+	}
+
+	public String getPreprocessorError() {
+<span class="fc" id="L281">		return preprocessorError;</span>
+	}
+
+	public long getFoxSignature() {
+<span class="fc bfc" id="L285" title="All 2 branches covered.">		if (fox == -1)</span>
+<span class="fc" id="L286">			fox = FoxSignature.getFoxSignatureFromRealString(getString());</span>
+
+<span class="fc" id="L288">		return fox;</span>
+	}
+
+	public TLineType getType() {
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (type == null)</span>
+<span class="fc" id="L293">			type = TLineType.getFromLineInternal(s);</span>
+
+<span class="fc" id="L295">		return type;</span>
+	}
+
+	public int length() {
+<span class="fc" id="L299">		return s.length();</span>
+	}
+
+	public char charAt(int i) {
+<span class="fc" id="L303">		return s.charAt(i);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

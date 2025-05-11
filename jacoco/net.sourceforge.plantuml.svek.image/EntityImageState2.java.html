@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageState2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageState2.java</span></div><h1>EntityImageState2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.url.Url;
+
+public class EntityImageState2 extends AbstractEntityImage {
+
+	final private Url url;
+
+	private final TextBlock asSmall;
+
+	public EntityImageState2(Entity entity) {
+<span class="nc" id="L64">		super(entity);</span>
+<span class="nc" id="L65">		final Stereotype stereotype = entity.getStereotype();</span>
+
+<span class="nc" id="L67">		final USymbol symbol = USymbols.FRAME;</span>
+<span class="nc" id="L68">		final Fashion ctx = getStyle().getSymbolContext(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc" id="L70">		this.url = entity.getUrl99();</span>
+<span class="nc" id="L71">		TextBlock stereo = TextBlockUtils.empty(0, 0);</span>
+
+<span class="nc" id="L73">		final TextBlock desc = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER),</span>
+<span class="nc" id="L74">				entity.getDisplay(), getSkinParam(), stereotype, entity, getStyle());</span>
+
+<span class="nc" id="L76">		asSmall = symbol.asSmall(null, desc, stereo, ctx, getSkinParam().getStereotypeAlignment());</span>
+
+<span class="nc" id="L78">	}</span>
+
+	private Style getStyle() {
+<span class="nc" id="L81">		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
+	private StyleSignatureBasic getStyleSignature() {
+<span class="nc" id="L85">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.state);</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L89">		return ShapeType.RECTANGLE;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L93">		return asSmall.calculateDimension(stringBounder);</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L98">			ug.startUrl(url);</span>
+
+<span class="nc" id="L100">		asSmall.drawU(ug);</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L103">			ug.closeUrl();</span>
+
+<span class="nc" id="L105">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

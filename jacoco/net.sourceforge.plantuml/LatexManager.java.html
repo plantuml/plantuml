@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LatexManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">LatexManager.java</span></div><h1>LatexManager.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+public class LatexManager implements AutoCloseable {
+
+	private final Process process;
+	private final PrintWriter writer;
+	private final BufferedReader reader;
+
+	private static final String TEMPLATE_PREFIX = &quot;{\\sbox0{&quot;;
+	private static final String TEMPLATE_SUFFIX = &quot;}\\typeout{\\the\\wd0,\\the\\ht0,\\the\\dp0}}&quot;;
+<span class="nc" id="L22">	private static final Pattern PATTERN = Pattern.compile(&quot;\\*?[\\d.]+pt,[\\d.]+pt,[\\d.]+pt&quot;);</span>
+<span class="nc" id="L23">	private final LruCache lruCache = new LruCache(128);</span>
+
+<span class="nc" id="L25">	public LatexManager(String system, String preamble) {</span>
+<span class="nc bnc" id="L26" title="All 4 branches missed.">		String command = (system != null &amp;&amp; !system.isEmpty()) ? system : &quot;xelatex&quot;;</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">		if (!command.endsWith(&quot;latex&quot;)) {</span>
+<span class="nc" id="L28">			throw new IllegalArgumentException(&quot;command &quot; + command + &quot; is unsupported&quot;);</span>
+		}
+		try {
+<span class="nc" id="L31">			File tempDir = Files.createTempDirectory(&quot;plantuml-latex-&quot;).toFile();</span>
+<span class="nc" id="L32">			tempDir.deleteOnExit();</span>
+<span class="nc" id="L33">			this.process = new ProcessBuilder(command, &quot;-halt-on-error&quot;)</span>
+<span class="nc" id="L34">							.directory(tempDir)</span>
+<span class="nc" id="L35">							.start();</span>
+<span class="nc" id="L36">		} catch (IOException e) {</span>
+<span class="nc" id="L37">			throw new RuntimeException(e);</span>
+<span class="nc" id="L38">		}</span>
+<span class="nc" id="L39">		this.writer = new PrintWriter(new OutputStreamWriter(this.process.getOutputStream()), true);</span>
+<span class="nc" id="L40">		this.reader = new BufferedReader(new InputStreamReader(this.process.getInputStream()));</span>
+<span class="nc" id="L41">		this.writer.println(&quot;\\documentclass[tikz]{standalone}\n&quot; +</span>
+						&quot;\\usepackage{amsmath}\n&quot; +
+<span class="nc bnc" id="L43" title="All 4 branches missed.">						((preamble != null &amp;&amp; !preamble.isEmpty()) ? preamble + &quot;\n&quot; : &quot;&quot;) +</span>
+						&quot;\\begin{document}\n&quot; +
+						&quot;\\typeout{latex_query_start}&quot;);
+<span class="nc" id="L46">		String output = expect(&quot;*latex_query_start&quot;, null);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (!output.trim().endsWith(&quot;*latex_query_start&quot;)) {</span>
+<span class="nc" id="L48">			throw new IllegalArgumentException(command + &quot; fail, message: &quot; + output + System.lineSeparator()</span>
+							+ &quot;please install &quot; + command + &quot;, and package `amsmath`, `tikz`&quot;);
+		}
+<span class="nc" id="L51">	}</span>
+
+	private String expect(String s, String end) {
+<span class="nc" id="L54">		StringBuilder sb = new StringBuilder();</span>
+		while (true) {
+			String line;
+			try {
+<span class="nc" id="L58">				line = this.reader.readLine();</span>
+<span class="nc" id="L59">			} catch (IOException e) {</span>
+<span class="nc" id="L60">				throw new RuntimeException(e);</span>
+<span class="nc" id="L61">			}</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (line == null) {</span>
+<span class="nc" id="L63">				break;</span>
+			}
+<span class="nc" id="L65">			sb.append(line);</span>
+<span class="nc" id="L66">			sb.append(System.lineSeparator());</span>
+<span class="nc bnc" id="L67" title="All 8 branches missed.">			if ((end == null &amp;&amp; line.startsWith(s)) || (end != null &amp;&amp; line.endsWith(end))) {</span>
+<span class="nc" id="L68">				break;</span>
+			}
+<span class="nc" id="L70">		}</span>
+<span class="nc" id="L71">		return sb.toString();</span>
+	}
+
+	public double[] getWidthHeightDepth(String s) {
+<span class="nc" id="L75">		double[] value = this.lruCache.get(s);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L77">			value = doGetWidthHeightDepth(s);</span>
+<span class="nc" id="L78">			this.lruCache.put(s, value);</span>
+		}
+<span class="nc" id="L80">		return value;</span>
+	}
+
+	protected double[] doGetWidthHeightDepth(String s) {
+<span class="nc" id="L84">		this.writer.println(TEMPLATE_PREFIX + s + TEMPLATE_SUFFIX);</span>
+<span class="nc" id="L85">		String output = this.expect(&quot;*&quot;, &quot;pt&quot;);</span>
+<span class="nc" id="L86">		String line = output.trim();</span>
+<span class="nc" id="L87">		int index = line.lastIndexOf(System.lineSeparator());</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (index &gt; 0) {</span>
+<span class="nc" id="L89">			line = line.substring(index + 1);</span>
+		}
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (!PATTERN.matcher(line).matches()) {</span>
+<span class="nc" id="L92">			System.err.println(&quot;[error] cannot get width, height, depth, text: &quot; + s + &quot;, message: &quot; + output.trim());</span>
+<span class="nc" id="L93">			throw new IllegalArgumentException(&quot;cannot get width, height, depth, text: &quot; + s + &quot;, message: &quot; + output.trim());</span>
+		}
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (!line.startsWith(&quot;*&quot;)) {</span>
+<span class="nc" id="L96">			System.err.println(&quot;[warning] cannot get width, height, depth, text: &quot; + s + &quot;, message: &quot; + output.trim());</span>
+		}
+<span class="nc" id="L98">		String[] pts = line.replace(&quot;*&quot;, &quot;&quot;).split(&quot;,&quot;, 3);</span>
+<span class="nc" id="L99">		double width = Double.parseDouble(pts[0].replace(&quot;pt&quot;, &quot;&quot;));</span>
+<span class="nc" id="L100">		double height = Double.parseDouble(pts[1].replace(&quot;pt&quot;, &quot;&quot;));</span>
+<span class="nc" id="L101">		double depth = Double.parseDouble(pts[2].replace(&quot;pt&quot;, &quot;&quot;));</span>
+<span class="nc" id="L102">		return new double[] {width, height, depth};</span>
+	}
+
+	public static String protectText(String text) {
+<span class="nc" id="L106">		final String tempBackslash = &quot;\uFFFF&quot;;</span>
+<span class="nc" id="L107">		return text.replace(&quot;\\&quot;, tempBackslash)</span>
+<span class="nc" id="L108">				.replace(&quot;#&quot;, &quot;\\#&quot;)</span>
+<span class="nc" id="L109">				.replace(&quot;$&quot;, &quot;\\$&quot;)</span>
+<span class="nc" id="L110">				.replace(&quot;%&quot;, &quot;\\%&quot;)</span>
+<span class="nc" id="L111">				.replace(&quot;&amp;&quot;, &quot;\\&amp;&quot;)</span>
+<span class="nc" id="L112">				.replace(&quot;_&quot;, &quot;\\_&quot;)</span>
+<span class="nc" id="L113">				.replace(&quot;{&quot;, &quot;\\{&quot;)</span>
+<span class="nc" id="L114">				.replace(&quot;}&quot;, &quot;\\}&quot;)</span>
+<span class="nc" id="L115">				.replace(&quot;^&quot;, &quot;\\^{}&quot;)</span>
+<span class="nc" id="L116">				.replace(&quot;~&quot;, &quot;\\~{}&quot;)</span>
+<span class="nc" id="L117">				.replace(&quot;\u00AB&quot;, &quot;\\guillemotleft{}&quot;)</span>
+<span class="nc" id="L118">				.replace(&quot;\u00BB&quot;, &quot;\\guillemotright{}&quot;)</span>
+<span class="nc" id="L119">				.replace(&quot;\t&quot;, &quot;~~~~~~~~&quot;) // #1016</span>
+<span class="nc" id="L120">				.replaceAll(&quot;^\\s+|\\s+$&quot;, &quot;~&quot;)</span>
+<span class="nc" id="L121">				.replace(tempBackslash, &quot;\\textbackslash{}&quot;);</span>
+	}
+
+	@Override
+	public void close() {
+<span class="nc" id="L126">		this.process.destroy();</span>
+<span class="nc" id="L127">	}</span>
+
+	private static class LruCache extends LinkedHashMap&lt;String, double[]&gt; {
+
+		private final int maxSize;
+
+		public LruCache(int maxSize) {
+<span class="nc" id="L134">			super(maxSize + 1, 1.0F, true);</span>
+<span class="nc" id="L135">			this.maxSize = maxSize;</span>
+<span class="nc" id="L136">		}</span>
+
+		@Override
+		protected boolean removeEldestEntry(Map.Entry&lt;String, double[]&gt; eldest) {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			return this.size() &gt;= this.maxSize;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

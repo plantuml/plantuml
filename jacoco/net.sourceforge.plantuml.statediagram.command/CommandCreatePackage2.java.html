@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandCreatePackage2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.statediagram.command</a> &gt; <span class="el_source">CommandCreatePackage2.java</span></div><h1>CommandCreatePackage2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.statediagram.command;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandCreatePackage2 extends SingleLineCommand2&lt;StateDiagram&gt; {
+
+	public CommandCreatePackage2() {
+<span class="fc" id="L68">		super(getRegexConcat());</span>
+<span class="fc" id="L69">	}</span>
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+<span class="nc bnc" id="L73" title="All 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
+	}
+
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L78">		return RegexConcat.build(CommandCreatePackage2.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;frame&quot;), //
+<span class="fc" id="L80">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOr(//
+						new RegexConcat(//
+								new RegexLeaf(&quot;CODE1&quot;, &quot;([%pLN_.]+)&quot;), //
+<span class="fc" id="L84">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L86">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;DISPLAY1&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+						new RegexConcat(//
+								new RegexOptional(new RegexConcat( //
+<span class="fc" id="L90">										new RegexLeaf(&quot;DISPLAY2&quot;, &quot;[%g]([^%g]+)[%g]&quot;), RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L91">										new RegexLeaf(&quot;as&quot;), RegexLeaf.spaceOneOrMore() //</span>
+								)), //
+								new RegexLeaf(&quot;CODE2&quot;, &quot;([%pLN_.]+)&quot;))), //
+<span class="fc" id="L94">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L96">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L97">				color().getRegex(), //</span>
+<span class="fc" id="L98">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;LINECOLOR&quot;, &quot;##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?&quot;)),
+<span class="fc" id="L100">				new RegexLeaf(&quot;(?:[%s]*\\{|[%s]+begin)&quot;), RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L104">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	private String getNotNull(RegexResult arg, String v1, String v2) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (arg.get(v1, 0) == null)</span>
+<span class="nc" id="L109">			return arg.get(v2, 0);</span>
+
+<span class="nc" id="L111">		return arg.get(v1, 0);</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+
+<span class="nc" id="L118">		final String idShort = getNotNull(arg, &quot;CODE1&quot;, &quot;CODE2&quot;);</span>
+<span class="nc" id="L119">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="nc" id="L120">		String display = getNotNull(arg, &quot;DISPLAY1&quot;, &quot;DISPLAY2&quot;);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (display == null)</span>
+<span class="nc" id="L122">			display = quark.getName();</span>
+
+<span class="nc" id="L124">		diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE, USymbols.FRAME);</span>
+<span class="nc" id="L125">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="nc" id="L126">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L128">			p.setStereotype(Stereotype.build(stereotype));</span>
+
+<span class="nc" id="L130">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L132">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L133">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L134">			p.addUrl(url);</span>
+		}
+
+<span class="nc" id="L137">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L138">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (lineColor != null)</span>
+<span class="nc" id="L142">			colors = colors.add(ColorType.LINE, lineColor);</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
+<span class="nc" id="L145">			colors = colors.addLegacyStroke(arg.get(&quot;LINECOLOR&quot;, 0));</span>
+
+<span class="nc" id="L147">		p.setColors(colors);</span>
+<span class="nc" id="L148">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

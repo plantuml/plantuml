@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvekNode.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">SvekNode.java</span></div><h1>SvekNode.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPosition;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.Together;
+import net.sourceforge.plantuml.cruise.XNode;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
+import net.sourceforge.plantuml.svek.image.EntityImagePort;
+import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
+import net.sourceforge.plantuml.utils.Direction;
+
+public class SvekNode implements XNode {
+
+	private final ShapeType type;
+	private XDimension2D dimImage;
+
+	private final String uid;
+	private final int color;
+
+	private double minX;
+	private double minY;
+	private Margins shield;
+
+	private final EntityPosition entityPosition;
+	private final IEntityImage image;
+	private final StringBounder stringBounder;
+
+	public EntityPosition getEntityPosition() {
+<span class="fc" id="L77">		return entityPosition;</span>
+	}
+
+	private Cluster cluster;
+
+	public final Cluster getCluster() {
+<span class="nc" id="L83">		return cluster;</span>
+	}
+
+	public final void setCluster(Cluster cluster) {
+<span class="fc" id="L87">		this.cluster = cluster;</span>
+<span class="fc" id="L88">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L92">		return super.toString() + &quot; &quot; + image + &quot; &quot; + type;</span>
+	}
+
+	private final Entity leaf;
+
+	public final Together getTogether() {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (leaf == null)</span>
+<span class="nc" id="L99">			return null;</span>
+<span class="nc" id="L100">		return leaf.getTogether();</span>
+	}
+
+<span class="fc" id="L103">	SvekNode(Entity ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {</span>
+<span class="fc" id="L104">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L105">		this.entityPosition = ent.getEntityPosition();</span>
+<span class="fc" id="L106">		this.image = image;</span>
+<span class="fc" id="L107">		this.type = image.getShapeType();</span>
+
+<span class="fc" id="L109">		this.color = colorSequence.getValue();</span>
+<span class="fc" id="L110">		this.uid = String.format(&quot;sh%04d&quot;, color);</span>
+<span class="fc" id="L111">		this.leaf = ent;</span>
+<span class="fc" id="L112">	}</span>
+
+	private XDimension2D getDimImage() {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (dimImage == null)</span>
+<span class="fc" id="L116">			this.dimImage = image.calculateDimension(stringBounder);</span>
+<span class="fc" id="L117">		return dimImage;</span>
+	}
+
+	public final ShapeType getType() {
+<span class="nc" id="L121">		return type;</span>
+	}
+
+	public final double getWidth() {
+<span class="fc" id="L125">		return getDimImage().getWidth();</span>
+	}
+
+	public final double getHeight() {
+<span class="fc" id="L129">		return getDimImage().getHeight();</span>
+	}
+
+	public void appendShape(StringBuilder sb, StringBounder stringBounder) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {</span>
+<span class="nc" id="L134">			appendLabelHtmlSpecialForLink(sb, stringBounder);</span>
+<span class="nc" id="L135">			SvekUtils.println(sb);</span>
+<span class="nc" id="L136">			return;</span>
+		}
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (type == ShapeType.RECTANGLE_PORT) {</span>
+<span class="nc" id="L139">			appendLabelHtmlSpecialForPort(sb, stringBounder);</span>
+<span class="nc" id="L140">			SvekUtils.println(sb);</span>
+<span class="nc" id="L141">			return;</span>
+		}
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE) {</span>
+<span class="nc" id="L144">			appendHtml(sb);</span>
+<span class="nc" id="L145">			SvekUtils.println(sb);</span>
+<span class="nc" id="L146">			return;</span>
+		}
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		if (type == ShapeType.RECTANGLE &amp;&amp; isShielded()) {</span>
+<span class="nc" id="L149">			appendHtml(sb);</span>
+<span class="nc" id="L150">			SvekUtils.println(sb);</span>
+<span class="nc" id="L151">			return;</span>
+		}
+<span class="nc" id="L153">		sb.append(uid);</span>
+<span class="nc" id="L154">		sb.append(&quot; [&quot;);</span>
+<span class="nc" id="L155">		appendShapeInternal(sb);</span>
+<span class="nc" id="L156">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L157">		sb.append(&quot;label=\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L158">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L159">		sb.append(&quot;width=&quot; + SvekUtils.pixelToInches(getWidth()));</span>
+<span class="nc" id="L160">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L161">		sb.append(&quot;height=&quot; + SvekUtils.pixelToInches(getHeight()));</span>
+<span class="nc" id="L162">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L163">		sb.append(&quot;color=\&quot;&quot; + StringUtils.sharp000000(color) + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L164">		sb.append(&quot;];&quot;);</span>
+<span class="nc" id="L165">		SvekUtils.println(sb);</span>
+<span class="nc" id="L166">	}</span>
+
+	private double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (image instanceof EntityImagePort) {</span>
+<span class="nc" id="L170">			final EntityImagePort im = (EntityImagePort) image;</span>
+<span class="nc" id="L171">			return im.getMaxWidthFromLabelForEntryExit(stringBounder);</span>
+		}
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (image instanceof EntityImageStateBorder) {</span>
+<span class="nc" id="L174">			final EntityImageStateBorder im = (EntityImageStateBorder) image;</span>
+<span class="nc" id="L175">			return im.getMaxWidthFromLabelForEntryExit(stringBounder);</span>
+		}
+<span class="nc" id="L177">		throw new UnsupportedOperationException();</span>
+	}
+
+	private void appendLabelHtmlSpecialForPort(StringBuilder sb, StringBounder stringBounder) {
+<span class="nc" id="L181">		final int width1 = (int) getWidth();</span>
+<span class="nc" id="L182">		final int width2 = (int) getMaxWidthFromLabelForEntryExit(stringBounder);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (width2 &gt; 40)</span>
+<span class="nc" id="L184">			appendLabelHtmlSpecialForPortHtml(sb, stringBounder, width2 - 40);</span>
+		else
+<span class="nc" id="L186">			appendLabelHtmlSpecialForPortBasic(sb, stringBounder);</span>
+<span class="nc" id="L187">	}</span>
+
+	private void appendLabelHtmlSpecialForPortHtml(StringBuilder sb, StringBounder stringBounder, int fullWidth) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (fullWidth &lt; 10)</span>
+<span class="nc" id="L191">			fullWidth = 10;</span>
+<span class="nc" id="L192">		sb.append(uid);</span>
+<span class="nc" id="L193">		sb.append(&quot; [&quot;);</span>
+<span class="nc" id="L194">		sb.append(&quot;shape=plaintext&quot;);</span>
+<span class="nc" id="L195">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L196">		sb.append(&quot;label=&lt;&quot;);</span>
+<span class="nc" id="L197">		sb.append(&quot;&lt;TABLE BORDER=\&quot;0\&quot; CELLBORDER=\&quot;0\&quot; CELLSPACING=\&quot;0\&quot; CELLPADDING=\&quot;0\&quot;&gt;&quot;);</span>
+<span class="nc" id="L198">		sb.append(&quot;&lt;TR&gt;&lt;TD WIDTH=\&quot;&quot; + fullWidth + &quot;\&quot; HEIGHT=\&quot;1\&quot; COLSPAN=\&quot;3\&quot;&gt;&lt;/TD&gt;&lt;/TR&gt;&quot;);</span>
+<span class="nc" id="L199">		sb.append(&quot;&lt;TR&gt;&lt;TD&gt;&lt;/TD&gt;&lt;TD FIXEDSIZE=\&quot;TRUE\&quot; PORT=\&quot;P\&quot;  BORDER=\&quot;1\&quot; COLOR=\&quot;&quot;</span>
+<span class="nc" id="L200">				+ StringUtils.sharp000000(color) + &quot;\&quot; WIDTH=\&quot;&quot; + (int) getWidth() + &quot;\&quot; HEIGHT=\&quot;&quot; + (int) getHeight()</span>
+				+ &quot;\&quot;&gt;&lt;/TD&gt;&lt;TD&gt;&lt;/TD&gt;&lt;/TR&gt;&quot;);
+<span class="nc" id="L202">		sb.append(&quot;&lt;TR&gt;&lt;TD WIDTH=\&quot;&quot; + fullWidth + &quot;\&quot; HEIGHT=\&quot;1\&quot; COLSPAN=\&quot;3\&quot;&gt;&lt;/TD&gt;&lt;/TR&gt;&quot;);</span>
+<span class="nc" id="L203">		sb.append(&quot;&lt;/TABLE&gt;&quot;);</span>
+<span class="nc" id="L204">		sb.append(&quot;&gt;];&quot;);</span>
+<span class="nc" id="L205">	}</span>
+
+	private void appendLabelHtmlSpecialForPortBasic(StringBuilder sb, StringBounder stringBounder) {
+<span class="nc" id="L208">		sb.append(uid);</span>
+<span class="nc" id="L209">		sb.append(&quot; [&quot;);</span>
+<span class="nc" id="L210">		sb.append(&quot;shape=rect&quot;);</span>
+<span class="nc" id="L211">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L212">		sb.append(&quot;label=\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L213">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L214">		sb.append(&quot;width=&quot; + SvekUtils.pixelToInches(getWidth()));</span>
+<span class="nc" id="L215">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L216">		sb.append(&quot;height=&quot; + SvekUtils.pixelToInches(getHeight()));</span>
+<span class="nc" id="L217">		sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L218">		sb.append(&quot;color=\&quot;&quot; + StringUtils.sharp000000(color) + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L219">		sb.append(&quot;];&quot;);</span>
+<span class="nc" id="L220">	}</span>
+
+	private Margins shield() {
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (shield == null) {</span>
+<span class="nc" id="L224">			this.shield = image.getShield(stringBounder);</span>
+<span class="nc bnc" id="L225" title="All 8 branches missed.">			if (!shield.isZero() &amp;&amp; type != ShapeType.RECTANGLE &amp;&amp; type != ShapeType.RECTANGLE_HTML_FOR_PORTS</span>
+					&amp;&amp; type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE)
+<span class="nc" id="L227">				throw new IllegalStateException();</span>
+		}
+
+<span class="nc" id="L230">		return shield;</span>
+	}
+
+	private void appendHtml(StringBuilder sb) {
+<span class="nc" id="L234">		sb.append(uid);</span>
+<span class="nc" id="L235">		sb.append(&quot; [&quot;);</span>
+<span class="nc" id="L236">		sb.append(&quot;shape=plaintext,&quot;);</span>
+<span class="nc" id="L237">		sb.append(&quot;label=&lt;&quot;);</span>
+<span class="nc" id="L238">		appendLabelHtml(sb);</span>
+<span class="nc" id="L239">		sb.append(&quot;&gt;&quot;);</span>
+<span class="nc" id="L240">		sb.append(&quot;];&quot;);</span>
+<span class="nc" id="L241">		SvekUtils.println(sb);</span>
+
+<span class="nc" id="L243">	}</span>
+
+	private void appendLabelHtml(StringBuilder sb) {
+		// Log.println(&quot;shield=&quot; + shield);
+<span class="nc" id="L247">		sb.append(&quot;&lt;TABLE BORDER=\&quot;0\&quot; CELLBORDER=\&quot;0\&quot; CELLSPACING=\&quot;0\&quot; CELLPADDING=\&quot;0\&quot;&gt;&quot;);</span>
+<span class="nc" id="L248">		sb.append(&quot;&lt;TR&gt;&quot;);</span>
+<span class="nc" id="L249">		appendTd(sb);</span>
+<span class="nc" id="L250">		appendTd(sb, 1, shield().getY1());</span>
+<span class="nc" id="L251">		appendTd(sb);</span>
+<span class="nc" id="L252">		sb.append(&quot;&lt;/TR&gt;&quot;);</span>
+<span class="nc" id="L253">		sb.append(&quot;&lt;TR&gt;&quot;);</span>
+<span class="nc" id="L254">		appendTd(sb, shield().getX1(), 1);</span>
+<span class="nc" id="L255">		sb.append(&quot;&lt;TD BGCOLOR=\&quot;&quot; + StringUtils.sharp000000(color) + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L256">		sb.append(&quot; FIXEDSIZE=\&quot;TRUE\&quot; WIDTH=\&quot;&quot; + getWidth() + &quot;\&quot; HEIGHT=\&quot;&quot; + getHeight() + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L257">		sb.append(&quot; PORT=\&quot;h\&quot;&gt;&quot;);</span>
+<span class="nc" id="L258">		sb.append(&quot;&lt;/TD&gt;&quot;);</span>
+<span class="nc" id="L259">		appendTd(sb, shield().getX2(), 1);</span>
+<span class="nc" id="L260">		sb.append(&quot;&lt;/TR&gt;&quot;);</span>
+<span class="nc" id="L261">		sb.append(&quot;&lt;TR&gt;&quot;);</span>
+<span class="nc" id="L262">		appendTd(sb);</span>
+<span class="nc" id="L263">		appendTd(sb, 1, shield().getY2());</span>
+<span class="nc" id="L264">		appendTd(sb);</span>
+<span class="nc" id="L265">		sb.append(&quot;&lt;/TR&gt;&quot;);</span>
+<span class="nc" id="L266">		sb.append(&quot;&lt;/TABLE&gt;&quot;);</span>
+<span class="nc" id="L267">	}</span>
+
+	private void appendLabelHtmlSpecialForLink(StringBuilder sb, StringBounder stringBounder) {
+<span class="nc" id="L270">		final Ports ports = ((WithPorts) this.image).getPorts(stringBounder);</span>
+
+<span class="nc" id="L272">		sb.append(uid);</span>
+<span class="nc" id="L273">		sb.append(&quot; [&quot;);</span>
+<span class="nc" id="L274">		sb.append(&quot;shape=plaintext,&quot;);</span>
+		// sb.append(&quot;color=\&quot;&quot; + StringUtils.getAsHtml(color) + &quot;\&quot;,&quot;);
+<span class="nc" id="L276">		sb.append(&quot;label=&lt;&quot;);</span>
+<span class="nc" id="L277">		sb.append(&quot;&lt;TABLE BGCOLOR=\&quot;&quot; + StringUtils.sharp000000(color)</span>
+				+ &quot;\&quot; BORDER=\&quot;0\&quot; CELLBORDER=\&quot;0\&quot; CELLSPACING=\&quot;0\&quot; CELLPADDING=\&quot;0\&quot;&gt;&quot;);
+<span class="nc" id="L279">		int sum = 0;</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">		for (PortGeometry geom : ports.getAllPortGeometry()) {</span>
+<span class="nc" id="L281">			final String portId = geom.getId();</span>
+<span class="nc" id="L282">			final int missing = (int) (geom.getPosition() - sum);</span>
+
+<span class="nc" id="L284">			sum += missing;</span>
+<span class="nc" id="L285">			appendTr(sb, null, missing);</span>
+<span class="nc" id="L286">			int intHeight = (int) geom.getHeight();</span>
+
+<span class="nc" id="L288">			appendTr(sb, portId, intHeight);</span>
+<span class="nc" id="L289">			sum += intHeight;</span>
+<span class="nc" id="L290">		}</span>
+<span class="nc" id="L291">		final double diff = getHeight() - sum;</span>
+<span class="nc" id="L292">		appendTr(sb, null, (int) diff);</span>
+
+<span class="nc" id="L294">		sb.append(&quot;&lt;/TABLE&gt;&quot;);</span>
+<span class="nc" id="L295">		sb.append(&quot;&gt;&quot;);</span>
+<span class="nc" id="L296">		sb.append(&quot;];&quot;);</span>
+<span class="nc" id="L297">		SvekUtils.println(sb);</span>
+<span class="nc" id="L298">	}</span>
+
+	private void appendTr(StringBuilder sb, String portId, int height) {
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		if (height &lt;= 0)</span>
+<span class="nc" id="L302">			return;</span>
+
+<span class="nc" id="L304">		sb.append(&quot;&lt;TR&gt;&quot;);</span>
+<span class="nc" id="L305">		sb.append(&quot;&lt;TD &quot;);</span>
+<span class="nc" id="L306">		sb.append(&quot; FIXEDSIZE=\&quot;TRUE\&quot; WIDTH=\&quot;&quot; + getWidth() + &quot;\&quot; HEIGHT=\&quot;&quot; + height + &quot;\&quot;&quot;);</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">		if (portId != null)</span>
+<span class="nc" id="L308">			sb.append(&quot; PORT=\&quot;&quot; + portId + &quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L310">		sb.append(&quot;&gt;&quot;);</span>
+<span class="nc" id="L311">		sb.append(&quot;&lt;/TD&gt;&quot;);</span>
+<span class="nc" id="L312">		sb.append(&quot;&lt;/TR&gt;&quot;);</span>
+<span class="nc" id="L313">	}</span>
+
+	private void appendTd(StringBuilder sb, double w, double h) {
+<span class="nc" id="L316">		sb.append(&quot;&lt;TD&quot;);</span>
+<span class="nc" id="L317">		sb.append(&quot; FIXEDSIZE=\&quot;TRUE\&quot; WIDTH=\&quot;&quot; + w + &quot;\&quot; HEIGHT=\&quot;&quot; + h + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L318">		sb.append(&quot;&gt;&quot;);</span>
+<span class="nc" id="L319">		sb.append(&quot;&lt;/TD&gt;&quot;);</span>
+<span class="nc" id="L320">	}</span>
+
+	private void appendTd(StringBuilder sb) {
+<span class="nc" id="L323">		sb.append(&quot;&lt;TD&gt;&quot;);</span>
+<span class="nc" id="L324">		sb.append(&quot;&lt;/TD&gt;&quot;);</span>
+<span class="nc" id="L325">	}</span>
+
+	private void appendShapeInternal(StringBuilder sb) {
+<span class="nc bnc" id="L328" title="All 4 branches missed.">		if (type == ShapeType.RECTANGLE &amp;&amp; isShielded())</span>
+<span class="nc" id="L329">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L330" title="All 6 branches missed.">		else if (type == ShapeType.RECTANGLE || type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE</span>
+				|| type == ShapeType.FOLDER)
+<span class="nc" id="L332">			sb.append(&quot;shape=rect&quot;);</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">		else if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS)</span>
+<span class="nc" id="L334">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">		else if (type == ShapeType.OCTAGON)</span>
+<span class="nc" id="L336">			sb.append(&quot;shape=octagon&quot;);</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		else if (type == ShapeType.HEXAGON)</span>
+<span class="nc" id="L338">			sb.append(&quot;shape=hexagon&quot;);</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		else if (type == ShapeType.DIAMOND)</span>
+<span class="nc" id="L340">			sb.append(&quot;shape=diamond&quot;);</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		else if (type == ShapeType.CIRCLE)</span>
+<span class="nc" id="L342">			sb.append(&quot;shape=circle&quot;);</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		else if (type == ShapeType.OVAL)</span>
+<span class="nc" id="L344">			sb.append(&quot;shape=ellipse&quot;);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		else if (type == ShapeType.ROUND_RECTANGLE)</span>
+<span class="nc" id="L346">			sb.append(&quot;shape=rect,style=rounded&quot;);</span>
+		else
+<span class="nc" id="L348">			throw new IllegalStateException(type.toString());</span>
+
+<span class="nc" id="L350">	}</span>
+
+	public final String getUid() {
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">		if (uid == null)</span>
+<span class="nc" id="L354">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L356">		return uid;</span>
+	}
+
+	public final double getMinX() {
+<span class="fc" id="L360">		return minX;</span>
+	}
+
+	public final double getMinY() {
+<span class="fc" id="L364">		return minY;</span>
+	}
+
+	public IEntityImage getImage() {
+<span class="fc" id="L368">		return image;</span>
+	}
+
+	public XPoint2D getPosition() {
+<span class="nc" id="L372">		return new XPoint2D(minX, minY);</span>
+	}
+
+	public XDimension2D getSize() {
+<span class="nc" id="L376">		return getDimImage();</span>
+	}
+
+	public RectangleArea getRectangleArea() {
+<span class="fc" id="L380">		return new RectangleArea(minX, minY, minX + getWidth(), minY + getHeight());</span>
+	}
+
+	public boolean isShielded() {
+		// Avoid calculating &quot;shield&quot; size through this.shield() before finishing
+		// creation of all SvekEdges (https://github.com/plantuml/plantuml/issues/1467)
+		// Instead, only check if we will have a shield (size is irrelevant here)
+		// This node will have a shield if it is target of a qualified association (will
+		// have a qualifier label
+		// placed besides this type's bounding box.)
+<span class="nc bnc" id="L390" title="All 2 branches missed.">		for (Link link : this.leaf.getDiagram().getLinks())</span>
+<span class="nc bnc" id="L391" title="All 4 branches missed.">			if ((this.leaf == link.getEntity1() &amp;&amp; link.hasKal1())</span>
+<span class="nc bnc" id="L392" title="All 4 branches missed.">					|| (this.leaf == link.getEntity2() &amp;&amp; link.hasKal2()))</span>
+<span class="nc" id="L393">				return true;</span>
+
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		return shield().isZero() == false;</span>
+	}
+
+	public void resetMove() {
+<span class="fc" id="L399">		this.minX = 0;</span>
+<span class="fc" id="L400">		this.minY = 0;</span>
+<span class="fc" id="L401">	}</span>
+
+	public void moveDelta(double deltaX, double deltaY) {
+<span class="fc" id="L404">		this.minX += deltaX;</span>
+<span class="fc" id="L405">		this.minY += deltaY;</span>
+<span class="fc" id="L406">	}</span>
+
+	public boolean isHidden() {
+<span class="nc" id="L409">		return image.isHidden();</span>
+	}
+
+	private Shadowable polygon;
+
+	public void setPolygon(double minX, double minY, List&lt;XPoint2D&gt; points) {
+<span class="nc" id="L415">		this.polygon = new UPolygon(points).translate(-minX, -minY);</span>
+<span class="nc" id="L416">	}</span>
+
+	public Shadowable getPolygon() {
+<span class="nc" id="L419">		return polygon;</span>
+	}
+
+	public XPoint2D getPoint2D(double x, double y) {
+<span class="nc" id="L423">		return new XPoint2D(minX + x, minY + y);</span>
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+<span class="nc" id="L427">		return image.getOverscanX(stringBounder);</span>
+	}
+
+	public void addImpact(double angle) {
+<span class="nc" id="L431">		((EntityImageLollipopInterface) image).addImpact(angle);</span>
+<span class="nc" id="L432">	}</span>
+
+	public void drawKals(UGraphic ug) {
+<span class="nc bnc" id="L435" title="All 2 branches missed.">		if (leaf instanceof Entity == false)</span>
+<span class="nc" id="L436">			return;</span>
+
+<span class="nc" id="L438">		drawList(ug, leaf.getKals(Direction.DOWN));</span>
+<span class="nc" id="L439">		drawList(ug, leaf.getKals(Direction.UP));</span>
+<span class="nc" id="L440">		drawList(ug, leaf.getKals(Direction.LEFT));</span>
+<span class="nc" id="L441">		drawList(ug, leaf.getKals(Direction.RIGHT));</span>
+
+<span class="nc" id="L443">	}</span>
+
+	public void fixOverlap() {
+<span class="nc bnc" id="L446" title="All 2 branches missed.">		if (leaf instanceof Entity == false)</span>
+<span class="nc" id="L447">			return;</span>
+
+<span class="nc" id="L449">		fixHoverlap(leaf.getKals(Direction.DOWN));</span>
+<span class="nc" id="L450">		fixHoverlap(leaf.getKals(Direction.UP));</span>
+<span class="nc" id="L451">	}</span>
+
+	private void fixHoverlap(final List&lt;Kal&gt; list) {
+<span class="nc" id="L454">		final LineOfSegments los = new LineOfSegments();</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">		for (Kal kal : list)</span>
+<span class="nc" id="L456">			los.addSegment(kal.getX1(), kal.getX2());</span>
+
+<span class="nc" id="L458">		final double[] res = los.solveOverlaps();</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">		for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="nc" id="L460">			final Kal kal = list.get(i);</span>
+<span class="nc" id="L461">			final double diff = res[i] - kal.getX1();</span>
+<span class="nc" id="L462">			kal.moveX(diff);</span>
+		}
+<span class="nc" id="L464">	}</span>
+
+	private void drawList(UGraphic ug, final List&lt;Kal&gt; list) {
+<span class="nc bnc" id="L467" title="All 2 branches missed.">		for (Kal kal : list)</span>
+<span class="nc" id="L468">			kal.drawU(ug);</span>
+<span class="nc" id="L469">	}</span>
+
+//	public XPoint2D projection(XPoint2D pt, StringBounder stringBounder) {
+//	if (getType() != ShapeType.FOLDER)
+//		return pt;
+//
+////	final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + getWidth(), minY + getHeight());
+////	if (clusterPosition.isPointJustUpper(pt)) {
+////		final XDimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
+////		if (pt.getX() &lt; minX + dimName.getWidth())
+////			return pt;
+////
+////		return new XPoint2D(pt.getX(), pt.getY() + dimName.getHeight() + 4);
+////	}
+//	return pt;
+//}
+
+	public MagneticBorder getMagneticBorder() {
+<span class="fc" id="L487">		return new MagneticBorder() {</span>
+			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+<span class="fc" id="L489">				final MagneticBorder orig = image.getMagneticBorder();</span>
+<span class="fc" id="L490">				return orig.getForceAt(stringBounder, position.move(-minX, -minY));</span>
+			}
+		};
+//		return image.getMagneticBorder();
+//		if (getType() != ShapeType.FOLDER)
+//			return new MagneticBorderNone();
+//
+//		return new MagneticBorder() {
+//			@Override
+//			public UTranslate getForceAt(XPoint2D pt) {
+//				if ((pt.getX() &gt;= minX &amp;&amp; pt.getX() &lt;= minX + getWidth() &amp;&amp; pt.getY() &lt;= minY)) {
+//					final XDimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
+//					if (pt.getX() &lt; minX + dimName.getWidth())
+//						return UTranslate.none();
+//
+//					return new UTranslate(0, dimName.getHeight() + 4);
+//				}
+//				return UTranslate.none();
+//			}
+//		};
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

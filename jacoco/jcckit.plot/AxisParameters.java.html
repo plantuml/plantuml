@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AxisParameters.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">AxisParameters.java</span></div><h1>AxisParameters.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import java.util.Properties;
+
+import jcckit.graphic.BasicGraphicAttributes;
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.LineAttributes;
+import jcckit.graphic.ShapeAttributes;
+import jcckit.graphic.TextAttributes;
+import jcckit.util.ConfigData;
+import jcckit.util.ConfigParameters;
+import jcckit.util.ConfigParametersBasedConfigData;
+import jcckit.util.Factory;
+import jcckit.util.Format;
+import jcckit.util.PropertiesBasedConfigData;
+import jcckit.util.TicLabelFormat;
+import jcckit.util.Util;
+
+/**
+ * Helper class with various parameters defining an axis.
+ * This helper class is used by {@link CartesianCoordinateSystem}
+ * to set up a coordinate systems.
+ * &lt;p&gt;
+ * This class holds more than a dozen parameters. There are two factory
+ * methods creating instances for x- and y-axis based on
+ * {@link ConfigParameters}. They differ in their default parameters for 
+ * those axes. 
+ * &lt;p&gt;
+ * Note, that there is a direct access of these parameters without getters
+ * and setters but only for classes in the package &lt;tt&gt;jcckit.plot&lt;/tt&gt;.
+ * 
+ * @author Franz-Josef Elmer
+ */
+<span class="nc" id="L52">public class AxisParameters {</span>
+  /** Configuration parameter key. */
+  public static final String LOG_SCALE_KEY = &quot;logScale&quot;,
+                             MINIMUM_KEY = &quot;minimum&quot;,
+                             MAXIMUM_KEY = &quot;maximum&quot;,
+                             AXIS_LENGTH_KEY = &quot;axisLength&quot;,
+                             AXIS_ATTRIBUTES_KEY = &quot;axisAttributes&quot;,
+                             AXIS_LABEL_KEY = &quot;axisLabel&quot;,
+                             AXIS_LABEL_POSITION_KEY = &quot;axisLabelPosition&quot;,
+                             AXIS_LABEL_ATTRIBUTES_KEY = &quot;axisLabelAttributes&quot;,
+                             AUTOMATIC_TIC_CALCULATION_KEY
+                                  = &quot;automaticTicCalculation&quot;,
+                             MINIMUM_TIC_KEY = &quot;minimumTic&quot;,
+                             MAXIMUM_TIC_KEY = &quot;maximumTic&quot;,
+                             NUMBER_OF_TICS_KEY = &quot;numberOfTics&quot;,
+                             TIC_LENGTH_KEY = &quot;ticLength&quot;,
+                             TIC_ATTRIBUTES_KEY = &quot;ticAttributes&quot;,
+                             TIC_LABEL_FORMAT_KEY = &quot;ticLabelFormat&quot;,
+                             TIC_LABEL_POSITION_KEY = &quot;ticLabelPosition&quot;,
+                             TIC_LABEL_ATTRIBUTES_KEY = &quot;ticLabelAttributes&quot;,
+                             GRID_KEY = &quot;grid&quot;,
+                             GRID_ATTRIBUTES_KEY = &quot;gridAttributes&quot;;
+
+<span class="nc" id="L75">  private static final double LN10 = Math.log(10);</span>
+
+  /** If &lt;tt&gt;true&lt;/tt&gt; the scale is logarithmic otherwise linear. */
+  boolean logScale;
+  /** Minimum data value represented by the axis. */
+  double minimum;
+  /** Maximum data value represented by the axis. */
+  double maximum;
+  /** Length of the axis in device-independent graphical units. */
+  double axisLength;
+  /**
+   *  Line attributes of the axis.
+   *  Can be &lt;tt&gt;null&lt;/tt&gt; which means default attributes.
+   */
+  LineAttributes axisAttributes;
+
+  boolean automaticTicCalculation;
+  double minimumTic;
+  double maximumTic;
+  int numberOfTics;
+  /**
+   *  Length of the tics in device-independent graphical units.
+   *  If 0 no tics and tics label will be drawn.
+   */
+  double ticLength;
+  /**
+   *  Attributes of the tics.
+   *  Can be &lt;tt&gt;null&lt;/tt&gt; which means default attributes.
+   */
+  LineAttributes ticAttributes;
+  /** Tic label formatter. */
+  TicLabelFormat ticLabelFormat;
+  /** Position of the tic label relative to the tic. */
+  GraphPoint ticLabelPosition;
+  /** Text attributes of the tic labels. */
+  TextAttributes ticLabelAttributes;
+
+  /** If &lt;tt&gt;true&lt;/tt&gt; grid lines are drawn. */
+  boolean grid;
+  /**
+   *  Attributes of the grid lines.
+   *  Can be &lt;tt&gt;null&lt;/tt&gt; which means default attributes.
+   */
+  LineAttributes gridAttributes;
+
+  /** Axis label. */
+  String axisLabel;
+  /** Position of the axis label relative to the center of the axis. */
+  GraphPoint axisLabelPosition;
+  /** Text attributes of the axis label. */
+  TextAttributes axisLabelAttributes;
+
+  /**
+   *  Calculate the tics based on &lt;tt&gt;minimumTic&lt;/tt&gt;, &lt;tt&gt;maximumTic&lt;/tt&gt;,
+   *  and &lt;tt&gt;numberOfTics&lt;/tt&gt;. If &lt;tt&gt;automaticTicCalculation == true&lt;/tt&gt;
+   *  appropriated values for these fields are calculated.
+   */
+  double[] calculateTics() {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">    if (automaticTicCalculation) {</span>
+<span class="nc" id="L134">      calculateTicsParameters();</span>
+    }
+<span class="nc" id="L136">    double[] result = new double[numberOfTics];</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">    if (numberOfTics &gt; 0) {</span>
+<span class="nc" id="L138">      double b = Util.log(minimumTic, logScale);</span>
+<span class="nc" id="L139">      double a = Util.log(maximumTic, logScale);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">      a = numberOfTics &gt; 1 ? (a - b) / (numberOfTics - 1) : 0;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">      for (int i = 0; i &lt; result.length; i++) {</span>
+<span class="nc" id="L142">        result[i] = Util.exp(a * i + b, logScale);</span>
+      }
+<span class="nc" id="L144">      result[0] = adjust(minimum, result[0]);</span>
+<span class="nc" id="L145">      result[numberOfTics - 1] = adjust(maximum, result[numberOfTics - 1]);</span>
+    }
+<span class="nc" id="L147">    return result;</span>
+  }
+
+  private void calculateTicsParameters() {
+<span class="nc" id="L151">    double min = Math.min(minimum, maximum);</span>
+<span class="nc" id="L152">    double max = Math.max(minimum, maximum);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">    if (logScale) {</span>
+<span class="nc" id="L154">      int minExponent = (int) (199.9999 + Math.log(min) / LN10) - 199;</span>
+<span class="nc" id="L155">      int maxExponent = (int) (200.0001 + Math.log(max) / LN10) - 200;</span>
+<span class="nc" id="L156">      minimumTic = Math.exp(LN10 * minExponent);</span>
+<span class="nc" id="L157">      maximumTic = Math.exp(LN10 * maxExponent);</span>
+<span class="nc" id="L158">      numberOfTics = maxExponent - minExponent + 1;</span>
+<span class="nc" id="L159">    } else {</span>
+<span class="nc" id="L160">      int baseExponent = (int) (199.69 + Math.log(max - min) / LN10) - 200;</span>
+<span class="nc" id="L161">      double base = 0.2 * Math.exp(LN10 * baseExponent);</span>
+      do 
+      {
+<span class="nc" id="L164">        base *= 5;</span>
+<span class="nc" id="L165">        int minInt = (int) (999999.999999 + min / base) - 999999;</span>
+<span class="nc" id="L166">        int maxInt = (int) (1000000.000001 + max / base) - 1000000;</span>
+<span class="nc" id="L167">        minimumTic = minInt * base;</span>
+<span class="nc" id="L168">        maximumTic = maxInt * base;</span>
+<span class="nc" id="L169">        numberOfTics = maxInt - minInt + 1;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">      } while (numberOfTics &gt; 11);</span>
+    }
+<span class="nc" id="L172">  }</span>
+
+  /**
+   * Returns &lt;tt&gt;adjustingValue&lt;/tt&gt; if &lt;tt&gt;value&lt;/tt&gt; is very close
+   * to &lt;tt&gt;adjustingValue&lt;/tt&gt;. Otherwise &lt;tt&gt;value&lt;/tt&gt; is returned.
+   */ 
+  private static double adjust(double adjustingValue, double value) {
+<span class="nc bnc" id="L179" title="All 4 branches missed.">    return value != 0 &amp;&amp; Math.abs(adjustingValue / value - 1) &lt; 1e-11</span>
+<span class="nc" id="L180">                                              ? adjustingValue : value;</span>
+  }
+
+  /** 
+   * Returns a &lt;tt&gt;Properties&lt;/tt&gt; object with those default parameters
+   * which are common for x- and y-axis.
+   */ 
+  private static Properties createDefaultAxisProperties() {
+<span class="nc" id="L188">    Properties p = new Properties();</span>
+<span class="nc" id="L189">    p.put(LOG_SCALE_KEY, &quot;false&quot;);</span>
+<span class="nc" id="L190">    p.put(MINIMUM_KEY, &quot;0&quot;);</span>
+<span class="nc" id="L191">    p.put(MAXIMUM_KEY, &quot;1&quot;);</span>
+<span class="nc" id="L192">    p.put(AXIS_LENGTH_KEY, &quot;0.8&quot;);</span>
+<span class="nc" id="L193">    p.put(AXIS_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L194">          ShapeAttributes.class.getName());</span>
+<span class="nc" id="L195">    p.put(AXIS_LABEL_KEY, &quot;x&quot;);</span>
+<span class="nc" id="L196">    p.put(AXIS_LABEL_POSITION_KEY, &quot;0 -0.05&quot;);</span>
+<span class="nc" id="L197">    p.put(AXIS_LABEL_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L198">          BasicGraphicAttributes.class.getName());</span>
+<span class="nc" id="L199">    p.put(AXIS_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.HORIZONTAL_ANCHOR_KEY, &quot;center&quot;);
+<span class="nc" id="L201">    p.put(AUTOMATIC_TIC_CALCULATION_KEY, &quot;true&quot;);</span>
+<span class="nc" id="L202">    p.put(TIC_LENGTH_KEY, &quot;0.01&quot;);</span>
+<span class="nc" id="L203">    p.put(TIC_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L204">          ShapeAttributes.class.getName());</span>
+<span class="nc" id="L205">    p.put(TIC_LABEL_POSITION_KEY, &quot;0 -0.01&quot;);</span>
+<span class="nc" id="L206">    p.put(TIC_LABEL_FORMAT_KEY, &quot;%1.1f&quot;);</span>
+<span class="nc" id="L207">    p.put(TIC_LABEL_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L208">          BasicGraphicAttributes.class.getName());</span>
+<span class="nc" id="L209">    p.put(TIC_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.HORIZONTAL_ANCHOR_KEY, &quot;center&quot;);
+<span class="nc" id="L211">    p.put(TIC_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.VERTICAL_ANCHOR_KEY, &quot;top&quot;);
+<span class="nc" id="L213">    p.put(GRID_KEY, &quot;false&quot;);</span>
+<span class="nc" id="L214">    p.put(GRID_ATTRIBUTES_KEY + '/' + Factory.CLASS_NAME_KEY,</span>
+<span class="nc" id="L215">          ShapeAttributes.class.getName());</span>
+<span class="nc" id="L216">    return p;</span>
+  }
+
+  /**
+   * Returns a &lt;tt&gt;Properties&lt;/tt&gt; object of the default parameters for 
+   * an x-axis. 
+   */ 
+  private static Properties createDefaultXAxisProperties() {
+<span class="nc" id="L224">    Properties p = createDefaultAxisProperties();</span>
+<span class="nc" id="L225">    p.put(AXIS_LABEL_KEY, &quot;x&quot;);</span>
+<span class="nc" id="L226">    p.put(AXIS_LABEL_POSITION_KEY, &quot;0 -0.05&quot;);</span>
+<span class="nc" id="L227">    p.put(AXIS_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.VERTICAL_ANCHOR_KEY, &quot;top&quot;);
+<span class="nc" id="L229">    p.put(TIC_LABEL_POSITION_KEY, &quot;0 -0.01&quot;);</span>
+<span class="nc" id="L230">    p.put(TIC_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.HORIZONTAL_ANCHOR_KEY, &quot;center&quot;);
+<span class="nc" id="L232">    p.put(TIC_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.VERTICAL_ANCHOR_KEY, &quot;top&quot;);
+<span class="nc" id="L234">    return p;</span>
+  }
+
+  /** 
+   * Creates an x axis based on the specified configuration parameters.
+   * All numbers (lengths, fontsizes, linethicknesses, etc.) are in
+   * device-independent units.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;automaticTicCalculation = true&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Has to be &lt;tt&gt;true&lt;/tt&gt; if the tics should be calculated
+   *         automatically.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisAttributes = &lt;/tt&gt;default values of 
+   *         {@link ShapeAttributes}&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Attributes of the axis box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLabel = x&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Axis label.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLabelAttributes = &lt;/tt&gt;default values of 
+   *         {@link BasicGraphicAttributes} with a text anchor CENTER 
+   *         TOP.&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Text attributes of axis label.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLabelPosition = 0 -0.05&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Position of the anchor of the axis 
+   *         label relative to the center of the x-axis line.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLength = 0.8&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Length of the x-axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;grid = false&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; grid lines will be drawn through the axis 
+   *         tics.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;gridAttributes  = &lt;/tt&gt;default values of 
+   *         {@link ShapeAttributes}&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Attributes of the grid lines.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;logScale = false&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; the axis will be logarithmic. Otherwise
+   *         the axis is linear.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;maximum = 1&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of one end of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;maximumTic = &lt;/tt&gt;result from automatic calculation&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of the tic nearest the maximum end
+   *         of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;minimum = 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of one end of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;minimumTic = &lt;/tt&gt;result from automatic calculation&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of the tic nearest the minimum end
+   *         of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;numberOfTics = &lt;/tt&gt;result from automatic calculation&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;int&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Number of tics. The tics between the minimum and maximum tic
+   *         are spaced equidistantly.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticAttributes = &lt;/tt&gt;default values of 
+   *         {@link ShapeAttributes}&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Attributes of the tics.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLabelAttributes = &lt;/tt&gt;default values of 
+   *         {@link BasicGraphicAttributes} with a text anchor CENTER 
+   *         TOP.&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Text attributes of tic labels.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLabelFormat = %1.1f&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt; or &lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Defines rendering of the tic label. By default a 
+   *         &lt;tt&gt;printf&lt;/tt&gt;-like format string is given (see {@link Format}).
+   *         Note, that an empty string means that tic labels are dropped.
+   *         &lt;p&gt;
+   *         For non-numerical rendering an implementation of a
+   *         {@link TicLabelFormat} can be specified (e.g.
+   *         {@link TicLabelMap}). Note, that a configuration sub tree with
+   *         a &lt;tt&gt;className&lt;/tt&gt; key-value pair overwrites any string
+   *         definition.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLabelPosition = 0 -0.01&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Position of the anchor of the tic label relative to the
+   *         tic position on the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLength = 0.01&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Length of the tics. Negative/positive values mean tics 
+   *         inside/outside the box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+  public static AxisParameters createXAxis(ConfigParameters config) {
+<span class="nc" id="L328">    return createAxis(config, createDefaultXAxisProperties());</span>
+  }
+
+  /**
+   * Returns a &lt;tt&gt;Properties&lt;/tt&gt; object of the default parameters for 
+   * an x-axis. 
+   */ 
+  private static Properties createDefaultYAxisProperties() {
+<span class="nc" id="L336">    Properties p = createDefaultAxisProperties();</span>
+<span class="nc" id="L337">    p.put(AXIS_LENGTH_KEY, &quot;0.45&quot;);</span>
+<span class="nc" id="L338">    p.put(AXIS_LABEL_KEY, &quot;y&quot;);</span>
+<span class="nc" id="L339">    p.put(AXIS_LABEL_POSITION_KEY, &quot;-0.1 0&quot;);</span>
+<span class="nc" id="L340">    p.put(AXIS_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.VERTICAL_ANCHOR_KEY, &quot;bottom&quot;);
+<span class="nc" id="L342">    p.put(AXIS_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.ORIENTATION_ANGLE_KEY, &quot;90&quot;);
+<span class="nc" id="L344">    p.put(TIC_LABEL_POSITION_KEY, &quot;-0.01 0&quot;);</span>
+<span class="nc" id="L345">    p.put(TIC_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.HORIZONTAL_ANCHOR_KEY, &quot;right&quot;);
+<span class="nc" id="L347">    p.put(TIC_LABEL_ATTRIBUTES_KEY + '/'</span>
+          + BasicGraphicAttributes.VERTICAL_ANCHOR_KEY, &quot;center&quot;);
+<span class="nc" id="L349">    return p;</span>
+  }
+
+  /** 
+   * Creates an y axis based on the specified configuration parameters. 
+   * All numbers (lengths, fontsizes, linethicknesses, etc.) are in
+   * device-independent units.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;automaticTicCalculation = true&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Has to be &lt;tt&gt;true&lt;/tt&gt; if the tics should be calculated
+   *         automatically.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisAttributes = &lt;/tt&gt;default values of 
+   *         {@link ShapeAttributes}&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Attributes of the axis box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLabel = y&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Axis label.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLabelAttributes = &lt;/tt&gt;default values of 
+   *         {@link BasicGraphicAttributes} with a text anchor CENTER 
+   *         BOTTOM and the text rotated by 90 degree.&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Text attributes of axis label.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLabelPosition = -0.1 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Position of the anchor of the axis 
+   *         label relative to the center of the y-axis line.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;axisLength = 0.45&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Length of the y-axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;grid = false&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; grid lines will be drawn through the axis 
+   *         tics.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;gridAttributes  = &lt;/tt&gt;default values of 
+   *         {@link ShapeAttributes}&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Attributes of the grid lines.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;logScale = false&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; the axis will be logarithmic. Otherwise
+   *         the axis is linear.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;maximum = 1&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of one end of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;maximumTic = &lt;/tt&gt;result from automatic calculation&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of the tic nearest the maximum end
+   *         of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;minimum = 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of one end of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;minimumTic = &lt;/tt&gt;result from automatic calculation&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;The corresponding data value of the tic nearest the minimum end
+   *         of the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;numberOfTics = &lt;/tt&gt;result from automatic calculation&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;int&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Number of tics. The tics between the minimum and maximum tic
+   *         are spaced equidistantly.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticAttributes = &lt;/tt&gt;default values of 
+   *         {@link ShapeAttributes}&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Attributes of the tics.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLabelAttributes = &lt;/tt&gt;default values of 
+   *         {@link BasicGraphicAttributes} with a text anchor RIGHT CENTER.
+   *         &lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Text attributes of tic labels.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLabelFormat = %1.1f&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;String&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Defines rendering of the tic label. By default a 
+   *         &lt;tt&gt;printf&lt;/tt&gt;-like format string is given (see {@link Format}).
+   *         Note, that an empty string means that tic labels are dropped.
+   *         &lt;p&gt;
+   *         For non-numerical rendering an implementation of a
+   *         {@link TicLabelFormat} can be specified (e.g.
+   *         {@link TicLabelMap}). Note, that a configuration sub tree with
+   *         a &lt;tt&gt;className&lt;/tt&gt; key-value pair overwrites any string
+   *         definition.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLabelPosition = -0.01 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Position of the anchor of the tic label relative to the
+   *         tic position on the axis.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;ticLength = 0.01&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Length of the tics. Negative/positive values mean tics 
+   *         inside/outside the box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+  public static AxisParameters createYAxis(ConfigParameters config) {
+<span class="nc" id="L443">    return createAxis(config, createDefaultYAxisProperties());</span>
+  }
+
+  private static AxisParameters createAxis(ConfigParameters config,
+                                           Properties p) {
+<span class="nc" id="L448">    ConfigData cd = new PropertiesBasedConfigData(p);</span>
+<span class="nc" id="L449">    ConfigParameters c = new ConfigParameters(cd);</span>
+<span class="nc" id="L450">    cd = new ConfigParametersBasedConfigData(config, c);</span>
+<span class="nc" id="L451">    c = new ConfigParameters(cd);</span>
+
+<span class="nc" id="L453">    AxisParameters a = new AxisParameters();</span>
+<span class="nc" id="L454">    a.logScale = c.getBoolean(LOG_SCALE_KEY);</span>
+<span class="nc" id="L455">    a.minimum = c.getDouble(MINIMUM_KEY);</span>
+<span class="nc" id="L456">    a.maximum = c.getDouble(MAXIMUM_KEY);</span>
+<span class="nc" id="L457">    a.axisLength = c.getDouble(AXIS_LENGTH_KEY);</span>
+<span class="nc" id="L458">    a.axisAttributes</span>
+<span class="nc" id="L459">        = (LineAttributes) Factory.create(c.getNode(AXIS_ATTRIBUTES_KEY));</span>
+<span class="nc" id="L460">    a.axisLabel = c.get(AXIS_LABEL_KEY);</span>
+<span class="nc" id="L461">    a.axisLabelPosition</span>
+<span class="nc" id="L462">        = new GraphPoint(c.getDoubleArray(AXIS_LABEL_POSITION_KEY));</span>
+<span class="nc" id="L463">    a.axisLabelAttributes = (TextAttributes) Factory.create(</span>
+<span class="nc" id="L464">                                c.getNode(AXIS_LABEL_ATTRIBUTES_KEY));</span>
+<span class="nc" id="L465">    a.ticLength = c.getDouble(TIC_LENGTH_KEY);</span>
+<span class="nc" id="L466">    a.automaticTicCalculation</span>
+<span class="nc" id="L467">        = c.getBoolean(AUTOMATIC_TIC_CALCULATION_KEY);</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">    if (!a.automaticTicCalculation) {</span>
+<span class="nc" id="L469">      a.calculateTicsParameters(); // calculate default parameters</span>
+<span class="nc" id="L470">      a.minimumTic = c.getDouble(MINIMUM_TIC_KEY, a.minimumTic);</span>
+<span class="nc" id="L471">      a.maximumTic = c.getDouble(MAXIMUM_TIC_KEY, a.maximumTic);</span>
+<span class="nc" id="L472">      a.numberOfTics = c.getInt(NUMBER_OF_TICS_KEY, a.numberOfTics);</span>
+    }
+<span class="nc" id="L474">    a.ticAttributes</span>
+<span class="nc" id="L475">        = (LineAttributes) Factory.create(c.getNode(TIC_ATTRIBUTES_KEY));</span>
+<span class="nc" id="L476">    a.ticLabelFormat = createTicLabelFormat(c);</span>
+<span class="nc" id="L477">    a.ticLabelPosition</span>
+<span class="nc" id="L478">        = new GraphPoint(c.getDoubleArray(TIC_LABEL_POSITION_KEY));</span>
+<span class="nc" id="L479">    a.ticLabelAttributes = (TextAttributes) Factory.create(</span>
+<span class="nc" id="L480">                                c.getNode(TIC_LABEL_ATTRIBUTES_KEY));</span>
+<span class="nc" id="L481">    a.grid = c.getBoolean(GRID_KEY);</span>
+<span class="nc" id="L482">    a.gridAttributes</span>
+<span class="nc" id="L483">        = (LineAttributes) Factory.create(c.getNode(GRID_ATTRIBUTES_KEY));</span>
+<span class="nc" id="L484">    return a;</span>
+  }
+
+  private static TicLabelFormat createTicLabelFormat(ConfigParameters c)
+  {
+<span class="nc" id="L489">    TicLabelFormat result = Format.create(c, TIC_LABEL_FORMAT_KEY);</span>
+<span class="nc" id="L490">    ConfigParameters node = c.getNode(TIC_LABEL_FORMAT_KEY);</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">    if (node.get(Factory.CLASS_NAME_KEY, null) != null) {</span>
+<span class="nc" id="L492">      result = (TicLabelFormat) Factory.create(node);</span>
+    }
+<span class="nc" id="L494">    return result;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

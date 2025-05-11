@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XPoint2D.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">XPoint2D.java</span></div><h1>XPoint2D.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.geom;
+
+// ::comment when __HAXE__
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+// ::done
+
+public class XPoint2D {
+
+	final public double x;
+	final public double y;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L15">		return &quot;(&quot; + x + &quot;,&quot; + y + &quot;)&quot;;</span>
+	}
+
+<span class="fc" id="L18">	public XPoint2D(double x, double y) {</span>
+<span class="fc" id="L19">		this.x = x;</span>
+<span class="fc" id="L20">		this.y = y;</span>
+<span class="fc" id="L21">	}</span>
+
+	// ::comment when __HAXE__
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc" id="L26">		final XPoint2D other = (XPoint2D) obj;</span>
+<span class="pc bpc" id="L27" title="1 of 4 branches missed.">		return this.x == other.x &amp;&amp; this.y == other.y;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L32">		return Double.valueOf(x).hashCode() + Double.valueOf(y).hashCode();</span>
+	}
+
+	public XPoint2D transform(AffineTransform rotate) {
+<span class="fc" id="L36">		final Point2D.Double tmp = new Point2D.Double(x, y);</span>
+<span class="fc" id="L37">		rotate.transform(tmp, tmp);</span>
+<span class="fc" id="L38">		return new XPoint2D(tmp.x, tmp.y);</span>
+	}
+	// ::done
+
+	public final double getX() {
+<span class="fc" id="L43">		return x;</span>
+	}
+
+	public final double getY() {
+<span class="fc" id="L47">		return y;</span>
+	}
+
+	public double distance(XPoint2D other) {
+<span class="fc" id="L51">		final double px = other.getX() - this.getX();</span>
+<span class="fc" id="L52">		final double py = other.getY() - this.getY();</span>
+<span class="fc" id="L53">		return Math.sqrt(px * px + py * py);</span>
+	}
+
+	public double distanceSq(XPoint2D other) {
+<span class="nc" id="L57">		final double px = other.getX() - this.getX();</span>
+<span class="nc" id="L58">		final double py = other.getY() - this.getY();</span>
+<span class="nc" id="L59">		return px * px + py * py;</span>
+	}
+
+	public static double distance(double x1, double y1, double x2, double y2) {
+<span class="nc" id="L63">		x1 -= x2;</span>
+<span class="nc" id="L64">		y1 -= y2;</span>
+<span class="nc" id="L65">		return Math.sqrt(x1 * x1 + y1 * y1);</span>
+	}
+
+	public double distance(double px, double py) {
+<span class="nc" id="L69">		px -= getX();</span>
+<span class="nc" id="L70">		py -= getY();</span>
+<span class="nc" id="L71">		return Math.sqrt(px * px + py * py);</span>
+	}
+
+	public XPoint2D move(double dx, double dy) {
+<span class="fc" id="L75">		return new XPoint2D(x + dx, y + dy);</span>
+	}
+
+	public XPoint2D move(XPoint2D delta) {
+<span class="nc" id="L79">		return new XPoint2D(x + delta.x, y + delta.y);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

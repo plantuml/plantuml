@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SegmentColored.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">SegmentColored.java</span></div><h1>SegmentColored.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.AbstractCollection;
+import java.util.Collection;
+import java.util.Iterator;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.SimpleContext2D;
+
+class SegmentColored {
+
+	final private Segment segment;
+	final private Fashion colors;
+	final private boolean shadowing;
+	final private double pos1Initial;
+
+	public static SegmentColored create(double pos1, double pos2, Fashion colors, boolean shadowing) {
+<span class="fc" id="L60">		return new SegmentColored(new Segment(pos1, pos2), colors, shadowing, pos1);</span>
+	}
+
+<span class="fc" id="L63">	private SegmentColored(Segment segment, Fashion colors, boolean shadowing, double pos1Initial) {</span>
+<span class="fc" id="L64">		this.segment = segment;</span>
+<span class="fc" id="L65">		this.colors = colors;</span>
+<span class="fc" id="L66">		this.shadowing = shadowing;</span>
+<span class="fc" id="L67">		this.pos1Initial = pos1Initial;</span>
+<span class="fc" id="L68">	}</span>
+
+	public HColor getSpecificBackColor() {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (colors == null) {</span>
+<span class="nc" id="L72">			return null;</span>
+		}
+<span class="fc" id="L74">		return colors.getBackColor();</span>
+	}
+
+	public HColor getSpecificLineColor() {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (colors == null) {</span>
+<span class="nc" id="L79">			return null;</span>
+		}
+<span class="fc" id="L81">		return colors.getForeColor();</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc" id="L86">		final SegmentColored this2 = (SegmentColored) obj;</span>
+<span class="nc" id="L87">		return this.segment.equals(this2.segment);</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L92">		return this.segment.hashCode();</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L97">		return this.segment.toString();</span>
+	}
+
+	public void drawU(UGraphic ug, Component compAliveBox, int level) {
+<span class="fc" id="L101">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L102">		ug = ug.apply(</span>
+<span class="fc" id="L103">				new UTranslate((level - 1) * compAliveBox.getPreferredWidth(stringBounder) / 2, segment.getPos1()));</span>
+<span class="fc" id="L104">		final XDimension2D dim = new XDimension2D(compAliveBox.getPreferredWidth(stringBounder),</span>
+<span class="fc" id="L105">				segment.getPos2() - segment.getPos1());</span>
+<span class="fc" id="L106">		compAliveBox.drawU(ug, new Area(dim), new SimpleContext2D(false));</span>
+<span class="fc" id="L107">	}</span>
+
+	public Collection&lt;SegmentColored&gt; cutSegmentIfNeed(Collection&lt;Segment&gt; allDelays) {
+<span class="fc" id="L110">		return new Coll2(segment.cutSegmentIfNeed(allDelays), segment.getPos1());</span>
+	}
+
+	public double getPos1Initial() {
+<span class="fc" id="L114">		return pos1Initial;</span>
+	}
+
+	public SegmentColored merge(SegmentColored this2) {
+<span class="fc" id="L118">		final Segment merge = this.segment.merge(this2.segment);</span>
+<span class="fc" id="L119">		return new SegmentColored(merge, colors, shadowing, merge.getPos1());</span>
+	}
+
+	public final Segment getSegment() {
+<span class="fc" id="L123">		return segment;</span>
+	}
+
+	class Iterator2 implements Iterator&lt;SegmentColored&gt; {
+
+		private final Iterator&lt;Segment&gt; it;
+		private final double pos1Initial;
+
+<span class="fc" id="L131">		public Iterator2(Iterator&lt;Segment&gt; it, double pos1Initial) {</span>
+<span class="fc" id="L132">			this.it = it;</span>
+<span class="fc" id="L133">			this.pos1Initial = pos1Initial;</span>
+<span class="fc" id="L134">		}</span>
+
+		public boolean hasNext() {
+<span class="fc" id="L137">			return it.hasNext();</span>
+		}
+
+		public SegmentColored next() {
+<span class="fc" id="L141">			return new SegmentColored(it.next(), colors, shadowing, pos1Initial);</span>
+		}
+
+		public void remove() {
+<span class="nc" id="L145">			throw new UnsupportedOperationException();</span>
+		}
+	}
+
+	class Coll2 extends AbstractCollection&lt;SegmentColored&gt; {
+
+		private final Collection&lt;Segment&gt; col;
+		private final double pos1Initial;
+
+<span class="fc" id="L154">		public Coll2(Collection&lt;Segment&gt; col, double pos1Initial) {</span>
+<span class="fc" id="L155">			this.col = col;</span>
+<span class="fc" id="L156">			this.pos1Initial = pos1Initial;</span>
+<span class="fc" id="L157">		}</span>
+
+		@Override
+		public Iterator&lt;SegmentColored&gt; iterator() {
+<span class="fc" id="L161">			return new Iterator2(col.iterator(), pos1Initial);</span>
+		}
+
+		@Override
+		public int size() {
+<span class="nc" id="L166">			return col.size();</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

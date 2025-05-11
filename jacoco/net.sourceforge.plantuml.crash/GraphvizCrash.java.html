@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphvizCrash.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.crash</a> &gt; <span class="el_source">GraphvizCrash.java</span></div><h1>GraphvizCrash.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.crash;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.atmp.PixelImage;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
+import net.sourceforge.plantuml.fun.IconLoader;
+import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.Margins;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.version.PSystemVersion;
+
+public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
+
+	private final TextBlock text1;
+	private final String flash;
+	// ::comment when __CORE__
+	private final BufferedImage flashCode;
+	private final boolean graphviz244onWindows;
+	// ::done
+
+<span class="nc" id="L76">	private GraphvizCrash(String flash, boolean graphviz244onWindows, Throwable rootCause) {</span>
+<span class="nc" id="L77">		this.flash = flash;</span>
+		// ::comment when __CORE__
+<span class="nc" id="L79">		this.graphviz244onWindows = graphviz244onWindows;</span>
+<span class="nc" id="L80">		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
+		// ::done
+<span class="nc" id="L82">		final ReportLog strings = new ReportLog();</span>
+<span class="nc" id="L83">		init(strings, rootCause);</span>
+<span class="nc" id="L84">		this.text1 = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),</span>
+				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
+<span class="nc" id="L86">	}</span>
+
+	public static IEntityImage build(String text, boolean graphviz244onWindows, Throwable rootCause) {
+<span class="nc" id="L89">		return new GraphvizCrash(text, graphviz244onWindows, rootCause);</span>
+	}
+
+	private void init(ReportLog strings, Throwable rootCause) {
+<span class="nc" id="L93">		strings.anErrorHasOccured(null, flash);</span>
+<span class="nc" id="L94">		strings.add(&quot;For some reason, dot/GraphViz has crashed.&quot;);</span>
+<span class="nc" id="L95">		strings.addEmptyLine();</span>
+<span class="nc" id="L96">		strings.add(&quot;RootCause &quot; + rootCause);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (rootCause != null)</span>
+<span class="nc" id="L98">			strings.addAll(CommandExecutionResult.getStackTrace(rootCause));</span>
+
+<span class="nc" id="L100">		strings.addEmptyLine();</span>
+<span class="nc" id="L101">		strings.addProperties();</span>
+<span class="nc" id="L102">		strings.addEmptyLine();</span>
+		// ::comment when __CORE__
+		try {
+<span class="nc" id="L105">			final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();</span>
+<span class="nc" id="L106">			strings.add(&quot;Default dot version: &quot; + dotVersion);</span>
+<span class="nc" id="L107">		} catch (Throwable e) {</span>
+<span class="nc" id="L108">			strings.add(&quot;Cannot determine dot version: &quot; + e.toString());</span>
+<span class="nc" id="L109">		}</span>
+		// ::done
+<span class="nc" id="L111">		strings.pleaseCheckYourGraphVizVersion();</span>
+<span class="nc" id="L112">		strings.youShouldSendThisDiagram();</span>
+		// ::comment when __CORE__
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (flashCode != null)</span>
+<span class="nc" id="L115">			strings.addDecodeHint();</span>
+		// ::done
+
+<span class="nc" id="L118">	}</span>
+
+	private List&lt;String&gt; getText2() {
+<span class="nc" id="L121">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L122">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L123">		strings.add(&quot;&lt;b&gt;It looks like you are running GraphViz 2.44 under Windows.&quot;);</span>
+<span class="nc" id="L124">		strings.add(&quot;If you have just installed GraphViz, you &lt;i&gt;may&lt;/i&gt; have to execute&quot;);</span>
+<span class="nc" id="L125">		strings.add(&quot;the post-install command &lt;b&gt;dot -c&lt;/b&gt; like in the following example:&quot;);</span>
+<span class="nc" id="L126">		return strings;</span>
+	}
+
+	private List&lt;String&gt; getText3() {
+<span class="nc" id="L130">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L131">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L132">		strings.add(&quot;You may have to have &lt;i&gt;Administrator rights&lt;/i&gt; to avoid the following error message:&quot;);</span>
+<span class="nc" id="L133">		return strings;</span>
+	}
+
+	public boolean isHidden() {
+<span class="nc" id="L137">		return false;</span>
+	}
+
+	public HColor getBackcolor() {
+<span class="nc" id="L141">		return HColors.WHITE;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L145">		return getMain().calculateDimension(stringBounder);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L149">		getMain().drawU(ug);</span>
+<span class="nc" id="L150">	}</span>
+
+	private TextBlock getMain() {
+<span class="nc" id="L153">		TextBlock result = text1;</span>
+		// ::comment when __CORE__
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (flashCode != null) {</span>
+<span class="nc" id="L156">			final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
+<span class="nc" id="L157">					.scale(3);</span>
+<span class="nc" id="L158">			result = TextBlockUtils.mergeTB(result, flash, HorizontalAlignment.LEFT);</span>
+		}
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (graphviz244onWindows) {</span>
+<span class="nc" id="L162">			final TextBlock text2 = GraphicStrings.createBlackOnWhite(getText2());</span>
+<span class="nc" id="L163">			result = TextBlockUtils.mergeTB(result, text2, HorizontalAlignment.LEFT);</span>
+
+<span class="nc" id="L165">			final UImage dotc = new UImage(new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L166">			result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);</span>
+
+<span class="nc" id="L168">			final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());</span>
+<span class="nc" id="L169">			result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);</span>
+
+<span class="nc" id="L171">			final UImage dotd = new UImage(new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L172">			result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);</span>
+		}
+		// ::done
+
+<span class="nc" id="L176">		return result;</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L180">		return ShapeType.RECTANGLE;</span>
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+<span class="nc" id="L184">		return Margins.NONE;</span>
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+<span class="nc" id="L188">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

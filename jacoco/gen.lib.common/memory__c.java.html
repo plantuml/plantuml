@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>memory__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">memory__c.java</span></div><h1>memory__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static smetana.core.JUtils.memset;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import smetana.core.__ptr__;
+import smetana.core.size_t;
+
+<span class="nc" id="L58">public class memory__c {</span>
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/memory.c&quot;, name=&quot;&quot;, key=&quot;6hfkgng9qf75cucpojc4r8x6w&quot;, definition=&quot;void *zmalloc(size_t nbytes)&quot;)
+public static __ptr__ zmalloc(size_t nbytes) {
+<span class="nc" id="L64">ENTERING(&quot;6hfkgng9qf75cucpojc4r8x6w&quot;,&quot;zmalloc&quot;);</span>
+try {
+    __ptr__ rv;
+<span class="nc bnc" id="L67" title="All 2 branches missed.">    if (nbytes.isZero())</span>
+<span class="nc" id="L68">	return null;</span>
+<span class="nc" id="L69">    rv = gmalloc(nbytes);</span>
+<span class="nc" id="L70">    memset(rv, 0, nbytes);</span>
+<span class="nc" id="L71">    return rv;</span>
+} finally {
+<span class="nc" id="L73">LEAVING(&quot;6hfkgng9qf75cucpojc4r8x6w&quot;,&quot;zmalloc&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/memory.c&quot;, name=&quot;gmalloc&quot;, key=&quot;4mfikqpmxyxrke46i5xakatmc&quot;, definition=&quot;void *gmalloc(size_t nbytes)&quot;)
+public static __ptr__ gmalloc(size_t nbytes) {
+<span class="nc" id="L83">ENTERING(&quot;4mfikqpmxyxrke46i5xakatmc&quot;,&quot;gmalloc&quot;);</span>
+try {
+    __ptr__ rv;
+<span class="nc bnc" id="L86" title="All 2 branches missed.">    if (nbytes.isZero())</span>
+<span class="nc" id="L87">	return null;</span>
+<span class="nc" id="L88">    rv = (__ptr__) nbytes.malloc();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">    if (rv == null) {</span>
+<span class="nc" id="L90">    UNSUPPORTED(&quot;out of memory&quot;);</span>
+    }
+<span class="nc" id="L92">    return rv;</span>
+} finally {
+<span class="nc" id="L94">LEAVING(&quot;4mfikqpmxyxrke46i5xakatmc&quot;,&quot;gmalloc&quot;);</span>
+}
+}
+
+
+
+
+//3 1ed55yig6d18nhtbyqlf37jik
+// void *grealloc(void *ptr, size_t size) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/memory.c&quot;, name=&quot;&quot;, key=&quot;1ed55yig6d18nhtbyqlf37jik&quot;, definition=&quot;void *grealloc(void *ptr, size_t size)&quot;)
+public static __ptr__ grealloc(__ptr__ ptr, size_t size) {
+<span class="nc" id="L106">ENTERING(&quot;1ed55yig6d18nhtbyqlf37jik&quot;,&quot;grealloc&quot;);</span>
+try {
+<span class="nc" id="L108">    __ptr__ p = (__ptr__) size.realloc(ptr);</span>
+<span class="nc" id="L109">    return p;</span>
+} finally {
+<span class="nc" id="L111">LEAVING(&quot;1ed55yig6d18nhtbyqlf37jik&quot;,&quot;grealloc&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

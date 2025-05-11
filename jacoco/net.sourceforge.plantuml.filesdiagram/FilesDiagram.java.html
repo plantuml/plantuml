@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilesDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.filesdiagram</a> &gt; <span class="el_source">FilesDiagram.java</span></div><h1>FilesDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.filesdiagram;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.text.StringLocated;
+
+public class FilesDiagram extends UmlDiagram {
+
+	private final FilesListing list;
+
+	public FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L66">		super(source, UmlDiagramType.FILES, null, preprocessing);</span>
+
+<span class="nc" id="L68">		final ISkinParam skinParam = getSkinParam();</span>
+		try {
+<span class="nc" id="L70">			styleExtractor.applyStyles(skinParam);</span>
+<span class="nc" id="L71">		} catch (StyleParsingException e) {</span>
+<span class="nc" id="L72">			e.printStackTrace();</span>
+<span class="nc" id="L73">		}</span>
+<span class="nc" id="L74">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.filesDiagram) //</span>
+<span class="nc" id="L75">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+		// final FontConfiguration fontConfiguration =
+		// FontConfiguration.blackBlueTrue(UFont.courier(14));
+<span class="nc" id="L79">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L81">		this.list = new FilesListing(skinParam, fontConfiguration);</span>
+
+<span class="nc" id="L83">		final Iterator&lt;StringLocated&gt; it = source.iterator2();</span>
+<span class="nc" id="L84">		it.next();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L86">			final String line = it.next().getString();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (line.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L88">				this.list.addRawEntry(line.substring(1));</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			else if (line.startsWith(&quot;&lt;note&gt;&quot;))</span>
+<span class="nc" id="L90">				this.list.addNote(getNote(it));</span>
+<span class="nc" id="L91">		}</span>
+
+<span class="nc" id="L93">	}</span>
+
+	private List&lt;String&gt; getNote(Iterator&lt;StringLocated&gt; it) {
+<span class="nc" id="L96">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L98">			final String line = it.next().getString();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (line.startsWith(&quot;&lt;/note&gt;&quot;))</span>
+<span class="nc" id="L100">				return result;</span>
+<span class="nc" id="L101">			result.add(line);</span>
+<span class="nc" id="L102">		}</span>
+<span class="nc" id="L103">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L107">		return new DiagramDescription(&quot;(Files)&quot;);</span>
+	}
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="nc" id="L114">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L119">		return list;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

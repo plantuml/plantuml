@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlantUmlTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ant</a> &gt; <span class="el_source">PlantUmlTask.java</span></div><h1>PlantUmlTask.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ant;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.FileList;
+import org.apache.tools.ant.types.FileSet;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.Option;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.Splash;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.stats.StatsUtils;
+
+// &lt;?xml version=&quot;1.0&quot;?&gt;
+//
+// &lt;project name=&quot;OwnTaskExample&quot; default=&quot;main&quot; basedir=&quot;.&quot;&gt;
+// &lt;taskdef name=&quot;plot&quot; classname=&quot;plot.PlotTask&quot; classpath=&quot;build&quot;/&gt;
+//
+// &lt;target name=&quot;main&quot;&gt;
+// &lt;mytask message=&quot;Hello World! MyVeryOwnTask works!&quot;/&gt;
+// &lt;/target&gt;
+// &lt;/project&gt;
+
+// Carriage Return in UTF-8 XML: &amp;#13;
+// Line Feed in UTF-8 XML: &amp;#10;
+<span class="nc" id="L80">public class PlantUmlTask extends Task {</span>
+    // ::remove folder when __HAXE__
+
+<span class="nc" id="L83">	private String dir = null;</span>
+<span class="nc" id="L84">	private final Option option = new Option();</span>
+<span class="nc" id="L85">	private List&lt;FileSet&gt; filesets = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L86">	private List&lt;FileList&gt; filelists = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L87">	private AtomicInteger nbFiles = new AtomicInteger(0);</span>
+	private ExecutorService executorService;
+
+	/**
+	 * Add a set of files to touch
+	 */
+	public void addFileset(FileSet set) {
+<span class="nc" id="L94">		filesets.add(set);</span>
+<span class="nc" id="L95">	}</span>
+
+	/**
+	 * Add a filelist to touch
+	 */
+	public void addFilelist(FileList list) {
+<span class="nc" id="L101">		filelists.add(list);</span>
+<span class="nc" id="L102">	}</span>
+
+	// The method executing the task
+	@Override
+	public void execute() throws BuildException {
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (option.isSplash()) {</span>
+<span class="nc" id="L109">			Splash.createSplash();</span>
+		}
+
+<span class="nc" id="L112">		this.log(&quot;Starting PlantUML&quot;);</span>
+
+		try {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (dir != null) {</span>
+<span class="nc" id="L116">				final File error = processingSingleDirectory(new File(dir));</span>
+<span class="nc" id="L117">				eventuallyFailfast(error);</span>
+			}
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			for (FileSet fileSet : filesets) {</span>
+<span class="nc" id="L120">				final File error = manageFileSet(fileSet);</span>
+<span class="nc" id="L121">				eventuallyFailfast(error);</span>
+<span class="nc" id="L122">			}</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			for (FileList fileList : filelists) {</span>
+<span class="nc" id="L124">				final File error = manageFileList(fileList);</span>
+<span class="nc" id="L125">				eventuallyFailfast(error);</span>
+<span class="nc" id="L126">			}</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (executorService != null) {</span>
+<span class="nc" id="L128">				executorService.shutdown();</span>
+<span class="nc" id="L129">				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">				if (option.isSplash()) {</span>
+<span class="nc" id="L131">					Splash.disposeSplash();</span>
+				}
+			}
+<span class="nc" id="L134">			this.log(&quot;Nb images generated: &quot; + nbFiles.get());</span>
+<span class="nc" id="L135">		} catch (IOException e) {</span>
+<span class="nc" id="L136">			Logme.error(e);</span>
+<span class="nc" id="L137">			throw new BuildException(e.toString());</span>
+<span class="nc" id="L138">		} catch (InterruptedException e) {</span>
+<span class="nc" id="L139">			Logme.error(e);</span>
+<span class="nc" id="L140">			throw new BuildException(e.toString());</span>
+<span class="nc" id="L141">		}</span>
+
+<span class="nc" id="L143">	}</span>
+
+	private void eventuallyFailfast(final File error) throws IOException {
+<span class="nc bnc" id="L146" title="All 4 branches missed.">		if (error != null &amp;&amp; option.isFailfastOrFailfast2()) {</span>
+<span class="nc" id="L147">			this.log(&quot;Error in file &quot; + error.getCanonicalPath());</span>
+<span class="nc" id="L148">			throw new BuildException(&quot;Error in file &quot; + error.getCanonicalPath());</span>
+		}
+<span class="nc" id="L150">	}</span>
+
+	private File manageFileList(FileList fl) throws IOException, InterruptedException {
+<span class="nc" id="L153">		final File fromDir = fl.getDir(getProject());</span>
+
+<span class="nc" id="L155">		final String[] srcFiles = fl.getFiles(getProject());</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		for (String src : srcFiles) {</span>
+<span class="nc" id="L158">			final File f = new File(fromDir, src);</span>
+<span class="nc" id="L159">			final boolean error = processingSingleFile(f);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (error) {</span>
+<span class="nc" id="L161">				return f;</span>
+			}
+		}
+<span class="nc" id="L164">		return null;</span>
+	}
+
+	private File manageFileSet(FileSet fs) throws IOException, InterruptedException {
+<span class="nc" id="L168">		final DirectoryScanner ds = fs.getDirectoryScanner(getProject());</span>
+<span class="nc" id="L169">		final File fromDir = fs.getDir(getProject());</span>
+
+<span class="nc" id="L171">		final String[] srcFiles = ds.getIncludedFiles();</span>
+<span class="nc" id="L172">		final String[] srcDirs = ds.getIncludedDirectories();</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		for (String src : srcFiles) {</span>
+<span class="nc" id="L175">			final File f = new File(fromDir, src);</span>
+<span class="nc" id="L176">			final boolean error = processingSingleFile(f);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (error) {</span>
+<span class="nc" id="L178">				return f;</span>
+			}
+		}
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (String src : srcDirs) {</span>
+<span class="nc" id="L183">			final File dir = new File(fromDir, src);</span>
+<span class="nc" id="L184">			final File errorFile = processingSingleDirectory(dir);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (errorFile != null) {</span>
+<span class="nc" id="L186">				return errorFile;</span>
+			}
+		}
+<span class="nc" id="L189">		return null;</span>
+
+	}
+
+	private boolean processingSingleFile(final File f) throws IOException, InterruptedException {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (OptionFlags.getInstance().isVerbose()) {</span>
+<span class="nc" id="L195">			this.log(&quot;Processing &quot; + f.getAbsolutePath());</span>
+		}
+<span class="nc" id="L197">		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L198">				option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());</span>
+
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (option.isCheckOnly()) {</span>
+<span class="nc" id="L201">			return sourceFileReader.hasError();</span>
+		}
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (executorService == null) {</span>
+<span class="nc" id="L204">			return doFile(f, sourceFileReader);</span>
+		}
+
+<span class="nc" id="L207">		Splash.incTotal(1);</span>
+<span class="nc" id="L208">		executorService.submit(new Callable&lt;Boolean&gt;() {</span>
+			public Boolean call() throws Exception {
+<span class="nc" id="L210">				return doFile(f, sourceFileReader);</span>
+			}
+		});
+
+<span class="nc" id="L214">		return false;</span>
+	}
+
+	private boolean doFile(final File f, final SourceFileReader sourceFileReader)
+			throws IOException, InterruptedException {
+<span class="nc" id="L219">		final Collection&lt;GeneratedImage&gt; result = sourceFileReader.getGeneratedImages();</span>
+<span class="nc" id="L220">		boolean error = false;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		for (GeneratedImage g : result) {</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">			if (OptionFlags.getInstance().isVerbose()) {</span>
+<span class="nc" id="L223">				myLog(g + &quot; &quot; + g.getDescription());</span>
+			}
+<span class="nc" id="L225">			nbFiles.addAndGet(1);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (g.lineErrorRaw() != -1) {</span>
+<span class="nc" id="L227">				error = true;</span>
+			}
+<span class="nc" id="L229">		}</span>
+<span class="nc" id="L230">		Splash.incDone(error);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (error) {</span>
+<span class="nc" id="L232">			myLog(&quot;Error: &quot; + f.getCanonicalPath());</span>
+		}
+<span class="nc bnc" id="L234" title="All 4 branches missed.">		if (error &amp;&amp; option.isFailfastOrFailfast2()) {</span>
+<span class="nc" id="L235">			return true;</span>
+		}
+<span class="nc" id="L237">		return false;</span>
+	}
+
+	private synchronized void myLog(String s) {
+<span class="nc" id="L241">		this.log(s);</span>
+<span class="nc" id="L242">	}</span>
+
+	private File processingSingleDirectory(File dir) throws IOException, InterruptedException {
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		if (dir.exists() == false) {</span>
+<span class="nc" id="L246">			final String s = &quot;The file &quot; + dir.getAbsolutePath() + &quot; does not exists.&quot;;</span>
+<span class="nc" id="L247">			this.log(s);</span>
+<span class="nc" id="L248">			throw new BuildException(s);</span>
+		}
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">			for (File f : dir.listFiles()) {</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">				if (f.isFile() == false)</span>
+<span class="nc" id="L253">					continue;</span>
+
+<span class="nc bnc" id="L255" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
+<span class="nc" id="L256">					continue;</span>
+
+<span class="nc" id="L258">				final boolean error = processingSingleFile(f);</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">				if (error)</span>
+<span class="nc" id="L260">					return f;</span>
+
+			}
+<span class="nc" id="L263">		return null;</span>
+	}
+
+	private boolean fileToProcess(String name) {
+<span class="nc" id="L267">		return name.matches(Option.getPattern());</span>
+	}
+
+	public void setDir(String s) {
+<span class="nc" id="L271">		this.dir = s;</span>
+<span class="nc" id="L272">	}</span>
+
+	public void setOutput(String s) {
+<span class="nc" id="L275">		option.setOutputDir(new File(s));</span>
+<span class="nc" id="L276">	}</span>
+
+	public void setCharset(String s) {
+<span class="nc" id="L279">		option.setCharset(s);</span>
+<span class="nc" id="L280">	}</span>
+
+	public void setConfig(String s) {
+		try {
+<span class="nc" id="L284">			option.initConfig(s);</span>
+<span class="nc" id="L285">		} catch (IOException e) {</span>
+<span class="nc" id="L286">			log(&quot;Error reading &quot; + s);</span>
+<span class="nc" id="L287">		}</span>
+<span class="nc" id="L288">	}</span>
+
+	public void setKeepTmpFiles(String s) {
+		// Deprecated
+<span class="nc" id="L292">	}</span>
+
+	public void setDebugSvek(String s) {
+<span class="nc bnc" id="L295" title="All 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L296">			option.setDebugSvek(true);</span>
+		}
+<span class="nc" id="L298">	}</span>
+
+	public void setVerbose(String s) {
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L302">			OptionFlags.getInstance().setVerbose(true);</span>
+		}
+<span class="nc" id="L304">	}</span>
+
+	public void setFormat(String s) {
+<span class="nc bnc" id="L307" title="All 2 branches missed.">		if (&quot;scxml&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L308">			option.setFileFormatOption(new FileFormatOption(FileFormat.SCXML));</span>
+		}
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (&quot;xmi&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L311">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));</span>
+		}
+<span class="nc bnc" id="L313" title="All 2 branches missed.">		if (&quot;xmi:argo&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L314">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));</span>
+		}
+<span class="nc bnc" id="L316" title="All 2 branches missed.">		if (&quot;xmi:custom&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L317">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_CUSTOM));</span>
+		}
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (&quot;xmi:script&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L320">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_SCRIPT));</span>
+		}
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (&quot;xmi:start&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L323">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));</span>
+		}
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (&quot;eps&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L326">			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS));</span>
+		}
+<span class="nc bnc" id="L328" title="All 2 branches missed.">		if (&quot;braille&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L329">			option.setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));</span>
+		}
+<span class="nc bnc" id="L331" title="All 2 branches missed.">		if (&quot;pdf&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L332">			option.setFileFormatOption(new FileFormatOption(FileFormat.PDF));</span>
+		}
+<span class="nc bnc" id="L334" title="All 2 branches missed.">		if (&quot;latex&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L335">			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX));</span>
+		}
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (&quot;latex:nopreamble&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L338">			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));</span>
+		}
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (&quot;eps:text&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L341">			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));</span>
+		}
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		if (&quot;svg&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L344">			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));</span>
+		}
+<span class="nc bnc" id="L346" title="All 2 branches missed.">		if (&quot;txt&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L347">			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));</span>
+		}
+<span class="nc bnc" id="L349" title="All 2 branches missed.">		if (&quot;utxt&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L350">			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));</span>
+		}
+<span class="nc" id="L352">	}</span>
+
+	public void setGraphvizDot(String s) {
+<span class="nc" id="L355">		GraphvizRuntimeEnvironment.getInstance().setDotExecutable(s);</span>
+<span class="nc" id="L356">	}</span>
+
+	public void setNbThread(String s) {
+<span class="nc bnc" id="L359" title="All 4 branches missed.">		if (s != null &amp;&amp; s.matches(&quot;\\d+&quot;)) {</span>
+<span class="nc" id="L360">			option.setNbThreads(Integer.parseInt(s));</span>
+<span class="nc" id="L361">			final int nbThreads = option.getNbThreads();</span>
+<span class="nc" id="L362">			this.executorService = Executors.newFixedThreadPool(nbThreads);</span>
+		}
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		if (&quot;auto&quot;.equalsIgnoreCase(s)) {</span>
+<span class="nc" id="L365">			option.setNbThreads(Option.defaultNbThreads());</span>
+<span class="nc" id="L366">			final int nbThreads = option.getNbThreads();</span>
+<span class="nc" id="L367">			this.executorService = Executors.newFixedThreadPool(nbThreads);</span>
+		}
+<span class="nc" id="L369">	}</span>
+
+	public void setNbThreads(String s) {
+<span class="nc" id="L372">		setNbThread(s);</span>
+<span class="nc" id="L373">	}</span>
+
+//	public void setSuggestEngine(String s) {
+//		OptionFlags.getInstance().setUseSuggestEngine(
+//				&quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s));
+//	}
+
+	public void setFailFast(String s) {
+<span class="nc bnc" id="L381" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L382">		option.setFailfast(flag);</span>
+<span class="nc" id="L383">	}</span>
+
+	public void setFailFast2(String s) {
+<span class="nc bnc" id="L386" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L387">		option.setFailfast2(flag);</span>
+<span class="nc" id="L388">	}</span>
+
+	public void setCheckOnly(String s) {
+<span class="nc bnc" id="L391" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L392">		option.setCheckOnly(flag);</span>
+<span class="nc" id="L393">	}</span>
+
+	public void setOverwrite(String s) {
+<span class="nc bnc" id="L396" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L397">		OptionFlags.getInstance().setOverwrite(flag);</span>
+<span class="nc" id="L398">	}</span>
+
+	public void setFileSeparator(String s) {
+<span class="nc" id="L401">		OptionFlags.getInstance().setFileSeparator(s);</span>
+<span class="nc" id="L402">	}</span>
+
+	public void setHtmlStats(String s) {
+<span class="nc bnc" id="L405" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L406">		StatsUtils.setHtmlStats(flag);</span>
+<span class="nc" id="L407">	}</span>
+
+	public void setXmlStats(String s) {
+<span class="nc bnc" id="L410" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L411">		StatsUtils.setXmlStats(flag);</span>
+<span class="nc" id="L412">	}</span>
+
+	public void setRealTimeStats(String s) {
+<span class="nc bnc" id="L415" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L416">		StatsUtils.setRealTimeStats(flag);</span>
+<span class="nc" id="L417">	}</span>
+
+	public void setEnableStats(String s) {
+<span class="nc bnc" id="L420" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L421">		OptionFlags.getInstance().setEnableStats(flag);</span>
+<span class="nc" id="L422">	}</span>
+
+	public void setSplash(String s) {
+<span class="nc bnc" id="L425" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
+<span class="nc" id="L426">		option.setSplash(flag);</span>
+<span class="nc" id="L427">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

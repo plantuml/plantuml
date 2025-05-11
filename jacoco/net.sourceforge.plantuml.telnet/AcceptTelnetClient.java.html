@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AcceptTelnetClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.telnet</a> &gt; <span class="el_source">AcceptTelnetClient.java</span></div><h1>AcceptTelnetClient.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.telnet;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
+
+class AcceptTelnetClient extends Thread {
+	final private Socket clientSocket;
+	final private BufferedReader br;
+	final private OutputStream os;
+
+<span class="nc" id="L55">	AcceptTelnetClient(Socket socket) throws Exception {</span>
+<span class="nc" id="L56">		clientSocket = socket;</span>
+<span class="nc" id="L57">		System.out.println(&quot;Client Connected ...&quot;);</span>
+<span class="nc" id="L58">		br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));</span>
+<span class="nc" id="L59">		os = clientSocket.getOutputStream();</span>
+
+<span class="nc" id="L61">		start();</span>
+<span class="nc" id="L62">	}</span>
+
+	public String runInternal() throws IOException {
+<span class="nc" id="L65">		final StringBuilder sb = new StringBuilder();</span>
+		while (true) {
+<span class="nc" id="L67">			final String s = br.readLine();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (s == null) {</span>
+<span class="nc" id="L69">				return sb.toString();</span>
+			}
+<span class="nc" id="L71">			Log.println(&quot;S=&quot; + s);</span>
+<span class="nc" id="L72">			sb.append(s);</span>
+<span class="nc" id="L73">			sb.append('\n');</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (s.equalsIgnoreCase(&quot;@enduml&quot;)) {</span>
+<span class="nc" id="L75">				return sb.toString();</span>
+			}
+<span class="nc" id="L77">		}</span>
+	}
+
+	public void run() {
+		try {
+<span class="nc" id="L82">			final String uml = runInternal();</span>
+<span class="nc" id="L83">			Log.println(&quot;UML=&quot; + uml);</span>
+<span class="nc" id="L84">			final SourceStringReader s = new SourceStringReader(uml);</span>
+<span class="nc" id="L85">			s.outputImage(os, new FileFormatOption(FileFormat.ATXT));</span>
+<span class="nc" id="L86">			os.close();</span>
+<span class="nc" id="L87">			br.close();</span>
+<span class="nc" id="L88">		} catch (IOException e) {</span>
+<span class="nc" id="L89">			Logme.error(e);</span>
+<span class="nc" id="L90">		}</span>
+
+<span class="nc" id="L92">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

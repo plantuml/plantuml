@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ElementMenuBar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.salt.element</a> &gt; <span class="el_source">ElementMenuBar.java</span></div><h1>ElementMenuBar.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.salt.element;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinSimple;
+
+public class ElementMenuBar extends AbstractElement {
+
+<span class="nc" id="L53">	private final Collection&lt;ElementMenuEntry&gt; entries = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L54">	private final Map&lt;ElementMenuEntry, ElementMenuPopup&gt; popups = new HashMap&lt;ElementMenuEntry, ElementMenuPopup&gt;();</span>
+	private final UFont font;
+	private final ISkinSimple spriteContainer;
+
+<span class="nc" id="L58">	public ElementMenuBar(UFont font, ISkinSimple spriteContainer) {</span>
+<span class="nc" id="L59">		this.font = font;</span>
+<span class="nc" id="L60">		this.spriteContainer = spriteContainer;</span>
+<span class="nc" id="L61">	}</span>
+
+	public void addEntry(String s) {
+<span class="nc" id="L64">		entries.add(new ElementMenuEntry(s, font, spriteContainer));</span>
+<span class="nc" id="L65">	}</span>
+
+	public void addSubEntry(String s, String sub) {
+<span class="nc" id="L68">		final ElementMenuPopup popup = getPopup(getElementMenuEntry(s));</span>
+<span class="nc" id="L69">		popup.addEntry(sub);</span>
+<span class="nc" id="L70">	}</span>
+
+	private ElementMenuPopup getPopup(ElementMenuEntry s) {
+<span class="nc" id="L73">		ElementMenuPopup popup = popups.get(s);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (popup == null) {</span>
+<span class="nc" id="L75">			popup = new ElementMenuPopup(font, spriteContainer);</span>
+<span class="nc" id="L76">			popups.put(s, popup);</span>
+		}
+<span class="nc" id="L78">		return popup;</span>
+	}
+
+	private ElementMenuEntry getElementMenuEntry(String n) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (ElementMenuEntry entry : entries) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (entry.getText().equals(n)) {</span>
+<span class="nc" id="L84">				return entry;</span>
+			}
+<span class="nc" id="L86">		}</span>
+<span class="nc" id="L87">		throw new IllegalArgumentException();</span>
+	}
+
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+<span class="nc" id="L91">		double w = 0;</span>
+<span class="nc" id="L92">		double h = 0;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (ElementMenuEntry entry : entries) {</span>
+<span class="nc" id="L94">			final XDimension2D dim = entry.getPreferredDimension(stringBounder, x, y);</span>
+<span class="nc" id="L95">			w += dim.getWidth() + 10;</span>
+<span class="nc" id="L96">			h = Math.max(h, dim.getHeight());</span>
+<span class="nc" id="L97">		}</span>
+<span class="nc" id="L98">		return new XDimension2D(w, h);</span>
+	}
+
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
+<span class="nc" id="L102">		final XDimension2D preferred = getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
+
+<span class="nc" id="L104">		ug = ug.apply(getBlack());</span>
+
+<span class="nc" id="L106">		double x1 = 0;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (zIndex == 0) {</span>
+<span class="nc" id="L108">			ug.apply(getColorDD().bg()).draw(URectangle.build(dimToUse.getWidth(), dimToUse.getHeight()));</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			for (ElementMenuEntry entry : entries) {</span>
+<span class="nc" id="L110">				entry.drawU(ug.apply(UTranslate.dx(x1)), zIndex, dimToUse);</span>
+<span class="nc" id="L111">				final double w = entry.getPreferredDimension(ug.getStringBounder(), x1, 0).getWidth();</span>
+<span class="nc" id="L112">				entry.setX(x1);</span>
+<span class="nc" id="L113">				x1 += w + 10;</span>
+<span class="nc" id="L114">			}</span>
+<span class="nc" id="L115">			return;</span>
+		}
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (zIndex == 1) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			for (ElementMenuEntry entry : popups.keySet())</span>
+<span class="nc" id="L120">				entry.setBackground(getColorBB());</span>
+
+<span class="nc" id="L122">			final double y1 = preferred.getHeight();</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			for (Map.Entry&lt;ElementMenuEntry, ElementMenuPopup&gt; ent : popups.entrySet()) {</span>
+<span class="nc" id="L124">				final ElementMenuPopup p = ent.getValue();</span>
+<span class="nc" id="L125">				final double xpopup = ent.getKey().getX();</span>
+<span class="nc" id="L126">				p.drawU(ug.apply(new UTranslate(xpopup, y1)), zIndex,</span>
+<span class="nc" id="L127">						p.getPreferredDimension(ug.getStringBounder(), xpopup, y1));</span>
+<span class="nc" id="L128">			}</span>
+		}
+<span class="nc" id="L130">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

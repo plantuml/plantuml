@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HtmlColorAndStyle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.decoration</a> &gt; <span class="el_source">HtmlColorAndStyle.java</span></div><h1>HtmlColorAndStyle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.decoration;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class HtmlColorAndStyle {
+
+	private final HColor arrowHeadColor;
+	private final HColor arrowColor;
+	private final LinkStyle style;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L57">		return arrowColor + &quot; &quot; + style;</span>
+	}
+
+	public HtmlColorAndStyle(HColor color, HColor arrowHeadColor) {
+<span class="fc" id="L61">		this(color, LinkStyle.NORMAL(), arrowHeadColor);</span>
+<span class="fc" id="L62">	}</span>
+
+<span class="fc" id="L64">	public HtmlColorAndStyle(HColor arrowColor, LinkStyle style, HColor arrowHeadColor) {</span>
+<span class="fc" id="L65">		this.arrowColor = Objects.requireNonNull(arrowColor);</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		this.arrowHeadColor = arrowHeadColor == null ? arrowColor : arrowHeadColor;</span>
+<span class="fc" id="L67">		this.style = style;</span>
+<span class="fc" id="L68">	}</span>
+
+	public HColor getArrowColor() {
+<span class="fc" id="L71">		return arrowColor;</span>
+	}
+
+	public HColor getArrowHeadColor() {
+<span class="fc" id="L75">		return arrowHeadColor;</span>
+	}
+
+	public LinkStyle getStyle() {
+<span class="fc" id="L79">		return style;</span>
+	}
+
+	static final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
+<span class="nc" id="L83">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	}
+
+	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {
+
+<span class="nc" id="L88">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L89">		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L90">		final HColor arrowHeadColor = null;</span>
+
+<span class="nc" id="L92">		LinkStyle linkStyle = LinkStyle.NORMAL();</span>
+<span class="nc" id="L93">		final HColorSet set = skinParam.getIHtmlColorSet();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (String s : definition.split(&quot;,&quot;)) {</span>
+<span class="nc" id="L95">			final LinkStyle tmpStyle = LinkStyle.fromString1(s);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (tmpStyle.isNormal() == false) {</span>
+<span class="nc" id="L97">				linkStyle = tmpStyle;</span>
+<span class="nc" id="L98">				continue;</span>
+			}
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			final HColor tmpColor = s == null ? null : set.getColor(s);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (tmpColor != null)</span>
+<span class="nc" id="L102">				arrowColor = tmpColor;</span>
+
+		}
+<span class="nc" id="L105">		return new HtmlColorAndStyle(arrowColor, linkStyle, arrowHeadColor);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

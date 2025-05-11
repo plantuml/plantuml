@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NServer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.nwdiag.core</a> &gt; <span class="el_source">NServer.java</span></div><h1>NServer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.nwdiag.core;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.nwdiag.next.NBar;
+import net.sourceforge.plantuml.nwdiag.next.NServerDraw;
+import net.sourceforge.plantuml.skin.ActorStyle;
+import net.sourceforge.plantuml.skin.ComponentStyle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.PackageStyle;
+
+public class NServer {
+
+<span class="nc" id="L67">	private final Map&lt;Network, String&gt; connections = new LinkedHashMap&lt;Network, String&gt;();</span>
+
+<span class="nc" id="L69">	private USymbol shape = USymbols.RECTANGLE;</span>
+	private final String name;
+	private String description;
+	private String backcolor;
+	private final NBar bar;
+	private final ISkinParam skinParam;
+	private String declaredAddress;
+
+<span class="nc" id="L77">	private boolean printFirstLink = true;</span>
+
+	public void doNotPrintFirstLink() {
+<span class="nc" id="L80">		this.printFirstLink = false;</span>
+<span class="nc" id="L81">	}</span>
+
+	public void connectMeIfAlone(Network network) {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (isAlone()) {</span>
+<span class="nc" id="L85">			connectTo(network, &quot;&quot;);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (network.isVisible() == false)</span>
+<span class="nc" id="L87">				this.doNotPrintFirstLink();</span>
+		}
+<span class="nc" id="L89">	}</span>
+
+	public boolean isAlone() {
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		return connections.size() == 0;</span>
+	}
+
+	public String someAddress() {
+<span class="nc bnc" id="L96" title="All 4 branches missed.">		if (connections.size() &gt; 0 &amp;&amp; connections.values().iterator().next().length() &gt; 0)</span>
+<span class="nc" id="L97">			return connections.values().iterator().next();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (declaredAddress != null)</span>
+<span class="nc" id="L99">			return declaredAddress;</span>
+<span class="nc" id="L100">		return &quot;&quot;;</span>
+	}
+
+	public Network someNetwork() {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (connections.size() &gt; 0)</span>
+<span class="nc" id="L105">			return connections.keySet().iterator().next();</span>
+<span class="nc" id="L106">		return null;</span>
+	}
+
+	public void blankSomeAddress() {
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (connections.size() &gt; 0) {</span>
+<span class="nc" id="L111">			final Network it = connections.keySet().iterator().next();</span>
+<span class="nc" id="L112">			connections.put(it, &quot;&quot;);</span>
+		}
+<span class="nc" id="L114">	}</span>
+
+	public void learnThisAddress(String address) {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (address == null)</span>
+<span class="nc" id="L118">			address = &quot;&quot;;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (Entry&lt;Network, String&gt; ent : connections.entrySet()) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (ent.getValue().length() == 0) {</span>
+<span class="nc" id="L121">				connections.put(ent.getKey(), address);</span>
+<span class="nc" id="L122">				return;</span>
+			}
+<span class="nc" id="L124">		}</span>
+
+<span class="nc" id="L126">	}</span>
+
+	public final boolean printFirstLink() {
+<span class="nc" id="L129">		return printFirstLink;</span>
+	}
+
+	public Network getMainNetworkNext() {
+<span class="nc" id="L133">		return connections.keySet().iterator().next();</span>
+	}
+
+	public String getAdress(Network network) {
+<span class="nc" id="L137">		return connections.get(network);</span>
+	}
+
+	@JawsStrange
+	public TextBlock toTextBlock(SName sname, String s) {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L143">			return null;</span>
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (s.length() == 0)</span>
+<span class="nc" id="L146">			return TextBlockUtils.empty(0, 0);</span>
+
+<span class="nc" id="L148">		s = s.replace(&quot;, &quot;, &quot;&quot; + Jaws.BLOCK_E1_NEWLINE);</span>
+<span class="nc" id="L149">		return Display.getWithNewlines(skinParam.getPragma(), s).create(getFontConfiguration(sname),</span>
+				HorizontalAlignment.LEFT, skinParam);
+	}
+
+	private StyleSignatureBasic getStyleDefinition(SName sname) {
+<span class="nc" id="L154">		return StyleSignatureBasic.of(SName.root, SName.element, SName.nwdiagDiagram, sname);</span>
+	}
+
+	private FontConfiguration getFontConfiguration(SName sname) {
+<span class="nc" id="L158">		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="nc" id="L159">		final Style style = getStyleDefinition(sname).getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L160">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+	}
+
+	public NServerDraw getDraw(double topMargin, Map&lt;Network, String&gt; conns, List&lt;Network&gt; networks,
+			ISkinParam skinParam) {
+<span class="nc" id="L165">		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="nc" id="L166">		Fashion symbolContext = getStyleDefinition(SName.server).getMergedStyle(styleBuilder)</span>
+<span class="nc" id="L167">				.getSymbolContext(skinParam.getIHtmlColorSet());</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (backcolor != null)</span>
+			try {
+<span class="nc" id="L170">				final HColor back = skinParam.getIHtmlColorSet().getColor(backcolor);</span>
+<span class="nc" id="L171">				symbolContext = symbolContext.withBackColor(back);</span>
+<span class="nc" id="L172">			} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L173">			}</span>
+
+<span class="nc" id="L175">		final TextBlock desc = toTextBlock(SName.server, getDescription());</span>
+<span class="nc" id="L176">		final TextBlock box = getShape().asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),</span>
+				symbolContext, HorizontalAlignment.CENTER);
+<span class="nc" id="L178">		return new NServerDraw(this, box, conns, networks, topMargin);</span>
+	}
+
+	public void connectTo(Network network, String address) {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (network == null)</span>
+<span class="nc" id="L183">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (address == null)</span>
+<span class="nc" id="L185">			address = &quot;&quot;;</span>
+<span class="nc bnc" id="L186" title="All 4 branches missed.">		if (address.length() == 0 &amp;&amp; connections.containsKey(network))</span>
+<span class="nc" id="L187">			return;</span>
+
+<span class="nc" id="L189">		connections.put(network, address);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (bar.getStart() == null)</span>
+<span class="nc" id="L191">			bar.addStage(network.getNstage());</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		else if (this.getMainNetworkNext() != network)</span>
+<span class="nc" id="L193">			bar.addStage(network.getUp());</span>
+<span class="nc" id="L194">	}</span>
+
+	public void updateProperties(Map&lt;String, String&gt; props) {
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (props.get(&quot;description&quot;) != null)</span>
+<span class="nc" id="L198">			this.description = props.get(&quot;description&quot;);</span>
+
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (props.get(&quot;color&quot;) != null)</span>
+<span class="nc" id="L201">			this.backcolor = props.get(&quot;color&quot;);</span>
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (props.get(&quot;address&quot;) != null)</span>
+<span class="nc" id="L204">			this.declaredAddress = props.get(&quot;address&quot;);</span>
+
+<span class="nc" id="L206">		final String shape = props.get(&quot;shape&quot;);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (shape != null) {</span>
+<span class="nc" id="L208">			final USymbol shapeFromString = USymbols.fromString(shape, ActorStyle.STICKMAN, ComponentStyle.RECTANGLE,</span>
+					PackageStyle.RECTANGLE);
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (shapeFromString != null)</span>
+<span class="nc" id="L211">				this.shape = shapeFromString;</span>
+		}
+
+<span class="nc" id="L214">	}</span>
+
+	@Override
+	public final String toString() {
+<span class="nc" id="L218">		return name;</span>
+	}
+
+	public static NServer create(String name, ISkinParam skinParam) {
+<span class="nc" id="L222">		return new NServer(name, new NBar(), skinParam);</span>
+	}
+
+<span class="nc" id="L225">	public NServer(String name, NBar bar, ISkinParam skinParam) {</span>
+<span class="nc" id="L226">		this.description = name;</span>
+<span class="nc" id="L227">		this.name = name;</span>
+<span class="nc" id="L228">		this.bar = bar;</span>
+<span class="nc" id="L229">		this.skinParam = skinParam;</span>
+<span class="nc" id="L230">	}</span>
+
+	public final String getDescription() {
+<span class="nc" id="L233">		return description;</span>
+	}
+
+	public final String getName() {
+<span class="nc" id="L237">		return name;</span>
+	}
+
+	public final USymbol getShape() {
+<span class="nc" id="L241">		return shape;</span>
+	}
+
+	public final NBar getBar() {
+<span class="nc" id="L245">		return bar;</span>
+	}
+
+	public final ISkinParam getSkinParam() {
+<span class="nc" id="L249">		return skinParam;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

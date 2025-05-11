@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TikzGraphics.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tikz</a> &gt; <span class="el_source">TikzGraphics.java</span></div><h1>TikzGraphics.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.tikz;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.awt.Color;
+import java.awt.geom.PathIterator;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.LatexManager;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.version.Version;
+
+<span class="nc" id="L66">public class TikzGraphics {</span>
+    // ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
+
+	// https://www.sharelatex.com/blog/2013/08/27/tikz-series-pt1.html
+	// http://cremeronline.com/LaTeX/minimaltikz.pdf
+
+<span class="nc" id="L73">	private final List&lt;String&gt; cmd = new ArrayList&lt;&gt;();</span>
+	private final boolean withPreamble;
+
+<span class="nc" id="L76">	private HColor color = HColors.BLACK;</span>
+<span class="nc" id="L77">	private HColor fillcolor = HColors.BLACK;</span>
+<span class="nc" id="L78">	private HColor fillcolorGradient2 = null;</span>
+	private char gradientPolicy;
+<span class="nc" id="L80">	private double thickness = 1.0;</span>
+	private final double scale;
+<span class="nc" id="L82">	private String dash = null;</span>
+	private final ColorMapper mapper;
+	private final String preamble;
+
+<span class="nc" id="L86">	private final Map&lt;Color, String&gt; colornames = new LinkedHashMap&lt;Color, String&gt;();</span>
+
+<span class="nc" id="L88">	public TikzGraphics(double scale, boolean withPreamble, ColorMapper mapper, Pragma pragma) {</span>
+<span class="nc" id="L89">		this.withPreamble = withPreamble;</span>
+<span class="nc" id="L90">		this.scale = scale;</span>
+<span class="nc" id="L91">		this.mapper = mapper;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		this.preamble = pragma != null ? pragma.getValue(PragmaKey.TEX_PREAMBLE) : null;</span>
+<span class="nc" id="L93">	}</span>
+
+<span class="nc" id="L95">	private final Map&lt;String, Integer&gt; styles = new LinkedHashMap&lt;String, Integer&gt;();</span>
+<span class="nc" id="L96">	private final Map&lt;String, String&gt; stylesID = new HashMap&lt;String, String&gt;();</span>
+
+	private void addCommand(final StringBuilder sb) {
+<span class="nc" id="L99">		final String s = sb.toString();</span>
+<span class="nc" id="L100">		cmd.add(s);</span>
+<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (s.startsWith(&quot;\\draw[&quot;) || s.startsWith(&quot;\\shade[&quot;)) {</span>
+<span class="nc" id="L102">			final int end = s.indexOf(']');</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (end != -1) {</span>
+<span class="nc" id="L104">				final int start = s.indexOf('[');</span>
+<span class="nc" id="L105">				final String style = s.substring(start + 1, end);</span>
+<span class="nc" id="L106">				Integer count = styles.get(style);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">				if (count == null) {</span>
+<span class="nc" id="L108">					count = 1;</span>
+<span class="nc" id="L109">					stylesID.put(style, &quot;pstyle&quot; + stylesID.size());</span>
+				} else {
+<span class="nc" id="L111">					count++;</span>
+				}
+<span class="nc" id="L113">				styles.put(style, count);</span>
+			}
+		}
+<span class="nc" id="L116">	}</span>
+
+	private String getColorName(HColor hcolor) {
+<span class="nc" id="L119">		final Color color = hcolor.toColor(mapper);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (color.equals(Color.WHITE))</span>
+<span class="nc" id="L121">			return &quot;white&quot;;</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (color.equals(Color.BLACK))</span>
+<span class="nc" id="L124">			return &quot;black&quot;;</span>
+
+<span class="nc" id="L126">		final String result = colornames.get(color);</span>
+<span class="nc" id="L127">		return Objects.requireNonNull(result);</span>
+	}
+
+	private boolean mustApplyFillColor() {
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (fillcolor == null)</span>
+<span class="nc" id="L132">			return false;</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (fillcolor.isTransparent())</span>
+<span class="nc" id="L135">			return false;</span>
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (fillcolor.toColor(mapper).getAlpha() == 0)</span>
+<span class="nc" id="L138">			return false;</span>
+
+<span class="nc" id="L140">		return true;</span>
+	}
+
+	private void appendFillColor(StringBuilder sb, boolean colorBackup) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (fillcolor == null)</span>
+<span class="nc" id="L145">			return;</span>
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (mustApplyFillColor()) {</span>
+<span class="nc" id="L148">			sb.append(&quot;fill=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+<span class="nc bnc" id="L149" title="All 4 branches missed.">			if (color == null &amp;&amp; colorBackup)</span>
+<span class="nc" id="L150">				sb.append(&quot;color=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+		} else {
+<span class="nc" id="L152">			sb.append(&quot;fill opacity=0,&quot;);</span>
+		}
+
+<span class="nc" id="L155">	}</span>
+
+	public void createData(OutputStream os) throws IOException {
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (withPreamble) {</span>
+<span class="nc" id="L159">			out(os, &quot;\\documentclass[tikz]{standalone}&quot;);</span>
+<span class="nc" id="L160">			out(os, &quot;\\usepackage{amsmath}&quot;);</span>
+<span class="nc" id="L161">			out(os, &quot;\\usepackage[T1]{fontenc}&quot;);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (hasUrl) {</span>
+<span class="nc" id="L163">				out(os, &quot;\\usetikzlibrary{calc}&quot;);</span>
+<span class="nc" id="L164">				out(os, &quot;\\usepackage{hyperref}&quot;);</span>
+			}
+<span class="nc bnc" id="L166" title="All 4 branches missed.">			if (preamble != null &amp;&amp; !preamble.isEmpty()) {</span>
+<span class="nc" id="L167">				out(os, preamble);</span>
+			}
+<span class="nc" id="L169">			out(os, &quot;\\begin{document}&quot;);</span>
+		}
+<span class="nc" id="L171">		out(os, &quot;% generated by Plantuml &quot; + Version.versionString(15));</span>
+<span class="nc bnc" id="L172" title="All 4 branches missed.">		if (hasUrl &amp;&amp; withPreamble) {</span>
+<span class="nc" id="L173">			out(os, &quot;\\tikzset{&quot;);</span>
+<span class="nc" id="L174">			out(os, &quot;    href node/.style={&quot;);</span>
+<span class="nc" id="L175">			out(os, &quot;        alias=sourcenode,&quot;);</span>
+<span class="nc" id="L176">			out(os, &quot;        append after command={&quot;);</span>
+<span class="nc" id="L177">			out(os, &quot;            let \\p1 = (sourcenode.north west),&quot;);</span>
+<span class="nc" id="L178">			out(os, &quot;                \\p2=(sourcenode.south east),&quot;);</span>
+<span class="nc" id="L179">			out(os, &quot;                \\n1={\\x2-\\x1},&quot;);</span>
+<span class="nc" id="L180">			out(os, &quot;                \\n2={\\y2-\\y1} in&quot;);</span>
+<span class="nc" id="L181">			out(os, &quot;            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\\p1)] {\\href{#1}{\\XeTeXLinkBox{\\phantom{\\rule{\\n1}{\\n2}}}}}&quot;);</span>
+<span class="nc" id="L182">			out(os, &quot;                    %xelatex needs \\XeTeXLinkBox, won't create a link unless it&quot;);</span>
+<span class="nc" id="L183">			out(os, &quot;                    %finds text --- rules don't work without \\XeTeXLinkBox.&quot;);</span>
+<span class="nc" id="L184">			out(os, &quot;                    %Still builds correctly with pdflatex and lualatex&quot;);</span>
+<span class="nc" id="L185">			out(os, &quot;        }&quot;);</span>
+<span class="nc" id="L186">			out(os, &quot;    }&quot;);</span>
+<span class="nc" id="L187">			out(os, &quot;}&quot;);</span>
+<span class="nc" id="L188">			out(os, &quot;\\tikzset{&quot;);</span>
+<span class="nc" id="L189">			out(os, &quot;    hyperref node/.style={&quot;);</span>
+<span class="nc" id="L190">			out(os, &quot;        alias=sourcenode,&quot;);</span>
+<span class="nc" id="L191">			out(os, &quot;        append after command={&quot;);</span>
+<span class="nc" id="L192">			out(os, &quot;            let \\p1 = (sourcenode.north west),&quot;);</span>
+<span class="nc" id="L193">			out(os, &quot;                \\p2=(sourcenode.south east),&quot;);</span>
+<span class="nc" id="L194">			out(os, &quot;                \\n1={\\x2-\\x1},&quot;);</span>
+<span class="nc" id="L195">			out(os, &quot;                \\n2={\\y2-\\y1} in&quot;);</span>
+<span class="nc" id="L196">			out(os, &quot;            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\\p1)] {\\hyperref [#1]{\\XeTeXLinkBox{\\phantom{\\rule{\\n1}{\\n2}}}}}&quot;);</span>
+<span class="nc" id="L197">			out(os, &quot;                    %xelatex needs \\XeTeXLinkBox, won't create a link unless it&quot;);</span>
+<span class="nc" id="L198">			out(os, &quot;                    %finds text --- rules don't work without \\XeTeXLinkBox.&quot;);</span>
+<span class="nc" id="L199">			out(os, &quot;                    %Still builds correctly with pdflatex and lualatex&quot;);</span>
+<span class="nc" id="L200">			out(os, &quot;        }&quot;);</span>
+<span class="nc" id="L201">			out(os, &quot;    }&quot;);</span>
+<span class="nc" id="L202">			out(os, &quot;}&quot;);</span>
+		}
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (Map.Entry&lt;Color, String&gt; ent : colornames.entrySet())</span>
+<span class="nc" id="L205">			out(os, definecolor(ent.getValue(), ent.getKey()));</span>
+
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (scale != 1)</span>
+<span class="nc" id="L208">			out(os, &quot;\\scalebox{&quot; + format(scale) + &quot;}{&quot;);</span>
+
+<span class="nc" id="L210">		out(os, &quot;\\begin{tikzpicture}[yscale=-1&quot;);</span>
+<span class="nc" id="L211">		purgeStyles();</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (String style : styles.keySet())</span>
+<span class="nc" id="L213">			out(os, &quot;,&quot; + stylesID.get(style) + &quot;/.style={&quot; + style + &quot;}&quot;);</span>
+
+<span class="nc" id="L215">		out(os, &quot;]&quot;);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		for (String s : cmd)</span>
+<span class="nc" id="L217">			out(os, useStyle(s));</span>
+
+<span class="nc" id="L219">		out(os, &quot;\\end{tikzpicture}&quot;);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (scale != 1)</span>
+<span class="nc" id="L221">			out(os, &quot;}&quot;);</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (withPreamble)</span>
+<span class="nc" id="L224">			out(os, &quot;\\end{document}&quot;);</span>
+
+<span class="nc" id="L226">	}</span>
+
+	private String useStyle(String s) {
+<span class="nc bnc" id="L229" title="All 2 branches missed.">		for (String style : styles.keySet()) {</span>
+<span class="nc" id="L230">			final String start1 = &quot;\\draw[&quot; + style + &quot;]&quot;;</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (s.startsWith(start1)) {</span>
+<span class="nc" id="L232">				final String newStart = &quot;\\draw[&quot; + stylesID.get(style) + &quot;]&quot;;</span>
+<span class="nc" id="L233">				return newStart + s.substring(start1.length());</span>
+			}
+<span class="nc" id="L235">			final String start2 = &quot;\\shade[&quot; + style + &quot;]&quot;;</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">			if (s.startsWith(start2)) {</span>
+<span class="nc" id="L237">				final String newStart = &quot;\\shade[&quot; + stylesID.get(style) + &quot;]&quot;;</span>
+<span class="nc" id="L238">				return newStart + s.substring(start2.length());</span>
+			}
+<span class="nc" id="L240">		}</span>
+<span class="nc" id="L241">		return s;</span>
+	}
+
+	private void purgeStyles() {
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		for (Iterator&lt;Map.Entry&lt;String, Integer&gt;&gt; it = styles.entrySet().iterator(); it.hasNext();) {</span>
+<span class="nc" id="L246">			final Map.Entry&lt;String, Integer&gt; ent = it.next();</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			if (ent.getValue().intValue() == 1)</span>
+<span class="nc" id="L248">				it.remove();</span>
+
+<span class="nc" id="L250">		}</span>
+<span class="nc" id="L251">	}</span>
+
+	private String definecolor(String name, Color color) {
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (color.getAlpha() == 0)</span>
+<span class="nc" id="L255">			color = Color.WHITE;</span>
+<span class="nc" id="L256">		return &quot;\\definecolor{&quot; + name + &quot;}{RGB}{&quot; + color.getRed() + &quot;,&quot; + color.getGreen() + &quot;,&quot; + color.getBlue()</span>
+				+ &quot;}&quot;;
+	}
+
+	public void rectangle(double x, double y, double width, double height) {
+<span class="nc" id="L261">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (pendingUrl == null) {</span>
+<span class="nc" id="L263">			appendShadeOrDraw(sb);</span>
+<span class="nc" id="L264">			sb.append(&quot;line width=&quot; + thickness + &quot;pt] &quot;);</span>
+<span class="nc" id="L265">			sb.append(couple(x, y) + &quot; rectangle &quot; + couple(x + width, y + height));</span>
+<span class="nc" id="L266">			sb.append(&quot;;&quot;);</span>
+		} else {
+<span class="nc" id="L268">			sb.append(&quot;\\node at &quot; + couple(x, y) + &quot;[draw, &quot;);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">			if (color != null)</span>
+<span class="nc" id="L270">				sb.append(&quot;color=&quot; + getColorName(color) + &quot;,&quot;);</span>
+
+<span class="nc bnc" id="L272" title="All 2 branches missed.">			if (mustApplyFillColor()) {</span>
+<span class="nc" id="L273">				appendFillColor(sb, true);</span>
+				// sb.append(&quot;fill=&quot; + getColorName(fillcolor) + &quot;,&quot;);
+<span class="nc bnc" id="L275" title="All 2 branches missed.">				if (color == null)</span>
+<span class="nc" id="L276">					sb.append(&quot;color=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+
+			}
+<span class="nc" id="L279">			sb.append(&quot;line width=&quot; + thickness + &quot;pt,&quot;);</span>
+<span class="nc" id="L280">			sb.append(&quot;below right,&quot;);</span>
+<span class="nc" id="L281">			sb.append(&quot;inner sep=2ex,&quot;);</span>
+<span class="nc" id="L282">			sb.append(&quot;minimum width=&quot; + format(width) + &quot;pt,&quot;);</span>
+<span class="nc" id="L283">			sb.append(&quot;minimum height=&quot; + format(height) + &quot;pt,&quot;);</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">			if (Url.isLatex(pendingUrl))</span>
+<span class="nc" id="L285">				sb.append(&quot;hyperref node=&quot; + extractInternalHref(pendingUrl));</span>
+			else
+<span class="nc" id="L287">				sb.append(&quot;href node=&quot; + pendingUrl);</span>
+
+<span class="nc" id="L289">			sb.append(&quot;] &quot;);</span>
+<span class="nc" id="L290">			sb.append(&quot; {};&quot;);</span>
+<span class="nc" id="L291">			urlIgnoreText = true;</span>
+		}
+<span class="nc" id="L293">		addCommand(sb);</span>
+<span class="nc" id="L294">	}</span>
+
+	private String getAngleFromGradientPolicy() {
+<span class="nc bnc" id="L297" title="All 2 branches missed.">		if (this.gradientPolicy == '-')</span>
+<span class="nc" id="L298">			return &quot;0&quot;;</span>
+
+<span class="nc bnc" id="L300" title="All 2 branches missed.">		if (this.gradientPolicy == '|')</span>
+<span class="nc" id="L301">			return &quot;90&quot;;</span>
+
+<span class="nc bnc" id="L303" title="All 2 branches missed.">		if (this.gradientPolicy == '/')</span>
+<span class="nc" id="L304">			return &quot;45&quot;;</span>
+
+<span class="nc bnc" id="L306" title="All 2 branches missed.">		if (this.gradientPolicy == '\\')</span>
+<span class="nc" id="L307">			return &quot;135&quot;;</span>
+
+<span class="nc" id="L309">		throw new IllegalArgumentException();</span>
+	}
+
+	private String couple(double x, double y) {
+<span class="nc" id="L313">		return &quot;(&quot; + format(x) + &quot;pt,&quot; + format(y) + &quot;pt)&quot;;</span>
+	}
+
+	public static String format(double x) {
+<span class="nc" id="L317">		return EpsGraphics.formatSimple4(x);</span>
+	}
+
+	private void out(OutputStream os, String s) throws IOException {
+<span class="nc" id="L321">		os.write(s.getBytes(UTF_8));</span>
+<span class="nc" id="L322">		os.write(&quot;\n&quot;.getBytes(UTF_8));</span>
+<span class="nc" id="L323">	}</span>
+
+	public void text(double x, double y, String text, boolean underline, boolean italic, boolean bold) {
+<span class="nc" id="L326">		final StringBuilder sb = new StringBuilder(&quot;\\node at &quot; + couple(x, y));</span>
+<span class="nc" id="L327">		sb.append(&quot;[below right&quot;);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">		if (color != null) {</span>
+<span class="nc" id="L329">			sb.append(&quot;,color=&quot;);</span>
+<span class="nc" id="L330">			sb.append(getColorName(color));</span>
+		}
+<span class="nc" id="L332">		sb.append(&quot;,inner sep=0]{&quot;);</span>
+<span class="nc bnc" id="L333" title="All 4 branches missed.">		if (pendingUrl == null || urlIgnoreText) {</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">			if (underline)</span>
+<span class="nc" id="L335">				sb.append(&quot;\\underline{&quot;);</span>
+
+<span class="nc bnc" id="L337" title="All 2 branches missed.">			if (italic)</span>
+<span class="nc" id="L338">				sb.append(&quot;\\textit{&quot;);</span>
+
+<span class="nc bnc" id="L340" title="All 2 branches missed.">			if (bold)</span>
+<span class="nc" id="L341">				sb.append(&quot;\\textbf{&quot;);</span>
+
+<span class="nc" id="L343">			sb.append(LatexManager.protectText(text));</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">			if (bold)</span>
+<span class="nc" id="L345">				sb.append(&quot;}&quot;);</span>
+
+<span class="nc bnc" id="L347" title="All 2 branches missed.">			if (italic)</span>
+<span class="nc" id="L348">				sb.append(&quot;}&quot;);</span>
+
+<span class="nc bnc" id="L350" title="All 2 branches missed.">			if (underline)</span>
+<span class="nc" id="L351">				sb.append(&quot;}&quot;);</span>
+
+		} else {
+<span class="nc" id="L354">			appendPendingUrl(sb);</span>
+<span class="nc" id="L355">			sb.append(&quot;{&quot;);</span>
+<span class="nc" id="L356">			sb.append(LatexManager.protectText(text));</span>
+<span class="nc" id="L357">			sb.append(&quot;}&quot;);</span>
+		}
+<span class="nc" id="L359">		sb.append(&quot;};&quot;);</span>
+<span class="nc" id="L360">		addCommand(sb);</span>
+<span class="nc" id="L361">	}</span>
+
+	public void appendRaw(double x, double y, String formula) {
+<span class="nc" id="L364">		Objects.requireNonNull(formula);</span>
+<span class="nc" id="L365">		final StringBuilder sb = new StringBuilder(&quot;\\node at &quot; + couple(x, y));</span>
+<span class="nc" id="L366">		sb.append(&quot;[below right&quot;);</span>
+<span class="nc" id="L367">		sb.append(&quot;,inner sep=0]{&quot;);</span>
+<span class="nc" id="L368">		sb.append(&quot;$&quot;);</span>
+<span class="nc" id="L369">		sb.append(formula);</span>
+<span class="nc" id="L370">		sb.append(&quot;$&quot;);</span>
+<span class="nc" id="L371">		sb.append(&quot;};&quot;);</span>
+<span class="nc" id="L372">		addCommand(sb);</span>
+<span class="nc" id="L373">	}</span>
+
+	private void appendPendingUrl(final StringBuilder sb) {
+<span class="nc bnc" id="L376" title="All 2 branches missed.">		if (Url.isLatex(pendingUrl)) {</span>
+<span class="nc" id="L377">			sb.append(&quot;\\hyperref[&quot;);</span>
+<span class="nc" id="L378">			sb.append(extractInternalHref(pendingUrl));</span>
+<span class="nc" id="L379">			sb.append(&quot;]&quot;);</span>
+		} else {
+<span class="nc" id="L381">			sb.append(&quot;\\href{&quot;);</span>
+<span class="nc" id="L382">			sb.append(pendingUrl);</span>
+<span class="nc" id="L383">			sb.append(&quot;}&quot;);</span>
+		}
+<span class="nc" id="L385">	}</span>
+
+	private static String extractInternalHref(String pendingUrl) {
+<span class="nc bnc" id="L388" title="All 2 branches missed.">		if (Url.isLatex(pendingUrl) == false) {</span>
+<span class="nc" id="L389">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L391">		return pendingUrl.substring(&quot;latex://&quot;.length());</span>
+	}
+
+	public void line(double x1, double y1, double x2, double y2) {
+<span class="nc" id="L395">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L396">		sb.append(&quot;\\draw[&quot;);</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L398">			sb.append(&quot;color=&quot; + getColorName(color) + &quot;,&quot;);</span>
+
+<span class="nc" id="L400">		sb.append(&quot;line width=&quot; + thickness + &quot;pt&quot;);</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">		if (dash != null)</span>
+<span class="nc" id="L402">			sb.append(&quot;,dash pattern=&quot; + dash);</span>
+
+<span class="nc" id="L404">		sb.append(&quot;] &quot;);</span>
+<span class="nc" id="L405">		sb.append(couple(x1, y1));</span>
+<span class="nc" id="L406">		sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L407">		sb.append(couple(x2, y2));</span>
+<span class="nc" id="L408">		sb.append(&quot;;&quot;);</span>
+<span class="nc" id="L409">		addCommand(sb);</span>
+<span class="nc" id="L410">	}</span>
+
+	public void polygon(double[] points) {
+
+<span class="nc bnc" id="L414" title="All 2 branches missed.">		assert points.length % 2 == 0;</span>
+<span class="nc" id="L415">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L416">		appendShadeOrDraw(sb);</span>
+<span class="nc" id="L417">		sb.append(&quot;line width=&quot; + thickness + &quot;pt]&quot;);</span>
+<span class="nc" id="L418">		sb.append(&quot; &quot;);</span>
+<span class="nc bnc" id="L419" title="All 2 branches missed.">		for (int i = 0; i &lt; points.length; i += 2) {</span>
+<span class="nc" id="L420">			sb.append(couple(points[i], points[i + 1]));</span>
+<span class="nc" id="L421">			sb.append(&quot; -- &quot;);</span>
+		}
+<span class="nc" id="L423">		sb.append(&quot;cycle;&quot;);</span>
+<span class="nc" id="L424">		addCommand(sb);</span>
+<span class="nc" id="L425">	}</span>
+
+	private void round(double r, double[] points) {
+<span class="nc bnc" id="L428" title="All 2 branches missed.">		assert points.length % 2 == 0;</span>
+<span class="nc" id="L429">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L430">		appendShadeOrDraw(sb);</span>
+<span class="nc" id="L431">		sb.append(&quot;line width=&quot; + thickness + &quot;pt]&quot;);</span>
+<span class="nc" id="L432">		sb.append(&quot; &quot;);</span>
+<span class="nc" id="L433">		int i = 0;</span>
+<span class="nc" id="L434">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L435">		sb.append(&quot; arc (180:270:&quot; + format(r) + &quot;pt) -- &quot;);</span>
+<span class="nc" id="L436">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L437">		sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L438">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L439">		sb.append(&quot; arc (270:360:&quot; + format(r) + &quot;pt) -- &quot;);</span>
+<span class="nc" id="L440">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L441">		sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L442">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L443">		sb.append(&quot; arc (0:90:&quot; + format(r) + &quot;pt) -- &quot;);</span>
+<span class="nc" id="L444">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L445">		sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L446">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L447">		sb.append(&quot; arc (90:180:&quot; + format(r) + &quot;pt) -- &quot;);</span>
+<span class="nc" id="L448">		sb.append(couple(points[i++], points[i++]));</span>
+<span class="nc" id="L449">		sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L450">		sb.append(&quot;cycle;&quot;);</span>
+<span class="nc" id="L451">		addCommand(sb);</span>
+<span class="nc" id="L452">	}</span>
+
+	private void appendShadeOrDraw(final StringBuilder sb) {
+<span class="nc bnc" id="L455" title="All 2 branches missed.">		final boolean gradient = this.fillcolorGradient2 != null;</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">		sb.append(gradient ? &quot;\\shade[&quot; : &quot;\\draw[&quot;);</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">		if (color != null) {</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">			sb.append(gradient ? &quot;draw=&quot; : &quot;color=&quot;);</span>
+<span class="nc" id="L459">			sb.append(getColorName(color) + &quot;,&quot;);</span>
+		}
+<span class="nc bnc" id="L461" title="All 2 branches missed.">		if (gradient) {</span>
+<span class="nc" id="L462">			sb.append(&quot;top color=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+<span class="nc" id="L463">			sb.append(&quot;bottom color=&quot; + getColorName(fillcolorGradient2) + &quot;,&quot;);</span>
+<span class="nc" id="L464">			sb.append(&quot;shading=axis,shading angle=&quot; + getAngleFromGradientPolicy() + &quot;,&quot;);</span>
+<span class="nc bnc" id="L465" title="All 2 branches missed.">		} else if (mustApplyFillColor()) {</span>
+<span class="nc" id="L466">			appendFillColor(sb, false);</span>
+			// sb.append(&quot;fill=&quot; + getColorName(fillcolor) + &quot;,&quot;);
+<span class="nc bnc" id="L468" title="All 2 branches missed.">			if (color == null)</span>
+<span class="nc" id="L469">				sb.append(&quot;color=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+
+		}
+<span class="nc" id="L472">	}</span>
+
+	public void rectangleRound(double x, double y, double width, double height, double r) {
+<span class="nc" id="L475">		double[] points = new double[8 * 2];</span>
+<span class="nc" id="L476">		points[0] = x;</span>
+<span class="nc" id="L477">		points[1] = y + r;</span>
+<span class="nc" id="L478">		points[2] = x + r;</span>
+<span class="nc" id="L479">		points[3] = y;</span>
+
+<span class="nc" id="L481">		points[4] = x + width - r;</span>
+<span class="nc" id="L482">		points[5] = y;</span>
+<span class="nc" id="L483">		points[6] = x + width;</span>
+<span class="nc" id="L484">		points[7] = y + r;</span>
+
+<span class="nc" id="L486">		points[8] = x + width;</span>
+<span class="nc" id="L487">		points[9] = y + height - r;</span>
+<span class="nc" id="L488">		points[10] = x + width - r;</span>
+<span class="nc" id="L489">		points[11] = y + height;</span>
+
+<span class="nc" id="L491">		points[12] = x + r;</span>
+<span class="nc" id="L492">		points[13] = y + height;</span>
+<span class="nc" id="L493">		points[14] = x;</span>
+<span class="nc" id="L494">		points[15] = y + height - r;</span>
+
+<span class="nc" id="L496">		round(r, points);</span>
+<span class="nc" id="L497">	}</span>
+
+	public void upath(double x, double y, UPath path) {
+<span class="nc" id="L500">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L501">		appendShadeOrDraw(sb);</span>
+<span class="nc" id="L502">		sb.append(&quot;line width=&quot; + thickness + &quot;pt&quot;);</span>
+<span class="nc bnc" id="L503" title="All 2 branches missed.">		if (dash != null)</span>
+<span class="nc" id="L504">			sb.append(&quot;,dash pattern=&quot; + dash);</span>
+
+<span class="nc" id="L506">		sb.append(&quot;] &quot;);</span>
+<span class="nc" id="L507">		double lastx = 0;</span>
+<span class="nc" id="L508">		double lasty = 0;</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">		for (USegment seg : path) {</span>
+<span class="nc" id="L510">			final USegmentType type = seg.getSegmentType();</span>
+<span class="nc" id="L511">			final double coord[] = seg.getCoord();</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="nc" id="L513">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="nc" id="L514">				lastx = coord[0] + x;</span>
+<span class="nc" id="L515">				lasty = coord[1] + y;</span>
+<span class="nc bnc" id="L516" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="nc" id="L517">				sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L518">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="nc" id="L519">				lastx = coord[0] + x;</span>
+<span class="nc" id="L520">				lasty = coord[1] + y;</span>
+<span class="nc bnc" id="L521" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="nc" id="L522">				throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+				// curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y,
+				// coord[4] + x, coord[5] + y);
+<span class="nc" id="L526">				sb.append(&quot; ..controls &quot;);</span>
+<span class="nc" id="L527">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="nc" id="L528">				sb.append(&quot; and &quot;);</span>
+<span class="nc" id="L529">				sb.append(couple(coord[2] + x, coord[3] + y));</span>
+<span class="nc" id="L530">				sb.append(&quot; .. &quot;);</span>
+<span class="nc" id="L531">				sb.append(couple(coord[4] + x, coord[5] + y));</span>
+<span class="nc" id="L532">				lastx = coord[4] + x;</span>
+<span class="nc" id="L533">				lasty = coord[5] + y;</span>
+<span class="nc bnc" id="L534" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
+				// Nothing
+<span class="nc bnc" id="L536" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+
+<span class="nc" id="L538">				final double newx = coord[5] + x;</span>
+<span class="nc" id="L539">				final double newy = coord[6] + y;</span>
+<span class="nc bnc" id="L540" title="All 6 branches missed.">				final boolean easyCase = coord[2] == 0 &amp;&amp; coord[3] == 0 &amp;&amp; coord[4] == 1;</span>
+
+<span class="nc bnc" id="L542" title="All 6 branches missed.">				if (easyCase &amp;&amp; newx &gt; lastx &amp;&amp; newy &lt; lasty) {</span>
+<span class="nc" id="L543">					final int start = 180;</span>
+<span class="nc" id="L544">					final int end = 270;</span>
+<span class="nc" id="L545">					final String radius = format(coord[0]);</span>
+<span class="nc" id="L546">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
+<span class="nc bnc" id="L547" title="All 6 branches missed.">				} else if (easyCase &amp;&amp; newx &gt; lastx &amp;&amp; newy &gt; lasty) {</span>
+<span class="nc" id="L548">					final int start = 270;</span>
+<span class="nc" id="L549">					final int end = 360;</span>
+<span class="nc" id="L550">					final String radius = format(coord[0]);</span>
+<span class="nc" id="L551">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
+<span class="nc bnc" id="L552" title="All 6 branches missed.">				} else if (easyCase &amp;&amp; newx &lt; lastx &amp;&amp; newy &gt; lasty) {</span>
+<span class="nc" id="L553">					final int start = 0;</span>
+<span class="nc" id="L554">					final int end = 90;</span>
+<span class="nc" id="L555">					final String radius = format(coord[0]);</span>
+<span class="nc" id="L556">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
+<span class="nc bnc" id="L557" title="All 6 branches missed.">				} else if (easyCase &amp;&amp; newx &lt; lastx &amp;&amp; newy &lt; lasty) {</span>
+<span class="nc" id="L558">					final int start = 90;</span>
+<span class="nc" id="L559">					final int end = 180;</span>
+<span class="nc" id="L560">					final String radius = format(coord[0]);</span>
+<span class="nc" id="L561">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
+<span class="nc" id="L562">				} else {</span>
+<span class="nc" id="L563">					sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L564">					sb.append(couple(coord[5] + x, coord[6] + y));</span>
+				}
+
+<span class="nc" id="L567">				lastx = newx;</span>
+<span class="nc" id="L568">				lasty = newy;</span>
+
+<span class="nc" id="L570">			} else {</span>
+<span class="nc" id="L571">				Log.println(&quot;unknown4 &quot; + seg);</span>
+			}
+<span class="nc" id="L573">		}</span>
+<span class="nc" id="L574">		sb.append(&quot;;&quot;);</span>
+<span class="nc" id="L575">		addCommand(sb);</span>
+<span class="nc" id="L576">	}</span>
+
+	public void ellipse(double x, double y, double width, double height) {
+<span class="nc" id="L579">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L580">		sb.append(&quot;\\draw[&quot;);</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L582">			sb.append(&quot;color=&quot; + getColorName(color) + &quot;,&quot;);</span>
+
+<span class="nc bnc" id="L584" title="All 2 branches missed.">		if (mustApplyFillColor())</span>
+<span class="nc" id="L585">			sb.append(&quot;fill=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+
+<span class="nc" id="L587">		sb.append(&quot;line width=&quot; + thickness + &quot;pt] &quot; + couple(x, y) + &quot; ellipse (&quot; + format(width) + &quot;pt and &quot;</span>
+<span class="nc" id="L588">				+ format(height) + &quot;pt);&quot;);</span>
+<span class="nc" id="L589">		addCommand(sb);</span>
+<span class="nc" id="L590">	}</span>
+
+	public void arc(double x, double y, int angleStart, int angleEnd, double radius) {
+<span class="nc" id="L593">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L594">		sb.append(&quot;\\draw[&quot;);</span>
+<span class="nc bnc" id="L595" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L596">			sb.append(&quot;color=&quot; + getColorName(color) + &quot;,&quot;);</span>
+
+<span class="nc bnc" id="L598" title="All 2 branches missed.">		if (mustApplyFillColor())</span>
+<span class="nc" id="L599">			sb.append(&quot;fill=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+
+<span class="nc" id="L601">		sb.append(&quot;line width=&quot; + thickness + &quot;pt] &quot; + couple(x, y) + &quot; arc (&quot; + angleStart + &quot;:&quot; + angleEnd + &quot;:&quot;</span>
+<span class="nc" id="L602">				+ format(radius) + &quot;pt);&quot;);</span>
+<span class="nc" id="L603">		addCommand(sb);</span>
+<span class="nc" id="L604">	}</span>
+
+	public void drawSingleCharacter(double x, double y, char c) {
+<span class="nc" id="L607">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L608">		sb.append(&quot;\\node at &quot;);</span>
+<span class="nc" id="L609">		sb.append(couple(x, y));</span>
+<span class="nc" id="L610">		sb.append(&quot;[]{\\textbf{\\Large &quot; + c + &quot;}};&quot;);</span>
+<span class="nc" id="L611">		addCommand(sb);</span>
+<span class="nc" id="L612">	}</span>
+
+	public void drawPathIterator(double x, double y, PathIterator path) {
+<span class="nc" id="L615">		final StringBuilder sb = new StringBuilder(</span>
+<span class="nc" id="L616">				&quot;\\draw[color=&quot; + getColorName(color) + &quot;,fill=&quot; + getColorName(color) + &quot;] &quot;);</span>
+<span class="nc" id="L617">		final double coord[] = new double[6];</span>
+<span class="nc bnc" id="L618" title="All 2 branches missed.">		while (path.isDone() == false) {</span>
+<span class="nc" id="L619">			final int code = path.currentSegment(coord);</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">			if (code == PathIterator.SEG_MOVETO) {</span>
+<span class="nc" id="L621">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_LINETO) {</span>
+<span class="nc" id="L623">				sb.append(&quot; -- &quot;);</span>
+<span class="nc" id="L624">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="nc bnc" id="L625" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_CLOSE) {</span>
+<span class="nc" id="L626">				sb.append(&quot;;&quot;);</span>
+<span class="nc" id="L627">				addCommand(sb);</span>
+<span class="nc" id="L628">				sb.setLength(0);</span>
+<span class="nc" id="L629">				sb.append(&quot;\\draw &quot;);</span>
+<span class="nc bnc" id="L630" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_CUBICTO) {</span>
+<span class="nc" id="L631">				sb.append(&quot; ..controls &quot;);</span>
+<span class="nc" id="L632">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="nc" id="L633">				sb.append(&quot; and &quot;);</span>
+<span class="nc" id="L634">				sb.append(couple(coord[2] + x, coord[3] + y));</span>
+<span class="nc" id="L635">				sb.append(&quot; .. &quot;);</span>
+<span class="nc" id="L636">				sb.append(couple(coord[4] + x, coord[5] + y));</span>
+<span class="nc bnc" id="L637" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_QUADTO) {</span>
+<span class="nc" id="L638">				sb.append(&quot; ..controls &quot;);</span>
+<span class="nc" id="L639">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="nc" id="L640">				sb.append(&quot; .. &quot;);</span>
+<span class="nc" id="L641">				sb.append(couple(coord[2] + x, coord[3] + y));</span>
+			} else {
+<span class="nc" id="L643">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
+			}
+
+<span class="nc" id="L646">			path.next();</span>
+<span class="nc" id="L647">		}</span>
+
+		// eps.fill(path.getWindingRule());
+
+<span class="nc" id="L651">	}</span>
+
+	public void setFillColor(HColor c) {
+<span class="nc" id="L654">		this.fillcolor = c;</span>
+<span class="nc" id="L655">		this.fillcolorGradient2 = null;</span>
+<span class="nc bnc" id="L656" title="All 2 branches missed.">		if (mustApplyFillColor())</span>
+<span class="nc" id="L657">			addColor(fillcolor);</span>
+
+<span class="nc" id="L659">	}</span>
+
+	public void setGradientColor(HColor c1, HColor c2, char policy) {
+<span class="nc" id="L662">		this.fillcolor = c1;</span>
+<span class="nc" id="L663">		this.fillcolorGradient2 = c2;</span>
+<span class="nc" id="L664">		this.gradientPolicy = policy;</span>
+<span class="nc bnc" id="L665" title="All 2 branches missed.">		if (mustApplyFillColor())</span>
+<span class="nc" id="L666">			addColor(fillcolor);</span>
+
+<span class="nc" id="L668">		addColor(fillcolorGradient2);</span>
+<span class="nc" id="L669">	}</span>
+
+	public void setStrokeColor(HColor c) {
+		// Objects.requireNonNull(c);
+<span class="nc" id="L673">		this.color = c;</span>
+<span class="nc" id="L674">		addColor(c);</span>
+<span class="nc" id="L675">	}</span>
+
+	private void addColor(HColor hcolor) {
+<span class="nc bnc" id="L678" title="All 2 branches missed.">		if (hcolor == null)</span>
+<span class="nc" id="L679">			return;</span>
+<span class="nc" id="L680">		final Color color = hcolor.toColor(mapper);</span>
+<span class="nc bnc" id="L681" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L682">			return;</span>
+
+<span class="nc bnc" id="L684" title="All 2 branches missed.">		if (colornames.containsKey(color))</span>
+<span class="nc" id="L685">			return;</span>
+
+<span class="nc" id="L687">		final String name = &quot;plantucolor&quot; + String.format(&quot;%04d&quot;, colornames.size());</span>
+<span class="nc" id="L688">		colornames.put(color, name);</span>
+<span class="nc" id="L689">	}</span>
+
+	public void setStrokeWidth(double thickness, String dash) {
+<span class="nc" id="L692">		this.thickness = thickness;</span>
+<span class="nc" id="L693">		this.dash = dash;</span>
+<span class="nc" id="L694">	}</span>
+
+<span class="nc" id="L696">	private String pendingUrl = null;</span>
+<span class="nc" id="L697">	private boolean urlIgnoreText = false;</span>
+<span class="nc" id="L698">	private boolean hasUrl = false;</span>
+
+	public void openLink(String url, String title) {
+<span class="nc" id="L701">		this.hasUrl = true;</span>
+<span class="nc" id="L702">		this.urlIgnoreText = false;</span>
+<span class="nc" id="L703">		this.pendingUrl = Objects.requireNonNull(url);</span>
+		//
+		// if (pendingLink2.size() &gt; 0) {
+		// closeLink();
+		// }
+		//
+		// pendingLink2.add(0, (Element) document.createElement(&quot;a&quot;));
+		// pendingLink2.get(0).setAttribute(&quot;target&quot;, target);
+		// pendingLink2.get(0).setAttribute(&quot;xlink:href&quot;, url);
+		// if (title == null) {
+		// pendingLink2.get(0).setAttribute(&quot;xlink:title&quot;, url);
+		// } else {
+		// pendingLink2.get(0).setAttribute(&quot;xlink:title&quot;, title);
+		// }
+<span class="nc" id="L717">	}</span>
+
+	public void closeLink() {
+<span class="nc" id="L720">		this.pendingUrl = null;</span>
+<span class="nc" id="L721">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

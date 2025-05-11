@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>id__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">id__c.java</span></div><h1>id__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cgraph.imap__c.aginternalmapinsert;
+import static gen.lib.cgraph.imap__c.aginternalmaplookup;
+import static gen.lib.cgraph.imap__c.aginternalmapprint;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.cgraph.refstr__c.agstrbind;
+import static gen.lib.cgraph.refstr__c.agstrdup;
+import static smetana.core.Macro.AGCLOS_id;
+import static smetana.core.Macro.AGDISC_id;
+import static smetana.core.Macro.AGEDGE;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agdisc_s;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_dt_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.__ptr__;
+
+<span class="nc" id="L75">public class id__c {</span>
+    // ::remove folder when __HAXE__
+
+<span class="fc" id="L78">public static CFunction idopen = new CFunctionAbstract(&quot;idopen&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L81">		return idopen((ST_Agraph_s)args[0], (ST_Agdisc_s)args[1]);</span>
+	}};
+		
+
+//3 a0a2zxsu8n019hzm1rwf1jc7f
+// static void *idopen(Agraph_t * g, Agdisc_t* disc) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;&quot;, key=&quot;a0a2zxsu8n019hzm1rwf1jc7f&quot;, definition=&quot;static void *idopen(Agraph_t * g, Agdisc_t* disc)&quot;)
+public static Object idopen(ST_Agraph_s g, ST_Agdisc_s disc) {
+<span class="fc" id="L90">ENTERING(&quot;a0a2zxsu8n019hzm1rwf1jc7f&quot;,&quot;idopen&quot;);</span>
+try {
+<span class="fc" id="L92">	return g;</span>
+} finally {
+<span class="fc" id="L94">LEAVING(&quot;a0a2zxsu8n019hzm1rwf1jc7f&quot;,&quot;idopen&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L100">public static CFunction idmap = new CFunctionAbstract(&quot;idmap&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L103">		return idmap(zz, (Object)args[0], (Integer)args[1], (CString)args[2], (int[])args[3], (Boolean)args[4]);</span>
+	}};
+
+//3 lsl0c1gejls1wv04ga6xy2cf
+// static long idmap(void *state, int objtype, char *str, unsigned long *id, 		  int createflag) 
+//static int ctr = 1;
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;&quot;, key=&quot;&quot;, definition=&quot;&quot;)
+public static int idmap(Globals zz, Object state, int objtype, CString str, int id[], boolean createflag) {
+<span class="fc" id="L112">ENTERING(&quot;lsl0c1gejls1wv04ga6xy2cf&quot;,&quot;idmap&quot;);</span>
+try {
+    CString s;
+<span class="fc bfc" id="L115" title="All 2 branches covered.">    if (str!=null) {</span>
+	ST_Agraph_s g;
+<span class="fc" id="L117">	g = (ST_Agraph_s) state;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">	if (createflag)</span>
+<span class="fc" id="L119">	    s = agstrdup(zz, g, str);</span>
+	else
+<span class="fc" id="L121">	    s = agstrbind(zz, g, str);</span>
+<span class="fc" id="L122">	id[0] = Memory.identityHashCode(zz, s);</span>
+<span class="fc" id="L123">    } else {</span>
+<span class="fc" id="L124">	id[0] = zz.ctr;</span>
+<span class="fc" id="L125">	zz.ctr += 2;</span>
+    }
+<span class="fc" id="L127">    return true ? 1 : 0;</span>
+} finally {
+<span class="fc" id="L129">LEAVING(&quot;lsl0c1gejls1wv04ga6xy2cf&quot;,&quot;idmap&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L135">public static CFunction idalloc = new CFunctionAbstract(&quot;idalloc&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L138">		return idalloc(args);</span>
+	}};
+
+//3 8ynmf2fueegi7vjejal3ri1ax
+// static long idalloc(void *state, int objtype, unsigned long request) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;idalloc&quot;, key=&quot;8ynmf2fueegi7vjejal3ri1ax&quot;, definition=&quot;static long idalloc(void *state, int objtype, unsigned long request)&quot;)
+public static Object idalloc(Object... arg_) {
+<span class="nc" id="L146">UNSUPPORTED(&quot;1z2o91qjhxg0zcs8vgzyl9bf1&quot;); // static long idalloc(void *state, int objtype, unsigned long request)</span>
+<span class="nc" id="L147">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L148">UNSUPPORTED(&quot;2s0qc9g3dasd7eqa3rhtlxrae&quot;); //     (void) state;</span>
+<span class="nc" id="L149">UNSUPPORTED(&quot;x0ltcg0hfp8jlgbjde43bdwj&quot;); //     (void) objtype;</span>
+<span class="nc" id="L150">UNSUPPORTED(&quot;6xs9bwnce34njm5w424uwon6d&quot;); //     (void) request;</span>
+<span class="nc" id="L151">UNSUPPORTED(&quot;297p5iu8oro94tdg9v29bbgiw&quot;); //     return (0);</span>
+<span class="nc" id="L152">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L154">throw new UnsupportedOperationException();</span>
+}
+
+
+
+<span class="fc" id="L159">public static CFunction idfree = new CFunctionAbstract(&quot;idfree&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L162">		return idfree(args);</span>
+	}};
+
+//3 5fsdlq8w38bfd7gtwz1z8arad
+// static void idfree(void *state, int objtype, unsigned long id) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;idfree&quot;, key=&quot;5fsdlq8w38bfd7gtwz1z8arad&quot;, definition=&quot;static void idfree(void *state, int objtype, unsigned long id)&quot;)
+public static Object idfree(Object... arg_) {
+<span class="nc" id="L170">UNSUPPORTED(&quot;adq5fviqjzpkxrjt37qxo1ywh&quot;); // static void idfree(void *state, int objtype, unsigned long id)</span>
+<span class="nc" id="L171">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L172">UNSUPPORTED(&quot;x0ltcg0hfp8jlgbjde43bdwj&quot;); //     (void) objtype;</span>
+<span class="nc" id="L173">UNSUPPORTED(&quot;e3dd233viwus8xrkad68a1qhr&quot;); //     if (id % 2 == 0)</span>
+<span class="nc" id="L174">UNSUPPORTED(&quot;69x6bjndheh46syz632mlu192&quot;); // 	agstrfree((Agraph_t *) state, (char *) id);</span>
+<span class="nc" id="L175">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L177">throw new UnsupportedOperationException();</span>
+}
+
+
+
+<span class="fc" id="L182">public static CFunction idprint = new CFunctionAbstract(&quot;idprint&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L185">		return idprint(zz, (__ptr__)args[0], (Integer)args[1], (Integer)args[2]);</span>
+	}};
+
+@Difficult
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;&quot;, key=&quot;8143j507ej7uqqjzw5i32xej5&quot;, definition=&quot;static char *idprint(void *state, int objtype, unsigned long id)&quot;)
+public static CString idprint(Globals zz, __ptr__ state, int objtype, int id) {
+<span class="fc" id="L192">ENTERING(&quot;8143j507ej7uqqjzw5i32xej5&quot;,&quot;idprint&quot;);</span>
+try {
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">    if (id % 2 == 0)</span>
+<span class="fc" id="L195">	return (CString) Memory.fromIdentityHashCode(zz, id);</span>
+    else
+<span class="nc" id="L197">	return null;</span>
+} finally {
+<span class="fc" id="L199">LEAVING(&quot;8143j507ej7uqqjzw5i32xej5&quot;,&quot;idprint&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L205">public static CFunction idclose = new CFunctionAbstract(&quot;idclose&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L208">		return idclose((ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);</span>
+	}};
+
+//3 44seyu1scoubb1wsuhwlghwyz
+// static void idclose(void *state) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;idclose&quot;, key=&quot;44seyu1scoubb1wsuhwlghwyz&quot;, definition=&quot;static void idclose(void *state)&quot;)
+public static Object idclose(Object... arg_) {
+<span class="nc" id="L216">UNSUPPORTED(&quot;18oh21h7t6fg06ozg64u87nyu&quot;); // static void idclose(void *state)</span>
+<span class="nc" id="L217">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L218">UNSUPPORTED(&quot;2s0qc9g3dasd7eqa3rhtlxrae&quot;); //     (void) state;</span>
+<span class="nc" id="L219">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L221">throw new UnsupportedOperationException();</span>
+}
+
+
+
+<span class="fc" id="L226">public static CFunction idregister = new CFunctionAbstract(&quot;idregister&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L229">		idregister((Object)args[0], (Integer)args[1], (Object)args[2]);</span>
+<span class="fc" id="L230">		return null;</span>
+	}};
+
+//3 5bjqo0ihl0x25vaspoiehmwzk
+// static void idregister(void *state, int objtype, void *obj) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;idregister&quot;, key=&quot;5bjqo0ihl0x25vaspoiehmwzk&quot;, definition=&quot;static void idregister(void *state, int objtype, void *obj)&quot;)
+public static void idregister(Object state, int objtype, Object obj) {
+<span class="fc" id="L238">ENTERING(&quot;5bjqo0ihl0x25vaspoiehmwzk&quot;,&quot;idregister&quot;);</span>
+try {
+ 
+} finally {
+<span class="fc" id="L242">LEAVING(&quot;5bjqo0ihl0x25vaspoiehmwzk&quot;,&quot;idregister&quot;);</span>
+}
+<span class="fc" id="L244">}</span>
+
+
+
+//3 aq30wwcj4ugatsgx0zdtdmeed
+// int agmapnametoid(Agraph_t * g, int objtype, char *str, 		  unsigned long *result, int createflag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;agmapnametoid&quot;, key=&quot;aq30wwcj4ugatsgx0zdtdmeed&quot;, definition=&quot;int agmapnametoid(Agraph_t * g, int objtype, char *str, 		  unsigned long *result, int createflag)&quot;)
+public static int agmapnametoid(Globals zz, ST_Agraph_s g, int objtype, CString str, final int result[], boolean createflag) {
+<span class="fc" id="L253">ENTERING(&quot;aq30wwcj4ugatsgx0zdtdmeed&quot;,&quot;agmapnametoid&quot;);</span>
+try {
+    int rv;
+<span class="pc bpc" id="L256" title="1 of 4 branches missed.">    if (str!=null &amp;&amp; (str.charAt(0) != '%')) {</span>
+<span class="fc" id="L257">    	rv = (Integer) AGDISC_id(g).map.exe(zz, AGCLOS_id(g), objtype, str, result, createflag);</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">	if (rv!=0)</span>
+<span class="fc" id="L259">	    return rv;</span>
+    }
+    /* either an internal ID, or disc. can't map strings */
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">    if (str!=null) {</span>
+<span class="nc" id="L263">	rv = aginternalmaplookup(g, objtype, str, result);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">	if (rv!=0)</span>
+<span class="nc" id="L265">	    return rv;</span>
+    } else
+<span class="fc" id="L267">	rv = 0;</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">    if (createflag) {</span>
+	/* get a new anonymous ID, and store in the internal map */
+<span class="fc" id="L270">	rv = (Integer) AGDISC_id(g).map.exe(zz, AGCLOS_id(g), objtype, null, result,</span>
+<span class="fc" id="L271">				createflag);</span>
+<span class="pc bpc" id="L272" title="2 of 4 branches missed.">	if (rv!=0 &amp;&amp; str!=null)</span>
+<span class="nc" id="L273">	    aginternalmapinsert(g, objtype, str, result[0]);</span>
+    }
+<span class="fc" id="L275">    return rv;</span>
+} finally {
+<span class="fc" id="L277">LEAVING(&quot;aq30wwcj4ugatsgx0zdtdmeed&quot;,&quot;agmapnametoid&quot;);</span>
+}
+}
+
+
+
+
+
+
+
+/* agnameof:
+ * Return string representation of object.
+ * In general, returns the name of node or graph,
+ * and the key of an edge. If edge is anonymous, returns NULL.
+ * Uses static buffer for anonymous graphs.
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;agnameof&quot;, key=&quot;cctsybrl54fy799aynfej4iiy&quot;, definition=&quot;char *agnameof(void *obj)&quot;)
+public static CString agnameof(Globals zz, ST_Agobj_s obj) {
+<span class="fc" id="L296">ENTERING(&quot;cctsybrl54fy799aynfej4iiy&quot;,&quot;agnameof&quot;);</span>
+try {
+    ST_Agraph_s g;
+    CString rv;
+    /* perform internal lookup first */
+<span class="fc" id="L301">    g = agraphof(obj);</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">    if ((rv = aginternalmapprint(g, obj.tag.objtype, obj.tag.id))!=null)</span>
+<span class="nc" id="L303">	return rv;</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">    if (AGDISC_id(g).print!=null) {</span>
+<span class="fc" id="L305">	if ((rv =</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">	     (CString) AGDISC_id(g).print.exe(zz, AGCLOS_id(g), obj.tag.objtype, obj.tag.id))!=null)</span>
+<span class="fc" id="L307">	    return rv;</span>
+    }
+<span class="nc bnc" id="L309" title="All 2 branches missed.">    if (obj.tag.objtype != AGEDGE) {</span>
+<span class="nc" id="L310">      rv = new CString(&quot;%&quot;+obj.tag.id);</span>
+    }
+    else
+<span class="nc" id="L313">	rv = null;</span>
+<span class="nc" id="L314">    return rv;</span>
+} finally {
+<span class="fc" id="L316">LEAVING(&quot;cctsybrl54fy799aynfej4iiy&quot;,&quot;agnameof&quot;);</span>
+}
+}
+
+
+
+
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/id.c&quot;, name=&quot;agregister&quot;, key=&quot;emt63ldde99jnwe2vvjal9kt9&quot;, definition=&quot;void agregister(Agraph_t * g, int objtype, void *obj)&quot;)
+public static void agregister(Globals zz, ST_Agraph_s g, int objtype, Object obj) {
+<span class="fc" id="L330">ENTERING(&quot;emt63ldde99jnwe2vvjal9kt9&quot;,&quot;agregister&quot;);</span>
+try {
+<span class="fc" id="L332">	AGDISC_id(g).idregister.exe(zz, AGCLOS_id(g), objtype, obj);</span>
+} finally {
+<span class="fc" id="L334">LEAVING(&quot;emt63ldde99jnwe2vvjal9kt9&quot;,&quot;agregister&quot;);</span>
+}
+<span class="fc" id="L336">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

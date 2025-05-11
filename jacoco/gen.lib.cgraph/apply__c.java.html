@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>apply__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cgraph</a> &gt; <span class="el_source">apply__c.java</span></div><h1>apply__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cgraph;
+import static gen.lib.cgraph.subg__c.agfstsubg;
+import static gen.lib.cgraph.subg__c.agnxtsubg;
+import static smetana.core.Macro.AGINEDGE;
+import static smetana.core.Macro.AGNODE;
+import static smetana.core.Macro.AGOUTEDGE;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.Globals;
+import smetana.core.__ptr__;
+
+<span class="nc" id="L66">public class apply__c {</span>
+
+
+
+
+<span class="fc" id="L71">public static CFunction subgraph_search = new CFunctionAbstract(&quot;subgraph_search&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L74">		return subgraph_search((ST_Agraph_s)args[0], (ST_Agobj_s)args[1]);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/apply.c&quot;, name=&quot;&quot;, key=&quot;95y4aknoddh42lieikrb72vxw&quot;, definition=&quot;static Agobj_t *subgraph_search(Agraph_t * sub, Agobj_t * g)&quot;)
+public static ST_Agobj_s subgraph_search(ST_Agraph_s sub, ST_Agobj_s g) {
+<span class="fc" id="L79">ENTERING(&quot;95y4aknoddh42lieikrb72vxw&quot;,&quot;subgraph_search&quot;);</span>
+try {
+<span class="fc" id="L81">    return (ST_Agobj_s) sub.base;</span>
+} finally {
+<span class="fc" id="L83">LEAVING(&quot;95y4aknoddh42lieikrb72vxw&quot;,&quot;subgraph_search&quot;);</span>
+}
+}
+
+
+
+
+//3 8s9l15wqucf1glmbeb6fmya8e
+// static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/apply.c&quot;, name=&quot;rec_apply&quot;, key=&quot;8s9l15wqucf1glmbeb6fmya8e&quot;, definition=&quot;static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder)&quot;)
+public static void rec_apply(Globals zz, ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, CFunction objsearch, boolean preorder) {
+<span class="fc" id="L95">ENTERING(&quot;8s9l15wqucf1glmbeb6fmya8e&quot;,&quot;rec_apply&quot;);</span>
+try {
+    ST_Agraph_s sub;
+    ST_Agobj_s subobj;
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">    if (preorder)</span>
+<span class="fc" id="L100">	fn.exe(zz, g, obj, arg);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">    for (sub = agfstsubg(zz, g); sub!=null; sub = agnxtsubg(zz, sub)) {</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">    if ((subobj = (ST_Agobj_s) objsearch.exe(zz, sub, obj))!=null)</span>
+<span class="fc" id="L103">	    rec_apply(zz, sub, subobj, fn, arg, objsearch, preorder);</span>
+    }
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">    if (!preorder)</span>
+<span class="nc" id="L106">	fn.exe(zz, g, obj, arg);</span>
+} finally {
+<span class="fc" id="L108">LEAVING(&quot;8s9l15wqucf1glmbeb6fmya8e&quot;,&quot;rec_apply&quot;);</span>
+}
+<span class="fc" id="L110">}</span>
+
+
+
+
+//3 9hqql178zpl8iudlf6sgnv7aj
+// int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/apply.c&quot;, name=&quot;agapply&quot;, key=&quot;9hqql178zpl8iudlf6sgnv7aj&quot;, definition=&quot;int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder)&quot;)
+public static int agapply(Globals zz, ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, boolean preorder) {
+<span class="fc" id="L120">ENTERING(&quot;9hqql178zpl8iudlf6sgnv7aj&quot;,&quot;agapply&quot;);</span>
+try {
+	ST_Agobj_s subobj;
+<span class="fc" id="L123">    CFunction objsearch=null;</span>
+<span class="pc bpc" id="L124" title="3 of 4 branches missed.">    switch (obj.tag.objtype) {</span>
+    case AGRAPH:
+<span class="fc" id="L126"> 	objsearch = apply__c.subgraph_search;</span>
+<span class="fc" id="L127">	break;</span>
+    case AGNODE:
+<span class="nc" id="L129">UNSUPPORTED(&quot;arkoj4niyfqe213zut6szzeji&quot;); // 	objsearch = subnode_search;</span>
+<span class="nc" id="L130">	break;</span>
+    case AGOUTEDGE:
+    case AGINEDGE:
+<span class="nc" id="L133">UNSUPPORTED(&quot;3h8kzrrsobdp839772gupdrbf&quot;); // 	objsearch = subedge_search;</span>
+<span class="nc" id="L134">	break;</span>
+    default:
+<span class="nc" id="L136">UNSUPPORTED(&quot;2pc67byzirrkhe1cmdoguh6i1&quot;); // 	agerr(AGERR, &quot;agapply: unknown object type %d\n&quot;, AGTYPE(obj));</span>
+<span class="nc" id="L137">UNSUPPORTED(&quot;8d9xfgejx5vgd6shva5wk5k06&quot;); // 	return -1;</span>
+	break;
+    }
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">    if ((subobj = (ST_Agobj_s) objsearch.exe(zz, g, obj))!=null) {</span>
+<span class="fc" id="L141">	rec_apply(zz, g, subobj, fn, arg, objsearch, preorder);</span>
+<span class="fc" id="L142">	return 0;</span>
+    } else
+<span class="nc" id="L144">UNSUPPORTED(&quot;8d9xfgejx5vgd6shva5wk5k06&quot;); // 	return -1;</span>
+<span class="nc" id="L145">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L147">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L149">LEAVING(&quot;9hqql178zpl8iudlf6sgnv7aj&quot;,&quot;agapply&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

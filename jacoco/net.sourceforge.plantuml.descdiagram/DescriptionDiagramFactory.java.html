@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DescriptionDiagramFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram</a> &gt; <span class="el_source">DescriptionDiagramFactory.java</span></div><h1>DescriptionDiagramFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.descdiagram;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
+import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
+import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandEndPackage;
+import net.sourceforge.plantuml.command.CommandFootboxIgnored;
+import net.sourceforge.plantuml.command.CommandRankDir;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.note.CommandFactoryNote;
+import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
+import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.descdiagram.command.CommandArchimate;
+import net.sourceforge.plantuml.descdiagram.command.CommandArchimateMultilines;
+import net.sourceforge.plantuml.descdiagram.command.CommandArchimatePackage;
+import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
+import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.descdiagram.command.CommandNewpage;
+import net.sourceforge.plantuml.descdiagram.command.CommandPackageWithUSymbol;
+import net.sourceforge.plantuml.descdiagram.command.CommandTogether;
+import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
+import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
+import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+<span class="fc" id="L72">public class DescriptionDiagramFactory extends PSystemCommandFactory {</span>
+
+	@Override
+	public DescriptionDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L76">		return new DescriptionDiagram(source, previous, preprocessing);</span>
+	}
+
+	@Override
+	protected void initCommandsList(List&lt;Command&gt; cmds) {
+<span class="fc" id="L81">		cmds.add(new CommandFootboxIgnored());</span>
+<span class="fc" id="L82">		cmds.add(new CommandRankDir());</span>
+<span class="fc" id="L83">		cmds.add(new CommandNewpage(this));</span>
+<span class="fc" id="L84">		CommonCommands.addCommonCommands1(cmds);</span>
+
+<span class="fc" id="L86">		cmds.add(new CommandLinkElement());</span>
+<span class="fc" id="L87">		cmds.add(new CommandHideShow2());</span>
+<span class="fc" id="L88">		cmds.add(new CommandRemoveRestore());</span>
+
+<span class="fc" id="L90">		cmds.add(new CommandPackageWithUSymbol());</span>
+<span class="fc" id="L91">		cmds.add(new CommandTogether());</span>
+
+<span class="fc" id="L93">		cmds.add(new CommandEndPackage());</span>
+<span class="fc" id="L94">		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();</span>
+<span class="fc" id="L95">		cmds.add(factoryNoteCommand.createMultiLine(false));</span>
+
+<span class="fc" id="L97">		final CommandFactoryNoteOnLink factoryNoteOnLinkCommand = new CommandFactoryNoteOnLink(ParserPass.ONE);</span>
+<span class="fc" id="L98">		cmds.add(factoryNoteOnLinkCommand.createSingleLine());</span>
+<span class="fc" id="L99">		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));</span>
+
+<span class="fc" id="L101">		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity(&quot;desc&quot;,</span>
+				new RegexOr(&quot;CODE&quot;, //
+						new RegexLeaf(&quot;[%pLN_.]+&quot;), //
+						new RegexLeaf(&quot;\\(\\)[%s]*[%pLN_.]+&quot;), //
+						new RegexLeaf(&quot;\\(\\)[%s]*[%g][^%g]+[%g]&quot;), //
+						new RegexLeaf(&quot;\\[[^\\]*]+[^\\]]*\\]&quot;), //
+						new RegexLeaf(&quot;\\((?!\\*\\))[^\\)]+\\)&quot;), //
+						new RegexLeaf(&quot;:[^:]+:&quot;), //
+						new RegexLeaf(&quot;[%g][^%g]+[%g]&quot;) //
+				), ParserPass.ONE);
+<span class="fc" id="L111">		cmds.add(factoryNoteOnEntityCommand.createSingleLine());</span>
+
+<span class="fc" id="L113">		cmds.add(factoryNoteCommand.createSingleLine());</span>
+<span class="fc" id="L114">		cmds.add(new CommandUrl());</span>
+<span class="fc" id="L115">		cmds.add(new CommandCreateElementFull());</span>
+<span class="fc" id="L116">		cmds.add(new CommandCreateElementMultilines(0));</span>
+<span class="fc" id="L117">		cmds.add(new CommandCreateElementMultilines(1));</span>
+
+<span class="fc" id="L119">		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));</span>
+<span class="fc" id="L120">		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));</span>
+<span class="fc" id="L121">		cmds.add(factoryNoteCommand.createMultiLine(false));</span>
+
+<span class="fc" id="L123">		cmds.add(new CommandCreateMap());</span>
+<span class="fc" id="L124">		cmds.add(new CommandCreateJson());</span>
+<span class="fc" id="L125">		cmds.add(new CommandCreateJsonSingleLine());</span>
+		// cmds.add(new CommandHideShowSpecificClass());
+
+<span class="fc" id="L128">		cmds.add(new CommandArchimate());</span>
+<span class="fc" id="L129">		cmds.add(new CommandArchimateMultilines());</span>
+<span class="fc" id="L130">		cmds.add(new CommandArchimatePackage());</span>
+<span class="fc" id="L131">		cmds.add(new CommandCreateDomain());</span>
+<span class="fc" id="L132">	}</span>
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+<span class="fc" id="L136">		return UmlDiagramType.DESCRIPTION;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

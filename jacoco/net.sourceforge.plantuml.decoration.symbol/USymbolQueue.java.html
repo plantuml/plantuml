@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>USymbolQueue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.decoration.symbol</a> &gt; <span class="el_source">USymbolQueue.java</span></div><h1>USymbolQueue.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.decoration.symbol;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphicHorizontalLine;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
+import net.sourceforge.plantuml.style.SName;
+
+<span class="fc" id="L54">class USymbolQueue extends USymbol {</span>
+
+	@Override
+	public SName[] getSNames() {
+<span class="nc" id="L58">		return new SName[] { SName.queue };</span>
+	}
+
+<span class="fc" id="L61">	private final double dx = 5;</span>
+
+	private void drawQueue(UGraphic ug, double width, double height, double shadowing) {
+<span class="fc" id="L64">		final UPath shape = UPath.none();</span>
+<span class="fc" id="L65">		shape.setDeltaShadow(shadowing);</span>
+
+<span class="fc" id="L67">		shape.moveTo(dx, 0);</span>
+<span class="fc" id="L68">		shape.lineTo(width - dx, 0);</span>
+<span class="fc" id="L69">		shape.cubicTo(width, 0, width, height / 2, width, height / 2);</span>
+<span class="fc" id="L70">		shape.cubicTo(width, height / 2, width, height, width - dx, height);</span>
+<span class="fc" id="L71">		shape.lineTo(dx, height);</span>
+
+<span class="fc" id="L73">		shape.cubicTo(0, height, 0, height / 2, 0, height / 2);</span>
+<span class="fc" id="L74">		shape.cubicTo(0, height / 2, 0, 0, dx, 0);</span>
+
+<span class="fc" id="L76">		ug.draw(shape);</span>
+
+<span class="fc" id="L78">		final UPath closing = getClosingPath(width, height);</span>
+<span class="fc" id="L79">		ug.apply(HColors.none().bg()).draw(closing);</span>
+
+<span class="fc" id="L81">	}</span>
+
+	private UPath getClosingPath(double width, double height) {
+<span class="fc" id="L84">		final UPath closing = UPath.none();</span>
+<span class="fc" id="L85">		closing.moveTo(width - dx, 0);</span>
+<span class="fc" id="L86">		closing.cubicTo(width - dx * 2, 0, width - dx * 2, height / 2, width - dx * 2, height / 2);</span>
+<span class="fc" id="L87">		closing.cubicTo(width - dx * 2, height, width - dx, height, width - dx, height);</span>
+<span class="fc" id="L88">		return closing;</span>
+	}
+
+	class MyUGraphicQueue extends AbstractUGraphicHorizontalLine implements Stencil {
+
+		private final double x1;
+		private final double x2;
+		private final double fullHeight;
+
+		@Override
+		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
+<span class="fc" id="L99">			return new MyUGraphicQueue(ug, x1, x2, fullHeight);</span>
+		}
+
+<span class="fc" id="L102">		public MyUGraphicQueue(UGraphic ug, double x1, double x2, double fullHeight) {</span>
+<span class="fc" id="L103">			super(ug);</span>
+<span class="fc" id="L104">			this.x1 = x1;</span>
+<span class="fc" id="L105">			this.x2 = x2;</span>
+<span class="fc" id="L106">			this.fullHeight = fullHeight;</span>
+<span class="fc" id="L107">		}</span>
+
+		@Override
+		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
+<span class="nc" id="L111">			line.drawLineInternal(ug, this, translate.getDy(), line.getStroke());</span>
+<span class="nc" id="L112">		}</span>
+
+		public double getStartingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L115">			return 0;</span>
+		}
+
+		public double getEndingX(StringBounder stringBounder, double y) {
+			final double factor2;
+<span class="nc" id="L120">			final double halfHeight = fullHeight / 2;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (y &lt;= halfHeight) {</span>
+<span class="nc" id="L122">				factor2 = 1 - (y / halfHeight);</span>
+			} else {
+<span class="nc" id="L124">				factor2 = (y - halfHeight) / halfHeight;</span>
+			}
+<span class="nc" id="L126">			return (x2 - x1) * factor2 + x1;</span>
+		}
+	}
+
+	private Margin getMargin() {
+<span class="fc" id="L131">		return new Margin(5, 15, 5, 5);</span>
+	}
+
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
+<span class="fc" id="L137">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L140">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L141">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L142">				drawQueue(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
+<span class="fc" id="L143">				final Margin margin = getMargin();</span>
+<span class="fc" id="L144">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L145">				final UGraphic ug2 = new MyUGraphicQueue(ug, dim.getWidth() - 2 * dx, dim.getWidth() - dx,</span>
+<span class="fc" id="L146">						dim.getHeight());</span>
+<span class="fc" id="L147">				tb.drawU(ug2.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
+<span class="fc" id="L148">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L151">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L152">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="fc" id="L153">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+			}
+		};
+	}
+
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final Fashion symbolContext,
+			final HorizontalAlignment stereoAlignment) {
+<span class="nc" id="L162">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L165">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L166">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L167">				drawQueue(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L168">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L169">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L170">				stereotype.drawU(ug.apply(new UTranslate(posStereo, 2)));</span>
+
+<span class="nc" id="L172">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L173">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
+<span class="nc" id="L174">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
+<span class="nc" id="L175">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L178">				return new XDimension2D(width, height);</span>
+			}
+		};
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

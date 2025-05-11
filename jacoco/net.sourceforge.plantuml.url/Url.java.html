@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Url.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.url</a> &gt; <span class="el_source">Url.java</span></div><h1>Url.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.url;
+
+import java.util.Comparator;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.geom.BasicEnsureVisible;
+import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
+import net.sourceforge.plantuml.text.BackSlash;
+
+public class Url implements EnsureVisible {
+	private final String url;
+	private final String tooltip;
+	private final String label;
+	private boolean member;
+
+<span class="fc" id="L51">	public Url(String url, String tooltip, String label) {</span>
+<span class="fc" id="L52">		url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(url, &quot;\&quot;&quot;);</span>
+<span class="fc" id="L53">		this.url = url;</span>
+		// ::revert when __HAXE__
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (tooltip == null)</span>
+<span class="fc" id="L56">			this.tooltip = url;</span>
+		else
+<span class="fc" id="L58">			this.tooltip = tooltip;</span>
+		// this.tooltip = url;
+		// ::done
+
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">		if (label == null || label.length() == 0)</span>
+<span class="fc" id="L63">			this.label = url;</span>
+		else
+<span class="fc" id="L65">			this.label = label;</span>
+
+<span class="fc" id="L67">	}</span>
+
+	public static boolean isLatex(String pendingUrl) {
+<span class="nc" id="L70">		return pendingUrl.startsWith(&quot;latex://&quot;);</span>
+	}
+
+	public boolean isLatex() {
+<span class="nc" id="L74">		return isLatex(url);</span>
+	}
+
+	public final String getUrl() {
+<span class="fc" id="L78">		return url;</span>
+	}
+
+	public final String getTooltip() {
+<span class="fc" id="L82">		return tooltip;</span>
+	}
+
+	public String getLabel() {
+<span class="fc" id="L86">		return label;</span>
+	}
+
+	// ::comment when __HAXE__
+	@Override
+	public String toString() {
+<span class="nc" id="L92">		return super.toString() + &quot; &quot; + url + &quot; &quot; + visible.getCoords(1.0);</span>
+	}
+	// ::done
+
+	public String getCoords(double scale) {
+		// ::comment when __CORE__ or __HAXE__
+<span class="pc bpc" id="L98" title="3 of 4 branches missed.">		if (Check.isJunit() &amp;&amp; visible.getCoords(1.0).contains(&quot;0,0,0,0&quot;))</span>
+<span class="nc" id="L99">			throw new IllegalStateException(toString());</span>
+		// ::done
+
+<span class="fc" id="L102">		return visible.getCoords(scale);</span>
+	}
+
+	public void setMember(boolean member) {
+<span class="nc" id="L106">		this.member = member;</span>
+<span class="nc" id="L107">	}</span>
+
+	public final boolean isMember() {
+<span class="nc" id="L110">		return member;</span>
+	}
+
+<span class="fc" id="L113">	private final BasicEnsureVisible visible = new BasicEnsureVisible();</span>
+
+	public void ensureVisible(double x, double y) {
+<span class="fc" id="L116">		visible.ensureVisible(x, y);</span>
+<span class="fc" id="L117">	}</span>
+
+	public boolean hasData() {
+<span class="fc" id="L120">		return visible.hasData();</span>
+	}
+
+<span class="fc" id="L123">	public static final Comparator&lt;Url&gt; SURFACE_COMPARATOR = new Comparator&lt;Url&gt;() {</span>
+		public int compare(Url url1, Url url2) {
+<span class="fc" id="L125">			final double surface1 = url1.visible.getSurface();</span>
+<span class="fc" id="L126">			final double surface2 = url2.visible.getSurface();</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (surface1 &gt; surface2)</span>
+<span class="fc" id="L128">				return 1;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			else if (surface1 &lt; surface2)</span>
+<span class="fc" id="L130">				return -1;</span>
+
+<span class="fc" id="L132">			return 0;</span>
+		}
+	};
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

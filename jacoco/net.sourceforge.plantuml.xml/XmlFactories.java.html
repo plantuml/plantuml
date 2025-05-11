@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlFactories.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xml</a> &gt; <span class="el_source">XmlFactories.java</span></div><h1>XmlFactories.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.xml;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+
+public class XmlFactories {
+    // ::remove folder when __HAXE__
+
+	private XmlFactories() {
+	}
+
+	// This class uses the &quot;initialization-on-demand holder&quot; idiom to provide
+	// thread-safe
+	// lazy initialization of expensive factories.
+	// (see https://stackoverflow.com/a/8297830/1848731)
+
+	private static class DocumentBuilderFactoryHolder {
+<span class="fc" id="L22">		static final DocumentBuilderFactory INSTANCE = DocumentBuilderFactory.newInstance();</span>
+	}
+
+	private static class TransformerFactoryHolder {
+<span class="fc" id="L26">		static final TransformerFactory INSTANCE = TransformerFactory.newInstance();</span>
+	}
+
+	public static DocumentBuilder newDocumentBuilder() throws ParserConfigurationException {
+<span class="fc" id="L30">		return DocumentBuilderFactoryHolder.INSTANCE.newDocumentBuilder();</span>
+	}
+
+	public static Transformer newTransformer() throws TransformerConfigurationException {
+<span class="fc" id="L34">		return TransformerFactoryHolder.INSTANCE.newTransformer();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

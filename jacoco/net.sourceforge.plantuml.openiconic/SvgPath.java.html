@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvgPath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.openiconic</a> &gt; <span class="el_source">SvgPath.java</span></div><h1>SvgPath.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.openiconic;
+
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+public class SvgPath {
+
+	// http://www.w3.org/TR/SVG11/paths.html#PathDataEllipticalArcCommands
+	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+	// http://tutorials.jenkov.com/svg/path-element.html
+	// https://www.w3.org/TR/SVG/paths.html#PathDataQuadraticBezierCommands
+
+<span class="nc" id="L56">	private final List&lt;Movement&gt; movements = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L57">	private List&lt;SvgCommand&gt; commands = new ArrayList&lt;&gt;();</span>
+	private final UTranslate translate;
+
+<span class="nc" id="L60">	public SvgPath(String path, UTranslate translate) {</span>
+<span class="nc" id="L61">		this.translate = translate;</span>
+		// System.err.println(&quot;before=&quot; + path);
+<span class="nc" id="L63">		path = StringDecipher.decipher(path);</span>
+		// System.err.println(&quot;after=&quot; + path);
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (final StringTokenizer st = new StringTokenizer(path); st.hasMoreTokens();) {</span>
+<span class="nc" id="L67">			final String token = st.nextToken();</span>
+
+<span class="nc bnc" id="L69" title="All 4 branches missed.">			if (token.length() == 1 &amp;&amp; Character.isLetter(token.charAt(0)))</span>
+<span class="nc" id="L70">				commands.add(new SvgCommandLetter(token));</span>
+			else
+<span class="nc" id="L72">				commands.add(new SvgCommandNumber(token));</span>
+
+<span class="nc" id="L74">		}</span>
+<span class="nc" id="L75">		commands = insertMissingLetter(commands);</span>
+<span class="nc" id="L76">		checkArguments(commands);</span>
+<span class="nc" id="L77">		SvgPosition last = new SvgPosition();</span>
+<span class="nc" id="L78">		SvgPosition lastMove = new SvgPosition();</span>
+<span class="nc" id="L79">		SvgPosition mirrorControlPoint = null;</span>
+<span class="nc" id="L80">		final Iterator&lt;SvgCommand&gt; iterator = commands.iterator();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		while (iterator.hasNext()) {</span>
+<span class="nc" id="L82">			Movement movement = new Movement(iterator);</span>
+<span class="nc" id="L83">			movement = movement.toAbsoluteUpperCase(last);</span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (movement.getLetter() == 'Z')</span>
+<span class="nc" id="L86">				last = lastMove;</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (movement.is('S'))</span>
+<span class="nc" id="L89">				movement = movement.mutoToC(mirrorControlPoint);</span>
+
+<span class="nc" id="L91">			movements.add(movement);</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (movement.getLetter() == 'M')</span>
+<span class="nc" id="L94">				lastMove = movement.lastPosition();</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (movement.lastPosition() != null)</span>
+<span class="nc" id="L97">				last = movement.lastPosition();</span>
+
+<span class="nc" id="L99">			mirrorControlPoint = movement.getMirrorControlPoint();</span>
+<span class="nc" id="L100">		}</span>
+<span class="nc" id="L101">	}</span>
+
+	private List&lt;SvgCommand&gt; insertMissingLetter(List&lt;SvgCommand&gt; commands) {
+<span class="nc" id="L104">		final List&lt;SvgCommand&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L105">		final Iterator&lt;SvgCommand&gt; it = commands.iterator();</span>
+<span class="nc" id="L106">		SvgCommandLetter lastLetter = null;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L108">			final SvgCommand cmd = it.next();</span>
+			// System.err.println(&quot;cmd=&quot; + cmd);
+			final int nb;
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (cmd instanceof SvgCommandNumber) {</span>
+				// System.err.println(&quot;INSERTING &quot; + lastLetter);
+<span class="nc" id="L113">				result.add(lastLetter);</span>
+<span class="nc" id="L114">				result.add(cmd);</span>
+<span class="nc" id="L115">				nb = lastLetter.argumentNumber() - 1;</span>
+			} else {
+<span class="nc" id="L117">				result.add(cmd);</span>
+<span class="nc" id="L118">				lastLetter = ((SvgCommandLetter) cmd).implicit();</span>
+<span class="nc" id="L119">				nb = lastLetter.argumentNumber();</span>
+			}
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L122">				final SvgCommandNumber number = (SvgCommandNumber) it.next();</span>
+<span class="nc" id="L123">				result.add(number);</span>
+			}
+<span class="nc" id="L125">		}</span>
+<span class="nc" id="L126">		return result;</span>
+	}
+
+	private void checkArguments(List&lt;SvgCommand&gt; commands) {
+<span class="nc" id="L130">		final Iterator&lt;SvgCommand&gt; it = commands.iterator();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L132">			final SvgCommandLetter cmd = (SvgCommandLetter) it.next();</span>
+<span class="nc" id="L133">			final int nb = cmd.argumentNumber();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L135">				final SvgCommandNumber number = (SvgCommandNumber) it.next();</span>
+			}
+<span class="nc" id="L137">		}</span>
+<span class="nc" id="L138">	}</span>
+
+	public String toSvg() {
+<span class="nc" id="L141">		final StringBuilder result = new StringBuilder(&quot;&lt;path d=\&quot;&quot;);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (Movement move : movements) {</span>
+<span class="nc" id="L143">			result.append(move.toSvg());</span>
+<span class="nc" id="L144">			result.append(' ');</span>
+<span class="nc" id="L145">		}</span>
+<span class="nc" id="L146">		result.append(&quot;\&quot;/&gt;&quot;);</span>
+<span class="nc" id="L147">		return result.toString();</span>
+	}
+
+	private UPath toUPath(double factorx, double factory) {
+<span class="nc" id="L151">		UPath result = UPath.none();</span>
+<span class="nc" id="L152">		Movement previous = null;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (Movement move : movements) {</span>
+<span class="nc" id="L154">			final char letter = move.getLetter();</span>
+<span class="nc" id="L155">			final SvgPosition position = move.lastPosition();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (letter == 'M') {</span>
+<span class="nc" id="L157">				result.moveTo(position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			} else if (letter == 'C') {</span>
+<span class="nc" id="L159">				final SvgPosition ctl1 = move.getSvgPosition(0);</span>
+<span class="nc" id="L160">				final SvgPosition ctl2 = move.getSvgPosition(2);</span>
+<span class="nc" id="L161">				result.cubicTo(ctl1.getXDouble() * factorx, ctl1.getYDouble() * factory, ctl2.getXDouble() * factorx,</span>
+<span class="nc" id="L162">						ctl2.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			} else if (letter == 'Q') {</span>
+<span class="nc" id="L164">				final SvgPosition ctl = move.getSvgPosition(0);</span>
+<span class="nc" id="L165">				result.cubicTo(ctl.getXDouble() * factorx, ctl.getYDouble() * factory, ctl.getXDouble() * factorx,</span>
+<span class="nc" id="L166">						ctl.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			} else if (letter == 'T') {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">				if (previous.getLetter() != 'Q')</span>
+<span class="nc" id="L169">					throw new IllegalArgumentException();</span>
+				// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
+<span class="nc" id="L171">				final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
+<span class="nc" id="L172">				final SvgPosition lastP = previous.lastPosition();</span>
+<span class="nc" id="L173">				final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
+<span class="nc" id="L174">				result.cubicTo(ctl.getXDouble() * factorx, ctl.getYDouble() * factory, ctl.getXDouble() * factorx,</span>
+<span class="nc" id="L175">						ctl.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">			} else if (letter == 'L') {</span>
+<span class="nc" id="L177">				result.lineTo(position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			} else if (letter == 'A') {</span>
+<span class="nc" id="L179">				final double rx = move.getArgument(0);</span>
+<span class="nc" id="L180">				final double ry = move.getArgument(1);</span>
+<span class="nc" id="L181">				final double x_axis_rotation = move.getArgument(2);</span>
+<span class="nc" id="L182">				final double large_arc_flag = move.getArgument(3);</span>
+<span class="nc" id="L183">				final double sweep_flag = move.getArgument(4);</span>
+<span class="nc" id="L184">				result.arcTo(rx * factorx, ry * factory, x_axis_rotation, large_arc_flag, sweep_flag,</span>
+<span class="nc" id="L185">						position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			} else if (letter == 'Z') {</span>
+<span class="nc" id="L187">				result.closePath();</span>
+			} else {
+<span class="nc" id="L189">				throw new UnsupportedOperationException(&quot;letter &quot; + letter);</span>
+			}
+<span class="nc" id="L191">		}</span>
+<span class="nc" id="L192">		result = result.translate(translate.getDx() * factorx, translate.getDy() * factory);</span>
+<span class="nc" id="L193">		result.setOpenIconic(true);</span>
+<span class="nc" id="L194">		return result;</span>
+	}
+
+	private UPath toUPath(AffineTransform at) {
+<span class="nc" id="L198">		UPath result = UPath.none();</span>
+<span class="nc" id="L199">		Movement previous = null;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (Movement move : movements) {</span>
+<span class="nc" id="L201">			final char letter = move.getLetter();</span>
+<span class="nc" id="L202">			final SvgPosition position = move.lastPosition();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (letter == 'M') {</span>
+<span class="nc" id="L204">				result.moveTo(position.affine(at));</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			} else if (letter == 'C') {</span>
+<span class="nc" id="L206">				final SvgPosition ctl1 = move.getSvgPosition(0);</span>
+<span class="nc" id="L207">				final SvgPosition ctl2 = move.getSvgPosition(2);</span>
+<span class="nc" id="L208">				result.cubicTo(ctl1.affine(at), ctl2.affine(at), position.affine(at));</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			} else if (letter == 'Q') {</span>
+<span class="nc" id="L210">				final SvgPosition ctl = move.getSvgPosition(0);</span>
+<span class="nc" id="L211">				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">			} else if (letter == 'T') {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">				if (previous.getLetter() == 'Q') {</span>
+					// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
+<span class="nc" id="L215">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
+<span class="nc" id="L216">					final SvgPosition lastP = previous.lastPosition();</span>
+<span class="nc" id="L217">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
+<span class="nc" id="L218">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">				} else if (previous.getLetter() == 'T') {</span>
+					// Same logic as for Q followed by T: reflect the previous control point
+<span class="nc" id="L221">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
+<span class="nc" id="L222">					final SvgPosition lastP = previous.lastPosition();</span>
+<span class="nc" id="L223">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
+<span class="nc" id="L224">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="nc" id="L225">				} else</span>
+<span class="nc" id="L226">					throw new IllegalArgumentException(&quot;&quot; + previous.getLetter());</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			} else if (letter == 'L') {</span>
+<span class="nc" id="L228">				result.lineTo(position.affine(at));</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			} else if (letter == 'A') {</span>
+<span class="nc" id="L230">				final double rx = move.getArgument(0);</span>
+<span class="nc" id="L231">				final double ry = move.getArgument(1);</span>
+<span class="nc" id="L232">				final double x_axis_rotation = move.getArgument(2);</span>
+<span class="nc" id="L233">				final double large_arc_flag = move.getArgument(3);</span>
+<span class="nc" id="L234">				final double sweep_flag = move.getArgument(4);</span>
+<span class="nc" id="L235">				final XPoint2D tmp = position.affine(at);</span>
+<span class="nc" id="L236">				result.arcTo(rx * at.getScaleX(), ry * at.getScaleY(), x_axis_rotation, large_arc_flag, sweep_flag,</span>
+<span class="nc" id="L237">						tmp.getX(), tmp.getY());</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">			} else if (letter == 'Z') {</span>
+<span class="nc" id="L239">				result.closePath();</span>
+			} else {
+<span class="nc" id="L241">				throw new UnsupportedOperationException(&quot;letter &quot; + letter);</span>
+			}
+<span class="nc" id="L243">			previous = move;</span>
+<span class="nc" id="L244">		}</span>
+<span class="nc" id="L245">		result = result.translate(translate.getDx() * at.getScaleX(), translate.getDy() * at.getScaleY());</span>
+<span class="nc" id="L246">		result.setOpenIconic(true);</span>
+<span class="nc" id="L247">		return result;</span>
+	}
+
+	public void drawMe(UGraphic ug, double factor) {
+<span class="nc" id="L251">		final UPath path = toUPath(factor, factor);</span>
+<span class="nc" id="L252">		ug.draw(path);</span>
+<span class="nc" id="L253">	}</span>
+
+	public void drawMe(UGraphic ug, AffineTransform at) {
+<span class="nc" id="L256">		final UPath path = toUPath(at);</span>
+<span class="nc" id="L257">		ug.draw(path);</span>
+<span class="nc" id="L258">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

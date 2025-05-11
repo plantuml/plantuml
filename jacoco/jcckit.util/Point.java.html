@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Point.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.util</a> &gt; <span class="el_source">Point.java</span></div><h1>Point.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.util;
+
+/**
+ *  Immutable class of a two-dimensional point with floating point
+ *  coordinates.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class Point {
+  private final double _x;
+  private final double _y;
+
+  /**
+   *  Creates an instance for the specified vector. The value of the 
+   *  first/second element of &lt;tt&gt;vector&lt;/tt&gt; denotes the x/y value.
+   *  If &lt;tt&gt;vector&lt;/tt&gt; is &lt;tt&gt;null&lt;/tt&gt; or not long enough 0 will be used 
+   *  as default values.
+   */
+<span class="nc" id="L37">  public Point(double[] vector) {</span>
+<span class="nc" id="L38">    double x = 0;</span>
+<span class="nc" id="L39">    double y = 0;</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">    if (vector != null &amp;&amp; vector.length &gt; 0) {</span>
+<span class="nc" id="L41">      x =  vector[0];</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">      if (vector.length &gt; 1) {</span>
+<span class="nc" id="L43">        y =  vector[1];</span>
+      }
+    }
+<span class="nc" id="L46">    _x = x;</span>
+<span class="nc" id="L47">    _y = y;</span>
+<span class="nc" id="L48">  }</span>
+
+  /** Creates an instance for the specified coordinates. */
+<span class="nc" id="L51">  public Point(double x, double y) {</span>
+<span class="nc" id="L52">    _x = x;</span>
+<span class="nc" id="L53">    _y = y;</span>
+<span class="nc" id="L54">  }</span>
+
+  /** Returns the x-coordinate of the point. */
+  public double getX() {
+<span class="nc" id="L58">    return _x;</span>
+  }
+
+  /** Returns the y-coordinate of the point. */
+  public double getY() {
+<span class="nc" id="L63">    return _y;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

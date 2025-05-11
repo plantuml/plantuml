@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextSkin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiart</a> &gt; <span class="el_source">TextSkin.java</span></div><h1>TextSkin.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiart;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.ArrowComponent;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.rose.ComponentRoseGroupingSpace;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+public class TextSkin extends Rose {
+
+	private final FileFormat fileFormat;
+
+<span class="fc" id="L57">	public TextSkin(FileFormat fileFormat) {</span>
+<span class="fc" id="L58">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L59">	}</span>
+
+	@Override
+	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION)</span>
+<span class="fc" id="L67">			return new ComponentTextArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat,</span>
+<span class="fc" id="L68">					param.maxAsciiMessageLength());</span>
+
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (config.isSelfArrow())</span>
+<span class="fc" id="L71">			return new ComponentTextSelfArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat);</span>
+
+<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
+			Colors colors, NotePosition notePosition) {
+<span class="nc bnc" id="L79" title="All 6 branches missed.">		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX || type == ComponentType.NOTE_HEXAGONAL)</span>
+<span class="nc" id="L80">			return new ComponentTextNote(type, stringsToDisplay, fileFormat);</span>
+
+<span class="nc" id="L82">		throw new UnsupportedOperationException(type.toString());</span>
+	}
+
+	@Override
+	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
+			Colors colors) {
+<span class="nc" id="L88">		return createComponentNote(styles, type, param, stringsToDisplay, colors, null);</span>
+	}
+	
+	@Override
+	public Component createComponentParticipant(Participant p, ComponentType type, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
+<span class="fc" id="L94">		return createComponent(p.getUsedStyles(), type, config, param, stringsToDisplay);</span>
+	}
+
+
+	@Override
+	public Component createComponent(Style style[], ComponentType type, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
+<span class="pc bpc" id="L101" title="2 of 4 branches missed.">		if (type == ComponentType.ACTOR_HEAD || type == ComponentType.ACTOR_TAIL)</span>
+<span class="nc" id="L102">			return new ComponentTextActor(type, stringsToDisplay, fileFormat,</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					fileFormat == FileFormat.UTXT ? AsciiShape.STICKMAN_UNICODE : AsciiShape.STICKMAN);</span>
+
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		if (type == ComponentType.BOUNDARY_HEAD || type == ComponentType.BOUNDARY_TAIL)</span>
+<span class="nc" id="L106">			return new ComponentTextShape(type, stringsToDisplay, AsciiShape.BOUNDARY);</span>
+
+<span class="pc bpc" id="L108" title="2 of 4 branches missed.">		if (type == ComponentType.DATABASE_HEAD || type == ComponentType.DATABASE_TAIL)</span>
+<span class="nc" id="L109">			return new ComponentTextShape(type, stringsToDisplay, AsciiShape.DATABASE);</span>
+
+<span class="fc bfc" id="L111" title="All 4 branches covered.">		if (type.name().endsWith(&quot;_HEAD&quot;) || type.name().endsWith(&quot;_TAIL&quot;))</span>
+<span class="fc" id="L112">			return new ComponentTextParticipant(type, stringsToDisplay, fileFormat);</span>
+
+<span class="pc bpc" id="L114" title="3 of 4 branches missed.">		if (type.isArrow() &amp;&amp; (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION))</span>
+<span class="nc" id="L117">			return new ComponentTextArrow(type, config, stringsToDisplay, fileFormat, param.maxAsciiMessageLength());</span>
+
+<span class="pc bpc" id="L119" title="3 of 4 branches missed.">		if (type.isArrow() &amp;&amp; config.isSelfArrow())</span>
+<span class="nc" id="L120">			return new ComponentTextSelfArrow(type, config, stringsToDisplay, fileFormat);</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_LINE)</span>
+<span class="fc" id="L123">			return new ComponentTextLine(type, fileFormat);</span>
+
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (type == ComponentType.CONTINUE_LINE)</span>
+<span class="nc" id="L126">			return new ComponentTextLine(type, fileFormat);</span>
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE)</span>
+<span class="fc" id="L129">			return new ComponentTextLine(type, fileFormat);</span>
+
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE)</span>
+<span class="fc" id="L132">			return new ComponentTextActiveLine(fileFormat);</span>
+
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)</span>
+<span class="nc" id="L135">			return new ComponentTextActiveLine(fileFormat);</span>
+
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE)</span>
+<span class="nc" id="L138">			return new ComponentTextActiveLine(fileFormat);</span>
+
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)</span>
+<span class="fc" id="L141">			return new ComponentTextActiveLine(fileFormat);</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
+<span class="nc" id="L144">			return new ComponentTextDivider(type, stringsToDisplay, fileFormat);</span>
+
+<span class="nc bnc" id="L146" title="All 4 branches missed.">		if (type == ComponentType.GROUPING_HEADER_LEGACY || type == ComponentType.GROUPING_HEADER_TEOZ)</span>
+<span class="nc" id="L147">			return new ComponentTextGroupingHeader(type, stringsToDisplay, fileFormat);</span>
+
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (type == ComponentType.GROUPING_SPACE)</span>
+<span class="nc" id="L150">			return new ComponentRoseGroupingSpace(1);</span>
+
+<span class="nc bnc" id="L152" title="All 4 branches missed.">		if (type == ComponentType.GROUPING_ELSE_LEGACY || type == ComponentType.GROUPING_ELSE_TEOZ)</span>
+<span class="nc" id="L153">			return new ComponentTextGroupingElse(type, stringsToDisplay, fileFormat);</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (type == ComponentType.DELAY_TEXT)</span>
+<span class="nc" id="L156">			return new ComponentTextDelay(type, stringsToDisplay, fileFormat);</span>
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (type == ComponentType.DESTROY)</span>
+<span class="nc" id="L159">			return new ComponentTextDestroy();</span>
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (type == ComponentType.REFERENCE)</span>
+<span class="nc" id="L162">			return new ComponentTextReference(stringsToDisplay, fileFormat);</span>
+
+<span class="nc" id="L164">		throw new UnsupportedOperationException(type.toString());</span>
+	}
+
+	@Override
+	public Component createComponentNewPage(Style[] styles, ISkinParam param) {
+<span class="nc" id="L169">		return new ComponentTextNewpage(fileFormat);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

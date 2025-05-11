@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtremityArrow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.extremity</a> &gt; <span class="el_source">ExtremityArrow.java</span></div><h1>ExtremityArrow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek.extremity;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+
+public class ExtremityArrow extends Extremity {
+
+<span class="pc" id="L48">	private UPolygon polygon = new UPolygon();</span>
+	private final ULine line;
+	private final XPoint2D contact;
+
+	@Override
+	public XPoint2D somePoint() {
+<span class="nc" id="L54">		return contact;</span>
+	}
+
+<span class="nc" id="L57">	public ExtremityArrow(XPoint2D p1, double angle, XPoint2D center) {</span>
+<span class="nc" id="L58">		angle = manageround(angle);</span>
+<span class="nc" id="L59">		final int xContact = buildPolygon();</span>
+<span class="nc" id="L60">		polygon.rotate(angle + Math.PI / 2);</span>
+<span class="nc" id="L61">		polygon = polygon.translate(p1.getX(), p1.getY());</span>
+<span class="nc" id="L62">		contact = new XPoint2D(p1.getX() - xContact * Math.cos(angle + Math.PI / 2),</span>
+<span class="nc" id="L63">				p1.getY() - xContact * Math.sin(angle + Math.PI / 2));</span>
+<span class="nc" id="L64">		this.line = new ULine(center.getX() - contact.getX(), center.getY() - contact.getY());</span>
+<span class="nc" id="L65">	}</span>
+
+<span class="fc" id="L67">	public ExtremityArrow(XPoint2D p0, double angle) {</span>
+<span class="fc" id="L68">		this.line = null;</span>
+<span class="fc" id="L69">		angle = manageround(angle);</span>
+<span class="fc" id="L70">		buildPolygon();</span>
+<span class="fc" id="L71">		polygon.rotate(angle);</span>
+<span class="fc" id="L72">		polygon = polygon.translate(p0.getX(), p0.getY());</span>
+<span class="fc" id="L73">		contact = p0;</span>
+<span class="fc" id="L74">	}</span>
+
+	private int buildPolygon() {
+<span class="fc" id="L77">		polygon.addPoint(0, 0);</span>
+<span class="fc" id="L78">		final int xWing = 9;</span>
+<span class="fc" id="L79">		final int yAperture = 4;</span>
+<span class="fc" id="L80">		polygon.addPoint(-xWing, -yAperture);</span>
+<span class="fc" id="L81">		final int xContact = 5;</span>
+<span class="fc" id="L82">		polygon.addPoint(-xContact, 0);</span>
+<span class="fc" id="L83">		polygon.addPoint(-xWing, yAperture);</span>
+<span class="fc" id="L84">		polygon.addPoint(0, 0);</span>
+<span class="fc" id="L85">		return xContact;</span>
+	}
+
+	@Override
+	public double getDecorationLength() {
+<span class="fc" id="L90">		return 6;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L94">		final HColor color = ug.getParam().getColor();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L96">			ug = ug.apply(HColors.none().bg());</span>
+		else
+<span class="fc" id="L98">			ug = ug.apply(color.bg());</span>
+
+<span class="fc" id="L100">		ug.draw(polygon);</span>
+<span class="pc bpc" id="L101" title="3 of 4 branches missed.">		if (line != null &amp;&amp; line.getLength() &gt; 2)</span>
+<span class="nc" id="L102">			ug.apply(UTranslate.point(contact)).draw(line);</span>
+
+<span class="fc" id="L104">	}</span>
+
+	public void drawLineIfTransparent(UGraphic ug) {
+<span class="nc" id="L107">		final XPoint2D pt1 = polygon.getPoint(0);</span>
+<span class="nc" id="L108">		final XPoint2D pt2 = polygon.getPoint(2);</span>
+<span class="nc" id="L109">		final ULine line = ULine.create(pt1, pt2);</span>
+<span class="nc" id="L110">		ug.apply(UTranslate.point(pt1)).draw(line);</span>
+
+<span class="nc" id="L112">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

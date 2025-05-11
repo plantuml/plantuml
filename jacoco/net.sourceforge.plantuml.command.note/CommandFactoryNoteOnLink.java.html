@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandFactoryNoteOnLink.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command.note</a> &gt; <span class="el_source">CommandFactoryNoteOnLink.java</span></div><h1>CommandFactoryNoteOnLink.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command.note;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.CucaNote;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.Position;
+
+public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand&lt;CucaDiagram&gt; {
+
+	private final ParserPass selectedpass;
+
+<span class="fc" id="L69">	public CommandFactoryNoteOnLink(ParserPass selectedpass) {</span>
+<span class="fc" id="L70">		this.selectedpass = selectedpass;</span>
+<span class="fc" id="L71">	}</span>
+
+	private IRegex getRegexConcatSingleLine() {
+<span class="fc" id="L74">		return RegexConcat.build(CommandFactoryNoteOnLink.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L76">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)?&quot;), //
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;(on|of)&quot;), //
+<span class="fc" id="L80">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;link&quot;), //
+<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">				color().getRegex(), //</span>
+<span class="fc" id="L84">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L87">				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+	}
+
+	private IRegex getRegexConcatMultiLine() {
+<span class="fc" id="L91">		return RegexConcat.build(CommandFactoryNoteOnLink.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;note&quot;), //
+<span class="fc" id="L93">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)?&quot;), //
+<span class="fc" id="L95">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;(on|of)&quot;), //
+<span class="fc" id="L97">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;link&quot;), //
+<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L100">				color().getRegex(), RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L104">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	public Command&lt;CucaDiagram&gt; createMultiLine(boolean withBracket) {
+<span class="fc" id="L108">		return new CommandMultilines2&lt;CucaDiagram&gt;(getRegexConcatMultiLine(), MultilinesStrategy.KEEP_STARTING_QUOTE,</span>
+<span class="fc" id="L109">				Trim.BOTH) {</span>
+
+			@Override
+			public String getPatternEnd() {
+<span class="nc" id="L113">				return &quot;^end[%s]?note$&quot;;</span>
+			}
+
+			@Override
+			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
+<span class="nc" id="L119">				final String line0 = lines.getFirst().getTrimmed().getString();</span>
+<span class="nc" id="L120">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="nc" id="L121">				lines = lines.removeEmptyColumns();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				if (lines.size() &gt; 0) {</span>
+<span class="nc" id="L123">					final RegexResult arg = getStartingPattern().matcher(line0);</span>
+<span class="nc" id="L124">					final Display display = lines.toDisplay();</span>
+<span class="nc" id="L125">					return executeInternal(system, arg, display);</span>
+				}
+<span class="nc" id="L127">				return CommandExecutionResult.error(&quot;No note defined&quot;);</span>
+			}
+
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">				return pass == selectedpass;</span>
+			}
+
+		};
+	}
+
+	public Command&lt;CucaDiagram&gt; createSingleLine() {
+<span class="fc" id="L139">		return new SingleLineCommand2&lt;CucaDiagram&gt;(getRegexConcatSingleLine()) {</span>
+
+			@Override
+			protected CommandExecutionResult executeArg(final CucaDiagram diagram, LineLocation location,
+					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
+<span class="nc" id="L144">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="nc" id="L145">				return executeInternal(diagram, arg, display);</span>
+			}
+
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				return pass == selectedpass;</span>
+			}
+		};
+	}
+
+	private CommandExecutionResult executeInternal(CucaDiagram diagram, final RegexResult arg, Display display)
+			throws NoSuchColorException {
+<span class="nc" id="L157">		final Link link = diagram.getLastLink();</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (link == null)</span>
+<span class="nc" id="L159">			return CommandExecutionResult.error(&quot;No link defined&quot;);</span>
+
+<span class="nc" id="L161">		Position position = Position.BOTTOM;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (arg.get(&quot;POSITION&quot;, 0) != null)</span>
+<span class="nc" id="L163">			position = Position.valueOf(StringUtils.goUpperCase(arg.get(&quot;POSITION&quot;, 0)));</span>
+
+<span class="nc" id="L165">		Url url = null;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (arg.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc" id="L167">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L168">			url = urlBuilder.getUrl(arg.get(&quot;URL&quot;, 0));</span>
+		}
+<span class="nc" id="L170">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L171">		link.addNote(CucaNote.build(display, position, colors));</span>
+<span class="nc" id="L172">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

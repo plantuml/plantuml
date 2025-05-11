@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Month.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.time</a> &gt; <span class="el_source">Month.java</span></div><h1>Month.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.time;
+
+import java.time.format.TextStyle;
+import java.util.Locale;
+
+import net.sourceforge.plantuml.StringUtils;
+
+<span class="fc" id="L43">public enum Month {</span>
+
+<span class="fc" id="L45">	JANUARY(31), FEBRUARY(28), MARCH(31), APRIL(30), MAY(31), JUNE(30), //</span>
+<span class="fc" id="L46">	JULY(31), AUGUST(31), SEPTEMBER(30), OCTOBER(31), NOVEMBER(30), DECEMBER(31);</span>
+
+	private final int daysPerMonth;
+
+<span class="fc" id="L50">	private Month(int daysPerMonth) {</span>
+<span class="fc" id="L51">		this.daysPerMonth = daysPerMonth;</span>
+<span class="fc" id="L52">	}</span>
+
+	public String shortName(Locale locale) {
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
+<span class="fc" id="L56">			return longName(locale).substring(0, 3);</span>
+
+<span class="nc" id="L58">		return StringUtils.capitalize(getJavaTimeMonth().getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
+	}
+
+	private java.time.Month getJavaTimeMonth() {
+<span class="nc" id="L62">		return java.time.Month.valueOf(this.toString());</span>
+	}
+
+	public String longName(Locale locale) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
+<span class="fc" id="L67">			return StringUtils.capitalize(name());</span>
+
+<span class="nc" id="L69">		final java.time.Month javaTimeMonth = getJavaTimeMonth();</span>
+<span class="nc" id="L70">		return javaTimeMonth.getDisplayName(TextStyle.FULL_STANDALONE, locale);</span>
+//		final String v1 = javaTimeMonth.getDisplayName(TextStyle.FULL_STANDALONE, locale);
+//		final String v2 = javaTimeMonth.getDisplayName(TextStyle.FULL, locale);
+//		return StringUtils.capitalize(longest(v1, v2));
+	}
+
+//	private String longest(String v1, String v2) {
+//		if (v1.length() &gt; v2.length())
+//			return v1;
+//		return v2;
+//	}
+
+	static public String getRegexString() {
+<span class="fc" id="L83">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (Month month : Month.values()) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (sb.length() &gt; 0) {</span>
+<span class="fc" id="L86">				sb.append(&quot;|&quot;);</span>
+			}
+<span class="fc" id="L88">			sb.append(month.name().substring(0, 3) + &quot;[a-z]*&quot;);</span>
+		}
+<span class="fc" id="L90">		return sb.toString();</span>
+	}
+
+	public static Month fromString(String value) {
+<span class="nc" id="L94">		value = StringUtils.goUpperCase(value).substring(0, 3);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (Month m : Month.values()) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (m.name().startsWith(value)) {</span>
+<span class="nc" id="L97">				return m;</span>
+			}
+		}
+<span class="nc" id="L100">		throw new IllegalArgumentException();</span>
+	}
+
+	public final int getDaysPerMonth(int year) {
+<span class="nc bnc" id="L104" title="All 4 branches missed.">		if (this == FEBRUARY &amp;&amp; year % 4 == 0) {</span>
+<span class="nc" id="L105">			return 29;</span>
+		}
+<span class="nc" id="L107">		return daysPerMonth;</span>
+	}
+
+	public Month next() {
+<span class="nc" id="L111">		return Month.values()[(this.ordinal() + 1) % 12];</span>
+	}
+
+	public int m() {
+<span class="fc" id="L115">		return 3 + (ordinal() + 10) % 12;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

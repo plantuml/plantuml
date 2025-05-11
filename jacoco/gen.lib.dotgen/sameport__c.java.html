@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>sameport__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">sameport__c.java</span></div><h1>sameport__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.attr__c.agattr;
+import static smetana.core.Macro.AGEDGE;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+<span class="nc" id="L61">public class sameport__c {</span>
+
+
+
+
+//3 eu2yvovb9xx4rzic3gllij2bv
+// void dot_sameports(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/sameport.c&quot;, name=&quot;dot_sameports&quot;, key=&quot;eu2yvovb9xx4rzic3gllij2bv&quot;, definition=&quot;void dot_sameports(graph_t * g)&quot;)
+public static void dot_sameports(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L71">ENTERING(&quot;eu2yvovb9xx4rzic3gllij2bv&quot;,&quot;dot_sameports&quot;);</span>
+try {
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+    CString id;
+    //same_t samehead[5];
+    //same_t sametail[5];
+    int n_samehead;		/* number of same_t groups on current node */
+    int n_sametail;		/* number of same_t groups on current node */
+    int i;
+<span class="fc" id="L81">    zz.E_samehead = agattr(zz, g, AGEDGE, new CString(&quot;samehead&quot;),null);</span>
+<span class="fc" id="L82">    zz.E_sametail = agattr(zz, g, AGEDGE, new CString(&quot;sametail&quot;),null);</span>
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">    if (!(zz.E_samehead!=null || zz.E_sametail!=null))</span>
+<span class="fc" id="L84">	return;</span>
+<span class="nc" id="L85">UNSUPPORTED(&quot;44thr6ep72jsj3fksjiwdx3yr&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g, n)) {</span>
+<span class="nc" id="L86">UNSUPPORTED(&quot;4roxmr5lxkjz6gn1j9mndurq2&quot;); // 	n_samehead = n_sametail = 0;</span>
+<span class="nc" id="L87">UNSUPPORTED(&quot;8oxob1qbbkbjh0jjcogk42jfl&quot;); // 	for (e = agfstedge(g, n); e; e = agnxtedge(g, e, n)) {</span>
+<span class="nc" id="L88">UNSUPPORTED(&quot;4gy7rakqurxvound05crezka2&quot;); // 	    if (aghead(e) == agtail(e)) continue;  /* Don't support same* for loops */</span>
+<span class="nc" id="L89">UNSUPPORTED(&quot;2r5fkddp1ey0fvpok2scgkk99&quot;); // 	    if (aghead(e) == n &amp;&amp; E_samehead &amp;&amp;</span>
+<span class="nc" id="L90">UNSUPPORTED(&quot;d38ofiemhq37ykyauh9wync84&quot;); // 	        (id = agxget(e, E_samehead))[0])</span>
+<span class="nc" id="L91">UNSUPPORTED(&quot;18y7dy98psh7ultlx0jugsfu2&quot;); // 		n_samehead = sameedge(samehead, n_samehead, n, e, id);</span>
+<span class="nc" id="L92">UNSUPPORTED(&quot;5snv0fee5roi91irdwv8x51xi&quot;); // 	    else if (agtail(e) == n &amp;&amp; E_sametail &amp;&amp;</span>
+<span class="nc" id="L93">UNSUPPORTED(&quot;8xvjbvzldkn1yksprzfexgsjs&quot;); // 	        (id = agxget(e, E_sametail))[0])</span>
+<span class="nc" id="L94">UNSUPPORTED(&quot;cdn1fgq1pke9ekyar2b4r6e91&quot;); // 		n_sametail = sameedge(sametail, n_sametail, n, e, id);</span>
+<span class="nc" id="L95">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L96">UNSUPPORTED(&quot;c96gtgvp5uw8ktp389l2s9l4u&quot;); // 	for (i = 0; i &lt; n_samehead; i++) {</span>
+<span class="nc" id="L97">UNSUPPORTED(&quot;b2s9feywib1q9pxw4h31yz6dk&quot;); // 	    if (samehead[i].l.size &gt; 1)</span>
+<span class="nc" id="L98">UNSUPPORTED(&quot;1xvsmwfz2hihjki8tsqiaa1g8&quot;); // 		sameport(n, &amp;samehead[i].l, samehead[i].arr_len);</span>
+<span class="nc" id="L99">UNSUPPORTED(&quot;cpzvkkchr60qet357b9gg1e5q&quot;); // 	    free_list(samehead[i].l);</span>
+<span class="nc" id="L100">UNSUPPORTED(&quot;6cnsuklvjftdyhzat6za4qggi&quot;); // 	    /* I sure hope I don't need to free the char* id */</span>
+<span class="nc" id="L101">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L102">UNSUPPORTED(&quot;9ktz8j6cseb5w7jkfhrj5r19t&quot;); // 	for (i = 0; i &lt; n_sametail; i++) {</span>
+<span class="nc" id="L103">UNSUPPORTED(&quot;5vcqm1irqrqcg4f6ldrqkikq8&quot;); // 	    if (sametail[i].l.size &gt; 1)</span>
+<span class="nc" id="L104">UNSUPPORTED(&quot;dcjzqns8bm1o766uqi8dy72qf&quot;); // 		sameport(n, &amp;sametail[i].l, sametail[i].arr_len);</span>
+<span class="nc" id="L105">UNSUPPORTED(&quot;13a7frulpyheo0h4ajbfja7ph&quot;); // 	    free_list(sametail[i].l);</span>
+<span class="nc" id="L106">UNSUPPORTED(&quot;6cnsuklvjftdyhzat6za4qggi&quot;); // 	    /* I sure hope I don't need to free the char* id */</span>
+<span class="nc" id="L107">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L108">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L109">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L111">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L113">LEAVING(&quot;eu2yvovb9xx4rzic3gllij2bv&quot;,&quot;dot_sameports&quot;);</span>
+}
+}
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandNamespace.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command</a> &gt; <span class="el_source">CommandNamespace.java</span></div><h1>CommandNamespace.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandNamespace extends SingleLineCommand2&lt;ClassDiagram&gt; {
+
+	public static final String NAMESPACE_REGEX = &quot;([%pLN_][-%pLN_.:\\\\/]*)&quot;;
+
+	public CommandNamespace() {
+<span class="fc" id="L64">		super(getRegexConcat());</span>
+<span class="fc" id="L65">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L68">		return RegexConcat.build(CommandNamespace.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;namespace&quot;), //
+<span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;NAME&quot;, NAMESPACE_REGEX), //
+<span class="fc" id="L72">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				ColorParser.exp1(), //</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L83">		final String idShort = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L84">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
+		
+<span class="nc" id="L86">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc" id="L87">		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),</span>
+<span class="nc" id="L88">				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
+		
+<span class="nc" id="L90">		final CommandExecutionResult status = diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()),</span>
+				GroupType.PACKAGE, usymbol);
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L93">			return status;</span>
+		
+<span class="nc" id="L95">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">		if (stereotype != null &amp;&amp; usymbol == null)</span>
+<span class="nc" id="L97">			p.setStereotype(Stereotype.build(stereotype));</span>
+
+<span class="nc" id="L99">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L101">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L102">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L103">			p.addUrl(url);</span>
+		}
+
+<span class="nc" id="L106">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L108">			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));</span>
+
+<span class="nc" id="L110">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

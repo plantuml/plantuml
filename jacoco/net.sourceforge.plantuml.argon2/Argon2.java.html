@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Argon2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.argon2</a> &gt; <span class="el_source">Argon2.java</span></div><h1>Argon2.java</h1><pre class="source lang-java linenums">/* 	This file is taken from
+	https://github.com/andreas1327250/argon2-java
+
+	Original Author: Andreas Gadermaier &lt;up.gadermaier@gmail.com&gt;
+ */
+package net.sourceforge.plantuml.argon2;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.LANES_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.LOG_M_COST_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.OUTLEN_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.TYPE_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.T_COST_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.VERSION_DEF;
+
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
+import net.sourceforge.plantuml.argon2.algorithm.FillMemory;
+import net.sourceforge.plantuml.argon2.algorithm.Finalize;
+import net.sourceforge.plantuml.argon2.algorithm.Initialize;
+import net.sourceforge.plantuml.argon2.model.Argon2Type;
+import net.sourceforge.plantuml.argon2.model.Instance;
+
+<span class="nc" id="L27">public class Argon2 {</span>
+	// ::remove folder when __CORE__
+	// ::remove folder when __HAXE__
+
+	private byte[] output;
+	private int outputLength; // -l N
+	private double duration;
+
+	private byte[] password;
+	private byte[] salt;
+	private byte[] secret;
+	private byte[] additional;
+
+	private int iterations; // -t N
+	private int memory; // -m N
+	private int lanes; // -p N
+
+	private int version; // -v (10/13)
+	private Argon2Type type;
+
+<span class="nc" id="L47">	private boolean clearMemory = true;</span>
+
+<span class="nc" id="L49">	private boolean encodedOnly = false;</span>
+<span class="nc" id="L50">	private boolean rawOnly = false;</span>
+
+<span class="nc" id="L52">	Argon2() {</span>
+<span class="nc" id="L53">		this.lanes = LANES_DEF;</span>
+<span class="nc" id="L54">		this.outputLength = OUTLEN_DEF;</span>
+<span class="nc" id="L55">		this.memory = 1 &lt;&lt; LOG_M_COST_DEF;</span>
+<span class="nc" id="L56">		this.iterations = T_COST_DEF;</span>
+<span class="nc" id="L57">		this.version = VERSION_DEF;</span>
+<span class="nc" id="L58">		this.type = TYPE_DEF;</span>
+<span class="nc" id="L59">	}</span>
+
+	private static byte[] toByteArray(char[] chars, Charset charset) {
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		assert chars != null;</span>
+
+<span class="nc" id="L64">		CharBuffer charBuffer = CharBuffer.wrap(chars);</span>
+<span class="nc" id="L65">		ByteBuffer byteBuffer = charset.encode(charBuffer);</span>
+<span class="nc" id="L66">		byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());</span>
+<span class="nc" id="L67">		Arrays.fill(byteBuffer.array(), (byte) 0);</span>
+<span class="nc" id="L68">		return bytes;</span>
+	}
+
+	public void hashNow() {
+		try {
+<span class="nc" id="L73">			Validation.validateInput(this);</span>
+
+<span class="nc" id="L75">			long start = System.nanoTime();</span>
+
+<span class="nc" id="L77">			Instance instance = new Instance(this);</span>
+
+<span class="nc" id="L79">			Initialize.initialize(instance, this);</span>
+<span class="nc" id="L80">			FillMemory.fillMemoryBlocks(instance);</span>
+<span class="nc" id="L81">			Finalize.finalize(instance, this);</span>
+
+<span class="nc" id="L83">			duration = (System.nanoTime() - start) / 1000000000.0;</span>
+		} finally {
+<span class="nc" id="L85">			clear();</span>
+		}
+<span class="nc" id="L87">	}</span>
+
+	public void clear() {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (password != null)</span>
+<span class="nc" id="L91">			Arrays.fill(password, 0, password.length - 1, (byte) 0);</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (salt != null)</span>
+<span class="nc" id="L94">			Arrays.fill(salt, 0, salt.length - 1, (byte) 0);</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (secret != null)</span>
+<span class="nc" id="L97">			Arrays.fill(secret, 0, secret.length - 1, (byte) 0);</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (additional != null)</span>
+<span class="nc" id="L100">			Arrays.fill(additional, 0, additional.length - 1, (byte) 0);</span>
+<span class="nc" id="L101">	}</span>
+
+	void printSummary() {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (encodedOnly)</span>
+<span class="nc" id="L105">			System.out.println(getEncoded());</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		else if (rawOnly)</span>
+<span class="nc" id="L107">			System.out.println(getOutputString());</span>
+		else {
+<span class="nc" id="L109">			System.out.println(&quot;Type:\t\t&quot; + type);</span>
+<span class="nc" id="L110">			System.out.println(&quot;Iterations:\t&quot; + iterations);</span>
+<span class="nc" id="L111">			System.out.println(&quot;Memory:\t\t&quot; + memory + &quot; KiB&quot;);</span>
+<span class="nc" id="L112">			System.out.println(&quot;Parallelism:\t&quot; + lanes);</span>
+<span class="nc" id="L113">			System.out.println(&quot;Hash:\t\t&quot; + getOutputString());</span>
+<span class="nc" id="L114">			System.out.println(&quot;Encoded:\t &quot; + getEncoded());</span>
+<span class="nc" id="L115">			System.out.println(duration + &quot; seconds&quot;);</span>
+		}
+<span class="nc" id="L117">	}</span>
+
+	public Argon2 setMemoryInKiB(int memory) {
+<span class="nc" id="L120">		this.memory = memory;</span>
+<span class="nc" id="L121">		return this;</span>
+	}
+
+	public Argon2 setParallelism(int parallelism) {
+<span class="nc" id="L125">		this.lanes = parallelism;</span>
+<span class="nc" id="L126">		return this;</span>
+	}
+
+	public Argon2 setPassword(char[] password) {
+<span class="nc" id="L130">		return setPassword(toByteArray(password, UTF_8));</span>
+	}
+
+	public Argon2 setSalt(String salt) {
+<span class="nc" id="L134">		return setSalt(salt.getBytes(UTF_8));</span>
+	}
+
+	public byte[] getOutput() {
+<span class="nc" id="L138">		return output;</span>
+	}
+
+	public void setOutput(byte[] finalResult) {
+<span class="nc" id="L142">		this.output = finalResult;</span>
+<span class="nc" id="L143">	}</span>
+
+	public String getOutputString() {
+<span class="nc" id="L146">		return Util.bytesToHexString(output);</span>
+	}
+
+	public int getOutputLength() {
+<span class="nc" id="L150">		return outputLength;</span>
+	}
+
+	public Argon2 setOutputLength(int outputLength) {
+<span class="nc" id="L154">		this.outputLength = outputLength;</span>
+<span class="nc" id="L155">		return this;</span>
+	}
+
+	public byte[] getPassword() {
+<span class="nc" id="L159">		return password;</span>
+	}
+
+	public Argon2 setPassword(byte[] password) {
+<span class="nc" id="L163">		this.password = password;</span>
+<span class="nc" id="L164">		return this;</span>
+	}
+
+	public int getPasswordLength() {
+<span class="nc" id="L168">		return password.length;</span>
+	}
+
+	public byte[] getSalt() {
+<span class="nc" id="L172">		return salt;</span>
+	}
+
+	public Argon2 setSalt(byte[] salt) {
+<span class="nc" id="L176">		this.salt = salt;</span>
+<span class="nc" id="L177">		return this;</span>
+	}
+
+	public int getSaltLength() {
+<span class="nc" id="L181">		return salt.length;</span>
+	}
+
+	public byte[] getSecret() {
+<span class="nc" id="L185">		return secret;</span>
+	}
+
+	public Argon2 setSecret(byte[] secret) {
+<span class="nc" id="L189">		this.secret = secret;</span>
+<span class="nc" id="L190">		return this;</span>
+	}
+
+	public int getSecretLength() {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		return secret != null ? secret.length : 0;</span>
+	}
+
+	public byte[] getAdditional() {
+<span class="nc" id="L198">		return additional;</span>
+	}
+
+	public Argon2 setAdditional(byte[] additional) {
+<span class="nc" id="L202">		this.additional = additional;</span>
+<span class="nc" id="L203">		return this;</span>
+	}
+
+	public int getAdditionalLength() {
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		return additional != null ? additional.length : 0;</span>
+	}
+
+	public int getIterations() {
+<span class="nc" id="L211">		return iterations;</span>
+	}
+
+	public Argon2 setIterations(int iterations) {
+<span class="nc" id="L215">		this.iterations = iterations;</span>
+<span class="nc" id="L216">		return this;</span>
+	}
+
+	public int getMemory() {
+<span class="nc" id="L220">		return memory;</span>
+	}
+
+	public Argon2 setMemory(int memory) {
+<span class="nc" id="L224">		this.memory = 1 &lt;&lt; memory;</span>
+<span class="nc" id="L225">		return this;</span>
+	}
+
+	public int getLanes() {
+<span class="nc" id="L229">		return lanes;</span>
+	}
+
+	public int getVersion() {
+<span class="nc" id="L233">		return version;</span>
+	}
+
+	public Argon2 setVersion(int version) {
+<span class="nc" id="L237">		this.version = version;</span>
+<span class="nc" id="L238">		return this;</span>
+	}
+
+	public Argon2Type getType() {
+<span class="nc" id="L242">		return type;</span>
+	}
+
+	public Argon2 setType(Argon2Type type) {
+<span class="nc" id="L246">		this.type = type;</span>
+<span class="nc" id="L247">		return this;</span>
+	}
+
+	public boolean isClearMemory() {
+<span class="nc" id="L251">		return clearMemory;</span>
+	}
+
+	public void setClearMemory(boolean clearMemory) {
+<span class="nc" id="L255">		this.clearMemory = clearMemory;</span>
+<span class="nc" id="L256">	}</span>
+
+	public Charset getCharset() {
+<span class="nc" id="L259">		return UTF_8;</span>
+	}
+
+	public void setEncodedOnly(boolean encodedOnly) {
+<span class="nc" id="L263">		this.encodedOnly = encodedOnly;</span>
+<span class="nc" id="L264">	}</span>
+
+	public void setRawOnly(boolean rawOnly) {
+<span class="nc" id="L267">		this.rawOnly = rawOnly;</span>
+<span class="nc" id="L268">	}</span>
+
+	public String getEncoded() {
+<span class="nc" id="L271">		return &quot;&quot;; // TODO</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

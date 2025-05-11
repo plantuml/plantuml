@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TLineType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.text</a> &gt; <span class="el_source">TLineType.java</span></div><h1>TLineType.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.text;
+
+import java.util.regex.Pattern;
+
+<span class="fc" id="L39">public enum TLineType {</span>
+
+<span class="fc" id="L41">	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,</span>
+<span class="fc" id="L42">	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE,</span>
+<span class="fc" id="L43">	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY,</span>
+<span class="fc" id="L44">	COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;</span>
+
+<span class="fc" id="L46">	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile(&quot;^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\(.*&quot;);</span>
+
+<span class="fc" id="L48">	private static final Pattern PATTERN_LEGACY_DEFINELONG = Pattern</span>
+<span class="fc" id="L49">			.compile(&quot;^\\s*!definelong\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*&quot;);</span>
+
+<span class="fc" id="L51">	private static final Pattern PATTERN_AFFECTATION_DEFINE = Pattern</span>
+<span class="fc" id="L52">			.compile(&quot;^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*&quot;);</span>
+
+<span class="fc" id="L54">	private static final Pattern PATTERN_AFFECTATION = Pattern</span>
+<span class="fc" id="L55">			.compile(&quot;^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\s*\\??=.*&quot;);</span>
+
+<span class="fc" id="L57">	private static final Pattern PATTERN_COMMENT_SIMPLE1 = Pattern.compile(&quot;^\\s*'.*&quot;);</span>
+
+<span class="fc" id="L59">	private static final Pattern PATTERN_COMMENT_SIMPLE2 = Pattern.compile(&quot;^\\s*/'.*'/\\s*$&quot;);</span>
+
+<span class="fc" id="L61">	private static final Pattern PATTERN_COMMENT_LONG_START = Pattern.compile(&quot;^\\s*/'.*&quot;);</span>
+
+<span class="fc" id="L63">	private static final Pattern PATTERN_IFDEF = Pattern.compile(&quot;^\\s*!ifdef\\s+.*&quot;);</span>
+
+<span class="fc" id="L65">	private static final Pattern PATTERN_UNDEF = Pattern.compile(&quot;^\\s*!undef\\s+.*&quot;);</span>
+
+<span class="fc" id="L67">	private static final Pattern PATTERN_IFNDEF = Pattern.compile(&quot;^\\s*!ifndef\\s+.*&quot;);</span>
+
+<span class="fc" id="L69">	private static final Pattern PATTERN_ASSERT = Pattern.compile(&quot;^\\s*!assert\\s+.*&quot;);</span>
+
+<span class="fc" id="L71">	private static final Pattern PATTERN_IF = Pattern.compile(&quot;^\\s*!if\\s+.*&quot;);</span>
+
+<span class="fc" id="L73">	private static final Pattern PATTERN_DECLARE_RETURN_FUNCTION = Pattern</span>
+<span class="fc" id="L74">			.compile(&quot;^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*&quot;);</span>
+
+<span class="fc" id="L76">	private static final Pattern PATTERN_DECLARE_PROCEDURE = Pattern</span>
+<span class="fc" id="L77">			.compile(&quot;^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*&quot;);</span>
+
+<span class="fc" id="L79">	private static final Pattern PATTERN_ELSE = Pattern.compile(&quot;^\\s*!else\\b.*&quot;);</span>
+
+<span class="fc" id="L81">	private static final Pattern PATTERN_ELSEIF = Pattern.compile(&quot;^\\s*!elseif\\b.*&quot;);</span>
+
+<span class="fc" id="L83">	private static final Pattern PATTERN_ENDIF = Pattern.compile(&quot;^\\s*!endif\\b.*&quot;);</span>
+
+<span class="fc" id="L85">	private static final Pattern PATTERN_WHILE = Pattern.compile(&quot;^\\s*!while\\s+.*&quot;);</span>
+
+<span class="fc" id="L87">	private static final Pattern PATTERN_ENDWHILE = Pattern.compile(&quot;^\\s*!endwhile\\b.*&quot;);</span>
+
+<span class="fc" id="L89">	private static final Pattern PATTERN_FOREACH = Pattern.compile(&quot;^\\s*!foreach\\s+.*&quot;);</span>
+
+<span class="fc" id="L91">	private static final Pattern PATTERN_ENDFOREACH = Pattern.compile(&quot;^\\s*!endfor\\b.*&quot;);</span>
+
+<span class="fc" id="L93">	private static final Pattern PATTERN_END_FUNCTION = Pattern</span>
+<span class="fc" id="L94">			.compile(&quot;^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*&quot;);</span>
+
+<span class="fc" id="L96">	private static final Pattern PATTERN_RETURN = Pattern.compile(&quot;^\\s*!return\\b.*&quot;);</span>
+
+<span class="fc" id="L98">	private static final Pattern PATTERN_THEME = Pattern.compile(&quot;^\\s*!theme\\b.*&quot;);</span>
+
+<span class="fc" id="L100">	private static final Pattern PATTERN_INCLUDE = Pattern</span>
+<span class="fc" id="L101">			.compile(&quot;^\\s*!(include|includeurl|include_many|include_once)\\b.*&quot;);</span>
+
+<span class="fc" id="L103">	private static final Pattern PATTERN_INCLUDE_SPRITES = Pattern</span>
+<span class="fc" id="L104">			.compile(&quot;^\\s*!(include_sprites)\\b.*&quot;);</span>
+
+<span class="fc" id="L106">	private static final Pattern PATTERN_INCLUDE_DEF = Pattern.compile(&quot;^\\s*!(includedef)\\b.*&quot;);</span>
+
+<span class="fc" id="L108">	private static final Pattern PATTERN_IMPORT = Pattern.compile(&quot;^\\s*!(import)\\b.*&quot;);</span>
+
+<span class="fc" id="L110">	private static final Pattern PATTERN_STARTSUB = Pattern.compile(&quot;^\\s*!startsub\\s+.*&quot;);</span>
+
+<span class="fc" id="L112">	private static final Pattern PATTERN_ENDSUB = Pattern.compile(&quot;^\\s*!endsub\\b.*&quot;);</span>
+
+<span class="fc" id="L114">	private static final Pattern PATTERN_INCLUDESUB = Pattern.compile(&quot;^\\s*!includesub\\b.*&quot;);</span>
+
+<span class="fc" id="L116">	private static final Pattern PATTERN_LOG = Pattern.compile(&quot;^\\s*!(log)\\b.*&quot;);</span>
+
+<span class="fc" id="L118">	private static final Pattern PATTERN_DUMP_MEMORY = Pattern.compile(&quot;^\\s*!(dump_memory)\\b.*&quot;);</span>
+	
+<span class="fc" id="L120">	private static final Pattern PATTERN_OPTION = Pattern.compile(&quot;^\\s*!option\\b.*&quot;);</span>
+
+
+	public static TLineType getFromLineInternal(String s) {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (PATTERN_LEGACY_DEFINE.matcher(s).matches())</span>
+<span class="fc" id="L125">			return LEGACY_DEFINE;</span>
+
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (PATTERN_LEGACY_DEFINELONG.matcher(s).matches())</span>
+<span class="nc" id="L128">			return LEGACY_DEFINELONG;</span>
+
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (PATTERN_AFFECTATION_DEFINE.matcher(s).matches())</span>
+<span class="nc" id="L131">			return AFFECTATION_DEFINE;</span>
+
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (PATTERN_AFFECTATION.matcher(s).matches())</span>
+<span class="fc" id="L134">			return AFFECTATION;</span>
+
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE1.matcher(s).matches())</span>
+<span class="fc" id="L137">			return COMMENT_SIMPLE;</span>
+
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE2.matcher(s).matches())</span>
+<span class="fc" id="L140">			return COMMENT_SIMPLE;</span>
+
+<span class="pc bpc" id="L142" title="3 of 4 branches missed.">		if (PATTERN_COMMENT_LONG_START.matcher(s).matches() &amp;&amp; s.contains(&quot;'/&quot;) == false)</span>
+<span class="nc" id="L143">			return COMMENT_LONG_START;</span>
+
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (PATTERN_IFDEF.matcher(s).matches())</span>
+<span class="nc" id="L146">			return IFDEF;</span>
+
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (PATTERN_UNDEF.matcher(s).matches())</span>
+<span class="nc" id="L149">			return UNDEF;</span>
+
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (PATTERN_IFNDEF.matcher(s).matches())</span>
+<span class="fc" id="L152">			return IFNDEF;</span>
+
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (PATTERN_ASSERT.matcher(s).matches())</span>
+<span class="nc" id="L155">			return ASSERT;</span>
+
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (PATTERN_IF.matcher(s).matches())</span>
+<span class="fc" id="L158">			return IF;</span>
+
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (PATTERN_DECLARE_RETURN_FUNCTION.matcher(s).matches())</span>
+<span class="fc" id="L161">			return DECLARE_RETURN_FUNCTION;</span>
+
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (PATTERN_DECLARE_PROCEDURE.matcher(s).matches())</span>
+<span class="fc" id="L164">			return DECLARE_PROCEDURE;</span>
+
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (PATTERN_ELSE.matcher(s).matches())</span>
+<span class="fc" id="L167">			return ELSE;</span>
+
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (PATTERN_ELSEIF.matcher(s).matches())</span>
+<span class="fc" id="L170">			return ELSEIF;</span>
+
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (PATTERN_ENDIF.matcher(s).matches())</span>
+<span class="fc" id="L173">			return ENDIF;</span>
+
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (PATTERN_WHILE.matcher(s).matches())</span>
+<span class="fc" id="L176">			return WHILE;</span>
+
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (PATTERN_ENDWHILE.matcher(s).matches())</span>
+<span class="fc" id="L179">			return ENDWHILE;</span>
+
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (PATTERN_FOREACH.matcher(s).matches())</span>
+<span class="fc" id="L182">			return FOREACH;</span>
+
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (PATTERN_ENDFOREACH.matcher(s).matches())</span>
+<span class="fc" id="L185">			return ENDFOREACH;</span>
+
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (PATTERN_END_FUNCTION.matcher(s).matches())</span>
+<span class="fc" id="L188">			return END_FUNCTION;</span>
+
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (PATTERN_RETURN.matcher(s).matches())</span>
+<span class="fc" id="L191">			return RETURN;</span>
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (PATTERN_THEME.matcher(s).matches())</span>
+<span class="fc" id="L194">			return THEME;</span>
+
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (PATTERN_INCLUDE.matcher(s).matches())</span>
+<span class="fc" id="L197">			return INCLUDE;</span>
+
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_SPRITES.matcher(s).matches())</span>
+<span class="nc" id="L200">			return INCLUDE_SPRITES;</span>
+
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_DEF.matcher(s).matches())</span>
+<span class="nc" id="L203">			return INCLUDE_DEF;</span>
+
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (PATTERN_IMPORT.matcher(s).matches())</span>
+<span class="nc" id="L206">			return IMPORT;</span>
+
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (PATTERN_STARTSUB.matcher(s).matches())</span>
+<span class="nc" id="L209">			return STARTSUB;</span>
+
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (PATTERN_ENDSUB.matcher(s).matches())</span>
+<span class="nc" id="L212">			return ENDSUB;</span>
+
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		if (PATTERN_INCLUDESUB.matcher(s).matches())</span>
+<span class="nc" id="L215">			return INCLUDESUB;</span>
+
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (PATTERN_LOG.matcher(s).matches())</span>
+<span class="fc" id="L218">			return LOG;</span>
+
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (PATTERN_DUMP_MEMORY.matcher(s).matches())</span>
+<span class="nc" id="L221">			return DUMP_MEMORY;</span>
+		
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (PATTERN_OPTION.matcher(s).matches())</span>
+<span class="nc" id="L224">			return OPTION;</span>
+
+
+<span class="fc" id="L227">		return PLAIN;</span>
+	}
+
+	public static boolean isQuote(char ch) {
+<span class="fc bfc" id="L231" title="All 4 branches covered.">		return ch == '\&quot;' || ch == '\'';</span>
+	}
+
+	public static boolean isSpaceChar(char ch) {
+<span class="fc" id="L235">		return Character.isSpaceChar(ch);</span>
+	}
+
+	public static boolean isLatinDigit(char ch) {
+<span class="fc bfc" id="L239" title="All 4 branches covered.">		return ch &gt;= '0' &amp;&amp; ch &lt;= '9';</span>
+	}
+
+	public static boolean isLetterOrEmojiOrUnderscoreOrDigit(char ch) {
+<span class="fc bfc" id="L243" title="All 6 branches covered.">		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);</span>
+	}
+
+	public static boolean isLetterOrEmojiOrUnderscoreOrDollar(char ch) {
+<span class="pc bpc" id="L247" title="1 of 6 branches missed.">		return isLetterOrUnderscore(ch) || ch == '$' || isEmoji(ch);</span>
+	}
+
+	private static boolean isLetterOrUnderscore(char ch) {
+<span class="fc bfc" id="L251" title="All 4 branches covered.">		return isLetter(ch) || ch == '_';</span>
+	}
+
+	private static boolean isLetter(char ch) {
+<span class="fc" id="L255">		return Character.isLetter(ch);</span>
+	}
+
+	private static boolean isEmoji(char ch) {
+<span class="fc bfc" id="L259" title="All 4 branches covered.">		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch) ;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

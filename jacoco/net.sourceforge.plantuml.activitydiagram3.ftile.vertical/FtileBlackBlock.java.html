@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileBlackBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vertical</a> &gt; <span class="el_source">FtileBlackBlock.java</span></div><h1>FtileBlackBlock.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class FtileBlackBlock extends AbstractFtile {
+
+<span class="nc" id="L63">	private final double labelMargin = 5;</span>
+
+	private double width;
+	private double height;
+<span class="nc" id="L67">	private TextBlock label = TextBlockUtils.empty(0, 0);</span>
+
+	private final Swimlane swimlane;
+
+	public FtileBlackBlock(ISkinParam skinParam, Swimlane swimlane) {
+<span class="nc" id="L72">		super(skinParam);</span>
+<span class="nc" id="L73">		this.swimlane = swimlane;</span>
+<span class="nc" id="L74">	}</span>
+
+	public void setBlackBlockDimension(double width, double height) {
+<span class="nc" id="L77">		this.height = height;</span>
+<span class="nc" id="L78">		this.width = width;</span>
+<span class="nc" id="L79">	}</span>
+
+	public void setLabel(TextBlock label) {
+<span class="nc" id="L82">		this.label = Objects.requireNonNull(label);</span>
+<span class="nc" id="L83">	}</span>
+
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+<span class="nc" id="L87">		double supp = label.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (supp &gt; 0)</span>
+<span class="nc" id="L89">			supp += labelMargin;</span>
+
+<span class="nc" id="L91">		return new FtileGeometry(width + supp, height, width / 2, 0, height);</span>
+	}
+
+	private StyleSignatureBasic getSignature() {
+<span class="nc" id="L95">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L99">		final URectangle rect = URectangle.build(width, height).rounded(5).ignoreForCompressionOnX();</span>
+
+<span class="nc" id="L101">		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L102">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L103">		rect.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L104">		final HColor colorBar = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+
+<span class="nc" id="L106">		ug.apply(colorBar).apply(colorBar.bg()).draw(rect);</span>
+<span class="nc" id="L107">		final XDimension2D dimLabel = label.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L108">		label.drawU(ug.apply(new UTranslate(width + labelMargin, -dimLabel.getHeight() / 2)));</span>
+<span class="nc" id="L109">	}</span>
+
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L112">		return Collections.singleton(swimlane);</span>
+	}
+
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L116">		return swimlane;</span>
+	}
+
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L120">		return swimlane;</span>
+	}
+
+	@Override
+	public Collection&lt;Ftile&gt; getMyChildren() {
+<span class="nc" id="L125">		return Collections.emptyList();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrotliInputStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.brotli</a> &gt; <span class="el_source">BrotliInputStream.java</span></div><h1>BrotliInputStream.java</h1><pre class="source lang-java linenums">/* Copyright 2015 Google Inc. All Rights Reserved.
+
+   https://github.com/google/brotli/blob/master/LICENSE
+
+   Distributed under MIT license.
+   See file LICENSE for detail or copy at https://opensource.org/licenses/MIT
+*/
+
+package net.sourceforge.plantuml.brotli;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * {@link InputStream} decorator that decompresses brotli data.
+ *
+ * &lt;p&gt;
+ * Not thread-safe.
+ */
+public class BrotliInputStream extends InputStream {
+
+	public static final int DEFAULT_INTERNAL_BUFFER_SIZE = 16384;
+
+	/**
+	 * Internal buffer used for efficient byte-by-byte reading.
+	 */
+	private byte[] buffer;
+
+	/**
+	 * Number of decoded but still unused bytes in internal buffer.
+	 */
+	private int remainingBufferBytes;
+
+	/**
+	 * Next unused byte offset.
+	 */
+	private int bufferOffset;
+
+	/**
+	 * Decoder state.
+	 */
+<span class="fc" id="L42">	private final State state = new State();</span>
+
+	/**
+	 * Creates a {@link InputStream} wrapper that decompresses brotli data.
+	 *
+	 * &lt;p&gt;
+	 * For byte-by-byte reading ({@link #read()}) internal buffer with
+	 * {@link #DEFAULT_INTERNAL_BUFFER_SIZE} size is allocated and used.
+	 *
+	 * &lt;p&gt;
+	 * Will block the thread until first kilobyte of data of source is available.
+	 *
+	 * @param source underlying data source
+	 * @throws IOException in case of corrupted data or source stream problems
+	 */
+	public BrotliInputStream(InputStream source) throws IOException {
+<span class="fc" id="L58">		this(source, DEFAULT_INTERNAL_BUFFER_SIZE);</span>
+<span class="fc" id="L59">	}</span>
+
+	/**
+	 * Creates a {@link InputStream} wrapper that decompresses brotli data.
+	 *
+	 * &lt;p&gt;
+	 * For byte-by-byte reading ({@link #read()}) internal buffer of specified size
+	 * is allocated and used.
+	 *
+	 * &lt;p&gt;
+	 * Will block the thread until first kilobyte of data of source is available.
+	 *
+	 * @param source             compressed data source
+	 * @param byteReadBufferSize size of internal buffer used in case of
+	 *                           byte-by-byte reading
+	 * @throws IOException in case of corrupted data or source stream problems
+	 */
+<span class="fc" id="L76">	public BrotliInputStream(InputStream source, int byteReadBufferSize) throws IOException {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (byteReadBufferSize &lt;= 0) {</span>
+<span class="nc" id="L78">			throw new IllegalArgumentException(&quot;Bad buffer size:&quot; + byteReadBufferSize);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		} else if (source == null) {</span>
+<span class="nc" id="L80">			throw new IllegalArgumentException(&quot;source is null&quot;);</span>
+		}
+<span class="fc" id="L82">		this.buffer = new byte[byteReadBufferSize];</span>
+<span class="fc" id="L83">		this.remainingBufferBytes = 0;</span>
+<span class="fc" id="L84">		this.bufferOffset = 0;</span>
+		try {
+<span class="fc" id="L86">			Decode.initState(state, source);</span>
+<span class="nc" id="L87">		} catch (BrotliRuntimeException ex) {</span>
+<span class="nc" id="L88">			throw new IOException(&quot;Brotli decoder initialization failed&quot;, ex);</span>
+<span class="fc" id="L89">		}</span>
+<span class="fc" id="L90">	}</span>
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void close() throws IOException {
+<span class="fc" id="L97">		Decode.close(state);</span>
+<span class="fc" id="L98">	}</span>
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int read() throws IOException {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (bufferOffset &gt;= remainingBufferBytes) {</span>
+<span class="fc" id="L106">			remainingBufferBytes = read(buffer, 0, buffer.length);</span>
+<span class="fc" id="L107">			bufferOffset = 0;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			if (remainingBufferBytes == -1) {</span>
+<span class="nc" id="L109">				return -1;</span>
+			}
+		}
+<span class="fc" id="L112">		return buffer[bufferOffset++] &amp; 0xFF;</span>
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int read(byte[] destBuffer, int destOffset, int destLen) throws IOException {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (destOffset &lt; 0) {</span>
+<span class="nc" id="L121">			throw new IllegalArgumentException(&quot;Bad offset: &quot; + destOffset);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		} else if (destLen &lt; 0) {</span>
+<span class="nc" id="L123">			throw new IllegalArgumentException(&quot;Bad length: &quot; + destLen);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		} else if (destOffset + destLen &gt; destBuffer.length) {</span>
+<span class="nc" id="L125">			throw new IllegalArgumentException(</span>
+					&quot;Buffer overflow: &quot; + (destOffset + destLen) + &quot; &gt; &quot; + destBuffer.length);
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		} else if (destLen == 0) {</span>
+<span class="nc" id="L128">			return 0;</span>
+		}
+<span class="fc" id="L130">		int copyLen = Math.max(remainingBufferBytes - bufferOffset, 0);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (copyLen != 0) {</span>
+<span class="fc" id="L132">			copyLen = Math.min(copyLen, destLen);</span>
+<span class="fc" id="L133">			System.arraycopy(buffer, bufferOffset, destBuffer, destOffset, copyLen);</span>
+<span class="fc" id="L134">			bufferOffset += copyLen;</span>
+<span class="fc" id="L135">			destOffset += copyLen;</span>
+<span class="fc" id="L136">			destLen -= copyLen;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			if (destLen == 0) {</span>
+<span class="fc" id="L138">				return copyLen;</span>
+			}
+		}
+		try {
+<span class="fc" id="L142">			state.output = destBuffer;</span>
+<span class="fc" id="L143">			state.outputOffset = destOffset;</span>
+<span class="fc" id="L144">			state.outputLength = destLen;</span>
+<span class="fc" id="L145">			state.outputUsed = 0;</span>
+<span class="fc" id="L146">			Decode.decompress(state);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">			if (state.outputUsed == 0) {</span>
+<span class="nc" id="L148">				return -1;</span>
+			}
+<span class="fc" id="L150">			return state.outputUsed + copyLen;</span>
+<span class="nc" id="L151">		} catch (BrotliRuntimeException ex) {</span>
+<span class="nc" id="L152">			throw new IOException(&quot;Brotli stream decoding failed&quot;, ex);</span>
+		}
+
+		// &lt;{[INJECTED CODE]}&gt;
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

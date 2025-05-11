@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Hash.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">Hash.java</span></div><h1>Hash.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+class Hash {
+
+	// HASH_SHIFT = 5;
+	// HASH_MASK = 32767;
+
+<span class="nc" id="L26">	private static final int[] seq = new int[0x8000];</span>
+
+	static {
+<span class="nc" id="L29">		int[] seq = Hash.seq;</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">		for (int i = 0, l = 0x8000; i &lt; l; ++i) {</span>
+<span class="nc" id="L31">			seq[i] = i;</span>
+		}
+<span class="nc" id="L33">	}</span>
+
+<span class="nc" id="L35">	final int[] head = new int[0x10000];</span>
+<span class="nc" id="L36">	final int[] prev = new int[0x8000];</span>
+<span class="nc" id="L37">	private final int[] hashVal = new int[0x8000];</span>
+<span class="nc" id="L38">	final int[] same = new int[0x8000];</span>
+	int val;
+
+<span class="nc" id="L41">	private final int[] head2 = new int[0x10000];</span>
+<span class="nc" id="L42">	final int[] prev2 = new int[0x8000];</span>
+<span class="nc" id="L43">	final int[] hashVal2 = new int[0x8000];</span>
+
+<span class="nc" id="L45">	public Hash() {</span>
+<span class="nc" id="L46">	}</span>
+
+	public void init(byte[] input, int windowStart, int from, int to) {
+<span class="nc" id="L49">		int[] hashVal = this.hashVal;</span>
+<span class="nc" id="L50">		int[] head = this.head;</span>
+<span class="nc" id="L51">		int[] same = this.same;</span>
+<span class="nc" id="L52">		int[] prev = this.prev;</span>
+<span class="nc" id="L53">		int[] hashVal2 = this.hashVal2;</span>
+<span class="nc" id="L54">		int[] head2 = this.head2;</span>
+<span class="nc" id="L55">		int[] prev2 = this.prev2;</span>
+
+<span class="nc" id="L57">		System.arraycopy(Cookie.intMOnes, 0, head, 0, 0x10000);</span>
+<span class="nc" id="L58">		System.arraycopy(Cookie.intMOnes, 0, hashVal, 0, 0x8000);</span>
+<span class="nc" id="L59">		System.arraycopy(Cookie.intZeroes, 0, same, 0x8000, 0);</span>
+<span class="nc" id="L60">		System.arraycopy(seq, 0, prev, 0, 0x8000);</span>
+
+<span class="nc" id="L62">		System.arraycopy(Cookie.intMOnes, 0, head2, 0, 0x10000);</span>
+<span class="nc" id="L63">		System.arraycopy(Cookie.intMOnes, 0, hashVal2, 0, 0x8000);</span>
+<span class="nc" id="L64">		System.arraycopy(seq, 0, prev2, 0, 0x8000);</span>
+
+<span class="nc" id="L66">		int val = (((input[windowStart] &amp; 0xFF) &lt;&lt; 5) ^ input[windowStart + 1] &amp; 0xFF) &amp; 0x7FFF;</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (int i = windowStart; i &lt; from; ++i) {</span>
+<span class="nc" id="L69">			int hPos = i &amp; 0x7FFF;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			val = ((val &lt;&lt; 5) ^ (i + 2 &lt; to ? input[i + 2] &amp; 0xFF : 0)) &amp; 0x7FFF;</span>
+
+<span class="nc" id="L72">			hashVal[hPos] = val;</span>
+<span class="nc" id="L73">			int tmp = head[val];</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">			prev[hPos] = tmp != -1 &amp;&amp; hashVal[tmp] == val ? tmp : hPos;</span>
+<span class="nc" id="L75">			head[val] = hPos;</span>
+
+<span class="nc" id="L77">			tmp = same[(i - 1) &amp; 0x7FFF];</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (tmp &lt; 1) {</span>
+<span class="nc" id="L79">				tmp = 1;</span>
+			}
+<span class="nc" id="L81">			tmp += i;</span>
+<span class="nc" id="L82">			byte b = input[i];</span>
+<span class="nc bnc" id="L83" title="All 4 branches missed.">			while (tmp &lt; to &amp;&amp; b == input[tmp]) {</span>
+<span class="nc" id="L84">				tmp++;</span>
+			}
+<span class="nc" id="L86">			tmp -= i;</span>
+<span class="nc" id="L87">			tmp--;</span>
+<span class="nc" id="L88">			same[hPos] = tmp;</span>
+
+<span class="nc" id="L90">			tmp = ((tmp - 3) &amp; 0xFF) ^ val;</span>
+<span class="nc" id="L91">			hashVal2[hPos] = tmp;</span>
+<span class="nc" id="L92">			int h = head2[tmp];</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">			prev2[hPos] = h != -1 &amp;&amp; hashVal2[h] == tmp ? h : hPos;</span>
+<span class="nc" id="L94">			head2[tmp] = hPos;</span>
+		}
+<span class="nc" id="L96">		this.val = val;</span>
+<span class="nc" id="L97">	}</span>
+
+	/*
+	 * private void updateHashValue(int c) { val = ((val &lt;&lt; HASH_SHIFT) ^ c) &amp;
+	 * HASH_MASK; }
+	 */
+
+	public void updateHash(byte[] input, int pos, int end) {
+		// WINDOW_MASK
+<span class="nc" id="L106">		int hPos = pos &amp; 0x7FFF;</span>
+<span class="nc" id="L107">		int val = this.val;</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		val = ((val &lt;&lt; 5) ^ (pos + 2 &lt; end ? input[pos + 2] &amp; 0xFF : 0)) &amp; 0x7FFF;</span>
+
+<span class="nc" id="L111">		hashVal[hPos] = val;</span>
+<span class="nc" id="L112">		int tmp = head[val];</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">		prev[hPos] = (tmp != -1 &amp;&amp; hashVal[tmp] == val) ? tmp : hPos;</span>
+<span class="nc" id="L114">		head[val] = hPos;</span>
+
+<span class="nc" id="L116">		tmp = same[(pos - 1) &amp; 0x7FFF];</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (tmp &lt; 1) {</span>
+<span class="nc" id="L118">			tmp = 1;</span>
+		}
+<span class="nc" id="L120">		tmp += pos;</span>
+<span class="nc" id="L121">		byte b = input[pos];</span>
+<span class="nc bnc" id="L122" title="All 4 branches missed.">		while (tmp &lt; end &amp;&amp; b == input[tmp]) {</span>
+<span class="nc" id="L123">			tmp++;</span>
+		}
+<span class="nc" id="L125">		tmp -= pos;</span>
+<span class="nc" id="L126">		tmp--;</span>
+<span class="nc" id="L127">		same[hPos] = tmp;</span>
+
+<span class="nc" id="L129">		tmp = ((tmp - 3) &amp; 0xFF) ^ val;</span>
+<span class="nc" id="L130">		hashVal2[hPos] = tmp;</span>
+<span class="nc" id="L131">		int h = head2[tmp];</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">		prev2[hPos] = h != -1 &amp;&amp; hashVal2[h] == tmp ? h : hPos;</span>
+<span class="nc" id="L133">		head2[tmp] = hPos;</span>
+
+<span class="nc" id="L135">		this.val = val;</span>
+<span class="nc" id="L136">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

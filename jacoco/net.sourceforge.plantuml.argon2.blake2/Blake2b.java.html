@@ -1,0 +1,1356 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Blake2b.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.argon2.blake2</a> &gt; <span class="el_source">Blake2b.java</span></div><h1>Blake2b.java</h1><pre class="source lang-java linenums">
+/* 	This file is taken from
+	https://github.com/alphazero/Blake2b/
+
+	Original Author: Andreas Gadermaier &lt;up.gadermaier@gmail.com&gt;
+	because the repository artifact was not uploaded to maven central repository
+
+ */
+/*
+   A Java implementation of BLAKE2B cryptographic digest algorithm.
+
+   Joubin Mohammad Houshyar &lt;alphazero@sensesay.net&gt;
+   bushwick, nyc
+   02-14-2014
+
+   --
+
+   To the extent possible under law, the author(s) have dedicated all copyright
+   and related and neighboring rights to this software to the public domain
+   worldwide. This software is distributed without any warranty.
+
+   You should have received a copy of the CC0 Public Domain Dedication along with
+   this software. If not, see &lt;http://creativecommons.org/publicdomain/zero/1.0/&gt;.
+*/
+package net.sourceforge.plantuml.argon2.blake2;
+
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.assertFail;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.exclusiveLowerBound;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.inclusiveLowerBound;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.inclusiveUpperBound;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.readInt;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.readLong;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.writeInt;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.writeLong;
+
+import java.io.PrintStream;
+import java.security.Key;
+import java.security.spec.AlgorithmParameterSpec;
+import java.util.Arrays;
+
+/**  */
+public interface Blake2b {
+    // ::remove folder when __HAXE__
+	/** */
+	void update(byte[] input);
+
+	// ---------------------------------------------------------------------
+	// API
+	// ---------------------------------------------------------------------
+	// TODO add ByteBuffer variants
+
+	/** */
+	void update(byte input);
+
+	/** */
+	void update(byte[] input, int offset, int len);
+
+	/** */
+	byte[] digest();
+
+	/** */
+	byte[] digest(byte[] input);
+
+	/** */
+	void digest(byte[] output, int offset, int len);
+
+	/** */
+	void reset();
+
+	// ---------------------------------------------------------------------
+	// Specification
+	// ---------------------------------------------------------------------
+	public interface Spec {
+		/** pblock size of blake2b */
+		int param_bytes = 64;
+
+		/** pblock size of blake2b */
+		int block_bytes = 128;
+
+		/** maximum digest size */
+		int max_digest_bytes = 64;
+
+		/** maximum key sie */
+		int max_key_bytes = 64;
+
+		/** maximum salt size */
+		int max_salt_bytes = 16;
+
+		/** maximum personalization string size */
+		int max_personalization_bytes = 16;
+
+		/** length of h space vector array */
+		int state_space_len = 8;
+
+		/** max tree fanout value */
+		int max_tree_fantout = 0xFF;
+
+		/** max tree depth value */
+		int max_tree_depth = 0xFF;
+
+		/**
+		 * max tree leaf length value.Note that this has uint32 semantics and thus
+		 * 0xFFFFFFFF is used as max value limit.
+		 */
+		int max_tree_leaf_length = 0xFFFFFFFF;
+
+		/**
+		 * max node offset value. Note that this has uint64 semantics and thus
+		 * 0xFFFFFFFFFFFFFFFFL is used as max value limit.
+		 */
+		long max_node_offset = 0xFFFFFFFFFFFFFFFFL;
+
+		/** max tree inner length value */
+		int max_tree_inner_length = 0xFF;
+
+		/** initialization values map ref-Spec IV[i]    slice iv[i*8:i*8+7] */
+<span class="nc" id="L117">		long[] IV = { 0x6a09e667f3bcc908L, 0xbb67ae8584caa73bL, 0x3c6ef372fe94f82bL, 0xa54ff53a5f1d36f1L,</span>
+				0x510e527fade682d1L, 0x9b05688c2b3e6c1fL, 0x1f83d9abfb41bd6bL, 0x5be0cd19137e2179L };
+
+		/** sigma per spec used in compress func generation - for reference only */
+<span class="nc" id="L121">		static byte[][] sigma = { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },</span>
+				{ 14, 10, 4, 8, 9, 15, 13, 6, 1, 12, 0, 2, 11, 7, 5, 3 },
+				{ 11, 8, 12, 0, 5, 2, 15, 13, 10, 14, 3, 6, 7, 1, 9, 4 },
+				{ 7, 9, 3, 1, 13, 12, 11, 14, 2, 6, 5, 10, 4, 0, 15, 8 },
+				{ 9, 0, 5, 7, 2, 4, 10, 15, 14, 1, 11, 12, 6, 8, 3, 13 },
+				{ 2, 12, 6, 10, 0, 11, 8, 3, 4, 13, 7, 5, 15, 14, 1, 9 },
+				{ 12, 5, 1, 15, 14, 13, 4, 10, 0, 7, 6, 3, 9, 2, 8, 11 },
+				{ 13, 11, 7, 14, 12, 1, 3, 9, 5, 0, 15, 4, 8, 6, 2, 10 },
+				{ 6, 15, 14, 9, 11, 3, 0, 8, 12, 2, 13, 7, 1, 4, 10, 5 },
+				{ 10, 2, 8, 4, 7, 6, 1, 5, 15, 11, 9, 14, 3, 12, 13, 0 },
+				{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+				{ 14, 10, 4, 8, 9, 15, 13, 6, 1, 12, 0, 2, 11, 7, 5, 3 } };
+	}
+
+	// ---------------------------------------------------------------------
+	// Blake2b Message Digest
+	// ---------------------------------------------------------------------
+
+	/** Generalized Blake2b digest. */
+	public static class Digest extends Engine implements Blake2b {
+		private Digest(final Param p) {
+<span class="nc" id="L142">			super(p);</span>
+<span class="nc" id="L143">		}</span>
+
+		private Digest() {
+			super();
+		}
+
+		public static Digest newInstance() {
+<span class="nc" id="L150">			return new Digest();</span>
+		}
+
+		public static Digest newInstance(final int digestLength) {
+<span class="nc" id="L154">			return new Digest(new Param().setDigestLength(digestLength));</span>
+		}
+
+		public static Digest newInstance(Param p) {
+<span class="nc" id="L158">			return new Digest(p);</span>
+		}
+	}
+
+	// ---------------------------------------------------------------------
+	// Blake2b Message Authentication Code
+	// ---------------------------------------------------------------------
+
+	/** Message Authentication Code (MAC) digest. */
+<span class="nc" id="L167">	public static class Mac extends Engine implements Blake2b {</span>
+		private Mac(final Param p) {
+<span class="nc" id="L169">			super(p);</span>
+<span class="nc" id="L170">		}</span>
+
+		private Mac() {
+			super();
+		}
+
+		/** Blake2b.MAC 512 - using default Blake2b.Spec settings with given key */
+		public static Mac newInstance(final byte[] key) {
+<span class="nc" id="L178">			return new Mac(new Param().setKey(key));</span>
+		}
+
+		/**
+		 * Blake2b.MAC - using default Blake2b.Spec settings with given key, with given
+		 * digest length
+		 */
+		public static Mac newInstance(final byte[] key, final int digestLength) {
+<span class="nc" id="L186">			return new Mac(new Param().setKey(key).setDigestLength(digestLength));</span>
+		}
+
+		/**
+		 * Blake2b.MAC - using default Blake2b.Spec settings with given
+		 * java.security.Key, with given digest length
+		 */
+		public static Mac newInstance(final Key key, final int digestLength) {
+<span class="nc" id="L194">			return new Mac(new Param().setKey(key).setDigestLength(digestLength));</span>
+		}
+
+		/**
+		 * Blake2b.MAC - using the specified Parameters.
+		 * 
+		 * @param p asserted valid configured Param with key
+		 */
+		public static Mac newInstance(Param p) {
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			assert p != null : &quot;Param (p) is null&quot;;</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			assert p.hasKey() : &quot;Param (p) not configured with a key&quot;;</span>
+<span class="nc" id="L205">			return new Mac(p);</span>
+		}
+	}
+
+	// ---------------------------------------------------------------------
+	// Blake2b Incremental Message Digest (Tree)
+	// ---------------------------------------------------------------------
+
+	/**
+	 * Note that Tree is just a convenience class; incremental hash (tree) can be
+	 * done directly with the Digest class. &lt;br&gt;
+	 * Further node, that tree does NOT accumulate the leaf hashes -- you need to do
+	 * that
+	 */
+	public static class Tree {
+
+		final int depth;
+		final int fanout;
+		final int leaf_length;
+		final int inner_length;
+		final int digest_length;
+
+		/**
+		 *
+		 * @param fanout
+		 * @param depth
+		 * @param leaf_length   size of data input for leaf nodes.
+		 * @param inner_length  note this is used also as digest-length for non-root
+		 *                      nodes.
+		 * @param digest_length final hash out digest-length for the tree
+		 */
+		public Tree(final int depth, final int fanout, final int leaf_length, final int inner_length,
+<span class="nc" id="L237">				final int digest_length) {</span>
+<span class="nc" id="L238">			this.fanout = fanout;</span>
+<span class="nc" id="L239">			this.depth = depth;</span>
+<span class="nc" id="L240">			this.leaf_length = leaf_length;</span>
+<span class="nc" id="L241">			this.inner_length = inner_length;</span>
+<span class="nc" id="L242">			this.digest_length = digest_length;</span>
+<span class="nc" id="L243">		}</span>
+
+		private Param treeParam() {
+<span class="nc" id="L246">			return new Param().setDepth(depth).setFanout(fanout).setLeafLength(leaf_length)</span>
+<span class="nc" id="L247">					.setInnerLength(inner_length);</span>
+		}
+
+		/** returns the Digest for tree node @ (depth, offset) */
+		public final Digest getNode(final int depth, final int offset) {
+<span class="nc" id="L252">			final Param nodeParam = treeParam().setNodeDepth(depth).setNodeOffset(offset).setDigestLength(inner_length);</span>
+<span class="nc" id="L253">			return Digest.newInstance(nodeParam);</span>
+		}
+
+		/** returns the Digest for root node */
+		public final Digest getRoot() {
+<span class="nc" id="L258">			final int depth = this.depth - 1;</span>
+<span class="nc" id="L259">			final Param rootParam = treeParam().setNodeDepth(depth).setNodeOffset(0L).setDigestLength(digest_length);</span>
+<span class="nc" id="L260">			return Digest.newInstance(rootParam);</span>
+		}
+	}
+
+	// ---------------------------------------------------------------------
+	// Engine
+	// ---------------------------------------------------------------------
+	static class Engine implements Blake2b {
+
+		/* G0 sigmas */
+<span class="nc" id="L270">		static final int[] sig_g00 = { 0, 14, 11, 7, 9, 2, 12, 13, 6, 10, 0, 14, };</span>
+<span class="nc" id="L271">		static final int[] sig_g01 = { 1, 10, 8, 9, 0, 12, 5, 11, 15, 2, 1, 10, };</span>
+
+		/* G1 sigmas */
+<span class="nc" id="L274">		static final int[] sig_g10 = { 2, 4, 12, 3, 5, 6, 1, 7, 14, 8, 2, 4, };</span>
+<span class="nc" id="L275">		static final int[] sig_g11 = { 3, 8, 0, 1, 7, 10, 15, 14, 9, 4, 3, 8, };</span>
+
+		/* G2 sigmas */
+<span class="nc" id="L278">		static final int[] sig_g20 = { 4, 9, 5, 13, 2, 0, 14, 12, 11, 7, 4, 9, };</span>
+<span class="nc" id="L279">		static final int[] sig_g21 = { 5, 15, 2, 12, 4, 11, 13, 1, 3, 6, 5, 15, };</span>
+
+		/* G3 sigmas */
+<span class="nc" id="L282">		static final int[] sig_g30 = { 6, 13, 15, 11, 10, 8, 4, 3, 0, 1, 6, 13, };</span>
+<span class="nc" id="L283">		static final int[] sig_g31 = { 7, 6, 13, 14, 15, 3, 10, 9, 8, 5, 7, 6, };</span>
+
+		/* G4 sigmas */
+<span class="nc" id="L286">		static final int[] sig_g40 = { 8, 1, 10, 2, 14, 4, 0, 5, 12, 15, 8, 1, };</span>
+<span class="nc" id="L287">		static final int[] sig_g41 = { 9, 12, 14, 6, 1, 13, 7, 0, 2, 11, 9, 12, };</span>
+
+		/* G5 sigmas */
+<span class="nc" id="L290">		static final int[] sig_g50 = { 10, 0, 3, 5, 11, 7, 6, 15, 13, 9, 10, 0, };</span>
+<span class="nc" id="L291">		static final int[] sig_g51 = { 11, 2, 6, 10, 12, 5, 3, 4, 7, 14, 11, 2, };</span>
+
+		/* G6 sigmas */
+<span class="nc" id="L294">		static final int[] sig_g60 = { 12, 11, 7, 4, 6, 15, 9, 8, 1, 3, 12, 11, };</span>
+<span class="nc" id="L295">		static final int[] sig_g61 = { 13, 7, 1, 0, 8, 14, 2, 6, 4, 12, 13, 7, };</span>
+
+		/* G7 sigmas */
+<span class="nc" id="L298">		static final int[] sig_g70 = { 14, 5, 9, 15, 3, 1, 8, 2, 10, 13, 14, 5, };</span>
+<span class="nc" id="L299">		static final int[] sig_g71 = { 15, 3, 4, 8, 13, 9, 11, 10, 5, 0, 15, 3, };</span>
+
+		// ---------------------------------------------------------------------
+		// Blake2b State(+) per reference implementation
+		// ---------------------------------------------------------------------
+		// REVU: address last_node TODO part of the Tree/incremental
+		/**
+		 * read only
+		 */
+<span class="nc" id="L308">		private static byte[] zeropad = new byte[Spec.block_bytes];</span>
+		/**
+		 * per spec
+		 */
+<span class="nc" id="L312">		private final long[] h = new long[8];</span>
+		/** per spec */
+<span class="nc" id="L314">		private final long[] t = new long[2];</span>
+		/** per spec */
+<span class="nc" id="L316">		private final long[] f = new long[2];</span>
+		/** pulled up 2b optimal */
+<span class="nc" id="L318">		private final long[] m = new long[16];</span>
+		/** pulled up 2b optimal */
+<span class="nc" id="L320">		private final long[] v = new long[16];</span>
+
+		/** compressor cache buffer */
+		private final byte[] buffer;
+		/** configuration params */
+		private final Param param;
+		/** digest length from init param - copied here on init */
+		private final int outlen;
+		/**
+		 * per spec (tree)
+		 */
+<span class="nc" id="L331">		private boolean last_node = false;</span>
+		/**
+		 * compressor cache buffer offset/cached data length
+		 */
+		private int buflen;
+		/** to support update(byte) */
+		private byte[] oneByte;
+
+		/** Basic use constructor pending (TODO) JCA/JCE compliance */
+		Engine() {
+<span class="nc" id="L341">			this(new Param());</span>
+<span class="nc" id="L342">		}</span>
+
+		// ---------------------------------------------------------------------
+		// Ctor &amp; Initialization
+		// ---------------------------------------------------------------------
+
+		/** User provided Param for custom configurations */
+<span class="nc" id="L349">		Engine(final Param param) {</span>
+<span class="nc bnc" id="L350" title="All 2 branches missed.">			assert param != null : &quot;param is null&quot;;</span>
+<span class="nc" id="L351">			this.param = param;</span>
+<span class="nc" id="L352">			this.buffer = new byte[Spec.block_bytes];</span>
+<span class="nc" id="L353">			this.oneByte = new byte[1];</span>
+<span class="nc" id="L354">			this.outlen = param.getDigestLength();</span>
+
+<span class="nc bnc" id="L356" title="All 2 branches missed.">			if (param.getDepth() &gt; Param.Default.depth) {</span>
+<span class="nc" id="L357">				final int ndepth = param.getNodeDepth();</span>
+<span class="nc" id="L358">				final long nxoff = param.getNodeOffset();</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">				if (ndepth == param.getDepth() - 1) {</span>
+<span class="nc" id="L360">					last_node = true;</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">					assert param.getNodeOffset() == 0 : &quot;root must have offset of zero&quot;;</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">				} else if (param.getNodeOffset() == param.getFanout() - 1) {</span>
+<span class="nc" id="L363">					this.last_node = true;</span>
+				}
+			}
+
+<span class="nc" id="L367">			initialize();</span>
+
+//			Debug.dumpBuffer(System.out, &quot;param bytes at init&quot;, param.getBytes());
+
+<span class="nc" id="L371">		}</span>
+
+		public static void main(String... args) {
+<span class="nc" id="L374">			Blake2b mac = Blake2b.Mac.newInstance(&quot;LOVE&quot;.getBytes());</span>
+<span class="nc" id="L375">			final byte[] hash = mac.digest(&quot;Salaam!&quot;.getBytes());</span>
+//			Debug.dumpBuffer(System.out, &quot;-- mac hash --&quot;, hash);
+<span class="nc" id="L377">		}</span>
+
+		private void initialize() {
+			// state vector h - copy values to address reset() requests
+<span class="nc" id="L381">			System.arraycopy(param.initialized_H(), 0, this.h, 0, Spec.state_space_len);</span>
+
+//			Debug.dumpArray(&quot;init H&quot;, this.h);
+			// if we have a key update initial block
+			// Note param has zero padded key_bytes to Spec.max_key_bytes
+<span class="nc bnc" id="L386" title="All 2 branches missed.">			if (param.hasKey) {</span>
+<span class="nc" id="L387">				this.update(param.key_bytes, 0, Spec.block_bytes);</span>
+			}
+<span class="nc" id="L389">		}</span>
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		final public void reset() {
+			// reset cache
+<span class="nc" id="L397">			this.buflen = 0;</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">			for (int i = 0; i &lt; buffer.length; i++) {</span>
+<span class="nc" id="L399">				buffer[i] = (byte) 0;</span>
+			}
+
+			// reset flags
+<span class="nc" id="L403">			this.f[0] = 0L;</span>
+<span class="nc" id="L404">			this.f[1] = 0L;</span>
+
+			// reset counters
+<span class="nc" id="L407">			this.t[0] = 0L;</span>
+<span class="nc" id="L408">			this.t[1] = 0L;</span>
+
+			// reset state vector
+			// NOTE: keep as last stmt as init calls update0 for MACs.
+<span class="nc" id="L412">			initialize();</span>
+<span class="nc" id="L413">		}</span>
+
+		// ---------------------------------------------------------------------
+		// interface: Blake2b API
+		// ---------------------------------------------------------------------
+
+		/** {@inheritDoc} */
+		@Override
+		final public void update(final byte[] b, int off, int len) {
+<span class="nc bnc" id="L422" title="All 2 branches missed.">			if (b == null) {</span>
+<span class="nc" id="L423">				throw new IllegalArgumentException(&quot;input buffer (b) is null&quot;);</span>
+			}
+			/* zero or more calls to compress */
+			// REVU: possibly the double buffering of c-ref is more sensible ..
+			// regardless, the hotspot is in the compress, as expected.
+<span class="nc bnc" id="L428" title="All 2 branches missed.">			while (len &gt; 0) {</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">				if (buflen == 0) {</span>
+					/* try compressing direct from input ? */
+<span class="nc bnc" id="L431" title="All 2 branches missed.">					while (len &gt; Spec.block_bytes) {</span>
+<span class="nc" id="L432">						this.t[0] += Spec.block_bytes;</span>
+<span class="nc bnc" id="L433" title="All 2 branches missed.">						this.t[1] += this.t[0] == 0 ? 1 : 0;</span>
+<span class="nc" id="L434">						compress(b, off);</span>
+<span class="nc" id="L435">						len -= Spec.block_bytes;</span>
+<span class="nc" id="L436">						off += Spec.block_bytes;</span>
+					}
+<span class="nc bnc" id="L438" title="All 2 branches missed.">				} else if (buflen == Spec.block_bytes) {</span>
+					/* flush */
+<span class="nc" id="L440">					this.t[0] += Spec.block_bytes;</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">					this.t[1] += this.t[0] == 0 ? 1 : 0;</span>
+<span class="nc" id="L442">					compress(buffer, 0);</span>
+<span class="nc" id="L443">					buflen = 0;</span>
+<span class="nc" id="L444">					continue;</span>
+				}
+
+				// &quot;are we there yet?&quot;
+<span class="nc bnc" id="L448" title="All 2 branches missed.">				if (len == 0)</span>
+<span class="nc" id="L449">					return;</span>
+
+<span class="nc" id="L451">				final int cap = Spec.block_bytes - buflen;</span>
+<span class="nc bnc" id="L452" title="All 2 branches missed.">				final int fill = len &gt; cap ? cap : len;</span>
+<span class="nc" id="L453">				System.arraycopy(b, off, buffer, buflen, fill);</span>
+<span class="nc" id="L454">				buflen += fill;</span>
+<span class="nc" id="L455">				len -= fill;</span>
+<span class="nc" id="L456">				off += fill;</span>
+<span class="nc" id="L457">			}</span>
+<span class="nc" id="L458">		}</span>
+
+		/** {@inheritDoc} */
+		@Override
+		final public void update(byte b) {
+<span class="nc" id="L463">			oneByte[0] = b;</span>
+<span class="nc" id="L464">			update(oneByte, 0, 1);</span>
+<span class="nc" id="L465">		}</span>
+
+		/** {@inheritDoc} */
+		@Override
+		final public void update(byte[] input) {
+<span class="nc" id="L470">			update(input, 0, input.length);</span>
+<span class="nc" id="L471">		}</span>
+
+		/** {@inheritDoc} */
+		@Override
+		final public void digest(byte[] output, int off, int len) {
+			// zero pad last block; set last block flags; and compress
+<span class="nc" id="L477">			System.arraycopy(zeropad, 0, buffer, buflen, Spec.block_bytes - buflen);</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">			if (buflen &gt; 0) {</span>
+<span class="nc" id="L479">				this.t[0] += buflen;</span>
+<span class="nc bnc" id="L480" title="All 2 branches missed.">				this.t[1] += this.t[0] == 0 ? 1 : 0;</span>
+			}
+
+<span class="nc" id="L483">			this.f[flag.last_block] = 0xFFFFFFFFFFFFFFFFL;</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">			this.f[flag.last_node] = this.last_node ? 0xFFFFFFFFFFFFFFFFL : 0x0L;</span>
+
+			// compres and write final out (truncated to len) to output
+<span class="nc" id="L487">			compress(buffer, 0);</span>
+<span class="nc" id="L488">			hashout(output, off, len);</span>
+
+<span class="nc" id="L490">			reset();</span>
+<span class="nc" id="L491">		}</span>
+
+		/** {@inheritDoc} */
+		@Override
+		final public byte[] digest() throws IllegalArgumentException {
+<span class="nc" id="L496">			final byte[] out = new byte[outlen];</span>
+<span class="nc" id="L497">			digest(out, 0, outlen);</span>
+<span class="nc" id="L498">			return out;</span>
+		}
+
+		/** {@inheritDoc} */
+		@Override
+		final public byte[] digest(byte[] input) {
+<span class="nc" id="L504">			update(input, 0, input.length);</span>
+<span class="nc" id="L505">			return digest();</span>
+		}
+
+		/**
+		 * write out the digest output from the 'h' registers. truncate full output if
+		 * necessary.
+		 */
+		private void hashout(final byte[] out, final int offset, final int hashlen) {
+			// write max number of whole longs
+<span class="nc" id="L514">			final int lcnt = hashlen &gt;&gt;&gt; 3;</span>
+<span class="nc" id="L515">			long v = 0;</span>
+<span class="nc" id="L516">			int i = offset;</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">			for (int w = 0; w &lt; lcnt; w++) {</span>
+<span class="nc" id="L518">				v = h[w];</span>
+<span class="nc" id="L519">				out[i++] = (byte) v;</span>
+<span class="nc" id="L520">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L521">				out[i++] = (byte) v;</span>
+<span class="nc" id="L522">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L523">				out[i++] = (byte) v;</span>
+<span class="nc" id="L524">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L525">				out[i++] = (byte) v;</span>
+<span class="nc" id="L526">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L527">				out[i++] = (byte) v;</span>
+<span class="nc" id="L528">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L529">				out[i++] = (byte) v;</span>
+<span class="nc" id="L530">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L531">				out[i++] = (byte) v;</span>
+<span class="nc" id="L532">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L533">				out[i++] = (byte) v;</span>
+			}
+
+			// basta?
+<span class="nc bnc" id="L537" title="All 2 branches missed.">			if (hashlen == Spec.max_digest_bytes)</span>
+<span class="nc" id="L538">				return;</span>
+
+			// write the remaining bytes of a partial long value
+<span class="nc" id="L541">			v = h[lcnt];</span>
+<span class="nc" id="L542">			i = lcnt &lt;&lt; 3;</span>
+<span class="nc bnc" id="L543" title="All 2 branches missed.">			while (i &lt; hashlen) {</span>
+<span class="nc" id="L544">				out[offset + i] = (byte) v;</span>
+<span class="nc" id="L545">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L546">				++i;</span>
+			}
+<span class="nc" id="L548">		}</span>
+
+		// ---------------------------------------------------------------------
+		// Internal Ops
+		// ---------------------------------------------------------------------
+
+		/** compress Spec.block_bytes data from b, from offset */
+		private void compress(final byte[] b, final int offset) {
+
+			// set m registers
+			// REVU: some small gains still possible here.
+<span class="nc" id="L559">			m[0] = ((long) b[offset] &amp; 0xFF);</span>
+<span class="nc" id="L560">			m[0] |= ((long) b[offset + 1] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L561">			m[0] |= ((long) b[offset + 2] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L562">			m[0] |= ((long) b[offset + 3] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L563">			m[0] |= ((long) b[offset + 4] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L564">			m[0] |= ((long) b[offset + 5] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L565">			m[0] |= ((long) b[offset + 6] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L566">			m[0] |= ((long) b[offset + 7]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L568">			m[1] = ((long) b[offset + 8] &amp; 0xFF);</span>
+<span class="nc" id="L569">			m[1] |= ((long) b[offset + 9] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L570">			m[1] |= ((long) b[offset + 10] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L571">			m[1] |= ((long) b[offset + 11] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L572">			m[1] |= ((long) b[offset + 12] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L573">			m[1] |= ((long) b[offset + 13] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L574">			m[1] |= ((long) b[offset + 14] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L575">			m[1] |= ((long) b[offset + 15]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L577">			m[2] = ((long) b[offset + 16] &amp; 0xFF);</span>
+<span class="nc" id="L578">			m[2] |= ((long) b[offset + 17] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L579">			m[2] |= ((long) b[offset + 18] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L580">			m[2] |= ((long) b[offset + 19] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L581">			m[2] |= ((long) b[offset + 20] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L582">			m[2] |= ((long) b[offset + 21] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L583">			m[2] |= ((long) b[offset + 22] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L584">			m[2] |= ((long) b[offset + 23]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L586">			m[3] = ((long) b[offset + 24] &amp; 0xFF);</span>
+<span class="nc" id="L587">			m[3] |= ((long) b[offset + 25] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L588">			m[3] |= ((long) b[offset + 26] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L589">			m[3] |= ((long) b[offset + 27] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L590">			m[3] |= ((long) b[offset + 28] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L591">			m[3] |= ((long) b[offset + 29] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L592">			m[3] |= ((long) b[offset + 30] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L593">			m[3] |= ((long) b[offset + 31]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L595">			m[4] = ((long) b[offset + 32] &amp; 0xFF);</span>
+<span class="nc" id="L596">			m[4] |= ((long) b[offset + 33] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L597">			m[4] |= ((long) b[offset + 34] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L598">			m[4] |= ((long) b[offset + 35] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L599">			m[4] |= ((long) b[offset + 36] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L600">			m[4] |= ((long) b[offset + 37] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L601">			m[4] |= ((long) b[offset + 38] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L602">			m[4] |= ((long) b[offset + 39]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L604">			m[5] = ((long) b[offset + 40] &amp; 0xFF);</span>
+<span class="nc" id="L605">			m[5] |= ((long) b[offset + 41] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L606">			m[5] |= ((long) b[offset + 42] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L607">			m[5] |= ((long) b[offset + 43] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L608">			m[5] |= ((long) b[offset + 44] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L609">			m[5] |= ((long) b[offset + 45] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L610">			m[5] |= ((long) b[offset + 46] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L611">			m[5] |= ((long) b[offset + 47]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L613">			m[6] = ((long) b[offset + 48] &amp; 0xFF);</span>
+<span class="nc" id="L614">			m[6] |= ((long) b[offset + 49] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L615">			m[6] |= ((long) b[offset + 50] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L616">			m[6] |= ((long) b[offset + 51] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L617">			m[6] |= ((long) b[offset + 52] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L618">			m[6] |= ((long) b[offset + 53] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L619">			m[6] |= ((long) b[offset + 54] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L620">			m[6] |= ((long) b[offset + 55]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L622">			m[7] = ((long) b[offset + 56] &amp; 0xFF);</span>
+<span class="nc" id="L623">			m[7] |= ((long) b[offset + 57] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L624">			m[7] |= ((long) b[offset + 58] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L625">			m[7] |= ((long) b[offset + 59] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L626">			m[7] |= ((long) b[offset + 60] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L627">			m[7] |= ((long) b[offset + 61] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L628">			m[7] |= ((long) b[offset + 62] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L629">			m[7] |= ((long) b[offset + 63]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L631">			m[8] = ((long) b[offset + 64] &amp; 0xFF);</span>
+<span class="nc" id="L632">			m[8] |= ((long) b[offset + 65] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L633">			m[8] |= ((long) b[offset + 66] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L634">			m[8] |= ((long) b[offset + 67] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L635">			m[8] |= ((long) b[offset + 68] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L636">			m[8] |= ((long) b[offset + 69] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L637">			m[8] |= ((long) b[offset + 70] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L638">			m[8] |= ((long) b[offset + 71]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L640">			m[9] = ((long) b[offset + 72] &amp; 0xFF);</span>
+<span class="nc" id="L641">			m[9] |= ((long) b[offset + 73] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L642">			m[9] |= ((long) b[offset + 74] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L643">			m[9] |= ((long) b[offset + 75] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L644">			m[9] |= ((long) b[offset + 76] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L645">			m[9] |= ((long) b[offset + 77] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L646">			m[9] |= ((long) b[offset + 78] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L647">			m[9] |= ((long) b[offset + 79]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L649">			m[10] = ((long) b[offset + 80] &amp; 0xFF);</span>
+<span class="nc" id="L650">			m[10] |= ((long) b[offset + 81] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L651">			m[10] |= ((long) b[offset + 82] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L652">			m[10] |= ((long) b[offset + 83] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L653">			m[10] |= ((long) b[offset + 84] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L654">			m[10] |= ((long) b[offset + 85] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L655">			m[10] |= ((long) b[offset + 86] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L656">			m[10] |= ((long) b[offset + 87]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L658">			m[11] = ((long) b[offset + 88] &amp; 0xFF);</span>
+<span class="nc" id="L659">			m[11] |= ((long) b[offset + 89] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L660">			m[11] |= ((long) b[offset + 90] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L661">			m[11] |= ((long) b[offset + 91] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L662">			m[11] |= ((long) b[offset + 92] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L663">			m[11] |= ((long) b[offset + 93] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L664">			m[11] |= ((long) b[offset + 94] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L665">			m[11] |= ((long) b[offset + 95]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L667">			m[12] = ((long) b[offset + 96] &amp; 0xFF);</span>
+<span class="nc" id="L668">			m[12] |= ((long) b[offset + 97] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L669">			m[12] |= ((long) b[offset + 98] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L670">			m[12] |= ((long) b[offset + 99] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L671">			m[12] |= ((long) b[offset + 100] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L672">			m[12] |= ((long) b[offset + 101] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L673">			m[12] |= ((long) b[offset + 102] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L674">			m[12] |= ((long) b[offset + 103]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L676">			m[13] = ((long) b[offset + 104] &amp; 0xFF);</span>
+<span class="nc" id="L677">			m[13] |= ((long) b[offset + 105] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L678">			m[13] |= ((long) b[offset + 106] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L679">			m[13] |= ((long) b[offset + 107] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L680">			m[13] |= ((long) b[offset + 108] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L681">			m[13] |= ((long) b[offset + 109] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L682">			m[13] |= ((long) b[offset + 110] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L683">			m[13] |= ((long) b[offset + 111]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L685">			m[14] = ((long) b[offset + 112] &amp; 0xFF);</span>
+<span class="nc" id="L686">			m[14] |= ((long) b[offset + 113] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L687">			m[14] |= ((long) b[offset + 114] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L688">			m[14] |= ((long) b[offset + 115] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L689">			m[14] |= ((long) b[offset + 116] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L690">			m[14] |= ((long) b[offset + 117] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L691">			m[14] |= ((long) b[offset + 118] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L692">			m[14] |= ((long) b[offset + 119]) &lt;&lt; 56;</span>
+
+<span class="nc" id="L694">			m[15] = ((long) b[offset + 120] &amp; 0xFF);</span>
+<span class="nc" id="L695">			m[15] |= ((long) b[offset + 121] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L696">			m[15] |= ((long) b[offset + 122] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L697">			m[15] |= ((long) b[offset + 123] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L698">			m[15] |= ((long) b[offset + 124] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L699">			m[15] |= ((long) b[offset + 125] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L700">			m[15] |= ((long) b[offset + 126] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L701">			m[15] |= ((long) b[offset + 127]) &lt;&lt; 56;</span>
+//			Debug.dumpArray(&quot;m @ compress&quot;, m);
+//
+//			Debug.dumpArray(&quot;h @ compress&quot;, h);
+//			Debug.dumpArray(&quot;t @ compress&quot;, t);
+//			Debug.dumpArray(&quot;f @ compress&quot;, f);
+
+			// set v registers
+<span class="nc" id="L709">			v[0] = h[0];</span>
+<span class="nc" id="L710">			v[1] = h[1];</span>
+<span class="nc" id="L711">			v[2] = h[2];</span>
+<span class="nc" id="L712">			v[3] = h[3];</span>
+<span class="nc" id="L713">			v[4] = h[4];</span>
+<span class="nc" id="L714">			v[5] = h[5];</span>
+<span class="nc" id="L715">			v[6] = h[6];</span>
+<span class="nc" id="L716">			v[7] = h[7];</span>
+<span class="nc" id="L717">			v[8] = 0x6a09e667f3bcc908L;</span>
+<span class="nc" id="L718">			v[9] = 0xbb67ae8584caa73bL;</span>
+<span class="nc" id="L719">			v[10] = 0x3c6ef372fe94f82bL;</span>
+<span class="nc" id="L720">			v[11] = 0xa54ff53a5f1d36f1L;</span>
+<span class="nc" id="L721">			v[12] = t[0] ^ 0x510e527fade682d1L;</span>
+<span class="nc" id="L722">			v[13] = t[1] ^ 0x9b05688c2b3e6c1fL;</span>
+<span class="nc" id="L723">			v[14] = f[0] ^ 0x1f83d9abfb41bd6bL;</span>
+<span class="nc" id="L724">			v[15] = f[1] ^ 0x5be0cd19137e2179L;</span>
+
+//			Debug.dumpArray(&quot;v @ compress&quot;, v);
+			// the rounds
+			// REVU: let's try unrolling this again TODO do &amp; bench
+<span class="nc bnc" id="L729" title="All 2 branches missed.">			for (int r = 0; r &lt; 12; r++) {</span>
+
+				/** G (r, 0, 0, 4, 8, 12); */
+
+<span class="nc" id="L733">				v[0] = v[0] + v[4] + m[sig_g00[r]];</span>
+<span class="nc" id="L734">				v[12] ^= v[0];</span>
+<span class="nc" id="L735">				v[12] = (v[12] &lt;&lt; 32) | (v[12] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L736">				v[8] = v[8] + v[12];</span>
+<span class="nc" id="L737">				v[4] ^= v[8];</span>
+<span class="nc" id="L738">				v[4] = (v[4] &gt;&gt;&gt; 24) | (v[4] &lt;&lt; 40);</span>
+<span class="nc" id="L739">				v[0] = v[0] + v[4] + m[sig_g01[r]];</span>
+<span class="nc" id="L740">				v[12] ^= v[0];</span>
+<span class="nc" id="L741">				v[12] = (v[12] &gt;&gt;&gt; 16) | (v[12] &lt;&lt; 48);</span>
+<span class="nc" id="L742">				v[8] = v[8] + v[12];</span>
+<span class="nc" id="L743">				v[4] ^= v[8];</span>
+<span class="nc" id="L744">				v[4] = (v[4] &lt;&lt; 1) | (v[4] &gt;&gt;&gt; 63);</span>
+
+				/** G (r, 1, 1, 5, 9, 13); */
+
+<span class="nc" id="L748">				v[1] = v[1] + v[5] + m[sig_g10[r]];</span>
+<span class="nc" id="L749">				v[13] ^= v[1];</span>
+<span class="nc" id="L750">				v[13] = (v[13] &lt;&lt; 32) | (v[13] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L751">				v[9] = v[9] + v[13];</span>
+<span class="nc" id="L752">				v[5] ^= v[9];</span>
+<span class="nc" id="L753">				v[5] = (v[5] &gt;&gt;&gt; 24) | (v[5] &lt;&lt; 40);</span>
+<span class="nc" id="L754">				v[1] = v[1] + v[5] + m[sig_g11[r]];</span>
+<span class="nc" id="L755">				v[13] ^= v[1];</span>
+<span class="nc" id="L756">				v[13] = (v[13] &gt;&gt;&gt; 16) | (v[13] &lt;&lt; 48);</span>
+<span class="nc" id="L757">				v[9] = v[9] + v[13];</span>
+<span class="nc" id="L758">				v[5] ^= v[9];</span>
+<span class="nc" id="L759">				v[5] = (v[5] &lt;&lt; 1) | (v[5] &gt;&gt;&gt; 63);</span>
+
+				/** G (r, 2, 2, 6, 10, 14); */
+
+<span class="nc" id="L763">				v[2] = v[2] + v[6] + m[sig_g20[r]];</span>
+<span class="nc" id="L764">				v[14] ^= v[2];</span>
+<span class="nc" id="L765">				v[14] = (v[14] &lt;&lt; 32) | (v[14] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L766">				v[10] = v[10] + v[14];</span>
+<span class="nc" id="L767">				v[6] ^= v[10];</span>
+<span class="nc" id="L768">				v[6] = (v[6] &gt;&gt;&gt; 24) | (v[6] &lt;&lt; 40);</span>
+<span class="nc" id="L769">				v[2] = v[2] + v[6] + m[sig_g21[r]];</span>
+<span class="nc" id="L770">				v[14] ^= v[2];</span>
+<span class="nc" id="L771">				v[14] = (v[14] &gt;&gt;&gt; 16) | (v[14] &lt;&lt; 48);</span>
+<span class="nc" id="L772">				v[10] = v[10] + v[14];</span>
+<span class="nc" id="L773">				v[6] ^= v[10];</span>
+<span class="nc" id="L774">				v[6] = (v[6] &lt;&lt; 1) | (v[6] &gt;&gt;&gt; 63);</span>
+
+				/** G (r, 3, 3, 7, 11, 15); */
+
+<span class="nc" id="L778">				v[3] = v[3] + v[7] + m[sig_g30[r]];</span>
+<span class="nc" id="L779">				v[15] ^= v[3];</span>
+<span class="nc" id="L780">				v[15] = (v[15] &lt;&lt; 32) | (v[15] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L781">				v[11] = v[11] + v[15];</span>
+<span class="nc" id="L782">				v[7] ^= v[11];</span>
+<span class="nc" id="L783">				v[7] = (v[7] &gt;&gt;&gt; 24) | (v[7] &lt;&lt; 40);</span>
+<span class="nc" id="L784">				v[3] = v[3] + v[7] + m[sig_g31[r]];</span>
+<span class="nc" id="L785">				v[15] ^= v[3];</span>
+<span class="nc" id="L786">				v[15] = (v[15] &gt;&gt;&gt; 16) | (v[15] &lt;&lt; 48);</span>
+<span class="nc" id="L787">				v[11] = v[11] + v[15];</span>
+<span class="nc" id="L788">				v[7] ^= v[11];</span>
+<span class="nc" id="L789">				v[7] = (v[7] &lt;&lt; 1) | (v[7] &gt;&gt;&gt; 63);</span>
+
+				/** G (r, 4, 0, 5, 10, 15); */
+
+<span class="nc" id="L793">				v[0] = v[0] + v[5] + m[sig_g40[r]];</span>
+<span class="nc" id="L794">				v[15] ^= v[0];</span>
+<span class="nc" id="L795">				v[15] = (v[15] &lt;&lt; 32) | (v[15] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L796">				v[10] = v[10] + v[15];</span>
+<span class="nc" id="L797">				v[5] ^= v[10];</span>
+<span class="nc" id="L798">				v[5] = (v[5] &gt;&gt;&gt; 24) | (v[5] &lt;&lt; 40);</span>
+<span class="nc" id="L799">				v[0] = v[0] + v[5] + m[sig_g41[r]];</span>
+<span class="nc" id="L800">				v[15] ^= v[0];</span>
+<span class="nc" id="L801">				v[15] = (v[15] &gt;&gt;&gt; 16) | (v[15] &lt;&lt; 48);</span>
+<span class="nc" id="L802">				v[10] = v[10] + v[15];</span>
+<span class="nc" id="L803">				v[5] ^= v[10];</span>
+<span class="nc" id="L804">				v[5] = (v[5] &lt;&lt; 1) | (v[5] &gt;&gt;&gt; 63);</span>
+
+				/** G (r, 5, 1, 6, 11, 12); */
+
+<span class="nc" id="L808">				v[1] = v[1] + v[6] + m[sig_g50[r]];</span>
+<span class="nc" id="L809">				v[12] ^= v[1];</span>
+<span class="nc" id="L810">				v[12] = (v[12] &lt;&lt; 32) | (v[12] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L811">				v[11] = v[11] + v[12];</span>
+<span class="nc" id="L812">				v[6] ^= v[11];</span>
+<span class="nc" id="L813">				v[6] = (v[6] &gt;&gt;&gt; 24) | (v[6] &lt;&lt; 40);</span>
+<span class="nc" id="L814">				v[1] = v[1] + v[6] + +m[sig_g51[r]];</span>
+<span class="nc" id="L815">				v[12] ^= v[1];</span>
+<span class="nc" id="L816">				v[12] = (v[12] &gt;&gt;&gt; 16) | (v[12] &lt;&lt; 48);</span>
+<span class="nc" id="L817">				v[11] = v[11] + v[12];</span>
+<span class="nc" id="L818">				v[6] ^= v[11];</span>
+<span class="nc" id="L819">				v[6] = (v[6] &lt;&lt; 1) | (v[6] &gt;&gt;&gt; 63);</span>
+
+				/** G (r, 6, 2, 7, 8, 13); */
+
+<span class="nc" id="L823">				v[2] = v[2] + v[7] + m[sig_g60[r]];</span>
+<span class="nc" id="L824">				v[13] ^= v[2];</span>
+<span class="nc" id="L825">				v[13] = (v[13] &lt;&lt; 32) | (v[13] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L826">				v[8] = v[8] + v[13];</span>
+<span class="nc" id="L827">				v[7] ^= v[8];</span>
+<span class="nc" id="L828">				v[7] = (v[7] &gt;&gt;&gt; 24) | (v[7] &lt;&lt; 40);</span>
+<span class="nc" id="L829">				v[2] = v[2] + v[7] + m[sig_g61[r]];</span>
+<span class="nc" id="L830">				v[13] ^= v[2];</span>
+<span class="nc" id="L831">				v[13] = (v[13] &gt;&gt;&gt; 16) | (v[13] &lt;&lt; 48);</span>
+<span class="nc" id="L832">				v[8] = v[8] + v[13];</span>
+<span class="nc" id="L833">				v[7] ^= v[8];</span>
+<span class="nc" id="L834">				v[7] = (v[7] &lt;&lt; 1) | (v[7] &gt;&gt;&gt; 63);</span>
+
+				/** G (r, 7, 3, 4, 9, 14); */
+
+<span class="nc" id="L838">				v[3] = v[3] + v[4] + m[sig_g70[r]];</span>
+<span class="nc" id="L839">				v[14] ^= v[3];</span>
+<span class="nc" id="L840">				v[14] = (v[14] &lt;&lt; 32) | (v[14] &gt;&gt;&gt; 32);</span>
+<span class="nc" id="L841">				v[9] = v[9] + v[14];</span>
+<span class="nc" id="L842">				v[4] ^= v[9];</span>
+<span class="nc" id="L843">				v[4] = (v[4] &gt;&gt;&gt; 24) | (v[4] &lt;&lt; 40);</span>
+<span class="nc" id="L844">				v[3] = v[3] + v[4] + m[sig_g71[r]];</span>
+<span class="nc" id="L845">				v[14] ^= v[3];</span>
+<span class="nc" id="L846">				v[14] = (v[14] &gt;&gt;&gt; 16) | (v[14] &lt;&lt; 48);</span>
+<span class="nc" id="L847">				v[9] = v[9] + v[14];</span>
+<span class="nc" id="L848">				v[4] ^= v[9];</span>
+<span class="nc" id="L849">				v[4] = (v[4] &lt;&lt; 1) | (v[4] &gt;&gt;&gt; 63);</span>
+			}
+
+			// Update state vector h
+<span class="nc" id="L853">			h[0] ^= v[0] ^ v[8];</span>
+<span class="nc" id="L854">			h[1] ^= v[1] ^ v[9];</span>
+<span class="nc" id="L855">			h[2] ^= v[2] ^ v[10];</span>
+<span class="nc" id="L856">			h[3] ^= v[3] ^ v[11];</span>
+<span class="nc" id="L857">			h[4] ^= v[4] ^ v[12];</span>
+<span class="nc" id="L858">			h[5] ^= v[5] ^ v[13];</span>
+<span class="nc" id="L859">			h[6] ^= v[6] ^ v[14];</span>
+<span class="nc" id="L860">			h[7] ^= v[7] ^ v[15];</span>
+
+//			Debug.dumpArray(&quot;v @ compress end&quot;, v);
+//			Debug.dumpArray(&quot;h @ compress end&quot;, h);
+			/* kaamil */
+<span class="nc" id="L865">		}</span>
+
+		////////////////////////////////////////////////////////////////////////
+		/// Compression Kernel /////////////////////////////////////////// BEGIN
+		////////////////////////////////////////////////////////////////////////
+
+		/**
+		 * a little bit of semantics
+		 */
+		interface flag {
+			int last_block = 0;
+			int last_node = 1;
+		}
+
+		////////////////////////////////////////////////////////////////////////
+		/// Compression Kernel //////////////////////////////////////////// FINI
+		////////////////////////////////////////////////////////////////////////
+
+		/* TEMP - remove at will */
+<span class="nc" id="L884">		public static class Debug {</span>
+			public static void dumpState(Blake2b.Engine e, final String mark) {
+<span class="nc" id="L886">				System.out.format(&quot;-- MARK == @ %s @ ===========\n&quot;, mark);</span>
+<span class="nc" id="L887">				dumpArray(&quot;register t&quot;, e.t);</span>
+<span class="nc" id="L888">				dumpArray(&quot;register h&quot;, e.h);</span>
+<span class="nc" id="L889">				dumpArray(&quot;register f&quot;, e.f);</span>
+<span class="nc" id="L890">				dumpArray(&quot;register offset&quot;, new long[] { e.buflen });</span>
+<span class="nc" id="L891">				System.out.format(&quot;-- END MARK =================\n&quot;);</span>
+<span class="nc" id="L892">			}</span>
+
+			public static void dumpArray(final String label, final long[] b) {
+<span class="nc" id="L895">				System.out.format(&quot;-- %s -- :\n{\n&quot;, label);</span>
+<span class="nc bnc" id="L896" title="All 2 branches missed.">				for (int j = 0; j &lt; b.length; ++j) {</span>
+<span class="nc" id="L897">					System.out.format(&quot;    [%2d] : %016X\n&quot;, j, b[j]);</span>
+				}
+<span class="nc" id="L899">				System.out.format(&quot;}\n&quot;);</span>
+<span class="nc" id="L900">			}</span>
+
+			public static void dumpBuffer(final PrintStream out, final String label, final byte[] b) {
+<span class="nc" id="L903">				dumpBuffer(out, label, b, 0, b.length);</span>
+<span class="nc" id="L904">			}</span>
+
+			public static void dumpBuffer(final PrintStream out, final byte[] b) {
+<span class="nc" id="L907">				dumpBuffer(out, null, b, 0, b.length);</span>
+<span class="nc" id="L908">			}</span>
+
+			public static void dumpBuffer(final PrintStream out, final byte[] b, final int offset, final int len) {
+<span class="nc" id="L911">				dumpBuffer(out, null, b, offset, len);</span>
+<span class="nc" id="L912">			}</span>
+
+			public static void dumpBuffer(final PrintStream out, final String label, final byte[] b, final int offset,
+					final int len) {
+<span class="nc bnc" id="L916" title="All 2 branches missed.">				if (label != null)</span>
+<span class="nc" id="L917">					out.format(&quot;-- %s -- :\n&quot;, label);</span>
+<span class="nc" id="L918">				out.format(&quot;{\n    &quot;, label);</span>
+<span class="nc bnc" id="L919" title="All 2 branches missed.">				for (int j = 0; j &lt; len; ++j) {</span>
+<span class="nc" id="L920">					out.format(&quot;%02X&quot;, b[j + offset]);</span>
+<span class="nc bnc" id="L921" title="All 2 branches missed.">					if (j + 1 &lt; len) {</span>
+<span class="nc bnc" id="L922" title="All 2 branches missed.">						if ((j + 1) % 8 == 0)</span>
+<span class="nc" id="L923">							out.print(&quot;\n    &quot;);</span>
+						else
+<span class="nc" id="L925">							out.print(' ');</span>
+					}
+				}
+<span class="nc" id="L928">				out.format(&quot;\n}\n&quot;);</span>
+<span class="nc" id="L929">			}</span>
+		}
+		/* TEMP - remove at will */
+
+		// ---------------------------------------------------------------------
+		// Helper for assert error messages
+		// ---------------------------------------------------------------------
+<span class="nc" id="L936">		public static final class Assert {</span>
+			public final static String exclusiveUpperBound = &quot;'%s' %d is &gt;= %d&quot;;
+			public final static String inclusiveUpperBound = &quot;'%s' %d is &gt; %d&quot;;
+			public final static String exclusiveLowerBound = &quot;'%s' %d is &lt;= %d&quot;;
+			public final static String inclusiveLowerBound = &quot;'%s' %d is &lt; %d&quot;;
+
+			static &lt;T extends Number&gt; String assertFail(final String name, final T v, final String err, final T spec) {
+<span class="nc" id="L943">				new Exception().printStackTrace();</span>
+<span class="nc" id="L944">				return String.format(err, name, v, spec);</span>
+			}
+		}
+		// ---------------------------------------------------------------------
+		// Little Endian Codecs (inlined in the compressor)
+		/*
+		 * impl note: these are not library funcs and used in hot loops, so no null or
+		 * bounds checks are performed. For our purposes, this is OK.
+		 */
+		// ---------------------------------------------------------------------
+
+<span class="nc" id="L955">		public static class LittleEndian {</span>
+<span class="nc" id="L956">			private static final byte[] hex_digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',</span>
+					'd', 'e', 'f' };
+<span class="nc" id="L958">			private static final byte[] HEX_digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',</span>
+					'D', 'E', 'F' };
+
+			/** @return hex rep of byte (lower case). */
+			static public String toHexStr(final byte[] b) {
+<span class="nc" id="L963">				return toHexStr(b, false); // because String class is slower.</span>
+			}
+
+			static public String toHexStr(final byte[] b, boolean upperCase) {
+<span class="nc" id="L967">				final int len = b.length;</span>
+<span class="nc" id="L968">				final byte[] digits = new byte[len * 2];</span>
+<span class="nc bnc" id="L969" title="All 2 branches missed.">				final byte[] hex_rep = upperCase ? HEX_digits : hex_digits;</span>
+<span class="nc bnc" id="L970" title="All 2 branches missed.">				for (int i = 0; i &lt; len; i++) {</span>
+<span class="nc" id="L971">					digits[i * 2] = hex_rep[(byte) (b[i] &gt;&gt; 4 &amp; 0x0F)];</span>
+<span class="nc" id="L972">					digits[i * 2 + 1] = hex_rep[(byte) (b[i] &amp; 0x0F)];</span>
+				}
+<span class="nc" id="L974">				return new String(digits);</span>
+			}
+
+			public static int readInt(final byte[] b, int off) {
+<span class="nc" id="L978">				int v0 = ((int) b[off++] &amp; 0xFF);</span>
+<span class="nc" id="L979">				v0 |= ((int) b[off++] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L980">				v0 |= ((int) b[off++] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L981">				v0 |= ((int) b[off]) &lt;&lt; 24;</span>
+<span class="nc" id="L982">				return v0;</span>
+			}
+
+			/** Little endian - byte[] to long */
+			public static long readLong(final byte[] b, int off) {
+<span class="nc" id="L987">				long v0 = ((long) b[off++] &amp; 0xFF);</span>
+<span class="nc" id="L988">				v0 |= ((long) b[off++] &amp; 0xFF) &lt;&lt; 8;</span>
+<span class="nc" id="L989">				v0 |= ((long) b[off++] &amp; 0xFF) &lt;&lt; 16;</span>
+<span class="nc" id="L990">				v0 |= ((long) b[off++] &amp; 0xFF) &lt;&lt; 24;</span>
+<span class="nc" id="L991">				v0 |= ((long) b[off++] &amp; 0xFF) &lt;&lt; 32;</span>
+<span class="nc" id="L992">				v0 |= ((long) b[off++] &amp; 0xFF) &lt;&lt; 40;</span>
+<span class="nc" id="L993">				v0 |= ((long) b[off++] &amp; 0xFF) &lt;&lt; 48;</span>
+<span class="nc" id="L994">				v0 |= ((long) b[off]) &lt;&lt; 56;</span>
+<span class="nc" id="L995">				return v0;</span>
+			}
+
+			/** */
+			/** Little endian - long to byte[] */
+			public static void writeLong(long v, final byte[] b, final int off) {
+<span class="nc" id="L1001">				b[off] = (byte) v;</span>
+<span class="nc" id="L1002">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1003">				b[off + 1] = (byte) v;</span>
+<span class="nc" id="L1004">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1005">				b[off + 2] = (byte) v;</span>
+<span class="nc" id="L1006">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1007">				b[off + 3] = (byte) v;</span>
+<span class="nc" id="L1008">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1009">				b[off + 4] = (byte) v;</span>
+<span class="nc" id="L1010">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1011">				b[off + 5] = (byte) v;</span>
+<span class="nc" id="L1012">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1013">				b[off + 6] = (byte) v;</span>
+<span class="nc" id="L1014">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1015">				b[off + 7] = (byte) v;</span>
+<span class="nc" id="L1016">			}</span>
+
+			/** Little endian - int to byte[] */
+			public static void writeInt(int v, final byte[] b, final int off) {
+<span class="nc" id="L1020">				b[off] = (byte) v;</span>
+<span class="nc" id="L1021">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1022">				b[off + 1] = (byte) v;</span>
+<span class="nc" id="L1023">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1024">				b[off + 2] = (byte) v;</span>
+<span class="nc" id="L1025">				v &gt;&gt;&gt;= 8;</span>
+<span class="nc" id="L1026">				b[off + 3] = (byte) v;</span>
+<span class="nc" id="L1027">			}</span>
+		}
+	}
+
+	// ---------------------------------------------------------------------
+	// digest parameter (block)
+	// ---------------------------------------------------------------------
+	/** Blake2b configuration parameters block per spec */
+	// REVU: need to review a revert back to non-lazy impl TODO: do &amp; bench
+	public static class Param implements AlgorithmParameterSpec {
+		/**
+		 * default bytes of Blake2b parameter block
+		 */
+<span class="nc" id="L1040">		final static byte[] default_bytes = new byte[Spec.param_bytes];</span>
+		/**
+		 * default Blake2b h vector
+		 */
+<span class="nc" id="L1044">		final static long[] default_h = new long[Spec.state_space_len];</span>
+
+		/** initialize default_bytes */
+		static {
+<span class="nc" id="L1048">			default_bytes[Xoff.digest_length] = Default.digest_length;</span>
+<span class="nc" id="L1049">			default_bytes[Xoff.key_length] = Default.key_length;</span>
+<span class="nc" id="L1050">			default_bytes[Xoff.fanout] = Default.fanout;</span>
+<span class="nc" id="L1051">			default_bytes[Xoff.depth] = Default.depth;</span>
+			/* def. leaf_length is 0 fill and already set by new byte[] */
+			/* def. node_offset is 0 fill and already set by new byte[] */
+<span class="nc" id="L1054">			default_bytes[Xoff.node_depth] = Default.node_depth;</span>
+<span class="nc" id="L1055">			default_bytes[Xoff.inner_length] = Default.inner_length;</span>
+			/* def. salt is 0 fill and already set by new byte[] */
+			/* def. personal is 0 fill and already set by new byte[] */
+		}
+
+		static {
+<span class="nc" id="L1061">			default_h[0] = readLong(default_bytes, 0);</span>
+<span class="nc" id="L1062">			default_h[1] = readLong(default_bytes, 8);</span>
+<span class="nc" id="L1063">			default_h[2] = readLong(default_bytes, 16);</span>
+<span class="nc" id="L1064">			default_h[3] = readLong(default_bytes, 24);</span>
+<span class="nc" id="L1065">			default_h[4] = readLong(default_bytes, 32);</span>
+<span class="nc" id="L1066">			default_h[5] = readLong(default_bytes, 40);</span>
+<span class="nc" id="L1067">			default_h[6] = readLong(default_bytes, 48);</span>
+<span class="nc" id="L1068">			default_h[7] = readLong(default_bytes, 56);</span>
+
+<span class="nc" id="L1070">			default_h[0] ^= Spec.IV[0];</span>
+<span class="nc" id="L1071">			default_h[1] ^= Spec.IV[1];</span>
+<span class="nc" id="L1072">			default_h[2] ^= Spec.IV[2];</span>
+<span class="nc" id="L1073">			default_h[3] ^= Spec.IV[3];</span>
+<span class="nc" id="L1074">			default_h[4] ^= Spec.IV[4];</span>
+<span class="nc" id="L1075">			default_h[5] ^= Spec.IV[5];</span>
+<span class="nc" id="L1076">			default_h[6] ^= Spec.IV[6];</span>
+<span class="nc" id="L1077">			default_h[7] ^= Spec.IV[7];</span>
+<span class="nc" id="L1078">		}</span>
+
+		/** */
+<span class="nc" id="L1081">		private final long[] h = new long[Spec.state_space_len];</span>
+		/** */
+<span class="nc" id="L1083">		private boolean hasKey = false;</span>
+		/** not sure how to make this secure - TODO */
+<span class="nc" id="L1085">		private byte[] key_bytes = null;</span>
+		/** */
+<span class="nc" id="L1087">		private byte[] bytes = null;</span>
+
+		/** */
+<span class="nc" id="L1090">		public Param() {</span>
+<span class="nc" id="L1091">			System.arraycopy(default_h, 0, h, 0, Spec.state_space_len);</span>
+<span class="nc" id="L1092">		}</span>
+
+		/** */
+		public long[] initialized_H() {
+<span class="nc" id="L1096">			return h;</span>
+		}
+
+		/** package only - copy returned - do not use in functional loops */
+		public byte[] getBytes() {
+<span class="nc" id="L1101">			lazyInitBytes();</span>
+<span class="nc" id="L1102">			byte[] copy = new byte[bytes.length];</span>
+<span class="nc" id="L1103">			System.arraycopy(bytes, 0, copy, 0, bytes.length);</span>
+<span class="nc" id="L1104">			return copy;</span>
+		}
+
+		final byte getByteParam(final int xoffset) {
+<span class="nc" id="L1108">			byte[] _bytes = bytes;</span>
+<span class="nc bnc" id="L1109" title="All 2 branches missed.">			if (_bytes == null)</span>
+<span class="nc" id="L1110">				_bytes = Param.default_bytes;</span>
+<span class="nc" id="L1111">			return _bytes[xoffset];</span>
+		}
+
+		final int getIntParam(final int xoffset) {
+<span class="nc" id="L1115">			byte[] _bytes = bytes;</span>
+<span class="nc bnc" id="L1116" title="All 2 branches missed.">			if (_bytes == null)</span>
+<span class="nc" id="L1117">				_bytes = Param.default_bytes;</span>
+<span class="nc" id="L1118">			return readInt(_bytes, xoffset);</span>
+		}
+
+		final long getLongParam(final int xoffset) {
+<span class="nc" id="L1122">			byte[] _bytes = bytes;</span>
+<span class="nc bnc" id="L1123" title="All 2 branches missed.">			if (_bytes == null)</span>
+<span class="nc" id="L1124">				_bytes = Param.default_bytes;</span>
+<span class="nc" id="L1125">			return readLong(_bytes, xoffset);</span>
+		}
+
+		// TODO same for tree params depth, fanout, inner, node-depth, node-offset
+		public final int getDigestLength() {
+<span class="nc" id="L1130">			return (int) getByteParam(Xoff.digest_length);</span>
+		}
+
+		/* 0-7 inclusive */
+		public final Param setDigestLength(int len) {
+<span class="nc bnc" id="L1135" title="All 2 branches missed.">			assert len &gt; 0 : assertFail(&quot;len&quot;, len, exclusiveLowerBound, 0);</span>
+<span class="nc bnc" id="L1136" title="All 2 branches missed.">			assert len &lt;= Spec.max_digest_bytes : assertFail(&quot;len&quot;, len, inclusiveUpperBound, Spec.max_digest_bytes);</span>
+
+<span class="nc" id="L1138">			lazyInitBytes();</span>
+<span class="nc" id="L1139">			bytes[Xoff.digest_length] = (byte) len;</span>
+<span class="nc" id="L1140">			h[0] = readLong(bytes, 0);</span>
+<span class="nc" id="L1141">			h[0] ^= Spec.IV[0];</span>
+<span class="nc" id="L1142">			return this;</span>
+		}
+
+		public final int getKeyLength() {
+<span class="nc" id="L1146">			return (int) getByteParam(Xoff.key_length);</span>
+		}
+
+		public final int getFanout() {
+<span class="nc" id="L1150">			return (int) getByteParam(Xoff.fanout);</span>
+		}
+
+		public final Param setFanout(int fanout) {
+<span class="nc bnc" id="L1154" title="All 2 branches missed.">			assert fanout &gt; 0 : assertFail(&quot;fanout&quot;, fanout, exclusiveLowerBound, 0);</span>
+
+<span class="nc" id="L1156">			lazyInitBytes();</span>
+<span class="nc" id="L1157">			bytes[Xoff.fanout] = (byte) fanout;</span>
+<span class="nc" id="L1158">			h[0] = readLong(bytes, 0);</span>
+<span class="nc" id="L1159">			h[0] ^= Spec.IV[0];</span>
+<span class="nc" id="L1160">			return this;</span>
+		}
+
+		public final int getDepth() {
+<span class="nc" id="L1164">			return (int) getByteParam(Xoff.depth);</span>
+		}
+
+		public final Param setDepth(int depth) {
+<span class="nc bnc" id="L1168" title="All 2 branches missed.">			assert depth &gt; 0 : assertFail(&quot;depth&quot;, depth, exclusiveLowerBound, 0);</span>
+
+<span class="nc" id="L1170">			lazyInitBytes();</span>
+<span class="nc" id="L1171">			bytes[Xoff.depth] = (byte) depth;</span>
+<span class="nc" id="L1172">			h[0] = readLong(bytes, 0);</span>
+<span class="nc" id="L1173">			h[0] ^= Spec.IV[0];</span>
+<span class="nc" id="L1174">			return this;</span>
+		}
+
+		public final int getLeafLength() {
+<span class="nc" id="L1178">			return getIntParam(Xoff.leaf_length);</span>
+		}
+
+		public final Param setLeafLength(int leaf_length) {
+<span class="nc bnc" id="L1182" title="All 2 branches missed.">			assert leaf_length &gt;= 0 : assertFail(&quot;leaf_length&quot;, leaf_length, inclusiveLowerBound, 0);</span>
+
+<span class="nc" id="L1184">			lazyInitBytes();</span>
+<span class="nc" id="L1185">			writeInt(leaf_length, bytes, Xoff.leaf_length);</span>
+<span class="nc" id="L1186">			h[0] = readLong(bytes, 0);</span>
+<span class="nc" id="L1187">			h[0] ^= Spec.IV[0];</span>
+<span class="nc" id="L1188">			return this;</span>
+		}
+
+		public final long getNodeOffset() {
+<span class="nc" id="L1192">			return getLongParam(Xoff.node_offset);</span>
+		}
+
+		/* 8-15 inclusive */
+		public final Param setNodeOffset(long node_offset) {
+<span class="nc bnc" id="L1197" title="All 2 branches missed.">			assert node_offset &gt;= 0 : assertFail(&quot;node_offset&quot;, node_offset, inclusiveLowerBound, 0);</span>
+
+<span class="nc" id="L1199">			lazyInitBytes();</span>
+<span class="nc" id="L1200">			writeLong(node_offset, bytes, Xoff.node_offset);</span>
+<span class="nc" id="L1201">			h[1] = readLong(bytes, Xoff.node_offset);</span>
+<span class="nc" id="L1202">			h[1] ^= Spec.IV[1];</span>
+<span class="nc" id="L1203">			return this;</span>
+		}
+
+		public final int getNodeDepth() {
+<span class="nc" id="L1207">			return (int) getByteParam(Xoff.node_depth);</span>
+		}
+
+		/* 16-23 inclusive */
+		public final Param setNodeDepth(int node_depth) {
+<span class="nc bnc" id="L1212" title="All 2 branches missed.">			assert node_depth &gt;= 0 : assertFail(&quot;node_depth&quot;, node_depth, inclusiveLowerBound, 0);</span>
+
+<span class="nc" id="L1214">			lazyInitBytes();</span>
+<span class="nc" id="L1215">			bytes[Xoff.node_depth] = (byte) node_depth;</span>
+<span class="nc" id="L1216">			h[2] = readLong(bytes, Xoff.node_depth);</span>
+<span class="nc" id="L1217">			h[2] ^= Spec.IV[2];</span>
+<span class="nc" id="L1218">			h[3] = readLong(bytes, Xoff.node_depth + 8);</span>
+<span class="nc" id="L1219">			h[3] ^= Spec.IV[3];</span>
+<span class="nc" id="L1220">			return this;</span>
+		}
+
+		public final int getInnerLength() {
+<span class="nc" id="L1224">			return (int) getByteParam(Xoff.inner_length);</span>
+		}
+
+		public final Param setInnerLength(int inner_length) {
+<span class="nc bnc" id="L1228" title="All 2 branches missed.">			assert inner_length &gt;= 0 : assertFail(&quot;inner_length&quot;, inner_length, inclusiveLowerBound, 0);</span>
+
+<span class="nc" id="L1230">			lazyInitBytes();</span>
+<span class="nc" id="L1231">			bytes[Xoff.inner_length] = (byte) inner_length;</span>
+<span class="nc" id="L1232">			h[2] = readLong(bytes, Xoff.node_depth);</span>
+<span class="nc" id="L1233">			h[2] ^= Spec.IV[2];</span>
+<span class="nc" id="L1234">			h[3] = readLong(bytes, Xoff.node_depth + 8);</span>
+<span class="nc" id="L1235">			h[3] ^= Spec.IV[3];</span>
+<span class="nc" id="L1236">			return this;</span>
+		}
+
+		public final boolean hasKey() {
+<span class="nc" id="L1240">			return this.hasKey;</span>
+		}
+
+		@Override
+		public Param clone() {
+<span class="nc" id="L1245">			final Param clone = new Param();</span>
+<span class="nc" id="L1246">			System.arraycopy(this.h, 0, clone.h, 0, h.length);</span>
+<span class="nc" id="L1247">			clone.lazyInitBytes();</span>
+<span class="nc" id="L1248">			System.arraycopy(this.bytes, 0, clone.bytes, 0, this.bytes.length);</span>
+
+<span class="nc bnc" id="L1250" title="All 2 branches missed.">			if (this.hasKey) {</span>
+<span class="nc" id="L1251">				clone.hasKey = this.hasKey;</span>
+<span class="nc" id="L1252">				clone.key_bytes = new byte[Spec.max_key_bytes * 2];</span>
+<span class="nc" id="L1253">				System.arraycopy(this.key_bytes, 0, clone.key_bytes, 0, this.key_bytes.length);</span>
+			}
+<span class="nc" id="L1255">			return clone;</span>
+		}
+
+		////////////////////////////////////////////////////////////////////////
+		/// lazy setters - write directly to the bytes image of param block ////
+		////////////////////////////////////////////////////////////////////////
+		final void lazyInitBytes() {
+<span class="nc bnc" id="L1262" title="All 2 branches missed.">			if (bytes == null) {</span>
+<span class="nc" id="L1263">				bytes = new byte[Spec.param_bytes];</span>
+<span class="nc" id="L1264">				System.arraycopy(Param.default_bytes, 0, bytes, 0, Spec.param_bytes);</span>
+			}
+<span class="nc" id="L1266">		}</span>
+
+		public final Param setKey(final Key key) {
+<span class="nc bnc" id="L1269" title="All 2 branches missed.">			assert key != null : &quot;key is null&quot;;</span>
+<span class="nc" id="L1270">			final byte[] keybytes = key.getEncoded();</span>
+<span class="nc bnc" id="L1271" title="All 2 branches missed.">			assert keybytes != null : &quot;key.encoded() is null&quot;;</span>
+
+<span class="nc" id="L1273">			return this.setKey(keybytes);</span>
+		}
+
+		public final Param setKey(final byte[] key) {
+<span class="nc bnc" id="L1277" title="All 2 branches missed.">			assert key != null : &quot;key is null&quot;;</span>
+<span class="nc bnc" id="L1278" title="All 2 branches missed.">			assert key.length &gt;= 0 : assertFail(&quot;key.length&quot;, key.length, inclusiveUpperBound, 0);</span>
+<span class="nc bnc" id="L1279" title="All 2 branches missed.">			assert key.length &lt;= Spec.max_key_bytes</span>
+<span class="nc" id="L1280">					: assertFail(&quot;key.length&quot;, key.length, inclusiveUpperBound, Spec.max_key_bytes);</span>
+
+			// zeropad keybytes
+<span class="nc" id="L1283">			this.key_bytes = new byte[Spec.max_key_bytes * 2];</span>
+<span class="nc" id="L1284">			System.arraycopy(key, 0, this.key_bytes, 0, key.length);</span>
+<span class="nc" id="L1285">			lazyInitBytes();</span>
+<span class="nc" id="L1286">			bytes[Xoff.key_length] = (byte) key.length; // checked c ref; this is correct</span>
+<span class="nc" id="L1287">			h[0] = readLong(bytes, 0);</span>
+<span class="nc" id="L1288">			h[0] ^= Spec.IV[0];</span>
+<span class="nc" id="L1289">			this.hasKey = true;</span>
+<span class="nc" id="L1290">			return this;</span>
+		}
+
+		/* 32-47 inclusive */
+		public final Param setSalt(final byte[] salt) {
+<span class="nc bnc" id="L1295" title="All 2 branches missed.">			assert salt != null : &quot;salt is null&quot;;</span>
+<span class="nc bnc" id="L1296" title="All 2 branches missed.">			assert salt.length &lt;= Spec.max_salt_bytes</span>
+<span class="nc" id="L1297">					: assertFail(&quot;salt.length&quot;, salt.length, inclusiveUpperBound, Spec.max_salt_bytes);</span>
+
+<span class="nc" id="L1299">			lazyInitBytes();</span>
+<span class="nc" id="L1300">			Arrays.fill(bytes, Xoff.salt, Xoff.salt + Spec.max_salt_bytes, (byte) 0);</span>
+<span class="nc" id="L1301">			System.arraycopy(salt, 0, bytes, Xoff.salt, salt.length);</span>
+<span class="nc" id="L1302">			h[4] = readLong(bytes, Xoff.salt);</span>
+<span class="nc" id="L1303">			h[4] ^= Spec.IV[4];</span>
+<span class="nc" id="L1304">			h[5] = readLong(bytes, Xoff.salt + 8);</span>
+<span class="nc" id="L1305">			h[5] ^= Spec.IV[5];</span>
+<span class="nc" id="L1306">			return this;</span>
+		}
+
+		/* 48-63 inclusive */
+		public final Param setPersonal(byte[] personal) {
+<span class="nc bnc" id="L1311" title="All 2 branches missed.">			assert personal != null : &quot;personal is null&quot;;</span>
+<span class="nc bnc" id="L1312" title="All 2 branches missed.">			assert personal.length &lt;= Spec.max_personalization_bytes : assertFail(&quot;personal.length&quot;, personal.length,</span>
+<span class="nc" id="L1313">					inclusiveUpperBound, Spec.max_personalization_bytes);</span>
+
+<span class="nc" id="L1315">			lazyInitBytes();</span>
+<span class="nc" id="L1316">			Arrays.fill(bytes, Xoff.personal, Xoff.personal + Spec.max_personalization_bytes, (byte) 0);</span>
+<span class="nc" id="L1317">			System.arraycopy(personal, 0, bytes, Xoff.personal, personal.length);</span>
+<span class="nc" id="L1318">			h[6] = readLong(bytes, Xoff.personal);</span>
+<span class="nc" id="L1319">			h[6] ^= Spec.IV[6];</span>
+<span class="nc" id="L1320">			h[7] = readLong(bytes, Xoff.personal + 8);</span>
+<span class="nc" id="L1321">			h[7] ^= Spec.IV[7];</span>
+<span class="nc" id="L1322">			return this;</span>
+		}
+
+		/* 24-31 masked by reserved and remain unchanged */
+
+		interface Xoff {
+			int digest_length = 0;
+			int key_length = 1;
+			int fanout = 2;
+			int depth = 3;
+			int leaf_length = 4;
+			int node_offset = 8;
+			int node_depth = 16;
+			int inner_length = 17;
+			int reserved = 18;
+			int salt = 32;
+			int personal = 48;
+		}
+
+		public interface Default {
+			byte digest_length = Spec.max_digest_bytes;
+			byte key_length = 0;
+			byte fanout = 1;
+			byte depth = 1;
+			int leaf_length = 0;
+			long node_offset = 0;
+			byte node_depth = 0;
+			byte inner_length = 0;
+		}
+		////////////////////////////////////////////////////////////////////////
+		/// lazy setters /////////////////////////////////////////////////// END
+		////////////////////////////////////////////////////////////////////////
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

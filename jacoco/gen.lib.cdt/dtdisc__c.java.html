@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>dtdisc__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cdt</a> &gt; <span class="el_source">dtdisc__c.java</span></div><h1>dtdisc__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cdt;
+import static gen.lib.cdt.dtflatten__c.dtflatten;
+import static gen.lib.cdt.dtrestore__c.dtrestore;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dtlink_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.size_t;
+
+<span class="nc" id="L65">public class dtdisc__c {</span>
+
+<span class="fc" id="L67">public static CFunction dtmemory = new CFunctionAbstract(&quot;dtmemory&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L70">		return dtmemory((ST_dt_s)args[0], (Object)args[1], (size_t)args[2], (ST_dtdisc_s)args[3]);</span>
+	}};
+
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtdisc.c&quot;, name=&quot;dtmemory&quot;, key=&quot;507t9jcy6v9twvl30rs9i2nwi&quot;, definition=&quot;static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)&quot;)
+public static Object dtmemory(ST_dt_s dt, Object addr, size_t size, ST_dtdisc_s disc) {
+<span class="fc" id="L76">ENTERING(&quot;507t9jcy6v9twvl30rs9i2nwi&quot;,&quot;dtmemory&quot;);</span>
+try {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">if(addr!=null) {</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed."> 		if(size == null) {</span>
+<span class="fc" id="L80">	Memory.free(addr);</span>
+<span class="fc" id="L81"> 			return null;</span>
+ 		}
+<span class="nc" id="L83">UNSUPPORTED(&quot;9ed8imo9cbvwtwe92qmavoqko&quot;); // 		else	return realloc(addr,size);</span>
+}
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">else	return size.isStrictPositive() ? size.malloc() : null;</span>
+<span class="nc" id="L86">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L88">LEAVING(&quot;507t9jcy6v9twvl30rs9i2nwi&quot;,&quot;dtmemory&quot;);</span>
+}
+}
+
+
+
+
+//3 axpvuswclmi9bx3qtlh4quyah
+// Dtdisc_t* dtdisc(Dt_t* dt, Dtdisc_t* disc, int type)       
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtdisc.c&quot;, name=&quot;dtdisc&quot;, key=&quot;axpvuswclmi9bx3qtlh4quyah&quot;, definition=&quot;Dtdisc_t* dtdisc(Dt_t* dt, Dtdisc_t* disc, int type)&quot;)
+public static ST_dtdisc_s dtdisc(Globals zz, ST_dt_s dt, ST_dtdisc_s disc, int type) {
+<span class="fc" id="L100">ENTERING(&quot;axpvuswclmi9bx3qtlh4quyah&quot;,&quot;dtdisc&quot;);</span>
+try {
+	CFunction	searchf;
+	ST_dtlink_s	r, t;
+	CString	k;
+	ST_dtdisc_s	old;
+<span class="fc bfc" id="L106" title="All 2 branches covered.">	if((old = (ST_dtdisc_s) dt.disc) == null )	/* initialization call from dtopen() */</span>
+<span class="fc" id="L107">	{	dt.disc = disc;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if((dt.memoryf = disc.memoryf ) == null)</span>
+<span class="fc" id="L109">			dt.memoryf = dtdisc__c.dtmemory;</span>
+<span class="fc" id="L110">		return disc;</span>
+	}
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">	if((disc) == null)	/* only want to know current discipline */</span>
+<span class="fc" id="L113">		return old;</span>
+<span class="nc" id="L114"> 	searchf = dt.meth.searchf;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed."> 	if((dt.data.type&amp;010000)!=0) dtrestore(dt,null);</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed."> 	if(old.eventf!=null &amp;&amp; ((Integer)old.eventf.exe(zz, dt,3, disc,old)) &lt; 0)</span>
+<span class="nc" id="L117"> 		return null;</span>
+<span class="nc" id="L118"> 	dt.disc = disc;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed."> 	if((dt.memoryf = disc.memoryf) == null)</span>
+<span class="nc" id="L120"> 		dt.memoryf = dtdisc__c.dtmemory;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed."> 	if((dt.data.type&amp;(0000040|0000100|0000020))!=0)</span>
+<span class="nc" id="L122">UNSUPPORTED(&quot;e2tzh95k1lvjl6wbtpwizam8q&quot;); // 		goto done;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed."> 	else if((dt.data.type&amp;0000002)!=0) {</span>
+<span class="nc" id="L124">UNSUPPORTED(&quot;3q5nyguq8mgdfwmm0yrzq2br8&quot;); // 		if(type&amp;0000002)</span>
+<span class="nc" id="L125">UNSUPPORTED(&quot;93q6zqzlgfz2qd0yl6koyw99c&quot;); // 			goto done;</span>
+<span class="nc" id="L126">UNSUPPORTED(&quot;6d1rfacssm8768oz9fu5o66t8&quot;); // 		else	goto dt_renew;</span>
+ 	}
+<span class="nc bnc" id="L128" title="All 2 branches missed."> 	else if((dt.data.type&amp;(0000001|0000002))!=0) {</span>
+<span class="nc" id="L129">UNSUPPORTED(&quot;8xmm1djjds55s86jodixkp72u&quot;); // 		if((type&amp;0000002) &amp;&amp; (type&amp;0000001))</span>
+<span class="nc" id="L130">UNSUPPORTED(&quot;93q6zqzlgfz2qd0yl6koyw99c&quot;); // 			goto done;</span>
+<span class="nc" id="L131">UNSUPPORTED(&quot;6d1rfacssm8768oz9fu5o66t8&quot;); // 		else	goto dt_renew;</span>
+ 	}
+ 	else /*if(dt-&gt;data-&gt;type&amp;(DT_OSET|DT_OBAG))*/ {
+<span class="nc bnc" id="L134" title="All 2 branches missed."> 		if((type&amp;0000001)!=0)</span>
+<span class="nc" id="L135">UNSUPPORTED(&quot;93q6zqzlgfz2qd0yl6koyw99c&quot;); // 			goto done;</span>
+// 	dt_renew:
+<span class="nc" id="L137"> 		r = dtflatten(dt);</span>
+<span class="nc" id="L138">UNSUPPORTED(&quot;1rry7yjzos90pgbf3li2qpa18&quot;); // 		dt-&gt;data-&gt;type &amp;= ~010000;</span>
+<span class="nc" id="L139">UNSUPPORTED(&quot;6vkn7padspfbtju9g5b65b34w&quot;); // 		dt-&gt;data-&gt;here = ((Dtlink_t*)0);</span>
+<span class="nc" id="L140">UNSUPPORTED(&quot;2jfi30wa60xp7iqlk9yyf4k5j&quot;); // 		dt-&gt;data-&gt;size = 0;</span>
+<span class="nc" id="L141">UNSUPPORTED(&quot;1i3oayy7gy36lar9kfhuq6rur&quot;); // 		if(dt-&gt;data-&gt;type&amp;(0000001|0000002))</span>
+<span class="nc" id="L142">UNSUPPORTED(&quot;ay51d19gimt3gpqjact2t0ypm&quot;); // 		{	register Dtlink_t	**s, **ends;</span>
+<span class="nc" id="L143">UNSUPPORTED(&quot;5p6g054kk7snvpwuxudelseir&quot;); // 			ends = (s = dt-&gt;data-&gt;hh._htab) + dt-&gt;data-&gt;ntab;</span>
+<span class="nc" id="L144">UNSUPPORTED(&quot;3zu1r6orkvmsvbjbzqqx9wedr&quot;); // 			while(s &lt; ends)</span>
+<span class="nc" id="L145">UNSUPPORTED(&quot;9wq8eycc78fg8sqi6bjce4q7f&quot;); // 				*s++ = ((Dtlink_t*)0);</span>
+<span class="nc" id="L146">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L147">UNSUPPORTED(&quot;3rfhc462a0qx53yecw933hkk8&quot;); // 		/* reinsert them */</span>
+<span class="nc" id="L148">UNSUPPORTED(&quot;ctmfjzioo5q7mzsmb6rf9mxoy&quot;); // 		while(r)</span>
+<span class="nc" id="L149">UNSUPPORTED(&quot;9qxb0eqp3ujnnuum1bggqarjh&quot;); // 		{	t = r-&gt;right;</span>
+<span class="nc" id="L150">UNSUPPORTED(&quot;ddltpk94i08fyy6x03ozyc7s1&quot;); // 			if(!(type&amp;0000002))	/* new hash value */</span>
+<span class="nc" id="L151">UNSUPPORTED(&quot;8mj2vd7idro90tjnvl6b9trnc&quot;); // 			{	k = (char*)(disc-&gt;link &lt; 0 ? ((Dthold_t*)(r))-&gt;obj : (void*)((char*)(r) - disc-&gt;link) );</span>
+<span class="nc" id="L152">UNSUPPORTED(&quot;1dvo2602az1wcigxx20czskv9&quot;); // 				k = (void*)(disc-&gt;size &lt; 0 ? *((char**)((char*)((void*)k)+disc-&gt;key)) : ((char*)((void*)k)+disc-&gt;key));</span>
+<span class="nc" id="L153">UNSUPPORTED(&quot;269t5qi8m2ujfjvmbqvyjvr1s&quot;); // 				r-&gt;hl._hash = (disc-&gt;hashf ? (*disc-&gt;hashf)(dt,k,disc) : dtstrhash(0,k,disc-&gt;size) );</span>
+<span class="nc" id="L154">UNSUPPORTED(&quot;3to5h0rvqxdeqs38mhv47mm3o&quot;); // 			}</span>
+<span class="nc" id="L155">UNSUPPORTED(&quot;2e2tx3ch32oxo5y01bflgbf2h&quot;); // 			(void)(*searchf)(dt,(void*)r,0000040);</span>
+<span class="nc" id="L156">UNSUPPORTED(&quot;8tob14cb9u9q0mnud0wovaioi&quot;); // 			r = t;</span>
+<span class="nc" id="L157">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L158">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L159">UNSUPPORTED(&quot;cerydbb7i6l7c4pgeygvwoqk2&quot;); // done:</span>
+<span class="nc" id="L160">UNSUPPORTED(&quot;bi0p581nen18ypj0ey48s6ete&quot;); // 	return old;</span>
+ }
+
+<span class="nc" id="L163">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L165">LEAVING(&quot;axpvuswclmi9bx3qtlh4quyah&quot;,&quot;dtdisc&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

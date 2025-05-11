@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FormatInformation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.qrcode.decoder</a> &gt; <span class="el_source">FormatInformation.java</span></div><h1>FormatInformation.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2007 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.qrcode.decoder;
+
+/**
+ * &lt;p&gt;Encapsulates a QR Code's format information, including the data mask used and
+ * error correction level.&lt;/p&gt;
+ *
+ * @author Sean Owen
+ * @see DataMask
+ * @see ErrorCorrectionLevel
+ */
+final class FormatInformation {
+
+  private static final int FORMAT_INFO_MASK_QR = 0x5412;
+
+  /**
+   * See ISO 18004:2006, Annex C, Table C.1
+   */
+<span class="nc" id="L34">  private static final int[][] FORMAT_INFO_DECODE_LOOKUP = {</span>
+      {0x5412, 0x00},
+      {0x5125, 0x01},
+      {0x5E7C, 0x02},
+      {0x5B4B, 0x03},
+      {0x45F9, 0x04},
+      {0x40CE, 0x05},
+      {0x4F97, 0x06},
+      {0x4AA0, 0x07},
+      {0x77C4, 0x08},
+      {0x72F3, 0x09},
+      {0x7DAA, 0x0A},
+      {0x789D, 0x0B},
+      {0x662F, 0x0C},
+      {0x6318, 0x0D},
+      {0x6C41, 0x0E},
+      {0x6976, 0x0F},
+      {0x1689, 0x10},
+      {0x13BE, 0x11},
+      {0x1CE7, 0x12},
+      {0x19D0, 0x13},
+      {0x0762, 0x14},
+      {0x0255, 0x15},
+      {0x0D0C, 0x16},
+      {0x083B, 0x17},
+      {0x355F, 0x18},
+      {0x3068, 0x19},
+      {0x3F31, 0x1A},
+      {0x3A06, 0x1B},
+      {0x24B4, 0x1C},
+      {0x2183, 0x1D},
+      {0x2EDA, 0x1E},
+      {0x2BED, 0x1F},
+  };
+
+  /**
+   * Offset i holds the number of 1 bits in the binary representation of i
+   */
+<span class="nc" id="L72">  private static final int[] BITS_SET_IN_HALF_BYTE =</span>
+      {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4};
+
+  private final ErrorCorrectionLevel errorCorrectionLevel;
+  private final byte dataMask;
+
+<span class="nc" id="L78">  private FormatInformation(int formatInfo) {</span>
+    // Bits 3,4
+<span class="nc" id="L80">    errorCorrectionLevel = ErrorCorrectionLevel.forBits((formatInfo &gt;&gt; 3) &amp; 0x03);</span>
+    // Bottom 3 bits
+<span class="nc" id="L82">    dataMask = (byte) (formatInfo &amp; 0x07);</span>
+<span class="nc" id="L83">  }</span>
+
+  static int numBitsDiffering(int a, int b) {
+<span class="nc" id="L86">    a ^= b; // a now has a 1 bit exactly where its bit differs with b's</span>
+    // Count bits set quickly with a series of lookups:
+<span class="nc" id="L88">    return BITS_SET_IN_HALF_BYTE[a &amp; 0x0F] +</span>
+        BITS_SET_IN_HALF_BYTE[(a &gt;&gt;&gt; 4 &amp; 0x0F)] +
+        BITS_SET_IN_HALF_BYTE[(a &gt;&gt;&gt; 8 &amp; 0x0F)] +
+        BITS_SET_IN_HALF_BYTE[(a &gt;&gt;&gt; 12 &amp; 0x0F)] +
+        BITS_SET_IN_HALF_BYTE[(a &gt;&gt;&gt; 16 &amp; 0x0F)] +
+        BITS_SET_IN_HALF_BYTE[(a &gt;&gt;&gt; 20 &amp; 0x0F)] +
+        BITS_SET_IN_HALF_BYTE[(a &gt;&gt;&gt; 24 &amp; 0x0F)] +
+        BITS_SET_IN_HALF_BYTE[(a &gt;&gt;&gt; 28 &amp; 0x0F)];
+  }
+
+  /**
+   * @param maskedFormatInfo1 format info indicator, with mask still applied
+   * @param maskedFormatInfo2 second copy of same info; both are checked at the same time
+   *  to establish best match
+   * @return information about the format it specifies, or &lt;code&gt;null&lt;/code&gt;
+   *  if doesn't seem to match any known pattern
+   */
+  static FormatInformation decodeFormatInformation(int maskedFormatInfo1, int maskedFormatInfo2) {
+<span class="nc" id="L106">    FormatInformation formatInfo = doDecodeFormatInformation(maskedFormatInfo1, maskedFormatInfo2);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">    if (formatInfo != null) {</span>
+<span class="nc" id="L108">      return formatInfo;</span>
+    }
+    // Should return null, but, some QR codes apparently
+    // do not mask this info. Try again by actually masking the pattern
+    // first
+<span class="nc" id="L113">    return doDecodeFormatInformation(maskedFormatInfo1 ^ FORMAT_INFO_MASK_QR,</span>
+                                     maskedFormatInfo2 ^ FORMAT_INFO_MASK_QR);
+  }
+
+  private static FormatInformation doDecodeFormatInformation(int maskedFormatInfo1, int maskedFormatInfo2) {
+    // Find the int in FORMAT_INFO_DECODE_LOOKUP with fewest bits differing
+<span class="nc" id="L119">    int bestDifference = Integer.MAX_VALUE;</span>
+<span class="nc" id="L120">    int bestFormatInfo = 0;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">    for (int i = 0; i &lt; FORMAT_INFO_DECODE_LOOKUP.length; i++) {</span>
+<span class="nc" id="L122">      int[] decodeInfo = FORMAT_INFO_DECODE_LOOKUP[i];</span>
+<span class="nc" id="L123">      int targetInfo = decodeInfo[0];</span>
+<span class="nc bnc" id="L124" title="All 4 branches missed.">      if (targetInfo == maskedFormatInfo1 || targetInfo == maskedFormatInfo2) {</span>
+        // Found an exact match
+<span class="nc" id="L126">        return new FormatInformation(decodeInfo[1]);</span>
+      }
+<span class="nc" id="L128">      int bitsDifference = numBitsDiffering(maskedFormatInfo1, targetInfo);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">      if (bitsDifference &lt; bestDifference) {</span>
+<span class="nc" id="L130">        bestFormatInfo = decodeInfo[1];</span>
+<span class="nc" id="L131">        bestDifference = bitsDifference;</span>
+      }
+<span class="nc bnc" id="L133" title="All 2 branches missed.">      if (maskedFormatInfo1 != maskedFormatInfo2) {</span>
+        // also try the other option
+<span class="nc" id="L135">        bitsDifference = numBitsDiffering(maskedFormatInfo2, targetInfo);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        if (bitsDifference &lt; bestDifference) {</span>
+<span class="nc" id="L137">          bestFormatInfo = decodeInfo[1];</span>
+<span class="nc" id="L138">          bestDifference = bitsDifference;</span>
+        }
+      }
+    }
+    // Hamming distance of the 32 masked codes is 7, by construction, so &lt;= 3 bits
+    // differing means we found a match
+<span class="nc bnc" id="L144" title="All 2 branches missed.">    if (bestDifference &lt;= 3) {</span>
+<span class="nc" id="L145">      return new FormatInformation(bestFormatInfo);</span>
+    }
+<span class="nc" id="L147">    return null;</span>
+  }
+
+  ErrorCorrectionLevel getErrorCorrectionLevel() {
+<span class="nc" id="L151">    return errorCorrectionLevel;</span>
+  }
+
+  byte getDataMask() {
+<span class="nc" id="L155">    return dataMask;</span>
+  }
+
+  public int hashCode() {
+<span class="nc" id="L159">    return (errorCorrectionLevel.ordinal() &lt;&lt; 3) | (int) dataMask;</span>
+  }
+
+  public boolean equals(Object o) {
+<span class="nc bnc" id="L163" title="All 2 branches missed.">    if (!(o instanceof FormatInformation)) {</span>
+<span class="nc" id="L164">      return false;</span>
+    }
+<span class="nc" id="L166">    FormatInformation other = (FormatInformation) o;</span>
+<span class="nc bnc" id="L167" title="All 4 branches missed.">    return this.errorCorrectionLevel == other.errorCorrectionLevel &amp;&amp;</span>
+        this.dataMask == other.dataMask;
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

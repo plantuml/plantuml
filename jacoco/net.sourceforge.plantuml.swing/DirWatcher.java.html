@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirWatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.swing</a> &gt; <span class="el_source">DirWatcher.java</span></div><h1>DirWatcher.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.swing;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.Option;
+import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.file.FileWatcher;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
+
+@Deprecated
+public class DirWatcher {
+	// ::remove file when __CORE__
+
+	final private File dir;
+	final private Option option;
+	final private String pattern;
+
+<span class="nc" id="L62">	final private Map&lt;File, FileWatcher&gt; modifieds = new HashMap&lt;File, FileWatcher&gt;();</span>
+
+<span class="nc" id="L64">	public DirWatcher(File dir, Option option, String pattern) {</span>
+<span class="nc" id="L65">		this.dir = dir;</span>
+<span class="nc" id="L66">		this.option = option;</span>
+<span class="nc" id="L67">		this.pattern = pattern;</span>
+<span class="nc" id="L68">	}</span>
+
+	public List&lt;GeneratedImage&gt; buildCreatedFiles() throws IOException, InterruptedException {
+<span class="nc" id="L71">		boolean error = false;</span>
+<span class="nc" id="L72">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			for (File f : dir.listFiles()) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">				if (error)</span>
+<span class="nc" id="L76">					continue;</span>
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">				if (f.isFile() == false)</span>
+<span class="nc" id="L79">					continue;</span>
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
+<span class="nc" id="L82">					continue;</span>
+
+<span class="nc" id="L84">				final FileWatcher watcher = modifieds.get(f);</span>
+
+<span class="nc bnc" id="L86" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
+<span class="nc" id="L87">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L88">							option.getOutputDir(), option.getConfig(), option.getCharset(),</span>
+<span class="nc" id="L89">							option.getFileFormatOption());</span>
+<span class="nc" id="L90">					final Set&lt;File&gt; files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());</span>
+<span class="nc" id="L91">					files.add(f);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">					for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {</span>
+<span class="nc" id="L93">						result.add(g);</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">						if (option.isFailfastOrFailfast2() &amp;&amp; g.lineErrorRaw() != -1) {</span>
+<span class="nc" id="L95">							error = true;</span>
+						}
+<span class="nc" id="L97">					}</span>
+<span class="nc" id="L98">					modifieds.put(f, new FileWatcher(files));</span>
+				}
+			}
+<span class="nc" id="L101">		Collections.sort(result);</span>
+<span class="nc" id="L102">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public File getErrorFile() throws IOException, InterruptedException {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			for (File f : dir.listFiles()) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">				if (f.isFile() == false)</span>
+<span class="nc" id="L109">					continue;</span>
+
+<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
+<span class="nc" id="L112">					continue;</span>
+
+<span class="nc" id="L114">				final FileWatcher watcher = modifieds.get(f);</span>
+
+<span class="nc bnc" id="L116" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
+<span class="nc" id="L117">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L118">							option.getOutputDir(), option.getConfig(), option.getCharset(),</span>
+<span class="nc" id="L119">							option.getFileFormatOption());</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">					if (sourceFileReader.hasError())</span>
+<span class="nc" id="L121">						return f;</span>
+
+				}
+			}
+<span class="nc" id="L125">		return null;</span>
+	}
+
+	private boolean fileToProcess(String name) {
+<span class="nc" id="L129">		return name.matches(pattern);</span>
+	}
+
+	public final File getDir() {
+<span class="nc" id="L133">		return dir;</span>
+	}
+
+	// public void setPattern(String pattern) {
+	// this.pattern = pattern;
+	// }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

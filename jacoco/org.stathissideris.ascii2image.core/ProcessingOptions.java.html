@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProcessingOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.core</a> &gt; <span class="el_source">ProcessingOptions.java</span></div><h1>ProcessingOptions.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.core;
+
+import java.util.HashMap;
+
+import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
+
+/**
+ * @author Efstathios Sideris
+ *
+ */
+<span class="nc" id="L30">public class ProcessingOptions {</span>
+    // ::remove folder when __HAXE__
+
+<span class="nc" id="L33">	private HashMap&lt;String, CustomShapeDefinition&gt; customShapes = new HashMap&lt;String, CustomShapeDefinition&gt;();</span>
+	
+<span class="nc" id="L35">	private boolean beVerbose = false;</span>
+<span class="nc" id="L36">	private boolean printDebugOutput = false;</span>
+<span class="nc" id="L37">	private boolean overwriteFiles = false;</span>
+<span class="nc" id="L38">	private boolean performSeparationOfCommonEdges = true;</span>
+<span class="nc" id="L39">	private boolean allCornersAreRound = false;</span>
+
+	public static final int USE_TAGS = 0;
+	public static final int RENDER_TAGS = 1;
+	public static final int IGNORE_TAGS = 2;
+<span class="nc" id="L44">	private int tagProcessingMode = USE_TAGS;</span>
+
+	public static final int USE_COLOR_CODES = 0;
+	public static final int RENDER_COLOR_CODES = 1;
+	public static final int IGNORE_COLOR_CODES = 2;
+<span class="nc" id="L49">	private int colorCodesProcessingMode = USE_COLOR_CODES;</span>
+
+	public static final int FORMAT_JPEG = 0;
+	public static final int FORMAT_PNG = 1;
+	public static final int FORMAT_GIF = 2;
+<span class="nc" id="L54">	private int exportFormat = FORMAT_PNG;</span>
+
+	public static final int DEFAULT_TAB_SIZE = 8;
+<span class="nc" id="L57">	private int tabSize = DEFAULT_TAB_SIZE;</span>
+
+	private String inputFilename;
+	private String outputFilename;
+	
+<span class="nc" id="L62">	private String characterEncoding = null;</span>
+	
+	/**
+	 * @return
+	 */
+	public boolean areAllCornersRound() {
+<span class="nc" id="L68">		return allCornersAreRound;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public int getColorCodesProcessingMode() {
+<span class="nc" id="L75">		return colorCodesProcessingMode;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public int getExportFormat() {
+<span class="nc" id="L82">		return exportFormat;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean performSeparationOfCommonEdges() {
+<span class="nc" id="L89">		return performSeparationOfCommonEdges;</span>
+	}
+
+    /**
+	 * @return
+	 */
+	public int getTagProcessingMode() {
+<span class="nc" id="L96">		return tagProcessingMode;</span>
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setAllCornersAreRound(boolean b) {
+<span class="nc" id="L103">		allCornersAreRound = b;</span>
+<span class="nc" id="L104">	}</span>
+
+	/**
+	 * @param i
+	 */
+	public void setColorCodesProcessingMode(int i) {
+<span class="nc" id="L110">		colorCodesProcessingMode = i;</span>
+<span class="nc" id="L111">	}</span>
+
+	/**
+	 * @param i
+	 */
+	public void setExportFormat(int i) {
+<span class="nc" id="L117">		exportFormat = i;</span>
+<span class="nc" id="L118">	}</span>
+
+	/**
+	 * @param b
+	 */
+	public void setPerformSeparationOfCommonEdges(boolean b) {
+<span class="nc" id="L124">		performSeparationOfCommonEdges = b;</span>
+<span class="nc" id="L125">	}</span>
+
+    /**
+	 * @param i
+	 */
+	public void setTagProcessingMode(int i) {
+<span class="nc" id="L131">		tagProcessingMode = i;</span>
+<span class="nc" id="L132">	}</span>
+
+	/**
+	 * @return
+	 */
+	public String getInputFilename() {
+<span class="nc" id="L138">		return inputFilename;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public String getOutputFilename() {
+<span class="nc" id="L145">		return outputFilename;</span>
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setInputFilename(String string) {
+<span class="nc" id="L152">		inputFilename = string;</span>
+<span class="nc" id="L153">	}</span>
+
+	/**
+	 * @param string
+	 */
+	public void setOutputFilename(String string) {
+<span class="nc" id="L159">		outputFilename = string;</span>
+<span class="nc" id="L160">	}</span>
+
+	/**
+	 * @return
+	 */
+	public boolean verbose() {
+<span class="nc" id="L166">		return beVerbose;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean printDebugOutput() {
+<span class="nc" id="L173">		return printDebugOutput;</span>
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setVerbose(boolean b) {
+<span class="nc" id="L180">		beVerbose = b;</span>
+<span class="nc" id="L181">	}</span>
+
+	/**
+	 * @param b
+	 */
+	public void setPrintDebugOutput(boolean b) {
+<span class="nc" id="L187">		printDebugOutput = b;</span>
+<span class="nc" id="L188">	}</span>
+
+	/**
+	 * @return
+	 */
+	public boolean overwriteFiles() {
+<span class="nc" id="L194">		return overwriteFiles;</span>
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setOverwriteFiles(boolean b) {
+<span class="nc" id="L201">		overwriteFiles = b;</span>
+<span class="nc" id="L202">	}</span>
+
+	/**
+	 * @return
+	 */
+	public int getTabSize() {
+<span class="nc" id="L208">		return tabSize;</span>
+	}
+
+	/**
+	 * @param i
+	 */
+	public void setTabSize(int i) {
+<span class="nc" id="L215">		tabSize = i;</span>
+<span class="nc" id="L216">	}</span>
+
+	public String getCharacterEncoding() {
+<span class="nc" id="L219">		return characterEncoding;</span>
+	}
+
+	public void setCharacterEncoding(String characterEncoding) {
+<span class="nc" id="L223">		this.characterEncoding = characterEncoding;</span>
+<span class="nc" id="L224">	}</span>
+
+	public HashMap&lt;String, CustomShapeDefinition&gt; getCustomShapes() {
+<span class="nc" id="L227">		return customShapes;</span>
+	}
+
+	public void setCustomShapes(HashMap&lt;String, CustomShapeDefinition&gt; customShapes) {
+<span class="nc" id="L231">		this.customShapes = customShapes;</span>
+<span class="nc" id="L232">	}</span>
+
+	public void putAllInCustomShapes(HashMap&lt;String, CustomShapeDefinition&gt; customShapes) {
+<span class="nc" id="L235">		this.customShapes.putAll(customShapes);</span>
+<span class="nc" id="L236">	}</span>
+	
+	public CustomShapeDefinition getFromCustomShapes(String tagName){
+<span class="nc" id="L239">		return customShapes.get(tagName);</span>
+	}
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

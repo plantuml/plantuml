@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FactoryException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.util</a> &gt; <span class="el_source">FactoryException.java</span></div><h1>FactoryException.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.util;
+
+import java.lang.reflect.InvocationTargetException;
+
+/**
+ *  Exception thrown in the case of an error during creation of a new
+ *  object by {@link Factory#create}.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class FactoryException extends RuntimeException {
+  private final String _fullKey;
+  private final String _className;
+  private final Object _reason;
+
+  /**
+   *  Creates a new instance based on the specified configuration parameters
+   *  and reason object.
+   *  &lt;p&gt;
+   *  If &lt;tt&gt;reason&lt;/tt&gt; is an instance of &lt;tt&gt;InvocationTargetException&lt;/tt&gt; 
+   *  it will be replaced by the wrapped &lt;tt&gt;Throwable&lt;/tt&gt;.
+   *  @param configParameters Configuration parameters from which the 
+   *         &lt;tt&gt;className&lt;/tt&gt; will be extracted (if it exists, otherwise
+   *         &lt;tt&gt;null&lt;/tt&gt; will be taken).
+   *  @param reason The reason causing this exception. Most often an
+   *         an exception.
+   */
+  public FactoryException(ConfigParameters configParameters, String key,
+<span class="nc" id="L47">                          Object reason) {</span>
+<span class="nc" id="L48">    _fullKey = configParameters.getFullKey(key);</span>
+<span class="nc" id="L49">    _className = configParameters.get(key, null);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">    if (reason instanceof InvocationTargetException) {</span>
+<span class="nc" id="L51">      reason = ((InvocationTargetException) reason).getTargetException();</span>
+    }
+<span class="nc" id="L53">    _reason = reason;</span>
+<span class="nc" id="L54">  }</span>
+
+  /** Returns the full class name key. */
+  public String getFullKey() {
+<span class="nc" id="L58">    return _fullKey;</span>
+  }
+
+  /** Returns the fully qualified class name. */
+  public String getClassName() {
+<span class="nc" id="L63">    return _className;</span>
+  }
+
+  /** Returns the reason object causing this exception. */
+  public Object getReason() {
+<span class="nc" id="L68">    return _reason;</span>
+  }
+
+  /**
+   * Renders this instance as follows: &lt;tt&gt;jcckit.util.FactoryException: 
+   * &lt;i&gt;full key&lt;/i&gt; = &lt;i&gt;class name&lt;/i&gt;: &lt;i&gt;reason&lt;/i&gt;&lt;/tt&gt;.
+   */
+  public String toString() {
+<span class="nc" id="L76">    return getClass().getName() + &quot;: &quot; + _fullKey + &quot; = &quot; + _className</span>
+           + &quot;: &quot; + _reason;
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScxmlStateDiagramStandard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xmlsc</a> &gt; <span class="el_source">ScxmlStateDiagramStandard.java</span></div><h1>ScxmlStateDiagramStandard.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.xmlsc;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.OutputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.xml.XmlFactories;
+
+public class ScxmlStateDiagramStandard {
+	// ::remove folder when __CORE__
+
+	private final StateDiagram diagram;
+	private final Document document;
+
+<span class="fc" id="L71">	public ScxmlStateDiagramStandard(StateDiagram diagram) throws ParserConfigurationException {</span>
+<span class="fc" id="L72">		this.diagram = diagram;</span>
+
+<span class="fc" id="L74">		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();</span>
+<span class="fc" id="L75">		this.document = builder.newDocument();</span>
+<span class="fc" id="L76">		document.setXmlVersion(&quot;1.0&quot;);</span>
+<span class="fc" id="L77">		document.setXmlStandalone(true);</span>
+
+<span class="fc" id="L79">		final Element scxml = document.createElement(&quot;scxml&quot;);</span>
+<span class="fc" id="L80">		scxml.setAttribute(&quot;xmlns&quot;, &quot;http://www.w3.org/2005/07/scxml&quot;);</span>
+<span class="fc" id="L81">		scxml.setAttribute(&quot;version&quot;, &quot;1.0&quot;);</span>
+<span class="fc" id="L82">		final String initial = getInitial();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (initial != null)</span>
+<span class="fc" id="L84">			scxml.setAttribute(&quot;initial&quot;, initial);</span>
+
+<span class="fc" id="L86">		document.appendChild(scxml);</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		for (final Entity ent : diagram.leafs())</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (ent.getParentContainer().isRoot())</span>
+<span class="fc" id="L90">				scxml.appendChild(createState(ent));</span>
+
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (Entity ent : diagram.groups())</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (ent.getParentContainer().isRoot())</span>
+<span class="fc" id="L94">				exportGroup(scxml, ent);</span>
+
+<span class="fc" id="L96">	}</span>
+
+	private Element exportGroup(Element dest, Entity ent) {
+<span class="fc" id="L99">		final Element gr = createGroup(ent);</span>
+<span class="fc" id="L100">		dest.appendChild(gr);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (Entity leaf : ent.leafs())</span>
+<span class="fc" id="L102">			gr.appendChild(createState(leaf));</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (Entity child : ent.groups())</span>
+<span class="fc" id="L104">			exportGroup(gr, child);</span>
+<span class="fc" id="L105">		return gr;</span>
+	}
+
+	private String getInitial() {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (final Entity ent : diagram.leafs())</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (ent.getLeafType() == LeafType.CIRCLE_START)</span>
+<span class="fc" id="L111">				return getId(ent);</span>
+
+<span class="fc" id="L113">		return null;</span>
+	}
+
+	private Element createGroup(Entity entity) {
+<span class="fc" id="L117">		return createState(entity);</span>
+	}
+
+	private Element createState(Entity entity) {
+<span class="fc" id="L121">		final LeafType type = entity.getLeafType();</span>
+
+<span class="fc" id="L123">		final Element state = document.createElement(&quot;state&quot;);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (type == LeafType.NOTE) {</span>
+<span class="fc" id="L125">			state.setAttribute(&quot;stereotype&quot;, &quot;note&quot;);</span>
+<span class="fc" id="L126">			state.setAttribute(&quot;id&quot;, entity.getName());</span>
+<span class="fc" id="L127">			final Display display = entity.getDisplay();</span>
+<span class="fc" id="L128">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			for (CharSequence s : display) {</span>
+<span class="fc" id="L130">				sb.append(s);</span>
+<span class="fc" id="L131">				sb.append(&quot;\n&quot;);</span>
+<span class="fc" id="L132">			}</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L134">				sb.setLength(sb.length() - 1);</span>
+<span class="fc" id="L135">			final Comment comment = document.createComment(sb.toString());</span>
+<span class="fc" id="L136">			state.appendChild(comment);</span>
+
+<span class="fc" id="L138">		} else {</span>
+<span class="fc" id="L139">			state.setAttribute(&quot;id&quot;, getId(entity));</span>
+<span class="fc" id="L140">			final Stereotype stereotype = entity.getStereotype();</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (stereotype != null)</span>
+<span class="fc" id="L142">				state.setAttribute(&quot;stereotype&quot;, stereotype.getLabels(Guillemet.NONE).get(0));</span>
+
+<span class="fc bfc" id="L144" title="All 2 branches covered.">			for (final Link link : diagram.getLinks())</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">				if (link.getEntity1() == entity)</span>
+<span class="fc" id="L146">					addLink(state, link);</span>
+		}
+
+<span class="fc" id="L149">		return state;</span>
+	}
+
+	private void addLink(Element state, Link link) {
+<span class="fc" id="L153">		final Element transition = document.createElement(&quot;transition&quot;);</span>
+<span class="fc" id="L154">		final Display label = link.getLabel();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (Display.isNull(label) == false) {</span>
+<span class="fc" id="L156">			final String event = label.get(0).toString();</span>
+<span class="fc" id="L157">			transition.setAttribute(&quot;event&quot;, event);</span>
+		}
+<span class="fc" id="L159">		transition.setAttribute(&quot;target&quot;, getId(link.getEntity2()));</span>
+<span class="fc" id="L160">		state.appendChild(transition);</span>
+
+<span class="fc" id="L162">	}</span>
+
+	private String getId(Entity entity) {
+<span class="fc" id="L165">		return entity.getName().replaceAll(&quot;\\*&quot;, &quot;&quot;);</span>
+	}
+
+	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+<span class="fc" id="L169">		final Source source = new DOMSource(document);</span>
+
+<span class="fc" id="L171">		final Result resultat = new StreamResult(os);</span>
+
+<span class="fc" id="L173">		final Transformer transformer = XmlFactories.newTransformer();</span>
+<span class="fc" id="L174">		transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="fc" id="L175">		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());</span>
+<span class="fc" id="L176">		transformer.transform(source, resultat);</span>
+<span class="fc" id="L177">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EpsGraphics.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.eps</a> &gt; <span class="el_source">EpsGraphics.java</span></div><h1>EpsGraphics.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.eps;
+
+import java.awt.Color;
+import java.awt.geom.PathIterator;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MathUtils;
+import net.sourceforge.plantuml.version.Version;
+
+<span class="nc" id="L58">public class EpsGraphics {</span>
+	// ::remove folder when __CORE__
+
+	public static final String END_OF_FILE = &quot;%plantuml done&quot;;
+	protected static final long COEF = 100L;
+
+	// http://www.linuxfocus.org/Francais/May1998/article43.html
+	// http://www.tailrecursive.org/postscript/text.html
+<span class="nc" id="L66">	private final StringBuilder body = new StringBuilder();</span>
+<span class="nc" id="L67">	private final StringBuilder header = new StringBuilder();</span>
+
+<span class="nc" id="L69">	private Color color = Color.BLACK;</span>
+<span class="nc" id="L70">	private Color fillcolor = Color.BLACK;</span>
+
+<span class="nc" id="L72">	private String strokeWidth = format(1);</span>
+	// private String strokeDasharray = null;
+
+<span class="nc" id="L75">	private final PostScriptCommandMacro setcolorgradient = new PostScriptCommandMacro(&quot;setcolorgradient&quot;);</span>
+<span class="nc" id="L76">	private final PostScriptCommandMacro simplerect = new PostScriptCommandMacro(&quot;simplerect&quot;);</span>
+<span class="nc" id="L77">	private final PostScriptCommandMacro roundrect = new PostScriptCommandMacro(&quot;roundrect&quot;);</span>
+<span class="nc" id="L78">	private boolean setcolorgradientUsed = false;</span>
+<span class="nc" id="L79">	private boolean simplerectUsed = false;</span>
+<span class="nc" id="L80">	private boolean roundrectUsed = false;</span>
+
+<span class="nc" id="L82">	public EpsGraphics() {</span>
+<span class="nc" id="L83">		header.append(&quot;%!PS-Adobe-3.0 EPSF-3.0\n&quot;);</span>
+<span class="nc" id="L84">		header.append(&quot;%%Creator: PlantUML v&quot; + Version.versionString(15) + BackSlash.NEWLINE);</span>
+<span class="nc" id="L85">		header.append(&quot;%%Title: noTitle\n&quot;);</span>
+		// header.append(&quot;%%CreationDate: &quot; + new Date() + BackSlash.BS_N);
+<span class="nc" id="L87">		setcolorgradient.add(new PostScriptCommandRaw(&quot;3 index 7 index sub 1 index mul 7 index add&quot;, true));</span>
+<span class="nc" id="L88">		setcolorgradient.add(new PostScriptCommandRaw(&quot;3 index 7 index sub 2 index mul 7 index add&quot;, true));</span>
+<span class="nc" id="L89">		setcolorgradient.add(new PostScriptCommandRaw(&quot;3 index 7 index sub 3 index mul 7 index add&quot;, true));</span>
+<span class="nc" id="L90">		setcolorgradient.add(new PostScriptCommandRaw(&quot;setrgbcolor&quot;, true));</span>
+		// setcolorgradient.add(new PostScriptCommandRaw(&quot;0 7 1 {pop} for&quot;));
+<span class="nc" id="L92">		setcolorgradient.add(new PostScriptCommandRaw(&quot;pop pop pop pop pop pop pop &quot;, true));</span>
+
+<span class="nc" id="L94">		simplerect.add(new PostScriptCommandRaw(&quot;newpath moveto 1 index 0 rlineto&quot;, true));</span>
+<span class="nc" id="L95">		simplerect.add(new PostScriptCommandRaw(&quot;0 exch rlineto&quot;, true));</span>
+<span class="nc" id="L96">		simplerect.add(new PostScriptCommandRaw(&quot;neg 0 rlineto&quot;, true));</span>
+
+<span class="nc" id="L98">		roundrect.add(new PostScriptCommandRaw(&quot;newpath&quot;, true));</span>
+<span class="nc" id="L99">		roundrect.add(new PostScriptCommandRaw(&quot;dup 3 index add 2 index 2 index add 2 index 180 270 arc&quot;, true));</span>
+<span class="nc" id="L100">		roundrect.add(new PostScriptCommandRaw(&quot;2 index 5 index add 1 index sub 2 index 2 index add 2 index 270 0 arc&quot;,</span>
+				true));
+<span class="nc" id="L102">		roundrect.add(new PostScriptCommandRaw(</span>
+				&quot;2 index 5 index add 1 index sub 2 index 5 index add 2 index sub 2 index 0 90 arc&quot;, true));
+<span class="nc" id="L104">		roundrect.add(</span>
+				new PostScriptCommandRaw(&quot;dup 3 index add 2 index 5 index add 2 index sub 2 index 90 180 arc&quot;, true));
+<span class="nc" id="L106">		roundrect.add(new PostScriptCommandRaw(&quot;pop pop pop pop pop &quot;, true));</span>
+<span class="nc" id="L107">	}</span>
+
+<span class="nc" id="L109">	private boolean closeDone = false;</span>
+
+<span class="nc" id="L111">	private int maxX = 10;</span>
+<span class="nc" id="L112">	private int maxY = 10;</span>
+
+	final protected void ensureVisible(double x, double y) {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (x &gt; maxX)</span>
+<span class="nc" id="L116">			maxX = (int) (x + 1);</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (y &gt; maxY)</span>
+<span class="nc" id="L119">			maxY = (int) (y + 1);</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (urlArea != null)</span>
+<span class="nc" id="L122">			urlArea.ensureVisible((int) Math.round(x), (int) Math.round(y));</span>
+
+<span class="nc" id="L124">	}</span>
+
+	protected final Color getColor() {
+<span class="nc" id="L127">		return color;</span>
+	}
+
+	final public void close() {
+<span class="nc" id="L131">		checkCloseDone();</span>
+
+<span class="nc" id="L133">		header.append(&quot;%%BoundingBox: 0 0 &quot; + maxX + &quot; &quot; + maxY + BackSlash.NEWLINE);</span>
+		// header.append(&quot;%%DocumentData: Clean7Bit\n&quot;);
+		// header.append(&quot;%%DocumentProcessColors: Black\n&quot;);
+<span class="nc" id="L136">		header.append(&quot;%%ColorUsage: Color\n&quot;);</span>
+<span class="nc" id="L137">		header.append(&quot;%%Origin: 0 0\n&quot;);</span>
+<span class="nc" id="L138">		header.append(&quot;%%EndComments\n\n&quot;);</span>
+<span class="nc" id="L139">		header.append(&quot;gsave\n&quot;);</span>
+<span class="nc" id="L140">		header.append(&quot;0 &quot; + maxY + &quot; translate\n&quot;);</span>
+<span class="nc" id="L141">		header.append(&quot;.01 -.01 scale\n&quot;);</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (setcolorgradientUsed)</span>
+<span class="nc" id="L144">			header.append(setcolorgradient.getPostStringDefinition());</span>
+
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (simplerectUsed)</span>
+<span class="nc" id="L147">			header.append(simplerect.getPostStringDefinition());</span>
+
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (roundrectUsed)</span>
+<span class="nc" id="L150">			header.append(roundrect.getPostStringDefinition());</span>
+
+<span class="nc" id="L152">		append(&quot;grestore&quot;, true);</span>
+
+		// if(isClipSet())
+		// writer.write(&quot;grestore\n&quot;);
+
+<span class="nc" id="L157">		append(&quot;showpage&quot;, true);</span>
+<span class="nc" id="L158">		append(END_OF_FILE, true);</span>
+<span class="nc" id="L159">		append(&quot;%%EOF&quot;, true);</span>
+<span class="nc" id="L160">		closeDone = true;</span>
+<span class="nc" id="L161">	}</span>
+
+	private void checkCloseDone() {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (closeDone)</span>
+<span class="nc" id="L165">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L167">	}</span>
+
+	final public String getEPSCode() {
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (closeDone == false)</span>
+<span class="nc" id="L171">			close();</span>
+
+<span class="nc" id="L173">		return header.toString() + getBodyString();</span>
+	}
+
+	protected String getBodyString() {
+<span class="nc" id="L177">		return body.toString();</span>
+	}
+
+	public final void setStrokeColor(Color c) {
+<span class="nc" id="L181">		checkCloseDone();</span>
+<span class="nc" id="L182">		this.color = c;</span>
+<span class="nc" id="L183">	}</span>
+
+	final public void setFillColor(Color c) {
+<span class="nc" id="L186">		checkCloseDone();</span>
+<span class="nc" id="L187">		this.fillcolor = c;</span>
+<span class="nc" id="L188">	}</span>
+
+	public final void setStrokeWidth(double strokeWidth, double dashVisible, double dashSpace) {
+<span class="nc" id="L191">		checkCloseDone();</span>
+<span class="nc" id="L192">		this.strokeWidth = format(strokeWidth);</span>
+<span class="nc" id="L193">		this.dashVisible = (long) (dashVisible * COEF);</span>
+<span class="nc" id="L194">		this.dashSpace = (long) (dashSpace * COEF);</span>
+<span class="nc" id="L195">	}</span>
+
+<span class="nc" id="L197">	private long dashVisible = 0;</span>
+<span class="nc" id="L198">	private long dashSpace = 0;</span>
+
+	final public void newpathDot() {
+<span class="nc" id="L201">		final boolean dashed = isDashed();</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (isNull(color))</span>
+<span class="nc" id="L203">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L205">		checkCloseDone();</span>
+<span class="nc" id="L206">		append(strokeWidth + &quot; setlinewidth&quot;, true);</span>
+<span class="nc" id="L207">		appendColor(color);</span>
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (dashed)</span>
+<span class="nc" id="L210">			append(&quot;[&quot; + dashSpace + &quot; &quot; + dashVisible + &quot;] 0 setdash&quot;, true);</span>
+
+<span class="nc" id="L212">		append(&quot;newpath&quot;, true);</span>
+<span class="nc" id="L213">	}</span>
+
+	private boolean isDashed() {
+<span class="nc bnc" id="L216" title="All 4 branches missed.">		return dashVisible != 0 || dashSpace != 0;</span>
+	}
+
+	private boolean isDashed2() {
+<span class="nc bnc" id="L220" title="All 4 branches missed.">		return dashVisible == 0 || dashSpace == 0;</span>
+	}
+
+	private boolean isDashed3() {
+<span class="nc bnc" id="L224" title="All 4 branches missed.">		return dashSpace != 0 &amp;&amp; dashVisible != 0;</span>
+	}
+
+	final public void closepathDot() {
+<span class="nc" id="L228">		final boolean dashed = isDashed();</span>
+<span class="nc" id="L229">		append(&quot;stroke&quot;, true);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (dashed)</span>
+<span class="nc" id="L231">			append(&quot;[] 0 setdash&quot;, true);</span>
+
+<span class="nc" id="L233">	}</span>
+
+	final public void epsLine(double x1, double y1, double x2, double y2) {
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		if (isNull(color))</span>
+<span class="nc" id="L237">			throw new IllegalStateException();</span>
+<span class="nc" id="L238">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L239">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L240">		checkCloseDone();</span>
+<span class="nc" id="L241">		append(strokeWidth + &quot; setlinewidth&quot;, true);</span>
+<span class="nc" id="L242">		appendColor(color);</span>
+<span class="nc" id="L243">		append(&quot;newpath&quot;, true);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (isDashed2()) {</span>
+<span class="nc" id="L245">			append(format(x1) + &quot; &quot; + format(y1) + &quot; moveto&quot;, true);</span>
+<span class="nc" id="L246">			append(format(x2 - x1) + &quot; &quot; + format(y2 - y1) + &quot; rlineto&quot;, true);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		} else if (x1 == x2) {</span>
+<span class="nc" id="L248">			epsHLine(x1, Math.min(y1, y2), Math.max(y1, y2));</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		} else if (y1 == y2) {</span>
+<span class="nc" id="L250">			epsVLine(y1, Math.min(x1, x2), Math.max(x1, x2));</span>
+		}
+<span class="nc" id="L252">		append(&quot;stroke&quot;, true);</span>
+<span class="nc" id="L253">		ensureVisible(Math.max(x1, x2), Math.max(y1, y2));</span>
+<span class="nc" id="L254">	}</span>
+
+	protected void epsHLine(final double x, final double ymin, final double ymax) {
+<span class="nc" id="L257">		append(format(x) + &quot; &quot; + format(ymin) + &quot; moveto&quot;, true);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		for (long y2 = (long) (ymin * COEF); y2 &lt; (long) (ymax * COEF); y2 += (dashVisible + dashSpace)) {</span>
+			final long v;
+<span class="nc bnc" id="L260" title="All 2 branches missed.">			if (y2 + dashVisible &gt; (long) (ymax * COEF))</span>
+<span class="nc" id="L261">				v = y2 - (long) (ymax * COEF);</span>
+			else
+<span class="nc" id="L263">				v = dashSpace;</span>
+
+<span class="nc" id="L265">			append(&quot;0 &quot; + v + &quot; rlineto&quot;, true);</span>
+<span class="nc" id="L266">			append(&quot;0 &quot; + dashSpace + &quot; rmoveto&quot;, true);</span>
+		}
+<span class="nc" id="L268">	}</span>
+
+	protected void epsVLine(final double y, final double xmin, final double xmax) {
+<span class="nc" id="L271">		append(format(xmin) + &quot; &quot; + format(y) + &quot; moveto&quot;, true);</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		for (long x2 = (long) (xmin * COEF); x2 &lt; (long) (xmax * COEF); x2 += (dashVisible + dashSpace)) {</span>
+			final long v;
+<span class="nc bnc" id="L274" title="All 2 branches missed.">			if (x2 + dashVisible &gt; (long) (xmax * COEF))</span>
+<span class="nc" id="L275">				v = x2 - (long) (xmax * COEF);</span>
+			else
+<span class="nc" id="L277">				v = dashSpace;</span>
+
+<span class="nc" id="L279">			append(&quot;&quot; + v + &quot; 0 rlineto&quot;, true);</span>
+<span class="nc" id="L280">			append(&quot;&quot; + dashSpace + &quot; 0 rmoveto&quot;, true);</span>
+		}
+<span class="nc" id="L282">	}</span>
+
+	final public void epsPath(double x, double y, UPath path) {
+<span class="nc" id="L285">		checkCloseDone();</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		if (isNull(fillcolor) == false) {</span>
+<span class="nc" id="L287">			appendColor(fillcolor);</span>
+<span class="nc" id="L288">			append(&quot;newpath&quot;, true);</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">			for (USegment seg : path) {</span>
+<span class="nc" id="L290">				final USegmentType type = seg.getSegmentType();</span>
+<span class="nc" id="L291">				final double coord[] = seg.getCoord();</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">				if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="nc" id="L293">					movetoNoMacro(coord[0] + x, coord[1] + y);</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="nc" id="L295">					linetoNoMacro(coord[0] + x, coord[1] + y);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="nc" id="L297">					throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="nc" id="L299">					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_CLOSE) {</span>
+					// Nothing
+<span class="nc bnc" id="L302" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="nc" id="L303">					linetoNoMacro(coord[5] + x, coord[6] + y);</span>
+				} else {
+<span class="nc" id="L305">					Log.println(&quot;unknown1 &quot; + seg);</span>
+				}
+<span class="nc" id="L307">			}</span>
+<span class="nc" id="L308">			append(&quot;closepath eofill&quot;, true);</span>
+		}
+
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		if (isNull(color) == false) {</span>
+<span class="nc" id="L312">			append(strokeWidth + &quot; setlinewidth&quot;, true);</span>
+<span class="nc" id="L313">			appendColor(color);</span>
+<span class="nc" id="L314">			append(&quot;newpath&quot;, true);</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">			for (USegment seg : path) {</span>
+<span class="nc" id="L316">				final USegmentType type = seg.getSegmentType();</span>
+<span class="nc" id="L317">				final double coord[] = seg.getCoord();</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">				if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="nc" id="L319">					movetoNoMacro(coord[0] + x, coord[1] + y);</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="nc" id="L321">					linetoNoMacro(coord[0] + x, coord[1] + y);</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="nc" id="L323">					throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="nc" id="L325">					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_CLOSE) {</span>
+					// Nothing
+<span class="nc bnc" id="L328" title="All 2 branches missed.">				} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="nc" id="L329">					linetoNoMacro(coord[5] + x, coord[6] + y);</span>
+				} else {
+<span class="nc" id="L331">					Log.println(&quot;unknown2 &quot; + seg);</span>
+				}
+<span class="nc" id="L333">			}</span>
+<span class="nc" id="L334">			append(&quot;stroke&quot;, true);</span>
+		}
+
+<span class="nc" id="L337">	}</span>
+
+	private final boolean isNull(Color c) {
+<span class="nc bnc" id="L340" title="All 4 branches missed.">		return c == null || c.getAlpha() == 0;</span>
+	}
+
+	final public void epsPolygon(HColorGradient gr, ColorMapper mapper, double... points) {
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		assert points.length % 2 == 0;</span>
+<span class="nc" id="L345">		setFillColor(gr.getColor1().toColor(mapper));</span>
+<span class="nc" id="L346">		epsPolygon(points);</span>
+<span class="nc" id="L347">	}</span>
+
+	final public void epsPolygon(double... points) {
+<span class="nc bnc" id="L350" title="All 2 branches missed.">		assert points.length % 2 == 0;</span>
+<span class="nc" id="L351">		checkCloseDone();</span>
+<span class="nc" id="L352">		double lastX = 0;</span>
+<span class="nc" id="L353">		double lastY = 0;</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">		if (isNull(fillcolor) == false) {</span>
+<span class="nc" id="L355">			appendColor(fillcolor);</span>
+<span class="nc" id="L356">			append(&quot;newpath&quot;, true);</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">			for (int i = 0; i &lt; points.length; i += 2) {</span>
+<span class="nc" id="L358">				ensureVisible(points[i], points[i + 1]);</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">				if (i == 0)</span>
+<span class="nc" id="L360">					append(format(points[i]) + &quot; &quot; + format(points[i + 1]) + &quot; moveto&quot;, true);</span>
+				else
+<span class="nc" id="L362">					append(format(points[i] - lastX) + &quot; &quot; + format(points[i + 1] - lastY) + &quot; rlineto&quot;, true);</span>
+
+<span class="nc" id="L364">				lastX = points[i];</span>
+<span class="nc" id="L365">				lastY = points[i + 1];</span>
+			}
+<span class="nc" id="L367">			append(format(points[0]) + &quot; &quot; + format(points[1]) + &quot; lineto&quot;, true);</span>
+<span class="nc" id="L368">			append(&quot;closepath eofill&quot;, true);</span>
+		}
+
+<span class="nc bnc" id="L371" title="All 2 branches missed.">		if (isNull(color) == false) {</span>
+<span class="nc" id="L372">			append(strokeWidth + &quot; setlinewidth&quot;, true);</span>
+<span class="nc" id="L373">			appendColor(color);</span>
+<span class="nc" id="L374">			append(&quot;newpath&quot;, true);</span>
+<span class="nc bnc" id="L375" title="All 2 branches missed.">			for (int i = 0; i &lt; points.length; i += 2) {</span>
+<span class="nc" id="L376">				ensureVisible(points[i], points[i + 1]);</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">				if (i == 0)</span>
+<span class="nc" id="L378">					append(format(points[i]) + &quot; &quot; + format(points[i + 1]) + &quot; moveto&quot;, true);</span>
+				else
+<span class="nc" id="L380">					append(format(points[i] - lastX) + &quot; &quot; + format(points[i + 1] - lastY) + &quot; rlineto&quot;, true);</span>
+
+<span class="nc" id="L382">				lastX = points[i];</span>
+<span class="nc" id="L383">				lastY = points[i + 1];</span>
+			}
+<span class="nc" id="L385">			append(format(points[0]) + &quot; &quot; + format(points[1]) + &quot; lineto&quot;, true);</span>
+<span class="nc" id="L386">			append(&quot;closepath stroke&quot;, true);</span>
+		}
+
+<span class="nc" id="L389">	}</span>
+
+	final public void epsRectangle(double x, double y, double width, double height, double rx, double ry) {
+<span class="nc" id="L392">		checkCloseDone();</span>
+<span class="nc" id="L393">		ensureVisible(x, y);</span>
+<span class="nc" id="L394">		ensureVisible(x + width, y + height);</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		if (isNull(fillcolor) == false) {</span>
+<span class="nc" id="L396">			appendColor(fillcolor);</span>
+<span class="nc" id="L397">			epsRectangleInternal(x, y, width, height, rx, ry, true);</span>
+<span class="nc" id="L398">			append(&quot;closepath eofill&quot;, true);</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">			if (isDashed3())</span>
+<span class="nc" id="L400">				append(&quot;[] 0 setdash&quot;, true);</span>
+		}
+
+<span class="nc bnc" id="L403" title="All 2 branches missed.">		if (isNull(color) == false) {</span>
+<span class="nc" id="L404">			append(strokeWidth + &quot; setlinewidth&quot;, true);</span>
+<span class="nc" id="L405">			appendColor(color);</span>
+<span class="nc" id="L406">			epsRectangleInternal(x, y, width, height, rx, ry, false);</span>
+<span class="nc" id="L407">			append(&quot;closepath stroke&quot;, true);</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">			if (isDashed3())</span>
+<span class="nc" id="L409">				append(&quot;[] 0 setdash&quot;, true);</span>
+
+		}
+<span class="nc" id="L412">	}</span>
+
+	final public void epsRectangle(double x, double y, double width, double height, double rx, double ry,
+			HColorGradient gr, ColorMapper mapper) {
+<span class="nc bnc" id="L416" title="All 2 branches missed.">		if (isNull(color))</span>
+<span class="nc" id="L417">			throw new IllegalStateException();</span>
+<span class="nc" id="L418">		checkCloseDone();</span>
+<span class="nc" id="L419">		ensureVisible(x, y);</span>
+<span class="nc" id="L420">		ensureVisible(x + width, y + height);</span>
+<span class="nc" id="L421">		setcolorgradientUsed = true;</span>
+
+<span class="nc bnc" id="L423" title="All 4 branches missed.">		if (rx == 0 &amp;&amp; ry == 0) {</span>
+<span class="nc" id="L424">			simplerectUsed = true;</span>
+<span class="nc" id="L425">			appendColorShort(gr.getColor1().toColor(mapper));</span>
+<span class="nc" id="L426">			appendColorShort(gr.getColor2().toColor(mapper));</span>
+<span class="nc" id="L427">			append(format(width) + &quot; &quot; + format(height) + &quot; &quot; + format(x) + &quot; &quot; + format(y), true);</span>
+<span class="nc" id="L428">			append(&quot;100 -1 1 {&quot;, true);</span>
+<span class="nc" id="L429">			append(&quot;100 div&quot;, true);</span>
+<span class="nc" id="L430">			append(&quot;newpath&quot;, true);</span>
+<span class="nc" id="L431">			append(&quot;2 index 2 index moveto&quot;, true);</span>
+<span class="nc" id="L432">			append(&quot;dup 5 index mul 2 mul dup 0 rlineto&quot;, true);</span>
+<span class="nc" id="L433">			append(&quot;neg 4 index 2 index mul 2 mul rlineto&quot;, true);</span>
+<span class="nc" id="L434">			append(&quot;closepath eoclip&quot;, true);</span>
+<span class="nc" id="L435">			append(&quot;10 index 10 index 10 index&quot;, true);</span>
+<span class="nc" id="L436">			append(&quot;10 index 10 index 10 index&quot;, true);</span>
+<span class="nc" id="L437">			append(&quot;6 index setcolorgradient&quot;, true);</span>
+<span class="nc" id="L438">			append(&quot;4 index 4 index 4 index 4 index simplerect&quot;, true);</span>
+<span class="nc" id="L439">			append(&quot;closepath eofill&quot;, true);</span>
+<span class="nc" id="L440">			append(&quot;pop&quot;, true);</span>
+<span class="nc" id="L441">			append(&quot;} for&quot;, true);</span>
+<span class="nc" id="L442">			append(&quot;pop pop pop pop&quot;, true);</span>
+<span class="nc" id="L443">			append(&quot;pop pop pop&quot;, true);</span>
+<span class="nc" id="L444">			append(&quot;pop pop pop&quot;, true);</span>
+<span class="nc" id="L445">			append(&quot;initclip&quot;, true);</span>
+		} else {
+<span class="nc" id="L447">			roundrectUsed = true;</span>
+<span class="nc" id="L448">			appendColorShort(gr.getColor1().toColor(mapper));</span>
+<span class="nc" id="L449">			appendColorShort(gr.getColor2().toColor(mapper));</span>
+<span class="nc" id="L450">			append(format(width) + &quot; &quot; + format(height) + &quot; &quot; + format(x) + &quot; &quot; + format(y) + &quot; &quot;</span>
+<span class="nc" id="L451">					+ format((rx + ry) / 2), true);</span>
+<span class="nc" id="L452">			append(&quot;100 -1 1 {&quot;, true);</span>
+<span class="nc" id="L453">			append(&quot;100 div&quot;, true);</span>
+<span class="nc" id="L454">			append(&quot;newpath&quot;, true);</span>
+<span class="nc" id="L455">			append(&quot;3 index 3 index moveto&quot;, true);</span>
+<span class="nc" id="L456">			append(&quot;dup 6 index mul 2 mul dup 0 rlineto&quot;, true);</span>
+<span class="nc" id="L457">			append(&quot;neg 5 index 2 index mul 2 mul rlineto&quot;, true);</span>
+<span class="nc" id="L458">			append(&quot;closepath eoclip&quot;, true);</span>
+<span class="nc" id="L459">			append(&quot;11 index 11 index 11 index&quot;, true);</span>
+<span class="nc" id="L460">			append(&quot;11 index 11 index 11 index&quot;, true);</span>
+<span class="nc" id="L461">			append(&quot;6 index setcolorgradient&quot;, true);</span>
+<span class="nc" id="L462">			append(&quot;5 index 5 index 5 index 5 index 5 index roundrect&quot;, true);</span>
+<span class="nc" id="L463">			append(&quot;closepath eofill&quot;, true);</span>
+<span class="nc" id="L464">			append(&quot;pop&quot;, true);</span>
+<span class="nc" id="L465">			append(&quot;} for&quot;, true);</span>
+<span class="nc" id="L466">			append(&quot;pop pop pop pop pop&quot;, true);</span>
+<span class="nc" id="L467">			append(&quot;pop pop pop&quot;, true);</span>
+<span class="nc" id="L468">			append(&quot;pop pop pop&quot;, true);</span>
+<span class="nc" id="L469">			append(&quot;initclip&quot;, true);</span>
+		}
+<span class="nc" id="L471">	}</span>
+
+	private void epsRectangleInternal(double x, double y, double width, double height, double rx, double ry,
+			boolean fill) {
+<span class="nc bnc" id="L475" title="All 4 branches missed.">		if (rx == 0 &amp;&amp; ry == 0)</span>
+<span class="nc" id="L476">			simpleRectangle(x, y, width, height, fill);</span>
+		else
+<span class="nc" id="L478">			roundRectangle(x, y, width, height, rx, ry);</span>
+
+<span class="nc" id="L480">	}</span>
+
+	private void roundRectangle(double x, double y, double width, double height, double rx, double ry) {
+<span class="nc bnc" id="L483" title="All 2 branches missed.">		if (isDashed3())</span>
+<span class="nc" id="L484">			append(&quot;[&quot; + dashSpace + &quot; &quot; + dashVisible + &quot;] 0 setdash&quot;, true);</span>
+
+<span class="nc" id="L486">		final double round = MathUtils.min((rx + ry) / 2, width / 2, height / 2);</span>
+<span class="nc" id="L487">		append(format(width) + &quot; &quot; + format(height) + &quot; &quot; + format(x) + &quot; &quot; + format(y) + &quot; &quot; + format(round)</span>
+				+ &quot; roundrect&quot;, true);
+<span class="nc" id="L489">		roundrectUsed = true;</span>
+<span class="nc" id="L490">	}</span>
+
+	private void simpleRectangle(double x, double y, double width, double height, boolean fill) {
+<span class="nc bnc" id="L493" title="All 2 branches missed.">		if (isDashed3())</span>
+<span class="nc" id="L494">			append(&quot;[&quot; + dashSpace + &quot; &quot; + dashVisible + &quot;] 0 setdash&quot;, true);</span>
+
+		// if (isDashed3() || fill) {
+<span class="nc" id="L497">		append(format(width) + &quot; &quot; + format(height) + &quot; &quot; + format(x) + &quot; &quot; + format(y) + &quot; simplerect&quot;, true);</span>
+<span class="nc" id="L498">		simplerectUsed = true;</span>
+		// }
+<span class="nc" id="L500">	}</span>
+
+	/**
+	 * Converts a counter clockwise angle to a clockwise angle. i.e. 0 -&gt; 360, 90 -&gt;
+	 * 270, 180 -&gt; 180, 270 -&gt; 90
+	 * 
+	 * @param counterClockwise counter clockwise angle in degrees
+	 * @return clockwise angle in degrees
+	 */
+	private int convertToClockwiseAngle(double counterClockwise) {
+<span class="nc" id="L510">		return (int) (360.0 - counterClockwise);</span>
+	}
+
+	final public void epsEllipse(double x, double y, double xRadius, double yRadius, double start, double extend) {
+<span class="nc" id="L514">		checkCloseDone();</span>
+<span class="nc" id="L515">		ensureVisible(x + xRadius, y + yRadius);</span>
+<span class="nc" id="L516">		double scale = 1;</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">		if (xRadius != yRadius) {</span>
+<span class="nc" id="L518">			scale = yRadius / xRadius;</span>
+<span class="nc" id="L519">			append(&quot;gsave&quot;, true);</span>
+<span class="nc" id="L520">			append(&quot;1 &quot; + format(scale) + &quot; scale&quot;, true);</span>
+		}
+		// if (fillcolor != null) {
+		// appendColor(fillcolor);
+		// append(&quot;newpath&quot;, true);
+		// append(format(x) + &quot; &quot; + format(y / scale) + &quot; &quot; + format(xRadius) + &quot; 0 360
+		// arc&quot;, true);
+		// append(&quot;closepath eofill&quot;, true);
+		// }
+
+<span class="nc bnc" id="L530" title="All 2 branches missed.">		if (isNull(color) == false) {</span>
+<span class="nc" id="L531">			append(strokeWidth + &quot; setlinewidth&quot;, true);</span>
+<span class="nc" id="L532">			appendColor(color);</span>
+<span class="nc" id="L533">			append(&quot;newpath&quot;, true);</span>
+
+<span class="nc" id="L535">			final double a1 = convertToClockwiseAngle(start + extend);</span>
+<span class="nc" id="L536">			final double a2 = convertToClockwiseAngle(start);</span>
+<span class="nc" id="L537">			append(format(x) + &quot; &quot; + format(y / scale) + &quot; &quot; + format(xRadius) + &quot; &quot; + a1 + &quot; &quot; + a2 + &quot; arc&quot;, true);</span>
+<span class="nc" id="L538">			append(&quot;stroke&quot;, true);</span>
+		}
+
+<span class="nc bnc" id="L541" title="All 2 branches missed.">		if (scale != 1)</span>
+<span class="nc" id="L542">			append(&quot;grestore&quot;, true);</span>
+
+<span class="nc" id="L544">	}</span>
+
+	final public void epsEllipse(double x, double y, double xRadius, double yRadius) {
+<span class="nc" id="L547">		checkCloseDone();</span>
+<span class="nc" id="L548">		ensureVisible(x + xRadius, y + yRadius);</span>
+<span class="nc" id="L549">		double scale = 1;</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">		if (xRadius != yRadius) {</span>
+<span class="nc" id="L551">			scale = yRadius / xRadius;</span>
+<span class="nc" id="L552">			append(&quot;gsave&quot;, true);</span>
+<span class="nc" id="L553">			append(&quot;1 &quot; + formatSimple4(scale) + &quot; scale&quot;, true);</span>
+		}
+<span class="nc bnc" id="L555" title="All 2 branches missed.">		if (isNull(fillcolor) == false) {</span>
+<span class="nc" id="L556">			appendColor(fillcolor);</span>
+<span class="nc" id="L557">			append(&quot;newpath&quot;, true);</span>
+<span class="nc" id="L558">			append(format(x) + &quot; &quot; + format(y / scale) + &quot; &quot; + format(xRadius) + &quot; 0 360 arc&quot;, true);</span>
+<span class="nc" id="L559">			append(&quot;closepath eofill&quot;, true);</span>
+		}
+
+<span class="nc bnc" id="L562" title="All 2 branches missed.">		if (isNull(color) == false) {</span>
+<span class="nc" id="L563">			append(strokeWidth + &quot; setlinewidth&quot;, true);</span>
+<span class="nc" id="L564">			appendColor(color);</span>
+<span class="nc" id="L565">			append(&quot;newpath&quot;, true);</span>
+<span class="nc" id="L566">			append(format(x) + &quot; &quot; + format(y / scale) + &quot; &quot; + format(xRadius) + &quot; 0 360 arc&quot;, true);</span>
+<span class="nc" id="L567">			append(&quot;closepath stroke&quot;, true);</span>
+		}
+
+<span class="nc bnc" id="L570" title="All 2 branches missed.">		if (scale != 1)</span>
+<span class="nc" id="L571">			append(&quot;grestore&quot;, true);</span>
+
+<span class="nc" id="L573">	}</span>
+
+	final protected void appendColor(Color c) {
+<span class="nc bnc" id="L576" title="All 2 branches missed.">		if (isNull(c))</span>
+<span class="nc" id="L577">			return;</span>
+
+<span class="nc" id="L579">		final double r = c.getRed() / 255.0;</span>
+<span class="nc" id="L580">		final double g = c.getGreen() / 255.0;</span>
+<span class="nc" id="L581">		final double b = c.getBlue() / 255.0;</span>
+<span class="nc" id="L582">		append(formatSimple2(r) + &quot; &quot; + formatSimple2(g) + &quot; &quot; + formatSimple2(b) + &quot; setrgbcolor&quot;, true);</span>
+<span class="nc" id="L583">	}</span>
+
+	final protected void appendColorShort(Color c) {
+<span class="nc bnc" id="L586" title="All 2 branches missed.">		if (isNull(c))</span>
+<span class="nc" id="L587">			return;</span>
+
+<span class="nc" id="L589">		final double r = c.getRed() / 255.0;</span>
+<span class="nc" id="L590">		final double g = c.getGreen() / 255.0;</span>
+<span class="nc" id="L591">		final double b = c.getBlue() / 255.0;</span>
+<span class="nc" id="L592">		append(formatSimple2(r) + &quot; &quot; + formatSimple2(g) + &quot; &quot; + formatSimple2(b), true);</span>
+<span class="nc" id="L593">	}</span>
+
+	static String format(double x) {
+<span class="nc bnc" id="L596" title="All 2 branches missed.">		if (x == 0)</span>
+<span class="nc" id="L597">			return &quot;0&quot;;</span>
+
+<span class="nc" id="L599">		return Long.toString((long) (x * COEF));</span>
+	}
+
+	public static String formatSimple4(double x) {
+<span class="nc bnc" id="L603" title="All 2 branches missed.">		if (x == 0)</span>
+<span class="nc" id="L604">			return &quot;0&quot;;</span>
+
+<span class="nc" id="L606">		String s = String.format(Locale.US, &quot;%1.4f&quot;, x);</span>
+<span class="nc" id="L607">		s = s.replaceAll(&quot;(\\.\\d*?)0+$&quot;, &quot;$1&quot;);</span>
+<span class="nc bnc" id="L608" title="All 2 branches missed.">		if (s.endsWith(&quot;.&quot;))</span>
+<span class="nc" id="L609">			s = s.substring(0, s.length() - 1);</span>
+
+<span class="nc" id="L611">		return s;</span>
+	}
+
+	private static String formatSimple2(double x) {
+<span class="nc bnc" id="L615" title="All 2 branches missed.">		if (x == 0)</span>
+<span class="nc" id="L616">			return &quot;0&quot;;</span>
+
+<span class="nc" id="L618">		String s = String.format(Locale.US, &quot;%1.2f&quot;, x);</span>
+<span class="nc" id="L619">		s = s.replaceAll(&quot;(\\.\\d*?)0+$&quot;, &quot;$1&quot;);</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">		if (s.endsWith(&quot;.&quot;))</span>
+<span class="nc" id="L621">			s = s.substring(0, s.length() - 1);</span>
+
+<span class="nc" id="L623">		return s;</span>
+	}
+
+	protected void append(String s, boolean checkConsistence) {
+<span class="nc bnc" id="L627" title="All 4 branches missed.">		if (checkConsistence &amp;&amp; s.indexOf(&quot;  &quot;) != -1)</span>
+<span class="nc" id="L628">			throw new IllegalArgumentException(s);</span>
+
+<span class="nc" id="L630">		body.append(s + BackSlash.NEWLINE);</span>
+<span class="nc" id="L631">	}</span>
+
+	final public void linetoNoMacro(double x1, double y1) {
+<span class="nc" id="L634">		append(format(x1) + &quot; &quot; + format(y1) + &quot; lineto&quot;, true);</span>
+<span class="nc" id="L635">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L636">	}</span>
+
+	final public void movetoNoMacro(double x1, double y1) {
+<span class="nc" id="L639">		append(format(x1) + &quot; &quot; + format(y1) + &quot; moveto&quot;, true);</span>
+<span class="nc" id="L640">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L641">	}</span>
+
+	final public void curvetoNoMacro(double x1, double y1, double x2, double y2, double x3, double y3) {
+<span class="nc" id="L644">		append(format(x1) + &quot; &quot; + format(y1) + &quot; &quot; + format(x2) + &quot; &quot; + format(y2) + &quot; &quot; + format(x3) + &quot; &quot; + format(y3)</span>
+				+ &quot; curveto&quot;, true);
+<span class="nc" id="L646">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L647">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L648">		ensureVisible(x3, y3);</span>
+<span class="nc" id="L649">	}</span>
+
+	// FONT
+	public void moveto(double x1, double y1) {
+<span class="nc" id="L653">		append(format(x1) + &quot; &quot; + format(y1) + &quot; moveto&quot;, true);</span>
+<span class="nc" id="L654">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L655">	}</span>
+
+	public void lineto(double x1, double y1) {
+<span class="nc" id="L658">		append(format(x1) + &quot; &quot; + format(y1) + &quot; lineto&quot;, true);</span>
+<span class="nc" id="L659">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L660">	}</span>
+
+	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
+<span class="nc" id="L663">		append(format(x1) + &quot; &quot; + format(y1) + &quot; &quot; + format(x2) + &quot; &quot; + format(y2) + &quot; &quot; + format(x3) + &quot; &quot; + format(y3)</span>
+				+ &quot; curveto&quot;, true);
+<span class="nc" id="L665">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L666">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L667">		ensureVisible(x3, y3);</span>
+<span class="nc" id="L668">	}</span>
+
+	public void quadto(double x1, double y1, double x2, double y2) {
+<span class="nc" id="L671">		append(format(x1) + &quot; &quot; + format(y1) + &quot; &quot; + format(x1) + &quot; &quot; + format(y1) + &quot; &quot; + format(x2) + &quot; &quot; + format(y2)</span>
+				+ &quot; curveto&quot;, true);
+<span class="nc" id="L673">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L674">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L675">	}</span>
+
+	public void newpath() {
+<span class="nc" id="L678">		append(&quot;0 setlinewidth&quot;, true);</span>
+<span class="nc" id="L679">		appendColor(color);</span>
+<span class="nc" id="L680">		append(&quot;newpath&quot;, true);</span>
+<span class="nc" id="L681">	}</span>
+
+	public void closepath() {
+<span class="nc" id="L684">		append(&quot;closepath&quot;, true);</span>
+<span class="nc" id="L685">	}</span>
+
+	public void fill(int windingRule) {
+<span class="nc" id="L688">		append(&quot;%fill&quot;, true);</span>
+<span class="nc bnc" id="L689" title="All 2 branches missed.">		if (windingRule == PathIterator.WIND_EVEN_ODD)</span>
+<span class="nc" id="L690">			append(&quot;eofill&quot;, true);</span>
+<span class="nc bnc" id="L691" title="All 2 branches missed.">		else if (windingRule == PathIterator.WIND_NON_ZERO)</span>
+<span class="nc" id="L692">			append(&quot;fill&quot;, true);</span>
+
+<span class="nc" id="L694">	}</span>
+
+	final public void drawImage(BufferedImage image, double x, double y) {
+<span class="nc" id="L697">		final int width = image.getWidth();</span>
+<span class="nc" id="L698">		final int height = image.getHeight();</span>
+<span class="nc" id="L699">		append(&quot;gsave&quot;, true);</span>
+<span class="nc" id="L700">		append(format(x) + &quot; &quot; + format(y) + &quot; translate&quot;, true);</span>
+<span class="nc" id="L701">		append(format(width) + &quot; &quot; + format(height) + &quot; scale&quot;, true);</span>
+<span class="nc" id="L702">		append(&quot;&quot; + width + &quot; &quot; + height + &quot; 8 [&quot; + width + &quot; 0 0 -&quot; + height + &quot; 0 &quot; + height + &quot;]&quot;, true);</span>
+		// append(&quot;&quot; + width + &quot; &quot; + height + &quot; 8 [0 0 0 0 0 0]&quot;);
+<span class="nc" id="L704">		append(&quot;{&lt;&quot;, true);</span>
+<span class="nc" id="L705">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L706" title="All 2 branches missed.">		for (int j = height - 1; j &gt;= 0; j--)</span>
+<span class="nc bnc" id="L707" title="All 2 branches missed.">			for (int i = 0; i &lt; width; i++) {</span>
+<span class="nc" id="L708">				final String hexString = getRgb(image.getRGB(i, j));</span>
+<span class="nc bnc" id="L709" title="All 2 branches missed.">				assert hexString.length() == 6;</span>
+<span class="nc" id="L710">				sb.append(hexString);</span>
+			}
+
+<span class="nc" id="L713">		append(sb.toString(), true);</span>
+		// append(&quot;&gt;} image&quot;);
+<span class="nc" id="L715">		append(&quot;&gt;} false 3 colorimage&quot;, true);</span>
+<span class="nc" id="L716">		ensureVisible(x + width, y + height);</span>
+<span class="nc" id="L717">		append(&quot;grestore&quot;, true);</span>
+<span class="nc" id="L718">	}</span>
+
+	static String getRgb(int x) {
+<span class="nc" id="L721">		final String s = &quot;000000&quot; + Integer.toHexString(x);</span>
+<span class="nc" id="L722">		return s.substring(s.length() - 6);</span>
+	}
+
+	final public void drawEps(String eps, double x, double y) {
+
+<span class="nc" id="L727">		final int idx = eps.indexOf(&quot;%%BoundingBox:&quot;);</span>
+<span class="nc bnc" id="L728" title="All 2 branches missed.">		if (idx == -1)</span>
+<span class="nc" id="L729">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L731">		final StringTokenizer st = new StringTokenizer(eps.substring(idx + &quot;%%BoundingBox:&quot;.length()), &quot; \n\t\r&quot;);</span>
+<span class="nc" id="L732">		final int x1 = Integer.parseInt(st.nextToken());</span>
+<span class="nc" id="L733">		final int y1 = Integer.parseInt(st.nextToken());</span>
+<span class="nc" id="L734">		final int x2 = Integer.parseInt(st.nextToken());</span>
+<span class="nc" id="L735">		final int y2 = Integer.parseInt(st.nextToken());</span>
+<span class="nc bnc" id="L736" title="All 2 branches missed.">		assert x2 &gt;= x1;</span>
+<span class="nc bnc" id="L737" title="All 2 branches missed.">		assert y2 &gt;= y1;</span>
+
+<span class="nc" id="L739">		append(&quot;gsave&quot;, true);</span>
+<span class="nc" id="L740">		final double dx = x - x1;</span>
+<span class="nc" id="L741">		final double dy = y + y2;</span>
+<span class="nc" id="L742">		append(format(dx) + &quot; &quot; + format(dy) + &quot; translate&quot;, true);</span>
+<span class="nc" id="L743">		append(&quot;1 -1 scale&quot;, true);</span>
+<span class="nc" id="L744">		append(eps, false);</span>
+<span class="nc" id="L745">		ensureVisible(x + (x2 - x1), y + (y2 - y1));</span>
+<span class="nc" id="L746">		append(&quot;grestore&quot;, true);</span>
+<span class="nc" id="L747">	}</span>
+
+	protected final long getDashVisible() {
+<span class="nc" id="L750">		return dashVisible;</span>
+	}
+
+	protected final long getDashSpace() {
+<span class="nc" id="L754">		return dashSpace;</span>
+	}
+
+	static class UrlArea {
+		private final String url;
+<span class="nc" id="L759">		private int xmin = Integer.MAX_VALUE;</span>
+<span class="nc" id="L760">		private int xmax = Integer.MIN_VALUE;</span>
+<span class="nc" id="L761">		private int ymin = Integer.MAX_VALUE;</span>
+<span class="nc" id="L762">		private int ymax = Integer.MIN_VALUE;</span>
+
+<span class="nc" id="L764">		UrlArea(String url) {</span>
+<span class="nc" id="L765">			this.url = url;</span>
+<span class="nc" id="L766">		}</span>
+
+		void ensureVisible(int x, int y) {
+<span class="nc bnc" id="L769" title="All 2 branches missed.">			if (x &lt; xmin)</span>
+<span class="nc" id="L770">				xmin = x;</span>
+
+<span class="nc bnc" id="L772" title="All 2 branches missed.">			if (x &gt; xmax)</span>
+<span class="nc" id="L773">				xmax = x;</span>
+
+<span class="nc bnc" id="L775" title="All 2 branches missed.">			if (y &lt; ymin)</span>
+<span class="nc" id="L776">				ymin = y;</span>
+
+<span class="nc bnc" id="L778" title="All 2 branches missed.">			if (y &gt; ymax)</span>
+<span class="nc" id="L779">				ymax = y;</span>
+
+<span class="nc" id="L781">		}</span>
+	}
+
+	private UrlArea urlArea;
+
+	final public void closeLink() {
+<span class="nc bnc" id="L787" title="All 4 branches missed.">		if (urlArea != null &amp;&amp; urlArea.xmin != Integer.MAX_VALUE) {</span>
+<span class="nc" id="L788">			final int width = urlArea.xmax - urlArea.xmin;</span>
+<span class="nc" id="L789">			final int height = urlArea.ymax - urlArea.ymin;</span>
+<span class="nc bnc" id="L790" title="All 4 branches missed.">			assert width &gt;= 0 &amp;&amp; height &gt;= 0;</span>
+<span class="nc" id="L791">			epsUrlLink(urlArea.xmin, urlArea.ymin, width, height, urlArea.url);</span>
+		}
+<span class="nc" id="L793">		this.urlArea = null;</span>
+<span class="nc" id="L794">	}</span>
+
+	final public void epsUrlLink(int x, int y, int width, int height, String url) {
+<span class="nc" id="L797">		append(&quot;[ /Rect [ &quot; + x + &quot; &quot; + y + &quot; &quot; + (x + width) + &quot; &quot; + (y + height) + &quot; ]&quot;, true);</span>
+<span class="nc" id="L798">		append(&quot;/Border [ 0 0 0 ]&quot;, true);</span>
+<span class="nc" id="L799">		append(&quot;/Action &lt;&lt; /Subtype /URI /URI (&quot; + url + &quot;) &gt;&gt;&quot;, true);</span>
+<span class="nc" id="L800">		append(&quot;/Subtype /Link&quot;, true);</span>
+<span class="nc" id="L801">		append(&quot;/ANN pdfmark&quot;, true);</span>
+<span class="nc" id="L802">	}</span>
+
+	final public void openLink(String url) {
+		// javascript: security issue
+<span class="nc bnc" id="L806" title="All 2 branches missed.">		if (SecurityUtils.ignoreThisLink(url))</span>
+<span class="nc" id="L807">			return;</span>
+
+<span class="nc" id="L809">		this.urlArea = new UrlArea(url);</span>
+<span class="nc" id="L810">	}</span>
+
+	// Shadow
+<span class="nc" id="L813">	final private ShadowManager shadowManager = new ShadowManager(50, 200);</span>
+
+	final public void epsRectangleShadow(double x, double y, double width, double height, double rx, double ry,
+			double deltaShadow) {
+<span class="nc" id="L817">		setStrokeColor(null);</span>
+<span class="nc bnc" id="L818" title="All 2 branches missed.">		for (double i = 0; i &lt;= deltaShadow; i += 0.5) {</span>
+<span class="nc" id="L819">			setFillColor(shadowManager.getColor(i, deltaShadow));</span>
+<span class="nc" id="L820">			final double diff = i;</span>
+<span class="nc" id="L821">			epsRectangle(x + deltaShadow + diff, y + deltaShadow + diff, width - 2 * diff, height - 2 * diff, rx + 1,</span>
+					ry + 1);
+		}
+<span class="nc" id="L824">	}</span>
+
+	final public void epsPolygonShadow(double deltaShadow, double... points) {
+<span class="nc bnc" id="L827" title="All 2 branches missed.">		assert points.length % 2 == 0;</span>
+<span class="nc" id="L828">		setStrokeColor(null);</span>
+<span class="nc bnc" id="L829" title="All 2 branches missed.">		for (double i = 0; i &lt;= deltaShadow; i += 0.5) {</span>
+<span class="nc" id="L830">			setFillColor(shadowManager.getColor(i, deltaShadow));</span>
+<span class="nc" id="L831">			final double diff = i;</span>
+<span class="nc" id="L832">			epsPolygon(shadowManager.getShadowDeltaPoints(deltaShadow, diff, points));</span>
+		}
+<span class="nc" id="L834">	}</span>
+
+	final public void epsEllipseShadow(double x, double y, double xRadius, double yRadius, double deltaShadow) {
+<span class="nc" id="L837">		setStrokeColor(null);</span>
+<span class="nc bnc" id="L838" title="All 2 branches missed.">		for (double i = 0; i &lt;= deltaShadow; i += 0.5) {</span>
+<span class="nc" id="L839">			setFillColor(shadowManager.getColor(i, deltaShadow));</span>
+<span class="nc" id="L840">			final double diff = i;</span>
+<span class="nc" id="L841">			epsEllipse(x + deltaShadow, y + deltaShadow, xRadius - diff, yRadius - diff);</span>
+		}
+<span class="nc" id="L843">	}</span>
+
+	public void drawOk(DotPath dotPath, double x, double y) {
+		// boolean first = true;
+<span class="nc bnc" id="L847" title="All 2 branches missed.">		for (XCubicCurve2D bez : dotPath.getBeziers()) {</span>
+<span class="nc" id="L848">			bez = new XCubicCurve2D(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,</span>
+					y + bez.ctrly2, x + bez.x2, y + bez.y2);
+<span class="nc" id="L850">			this.epsLine(bez.x1, bez.y1, bez.x2, bez.y2);</span>
+<span class="nc" id="L851">		}</span>
+<span class="nc" id="L852">	}</span>
+
+	public void drawBezier(List&lt;XCubicCurve2D&gt; beziers, double x, double y) {
+<span class="nc" id="L855">		this.newpathDot();</span>
+<span class="nc" id="L856">		final boolean dashed = false;</span>
+<span class="nc" id="L857">		boolean first = true;</span>
+<span class="nc bnc" id="L858" title="All 2 branches missed.">		for (XCubicCurve2D bez : beziers) {</span>
+<span class="nc" id="L859">			bez = new XCubicCurve2D(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,</span>
+					y + bez.ctrly2, x + bez.x2, y + bez.y2);
+<span class="nc bnc" id="L861" title="All 2 branches missed.">			if (first) {</span>
+<span class="nc" id="L862">				this.movetoNoMacro(bez.x1, bez.y1);</span>
+<span class="nc" id="L863">				first = dashed;</span>
+			}
+<span class="nc" id="L865">			this.curvetoNoMacro(bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2);</span>
+<span class="nc" id="L866">		}</span>
+<span class="nc" id="L867">		this.closepathDot();</span>
+<span class="nc" id="L868">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

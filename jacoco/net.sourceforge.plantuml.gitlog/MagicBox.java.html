@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MagicBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gitlog</a> &gt; <span class="el_source">MagicBox.java</span></div><h1>MagicBox.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.gitlog;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class MagicBox {
+
+	private final ISkinParam skinParam;
+	private final GNode node;
+	private final HColor fontColor;
+
+<span class="nc" id="L62">	public MagicBox(ISkinParam skinParam, GNode node) {</span>
+<span class="nc" id="L63">		this.skinParam = skinParam;</span>
+<span class="nc" id="L64">		this.node = node;</span>
+<span class="nc" id="L65">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.gitDiagram)</span>
+<span class="nc" id="L66">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L67">		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L68">	}</span>
+
+	private TextBlock getSmallBlock() {
+<span class="nc" id="L71">		final FontConfiguration fc = FontConfiguration.create(UFont.monospaced(15).bold(), fontColor, fontColor, null);</span>
+<span class="nc" id="L72">		return node.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);</span>
+	}
+
+	private TextBlock getCommentBlock() {
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (node.getComment() != null &amp;&amp; node.isTop()) {</span>
+<span class="nc" id="L77">			final FontConfiguration tag = FontConfiguration.create(UFont.sansSerif(13), fontColor, fontColor, null);</span>
+<span class="nc" id="L78">			return Display.create(node.getComment()).create(tag, HorizontalAlignment.CENTER, skinParam);</span>
+		}
+<span class="nc" id="L80">		return TextBlockUtils.empty(0, 0);</span>
+
+	}
+
+	public XDimension2D getBigDim(StringBounder stringBounder) {
+<span class="nc" id="L85">		final XDimension2D dimComment = getCommentBlock().calculateDimension(stringBounder);</span>
+<span class="nc" id="L86">		final XDimension2D dimSmall = getSmallBlock().calculateDimension(stringBounder);</span>
+<span class="nc" id="L87">		final XDimension2D mergeTB = dimComment.mergeTB(dimSmall);</span>
+<span class="nc" id="L88">		return mergeTB.delta(8, 2);</span>
+	}
+
+	public void drawBorder(UGraphic ug, XDimension2D sizeInDot) {
+
+<span class="nc" id="L93">		final TextBlock comment = getCommentBlock();</span>
+<span class="nc" id="L94">		final TextBlock small = getSmallBlock();</span>
+
+<span class="nc" id="L96">		final double moveY = comment.calculateDimension(ug.getStringBounder()).getHeight();</span>
+
+<span class="nc" id="L98">		final URectangle rect = URectangle.build(sizeInDot.getWidth(), sizeInDot.getHeight() - moveY).rounded(8);</span>
+<span class="nc" id="L99">		ug.apply(UStroke.withThickness(1.5)).apply(UTranslate.dy(moveY)).draw(rect);</span>
+
+<span class="nc" id="L101">		comment.drawU(ug);</span>
+
+<span class="nc" id="L103">		final double deltaWidth = rect.getWidth() - small.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc" id="L104">		final double deltaHeight = rect.getHeight() - small.calculateDimension(ug.getStringBounder()).getHeight();</span>
+
+<span class="nc" id="L106">		small.drawU(ug.apply(new UTranslate(deltaWidth / 2, moveY + deltaHeight / 2)));</span>
+
+<span class="nc" id="L108">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

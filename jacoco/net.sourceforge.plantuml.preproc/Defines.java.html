@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Defines.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">Defines.java</span></div><h1>Defines.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.api.ApiWarning;
+import net.sourceforge.plantuml.file.AParentFolder;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.TVariableScope;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.version.Version;
+
+public class Defines implements Truth {
+
+<span class="fc" id="L67">	private final Map&lt;String, String&gt; environment = new LinkedHashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L68">	private final Map&lt;String, Define&gt; values = new LinkedHashMap&lt;String, Define&gt;();</span>
+
+	@Deprecated
+	@ApiWarning(willBeRemoved = &quot;in next major release&quot;)
+<span class="fc" id="L72">	public Defines() {</span>
+<span class="fc" id="L73">		environment.put(&quot;PLANTUML_VERSION&quot;, &quot;&quot; + Version.versionString());</span>
+<span class="fc" id="L74">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L78">		return values.keySet().toString() + &quot; &quot; + environment.keySet();</span>
+	}
+
+	public static Defines createEmpty() {
+<span class="fc" id="L82">		return new Defines();</span>
+	}
+
+	public void copyTo(TMemory memory, StringLocated location) throws EaterException {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		for (Entry&lt;String, Define&gt; ent : values.entrySet()) {</span>
+<span class="nc" id="L87">			final String name = ent.getKey();</span>
+<span class="nc" id="L88">			final Define def = ent.getValue();</span>
+<span class="nc" id="L89">			memory.putVariable(name, def.asTVariable(), TVariableScope.GLOBAL, location);</span>
+<span class="nc" id="L90">		}</span>
+
+<span class="fc" id="L92">	}</span>
+
+	public void overrideFilename(String filename) {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (filename != null) {</span>
+<span class="fc" id="L96">			environment.put(&quot;filename&quot;, filename);</span>
+<span class="fc" id="L97">			environment.put(&quot;filenameNoExtension&quot;, nameNoExtension(filename));</span>
+		}
+<span class="fc" id="L99">	}</span>
+
+	public void overrideDirPath(String fileDir) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (fileDir != null)</span>
+<span class="fc" id="L103">			environment.put(&quot;dirpath&quot;, fileDir.replace('\\', '/'));</span>
+<span class="fc" id="L104">	}</span>
+
+	public void importFrom(Defines other) {
+<span class="fc" id="L107">		this.environment.putAll(other.environment);</span>
+<span class="fc" id="L108">		this.values.putAll(other.values);</span>
+<span class="fc" id="L109">		magic = null;</span>
+<span class="fc" id="L110">	}</span>
+
+	public Defines cloneMe() {
+<span class="fc" id="L113">		final Defines result = new Defines();</span>
+<span class="fc" id="L114">		result.importFrom(this);</span>
+<span class="fc" id="L115">		return result;</span>
+	}
+
+	public static Defines createWithFileName(SFile file) {
+<span class="nc" id="L119">		Objects.requireNonNull(file);</span>
+<span class="nc" id="L120">		final Defines result = createEmpty();</span>
+<span class="nc" id="L121">		result.overrideFilename(file.getName());</span>
+<span class="nc" id="L122">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L124">			result.environment.put(&quot;dirpath&quot;,</span>
+<span class="nc" id="L125">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
+
+<span class="nc" id="L127">		return result;</span>
+	}
+
+	public static Defines createWithFileName(java.io.File file) {
+<span class="fc" id="L131">		Objects.requireNonNull(file);</span>
+<span class="fc" id="L132">		final Defines result = createEmpty();</span>
+<span class="fc" id="L133">		result.overrideFilename(file.getName());</span>
+<span class="fc" id="L134">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L136">			result.environment.put(&quot;dirpath&quot;,</span>
+<span class="nc" id="L137">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
+
+<span class="fc" id="L139">		return result;</span>
+	}
+
+	private static Defines createWithMap(Map&lt;String, String&gt; init) {
+<span class="nc" id="L143">		final Defines result = createEmpty();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : init.entrySet()) {</span>
+<span class="nc" id="L145">			result.environment.put(ent.getKey(), ent.getValue());</span>
+<span class="nc" id="L146">		}</span>
+<span class="nc" id="L147">		return result;</span>
+	}
+
+	public String getEnvironmentValue(String key) {
+<span class="fc" id="L151">		return this.environment.get(key);</span>
+	}
+
+	private static String nameNoExtension(String name) {
+<span class="fc" id="L155">		final int x = name.lastIndexOf('.');</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (x == -1)</span>
+<span class="nc" id="L157">			return name;</span>
+
+<span class="fc" id="L159">		return name.substring(0, x);</span>
+	}
+
+	public void define(String name, List&lt;String&gt; value, boolean emptyParentheses, AParentFolder currentDir) {
+<span class="nc" id="L163">		values.put(name, new Define(name, value, emptyParentheses, currentDir));</span>
+<span class="nc" id="L164">		magic = null;</span>
+<span class="nc" id="L165">	}</span>
+
+	public boolean isDefine(String expression) {
+		try {
+<span class="nc" id="L169">			final EvalBoolean eval = new EvalBoolean(expression, this);</span>
+<span class="nc" id="L170">			return eval.eval();</span>
+<span class="nc" id="L171">		} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L172">			Log.info(&quot;Error in &quot; + expression);</span>
+<span class="nc" id="L173">			return false;</span>
+		}
+	}
+
+	public boolean isTrue(String name) {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (String key : values.keySet())</span>
+<span class="nc bnc" id="L179" title="All 4 branches missed.">			if (key.equals(name) || key.startsWith(name + &quot;(&quot;))</span>
+<span class="nc" id="L180">				return true;</span>
+
+<span class="nc" id="L182">		return false;</span>
+	}
+
+	public void undefine(String name) {
+<span class="nc" id="L186">		values.remove(name);</span>
+<span class="nc" id="L187">		magic = null;</span>
+<span class="nc" id="L188">	}</span>
+
+	public List&lt;String&gt; applyDefines(String line) {
+		// System.err.println(&quot;line=&quot; + line + &quot; &quot; + values.size());
+<span class="nc" id="L192">		line = manageDate(line);</span>
+<span class="nc" id="L193">		line = manageEnvironment(line);</span>
+<span class="nc" id="L194">		line = method1(line);</span>
+		// line = values.size() &lt; 10 ? method1(line) : method2(line);
+<span class="nc" id="L196">		return Arrays.asList(line.split(&quot;\n&quot;));</span>
+	}
+
+	private String method1(String line) {
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (Define def : values.values())</span>
+<span class="nc" id="L201">			line = def.apply(line);</span>
+
+<span class="nc" id="L203">		return line;</span>
+	}
+
+	private Map&lt;String, Collection&lt;Define&gt;&gt; getAll() {
+<span class="nc" id="L207">		final Map&lt;String, Collection&lt;Define&gt;&gt; result = new LinkedHashMap&lt;String, Collection&lt;Define&gt;&gt;();</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (Define def : values.values()) {</span>
+<span class="nc" id="L209">			Collection&lt;Define&gt; tmp = result.get(def.getFunctionName());</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (tmp == null) {</span>
+<span class="nc" id="L211">				tmp = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L212">				result.put(def.getFunctionName(), tmp);</span>
+			}
+<span class="nc" id="L214">			tmp.add(def);</span>
+<span class="nc" id="L215">		}</span>
+<span class="nc" id="L216">		return result;</span>
+	}
+
+	private Map&lt;String, Collection&lt;Define&gt;&gt; magic;
+
+	private String method2(String line) {
+<span class="nc" id="L222">		final Set&lt;String&gt; words = words(line);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (magic == null)</span>
+<span class="nc" id="L224">			magic = getAll();</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (String w : words) {</span>
+<span class="nc" id="L227">			Collection&lt;Define&gt; tmp = magic.get(w);</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (tmp == null)</span>
+<span class="nc" id="L229">				continue;</span>
+
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			for (Define def : tmp)</span>
+<span class="nc" id="L232">				line = def.apply(line);</span>
+
+<span class="nc" id="L234">		}</span>
+<span class="nc" id="L235">		return line;</span>
+	}
+
+	private Set&lt;String&gt; words(String line) {
+<span class="nc" id="L239">		final String ID = &quot;[A-Za-z_][A-Za-z_0-9]*&quot;;</span>
+<span class="nc" id="L240">		Pattern p = Pattern.compile(ID);</span>
+<span class="nc" id="L241">		Matcher m = p.matcher(line);</span>
+<span class="nc" id="L242">		final Set&lt;String&gt; words = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		while (m.find())</span>
+<span class="nc" id="L244">			words.add(m.group(0));</span>
+
+<span class="nc" id="L246">		return words;</span>
+	}
+
+	private String manageEnvironment(String line) {
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : environment.entrySet()) {</span>
+<span class="nc" id="L251">			final String key = Pattern.quote(&quot;%&quot; + ent.getKey() + &quot;%&quot;);</span>
+<span class="nc" id="L252">			line = line.replaceAll(key, ent.getValue());</span>
+<span class="nc" id="L253">		}</span>
+<span class="nc" id="L254">		return line;</span>
+	}
+
+	private static final String DATE = &quot;(?i)%date(\\[(.+?)\\])?%&quot;;
+<span class="fc" id="L258">	private final static Pattern datePattern = Pattern.compile(DATE);</span>
+
+	private String manageDate(String line) {
+<span class="nc" id="L261">		final Matcher m = datePattern.matcher(line);</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L263">			final String format = m.group(2);</span>
+			String replace;
+<span class="nc bnc" id="L265" title="All 2 branches missed.">			if (format == null) {</span>
+<span class="nc" id="L266">				replace = new Date().toString();</span>
+			} else {
+				try {
+<span class="nc" id="L269">					replace = new SimpleDateFormat(format).format(new Date());</span>
+<span class="nc" id="L270">				} catch (Exception e) {</span>
+<span class="nc" id="L271">					replace = &quot;(BAD DATE PATTERN:&quot; + format + &quot;)&quot;;</span>
+<span class="nc" id="L272">				}</span>
+			}
+<span class="nc" id="L274">			line = line.replaceAll(DATE, replace);</span>
+		}
+<span class="nc" id="L276">		return line;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

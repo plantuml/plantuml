@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandLinkStateCommon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.statediagram.command</a> &gt; <span class="el_source">CommandLinkStateCommon.java</span></div><h1>CommandLinkStateCommon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution   :  Serge Wenger
+ * 
+ *
+ */
+package net.sourceforge.plantuml.statediagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram&gt; {
+	// ::remove folder when __HAXE__
+
+	CommandLinkStateCommon(IRegex pattern) {
+<span class="fc" id="L65">		super(pattern);</span>
+<span class="fc" id="L66">	}</span>
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		return pass == ParserPass.TWO;</span>
+	}
+
+
+	protected static RegexLeaf getStatePattern(String name) {
+<span class="fc" id="L75">		return new RegexLeaf(name,</span>
+				&quot;([%pLN_.:]+|[%pLN_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[%pLN_.:]+)(?:==+))[%s]*(\\&lt;\\&lt;.*\\&gt;\\&gt;)?[%s]*(#\\w+)?&quot;);
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="fc" id="L82">		final String ent1 = arg.get(&quot;ENT1&quot;, 0);</span>
+<span class="fc" id="L83">		final String ent2 = arg.get(&quot;ENT2&quot;, 0);</span>
+
+<span class="fc" id="L85">		final Entity cl1 = getEntityStart(location, diagram, ent1);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (cl1 == null)</span>
+<span class="nc" id="L87">			return CommandExecutionResult</span>
+<span class="nc" id="L88">					.error(&quot;The state &quot; + ent1 + &quot; has been created in a concurrent state : it cannot be used here.&quot;);</span>
+
+<span class="fc" id="L90">		final Entity cl2 = getEntityEnd(location, diagram, ent2);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (cl2 == null)</span>
+<span class="nc" id="L92">			return CommandExecutionResult</span>
+<span class="nc" id="L93">					.error(&quot;The state &quot; + ent2 + &quot; has been created in a concurrent state : it cannot be used here.&quot;);</span>
+
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (arg.get(&quot;ENT1&quot;, 1) != null)</span>
+<span class="nc" id="L96">			cl1.setStereotype(Stereotype.build(arg.get(&quot;ENT1&quot;, 1)));</span>
+
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (arg.get(&quot;ENT1&quot;, 2) != null) {</span>
+<span class="nc" id="L99">			final String s = arg.get(&quot;ENT1&quot;, 2);</span>
+<span class="nc" id="L100">			cl1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+		}
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (arg.get(&quot;ENT2&quot;, 1) != null) {</span>
+<span class="nc" id="L103">			cl2.setStereotype(Stereotype.build(arg.get(&quot;ENT2&quot;, 1)));</span>
+		}
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (arg.get(&quot;ENT2&quot;, 2) != null) {</span>
+<span class="nc" id="L106">			final String s = arg.get(&quot;ENT2&quot;, 2);</span>
+<span class="nc" id="L107">			cl2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+		}
+
+<span class="fc" id="L110">		String queue = arg.get(&quot;ARROW_BODY1&quot;, 0) + arg.get(&quot;ARROW_BODY2&quot;, 0);</span>
+<span class="fc" id="L111">		final Direction dir = getDirection(arg);</span>
+
+<span class="pc bpc" id="L113" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="nc" id="L114">			queue = &quot;-&quot;;</span>
+
+<span class="fc" id="L116">		final int lenght = queue.length();</span>
+
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		final boolean crossStart = arg.get(&quot;ARROW_CROSS_START&quot;, 0) != null;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		final boolean circleEnd = arg.get(&quot;ARROW_CIRCLE_END&quot;, 0) != null;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		final LinkType linkType = new LinkType(circleEnd ? LinkDecor.ARROW_AND_CIRCLE : LinkDecor.ARROW,</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);</span>
+
+<span class="fc" id="L123">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		final LinkArg linkArg = LinkArg.build(label, lenght, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="fc" id="L125">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,</span>
+				linkType, linkArg);
+<span class="pc bpc" id="L127" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP)</span>
+<span class="nc" id="L128">			link = link.getInv();</span>
+
+<span class="fc" id="L130">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="fc" id="L131">		diagram.addLink(link);</span>
+
+<span class="fc" id="L133">		return CommandExecutionResult.ok();</span>
+	}
+
+	private Direction getDirection(RegexResult arg) {
+<span class="fc" id="L137">		final String arrowDirection = arg.get(&quot;ARROW_DIRECTION&quot;, 0);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (arrowDirection != null)</span>
+<span class="nc" id="L139">			return StringUtils.getQueueDirection(arrowDirection);</span>
+
+<span class="fc" id="L141">		return getDefaultDirection();</span>
+	}
+
+	protected Direction getDefaultDirection() {
+<span class="fc" id="L145">		return null;</span>
+	}
+
+	private Entity getEntityStart(LineLocation location, StateDiagram diagram, final String code) {
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (code.startsWith(&quot;[*]&quot;))</span>
+<span class="fc" id="L150">			return diagram.getStart(location);</span>
+
+<span class="fc" id="L152">		return getEntity(location, diagram, code);</span>
+	}
+
+	private Entity getEntityEnd(LineLocation location, StateDiagram diagram, final String code) {
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (code.startsWith(&quot;[*]&quot;))</span>
+<span class="fc" id="L157">			return diagram.getEnd(location);</span>
+
+<span class="fc" id="L159">		return getEntity(location, diagram, code);</span>
+	}
+
+	private Entity getEntity(LineLocation location, StateDiagram diagram, final String code) {
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H]&quot;))</span>
+<span class="nc" id="L164">			return diagram.getHistorical(location);</span>
+
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H]&quot;))</span>
+<span class="nc" id="L167">			return diagram.getHistorical(location, code.substring(0, code.length() - 3));</span>
+
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H*]&quot;))</span>
+<span class="nc" id="L170">			return diagram.getDeepHistory(location);</span>
+
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H*]&quot;))</span>
+<span class="nc" id="L173">			return diagram.getDeepHistory(location, code.substring(0, code.length() - 4));</span>
+
+<span class="pc bpc" id="L175" title="3 of 4 branches missed.">		if (code.startsWith(&quot;=&quot;) &amp;&amp; code.endsWith(&quot;=&quot;)) {</span>
+<span class="nc" id="L176">			final String codeString1 = removeEquals(code);</span>
+<span class="nc" id="L177">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(codeString1));</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (quark.getData() != null)</span>
+<span class="nc" id="L179">				return quark.getData();</span>
+<span class="nc" id="L180">			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR, null);</span>
+		}
+
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (diagram.getCurrentGroup().getName().equals(code))</span>
+<span class="nc" id="L184">			return diagram.getCurrentGroup();</span>
+
+<span class="fc" id="L186">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(code));</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (diagram.checkConcurrentStateOk(quark) == false)</span>
+<span class="nc" id="L188">			return null;</span>
+
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (quark.getData() != null)</span>
+<span class="fc" id="L191">			return quark.getData();</span>
+<span class="fc" id="L192">		return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.STATE, null);</span>
+	}
+
+	private String removeEquals(String code) {
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		while (code.startsWith(&quot;=&quot;))</span>
+<span class="nc" id="L197">			code = code.substring(1);</span>
+
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		while (code.endsWith(&quot;=&quot;))</span>
+<span class="nc" id="L200">			code = code.substring(0, code.length() - 1);</span>
+
+<span class="nc" id="L202">		return code;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

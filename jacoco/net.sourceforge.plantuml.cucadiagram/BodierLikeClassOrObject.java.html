@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BodierLikeClassOrObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">BodierLikeClassOrObject.java</span></div><h1>BodierLikeClassOrObject.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Parser;
+import net.sourceforge.plantuml.klimt.creole.legacy.CreoleParser;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.url.UrlBuilder;
+
+<span class="fc" id="L60">public class BodierLikeClassOrObject implements Bodier {</span>
+
+<span class="fc" id="L62">	private final List&lt;CharSequence&gt; rawBody = new ArrayList&lt;&gt;();</span>
+	private final Set&lt;VisibilityModifier&gt; hideVisibilityModifier;
+	private LeafType type;
+	private List&lt;Member&gt; methodsToDisplay;
+	private List&lt;Member&gt; fieldsToDisplay;
+	private Entity leaf;
+
+	@Override
+	public void muteClassToObject() {
+<span class="nc" id="L71">		methodsToDisplay = null;</span>
+<span class="nc" id="L72">		fieldsToDisplay = null;</span>
+<span class="nc" id="L73">		type = LeafType.OBJECT;</span>
+<span class="nc" id="L74">	}</span>
+
+<span class="fc" id="L76">	BodierLikeClassOrObject(LeafType type, Set&lt;VisibilityModifier&gt; hideVisibilityModifier) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (type == LeafType.MAP)</span>
+<span class="nc" id="L78">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L80">		this.type = Objects.requireNonNull(type);</span>
+<span class="pc bpc" id="L81" title="3 of 4 branches missed.">		assert type.isLikeClass() || type == LeafType.OBJECT;</span>
+<span class="fc" id="L82">		this.hideVisibilityModifier = hideVisibilityModifier;</span>
+<span class="fc" id="L83">	}</span>
+
+	@Override
+	public void setLeaf(Entity leaf) {
+<span class="fc" id="L87">		this.leaf = Objects.requireNonNull(leaf);</span>
+
+<span class="fc" id="L89">	}</span>
+
+	@Override
+	public boolean addFieldOrMethod(String s) {
+		// Empty cache
+<span class="fc" id="L94">		methodsToDisplay = null;</span>
+<span class="fc" id="L95">		fieldsToDisplay = null;</span>
+<span class="fc" id="L96">		rawBody.add(s);</span>
+<span class="fc" id="L97">		return true;</span>
+	}
+
+	private boolean isBodyEnhanced() {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (CharSequence s : rawBody)</span>
+<span class="pc bpc" id="L102" title="2 of 4 branches missed.">			if (BodyEnhanced1.isBlockSeparator(s) || CreoleParser.isTableLine(s.toString())</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">					|| Parser.isTreeStart(s.toString()))</span>
+<span class="nc" id="L104">				return true;</span>
+
+<span class="fc" id="L106">		return false;</span>
+	}
+
+	private boolean isMethod(CharSequence s) {
+<span class="fc" id="L110">		final String purged = s.toString().replaceAll(UrlBuilder.getRegexp(), &quot;&quot;);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (purged.contains(&quot;{method}&quot;))</span>
+<span class="fc" id="L112">			return true;</span>
+
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (purged.contains(&quot;{field}&quot;))</span>
+<span class="nc" id="L115">			return false;</span>
+
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		return purged.contains(&quot;(&quot;) || purged.contains(&quot;)&quot;);</span>
+	}
+
+	@Override
+	public Display getMethodsToDisplay() {
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (methodsToDisplay == null) {</span>
+<span class="fc" id="L123">			methodsToDisplay = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			for (int i = 0; i &lt; rawBody.size(); i++) {</span>
+<span class="fc" id="L125">				final CharSequence s = rawBody.get(i);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">				if (isMethod(i, rawBody) == false)</span>
+<span class="fc" id="L127">					continue;</span>
+
+<span class="pc bpc" id="L129" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; methodsToDisplay.size() == 0)</span>
+<span class="nc" id="L130">					continue;</span>
+
+<span class="fc" id="L132">				final Member m = Member.method(s);</span>
+<span class="pc bpc" id="L133" title="2 of 4 branches missed.">				if (hideVisibilityModifier == null || hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="fc" id="L134">					methodsToDisplay.add(m);</span>
+
+			}
+<span class="fc" id="L137">			removeFinalEmptyMembers(methodsToDisplay);</span>
+		}
+<span class="fc" id="L139">		return Display.create(methodsToDisplay);</span>
+	}
+
+	private boolean isMethod(int i, List&lt;CharSequence&gt; rawBody) {
+<span class="pc bpc" id="L143" title="3 of 8 branches missed.">		if (i &gt; 0 &amp;&amp; i &lt; rawBody.size() - 1 &amp;&amp; rawBody.get(i).length() == 0 &amp;&amp; isMethod(rawBody.get(i - 1))</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">				&amp;&amp; isMethod(rawBody.get(i + 1))) {</span>
+<span class="nc" id="L145">			return true;</span>
+		}
+<span class="fc" id="L147">		return isMethod(rawBody.get(i));</span>
+	}
+
+	@Override
+	public Display getFieldsToDisplay() {
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (fieldsToDisplay == null) {</span>
+<span class="fc" id="L153">			fieldsToDisplay = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			for (CharSequence s : rawBody) {</span>
+<span class="pc bpc" id="L155" title="1 of 4 branches missed.">				if (type != LeafType.OBJECT &amp;&amp; isMethod(s) == true)</span>
+<span class="fc" id="L156">					continue;</span>
+
+<span class="pc bpc" id="L158" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; fieldsToDisplay.size() == 0)</span>
+<span class="nc" id="L159">					continue;</span>
+
+<span class="fc" id="L161">				final Member m = Member.field(s);</span>
+<span class="pc bpc" id="L162" title="2 of 4 branches missed.">				if (hideVisibilityModifier == null || hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="fc" id="L163">					fieldsToDisplay.add(m);</span>
+
+<span class="fc" id="L165">			}</span>
+<span class="fc" id="L166">			removeFinalEmptyMembers(fieldsToDisplay);</span>
+		}
+<span class="fc" id="L168">		return Display.create(fieldsToDisplay);</span>
+	}
+
+	private void removeFinalEmptyMembers(List&lt;Member&gt; result) {
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">		while (result.size() &gt; 0 &amp;&amp; StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).length() == 0)</span>
+<span class="nc" id="L173">			result.remove(result.size() - 1);</span>
+
+<span class="fc" id="L175">	}</span>
+
+	@Override
+	public boolean hasUrl() {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (CharSequence cs : getFieldsToDisplay())</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (cs instanceof Member) {</span>
+<span class="nc" id="L181">				final Member m = (Member) cs;</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">				if (m.hasUrl())</span>
+<span class="nc" id="L183">					return true;</span>
+
+			}
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		for (CharSequence cs : getMethodsToDisplay())</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (cs instanceof Member) {</span>
+<span class="nc" id="L189">				final Member m = (Member) cs;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (m.hasUrl())</span>
+<span class="nc" id="L191">					return true;</span>
+
+			}
+<span class="nc" id="L194">		return false;</span>
+	}
+
+	private List&lt;CharSequence&gt; rawBodyWithoutHidden() {
+<span class="nc" id="L198">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (CharSequence s : rawBody) {</span>
+			final Member m;
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (isMethod(s))</span>
+<span class="nc" id="L202">				m = Member.method(s);</span>
+			else
+<span class="nc" id="L204">				m = Member.field(s);</span>
+
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="nc" id="L207">				result.add(m);</span>
+
+<span class="nc" id="L209">		}</span>
+<span class="nc" id="L210">		return result;</span>
+	}
+
+	@Override
+	public TextBlock getBody(ISkinParam skinParam, boolean showMethods, boolean showFields, Stereotype stereotype,
+			Style style, FontConfiguration fontConfiguration) {
+
+		if (BodyFactory.BODY3)
+			return new Body3(rawBody, skinParam, stereotype, style);
+
+<span class="pc bpc" id="L220" title="2 of 4 branches missed.">		if (type.isLikeClass() &amp;&amp; isBodyEnhanced()) {</span>
+<span class="nc bnc" id="L221" title="All 4 branches missed.">			if (showMethods || showFields)</span>
+<span class="nc" id="L222">				return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="nc" id="L223">						rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
+
+<span class="nc" id="L225">			return null;</span>
+		}
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		if (leaf == null)</span>
+<span class="nc" id="L228">			throw new IllegalStateException();</span>
+
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (type == LeafType.OBJECT) {</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (showFields == false)</span>
+				// return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),
+				// TextBlockUtils.empty(0, 0));
+<span class="nc" id="L234">				return TextBlockUtils.empty(0, 0);</span>
+
+<span class="nc" id="L236">			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="nc" id="L237">					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
+		}
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">		assert type.isLikeClass();</span>
+
+<span class="fc" id="L241">		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), skinParam, leaf, style);</span>
+
+<span class="fc" id="L243">		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), skinParam, leaf, style);</span>
+<span class="pc bpc" id="L244" title="1 of 4 branches missed.">		if (showFields &amp;&amp; showMethods == false)</span>
+<span class="nc" id="L245">			return fields.asBlockMemberImpl();</span>
+<span class="fc bfc" id="L246" title="All 4 branches covered.">		else if (showMethods &amp;&amp; showFields == false)</span>
+<span class="fc" id="L247">			return methods.asBlockMemberImpl();</span>
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		else if (showFields == false &amp;&amp; showMethods == false)</span>
+<span class="fc" id="L249">			return TextBlockUtils.empty(0, 0);</span>
+
+<span class="fc" id="L251">		final TextBlock bb1 = fields.asBlockMemberImpl();</span>
+<span class="fc" id="L252">		final TextBlock bb2 = methods.asBlockMemberImpl();</span>
+<span class="fc" id="L253">		return TextBlockUtils.mergeTB(bb1, bb2, HorizontalAlignment.LEFT);</span>
+	}
+
+	@Override
+	public List&lt;CharSequence&gt; getRawBody() {
+<span class="fc" id="L258">		return Collections.unmodifiableList(rawBody);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

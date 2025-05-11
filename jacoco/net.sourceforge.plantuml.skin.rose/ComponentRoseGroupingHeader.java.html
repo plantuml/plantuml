@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComponentRoseGroupingHeader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin.rose</a> &gt; <span class="el_source">ComponentRoseGroupingHeader.java</span></div><h1>ComponentRoseGroupingHeader.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin.rose;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+
+public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
+
+<span class="fc" id="L63">	private final int cornersize = 10;</span>
+<span class="fc" id="L64">	private final int commentMargin = 0; // 8;</span>
+
+	private final TextBlock commentTextBlock;
+
+	private final HColor background;
+	private final Fashion symbolContext;
+	private final Fashion symbolContextCorner;
+	private final double roundCorner;
+
+	public ComponentRoseGroupingHeader(boolean teoz, Style style, Style styleHeader, Display strings,
+			ISkinParam skinParam) {
+<span class="fc" id="L75">		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, skinParam, strings.get(0));</span>
+
+<span class="fc" id="L77">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L79">		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());</span>
+<span class="fc" id="L80">		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());</span>
+
+<span class="fc" id="L82">		final FontConfiguration smallFont2 = style.getFontConfiguration(getIHtmlColorSet());</span>
+
+<span class="fc bfc" id="L84" title="All 4 branches covered.">		if (strings.size() == 1 || strings.get(1) == null) {</span>
+<span class="fc" id="L85">			this.commentTextBlock = null;</span>
+		} else {
+<span class="fc" id="L87">			final Display display = Display.getWithNewlines(skinParam.getPragma(), &quot;[&quot; + strings.get(1) + &quot;]&quot;);</span>
+<span class="fc" id="L88">			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, skinParam);</span>
+		}
+<span class="fc" id="L90">		Objects.requireNonNull(this.background);</span>
+<span class="fc" id="L91">	}</span>
+
+	private double getSuppHeightForComment(StringBounder stringBounder) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (commentTextBlock == null)</span>
+<span class="fc" id="L95">			return 0;</span>
+
+<span class="fc" id="L97">		final double height = commentTextBlock.calculateDimension(stringBounder).getHeight();</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (height &gt; 15)</span>
+<span class="nc" id="L99">			return height - 15;</span>
+
+<span class="fc" id="L101">		return 0;</span>
+
+	}
+
+	@Override
+	final public double getPreferredWidth(StringBounder stringBounder) {
+		final double sup;
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (commentTextBlock == null) {</span>
+<span class="fc" id="L109">			sup = commentMargin * 2;</span>
+		} else {
+<span class="fc" id="L111">			final XDimension2D size = commentTextBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L112">			sup = getMarginX1() + commentMargin + size.getWidth();</span>
+
+		}
+<span class="fc" id="L115">		return getTextWidth(stringBounder) + sup;</span>
+	}
+
+	@Override
+	final public double getPreferredHeight(StringBounder stringBounder) {
+<span class="fc" id="L120">		return getTextHeight(stringBounder) + 2 * getPaddingY() + getSuppHeightForComment(stringBounder);</span>
+	}
+
+	@Override
+	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
+<span class="fc" id="L125">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L126">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
+<span class="fc" id="L127">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
+<span class="fc" id="L128">				.rounded(roundCorner);</span>
+<span class="fc" id="L129">		rect.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="fc" id="L130">		ug.apply(background.bg()).draw(rect);</span>
+<span class="fc" id="L131">	}</span>
+
+	@Override
+	protected void drawInternalU(UGraphic ug, Area area) {
+<span class="fc" id="L135">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L136">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L137">		final double textWidth = getTextWidth(stringBounder);</span>
+<span class="fc" id="L138">		final double textHeight = getTextHeight(stringBounder);</span>
+
+<span class="fc" id="L140">		symbolContextCorner.apply(ug).draw(getCorner(textWidth, textHeight));</span>
+
+<span class="fc" id="L142">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
+<span class="fc" id="L143">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
+<span class="fc" id="L144">				.rounded(roundCorner);</span>
+<span class="fc" id="L145">		ug.draw(rect);</span>
+
+<span class="fc" id="L147">		ug = ug.apply(UStroke.simple());</span>
+
+<span class="fc" id="L149">		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));</span>
+
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (commentTextBlock != null) {</span>
+<span class="fc" id="L152">			final double x1 = getMarginX1() + textWidth;</span>
+<span class="fc" id="L153">			final double y2 = getMarginY() + 1;</span>
+
+<span class="fc" id="L155">			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2)));</span>
+		}
+<span class="fc" id="L157">	}</span>
+
+	private UPath getCorner(final double width, final double height) {
+<span class="fc" id="L160">		final UPath polygon = UPath.none();</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (roundCorner == 0) {</span>
+<span class="fc" id="L162">			polygon.moveTo(0, 0);</span>
+<span class="fc" id="L163">			polygon.lineTo(width, 0);</span>
+
+<span class="fc" id="L165">			polygon.lineTo(width, height - cornersize);</span>
+<span class="fc" id="L166">			polygon.lineTo(width - cornersize, height);</span>
+
+<span class="fc" id="L168">			polygon.lineTo(0, height);</span>
+<span class="fc" id="L169">			polygon.lineTo(0, 0);</span>
+		} else {
+<span class="nc" id="L171">			polygon.moveTo(roundCorner / 2, 0);</span>
+<span class="nc" id="L172">			polygon.lineTo(width, 0);</span>
+
+<span class="nc" id="L174">			polygon.lineTo(width, height - cornersize);</span>
+<span class="nc" id="L175">			polygon.lineTo(width - cornersize, height);</span>
+
+<span class="nc" id="L177">			polygon.lineTo(0, height);</span>
+<span class="nc" id="L178">			polygon.lineTo(0, roundCorner / 2);</span>
+
+<span class="nc" id="L180">			polygon.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, roundCorner / 2, 0);</span>
+
+		}
+<span class="fc" id="L183">		return polygon;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

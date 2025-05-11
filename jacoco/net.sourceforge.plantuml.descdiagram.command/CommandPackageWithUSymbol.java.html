@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandPackageWithUSymbol.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram.command</a> &gt; <span class="el_source">CommandPackageWithUSymbol.java</span></div><h1>CommandPackageWithUSymbol.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.descdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
+import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandPackageWithUSymbol extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
+
+	public CommandPackageWithUSymbol() {
+<span class="fc" id="L71">		super(getRegexConcat());</span>
+<span class="fc" id="L72">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L75">		return RegexConcat.build(CommandPackageWithUSymbol.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;SYMBOL&quot;,
+						&quot;(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|action|process|database|storage|component|card|queue|stack)&quot;), //
+<span class="fc" id="L78">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOr(//
+						new RegexConcat( //
+								new RegexLeaf(&quot;DISPLAY1&quot;, &quot;([%g].+?[%g])&quot;), //
+								new RegexOptional( //
+										new RegexConcat( //
+<span class="fc" id="L84">												RegexLeaf.spaceOneOrMore(), //</span>
+												new RegexLeaf(&quot;STEREOTYPE1&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+										)), //
+<span class="fc" id="L87">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L89">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE1&quot;, &quot;([^#%s{}]+)&quot;) //
+						), //
+						new RegexConcat( //
+								new RegexLeaf(&quot;CODE2&quot;, &quot;([^#%s{}%g]+)&quot;), //
+								new RegexOptional( //
+										new RegexConcat( //
+<span class="fc" id="L96">												RegexLeaf.spaceOneOrMore(), //</span>
+												new RegexLeaf(&quot;STEREOTYPE2&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+										)), //
+<span class="fc" id="L99">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L101">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;DISPLAY2&quot;, &quot;([%g].+?[%g])&quot;) //
+						), //
+						new RegexConcat( //
+								new RegexLeaf(&quot;DISPLAY3&quot;, &quot;([^#%s{}%g]+)&quot;), //
+								new RegexOptional( //
+										new RegexConcat( //
+<span class="fc" id="L108">												RegexLeaf.spaceOneOrMore(), //</span>
+												new RegexLeaf(&quot;STEREOTYPE3&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+										)), //
+<span class="fc" id="L111">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L113">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(&quot;CODE3&quot;, &quot;([^#%s{}%g]+)&quot;) //
+						), //
+						new RegexLeaf(&quot;CODE8&quot;, &quot;([%g][^%g]+[%g])&quot;), //
+						new RegexLeaf(&quot;CODE9&quot;, &quot;([^#%s{}%g]*)&quot;) //
+				), //
+<span class="fc" id="L119">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L120">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L121">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L122">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L123">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L125">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L126">				color().getRegex(), //</span>
+<span class="fc" id="L127">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L128">				new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L132">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="fc" id="L138">		final String codeArg = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="fc" id="L139">		final Quark&lt;Entity&gt; ident = diagram.quarkInContext(false,</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">				diagram.cleanId(codeArg.length() == 0 ? diagram.getUniqueSequence(&quot;##&quot;) : codeArg));</span>
+
+<span class="fc" id="L142">		final String displayArg = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
+		final String display;
+
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (codeArg.length() == 0)</span>
+<span class="nc" id="L146">			display = null;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		else if (displayArg == null)</span>
+<span class="fc" id="L148">			display = ident.getName();</span>
+		else
+<span class="fc" id="L150">			display = displayArg;</span>
+
+<span class="fc" id="L152">		final String symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
+
+<span class="fc" id="L154">		final USymbol usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),</span>
+<span class="fc" id="L155">				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
+
+<span class="fc" id="L157">		final CommandExecutionResult status = diagram.gotoGroup(location, ident, Display.getWithNewlines(diagram.getPragma(), display),</span>
+				GroupType.PACKAGE, usymbol);
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L160">			return status;</span>
+
+<span class="fc" id="L162">		final Entity p = diagram.getCurrentGroup();</span>
+		
+<span class="fc" id="L164">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L166">			p.setStereotype(Stereotype.build(stereotype, false));</span>
+
+<span class="fc" id="L168">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L170">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L171">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L172">			p.addUrl(url);</span>
+		}
+<span class="fc" id="L174">		CommandCreateClassMultilines.addTags(p, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+<span class="fc" id="L175">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L176">		p.setColors(colors);</span>
+<span class="fc" id="L177">		return CommandExecutionResult.ok();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

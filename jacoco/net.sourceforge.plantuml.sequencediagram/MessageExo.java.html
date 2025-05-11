@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageExo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">MessageExo.java</span></div><h1>MessageExo.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.style.StyleBuilder;
+
+public class MessageExo extends AbstractMessage {
+
+	final private MessageExoType type;
+	final private Participant participant;
+	final private boolean shortArrow;
+
+	public MessageExo(StyleBuilder styleBuilder, Participant p, MessageExoType type, Display label,
+			ArrowConfiguration arrowConfiguration, String messageNumber, boolean shortArrow) {
+<span class="fc" id="L50">		super(styleBuilder, label, arrowConfiguration, messageNumber);</span>
+<span class="fc" id="L51">		this.participant = p;</span>
+<span class="fc" id="L52">		this.type = type;</span>
+<span class="fc" id="L53">		this.shortArrow = shortArrow;</span>
+<span class="fc" id="L54">	}</span>
+
+	public boolean isShortArrow() {
+<span class="fc" id="L57">		return shortArrow;</span>
+	}
+
+	@Override
+	protected NotePosition overrideNotePosition(NotePosition notePosition) {
+<span class="nc bnc" id="L62" title="All 4 branches missed.">		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {</span>
+<span class="nc" id="L63">			return NotePosition.RIGHT;</span>
+		}
+<span class="nc bnc" id="L65" title="All 4 branches missed.">		if (type == MessageExoType.FROM_RIGHT || type == MessageExoType.TO_RIGHT) {</span>
+<span class="nc" id="L66">			return NotePosition.LEFT;</span>
+		}
+<span class="nc" id="L68">		throw new IllegalStateException();</span>
+	}
+
+	@Override
+	public Participant getParticipant1() {
+<span class="nc" id="L73">		return participant;</span>
+	}
+
+	@Override
+	public Participant getParticipant2() {
+<span class="nc" id="L78">		return participant;</span>
+	}
+
+	public Participant getParticipant() {
+<span class="fc" id="L82">		return participant;</span>
+	}
+
+	public final MessageExoType getType() {
+<span class="fc" id="L86">		return type;</span>
+	}
+
+	public boolean dealWith(Participant someone) {
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		return participant == someone;</span>
+	}
+
+	@Override
+	public boolean compatibleForCreate(Participant p) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		return p == participant;</span>
+	}
+
+	public boolean isSelfMessage() {
+<span class="fc" id="L99">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

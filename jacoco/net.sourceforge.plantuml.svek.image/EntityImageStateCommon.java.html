@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageStateCommon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageStateCommon.java</span></div><h1>EntityImageStateCommon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LineConfigurable;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.url.Url;
+
+public abstract class EntityImageStateCommon extends AbstractEntityImage {
+
+	final protected TextBlock title;
+	final protected Url url;
+
+	final protected LineConfigurable lineConfig;
+
+	public EntityImageStateCommon(Entity entity) {
+<span class="fc" id="L66">		super(entity);</span>
+
+<span class="fc" id="L68">		this.lineConfig = entity;</span>
+
+<span class="fc" id="L70">		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, getSkinParam())</span>
+<span class="fc" id="L71">				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());</span>
+
+<span class="fc" id="L73">		final HorizontalAlignment horizontalAlignment = getStyleState(entity, getSkinParam()).getHorizontalAlignment();</span>
+<span class="fc" id="L74">		this.title = entity.getDisplay().create8(titleFontConfiguration, horizontalAlignment, getSkinParam(),</span>
+<span class="fc" id="L75">				CreoleMode.FULL, getStyleState().wrapWidth());</span>
+<span class="fc" id="L76">		this.url = entity.getUrl99();</span>
+
+<span class="fc" id="L78">	}</span>
+
+	public static Style getStyleStateTitle(Entity group, ISkinParam skinParam) {
+<span class="fc" id="L81">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.title)</span>
+<span class="fc" id="L82">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	public static Style getStyleStateHeader(Entity group, ISkinParam skinParam) {
+<span class="fc" id="L86">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)</span>
+<span class="fc" id="L87">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	public static Style getStyleState(Entity group, ISkinParam skinParam) {
+<span class="fc" id="L91">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state)</span>
+<span class="fc" id="L92">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	public static Style getStyleStateBody(Entity group, ISkinParam skinParam) {
+<span class="nc" id="L96">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.stateBody)</span>
+<span class="nc" id="L97">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	final protected Style getStyleState() {
+<span class="fc" id="L101">		return getStyleState(getEntity(), getSkinParam());</span>
+	}
+
+	final protected Style getStyleStateHeader() {
+<span class="fc" id="L105">		return getStyleStateHeader(getEntity(), getSkinParam());</span>
+	}
+
+	final public ShapeType getShapeType() {
+<span class="fc" id="L109">		return ShapeType.ROUND_RECTANGLE;</span>
+	}
+
+	final protected URectangle getShape(final XDimension2D dimTotal) {
+
+<span class="fc" id="L114">		final double corner = getStyleState().value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L115">		final double deltaShadow = getStyleState().getShadowing();</span>
+
+<span class="fc" id="L117">		final URectangle rect = URectangle.build(dimTotal).rounded(corner);</span>
+<span class="fc" id="L118">		rect.setDeltaShadow(deltaShadow);</span>
+<span class="fc" id="L119">		return rect;</span>
+	}
+
+	final protected UGraphic applyColor(UGraphic ug) {
+
+<span class="fc" id="L124">		HColor border = lineConfig.getColors().getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (border == null)</span>
+<span class="fc" id="L126">			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L128">		ug = ug.apply(border);</span>
+<span class="fc" id="L129">		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (backcolor == null)</span>
+<span class="fc" id="L131">			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L133">		ug = ug.apply(backcolor.bg());</span>
+
+<span class="fc" id="L135">		return ug;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlayerRobustConcise.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram</a> &gt; <span class="el_source">PlayerRobustConcise.java</span></div><h1>PlayerRobustConcise.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.timingdiagram.graphic.Histogram;
+import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
+import net.sourceforge.plantuml.timingdiagram.graphic.PDrawing;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
+import net.sourceforge.plantuml.timingdiagram.graphic.Ribbon;
+import net.sourceforge.plantuml.utils.Position;
+
+public final class PlayerRobustConcise extends Player {
+
+<span class="fc" id="L71">	private final Set&lt;ChangeState&gt; changes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L72">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L73">	private final List&lt;TimingNote&gt; notes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L74">	private final Map&lt;String, String&gt; statesLabel = new LinkedHashMap&lt;String, String&gt;();</span>
+	private final TimingStyle type;
+
+	private String initialState;
+	private PDrawing cached;
+	private Colors initialColors;
+
+	public PlayerRobustConcise(TimingStyle type, String full, ISkinParam skinParam, TimingRuler ruler, boolean compact,
+			Stereotype stereotype, HColor generalBackgroundColor) {
+<span class="fc" id="L83">		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);</span>
+<span class="fc" id="L84">		this.type = type;</span>
+<span class="fc" id="L85">		this.suggestedHeight = 0;</span>
+<span class="fc" id="L86">	}</span>
+
+	@Override
+	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		final double margin = type == TimingStyle.ROBUST ? 2.5 : 1;</span>
+<span class="fc" id="L91">		this.constraints.add(new TimeConstraint(margin, tick1, tick2, message, skinParam, config));</span>
+<span class="fc" id="L92">	}</span>
+
+	@Override
+	protected StyleSignature getStyleSignature() {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (type == TimingStyle.CONCISE)</span>
+<span class="fc" id="L97">			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise)</span>
+<span class="fc" id="L98">					.withTOBECHANGED(stereotype);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (type == TimingStyle.ROBUST)</span>
+<span class="fc" id="L100">			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust)</span>
+<span class="fc" id="L101">					.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L102">		throw new IllegalStateException();</span>
+	}
+
+	private PDrawing buildPDrawing() {
+<span class="fc" id="L106">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (type == TimingStyle.CONCISE)</span>
+<span class="fc" id="L108">			return new Ribbon(ruler, skinParam, notes, isCompact(), getTitle(), suggestedHeight, style);</span>
+
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (type == TimingStyle.ROBUST) {</span>
+<span class="fc" id="L111">			final Style style0 = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)</span>
+<span class="fc" id="L112">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L113">			return new Histogram(ruler, skinParam, statesLabel.values(), isCompact(), getTitle(), suggestedHeight,</span>
+					style, style0);
+		}
+
+<span class="nc" id="L117">		throw new IllegalStateException();</span>
+	}
+
+	@Override
+	public final TextBlock getPart1(final double fullAvailableWidth, final double specialVSpace) {
+<span class="fc" id="L122">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">				if (isCompact() == false)</span>
+<span class="fc" id="L126">					new PlayerFrame(getTitle(), skinParam).drawFrameTitle(ug);</span>
+
+<span class="fc" id="L128">				ug = ug.apply(getTranslateForTimeDrawing(ug.getStringBounder())).apply(UTranslate.dy(specialVSpace));</span>
+<span class="fc" id="L129">				getTimeDrawing().getPart1(fullAvailableWidth).drawU(ug);</span>
+<span class="fc" id="L130">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L133">				return getTimeDrawing().getPart1(fullAvailableWidth).calculateDimension(stringBounder);</span>
+			}
+		};
+	}
+
+	@Override
+	public UDrawable getPart2() {
+<span class="fc" id="L140">		return new UDrawable() {</span>
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L142">				ug = ug.apply(getTranslateForTimeDrawing(ug.getStringBounder()));</span>
+<span class="fc" id="L143">				getTimeDrawing().getPart2().drawU(ug);</span>
+<span class="fc" id="L144">			}</span>
+		};
+	}
+
+	private UTranslate getTranslateForTimeDrawing(StringBounder stringBounder) {
+<span class="fc" id="L149">		return UTranslate.dy(getTitleHeight(stringBounder));</span>
+	}
+
+	@Override
+	public final double getFullHeight(StringBounder stringBounder) {
+<span class="fc" id="L154">		return getTitleHeight(stringBounder) + getZoneHeight(stringBounder);</span>
+	}
+
+	private double getTitleHeight(StringBounder stringBounder) {
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (isCompact())</span>
+<span class="nc" id="L159">			return 6;</span>
+
+<span class="fc" id="L161">		return getTitle().calculateDimension(stringBounder).getHeight() + 6;</span>
+	}
+
+	private PDrawing getTimeDrawing() {
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (cached == null)</span>
+<span class="fc" id="L166">			cached = computeTimeDrawing();</span>
+
+<span class="fc" id="L168">		return cached;</span>
+	}
+
+	private PDrawing computeTimeDrawing() {
+<span class="fc" id="L172">		final PDrawing result = buildPDrawing();</span>
+<span class="fc" id="L173">		result.setInitialState(initialState, initialColors);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (ChangeState change : changes)</span>
+<span class="fc" id="L175">			result.addChange(change);</span>
+
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (TimeConstraint constraint : constraints)</span>
+<span class="fc" id="L178">			result.addConstraint(constraint);</span>
+
+<span class="fc" id="L180">		return result;</span>
+	}
+
+	private double getZoneHeight(StringBounder stringBounder) {
+<span class="fc" id="L184">		return getTimeDrawing().getFullHeight(stringBounder);</span>
+	}
+
+	@Override
+	public final void setState(TimeTick now, String comment, Colors color, String... states) {
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		for (int i = 0; i &lt; states.length; i++)</span>
+<span class="fc" id="L190">			states[i] = decodeState(states[i]);</span>
+
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (now == null) {</span>
+<span class="nc" id="L193">			this.initialState = states[0];</span>
+<span class="nc" id="L194">			this.initialColors = color;</span>
+		} else {
+<span class="fc" id="L196">			this.changes.add(new ChangeState(now, comment, color, states));</span>
+		}
+
+<span class="fc" id="L199">	}</span>
+
+	private String decodeState(String code) {
+<span class="fc" id="L202">		final String label = statesLabel.get(code);</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (label == null)</span>
+<span class="fc" id="L204">			return code;</span>
+
+<span class="nc" id="L206">		return label;</span>
+	}
+
+	@Override
+	public final IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (tick == null)</span>
+<span class="nc" id="L212">			return null;</span>
+<span class="fc" id="L213">		final IntricatedPoint point = getTimeDrawing().getTimeProjection(stringBounder, tick);</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		if (point == null)</span>
+<span class="nc" id="L215">			return null;</span>
+
+<span class="fc" id="L217">		final UTranslate translation = getTranslateForTimeDrawing(stringBounder);</span>
+<span class="fc" id="L218">		return point.translated(translation);</span>
+	}
+
+	@Override
+	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
+
+<span class="nc" id="L224">		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,</span>
+				SName.note);
+<span class="nc" id="L226">		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+<span class="nc" id="L228">		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));</span>
+<span class="nc" id="L229">	}</span>
+
+	@Override
+	public final void defineState(String stateCode, String label) {
+<span class="nc" id="L233">		statesLabel.put(stateCode, label);</span>
+<span class="nc" id="L234">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AtomTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.atom</a> &gt; <span class="el_source">AtomTable.java</span></div><h1>AtomTable.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.creole.atom;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Position;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public class AtomTable extends AbstractAtom implements Atom {
+
+	class Line {
+<span class="fc" id="L58">		private final List&lt;Atom&gt; cells = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">		private final List&lt;HColor&gt; cellsBackColor = new ArrayList&lt;&gt;();</span>
+		private final HColor lineBackColor;
+
+<span class="fc" id="L62">		private Line(HColor lineBackColor) {</span>
+<span class="fc" id="L63">			this.lineBackColor = lineBackColor;</span>
+<span class="fc" id="L64">		}</span>
+
+		public void add(Atom cell, HColor cellBackColor) {
+<span class="fc" id="L67">			cells.add(cell);</span>
+<span class="fc" id="L68">			cellsBackColor.add(cellBackColor);</span>
+<span class="fc" id="L69">		}</span>
+
+		public int size() {
+<span class="fc" id="L72">			return cells.size();</span>
+		}
+
+		@Override
+		public String toString() {
+<span class="nc" id="L77">			return super.toString() + &quot; &quot; + cells.size();</span>
+		}
+	}
+
+<span class="fc" id="L81">	private final List&lt;Line&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L82">	private final Map&lt;Atom, Position&gt; positions = new HashMap&lt;Atom, Position&gt;();</span>
+	private final HColor lineColor;
+	private Class&lt;? extends StringBounder&gt; lastCaller;
+
+<span class="fc" id="L86">	public AtomTable(HColor lineColor) {</span>
+<span class="fc" id="L87">		this.lineColor = lineColor;</span>
+<span class="fc" id="L88">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L91">		initMap(stringBounder);</span>
+<span class="fc" id="L92">		final double width = getEndingX(getNbCols() - 1);</span>
+<span class="fc" id="L93">		final double height = getEndingY(getNbLines() - 1);</span>
+<span class="fc" id="L94">		return new XDimension2D(width, height);</span>
+	}
+
+	public double getStartingAltitude(StringBounder stringBounder) {
+<span class="fc" id="L98">		return 0;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L102">		initMap(ug.getStringBounder());</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
+<span class="fc" id="L104">			final Line line = lines.get(i);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			if (line.lineBackColor != null) {</span>
+<span class="fc" id="L106">				final double y1 = getStartingY(i);</span>
+<span class="fc" id="L107">				final double y2 = getStartingY(i + 1);</span>
+<span class="fc" id="L108">				final double x1 = getStartingX(0);</span>
+<span class="fc" id="L109">				final double x2 = getStartingX(getNbCols());</span>
+<span class="fc" id="L110">				ug.apply(HColors.none()).apply(line.lineBackColor.bg()).apply(new UTranslate(x1, y1))</span>
+<span class="fc" id="L111">						.draw(URectangle.build(x2 - x1, y2 - y1));</span>
+			}
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			for (int j = 0; j &lt; getNbCols(); j++) {</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">				if (j &gt;= line.cells.size())</span>
+<span class="nc" id="L115">					continue;</span>
+
+<span class="fc" id="L117">				final Atom cell = line.cells.get(j);</span>
+<span class="fc" id="L118">				HorizontalAlignment align = HorizontalAlignment.LEFT;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				if (cell instanceof SheetBlock1)</span>
+<span class="fc" id="L120">					align = ((SheetBlock1) cell).getCellAlignment();</span>
+
+<span class="fc" id="L122">				final HColor cellBackColor = line.cellsBackColor.get(j);</span>
+<span class="fc" id="L123">				final double x1 = getStartingX(j);</span>
+<span class="fc" id="L124">				final double x2 = getStartingX(j + 1);</span>
+<span class="fc" id="L125">				final double cellWidth = x2 - x1;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">				if (cellBackColor != null) {</span>
+<span class="fc" id="L127">					final double y1 = getStartingY(i);</span>
+<span class="fc" id="L128">					final double y2 = getStartingY(i + 1);</span>
+<span class="fc" id="L129">					ug.apply(HColors.none()).apply(cellBackColor.bg()).apply(new UTranslate(x1, y1))</span>
+<span class="fc" id="L130">							.draw(URectangle.build(x2 - x1, y2 - y1));</span>
+				}
+<span class="fc" id="L132">				final Position pos = positions.get(cell);</span>
+<span class="fc" id="L133">				final XDimension2D dimCell = cell.calculateDimension(ug.getStringBounder());</span>
+				final double dx;
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">				if (align == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L136">					dx = cellWidth - dimCell.getWidth();</span>
+				else
+<span class="fc" id="L138">					dx = 0;</span>
+
+<span class="fc bfc" id="L140" title="All 2 branches covered.">				if (cellBackColor == null)</span>
+<span class="fc" id="L141">					cell.drawU(ug.apply(pos.getTranslate().compose(UTranslate.dx(dx))));</span>
+				else
+<span class="fc" id="L143">					cell.drawU(ug.apply(cellBackColor.bg()).apply(pos.getTranslate().compose(UTranslate.dx(dx))));</span>
+			}
+		}
+<span class="fc" id="L146">		ug = ug.apply(lineColor);</span>
+<span class="fc" id="L147">		final ULine hline = ULine.hline(getEndingX(getNbCols() - 1));</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (int i = 0; i &lt;= getNbLines(); i++)</span>
+<span class="fc" id="L149">			ug.apply(UTranslate.dy(getStartingY(i))).draw(hline);</span>
+
+<span class="fc" id="L151">		final ULine vline = ULine.vline(getEndingY(getNbLines() - 1));</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (int i = 0; i &lt;= getNbCols(); i++)</span>
+<span class="fc" id="L153">			ug.apply(UTranslate.dx(getStartingX(i))).draw(vline);</span>
+
+<span class="fc" id="L155">	}</span>
+
+	private void initMap(StringBounder stringBounder) {
+<span class="fc" id="L158">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (lastCaller != currentCaller)</span>
+<span class="fc" id="L160">			positions.clear();</span>
+
+<span class="fc" id="L162">		this.lastCaller = currentCaller;</span>
+
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (positions.size() &gt; 0)</span>
+<span class="fc" id="L165">			return;</span>
+
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (Line line : lines) {</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">			for (Atom cell : line.cells) {</span>
+<span class="fc" id="L169">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
+<span class="fc" id="L170">				final Position pos = new Position(0, 0, dim);</span>
+<span class="fc" id="L171">				positions.put(cell, pos);</span>
+<span class="fc" id="L172">			}</span>
+<span class="fc" id="L173">		}</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			for (int j = 0; j &lt; lines.get(i).size(); j++) {</span>
+<span class="fc" id="L176">				final Atom cell = lines.get(i).cells.get(j);</span>
+<span class="fc" id="L177">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
+<span class="fc" id="L178">				final double x = getStartingX(j);</span>
+<span class="fc" id="L179">				final double y = getStartingY(i);</span>
+<span class="fc" id="L180">				final Position pos = new Position(x, y, dim);</span>
+<span class="fc" id="L181">				positions.put(cell, pos);</span>
+			}
+		}
+<span class="fc" id="L184">	}</span>
+
+	private double getStartingX(int col) {
+<span class="fc" id="L187">		double result = 0;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (int i = 0; i &lt; col; i++)</span>
+<span class="fc" id="L189">			result += getColWidth(i);</span>
+
+<span class="fc" id="L191">		return result;</span>
+	}
+
+	private double getEndingX(int col) {
+<span class="fc" id="L195">		double result = 0;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		for (int i = 0; i &lt;= col; i++)</span>
+<span class="fc" id="L197">			result += getColWidth(i);</span>
+
+<span class="fc" id="L199">		return result;</span>
+	}
+
+	private double getStartingY(int line) {
+<span class="fc" id="L203">		double result = 0;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		for (int i = 0; i &lt; line; i++)</span>
+<span class="fc" id="L205">			result += getLineHeight(i);</span>
+
+<span class="fc" id="L207">		return result;</span>
+	}
+
+	private double getEndingY(int line) {
+<span class="fc" id="L211">		double result = 0;</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		for (int i = 0; i &lt;= line; i++)</span>
+<span class="fc" id="L213">			result += getLineHeight(i);</span>
+
+<span class="fc" id="L215">		return result;</span>
+	}
+
+	private double getColWidth(int col) {
+<span class="fc" id="L219">		double result = 0;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
+<span class="fc" id="L221">			final Position position = getPosition(i, col);</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">			if (position == null)</span>
+<span class="nc" id="L223">				continue;</span>
+
+<span class="fc" id="L225">			final double width = position.getWidth();</span>
+<span class="fc" id="L226">			result = Math.max(result, width);</span>
+		}
+<span class="fc" id="L228">		return result;</span>
+	}
+
+	private double getLineHeight(int line) {
+<span class="fc" id="L232">		double result = 0;</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbCols(); i++) {</span>
+<span class="fc" id="L234">			final Position position = getPosition(line, i);</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">			if (position == null)</span>
+<span class="nc" id="L236">				continue;</span>
+
+<span class="fc" id="L238">			final double height = position.getHeight();</span>
+<span class="fc" id="L239">			result = Math.max(result, height);</span>
+		}
+<span class="fc" id="L241">		return result;</span>
+	}
+
+	private Position getPosition(int line, int col) {
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (line &gt;= lines.size())</span>
+<span class="nc" id="L246">			return null;</span>
+
+<span class="fc" id="L248">		final Line l = lines.get(line);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (col &gt;= l.cells.size())</span>
+<span class="nc" id="L250">			return null;</span>
+
+<span class="fc" id="L252">		final Atom atom = l.cells.get(col);</span>
+<span class="fc" id="L253">		return positions.get(atom);</span>
+	}
+
+	private int getNbCols() {
+<span class="fc" id="L257">		int result = lines.get(0).size();</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		for (int i = 1; i &lt; lines.size(); i++)</span>
+<span class="fc" id="L259">			result = Math.max(result, lines.get(i).size());</span>
+<span class="fc" id="L260">		return result;</span>
+	}
+
+	private int getNbLines() {
+<span class="fc" id="L264">		return lines.size();</span>
+	}
+
+	private Line lastLine() {
+<span class="fc" id="L268">		return lines.get(lines.size() - 1);</span>
+	}
+
+	public void addCell(Atom cell, HColor cellBackColor) {
+<span class="fc" id="L272">		lastLine().add(cell, cellBackColor);</span>
+<span class="fc" id="L273">		positions.clear();</span>
+<span class="fc" id="L274">	}</span>
+
+	public void newLine(HColor lineBackColor) {
+<span class="fc" id="L277">		lines.add(new Line(lineBackColor));</span>
+<span class="fc" id="L278">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

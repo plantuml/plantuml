@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Reflect.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.elk.proxy</a> &gt; <span class="el_source">Reflect.java</span></div><h1>Reflect.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.elk.proxy;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import net.sourceforge.plantuml.log.Logme;
+
+/*
+ * Various methods to do Java introspection
+ */
+<span class="nc" id="L47">public class Reflect {</span>
+
+	public static Class clazz(String className) {
+		try {
+<span class="nc" id="L51">			return Class.forName(className);</span>
+<span class="nc" id="L52">		} catch (Throwable t) {</span>
+<span class="nc" id="L53">			Logme.error(t);</span>
+<span class="nc" id="L54">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Enum getEnum(String clazz, String name) {
+		try {
+<span class="nc" id="L60">			final Class cl = clazz(clazz);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			for (Object en : cl.getEnumConstants()) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">				if (en.toString().equals(name)) {</span>
+<span class="nc" id="L63">					return (Enum) en;</span>
+				}
+			}
+<span class="nc" id="L66">			throw new UnsupportedOperationException(name);</span>
+<span class="nc" id="L67">		} catch (Throwable t) {</span>
+<span class="nc" id="L68">			Logme.error(t);</span>
+<span class="nc" id="L69">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object opt(String className, String fieldname) {
+		try {
+<span class="nc" id="L75">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L76">			final Field field = cl.getField(fieldname);</span>
+<span class="nc" id="L77">			return field.get(null);</span>
+<span class="nc" id="L78">		} catch (Throwable t) {</span>
+<span class="nc" id="L79">			Logme.error(t);</span>
+<span class="nc" id="L80">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object newInstance(String className) {
+		try {
+<span class="nc" id="L86">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L87">			return cl.newInstance();</span>
+<span class="nc" id="L88">		} catch (Throwable t) {</span>
+<span class="nc" id="L89">			Logme.error(t);</span>
+<span class="nc" id="L90">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object newInstance(String className, Object arg1) {
+		try {
+<span class="nc" id="L96">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L97">			final Constructor&lt;?&gt; m = cl.getConstructor(arg1.getClass());</span>
+<span class="nc" id="L98">			return m.newInstance(arg1);</span>
+<span class="nc" id="L99">		} catch (Throwable t) {</span>
+<span class="nc" id="L100">			Logme.error(t);</span>
+<span class="nc" id="L101">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object newInstance(String className, double arg1, double arg2, double arg3, double arg4) {
+		try {
+<span class="nc" id="L107">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L108">			final Constructor&lt;?&gt; m = cl.getConstructor(Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE);</span>
+<span class="nc" id="L109">			return m.newInstance(arg1, arg2, arg3, arg4);</span>
+<span class="nc" id="L110">		} catch (Throwable t) {</span>
+<span class="nc" id="L111">			Logme.error(t);</span>
+<span class="nc" id="L112">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object field(String className, String fieldName) {
+		try {
+<span class="nc" id="L118">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L119">			final Field f = cl.getField(fieldName);</span>
+<span class="nc" id="L120">			return f.get(null);</span>
+<span class="nc" id="L121">		} catch (Throwable t) {</span>
+<span class="nc" id="L122">			Logme.error(t);</span>
+<span class="nc" id="L123">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object callStatic(String className, String method) {
+		try {
+<span class="nc" id="L129">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L130">			final Method m = cl.getMethod(method);</span>
+<span class="nc" id="L131">			return m.invoke(null);</span>
+<span class="nc" id="L132">		} catch (Throwable t) {</span>
+<span class="nc" id="L133">			Logme.error(t);</span>
+<span class="nc" id="L134">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object callStatic(String className, String method, Object arg1) {
+		try {
+<span class="nc" id="L140">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L141">			final Method m = cl.getMethod(method, arg1.getClass());</span>
+<span class="nc" id="L142">			return m.invoke(null, arg1);</span>
+<span class="nc" id="L143">		} catch (Throwable t) {</span>
+<span class="nc" id="L144">			Logme.error(t);</span>
+<span class="nc" id="L145">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object callStatic(String className, String method, Object arg1, Object arg2) {
+		try {
+<span class="nc" id="L151">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L152">			final Method m = cl.getMethod(method, arg1.getClass(), arg2.getClass());</span>
+<span class="nc" id="L153">			return m.invoke(null, arg1, arg2);</span>
+<span class="nc" id="L154">		} catch (Throwable t) {</span>
+<span class="nc" id="L155">			Logme.error(t);</span>
+<span class="nc" id="L156">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object callStatic2(String className, String method, Object arg1) {
+		try {
+<span class="nc" id="L162">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L163">			final Method m = getStaticMethod(cl, method, 1);</span>
+<span class="nc" id="L164">			return m.invoke(null, arg1);</span>
+<span class="nc" id="L165">		} catch (Throwable t) {</span>
+<span class="nc" id="L166">			Logme.error(t);</span>
+<span class="nc" id="L167">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object callStatic2(String className, String method, Object arg1, Object arg2) {
+		try {
+<span class="nc" id="L173">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="nc" id="L174">			final Method m = getStaticMethod(cl, method, 2);</span>
+<span class="nc" id="L175">			return m.invoke(null, arg1, arg2);</span>
+<span class="nc" id="L176">		} catch (Throwable t) {</span>
+<span class="nc" id="L177">			Logme.error(t);</span>
+<span class="nc" id="L178">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Method getStaticMethod(Class&lt;?&gt; cl, String method, int nbArgs) {
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (Method m : cl.getMethods()) {</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
+<span class="nc" id="L185">				return m;</span>
+			}
+		}
+<span class="nc" id="L188">		throw new IllegalArgumentException();</span>
+	}
+
+	public static Object call(Object instance, String method) {
+		try {
+<span class="nc" id="L193">			final Method m = instance.getClass().getMethod(method);</span>
+<span class="nc" id="L194">			return m.invoke(instance);</span>
+<span class="nc" id="L195">		} catch (Throwable t) {</span>
+<span class="nc" id="L196">			Logme.error(t);</span>
+<span class="nc" id="L197">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object call(Object instance, String method, Object arg1) {
+		try {
+<span class="nc" id="L203">			final Method m = instance.getClass().getMethod(method, arg1.getClass());</span>
+<span class="nc" id="L204">			return m.invoke(instance, arg1);</span>
+<span class="nc" id="L205">		} catch (Throwable t) {</span>
+<span class="nc" id="L206">			Logme.error(t);</span>
+<span class="nc" id="L207">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object call(Object instance, String method, Object arg1, Object arg2) {
+		try {
+<span class="nc" id="L213">			final Method m = instance.getClass().getMethod(method, arg1.getClass(), arg2.getClass());</span>
+<span class="nc" id="L214">			return m.invoke(instance, arg1, arg2);</span>
+<span class="nc" id="L215">		} catch (Throwable t) {</span>
+<span class="nc" id="L216">			Logme.error(t);</span>
+<span class="nc" id="L217">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Object call2(Object instance, String method, Object arg1, Object arg2) {
+		try {
+<span class="nc" id="L223">			final Method m = getMethod(instance, method, 2);</span>
+<span class="nc" id="L224">			return m.invoke(instance, arg1, arg2);</span>
+<span class="nc" id="L225">		} catch (Throwable t) {</span>
+<span class="nc" id="L226">			Logme.error(t);</span>
+<span class="nc" id="L227">			throw new IllegalArgumentException(t);</span>
+		}
+	}
+
+	public static Method getMethod(Object instance, String method, int nbArgs) {
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		for (Method m : instance.getClass().getMethods()) {</span>
+<span class="nc bnc" id="L233" title="All 4 branches missed.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
+<span class="nc" id="L234">				return m;</span>
+			}
+		}
+<span class="nc" id="L237">		throw new IllegalArgumentException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

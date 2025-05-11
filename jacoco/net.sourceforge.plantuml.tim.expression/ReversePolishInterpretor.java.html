@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReversePolishInterpretor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim.expression</a> &gt; <span class="el_source">ReversePolishInterpretor.java</span></div><h1>ReversePolishInterpretor.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim.expression;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
+
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunction;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+
+public class ReversePolishInterpretor {
+
+	private final TValue result;
+<span class="fc" id="L53">	private final boolean trace = false;</span>
+
+	public ReversePolishInterpretor(StringLocated location, TokenStack queue, Knowledge knowledge, TMemory memory,
+<span class="fc" id="L56">			TContext context) throws EaterException {</span>
+
+<span class="fc" id="L58">		final Deque&lt;TValue&gt; stack = new ArrayDeque&lt;&gt;();</span>
+		if (trace)
+			System.err.println(&quot;ReversePolishInterpretor::queue=&quot; + queue);
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		for (TokenIterator it = queue.tokenIterator(); it.hasMoreTokens();) {</span>
+<span class="fc" id="L62">			final Token token = it.nextToken();</span>
+			if (trace)
+				System.err.println(&quot;rpn &quot; + token);
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (token.getTokenType() == TokenType.NUMBER) {</span>
+<span class="fc" id="L66">				stack.addFirst(TValue.fromNumber(token));</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.QUOTED_STRING) {</span>
+<span class="fc" id="L68">				stack.addFirst(TValue.fromString(token));</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.JSON_DATA) {</span>
+<span class="fc" id="L70">				stack.addFirst(TValue.fromJson(token.getJson()));</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPERATOR) {</span>
+<span class="fc" id="L72">				final TValue v2 = stack.removeFirst();</span>
+<span class="fc" id="L73">				final TValue v1 = stack.removeFirst();</span>
+<span class="fc" id="L74">				final TokenOperator op = token.getTokenOperator();</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">				if (op == null)</span>
+<span class="nc" id="L76">					throw new EaterException(&quot;bad op&quot;, location);</span>
+
+<span class="fc" id="L78">				final TValue tmp = op.operate(v1, v2);</span>
+<span class="fc" id="L79">				stack.addFirst(tmp);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {</span>
+<span class="fc" id="L81">				final int nb = Integer.parseInt(token.getSurface());</span>
+<span class="fc" id="L82">				final Token token2 = it.nextToken();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">				if (token2.getTokenType() != TokenType.FUNCTION_NAME)</span>
+<span class="nc" id="L84">					throw new EaterException(&quot;rpn43&quot;, location);</span>
+
+				if (trace)
+					System.err.println(&quot;token2=&quot; + token2);
+<span class="fc" id="L88">				final TFunction function = knowledge.getFunction(new TFunctionSignature(token2.getSurface(), nb));</span>
+				if (trace)
+					System.err.println(&quot;function=&quot; + function);
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">				if (function == null)</span>
+<span class="nc" id="L92">					throw new EaterException(&quot;Unknown built-in function &quot; + token2.getSurface(), location);</span>
+
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">				if (function.canCover(nb, Collections.&lt;String&gt;emptySet()) == false)</span>
+<span class="nc" id="L95">					throw new EaterException(&quot;Bad number of arguments for &quot; + function.getSignature().getFunctionName(), location);</span>
+
+<span class="fc" id="L97">				final List&lt;TValue&gt; args = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">				for (int i = 0; i &lt; nb; i++)</span>
+<span class="fc" id="L99">					args.add(0, stack.removeFirst());</span>
+
+				if (trace)
+					System.err.println(&quot;args=&quot; + args);
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">				if (location == null)</span>
+<span class="nc" id="L104">					throw new EaterException(&quot;rpn44&quot;, location);</span>
+
+<span class="fc" id="L106">				final TValue r = function.executeReturnFunction(context, memory, location, args,</span>
+<span class="fc" id="L107">						Collections.&lt;String, TValue&gt;emptyMap());</span>
+				if (trace)
+					System.err.println(&quot;r=&quot; + r);
+<span class="fc" id="L110">				stack.addFirst(r);</span>
+<span class="fc" id="L111">			} else {</span>
+<span class="nc" id="L112">				throw new EaterException(&quot;rpn41&quot;, location);</span>
+			}
+<span class="fc" id="L114">		}</span>
+<span class="fc" id="L115">		result = stack.removeFirst();</span>
+<span class="fc" id="L116">	}</span>
+
+	public final TValue getResult() {
+<span class="fc" id="L119">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

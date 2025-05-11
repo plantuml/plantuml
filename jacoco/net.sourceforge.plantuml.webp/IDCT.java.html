@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IDCT.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">IDCT.java</span></div><h1>IDCT.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package net.sourceforge.plantuml.webp;
+
+<span class="nc" id="L18">public class IDCT {</span>
+	/* IDCT implementation */
+	private static final int cospi8sqrt2minus1 = 20091;
+
+	private static final int sinpi8sqrt2 = 35468;
+
+	public static int[][] idct4x4llm(int input[]) {
+
+		int i;
+		int a1, b1, c1, d1;
+<span class="nc" id="L28">		int offset = 0;</span>
+
+<span class="nc" id="L30">		int[] output = new int[16];</span>
+		int temp1, temp2;
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">		for (i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L34">			a1 = input[offset + 0] + input[offset + 8];</span>
+<span class="nc" id="L35">			b1 = input[offset + 0] - input[offset + 8];</span>
+
+<span class="nc" id="L37">			temp1 = (input[offset + 4] * sinpi8sqrt2) &gt;&gt; 16;</span>
+<span class="nc" id="L38">			temp2 = input[offset + 12] + ((input[offset + 12] * cospi8sqrt2minus1) &gt;&gt; 16);</span>
+
+<span class="nc" id="L40">			c1 = temp1 - temp2;</span>
+
+<span class="nc" id="L42">			temp1 = input[offset + 4] + ((input[offset + 4] * cospi8sqrt2minus1) &gt;&gt; 16);</span>
+<span class="nc" id="L43">			temp2 = (input[offset + 12] * sinpi8sqrt2) &gt;&gt; 16;</span>
+<span class="nc" id="L44">			d1 = temp1 + temp2;</span>
+
+<span class="nc" id="L46">			output[offset + (0 * 4)] = a1 + d1;</span>
+<span class="nc" id="L47">			output[offset + (3 * 4)] = a1 - d1;</span>
+<span class="nc" id="L48">			output[offset + (1 * 4)] = b1 + c1;</span>
+<span class="nc" id="L49">			output[offset + (2 * 4)] = b1 - c1;</span>
+
+<span class="nc" id="L51">			offset++;</span>
+		}
+
+<span class="nc" id="L54">		int diffo = 0;</span>
+<span class="nc" id="L55">		int diff[][] = new int[4][4];</span>
+<span class="nc" id="L56">		offset = 0;</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L58">			a1 = output[(offset * 4) + 0] + output[(offset * 4) + 2];</span>
+<span class="nc" id="L59">			b1 = output[(offset * 4) + 0] - output[(offset * 4) + 2];</span>
+
+<span class="nc" id="L61">			temp1 = (output[(offset * 4) + 1] * sinpi8sqrt2) &gt;&gt; 16;</span>
+<span class="nc" id="L62">			temp2 = output[(offset * 4) + 3] + ((output[(offset * 4) + 3] * cospi8sqrt2minus1) &gt;&gt; 16);</span>
+<span class="nc" id="L63">			c1 = temp1 - temp2;</span>
+
+<span class="nc" id="L65">			temp1 = output[(offset * 4) + 1] + ((output[(offset * 4) + 1] * cospi8sqrt2minus1) &gt;&gt; 16);</span>
+<span class="nc" id="L66">			temp2 = (output[(offset * 4) + 3] * sinpi8sqrt2) &gt;&gt; 16;</span>
+<span class="nc" id="L67">			d1 = temp1 + temp2;</span>
+
+<span class="nc" id="L69">			output[(offset * 4) + 0] = (a1 + d1 + 4) &gt;&gt; 3;</span>
+<span class="nc" id="L70">			output[(offset * 4) + 3] = (a1 - d1 + 4) &gt;&gt; 3;</span>
+<span class="nc" id="L71">			output[(offset * 4) + 1] = (b1 + c1 + 4) &gt;&gt; 3;</span>
+<span class="nc" id="L72">			output[(offset * 4) + 2] = (b1 - c1 + 4) &gt;&gt; 3;</span>
+
+<span class="nc" id="L74">			diff[0][diffo] = (a1 + d1 + 4) &gt;&gt; 3;</span>
+<span class="nc" id="L75">			diff[3][diffo] = (a1 - d1 + 4) &gt;&gt; 3;</span>
+<span class="nc" id="L76">			diff[1][diffo] = (b1 + c1 + 4) &gt;&gt; 3;</span>
+<span class="nc" id="L77">			diff[2][diffo] = (b1 - c1 + 4) &gt;&gt; 3;</span>
+
+<span class="nc" id="L79">			offset++;</span>
+<span class="nc" id="L80">			diffo++;</span>
+		}
+
+<span class="nc" id="L83">		return diff;</span>
+
+	}
+
+	public static int[][] iwalsh4x4(int input[]) {
+		int i;
+		int a1, b1, c1, d1;
+		int a2, b2, c2, d2;
+
+<span class="nc" id="L92">		int[] output = new int[16];</span>
+<span class="nc" id="L93">		int diff[][] = new int[4][4];</span>
+<span class="nc" id="L94">		int offset = 0;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L96">			a1 = input[offset + 0] + input[offset + 12];</span>
+<span class="nc" id="L97">			b1 = input[offset + 4] + input[offset + 8];</span>
+<span class="nc" id="L98">			c1 = input[offset + 4] - input[offset + 8];</span>
+<span class="nc" id="L99">			d1 = input[offset + 0] - input[offset + 12];</span>
+
+<span class="nc" id="L101">			output[offset + 0] = a1 + b1;</span>
+<span class="nc" id="L102">			output[offset + 4] = c1 + d1;</span>
+<span class="nc" id="L103">			output[offset + 8] = a1 - b1;</span>
+<span class="nc" id="L104">			output[offset + 12] = d1 - c1;</span>
+<span class="nc" id="L105">			offset++;</span>
+		}
+
+<span class="nc" id="L108">		offset = 0;</span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L111">			a1 = output[offset + 0] + output[offset + 3];</span>
+<span class="nc" id="L112">			b1 = output[offset + 1] + output[offset + 2];</span>
+<span class="nc" id="L113">			c1 = output[offset + 1] - output[offset + 2];</span>
+<span class="nc" id="L114">			d1 = output[offset + 0] - output[offset + 3];</span>
+
+<span class="nc" id="L116">			a2 = a1 + b1;</span>
+<span class="nc" id="L117">			b2 = c1 + d1;</span>
+<span class="nc" id="L118">			c2 = a1 - b1;</span>
+<span class="nc" id="L119">			d2 = d1 - c1;</span>
+<span class="nc" id="L120">			output[offset + 0] = (a2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L121">			output[offset + 1] = (b2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L122">			output[offset + 2] = (c2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L123">			output[offset + 3] = (d2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L124">			diff[0][i] = (a2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L125">			diff[1][i] = (b2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L126">			diff[2][i] = (c2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L127">			diff[3][i] = (d2 + 3) &gt;&gt; 3;</span>
+<span class="nc" id="L128">			offset += 4;</span>
+		}
+
+<span class="nc" id="L131">		return diff;</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SentenceAnd.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">SentenceAnd.java</span></div><h1>SentenceAnd.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+
+public class SentenceAnd&lt;D extends Diagram&gt; implements Sentence&lt;D&gt; {
+
+	private final SentenceSimple&lt;D&gt; sentence1;
+	private final SentenceSimple&lt;D&gt; sentence2;
+
+<span class="fc" id="L51">	public SentenceAnd(SentenceSimple&lt;D&gt; sentence1, SentenceSimple&lt;D&gt; sentence2) {</span>
+<span class="fc" id="L52">		this.sentence1 = sentence1;</span>
+<span class="fc" id="L53">		this.sentence2 = sentence2;</span>
+<span class="fc" id="L54">	}</span>
+
+	public IRegex toRegex() {
+<span class="fc" id="L57">		return new RegexConcat(//</span>
+<span class="fc" id="L58">				RegexLeaf.start(), //</span>
+<span class="fc" id="L59">				sentence1.getSubject().toRegex(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">				sentence1.getVerbRegex(), //</span>
+<span class="fc" id="L62">				sentence1.getAdverbialOrPropositon(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				sentence1.getComplement().toRegex(&quot;1&quot;), //</span>
+				SENTENCE_SEPARATOR, //
+<span class="fc" id="L66">				sentence2.getVerbRegex(), //</span>
+<span class="fc" id="L67">				sentence2.getAdverbialOrPropositon(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L69">				sentence2.getComplement().toRegex(&quot;2&quot;), //</span>
+				OPTIONAL_FINAL_DOT);
+	}
+
+	public final CommandExecutionResult execute(D project, RegexResult arg) {
+<span class="nc" id="L74">		final Failable&lt;? extends Object&gt; subject = sentence1.getSubject().getMe(project, arg);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (subject.isFail())</span>
+<span class="nc" id="L76">			return CommandExecutionResult.error(subject.getError());</span>
+
+<span class="nc" id="L78">		final Failable&lt;? extends Object&gt; complement1 = sentence1.getComplement().getMe(project, arg, &quot;1&quot;);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (complement1.isFail())</span>
+<span class="nc" id="L80">			return CommandExecutionResult.error(complement1.getError());</span>
+
+<span class="nc" id="L82">		final CommandExecutionResult result1 = sentence1.execute(project, subject.get(), complement1.get());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (result1.isOk() == false)</span>
+<span class="nc" id="L84">			return result1;</span>
+
+<span class="nc" id="L86">		final Failable&lt;? extends Object&gt; complement2 = sentence2.getComplement().getMe(project, arg, &quot;2&quot;);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (complement2.isFail())</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(complement2.getError());</span>
+
+<span class="nc" id="L90">		return sentence2.execute(project, subject.get(), complement2.get());</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

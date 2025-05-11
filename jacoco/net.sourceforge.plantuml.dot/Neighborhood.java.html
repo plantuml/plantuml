@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Neighborhood.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.dot</a> &gt; <span class="el_source">Neighborhood.java</span></div><h1>Neighborhood.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.dot;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.svek.Bibliotekon;
+import net.sourceforge.plantuml.svek.SvekEdge;
+
+<span class="nc" id="L55">public class Neighborhood {</span>
+
+	private final Entity leaf;
+	private final List&lt;Link&gt; sametailLinks;
+	private final List&lt;Link&gt; allButSametails;
+
+<span class="nc" id="L61">	public Neighborhood(Entity leaf, List&lt;Link&gt; sametailLinks, List&lt;Link&gt; all) {</span>
+<span class="nc" id="L62">		this.leaf = leaf;</span>
+<span class="nc" id="L63">		this.sametailLinks = sametailLinks;</span>
+<span class="nc" id="L64">		this.allButSametails = new ArrayList&lt;&gt;(all);</span>
+<span class="nc" id="L65">		allButSametails.removeAll(sametailLinks);</span>
+<span class="nc" id="L66">	}</span>
+
+	public void drawU(UGraphic ug, double minX, double minY, Bibliotekon bibliotekon, XDimension2D shapeDim) {
+<span class="nc" id="L69">		final Set&lt;XPoint2D&gt; contactPoints = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (Link link : sametailLinks) {</span>
+<span class="nc" id="L71">			final SvekEdge line = bibliotekon.getLine(link);</span>
+<span class="nc" id="L72">			final XPoint2D contact = line.getStartContactPoint();</span>
+<span class="nc" id="L73">			contactPoints.add(contact);</span>
+<span class="nc" id="L74">		}</span>
+<span class="nc" id="L75">		final XRectangle2D rect = new XRectangle2D(minX, minY, shapeDim.getWidth(), shapeDim.getHeight());</span>
+<span class="nc" id="L76">		final XPoint2D center = new XPoint2D(rect.getCenterX(), rect.getCenterY());</span>
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (XPoint2D pt : contactPoints) {</span>
+<span class="nc" id="L79">			final XPoint2D inter = intersection(rect, center, pt);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (inter == null) {</span>
+				// System.err.println(&quot;rect=&quot; + rect);
+				// System.err.println(&quot;center=&quot; + center);
+				// System.err.println(&quot;pt=&quot; + pt);
+<span class="nc" id="L84">				assert false;</span>
+				continue;
+			}
+<span class="nc" id="L87">			final double theta = Math.atan2(center.getX() - pt.getX(), -(center.getY() - pt.getY()));</span>
+<span class="nc" id="L88">			final XPoint2D middle = drawExtends(ug, inter, theta);</span>
+<span class="nc" id="L89">			drawLine(ug, middle, pt);</span>
+<span class="nc" id="L90">		}</span>
+
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (Link link : allButSametails) {</span>
+<span class="nc" id="L93">			final SvekEdge line = bibliotekon.getLine(link);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			final XPoint2D contact = link.getEntity1() == leaf ? line.getStartContactPoint()</span>
+<span class="nc" id="L95">					: line.getEndContactPoint();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (contact == null) {</span>
+				// assert false;
+<span class="nc" id="L98">				continue;</span>
+			}
+<span class="nc" id="L100">			final XPoint2D inter = intersection(rect, center, contact);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (inter == null) {</span>
+				// assert false;
+<span class="nc" id="L103">				continue;</span>
+			}
+<span class="nc" id="L105">			drawLine(ug, inter, contact);</span>
+<span class="nc" id="L106">		}</span>
+<span class="nc" id="L107">	}</span>
+
+	private XPoint2D drawExtends(UGraphic ug, XPoint2D contact, double theta) {
+<span class="nc" id="L110">		final UPolygon poly = new UPolygon();</span>
+<span class="nc" id="L111">		poly.addPoint(0, 0);</span>
+<span class="nc" id="L112">		poly.addPoint(7, 20);</span>
+<span class="nc" id="L113">		poly.addPoint(-7, 20);</span>
+<span class="nc" id="L114">		poly.rotate(theta);</span>
+<span class="nc" id="L115">		final UTranslate translate = UTranslate.point(contact);</span>
+<span class="nc" id="L116">		ug.apply(translate).draw(poly);</span>
+<span class="nc" id="L117">		final XPoint2D p1 = translate.getTranslated(poly.getPoints().get(1));</span>
+<span class="nc" id="L118">		final XPoint2D p2 = translate.getTranslated(poly.getPoints().get(2));</span>
+<span class="nc" id="L119">		return new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);</span>
+	}
+
+	static XPoint2D intersection(XRectangle2D rect, XPoint2D pt1, XPoint2D pt2) {
+		XPoint2D p;
+<span class="nc" id="L124">		p = intersection(new XPoint2D(rect.getMinX(), rect.getMinY()), new XPoint2D(rect.getMaxX(), rect.getMinY()),</span>
+				pt1, pt2);
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (p != null)</span>
+<span class="nc" id="L127">			return p;</span>
+
+<span class="nc" id="L129">		p = intersection(new XPoint2D(rect.getMinX(), rect.getMaxY()), new XPoint2D(rect.getMaxX(), rect.getMaxY()),</span>
+				pt1, pt2);
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (p != null)</span>
+<span class="nc" id="L132">			return p;</span>
+
+<span class="nc" id="L134">		p = intersection(new XPoint2D(rect.getMinX(), rect.getMinY()), new XPoint2D(rect.getMinX(), rect.getMaxY()),</span>
+				pt1, pt2);
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (p != null)</span>
+<span class="nc" id="L137">			return p;</span>
+
+<span class="nc" id="L139">		p = intersection(new XPoint2D(rect.getMaxX(), rect.getMinY()), new XPoint2D(rect.getMaxX(), rect.getMaxY()),</span>
+				pt1, pt2);
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (p != null)</span>
+<span class="nc" id="L142">			return p;</span>
+
+<span class="nc" id="L144">		return null;</span>
+	}
+
+	static private XPoint2D intersection(XPoint2D pt1, XPoint2D pt2, XPoint2D pt3, XPoint2D pt4) {
+		// System.err.println(&quot;Checking intersection of &quot; + pt1 + &quot;-&quot; + pt2 + &quot; and &quot; +
+		// pt3 + &quot;-&quot; + pt4);
+<span class="nc" id="L150">		return intersection(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(), pt4.getX(),</span>
+<span class="nc" id="L151">				pt4.getY());</span>
+	}
+
+	private static final double epsilon = .001;
+
+	static private XPoint2D intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4,
+			double y4) {
+<span class="nc" id="L158">		final double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (d == 0)</span>
+<span class="nc" id="L160">			return null;</span>
+
+<span class="nc" id="L162">		final double xi = ((x3 - x4) * (x1 * y2 - y1 * x2) - (x1 - x2) * (x3 * y4 - y3 * x4)) / d;</span>
+<span class="nc" id="L163">		final double yi = ((y3 - y4) * (x1 * y2 - y1 * x2) - (y1 - y2) * (x3 * y4 - y3 * x4)) / d;</span>
+
+<span class="nc" id="L165">		final XPoint2D p = new XPoint2D(xi, yi);</span>
+<span class="nc bnc" id="L166" title="All 4 branches missed.">		if (xi + epsilon &lt; Math.min(x1, x2) || xi - epsilon &gt; Math.max(x1, x2))</span>
+<span class="nc" id="L167">			return null;</span>
+
+<span class="nc bnc" id="L169" title="All 4 branches missed.">		if (xi + epsilon &lt; Math.min(x3, x4) || xi - epsilon &gt; Math.max(x3, x4))</span>
+<span class="nc" id="L170">			return null;</span>
+
+<span class="nc bnc" id="L172" title="All 4 branches missed.">		if (yi + epsilon &lt; Math.min(y1, y2) || yi - epsilon &gt; Math.max(y1, y2))</span>
+<span class="nc" id="L173">			return null;</span>
+
+<span class="nc bnc" id="L175" title="All 4 branches missed.">		if (yi + epsilon &lt; Math.min(y3, y4) || yi - epsilon &gt; Math.max(y3, y4))</span>
+<span class="nc" id="L176">			return null;</span>
+
+<span class="nc" id="L178">		return p;</span>
+	}
+
+	private void drawLine(UGraphic ug, XPoint2D pt1, XPoint2D pt2) {
+<span class="nc" id="L182">		drawLine(ug, pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY());</span>
+<span class="nc" id="L183">	}</span>
+
+	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
+<span class="nc" id="L186">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="nc" id="L187">		ug.apply(new UTranslate(x1, y1)).draw(line);</span>
+<span class="nc" id="L188">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

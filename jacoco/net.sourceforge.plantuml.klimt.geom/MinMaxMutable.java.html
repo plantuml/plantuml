@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinMaxMutable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">MinMaxMutable.java</span></div><h1>MinMaxMutable.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.geom;
+
+public class MinMaxMutable {
+
+	private double maxX;
+	private double maxY;
+	private double minX;
+	private double minY;
+
+	public static MinMaxMutable getEmpty(boolean initToZero) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (initToZero)</span>
+<span class="fc" id="L47">			return new MinMaxMutable(0, 0, 0, 0);</span>
+
+<span class="fc" id="L49">		return new MinMaxMutable(Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE);</span>
+	}
+
+	public boolean isInfinity() {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		return minX == Double.MAX_VALUE;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L58">		return &quot;X=&quot; + minX + &quot; to &quot; + maxX + &quot; and Y=&quot; + minY + &quot; to &quot; + maxY;</span>
+	}
+
+<span class="fc" id="L61">	private MinMaxMutable(double minX, double minY, double maxX, double maxY) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (Double.isNaN(minX))</span>
+<span class="nc" id="L63">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (Double.isNaN(maxX))</span>
+<span class="nc" id="L66">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (Double.isNaN(minY))</span>
+<span class="nc" id="L69">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (Double.isNaN(maxY))</span>
+<span class="nc" id="L72">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L74">		this.minX = minX;</span>
+<span class="fc" id="L75">		this.minY = minY;</span>
+<span class="fc" id="L76">		this.maxX = maxX;</span>
+<span class="fc" id="L77">		this.maxY = maxY;</span>
+<span class="fc" id="L78">	}</span>
+
+	public void addPoint(double x, double y) {
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (Double.isNaN(x))</span>
+<span class="nc" id="L82">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (Double.isNaN(y))</span>
+<span class="nc" id="L85">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L87">		this.maxX = Math.max(x, maxX);</span>
+<span class="fc" id="L88">		this.maxY = Math.max(y, maxY);</span>
+<span class="fc" id="L89">		this.minX = Math.min(x, minX);</span>
+<span class="fc" id="L90">		this.minY = Math.min(y, minY);</span>
+<span class="fc" id="L91">	}</span>
+
+	public void addPoint(XPoint2D pt) {
+<span class="fc" id="L94">		addPoint(pt.getX(), pt.getY());</span>
+<span class="fc" id="L95">	}</span>
+
+	public static MinMaxMutable fromMax(double maxX, double maxY) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (Double.isNaN(maxX))</span>
+<span class="nc" id="L99">			throw new IllegalArgumentException();</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (Double.isNaN(maxY))</span>
+<span class="nc" id="L102">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L104">		final MinMaxMutable result = MinMaxMutable.getEmpty(true);</span>
+<span class="nc" id="L105">		result.addPoint(maxX, maxY);</span>
+<span class="nc" id="L106">		return result;</span>
+	}
+
+	public final double getMaxX() {
+<span class="fc" id="L110">		return maxX;</span>
+	}
+
+	public final double getMaxY() {
+<span class="fc" id="L114">		return maxY;</span>
+	}
+
+	public final double getMinX() {
+<span class="fc" id="L118">		return minX;</span>
+	}
+
+	public final double getMinY() {
+<span class="fc" id="L122">		return minY;</span>
+	}
+
+	public XDimension2D getDimension() {
+<span class="fc" id="L126">		return new XDimension2D(maxX - minX, maxY - minY);</span>
+	}
+
+	public void reset() {
+<span class="nc" id="L130">		this.maxX = 0;</span>
+<span class="nc" id="L131">		this.maxY = 0;</span>
+<span class="nc" id="L132">		this.minX = 0;</span>
+<span class="nc" id="L133">		this.minY = 0;</span>
+<span class="nc" id="L134">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

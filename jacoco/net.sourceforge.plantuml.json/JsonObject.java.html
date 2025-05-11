@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">JsonObject.java</span></div><h1>JsonObject.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.json.JsonObject.Member;
+
+/**
+ * Represents a JSON object, a set of name/value pairs, where the names are
+ * strings and the values are JSON values.
+ * &lt;p&gt;
+ * Members can be added using the &lt;code&gt;add(String, ...)&lt;/code&gt; methods which
+ * accept instances of {@link JsonValue}, strings, primitive numbers, and
+ * boolean values. To modify certain values of an object, use the
+ * &lt;code&gt;set(String, ...)&lt;/code&gt; methods. Please note that the &lt;code&gt;add&lt;/code&gt;
+ * methods are faster than &lt;code&gt;set&lt;/code&gt; as they do not search for existing
+ * members. On the other hand, the &lt;code&gt;add&lt;/code&gt; methods do not prevent
+ * adding multiple members with the same name. Duplicate names are discouraged
+ * but not prohibited by JSON.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Members can be accessed by their name using {@link #get(String)}. A list of
+ * all names can be obtained from the method {@link #names()}. This class also
+ * supports iterating over the members in document order using an
+ * {@link #iterator()} or an enhanced for loop:
+ * &lt;/p&gt;
+ * 
+ * &lt;pre&gt;
+ * for (Member member : jsonObject) {
+ *   String name = member.getName();
+ *   JsonValue value = member.getValue();
+ *   ...
+ * }
+ * &lt;/pre&gt;
+ * &lt;p&gt;
+ * Even though JSON objects are unordered by definition, instances of this class
+ * preserve the order of members to allow processing in document order and to
+ * guarantee a predictable output.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Note that this class is &lt;strong&gt;not thread-safe&lt;/strong&gt;. If multiple threads
+ * access a &lt;code&gt;JsonObject&lt;/code&gt; instance concurrently, while at least one of
+ * these threads modifies the contents of this object, access to the instance
+ * must be synchronized externally. Failure to do so may lead to an inconsistent
+ * state.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * This class is &lt;strong&gt;not supposed to be extended&lt;/strong&gt; by clients.
+ * &lt;/p&gt;
+ */
+@SuppressWarnings(&quot;serial&quot;) // use default serial UID
+public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
+	
+	/**
+	 * Added for PlantUML
+	 */
+	public JsonValue cloneMe() {
+<span class="fc" id="L87">		final JsonObject copy = new JsonObject();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		for (int i=0; i&lt;names.size(); i++)</span>
+<span class="fc" id="L89">			copy.add(this.names.get(i), this.values.get(i).cloneMe());</span>
+<span class="fc" id="L90">		return copy;</span>
+	}
+
+
+	private final List&lt;String&gt; names;
+	private final List&lt;JsonValue&gt; values;
+	private transient HashIndexTable table;
+
+	/**
+	 * Creates a new empty JsonObject.
+	 */
+<span class="fc" id="L101">	public JsonObject() {</span>
+<span class="fc" id="L102">		names = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L103">		values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L104">		table = new HashIndexTable();</span>
+<span class="fc" id="L105">	}</span>
+
+	/**
+	 * Creates a new JsonObject, initialized with the contents of the specified JSON
+	 * object.
+	 *
+	 * @param object the JSON object to get the initial contents from, must not be
+	 *               &lt;code&gt;null&lt;/code&gt;
+	 */
+	public JsonObject(JsonObject object) {
+<span class="nc" id="L115">		this(object, false);</span>
+<span class="nc" id="L116">	}</span>
+
+<span class="nc" id="L118">	private JsonObject(JsonObject object, boolean unmodifiable) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (object == null) {</span>
+<span class="nc" id="L120">			throw new NullPointerException(&quot;object is null&quot;);</span>
+		}
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (unmodifiable) {</span>
+<span class="nc" id="L123">			names = Collections.unmodifiableList(object.names);</span>
+<span class="nc" id="L124">			values = Collections.unmodifiableList(object.values);</span>
+		} else {
+<span class="nc" id="L126">			names = new ArrayList&lt;&gt;(object.names);</span>
+<span class="nc" id="L127">			values = new ArrayList&lt;&gt;(object.values);</span>
+		}
+<span class="nc" id="L129">		table = new HashIndexTable();</span>
+<span class="nc" id="L130">		updateHashIndex();</span>
+<span class="nc" id="L131">	}</span>
+
+	/**
+	 * Reads a JSON object from the given reader.
+	 * &lt;p&gt;
+	 * Characters are read in chunks and buffered internally, therefore wrapping an
+	 * existing reader in an additional &lt;code&gt;BufferedReader&lt;/code&gt; does
+	 * &lt;strong&gt;not&lt;/strong&gt; improve reading performance.
+	 * &lt;/p&gt;
+	 *
+	 * @param reader the reader to read the JSON object from
+	 * @return the JSON object that has been read
+	 * @throws IOException                   if an I/O error occurs in the reader
+	 * @throws ParseException                if the input is not valid JSON
+	 * @throws UnsupportedOperationException if the input does not contain a JSON
+	 *                                       object
+	 * @deprecated Use {@link Json#parse(Reader)}{@link JsonValue#asObject()
+	 *             .asObject()} instead
+	 */
+	@Deprecated
+	public static JsonObject readFrom(Reader reader) throws IOException {
+<span class="nc" id="L152">		return JsonValue.readFrom(reader).asObject();</span>
+	}
+
+	/**
+	 * Reads a JSON object from the given string.
+	 *
+	 * @param string the string that contains the JSON object
+	 * @return the JSON object that has been read
+	 * @throws ParseException                if the input is not valid JSON
+	 * @throws UnsupportedOperationException if the input does not contain a JSON
+	 *                                       object
+	 * @deprecated Use {@link Json#parse(String)}{@link JsonValue#asObject()
+	 *             .asObject()} instead
+	 */
+	@Deprecated
+	public static JsonObject readFrom(String string) {
+<span class="nc" id="L168">		return JsonValue.readFrom(string).asObject();</span>
+	}
+
+	/**
+	 * Returns an unmodifiable JsonObject for the specified one. This method allows
+	 * to provide read-only access to a JsonObject.
+	 * &lt;p&gt;
+	 * The returned JsonObject is backed by the given object and reflect changes
+	 * that happen to it. Attempts to modify the returned JsonObject result in an
+	 * &lt;code&gt;UnsupportedOperationException&lt;/code&gt;.
+	 * &lt;/p&gt;
+	 *
+	 * @param object the JsonObject for which an unmodifiable JsonObject is to be
+	 *               returned
+	 * @return an unmodifiable view of the specified JsonObject
+	 */
+	public static JsonObject unmodifiableObject(JsonObject object) {
+<span class="nc" id="L185">		return new JsonObject(object, true);</span>
+	}
+
+	/**
+	 * Appends a new member to the end of this object, with the specified name and
+	 * the JSON representation of the specified &lt;code&gt;int&lt;/code&gt; value.
+	 * &lt;p&gt;
+	 * This method &lt;strong&gt;does not prevent duplicate names&lt;/strong&gt;. Calling this
+	 * method with a name that already exists in the object will append another
+	 * member with the same name. In order to replace existing members, use the
+	 * method &lt;code&gt;set(name, value)&lt;/code&gt; instead. However, &lt;strong&gt; &lt;em&gt;add&lt;/em&gt;
+	 * is much faster than &lt;em&gt;set&lt;/em&gt;&lt;/strong&gt; (because it does not need to search
+	 * for existing members). Therefore &lt;em&gt;add&lt;/em&gt; should be preferred when
+	 * constructing new objects.
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject add(String name, int value) {
+<span class="fc" id="L206">		add(name, Json.value(value));</span>
+<span class="fc" id="L207">		return this;</span>
+	}
+
+	/**
+	 * Appends a new member to the end of this object, with the specified name and
+	 * the JSON representation of the specified &lt;code&gt;long&lt;/code&gt; value.
+	 * &lt;p&gt;
+	 * This method &lt;strong&gt;does not prevent duplicate names&lt;/strong&gt;. Calling this
+	 * method with a name that already exists in the object will append another
+	 * member with the same name. In order to replace existing members, use the
+	 * method &lt;code&gt;set(name, value)&lt;/code&gt; instead. However, &lt;strong&gt; &lt;em&gt;add&lt;/em&gt;
+	 * is much faster than &lt;em&gt;set&lt;/em&gt;&lt;/strong&gt; (because it does not need to search
+	 * for existing members). Therefore &lt;em&gt;add&lt;/em&gt; should be preferred when
+	 * constructing new objects.
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject add(String name, long value) {
+<span class="nc" id="L228">		add(name, Json.value(value));</span>
+<span class="nc" id="L229">		return this;</span>
+	}
+
+	/**
+	 * Appends a new member to the end of this object, with the specified name and
+	 * the JSON representation of the specified &lt;code&gt;float&lt;/code&gt; value.
+	 * &lt;p&gt;
+	 * This method &lt;strong&gt;does not prevent duplicate names&lt;/strong&gt;. Calling this
+	 * method with a name that already exists in the object will append another
+	 * member with the same name. In order to replace existing members, use the
+	 * method &lt;code&gt;set(name, value)&lt;/code&gt; instead. However, &lt;strong&gt; &lt;em&gt;add&lt;/em&gt;
+	 * is much faster than &lt;em&gt;set&lt;/em&gt;&lt;/strong&gt; (because it does not need to search
+	 * for existing members). Therefore &lt;em&gt;add&lt;/em&gt; should be preferred when
+	 * constructing new objects.
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject add(String name, float value) {
+<span class="nc" id="L250">		add(name, Json.value(value));</span>
+<span class="nc" id="L251">		return this;</span>
+	}
+
+	/**
+	 * Appends a new member to the end of this object, with the specified name and
+	 * the JSON representation of the specified &lt;code&gt;double&lt;/code&gt; value.
+	 * &lt;p&gt;
+	 * This method &lt;strong&gt;does not prevent duplicate names&lt;/strong&gt;. Calling this
+	 * method with a name that already exists in the object will append another
+	 * member with the same name. In order to replace existing members, use the
+	 * method &lt;code&gt;set(name, value)&lt;/code&gt; instead. However, &lt;strong&gt; &lt;em&gt;add&lt;/em&gt;
+	 * is much faster than &lt;em&gt;set&lt;/em&gt;&lt;/strong&gt; (because it does not need to search
+	 * for existing members). Therefore &lt;em&gt;add&lt;/em&gt; should be preferred when
+	 * constructing new objects.
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject add(String name, double value) {
+<span class="nc" id="L272">		add(name, Json.value(value));</span>
+<span class="nc" id="L273">		return this;</span>
+	}
+
+	/**
+	 * Appends a new member to the end of this object, with the specified name and
+	 * the JSON representation of the specified &lt;code&gt;boolean&lt;/code&gt; value.
+	 * &lt;p&gt;
+	 * This method &lt;strong&gt;does not prevent duplicate names&lt;/strong&gt;. Calling this
+	 * method with a name that already exists in the object will append another
+	 * member with the same name. In order to replace existing members, use the
+	 * method &lt;code&gt;set(name, value)&lt;/code&gt; instead. However, &lt;strong&gt; &lt;em&gt;add&lt;/em&gt;
+	 * is much faster than &lt;em&gt;set&lt;/em&gt;&lt;/strong&gt; (because it does not need to search
+	 * for existing members). Therefore &lt;em&gt;add&lt;/em&gt; should be preferred when
+	 * constructing new objects.
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject add(String name, boolean value) {
+<span class="nc" id="L294">		add(name, Json.value(value));</span>
+<span class="nc" id="L295">		return this;</span>
+	}
+
+	/**
+	 * Appends a new member to the end of this object, with the specified name and
+	 * the JSON representation of the specified string.
+	 * &lt;p&gt;
+	 * This method &lt;strong&gt;does not prevent duplicate names&lt;/strong&gt;. Calling this
+	 * method with a name that already exists in the object will append another
+	 * member with the same name. In order to replace existing members, use the
+	 * method &lt;code&gt;set(name, value)&lt;/code&gt; instead. However, &lt;strong&gt; &lt;em&gt;add&lt;/em&gt;
+	 * is much faster than &lt;em&gt;set&lt;/em&gt;&lt;/strong&gt; (because it does not need to search
+	 * for existing members). Therefore &lt;em&gt;add&lt;/em&gt; should be preferred when
+	 * constructing new objects.
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject add(String name, String value) {
+<span class="fc" id="L316">		add(name, Json.value(value));</span>
+<span class="fc" id="L317">		return this;</span>
+	}
+
+	/**
+	 * Appends a new member to the end of this object, with the specified name and
+	 * the specified JSON value.
+	 * &lt;p&gt;
+	 * This method &lt;strong&gt;does not prevent duplicate names&lt;/strong&gt;. Calling this
+	 * method with a name that already exists in the object will append another
+	 * member with the same name. In order to replace existing members, use the
+	 * method &lt;code&gt;set(name, value)&lt;/code&gt; instead. However, &lt;strong&gt; &lt;em&gt;add&lt;/em&gt;
+	 * is much faster than &lt;em&gt;set&lt;/em&gt;&lt;/strong&gt; (because it does not need to search
+	 * for existing members). Therefore &lt;em&gt;add&lt;/em&gt; should be preferred when
+	 * constructing new objects.
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add, must not be &lt;code&gt;null&lt;/code&gt;
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject add(String name, JsonValue value) {
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (name == null) {</span>
+<span class="nc" id="L339">			throw new NullPointerException(&quot;name is null&quot;);</span>
+		}
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L342">			throw new NullPointerException(&quot;value is null&quot;);</span>
+		}
+<span class="fc" id="L344">		table.add(name, names.size());</span>
+<span class="fc" id="L345">		names.add(name);</span>
+<span class="fc" id="L346">		values.add(value);</span>
+<span class="fc" id="L347">		return this;</span>
+	}
+
+	/**
+	 * Sets the value of the member with the specified name to the JSON
+	 * representation of the specified &lt;code&gt;int&lt;/code&gt; value. If this object does
+	 * not contain a member with this name, a new member is added at the end of the
+	 * object. If this object contains multiple members with this name, only the
+	 * last one is changed.
+	 * &lt;p&gt;
+	 * This method should &lt;strong&gt;only be used to modify existing objects&lt;/strong&gt;.
+	 * To fill a new object with members, the method &lt;code&gt;add(name, value)&lt;/code&gt;
+	 * should be preferred which is much faster (as it does not need to search for
+	 * existing members).
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to replace
+	 * @param value the value to set to the member
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject set(String name, int value) {
+<span class="nc" id="L368">		set(name, Json.value(value));</span>
+<span class="nc" id="L369">		return this;</span>
+	}
+
+	/**
+	 * Sets the value of the member with the specified name to the JSON
+	 * representation of the specified &lt;code&gt;long&lt;/code&gt; value. If this object does
+	 * not contain a member with this name, a new member is added at the end of the
+	 * object. If this object contains multiple members with this name, only the
+	 * last one is changed.
+	 * &lt;p&gt;
+	 * This method should &lt;strong&gt;only be used to modify existing objects&lt;/strong&gt;.
+	 * To fill a new object with members, the method &lt;code&gt;add(name, value)&lt;/code&gt;
+	 * should be preferred which is much faster (as it does not need to search for
+	 * existing members).
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to replace
+	 * @param value the value to set to the member
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject set(String name, long value) {
+<span class="nc" id="L390">		set(name, Json.value(value));</span>
+<span class="nc" id="L391">		return this;</span>
+	}
+
+	/**
+	 * Sets the value of the member with the specified name to the JSON
+	 * representation of the specified &lt;code&gt;float&lt;/code&gt; value. If this object does
+	 * not contain a member with this name, a new member is added at the end of the
+	 * object. If this object contains multiple members with this name, only the
+	 * last one is changed.
+	 * &lt;p&gt;
+	 * This method should &lt;strong&gt;only be used to modify existing objects&lt;/strong&gt;.
+	 * To fill a new object with members, the method &lt;code&gt;add(name, value)&lt;/code&gt;
+	 * should be preferred which is much faster (as it does not need to search for
+	 * existing members).
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject set(String name, float value) {
+<span class="nc" id="L412">		set(name, Json.value(value));</span>
+<span class="nc" id="L413">		return this;</span>
+	}
+
+	/**
+	 * Sets the value of the member with the specified name to the JSON
+	 * representation of the specified &lt;code&gt;double&lt;/code&gt; value. If this object
+	 * does not contain a member with this name, a new member is added at the end of
+	 * the object. If this object contains multiple members with this name, only the
+	 * last one is changed.
+	 * &lt;p&gt;
+	 * This method should &lt;strong&gt;only be used to modify existing objects&lt;/strong&gt;.
+	 * To fill a new object with members, the method &lt;code&gt;add(name, value)&lt;/code&gt;
+	 * should be preferred which is much faster (as it does not need to search for
+	 * existing members).
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject set(String name, double value) {
+<span class="nc" id="L434">		set(name, Json.value(value));</span>
+<span class="nc" id="L435">		return this;</span>
+	}
+
+	/**
+	 * Sets the value of the member with the specified name to the JSON
+	 * representation of the specified &lt;code&gt;boolean&lt;/code&gt; value. If this object
+	 * does not contain a member with this name, a new member is added at the end of
+	 * the object. If this object contains multiple members with this name, only the
+	 * last one is changed.
+	 * &lt;p&gt;
+	 * This method should &lt;strong&gt;only be used to modify existing objects&lt;/strong&gt;.
+	 * To fill a new object with members, the method &lt;code&gt;add(name, value)&lt;/code&gt;
+	 * should be preferred which is much faster (as it does not need to search for
+	 * existing members).
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject set(String name, boolean value) {
+<span class="nc" id="L456">		set(name, Json.value(value));</span>
+<span class="nc" id="L457">		return this;</span>
+	}
+
+	/**
+	 * Sets the value of the member with the specified name to the JSON
+	 * representation of the specified string. If this object does not contain a
+	 * member with this name, a new member is added at the end of the object. If
+	 * this object contains multiple members with this name, only the last one is
+	 * changed.
+	 * &lt;p&gt;
+	 * This method should &lt;strong&gt;only be used to modify existing objects&lt;/strong&gt;.
+	 * To fill a new object with members, the method &lt;code&gt;add(name, value)&lt;/code&gt;
+	 * should be preferred which is much faster (as it does not need to search for
+	 * existing members).
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject set(String name, String value) {
+<span class="nc" id="L478">		set(name, Json.value(value));</span>
+<span class="nc" id="L479">		return this;</span>
+	}
+
+	/**
+	 * Sets the value of the member with the specified name to the specified JSON
+	 * value. If this object does not contain a member with this name, a new member
+	 * is added at the end of the object. If this object contains multiple members
+	 * with this name, only the last one is changed.
+	 * &lt;p&gt;
+	 * This method should &lt;strong&gt;only be used to modify existing objects&lt;/strong&gt;.
+	 * To fill a new object with members, the method &lt;code&gt;add(name, value)&lt;/code&gt;
+	 * should be preferred which is much faster (as it does not need to search for
+	 * existing members).
+	 * &lt;/p&gt;
+	 *
+	 * @param name  the name of the member to add
+	 * @param value the value of the member to add, must not be &lt;code&gt;null&lt;/code&gt;
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject set(String name, JsonValue value) {
+<span class="pc bpc" id="L499" title="1 of 2 branches missed.">		if (name == null) {</span>
+<span class="nc" id="L500">			throw new NullPointerException(&quot;name is null&quot;);</span>
+		}
+<span class="pc bpc" id="L502" title="1 of 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L503">			throw new NullPointerException(&quot;value is null&quot;);</span>
+		}
+<span class="fc" id="L505">		int index = indexOf(name);</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">		if (index != -1) {</span>
+<span class="fc" id="L507">			values.set(index, value);</span>
+		} else {
+<span class="fc" id="L509">			table.add(name, names.size());</span>
+<span class="fc" id="L510">			names.add(name);</span>
+<span class="fc" id="L511">			values.add(value);</span>
+		}
+<span class="fc" id="L513">		return this;</span>
+	}
+
+	/**
+	 * Removes a member with the specified name from this object. If this object
+	 * contains multiple members with the given name, only the last one is removed.
+	 * If this object does not contain a member with the specified name, the object
+	 * is not modified.
+	 *
+	 * @param name the name of the member to remove
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject remove(String name) {
+<span class="pc bpc" id="L526" title="1 of 2 branches missed.">		if (name == null) {</span>
+<span class="nc" id="L527">			throw new NullPointerException(&quot;name is null&quot;);</span>
+		}
+<span class="fc" id="L529">		int index = indexOf(name);</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">		if (index != -1) {</span>
+<span class="fc" id="L531">			table.remove(index);</span>
+<span class="fc" id="L532">			names.remove(index);</span>
+<span class="fc" id="L533">			values.remove(index);</span>
+		}
+<span class="fc" id="L535">		return this;</span>
+	}
+
+	/**
+	 * Checks if a specified member is present as a child of this object. This will
+	 * not test if this object contains the literal &lt;code&gt;null&lt;/code&gt;,
+	 * {@link JsonValue#isNull()} should be used for this purpose.
+	 *
+	 * @param name the name of the member to check for
+	 * @return whether or not the member is present
+	 */
+	public boolean contains(String name) {
+<span class="fc" id="L547">		return names.contains(name);</span>
+	}
+
+	/**
+	 * Copies all members of the specified object into this object. When the
+	 * specified object contains members with names that also exist in this object,
+	 * the existing values in this object will be replaced by the corresponding
+	 * values in the specified object.
+	 *
+	 * @param object the object to merge
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject merge(JsonObject object) {
+<span class="fc bfc" id="L560" title="All 2 branches covered.">		if (object == null) {</span>
+<span class="fc" id="L561">			throw new NullPointerException(&quot;object is null&quot;);</span>
+		}
+<span class="fc bfc" id="L563" title="All 2 branches covered.">		for (Member member : object) {</span>
+<span class="fc" id="L564">			this.set(member.name, member.value);</span>
+<span class="fc" id="L565">		}</span>
+<span class="fc" id="L566">		return this;</span>
+	}
+
+	/**
+	 * Copies all members of the specified object into this object. When the
+	 * specified object contains members with names that also exist in this object,
+	 * the existing values in this object will be replaced by the corresponding
+	 * values in the specified object, except for the case that both values are
+	 * JsonObjects themselves, which will trigger another merge of these objects.
+	 *
+	 * @param object the object to deep merge
+	 * @return the object itself, to enable method chaining
+	 */
+	public JsonObject deepMerge(JsonObject object) {
+<span class="fc bfc" id="L580" title="All 2 branches covered.">		if (object == null) {</span>
+<span class="fc" id="L581">			throw new NullPointerException(&quot;object is null&quot;);</span>
+		}
+<span class="fc bfc" id="L583" title="All 2 branches covered.">		for (Member member : object) {</span>
+<span class="fc" id="L584">			final String name = member.name;</span>
+<span class="fc" id="L585">			JsonValue value = member.value;</span>
+<span class="fc bfc" id="L586" title="All 2 branches covered.">			if (value instanceof JsonObject) {</span>
+<span class="fc" id="L587">				final JsonValue existingValue = this.get(member.name);</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">				if (existingValue instanceof JsonObject) {</span>
+<span class="fc" id="L589">					value = ((JsonObject) existingValue).deepMerge((JsonObject) value);</span>
+				}
+			}
+<span class="fc" id="L592">			this.set(name, value);</span>
+<span class="fc" id="L593">		}</span>
+<span class="fc" id="L594">		return this;</span>
+	}
+
+	/**
+	 * Returns the value of the member with the specified name in this object. If
+	 * this object contains multiple members with the given name, this method will
+	 * return the last one.
+	 *
+	 * @param name the name of the member whose value is to be returned
+	 * @return the value of the last member with the specified name, or
+	 *         &lt;code&gt;null&lt;/code&gt; if this object does not contain a member with that
+	 *         name
+	 */
+	public JsonValue get(String name) {
+<span class="pc bpc" id="L608" title="1 of 2 branches missed.">		if (name == null) {</span>
+<span class="nc" id="L609">			throw new NullPointerException(&quot;name is null&quot;);</span>
+		}
+<span class="fc" id="L611">		int index = indexOf(name);</span>
+<span class="fc bfc" id="L612" title="All 2 branches covered.">		return index != -1 ? values.get(index) : null;</span>
+	}
+
+	/**
+	 * Returns the &lt;code&gt;int&lt;/code&gt; value of the member with the specified name in
+	 * this object. If this object does not contain a member with this name, the
+	 * given default value is returned. If this object contains multiple members
+	 * with the given name, the last one will be picked. If this member's value does
+	 * not represent a JSON number or if it cannot be interpreted as Java
+	 * &lt;code&gt;int&lt;/code&gt;, an exception is thrown.
+	 *
+	 * @param name         the name of the member whose value is to be returned
+	 * @param defaultValue the value to be returned if the requested member is
+	 *                     missing
+	 * @return the value of the last member with the specified name, or the given
+	 *         default value if this object does not contain a member with that name
+	 */
+	public int getInt(String name, int defaultValue) {
+<span class="fc" id="L630">		JsonValue value = get(name);</span>
+<span class="pc bpc" id="L631" title="1 of 2 branches missed.">		return value != null ? value.asInt() : defaultValue;</span>
+	}
+
+	/**
+	 * Returns the &lt;code&gt;long&lt;/code&gt; value of the member with the specified name in
+	 * this object. If this object does not contain a member with this name, the
+	 * given default value is returned. If this object contains multiple members
+	 * with the given name, the last one will be picked. If this member's value does
+	 * not represent a JSON number or if it cannot be interpreted as Java
+	 * &lt;code&gt;long&lt;/code&gt;, an exception is thrown.
+	 *
+	 * @param name         the name of the member whose value is to be returned
+	 * @param defaultValue the value to be returned if the requested member is
+	 *                     missing
+	 * @return the value of the last member with the specified name, or the given
+	 *         default value if this object does not contain a member with that name
+	 */
+	public long getLong(String name, long defaultValue) {
+<span class="nc" id="L649">		JsonValue value = get(name);</span>
+<span class="nc bnc" id="L650" title="All 2 branches missed.">		return value != null ? value.asLong() : defaultValue;</span>
+	}
+
+	/**
+	 * Returns the &lt;code&gt;float&lt;/code&gt; value of the member with the specified name in
+	 * this object. If this object does not contain a member with this name, the
+	 * given default value is returned. If this object contains multiple members
+	 * with the given name, the last one will be picked. If this member's value does
+	 * not represent a JSON number or if it cannot be interpreted as Java
+	 * &lt;code&gt;float&lt;/code&gt;, an exception is thrown.
+	 *
+	 * @param name         the name of the member whose value is to be returned
+	 * @param defaultValue the value to be returned if the requested member is
+	 *                     missing
+	 * @return the value of the last member with the specified name, or the given
+	 *         default value if this object does not contain a member with that name
+	 */
+	public float getFloat(String name, float defaultValue) {
+<span class="nc" id="L668">		JsonValue value = get(name);</span>
+<span class="nc bnc" id="L669" title="All 2 branches missed.">		return value != null ? value.asFloat() : defaultValue;</span>
+	}
+
+	/**
+	 * Returns the &lt;code&gt;double&lt;/code&gt; value of the member with the specified name
+	 * in this object. If this object does not contain a member with this name, the
+	 * given default value is returned. If this object contains multiple members
+	 * with the given name, the last one will be picked. If this member's value does
+	 * not represent a JSON number or if it cannot be interpreted as Java
+	 * &lt;code&gt;double&lt;/code&gt;, an exception is thrown.
+	 *
+	 * @param name         the name of the member whose value is to be returned
+	 * @param defaultValue the value to be returned if the requested member is
+	 *                     missing
+	 * @return the value of the last member with the specified name, or the given
+	 *         default value if this object does not contain a member with that name
+	 */
+	public double getDouble(String name, double defaultValue) {
+<span class="nc" id="L687">		JsonValue value = get(name);</span>
+<span class="nc bnc" id="L688" title="All 2 branches missed.">		return value != null ? value.asDouble() : defaultValue;</span>
+	}
+
+	/**
+	 * Returns the &lt;code&gt;boolean&lt;/code&gt; value of the member with the specified name
+	 * in this object. If this object does not contain a member with this name, the
+	 * given default value is returned. If this object contains multiple members
+	 * with the given name, the last one will be picked. If this member's value does
+	 * not represent a JSON &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; value, an
+	 * exception is thrown.
+	 *
+	 * @param name         the name of the member whose value is to be returned
+	 * @param defaultValue the value to be returned if the requested member is
+	 *                     missing
+	 * @return the value of the last member with the specified name, or the given
+	 *         default value if this object does not contain a member with that name
+	 */
+	public boolean getBoolean(String name, boolean defaultValue) {
+<span class="nc" id="L706">		JsonValue value = get(name);</span>
+<span class="nc bnc" id="L707" title="All 2 branches missed.">		return value != null ? value.asBoolean() : defaultValue;</span>
+	}
+
+	/**
+	 * Returns the &lt;code&gt;String&lt;/code&gt; value of the member with the specified name
+	 * in this object. If this object does not contain a member with this name, the
+	 * given default value is returned. If this object contains multiple members
+	 * with the given name, the last one is picked. If this member's value does not
+	 * represent a JSON string, an exception is thrown.
+	 *
+	 * @param name         the name of the member whose value is to be returned
+	 * @param defaultValue the value to be returned if the requested member is
+	 *                     missing
+	 * @return the value of the last member with the specified name, or the given
+	 *         default value if this object does not contain a member with that name
+	 */
+	public String getString(String name, String defaultValue) {
+<span class="fc" id="L724">		JsonValue value = get(name);</span>
+<span class="pc bpc" id="L725" title="1 of 2 branches missed.">		return value != null ? value.asString() : defaultValue;</span>
+	}
+
+	/**
+	 * Returns the number of members (name/value pairs) in this object.
+	 *
+	 * @return the number of members in this object
+	 */
+	public int size() {
+<span class="fc" id="L734">		return names.size();</span>
+	}
+
+	/**
+	 * Returns &lt;code&gt;true&lt;/code&gt; if this object contains no members.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this object contains no members
+	 */
+	public boolean isEmpty() {
+<span class="fc" id="L743">		return names.isEmpty();</span>
+	}
+
+	/**
+	 * Returns a list of the names in this object in document order. The returned
+	 * list is backed by this object and will reflect subsequent changes. It cannot
+	 * be used to modify this object. Attempts to modify the returned list will
+	 * result in an exception.
+	 *
+	 * @return a list of the names in this object
+	 */
+	public List&lt;String&gt; names() {
+<span class="fc" id="L755">		return Collections.unmodifiableList(names);</span>
+	}
+
+	/**
+	 * Returns an iterator over the members of this object in document order. The
+	 * returned iterator cannot be used to modify this object.
+	 *
+	 * @return an iterator over the members of this object
+	 */
+	public Iterator&lt;Member&gt; iterator() {
+<span class="fc" id="L765">		final Iterator&lt;String&gt; namesIterator = names.iterator();</span>
+<span class="fc" id="L766">		final Iterator&lt;JsonValue&gt; valuesIterator = values.iterator();</span>
+<span class="fc" id="L767">		return new Iterator&lt;JsonObject.Member&gt;() {</span>
+
+			public boolean hasNext() {
+<span class="fc" id="L770">				return namesIterator.hasNext();</span>
+			}
+
+			public Member next() {
+<span class="fc" id="L774">				String name = namesIterator.next();</span>
+<span class="fc" id="L775">				JsonValue value = valuesIterator.next();</span>
+<span class="fc" id="L776">				return new Member(name, value);</span>
+			}
+
+			public void remove() {
+<span class="nc" id="L780">				throw new UnsupportedOperationException();</span>
+			}
+
+		};
+	}
+
+	@Override
+	void write(JsonWriter writer) throws IOException {
+<span class="fc" id="L788">		writer.writeObjectOpen();</span>
+<span class="fc" id="L789">		Iterator&lt;String&gt; namesIterator = names.iterator();</span>
+<span class="fc" id="L790">		Iterator&lt;JsonValue&gt; valuesIterator = values.iterator();</span>
+<span class="fc bfc" id="L791" title="All 2 branches covered.">		if (namesIterator.hasNext()) {</span>
+<span class="fc" id="L792">			writer.writeMemberName(namesIterator.next());</span>
+<span class="fc" id="L793">			writer.writeMemberSeparator();</span>
+<span class="fc" id="L794">			valuesIterator.next().write(writer);</span>
+<span class="fc bfc" id="L795" title="All 2 branches covered.">			while (namesIterator.hasNext()) {</span>
+<span class="fc" id="L796">				writer.writeObjectSeparator();</span>
+<span class="fc" id="L797">				writer.writeMemberName(namesIterator.next());</span>
+<span class="fc" id="L798">				writer.writeMemberSeparator();</span>
+<span class="fc" id="L799">				valuesIterator.next().write(writer);</span>
+			}
+		}
+<span class="fc" id="L802">		writer.writeObjectClose();</span>
+<span class="fc" id="L803">	}</span>
+
+	@Override
+	public boolean isObject() {
+<span class="fc" id="L807">		return true;</span>
+	}
+
+	@Override
+	public JsonObject asObject() {
+<span class="fc" id="L812">		return this;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L817">		int result = 1;</span>
+<span class="nc" id="L818">		result = 31 * result + names.hashCode();</span>
+<span class="nc" id="L819">		result = 31 * result + values.hashCode();</span>
+<span class="nc" id="L820">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L825" title="1 of 2 branches missed.">		if (this == obj) {</span>
+<span class="nc" id="L826">			return true;</span>
+		}
+<span class="pc bpc" id="L828" title="1 of 2 branches missed.">		if (obj == null) {</span>
+<span class="nc" id="L829">			return false;</span>
+		}
+<span class="pc bpc" id="L831" title="1 of 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L832">			return false;</span>
+		}
+<span class="fc" id="L834">		JsonObject other = (JsonObject) obj;</span>
+<span class="pc bpc" id="L835" title="2 of 4 branches missed.">		return names.equals(other.names) &amp;&amp; values.equals(other.values);</span>
+	}
+
+	int indexOf(String name) {
+<span class="fc" id="L839">		int index = table.get(name);</span>
+<span class="fc bfc" id="L840" title="All 4 branches covered.">		if (index != -1 &amp;&amp; name.equals(names.get(index))) {</span>
+<span class="fc" id="L841">			return index;</span>
+		}
+<span class="fc" id="L843">		return names.lastIndexOf(name);</span>
+	}
+
+	private synchronized void readObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+<span class="nc" id="L847">		inputStream.defaultReadObject();</span>
+<span class="nc" id="L848">		table = new HashIndexTable();</span>
+<span class="nc" id="L849">		updateHashIndex();</span>
+<span class="nc" id="L850">	}</span>
+
+	private void updateHashIndex() {
+<span class="nc" id="L853">		int size = names.size();</span>
+<span class="nc bnc" id="L854" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L855">			table.add(names.get(i), i);</span>
+		}
+<span class="nc" id="L857">	}</span>
+
+	/**
+	 * Represents a member of a JSON object, a pair of a name and a value.
+	 */
+	public static class Member {
+
+		private final String name;
+		private final JsonValue value;
+
+<span class="fc" id="L867">		Member(String name, JsonValue value) {</span>
+<span class="fc" id="L868">			this.name = name;</span>
+<span class="fc" id="L869">			this.value = value;</span>
+<span class="fc" id="L870">		}</span>
+
+		/**
+		 * Returns the name of this member.
+		 *
+		 * @return the name of this member, never &lt;code&gt;null&lt;/code&gt;
+		 */
+		public String getName() {
+<span class="fc" id="L878">			return name;</span>
+		}
+
+		/**
+		 * Returns the value of this member.
+		 *
+		 * @return the value of this member, never &lt;code&gt;null&lt;/code&gt;
+		 */
+		public JsonValue getValue() {
+<span class="fc" id="L887">			return value;</span>
+		}
+
+		@Override
+		public int hashCode() {
+<span class="nc" id="L892">			int result = 1;</span>
+<span class="nc" id="L893">			result = 31 * result + name.hashCode();</span>
+<span class="nc" id="L894">			result = 31 * result + value.hashCode();</span>
+<span class="nc" id="L895">			return result;</span>
+		}
+
+		/**
+		 * Indicates whether a given object is &quot;equal to&quot; this JsonObject. An object is
+		 * considered equal if it is also a &lt;code&gt;JsonObject&lt;/code&gt; and both objects
+		 * contain the same members &lt;em&gt;in the same order&lt;/em&gt;.
+		 * &lt;p&gt;
+		 * If two JsonObjects are equal, they will also produce the same JSON output.
+		 * &lt;/p&gt;
+		 *
+		 * @param object the object to be compared with this JsonObject
+		 * @return &lt;tt&gt;true&lt;/tt&gt; if the specified object is equal to this JsonObject,
+		 *         &lt;code&gt;false&lt;/code&gt; otherwise
+		 */
+		@Override
+		public boolean equals(Object object) {
+<span class="nc bnc" id="L912" title="All 2 branches missed.">			if (this == object) {</span>
+<span class="nc" id="L913">				return true;</span>
+			}
+<span class="nc bnc" id="L915" title="All 2 branches missed.">			if (object == null) {</span>
+<span class="nc" id="L916">				return false;</span>
+			}
+<span class="nc bnc" id="L918" title="All 2 branches missed.">			if (getClass() != object.getClass()) {</span>
+<span class="nc" id="L919">				return false;</span>
+			}
+<span class="nc" id="L921">			Member other = (Member) object;</span>
+<span class="nc bnc" id="L922" title="All 4 branches missed.">			return name.equals(other.name) &amp;&amp; value.equals(other.value);</span>
+		}
+
+	}
+
+	static class HashIndexTable {
+
+<span class="pc" id="L929">		private final byte[] hashTable = new byte[32]; // must be a power of two</span>
+
+<span class="fc" id="L931">		HashIndexTable() {</span>
+<span class="fc" id="L932">		}</span>
+
+<span class="nc" id="L934">		HashIndexTable(HashIndexTable original) {</span>
+<span class="nc" id="L935">			System.arraycopy(original.hashTable, 0, hashTable, 0, hashTable.length);</span>
+<span class="nc" id="L936">		}</span>
+
+		void add(String name, int index) {
+<span class="fc" id="L939">			int slot = hashSlotFor(name);</span>
+<span class="pc bpc" id="L940" title="1 of 2 branches missed.">			if (index &lt; 0xff) {</span>
+				// increment by 1, 0 stands for empty
+<span class="fc" id="L942">				hashTable[slot] = (byte) (index + 1);</span>
+			} else {
+<span class="nc" id="L944">				hashTable[slot] = 0;</span>
+			}
+<span class="fc" id="L946">		}</span>
+
+		void remove(int index) {
+<span class="fc bfc" id="L949" title="All 2 branches covered.">			for (int i = 0; i &lt; hashTable.length; i++) {</span>
+<span class="fc bfc" id="L950" title="All 2 branches covered.">				if ((hashTable[i] &amp; 0xff) == index + 1) {</span>
+<span class="fc" id="L951">					hashTable[i] = 0;</span>
+<span class="pc bpc" id="L952" title="1 of 2 branches missed.">				} else if ((hashTable[i] &amp; 0xff) &gt; index + 1) {</span>
+<span class="nc" id="L953">					hashTable[i]--;</span>
+				}
+			}
+<span class="fc" id="L956">		}</span>
+
+		int get(Object name) {
+<span class="fc" id="L959">			int slot = hashSlotFor(name);</span>
+			// subtract 1, 0 stands for empty
+<span class="fc" id="L961">			return (hashTable[slot] &amp; 0xff) - 1;</span>
+		}
+
+		private int hashSlotFor(Object element) {
+<span class="fc" id="L965">			return element.hashCode() &amp; hashTable.length - 1;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

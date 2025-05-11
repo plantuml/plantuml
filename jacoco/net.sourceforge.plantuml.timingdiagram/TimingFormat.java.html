@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimingFormat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram</a> &gt; <span class="el_source">TimingFormat.java</span></div><h1>TimingFormat.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+public final class TimingFormat {
+<span class="fc" id="L44">	private static final TimeZone GMT = TimeZone.getTimeZone(&quot;GMT&quot;);</span>
+<span class="fc" id="L45">	private static final GregorianCalendar gc = new GregorianCalendar(TimingFormat.GMT);</span>
+
+<span class="fc" id="L47">	public static final TimingFormat DECIMAL = new TimingFormat(null);</span>
+<span class="fc" id="L48">	public static final TimingFormat HOUR = new TimingFormat(null);</span>
+<span class="fc" id="L49">	public static final TimingFormat DATE = new TimingFormat(null);</span>
+
+	private final SimpleDateFormat sdf;
+
+<span class="fc" id="L53">	private TimingFormat(SimpleDateFormat sdf) {</span>
+<span class="fc" id="L54">		this.sdf = sdf;</span>
+<span class="fc" id="L55">	}</span>
+
+	public static TimingFormat create(SimpleDateFormat sdf) {
+<span class="nc" id="L58">		return new TimingFormat(sdf);</span>
+	}
+
+	public String formatTime(BigDecimal time) {
+<span class="nc bnc" id="L62" title="All 6 branches missed.">		if (this == HOUR || this == DATE || sdf != null)</span>
+<span class="nc" id="L63">			return formatTime(time.longValueExact());</span>
+
+<span class="nc" id="L65">		return time.toPlainString();</span>
+	}
+
+	public String formatTime(long time) {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (sdf != null)</span>
+<span class="nc" id="L70">			return sdf.format(time * 1000L);</span>
+
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (this == HOUR) {</span>
+<span class="nc" id="L73">			final int s = (int) time % 60;</span>
+<span class="nc" id="L74">			final int m = (int) (time / 60) % 60;</span>
+<span class="nc" id="L75">			final int h = (int) (time / 3600);</span>
+<span class="nc" id="L76">			return String.format(&quot;%d:%02d:%02d&quot;, h, m, s);</span>
+		}
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (this == DATE) {</span>
+			final int yyyy;
+			final int mm;
+			final int dd;
+<span class="nc" id="L82">			synchronized (gc) {</span>
+<span class="nc" id="L83">				gc.setTimeInMillis(time * 1000L);</span>
+<span class="nc" id="L84">				yyyy = gc.get(Calendar.YEAR);</span>
+<span class="nc" id="L85">				mm = gc.get(Calendar.MONTH) + 1;</span>
+<span class="nc" id="L86">				dd = gc.get(Calendar.DAY_OF_MONTH);</span>
+<span class="nc" id="L87">			}</span>
+			// return String.format(&quot;%04d/%02d/%02d&quot;, yyyy, mm, dd);
+<span class="nc" id="L89">			return String.format(&quot;%02d/%02d&quot;, mm, dd);</span>
+		}
+<span class="fc" id="L91">		return &quot;&quot; + time;</span>
+	}
+
+	public static TimeTick createDate(int yyyy, int mm, int dd, TimingFormat format) {
+		final long timeInMillis;
+<span class="nc" id="L96">		synchronized (gc) {</span>
+<span class="nc" id="L97">			gc.setTimeInMillis(0);</span>
+<span class="nc" id="L98">			gc.set(yyyy, mm - 1, dd);</span>
+<span class="nc" id="L99">			timeInMillis = gc.getTimeInMillis() / 1000L;</span>
+<span class="nc" id="L100">		}</span>
+<span class="nc" id="L101">		return new TimeTick(new BigDecimal(timeInMillis), format);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

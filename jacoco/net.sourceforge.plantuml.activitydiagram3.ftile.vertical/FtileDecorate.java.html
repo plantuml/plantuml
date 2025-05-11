@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileDecorate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vertical</a> &gt; <span class="el_source">FtileDecorate.java</span></div><h1>FtileDecorate.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
+
+	final private Ftile ftile;
+
+<span class="fc" id="L62">	public FtileDecorate(final Ftile ftile) {</span>
+<span class="fc" id="L63">		this.ftile = ftile;</span>
+<span class="fc" id="L64">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L68">		return &quot;&quot; + getClass() + &quot; &quot; + ftile;</span>
+	}
+
+	@Override
+	public LinkRendering getOutLinkRendering() {
+<span class="nc" id="L73">		return ftile.getOutLinkRendering();</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="fc" id="L78">		return ftile.getInLinkRendering();</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L83">		ftile.drawU(ug);</span>
+<span class="fc" id="L84">	}</span>
+
+	@Override
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L88">		return ftile.calculateDimension(stringBounder);</span>
+	}
+
+	@Override
+	public Collection&lt;Connection&gt; getInnerConnections() {
+<span class="nc" id="L93">		return ftile.getInnerConnections();</span>
+	}
+
+	@Override
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="fc" id="L98">		return ftile.getSwimlanes();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneIn() {
+<span class="fc" id="L103">		return ftile.getSwimlaneIn();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneOut() {
+<span class="fc" id="L108">		return ftile.getSwimlaneOut();</span>
+	}
+
+	@Override
+	public ISkinParam skinParam() {
+<span class="fc" id="L113">		return ftile.skinParam();</span>
+	}
+
+	@Override
+	public UStroke getThickness(Style style) {
+<span class="nc" id="L118">		return ftile.getThickness(style);</span>
+	}
+
+	protected final Ftile getFtileDelegated() {
+<span class="fc" id="L122">		return ftile;</span>
+	}
+
+	@Override
+	public List&lt;WeldingPoint&gt; getWeldingPoints() {
+<span class="fc" id="L127">		return ftile.getWeldingPoints();</span>
+	}
+
+	@Override
+	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (child == ftile)</span>
+<span class="nc" id="L133">			return UTranslate.none();</span>
+
+<span class="nc" id="L135">		return ftile.getTranslateFor(child, stringBounder);</span>
+	}
+
+	@Override
+	public Collection&lt;Ftile&gt; getMyChildren() {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (this == ftile)</span>
+<span class="nc" id="L141">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L143">		return Collections.singleton(ftile);</span>
+	}
+
+	@Override
+	public HorizontalAlignment arrowHorizontalAlignment() {
+<span class="fc" id="L148">		return ftile.arrowHorizontalAlignment();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

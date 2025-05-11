@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemDonors.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.donors</a> &gt; <span class="el_source">PSystemDonors.java</span></div><h1>PSystemDonors.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.donors;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import net.atmp.PixelImage;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.code.AsciiEncoder;
+import net.sourceforge.plantuml.code.CompressionBrotli;
+import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
+import net.sourceforge.plantuml.code.StringCompressorNone;
+import net.sourceforge.plantuml.code.Transcoder;
+import net.sourceforge.plantuml.code.TranscoderImpl;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.version.PSystemVersion;
+
+public class PSystemDonors extends PlainDiagram {
+	// ::remove file when __CORE__
+
+	private static final int COLS = 6;
+	private static final int FREE_LINES = 6;
+
+	public static final String DONORS = &quot;6r8F0AoFktsyGOBPua5wjfPR-fZcX3WHBCyJYiF0HZpT1SGVuDxfSR-H_YAwqhrlcZ5glPofDGbvnfSS&quot;
+			+ &quot;iFHQuIQCt_d2eyvUFWIVD0A61iW0SLF_nZdioMcw8rM6bE3DT-Z-bidQawtZOb7pEH6u2g0IqPnYkvU9&quot;
+			+ &quot;URr2AgNu_9MFq4yWcuBESwPH96fUuEQexQVO-vhxdpexbp1BToim0gEY4QhylkPOUxarxw9QL8c2dQ0A&quot;
+			+ &quot;TepbL5gr7AgeZ2tBoCS-CD6QGpwgrAoACHUHOXYTD0mY4QZBnUXZvCMOL7wfD-73TLL8Hjq1dMqDT7tJ&quot;
+			+ &quot;sZRFnFJpHH-XqWRVOAJ025YEn4sqV1v6KD5oG52pYsniKUN8apXGf48B_kKFXQcCafnT0JKLdGP067m7&quot;
+			+ &quot;AeXafperd6qw3AYmn1Pj5guwrzzO6k_BybIc2mrF83Ow9bg1LOBy3xh1EsiTZqIrXq4HwIdH6BOSvNCe&quot;
+			+ &quot;M-c75NrkrX910g1Jit1_-IYdahgEurdxTwu5uB2qVDV37CET4sZA4gh8-6X1nXNehBKWYzwx72oaGDZ7&quot;
+			+ &quot;uPinTAuyj2p2DfvI5clxPMnxBVE7hhJ1-iGy1HR-FVPBhWKSQj9LaXR05rg5TEjyef2M-VVIuzj_tnEk&quot;
+			+ &quot;AUIurotw25T8-kt7sCnO2D2-PKX3Dq4W2TobLMkn1H7g4TetG6iX6OHpf5ts4R-aZ_m4m5kM4CDX4qez&quot;
+			+ &quot;-FDBKQQENAW93rsLnWfWQR6YRIfwZs1GgYdeObHnPRJnuolJEljODfOiYpvvNcem9dvDfoWsbYjKP8PX&quot;
+			+ &quot;eHxHdFcsjfLs2MwNCNZLVM9b5T1QuJtanhrVP22VUyX49EyCnti-SiioJKZCufZhPKhF-cHoyz2D2yxi&quot;
+			+ &quot;fYSpofH3bW6TtSberaUiiLbCVpF8PkIridWCO7mDHLlmCACOl7uqEQQQOofQcooYOeiGITRc5RkOS1P1&quot;
+			+ &quot;dfOZoL5HGkKMgriX8RzjOn6HAd6Zr65pkZFm3EzHb9VppbdrcB_TIie2AbERm2KjIAkbOj-pBf2XUoSz&quot;
+			+ &quot;Kos9C_vzOi6sz-M1mQ7qYecM7jm0c4AIBZ8F128HEWgbz58cXWM-xhUxrUDp7TBnjq-d68T83qa2L073&quot;
+			+ &quot;sLvGZTJPHeIDzHh_VzEd9Ixy-TUwRPDJlRtttONGE4WMW0WlDAIS4q8y1JutDam6dCAIB3f9k7BMqek1&quot;
+			+ &quot;o8ADZC4kwcoPqNRZ9ykDo4rlBn-gyAUhN5JOwGTqNBXIx7qkgJ9zCOEAsRxnZSL53W7_4bL6PNBlAgDP&quot;
+			+ &quot;OIJYA6HnxCVfRKFJ5pf8mHgeJU3OtUyj5XgQQxyYgJGSW7oo8QdKhD2YQarBOoEmKaxixwquAMVMPsUY&quot;
+			+ &quot;7zCwSrxLGzqaPzTJZ2Xy-oaqzmWJqqNSX8LmJyv934Rune9yKIsMnDAo3ZjDi8B_-tuCRoHiieCF5Ee9&quot;
+			+ &quot;fJpJWXnXa-nzgoZ-8DvTn40M5ijq9x5Ool58YgHmhcoPd25zfKyufMyGWw9m_7ylGRZCHFCLaYwzgvFC&quot;
+			+ &quot;vRTMamoYEDJF9Ab5obQB3EoRIovRl2AtRMtIOTl-1txYVFaZwkAR220GpONWDQUX3pVMgwbX2_ARETp7&quot;
+			+ &quot;PRPk9Z-FIz7EKGbirYSRDS1cgE991647e49u3VrL_GbRpcNus_DKAepKyDnH3JruhWQMaQqql4WQrBp8&quot;
+			+ &quot;OjhwVifDdXn8d00TKAawZPqUneneXKCjlscp98DAuauL_ti6qjqbLTwgc3JAaAXwWysIs3hlpD3fdDmg&quot;
+			+ &quot;N5xFyVJ632dr2-eBWZs6kbpF3NW20meXhW05oLNpljMACsHKbbNZmoeKHWws5JKqsWmMsHtZqr0shvYj&quot;
+			+ &quot;yUpO5i08L0pzWmjxZuP6JgXesUQ4CXiH1ObIQ0ieiySejc6VaYvkEJMTj_PENUY7pPDDDVeMbUB0EZoZ&quot; + &quot;yWe1&quot;;
+	/*
+	 * Special thanks to our sponsors and donors:
+	 * 
+	 * - Noam Tamim
+	 */
+
+	public PSystemDonors(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L106">		super(source, preprocessing);</span>
+<span class="nc" id="L107">	}</span>
+
+	@Override
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L111">		final List&lt;TextBlock&gt; cols = getCols(getDonors(), COLS, FREE_LINES);</span>
+<span class="nc" id="L112">		return new UDrawable() {</span>
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L114">				final TextBlock header = GraphicStrings</span>
+<span class="nc" id="L115">						.createBlackOnWhite(Arrays.asList(&quot;&lt;b&gt;Special thanks to our sponsors and donors !&quot;));</span>
+<span class="nc" id="L116">				header.drawU(ug);</span>
+<span class="nc" id="L117">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L118">				ug = ug.apply(UTranslate.dy(header.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L119">				double x = 0;</span>
+<span class="nc" id="L120">				double lastX = 0;</span>
+<span class="nc" id="L121">				double y = 0;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				for (TextBlock tb : cols) {</span>
+<span class="nc" id="L123">					final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L124">					tb.drawU(ug.apply(UTranslate.dx(x)));</span>
+<span class="nc" id="L125">					lastX = x;</span>
+<span class="nc" id="L126">					x += dim.getWidth() + 10;</span>
+<span class="nc" id="L127">					y = Math.max(y, dim.getHeight());</span>
+<span class="nc" id="L128">				}</span>
+<span class="nc" id="L129">				final UImage logo = new UImage(</span>
+<span class="nc" id="L130">						new PixelImage(PSystemVersion.getPlantumlImage(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L131">				ug.apply(new UTranslate(lastX, y - logo.getHeight())).draw(logo);</span>
+<span class="nc" id="L132">			}</span>
+		};
+	}
+
+	public static List&lt;TextBlock&gt; getCols(List&lt;String&gt; lines, final int nbCol, final int reserved) throws IOException {
+<span class="nc" id="L137">		final List&lt;TextBlock&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L138">		final int maxLine = (lines.size() + (nbCol - 1) + reserved) / nbCol;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (int i = 0; i &lt; lines.size(); i += maxLine) {</span>
+<span class="nc" id="L140">			final List&lt;String&gt; current = lines.subList(i, Math.min(lines.size(), i + maxLine));</span>
+<span class="nc" id="L141">			result.add(GraphicStrings.createBlackOnWhite(current));</span>
+		}
+<span class="nc" id="L143">		return result;</span>
+	}
+
+	private List&lt;String&gt; getDonors() throws IOException {
+<span class="nc" id="L147">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+		// ::comment when __CORE__
+<span class="nc" id="L149">		final Transcoder t = TranscoderImpl.utf8(new AsciiEncoder(), new StringCompressorNone(),</span>
+				new CompressionBrotli());
+		try {
+<span class="nc" id="L152">			final String s = t.decode(DONORS).replace('*', '.');</span>
+<span class="nc" id="L153">			final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L155">				lines.add(st.nextToken());</span>
+			}
+<span class="nc" id="L157">		} catch (NoPlantumlCompressionException e) {</span>
+<span class="nc" id="L158">			Logme.error(e);</span>
+<span class="nc" id="L159">		}</span>
+		// ::done
+<span class="nc" id="L161">		return lines;</span>
+	}
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L165">		return new DiagramDescription(&quot;(Donors)&quot;);</span>
+	}
+
+	public static PSystemDonors create(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L169">		return new PSystemDonors(source, preprocessing);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

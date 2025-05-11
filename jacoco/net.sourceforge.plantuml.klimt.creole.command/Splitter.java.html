@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Splitter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.command</a> &gt; <span class="el_source">Splitter.java</span></div><h1>Splitter.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.creole.command;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.emoji.Emoji;
+import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.klimt.font.FontStyle;
+import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+
+public class Splitter {
+
+	static final String endFontPattern = &quot;\\&lt;/font\\&gt;|\\&lt;/color\\&gt;|\\&lt;/size\\&gt;|\\&lt;/text\\&gt;&quot;;
+	static final String endSupSub = &quot;\\&lt;/sup\\&gt;|\\&lt;/sub\\&gt;&quot;;
+	public static final String fontPattern = &quot;\\&lt;font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\&gt;&quot;;
+	public static final String fontColorPattern2 = &quot;\\&lt;color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)[%s]*\\&gt;&quot;;
+	public static final String fontSizePattern2 = &quot;\\&lt;size[\\s:]+(\\d+)[%s]*\\&gt;&quot;;
+	static final String fontSup = &quot;\\&lt;sup\\&gt;&quot;;
+	static final String fontSub = &quot;\\&lt;sub\\&gt;&quot;;
+	public static final String qrcodePattern = &quot;\\&lt;qrcode[\\s:]+([^&gt;{}]+)&quot; + &quot;(\\{scale=(?:[0-9.]+)\\})?&quot; + &quot;\\&gt;&quot;;
+	static final String imgPattern = &quot;\\&lt;img\\s+(src[%s]*=[%s]*[%q%g]?[^\\s%g&gt;]+[%q%g]?[%s]*|vspace\\s*=\\s*[%q%g]?\\d+[%q%g]?\\s*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\&gt;&quot;;
+	public static final String imgPatternNoSrcColon = &quot;\\&lt;img[\\s:]+([^&gt;{}]+)&quot; + &quot;(\\{scale=(?:[0-9.]+)\\})?&quot; + &quot;\\&gt;&quot;;
+	public static final String fontFamilyPattern = &quot;\\&lt;font[\\s:]+([^&gt;]+)/?\\&gt;&quot;;
+	public static final String svgAttributePattern = &quot;\\&lt;text[\\s:]+([^&gt;]+)/?\\&gt;&quot;;
+
+	private static final String scale2 = &quot;(&quot; + &quot;(?:\\{scale=|\\*)[0-9.]+\\}?&quot; + &quot;)?&quot;;
+	private static final String scale = &quot;(&quot; + //
+			&quot;[\\{,]?&quot; + //
+			&quot;(?:(?:scale=|\\*)[0-9.]+)?&quot; + //
+			&quot;(?:,color[= :](?:#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|\\w+))?&quot; + //
+			&quot;\\}?&quot; + //
+			&quot;)?&quot;;
+
+<span class="fc" id="L75">	public static final String emojiPattern = Emoji.pattern();</span>
+	public static final String openiconPattern = &quot;\\&lt;&amp;([-\\w]+)&quot; + scale + &quot;\\&gt;&quot;;
+	public static final String spritePattern2 = &quot;\\&lt;\\$(&quot; + SpriteUtils.SPRITE_NAME + &quot;)&quot; + scale + &quot;\\&gt;&quot;;
+
+	public static final String spritePatternForMatch = spritePattern2;
+	// &quot;\\&lt;\\$&quot; + SpriteUtils.SPRITE_NAME + &quot;(?:\\{scale=(?:[0-9.]+)\\})?&quot; + &quot;\\&gt;&quot;;
+
+	static final String htmlTag;
+
+	static final String linkPattern = &quot;\\[\\[([^\\[\\]]+)\\]\\]&quot;;
+	public static final String mathPattern = &quot;\\&lt;math\\&gt;(.+?)\\&lt;/math\\&gt;&quot;;
+	public static final String latexPattern = &quot;\\&lt;latex\\&gt;(.+?)\\&lt;/latex\\&gt;&quot;;
+
+	private static final Pattern2 tagOrText;
+
+	static {
+<span class="fc" id="L91">		final StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {</span>
+<span class="fc" id="L94">			sb.append(style.getActivationPattern());</span>
+<span class="fc" id="L95">			sb.append('|');</span>
+<span class="fc" id="L96">			sb.append(style.getDeactivationPattern());</span>
+<span class="fc" id="L97">			sb.append('|');</span>
+<span class="fc" id="L98">		}</span>
+<span class="fc" id="L99">		sb.append(fontPattern);</span>
+<span class="fc" id="L100">		sb.append('|');</span>
+<span class="fc" id="L101">		sb.append(fontColorPattern2);</span>
+<span class="fc" id="L102">		sb.append('|');</span>
+<span class="fc" id="L103">		sb.append(fontSizePattern2);</span>
+<span class="fc" id="L104">		sb.append('|');</span>
+<span class="fc" id="L105">		sb.append(fontSup);</span>
+<span class="fc" id="L106">		sb.append('|');</span>
+<span class="fc" id="L107">		sb.append(fontSub);</span>
+<span class="fc" id="L108">		sb.append('|');</span>
+<span class="fc" id="L109">		sb.append(endFontPattern);</span>
+<span class="fc" id="L110">		sb.append('|');</span>
+<span class="fc" id="L111">		sb.append(endSupSub);</span>
+<span class="fc" id="L112">		sb.append('|');</span>
+<span class="fc" id="L113">		sb.append(qrcodePattern);</span>
+<span class="fc" id="L114">		sb.append('|');</span>
+<span class="fc" id="L115">		sb.append(imgPattern);</span>
+<span class="fc" id="L116">		sb.append('|');</span>
+<span class="fc" id="L117">		sb.append(imgPatternNoSrcColon);</span>
+<span class="fc" id="L118">		sb.append('|');</span>
+<span class="fc" id="L119">		sb.append(fontFamilyPattern);</span>
+<span class="fc" id="L120">		sb.append('|');</span>
+		// sb.append(spritePattern);
+		// sb.append('|');
+<span class="fc" id="L123">		sb.append(linkPattern);</span>
+<span class="fc" id="L124">		sb.append('|');</span>
+<span class="fc" id="L125">		sb.append(svgAttributePattern);</span>
+
+<span class="fc" id="L127">		htmlTag = sb.toString();</span>
+<span class="fc" id="L128">		tagOrText = MyPattern.cmpile(htmlTag + &quot;|.+?(?=&quot; + htmlTag + &quot;)|.+$&quot;);</span>
+<span class="fc" id="L129">	}</span>
+
+<span class="nc" id="L131">	private final List&lt;String&gt; splitted = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L133">	public Splitter(String s) {</span>
+<span class="nc" id="L134">		final Matcher2 matcher = tagOrText.matcher(s);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		while (matcher.find()) {</span>
+<span class="nc" id="L136">			String part = matcher.group(0);</span>
+<span class="nc" id="L137">			part = StringUtils.showComparatorCharacters(part);</span>
+<span class="nc" id="L138">			splitted.add(part);</span>
+<span class="nc" id="L139">		}</span>
+<span class="nc" id="L140">	}</span>
+
+	List&lt;String&gt; getSplittedInternal() {
+<span class="nc" id="L143">		return splitted;</span>
+	}
+
+	public static String purgeAllTag(String s) {
+<span class="nc" id="L147">		return s.replaceAll(htmlTag, &quot;&quot;);</span>
+	}
+
+	@JawsStrange
+	public List&lt;HtmlCommand&gt; getHtmlCommands(boolean newLineAlone) {
+<span class="nc" id="L152">		final HtmlCommandFactory factory = new HtmlCommandFactory();</span>
+<span class="nc" id="L153">		final List&lt;HtmlCommand&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (String s : getSplittedInternal()) {</span>
+<span class="nc" id="L155">			final HtmlCommand cmd = factory.getHtmlCommand(s);</span>
+//			if (newLineAlone &amp;&amp; cmd instanceof PlainText) {
+//				result.addAll(splitText((PlainText) cmd));
+//			} else {
+<span class="nc" id="L159">			result.add(cmd);</span>
+//			}
+<span class="nc" id="L161">		}</span>
+<span class="nc" id="L162">		return Collections.unmodifiableList(result);</span>
+	}
+
+//	@JawsStrange
+//	private Collection&lt;PlainText&gt; splitText(PlainText cmd) {
+//		String s = cmd.getText();
+//		final Collection&lt;PlainText&gt; result = new ArrayList&lt;&gt;();
+//		while (true) {
+//			final int x = s.indexOf(PlainText.TEXT_BS_BS_N.getText());
+//			if (x == -1) {
+//				result.add(new PlainText(s));
+//				return result;
+//			}
+//			if (x &gt; 0) {
+//				result.add(new PlainText(s.substring(0, x)));
+//			}
+//			result.add(PlainText.TEXT_BS_BS_N);
+//			s = s.substring(x + 2);
+//		}
+//	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

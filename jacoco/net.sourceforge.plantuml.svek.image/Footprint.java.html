@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Footprint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">Footprint.java</span></div><h1>Footprint.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UBackground;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicNo;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UEmpty;
+import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+
+public class Footprint {
+
+	private final StringBounder stringBounder;
+
+<span class="fc" id="L69">	public Footprint(StringBounder stringBounder) {</span>
+<span class="fc" id="L70">		this.stringBounder = stringBounder;</span>
+
+<span class="fc" id="L72">	}</span>
+
+	class MyUGraphic extends UGraphicNo {
+
+		private final List&lt;XPoint2D&gt; all;
+
+<span class="fc" id="L78">		public MyUGraphic() {</span>
+<span class="fc" id="L79">			super(stringBounder, UTranslate.none());</span>
+<span class="fc" id="L80">			this.all = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L81">		}</span>
+
+<span class="fc" id="L83">		private MyUGraphic(MyUGraphic other, UChange change) {</span>
+			// super(other, change);
+<span class="fc" id="L85">			super(other.getStringBounder(),</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">					change instanceof UTranslate ? other.getTranslate().compose((UTranslate) change)</span>
+<span class="nc" id="L87">							: other.getTranslate());</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))</span>
+<span class="nc" id="L89">				throw new UnsupportedOperationException(change.getClass().toString());</span>
+
+<span class="fc" id="L91">			this.all = other.all;</span>
+<span class="fc" id="L92">		}</span>
+
+		public UGraphic apply(UChange change) {
+<span class="fc" id="L95">			return new MyUGraphic(this, change);</span>
+		}
+
+		public void draw(UShape shape) {
+<span class="fc" id="L99">			final double x = getTranslate().getDx();</span>
+<span class="fc" id="L100">			final double y = getTranslate().getDy();</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (shape instanceof UText) {</span>
+<span class="fc" id="L102">				drawText(x, y, (UText) shape);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			} else if (shape instanceof UHorizontalLine) {</span>
+				// Definitively a Horizontal line
+//				line.drawTitleInternalForFootprint(this, x, y);
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			} else if (shape instanceof ULine) {</span>
+				// Probably a Horizontal line
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			} else if (shape instanceof UImage) {</span>
+<span class="nc" id="L109">				drawImage(x, y, (UImage) shape);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			} else if (shape instanceof UPath) {</span>
+<span class="nc" id="L111">				drawPath(x, y, (UPath) shape);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			} else if (shape instanceof URectangle) {</span>
+<span class="nc" id="L113">				drawRectangle(x, y, (URectangle) shape);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			} else if (shape instanceof UEllipse) {</span>
+<span class="nc" id="L115">				drawEllipse(x, y, (UEllipse) shape);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			} else if (shape instanceof UEmpty) {</span>
+<span class="nc" id="L117">				drawEmpty(x, y, (UEmpty) shape);</span>
+			} else {
+<span class="nc" id="L119">				throw new UnsupportedOperationException(shape.getClass().toString());</span>
+			}
+<span class="fc" id="L121">		}</span>
+
+		public ColorMapper getColorMapper() {
+<span class="nc" id="L124">			return ColorMapper.IDENTITY;</span>
+		}
+
+		private void addPoint(double x, double y) {
+<span class="fc" id="L128">			all.add(new XPoint2D(x, y));</span>
+<span class="fc" id="L129">		}</span>
+
+		private void drawText(double x, double y, UText text) {
+<span class="fc" id="L132">			final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
+<span class="fc" id="L133">					text.getText());</span>
+<span class="fc" id="L134">			y -= dim.getHeight() - 1.5;</span>
+<span class="fc" id="L135">			addPoint(x, y);</span>
+<span class="fc" id="L136">			addPoint(x, y + dim.getHeight());</span>
+<span class="fc" id="L137">			addPoint(x + dim.getWidth(), y);</span>
+<span class="fc" id="L138">			addPoint(x + dim.getWidth(), y + dim.getHeight());</span>
+<span class="fc" id="L139">		}</span>
+
+		private void drawImage(double x, double y, UImage image) {
+<span class="nc" id="L142">			addPoint(x, y);</span>
+<span class="nc" id="L143">			addPoint(x, y + image.getHeight());</span>
+<span class="nc" id="L144">			addPoint(x + image.getWidth(), y);</span>
+<span class="nc" id="L145">			addPoint(x + image.getWidth(), y + image.getHeight());</span>
+<span class="nc" id="L146">		}</span>
+
+		private void drawPath(double x, double y, UPath path) {
+<span class="nc" id="L149">			addPoint(x + path.getMinX(), y + path.getMinY());</span>
+<span class="nc" id="L150">			addPoint(x + path.getMaxX(), y + path.getMaxY());</span>
+<span class="nc" id="L151">		}</span>
+
+		private void drawRectangle(double x, double y, URectangle rect) {
+<span class="nc" id="L154">			addPoint(x, y);</span>
+<span class="nc" id="L155">			addPoint(x + rect.getWidth(), y + rect.getHeight());</span>
+<span class="nc" id="L156">		}</span>
+
+		private void drawEllipse(double x, double y, UEllipse rect) {
+<span class="nc" id="L159">			addPoint(x, y);</span>
+<span class="nc" id="L160">			addPoint(x + rect.getWidth(), y + rect.getHeight());</span>
+<span class="nc" id="L161">		}</span>
+
+		private void drawEmpty(double x, double y, UEmpty rect) {
+<span class="nc" id="L164">			addPoint(x, y);</span>
+<span class="nc" id="L165">			addPoint(x + rect.getWidth(), y + rect.getHeight());</span>
+<span class="nc" id="L166">		}</span>
+	}
+
+	public ContainingEllipse getEllipse(UDrawable drawable, double alpha) {
+<span class="fc" id="L170">		final MyUGraphic ug = new MyUGraphic();</span>
+<span class="fc" id="L171">		drawable.drawU(ug);</span>
+<span class="fc" id="L172">		final List&lt;XPoint2D&gt; all = ug.all;</span>
+<span class="fc" id="L173">		final ContainingEllipse circle = new ContainingEllipse(alpha);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
+<span class="fc" id="L175">			circle.append(pt);</span>
+
+<span class="fc" id="L177">		return circle;</span>
+	}
+
+	// public void drawDebug(UGraphic ug, double dx, double dy, TextBlock text) {
+	// final MyUGraphic mug = new MyUGraphic();
+	// text.drawU(mug, dx, dy);
+	// for (Point2D pt : mug.all) {
+	// ug.draw(pt.getX(), pt.getY(), new URectangle(1, 1));
+	// }
+	//
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

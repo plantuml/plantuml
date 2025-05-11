@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropertiesBasedConfigData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.util</a> &gt; <span class="el_source">PropertiesBasedConfigData.java</span></div><h1>PropertiesBasedConfigData.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.util;
+
+import java.util.Properties;
+
+/**
+ *  Implementation of {@link FlatConfigData} based on
+ *  &lt;tt&gt;java.util.Properties&lt;/tt&gt;.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class PropertiesBasedConfigData extends FlatConfigData {
+  private final Properties _properties;
+
+  /**
+   * Creates an instance based on the specified properties.
+   * The path is undefined.
+   */
+  public PropertiesBasedConfigData(Properties properties) {
+<span class="nc" id="L37">    this(properties, null);</span>
+<span class="nc" id="L38">  }</span>
+
+  /** Creates an instance based on the specified properties and path. */
+  private PropertiesBasedConfigData(Properties properties, String path) {
+<span class="nc" id="L42">    super(path);</span>
+<span class="nc" id="L43">    _properties = properties;</span>
+<span class="nc" id="L44">  }</span>
+
+  /**
+   * Returns the value for the specified full key. The call will be delegated
+   * to the wrapped &lt;tt&gt;java.util.properties&lt;/tt&gt; object.
+   * @param fullKey The full key including path. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   * @return the value or &lt;tt&gt;null&lt;/tt&gt; if not found.
+   */
+  protected String getValue(String fullKey) {
+<span class="nc" id="L53">    return _properties.getProperty(fullKey);</span>
+  }
+
+  /**
+   * Returns a new instance of &lt;tt&gt;PropertiesBasedConfigData&lt;/tt&gt; 
+   * for the specified full path. The wrapped &lt;tt&gt;java.util.Properties&lt;/tt&gt;
+   * will be the same as of this instance.
+   * @param path The full path.
+   * @return a new instance.
+   */
+  protected ConfigData createConfigData(String path) {
+<span class="nc" id="L64">    return new PropertiesBasedConfigData(_properties, path);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

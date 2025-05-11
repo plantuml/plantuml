@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tokens.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.code</a> &gt; <span class="el_source">Tokens.java</span></div><h1>Tokens.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.code;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.annotation.DeadCode;
+
+@DeadCode(comment = &quot;try for text diagram compression&quot;)
+public class Tokens {
+	// ::remove file when __CORE__
+
+<span class="nc" id="L49">	private final List&lt;String&gt; keywords = new ArrayList&lt;&gt;();</span>
+
+	public static void main(String[] args) {
+<span class="nc" id="L52">		System.err.println(&quot;keywords=&quot; + new Tokens().keywords.size());</span>
+<span class="nc" id="L53">		final Set&lt;String&gt; sorted = new TreeSet&lt;&gt;(new Tokens().keywords);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (String s : sorted) {</span>
+<span class="nc" id="L55">			System.err.println(s);</span>
+<span class="nc" id="L56">		}</span>
+<span class="nc" id="L57">	}</span>
+
+	public String compressUnicodeE000(String s) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (int i = 0; i &lt; keywords.size(); i++) {</span>
+<span class="nc" id="L61">			final char c = (char) ('\uE000' + i);</span>
+<span class="nc" id="L62">			s = s.replace(keywords.get(i), &quot;&quot; + c);</span>
+		}
+<span class="nc" id="L64">		return s;</span>
+	}
+
+	public String compressAscii128(String s) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (int i = 0; i &lt; keywords.size(); i++) {</span>
+<span class="nc" id="L69">			final char c = (char) (128 + i);</span>
+<span class="nc" id="L70">			s = s.replace(keywords.get(i), &quot;&quot; + c);</span>
+		}
+<span class="nc" id="L72">		return s;</span>
+	}
+
+<span class="nc" id="L75">	public Tokens() {</span>
+<span class="nc" id="L76">		add(&quot;actor&quot;);</span>
+<span class="nc" id="L77">		add(&quot;participant&quot;);</span>
+<span class="nc" id="L78">		add(&quot;usecase&quot;);</span>
+<span class="nc" id="L79">		add(&quot;class&quot;);</span>
+<span class="nc" id="L80">		add(&quot;interface&quot;);</span>
+<span class="nc" id="L81">		add(&quot;abstract&quot;);</span>
+<span class="nc" id="L82">		add(&quot;enum&quot;);</span>
+<span class="nc" id="L83">		add(&quot;component&quot;);</span>
+<span class="nc" id="L84">		add(&quot;state&quot;);</span>
+<span class="nc" id="L85">		add(&quot;object&quot;);</span>
+<span class="nc" id="L86">		add(&quot;artifact&quot;);</span>
+<span class="nc" id="L87">		add(&quot;folder&quot;);</span>
+<span class="nc" id="L88">		add(&quot;rectangle&quot;);</span>
+<span class="nc" id="L89">		add(&quot;node&quot;);</span>
+<span class="nc" id="L90">		add(&quot;frame&quot;);</span>
+<span class="nc" id="L91">		add(&quot;cloud&quot;);</span>
+<span class="nc" id="L92">		add(&quot;database&quot;);</span>
+<span class="nc" id="L93">		add(&quot;storage&quot;);</span>
+<span class="nc" id="L94">		add(&quot;agent&quot;);</span>
+<span class="nc" id="L95">		add(&quot;stack&quot;);</span>
+<span class="nc" id="L96">		add(&quot;boundary&quot;);</span>
+<span class="nc" id="L97">		add(&quot;control&quot;);</span>
+<span class="nc" id="L98">		add(&quot;entity&quot;);</span>
+<span class="nc" id="L99">		add(&quot;card&quot;);</span>
+<span class="nc" id="L100">		add(&quot;file&quot;);</span>
+<span class="nc" id="L101">		add(&quot;package&quot;);</span>
+<span class="nc" id="L102">		add(&quot;queue&quot;);</span>
+<span class="nc" id="L103">		add(&quot;archimate&quot;);</span>
+<span class="nc" id="L104">		add(&quot;diamond&quot;);</span>
+<span class="nc" id="L105">		add(&quot;detach&quot;);</span>
+
+<span class="nc" id="L107">		add(&quot;@start&quot;);</span>
+<span class="nc" id="L108">		add(&quot;@end&quot;);</span>
+<span class="nc" id="L109">		add(&quot;also&quot;);</span>
+<span class="nc" id="L110">		add(&quot;autonumber&quot;);</span>
+<span class="nc" id="L111">		add(&quot;caption&quot;);</span>
+<span class="nc" id="L112">		add(&quot;title&quot;);</span>
+<span class="nc" id="L113">		add(&quot;newpage&quot;);</span>
+<span class="nc" id="L114">		add(&quot;loop&quot;);</span>
+<span class="nc" id="L115">		add(&quot;break&quot;);</span>
+<span class="nc" id="L116">		add(&quot;critical&quot;);</span>
+<span class="nc" id="L117">		add(&quot;note&quot;);</span>
+<span class="nc" id="L118">		add(&quot;legend&quot;);</span>
+<span class="nc" id="L119">		add(&quot;group&quot;);</span>
+<span class="nc" id="L120">		add(&quot;left&quot;);</span>
+<span class="nc" id="L121">		add(&quot;right&quot;);</span>
+<span class="nc" id="L122">		add(&quot;link&quot;);</span>
+<span class="nc" id="L123">		add(&quot;over&quot;);</span>
+<span class="nc" id="L124">		add(&quot;activate&quot;);</span>
+<span class="nc" id="L125">		add(&quot;deactivate&quot;);</span>
+<span class="nc" id="L126">		add(&quot;destroy&quot;);</span>
+<span class="nc" id="L127">		add(&quot;create&quot;);</span>
+<span class="nc" id="L128">		add(&quot;footbox&quot;);</span>
+<span class="nc" id="L129">		add(&quot;hide&quot;);</span>
+<span class="nc" id="L130">		add(&quot;show&quot;);</span>
+<span class="nc" id="L131">		add(&quot;skinparam&quot;);</span>
+<span class="nc" id="L132">		add(&quot;skin&quot;);</span>
+<span class="nc" id="L133">		add(&quot;bottom&quot;);</span>
+<span class="nc" id="L134">		add(&quot;namespace&quot;);</span>
+<span class="nc" id="L135">		add(&quot;page&quot;);</span>
+<span class="nc" id="L136">		add(&quot;down&quot;);</span>
+<span class="nc" id="L137">		add(&quot;else&quot;);</span>
+<span class="nc" id="L138">		add(&quot;endif&quot;);</span>
+<span class="nc" id="L139">		add(&quot;partition&quot;);</span>
+<span class="nc" id="L140">		add(&quot;footer&quot;);</span>
+<span class="nc" id="L141">		add(&quot;header&quot;);</span>
+<span class="nc" id="L142">		add(&quot;center&quot;);</span>
+<span class="nc" id="L143">		add(&quot;rotate&quot;);</span>
+<span class="nc" id="L144">		add(&quot;return&quot;);</span>
+<span class="nc" id="L145">		add(&quot;repeat&quot;);</span>
+<span class="nc" id="L146">		add(&quot;start&quot;);</span>
+<span class="nc" id="L147">		add(&quot;stop&quot;);</span>
+<span class="nc" id="L148">		add(&quot;while&quot;);</span>
+<span class="nc" id="L149">		add(&quot;endwhile&quot;);</span>
+<span class="nc" id="L150">		add(&quot;fork&quot;);</span>
+<span class="nc" id="L151">		add(&quot;again&quot;);</span>
+<span class="nc" id="L152">		add(&quot;kill&quot;);</span>
+<span class="nc" id="L153">		add(&quot;order&quot;);</span>
+<span class="nc" id="L154">		add(&quot;mainframe&quot;);</span>
+<span class="nc" id="L155">		add(&quot;across&quot;);</span>
+<span class="nc" id="L156">		add(&quot;stereotype&quot;);</span>
+<span class="nc" id="L157">		add(&quot;split&quot;);</span>
+<span class="nc" id="L158">		add(&quot;style&quot;);</span>
+<span class="nc" id="L159">		add(&quot;sprite&quot;);</span>
+
+<span class="nc" id="L161">		add(&quot;exit&quot;);</span>
+<span class="nc" id="L162">		add(&quot;include&quot;);</span>
+<span class="nc" id="L163">		add(&quot;pragma&quot;);</span>
+<span class="nc" id="L164">		add(&quot;undef&quot;);</span>
+<span class="nc" id="L165">		add(&quot;ifdef&quot;);</span>
+		// add(&quot;endif&quot;);
+<span class="nc" id="L167">		add(&quot;ifndef&quot;);</span>
+		// add(&quot;else&quot;);
+<span class="nc" id="L169">		add(&quot;function&quot;);</span>
+<span class="nc" id="L170">		add(&quot;procedure&quot;);</span>
+<span class="nc" id="L171">		add(&quot;endfunction&quot;);</span>
+<span class="nc" id="L172">		add(&quot;endprocedure&quot;);</span>
+<span class="nc" id="L173">		add(&quot;unquoted&quot;);</span>
+		// add(&quot;return&quot;);
+<span class="nc" id="L175">		add(&quot;startsub&quot;);</span>
+<span class="nc" id="L176">		add(&quot;endsub&quot;);</span>
+<span class="nc" id="L177">		add(&quot;assert&quot;);</span>
+<span class="nc" id="L178">		add(&quot;local&quot;);</span>
+
+<span class="nc" id="L180">		add(&quot;!definelong&quot;);</span>
+<span class="nc" id="L181">		add(&quot;!enddefinelong&quot;);</span>
+<span class="nc" id="L182">		add(&quot;!define&quot;);</span>
+
+<span class="nc" id="L184">		add(&quot;define&quot;);</span>
+<span class="nc" id="L185">		add(&quot;alias&quot;);</span>
+<span class="nc" id="L186">		add(&quot;shape&quot;);</span>
+<span class="nc" id="L187">		add(&quot;label&quot;);</span>
+<span class="nc" id="L188">		add(&quot;BackgroundColor&quot;);</span>
+<span class="nc" id="L189">		add(&quot;Color&quot;);</span>
+<span class="nc" id="L190">		add(&quot;color&quot;);</span>
+<span class="nc" id="L191">		add(&quot;Entity&quot;);</span>
+<span class="nc" id="L192">		add(&quot;ENTITY&quot;);</span>
+<span class="nc" id="L193">		add(&quot;COLOR&quot;);</span>
+<span class="nc" id="L194">		add(&quot;LARGE&quot;);</span>
+<span class="nc" id="L195">		add(&quot;stereo&quot;);</span>
+<span class="nc" id="L196">		add(&quot;AZURE&quot;);</span>
+<span class="nc" id="L197">		add(&quot;Azure&quot;);</span>
+
+<span class="nc" id="L199">	}</span>
+
+	private void add(String string) {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (keywords.contains(string)) {</span>
+<span class="nc" id="L203">			System.err.println(string);</span>
+<span class="nc" id="L204">			throw new IllegalArgumentException(string);</span>
+		}
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (string.length() &lt;= 3) {</span>
+<span class="nc" id="L207">			System.err.println(string);</span>
+<span class="nc" id="L208">			throw new IllegalArgumentException(string);</span>
+		}
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (string.matches(&quot;[!@]?[A-Za-z]+&quot;) == false) {</span>
+<span class="nc" id="L211">			System.err.println(string);</span>
+<span class="nc" id="L212">			throw new IllegalArgumentException(string);</span>
+		}
+<span class="nc" id="L214">		keywords.add(string);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (keywords.size() &gt; 127) {</span>
+<span class="nc" id="L216">			System.err.println(string);</span>
+<span class="nc" id="L217">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L219">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

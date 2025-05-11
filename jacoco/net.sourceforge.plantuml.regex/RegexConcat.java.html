@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegexConcat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.regex</a> &gt; <span class="el_source">RegexConcat.java</span></div><h1>RegexConcat.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.regex;
+
+import java.util.concurrent.atomic.AtomicLong;
+
+import net.sourceforge.plantuml.text.StringLocated;
+
+<span class="fc" id="L42">public final class RegexConcat extends RegexComposed implements IRegex {</span>
+
+<span class="fc" id="L44">	private final AtomicLong foxRegex = new AtomicLong(-1L);</span>
+	private int limitSize;
+
+	// private static final Set&lt;String&gt; PRINTED2 = new HashSet&lt;&gt;();
+
+	public static void printCacheInfo() {
+//		if (OptionFlags.getInstance().isVerbose())
+//			synchronized (cache) {
+//
+//				final NumberFormat nf = NumberFormat.getInstance(Locale.US);
+//
+//				int nbCompiled = 0;
+//				int nbInvoked = 0;
+//				for (RegexConcat reg : cache.values()) {
+//					if (reg.isCompiled())
+//						nbCompiled++;
+//
+//					if (reg.invoked())
+//						nbInvoked++;
+//
+//				}
+//				Log.info(&quot;Regex total/invoked/compiled &quot; + nf.format(cache.size()) + &quot;/&quot; + nf.format(nbInvoked) + &quot;/&quot;
+//						+ nf.format(nbCompiled));
+//				Log.info(&quot;Matches escaped &quot; + nf.format(vescaped.get()) + &quot;/&quot; + nf.format(vtot.get()));
+//				Log.info(&quot;Matches created &quot; + nf.format(nbCreateMatches.get()));
+//			}
+<span class="fc" id="L70">	}</span>
+
+	public RegexConcat(IRegex... partials) {
+<span class="fc" id="L73">		super(partials);</span>
+<span class="fc" id="L74">	}</span>
+
+	private long foxRegex() {
+<span class="fc" id="L77">		final long result = foxRegex.get();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (result == -1L) {</span>
+<span class="fc" id="L79">			long tmp = 0L;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			for (int i = 1; i &lt; partials().size() - 1; i++) {</span>
+<span class="fc" id="L81">				final IRegex part = partials().get(i);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">				if (part instanceof RegexLeaf) {</span>
+<span class="fc" id="L83">					final RegexLeaf leaf = (RegexLeaf) part;</span>
+<span class="fc" id="L84">					tmp = tmp | leaf.getFoxSignature();</span>
+				}
+			}
+<span class="fc" id="L87">			foxRegex.set(tmp);</span>
+<span class="fc" id="L88">			return tmp;</span>
+		}
+<span class="fc" id="L90">		return result;</span>
+	}
+
+	public static RegexConcat build(String key, IRegex... partials) {
+<span class="fc" id="L94">		return buildInternal(partials);</span>
+//		RegexConcat result = cache.get(key);
+//		if (result == null) {
+//			cache.putIfAbsent(key, buildInternal(partials));
+//			result = cache.get(key);
+//			// System.err.println(&quot;cache size=&quot; + cache.size());
+//			// } else {
+//			// synchronized (PRINTED2) {
+//			// if (PRINTED2.contains(key) == false) {
+//			// System.err.println(&quot;if (key.equals(\&quot;&quot; + key + &quot;\&quot;)) return
+//			// buildInternal(partials);&quot;);
+//			// }
+//			// PRINTED2.add(key);
+//		}
+//		return result;
+	}
+
+	private static RegexConcat buildInternal(IRegex... partials) {
+<span class="fc" id="L112">		final RegexConcat result = new RegexConcat(partials);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		assert partials[0] == RegexLeaf.start();</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		assert partials[partials.length - 1] == RegexLeaf.end();</span>
+<span class="fc" id="L115">		return result;</span>
+	}
+
+	private boolean invoked() {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		return foxRegex.get() != -1L;</span>
+	}
+
+//	static private final Set&lt;String&gt; PRINTED = new HashSet&lt;&gt;();
+//	static private final Set&lt;String&gt; ZERO = new HashSet&lt;&gt;();
+
+	@Override
+	public boolean match(StringLocated s) {
+<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (limitSize != 0 &amp;&amp; s.getString().length() &gt; limitSize)</span>
+<span class="nc" id="L128">			return false;</span>
+
+		// vtot.incrementAndGet();
+<span class="fc" id="L131">		final long foxRegex = foxRegex();</span>
+//		synchronized (PRINTED) {
+//			final String full = getFullSlow();
+//			final boolean added = PRINTED.add(full);
+//			if (added &amp;&amp; foxRegex == 0L) {
+//				ZERO.add(full);
+//				System.err.println(&quot;PR &quot; + ZERO.size() + &quot;/&quot; + PRINTED.size() + &quot; &quot;
+//						+ FoxSignature.backToString(foxRegex) + &quot; &quot; + full);
+//			}
+//		}
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (foxRegex != 0L) {</span>
+<span class="fc" id="L142">			final long foxLine = s.getFoxSignature();</span>
+<span class="fc" id="L143">			final long check = foxRegex &amp; foxLine;</span>
+			// System.err.println(&quot;r=&quot; + getFullSlow() + &quot; s=&quot; + s + &quot; line=&quot; + foxLine + &quot;
+			// regex&quot; + foxRegex + &quot; &quot;
+			// + check + &quot; &lt;&quot; + FoxSignature.backToString(check) + &quot;&gt;&quot;);
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			if (check != foxRegex) {</span>
+				// vescaped.incrementAndGet();
+<span class="fc" id="L149">				return false;</span>
+			}
+
+		}
+<span class="fc" id="L153">		return super.match(s);</span>
+	}
+
+	@Override
+	protected String getFullSlow() {
+<span class="fc" id="L158">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (IRegex p : partials())</span>
+<span class="fc" id="L160">			sb.append(p.getPattern());</span>
+
+<span class="fc" id="L162">		return sb.toString();</span>
+	}
+
+	public RegexConcat protectSize(int size) {
+<span class="fc" id="L166">		limitSize = size;</span>
+<span class="fc" id="L167">		return this;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

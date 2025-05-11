@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HclDiagramFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.hcl</a> &gt; <span class="el_source">HclDiagramFactory.java</span></div><h1>HclDiagramFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.hcl;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.command.PSystemAbstractFactory;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.yaml.Highlighted;
+
+public class HclDiagramFactory extends PSystemAbstractFactory {
+
+	public HclDiagramFactory() {
+<span class="fc" id="L58">		super(DiagramType.HCL);</span>
+<span class="fc" id="L59">	}</span>
+
+	@Override
+	public Diagram createSystem(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L63">		final List&lt;Highlighted&gt; highlighted = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L64">		JsonValue data = null;</span>
+<span class="nc" id="L65">		StyleExtractor styleExtractor = null;</span>
+		try {
+<span class="nc" id="L67">			final HclSource list = new HclSource();</span>
+<span class="nc" id="L68">			styleExtractor = new StyleExtractor(source.iterator2());</span>
+<span class="nc" id="L69">			final Iterator&lt;String&gt; it = styleExtractor.getIterator();</span>
+<span class="nc" id="L70">			it.next();</span>
+			while (true) {
+<span class="nc" id="L72">				final String line = it.next();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">				if (it.hasNext() == false)</span>
+<span class="nc" id="L74">					break;</span>
+
+<span class="nc" id="L76">				list.add(line);</span>
+<span class="nc" id="L77">			}</span>
+<span class="nc" id="L78">			HclParser parser = new HclParser(list);</span>
+<span class="nc" id="L79">			data = parser.parseMe();</span>
+<span class="nc" id="L80">		} catch (Exception e) {</span>
+<span class="nc" id="L81">			Logme.error(e);</span>
+<span class="nc" id="L82">		}</span>
+<span class="nc" id="L83">		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted, styleExtractor, preprocessing);</span>
+//		if (styleExtractor != null) {
+//			styleExtractor.applyStyles(result.getSkinParam());
+//			final String title = styleExtractor.getTitle();
+//			if (title != null)
+//				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,
+//						VerticalAlignment.CENTER));
+//		}
+<span class="nc" id="L91">		return result;</span>
+	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+<span class="nc" id="L96">		return UmlDiagramType.HCL;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

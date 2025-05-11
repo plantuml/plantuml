@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CucaDiagramTxtMaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.dot</a> &gt; <span class="el_source">CucaDiagramTxtMaker.java</span></div><h1>CucaDiagramTxtMaker.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.dot;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.asciiart.BasicCharArea;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.posimo.Block;
+import net.sourceforge.plantuml.posimo.Cluster;
+import net.sourceforge.plantuml.posimo.GraphvizSolverB;
+import net.sourceforge.plantuml.posimo.Path;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.skin.Pragma;
+
+public final class CucaDiagramTxtMaker {
+	// ::remove file when __CORE__
+
+	// private final CucaDiagram diagram;
+	private final FileFormat fileFormat;
+<span class="fc" id="L76">	private final UGraphicTxt globalUg = new UGraphicTxt();</span>
+	private final PortionShower portionShower;
+	private final Pragma pragma;
+
+	private static double getXPixelPerChar() {
+<span class="fc" id="L81">		return 5;</span>
+	}
+
+	private static double getYPixelPerChar() {
+<span class="fc" id="L85">		return 10;</span>
+	}
+
+	private boolean showMember(Entity entity) {
+<span class="fc" id="L89">		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);</span>
+<span class="fc" id="L90">		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);</span>
+<span class="pc bpc" id="L91" title="3 of 4 branches missed.">		return showMethods || showFields;</span>
+	}
+
+<span class="fc" id="L94">	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {</span>
+<span class="fc" id="L95">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L96">		this.portionShower = diagram;</span>
+<span class="fc" id="L97">		this.pragma = diagram.getPragma();</span>
+
+<span class="fc" id="L99">		final Cluster root = new Cluster(null, 0, 0);</span>
+<span class="fc" id="L100">		int uid = 0;</span>
+
+<span class="fc" id="L102">		final Map&lt;Entity, Block&gt; blocks = new HashMap&lt;Entity, Block&gt;();</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (Entity ent : diagram.leafs()) {</span>
+			// printClass(ent);
+			// ug.translate(0, getHeight(ent) + 1);
+<span class="fc" id="L107">			final double width = getWidth(ent) * getXPixelPerChar();</span>
+<span class="fc" id="L108">			final double height = getHeight(ent) * getYPixelPerChar();</span>
+<span class="fc" id="L109">			final Block b = new Block(uid++, width, height, null);</span>
+<span class="fc" id="L110">			root.addBloc(b);</span>
+<span class="fc" id="L111">			blocks.put(ent, b);</span>
+<span class="fc" id="L112">		}</span>
+
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (blocks.size() &gt; 1) {</span>
+<span class="nc" id="L115">			final GraphvizSolverB solver = new GraphvizSolverB();</span>
+
+<span class="nc" id="L117">			final Collection&lt;Path&gt; paths = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			for (Link link : diagram.getLinks()) {</span>
+<span class="nc" id="L119">				final Block b1 = blocks.get(link.getEntity1());</span>
+<span class="nc" id="L120">				final Block b2 = blocks.get(link.getEntity2());</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">				if (b1 != null &amp;&amp; b2 != null)</span>
+<span class="nc" id="L122">					paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));</span>
+<span class="nc" id="L123">			}</span>
+<span class="nc" id="L124">			solver.solve(root, paths);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			for (Path p : paths) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">				if (p.isInvis())</span>
+<span class="nc" id="L127">					continue;</span>
+
+<span class="nc" id="L129">				drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());</span>
+<span class="nc" id="L130">			}</span>
+
+		}
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		for (Entity ent : diagram.leafs()) {</span>
+<span class="fc" id="L135">			final Block b = blocks.get(ent);</span>
+<span class="fc" id="L136">			final XPoint2D p = b.getPosition();</span>
+<span class="fc" id="L137">			printClass(ent, (UGraphicTxt) globalUg</span>
+<span class="fc" id="L138">					.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar())));</span>
+<span class="fc" id="L139">		}</span>
+
+<span class="fc" id="L141">	}</span>
+
+	private void drawDotPath(DotPath dotPath, BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (XCubicCurve2D bez : dotPath.getBeziers())</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (bez.x1 == bez.x2)</span>
+<span class="nc" id="L146">				area.drawVLine('|', (int) (bez.x1 / pixelXPerChar), (int) (bez.y1 / pixelYPerChar),</span>
+						(int) (bez.y2 / pixelYPerChar));
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			else if (bez.y1 == bez.y2)</span>
+<span class="nc" id="L149">				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),</span>
+						(int) (bez.x2 / pixelXPerChar));
+
+<span class="nc" id="L152">	}</span>
+
+	private void printClass(final Entity ent, UGraphicTxt ug) {
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT)</span>
+<span class="fc" id="L156">			drawClassUnicode(ent, ug);</span>
+		else
+<span class="nc" id="L158">			drawClassSimple(ent, ug);</span>
+<span class="fc" id="L159">	}</span>
+
+	private void drawClassSimple(final Entity ent, UGraphicTxt ug) {
+<span class="nc" id="L162">		final int w = getWidth(ent);</span>
+<span class="nc" id="L163">		final int h = getHeight(ent);</span>
+<span class="nc" id="L164">		ug.getCharArea().drawBoxSimple(0, 0, w, h);</span>
+<span class="nc" id="L165">		ug.getCharArea().drawStringsLRSimple(ent.getDisplay().asList(), 1, 1);</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (showMember(ent)) {</span>
+<span class="nc" id="L167">			int y = 2;</span>
+<span class="nc" id="L168">			ug.getCharArea().drawHLine('-', y, 1, w - 1);</span>
+<span class="nc" id="L169">			y++;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
+<span class="nc" id="L171">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
+<span class="nc" id="L172">				ug.getCharArea().drawStringsLRSimple(disp, 1, y);</span>
+<span class="nc" id="L173">				y += StringUtils.getHeight(disp);</span>
+<span class="nc" id="L174">			}</span>
+//			for (Member att : ent.getBodier().getFieldsToDisplay()) {
+//				final List&lt;String&gt; disp = BackSlash.getWithNewlines(att.getDisplay(true));
+//				ug.getCharArea().drawStringsLR(disp, 1, y);
+//				y += StringUtils.getHeight(disp);
+//			}
+//			ug.getCharArea().drawHLine('-', y, 1, w - 1);
+//			y++;
+//			for (Member att : ent.getBodier().getMethodsToDisplay()) {
+//				final List&lt;String&gt; disp = BackSlash.getWithNewlines(att.getDisplay(true));
+//				ug.getCharArea().drawStringsLR(disp, 1, y);
+//				y += StringUtils.getHeight(disp);
+//			}
+		}
+<span class="nc" id="L188">	}</span>
+
+	private void drawClassUnicode(final Entity ent, UGraphicTxt ug) {
+<span class="fc" id="L191">		final int w = getWidth(ent);</span>
+<span class="fc" id="L192">		final int h = getHeight(ent);</span>
+<span class="fc" id="L193">		ug.getCharArea().drawBoxSimpleUnicode(0, 0, w, h);</span>
+<span class="fc" id="L194">		ug.getCharArea().drawStringsLRUnicode(ent.getDisplay().asList(), 1, 1);</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (showMember(ent)) {</span>
+<span class="fc" id="L196">			int y = 2;</span>
+<span class="fc" id="L197">			ug.getCharArea().drawHLine('\u2500', y, 1, w - 1);</span>
+<span class="fc" id="L198">			ug.getCharArea().drawChar('\u251C', 0, y);</span>
+<span class="fc" id="L199">			ug.getCharArea().drawChar('\u2524', w - 1, y);</span>
+<span class="fc" id="L200">			y++;</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
+<span class="nc" id="L202">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
+<span class="nc" id="L203">				ug.getCharArea().drawStringsLRUnicode(disp, 1, y);</span>
+<span class="nc" id="L204">				y += StringUtils.getHeight(disp);</span>
+<span class="nc" id="L205">			}</span>
+		}
+<span class="fc" id="L207">	}</span>
+
+	public List&lt;SFile&gt; createFiles(SFile suggestedFile) throws IOException {
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT)</span>
+<span class="nc" id="L211">			globalUg.getCharArea().print(suggestedFile.createPrintStream(UTF_8));</span>
+		else
+<span class="nc" id="L213">			globalUg.getCharArea().print(suggestedFile.createPrintStream());</span>
+
+<span class="nc" id="L215">		return Collections.singletonList(suggestedFile);</span>
+	}
+
+	private int getHeight(Entity entity) {
+<span class="fc" id="L219">		int result = StringUtils.getHeight(entity.getDisplay());</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (showMember(entity)) {</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody())</span>
+<span class="nc" id="L222">				result += StringUtils.getHeight(Display.getWithNewlines(pragma, att.toString()));</span>
+
+//			for (Member att : entity.getBodier().getMethodsToDisplay()) {
+//				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
+//			}
+//			result++;
+//			for (Member att : entity.getBodier().getFieldsToDisplay()) {
+//				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
+//			}
+//			result++;
+		}
+<span class="fc" id="L233">		return result + 3;</span>
+	}
+
+	private int getWidth(Entity entity) {
+<span class="fc" id="L237">		int result = StringUtils.getWcWidth(entity.getDisplay());</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (showMember(entity)) {</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody()) {</span>
+<span class="nc" id="L240">				final int w = StringUtils.getWcWidth(Display.getWithNewlines(pragma, att.toString()));</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">				if (w &gt; result)</span>
+<span class="nc" id="L242">					result = w;</span>
+
+<span class="nc" id="L244">			}</span>
+//			for (Member att : entity.getBodier().getMethodsToDisplay()) {
+//			final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
+//			if (w &gt; result) {
+//				result = w;
+//			}
+//		}
+//			for (Member att : entity.getBodier().getFieldsToDisplay()) {
+//				final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
+//				if (w &gt; result) {
+//					result = w;
+//				}
+//			}
+		}
+<span class="fc" id="L258">		return result + 2;</span>
+	}
+
+	public void createFiles(OutputStream os, int index) {
+<span class="fc" id="L262">		globalUg.getCharArea().print(SecurityUtils.createPrintStream(os));</span>
+<span class="fc" id="L263">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

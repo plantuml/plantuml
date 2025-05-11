@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ETileBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ebnf</a> &gt; <span class="el_source">ETileBox.java</span></div><h1>ETileBox.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ebnf;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.I18n;
+
+public class ETileBox extends ETile {
+
+	private final String value;
+	private final FontConfiguration fc;
+	private final Style style;
+	private final UText utext;
+	private final HColorSet colorSet;
+	private final Symbol symbol;
+	private final ISkinParam skinParam;
+	private final ConfigurationStore&lt;OptionKey&gt; option;
+	private String commentAbove;
+	private String commentBelow;
+
+<span class="nc" id="L78">	private static final Map&lt;String, String&gt; VALUE_MAP = new HashMap&lt;&gt;();</span>
+
+	static {
+<span class="nc" id="L81">		VALUE_MAP.put(&quot;\\b&quot;, &quot;wordBoundary&quot;);</span>
+<span class="nc" id="L82">		VALUE_MAP.put(&quot;\\B&quot;, &quot;nonWordBoundary&quot;);</span>
+<span class="nc" id="L83">		VALUE_MAP.put(&quot;\\d&quot;, &quot;digit&quot;);</span>
+<span class="nc" id="L84">		VALUE_MAP.put(&quot;\\D&quot;, &quot;nonDigit&quot;);</span>
+<span class="nc" id="L85">		VALUE_MAP.put(&quot;\\w&quot;, &quot;word&quot;);</span>
+<span class="nc" id="L86">		VALUE_MAP.put(&quot;\\W&quot;, &quot;nonWord&quot;);</span>
+<span class="nc" id="L87">		VALUE_MAP.put(&quot;\\s&quot;, &quot;whitespace&quot;);</span>
+<span class="nc" id="L88">		VALUE_MAP.put(&quot;\\S&quot;, &quot;nonWhitespace&quot;);</span>
+<span class="nc" id="L89">		VALUE_MAP.put(&quot;.&quot;, &quot;anyChar&quot;);</span>
+<span class="nc" id="L90">	}</span>
+
+	public ETileBox mergeWith(ETileBox other) {
+<span class="nc" id="L93">		return new ETileBox(this.value + other.value, symbol, fc, style, colorSet, skinParam, option);</span>
+	}
+
+	public ETileBox(String value, Symbol symbol, FontConfiguration fc, Style style, HColorSet colorSet,
+<span class="nc" id="L97">			ISkinParam skinParam, ConfigurationStore&lt;OptionKey&gt; option) {</span>
+<span class="nc" id="L98">		this.symbol = symbol;</span>
+<span class="nc" id="L99">		this.skinParam = skinParam;</span>
+<span class="nc" id="L100">		this.option = option;</span>
+<span class="nc" id="L101">		this.value = getDrawValue(value);</span>
+<span class="nc" id="L102">		this.fc = fc;</span>
+<span class="nc" id="L103">		this.utext = UText.build(this.value, fc);</span>
+<span class="nc" id="L104">		this.style = style;</span>
+<span class="nc" id="L105">		this.colorSet = colorSet;</span>
+<span class="nc" id="L106">	}</span>
+
+	private double getPureH1(StringBounder stringBounder) {
+<span class="nc" id="L109">		final double height = getTextDim(stringBounder).getHeight() + 10;</span>
+<span class="nc" id="L110">		return height / 2;</span>
+	}
+
+	@Override
+	public double getH1(StringBounder stringBounder) {
+<span class="nc" id="L115">		double h1 = getPureH1(stringBounder);</span>
+<span class="nc" id="L116">		final TextBlock note = getNoteAbove(stringBounder);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (note != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L118">			h1 += note.calculateDimension(stringBounder).getHeight() + 20;</span>
+<span class="nc" id="L119">		return h1;</span>
+	}
+
+	@Override
+	public double getH2(StringBounder stringBounder) {
+<span class="nc" id="L124">		double h2 = getPureH1(stringBounder);</span>
+<span class="nc" id="L125">		final TextBlock note = getNoteBelow(stringBounder);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (note != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L127">			h2 += note.calculateDimension(stringBounder).getHeight() + 20;</span>
+<span class="nc" id="L128">		return h2;</span>
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+<span class="nc" id="L133">		double width = getTextDim(stringBounder).getWidth() + 10;</span>
+<span class="nc" id="L134">		final TextBlock noteAbove = getNoteAbove(stringBounder);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (noteAbove != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L136">			width = Math.max(width, noteAbove.calculateDimension(stringBounder).getWidth());</span>
+
+<span class="nc" id="L138">		final TextBlock noteBelow = getNoteBelow(stringBounder);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (noteBelow != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L140">			width = Math.max(width, noteBelow.calculateDimension(stringBounder).getWidth());</span>
+
+<span class="nc" id="L142">		return width;</span>
+	}
+
+	private XDimension2D getTextDim(StringBounder stringBounder) {
+<span class="nc" id="L146">		return stringBounder.calculateDimension(fc.getFont(), value);</span>
+	}
+
+	private XDimension2D getBoxDim(StringBounder stringBounder) {
+<span class="nc" id="L150">		return getTextDim(stringBounder).delta(10);</span>
+	}
+
+	@Override
+	protected void addCommentAbove(String comment) {
+<span class="nc" id="L155">		this.commentAbove = comment;</span>
+<span class="nc" id="L156">	}</span>
+
+	@Override
+	protected void addCommentBelow(String comment) {
+<span class="nc" id="L160">		this.commentBelow = comment;</span>
+<span class="nc" id="L161">	}</span>
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L165">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L166">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L167">		final XDimension2D dimText = getTextDim(stringBounder);</span>
+<span class="nc" id="L168">		final XDimension2D dimBox = getBoxDim(stringBounder);</span>
+<span class="nc" id="L169">		final HColor lineColor = style.value(PName.LineColor).asColor(colorSet);</span>
+<span class="nc" id="L170">		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
+
+<span class="nc" id="L172">		final TextBlock noteAbove = getNoteAbove(stringBounder);</span>
+<span class="nc" id="L173">		final TextBlock noteBelow = getNoteBelow(stringBounder);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		final double posy = noteAbove == TextBlockUtils.EMPTY_TEXT_BLOCK ? 0</span>
+<span class="nc" id="L175">				: noteAbove.calculateDimension(stringBounder).getHeight() + 20;</span>
+
+<span class="nc" id="L177">		final double posxBox = (dim.getWidth() - dimBox.getWidth()) / 2;</span>
+
+<span class="nc bnc" id="L179" title="All 4 branches missed.">		if (symbol == Symbol.TERMINAL_STRING1 || symbol == Symbol.TERMINAL_STRING2) {</span>
+<span class="nc" id="L180">			final URectangle rect = URectangle.build(dimBox);</span>
+<span class="nc" id="L181">			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(UStroke.withThickness(0.5)).draw(rect);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		} else if (symbol == Symbol.SPECIAL_SEQUENCE) {</span>
+<span class="nc" id="L183">			final URectangle rect = URectangle.build(dimBox);</span>
+<span class="nc" id="L184">			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(new UStroke(5, 5, 1)).draw(rect);</span>
+//			final URectangle rect1 = URectangle.build(dimBox.delta(2)).rounded(12);
+//			final URectangle rect2 = URectangle.build(dimBox.delta(-2)).rounded(8);
+//			ug.apply(new UTranslate(posxBox - 1, posy - 1)).apply(lineColor).apply(new UStroke(5.0, 5.0, 1.0)).draw(rect1);
+//			ug.apply(new UTranslate(posxBox + 1, posy + 1)).apply(lineColor).apply(UStroke.withThickness(0.5)).draw(rect2);
+<span class="nc" id="L189">		} else {</span>
+<span class="nc" id="L190">			final URectangle rect = URectangle.build(dimBox).rounded(10);</span>
+<span class="nc" id="L191">			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(backgroundColor.bg())</span>
+<span class="nc" id="L192">					.apply(UStroke.withThickness(1.5)).draw(rect);</span>
+		}
+
+<span class="nc" id="L195">		ug.apply(new UTranslate(5 + posxBox, posy + 5 + dimText.getHeight() - utext.getDescent(stringBounder)))</span>
+<span class="nc" id="L196">				.draw(utext);</span>
+
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (noteAbove != TextBlockUtils.EMPTY_TEXT_BLOCK) {</span>
+<span class="nc" id="L199">			final double posxAbove = (dim.getWidth() - noteAbove.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L200">			noteAbove.drawU(ug.apply(new UTranslate(posxAbove, 0)));</span>
+		}
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (noteBelow != TextBlockUtils.EMPTY_TEXT_BLOCK) {</span>
+<span class="nc" id="L204">			final double posxBelow = (dim.getWidth() - noteBelow.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L205">			final double posyBelow = dim.getHeight() - noteBelow.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L206">			noteBelow.drawU(ug.apply(new UTranslate(posxBelow, posyBelow)));</span>
+		}
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (posxBox &gt; 0) {</span>
+<span class="nc" id="L210">			drawHlineDirected(ug, getH1(stringBounder), 0, posxBox, .5, 25);</span>
+<span class="nc" id="L211">			drawHlineDirected(ug, getH1(stringBounder), posxBox + dimBox.getWidth(), dim.getWidth(), .5, 25);</span>
+		}
+
+<span class="nc" id="L214">	}</span>
+
+	private TextBlock getNoteAbove(StringBounder stringBounder) {
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (commentAbove == null)</span>
+<span class="nc" id="L218">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+
+<span class="nc" id="L220">		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentAbove),</span>
+				skinParam, SName.ebnf);
+<span class="nc" id="L222">		final XDimension2D dim = note.calculateDimension(stringBounder);</span>
+<span class="nc" id="L223">		final double pos = dim.getWidth() * .5;</span>
+<span class="nc" id="L224">		XPoint2D pp1 = new XPoint2D(pos, dim.getHeight());</span>
+<span class="nc" id="L225">		XPoint2D pp2 = new XPoint2D(pos, 20 + dim.getHeight());</span>
+<span class="nc" id="L226">		note.setOpale(Direction.DOWN, pp1, pp2);</span>
+<span class="nc" id="L227">		return note;</span>
+	}
+
+	private TextBlock getNoteBelow(StringBounder stringBounder) {
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (commentBelow == null)</span>
+<span class="nc" id="L232">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+
+<span class="nc" id="L234">		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentBelow),</span>
+				skinParam, SName.ebnf);
+<span class="nc" id="L236">		final XDimension2D dim = note.calculateDimension(stringBounder);</span>
+<span class="nc" id="L237">		final double pos = dim.getWidth() * .5;</span>
+<span class="nc" id="L238">		XPoint2D pp1 = new XPoint2D(pos, 0);</span>
+<span class="nc" id="L239">		XPoint2D pp2 = new XPoint2D(pos, -20);</span>
+<span class="nc" id="L240">		note.setOpale(Direction.UP, pp1, pp2);</span>
+<span class="nc" id="L241">		return note;</span>
+	}
+
+	@Override
+	public void push(ETile tile) {
+<span class="nc" id="L246">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	protected String getRepetitionLabel() {
+<span class="nc" id="L251">		return value;</span>
+	}
+
+	public final Symbol getSymbol() {
+<span class="nc" id="L255">		return symbol;</span>
+	}
+
+	private String getDrawValue(String value) {
+<span class="nc bnc" id="L259" title="All 4 branches missed.">		if (!Boolean.parseBoolean(option.getValue(OptionKey.USE_DESCRIPTIVE_NAMES)) || !VALUE_MAP.containsKey(value))</span>
+<span class="nc" id="L260">			return value;</span>
+
+<span class="nc" id="L262">		final String language = option.getValue(OptionKey.LANGUAGE);</span>
+<span class="nc" id="L263">		return I18n.getLocalizedValue(language, &quot;ebnf.&quot; + VALUE_MAP.get(value), value);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LiveBoxesDrawer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">LiveBoxesDrawer.java</span></div><h1>LiveBoxesDrawer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.SkinParamBackcolored;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+public class LiveBoxesDrawer {
+
+	private double y1;
+	private Fashion symbolContext;
+
+	private final Component cross;
+	private final Context2D context;
+	private final Rose skin;
+	private final ISkinParam skinParam;
+	private final Component compForWidth;
+	private final Collection&lt;Segment&gt; delays;
+
+<span class="fc" id="L71">	public LiveBoxesDrawer(Context2D context, Rose skin, ISkinParam skinParam, Map&lt;Double, Double&gt; delays) {</span>
+<span class="fc" id="L72">		this.cross = skin.createComponent(</span>
+				new Style[] {
+<span class="fc" id="L74">						ComponentType.DESTROY.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()) },</span>
+				ComponentType.DESTROY, null, skinParam, null);
+<span class="fc" id="L76">		this.compForWidth = skin.createComponent(</span>
+<span class="fc" id="L77">				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()</span>
+<span class="fc" id="L78">						.getMergedStyle(skinParam.getCurrentStyleBuilder()) },</span>
+				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam, null);
+<span class="fc" id="L80">		this.context = context;</span>
+<span class="fc" id="L81">		this.skin = skin;</span>
+<span class="fc" id="L82">		this.skinParam = skinParam;</span>
+<span class="fc" id="L83">		this.delays = new HashSet&lt;&gt;();</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		for (Map.Entry&lt;Double, Double&gt; ent : delays.entrySet()) {</span>
+<span class="nc" id="L85">			this.delays.add(new Segment(ent.getKey(), ent.getKey() + ent.getValue()));</span>
+<span class="nc" id="L86">		}</span>
+<span class="fc" id="L87">	}</span>
+
+	public double getWidth(StringBounder stringBounder) {
+<span class="fc" id="L90">		return compForWidth.getPreferredWidth(stringBounder);</span>
+	}
+
+	public void addStart(double y1, Fashion symbolContext) {
+<span class="fc" id="L94">		this.y1 = y1;</span>
+<span class="fc" id="L95">		this.symbolContext = symbolContext;</span>
+<span class="fc" id="L96">	}</span>
+
+	public void doDrawing(UGraphic ug, double yposition) {
+<span class="fc" id="L99">		final Segment full = new Segment(y1, yposition);</span>
+<span class="fc" id="L100">		final Collection&lt;Segment&gt; segments = full.cutSegmentIfNeed(delays);</span>
+<span class="fc" id="L101">		ComponentType type = ComponentType.ALIVE_BOX_CLOSE_CLOSE;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (segments.size() &gt; 1) {</span>
+<span class="nc" id="L103">			type = ComponentType.ALIVE_BOX_CLOSE_OPEN;</span>
+		}
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (Iterator&lt;Segment&gt; it = segments.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L106">			final Segment seg = it.next();</span>
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">			if (it.hasNext() == false &amp;&amp; type != ComponentType.ALIVE_BOX_CLOSE_CLOSE) {</span>
+<span class="nc" id="L108">				type = ComponentType.ALIVE_BOX_OPEN_CLOSE;</span>
+			}
+<span class="fc" id="L110">			drawInternal(ug, seg.getPos1(), seg.getPos2(), type);</span>
+<span class="fc" id="L111">			type = ComponentType.ALIVE_BOX_OPEN_OPEN;</span>
+<span class="fc" id="L112">		}</span>
+<span class="fc" id="L113">		y1 = Double.MAX_VALUE;</span>
+<span class="fc" id="L114">	}</span>
+
+	public void drawDestroyIfNeeded(UGraphic ug, Step step) {
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (step.isDestroy()) {</span>
+<span class="fc" id="L118">			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());</span>
+<span class="fc" id="L119">			cross.drawU(ug.apply(new UTranslate(-dimCross.getWidth() / 2, step.getValue() - dimCross.getHeight() / 2)),</span>
+					null, context);
+		}
+<span class="fc" id="L122">	}</span>
+
+	private void drawInternal(UGraphic ug, double ya, double yb, ComponentType type) {
+<span class="fc" id="L125">		final double width = getWidth(ug.getStringBounder());</span>
+<span class="fc" id="L126">		final Area area = Area.create(width, yb - ya);</span>
+<span class="fc" id="L127">		SkinParamBackcolored skinParam2 = new SkinParamBackcolored(skinParam,</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">				symbolContext == null ? null : symbolContext.getBackColor());</span>
+<span class="fc" id="L129">		Style style = type.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (style == null) {</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (symbolContext != null)</span>
+<span class="nc" id="L132">				skinParam2.forceColor(ColorParam.sequenceLifeLineBorder, symbolContext.getForeColor());</span>
+		} else {
+<span class="fc" id="L134">			style = style.eventuallyOverride(symbolContext);</span>
+		}
+<span class="fc" id="L136">		final Component comp = skin.createComponent(new Style[] { style }, type, null, skinParam2, null);</span>
+<span class="fc" id="L137">		comp.drawU(ug.apply(new UTranslate(-width / 2, ya)), area, context);</span>
+<span class="fc" id="L138">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

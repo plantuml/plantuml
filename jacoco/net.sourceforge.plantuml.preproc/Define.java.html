@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Define.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">Define.java</span></div><h1>Define.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.file.AParentFolder;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.tim.expression.TValue;
+
+public class Define {
+
+	private final DefineSignature signature;
+	private final String definition;
+	private final String definitionQuoted;
+	private final boolean emptyParentheses;
+	private Pattern pattern;
+	private final AParentFolder currentDir;
+
+<span class="nc" id="L56">	public Define(String key, List&lt;String&gt; lines, boolean emptyParentheses, AParentFolder currentDir) {</span>
+<span class="nc" id="L57">		this.currentDir = currentDir;</span>
+<span class="nc" id="L58">		this.emptyParentheses = emptyParentheses;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (lines == null) {</span>
+<span class="nc" id="L60">			this.definition = null;</span>
+<span class="nc" id="L61">			this.definitionQuoted = null;</span>
+		} else {
+<span class="nc" id="L63">			final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			for (final Iterator&lt;String&gt; it = lines.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L65">				sb.append(it.next());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				if (it.hasNext()) {</span>
+<span class="nc" id="L67">					sb.append('\n');</span>
+				}
+			}
+<span class="nc" id="L70">			this.definition = sb.toString();</span>
+<span class="nc" id="L71">			this.definitionQuoted = Matcher.quoteReplacement(definition);</span>
+		}
+<span class="nc" id="L73">		this.signature = new DefineSignature(key, this.definitionQuoted);</span>
+
+<span class="nc" id="L75">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L79">		return signature.toString();</span>
+	}
+
+	public String apply(String line) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (definition == null) {</span>
+<span class="nc" id="L84">			return line;</span>
+		}
+		// if (getFunctionName().indexOf('_') &gt;= 0 &amp;&amp; line.indexOf('_') == -1) {
+		// return line;
+		// }
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (/* line.length() &lt; getFunctionName().length() || */line.contains(getFunctionName()) == false) {</span>
+<span class="nc" id="L90">			return line;</span>
+		}
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (signature.isMethod()) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (line.indexOf('(') == -1) {</span>
+<span class="nc" id="L94">				return line;</span>
+			}
+<span class="nc" id="L96">			line = apply1(line);</span>
+		} else {
+<span class="nc" id="L98">			line = apply2(line);</span>
+		}
+<span class="nc" id="L100">		return line;</span>
+	}
+
+	private String apply2(String line) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (pattern == null) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			final String regex = &quot;\\b&quot; + signature.getKey() + &quot;\\b&quot; + (emptyParentheses ? &quot;(\\(\\))?&quot; : &quot;&quot;);</span>
+<span class="nc" id="L106">			pattern = Pattern.compile(regex);</span>
+		}
+
+<span class="nc" id="L109">		line = BackSlash.translateBackSlashes(line);</span>
+<span class="nc" id="L110">		line = pattern.matcher(line).replaceAll(definitionQuoted);</span>
+<span class="nc" id="L111">		line = BackSlash.untranslateBackSlashes(line);</span>
+<span class="nc" id="L112">		return line;</span>
+	}
+
+	private String apply1(String line) {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (Variables vars : signature.getVariationVariables()) {</span>
+<span class="nc" id="L117">			line = vars.applyOn(line);</span>
+<span class="nc" id="L118">		}</span>
+<span class="nc" id="L119">		return line;</span>
+	}
+
+	public final String getFunctionName() {
+<span class="nc" id="L123">		return signature.getFonctionName();</span>
+	}
+
+	public TValue asTVariable() {
+<span class="nc" id="L127">		return TValue.fromString(definition);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

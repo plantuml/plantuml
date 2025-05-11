@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Variables.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">Variables.java</span></div><h1>Variables.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Variables {
+
+<span class="nc" id="L45">	private final List&lt;DefineVariable&gt; all = new ArrayList&lt;&gt;();</span>
+	private final String fonctionName;
+	private final String definitionQuoted;
+
+<span class="nc" id="L49">	public Variables(String fonctionName, String definitionQuoted) {</span>
+<span class="nc" id="L50">		this.fonctionName = fonctionName;</span>
+<span class="nc" id="L51">		this.definitionQuoted = definitionQuoted;</span>
+<span class="nc" id="L52">	}</span>
+
+	public void add(DefineVariable var) {
+<span class="nc" id="L55">		this.all.add(var);</span>
+<span class="nc" id="L56">	}</span>
+
+	public int countDefaultValue() {
+<span class="nc" id="L59">		int result = 0;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (DefineVariable var : all) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (var.getDefaultValue() != null) {</span>
+<span class="nc" id="L62">				result++;</span>
+			}
+<span class="nc" id="L64">		}</span>
+<span class="nc" id="L65">		return result;</span>
+	}
+
+	public Variables removeSomeDefaultValues(int nb) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (nb == 0) {</span>
+<span class="nc" id="L70">			return this;</span>
+		}
+<span class="nc" id="L72">		final Variables result = new Variables(fonctionName, definitionQuoted);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (DefineVariable v : all) {</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">			if (v.getDefaultValue() != null &amp;&amp; nb &gt; 0) {</span>
+<span class="nc" id="L75">				result.add(v.removeDefault());</span>
+<span class="nc" id="L76">				nb--;</span>
+			} else {
+<span class="nc" id="L78">				result.add(v);</span>
+			}
+<span class="nc" id="L80">		}</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (nb != 0) {</span>
+<span class="nc" id="L82">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L84">		return result;</span>
+	}
+
+	private String newValue;
+	private Pattern regex2;
+
+	public String applyOn(String line) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (newValue == null) {</span>
+<span class="nc" id="L92">			newValue = definitionQuoted;</span>
+<span class="nc" id="L93">			final StringBuilder regex = new StringBuilder(&quot;\\b&quot; + fonctionName + &quot;\\(&quot;);</span>
+
+<span class="nc" id="L95">			final List&lt;DefineVariable&gt; variables = all;</span>
+<span class="nc" id="L96">			boolean appended = false;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			for (int j = 0; j &lt; variables.size(); j++) {</span>
+<span class="nc" id="L98">				final DefineVariable variable = variables.get(j);</span>
+<span class="nc" id="L99">				final String varName = variable.getName();</span>
+<span class="nc" id="L100">				final String var2 = &quot;(##&quot; + varName + &quot;##)|(##&quot; + varName + &quot;\\b)|(\\b&quot; + varName + &quot;##)|(\\b&quot; + varName</span>
+						+ &quot;\\b)&quot;;
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				if (variable.getDefaultValue() == null) {</span>
+<span class="nc" id="L103">					regex.append(&quot;(?:(?:\\s*\&quot;([^\&quot;]*)\&quot;\\s*)|(?:\\s*'([^']*)'\\s*)|\\s*&quot;</span>
+							+ &quot;((?:\\([^()]*\\)|[^,'\&quot;])*?)&quot; + &quot;)&quot;);
+<span class="nc" id="L105">					final int i = 1 + 3 * j;</span>
+<span class="nc" id="L106">					newValue = newValue.replaceAll(var2, &quot;\\$&quot; + i + &quot;\\$&quot; + (i + 1) + &quot;\\$&quot; + (i + 2));</span>
+<span class="nc" id="L107">					regex.append(&quot;,&quot;);</span>
+<span class="nc" id="L108">					appended = true;</span>
+<span class="nc" id="L109">				} else {</span>
+<span class="nc" id="L110">					newValue = newValue.replaceAll(var2, Matcher.quoteReplacement(variable.getDefaultValue()));</span>
+				}
+			}
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (appended == true) {</span>
+<span class="nc" id="L114">				regex.setLength(regex.length() - 1);</span>
+			}
+<span class="nc" id="L116">			regex.append(&quot;\\)&quot;);</span>
+<span class="nc" id="L117">			regex2 = Pattern.compile(regex.toString());</span>
+		}
+		// line = line.replaceAll(regex.toString(), newValue);
+<span class="nc" id="L120">		line = regex2.matcher(line).replaceAll(newValue);</span>
+<span class="nc" id="L121">		return line;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

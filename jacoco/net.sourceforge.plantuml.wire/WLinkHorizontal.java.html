@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WLinkHorizontal.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.wire</a> &gt; <span class="el_source">WLinkHorizontal.java</span></div><h1>WLinkHorizontal.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.wire;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class WLinkHorizontal {
+
+	private final UTranslate start;
+	private final double destination;
+	private final WLinkType type;
+	private final WArrowDirection direction;
+	private final HColor color;
+	private final Display label;
+	private final ISkinParam skinParam;
+
+	public WLinkHorizontal(ISkinParam skinParam, UTranslate start, double destination, WLinkType type,
+<span class="nc" id="L64">			WArrowDirection direction, HColor color, Display label) {</span>
+<span class="nc" id="L65">		this.start = start;</span>
+<span class="nc" id="L66">		this.destination = destination;</span>
+<span class="nc" id="L67">		this.skinParam = skinParam;</span>
+<span class="nc" id="L68">		this.direction = direction;</span>
+<span class="nc" id="L69">		this.type = type;</span>
+<span class="nc" id="L70">		this.label = label;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		this.color = color == null ? getBlack() : color;</span>
+<span class="nc" id="L72">	}</span>
+
+	private HColor getBlack() {
+<span class="nc" id="L75">		return HColors.BLACK.withDark(HColors.WHITE);</span>
+	}
+
+	private HColor getWhite() {
+<span class="nc" id="L79">		return HColors.WHITE.withDark(HColors.BLACK);</span>
+	}
+
+	private TextBlock getTextBlock() {
+<span class="nc" id="L83">		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.sansSerif(10))</span>
+<span class="nc" id="L84">				.changeColor(color);</span>
+<span class="nc" id="L85">		return label.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+	}
+
+	public void drawMe(UGraphic ug) {
+<span class="nc" id="L89">		ug = ug.apply(color);</span>
+<span class="nc" id="L90">		final TextBlock textBlock = getTextBlock();</span>
+<span class="nc" id="L91">		final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());</span>
+
+<span class="nc" id="L93">		UGraphic ugText = ug.apply(start);</span>
+<span class="nc" id="L94">		final double len = destination - start.getDx();</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (type == WLinkType.NORMAL) {</span>
+<span class="nc" id="L97">			ug = ug.apply(color.bg());</span>
+<span class="nc" id="L98">			drawNormalArrow(ug);</span>
+
+<span class="nc" id="L100">			ugText = ugText.apply(UTranslate.dy(-dimText.getHeight() / 2));</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		} else if (type == WLinkType.BUS) {</span>
+<span class="nc" id="L103">			ug = ug.apply(getWhite().bg());</span>
+<span class="nc" id="L104">			drawBusArrow(ug);</span>
+<span class="nc" id="L105">			ugText = ugText.apply(UTranslate.dy((20 - dimText.getHeight()) / 2 - 5));</span>
+		}
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (dimText.getHeight() &gt; 0) {</span>
+<span class="nc bnc" id="L109" title="All 3 branches missed.">			switch (direction) {</span>
+			case NORMAL:
+<span class="nc" id="L111">				ugText = ugText.apply(UTranslate.dx(4));</span>
+<span class="nc" id="L112">				break;</span>
+			case REVERSE:
+<span class="nc" id="L114">				ugText = ugText.apply(UTranslate.dx(len - dimText.getWidth() - 4));</span>
+<span class="nc" id="L115">				break;</span>
+			default:
+<span class="nc" id="L117">				ugText = ugText.apply(UTranslate.dx((len - dimText.getWidth()) / 2));</span>
+				break;
+			}
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (type == WLinkType.NORMAL)</span>
+<span class="nc" id="L121">				ugText.apply(getWhite()).apply(getWhite().bg()).draw(URectangle.build(dimText));</span>
+
+<span class="nc" id="L123">			textBlock.drawU(ugText);</span>
+		}
+
+<span class="nc" id="L126">	}</span>
+
+	private void drawBusArrow(UGraphic ug) {
+<span class="nc" id="L129">		final double dx = destination - start.getDx() - 2;</span>
+<span class="nc" id="L130">		final UPath path = UPath.none();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (direction == WArrowDirection.NONE) {</span>
+<span class="nc" id="L132">			path.moveTo(0, 0);</span>
+<span class="nc" id="L133">			path.lineTo(dx, 0);</span>
+<span class="nc" id="L134">			path.lineTo(dx, 10);</span>
+<span class="nc" id="L135">			path.lineTo(0, 10);</span>
+<span class="nc" id="L136">			path.lineTo(0, 0);</span>
+<span class="nc" id="L137">			path.closePath();</span>
+<span class="nc" id="L138">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+		}
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (direction == WArrowDirection.NORMAL) {</span>
+<span class="nc" id="L141">			path.moveTo(0, 0);</span>
+<span class="nc" id="L142">			path.lineTo(dx - 15, 0);</span>
+<span class="nc" id="L143">			path.lineTo(dx - 15, -5);</span>
+<span class="nc" id="L144">			path.lineTo(dx, 5);</span>
+<span class="nc" id="L145">			path.lineTo(dx - 15, 15);</span>
+<span class="nc" id="L146">			path.lineTo(dx - 15, 10);</span>
+<span class="nc" id="L147">			path.lineTo(0, 10);</span>
+<span class="nc" id="L148">			path.lineTo(0, 0);</span>
+<span class="nc" id="L149">			path.closePath();</span>
+<span class="nc" id="L150">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+		}
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (direction == WArrowDirection.BOTH) {</span>
+<span class="nc" id="L153">			path.moveTo(0, 5);</span>
+<span class="nc" id="L154">			path.lineTo(15, -5);</span>
+<span class="nc" id="L155">			path.lineTo(15, 0);</span>
+<span class="nc" id="L156">			path.lineTo(dx - 15, 0);</span>
+<span class="nc" id="L157">			path.lineTo(dx - 15, -5);</span>
+<span class="nc" id="L158">			path.lineTo(dx, 5);</span>
+<span class="nc" id="L159">			path.lineTo(dx - 15, 15);</span>
+<span class="nc" id="L160">			path.lineTo(dx - 15, 10);</span>
+<span class="nc" id="L161">			path.lineTo(15, 10);</span>
+<span class="nc" id="L162">			path.lineTo(15, 15);</span>
+<span class="nc" id="L163">			path.lineTo(0, 5);</span>
+<span class="nc" id="L164">			path.closePath();</span>
+<span class="nc" id="L165">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+		}
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (direction == WArrowDirection.REVERSE) {</span>
+<span class="nc" id="L168">			path.moveTo(0, 5);</span>
+<span class="nc" id="L169">			path.lineTo(15, -5);</span>
+<span class="nc" id="L170">			path.lineTo(15, 0);</span>
+<span class="nc" id="L171">			path.lineTo(dx, 0);</span>
+<span class="nc" id="L172">			path.lineTo(dx, 10);</span>
+<span class="nc" id="L173">			path.lineTo(15, 10);</span>
+<span class="nc" id="L174">			path.lineTo(15, 15);</span>
+<span class="nc" id="L175">			path.lineTo(0, 5);</span>
+<span class="nc" id="L176">			path.closePath();</span>
+<span class="nc" id="L177">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+		}
+<span class="nc" id="L179">	}</span>
+
+	private void drawNormalArrow(UGraphic ug) {
+<span class="nc" id="L182">		final double dx = destination - start.getDx() - 2;</span>
+<span class="nc bnc" id="L183" title="All 4 branches missed.">		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.NORMAL) {</span>
+<span class="nc" id="L184">			final UPath path = UPath.none();</span>
+<span class="nc" id="L185">			path.moveTo(0, 0);</span>
+<span class="nc" id="L186">			path.lineTo(-5, -5);</span>
+<span class="nc" id="L187">			path.lineTo(-5, 5);</span>
+<span class="nc" id="L188">			path.lineTo(0, 0);</span>
+<span class="nc" id="L189">			path.closePath();</span>
+<span class="nc" id="L190">			ug.apply(start.compose(UTranslate.dx(dx))).draw(path);</span>
+		}
+<span class="nc bnc" id="L192" title="All 4 branches missed.">		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.REVERSE) {</span>
+<span class="nc" id="L193">			final UPath path = UPath.none();</span>
+<span class="nc" id="L194">			path.moveTo(0, 0);</span>
+<span class="nc" id="L195">			path.lineTo(5, -5);</span>
+<span class="nc" id="L196">			path.lineTo(5, 5);</span>
+<span class="nc" id="L197">			path.lineTo(0, 0);</span>
+<span class="nc" id="L198">			path.closePath();</span>
+<span class="nc" id="L199">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+		}
+<span class="nc" id="L201">		ug.apply(start.compose(UTranslate.dx(1))).draw(ULine.hline(dx));</span>
+<span class="nc" id="L202">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

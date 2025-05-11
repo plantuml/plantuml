@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValueImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">ValueImpl.java</span></div><h1>ValueImpl.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.awt.Font;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+
+public class ValueImpl implements Value {
+	// ::remove file when __HAXE__
+
+	private final DarkString value;
+
+	public static ValueImpl dark(String value, AutomaticCounter counter) {
+<span class="fc" id="L52">		return new ValueImpl(new DarkString(null, Objects.requireNonNull(value), counter.getNextInt()));</span>
+	}
+
+	public static ValueImpl regular(String value, AutomaticCounter counter) {
+<span class="fc" id="L56">		return new ValueImpl(new DarkString(Objects.requireNonNull(value), null, counter.getNextInt()));</span>
+	}
+
+	public static ValueImpl regular(String value, int priority) {
+<span class="fc" id="L60">		return new ValueImpl(new DarkString(Objects.requireNonNull(value), null, priority));</span>
+	}
+
+	public Value mergeWith(Value other) {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (other == null)</span>
+<span class="fc" id="L65">			return this;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (other instanceof ValueImpl)</span>
+<span class="fc" id="L67">			return new ValueImpl(value.mergeWith(((ValueImpl) other).value));</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (other instanceof ValueColor) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (other.getPriority() &gt; getPriority())</span>
+<span class="nc" id="L70">				return other;</span>
+<span class="fc" id="L71">			return this;</span>
+		}
+<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
+	}
+
+<span class="fc" id="L76">	private ValueImpl(DarkString value) {</span>
+<span class="fc" id="L77">		this.value = value;</span>
+<span class="fc" id="L78">	}</span>
+
+	public Value addPriority(int delta) {
+<span class="fc" id="L81">		return new ValueImpl(value.addPriority(delta));</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L86">		return value.toString();</span>
+	}
+
+	public String asString() {
+<span class="fc" id="L90">		return value.getValue1();</span>
+	}
+
+	public HColor asColor(HColorSet set) {
+<span class="fc" id="L94">		final String value1 = value.getValue1();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(value1))</span>
+<span class="nc" id="L96">			return HColors.transparent();</span>
+
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (&quot;transparent&quot;.equalsIgnoreCase(value1))</span>
+<span class="fc" id="L99">			return HColors.transparent();</span>
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (value1 == null)</span>
+<span class="nc" id="L102">			throw new IllegalArgumentException(value.toString());</span>
+
+<span class="fc" id="L104">		final HColor result = set.getColorOrWhite(value1);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (value.getValue2() != null) {</span>
+<span class="fc" id="L106">			final HColor dark = set.getColorOrWhite(value.getValue2());</span>
+<span class="fc" id="L107">			return result.withDark(dark);</span>
+		}
+<span class="fc" id="L109">		return result;</span>
+	}
+
+	public boolean asBoolean() {
+<span class="nc" id="L113">		return &quot;true&quot;.equalsIgnoreCase(value.getValue1());</span>
+	}
+
+	public int asInt(boolean minusOneIfError) {
+<span class="fc" id="L117">		String s = value.getValue1();</span>
+<span class="fc" id="L118">		s = s.replaceAll(&quot;[^0-9]&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			return minusOneIfError ? -1 : 0;</span>
+<span class="fc" id="L121">		return Integer.parseInt(s);</span>
+	}
+
+	public double asDouble() {
+<span class="fc" id="L125">		String s = value.getValue1();</span>
+<span class="fc" id="L126">		s = s.replaceAll(&quot;[^.0-9]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L127">		return Double.parseDouble(s);</span>
+	}
+
+	public double asDoubleDefaultTo(double defaultValue) {
+<span class="fc" id="L131">		String s = value.getValue1();</span>
+<span class="fc" id="L132">		s = s.replaceAll(&quot;[^.0-9]&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (s.length() &gt; 0)</span>
+			try {
+<span class="fc" id="L135">				return Double.parseDouble(s);</span>
+<span class="nc" id="L136">			} catch (NumberFormatException e) {</span>
+			}
+<span class="nc" id="L138">		return defaultValue;</span>
+	}
+
+	public int asFontStyle() {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (value.getValue1().equalsIgnoreCase(&quot;bold&quot;))</span>
+<span class="fc" id="L143">			return Font.BOLD;</span>
+
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (value.getValue1().equalsIgnoreCase(&quot;italic&quot;))</span>
+<span class="fc" id="L146">			return Font.ITALIC;</span>
+
+<span class="fc" id="L148">		return Font.PLAIN;</span>
+	}
+
+	public HorizontalAlignment asHorizontalAlignment() {
+<span class="fc" id="L152">		return HorizontalAlignment.fromString(asString());</span>
+	}
+
+	public int getPriority() {
+<span class="fc" id="L156">		return value.getPriority();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

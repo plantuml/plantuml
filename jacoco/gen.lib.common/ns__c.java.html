@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ns__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">ns__c.java</span></div><h1>ns__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.common.utils__c.dequeue;
+import static gen.lib.common.utils__c.enqueue;
+import static gen.lib.common.utils__c.free_queue;
+import static gen.lib.common.utils__c.new_queue;
+import static smetana.core.JUtils.atoi;
+import static smetana.core.JUtils.setjmp;
+import static smetana.core.Macro.ED_cutvalue;
+import static smetana.core.Macro.ED_minlen;
+import static smetana.core.Macro.ED_tree_index;
+import static smetana.core.Macro.ED_weight;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.INT_MAX;
+import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_lim;
+import static smetana.core.Macro.ND_low;
+import static smetana.core.Macro.ND_mark;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_node_type;
+import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_par;
+import static smetana.core.Macro.ND_priority;
+import static smetana.core.Macro.ND_rank;
+import static smetana.core.Macro.ND_tree_in;
+import static smetana.core.Macro.ND_tree_out;
+import static smetana.core.Macro.NORMAL;
+import static smetana.core.Macro.SEARCHSIZE;
+import static smetana.core.Macro.SEQ;
+import static smetana.core.Macro.SLACK;
+import static smetana.core.Macro.TREE_EDGE;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.free_list;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Difficult;
+import gen.annotation.HasND_Rank;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_nodequeue;
+import smetana.core.CArrayOfStar;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.ZType;
+import smetana.core.jmp_buf;
+
+
+/* 
+ * Network Simplex Algorithm for Ranking Nodes of a DAG
+ */
+<span class="nc" id="L104">public class ns__c {</span>
+
+
+
+//1 540u5gu9i0x1wzoxqqx5n2vwp
+// static jmp_buf jbuf
+<span class="fc" id="L110">private static jmp_buf jbuf = new jmp_buf();</span>
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Difficult
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;add_tree_edge&quot;, key=&quot;6au5htcaxhw0blmx5c48v03u0&quot;, definition=&quot;static void add_tree_edge(edge_t * e)&quot;)
+public static void add_tree_edge(Globals zz, ST_Agedge_s e) {
+<span class="fc" id="L117">ENTERING(&quot;6au5htcaxhw0blmx5c48v03u0&quot;,&quot;add_tree_edge&quot;);</span>
+try {
+    ST_Agnode_s n;
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">    if (TREE_EDGE(e)) {</span>
+<span class="nc" id="L121">	UNSUPPORTED(&quot;cq4nqjjxvb0dtdfy4c7pwpqai&quot;); // 	agerr(AGERR, &quot;add_tree_edge: missing tree edge\n&quot;);</span>
+<span class="nc" id="L122">	UNSUPPORTED(&quot;6fzmgjpkhmnx0a2cnt0q0rceg&quot;); // 	longjmp (jbuf, 1);</span>
+    }
+<span class="fc" id="L124">    ED_tree_index(e, zz.Tree_edge.size);</span>
+    
+<span class="fc" id="L126">    zz.Tree_edge.list.set_(zz.Tree_edge.size++, e);</span>
+        
+<span class="fc bfc" id="L128" title="All 2 branches covered.">    if (ND_mark(agtail(e)) == 0)</span>
+<span class="fc" id="L129">    zz.Tree_node.list.set_(zz.Tree_node.size++, agtail(e));</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">    if (ND_mark(aghead(e)) == 0)</span>
+<span class="fc" id="L131">	zz.Tree_node.list.set_(zz.Tree_node.size++, aghead(e));</span>
+<span class="fc" id="L132">    n = agtail(e);</span>
+<span class="fc" id="L133">    ND_mark(n, 1);</span>
+<span class="fc" id="L134">    ND_tree_out(n).list.set_(ND_tree_out(n).size++, e);</span>
+<span class="fc" id="L135">    ND_tree_out(n).list.set_(ND_tree_out(n).size, null);</span>
+    
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">    if (ND_out(n).list.get_(ND_tree_out(n).size - 1) == null) {</span>
+<span class="nc" id="L138">UNSUPPORTED(&quot;9src34zgmgy8yvdzfs1ozlh0w&quot;); // 	agerr(AGERR, &quot;add_tree_edge: empty outedge list\n&quot;);</span>
+<span class="nc" id="L139">UNSUPPORTED(&quot;6fzmgjpkhmnx0a2cnt0q0rceg&quot;); // 	longjmp (jbuf, 1);</span>
+    }
+<span class="fc" id="L141">    n = aghead(e);</span>
+<span class="fc" id="L142">    ND_mark(n, 1);</span>
+    
+<span class="fc" id="L144">    ND_tree_in(n).list.set_(ND_tree_in(n).size++, e);</span>
+<span class="fc" id="L145">    ND_tree_in(n).list.set_(ND_tree_in(n).size, null);</span>
+
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">    if (ND_in(n).list.get_(ND_tree_in(n).size - 1) == null) {</span>
+<span class="nc" id="L148">UNSUPPORTED(&quot;f0uri98pv606g2qjpy9k385cy&quot;); // 	agerr(AGERR, &quot;add_tree_edge: empty inedge list\n&quot;);</span>
+<span class="nc" id="L149">UNSUPPORTED(&quot;6fzmgjpkhmnx0a2cnt0q0rceg&quot;); // 	longjmp (jbuf, 1);</span>
+    }
+} finally {
+<span class="fc" id="L152">LEAVING(&quot;6au5htcaxhw0blmx5c48v03u0&quot;,&quot;add_tree_edge&quot;);</span>
+}
+<span class="fc" id="L154">}</span>
+
+
+
+
+//3 9b7b78pmafynmvffztrqnlxtn
+// static void exchange_tree_edges(edge_t * e, edge_t * f) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;exchange_tree_edges&quot;, key=&quot;9b7b78pmafynmvffztrqnlxtn&quot;, definition=&quot;static void exchange_tree_edges(edge_t * e, edge_t * f)&quot;)
+public static void exchange_tree_edges(Globals zz, ST_Agedge_s e, ST_Agedge_s f) {
+<span class="fc" id="L164">ENTERING(&quot;9b7b78pmafynmvffztrqnlxtn&quot;,&quot;exchange_tree_edges&quot;);</span>
+try {
+    int i, j;
+    ST_Agnode_s n;
+<span class="fc" id="L168">    ED_tree_index(f, ED_tree_index(e));</span>
+<span class="fc" id="L169">    zz.Tree_edge.list.set_(ED_tree_index(e), f);</span>
+<span class="fc" id="L170">    ED_tree_index(e, -1);</span>
+<span class="fc" id="L171">    n = agtail(e);</span>
+<span class="fc" id="L172">    ND_tree_out(n).size = ND_tree_out(n).size -1;</span>
+<span class="fc" id="L173">    i = ND_tree_out(n).size;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">    for (j = 0; j &lt;= i; j++)</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">	if (ND_tree_out(n).list.get_(j) == e)</span>
+<span class="fc" id="L176">	    break;</span>
+<span class="fc" id="L177">    ND_tree_out(n).list.set_(j, ND_tree_out(n).list.get_(i));</span>
+<span class="fc" id="L178">    ND_tree_out(n).list.set_(i, null);</span>
+<span class="fc" id="L179">    n = aghead(e);</span>
+<span class="fc" id="L180">    ND_tree_in(n).size = ND_tree_in(n).size -1;</span>
+<span class="fc" id="L181">    i = ND_tree_in(n).size;</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">    for (j = 0; j &lt;= i; j++)</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">	if (ND_tree_in(n).list.get_(j) == e)</span>
+<span class="fc" id="L184">	    break;</span>
+<span class="fc" id="L185">    ND_tree_in(n).list.set_(j, ND_tree_in(n).list.get_(i));</span>
+<span class="fc" id="L186">    ND_tree_in(n).list.set_(i, null);</span>
+<span class="fc" id="L187">    n = agtail(f);</span>
+<span class="fc" id="L188">    ND_tree_out(n).list.set_(ND_tree_out(n).size, f);</span>
+<span class="fc" id="L189">    ND_tree_out(n).size = ND_tree_out(n).size +1;</span>
+<span class="fc" id="L190">    ND_tree_out(n).list.set_(ND_tree_out(n).size, null);</span>
+<span class="fc" id="L191">    n = aghead(f);</span>
+<span class="fc" id="L192">    ND_tree_in(n).list.set_(ND_tree_in(n).size, f);</span>
+<span class="fc" id="L193">    ND_tree_in(n).size = ND_tree_in(n).size +1;</span>
+<span class="fc" id="L194">    ND_tree_in(n).list.set_(ND_tree_in(n).size, null);</span>
+} finally {
+<span class="fc" id="L196">LEAVING(&quot;9b7b78pmafynmvffztrqnlxtn&quot;,&quot;exchange_tree_edges&quot;);</span>
+}
+<span class="fc" id="L198">}</span>
+
+
+
+
+//3 dbxco6m0mabzhsqfo3pb8nctk
+// static void init_rank(void) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;init_rank&quot;, key=&quot;dbxco6m0mabzhsqfo3pb8nctk&quot;, definition=&quot;static void init_rank(void)&quot;)
+public static void init_rank(Globals zz) {
+<span class="fc" id="L209">ENTERING(&quot;dbxco6m0mabzhsqfo3pb8nctk&quot;,&quot;init_rank&quot;);</span>
+try {
+    int i, ctr;
+    ST_nodequeue Q;
+    ST_Agnode_s v;
+    ST_Agedge_s e;
+<span class="fc" id="L215">    Q = new_queue(zz.N_nodes);</span>
+<span class="fc" id="L216">    ctr = 0;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">    for (v = GD_nlist(zz.G_ns); v!=null; v = ND_next(v)) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">	if (ND_priority(v) == 0)</span>
+<span class="fc" id="L219">	    enqueue(Q, v);</span>
+    }
+<span class="fc bfc" id="L221" title="All 2 branches covered.">    while ((v = dequeue(Q))!=null) {</span>
+<span class="fc" id="L222">	ND_rank(v, 0);</span>
+<span class="fc" id="L223">	ctr++;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">	for (i = 0; (e = ND_in(v).list.get_(i))!=null; i++)</span>
+<span class="fc" id="L225">	    ND_rank(v, Math.max(ND_rank(v), ND_rank(agtail(e)) + ED_minlen(e)));</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">	for (i = 0; (e = ND_out(v).list.get_(i))!=null; i++) {</span>
+<span class="fc" id="L227">	    ND_priority(aghead(e), ND_priority(aghead(e)) -1 );</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">	    if ((ND_priority(aghead(e))) &lt;= 0)</span>
+<span class="fc" id="L229">		enqueue(Q, aghead(e));</span>
+	}
+    }
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">    if (ctr != zz.N_nodes) {</span>
+<span class="nc" id="L233">UNSUPPORTED(&quot;7sgp99x1l3hzfks5wykxa87gf&quot;); // 	agerr(AGERR, &quot;trouble in init_rank\n&quot;);</span>
+<span class="nc" id="L234">UNSUPPORTED(&quot;bwwunxmw4kgz6qntbn6xp0cur&quot;); // 	for (v = (((Agraphinfo_t*)(((Agobj_t*)(G))-&gt;data))-&gt;nlist); v; v = (((Agnodeinfo_t*)(((Agobj_t*)(v))-&gt;data))-&gt;next))</span>
+<span class="nc" id="L235">UNSUPPORTED(&quot;3dk132mz1u2pf0tla64kl6hv0&quot;); // 	    if ((((Agnodeinfo_t*)(((Agobj_t*)(v))-&gt;data))-&gt;priority))</span>
+<span class="nc" id="L236">UNSUPPORTED(&quot;916bi45h6sjvte1rgig12b1v2&quot;); // 		agerr(AGPREV, &quot;\t%s %d\n&quot;, agnameof(v), (((Agnodeinfo_t*)(((Agobj_t*)(v))-&gt;data))-&gt;priority));</span>
+    }
+<span class="fc" id="L238">    free_queue(Q);</span>
+} finally {
+<span class="fc" id="L240">LEAVING(&quot;dbxco6m0mabzhsqfo3pb8nctk&quot;,&quot;init_rank&quot;);</span>
+}
+<span class="fc" id="L242">}</span>
+
+
+
+
+//3 bj7ux5kz8ls2lnfh0ix6i00b9
+// static node_t *incident(edge_t * e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;&quot;, key=&quot;bj7ux5kz8ls2lnfh0ix6i00b9&quot;, definition=&quot;static node_t *incident(edge_t * e)&quot;)
+public static ST_Agnode_s incident(ST_Agedge_s e) {
+<span class="fc" id="L252">ENTERING(&quot;bj7ux5kz8ls2lnfh0ix6i00b9&quot;,&quot;incident&quot;);</span>
+try {
+<span class="fc bfc" id="L254" title="All 2 branches covered.">    if (ND_mark(agtail(e))!=0) {</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">	if (ND_mark(aghead(e)) == 0)</span>
+<span class="fc" id="L256">	    return agtail(e);</span>
+    } else {
+<span class="fc bfc" id="L258" title="All 2 branches covered.">	if (ND_mark(aghead(e))!=0)</span>
+<span class="fc" id="L259">	    return aghead(e);</span>
+    }
+<span class="fc" id="L261">    return null;</span>
+} finally {
+<span class="fc" id="L263">LEAVING(&quot;bj7ux5kz8ls2lnfh0ix6i00b9&quot;,&quot;incident&quot;);</span>
+}
+}
+
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;&quot;, key=&quot;4i9tcvid2iql874c6k70s9aqm&quot;, definition=&quot;static edge_t *leave_edge(void)&quot;)
+public static ST_Agedge_s leave_edge(Globals zz) {
+<span class="fc" id="L274">ENTERING(&quot;4i9tcvid2iql874c6k70s9aqm&quot;,&quot;leave_edge&quot;);</span>
+try {
+<span class="fc" id="L276">    ST_Agedge_s f, rv = null;</span>
+<span class="fc" id="L277">    int j, cnt = 0;</span>
+    
+<span class="fc" id="L279">    j = zz.S_i;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">    while (zz.S_i &lt; zz.Tree_edge.size) {</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">	if (ED_cutvalue(f = (ST_Agedge_s) zz.Tree_edge.list.get_(zz.S_i)) &lt; 0) {</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">	    if (rv!=null) {</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">		if (ED_cutvalue(rv) &gt; ED_cutvalue(f))</span>
+<span class="fc" id="L284">		    rv = f;</span>
+	    } else
+<span class="fc" id="L286">		rv = (ST_Agedge_s) zz.Tree_edge.list.get_(zz.S_i);</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">	    if (++cnt &gt;= zz.Search_size)</span>
+<span class="fc" id="L288">		return rv;</span>
+	}
+<span class="fc" id="L290">	zz.S_i++;</span>
+    }
+<span class="fc bfc" id="L292" title="All 2 branches covered.">    if (j &gt; 0) {</span>
+<span class="fc" id="L293">	zz.S_i = 0;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">	while (zz.S_i &lt; j) {</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">	    if (ED_cutvalue(f = (ST_Agedge_s) zz.Tree_edge.list.get_(zz.S_i)) &lt; 0) {</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (rv!=null) {</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		    if (ED_cutvalue(rv) &gt; ED_cutvalue(f))</span>
+<span class="fc" id="L298">			rv = f;</span>
+		} else
+<span class="fc" id="L300">		    rv = (ST_Agedge_s) zz.Tree_edge.list.get_(zz.S_i);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (++cnt &gt;= zz.Search_size)</span>
+<span class="fc" id="L302">		    return rv;</span>
+	    }
+<span class="fc" id="L304">	    zz.S_i++;</span>
+	}
+    }
+<span class="fc" id="L307">    return rv;</span>
+} finally {
+<span class="fc" id="L309">LEAVING(&quot;4i9tcvid2iql874c6k70s9aqm&quot;,&quot;leave_edge&quot;);</span>
+}
+}
+
+
+//1 3wm7ej298st1xk7rbhbtnbk64
+// static edge_t *Enter
+//private static Agedge_s Enter;
+
+//1 dx9f0e947f5kjhc2eftn43t90
+// static int Low, Lim, Slack
+//private static int Low, Lim, Slack;
+
+
+
+//3 10lkpr4y40luvy2idlozfiva3
+// static void dfs_enter_outedge(node_t * v) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;dfs_enter_outedge&quot;, key=&quot;10lkpr4y40luvy2idlozfiva3&quot;, definition=&quot;static void dfs_enter_outedge(node_t * v)&quot;)
+public static void dfs_enter_outedge(Globals zz, ST_Agnode_s v) {
+<span class="fc" id="L329">ENTERING(&quot;10lkpr4y40luvy2idlozfiva3&quot;,&quot;dfs_enter_outedge&quot;);</span>
+try {
+    int i, slack;
+    ST_Agedge_s e;
+<span class="fc bfc" id="L333" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_out(v).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">	if (TREE_EDGE(e) == false) {</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">	    if (!SEQ(zz.Low, ND_lim(aghead(e)), zz.Lim)) {</span>
+<span class="fc" id="L336">		slack = SLACK(e);</span>
+<span class="pc bpc" id="L337" title="1 of 4 branches missed.">		if ((slack &lt; zz.Slack) || (zz.Enter == null)) {</span>
+<span class="fc" id="L338">		    zz.Enter = e;</span>
+<span class="fc" id="L339">		    zz.Slack = slack;</span>
+		}
+	    }
+<span class="fc bfc" id="L342" title="All 2 branches covered.">	} else if (ND_lim(aghead(e)) &lt; ND_lim(v))</span>
+<span class="fc" id="L343">	    dfs_enter_outedge(zz, aghead(e));</span>
+    }
+<span class="fc bfc" id="L345" title="All 4 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_in(v).list.get_(i))!=null &amp;&amp; (zz.Slack &gt; 0); i++)</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">	if (ND_lim(agtail(e)) &lt; ND_lim(v))</span>
+<span class="fc" id="L347">	    dfs_enter_outedge(zz, agtail(e));</span>
+} finally {
+<span class="fc" id="L349">LEAVING(&quot;10lkpr4y40luvy2idlozfiva3&quot;,&quot;dfs_enter_outedge&quot;);</span>
+}
+<span class="fc" id="L351">}</span>
+
+
+
+
+//3 2z9nii6380p8qlql8nznzgvof
+// static void dfs_enter_inedge(node_t * v) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;dfs_enter_inedge&quot;, key=&quot;2z9nii6380p8qlql8nznzgvof&quot;, definition=&quot;static void dfs_enter_inedge(node_t * v)&quot;)
+public static void dfs_enter_inedge(Globals zz, ST_Agnode_s v) {
+<span class="fc" id="L361">ENTERING(&quot;2z9nii6380p8qlql8nznzgvof&quot;,&quot;dfs_enter_inedge&quot;);</span>
+try {
+    int i, slack;
+    ST_Agedge_s e;
+<span class="fc bfc" id="L365" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_in(v).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">	if (TREE_EDGE(e) == false) {</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">	    if (!SEQ(zz.Low, ND_lim(agtail(e)), zz.Lim)) {</span>
+<span class="fc" id="L368">		slack = SLACK(e);</span>
+<span class="pc bpc" id="L369" title="1 of 4 branches missed.">		if ((slack &lt; zz.Slack) || (zz.Enter == null)) {</span>
+<span class="fc" id="L370">		    zz.Enter = e;</span>
+<span class="fc" id="L371">		    zz.Slack = slack;</span>
+		}
+	    }
+<span class="fc bfc" id="L374" title="All 2 branches covered.">	} else if (ND_lim(agtail(e)) &lt; ND_lim(v))</span>
+<span class="fc" id="L375">	    dfs_enter_inedge(zz, agtail(e));</span>
+    }
+<span class="fc bfc" id="L377" title="All 4 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_out(v).list.get_(i))!=null &amp;&amp; (zz.Slack &gt; 0); i++)</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">	if (ND_lim(aghead(e)) &lt; ND_lim(v))</span>
+<span class="fc" id="L379">	    dfs_enter_inedge(zz, aghead(e));</span>
+} finally {
+<span class="fc" id="L381">LEAVING(&quot;2z9nii6380p8qlql8nznzgvof&quot;,&quot;dfs_enter_inedge&quot;);</span>
+}
+<span class="fc" id="L383">}</span>
+
+
+
+
+//3 aeu2po1o1rvibmafk0k8dw0fh
+// static edge_t *enter_edge(edge_t * e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;&quot;, key=&quot;aeu2po1o1rvibmafk0k8dw0fh&quot;, definition=&quot;static edge_t *enter_edge(edge_t * e)&quot;)
+public static ST_Agedge_s enter_edge(Globals zz, ST_Agedge_s e) {
+<span class="fc" id="L393">ENTERING(&quot;aeu2po1o1rvibmafk0k8dw0fh&quot;,&quot;enter_edge&quot;);</span>
+try {
+    ST_Agnode_s v;
+    int outsearch;
+    /* v is the down node */
+<span class="fc bfc" id="L398" title="All 2 branches covered.">    if (ND_lim(agtail(e)) &lt; ND_lim(aghead(e))) {</span>
+<span class="fc" id="L399">	v = agtail(e);</span>
+<span class="fc" id="L400">	outsearch = 0;</span>
+    } else {
+<span class="fc" id="L402">	v = aghead(e);</span>
+<span class="fc" id="L403">	outsearch = 1;</span>
+    }
+<span class="fc" id="L405">    zz.Enter = null;</span>
+<span class="fc" id="L406">    zz.Slack = INT_MAX;</span>
+<span class="fc" id="L407">    zz.Low = ND_low(v);</span>
+<span class="fc" id="L408">    zz.Lim = ND_lim(v);</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">    if (outsearch!=0)</span>
+<span class="fc" id="L410">	dfs_enter_outedge(zz, v);</span>
+    else
+<span class="fc" id="L412">	dfs_enter_inedge(zz, v);</span>
+<span class="fc" id="L413">    return zz.Enter;</span>
+} finally {
+<span class="fc" id="L415">LEAVING(&quot;aeu2po1o1rvibmafk0k8dw0fh&quot;,&quot;enter_edge&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;treesearch&quot;, key=&quot;1gvyafmercq92v3lg6gb33cbt&quot;, definition=&quot;static int treesearch(node_t * v)&quot;)
+public static boolean treesearch(Globals zz, ST_Agnode_s v) {
+<span class="fc" id="L425">ENTERING(&quot;1gvyafmercq92v3lg6gb33cbt&quot;,&quot;treesearch&quot;);</span>
+try {
+    int i;
+    ST_Agedge_s e;
+    
+<span class="fc bfc" id="L430" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_out(v).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L431" title="All 4 branches covered.">	if ((ND_mark(aghead(e)) == 0) &amp;&amp; (SLACK(e) == 0)) {</span>
+<span class="fc" id="L432">	    add_tree_edge(zz, e);</span>
+<span class="fc bfc" id="L433" title="All 4 branches covered.">	    if ((zz.Tree_edge.size == zz.N_nodes - 1) || treesearch(zz, aghead(e)))</span>
+<span class="fc" id="L434">		return true;</span>
+	}
+    }
+<span class="fc bfc" id="L437" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_in(v).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L438" title="All 4 branches covered.">	if ((ND_mark(agtail(e)) == 0) &amp;&amp; (SLACK(e) == 0)) {</span>
+<span class="fc" id="L439">	    add_tree_edge(zz, e);</span>
+<span class="fc bfc" id="L440" title="All 4 branches covered.">	    if ((zz.Tree_edge.size == zz.N_nodes - 1) || treesearch(zz, agtail(e)))</span>
+<span class="fc" id="L441">		return true;</span>
+	}
+    }
+<span class="fc" id="L444">    return false;</span>
+} finally {
+<span class="fc" id="L446">LEAVING(&quot;1gvyafmercq92v3lg6gb33cbt&quot;,&quot;treesearch&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;tight_tree&quot;, key=&quot;c98bj1u8j43cdezeczn33mec0&quot;, definition=&quot;static int tight_tree(void)&quot;)
+public static int tight_tree(Globals zz) {
+<span class="fc" id="L456">ENTERING(&quot;c98bj1u8j43cdezeczn33mec0&quot;,&quot;tight_tree&quot;);</span>
+try {
+    int i;
+    ST_Agnode_s n;
+    
+<span class="fc bfc" id="L461" title="All 2 branches covered.">    for (n = GD_nlist(zz.G_ns); n!=null; n = ND_next(n)) {</span>
+<span class="fc" id="L462">	ND_mark(n, 0);</span>
+<span class="fc" id="L463">	ND_tree_in(n).list.set_(0, null);</span>
+<span class="fc" id="L464">	ND_tree_out(n).list.set_(0, null);</span>
+<span class="fc" id="L465">	ND_tree_in(n).size = ND_tree_out(n).size = 0;</span>
+    }
+<span class="fc bfc" id="L467" title="All 2 branches covered.">    for (i = 0; i &lt; zz.Tree_edge.size; i++)</span>
+<span class="fc" id="L468">	ED_tree_index(zz.Tree_edge.list.get_(i), -1);</span>
+    
+<span class="fc" id="L470">    zz.Tree_node.size = zz.Tree_edge.size = 0;</span>
+<span class="pc bpc" id="L471" title="1 of 4 branches missed.">    for (n = GD_nlist(zz.G_ns); n!=null &amp;&amp; (zz.Tree_edge.size == 0); n = ND_next(n))</span>
+<span class="fc" id="L472">	treesearch(zz, n);</span>
+<span class="fc" id="L473">    return zz.Tree_node.size;</span>
+} finally {
+<span class="fc" id="L475">LEAVING(&quot;c98bj1u8j43cdezeczn33mec0&quot;,&quot;tight_tree&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;init_cutvalues&quot;, key=&quot;10o7oe8d097fx7swmpqd4tf0h&quot;, definition=&quot;static void init_cutvalues(void)&quot;)
+public static void init_cutvalues(Globals zz) {
+<span class="fc" id="L485">ENTERING(&quot;10o7oe8d097fx7swmpqd4tf0h&quot;,&quot;init_cutvalues&quot;);</span>
+try {
+<span class="fc" id="L487">    dfs_range(GD_nlist(zz.G_ns), null, 1);</span>
+<span class="fc" id="L488">    dfs_cutval(GD_nlist(zz.G_ns), null);</span>
+} finally {
+<span class="fc" id="L490">LEAVING(&quot;10o7oe8d097fx7swmpqd4tf0h&quot;,&quot;init_cutvalues&quot;);</span>
+}
+<span class="fc" id="L492">}</span>
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;feasible_tree&quot;, key=&quot;756raqohoxdeiddqbyr37h7ig&quot;, definition=&quot;static int feasible_tree(void)&quot;)
+public static int feasible_tree(Globals zz) {
+<span class="fc" id="L501">ENTERING(&quot;756raqohoxdeiddqbyr37h7ig&quot;,&quot;feasible_tree&quot;);</span>
+try {
+    int i, delta;
+    ST_Agnode_s n;
+    ST_Agedge_s e, f;
+    
+<span class="fc bfc" id="L507" title="All 2 branches covered.">    if (zz.N_nodes &lt;= 1)</span>
+<span class="fc" id="L508">	return 0;</span>
+<span class="fc bfc" id="L509" title="All 2 branches covered.">    while (tight_tree(zz) &lt; zz.N_nodes) {</span>
+<span class="fc" id="L510">	e = null;</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">	for (n = GD_nlist(zz.G_ns); n!=null; n = ND_next(n)) {</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">	    for (i = 0; (f = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L513" title="All 6 branches covered.">		if ((TREE_EDGE(f) == false) &amp;&amp; incident(f)!=null &amp;&amp; ((e == null)</span>
+<span class="fc" id="L514">							       || (SLACK(f)</span>
+								   &lt;
+								   SLACK
+<span class="fc bfc" id="L517" title="All 2 branches covered.">								   (e))))</span>
+<span class="fc" id="L518">		    e = f;</span>
+	    }
+	}
+	
+	
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">	if (e!=null) {</span>
+<span class="fc" id="L524">	    delta = SLACK(e);</span>
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">	    if (delta!=0) {</span>
+<span class="fc bfc" id="L526" title="All 2 branches covered.">		if (incident(e) == aghead(e))</span>
+<span class="fc" id="L527">		    delta = -delta;</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">		for (i = 0; i &lt; zz.Tree_node.size; i++)</span>
+<span class="fc" id="L529">		    ND_rank(zz.Tree_node.list.get_(i), ND_rank(zz.Tree_node.list.get_(i)) + delta);</span>
+	    }
+	} else {
+<span class="nc" id="L532">	    return 1;</span>
+	}
+    }
+<span class="fc" id="L535">    init_cutvalues(zz);</span>
+<span class="fc" id="L536">    return 0;</span>
+} finally {
+<span class="fc" id="L538">LEAVING(&quot;756raqohoxdeiddqbyr37h7ig&quot;,&quot;feasible_tree&quot;);</span>
+}
+}
+
+
+
+
+//3 49un8m43odrf89cedvin3wz3r
+// static node_t *treeupdate(node_t * v, node_t * w, int cutvalue, int dir) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;&quot;, key=&quot;49un8m43odrf89cedvin3wz3r&quot;, definition=&quot;static node_t *treeupdate(node_t * v, node_t * w, int cutvalue, int dir)&quot;)
+public static ST_Agnode_s treeupdate(ST_Agnode_s v, ST_Agnode_s w, int cutvalue, boolean dir) {
+<span class="fc" id="L550">ENTERING(&quot;49un8m43odrf89cedvin3wz3r&quot;,&quot;treeupdate&quot;);</span>
+try {
+    ST_Agedge_s e;
+    boolean d;
+<span class="fc bfc" id="L554" title="All 2 branches covered.">    while (!SEQ(ND_low(v), ND_lim(w), ND_lim(v))) {</span>
+<span class="fc" id="L555">	e = (ST_Agedge_s) ND_par(v);</span>
+<span class="fc bfc" id="L556" title="All 2 branches covered.">	if (v == agtail(e))</span>
+<span class="fc" id="L557">	    d = dir;</span>
+	else
+<span class="fc bfc" id="L559" title="All 2 branches covered.">	    d = !dir;</span>
+<span class="fc bfc" id="L560" title="All 2 branches covered.">	if (d)</span>
+<span class="fc" id="L561">	    ED_cutvalue(e, ED_cutvalue(e) + cutvalue);</span>
+	else
+<span class="fc" id="L563">	    ED_cutvalue(e, ED_cutvalue(e) - cutvalue);</span>
+<span class="fc bfc" id="L564" title="All 2 branches covered.">	if (ND_lim(agtail(e)) &gt; ND_lim(aghead(e)))</span>
+<span class="fc" id="L565">	    v = agtail(e);</span>
+	else
+<span class="fc" id="L567">	    v = aghead(e);</span>
+    }
+<span class="fc" id="L569">    return v;</span>
+} finally {
+<span class="fc" id="L571">LEAVING(&quot;49un8m43odrf89cedvin3wz3r&quot;,&quot;treeupdate&quot;);</span>
+}
+}
+
+
+
+
+//3 e66n8gern1fejjsn8nefypo0g
+// static void rerank(node_t * v, int delta) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;rerank&quot;, key=&quot;e66n8gern1fejjsn8nefypo0g&quot;, definition=&quot;static void rerank(node_t * v, int delta)&quot;)
+public static void rerank(ST_Agnode_s v, int delta) {
+<span class="fc" id="L584">ENTERING(&quot;e66n8gern1fejjsn8nefypo0g&quot;,&quot;rerank&quot;);</span>
+try {
+    int i;
+    ST_Agedge_s e;
+<span class="fc" id="L588">    ND_rank(v, ND_rank(v) - delta);</span>
+<span class="fc bfc" id="L589" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_out(v).list.get_(i))!=null; i++)</span>
+<span class="fc bfc" id="L590" title="All 2 branches covered.">	if (e != ND_par(v))</span>
+<span class="fc" id="L591">	    rerank(aghead(e), delta);</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_in(v).list.get_(i))!=null; i++)</span>
+<span class="fc bfc" id="L593" title="All 2 branches covered.">	if (e != ND_par(v))</span>
+<span class="fc" id="L594">	    rerank(agtail(e), delta);</span>
+} finally {
+<span class="fc" id="L596">LEAVING(&quot;e66n8gern1fejjsn8nefypo0g&quot;,&quot;rerank&quot;);</span>
+}
+<span class="fc" id="L598">}</span>
+
+
+
+
+//3 xww1p8bentf1qk7mgfhi1q6m
+// static void  update(edge_t * e, edge_t * f) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;update&quot;, key=&quot;xww1p8bentf1qk7mgfhi1q6m&quot;, definition=&quot;static void  update(edge_t * e, edge_t * f)&quot;)
+public static void update(Globals zz, ST_Agedge_s e, ST_Agedge_s f) {
+<span class="fc" id="L608">ENTERING(&quot;xww1p8bentf1qk7mgfhi1q6m&quot;,&quot;update&quot;);</span>
+try {
+    int cutvalue, delta;
+    ST_Agnode_s lca;
+<span class="fc" id="L612">    delta = SLACK(f);</span>
+    /* &quot;for (v = in nodes in tail side of e) do ND_rank(v) -= delta;&quot; */
+<span class="fc bfc" id="L614" title="All 2 branches covered.">    if (delta &gt; 0) {</span>
+	int s;
+<span class="fc" id="L616">	s = ND_tree_in(agtail(e)).size + ND_tree_out(agtail(e)).size;</span>
+<span class="fc bfc" id="L617" title="All 2 branches covered.">	if (s == 1)</span>
+<span class="fc" id="L618">	    rerank(agtail(e), delta);</span>
+	else {
+<span class="fc" id="L620">	    s = ND_tree_in(aghead(e)).size + ND_tree_out(aghead(e)).size;</span>
+<span class="pc bpc" id="L621" title="1 of 2 branches missed.">	    if (s == 1)</span>
+<span class="nc" id="L622">		rerank(aghead(e), -delta);</span>
+	    else {
+<span class="fc bfc" id="L624" title="All 2 branches covered.">		if (ND_lim(agtail(e)) &lt; ND_lim(aghead(e)))</span>
+<span class="fc" id="L625">		    rerank(agtail(e), delta);</span>
+		else
+<span class="fc" id="L627">		    rerank(aghead(e), -delta);</span>
+	    }
+	}
+    }
+<span class="fc" id="L631">    cutvalue = ED_cutvalue(e);</span>
+<span class="fc" id="L632">    lca = treeupdate(agtail(f), aghead(f), cutvalue, true);</span>
+<span class="pc bpc" id="L633" title="1 of 2 branches missed.">    if ((treeupdate(aghead(f), agtail(f), cutvalue, false) != lca)) {</span>
+<span class="nc" id="L634">UNSUPPORTED(&quot;f2l4c6yhnwnfer3vrasf55fio&quot;); // 	agerr(AGERR, &quot;update: mismatched lca in treeupdates\n&quot;);</span>
+<span class="nc" id="L635">UNSUPPORTED(&quot;6fzmgjpkhmnx0a2cnt0q0rceg&quot;); // 	longjmp (jbuf, 1);</span>
+    }
+<span class="fc" id="L637">    ED_cutvalue(f, -cutvalue);</span>
+<span class="fc" id="L638">    ED_cutvalue(e, 0);</span>
+<span class="fc" id="L639">    exchange_tree_edges(zz, e, f);</span>
+<span class="fc" id="L640">    dfs_range(lca, ND_par(lca), ND_low(lca));</span>
+} finally {
+<span class="fc" id="L642">LEAVING(&quot;xww1p8bentf1qk7mgfhi1q6m&quot;,&quot;update&quot;);</span>
+}
+<span class="fc" id="L644">}</span>
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;scan_and_normalize&quot;, key=&quot;3yw7w42hz7af67d6qse3b2172&quot;, definition=&quot;static void scan_and_normalize(void)&quot;)
+public static void scan_and_normalize(Globals zz) {
+<span class="fc" id="L653">ENTERING(&quot;3yw7w42hz7af67d6qse3b2172&quot;,&quot;scan_and_normalize&quot;);</span>
+try {
+    ST_Agnode_s n;
+    
+<span class="fc" id="L657">    zz.Minrank = Integer.MAX_VALUE;</span>
+<span class="fc" id="L658">    zz.Maxrank = -Integer.MAX_VALUE;</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">    for (n = GD_nlist(zz.G_ns); n!=null; n = ND_next(n)) {</span>
+<span class="fc bfc" id="L660" title="All 2 branches covered.">	if (ND_node_type(n) == NORMAL) {</span>
+<span class="fc" id="L661">	    zz.Minrank = Math.min(zz.Minrank, ND_rank(n));</span>
+<span class="fc" id="L662">	    zz.Maxrank = Math.max(zz.Maxrank, ND_rank(n));</span>
+	}
+    }
+<span class="fc bfc" id="L665" title="All 2 branches covered.">    if (zz.Minrank != 0) {</span>
+<span class="fc bfc" id="L666" title="All 2 branches covered.">	for (n = GD_nlist(zz.G_ns); n!=null; n = ND_next(n))</span>
+<span class="fc" id="L667">	    ND_rank(n, ND_rank(n) - zz.Minrank);</span>
+<span class="fc" id="L668">	zz.Maxrank -= zz.Minrank;</span>
+<span class="fc" id="L669">	zz.Minrank = 0;</span>
+    }
+} finally {
+<span class="fc" id="L672">LEAVING(&quot;3yw7w42hz7af67d6qse3b2172&quot;,&quot;scan_and_normalize&quot;);</span>
+}
+<span class="fc" id="L674">}</span>
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;freeTreeList&quot;, key=&quot;7eg6zti36nbg4tqyo8yunh86r&quot;, definition=&quot;static void freeTreeList (graph_t* g)&quot;)
+public static void freeTreeList(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L682">ENTERING(&quot;7eg6zti36nbg4tqyo8yunh86r&quot;,&quot;freeTreeList&quot;);</span>
+try {
+    ST_Agnode_s n;
+<span class="fc bfc" id="L685" title="All 2 branches covered.">    for (n = GD_nlist(zz.G_ns); n!=null; n = ND_next(n)) {</span>
+<span class="fc" id="L686">	free_list(ND_tree_in(n));</span>
+<span class="fc" id="L687">	free_list(ND_tree_out(n));</span>
+<span class="fc" id="L688">	ND_mark(n, 0);</span>
+    }
+} finally {
+<span class="fc" id="L691">LEAVING(&quot;7eg6zti36nbg4tqyo8yunh86r&quot;,&quot;freeTreeList&quot;);</span>
+}
+<span class="fc" id="L693">}</span>
+
+
+
+
+//3 9gx8p7md3v3mzp640xdjj814a
+// static void LR_balance(void) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;LR_balance&quot;, key=&quot;9gx8p7md3v3mzp640xdjj814a&quot;, definition=&quot;static void LR_balance(void)&quot;)
+public static void LR_balance(Globals zz) {
+<span class="fc" id="L703">ENTERING(&quot;9gx8p7md3v3mzp640xdjj814a&quot;,&quot;LR_balance&quot;);</span>
+try {
+    int i, delta;
+    ST_Agedge_s e, f;
+<span class="fc bfc" id="L707" title="All 2 branches covered.">    for (i = 0; i &lt; zz.Tree_edge.size; i++) {</span>
+<span class="fc" id="L708">	e = (ST_Agedge_s) zz.Tree_edge.list.get_(i);</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">	if (ED_cutvalue(e) == 0) {</span>
+<span class="fc" id="L710">	    f = enter_edge(zz, e);</span>
+<span class="fc bfc" id="L711" title="All 2 branches covered.">	    if (f == null)</span>
+<span class="fc" id="L712">		continue;</span>
+<span class="fc" id="L713">	    delta = SLACK(f);</span>
+<span class="fc bfc" id="L714" title="All 2 branches covered.">	    if (delta &lt;= 1)</span>
+<span class="fc" id="L715">		continue;</span>
+<span class="fc bfc" id="L716" title="All 2 branches covered.">	    if (ND_lim(agtail(e)) &lt; ND_lim(aghead(e)))</span>
+<span class="fc" id="L717">		rerank(agtail(e), delta / 2);</span>
+	    else
+<span class="fc" id="L719">		rerank(aghead(e), -delta / 2);</span>
+	}
+    }
+<span class="fc" id="L722">    freeTreeList (zz, zz.G_ns);</span>
+} finally {
+<span class="fc" id="L724">LEAVING(&quot;9gx8p7md3v3mzp640xdjj814a&quot;,&quot;LR_balance&quot;);</span>
+}
+<span class="fc" id="L726">}</span>
+
+
+
+@Difficult
+@HasND_Rank
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;TB_balance&quot;, key=&quot;5c01jnao2ubmy4l0vi5jol0jz&quot;, definition=&quot;static void TB_balance(void)&quot;)
+public static void TB_balance(Globals zz) {
+<span class="fc" id="L735">ENTERING(&quot;5c01jnao2ubmy4l0vi5jol0jz&quot;,&quot;TB_balance&quot;);</span>
+try {
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+    int i, low, high, choice;
+    int[] nrank;
+    int inweight, outweight;
+    
+<span class="fc" id="L743">    scan_and_normalize(zz);</span>
+    
+    /* find nodes that are not tight and move to less populated ranks */
+<span class="fc" id="L746">    nrank = new int[zz.Maxrank + 1];</span>
+<span class="fc bfc" id="L747" title="All 2 branches covered.">    for (i = 0; i &lt;= zz.Maxrank; i++)</span>
+<span class="fc" id="L748">    nrank[i] = 0;</span>
+<span class="fc bfc" id="L749" title="All 2 branches covered.">    for (n = GD_nlist(zz.G_ns); n!=null; n = ND_next(n))</span>
+<span class="pc bpc" id="L750" title="1 of 2 branches missed.">	if (ND_node_type(n) == NORMAL)</span>
+<span class="fc" id="L751">		nrank[ND_rank(n)]++;</span>
+<span class="fc bfc" id="L752" title="All 2 branches covered.">    for (n = GD_nlist(zz.G_ns); n!=null; n = ND_next(n)) {</span>
+<span class="pc bpc" id="L753" title="1 of 2 branches missed.">	if (ND_node_type(n) != NORMAL)</span>
+<span class="nc" id="L754">	    continue;</span>
+<span class="fc" id="L755">	inweight = outweight = 0;</span>
+<span class="fc" id="L756">	low = 0;</span>
+<span class="fc" id="L757">	high = zz.Maxrank;</span>
+<span class="fc bfc" id="L758" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_in(n).list.get_(i))!=null; i++) {</span>
+<span class="fc" id="L759">	    inweight += ED_weight(e);</span>
+<span class="fc" id="L760">	    low = Math.max(low, ND_rank(agtail(e)) + ED_minlen(e));</span>
+	}
+<span class="fc bfc" id="L762" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++) {</span>
+<span class="fc" id="L763">	    outweight += ED_weight(e);</span>
+<span class="fc" id="L764">	    high = Math.min(high, ND_rank(aghead(e)) - ED_minlen(e));</span>
+	}
+<span class="pc bpc" id="L766" title="1 of 2 branches missed.">	if (low &lt; 0)</span>
+<span class="nc" id="L767">	    low = 0;		/* vnodes can have ranks &lt; 0 */</span>
+<span class="fc bfc" id="L768" title="All 2 branches covered.">	if (inweight == outweight) {</span>
+<span class="fc" id="L769">	    choice = low;</span>
+<span class="fc bfc" id="L770" title="All 2 branches covered.">	    for (i = low + 1; i &lt;= high; i++)</span>
+<span class="fc bfc" id="L771" title="All 2 branches covered.">		if (nrank[i] &lt; nrank[choice])</span>
+<span class="fc" id="L772">		    choice = i;</span>
+<span class="fc" id="L773">	    nrank[ND_rank(n)]--;</span>
+<span class="fc" id="L774">	    nrank[choice]++;</span>
+<span class="fc" id="L775">	    ND_rank(n, choice);</span>
+	}
+<span class="fc" id="L777">	free_list(ND_tree_in(n));</span>
+<span class="fc" id="L778">	free_list(ND_tree_out(n));</span>
+<span class="fc" id="L779">	ND_mark(n, 0);</span>
+    }
+<span class="fc" id="L781">    Memory.free(nrank);</span>
+} finally {
+<span class="fc" id="L783">LEAVING(&quot;5c01jnao2ubmy4l0vi5jol0jz&quot;,&quot;TB_balance&quot;);</span>
+}
+<span class="fc" id="L785">}</span>
+
+
+
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Difficult
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;init_graph&quot;, key=&quot;37hg5w7ywmyljdiebgp5ltl22&quot;, definition=&quot;static int init_graph(graph_t * g)&quot;)
+public static int init_graph(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L797">ENTERING(&quot;37hg5w7ywmyljdiebgp5ltl22&quot;,&quot;init_graph&quot;);</span>
+try {
+    int i, feasible;
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+    
+    
+<span class="fc" id="L804">    zz.G_ns = g;</span>
+<span class="fc" id="L805">    zz.N_nodes = zz.N_edges = zz.S_i = 0;</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="fc" id="L807">	ND_mark(n, 0);</span>
+<span class="fc" id="L808">	zz.N_nodes++;</span>
+<span class="fc bfc" id="L809" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++)</span>
+<span class="fc" id="L810">	    zz.N_edges++;</span>
+    }
+    
+    
+<span class="fc" id="L814">    zz.Tree_node.list = CArrayOfStar.&lt;ST_Agnode_s&gt;REALLOC(zz.N_nodes, zz.Tree_node.list, ZType.ST_Agnode_s); </span>
+<span class="fc" id="L815">    zz.Tree_node.size =  0;</span>
+<span class="fc" id="L816">    zz.Tree_edge.list = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(zz.N_nodes, zz.Tree_edge.list, ZType.ST_Agedge_s);</span>
+<span class="fc" id="L817">    zz.Tree_edge.size = 0;</span>
+    
+    
+<span class="fc" id="L820">    feasible = 1;</span>
+<span class="fc bfc" id="L821" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="fc" id="L822">	ND_priority(n, 0);</span>
+<span class="fc bfc" id="L823" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_in(n).list.get_(i))!=null; i++) {</span>
+<span class="fc" id="L824">	    ND_priority(n, ND_priority(n)+1);</span>
+<span class="fc" id="L825">	    ED_cutvalue(e, 0);</span>
+<span class="fc" id="L826">	    ED_tree_index(e, -1);</span>
+<span class="fc bfc" id="L827" title="All 2 branches covered.">	    if (feasible!=0</span>
+<span class="fc bfc" id="L828" title="All 2 branches covered.">		&amp;&amp; (ND_rank(aghead(e)) - ND_rank(agtail(e)) &lt; ED_minlen(e)))</span>
+<span class="fc" id="L829">		feasible = 0;</span>
+	}
+<span class="fc" id="L831">	ND_tree_in(n).list = CArrayOfStar.&lt;ST_Agedge_s&gt; ALLOC(i + 1, ZType.ST_Agedge_s);</span>
+<span class="fc" id="L832">	ND_tree_in(n).size = 0;</span>
+<span class="fc bfc" id="L833" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++);</span>
+<span class="fc" id="L834">	ND_tree_out(n).list = CArrayOfStar.&lt;ST_Agedge_s&gt; ALLOC(i + 1, ZType.ST_Agedge_s);</span>
+<span class="fc" id="L835">	ND_tree_out(n).size = 0;</span>
+    }
+<span class="fc" id="L837">    return feasible;</span>
+} finally {
+<span class="fc" id="L839">LEAVING(&quot;37hg5w7ywmyljdiebgp5ltl22&quot;,&quot;init_graph&quot;);</span>
+}
+}
+
+
+
+
+
+/* rank:
+ * Apply network simplex to rank the nodes in a graph.
+ * Uses ED_minlen as the internode constraint: if a-&gt;b with minlen=ml,
+ * rank b - rank a &gt;= ml.
+ * Assumes the graph has the following additional structure:
+ *   A list of all nodes, starting at GD_nlist, and linked using ND_next.
+ *   Out and in edges lists stored in ND_out and ND_in, even if the node
+ *  doesn't have any out or in edges.
+ * The node rank values are stored in ND_rank.
+ * Returns 0 if successful; returns 1 if `he graph was not connected;
+ * returns 2 if something seriously wrong;
+ */
+@Difficult
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;rank2&quot;, key=&quot;5n0ipwzhr8urlx0fsdzr02gwq&quot;, definition=&quot;int rank2(graph_t * g, int balance, int maxiter, int search_size)&quot;)
+public static int rank2(Globals zz, ST_Agraph_s g, int balance, int maxiter, int search_size) {
+<span class="fc" id="L863">ENTERING(&quot;5n0ipwzhr8urlx0fsdzr02gwq&quot;,&quot;rank2&quot;);</span>
+try {
+<span class="fc" id="L865">    int iter = 0, feasible;</span>
+<span class="fc" id="L866">    CString ns = new CString(&quot;network simplex: &quot;);</span>
+    ST_Agedge_s e, f;
+    
+    
+    /*if (Verbose) {
+	int nn, ne;
+	graphSize (g, &amp;nn, &amp;ne);
+	fprintf(stderr, &quot;%s %d nodes %d edges maxiter=%d balance=%d\n&quot;, ns,
+	    nn, ne, maxiter, balance);
+	start_timer();
+    }*/
+<span class="fc" id="L877">    feasible = init_graph(zz, g);</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">    if (feasible == 0)</span>
+<span class="fc" id="L879">	init_rank(zz);</span>
+<span class="pc bpc" id="L880" title="1 of 2 branches missed.">    if (maxiter &lt;= 0) {</span>
+<span class="nc" id="L881">	freeTreeList (zz, g);</span>
+<span class="nc" id="L882">	return 0;</span>
+    }
+    
+    
+<span class="pc bpc" id="L886" title="1 of 2 branches missed.">    if (search_size &gt;= 0)</span>
+<span class="fc" id="L887">	zz.Search_size = search_size;</span>
+    else
+<span class="nc" id="L889">	zz.Search_size = SEARCHSIZE;</span>
+    
+    
+<span class="pc bpc" id="L892" title="1 of 2 branches missed.">    if (setjmp (jbuf)!=0) {</span>
+<span class="nc" id="L893">	return 2;</span>
+    }
+    
+    
+<span class="pc bpc" id="L897" title="1 of 2 branches missed.">    if (feasible_tree(zz)!=0) {</span>
+<span class="nc" id="L898">	freeTreeList (zz, g);</span>
+<span class="nc" id="L899">	return 1;</span>
+    }
+<span class="fc bfc" id="L901" title="All 2 branches covered.">    while ((e = leave_edge(zz))!=null) {</span>
+<span class="fc" id="L902">	f = enter_edge(zz, e);</span>
+<span class="fc" id="L903">	update(zz, e, f);</span>
+<span class="fc" id="L904">	iter++;</span>
+	/*if (Verbose &amp;&amp; (iter % 100 == 0)) {
+	    if (iter % 1000 == 100)
+		fputs(ns, stderr);
+	    fprintf(stderr, &quot;%d &quot;, iter);
+	    if (iter % 1000 == 0)
+		fputc('\n', stderr);
+	}*/
+<span class="pc bpc" id="L912" title="1 of 2 branches missed.">	if (iter &gt;= maxiter)</span>
+<span class="nc" id="L913">	    break;</span>
+    }
+<span class="fc bfc" id="L915" title="All 3 branches covered.">    switch (balance) {</span>
+    case 1:
+<span class="fc" id="L917">	TB_balance(zz);</span>
+<span class="fc" id="L918">	break;</span>
+    case 2:
+<span class="fc" id="L920">	LR_balance(zz);</span>
+<span class="fc" id="L921">	break;</span>
+    default:
+<span class="fc" id="L923">	scan_and_normalize(zz);</span>
+<span class="fc" id="L924">	freeTreeList (zz, zz.G_ns);</span>
+	break;
+    }
+    /*if (Verbose) {
+	if (iter &gt;= 100)
+	    fputc('\n', stderr);
+	fprintf(stderr, &quot;%s%d nodes %d edges %d iter %.2f sec\n&quot;,
+		ns, N_nodes, N_edges, iter, elapsed_sec());
+    }*/
+<span class="fc" id="L933">    return 0;</span>
+} finally {
+<span class="fc" id="L935">LEAVING(&quot;5n0ipwzhr8urlx0fsdzr02gwq&quot;,&quot;rank2&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;rank&quot;, key=&quot;aqly8eniwjr5bmh4hzwc7ftdr&quot;, definition=&quot;int rank(graph_t * g, int balance, int maxiter)&quot;)
+public static int rank(Globals zz, ST_Agraph_s g, int balance, int maxiter) {
+<span class="fc" id="L945">ENTERING(&quot;aqly8eniwjr5bmh4hzwc7ftdr&quot;,&quot;rank&quot;);</span>
+try {
+    CString s;
+    int search_size;
+    
+<span class="pc bpc" id="L950" title="1 of 2 branches missed.">    if ((s = agget(zz, g, new CString(&quot;searchsize&quot;)))!=null)</span>
+<span class="nc" id="L951">	search_size = atoi(s);</span>
+    else
+<span class="fc" id="L953">	search_size = SEARCHSIZE;</span>
+    
+<span class="fc" id="L955">    return rank2 (zz, g, balance, maxiter, search_size);</span>
+} finally {
+<span class="fc" id="L957">LEAVING(&quot;aqly8eniwjr5bmh4hzwc7ftdr&quot;,&quot;rank&quot;);</span>
+}
+}
+
+
+
+
+/* set cut value of f, assuming values of edges on one side were already set */
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;x_cutval&quot;, key=&quot;2q59mz8qtn0biifbezb8uxz17&quot;, definition=&quot;static void x_cutval(edge_t * f)&quot;)
+public static void x_cutval(ST_Agedge_s f) {
+<span class="fc" id="L968">ENTERING(&quot;2q59mz8qtn0biifbezb8uxz17&quot;,&quot;x_cutval&quot;);</span>
+try {
+<span class="fc" id="L970">    ST_Agnode_s v=null;</span>
+    ST_Agedge_s e;
+<span class="fc" id="L972">    int i, sum, dir=0;</span>
+    
+    /* set v to the node on the side of the edge already searched */
+<span class="fc bfc" id="L975" title="All 2 branches covered.">    if (ND_par(agtail(f)) == f) {</span>
+<span class="fc" id="L976">	v = agtail(f);</span>
+<span class="fc" id="L977">	dir = 1;</span>
+    } else {
+<span class="fc" id="L979">	v = aghead(f);</span>
+<span class="fc" id="L980">	dir = -1;</span>
+    }
+    
+<span class="fc" id="L983">    sum = 0;</span>
+<span class="fc bfc" id="L984" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_out(v).list.get_(i))!=null; i++)</span>
+<span class="fc" id="L985">	sum += x_val(e, v, dir);</span>
+<span class="fc bfc" id="L986" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_in(v).list.get_(i))!=null; i++)</span>
+<span class="fc" id="L987">	sum += x_val(e, v, dir);</span>
+<span class="fc" id="L988">    ED_cutvalue(f, sum);</span>
+} finally {
+<span class="fc" id="L990">LEAVING(&quot;2q59mz8qtn0biifbezb8uxz17&quot;,&quot;x_cutval&quot;);</span>
+}
+<span class="fc" id="L992">}</span>
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;x_val&quot;, key=&quot;bfeafmsmmnblgizs37qj03dy4&quot;, definition=&quot;static int x_val(edge_t * e, node_t * v, int dir)&quot;)
+public static int x_val(ST_Agedge_s e, ST_Agnode_s v, int dir) {
+<span class="fc" id="L1000">ENTERING(&quot;bfeafmsmmnblgizs37qj03dy4&quot;,&quot;x_val&quot;);</span>
+try {
+    ST_Agnode_s other;
+<span class="fc" id="L1003">    int d=0, rv=0, f=0;</span>
+    
+<span class="fc bfc" id="L1005" title="All 2 branches covered.">    if (agtail(e) == v)</span>
+<span class="fc" id="L1006">	other = aghead(e);</span>
+    else
+<span class="fc" id="L1008">	other = agtail(e);</span>
+<span class="fc bfc" id="L1009" title="All 2 branches covered.">    if (!SEQ(ND_low(v), ND_lim(other), ND_lim(v))) {</span>
+<span class="fc" id="L1010">	f = 1;</span>
+<span class="fc" id="L1011">	rv = ED_weight(e);</span>
+    } else {
+<span class="fc" id="L1013">	f = 0;</span>
+<span class="fc bfc" id="L1014" title="All 2 branches covered.">	if (TREE_EDGE(e))</span>
+<span class="fc" id="L1015">	    rv = ED_cutvalue(e);</span>
+	else
+<span class="fc" id="L1017">	    rv = 0;</span>
+<span class="fc" id="L1018">	rv -= ED_weight(e);</span>
+    }
+<span class="fc bfc" id="L1020" title="All 2 branches covered.">    if (dir &gt; 0) {</span>
+<span class="fc bfc" id="L1021" title="All 2 branches covered.">	if (aghead(e) == v)</span>
+<span class="fc" id="L1022">	    d = 1;</span>
+	else
+<span class="fc" id="L1024">	    d = -1;</span>
+    } else {
+<span class="fc bfc" id="L1026" title="All 2 branches covered.">	if (agtail(e) == v)</span>
+<span class="fc" id="L1027">	    d = 1;</span>
+	else
+<span class="fc" id="L1029">	    d = -1;</span>
+    }
+<span class="fc bfc" id="L1031" title="All 2 branches covered.">    if (f!=0)</span>
+<span class="fc" id="L1032">	d = -d;</span>
+<span class="fc bfc" id="L1033" title="All 2 branches covered.">    if (d &lt; 0)</span>
+<span class="fc" id="L1034">	rv = -rv;</span>
+<span class="fc" id="L1035">    return rv;</span>
+} finally {
+<span class="fc" id="L1037">LEAVING(&quot;bfeafmsmmnblgizs37qj03dy4&quot;,&quot;x_val&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;dfs_cutval&quot;, key=&quot;ah65iqmwa5j0qwotm6amhijlg&quot;, definition=&quot;static void dfs_cutval(node_t * v, edge_t * par)&quot;)
+public static void dfs_cutval(ST_Agnode_s v, ST_Agedge_s par) {
+<span class="fc" id="L1047">ENTERING(&quot;ah65iqmwa5j0qwotm6amhijlg&quot;,&quot;dfs_cutval&quot;);</span>
+try {
+    int i;
+    ST_Agedge_s e;
+    
+<span class="fc bfc" id="L1052" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_out(v).list.get_(i))!=null; i++)</span>
+<span class="fc bfc" id="L1053" title="All 2 branches covered.">	if (e != par)</span>
+<span class="fc" id="L1054">	    dfs_cutval(aghead(e), e);</span>
+<span class="fc bfc" id="L1055" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_in(v).list.get_(i))!=null; i++)</span>
+<span class="fc bfc" id="L1056" title="All 2 branches covered.">	if (e != par)</span>
+<span class="fc" id="L1057">	    dfs_cutval(agtail(e), e);</span>
+<span class="fc bfc" id="L1058" title="All 2 branches covered.">    if (par!=null)</span>
+<span class="fc" id="L1059">	x_cutval(par);</span>
+} finally {
+<span class="fc" id="L1061">LEAVING(&quot;ah65iqmwa5j0qwotm6amhijlg&quot;,&quot;dfs_cutval&quot;);</span>
+}
+<span class="fc" id="L1063">}</span>
+
+
+
+
+@Reviewed(when = &quot;14/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/ns.c&quot;, name=&quot;dfs_range&quot;, key=&quot;cgqr48qol9p8bsqjnryo5z5x9&quot;, definition=&quot;static int dfs_range(node_t * v, edge_t * par, int low)&quot;)
+public static int dfs_range(ST_Agnode_s v, ST_Agedge_s par, int low) {
+<span class="fc" id="L1071">ENTERING(&quot;cgqr48qol9p8bsqjnryo5z5x9&quot;,&quot;dfs_range&quot;);</span>
+try {
+    ST_Agedge_s e;
+    int i, lim;
+    
+<span class="fc" id="L1076">    lim = low;</span>
+<span class="fc" id="L1077">    ND_par(v, par);</span>
+<span class="fc" id="L1078">    ND_low(v, low);</span>
+<span class="fc bfc" id="L1079" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_out(v).list.get_(i))!=null; i++)</span>
+<span class="fc bfc" id="L1080" title="All 2 branches covered.">	if (e != par)</span>
+<span class="fc" id="L1081">	    lim = dfs_range(aghead(e), e, lim);</span>
+<span class="fc bfc" id="L1082" title="All 2 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_in(v).list.get_(i))!=null; i++)</span>
+<span class="fc bfc" id="L1083" title="All 2 branches covered.">	if (e != par)</span>
+<span class="fc" id="L1084">	    lim = dfs_range(agtail(e), e, lim);</span>
+<span class="fc" id="L1085">    ND_lim(v, lim);</span>
+<span class="fc" id="L1086">    return lim + 1;</span>
+} finally {
+<span class="fc" id="L1088">LEAVING(&quot;cgqr48qol9p8bsqjnryo5z5x9&quot;,&quot;dfs_range&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

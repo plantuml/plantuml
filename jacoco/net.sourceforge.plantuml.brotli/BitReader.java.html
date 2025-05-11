@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BitReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.brotli</a> &gt; <span class="el_source">BitReader.java</span></div><h1>BitReader.java</h1><pre class="source lang-java linenums">/* Copyright 2015 Google Inc. All Rights Reserved.
+
+   https://github.com/google/brotli/blob/master/LICENSE
+
+   Distributed under MIT license.
+   See file LICENSE for detail or copy at https://opensource.org/licenses/MIT
+*/
+
+package net.sourceforge.plantuml.brotli;
+
+/**
+ * Bit reading helpers.
+ */
+<span class="nc" id="L14">final class BitReader {</span>
+	// ::remove folder when __CORE__
+
+	// Added by Arnaud... not very beautifull
+	private static final boolean CHECK_UNUSED_BYTES_AFTER_END = false;
+
+	// Possible values: {5, 6}. 5 corresponds to 32-bit build, 6 to 64-bit. This
+	// value is used for
+	// conditional compilation -&gt; produced artifacts might be binary INCOMPATIBLE
+	// (JLS 13.2).
+	private static final int LOG_BITNESS = 6;
+	private static final int BITNESS = 1 &lt;&lt; LOG_BITNESS;
+
+	private static final int BYTENESS = BITNESS / 8;
+	private static final int CAPACITY = 4096;
+	// After encountering the end of the input stream, this amount of zero bytes
+	// will be appended.
+	private static final int SLACK = 64;
+	private static final int BUFFER_SIZE = CAPACITY + SLACK;
+	// Don't bother to replenish the buffer while this number of bytes is available.
+	private static final int SAFEGUARD = 36;
+	private static final int WATERLINE = CAPACITY - SAFEGUARD;
+
+	// &quot;Half&quot; refers to &quot;half of native integer type&quot;, i.e. on 64-bit machines it is
+	// 32-bit type,
+	// on 32-bit machines it is 16-bit.
+	private static final int HALF_BITNESS = BITNESS / 2;
+	private static final int HALF_SIZE = BYTENESS / 2;
+	private static final int HALVES_CAPACITY = CAPACITY / HALF_SIZE;
+	private static final int HALF_BUFFER_SIZE = BUFFER_SIZE / HALF_SIZE;
+	private static final int HALF_WATERLINE = WATERLINE / HALF_SIZE;
+
+	private static final int LOG_HALF_SIZE = LOG_BITNESS - 4;
+
+	/**
+	 * Fills up the input buffer.
+	 *
+	 * &lt;p&gt;
+	 * No-op if there are at least 36 bytes present after current position.
+	 *
+	 * &lt;p&gt;
+	 * After encountering the end of the input stream, 64 additional zero bytes are
+	 * copied to the buffer.
+	 */
+	static void readMoreInput(State s) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (s.halfOffset &gt; HALF_WATERLINE) {</span>
+<span class="fc" id="L60">			doReadMoreInput(s);</span>
+		}
+<span class="fc" id="L62">	}</span>
+
+	static void doReadMoreInput(State s) {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (s.endOfStreamReached != 0) {</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">			if (halfAvailable(s) &gt;= -2) {</span>
+<span class="nc" id="L67">				return;</span>
+			}
+<span class="nc" id="L69">			throw new BrotliRuntimeException(&quot;No more input&quot;);</span>
+		}
+<span class="fc" id="L71">		int readOffset = s.halfOffset &lt;&lt; LOG_HALF_SIZE;</span>
+<span class="fc" id="L72">		int bytesInBuffer = CAPACITY - readOffset;</span>
+		// Move unused bytes to the head of the buffer.
+<span class="fc" id="L74">		Utils.copyBytesWithin(s.byteBuffer, 0, readOffset, CAPACITY);</span>
+<span class="fc" id="L75">		s.halfOffset = 0;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		while (bytesInBuffer &lt; CAPACITY) {</span>
+<span class="fc" id="L77">			int spaceLeft = CAPACITY - bytesInBuffer;</span>
+<span class="fc" id="L78">			int len = Utils.readInput(s.input, s.byteBuffer, bytesInBuffer, spaceLeft);</span>
+			// EOF is -1 in Java, but 0 in C#.
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			if (len &lt;= 0) {</span>
+<span class="fc" id="L81">				s.endOfStreamReached = 1;</span>
+<span class="fc" id="L82">				s.tailBytes = bytesInBuffer;</span>
+<span class="fc" id="L83">				bytesInBuffer += HALF_SIZE - 1;</span>
+<span class="fc" id="L84">				break;</span>
+			}
+<span class="fc" id="L86">			bytesInBuffer += len;</span>
+<span class="fc" id="L87">		}</span>
+<span class="fc" id="L88">		bytesToNibbles(s, bytesInBuffer);</span>
+<span class="fc" id="L89">	}</span>
+
+	static void checkHealth(State s, int endOfStream) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (s.endOfStreamReached == 0) {</span>
+<span class="fc" id="L93">			return;</span>
+		}
+<span class="fc" id="L95">		int byteOffset = (s.halfOffset &lt;&lt; LOG_HALF_SIZE) + ((s.bitOffset + 7) &gt;&gt; 3) - BYTENESS;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (byteOffset &gt; s.tailBytes) {</span>
+<span class="nc" id="L97">			throw new BrotliRuntimeException(&quot;Read after end&quot;);</span>
+		}
+		if (CHECK_UNUSED_BYTES_AFTER_END &amp;&amp; (endOfStream != 0) &amp;&amp; (byteOffset != s.tailBytes)) {
+			throw new BrotliRuntimeException(&quot;Unused bytes after end&quot;);
+		}
+<span class="fc" id="L102">	}</span>
+
+	static void fillBitWindow(State s) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (s.bitOffset &gt;= HALF_BITNESS) {</span>
+			// Same as doFillBitWindow. JVM fails to inline it.
+			if (BITNESS == 64) {
+<span class="fc" id="L108">				s.accumulator64 = ((long) s.intBuffer[s.halfOffset++] &lt;&lt; HALF_BITNESS)</span>
+						| (s.accumulator64 &gt;&gt;&gt; HALF_BITNESS);
+			} else {
+				s.accumulator32 = ((int) s.shortBuffer[s.halfOffset++] &lt;&lt; HALF_BITNESS)
+						| (s.accumulator32 &gt;&gt;&gt; HALF_BITNESS);
+			}
+<span class="fc" id="L114">			s.bitOffset -= HALF_BITNESS;</span>
+		}
+<span class="fc" id="L116">	}</span>
+
+	private static void doFillBitWindow(State s) {
+		if (BITNESS == 64) {
+<span class="fc" id="L120">			s.accumulator64 = ((long) s.intBuffer[s.halfOffset++] &lt;&lt; HALF_BITNESS) | (s.accumulator64 &gt;&gt;&gt; HALF_BITNESS);</span>
+		} else {
+			s.accumulator32 = ((int) s.shortBuffer[s.halfOffset++] &lt;&lt; HALF_BITNESS)
+					| (s.accumulator32 &gt;&gt;&gt; HALF_BITNESS);
+		}
+<span class="fc" id="L125">		s.bitOffset -= HALF_BITNESS;</span>
+<span class="fc" id="L126">	}</span>
+
+	static int peekBits(State s) {
+		if (BITNESS == 64) {
+<span class="fc" id="L130">			return (int) (s.accumulator64 &gt;&gt;&gt; s.bitOffset);</span>
+		} else {
+			return s.accumulator32 &gt;&gt;&gt; s.bitOffset;
+		}
+	}
+
+	static int readFewBits(State s, int n) {
+<span class="fc" id="L137">		int val = peekBits(s) &amp; ((1 &lt;&lt; n) - 1);</span>
+<span class="fc" id="L138">		s.bitOffset += n;</span>
+<span class="fc" id="L139">		return val;</span>
+	}
+
+	static int readBits(State s, int n) {
+		if (HALF_BITNESS &gt;= 24) {
+<span class="fc" id="L144">			return readFewBits(s, n);</span>
+		} else {
+			return (n &lt;= 16) ? readFewBits(s, n) : readManyBits(s, n);
+		}
+	}
+
+	private static int readManyBits(State s, int n) {
+<span class="nc" id="L151">		int low = readFewBits(s, 16);</span>
+<span class="nc" id="L152">		doFillBitWindow(s);</span>
+<span class="nc" id="L153">		return low | (readFewBits(s, n - 16) &lt;&lt; 16);</span>
+	}
+
+	static void initBitReader(State s) {
+<span class="fc" id="L157">		s.byteBuffer = new byte[BUFFER_SIZE];</span>
+		if (BITNESS == 64) {
+<span class="fc" id="L159">			s.accumulator64 = 0;</span>
+<span class="fc" id="L160">			s.intBuffer = new int[HALF_BUFFER_SIZE];</span>
+		} else {
+			s.accumulator32 = 0;
+			s.shortBuffer = new short[HALF_BUFFER_SIZE];
+		}
+<span class="fc" id="L165">		s.bitOffset = BITNESS;</span>
+<span class="fc" id="L166">		s.halfOffset = HALVES_CAPACITY;</span>
+<span class="fc" id="L167">		s.endOfStreamReached = 0;</span>
+<span class="fc" id="L168">		prepare(s);</span>
+<span class="fc" id="L169">	}</span>
+
+	private static void prepare(State s) {
+<span class="fc" id="L172">		readMoreInput(s);</span>
+<span class="fc" id="L173">		checkHealth(s, 0);</span>
+<span class="fc" id="L174">		doFillBitWindow(s);</span>
+<span class="fc" id="L175">		doFillBitWindow(s);</span>
+<span class="fc" id="L176">	}</span>
+
+	static void reload(State s) {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (s.bitOffset == BITNESS) {</span>
+<span class="nc" id="L180">			prepare(s);</span>
+		}
+<span class="nc" id="L182">	}</span>
+
+	static void jumpToByteBoundary(State s) {
+<span class="fc" id="L185">		int padding = (BITNESS - s.bitOffset) &amp; 7;</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (padding != 0) {</span>
+<span class="fc" id="L187">			int paddingBits = readFewBits(s, padding);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (paddingBits != 0) {</span>
+<span class="nc" id="L189">				throw new BrotliRuntimeException(&quot;Corrupted padding bits&quot;);</span>
+			}
+		}
+<span class="fc" id="L192">	}</span>
+
+	static int halfAvailable(State s) {
+<span class="nc" id="L195">		int limit = HALVES_CAPACITY;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (s.endOfStreamReached != 0) {</span>
+<span class="nc" id="L197">			limit = (s.tailBytes + (HALF_SIZE - 1)) &gt;&gt; LOG_HALF_SIZE;</span>
+		}
+<span class="nc" id="L199">		return limit - s.halfOffset;</span>
+	}
+
+	static void copyBytes(State s, byte[] data, int offset, int length) {
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if ((s.bitOffset &amp; 7) != 0) {</span>
+<span class="nc" id="L204">			throw new BrotliRuntimeException(&quot;Unaligned copyBytes&quot;);</span>
+		}
+
+		// Drain accumulator.
+<span class="nc bnc" id="L208" title="All 4 branches missed.">		while ((s.bitOffset != BITNESS) &amp;&amp; (length != 0)) {</span>
+<span class="nc" id="L209">			data[offset++] = (byte) peekBits(s);</span>
+<span class="nc" id="L210">			s.bitOffset += 8;</span>
+<span class="nc" id="L211">			length--;</span>
+		}
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (length == 0) {</span>
+<span class="nc" id="L214">			return;</span>
+		}
+
+		// Get data from shadow buffer with &quot;sizeof(int)&quot; granularity.
+<span class="nc" id="L218">		int copyNibbles = Math.min(halfAvailable(s), length &gt;&gt; LOG_HALF_SIZE);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (copyNibbles &gt; 0) {</span>
+<span class="nc" id="L220">			int readOffset = s.halfOffset &lt;&lt; LOG_HALF_SIZE;</span>
+<span class="nc" id="L221">			int delta = copyNibbles &lt;&lt; LOG_HALF_SIZE;</span>
+<span class="nc" id="L222">			System.arraycopy(s.byteBuffer, readOffset, data, offset, delta);</span>
+<span class="nc" id="L223">			offset += delta;</span>
+<span class="nc" id="L224">			length -= delta;</span>
+<span class="nc" id="L225">			s.halfOffset += copyNibbles;</span>
+		}
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		if (length == 0) {</span>
+<span class="nc" id="L228">			return;</span>
+		}
+
+		// Read tail bytes.
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (halfAvailable(s) &gt; 0) {</span>
+			// length = 1..3
+<span class="nc" id="L234">			fillBitWindow(s);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">			while (length != 0) {</span>
+<span class="nc" id="L236">				data[offset++] = (byte) peekBits(s);</span>
+<span class="nc" id="L237">				s.bitOffset += 8;</span>
+<span class="nc" id="L238">				length--;</span>
+			}
+<span class="nc" id="L240">			checkHealth(s, 0);</span>
+<span class="nc" id="L241">			return;</span>
+		}
+
+		// Now it is possible to copy bytes directly.
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		while (length &gt; 0) {</span>
+<span class="nc" id="L246">			int len = Utils.readInput(s.input, data, offset, length);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			if (len == -1) {</span>
+<span class="nc" id="L248">				throw new BrotliRuntimeException(&quot;Unexpected end of input&quot;);</span>
+			}
+<span class="nc" id="L250">			offset += len;</span>
+<span class="nc" id="L251">			length -= len;</span>
+<span class="nc" id="L252">		}</span>
+<span class="nc" id="L253">	}</span>
+
+	/**
+	 * Translates bytes to halves (int/short).
+	 */
+	static void bytesToNibbles(State s, int byteLen) {
+<span class="fc" id="L259">		byte[] byteBuffer = s.byteBuffer;</span>
+<span class="fc" id="L260">		int halfLen = byteLen &gt;&gt; LOG_HALF_SIZE;</span>
+		if (BITNESS == 64) {
+<span class="fc" id="L262">			int[] intBuffer = s.intBuffer;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">			for (int i = 0; i &lt; halfLen; ++i) {</span>
+<span class="fc" id="L264">				intBuffer[i] = ((byteBuffer[i * 4] &amp; 0xFF)) | ((byteBuffer[(i * 4) + 1] &amp; 0xFF) &lt;&lt; 8)</span>
+						| ((byteBuffer[(i * 4) + 2] &amp; 0xFF) &lt;&lt; 16) | ((byteBuffer[(i * 4) + 3] &amp; 0xFF) &lt;&lt; 24);
+			}
+		} else {
+			short[] shortBuffer = s.shortBuffer;
+			for (int i = 0; i &lt; halfLen; ++i) {
+				shortBuffer[i] = (short) ((byteBuffer[i * 2] &amp; 0xFF) | ((byteBuffer[(i * 2) + 1] &amp; 0xFF) &lt;&lt; 8));
+			}
+		}
+<span class="fc" id="L273">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

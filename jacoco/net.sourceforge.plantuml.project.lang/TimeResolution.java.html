@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeResolution.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">TimeResolution.java</span></div><h1>TimeResolution.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import net.sourceforge.plantuml.project.time.Month;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+
+<span class="nc" id="L43">public abstract class TimeResolution {</span>
+
+	public static IRegex toRegexA_DD_MONTH_YYYY(String year, String month, String day) {
+<span class="nc" id="L46">		return new RegexConcat( //</span>
+				new RegexLeaf(day, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+<span class="nc" id="L49">				new RegexLeaf(month, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+				new RegexLeaf(year, &quot;([\\d]{1,4})&quot;));
+	}
+
+	public static IRegex toRegexB_YYYY_MM_DD(String year, String month, String day) {
+<span class="fc" id="L55">		return new RegexConcat( //</span>
+				new RegexLeaf(year, &quot;([\\d]{1,4})&quot;), //
+				new RegexLeaf(&quot;\\D&quot;), //
+				new RegexLeaf(month, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(&quot;\\D&quot;), //
+				new RegexLeaf(day, &quot;([\\d]{1,2})&quot;));
+	}
+
+	public static IRegex toRegexC_MONTH_DD_YYYY(String year, String month, String day) {
+<span class="nc" id="L64">		return new RegexConcat( //</span>
+<span class="nc" id="L65">				new RegexLeaf(month, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+				new RegexLeaf(day, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+				new RegexLeaf(year, &quot;([\\d]{1,4})&quot;));
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InnerStateAutonom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">InnerStateAutonom.java</span></div><h1>InnerStateAutonom.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.svek.image.EntityImageState;
+import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
+import net.sourceforge.plantuml.url.Url;
+
+public final class InnerStateAutonom extends AbstractTextBlock implements IEntityImage {
+
+	private final IEntityImage im;
+	private final TextBlock title;
+	private final TextBlock attribute;
+	private HColor borderColor;
+	private HColor backColor;
+	private final Url url;
+	private final boolean withSymbol;
+	private UStroke stroke;
+	private final double rounded;
+	private final double shadowing;
+	private final HColor bodyColor;
+	private final Style styleHeader;
+
+<span class="nc" id="L74">	public InnerStateAutonom(IEntityImage im, Entity group) {</span>
+<span class="nc" id="L75">		this.im = Objects.requireNonNull(im);</span>
+<span class="nc" id="L76">		final ISkinParam skinParam = group.getSkinParam();</span>
+
+<span class="nc" id="L78">		final Style styleTitle = EntityImageStateCommon.getStyleStateTitle(group, skinParam);</span>
+<span class="nc" id="L79">		final Style style = EntityImageStateCommon.getStyleState(group, skinParam);</span>
+<span class="nc" id="L80">		final Style styleBody = EntityImageStateCommon.getStyleStateBody(group, skinParam);</span>
+<span class="nc" id="L81">		this.styleHeader = EntityImageStateCommon.getStyleStateHeader(group, skinParam);</span>
+
+<span class="nc" id="L83">		this.rounded = style.value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L84">		this.shadowing = style.getShadowing();</span>
+
+<span class="nc" id="L86">		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L87">		this.title = group.getDisplay().create(titleFontConfiguration, styleTitle.getHorizontalAlignment(), skinParam);</span>
+
+<span class="nc" id="L89">		this.attribute = group.getStateHeader(skinParam);</span>
+
+<span class="nc bnc" id="L91" title="All 4 branches missed.">		this.withSymbol = group.getStereotype() != null &amp;&amp; group.getStereotype().isWithOOSymbol();</span>
+<span class="nc" id="L92">		this.url = group.getUrl99();</span>
+
+<span class="nc" id="L94">		this.borderColor = group.getColors().getColor(ColorType.LINE);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (this.borderColor == null)</span>
+<span class="nc" id="L96">			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L98">		this.backColor = group.getColors().getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (this.backColor == null)</span>
+<span class="nc" id="L100">			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L102">		this.stroke = group.getColors().getSpecificLineStroke();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (this.stroke == null)</span>
+<span class="nc" id="L104">			this.stroke = style.getStroke();</span>
+
+<span class="nc" id="L106">		this.bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L108">	}</span>
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L111">		final XDimension2D text = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L112">		final XDimension2D attr = attribute.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L113">		final XDimension2D total = calculateDimension(ug.getStringBounder());</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
+
+<span class="nc" id="L116">		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;</span>
+
+<span class="nc" id="L118">		final RoundedContainer r = new RoundedContainer(total, titreHeight, attr.getHeight() + marginForFields,</span>
+				borderColor, backColor, bodyColor, stroke, rounded, shadowing);
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L122">			ug.startUrl(url);</span>
+
+<span class="nc" id="L124">		r.drawU(ug);</span>
+<span class="nc" id="L125">		title.drawU(ug.apply(new UTranslate((total.getWidth() - text.getWidth()) / 2, IEntityImage.MARGIN)));</span>
+<span class="nc" id="L126">		final HorizontalAlignment horizontalAlignment = styleHeader.getHorizontalAlignment();</span>
+<span class="nc" id="L127">		horizontalAlignment.draw(ug, attribute, IEntityImage.MARGIN,</span>
+<span class="nc" id="L128">				IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN, total.getWidth());</span>
+
+<span class="nc" id="L130">		final double spaceYforURL = getSpaceYforURL(ug.getStringBounder());</span>
+<span class="nc" id="L131">		im.drawU(ug.apply(new UTranslate(IEntityImage.MARGIN, spaceYforURL)));</span>
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (withSymbol)</span>
+<span class="nc" id="L134">			EntityImageState.drawSymbol(ug.apply(borderColor), total.getWidth(), total.getHeight());</span>
+
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L137">			ug.closeUrl();</span>
+
+<span class="nc" id="L139">	}</span>
+
+	private double getSpaceYforURL(StringBounder stringBounder) {
+<span class="nc" id="L142">		final XDimension2D text = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L143">		final XDimension2D attr = attribute.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
+<span class="nc" id="L145">		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;</span>
+<span class="nc" id="L146">		final double suppY = titreHeight + marginForFields + attr.getHeight();</span>
+<span class="nc" id="L147">		return suppY + IEntityImage.MARGIN_LINE;</span>
+	}
+
+	public HColor getBackcolor() {
+<span class="nc" id="L151">		return null;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L155">		final XDimension2D img = im.calculateDimension(stringBounder);</span>
+<span class="nc" id="L156">		final XDimension2D text = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L157">		final XDimension2D attr = attribute.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L159">		final XDimension2D dim = text.mergeTB(attr, img);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
+
+<span class="nc" id="L162">		final XDimension2D result = dim.delta(IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE + marginForFields);</span>
+
+<span class="nc" id="L164">		return result;</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L168">		return ShapeType.ROUND_RECTANGLE;</span>
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+<span class="nc" id="L172">		return Margins.NONE;</span>
+	}
+
+	public boolean isHidden() {
+<span class="nc" id="L176">		return im.isHidden();</span>
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+<span class="nc" id="L180">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

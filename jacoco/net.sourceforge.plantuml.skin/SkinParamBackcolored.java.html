@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SkinParamBackcolored.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">SkinParamBackcolored.java</span></div><h1>SkinParamBackcolored.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.skin;
+
+import java.util.EnumMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class SkinParamBackcolored extends SkinParamDelegator {
+
+	final private HColor backColorElement;
+	final private HColor backColorGeneral;
+	final private boolean forceClickage;
+
+	public SkinParamBackcolored(ISkinParam skinParam, HColor backColorElement) {
+<span class="fc" id="L52">		this(skinParam, backColorElement, null, false);</span>
+<span class="fc" id="L53">	}</span>
+
+	public SkinParamBackcolored(ISkinParam skinParam, HColor backColorElement, boolean forceClickage) {
+<span class="nc" id="L56">		this(skinParam, backColorElement, null, forceClickage);</span>
+<span class="nc" id="L57">	}</span>
+
+	public SkinParamBackcolored(ISkinParam skinParam, HColor backColorElement, HColor backColorGeneral) {
+<span class="fc" id="L60">		this(skinParam, backColorElement, backColorGeneral, false);</span>
+<span class="fc" id="L61">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L65">		return super.toString() + &quot; &quot; + backColorElement + &quot; &quot; + backColorGeneral;</span>
+	}
+
+	public SkinParamBackcolored(ISkinParam skinParam, HColor backColorElement, HColor backColorGeneral,
+			boolean forceClickage) {
+<span class="fc" id="L70">		super(skinParam);</span>
+<span class="fc" id="L71">		this.forceClickage = forceClickage;</span>
+<span class="fc" id="L72">		this.backColorElement = backColorElement;</span>
+<span class="fc" id="L73">		this.backColorGeneral = backColorGeneral;</span>
+<span class="fc" id="L74">	}</span>
+
+	@Override
+	public HColor getBackgroundColor() {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (backColorGeneral != null) {</span>
+<span class="nc" id="L79">			return backColorGeneral;</span>
+		}
+<span class="nc" id="L81">		return super.getBackgroundColor();</span>
+	}
+
+	@Override
+	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
+<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (param.isBackground() &amp;&amp; backColorElement != null) {</span>
+<span class="nc" id="L87">			return backColorElement;</span>
+		}
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (forceClickage) {</span>
+<span class="nc" id="L90">			final HColor c1 = super.getHtmlColor(param, stereotype, true);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (c1 != null) {</span>
+<span class="nc" id="L92">				return c1;</span>
+			}
+			// clickable = true;
+		}
+<span class="nc" id="L96">		final HColor forcedColor = forced.get(param);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (forcedColor != null) {</span>
+<span class="nc" id="L98">			return forcedColor;</span>
+		}
+<span class="nc" id="L100">		return super.getHtmlColor(param, stereotype, clickable);</span>
+	}
+
+<span class="fc" id="L103">	private final Map&lt;ColorParam, HColor&gt; forced = new EnumMap&lt;ColorParam, HColor&gt;(ColorParam.class);</span>
+
+	public void forceColor(ColorParam param, HColor color) {
+<span class="nc" id="L106">		forced.put(param, color);</span>
+<span class="nc" id="L107">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColorPalette4096.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.sprite</a> &gt; <span class="el_source">ColorPalette4096.java</span></div><h1>ColorPalette4096.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.sprite;
+
+import java.awt.Color;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
+
+<span class="nc" id="L44">public class ColorPalette4096 {</span>
+
+	// private static final String colorValue = &quot;!#$%&amp;*+-:;&lt;=&gt;?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;;
+	// Maybe ! and # will be used for something else in the future
+	// So we replace them by . and '
+	private static final String colorValue = &quot;.,$%&amp;*+-:;&lt;=&gt;?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;;
+
+	public String getStringFor(Color dest) {
+<span class="nc" id="L52">		return getStringFor((HColorSimple) HColors.simple(dest));</span>
+	}
+
+	private String getStringFor(HColorSimple dest) {
+<span class="nc" id="L56">		int result = 0;</span>
+<span class="nc" id="L57">		int resultDist = Integer.MAX_VALUE;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (int i = 0; i &lt; 4096; i++) {</span>
+<span class="nc" id="L59">			final int dist = dest.distanceTo(getHtmlColorSimpleFor(i));</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (dist &lt; resultDist) {</span>
+<span class="nc" id="L61">				result = i;</span>
+<span class="nc" id="L62">				resultDist = dist;</span>
+			}
+		}
+<span class="nc" id="L65">		return encodeInt(result);</span>
+	}
+
+	protected String encodeInt(int result) {
+<span class="nc" id="L69">		final int v2 = result % 64;</span>
+<span class="nc" id="L70">		final int v1 = result / 64;</span>
+<span class="nc bnc" id="L71" title="All 8 branches missed.">		assert v1 &gt;= 0 &amp;&amp; v1 &lt;= 63 &amp;&amp; v2 &gt;= 0 &amp;&amp; v2 &lt;= 63;</span>
+<span class="nc" id="L72">		return &quot;&quot; + colorValue.charAt(v1) + colorValue.charAt(v2);</span>
+	}
+
+	private HColorSimple getHtmlColorSimpleFor(int s) {
+<span class="nc" id="L76">		final Color color = Objects.requireNonNull(getColorFor(s));</span>
+<span class="nc" id="L77">		return (HColorSimple) HColors.simple(color);</span>
+	}
+
+	protected Color getColorFor(String s) {
+		// Migration
+<span class="nc" id="L82">		s = s.replace('!', '.');</span>
+<span class="nc" id="L83">		s = s.replace('#', ',');</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (s.length() != 2)</span>
+<span class="nc" id="L85">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L87">		final int v1 = colorValue.indexOf(s.charAt(0));</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (v1 == -1)</span>
+<span class="nc" id="L89">			return null;</span>
+
+<span class="nc" id="L91">		final int v2 = colorValue.indexOf(s.charAt(1));</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (v2 == -1)</span>
+<span class="nc" id="L93">			return null;</span>
+
+<span class="nc" id="L95">		final int code = v1 * 64 + v2;</span>
+<span class="nc" id="L96">		return getColorFor(code);</span>
+	}
+
+	protected Color getColorFor(final int code) {
+<span class="nc" id="L100">		final int blue = code % 16;</span>
+<span class="nc" id="L101">		final int green = (code / 16) % 16;</span>
+<span class="nc" id="L102">		final int red = (code / 256) % 16;</span>
+<span class="nc" id="L103">		return new Color(dup(red), dup(green), dup(blue));</span>
+	}
+
+	private int dup(int v) {
+<span class="nc bnc" id="L107" title="All 4 branches missed.">		assert v &gt;= 0 &amp;&amp; v &lt;= 15;</span>
+<span class="nc" id="L108">		return v * 16 + v;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

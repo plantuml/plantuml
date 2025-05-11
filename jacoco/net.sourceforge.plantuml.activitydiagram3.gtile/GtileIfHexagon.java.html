@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GtileIfHexagon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.gtile</a> &gt; <span class="el_source">GtileIfHexagon.java</span></div><h1>GtileIfHexagon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.gtile;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class GtileIfHexagon extends GtileColumns {
+
+	private final Gtile shape1;
+	private final List&lt;Branch&gt; branches;
+	private final Gtile shape2;
+
+	private final UTranslate positionShape1;
+	private final UTranslate positionShape2;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L64">		return &quot;GtileIfHexagon &quot; + gtiles;</span>
+	}
+
+	public static Gtile build(Swimlane swimlane, List&lt;Gtile&gt; gtiles, List&lt;Branch&gt; branches) {
+<span class="nc" id="L68">		final GtileIfHexagon result = new GtileIfHexagon(swimlane, gtiles, branches);</span>
+<span class="nc" id="L69">		return result;</span>
+		// return Gtiles.withEastMargin(result, 0);
+	}
+
+	// ConditionalBuilder
+	// FtileFactoryDelegatorIf
+
+	private GtileIfHexagon(Swimlane swimlane, List&lt;Gtile&gt; gtiles, List&lt;Branch&gt; branches) {
+<span class="nc" id="L77">		super(gtiles, swimlane, 20);</span>
+
+<span class="nc" id="L79">		this.branches = branches;</span>
+
+<span class="nc" id="L81">		this.shape1 = getShape1(swimlane);</span>
+<span class="nc" id="L82">		this.shape2 = Gtiles.diamondEmpty(swimlane, getStringBounder(), skinParam(), getDefaultStyleDefinitionDiamond(),</span>
+<span class="nc" id="L83">				branches.get(0).getColor());</span>
+
+<span class="nc" id="L85">		final XDimension2D dimShape1 = shape1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L86">		this.pushDown(dimShape1.getHeight());</span>
+
+		final double posShape;
+		final XDimension2D totalDim;
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (branches.size() == 2) {</span>
+<span class="nc" id="L91">			final Gtile tile0 = branches.get(0).getGtile();</span>
+<span class="nc" id="L92">			final Gtile tile1 = branches.get(1).getGtile();</span>
+
+<span class="nc" id="L94">			final double northHook0 = tile0.getGPoint(GPoint.NORTH_HOOK).getCoord().getDx();</span>
+<span class="nc" id="L95">			final double width0 = tile0.calculateDimension(getStringBounder()).getWidth();</span>
+<span class="nc" id="L96">			final double northHook1 = tile1.getGPoint(GPoint.NORTH_HOOK).getCoord().getDx();</span>
+<span class="nc" id="L97">			final double width1 = tile1.calculateDimension(getStringBounder()).getWidth();</span>
+
+<span class="nc" id="L99">			final double shlen1 = shape1.calculateDimension(getStringBounder()).getWidth();</span>
+<span class="nc" id="L100">			final double shlen = shape1.getGPoint(GPoint.EAST_HOOK).getCoord().getDx()</span>
+<span class="nc" id="L101">					- shape1.getGPoint(GPoint.WEST_HOOK).getCoord().getDx();</span>
+
+<span class="nc" id="L103">			System.err.println(&quot;shlen=&quot; + shlen);</span>
+
+<span class="nc" id="L105">			System.err.println(&quot;northHook0=&quot; + northHook0);</span>
+<span class="nc" id="L106">			System.err.println(&quot;width0=&quot; + width0);</span>
+
+<span class="nc" id="L108">			System.err.println(&quot;northHook1=&quot; + northHook1);</span>
+<span class="nc" id="L109">			System.err.println(&quot;width1=&quot; + width1);</span>
+
+<span class="nc" id="L111">			final double alpha = northHook0;</span>
+<span class="nc" id="L112">			final double beta = width1 - northHook1;</span>
+<span class="nc" id="L113">			System.err.println(&quot;alpha=&quot; + alpha);</span>
+<span class="nc" id="L114">			System.err.println(&quot;beta=&quot; + beta);</span>
+
+<span class="nc" id="L116">			final double wantedWidth = alpha + shlen + beta;</span>
+<span class="nc" id="L117">			System.err.println(&quot;wantedWidth=&quot; + wantedWidth);</span>
+<span class="nc" id="L118">			double diff = wantedWidth - width0 - width1;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (diff &lt; 0)</span>
+<span class="nc" id="L120">				diff = 0;</span>
+<span class="nc" id="L121">			System.err.println(&quot;diff=&quot; + diff);</span>
+<span class="nc" id="L122">			this.setMargin(diff + 10);</span>
+<span class="nc" id="L123">			totalDim = calculateDimensionRaw(stringBounder);</span>
+<span class="nc" id="L124">			final double p2 = totalDim.getWidth() - beta;</span>
+<span class="nc" id="L125">			posShape = (alpha + p2) / 2;</span>
+<span class="nc" id="L126">		} else {</span>
+<span class="nc" id="L127">			totalDim = calculateDimensionRaw(stringBounder);</span>
+<span class="nc" id="L128">			posShape = totalDim.getWidth() / 2;</span>
+		}
+
+<span class="nc" id="L131">		this.positionShape1 = UTranslate.dx(posShape).compose(shape1.getCoord(GPoint.NORTH_BORDER).reverse());</span>
+<span class="nc" id="L132">		this.positionShape2 = new UTranslate(posShape, totalDim.getHeight())</span>
+<span class="nc" id="L133">				.compose(shape2.getCoord(GPoint.SOUTH_BORDER).reverse());</span>
+
+<span class="nc" id="L135">	}</span>
+
+	@Override
+	protected UTranslate getCoordImpl(String name) {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (name.equals(GPoint.NORTH_HOOK))</span>
+<span class="nc" id="L140">			return shape1.getCoord(name).compose(positionShape1);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (name.equals(GPoint.SOUTH_HOOK))</span>
+<span class="nc" id="L142">			return shape2.getCoord(name).compose(positionShape2);</span>
+<span class="nc" id="L143">		return super.getCoordImpl(name);</span>
+	}
+
+	private Gtile getShape1(Swimlane swimlane) {
+<span class="nc" id="L147">		GtileHexagonInside tmp = Gtiles.hexagonInside(swimlane, getStringBounder(), skinParam(),</span>
+<span class="nc" id="L148">				getDefaultStyleDefinitionDiamond(), branches.get(0).getColor(), branches.get(0).getLabelTest());</span>
+
+<span class="nc" id="L150">		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (branches.size() == 1) {</span>
+<span class="nc" id="L152">			return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 10);</span>
+		}
+
+<span class="nc" id="L155">		final TextBlock tmp1 = branches.get(1).getTextBlockPositive();</span>
+<span class="nc" id="L156">		return Gtiles.withSouthMargin(tmp.withWestLabel(tmp0).withEastLabel(tmp1), 10);</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L161">		final XDimension2D rawDim = calculateDimensionRaw(stringBounder);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (branches.size() == 2) {</span>
+<span class="nc" id="L163">			final XDimension2D shape1Dim = shape1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L164">			final double shape1max = this.positionShape1.getDx() + shape1Dim.getWidth();</span>
+<span class="nc" id="L165">			return rawDim.atLeast(shape1max, 0);</span>
+
+		}
+		// return MathUtils.max(rawDim, shape1Dim);
+<span class="nc" id="L169">		return rawDim;</span>
+	}
+
+	private XDimension2D calculateDimensionRaw(StringBounder stringBounder) {
+<span class="nc" id="L173">		final double height2 = shape2.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L174">		final XDimension2D nude = super.calculateDimension(stringBounder);</span>
+		// +30 to be done only when branches.size()==1 ?
+<span class="nc" id="L176">		return nude.delta(0, height2 + 30);</span>
+	}
+
+	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
+<span class="nc" id="L180">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
+	}
+
+	final public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
+<span class="nc" id="L184">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
+	}
+
+	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
+<span class="nc" id="L188">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	}
+
+	@Override
+	protected void drawUInternal(UGraphic ug) {
+<span class="nc" id="L193">		super.drawUInternal(ug);</span>
+
+<span class="nc" id="L195">		ug.apply(positionShape1).draw(shape1);</span>
+<span class="nc" id="L196">		ug.apply(positionShape2).draw(shape2);</span>
+<span class="nc" id="L197">	}</span>
+
+//	private TextBlock getLabelPositive(Branch branch) {
+//		final LineBreakStrategy labelLineBreak = LineBreakStrategy.NONE;
+//
+//		final FontConfiguration fontConfiguration;
+//		if (UseStyle.useBetaStyle()) {
+//			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+//			fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
+//		} else {
+//			fontConfiguration = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
+//		}
+//
+//		return branch.getDisplayPositive().create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam(),
+//				labelLineBreak, CreoleMode.SIMPLE_LINE, null, null);
+//	}
+
+	@Override
+	public Collection&lt;GConnection&gt; getInnerConnections() {
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (branches.size() == 1) {</span>
+<span class="nc" id="L217">			final GConnection arrow1 = new GConnectionVerticalDown(positionShape1, shape1.getGPoint(GPoint.SOUTH_HOOK),</span>
+<span class="nc" id="L218">					getPosition(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
+<span class="nc" id="L219">			final GConnection arrow2 = new GConnectionVerticalDown(getPosition(0),</span>
+<span class="nc" id="L220">					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.NORTH_HOOK),</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+<span class="nc" id="L222">			return Arrays.asList(arrow1, arrow2);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		} else if (branches.size() == 2) {</span>
+<span class="nc" id="L224">			final GConnection arrow1 = new GConnectionHorizontalThenVerticalDown(positionShape1,</span>
+<span class="nc" id="L225">					shape1.getGPoint(GPoint.WEST_HOOK), getPosition(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK),</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+<span class="nc" id="L227">			final GConnection arrow2 = new GConnectionHorizontalThenVerticalDown(positionShape1,</span>
+<span class="nc" id="L228">					shape1.getGPoint(GPoint.EAST_HOOK), getPosition(1), gtiles.get(1).getGPoint(GPoint.NORTH_HOOK),</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+
+<span class="nc" id="L231">			final GConnection arrow3 = new GConnectionVerticalDownThenHorizontal(getPosition(0),</span>
+<span class="nc" id="L232">					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.WEST_HOOK),</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+<span class="nc" id="L234">			final GConnection arrow4 = new GConnectionVerticalDownThenHorizontal(getPosition(1),</span>
+<span class="nc" id="L235">					gtiles.get(1).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.EAST_HOOK),</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+
+<span class="nc" id="L238">			return Arrays.asList(arrow1, arrow2, arrow3, arrow4);</span>
+		}
+<span class="nc" id="L240">		return super.getInnerConnections();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

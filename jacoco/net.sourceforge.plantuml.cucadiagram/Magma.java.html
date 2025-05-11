@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Magma.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">Magma.java</span></div><h1>Magma.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import java.util.List;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class Magma {
+
+	private final CucaDiagram diagram;
+	private final List&lt;Entity&gt; standalones;
+<span class="fc" id="L52">	private final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
+
+<span class="fc" id="L54">	public Magma(CucaDiagram system, List&lt;Entity&gt; standalones) {</span>
+<span class="fc" id="L55">		this.diagram = system;</span>
+<span class="fc" id="L56">		this.standalones = standalones;</span>
+<span class="fc" id="L57">	}</span>
+
+	public void putInSquare() {
+<span class="fc" id="L60">		final SquareLinker&lt;Entity&gt; linker = new SquareLinker&lt;Entity&gt;() {</span>
+			public void topDown(Entity top, Entity down) {
+<span class="fc" id="L62">				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),</span>
+<span class="fc" id="L63">						top, down, linkType, LinkArg.noDisplay(2)));</span>
+<span class="fc" id="L64">			}</span>
+
+			public void leftRight(Entity left, Entity right) {
+<span class="fc" id="L67">				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),</span>
+<span class="fc" id="L68">						left, right, linkType, LinkArg.noDisplay(1)));</span>
+<span class="fc" id="L69">			}</span>
+		};
+<span class="fc" id="L71">		new SquareMaker&lt;Entity&gt;().putInSquare(standalones, linker);</span>
+<span class="fc" id="L72">	}</span>
+
+	public Entity getContainer() {
+<span class="fc" id="L75">		final Entity parent = standalones.get(0).getParentContainer();</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L77">			return null;</span>
+
+<span class="fc" id="L79">		return parent.getParentContainer();</span>
+	}
+
+	public boolean isComplete() {
+<span class="nc" id="L83">		final Entity parent = getContainer();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L85">			return false;</span>
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		return parent.countChildren() == standalones.size();</span>
+	}
+
+	private int squareSize() {
+<span class="nc" id="L91">		return SquareMaker.computeBranch(standalones.size());</span>
+	}
+
+	private Entity getTopLeft() {
+<span class="nc" id="L95">		return standalones.get(0);</span>
+	}
+
+	private Entity getBottomLeft() {
+<span class="nc" id="L99">		int result = SquareMaker.getBottomLeft(standalones.size());</span>
+<span class="nc" id="L100">		return standalones.get(result);</span>
+	}
+
+	private Entity getTopRight() {
+<span class="nc" id="L104">		final int s = squareSize();</span>
+<span class="nc" id="L105">		return standalones.get(s - 1);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L110">		return standalones.get(0).getParentContainer() + &quot; &quot; + standalones.toString() + &quot; &quot; + isComplete();</span>
+	}
+
+	public void linkToDown(Magma down) {
+<span class="nc" id="L114">		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getBottomLeft(),</span>
+<span class="nc" id="L115">				down.getTopLeft(), linkType, LinkArg.noDisplay(2)));</span>
+
+<span class="nc" id="L117">	}</span>
+
+	public void linkToRight(Magma right) {
+<span class="nc" id="L120">		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getTopRight(),</span>
+<span class="nc" id="L121">				right.getTopLeft(), linkType, LinkArg.noDisplay(1)));</span>
+<span class="nc" id="L122">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

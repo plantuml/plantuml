@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeTickBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.command</a> &gt; <span class="el_source">TimeTickBuilder.java</span></div><h1>TimeTickBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.command;
+
+import java.math.BigDecimal;
+
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.timingdiagram.Clocks;
+import net.sourceforge.plantuml.timingdiagram.TimeTick;
+import net.sourceforge.plantuml.timingdiagram.TimingFormat;
+
+<span class="nc" id="L49">public class TimeTickBuilder {</span>
+
+	public static IRegex expressionAtWithoutArobase(String name) {
+<span class="fc" id="L52">		return new RegexOr( //</span>
+				new RegexLeaf(name + &quot;CODE&quot;, &quot;:([%pLN_.]+)([-+][.\\d]+)?&quot;), //
+				new RegexLeaf(name + &quot;DATE&quot;, &quot;(\\d+)/(\\d+)/(\\d+)&quot;), //
+				new RegexLeaf(name + &quot;HOUR&quot;, &quot;(\\d+):(\\d+):(\\d+)&quot;), //
+				new RegexLeaf(name + &quot;DIGIT&quot;, &quot;(\\+?)(-?\\d+\\.?\\d*)&quot;), //
+				new RegexLeaf(name + &quot;CLOCK&quot;, &quot;([%pLN_.@]+)\\*(\\d+)&quot;));
+	}
+
+	public static IRegex expressionAtWithArobase(String name) {
+<span class="fc" id="L61">		return new RegexConcat( //</span>
+				new RegexLeaf(&quot;@&quot;), //
+<span class="fc" id="L63">				expressionAtWithoutArobase(name));</span>
+	}
+
+	public static IRegex optionalExpressionAtWithArobase(String name) {
+<span class="fc" id="L67">		return new RegexOptional(expressionAtWithArobase(name));</span>
+	}
+
+	public static TimeTick parseTimeTick(String name, RegexResult arg, Clocks clock) {
+<span class="fc" id="L71">		final String code = arg.get(name + &quot;CODE&quot;, 0);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (code != null) {</span>
+<span class="nc" id="L73">			final String delta = arg.get(name + &quot;CODE&quot;, 1);</span>
+<span class="nc" id="L74">			TimeTick result = clock.getCodeValue(code);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (delta == null)</span>
+<span class="nc" id="L76">				return result;</span>
+
+<span class="nc" id="L78">			final BigDecimal value = result.getTime().add(new BigDecimal(delta));</span>
+<span class="nc" id="L79">			return new TimeTick(value, TimingFormat.DECIMAL);</span>
+		}
+<span class="fc" id="L81">		final String clockName = arg.get(name + &quot;CLOCK&quot;, 0);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (clockName != null) {</span>
+<span class="nc" id="L83">			final int number = Integer.parseInt(arg.get(name + &quot;CLOCK&quot;, 1));</span>
+<span class="nc" id="L84">			return clock.getClockValue(clockName, number);</span>
+		}
+<span class="fc" id="L86">		final String hour = arg.get(name + &quot;HOUR&quot;, 0);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (hour != null) {</span>
+<span class="nc" id="L88">			final int h = Integer.parseInt(arg.get(name + &quot;HOUR&quot;, 0));</span>
+<span class="nc" id="L89">			final int m = Integer.parseInt(arg.get(name + &quot;HOUR&quot;, 1));</span>
+<span class="nc" id="L90">			final int s = Integer.parseInt(arg.get(name + &quot;HOUR&quot;, 2));</span>
+<span class="nc" id="L91">			final BigDecimal value = new BigDecimal(3600 * h + 60 * m + s);</span>
+<span class="nc" id="L92">			return new TimeTick(value, TimingFormat.HOUR);</span>
+		}
+<span class="fc" id="L94">		final String date = arg.get(name + &quot;DATE&quot;, 0);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (date != null) {</span>
+<span class="nc" id="L96">			final int yy = Integer.parseInt(arg.get(name + &quot;DATE&quot;, 0));</span>
+<span class="nc" id="L97">			final int mm = Integer.parseInt(arg.get(name + &quot;DATE&quot;, 1));</span>
+<span class="nc" id="L98">			final int dd = Integer.parseInt(arg.get(name + &quot;DATE&quot;, 2));</span>
+
+<span class="nc" id="L100">			return TimingFormat.createDate(yy, mm, dd, clock.getTimingFormatDate());</span>
+		}
+<span class="fc" id="L102">		final String number = arg.get(name + &quot;DIGIT&quot;, 1);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (number == null)</span>
+<span class="fc" id="L104">			return clock.getNow();</span>
+
+<span class="fc" id="L106">		final boolean isRelative = &quot;+&quot;.equals(arg.get(name + &quot;DIGIT&quot;, 0));</span>
+<span class="fc" id="L107">		BigDecimal value = new BigDecimal(number);</span>
+<span class="pc bpc" id="L108" title="1 of 4 branches missed.">		if (isRelative &amp;&amp; clock.getNow() != null)</span>
+<span class="fc" id="L109">			value = clock.getNow().getTime().add(value);</span>
+
+<span class="fc" id="L111">		return new TimeTick(value, TimingFormat.DECIMAL);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

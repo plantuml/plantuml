@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArobaseStringCompressor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.code</a> &gt; <span class="el_source">ArobaseStringCompressor.java</span></div><h1>ArobaseStringCompressor.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.code;
+
+import java.io.IOException;
+import java.io.StringReader;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.preproc.ReadLineReader;
+import net.sourceforge.plantuml.preproc.UncommentReadLine;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.text.StringLocated;
+
+<span class="fc" id="L50">public class ArobaseStringCompressor implements StringCompressor {</span>
+
+<span class="fc" id="L52">	private final static Pattern2 pattern = MyPattern</span>
+<span class="fc" id="L53">			.cmpile(&quot;(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$&quot;);</span>
+
+	public String compress(final String data) throws IOException {
+<span class="fc" id="L56">		final ReadLine r = new UncommentReadLine(ReadLineReader.create(new StringReader(data), &quot;COMPRESS&quot;));</span>
+<span class="fc" id="L57">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L58">		final StringBuilder full = new StringBuilder();</span>
+<span class="fc" id="L59">		StringLocated s = null;</span>
+<span class="fc" id="L60">		boolean startDone = false;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		while ((s = r.readLine()) != null) {</span>
+<span class="fc" id="L62">			append(full, s);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">			if (s.getString().startsWith(&quot;@startuml&quot;)) {</span>
+<span class="fc" id="L64">				startDone = true;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			} else if (s.getString().startsWith(&quot;@enduml&quot;)) {</span>
+<span class="fc" id="L66">				return sb.toString();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			} else if (startDone) {</span>
+<span class="fc" id="L68">				append(sb, s);</span>
+			}
+		}
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (startDone == false) {</span>
+<span class="fc" id="L72">			return compressOld(full.toString());</span>
+		}
+<span class="nc" id="L74">		return sb.toString();</span>
+	}
+
+	private void append(final StringBuilder sb, StringLocated s) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (sb.length() &gt; 0) {</span>
+<span class="fc" id="L79">			sb.append('\n');</span>
+		}
+<span class="fc" id="L81">		sb.append(s.getString());</span>
+<span class="fc" id="L82">	}</span>
+
+	private String compressOld(String s) throws IOException {
+<span class="fc" id="L85">		final Matcher2 m = pattern.matcher(s);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (m.find()) {</span>
+<span class="fc" id="L87">			return clean(m.group(2));</span>
+		}
+<span class="nc" id="L89">		return &quot;&quot;;</span>
+	}
+
+	public String decompress(String s) {
+<span class="fc" id="L93">		String result = clean(s);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (result.startsWith(&quot;@start&quot;)) {</span>
+<span class="nc" id="L95">			return result;</span>
+		}
+<span class="fc" id="L97">		result = &quot;@startuml\n&quot; + result;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (result.endsWith(&quot;\n&quot;) == false) {</span>
+<span class="fc" id="L99">			result += &quot;\n&quot;;</span>
+		}
+<span class="fc" id="L101">		result += &quot;@enduml&quot;;</span>
+<span class="fc" id="L102">		return result;</span>
+	}
+
+	private String clean(String s) {
+		// s = s.replace(&quot;\0&quot;, &quot;&quot;);
+<span class="fc" id="L107">		s = StringUtils.trin(s);</span>
+<span class="fc" id="L108">		s = clean1(s);</span>
+<span class="fc" id="L109">		s = s.replaceAll(&quot;@enduml[^\\n\\r]*&quot;, &quot;&quot;);</span>
+<span class="fc" id="L110">		s = s.replaceAll(&quot;@startuml[^\\n\\r]*&quot;, &quot;&quot;);</span>
+<span class="fc" id="L111">		s = StringUtils.trin(s);</span>
+<span class="fc" id="L112">		return s;</span>
+	}
+
+	private String clean1(String s) {
+<span class="fc" id="L116">		final Matcher2 m = pattern.matcher(s);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (m.matches())</span>
+<span class="fc" id="L118">			return m.group(2);</span>
+
+<span class="nc" id="L120">		return s;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

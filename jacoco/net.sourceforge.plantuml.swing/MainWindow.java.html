@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainWindow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.swing</a> &gt; <span class="el_source">MainWindow.java</span></div><h1>MainWindow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.swing;
+
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.prefs.Preferences;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.border.CompoundBorder;
+
+import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.Option;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.version.PSystemVersion;
+
+public class MainWindow extends JFrame {
+
+<span class="nc" id="L90">	final private static Preferences prefs = Preferences.userNodeForPackage(MainWindow.class);</span>
+	final private static String KEY_DIR = &quot;cur&quot;;
+	final private static String KEY_PATTERN = &quot;pat&quot;;
+
+<span class="nc" id="L94">	private final JList jList1 = new JList();</span>
+	private final JScrollPane scrollPane;
+<span class="nc" id="L96">	private final JButton changeDirButton = new JButton(&quot;Change Directory&quot;);</span>
+<span class="nc" id="L97">	private final JTextField extensions = new JTextField();</span>
+<span class="nc" id="L98">	private final int period = 300;</span>
+
+<span class="nc" id="L100">	final private List&lt;SimpleLine&gt; currentDirectoryListing2 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L101">	final private Set&lt;ImageWindow&gt; openWindows2 = new HashSet&lt;&gt;();</span>
+	final private Option option;
+
+	private DirWatcher2 dirWatcher;
+
+	private String getExtensions() {
+<span class="nc" id="L107">		return prefs.get(KEY_PATTERN, getDefaultFileExtensions());</span>
+	}
+
+	private String getDefaultFileExtensions() {
+<span class="nc" id="L111">		return &quot;txt, tex, java, htm, html, c, h, cpp, apt, pu, puml, hpp, hh, md&quot;;</span>
+	}
+
+	private void changeExtensions(String ext) {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (ext.equals(getExtensions())) {</span>
+<span class="nc" id="L116">			return;</span>
+		}
+<span class="nc" id="L118">		final Pattern p = Pattern.compile(&quot;\\w+&quot;);</span>
+<span class="nc" id="L119">		final Matcher m = p.matcher(ext);</span>
+<span class="nc" id="L120">		final StringBuilder sb = new StringBuilder();</span>
+
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		while (m.find()) {</span>
+<span class="nc" id="L123">			final String value = m.group();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (sb.length() &gt; 0) {</span>
+<span class="nc" id="L125">				sb.append(&quot;, &quot;);</span>
+			}
+<span class="nc" id="L127">			sb.append(value);</span>
+
+<span class="nc" id="L129">		}</span>
+<span class="nc" id="L130">		ext = sb.toString();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (ext.length() == 0) {</span>
+<span class="nc" id="L132">			ext = getDefaultFileExtensions();</span>
+		}
+<span class="nc" id="L134">		extensions.setText(ext);</span>
+<span class="nc" id="L135">		prefs.put(KEY_PATTERN, ext);</span>
+<span class="nc" id="L136">		changeDir(dirWatcher.getDir());</span>
+<span class="nc" id="L137">	}</span>
+
+	private String getRegexpPattern(String ext) {
+<span class="nc" id="L140">		final Pattern p = Pattern.compile(&quot;\\w+&quot;);</span>
+<span class="nc" id="L141">		final Matcher m = p.matcher(ext);</span>
+<span class="nc" id="L142">		final StringBuilder filePattern = new StringBuilder(&quot;(?i)^.*\\.(&quot;);</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		while (m.find()) {</span>
+<span class="nc" id="L145">			final String value = m.group();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (filePattern.toString().endsWith(&quot;(&quot;) == false) {</span>
+<span class="nc" id="L147">				filePattern.append(&quot;|&quot;);</span>
+			}
+<span class="nc" id="L149">			filePattern.append(value);</span>
+<span class="nc" id="L150">		}</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (filePattern.toString().endsWith(&quot;(&quot;) == false) {</span>
+<span class="nc" id="L152">			filePattern.append(&quot;)$&quot;);</span>
+<span class="nc" id="L153">			return filePattern.toString();</span>
+		}
+<span class="nc" id="L155">		return Option.getPattern();</span>
+	}
+
+	public MainWindow(Option option, File arg) {
+<span class="nc" id="L159">		super(getDirectory(arg).getAbsolutePath());</span>
+<span class="nc" id="L160">		System.setProperty(&quot;PLANTUML_SECURITY_PROFILE&quot;, &quot;UNSECURE&quot;);</span>
+<span class="nc" id="L161">		final File dir = getDirectory(arg);</span>
+<span class="nc" id="L162">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
+<span class="nc" id="L163">		this.option = option;</span>
+<span class="nc" id="L164">		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));</span>
+
+<span class="nc" id="L166">		Log.info(&quot;Showing MainWindow&quot;);</span>
+<span class="nc" id="L167">		scrollPane = new JScrollPane(jList1);</span>
+<span class="nc" id="L168">		scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
+
+<span class="nc" id="L170">		final JPanel south = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L171">		final JLabel labelFileExtensions = new JLabel(&quot;File extensions: &quot;);</span>
+<span class="nc" id="L172">		extensions.setText(getExtensions());</span>
+
+<span class="nc" id="L174">		labelFileExtensions.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));</span>
+<span class="nc" id="L175">		CompoundBorder border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10),</span>
+<span class="nc" id="L176">				BorderFactory.createEtchedBorder());</span>
+<span class="nc" id="L177">		border = BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
+<span class="nc" id="L178">		south.setBorder(border);</span>
+<span class="nc" id="L179">		south.add(labelFileExtensions, BorderLayout.WEST);</span>
+<span class="nc" id="L180">		south.add(extensions, BorderLayout.CENTER);</span>
+
+<span class="nc" id="L182">		south.add(changeDirButton, BorderLayout.SOUTH);</span>
+
+<span class="nc" id="L184">		getContentPane().add(south, BorderLayout.SOUTH);</span>
+<span class="nc" id="L185">		getContentPane().add(scrollPane, BorderLayout.CENTER);</span>
+
+<span class="nc" id="L187">		final MouseListener mouseListener = new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+<span class="nc bnc" id="L191" title="All 2 branches missed.">					if (e.getClickCount() == 2) {</span>
+<span class="nc" id="L192">						final int index = jList1.locationToIndex(e.getPoint());</span>
+<span class="nc" id="L193">						doubleClick((SimpleLine) jList1.getModel().getElementAt(index), jList1.getModel(), index);</span>
+					}
+<span class="nc" id="L195">				} catch (Exception ex) {</span>
+
+<span class="nc" id="L197">				}</span>
+<span class="nc" id="L198">			}</span>
+		};
+<span class="nc" id="L200">		jList1.addMouseListener(mouseListener);</span>
+<span class="nc" id="L201">		changeDirButton.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L203">				System.err.println(&quot;Opening Directory Window&quot;);</span>
+<span class="nc" id="L204">				displayDialogChangeDir();</span>
+<span class="nc" id="L205">			}</span>
+		});
+<span class="nc" id="L207">		jList1.addKeyListener(new KeyAdapter() {</span>
+			@Override
+			public void keyPressed(KeyEvent e) {
+<span class="nc bnc" id="L210" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_ENTER) {</span>
+<span class="nc" id="L211">					final int index = jList1.getSelectedIndex();</span>
+<span class="nc" id="L212">					doubleClick((SimpleLine) jList1.getModel().getElementAt(index), jList1.getModel(), index);</span>
+				}
+<span class="nc" id="L214">			}</span>
+
+		});
+
+<span class="nc" id="L218">		extensions.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L220">				changeExtensions(extensions.getText());</span>
+<span class="nc" id="L221">			}</span>
+		});
+<span class="nc" id="L223">		extensions.addFocusListener(new FocusListener() {</span>
+
+			public void focusGained(FocusEvent e) {
+<span class="nc" id="L226">			}</span>
+
+			public void focusLost(FocusEvent e) {
+<span class="nc" id="L229">				changeExtensions(extensions.getText());</span>
+<span class="nc" id="L230">			}</span>
+		});
+
+<span class="nc" id="L233">		final JMenuBar menuBar = new JMenuBar();</span>
+<span class="nc" id="L234">		final JMenu mFile = new JMenu(&quot;File&quot;);</span>
+<span class="nc" id="L235">		menuBar.add(mFile);</span>
+<span class="nc" id="L236">		setJMenuBar(menuBar);</span>
+
+<span class="nc" id="L238">		final JMenuItem sprite = new JMenuItem(&quot;Open Sprite Window&quot;);</span>
+<span class="nc" id="L239">		mFile.add(sprite);</span>
+<span class="nc" id="L240">		sprite.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L242">				new SpriteWindow();</span>
+<span class="nc" id="L243">			}</span>
+		});
+
+<span class="nc" id="L246">		final JMenuItem about = new JMenuItem(&quot;About&quot;);</span>
+<span class="nc" id="L247">		mFile.add(about);</span>
+<span class="nc" id="L248">		about.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L250">				new AboutWindow();</span>
+<span class="nc" id="L251">			}</span>
+		});
+
+<span class="nc" id="L254">		final JMenuItem exit = new JMenuItem(&quot;Exit&quot;);</span>
+<span class="nc" id="L255">		mFile.add(exit);</span>
+<span class="nc" id="L256">		exit.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L258">				System.exit(0);</span>
+<span class="nc" id="L259">			}</span>
+		});
+
+<span class="nc" id="L262">		setSize(640, 400);</span>
+<span class="nc" id="L263">		this.setLocationRelativeTo(this.getParent());</span>
+<span class="nc" id="L264">		setVisible(true);</span>
+<span class="nc" id="L265">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+
+<span class="nc" id="L267">		startTimer();</span>
+<span class="nc" id="L268">	}</span>
+
+	private static File getDirectory(File arg) {
+<span class="nc bnc" id="L271" title="All 6 branches missed.">		if (arg != null &amp;&amp; arg.exists() &amp;&amp; arg.isDirectory()) {</span>
+<span class="nc" id="L272">			return arg;</span>
+		}
+<span class="nc" id="L274">		return new File(prefs.get(KEY_DIR, &quot;.&quot;));</span>
+	}
+
+	private void startTimer() {
+<span class="nc" id="L278">		Log.info(&quot;Init done&quot;);</span>
+<span class="nc" id="L279">		final Timer timer = new Timer(period, new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L281">				tick();</span>
+<span class="nc" id="L282">			}</span>
+		});
+<span class="nc" id="L284">		timer.setInitialDelay(0);</span>
+<span class="nc" id="L285">		timer.start();</span>
+<span class="nc" id="L286">		Log.info(&quot;Timer started&quot;);</span>
+<span class="nc" id="L287">	}</span>
+
+	private void displayDialogChangeDir() {
+<span class="nc" id="L290">		final JFileChooser chooser = new JFileChooser();</span>
+<span class="nc" id="L291">		chooser.setDialogType(JFileChooser.CUSTOM_DIALOG);</span>
+<span class="nc" id="L292">		chooser.setDialogTitle(&quot;Directory to watch:&quot;);</span>
+<span class="nc" id="L293">		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);</span>
+<span class="nc" id="L294">		chooser.setAcceptAllFileFilterUsed(false);</span>
+<span class="nc" id="L295">		final String currentPath = prefs.get(KEY_DIR, &quot;.&quot;);</span>
+<span class="nc" id="L296">		chooser.setCurrentDirectory(new File(currentPath));</span>
+<span class="nc" id="L297">		Log.info(&quot;Showing OpenDialog&quot;);</span>
+<span class="nc" id="L298">		final int returnVal = chooser.showOpenDialog(this);</span>
+<span class="nc" id="L299">		Log.info(&quot;Closing OpenDialog&quot;);</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">		if (returnVal == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L301">			final File dir = chooser.getSelectedFile();</span>
+<span class="nc" id="L302">			changeDir(dir);</span>
+		}
+
+<span class="nc" id="L305">	}</span>
+
+	private void changeDir(File dir) {
+<span class="nc" id="L308">		prefs.put(KEY_DIR, dir.getAbsolutePath());</span>
+<span class="nc" id="L309">		dirWatcher.cancel();</span>
+<span class="nc" id="L310">		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));</span>
+<span class="nc" id="L311">		setTitle(dir.getAbsolutePath());</span>
+<span class="nc" id="L312">		Log.info(&quot;Creating DirWatcher&quot;);</span>
+<span class="nc" id="L313">		currentDirectoryListing2.clear();</span>
+<span class="nc" id="L314">		jList1.setListData(new Vector&lt;&gt;(currentDirectoryListing2));</span>
+<span class="nc" id="L315">		jList1.setVisible(true);</span>
+<span class="nc" id="L316">	}</span>
+
+	private void doubleClick(SimpleLine simpleLine, ListModel listModel, int index) {
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		for (ImageWindow win : openWindows2) {</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">			if (win.getSimpleLine().equals(simpleLine)) {</span>
+<span class="nc" id="L321">				win.setVisible(true);</span>
+<span class="nc" id="L322">				win.setExtendedState(Frame.NORMAL);</span>
+<span class="nc" id="L323">				return;</span>
+			}
+<span class="nc" id="L325">		}</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">		if (simpleLine.getGeneratedImage() != null) {</span>
+<span class="nc" id="L327">			openWindows2.add(new ImageWindow(simpleLine, this, listModel, index));</span>
+		}
+<span class="nc" id="L329">	}</span>
+
+	private void tick() {
+<span class="nc" id="L332">		SwingUtilities.invokeLater(new Runnable() {</span>
+			public void run() {
+				try {
+<span class="nc" id="L335">					final boolean changed = refreshDir();</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">					if (changed) {</span>
+<span class="nc" id="L337">						jList1.setListData(new Vector&lt;&gt;(currentDirectoryListing2));</span>
+<span class="nc" id="L338">						jList1.setVisible(true);</span>
+					}
+<span class="nc" id="L340">				} catch (IOException e) {</span>
+<span class="nc" id="L341">					Logme.error(e);</span>
+<span class="nc" id="L342">				} catch (InterruptedException e) {</span>
+<span class="nc" id="L343">					Logme.error(e);</span>
+<span class="nc" id="L344">				} catch (ExecutionException e) {</span>
+<span class="nc" id="L345">					Logme.error(e);</span>
+<span class="nc" id="L346">				}</span>
+<span class="nc" id="L347">			}</span>
+		});
+<span class="nc" id="L349">	}</span>
+
+	private boolean refreshDir() throws IOException, InterruptedException, ExecutionException {
+<span class="nc" id="L352">		final Map&lt;File, Future&lt;List&lt;GeneratedImage&gt;&gt;&gt; createdFiles2 = dirWatcher.buildCreatedFiles();</span>
+<span class="nc" id="L353">		boolean changed = false;</span>
+
+<span class="nc bnc" id="L355" title="All 2 branches missed.">		for (Map.Entry&lt;File, Future&lt;List&lt;GeneratedImage&gt;&gt;&gt; ent : createdFiles2.entrySet()) {</span>
+<span class="nc" id="L356">			final File file = ent.getKey();</span>
+<span class="nc" id="L357">			removeAllThatUseThisFile(file);</span>
+<span class="nc" id="L358">			final Future&lt;List&lt;GeneratedImage&gt;&gt; future = ent.getValue();</span>
+<span class="nc" id="L359">			final SimpleLine simpleLine = SimpleLine.fromFuture(file, future);</span>
+<span class="nc" id="L360">			currentDirectoryListing2.add(simpleLine);</span>
+<span class="nc" id="L361">			changed = true;</span>
+<span class="nc" id="L362">		}</span>
+
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		for (SimpleLine line : new ArrayList&lt;&gt;(currentDirectoryListing2)) {</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">			if (line.pendingAndFinished()) {</span>
+<span class="nc" id="L366">				currentDirectoryListing2.remove(line);</span>
+<span class="nc" id="L367">				changed = true;</span>
+<span class="nc" id="L368">				final Future&lt;List&lt;GeneratedImage&gt;&gt; future = line.getFuture();</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">				for (GeneratedImage im : future.get()) {</span>
+<span class="nc" id="L370">					mayRefreshImageWindow(im.getPngFile());</span>
+<span class="nc" id="L371">					final SimpleLine simpleLine = SimpleLine.fromGeneratedImage(line.getFile(), im);</span>
+<span class="nc" id="L372">					currentDirectoryListing2.add(simpleLine);</span>
+<span class="nc" id="L373">				}</span>
+			}
+<span class="nc" id="L375">		}</span>
+<span class="nc" id="L376">		Collections.sort(currentDirectoryListing2);</span>
+<span class="nc" id="L377">		return changed;</span>
+	}
+
+	private void removeAllThatUseThisFile(File file) {
+<span class="nc bnc" id="L381" title="All 2 branches missed.">		for (final Iterator&lt;SimpleLine&gt; it = currentDirectoryListing2.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L382">			final SimpleLine line = it.next();</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">			if (line.getFile().equals(file)) {</span>
+<span class="nc" id="L384">				it.remove();</span>
+			}
+<span class="nc" id="L386">		}</span>
+<span class="nc" id="L387">	}</span>
+
+	private void mayRefreshImageWindow(File pngFile) {
+<span class="nc bnc" id="L390" title="All 2 branches missed.">		for (ImageWindow win : openWindows2) {</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">			if (win.getSimpleLine().getGeneratedImage() == null) {</span>
+<span class="nc" id="L392">				continue;</span>
+			}
+<span class="nc bnc" id="L394" title="All 2 branches missed.">			if (pngFile.equals(win.getSimpleLine().getGeneratedImage().getPngFile())) {</span>
+<span class="nc" id="L395">				win.refreshImage(true);</span>
+			}
+<span class="nc" id="L397">		}</span>
+
+<span class="nc" id="L399">	}</span>
+
+	public void closing(ImageWindow imageWindow) {
+<span class="nc" id="L402">		final boolean ok = openWindows2.remove(imageWindow);</span>
+<span class="nc bnc" id="L403" title="All 2 branches missed.">		if (ok == false) {</span>
+<span class="nc" id="L404">			throw new IllegalStateException();</span>
+		}
+<span class="nc" id="L406">	}</span>
+
+	public List&lt;SimpleLine&gt; getCurrentDirectoryListing2() {
+<span class="nc" id="L409">		return Collections.unmodifiableList(currentDirectoryListing2);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

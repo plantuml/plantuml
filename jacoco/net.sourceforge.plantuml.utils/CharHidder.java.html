@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharHidder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.utils</a> &gt; <span class="el_source">CharHidder.java</span></div><h1>CharHidder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.utils;
+
+<span class="nc" id="L38">public class CharHidder {</span>
+	// ::remove file when __HAXE__
+
+	public static String addTileAtBegin(String s) {
+<span class="nc" id="L42">		return &quot;~&quot; + s;</span>
+	}
+
+	public static String hide(String s) {
+		// System.err.println(&quot;hide &quot; + s);
+<span class="fc" id="L47">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L49">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L50" title="1 of 6 branches missed.">			if (c == '\\' &amp;&amp; i + 1 &lt; s.length() &amp;&amp; s.charAt(i + 1) == '~') {</span>
+<span class="nc" id="L51">				result.append(hideChar('~'));</span>
+<span class="nc" id="L52">				i++;</span>
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">			} else if (c == '~' &amp;&amp; i + 1 &lt; s.length()) {</span>
+<span class="fc" id="L54">				i++;</span>
+<span class="fc" id="L55">				final char c2 = s.charAt(i);</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">				if (isToBeHidden(c2)) {</span>
+<span class="nc" id="L57">					result.append(hideChar(c2));</span>
+				} else {
+<span class="fc" id="L59">					result.append(c);</span>
+<span class="fc" id="L60">					result.append(c2);</span>
+				}
+
+<span class="fc" id="L63">			} else {</span>
+<span class="fc" id="L64">				result.append(c);</span>
+			}
+		}
+		// System.err.println(&quot;---&gt; &quot; + result);
+<span class="fc" id="L68">		return result.toString();</span>
+	}
+
+	private static boolean isToBeHidden(final char c) {
+<span class="pc bpc" id="L72" title="10 of 20 branches missed.">		if (c == '_' || c == '-' || c == '\&quot;' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/'</span>
+				|| c == '&lt;') {
+<span class="nc" id="L74">			return true;</span>
+		}
+<span class="fc" id="L76">		return false;</span>
+	}
+
+	private static char hideChar(char c) {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (c &gt; 255) {</span>
+<span class="nc" id="L81">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L83">		return (char) ('\uE000' + c);</span>
+	}
+
+	private static char unhideChar(char c) {
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		if (c &gt;= '\uE000' &amp;&amp; c &lt;= '\uE0FF') {</span>
+<span class="nc" id="L88">			return (char) (c - '\uE000');</span>
+		}
+<span class="fc" id="L90">		return c;</span>
+	}
+
+	public static String unhide(String s) {
+<span class="fc" id="L94">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L96">			final char c = s.charAt(i);</span>
+<span class="fc" id="L97">			result.append(unhideChar(c));</span>
+		}
+		// System.err.println(&quot;unhide &quot; + result);
+<span class="fc" id="L100">		return result.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

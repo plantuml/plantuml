@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GroupingStart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram</a> &gt; <span class="el_source">GroupingStart.java</span></div><h1>GroupingStart.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.url.Url;
+
+public class GroupingStart extends Grouping {
+
+<span class="fc" id="L50">	private final List&lt;GroupingLeaf&gt; children = new ArrayList&lt;&gt;();</span>
+	private final HColor backColorGeneral;
+
+	final private GroupingStart parent;
+<span class="fc" id="L54">	private boolean parallel = false;</span>
+
+	public GroupingStart(String title, String comment, HColor backColorGeneral, HColor backColorElement,
+			GroupingStart parent, StyleBuilder styleBuilder) {
+<span class="fc" id="L58">		super(title, comment, GroupingType.START, backColorElement, styleBuilder);</span>
+<span class="fc" id="L59">		this.backColorGeneral = backColorGeneral;</span>
+<span class="fc" id="L60">		this.parent = parent;</span>
+<span class="fc" id="L61">	}</span>
+
+	public Style[] getUsedStyles() {
+<span class="fc" id="L64">		final Style[] result = super.getUsedStyles();</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (result[0] != null)</span>
+<span class="fc" id="L66">			result[0] = result[0].eventuallyOverride(PName.BackGroundColor, backColorGeneral);</span>
+
+<span class="fc" id="L68">		return result;</span>
+	}
+
+	List&lt;GroupingLeaf&gt; getChildren() {
+<span class="nc" id="L72">		return Collections.unmodifiableList(children);</span>
+	}
+
+	public void addChildren(GroupingLeaf g) {
+<span class="fc" id="L76">		children.add(g);</span>
+<span class="fc" id="L77">	}</span>
+
+	public int getLevel() {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L81">			return 0;</span>
+
+<span class="nc" id="L83">		return parent.getLevel() + 1;</span>
+	}
+
+	@Override
+	public HColor getBackColorGeneral() {
+<span class="fc" id="L88">		return backColorGeneral;</span>
+	}
+
+	public boolean dealWith(Participant someone) {
+<span class="nc" id="L92">		return false;</span>
+	}
+
+	public Url getUrl() {
+<span class="nc" id="L96">		return null;</span>
+	}
+
+	public boolean hasUrl() {
+<span class="nc" id="L100">		return false;</span>
+	}
+
+	@Override
+	public boolean isParallel() {
+<span class="pc bpc" id="L105" title="1 of 4 branches missed.">		return parallel || isPar2GroupStart();</span>
+	}
+
+	public void goParallel() {
+<span class="fc" id="L109">		this.parallel = true;</span>
+<span class="fc" id="L110">	}</span>
+
+	public boolean isPar2GroupStart() {
+<span class="fc" id="L113">		return getTitle().equals(&quot;par2&quot;);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

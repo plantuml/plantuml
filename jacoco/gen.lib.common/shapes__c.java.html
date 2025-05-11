@@ -1,0 +1,2456 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>shapes__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">shapes__c.java</span></div><h1>shapes__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.common.geom__c.ccwrotatepf;
+import static gen.lib.common.geom__c.cwrotatepf;
+import static gen.lib.common.htmltable__c.html_port;
+import static gen.lib.common.labels__c.make_label;
+import static gen.lib.common.utils__c.late_double;
+import static gen.lib.common.utils__c.late_int;
+import static gen.lib.common.utils__c.late_string;
+import static gen.lib.common.utils__c.mapbool;
+import static gen.lib.common.utils__c.safefile;
+import static h.ST_pointf.pointfof;
+import static smetana.core.JUtils.strcmp;
+import static smetana.core.Macro.BETWEEN;
+import static smetana.core.Macro.BOTTOM;
+import static smetana.core.Macro.DIST2;
+import static smetana.core.Macro.FIXEDSHAPE;
+import static smetana.core.Macro.GD_drawing;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_rankdir;
+import static smetana.core.Macro.GD_realflip;
+import static smetana.core.Macro.INSIDE;
+import static smetana.core.Macro.LEFT;
+import static smetana.core.Macro.LT_HTML;
+import static smetana.core.Macro.LT_NONE;
+import static smetana.core.Macro.M_PI;
+import static smetana.core.Macro.ND_coord;
+import static smetana.core.Macro.ND_has_port;
+import static smetana.core.Macro.ND_height;
+import static smetana.core.Macro.ND_ht;
+import static smetana.core.Macro.ND_label;
+import static smetana.core.Macro.ND_lw;
+import static smetana.core.Macro.ND_rw;
+import static smetana.core.Macro.ND_shape;
+import static smetana.core.Macro.ND_shape_info;
+import static smetana.core.Macro.ND_width;
+import static smetana.core.Macro.PAD;
+import static smetana.core.Macro.PF2P;
+import static smetana.core.Macro.POINTS;
+import static smetana.core.Macro.PS2INCH;
+import static smetana.core.Macro.RADIANS;
+import static smetana.core.Macro.RIGHT;
+import static smetana.core.Macro.ROUND;
+import static smetana.core.Macro.SQR;
+import static smetana.core.Macro.SQRT2;
+import static smetana.core.Macro.TOP;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.hypot;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Difficult;
+import gen.annotation.Doc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.EN_shape_kind;
+import h.ST_Agnode_s;
+import h.ST_boxf;
+import h.ST_field_t;
+import h.ST_inside_t;
+import h.ST_point;
+import h.ST_pointf;
+import h.ST_polygon_t;
+import h.ST_port;
+import h.ST_shape_desc;
+import h.ST_textlabel_t;
+import smetana.core.CArray;
+import smetana.core.CArrayOfStar;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.ZType;
+
+<span class="nc" id="L123">public class shapes__c {</span>
+
+
+
+
+//3 eb4jyrh981apg1fy13fczexdl
+// static int same_side(pointf p0, pointf p1, pointf L0, pointf L1) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;same_side&quot;, key=&quot;eb4jyrh981apg1fy13fczexdl&quot;, definition=&quot;static int same_side(pointf p0, pointf p1, pointf L0, pointf L1)&quot;)
+public static boolean same_side(final ST_pointf p0, final ST_pointf p1, final ST_pointf L0, final ST_pointf L1) {
+// WARNING!! STRUCT
+<span class="fc" id="L134">return same_side_w_(p0.copy(), p1.copy(), L0.copy(), L1.copy());</span>
+}
+private static boolean same_side_w_(final ST_pointf p0, final ST_pointf p1, final ST_pointf L0, final ST_pointf L1) {
+<span class="fc" id="L137">ENTERING(&quot;eb4jyrh981apg1fy13fczexdl&quot;,&quot;same_side&quot;);</span>
+try {
+    boolean s0, s1;
+    double a, b, c;
+    /* a x + b y = c */
+<span class="fc" id="L142">    a = -(L1.y - L0.y);</span>
+<span class="fc" id="L143">    b = L1.x - L0.x;</span>
+<span class="fc" id="L144">    c = a * L0.x + b * L0.y;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">    s0 = a * p0.x + b * p0.y - c &gt;= 0;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">    s1 = a * p1.x + b * p1.y - c &gt;= 0;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">    return (s0 == s1);</span>
+} finally {
+<span class="fc" id="L149">LEAVING(&quot;eb4jyrh981apg1fy13fczexdl&quot;,&quot;same_side&quot;);</span>
+}
+}
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;shapeOf&quot;, key=&quot;5gahokttzv65lspm84ao1le37&quot;, definition=&quot;shape_kind shapeOf(node_t * n)&quot;)
+public static EN_shape_kind shapeOf(ST_Agnode_s n) {
+<span class="fc" id="L158">ENTERING(&quot;5gahokttzv65lspm84ao1le37&quot;,&quot;shapeOf&quot;);</span>
+try {
+<span class="fc" id="L160">	ST_shape_desc sh = (ST_shape_desc) ND_shape(n);</span>
+    CFunction ifn; //void (*ifn) (node_t *);
+    
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">    if ((sh) == null)</span>
+<span class="nc" id="L164">	return EN_shape_kind.SH_UNSET;</span>
+<span class="fc" id="L165">    ifn = ND_shape(n).fns.initfn;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">    if (ifn.getName().equals(&quot;poly_init&quot;))</span>
+<span class="fc" id="L167">	return EN_shape_kind.SH_POLY;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">    if (ifn.getName().equals(&quot;record_init&quot;))</span>
+<span class="fc" id="L169">	return EN_shape_kind.SH_RECORD;</span>
+<span class="nc" id="L170">UNSUPPORTED(&quot;cpzx2lwu889clk2f1d0k4c9jd&quot;); //     else if (ifn == point_init)</span>
+<span class="nc" id="L171">UNSUPPORTED(&quot;f4x4vap21dff1trk1lrzzb8u5&quot;); // 	return SH_POINT;</span>
+<span class="nc" id="L172">UNSUPPORTED(&quot;alkskrmw3fjn82qi1t2kyi6uh&quot;); //     else if (ifn == epsf_init)</span>
+<span class="nc" id="L173">UNSUPPORTED(&quot;5hp3oli47xj0s4fk7yj1dairi&quot;); // 	return SH_EPSF;</span>
+<span class="nc" id="L174">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
+<span class="nc" id="L175">UNSUPPORTED(&quot;7if5cqgy6h2m78kwe6gagv7p&quot;); // 	return SH_UNSET;</span>
+<span class="nc" id="L176">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L178">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L180">LEAVING(&quot;5gahokttzv65lspm84ao1le37&quot;,&quot;shapeOf&quot;);</span>
+}
+}
+
+
+
+
+//3 e8riwo21j5t1g1tewsbo39z48
+// boolean isPolygon(node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;isPolygon&quot;, key=&quot;e8riwo21j5t1g1tewsbo39z48&quot;, definition=&quot;boolean isPolygon(node_t * n)&quot;)
+public static Object isPolygon(Object... arg) {
+<span class="nc" id="L192">UNSUPPORTED(&quot;6tth154tjxb21b1rr8m3w5lbj&quot;); // boolean isPolygon(node_t * n)</span>
+<span class="nc" id="L193">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L194">UNSUPPORTED(&quot;9uh2xgxrn4veetmkfkbe9iq7y&quot;); //     return (ND_shape(n) &amp;&amp; (ND_shape(n)-&gt;fns-&gt;initfn == poly_init));</span>
+<span class="nc" id="L195">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L197">throw new UnsupportedOperationException();</span>
+}
+
+
+<span class="fc" id="L201">public static CFunction poly_init = new CFunctionAbstract(&quot;poly_init&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L204">		poly_init(zz, (ST_Agnode_s)args[0]);</span>
+<span class="fc" id="L205">		return null;</span>
+	}};
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Difficult
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;poly_init&quot;, key=&quot;a11xv6duihbr3d6gkgo2ye2j5&quot;, definition=&quot;static void poly_init(node_t * n)&quot;)
+public static void poly_init(Globals zz, ST_Agnode_s n) {
+<span class="fc" id="L211">ENTERING(&quot;a11xv6duihbr3d6gkgo2ye2j5&quot;,&quot;poly_init&quot;);</span>
+try {
+<span class="fc" id="L213">    final ST_pointf dimen = new ST_pointf(), min_bb = new ST_pointf(), bb = new ST_pointf();</span>
+<span class="fc" id="L214">    final ST_point imagesize = new ST_point();</span>
+<span class="fc" id="L215">    final ST_pointf P = new ST_pointf(), Q = new ST_pointf(), R = new ST_pointf();</span>
+<span class="fc" id="L216">    CArray&lt;ST_pointf&gt; vertices = null;</span>
+    CString p, sfile, fxd;
+    double temp, alpha, beta, gamma;
+    double orientation, distortion, skew;
+    double sectorangle, sidelength, skewdist, gdistortion, gskew;
+<span class="fc" id="L221">    double angle, sinx, cosx, xmax=0, ymax=0, scalex, scaley;</span>
+<span class="fc" id="L222">    double width=0, height=0, marginx, marginy, spacex;</span>
+    boolean regular; int peripheries, sides;
+    boolean isBox; int i, j, outp;
+<span class="fc" id="L225">    ST_polygon_t poly = new ST_polygon_t();</span>
+    
+    
+<span class="fc" id="L228">    regular = ND_shape(n).polygon.regular;</span>
+<span class="fc" id="L229">    peripheries = ND_shape(n).polygon.peripheries;</span>
+<span class="fc" id="L230">    sides = ND_shape(n).polygon.sides;</span>
+<span class="fc" id="L231">    orientation = ND_shape(n).polygon.orientation;</span>
+<span class="fc" id="L232">    skew = ND_shape(n).polygon.skew;</span>
+<span class="fc" id="L233">    distortion = ND_shape(n).polygon.distortion;</span>
+<span class="fc" id="L234">    regular |= mapbool(agget(zz, n, new CString(&quot;regular&quot;)));</span>
+    
+    /* all calculations in floating point POINTS */
+
+    /* make x and y dimensions equal if node is regular
+     *   If the user has specified either width or height, use the max.
+     *   Else use minimum default value.
+     * If node is not regular, use the current width and height.
+     */
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">    if (regular) {</span>
+<span class="nc" id="L244">UNSUPPORTED(&quot;637wuscax8bj094m73fwq3n00&quot;); // 	double sz = userSize(n);</span>
+<span class="nc" id="L245">UNSUPPORTED(&quot;6wtpde1bxbwd70jz3vuemuvqe&quot;); // 	if (sz &gt; 0.0)</span>
+<span class="nc" id="L246">UNSUPPORTED(&quot;c4cn28kuy1f86y4d8rbxy1a4g&quot;); // 	    width = height = sz;</span>
+<span class="nc" id="L247">UNSUPPORTED(&quot;8k75h069sv2k9b6tgz77dscwd&quot;); // 	else {</span>
+<span class="nc" id="L248">UNSUPPORTED(&quot;mafr2nmpj8xgeranqldzxhtb&quot;); // 	    width = (((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;width);</span>
+<span class="nc" id="L249">UNSUPPORTED(&quot;l2a1m5p66005ftc6gdbosugj&quot;); // 	    height = (((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;height);</span>
+<span class="nc" id="L250">UNSUPPORTED(&quot;61qxt5l8ums7d9os9ungn3rao&quot;); // 	    width = height = ((((((width)&lt;(height)?(width):(height)))*72&gt;=0)?(int)((((width)&lt;(height)?(width):(height)))*72 + .5):(int)((((width)&lt;(height)?(width):(height)))*72 - .5)));</span>
+<span class="nc" id="L251">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    } else {
+<span class="fc" id="L253">	width = POINTS(ND_width(n));</span>
+<span class="fc" id="L254">	height = POINTS(ND_height(n));</span>
+    }
+    
+    
+<span class="fc" id="L258">    peripheries = late_int(n, zz.N_peripheries, peripheries, 0);</span>
+<span class="fc" id="L259">    orientation += late_double(n, zz.N_orientation, 0.0, -360.0);</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">    if (sides == 0) {		/* not for builtins */</span>
+<span class="nc" id="L261">UNSUPPORTED(&quot;dd178b113cb8130tl6q70lcp3&quot;); // 	skew = late_double(n, N_skew, 0.0, -100.0);</span>
+<span class="nc" id="L262">UNSUPPORTED(&quot;cp83hdn3dp0a7rp9bauc3bgki&quot;); // 	sides = late_int(n, N_sides, 4, 0);</span>
+<span class="nc" id="L263">UNSUPPORTED(&quot;abmuc3vqirf3i48480fj0k14g&quot;); // 	distortion = late_double(n, N_distortion, 0.0, -100.0);</span>
+    }
+    
+    
+    /* get label dimensions */
+<span class="fc" id="L268">    dimen.___(ND_label(n).dimen);</span>
+    
+    
+    /* minimal whitespace around label */
+<span class="pc bpc" id="L272" title="2 of 4 branches missed.">    if (ROUND(Math.abs(dimen.x))!=0 || ROUND(Math.abs(dimen.y))!=0) {</span>
+    	/* padding */
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">	if ((p = agget(zz, n, new CString(&quot;margin&quot;)))!=null) {</span>
+<span class="nc" id="L275">UNSUPPORTED(&quot;4dlqwm3pklzgz2e777dm56n03&quot;); // 	    marginx = marginy = 0;</span>
+<span class="nc" id="L276">UNSUPPORTED(&quot;r186dwelv54pq63p2yo4czig&quot;); // 	    i = sscanf(p, &quot;%lf,%lf&quot;, &amp;marginx, &amp;marginy);</span>
+<span class="nc" id="L277">UNSUPPORTED(&quot;bjp5a2wbzhormf75ov5fumqto&quot;); // 	    if (marginx &lt; 0)</span>
+<span class="nc" id="L278">UNSUPPORTED(&quot;3tsws28ifjzq7ju8xs3ye4x18&quot;); // 		marginx = 0;</span>
+<span class="nc" id="L279">UNSUPPORTED(&quot;7gfecwqgqof787z8u1mgh7qoj&quot;); // 	    if (marginy &lt; 0)</span>
+<span class="nc" id="L280">UNSUPPORTED(&quot;1xpqznf0i4ljd2b5j81ipsvtg&quot;); // 		marginy = 0;</span>
+<span class="nc" id="L281">UNSUPPORTED(&quot;1lcx62wzgnn34tk5li0sgoqwm&quot;); // 	    if (i &gt; 0) {</span>
+<span class="nc" id="L282">UNSUPPORTED(&quot;dau1s6m0w92gp7bvqz3f63wnp&quot;); // 		dimen.x += 2 * ((((marginx)*72&gt;=0)?(int)((marginx)*72 + .5):(int)((marginx)*72 - .5)));</span>
+<span class="nc" id="L283">UNSUPPORTED(&quot;79iqlz01of88ftxysvivw2hgw&quot;); // 		if (i &gt; 1)</span>
+<span class="nc" id="L284">UNSUPPORTED(&quot;6opppos2hcjet4cn76130ykba&quot;); // 		    dimen.y += 2 * ((((marginy)*72&gt;=0)?(int)((marginy)*72 + .5):(int)((marginy)*72 - .5)));</span>
+<span class="nc" id="L285">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L286">UNSUPPORTED(&quot;8bwwxn4jop0urcsfnygjofg9s&quot;); // 		    dimen.y += 2 * ((((marginx)*72&gt;=0)?(int)((marginx)*72 + .5):(int)((marginx)*72 - .5)));</span>
+<span class="nc" id="L287">UNSUPPORTED(&quot;afk9bpom7x393euamnvwwkx6b&quot;); // 	    } else</span>
+<span class="nc" id="L288">UNSUPPORTED(&quot;87bdwkkwbzyswxnepdd9bj8mb&quot;); // 		{((dimen).x += 4*4); ((dimen).y += 2*4);};</span>
+	} else
+<span class="fc" id="L290">	    PAD(dimen);</span>
+    }
+<span class="fc" id="L292">    spacex = dimen.x - ND_label(n).dimen.x;</span>
+    
+    
+    /* quantization */
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">    if ((temp = GD_drawing(agraphof(n)).quantum) &gt; 0.0) {</span>
+<span class="nc" id="L297">UNSUPPORTED(&quot;3nqb0s5rkwj3igt71vooj8asd&quot;); // 	temp = ((((temp)*72&gt;=0)?(int)((temp)*72 + .5):(int)((temp)*72 - .5)));</span>
+<span class="nc" id="L298">UNSUPPORTED(&quot;5fxtqwy8liyvnx1yvsou5hb4o&quot;); // 	dimen.x = quant(dimen.x, temp);</span>
+<span class="nc" id="L299">UNSUPPORTED(&quot;et885f1jcqpske6ip856arouv&quot;); // 	dimen.y = quant(dimen.y, temp);</span>
+    }
+    
+    
+<span class="fc" id="L303">    imagesize.x = imagesize.y = 0;</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">    if (ND_shape(n).usershape) {</span>
+	/* custom requires a shapefile
+	 * not custom is an adaptable user shape such as a postscript
+	 * function.
+	 */
+<span class="nc" id="L309">UNSUPPORTED(&quot;7jbvoylyb27di8f54ufxj4mbk&quot;); // 	if ((*((((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;shape)-&gt;name)==*(&quot;custom&quot;)&amp;&amp;!strcmp((((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;shape)-&gt;name,&quot;custom&quot;))) {</span>
+<span class="nc" id="L310">UNSUPPORTED(&quot;cnfv2ayyl46ohdl5p4pc75swz&quot;); // 	    sfile = agget(n, &quot;shapefile&quot;);</span>
+<span class="nc" id="L311">UNSUPPORTED(&quot;6llro6gigojo2r8oo6c4k320o&quot;); // 	    imagesize = gvusershape_size(agraphof(n), sfile);</span>
+<span class="nc" id="L312">UNSUPPORTED(&quot;3ngt3ika8ppq3m9vbgf2q5lu1&quot;); // 	    if ((imagesize.x == -1) &amp;&amp; (imagesize.y == -1)) {</span>
+<span class="nc" id="L313">UNSUPPORTED(&quot;5l8jenkv77ax02t47zzxyv1k0&quot;); // 		agerr(AGWARN,</span>
+<span class="nc" id="L314">UNSUPPORTED(&quot;7hgyav5bbs1v4kts1oocozork&quot;); // 		      &quot;No or improper shapefile=\&quot;%s\&quot; for node \&quot;%s\&quot;\n&quot;,</span>
+<span class="nc" id="L315">UNSUPPORTED(&quot;34s5a4xy12nydt3idmis4np67&quot;); // 		      (sfile ? sfile : &quot;&lt;nil&gt;&quot;), agnameof(n));</span>
+<span class="nc" id="L316">UNSUPPORTED(&quot;apwtbaz0akr5pg5p6uwcroaan&quot;); // 		imagesize.x = imagesize.y = 0;</span>
+<span class="nc" id="L317">UNSUPPORTED(&quot;175pyfe8j8mbhdwvrbx3gmew9&quot;); // 	    } else {</span>
+<span class="nc" id="L318">UNSUPPORTED(&quot;4xiqgw4br039sl4r32gg5jv6k&quot;); // 		(((Agraphinfo_t*)(((Agobj_t*)(agraphof(n)))-&gt;data))-&gt;has_images) = (!(0));</span>
+<span class="nc" id="L319">UNSUPPORTED(&quot;3nl4wsbxuqlad4tcg8vmg99rx&quot;); // 		imagesize.x += 2;	/* some fixed padding */</span>
+<span class="nc" id="L320">UNSUPPORTED(&quot;da00oaavfp6fwqwgshhrodz2r&quot;); // 		imagesize.y += 2;</span>
+<span class="nc" id="L321">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L322">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="pc bpc" id="L323" title="3 of 4 branches missed.">    } else if ((sfile = agget(zz, n, new CString(&quot;image&quot;)))!=null &amp;&amp; (sfile.charAt(0) != '\0')) {</span>
+<span class="nc" id="L324">UNSUPPORTED(&quot;76t38i30025xohbzg8w9z4pn9&quot;); // 	imagesize = gvusershape_size(agraphof(n), sfile);</span>
+<span class="nc" id="L325">UNSUPPORTED(&quot;b8spvmvtuxcciaejq8j1xhu5s&quot;); // 	if ((imagesize.x == -1) &amp;&amp; (imagesize.y == -1)) {</span>
+<span class="nc" id="L326">UNSUPPORTED(&quot;cw5grwj6gbj94jcztvnp2ooyj&quot;); // 	    agerr(AGWARN,</span>
+<span class="nc" id="L327">UNSUPPORTED(&quot;68jdsrao22ymfpb8e1rdezyez&quot;); // 		  &quot;No or improper image=\&quot;%s\&quot; for node \&quot;%s\&quot;\n&quot;,</span>
+<span class="nc" id="L328">UNSUPPORTED(&quot;5lmxoq1rboqrxrchjf5ubg6w5&quot;); // 		  (sfile ? sfile : &quot;&lt;nil&gt;&quot;), agnameof(n));</span>
+<span class="nc" id="L329">UNSUPPORTED(&quot;7wmzbnczyvj4oocepujtghrka&quot;); // 	    imagesize.x = imagesize.y = 0;</span>
+<span class="nc" id="L330">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L331">UNSUPPORTED(&quot;71mfu0uflnm85dbt8g2oxs9rd&quot;); // 	    (((Agraphinfo_t*)(((Agobj_t*)(agraphof(n)))-&gt;data))-&gt;has_images) = (!(0));</span>
+<span class="nc" id="L332">UNSUPPORTED(&quot;286u48muwmjkomlzqufoqm5cw&quot;); // 	    imagesize.x += 2;	/* some fixed padding */</span>
+<span class="nc" id="L333">UNSUPPORTED(&quot;1x57knvrmlciu7odfroo3paso&quot;); // 	    imagesize.y += 2;</span>
+<span class="nc" id="L334">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+    
+    
+    /* initialize node bb to labelsize */
+<span class="fc" id="L339">    bb.x = Math.max(dimen.x, imagesize.x);</span>
+<span class="fc" id="L340">    bb.y = Math.max(dimen.y, imagesize.y);</span>
+    
+    
+    /* I don't know how to distort or skew ellipses in postscript */
+    /* Convert request to a polygon with a large number of sides */
+<span class="pc bpc" id="L345" title="5 of 6 branches missed.">    if ((sides &lt;= 2) &amp;&amp; ((distortion != 0.) || (skew != 0.))) {</span>
+<span class="nc" id="L346">	sides = 120;</span>
+    }
+    
+    
+    /* extra sizing depends on if label is centered vertically */
+<span class="fc" id="L351">    p = agget(zz, n, new CString(&quot;labelloc&quot;));</span>
+<span class="pc bpc" id="L352" title="5 of 6 branches missed.">    if (p!=null &amp;&amp; (p.charAt(0) == 't' || p.charAt(0) == 'b'))</span>
+<span class="nc" id="L353">    ND_label(n).valign = p.charAt(0);</span>
+    else
+<span class="fc" id="L355">    ND_label(n).valign = 'c';</span>
+    
+    
+    
+<span class="pc bpc" id="L359" title="4 of 8 branches missed.">    isBox = (sides == 4 &amp;&amp; (ROUND(orientation) % 90) == 0</span>
+	     &amp;&amp; distortion == 0. &amp;&amp; skew == 0.);
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">    if (isBox) {</span>
+	/* for regular boxes the fit should be exact */
+<span class="nc bnc" id="L363" title="All 2 branches missed.">    } else if (ND_shape(n).polygon.vertices!=null) {</span>
+<span class="nc" id="L364">UNSUPPORTED(&quot;4adqsyjwqwzs50ggjp57ok6u7&quot;); // 	poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;shape)-&gt;polygon-&gt;vertices;</span>
+<span class="nc" id="L365">UNSUPPORTED(&quot;1fjwgzo5xkijo98ycmzhal8yv&quot;); // 	bb = pd-&gt;size_gen(bb);</span>
+    } else {
+	/* for all other shapes, compute a smallest ellipse
+	 * containing bb centered on the origin, and then pad for that.
+	 * We assume the ellipse is defined by a scaling up of bb.
+	 */
+<span class="nc" id="L371">	temp = bb.y * SQRT2;</span>
+<span class="nc bnc" id="L372" title="All 4 branches missed.">	if (height &gt; temp &amp;&amp; ND_label(n).valign == 'c') {</span>
+	    /* if there is height to spare
+	     * and the label is centered vertically
+	     * then just pad x in proportion to the spare height */
+<span class="nc" id="L376">	    bb.x *= Math.sqrt(1. / (1. - SQR(bb.y / height)));</span>
+	} else {
+<span class="nc" id="L378">	    bb.x *= SQRT2;</span>
+<span class="nc" id="L379">	    bb.y = temp;</span>
+	}
+<span class="nc bnc" id="L381" title="All 2 branches missed.">	if (sides &gt; 2) {</span>
+<span class="nc" id="L382">	    temp = Math.cos(M_PI / sides);</span>
+<span class="nc" id="L383">	    bb.x /= temp;</span>
+<span class="nc" id="L384">	    bb.y /= temp;</span>
+	    /* FIXME - for odd-sided polygons, e.g. triangles, there
+	       would be a better fit with some vertical adjustment of the shape */
+	}
+    }
+    
+    
+    
+    /* at this point, bb is the minimum size of node that can hold the label */
+<span class="fc" id="L393">    min_bb.___(bb);</span>
+    
+    
+    /* increase node size to width/height if needed */
+<span class="fc" id="L397">    fxd = late_string(n, zz.N_fixed, new CString(&quot;false&quot;));</span>
+<span class="pc bpc" id="L398" title="3 of 4 branches missed.">    if ((fxd.charAt(0) == 's') &amp;&amp; (strcmp(fxd,new CString(&quot;shape&quot;)) == 0)) {</span>
+<span class="nc" id="L399">	bb.x = width;</span>
+<span class="nc" id="L400">	bb.y = height;</span>
+<span class="nc" id="L401">	poly.option |= FIXEDSHAPE;</span>
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">    } else if (mapbool(fxd)) {</span>
+	/* check only label, as images we can scale to fit */
+<span class="nc bnc" id="L404" title="All 4 branches missed.">	if ((width &lt; ND_label(n).dimen.x) || (height &lt; ND_label(n).dimen.y))</span>
+<span class="nc" id="L405">	    System.err.println(</span>
+		  &quot;node '%s', graph '%s' size too small for label\n&quot;);
+		  //agnameof(n), agnameof(agraphof(n)));
+<span class="nc" id="L408">	bb.x = width;</span>
+<span class="nc" id="L409">	bb.y = height;</span>
+    } else {
+<span class="fc" id="L411">	bb.x = width = Math.max(width, bb.x);</span>
+<span class="fc" id="L412">	bb.y = height = Math.max(height, bb.y);</span>
+    }
+    
+    
+    /* If regular, make dimensions the same.
+     * Need this to guarantee final node size is regular.
+     */
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">    if (regular) {</span>
+<span class="nc" id="L420">	width = height = bb.x = bb.y = Math.max(bb.x, bb.y);</span>
+    }
+    
+    
+    /* Compute space available for label.  Provides the justification borders */
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">    if (!mapbool(late_string(n, zz.N_nojustify, new CString(&quot;false&quot;)))) {</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">	if (isBox) {</span>
+<span class="fc" id="L427">	    ND_label(n).space.x = Math.max(dimen.x,bb.x) - spacex;</span>
+	}
+<span class="nc bnc" id="L429" title="All 2 branches missed.">	else if (dimen.y &lt; bb.y) {</span>
+<span class="nc" id="L430">	    temp = bb.x * Math.sqrt(1.0 - SQR(dimen.y) / SQR(bb.y));</span>
+<span class="nc" id="L431">	    ND_label(n).space.x = Math.max(dimen.x,temp) - spacex;</span>
+        }
+	else
+<span class="nc" id="L434">	    ND_label(n).space.x = dimen.x - spacex;</span>
+    } else {
+<span class="nc" id="L436">	ND_label(n).space.x = dimen.x - spacex;</span>
+    }
+    
+    
+<span class="pc bpc" id="L440" title="1 of 2 branches missed.">    if ((poly.option &amp; FIXEDSHAPE) == 0) {</span>
+<span class="fc" id="L441">	temp = bb.y - min_bb.y;</span>
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">	if (dimen.y &lt; imagesize.y)</span>
+<span class="nc" id="L443">	    temp += imagesize.y - dimen.y;</span>
+<span class="fc" id="L444">	ND_label(n).space.y = dimen.y + temp;</span>
+    }
+    
+    
+<span class="fc" id="L448">    outp = peripheries;</span>
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">    if (peripheries &lt; 1)</span>
+<span class="nc" id="L450">	outp = 1;</span>
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">    if (sides &lt; 3) {		/* ellipses */</span>
+<span class="nc" id="L452">	sides = 2;</span>
+<span class="nc" id="L453">	vertices = CArray.&lt;ST_pointf&gt; ALLOC__(outp * sides, ZType.ST_pointf);</span>
+<span class="nc" id="L454">	P.x = bb.x / 2.;</span>
+<span class="nc" id="L455">	P.y = bb.y / 2.;</span>
+<span class="nc" id="L456">	vertices.get__(0).x = -P.x;</span>
+<span class="nc" id="L457">	vertices.get__(0).y = -P.y;</span>
+<span class="nc" id="L458">	vertices.get__(1).___(P);</span>
+//	vertices.plus(1).x = P.x;
+//	vertices.plus(1).y = P.y;
+<span class="nc bnc" id="L461" title="All 2 branches missed.">	if (peripheries &gt; 1) {</span>
+<span class="nc" id="L462">UNSUPPORTED(&quot;4ofenmfgj7cgyf624qmugcx77&quot;); // 	    for (j = 1, i = 2; j &lt; peripheries; j++) {</span>
+<span class="nc" id="L463">UNSUPPORTED(&quot;458w3r6n3nidn2j2b154phpzt&quot;); // 		P.x += 4;</span>
+<span class="nc" id="L464">UNSUPPORTED(&quot;24bcrwtjsfswpmtwxnadf0cn1&quot;); // 		P.y += 4;</span>
+<span class="nc" id="L465">UNSUPPORTED(&quot;byrwdiqkace7e10l3pibk54wg&quot;); // 		vertices[i].x = -P.x;</span>
+<span class="nc" id="L466">UNSUPPORTED(&quot;bicdgzzy9pdopb03hn9l48yns&quot;); // 		vertices[i].y = -P.y;</span>
+<span class="nc" id="L467">UNSUPPORTED(&quot;en9fjm2thtauyxn9t7v4j2xgl&quot;); // 		i++;</span>
+<span class="nc" id="L468">UNSUPPORTED(&quot;2pejlnamuvmi1m7339vzctpnb&quot;); // 		vertices[i].x = P.x;</span>
+<span class="nc" id="L469">UNSUPPORTED(&quot;dy64x78vvm5nufbuxsn0bi8ng&quot;); // 		vertices[i].y = P.y;</span>
+<span class="nc" id="L470">UNSUPPORTED(&quot;en9fjm2thtauyxn9t7v4j2xgl&quot;); // 		i++;</span>
+<span class="nc" id="L471">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L472">UNSUPPORTED(&quot;6g6b8zsanvqyc953c4jh1j7iy&quot;); // 	    bb.x = 2. * P.x;</span>
+<span class="nc" id="L473">UNSUPPORTED(&quot;b5z0hw4dacenv33xsaex70g8d&quot;); // 	    bb.y = 2. * P.y;</span>
+	}
+    } else {
+/*
+ * FIXME - this code is wrong - it doesn't work for concave boundaries.
+ *          (e.g. &quot;folder&quot;  or &quot;promoter&quot;)
+ *   I don't think it even needs sectorangle, or knowledge of skewed shapes.
+ *   (Concepts that only work for convex regular (modulo skew/distort) polygons.)
+ *
+ *   I think it only needs to know inside v. outside (by always drawing
+ *   boundaries clockwise, say),  and the two adjacent segments.
+ *
+ *   It needs to find the point where the two lines, parallel to
+ *   the current segments, and outside by GAP distance, intersect.   
+ */
+<span class="fc" id="L488">	vertices = CArray.&lt;ST_pointf&gt;ALLOC__(outp * sides, ZType.ST_pointf);</span>
+<span class="pc bpc" id="L489" title="1 of 2 branches missed.">	if (ND_shape(n).polygon.vertices!=null) {</span>
+<span class="nc" id="L490">UNSUPPORTED(&quot;3ghle84ieryaenfnlbzrfv7bw&quot;); // 	    poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;shape)-&gt;polygon-&gt;vertices;</span>
+<span class="nc" id="L491">UNSUPPORTED(&quot;227lpcg9dt83m2bm8yshb4djf&quot;); // 	    pd-&gt;vertex_gen (vertices, &amp;bb);</span>
+<span class="nc" id="L492">UNSUPPORTED(&quot;cc3jvnwvbhjhro4adeet363yd&quot;); // 	    xmax = bb.x/2;</span>
+<span class="nc" id="L493">UNSUPPORTED(&quot;39rdmp8vl9muqtv7xs1xwtrwk&quot;); // 	    ymax = bb.y/2;</span>
+	} else {
+<span class="fc" id="L495">	    sectorangle = 2. * M_PI / sides;</span>
+<span class="fc" id="L496">	    sidelength = Math.sin(sectorangle / 2.);</span>
+<span class="fc" id="L497">	    skewdist = hypot(Math.abs(distortion) + Math.abs(skew), 1.);</span>
+<span class="fc" id="L498">	    gdistortion = distortion * SQRT2 / Math.cos(sectorangle / 2.);</span>
+<span class="fc" id="L499">	    gskew = skew / 2.;</span>
+<span class="fc" id="L500">	    angle = (sectorangle - M_PI) / 2.;</span>
+<span class="fc" id="L501">	    sinx = Math.sin(angle); cosx = Math.cos(angle);</span>
+<span class="fc" id="L502">	    R.x = .5 * cosx;</span>
+<span class="fc" id="L503">	    R.y = .5 * sinx;</span>
+<span class="fc" id="L504">	    xmax = ymax = 0.;</span>
+<span class="fc" id="L505">	    angle += (M_PI - sectorangle) / 2.;</span>
+	    
+	    
+	    
+<span class="pc bpc" id="L509" title="1 of 2 branches missed.">	    for (i = 0; i &lt; sides; i++) {</span>
+	    	
+	    /*next regular vertex */
+<span class="fc" id="L512">		angle += sectorangle;</span>
+<span class="fc" id="L513">	    sinx = Math.sin(angle); cosx = Math.cos(angle);</span>
+<span class="fc" id="L514">		R.x += sidelength * cosx;</span>
+<span class="fc" id="L515">		R.y += sidelength * sinx;</span>
+	    
+	    
+	    /*distort and skew */
+<span class="fc" id="L519">		P.x = R.x * (skewdist + R.y * gdistortion) + R.y * gskew;</span>
+<span class="fc" id="L520">		P.y = R.y;</span>
+	    
+	    
+	    /*orient P.x,P.y */
+<span class="fc" id="L524">		alpha = RADIANS(orientation) + Math.atan2(P.y, P.x);</span>
+<span class="fc" id="L525">	    sinx = Math.sin(alpha); cosx = Math.cos(alpha);</span>
+<span class="fc" id="L526">		P.x = P.y = hypot(P.x, P.y);</span>
+<span class="fc" id="L527">		P.x *= cosx;</span>
+<span class="fc" id="L528">		P.y *= sinx;</span>
+	    
+	    
+	    /*scale for label */
+<span class="fc" id="L532">		P.x *= bb.x;</span>
+<span class="fc" id="L533">		P.y *= bb.y;</span>
+	    
+	    
+	    /*find max for bounding box */
+<span class="fc" id="L537">		xmax = Math.max(Math.abs(P.x), xmax);</span>
+<span class="fc" id="L538">		ymax = Math.max(Math.abs(P.y), ymax);</span>
+		
+		
+	    /* store result in array of points */
+<span class="fc" id="L542">		vertices.get__(i).___(P);</span>
+<span class="pc bpc" id="L543" title="1 of 2 branches missed.">		if (isBox) { /* enforce exact symmetry of box */</span>
+<span class="fc" id="L544">			vertices.get__(1).x = -P.x;</span>
+<span class="fc" id="L545">			vertices.get__(1).y = P.y;</span>
+<span class="fc" id="L546">			vertices.get__(2).x = -P.x;</span>
+<span class="fc" id="L547">			vertices.get__(2).y = -P.y;</span>
+<span class="fc" id="L548">			vertices.get__(3).x = P.x;</span>
+<span class="fc" id="L549">			vertices.get__(3).y = -P.y;</span>
+<span class="fc" id="L550">		    break;</span>
+		}
+	    }
+	}
+	
+	
+	
+	/* apply minimum dimensions */
+<span class="fc" id="L558">	xmax *= 2.;</span>
+<span class="fc" id="L559">	ymax *= 2.;</span>
+<span class="fc" id="L560">	bb.x = Math.max(width, xmax);</span>
+<span class="fc" id="L561">	bb.y = Math.max(height, ymax);</span>
+<span class="fc" id="L562">	scalex = bb.x / xmax;</span>
+<span class="fc" id="L563">	scaley = bb.y / ymax;</span>
+	
+	
+<span class="fc bfc" id="L566" title="All 2 branches covered.">	for (i = 0; i &lt; sides; i++) {</span>
+<span class="fc" id="L567">	    P.___(vertices.get__(i));</span>
+<span class="fc" id="L568">	    P.x *= scalex;</span>
+<span class="fc" id="L569">	    P.y *= scaley;</span>
+<span class="fc" id="L570">	    vertices.get__(i).___(P);</span>
+	}
+<span class="pc bpc" id="L572" title="1 of 2 branches missed.">	if (peripheries &gt; 1) {</span>
+<span class="nc" id="L573">UNSUPPORTED(&quot;3x6t3unoi91ezbh3iz168cm2t&quot;); // 	    Q = vertices[(sides - 1)];</span>
+<span class="nc" id="L574">UNSUPPORTED(&quot;8cm8js7jdmpakzujw3wo4h6jk&quot;); // 	    R = vertices[0];</span>
+<span class="nc" id="L575">UNSUPPORTED(&quot;5zpv8twf25wr8n71ql3lh8ku2&quot;); // 	    beta = atan2(R.y - Q.y, R.x - Q.x);</span>
+<span class="nc" id="L576">UNSUPPORTED(&quot;9mlrumbikcvketd18jx1ox7k7&quot;); // 	    for (i = 0; i &lt; sides; i++) {</span>
+<span class="nc" id="L577">UNSUPPORTED(&quot;gkm8nb6f6ispdzj0ausiv1fe&quot;); // 		/*for each vertex find the bisector */</span>
+<span class="nc" id="L578">UNSUPPORTED(&quot;8tp61rvblb9bmqfwgyknlk906&quot;); // 		P = Q;</span>
+<span class="nc" id="L579">UNSUPPORTED(&quot;1ls3xc8rwvn3763c32mx1wzsd&quot;); // 		Q = R;</span>
+<span class="nc" id="L580">UNSUPPORTED(&quot;1zrelve2mvbnzah086dkomf6k&quot;); // 		R = vertices[(i + 1) % sides];</span>
+<span class="nc" id="L581">UNSUPPORTED(&quot;bgx8ee996r89memnp0ea0b80m&quot;); // 		alpha = beta;</span>
+<span class="nc" id="L582">UNSUPPORTED(&quot;5p9jzpcd51evtwqyugnwk50vf&quot;); // 		beta = atan2(R.y - Q.y, R.x - Q.x);</span>
+<span class="nc" id="L583">UNSUPPORTED(&quot;dwskcoivmu9pc5kth75x0ersl&quot;); // 		gamma = (alpha + 3.14159265358979323846 - beta) / 2.;</span>
+<span class="nc" id="L584">UNSUPPORTED(&quot;cmm5tvlcafe2aso9bkk3kl7of&quot;); // 		/*find distance along bisector to */</span>
+<span class="nc" id="L585">UNSUPPORTED(&quot;bebwurfm1a1h1bywf9kf5ueug&quot;); // 		/*intersection of next periphery */</span>
+<span class="nc" id="L586">UNSUPPORTED(&quot;1mtgr15b978d0tdunbpj2pkdp&quot;); // 		temp = 4 / sin(gamma);</span>
+<span class="nc" id="L587">UNSUPPORTED(&quot;28mxt6c4230xruf63s6u415y9&quot;); // 		/*convert this distance to x and y */</span>
+<span class="nc" id="L588">UNSUPPORTED(&quot;1fxw0fz2b6iq6p6qy58mx9mwu&quot;); // 		*&amp;sinx = sin((alpha - gamma)); *&amp;cosx = cos((alpha - gamma));</span>
+<span class="nc" id="L589">UNSUPPORTED(&quot;8j7vx250v0icumolzos2p5qa8&quot;); // 		sinx *= temp;</span>
+<span class="nc" id="L590">UNSUPPORTED(&quot;35ed1mrpnziq164g6cg4stt5w&quot;); // 		cosx *= temp;</span>
+<span class="nc" id="L591">UNSUPPORTED(&quot;eu3ptwi3s2200v4253yk1x69t&quot;); // 		/*save the vertices of all the */</span>
+<span class="nc" id="L592">UNSUPPORTED(&quot;7lc5jxgzj6z4lq7sd9y2b6vex&quot;); // 		/*peripheries at this base vertex */</span>
+<span class="nc" id="L593">UNSUPPORTED(&quot;86nzalouete6viryy967d5g9u&quot;); // 		for (j = 1; j &lt; peripheries; j++) {</span>
+<span class="nc" id="L594">UNSUPPORTED(&quot;dautpj9jyj2qwa8jpujdh3436&quot;); // 		    Q.x += cosx;</span>
+<span class="nc" id="L595">UNSUPPORTED(&quot;7p6tl6s20kdual1ysfoxl8wku&quot;); // 		    Q.y += sinx;</span>
+<span class="nc" id="L596">UNSUPPORTED(&quot;1yw9xq85ss81cogn9jrg24ojc&quot;); // 		    vertices[i + j * sides] = Q;</span>
+<span class="nc" id="L597">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L598">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L599">UNSUPPORTED(&quot;9mlrumbikcvketd18jx1ox7k7&quot;); // 	    for (i = 0; i &lt; sides; i++) {</span>
+<span class="nc" id="L600">UNSUPPORTED(&quot;aa5s79go4kwos2as72rcsdrxf&quot;); // 		P = vertices[i + (peripheries - 1) * sides];</span>
+<span class="nc" id="L601">UNSUPPORTED(&quot;7ee9ageu4efyramsg9jn6klpb&quot;); // 		bb.x = ((2. * fabs(P.x))&gt;(bb.x)?(2. * fabs(P.x)):(bb.x));</span>
+<span class="nc" id="L602">UNSUPPORTED(&quot;lklvdmn7xiqbxhpgdeufcvjj&quot;); // 		bb.y = ((2. * fabs(P.y))&gt;(bb.y)?(2. * fabs(P.y)):(bb.y));</span>
+<span class="nc" id="L603">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+	}
+    }
+<span class="fc" id="L606">    poly.regular = regular;</span>
+<span class="fc" id="L607">    poly.peripheries = peripheries;</span>
+<span class="fc" id="L608">    poly.sides = sides;</span>
+<span class="fc" id="L609">    poly.orientation = orientation;</span>
+<span class="fc" id="L610">    poly.skew = skew;</span>
+<span class="fc" id="L611">    poly.distortion = distortion;</span>
+<span class="fc" id="L612">    poly.vertices = vertices;</span>
+    
+    
+<span class="pc bpc" id="L615" title="1 of 2 branches missed.">    if ((poly.option &amp; FIXEDSHAPE)!=0) {</span>
+	/* set width and height to reflect label and shape */
+<span class="nc" id="L617">UNSUPPORTED(&quot;7kk8oru3b3copylmq3gssx6qx&quot;); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;width) = ((((dimen.x)&gt;(bb.x)?(dimen.x):(bb.x)))/(double)72);</span>
+<span class="nc" id="L618">UNSUPPORTED(&quot;8oouzms2x039fhfcfxm7yc4su&quot;); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))-&gt;data))-&gt;height) = ((((dimen.y)&gt;(bb.y)?(dimen.y):(bb.y)))/(double)72);</span>
+    } else {
+<span class="fc" id="L620">	ND_width(n, PS2INCH(bb.x));</span>
+<span class="fc" id="L621">	ND_height(n, PS2INCH(bb.y));</span>
+    }
+<span class="fc" id="L623">    ND_shape_info(n, poly);</span>
+} finally {
+<span class="fc" id="L625">LEAVING(&quot;a11xv6duihbr3d6gkgo2ye2j5&quot;,&quot;poly_init&quot;);</span>
+}
+<span class="fc" id="L627">}</span>
+
+
+
+<span class="fc" id="L631">public static CFunction poly_free = new CFunctionAbstract(&quot;poly_free&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L634">		return poly_free(args);</span>
+	}};
+//3 63sj12avbdw6e27zf3sedls1r
+// static void poly_free(node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;poly_free&quot;, key=&quot;63sj12avbdw6e27zf3sedls1r&quot;, definition=&quot;static void poly_free(node_t * n)&quot;)
+public static Object poly_free(Object... arg_) {
+<span class="nc" id="L641">UNSUPPORTED(&quot;cfl0ro4734avs9rtdlar7nbg8&quot;); // static void poly_free(node_t * n)</span>
+<span class="nc" id="L642">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L643">UNSUPPORTED(&quot;5ha1ng0rlvg0kiui0qhgme4nb&quot;); //     polygon_t *p = ND_shape_info(n);</span>
+<span class="nc" id="L644">UNSUPPORTED(&quot;3cvmixd2u1g2d9l03kuxyyxxw&quot;); //     if (p) {</span>
+<span class="nc" id="L645">UNSUPPORTED(&quot;3cjbelr7499ch9kn6lbjaz7l7&quot;); // 	free(p-&gt;vertices);</span>
+<span class="nc" id="L646">UNSUPPORTED(&quot;cy5x5dma0v4hiepir7lrfuo17&quot;); // 	free(p);</span>
+<span class="nc" id="L647">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L648">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L650">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+
+<span class="fc" id="L657">public static CFunction poly_inside = new CFunctionAbstract(&quot;poly_inside&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L660">		return poly_inside(zz, (ST_inside_t)args[0], (ST_pointf)args[1]);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;poly_inside&quot;, key=&quot;570t4xovyyfqipaikkf63crmk&quot;, definition=&quot;tatic boolean poly_inside(inside_t * inside_context, pointf p)&quot;)
+public static boolean poly_inside(Globals zz, ST_inside_t inside_context, ST_pointf p) {
+// WARNING!! STRUCT
+<span class="fc" id="L666">return poly_inside_w_(zz, inside_context, p.copy());</span>
+}
+private static boolean poly_inside_w_(Globals zz, ST_inside_t inside_context, final ST_pointf p) {
+<span class="fc" id="L669">ENTERING(&quot;570t4xovyyfqipaikkf63crmk&quot;,&quot;poly_inside&quot;);</span>
+try {
+    int i, i1, j;
+    boolean s;
+<span class="fc" id="L673">    final ST_pointf P = new ST_pointf(), Q = new ST_pointf(), R = new ST_pointf();</span>
+<span class="fc" id="L674">    ST_boxf bp = inside_context.s_bp;</span>
+<span class="fc" id="L675">    ST_Agnode_s n = inside_context.s_n;</span>
+<span class="fc" id="L676">    P.___(ccwrotatepf(p, 90 * GD_rankdir(agraphof(n))));</span>
+    /* Quick test if port rectangle is target */
+<span class="pc bpc" id="L678" title="1 of 2 branches missed.">    if (bp!=null) {</span>
+<span class="nc" id="L679">	final ST_boxf bbox = new ST_boxf();</span>
+<span class="nc" id="L680">	bbox.___(bp);</span>
+<span class="nc" id="L681">	return INSIDE(P, bbox);</span>
+    }
+<span class="fc bfc" id="L683" title="All 2 branches covered.">    if ((n != zz.lastn)) {</span>
+<span class="fc" id="L684">	double n_width = 0, n_height = 0;</span>
+<span class="fc" id="L685">	zz.poly = (ST_polygon_t) ND_shape_info(n);</span>
+<span class="fc" id="L686">	zz.vertex = zz.poly.vertices;</span>
+<span class="fc" id="L687">	zz.sides = zz.poly.sides;</span>
+<span class="pc bpc" id="L688" title="1 of 2 branches missed.">	if ((zz.poly.option &amp; (1 &lt;&lt; 11))!=0) {</span>
+<span class="nc" id="L689">UNSUPPORTED(&quot;18yw1scg4sol8bhyf1vedj9kn&quot;); // 	   boxf bb = polyBB(poly); </span>
+<span class="nc" id="L690">UNSUPPORTED(&quot;7rz7vxyxao0efec2nvd6g19m1&quot;); // 	    n_width = bb.UR.x - bb.LL.x;</span>
+<span class="nc" id="L691">UNSUPPORTED(&quot;4h0k2wroz3xqx1ljokdbaqaad&quot;); // 	    n_height = bb.UR.y - bb.LL.y;</span>
+<span class="nc" id="L692">UNSUPPORTED(&quot;dgykcjw02yoka8uz5b7jdc2ct&quot;); // 	    /* get point and node size adjusted for rankdir=LR */</span>
+<span class="nc" id="L693">UNSUPPORTED(&quot;75jifr4aucrxp2hvnsrcfunej&quot;); // 	    if (GD_flip(agraphof(n))) {</span>
+<span class="nc" id="L694">UNSUPPORTED(&quot;e53876tm7q1oasuu013njtgx&quot;); // 		ysize = n_width;</span>
+<span class="nc" id="L695">UNSUPPORTED(&quot;7wnmmcv8dfzi1bdwml4vcxf0w&quot;); // 		xsize = n_height;</span>
+<span class="nc" id="L696">UNSUPPORTED(&quot;175pyfe8j8mbhdwvrbx3gmew9&quot;); // 	    } else {</span>
+<span class="nc" id="L697">UNSUPPORTED(&quot;10ux82vu0kynxilmf6ak7x70q&quot;); // 		xsize = n_width;</span>
+<span class="nc" id="L698">UNSUPPORTED(&quot;5xao1mdiugxzaq03na34mbl5w&quot;); // 		ysize = n_height;</span>
+<span class="nc" id="L699">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+	} else {
+	    /* get point and node size adjusted for rankdir=LR */
+<span class="fc bfc" id="L702" title="All 2 branches covered.">	    if (GD_flip(agraphof(n))) {</span>
+<span class="fc" id="L703">		zz.ysize = ND_lw(n) + ND_rw(n);</span>
+<span class="fc" id="L704">		zz.xsize = ND_ht(n);</span>
+	    } else {
+<span class="fc" id="L706">		zz.xsize = ND_lw(n) + ND_rw(n);</span>
+<span class="fc" id="L707">		zz.ysize = ND_ht(n);</span>
+	    }
+<span class="fc" id="L709">	    n_width = (ROUND((ND_width(n))*72));</span>
+<span class="fc" id="L710">	    n_height = (ROUND((ND_height(n))*72));</span>
+	}
+	/* scale */
+<span class="pc bpc" id="L713" title="1 of 2 branches missed.">	if (zz.xsize == 0.0)</span>
+<span class="nc" id="L714">	    zz.xsize = 1.0;</span>
+<span class="pc bpc" id="L715" title="1 of 2 branches missed.">	if (zz.ysize == 0.0)</span>
+<span class="nc" id="L716">	    zz.ysize = 1.0;</span>
+<span class="fc" id="L717">	zz.scalex = n_width / zz.xsize;</span>
+<span class="fc" id="L718">	zz.scaley = n_height / zz.ysize;</span>
+<span class="fc" id="L719">	zz.box_URx = n_width / 2.0;</span>
+<span class="fc" id="L720">	zz.box_URy = n_height / 2.0;</span>
+	/* index to outer-periphery */
+<span class="fc" id="L722">	zz.outp = (zz.poly.peripheries - 1) * zz.sides;</span>
+<span class="pc bpc" id="L723" title="1 of 2 branches missed.">	if (zz.outp &lt; 0)</span>
+<span class="nc" id="L724">	    zz.outp = 0;</span>
+<span class="fc" id="L725">	zz.lastn = (ST_Agnode_s) n;</span>
+    }
+    /* scale */
+<span class="fc" id="L728">    P.x = (P.x * zz.scalex);</span>
+<span class="fc" id="L729">    P.y = (P.y * zz.scaley);</span>
+    /* inside bounding box? */
+<span class="fc bfc" id="L731" title="All 4 branches covered.">    if ((Math.abs(P.x) &gt; zz.box_URx) || (Math.abs(P.y) &gt; zz.box_URy))</span>
+<span class="fc" id="L732">	return false;</span>
+    /* ellipses */
+<span class="pc bpc" id="L734" title="1 of 2 branches missed.">    if (zz.sides &lt;= 2)</span>
+<span class="nc bnc" id="L735" title="All 2 branches missed.">	return (hypot(P.x / zz.box_URx, P.y / zz.box_URy) &lt; 1.);</span>
+    
+    /* use fast test in case we are converging on a segment */
+<span class="fc" id="L738">    i = zz.last % zz.sides;		/* in case last left over from larger polygon */</span>
+<span class="fc" id="L739">    i1 = (i + 1) % zz.sides;</span>
+<span class="fc" id="L740">    Q.___(zz.vertex.get__(i + zz.outp));</span>
+<span class="fc" id="L741">    R.___(zz.vertex.get__(i1 + zz.outp));</span>
+<span class="pc bpc" id="L742" title="1 of 2 branches missed.">    if (!same_side(P, zz.O, Q, R))   /* false if outside the segment's face */</span>
+<span class="nc" id="L743">	return false;</span>
+    /* else inside the segment face... */
+<span class="fc bfc" id="L745" title="All 4 branches covered.">    if ((s = same_side(P, Q, R, zz.O)) &amp;&amp; (same_side(P, R, zz.O, Q)))</span>
+<span class="fc" id="L746">		return true;</span>
+    /* else maybe in another segment */
+<span class="fc bfc" id="L748" title="All 2 branches covered.">    for (j = 1; j &lt; zz.sides; j++) { /* iterate over remaining segments */</span>
+<span class="fc bfc" id="L749" title="All 2 branches covered.">	if (s) { /* clockwise */</span>
+<span class="fc" id="L750">	    i = i1;</span>
+<span class="fc" id="L751">	    i1 = (i + 1) % zz.sides;</span>
+	} else { /* counter clockwise */
+<span class="fc" id="L753">	    i1 = i;</span>
+<span class="fc" id="L754">	    i = (i + zz.sides - 1) % zz.sides;</span>
+	}
+<span class="pc bpc" id="L756" title="1 of 2 branches missed.">	if (!same_side(P, zz.O, zz.vertex.get__(i + zz.outp), zz.vertex.get__(i1 + zz.outp))) { /* false if outside any other segment's face */</span>
+<span class="nc" id="L757">	    zz.last = i;</span>
+<span class="nc" id="L758">	    return false;</span>
+	}
+    }
+    /* inside all segments' faces */
+<span class="fc" id="L762">    zz.last = i;			/* in case next edge is to same side */</span>
+<span class="fc" id="L763">    return true;</span>
+} finally {
+<span class="fc" id="L765">LEAVING(&quot;570t4xovyyfqipaikkf63crmk&quot;,&quot;poly_inside&quot;);</span>
+}
+}
+
+
+
+<span class="fc" id="L771">public static CFunction poly_path = new CFunctionAbstract(&quot;poly_path&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L774">		return poly_path((ST_Agnode_s)args[0], (ST_port)args[1], (Integer)args[2], (Object)args[3], (Object)args[4]);</span>
+	}};
+//3 5mmuhvq40xadw0g9mzlauyztq
+// static int poly_path(node_t * n, port * p, int side, boxf rv[], int *kptr) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;poly_path&quot;, key=&quot;5mmuhvq40xadw0g9mzlauyztq&quot;, definition=&quot;static int poly_path(node_t * n, port * p, int side, boxf rv[], int *kptr)&quot;)
+public static int poly_path(ST_Agnode_s n, ST_port p, int side, Object rv, Object kptr) {
+<span class="fc" id="L781">ENTERING(&quot;5mmuhvq40xadw0g9mzlauyztq&quot;,&quot;poly_path&quot;);</span>
+try {
+<span class="fc" id="L783">    side = 0;</span>
+<span class="pc bpc" id="L784" title="3 of 4 branches missed.">    if (ND_label(n).html &amp;&amp; ND_has_port(n)) {</span>
+<span class="nc" id="L785">UNSUPPORTED(&quot;67g7bthntnw8syb6zd03ueg84&quot;); // 	side = html_path(n, p, side, rv, kptr);</span>
+    }
+<span class="fc" id="L787">    return side;</span>
+} finally {
+<span class="fc" id="L789">LEAVING(&quot;5mmuhvq40xadw0g9mzlauyztq&quot;,&quot;poly_path&quot;);</span>
+}
+}
+
+
+
+
+//3 857i3hwbu9mbq4nwur2q7e7er
+// static int invflip_side(int side, int rankdir) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;invflip_side&quot;, key=&quot;857i3hwbu9mbq4nwur2q7e7er&quot;, definition=&quot;static int invflip_side(int side, int rankdir)&quot;)
+public static int invflip_side(int side, int rankdir) {
+<span class="pc bpc" id="L801" title="4 of 5 branches missed.">    switch (rankdir) {</span>
+    case 0:
+<span class="fc" id="L803">	break;</span>
+    case 2:
+<span class="nc" id="L805">UNSUPPORTED(&quot;o4wjkq58uh9dgs94m2vxettc&quot;); // 	switch (side) {</span>
+<span class="nc" id="L806">UNSUPPORTED(&quot;a0zo28ne6fq7qm9hko3jwrsie&quot;); // 	case (1&lt;&lt;2):</span>
+<span class="nc" id="L807">UNSUPPORTED(&quot;asl0z4i3qt99vpfphpr7hpk5&quot;); // 	    side = 1&lt;&lt;0;</span>
+<span class="nc" id="L808">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L809">UNSUPPORTED(&quot;5uxczmgv9jelovrky9lyqmqxn&quot;); // 	case (1&lt;&lt;0):</span>
+<span class="nc" id="L810">UNSUPPORTED(&quot;aj9jgzaslnfuc2iy41yo6577i&quot;); // 	    side = 1&lt;&lt;2;</span>
+<span class="nc" id="L811">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L812">UNSUPPORTED(&quot;1drv0xz8hp34qnf72b4jpprg2&quot;); // 	default:</span>
+<span class="nc" id="L813">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L814">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L815">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    case 1:
+<span class="nc" id="L817">UNSUPPORTED(&quot;o4wjkq58uh9dgs94m2vxettc&quot;); // 	switch (side) {</span>
+<span class="nc" id="L818">UNSUPPORTED(&quot;a0zo28ne6fq7qm9hko3jwrsie&quot;); // 	case (1&lt;&lt;2):</span>
+<span class="nc" id="L819">UNSUPPORTED(&quot;csyxlzh6yvg14dkwm5h0q8l4e&quot;); // 	    side = 1&lt;&lt;1;</span>
+<span class="nc" id="L820">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L821">UNSUPPORTED(&quot;5uxczmgv9jelovrky9lyqmqxn&quot;); // 	case (1&lt;&lt;0):</span>
+<span class="nc" id="L822">UNSUPPORTED(&quot;6ob9sb98jfamphtvv99f9nny7&quot;); // 	    side = 1&lt;&lt;3;</span>
+<span class="nc" id="L823">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L824">UNSUPPORTED(&quot;3vvicpwbia6xzcxsn2qnkbzq8&quot;); // 	case (1&lt;&lt;3):</span>
+<span class="nc" id="L825">UNSUPPORTED(&quot;aj9jgzaslnfuc2iy41yo6577i&quot;); // 	    side = 1&lt;&lt;2;</span>
+<span class="nc" id="L826">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L827">UNSUPPORTED(&quot;ad90yo3mu0ffjurb9egult4pi&quot;); // 	case (1&lt;&lt;1):</span>
+<span class="nc" id="L828">UNSUPPORTED(&quot;asl0z4i3qt99vpfphpr7hpk5&quot;); // 	    side = 1&lt;&lt;0;</span>
+<span class="nc" id="L829">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L830">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L831">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    case 3:
+<span class="nc" id="L833">UNSUPPORTED(&quot;o4wjkq58uh9dgs94m2vxettc&quot;); // 	switch (side) {</span>
+<span class="nc" id="L834">UNSUPPORTED(&quot;a0zo28ne6fq7qm9hko3jwrsie&quot;); // 	case (1&lt;&lt;2):</span>
+<span class="nc" id="L835">UNSUPPORTED(&quot;csyxlzh6yvg14dkwm5h0q8l4e&quot;); // 	    side = 1&lt;&lt;1;</span>
+<span class="nc" id="L836">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L837">UNSUPPORTED(&quot;5uxczmgv9jelovrky9lyqmqxn&quot;); // 	case (1&lt;&lt;0):</span>
+<span class="nc" id="L838">UNSUPPORTED(&quot;6ob9sb98jfamphtvv99f9nny7&quot;); // 	    side = 1&lt;&lt;3;</span>
+<span class="nc" id="L839">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L840">UNSUPPORTED(&quot;3vvicpwbia6xzcxsn2qnkbzq8&quot;); // 	case (1&lt;&lt;3):</span>
+<span class="nc" id="L841">UNSUPPORTED(&quot;asl0z4i3qt99vpfphpr7hpk5&quot;); // 	    side = 1&lt;&lt;0;</span>
+<span class="nc" id="L842">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L843">UNSUPPORTED(&quot;ad90yo3mu0ffjurb9egult4pi&quot;); // 	case (1&lt;&lt;1):</span>
+<span class="nc" id="L844">UNSUPPORTED(&quot;aj9jgzaslnfuc2iy41yo6577i&quot;); // 	    side = 1&lt;&lt;2;</span>
+<span class="nc" id="L845">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L846">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L847">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    }
+<span class="fc" id="L849">    return side;</span>
+}
+
+
+
+
+//3 72pzdmirzds0yer4ks1ooxvic
+// static double invflip_angle(double angle, int rankdir) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;invflip_angle&quot;, key=&quot;72pzdmirzds0yer4ks1ooxvic&quot;, definition=&quot;static double invflip_angle(double angle, int rankdir)&quot;)
+public static double invflip_angle(double angle, int rankdir) {
+<span class="pc bpc" id="L860" title="4 of 5 branches missed.">    switch (rankdir) {</span>
+    case 0:
+<span class="fc" id="L862">	break;</span>
+    case 2:
+<span class="nc" id="L864">UNSUPPORTED(&quot;e7qgsf2gzf7fv8r5lpdfqp2gp&quot;); // 	angle *= -1;</span>
+<span class="nc" id="L865">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    case 1:
+<span class="nc" id="L867">UNSUPPORTED(&quot;b5wrpw5rvhjh7999v3sqqlbo3&quot;); // 	angle -= M_PI * 0.5;</span>
+<span class="nc" id="L868">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    case 3:
+<span class="nc" id="L870">UNSUPPORTED(&quot;536aocvem6ko7h9t50pllxla0&quot;); // 	if (angle == M_PI)</span>
+<span class="nc" id="L871">UNSUPPORTED(&quot;kxow9q31jmisg5yv60fj9z3g&quot;); // 	    angle = -0.5 * M_PI;</span>
+<span class="nc" id="L872">UNSUPPORTED(&quot;3hy3z7oxc494l61va60rwh9k3&quot;); // 	else if (angle == M_PI * 0.75)</span>
+<span class="nc" id="L873">UNSUPPORTED(&quot;76t0zkyxc3q2wnpcajih9mf65&quot;); // 	    angle = -0.25 * M_PI;</span>
+<span class="nc" id="L874">UNSUPPORTED(&quot;bd02ns5pweyapa70g9ozio3m4&quot;); // 	else if (angle == M_PI * 0.5)</span>
+<span class="nc" id="L875">UNSUPPORTED(&quot;a0pp5xd6lligtfp0riunw38t3&quot;); // 	    angle = 0;</span>
+<span class="nc" id="L876">UNSUPPORTED(&quot;8cqf9j5edmb4u2xnd8lkahkht&quot;); // /* clang complains about self assignment of double</span>
+<span class="nc" id="L877">UNSUPPORTED(&quot;205i7xisgiaz1vhn9p93tsw5a&quot;); // 	else if (angle == M_PI * 0.25)</span>
+<span class="nc" id="L878">UNSUPPORTED(&quot;76g7hlyzy67q9n7p5l89y4gxw&quot;); // 	    angle = angle;</span>
+<span class="nc" id="L879">UNSUPPORTED(&quot;e5xwyhh2l2jm6g9w2ofnktaf6&quot;); //  */</span>
+<span class="nc" id="L880">UNSUPPORTED(&quot;8pqjflzypl5wbdev1h4r6ee0e&quot;); // 	else if (angle == 0)</span>
+<span class="nc" id="L881">UNSUPPORTED(&quot;3uy8u4gjki2ksohuj3gn6ewkj&quot;); // 	    angle = M_PI * 0.5;</span>
+<span class="nc" id="L882">UNSUPPORTED(&quot;bqlwd51jj33yedz7tuck5hukd&quot;); // 	else if (angle == M_PI * -0.25)</span>
+<span class="nc" id="L883">UNSUPPORTED(&quot;3s431nqj2tfm95djdmjfjig6h&quot;); // 	    angle = M_PI * 0.75;</span>
+<span class="nc" id="L884">UNSUPPORTED(&quot;tl121swu8uuow1dlzumo1pyi&quot;); // 	else if (angle == M_PI * -0.5)</span>
+<span class="nc" id="L885">UNSUPPORTED(&quot;aa92obzwij392if7nnjch6dtz&quot;); // 	    angle = M_PI;</span>
+<span class="nc" id="L886">UNSUPPORTED(&quot;8cqf9j5edmb4u2xnd8lkahkht&quot;); // /* clang complains about self assignment of double</span>
+<span class="nc" id="L887">UNSUPPORTED(&quot;2waz5md3krpirny5m7gagynkc&quot;); // 	else if (angle == M_PI * -0.75)</span>
+<span class="nc" id="L888">UNSUPPORTED(&quot;76g7hlyzy67q9n7p5l89y4gxw&quot;); // 	    angle = angle;</span>
+<span class="nc" id="L889">UNSUPPORTED(&quot;e5xwyhh2l2jm6g9w2ofnktaf6&quot;); //  */</span>
+<span class="nc" id="L890">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    }
+<span class="fc" id="L892">    return angle;</span>
+}
+
+
+
+
+//3 54t5x4hsq6ie4hn83dix0fi3g
+// static pointf compassPoint(inside_t * ictxt, double y, double x) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;compassPoint&quot;, key=&quot;54t5x4hsq6ie4hn83dix0fi3g&quot;, definition=&quot;static pointf compassPoint(inside_t * ictxt, double y, double x)&quot;)
+public static Object compassPoint(Object... arg) {
+<span class="nc" id="L903">UNSUPPORTED(&quot;1owp098dshhw9x2d86x61ho3n&quot;); // static pointf compassPoint(inside_t * ictxt, double y, double x)</span>
+<span class="nc" id="L904">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L905">UNSUPPORTED(&quot;5jw267n0iigspndf3p51uuoyt&quot;); //     pointf curve[4];		/* bezier control points for a straight line */</span>
+<span class="nc" id="L906">UNSUPPORTED(&quot;2ol68djy9gbphj8kdfml5q1ej&quot;); //     node_t *n = ictxt-&gt;s.n;</span>
+<span class="nc" id="L907">UNSUPPORTED(&quot;f121hhzfkpb97hn84g46lhxdh&quot;); //     graph_t* g = agraphof(n);</span>
+<span class="nc" id="L908">UNSUPPORTED(&quot;347leky6wh51yiydoij5od0h2&quot;); //     int rd = GD_rankdir(g);</span>
+<span class="nc" id="L909">UNSUPPORTED(&quot;2bghyit203pd6xw2ihhenzyn8&quot;); //     pointf p;</span>
+<span class="nc" id="L910">UNSUPPORTED(&quot;saqn1396zzjkeo01vp1tskia&quot;); //     p.x = x;</span>
+<span class="nc" id="L911">UNSUPPORTED(&quot;5jdhcgi82gtmvn690v78zmkpe&quot;); //     p.y = y;</span>
+<span class="nc" id="L912">UNSUPPORTED(&quot;2imvfuepadgxdlfwq3qmsatju&quot;); //     if (rd)</span>
+<span class="nc" id="L913">UNSUPPORTED(&quot;8gcpvoawmbrjuiq80lglpl2bn&quot;); // 	p = cwrotatepf(p, 90 * rd);</span>
+<span class="nc" id="L914">UNSUPPORTED(&quot;b4ktwkbs8awubvwfgfeqzhlx0&quot;); //     curve[0].x = curve[0].y = 0;</span>
+<span class="nc" id="L915">UNSUPPORTED(&quot;dcqc3vt7dwuvg73lixbbwd3dj&quot;); //     curve[1] = curve[0];</span>
+<span class="nc" id="L916">UNSUPPORTED(&quot;ahj7ruzql6g6cm5nvomizsgcz&quot;); //     curve[3] = curve[2] = p;</span>
+<span class="nc" id="L917">UNSUPPORTED(&quot;6wkk7v0v7iyai22oyhq16dcno&quot;); //     bezier_clip(ictxt, ND_shape(n)-&gt;fns-&gt;insidefn, curve, 1);</span>
+<span class="nc" id="L918">UNSUPPORTED(&quot;2imvfuepadgxdlfwq3qmsatju&quot;); //     if (rd)</span>
+<span class="nc" id="L919">UNSUPPORTED(&quot;ip6d55dog3nmeksqauqb1fyo&quot;); // 	curve[0] = ccwrotatepf(curve[0], 90 * rd);</span>
+<span class="nc" id="L920">UNSUPPORTED(&quot;7jlv4v811jdfr56u2h3wdxxbm&quot;); //     return curve[0];</span>
+<span class="nc" id="L921">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L923">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 4oj0c3dwqqjei7u5u2ik9yyw1
+// static int compassPort(node_t * n, boxf * bp, port * pp, char *compass, int sides, 	    inside_t * ictxt) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;compassPort&quot;, key=&quot;4oj0c3dwqqjei7u5u2ik9yyw1&quot;, definition=&quot;static int compassPort(node_t * n, boxf * bp, port * pp, char *compass, int sides, 	    inside_t * ictxt)&quot;)
+public static boolean compassPort(ST_Agnode_s n, ST_boxf bp, ST_port pp, CString compass, int sides, ST_inside_t ictxt) {
+<span class="fc" id="L934">    final ST_boxf b = new ST_boxf();</span>
+<span class="fc" id="L935">    final ST_pointf p = new ST_pointf(), ctr = new ST_pointf();</span>
+<span class="fc" id="L936">    int rv = 0;</span>
+<span class="fc" id="L937">    double theta = 0.0;</span>
+<span class="fc" id="L938">    boolean constrain = false;</span>
+<span class="fc" id="L939">    boolean dyna = false;</span>
+<span class="fc" id="L940">    int side = 0;</span>
+<span class="fc" id="L941">    boolean clip = true;</span>
+<span class="fc" id="L942">    boolean defined = false;</span>
+    double maxv;  /* sufficiently large value outside of range of node */
+<span class="pc bpc" id="L944" title="1 of 2 branches missed.">    if (bp!=null) {</span>
+<span class="fc" id="L945">	b.___(bp);</span>
+<span class="fc" id="L946">	p.___(pointfof((b.LL.x + b.UR.x) / 2, (b.LL.y + b.UR.y) / 2));</span>
+<span class="fc" id="L947">	defined = true;</span>
+    } else {
+<span class="nc" id="L949">	p.x = p.y = 0.;</span>
+<span class="nc bnc" id="L950" title="All 2 branches missed.">	if (GD_flip(agraphof(n))) {</span>
+<span class="nc" id="L951">UNSUPPORTED(&quot;e21k9f24vr25zdbgo37m5er48&quot;); // 	    b.UR.x = ND_ht(n) / 2.;</span>
+<span class="nc" id="L952">UNSUPPORTED(&quot;1i4y4dgrig36gh0dq2jn8kde&quot;); // 	    b.LL.x = -b.UR.x;</span>
+<span class="nc" id="L953">UNSUPPORTED(&quot;7luuqd8n7bpffoa8v27jp7tn3&quot;); // 	    b.UR.y = ND_lw(n);</span>
+<span class="nc" id="L954">UNSUPPORTED(&quot;922vazdrkwhoxxy4yw5axu6i7&quot;); // 	    b.LL.y = -b.UR.y;</span>
+	} else {
+<span class="nc" id="L956">	    b.UR.y = ND_ht(n) / 2.;</span>
+<span class="nc" id="L957">	    b.LL.y = -b.UR.y;</span>
+<span class="nc" id="L958">	    b.UR.x = ND_lw(n);</span>
+<span class="nc" id="L959">	    b.LL.x = -b.UR.x;</span>
+	}
+<span class="nc" id="L961">	defined = false;</span>
+    }
+<span class="fc" id="L963">    maxv = Math.max(b.UR.x,b.UR.y);</span>
+<span class="fc" id="L964">    maxv *= 4.0;</span>
+<span class="fc" id="L965">    ctr.___(p);</span>
+<span class="pc bpc" id="L966" title="2 of 4 branches missed.">    if (compass!=null &amp;&amp; compass.charAt(0)!=0) {</span>
+<span class="fc" id="L967">	final char TMP =compass.charAt(0);</span>
+<span class="fc" id="L968">	compass = compass.plus_(1);</span>
+<span class="pc bpc" id="L969" title="5 of 7 branches missed.">    switch (TMP) {</span>
+	case 'e':
+<span class="nc bnc" id="L971" title="All 2 branches missed.">	    if (compass.charAt(0)!=0)</span>
+<span class="nc" id="L972">UNSUPPORTED(&quot;en0rarvkx5srsxnlqpf6ja1us&quot;); // 		rv = 1;</span>
+	    else {
+<span class="nc bnc" id="L974" title="All 2 branches missed.">                if (ictxt!=null)</span>
+<span class="nc" id="L975">UNSUPPORTED(&quot;8whok6jl4olniblvibxhrbbre&quot;); //                     p = compassPoint(ictxt, ctr.y, maxv);</span>
+                else
+<span class="nc" id="L977">		    p.x = b.UR.x;</span>
+<span class="nc" id="L978">		theta = 0.0;</span>
+<span class="nc" id="L979">		constrain = true;</span>
+<span class="nc" id="L980">		defined = true;</span>
+<span class="nc" id="L981">		clip = false;</span>
+<span class="nc" id="L982">		side = sides &amp; RIGHT;</span>
+	    }
+<span class="nc" id="L984">	    break;</span>
+	case 's':
+<span class="fc" id="L986">	    p.y = b.LL.y;</span>
+<span class="fc" id="L987">	    constrain = true;</span>
+<span class="fc" id="L988">	    clip = false;</span>
+<span class="pc bpc" id="L989" title="3 of 4 branches missed.">	    switch (compass.charAt(0)) {</span>
+	    case '\0':
+<span class="fc" id="L991">		theta = -M_PI * 0.5;</span>
+<span class="fc" id="L992">		defined = true;</span>
+<span class="pc bpc" id="L993" title="1 of 2 branches missed.">                if (ictxt!=null)</span>
+<span class="nc" id="L994">UNSUPPORTED(&quot;2iohu3tvlkzx2emq04ycxkhta&quot;); //                     p = compassPoint(ictxt, -maxv, ctr.x);</span>
+                else
+<span class="fc" id="L996">                    p.x = ctr.x;</span>
+<span class="fc" id="L997">		side = sides &amp; BOTTOM;</span>
+<span class="fc" id="L998">		break;</span>
+	    case 'e':
+<span class="nc" id="L1000">UNSUPPORTED(&quot;avfplp4wadl774qo2yrqn2btg&quot;); // 		theta = -M_PI * 0.25;</span>
+<span class="nc" id="L1001">UNSUPPORTED(&quot;bfouf47misaa32ulv25melpbm&quot;); // 		defined = NOT(0);</span>
+<span class="nc" id="L1002">UNSUPPORTED(&quot;e1jqt6v7gkr0w7anohkdvwzuz&quot;); // 		if (ictxt)</span>
+<span class="nc" id="L1003">UNSUPPORTED(&quot;4qnqhz6577yhq6u9919ve4tjb&quot;); // 		    p = compassPoint(ictxt, -maxv, maxv);</span>
+<span class="nc" id="L1004">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L1005">UNSUPPORTED(&quot;5f4jye7znkk6hbv6lv0l9l0hs&quot;); // 		    p.x = b.UR.x;</span>
+<span class="nc" id="L1006">UNSUPPORTED(&quot;b0weojc8y88qjfkoujifnu9ag&quot;); // 		side = sides &amp; ((1&lt;&lt;0) | (1&lt;&lt;1));</span>
+<span class="nc" id="L1007">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+	    case 'w':
+<span class="nc" id="L1009">UNSUPPORTED(&quot;a6j042vifpt4pgkwczny2dy24&quot;); // 		theta = -M_PI * 0.75;</span>
+<span class="nc" id="L1010">UNSUPPORTED(&quot;bfouf47misaa32ulv25melpbm&quot;); // 		defined = NOT(0);</span>
+<span class="nc" id="L1011">UNSUPPORTED(&quot;e1jqt6v7gkr0w7anohkdvwzuz&quot;); // 		if (ictxt)</span>
+<span class="nc" id="L1012">UNSUPPORTED(&quot;c0hdr34iyaygjxcr6a65hns2g&quot;); // 		    p = compassPoint(ictxt, -maxv, -maxv);</span>
+<span class="nc" id="L1013">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L1014">UNSUPPORTED(&quot;e2vcgqbz5sfyjwfyadlmm3s7n&quot;); // 		    p.x = b.LL.x;</span>
+<span class="nc" id="L1015">UNSUPPORTED(&quot;9yg4wc52hqtj6s3orou0nnbq4&quot;); // 		side = sides &amp; ((1&lt;&lt;0) | (1&lt;&lt;3));</span>
+<span class="nc" id="L1016">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+<span class="nc" id="L1017">UNSUPPORTED(&quot;bt2g0yhsy3c7keqyftf3c98ut&quot;); // 	    default:</span>
+<span class="nc" id="L1018">UNSUPPORTED(&quot;c8if0ggdrakzyxyn4fwlc8z2j&quot;); // 		p.y = ctr.y;</span>
+<span class="nc" id="L1019">UNSUPPORTED(&quot;30qndpdx39k6rmlgid0k16w53&quot;); // 		constrain = 0;</span>
+<span class="nc" id="L1020">UNSUPPORTED(&quot;2uxoapmd0p84jvg4utlai18nj&quot;); // 		clip = NOT(0);</span>
+<span class="nc" id="L1021">UNSUPPORTED(&quot;en0rarvkx5srsxnlqpf6ja1us&quot;); // 		rv = 1;</span>
+<span class="nc" id="L1022">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+	    }
+<span class="fc" id="L1024">	    break;</span>
+	case 'w':
+<span class="nc bnc" id="L1026" title="All 2 branches missed.">	    if (compass.charAt(0)!=0)</span>
+<span class="nc" id="L1027">		rv = 1;</span>
+	    else {
+<span class="nc bnc" id="L1029" title="All 2 branches missed.">                if (ictxt!=null)</span>
+<span class="nc" id="L1030">UNSUPPORTED(&quot;dkdxl90pni5x4m9rsi9l4fkml&quot;); //                     p = compassPoint(ictxt, ctr.y, -maxv);</span>
+                else
+<span class="nc" id="L1032">		    p.x = b.LL.x;</span>
+<span class="nc" id="L1033">		theta = M_PI;</span>
+<span class="nc" id="L1034">		constrain = true;</span>
+<span class="nc" id="L1035">		defined = true;</span>
+<span class="nc" id="L1036">		clip = false;</span>
+<span class="nc" id="L1037">		side = sides &amp; LEFT;</span>
+	    }
+<span class="nc" id="L1039">	    break;</span>
+	case 'n':
+<span class="nc" id="L1041">	    p.y = b.UR.y;</span>
+<span class="nc" id="L1042">	    constrain = true;</span>
+<span class="nc" id="L1043">	    clip = false;</span>
+<span class="nc bnc" id="L1044" title="All 4 branches missed.">	    switch (compass.charAt(0)) {</span>
+	    case '\0':
+<span class="nc" id="L1046">		defined = true;</span>
+<span class="nc" id="L1047">		theta = M_PI * 0.5;</span>
+<span class="nc bnc" id="L1048" title="All 2 branches missed.">                if (ictxt!=null)</span>
+<span class="nc" id="L1049">UNSUPPORTED(&quot;6l60lhko2eg8jry5mf4wpknho&quot;); //                     p = compassPoint(ictxt, maxv, ctr.x);</span>
+                else
+<span class="nc" id="L1051">                    p.x = ctr.x;</span>
+<span class="nc" id="L1052">		side = sides &amp; TOP;</span>
+<span class="nc" id="L1053">		break;</span>
+	    case 'e':
+<span class="nc" id="L1055">UNSUPPORTED(&quot;bfouf47misaa32ulv25melpbm&quot;); // 		defined = NOT(0);</span>
+<span class="nc" id="L1056">UNSUPPORTED(&quot;dpfvfzmxj8yxv0s9b2jrvy1dt&quot;); // 		theta = M_PI * 0.25;</span>
+<span class="nc" id="L1057">UNSUPPORTED(&quot;e1jqt6v7gkr0w7anohkdvwzuz&quot;); // 		if (ictxt)</span>
+<span class="nc" id="L1058">UNSUPPORTED(&quot;eaiok8sr9qt2m9t35bj1n33vk&quot;); // 		    p = compassPoint(ictxt, maxv, maxv);</span>
+<span class="nc" id="L1059">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L1060">UNSUPPORTED(&quot;5f4jye7znkk6hbv6lv0l9l0hs&quot;); // 		    p.x = b.UR.x;</span>
+<span class="nc" id="L1061">UNSUPPORTED(&quot;7eo9yj1faco0zq3n56ljnckjl&quot;); // 		side = sides &amp; ((1&lt;&lt;2) | (1&lt;&lt;1));</span>
+<span class="nc" id="L1062">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+	    case 'w':
+<span class="nc" id="L1064">UNSUPPORTED(&quot;bfouf47misaa32ulv25melpbm&quot;); // 		defined = NOT(0);</span>
+<span class="nc" id="L1065">UNSUPPORTED(&quot;b4rydjq1y842ljagzj3esvilf&quot;); // 		theta = M_PI * 0.75;</span>
+<span class="nc" id="L1066">UNSUPPORTED(&quot;e1jqt6v7gkr0w7anohkdvwzuz&quot;); // 		if (ictxt)</span>
+<span class="nc" id="L1067">UNSUPPORTED(&quot;aftpsq12rdaiypy81n10uki6g&quot;); // 		    p = compassPoint(ictxt, maxv, -maxv);</span>
+<span class="nc" id="L1068">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L1069">UNSUPPORTED(&quot;e2vcgqbz5sfyjwfyadlmm3s7n&quot;); // 		    p.x = b.LL.x;</span>
+<span class="nc" id="L1070">UNSUPPORTED(&quot;46gsms8looi57wty5vza2s5el&quot;); // 		side = sides &amp; ((1&lt;&lt;2) | (1&lt;&lt;3));</span>
+<span class="nc" id="L1071">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+	    default:
+<span class="nc" id="L1073">UNSUPPORTED(&quot;c8if0ggdrakzyxyn4fwlc8z2j&quot;); // 		p.y = ctr.y;</span>
+<span class="nc" id="L1074">UNSUPPORTED(&quot;30qndpdx39k6rmlgid0k16w53&quot;); // 		constrain = 0;</span>
+<span class="nc" id="L1075">UNSUPPORTED(&quot;2uxoapmd0p84jvg4utlai18nj&quot;); // 		clip = NOT(0);</span>
+<span class="nc" id="L1076">UNSUPPORTED(&quot;en0rarvkx5srsxnlqpf6ja1us&quot;); // 		rv = 1;</span>
+<span class="nc" id="L1077">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+	    }
+<span class="nc" id="L1079">	    break;</span>
+	case '_':
+<span class="fc" id="L1081">	    dyna = true;</span>
+<span class="fc" id="L1082">	    side = sides;</span>
+<span class="fc" id="L1083">	    break;</span>
+	case 'c':
+<span class="nc" id="L1085">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+	default:
+<span class="nc" id="L1087">	    rv = 1;</span>
+	    break;
+	}
+    }
+<span class="fc" id="L1091">    p.___(cwrotatepf(p, 90 * GD_rankdir(agraphof(n))));</span>
+<span class="fc bfc" id="L1092" title="All 2 branches covered.">    if (dyna)</span>
+<span class="fc" id="L1093">	pp.side = side;</span>
+    else
+<span class="fc" id="L1095">	pp.side = invflip_side(side, GD_rankdir(agraphof(n)));</span>
+<span class="fc" id="L1096">    pp.bp = bp;</span>
+<span class="fc" id="L1097">    PF2P(p, pp.p);</span>
+<span class="fc" id="L1098">    pp.theta = invflip_angle(theta, GD_rankdir(agraphof(n)));</span>
+<span class="pc bpc" id="L1099" title="3 of 4 branches missed.">    if ((p.x == 0) &amp;&amp; (p.y == 0))</span>
+<span class="nc" id="L1100">	pp.order = 256 / 2;</span>
+    else {
+	/* compute angle with 0 at north pole, increasing CCW */
+<span class="fc" id="L1103">	double angle = Math.atan2(p.y, p.x) + 1.5 * M_PI;</span>
+<span class="pc bpc" id="L1104" title="1 of 2 branches missed.">	if (angle &gt;= 2 * M_PI)</span>
+<span class="nc" id="L1105">	    angle -= 2 * M_PI;</span>
+<span class="fc" id="L1106">	pp.order = (int) ((256 * angle) / (2 * M_PI));</span>
+    }
+<span class="fc" id="L1108">    pp.constrained = constrain;</span>
+<span class="fc" id="L1109">    pp.defined = defined;</span>
+<span class="fc" id="L1110">    pp.clip = clip;</span>
+<span class="fc" id="L1111">    pp.dyna = dyna;</span>
+<span class="pc bpc" id="L1112" title="1 of 2 branches missed.">    return rv != 0;</span>
+}
+
+
+
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;unrecognized&quot;, key=&quot;a7copj498to9ai2kxtg728mex&quot;, definition=&quot;static void unrecognized(node_t * n, char *p)&quot;)
+public static void unrecognized(ST_Agnode_s n, CString p) {
+<span class="nc" id="L1120">ENTERING(&quot;a7copj498to9ai2kxtg728mex&quot;,&quot;unrecognized&quot;);</span>
+try {
+<span class="nc" id="L1122">System.err.println(&quot;node %s, port %s unrecognized &quot;+p);</span>
+}
+finally {
+<span class="nc" id="L1125">LEAVING(&quot;a7copj498to9ai2kxtg728mex&quot;,&quot;unrecognized&quot;);</span>
+}
+<span class="nc" id="L1127">}</span>
+
+<span class="fc" id="L1129">public static CFunction poly_port = new CFunctionAbstract(&quot;poly_port&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L1132">		return poly_port(zz, (ST_Agnode_s)args[0], (CString)args[1], (CString)args[2]);</span>
+	}};
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;poly_port&quot;, key=&quot;5k2b9gfpwm2tj3zmzniuz9azt&quot;, definition=&quot;static port poly_port(node_t * n, char *portname, char *compass)&quot;)
+public static ST_port poly_port(Globals zz, ST_Agnode_s n, CString portname, CString compass) {
+// WARNING!! STRUCT
+<span class="fc" id="L1138">return poly_port_w_(zz, n, portname, compass).copy();</span>
+}
+private static ST_port poly_port_w_(Globals zz, ST_Agnode_s n, CString portname, CString compass) {
+<span class="fc" id="L1141">ENTERING(&quot;5k2b9gfpwm2tj3zmzniuz9azt&quot;,&quot;poly_port&quot;);</span>
+try {
+<span class="fc" id="L1143">    final ST_port rv= new ST_port();</span>
+    ST_boxf bp;
+<span class="fc" id="L1145">    int sides[] = new int[1];			/* bitmap of which sides the port lies along */</span>
+    
+<span class="pc bpc" id="L1147" title="1 of 2 branches missed.">    if (portname.charAt(0) == '\0')</span>
+<span class="fc" id="L1148">	return zz.Center;</span>
+    
+<span class="nc bnc" id="L1150" title="All 2 branches missed.">    if (compass == null)</span>
+<span class="nc" id="L1151">	compass = new CString(&quot;_&quot;);</span>
+<span class="nc" id="L1152">    sides[0] = BOTTOM | RIGHT | TOP | LEFT;</span>
+<span class="nc bnc" id="L1153" title="All 4 branches missed.">    if ((ND_label(n).html) &amp;&amp; ((bp = html_port(n, portname, sides))!=null)) {</span>
+<span class="nc" id="L1154">UNSUPPORTED(&quot;dl6n43wu7irkeiaxb6wed3388&quot;); // 	if (compassPort(n, bp, &amp;rv, compass, sides, NULL)) {</span>
+<span class="nc" id="L1155">UNSUPPORTED(&quot;cw5grwj6gbj94jcztvnp2ooyj&quot;); // 	    agerr(AGWARN,</span>
+<span class="nc" id="L1156">UNSUPPORTED(&quot;en2xpqtprfng8gmc77dzq7klv&quot;); // 		  &quot;node %s, port %s, unrecognized compass point '%s' - ignored\n&quot;,</span>
+<span class="nc" id="L1157">UNSUPPORTED(&quot;cmo03yl2q1wgn0c1r45y1ay5e&quot;); // 		  agnameof(n), portname, compass);</span>
+<span class="nc" id="L1158">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    } else {
+<span class="nc" id="L1160">	ST_inside_t ictxtp = null;</span>
+<span class="nc" id="L1161">	final ST_inside_t ictxt = new ST_inside_t();</span>
+	
+<span class="nc bnc" id="L1163" title="All 2 branches missed.">	if (IS_BOX(zz, n))</span>
+<span class="nc" id="L1164">	    ictxtp = null;</span>
+	else {
+<span class="nc" id="L1166">UNSUPPORTED(&quot;17pbmb7rfq2rdapm13ww6pefz&quot;); // 	    ictxt.s.n = n;</span>
+<span class="nc" id="L1167">UNSUPPORTED(&quot;etss3zom716xdeasxnytjb8db&quot;); // 	    ictxt.s.bp = NULL;</span>
+<span class="nc" id="L1168">UNSUPPORTED(&quot;89cj6b362bd80f627mp67yjh0&quot;); // 	    ictxtp = &amp;ictxt;</span>
+	}
+<span class="nc bnc" id="L1170" title="All 2 branches missed.">	if (compassPort(n, null, rv, portname, sides[0], ictxtp))</span>
+<span class="nc" id="L1171">		unrecognized(n, portname);</span>
+    }
+
+<span class="nc" id="L1174">return rv;</span>
+} finally {
+<span class="fc" id="L1176">LEAVING(&quot;5k2b9gfpwm2tj3zmzniuz9azt&quot;,&quot;poly_port&quot;);</span>
+}
+}
+
+
+
+private static boolean IS_BOX(Globals zz, ST_Agnode_s n) {
+<span class="nc bnc" id="L1183" title="All 2 branches missed.">	return ND_shape(n).polygon == zz.p_box;</span>
+}
+
+
+<span class="fc" id="L1187">public static CFunction poly_gencode = new CFunctionAbstract(&quot;poly_gencode&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L1190">		return poly_gencode(args);</span>
+	}};
+//3 1tks71z165dy9pzfshnjejpx3
+// static void poly_gencode(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;poly_gencode&quot;, key=&quot;1tks71z165dy9pzfshnjejpx3&quot;, definition=&quot;static void poly_gencode(GVJ_t * job, node_t * n)&quot;)
+public static Object poly_gencode(Object... arg) {
+<span class="nc" id="L1197">UNSUPPORTED(&quot;p0x21cs921921juch0sv0bun&quot;); // static void poly_gencode(GVJ_t * job, node_t * n)</span>
+<span class="nc" id="L1198">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1199">UNSUPPORTED(&quot;84llcpxtvxaggx841n2t03850&quot;); //     obj_state_t *obj = job-&gt;obj;</span>
+<span class="nc" id="L1200">UNSUPPORTED(&quot;7b0667dpeiekddi69gpywx92t&quot;); //     polygon_t *poly;</span>
+<span class="nc" id="L1201">UNSUPPORTED(&quot;behzd4x7hwrpj60ld9ydd6ldw&quot;); //     double xsize, ysize;</span>
+<span class="nc" id="L1202">UNSUPPORTED(&quot;avlmoeaaigyvssingomxrvja4&quot;); //     int i, j, peripheries, sides, style;</span>
+<span class="nc" id="L1203">UNSUPPORTED(&quot;1r39xvspssd187ru2ru0hw25i&quot;); //     pointf P, *vertices;</span>
+<span class="nc" id="L1204">UNSUPPORTED(&quot;behdcj4jfqh2lxeud7bvr9dxx&quot;); //     static pointf *AF;</span>
+<span class="nc" id="L1205">UNSUPPORTED(&quot;922k2c5xjbw7vuw4vfhavkll9&quot;); //     static int A_size;</span>
+<span class="nc" id="L1206">UNSUPPORTED(&quot;e26zsspincyfi747lhus7h41b&quot;); //     boolean filled;</span>
+<span class="nc" id="L1207">UNSUPPORTED(&quot;343gvjl2hbvjb2nrrtcqqetep&quot;); //     boolean usershape_p;</span>
+<span class="nc" id="L1208">UNSUPPORTED(&quot;55zxkmqgt42k3bgw1g1del41&quot;); //     boolean pfilled;		/* true if fill not handled by user shape */</span>
+<span class="nc" id="L1209">UNSUPPORTED(&quot;b80uijjl4g1zjdox5s5vdh8s5&quot;); //     char *color, *name;</span>
+<span class="nc" id="L1210">UNSUPPORTED(&quot;6ciz320nm1jdjxir808cycx3t&quot;); //     int doMap = obj-&gt;url || obj-&gt;explicit_tooltip;</span>
+<span class="nc" id="L1211">UNSUPPORTED(&quot;7421ua6zgvtho3nwdlh9ypytf&quot;); //     char* fillcolor=NULL;</span>
+<span class="nc" id="L1212">UNSUPPORTED(&quot;39txqf5jgyh1q10jekeaemag6&quot;); //     char* pencolor=NULL;</span>
+<span class="nc" id="L1213">UNSUPPORTED(&quot;bhtcyodd9jiazat6sqhp9pm4x&quot;); //     char* clrs[2];</span>
+<span class="nc" id="L1214">UNSUPPORTED(&quot;7pfkga2nn8ltabo2ycvjgma6o&quot;); //     if (doMap &amp;&amp; !(job-&gt;flags &amp; (1&lt;&lt;2)))</span>
+<span class="nc" id="L1215">UNSUPPORTED(&quot;6e7g66eeo7n8h8mq556pt3xxy&quot;); // 	gvrender_begin_anchor(job,</span>
+<span class="nc" id="L1216">UNSUPPORTED(&quot;8g7o4dsbwgp9ggtiktgt2m41t&quot;); // 			      obj-&gt;url, obj-&gt;tooltip, obj-&gt;target,</span>
+<span class="nc" id="L1217">UNSUPPORTED(&quot;c8tk2e711ojwsnar0y39a73cf&quot;); // 			      obj-&gt;id);</span>
+<span class="nc" id="L1218">UNSUPPORTED(&quot;e8a863hfpkzgw2w09pemrprir&quot;); //     poly = (polygon_t *) ND_shape_info(n);</span>
+<span class="nc" id="L1219">UNSUPPORTED(&quot;44eync2gzhkt36aljp0pdxlws&quot;); //     vertices = poly-&gt;vertices;</span>
+<span class="nc" id="L1220">UNSUPPORTED(&quot;bt0ymhl3qyi2wkx6awwozl8pm&quot;); //     sides = poly-&gt;sides;</span>
+<span class="nc" id="L1221">UNSUPPORTED(&quot;axi5xtmkixooa3vai8uysr8y1&quot;); //     peripheries = poly-&gt;peripheries;</span>
+<span class="nc" id="L1222">UNSUPPORTED(&quot;3yzb2exxpwntmjik61bia8qin&quot;); //     if (A_size &lt; sides) {</span>
+<span class="nc" id="L1223">UNSUPPORTED(&quot;6czsf4ed6c2x6qn10dz9vvpc2&quot;); // 	A_size = sides + 5;</span>
+<span class="nc" id="L1224">UNSUPPORTED(&quot;4fxnv89xcha2g2jkqjznbfhtl&quot;); // 	AF = ALLOC(A_size, AF, pointf);</span>
+<span class="nc" id="L1225">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1226">UNSUPPORTED(&quot;65psnpx1lm1txgz684nsf5fy0&quot;); //     /* nominal label position in the center of the node */</span>
+<span class="nc" id="L1227">UNSUPPORTED(&quot;1bslo0pyyucx0zmdzt12sei6d&quot;); //     ND_label(n)-&gt;pos = ND_coord(n);</span>
+<span class="nc" id="L1228">UNSUPPORTED(&quot;8pq7sdzx1tcm5jiy7gk6k14ru&quot;); //     xsize = (ND_lw(n) + ND_rw(n)) / (ROUND((ND_width(n))*72));</span>
+<span class="nc" id="L1229">UNSUPPORTED(&quot;ebgzy2lbfiijt1acuci7zobbz&quot;); //     ysize = ND_ht(n) / (ROUND((ND_height(n))*72));</span>
+<span class="nc" id="L1230">UNSUPPORTED(&quot;6yjfupcwvts03fbmr493ea2ja&quot;); //     style = stylenode(job, n);</span>
+<span class="nc" id="L1231">UNSUPPORTED(&quot;92hvfvrwzs8dy1vdgk97mu8rm&quot;); //     clrs[0] = NULL;</span>
+<span class="nc" id="L1232">UNSUPPORTED(&quot;e5t9x8qxknm67g2irjuq09m0n&quot;); //     if (ND_gui_state(n) &amp; (1&lt;&lt;0)) {</span>
+<span class="nc" id="L1233">UNSUPPORTED(&quot;bmfnw21ksvzdvbf1k6jhpy482&quot;); // 	pencolor = late_nnstring(n, N_activepencolor, &quot;#808080&quot;);</span>
+<span class="nc" id="L1234">UNSUPPORTED(&quot;4m6zwbkh86axvr0iupq8yqbj&quot;); // 	gvrender_set_pencolor(job, pencolor);</span>
+<span class="nc" id="L1235">UNSUPPORTED(&quot;cmymz070zao66wyx1s7tv8pha&quot;); // 	color =</span>
+<span class="nc" id="L1236">UNSUPPORTED(&quot;3kou17p4mmlejrgnb4ubal4y0&quot;); // 	    late_nnstring(n, N_activefillcolor, &quot;#fcfcfc&quot;);</span>
+<span class="nc" id="L1237">UNSUPPORTED(&quot;8jkw84z9v2sgxja8neagg70yn&quot;); // 	gvrender_set_fillcolor(job, color);</span>
+<span class="nc" id="L1238">UNSUPPORTED(&quot;wgi1jlomdsgec9gfae0fj8md&quot;); // 	filled = 1;</span>
+<span class="nc" id="L1239">UNSUPPORTED(&quot;9ihvjyvhnzzz36yb9vxt7ds0x&quot;); //     } else if (ND_gui_state(n) &amp; (1&lt;&lt;1)) {</span>
+<span class="nc" id="L1240">UNSUPPORTED(&quot;aak3ib1vf3cr00erxujx1x1a2&quot;); // 	pencolor =</span>
+<span class="nc" id="L1241">UNSUPPORTED(&quot;1cimazkiwwo2m0abp23m3fnme&quot;); // 	    late_nnstring(n, N_selectedpencolor, &quot;#303030&quot;);</span>
+<span class="nc" id="L1242">UNSUPPORTED(&quot;4m6zwbkh86axvr0iupq8yqbj&quot;); // 	gvrender_set_pencolor(job, pencolor);</span>
+<span class="nc" id="L1243">UNSUPPORTED(&quot;cmymz070zao66wyx1s7tv8pha&quot;); // 	color =</span>
+<span class="nc" id="L1244">UNSUPPORTED(&quot;28yl28qxl17kdj778ikor38xk&quot;); // 	    late_nnstring(n, N_selectedfillcolor,</span>
+<span class="nc" id="L1245">UNSUPPORTED(&quot;47h1lk49r1o0z3cv330dq6dx&quot;); // 			  &quot;#e8e8e8&quot;);</span>
+<span class="nc" id="L1246">UNSUPPORTED(&quot;8jkw84z9v2sgxja8neagg70yn&quot;); // 	gvrender_set_fillcolor(job, color);</span>
+<span class="nc" id="L1247">UNSUPPORTED(&quot;wgi1jlomdsgec9gfae0fj8md&quot;); // 	filled = 1;</span>
+<span class="nc" id="L1248">UNSUPPORTED(&quot;1yfjih723r7l1aal6cgysntu9&quot;); //     } else if (ND_gui_state(n) &amp; (1&lt;&lt;3)) {</span>
+<span class="nc" id="L1249">UNSUPPORTED(&quot;aak3ib1vf3cr00erxujx1x1a2&quot;); // 	pencolor =</span>
+<span class="nc" id="L1250">UNSUPPORTED(&quot;7ksdqin8o1wm9jzsj3vquwpn4&quot;); // 	    late_nnstring(n, N_deletedpencolor, &quot;#e0e0e0&quot;);</span>
+<span class="nc" id="L1251">UNSUPPORTED(&quot;4m6zwbkh86axvr0iupq8yqbj&quot;); // 	gvrender_set_pencolor(job, pencolor);</span>
+<span class="nc" id="L1252">UNSUPPORTED(&quot;cmymz070zao66wyx1s7tv8pha&quot;); // 	color =</span>
+<span class="nc" id="L1253">UNSUPPORTED(&quot;bt3kkty4bxox77ydiwjgsxvdl&quot;); // 	    late_nnstring(n, N_deletedfillcolor, &quot;#f0f0f0&quot;);</span>
+<span class="nc" id="L1254">UNSUPPORTED(&quot;8jkw84z9v2sgxja8neagg70yn&quot;); // 	gvrender_set_fillcolor(job, color);</span>
+<span class="nc" id="L1255">UNSUPPORTED(&quot;wgi1jlomdsgec9gfae0fj8md&quot;); // 	filled = 1;</span>
+<span class="nc" id="L1256">UNSUPPORTED(&quot;8zwfuofs5l5a6z3f4rvlihyw2&quot;); //     } else if (ND_gui_state(n) &amp; (1&lt;&lt;2)) {</span>
+<span class="nc" id="L1257">UNSUPPORTED(&quot;aak3ib1vf3cr00erxujx1x1a2&quot;); // 	pencolor =</span>
+<span class="nc" id="L1258">UNSUPPORTED(&quot;ctvdbytqgb1rzge7ij5ocomx9&quot;); // 	    late_nnstring(n, N_visitedpencolor, &quot;#101010&quot;);</span>
+<span class="nc" id="L1259">UNSUPPORTED(&quot;4m6zwbkh86axvr0iupq8yqbj&quot;); // 	gvrender_set_pencolor(job, pencolor);</span>
+<span class="nc" id="L1260">UNSUPPORTED(&quot;cmymz070zao66wyx1s7tv8pha&quot;); // 	color =</span>
+<span class="nc" id="L1261">UNSUPPORTED(&quot;2ffts5ygp2gvce89s4zmac21o&quot;); // 	    late_nnstring(n, N_visitedfillcolor, &quot;#f8f8f8&quot;);</span>
+<span class="nc" id="L1262">UNSUPPORTED(&quot;8jkw84z9v2sgxja8neagg70yn&quot;); // 	gvrender_set_fillcolor(job, color);</span>
+<span class="nc" id="L1263">UNSUPPORTED(&quot;wgi1jlomdsgec9gfae0fj8md&quot;); // 	filled = 1;</span>
+<span class="nc" id="L1264">UNSUPPORTED(&quot;c07up7zvrnu2vhzy6d7zcu94g&quot;); //     } else {</span>
+<span class="nc" id="L1265">UNSUPPORTED(&quot;71lsnu3rvb8q4qjlg8ekkueb8&quot;); // 	if (style &amp; (1 &lt;&lt; 0)) {</span>
+<span class="nc" id="L1266">UNSUPPORTED(&quot;1ldzvmymblz8y4a6idvyxoj5t&quot;); // 	    float frac;</span>
+<span class="nc" id="L1267">UNSUPPORTED(&quot;e039lb3amkbtia1p5xid53g8f&quot;); // 	    fillcolor = findFill (n);</span>
+<span class="nc" id="L1268">UNSUPPORTED(&quot;5dnga3gh00f4sv4fk1n2iqdgu&quot;); // 	    if (findStopColor (fillcolor, clrs, &amp;frac)) {</span>
+<span class="nc" id="L1269">UNSUPPORTED(&quot;12wjuz2zq45txyp39hhco78xu&quot;); //         	gvrender_set_fillcolor(job, clrs[0]);</span>
+<span class="nc" id="L1270">UNSUPPORTED(&quot;5o23oun5dlazsaicyjj530pp&quot;); // 		if (clrs[1]) </span>
+<span class="nc" id="L1271">UNSUPPORTED(&quot;ct9w73vq2t9wsony60rgp0vuv&quot;); // 		    gvrender_set_gradient_vals(job,clrs[1],late_int(n,N_gradientangle,0,0), frac);</span>
+<span class="nc" id="L1272">UNSUPPORTED(&quot;5v31mz0fdr0su096gqov41vyn&quot;); // 		else </span>
+<span class="nc" id="L1273">UNSUPPORTED(&quot;5hcjieyymox6ih0mqxtesfkai&quot;); // 		    gvrender_set_gradient_vals(job,&quot;black&quot;,late_int(n,N_gradientangle,0,0), frac);</span>
+<span class="nc" id="L1274">UNSUPPORTED(&quot;cu80xxb02iidme5bgb4b9q03o&quot;); // 		if (style &amp; (1 &lt;&lt; 1))</span>
+<span class="nc" id="L1275">UNSUPPORTED(&quot;5jf506rwz9snq4d6ozpjvg3yg&quot;); // 		    filled = 3;</span>
+<span class="nc" id="L1276">UNSUPPORTED(&quot;7rknc7r0egcn3cw68mrvgow3v&quot;); // 	 	else</span>
+<span class="nc" id="L1277">UNSUPPORTED(&quot;7bikp52v1ey2yil3rybx6nris&quot;); // 		    filled = 2;</span>
+<span class="nc" id="L1278">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1279">UNSUPPORTED(&quot;6q044im7742qhglc4553noina&quot;); // 	    else {</span>
+<span class="nc" id="L1280">UNSUPPORTED(&quot;es2lu1zhy5wdeml1v1kmrcix3&quot;); //         	gvrender_set_fillcolor(job, fillcolor);</span>
+<span class="nc" id="L1281">UNSUPPORTED(&quot;6w06em6l23suofe15du0wq9hb&quot;); // 		filled = 1;</span>
+<span class="nc" id="L1282">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1283">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1284">UNSUPPORTED(&quot;cbyq6e4yotsw91ihtsbpqk9n&quot;); // 	else if (style &amp; ((1 &lt;&lt; 6)|(1 &lt;&lt; 9)))  {</span>
+<span class="nc" id="L1285">UNSUPPORTED(&quot;e039lb3amkbtia1p5xid53g8f&quot;); // 	    fillcolor = findFill (n);</span>
+<span class="nc" id="L1286">UNSUPPORTED(&quot;b39ijeotj91epdulx0zfawqg7&quot;); //             /* gvrender_set_fillcolor(job, fillcolor); */</span>
+<span class="nc" id="L1287">UNSUPPORTED(&quot;5op945vn3c1cyxwov5p8rj33t&quot;); // 	    filled = NOT(0);</span>
+<span class="nc" id="L1288">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1289">UNSUPPORTED(&quot;8k75h069sv2k9b6tgz77dscwd&quot;); // 	else {</span>
+<span class="nc" id="L1290">UNSUPPORTED(&quot;6hyckgrxm2nsg8cw4hffomldu&quot;); // 	    filled = 0;</span>
+<span class="nc" id="L1291">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1292">UNSUPPORTED(&quot;7v8vwyf8talmtwk6o9fv16cu7&quot;); // 	pencolor = penColor(job, n);	/* emit pen color */</span>
+<span class="nc" id="L1293">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1294">UNSUPPORTED(&quot;dzz4jp9gamcvlyn9e3vzfb9m5&quot;); //     pfilled = !ND_shape(n)-&gt;usershape || (*(ND_shape(n)-&gt;name)==*(&quot;custom&quot;)&amp;&amp;!strcmp(ND_shape(n)-&gt;name,&quot;custom&quot;));</span>
+<span class="nc" id="L1295">UNSUPPORTED(&quot;867znru6ot29tjqobp8dlbw6z&quot;); //     /* if no boundary but filled, set boundary color to transparent */</span>
+<span class="nc" id="L1296">UNSUPPORTED(&quot;42p7y58vqzgaceefog269961h&quot;); //     if ((peripheries == 0) &amp;&amp; filled &amp;&amp; pfilled) {</span>
+<span class="nc" id="L1297">UNSUPPORTED(&quot;15ha366z6aj0vmrwy4kws0mqd&quot;); // 	peripheries = 1;</span>
+<span class="nc" id="L1298">UNSUPPORTED(&quot;9h0jwzscq5xyee6v8y9a84z5z&quot;); // 	gvrender_set_pencolor(job, &quot;transparent&quot;);</span>
+<span class="nc" id="L1299">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1300">UNSUPPORTED(&quot;b5y5lqlrrc44k9t418m98208o&quot;); //     /* draw peripheries first */</span>
+<span class="nc" id="L1301">UNSUPPORTED(&quot;3ldxhnwdjmonz5bmmr7t8i5v6&quot;); //     for (j = 0; j &lt; peripheries; j++) {</span>
+<span class="nc" id="L1302">UNSUPPORTED(&quot;bnlcutimilujroygrsjpbamec&quot;); // 	for (i = 0; i &lt; sides; i++) {</span>
+<span class="nc" id="L1303">UNSUPPORTED(&quot;6jkqzav2wqsdxuy5nalny0l8v&quot;); // 	    P = vertices[i + j * sides];</span>
+<span class="nc" id="L1304">UNSUPPORTED(&quot;7cdu1dtqyaubntomiasv9qnoj&quot;); // 	    AF[i].x = P.x * xsize + ND_coord(n).x;</span>
+<span class="nc" id="L1305">UNSUPPORTED(&quot;e40xvnbar4dmi82ewqw5laa59&quot;); // 	    AF[i].y = P.y * ysize + ND_coord(n).y;</span>
+<span class="nc" id="L1306">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1307">UNSUPPORTED(&quot;9dpfyah7h8cjesbm1tagc3qr2&quot;); // 	if (sides &lt;= 2) {</span>
+<span class="nc" id="L1308">UNSUPPORTED(&quot;4iafj5ab7zhphfv75axr98xpm&quot;); // 	    if ((style &amp; (1 &lt;&lt; 9)) &amp;&amp; (j == 0) &amp;&amp; (strchr(fillcolor,':'))) {</span>
+<span class="nc" id="L1309">UNSUPPORTED(&quot;brwfdh2hmhcwxahcpjocmax54&quot;); // 		int rv = wedgedEllipse (job, AF, fillcolor);</span>
+<span class="nc" id="L1310">UNSUPPORTED(&quot;4195dkkxygfup9x2hevx5t0kt&quot;); // 		if (rv &gt; 1)</span>
+<span class="nc" id="L1311">UNSUPPORTED(&quot;6d80sdeoci13p59wizsvnilpd&quot;); // 		    agerr (AGPREV, &quot;in node %s\n&quot;, agnameof(n));</span>
+<span class="nc" id="L1312">UNSUPPORTED(&quot;3zx9cyeiqls2js359g1ja8px8&quot;); // 		filled = 0;</span>
+<span class="nc" id="L1313">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1314">UNSUPPORTED(&quot;dzwn73f4njl5hkp0qrnncl2ff&quot;); // 	    gvrender_ellipse(job, AF, sides, filled);</span>
+<span class="nc" id="L1315">UNSUPPORTED(&quot;chb5tdwhi8a8xmy8ftheo6824&quot;); // 	    if (style &amp; (1 &lt;&lt; 3)) {</span>
+<span class="nc" id="L1316">UNSUPPORTED(&quot;efwhq15vj62j7hdj6evx064cg&quot;); // 		Mcircle_hack(job, n);</span>
+<span class="nc" id="L1317">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1318">UNSUPPORTED(&quot;aci5r7yyn8mzrv3exe7znstcn&quot;); // 	} else if (style &amp; (1 &lt;&lt; 6)) {</span>
+<span class="nc" id="L1319">UNSUPPORTED(&quot;dgwuupvm0kjmgthk4ugim8woz&quot;); // 	    if (j == 0) {</span>
+<span class="nc" id="L1320">UNSUPPORTED(&quot;3x4ndf7fx76diabv9nfllk0b5&quot;); // 		int rv = stripedBox (job, AF, fillcolor, 1);</span>
+<span class="nc" id="L1321">UNSUPPORTED(&quot;4195dkkxygfup9x2hevx5t0kt&quot;); // 		if (rv &gt; 1)</span>
+<span class="nc" id="L1322">UNSUPPORTED(&quot;6d80sdeoci13p59wizsvnilpd&quot;); // 		    agerr (AGPREV, &quot;in node %s\n&quot;, agnameof(n));</span>
+<span class="nc" id="L1323">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1324">UNSUPPORTED(&quot;717qv74rlec63ys8natmmpak9&quot;); // 	    gvrender_polygon(job, AF, sides, 0);</span>
+<span class="nc" id="L1325">UNSUPPORTED(&quot;5ueys9z3ukkzz7o4fr6z8tuk0&quot;); // 	} else if (style &amp; (1 &lt;&lt; 10)) {</span>
+<span class="nc" id="L1326">UNSUPPORTED(&quot;8ozii45lu97yd30cta30grmf8&quot;); // 	    gvrender_set_pencolor(job, &quot;transparent&quot;);</span>
+<span class="nc" id="L1327">UNSUPPORTED(&quot;oe3tziy2rg7shg7dan61ilfq&quot;); // 	    gvrender_polygon(job, AF, sides, filled);</span>
+<span class="nc" id="L1328">UNSUPPORTED(&quot;9cgcmdbt8qdrnqnvs86u9cd53&quot;); // 	    gvrender_set_pencolor(job, pencolor);</span>
+<span class="nc" id="L1329">UNSUPPORTED(&quot;fft8g5x7554aunjp9t27mqx6&quot;); // 	    gvrender_polyline(job, AF+2, 2);</span>
+<span class="nc" id="L1330">UNSUPPORTED(&quot;8t4w6b2lracu2ee6rqqm6r915&quot;); // 	} else if (((style) &amp; ((1 &lt;&lt; 2) | (1 &lt;&lt; 3) | (127 &lt;&lt; 24)))) {</span>
+<span class="nc" id="L1331">UNSUPPORTED(&quot;858fovk41ca06eamq91gjw7tm&quot;); // 	    round_corners(job, AF, sides, style, filled);</span>
+<span class="nc" id="L1332">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L1333">UNSUPPORTED(&quot;oe3tziy2rg7shg7dan61ilfq&quot;); // 	    gvrender_polygon(job, AF, sides, filled);</span>
+<span class="nc" id="L1334">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1335">UNSUPPORTED(&quot;1peuavyjb0rqm2z4fzpf2afzm&quot;); // 	/* fill innermost periphery only */</span>
+<span class="nc" id="L1336">UNSUPPORTED(&quot;arpfq2ay8oyluwsz8s1wp6tp4&quot;); // 	filled = 0;</span>
+<span class="nc" id="L1337">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1338">UNSUPPORTED(&quot;76vwep8b6qm5azc0fy66d98rw&quot;); //     usershape_p = 0;</span>
+<span class="nc" id="L1339">UNSUPPORTED(&quot;8fhwzyrc8mh95ap0b1g7e9nbq&quot;); //     if (ND_shape(n)-&gt;usershape) {</span>
+<span class="nc" id="L1340">UNSUPPORTED(&quot;2v9mlb5rtcmwqpcth7w27clk5&quot;); // 	name = ND_shape(n)-&gt;name;</span>
+<span class="nc" id="L1341">UNSUPPORTED(&quot;ad1u0yih0rcookfy0x1lsev4d&quot;); // 	if ((*(name)==*(&quot;custom&quot;)&amp;&amp;!strcmp(name,&quot;custom&quot;))) {</span>
+<span class="nc" id="L1342">UNSUPPORTED(&quot;7eg6kesbmod5ryqil85qa0nhh&quot;); // 	    if ((name = agget(n, &quot;shapefile&quot;)) &amp;&amp; name[0])</span>
+<span class="nc" id="L1343">UNSUPPORTED(&quot;avdrph3m5jvu0m9cldtioxy3f&quot;); // 		usershape_p = NOT(0);</span>
+<span class="nc" id="L1344">UNSUPPORTED(&quot;6to1esmb8qfrhzgtr7jdqleja&quot;); // 	} else</span>
+<span class="nc" id="L1345">UNSUPPORTED(&quot;cmpu4v9yae7spgt5x9vvwycqu&quot;); // 	    usershape_p = NOT(0);</span>
+<span class="nc" id="L1346">UNSUPPORTED(&quot;5i5g01dslsnkth7in6u6rbi99&quot;); //     } else if ((name = agget(n, &quot;image&quot;)) &amp;&amp; name[0]) {</span>
+<span class="nc" id="L1347">UNSUPPORTED(&quot;e220s4b8iyyeqjgxmlg5pcdrj&quot;); // 	usershape_p = NOT(0);</span>
+<span class="nc" id="L1348">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1349">UNSUPPORTED(&quot;3btjgija7cfs4jgzrv91fjwpt&quot;); //     if (usershape_p) {</span>
+<span class="nc" id="L1350">UNSUPPORTED(&quot;9usktstdf8lawthhtrs6s58pm&quot;); // 	/* get coords of innermost periphery */</span>
+<span class="nc" id="L1351">UNSUPPORTED(&quot;bnlcutimilujroygrsjpbamec&quot;); // 	for (i = 0; i &lt; sides; i++) {</span>
+<span class="nc" id="L1352">UNSUPPORTED(&quot;5dznk69haxedww8ugav5ykrld&quot;); // 	    P = vertices[i];</span>
+<span class="nc" id="L1353">UNSUPPORTED(&quot;7cdu1dtqyaubntomiasv9qnoj&quot;); // 	    AF[i].x = P.x * xsize + ND_coord(n).x;</span>
+<span class="nc" id="L1354">UNSUPPORTED(&quot;e40xvnbar4dmi82ewqw5laa59&quot;); // 	    AF[i].y = P.y * ysize + ND_coord(n).y;</span>
+<span class="nc" id="L1355">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1356">UNSUPPORTED(&quot;1xu7you106p030clm45rzsrgc&quot;); // 	/* lay down fill first */</span>
+<span class="nc" id="L1357">UNSUPPORTED(&quot;3sznkjp2q6eryoqsuxyw523pa&quot;); // 	if (filled &amp;&amp; pfilled) {</span>
+<span class="nc" id="L1358">UNSUPPORTED(&quot;dur5g2omz2d8j499p5rr99e0g&quot;); // 	    if (sides &lt;= 2) {</span>
+<span class="nc" id="L1359">UNSUPPORTED(&quot;ezipi4mltlppyq0tetpgbb2rn&quot;); // 		if ((style &amp; (1 &lt;&lt; 9)) &amp;&amp; (j == 0) &amp;&amp; (strchr(fillcolor,':'))) {</span>
+<span class="nc" id="L1360">UNSUPPORTED(&quot;an9w62svq9d61trsclgublxs4&quot;); // 		    int rv = wedgedEllipse (job, AF, fillcolor);</span>
+<span class="nc" id="L1361">UNSUPPORTED(&quot;4njt8ngwdhm5t0qj38vd4vx26&quot;); // 		    if (rv &gt; 1)</span>
+<span class="nc" id="L1362">UNSUPPORTED(&quot;dimjpscq5rjb3aaiz8l8gia45&quot;); // 			agerr (AGPREV, &quot;in node %s\n&quot;, agnameof(n));</span>
+<span class="nc" id="L1363">UNSUPPORTED(&quot;14k7t5gy5xvy3m6y4lllccbyz&quot;); // 		    filled = 0;</span>
+<span class="nc" id="L1364">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L1365">UNSUPPORTED(&quot;4ey5tpwqvnf3eih51z1ar6wgg&quot;); // 		gvrender_ellipse(job, AF, sides, filled);</span>
+<span class="nc" id="L1366">UNSUPPORTED(&quot;7eygavzyy3od5lurlb1kyvq4q&quot;); // 		if (style &amp; (1 &lt;&lt; 3)) {</span>
+<span class="nc" id="L1367">UNSUPPORTED(&quot;53tsr41edfe2tdmq1vs4qmoh6&quot;); // 		    Mcircle_hack(job, n);</span>
+<span class="nc" id="L1368">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L1369">UNSUPPORTED(&quot;79b2w9yvj1qj97vqjuf6ff9w0&quot;); // 	    } else if (style &amp; (1 &lt;&lt; 6)) {</span>
+<span class="nc" id="L1370">UNSUPPORTED(&quot;3x4ndf7fx76diabv9nfllk0b5&quot;); // 		int rv = stripedBox (job, AF, fillcolor, 1);</span>
+<span class="nc" id="L1371">UNSUPPORTED(&quot;4195dkkxygfup9x2hevx5t0kt&quot;); // 		if (rv &gt; 1)</span>
+<span class="nc" id="L1372">UNSUPPORTED(&quot;6d80sdeoci13p59wizsvnilpd&quot;); // 		    agerr (AGPREV, &quot;in node %s\n&quot;, agnameof(n));</span>
+<span class="nc" id="L1373">UNSUPPORTED(&quot;ctx2lp124btfhy4z6030o2gs&quot;); // 		gvrender_polygon(job, AF, sides, 0);</span>
+<span class="nc" id="L1374">UNSUPPORTED(&quot;89clftmmkfws4k288i4jas2yb&quot;); // 	    } else if (style &amp; ((1 &lt;&lt; 2) | (1 &lt;&lt; 3))) {</span>
+<span class="nc" id="L1375">UNSUPPORTED(&quot;dk9vlsyutilnikpal5kjamo5x&quot;); // 		round_corners(job, AF, sides, style, filled);</span>
+<span class="nc" id="L1376">UNSUPPORTED(&quot;175pyfe8j8mbhdwvrbx3gmew9&quot;); // 	    } else {</span>
+<span class="nc" id="L1377">UNSUPPORTED(&quot;azv3esl3n2c27ol5b9dgx7yrz&quot;); // 		gvrender_polygon(job, AF, sides, filled);</span>
+<span class="nc" id="L1378">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1379">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1380">UNSUPPORTED(&quot;8bp2tc15gonvz3x38es3dcmqm&quot;); // 	gvrender_usershape(job, name, AF, sides, filled,</span>
+<span class="nc" id="L1381">UNSUPPORTED(&quot;4ob0y29flbn0mu1b6or1pikm&quot;); // 			   late_string(n, N_imagescale, &quot;false&quot;));</span>
+<span class="nc" id="L1382">UNSUPPORTED(&quot;cyozk4ozoaaqkwqvcr0wuavfb&quot;); // 	filled = 0;		/* with user shapes, we have done the fill if needed */</span>
+<span class="nc" id="L1383">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1384">UNSUPPORTED(&quot;59de9ohjmjuxis5h2yvc2zjnx&quot;); //     free (clrs[0]);</span>
+<span class="nc" id="L1385">UNSUPPORTED(&quot;8r8t0lgzzpigm1odig9a9yg1c&quot;); //     emit_label(job, EMIT_NLABEL, ND_label(n));</span>
+<span class="nc" id="L1386">UNSUPPORTED(&quot;amrlpbo0f5svfvv7e9lzhfzj9&quot;); //     if (doMap) {</span>
+<span class="nc" id="L1387">UNSUPPORTED(&quot;4drs7w0v5mk7ys9aylmo5lnq8&quot;); // 	if (job-&gt;flags &amp; (1&lt;&lt;2))</span>
+<span class="nc" id="L1388">UNSUPPORTED(&quot;12436nj34of615tb94t3cw2h0&quot;); // 	    gvrender_begin_anchor(job,</span>
+<span class="nc" id="L1389">UNSUPPORTED(&quot;2rwb38hipr5rxkwxfdzzwkdmy&quot;); // 				  obj-&gt;url, obj-&gt;tooltip, obj-&gt;target,</span>
+<span class="nc" id="L1390">UNSUPPORTED(&quot;4x188hxybttaubn1tt4tf710k&quot;); // 				  obj-&gt;id);</span>
+<span class="nc" id="L1391">UNSUPPORTED(&quot;e3o6yrnsv8lko5fql4f8a9gly&quot;); // 	gvrender_end_anchor(job);</span>
+<span class="nc" id="L1392">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1393">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1395">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//1 7tslf55o9g8v48j97pdsyich9
+// static char *reclblp
+
+
+
+
+//3 1dflsvfaih0mcg1gg4n23v1rg
+// static void free_field(field_t * f) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;free_field&quot;, key=&quot;1dflsvfaih0mcg1gg4n23v1rg&quot;, definition=&quot;static void free_field(field_t * f)&quot;)
+public static Object free_field(Object... arg) {
+<span class="nc" id="L1412">UNSUPPORTED(&quot;1w8vqjgpmm3wzxdg86sst9sna&quot;); // static void free_field(field_t * f)</span>
+<span class="nc" id="L1413">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1414">UNSUPPORTED(&quot;b17di9c7wgtqm51bvsyxz6e2f&quot;); //     int i;</span>
+<span class="nc" id="L1415">UNSUPPORTED(&quot;7zbyipqbl6t75m71to6vrvnmq&quot;); //     for (i = 0; i &lt; f-&gt;n_flds; i++) {</span>
+<span class="nc" id="L1416">UNSUPPORTED(&quot;44t6o1rhsqwprcg98j3zgbzvz&quot;); // 	free_field(f-&gt;fld[i]);</span>
+<span class="nc" id="L1417">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1418">UNSUPPORTED(&quot;8mpeuez5fwrg7hufhlnvpzpk6&quot;); //     free(f-&gt;id);</span>
+<span class="nc" id="L1419">UNSUPPORTED(&quot;9mo450myxof5j4jin03aqpb9n&quot;); //     free_label(f-&gt;lp);</span>
+<span class="nc" id="L1420">UNSUPPORTED(&quot;6onriqqkoxktq7iqg9iiuw1zo&quot;); //     free(f-&gt;fld);</span>
+<span class="nc" id="L1421">UNSUPPORTED(&quot;a4v6veu7h0jl3a2wwlxwpdsuw&quot;); //     free(f);</span>
+<span class="nc" id="L1422">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1424">throw new UnsupportedOperationException();</span>
+}
+
+
+
+private final static int HASTEXT = 1;
+private final static int HASPORT = 2;
+private final static int HASTABLE = 4;
+private final static int INTEXT = 8;
+private final static int INPORT = 16;
+
+//3 7zxlp1fmrq3zt4fprrtesdbg3
+// static field_t *parse_reclbl(node_t * n, int LR, int flag, char *text) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;&quot;, key=&quot;7zxlp1fmrq3zt4fprrtesdbg3&quot;, definition=&quot;static field_t *parse_reclbl(node_t * n, int LR, int flag, char *text)&quot;)
+public static ST_field_t parse_reclbl(Globals zz, ST_Agnode_s n, boolean LR, boolean flag, CString text) {
+<span class="fc" id="L1440">ENTERING(&quot;7zxlp1fmrq3zt4fprrtesdbg3&quot;,&quot;parse_reclbl&quot;);</span>
+try {
+    ST_field_t fp;
+<span class="fc" id="L1443">    ST_field_t rv = new ST_field_t();</span>
+<span class="fc" id="L1444">    CString tsp, psp=null, hstsp, hspsp=null, sp;</span>
+<span class="fc" id="L1445">    CString tmpport = null;</span>
+    int maxf, cnt, mode, fi;
+    boolean wflag, ishardspace;
+<span class="fc" id="L1448">    ST_textlabel_t lbl = ND_label(n);</span>
+    
+<span class="fc" id="L1450">    fp = null;</span>
+<span class="fc bfc" id="L1451" title="All 2 branches covered.">    for (maxf = 1, cnt = 0, sp = zz.reclblp; sp.charAt(0)!=0; sp = sp.plus_(1)) {</span>
+<span class="pc bpc" id="L1452" title="1 of 2 branches missed."> 	if (sp.charAt(0) == '\\') {</span>
+<span class="nc" id="L1453">	    sp = sp.plus_(1);</span>
+<span class="nc bnc" id="L1454" title="All 2 branches missed.">	    if (sp.charAt(0)!=0</span>
+<span class="nc bnc" id="L1455" title="All 8 branches missed.">		&amp;&amp; (sp.charAt(0) == '{' || sp.charAt(0) == '}' || sp.charAt(0) == '|' || sp.charAt(0) == '\\'))</span>
+<span class="nc" id="L1456">UNSUPPORTED(&quot;6hyelvzskqfqa07xtgjtvg2is&quot;); // 		continue;</span>
+ 	}
+<span class="fc bfc" id="L1458" title="All 2 branches covered."> 	if (sp.charAt(0) == '{')</span>
+<span class="fc" id="L1459"> 	    cnt++;</span>
+<span class="fc bfc" id="L1460" title="All 2 branches covered."> 	else if (sp.charAt(0) == '}')</span>
+<span class="fc" id="L1461"> 	    cnt--;</span>
+<span class="fc bfc" id="L1462" title="All 4 branches covered."> 	else if (sp.charAt(0) == '|' &amp;&amp; cnt == 0)</span>
+<span class="fc" id="L1463"> 	    maxf++;</span>
+<span class="fc bfc" id="L1464" title="All 2 branches covered."> 	if (cnt &lt; 0)</span>
+<span class="fc" id="L1465"> 	    break;</span>
+    }
+<span class="fc" id="L1467">	rv.fld = CArrayOfStar.&lt;ST_field_t&gt;ALLOC(maxf, ZType.ST_field_t);</span>
+<span class="fc" id="L1468">    rv.LR = LR;</span>
+<span class="fc" id="L1469">    mode = 0;</span>
+<span class="fc" id="L1470">    fi = 0;</span>
+<span class="fc" id="L1471">    hstsp = tsp = text;</span>
+<span class="fc" id="L1472">    wflag = true;</span>
+<span class="fc" id="L1473">    ishardspace = false;</span>
+<span class="fc bfc" id="L1474" title="All 2 branches covered.">    while (wflag) {</span>
+<span class="pc bpc" id="L1475" title="1 of 4 branches missed.">	if ((zz.reclblp.charAt(0) &lt; ' ') &amp;&amp; zz.reclblp.charAt(0)!=0) {    /* Ignore non-0 control characters */</span>
+<span class="nc" id="L1476">		zz.reclblp = zz.reclblp.plus_(1);</span>
+<span class="nc" id="L1477">	    continue;</span>
+	}
+<span class="pc bpc" id="L1479" title="1 of 6 branches missed."> 	switch (zz.reclblp.charAt(0)) {</span>
+ 	case '&lt;':
+<span class="pc bpc" id="L1481" title="1 of 2 branches missed.">	    if ((mode &amp; (HASTABLE | HASPORT))!=0)</span>
+<span class="nc" id="L1482">UNSUPPORTED(&quot;7zw1csy7lc9a9gq1nhizs470m&quot;); // 		return parse_error(rv, tmpport);</span>
+<span class="pc bpc" id="L1483" title="1 of 2 branches missed.">	    if (lbl.html)</span>
+<span class="nc" id="L1484">UNSUPPORTED(&quot;75bwqdnezjvhazmryfatc4819&quot;); // 		goto dotext;</span>
+<span class="fc" id="L1485">	    mode |= (HASPORT | INPORT);</span>
+<span class="fc" id="L1486">	    zz.reclblp = zz.reclblp.plus_(1);</span>
+<span class="fc" id="L1487">	    hspsp = psp = text;</span>
+<span class="fc" id="L1488">	    break;</span>
+ 	case '&gt;':
+<span class="pc bpc" id="L1490" title="1 of 2 branches missed.">	    if (lbl.html)</span>
+<span class="nc" id="L1491">UNSUPPORTED(&quot;75bwqdnezjvhazmryfatc4819&quot;); // 		goto dotext;</span>
+<span class="pc bpc" id="L1492" title="1 of 2 branches missed.">	    if ((mode &amp; INPORT) == 0)</span>
+<span class="nc" id="L1493">UNSUPPORTED(&quot;7zw1csy7lc9a9gq1nhizs470m&quot;); // 		return parse_error(rv, tmpport);</span>
+ // 	    if (psp &gt; text + 1 &amp;&amp; psp - 1 != hspsp &amp;&amp; *(psp - 1) == ' ')
+<span class="pc bpc" id="L1495" title="3 of 6 branches missed.">	    if (psp.comparePointer(text.plus_(1)) &gt; 0 &amp;&amp; psp.plus_(-1).comparePointer(hspsp) != 0 &amp;&amp; psp.charAt(-1) == ' ')</span>
+<span class="nc" id="L1496">UNSUPPORTED(&quot;7v2hf4x5nsnlq1l025dplo0vo&quot;); // 		psp--;</span>
+<span class="fc" id="L1497">	    psp.setCharAt(0, '\000');</span>
+<span class="fc" id="L1498">	    tmpport = text.strdup();</span>
+<span class="fc" id="L1499">	    mode &amp;= ~INPORT;</span>
+<span class="fc" id="L1500">	    zz.reclblp = zz.reclblp.plus_(1);</span>
+<span class="fc" id="L1501">	    break;</span>
+ 	case '{':
+<span class="fc" id="L1503">	    zz.reclblp = zz.reclblp.plus_(1);</span>
+<span class="pc bpc" id="L1504" title="2 of 4 branches missed.">	    if (mode != 0 || (int) zz.reclblp.charAt(0) == 0)</span>
+<span class="nc" id="L1505">UNSUPPORTED(&quot;7zw1csy7lc9a9gq1nhizs470m&quot;); // 		return parse_error(rv, tmpport);</span>
+<span class="fc" id="L1506">	    mode = 4;</span>
+<span class="fc bfc" id="L1507" title="All 2 branches covered.">	    rv.fld.set_(fi, parse_reclbl(zz, n, !LR, false, text));</span>
+<span class="pc bpc" id="L1508" title="1 of 2 branches missed.">	    if ((rv.fld.get_(fi++)) == null)</span>
+<span class="nc" id="L1509">UNSUPPORTED(&quot;7zw1csy7lc9a9gq1nhizs470m&quot;); // 		return parse_error(rv, tmpport);</span>
+	    break;
+ 	case '}':
+	case '|':
+	case '\000':
+<span class="pc bpc" id="L1514" title="2 of 6 branches missed.">	    if (((int) zz.reclblp.charAt(0) == 0 &amp;&amp; !flag) || (mode &amp; INPORT)!=0)</span>
+<span class="nc" id="L1515">UNSUPPORTED(&quot;7zw1csy7lc9a9gq1nhizs470m&quot;); // 		return parse_error(rv, tmpport);</span>
+<span class="fc bfc" id="L1516" title="All 2 branches covered.">	    if ((mode &amp; HASTABLE) == 0)</span>
+	    {
+<span class="fc" id="L1518">	    	fp = new ST_field_t();</span>
+<span class="fc" id="L1519">	    	rv.fld.set_(fi++, fp);</span>
+	    }
+<span class="fc bfc" id="L1521" title="All 2 branches covered.">	    if (tmpport!=null) {</span>
+<span class="fc" id="L1522">		fp.id = tmpport;</span>
+<span class="fc" id="L1523">		tmpport = null;</span>
+	    }
+<span class="pc bpc" id="L1525" title="1 of 2 branches missed.">	    if ((mode &amp; (HASTEXT | HASTABLE)) == 0)</span>
+<span class="nc" id="L1526"> 		{mode |= 1; tsp.setCharAt(0, ' ');tsp=tsp.plus_(1); }</span>
+<span class="fc bfc" id="L1527" title="All 2 branches covered.">	    if ((mode &amp; HASTEXT)!=0) {</span>
+<span class="pc bpc" id="L1528" title="1 of 2 branches missed.">		if (tsp.comparePointer(text.plus_(1))  &gt; 0 &amp;&amp;</span>
+<span class="pc bpc" id="L1529" title="2 of 4 branches missed.">		    tsp.plus_(-1).comparePointer(hstsp) != 0 &amp;&amp; tsp.charAt(-1) == ' ')</span>
+<span class="nc" id="L1530">		    tsp = tsp.plus_(-1);</span>
+<span class="fc" id="L1531">		tsp.setCharAt(0, '\000');</span>
+<span class="fc" id="L1532">		fp.lp =</span>
+<span class="fc" id="L1533">				make_label(zz, n, text.strdup(),</span>
+<span class="pc bpc" id="L1534" title="1 of 2 branches missed.">						(lbl.html ? LT_HTML : LT_NONE),</span>
+						lbl.fontsize, lbl.fontname,
+						lbl.fontcolor);
+<span class="fc" id="L1537">		fp.LR = true;</span>
+<span class="fc" id="L1538">		hstsp = tsp = text;</span>
+	    }
+<span class="fc bfc" id="L1540" title="All 2 branches covered.">	    if (zz.reclblp.charAt(0)!=0) {</span>
+<span class="fc bfc" id="L1541" title="All 2 branches covered.">		if (zz.reclblp.charAt(0) == '}') {</span>
+<span class="fc" id="L1542">		    zz.reclblp = zz.reclblp.plus_(1);</span>
+<span class="fc" id="L1543">		    rv.n_flds = fi;</span>
+<span class="fc" id="L1544">		    return rv;</span>
+		}
+<span class="fc" id="L1546">		mode = 0;</span>
+<span class="fc" id="L1547">		zz.reclblp = zz.reclblp.plus_(1);</span>
+	    } else
+<span class="fc" id="L1549">		wflag = false;</span>
+<span class="fc" id="L1550">	    break;</span>
+	case '\\':
+<span class="nc" id="L1552">UNSUPPORTED(&quot;3vnixbvvmty9ydvf0l1929gle&quot;); // 	    if (*(reclblp + 1)) {</span>
+<span class="nc" id="L1553">UNSUPPORTED(&quot;bjtxv6n9c9aqzdkik1c6cqbvy&quot;); // 		if (((*(reclblp + 1)) == '{' || (*(reclblp + 1)) == '}' || (*(reclblp + 1)) == '|' || (*(reclblp + 1)) == '&lt;' || (*(reclblp + 1)) == '&gt;'))</span>
+<span class="nc" id="L1554">UNSUPPORTED(&quot;dcc90zmv0256yuz6jtriktl8s&quot;); // 		    reclblp++;</span>
+<span class="nc" id="L1555">UNSUPPORTED(&quot;c8cxvsbs7ae3wdjeflwbk3z6u&quot;); // 		else if ((*(reclblp + 1) == ' ') &amp;&amp; !lbl-&gt;html)</span>
+<span class="nc" id="L1556">UNSUPPORTED(&quot;djkriuw8khnsxfne1jal3yysz&quot;); // 		    ishardspace = NOT(0), reclblp++;</span>
+<span class="nc" id="L1557">UNSUPPORTED(&quot;d28blrbmwwqp80cyksuz7dwx9&quot;); // 		else {</span>
+<span class="nc" id="L1558">UNSUPPORTED(&quot;2qwaphvt2yekkogtyqq0omhut&quot;); // 		    *tsp++ = '\\';</span>
+<span class="nc" id="L1559">UNSUPPORTED(&quot;63p7706g22u4h7m9yealimr3g&quot;); // 		    mode |= (8 | 1);</span>
+<span class="nc" id="L1560">UNSUPPORTED(&quot;dcc90zmv0256yuz6jtriktl8s&quot;); // 		    reclblp++;</span>
+<span class="nc" id="L1561">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L1562">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1563">UNSUPPORTED(&quot;dg5yg97t3vto8m73vvwj8jnb2&quot;); // 	    /* falling through ... */</span>
+ 	default:
+//UNSUPPORTED(&quot;2d4vmvpowhgj7h9539m0qrxsy&quot;); // 	  dotext:
+<span class="pc bpc" id="L1566" title="3 of 4 branches missed.">	    if ((mode &amp; HASTABLE)!=0 &amp;&amp; zz.reclblp.charAt(0) != ' ')</span>
+<span class="nc" id="L1567">UNSUPPORTED(&quot;7zw1csy7lc9a9gq1nhizs470m&quot;); // 		return parse_error(rv, tmpport);</span>
+<span class="pc bpc" id="L1568" title="1 of 4 branches missed.">	    if ((mode &amp; (INTEXT | INPORT)) == 0 &amp;&amp; zz.reclblp.charAt(0) != ' ')</span>
+<span class="fc" id="L1569">		mode |= (INTEXT | HASTEXT);</span>
+<span class="fc bfc" id="L1570" title="All 2 branches covered.">	    if ((mode &amp; INTEXT)!=0) {</span>
+<span class="pc bpc" id="L1571" title="7 of 8 branches missed.">		if (!(zz.reclblp.charAt(0) == ' ' &amp;&amp; !ishardspace &amp;&amp; tsp.charAt(-1) == ' '</span>
+		 &amp;&amp; !lbl.html))
+		{
+<span class="fc" id="L1574">			tsp.setCharAt(0, zz.reclblp.charAt(0));</span>
+<span class="fc" id="L1575">			tsp = tsp.plus_(1);</span>
+		}
+<span class="pc bpc" id="L1577" title="1 of 2 branches missed.">		if (ishardspace)</span>
+<span class="nc" id="L1578">UNSUPPORTED(&quot;atuokfvkmomvi6gvwvpbxggoz&quot;); // 		    hstsp = tsp - 1;</span>
+<span class="pc bpc" id="L1579" title="1 of 2 branches missed.">	    } else if ((mode &amp; INPORT)!=0) {</span>
+<span class="pc bpc" id="L1580" title="5 of 6 branches missed.">		if (!(zz.reclblp.charAt(0) == ' ' &amp;&amp; !ishardspace &amp;&amp;</span>
+<span class="nc bnc" id="L1581" title="All 2 branches missed.">		      (psp == text || psp.charAt(-1) == ' ')))</span>
+		{
+<span class="fc" id="L1583">			psp.setCharAt(0, zz.reclblp.charAt(0));</span>
+<span class="fc" id="L1584">			psp = psp.plus_(1);</span>
+		}
+<span class="pc bpc" id="L1586" title="1 of 2 branches missed.">		if (ishardspace)</span>
+<span class="nc" id="L1587">UNSUPPORTED(&quot;5u5h7cb6egued2g1q7w8yhb1n&quot;); // 		    hspsp = psp - 1;</span>
+	    }
+<span class="fc" id="L1589">	    zz.reclblp = zz.reclblp.plus_(1);</span>
+<span class="pc bpc" id="L1590" title="1 of 2 branches missed.">	    while ((zz.reclblp.charAt(0) &amp; 128)!=0)</span>
+<span class="nc" id="L1591">UNSUPPORTED(&quot;86nc3qdu6nuyt7u67d0kblb9w&quot;); // 		*tsp++ = *reclblp++;</span>
+	    break;
+ 	}
+    }
+<span class="fc" id="L1595">    rv.n_flds = fi;</span>
+<span class="fc" id="L1596">    return rv;</span>
+//UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }
+} finally {
+<span class="fc" id="L1599">LEAVING(&quot;7zxlp1fmrq3zt4fprrtesdbg3&quot;,&quot;poly_init&quot;);</span>
+}
+}
+
+
+
+
+//3 dwk0rh74bwfd7mky5hg9t1epj
+// static pointf size_reclbl(node_t * n, field_t * f) 
+@Unused
+@Doc(&quot;?&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;size_reclbl&quot;, key=&quot;dwk0rh74bwfd7mky5hg9t1epj&quot;, definition=&quot;static pointf size_reclbl(node_t * n, field_t * f)&quot;)
+public static ST_pointf size_reclbl(Globals zz, ST_Agnode_s n, ST_field_t f) {
+	// WARNING!! STRUCT
+<span class="fc" id="L1613">	return size_reclbl_(zz, n, f).copy();</span>
+}
+private static ST_pointf size_reclbl_(Globals zz, ST_Agnode_s n, ST_field_t f) {
+<span class="fc" id="L1616">	ENTERING(&quot;dwk0rh74bwfd7mky5hg9t1epj&quot;,&quot;size_reclbl_&quot;);</span>
+	try {
+    int i;
+    CString p;
+    double marginx, marginy;
+<span class="fc" id="L1621">    final ST_pointf d = new ST_pointf(), d0 = new ST_pointf();</span>
+<span class="fc" id="L1622">    final ST_pointf dimen = new ST_pointf();</span>
+<span class="fc bfc" id="L1623" title="All 2 branches covered.">    if (f.lp != null) {</span>
+<span class="fc" id="L1624">	dimen.___(f.lp.dimen);</span>
+	/* minimal whitespace around label */
+<span class="pc bpc" id="L1626" title="3 of 4 branches missed.">	if ((dimen.x &gt; 0.0) || (dimen.y &gt; 0.0)) {</span>
+	    /* padding */
+<span class="pc bpc" id="L1628" title="1 of 2 branches missed.">	    if ((p = agget(zz, n, new CString(&quot;margin&quot;)))!=null) {</span>
+<span class="nc" id="L1629">UNSUPPORTED(&quot;bfyy3iw4z9ebf4m89x69tn1eb&quot;); // 		i = sscanf(p, &quot;%lf,%lf&quot;, &amp;marginx, &amp;marginy);</span>
+<span class="nc" id="L1630">UNSUPPORTED(&quot;ebo7omz8ev8wu69ub10b4o890&quot;); // 		if (i &gt; 0) {</span>
+<span class="nc" id="L1631">UNSUPPORTED(&quot;efcgckeemzkbxh32pc2qcdv0d&quot;); // 		    dimen.x += 2 * (ROUND((marginx)*72));</span>
+<span class="nc" id="L1632">UNSUPPORTED(&quot;c755n9x3n7022hjjg8hanklib&quot;); // 		    if (i &gt; 1)</span>
+<span class="nc" id="L1633">UNSUPPORTED(&quot;2az12nq89f7txcsfmqdj8tly1&quot;); // 			dimen.y += 2 * (ROUND((marginy)*72));</span>
+<span class="nc" id="L1634">UNSUPPORTED(&quot;9acag2yacl63g8rg6r1alu62x&quot;); // 		    else</span>
+<span class="nc" id="L1635">UNSUPPORTED(&quot;2az12nq89f7txcsfmqdj8tly1&quot;); // 			dimen.y += 2 * (ROUND((marginy)*72));</span>
+<span class="nc" id="L1636">UNSUPPORTED(&quot;738mi6h8ef0itznt34ngxe25o&quot;); // 		} else</span>
+<span class="nc" id="L1637">UNSUPPORTED(&quot;b12tl2a8tebl71ewuz3jms9jv&quot;); // 		    {((dimen).x += 4*4); ((dimen).y += 2*4);};</span>
+	    } else
+		{
+	    	// Modification by Arnaud 18/03/2023
+	    	// The next line is now commented
+	    	//
+	    	// dimen.x += 4*4; dimen.y += 2*4;
+	    	//
+	    	// This is because we don't want to add any margin in Smetana
+    	};
+	}
+<span class="fc" id="L1648">	d.___(dimen);</span>
+    } else {
+<span class="fc" id="L1650">	d.x = d.y = 0;</span>
+<span class="fc bfc" id="L1651" title="All 2 branches covered.">	for (i = 0; i &lt; f.n_flds; i++) {</span>
+<span class="fc" id="L1652">	    d0.___(size_reclbl(zz, n, f.fld.get_(i)));</span>
+<span class="fc bfc" id="L1653" title="All 2 branches covered.">	    if (f.LR) {</span>
+<span class="fc" id="L1654">		d.x += d0.x;</span>
+<span class="fc" id="L1655">		d.y = Math.max(d.y, d0.y);</span>
+	    } else {
+<span class="fc" id="L1657">		d.y += d0.y;</span>
+<span class="fc" id="L1658">		d.x = Math.max(d.x, d0.x);</span>
+	    }
+	}
+    }
+<span class="fc" id="L1662">    f.size.___(d);</span>
+<span class="fc" id="L1663">    return d;</span>
+} finally {
+<span class="fc" id="L1665">LEAVING(&quot;dwk0rh74bwfd7mky5hg9t1epj&quot;,&quot;size_reclbl&quot;);</span>
+}
+}
+
+
+
+
+//3 blo8etwhtlcsld8ox0vryznfw
+// static void resize_reclbl(field_t * f, pointf sz, int nojustify_p) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;resize_reclbl&quot;, key=&quot;blo8etwhtlcsld8ox0vryznfw&quot;, definition=&quot;static void resize_reclbl(field_t * f, pointf sz, int nojustify_p)&quot;)
+public static void resize_reclbl(ST_field_t f, final ST_pointf sz, boolean nojustify_p) {
+	// WARNING!! STRUCT
+<span class="fc" id="L1678">	resize_reclbl_(f, sz.copy(), nojustify_p);</span>
+<span class="fc" id="L1679">}</span>
+private static void resize_reclbl_(ST_field_t f, final ST_pointf sz, boolean nojustify_p) {
+<span class="fc" id="L1681">ENTERING(&quot;blo8etwhtlcsld8ox0vryznfw&quot;,&quot;resize_reclbl&quot;);</span>
+try {
+    int i, amt;
+<span class="fc" id="L1684">    double inc = 0;</span>
+<span class="fc" id="L1685">    final ST_pointf d = new ST_pointf();</span>
+<span class="fc" id="L1686">    final ST_pointf newsz = new ST_pointf();</span>
+    ST_field_t sf;
+    /* adjust field */
+<span class="fc" id="L1689">    d.x = sz.x - f.size.x;</span>
+<span class="fc" id="L1690">    d.y = sz.y - f.size.y;</span>
+<span class="fc" id="L1691">    f.size.___(sz);</span>
+    /* adjust text area */
+<span class="pc bpc" id="L1693" title="1 of 4 branches missed.">    if (f.lp!=null &amp;&amp; !nojustify_p) {</span>
+<span class="fc" id="L1694">	f.lp.space.x += d.x;</span>
+<span class="fc" id="L1695">	f.lp.space.y += d.y;</span>
+    }
+    /* adjust children */
+<span class="fc bfc" id="L1698" title="All 2 branches covered.">    if (f.n_flds!=0) {</span>
+<span class="fc bfc" id="L1699" title="All 2 branches covered.">	if (f.LR)</span>
+<span class="fc" id="L1700">	    inc = d.x / f.n_flds;</span>
+	else
+<span class="fc" id="L1702">	    inc = d.y / f.n_flds;</span>
+<span class="fc bfc" id="L1703" title="All 2 branches covered.">	for (i = 0; i &lt; f.n_flds; i++) {</span>
+<span class="fc" id="L1704">	    sf = f.fld.get_(i);</span>
+<span class="fc" id="L1705">	    amt = ((int) ((i + 1) * inc)) - ((int) (i * inc));</span>
+<span class="fc bfc" id="L1706" title="All 2 branches covered.">	    if (f.LR)</span>
+<span class="fc" id="L1707">		newsz.___(pointfof(sf.size.x + amt, sz.y));</span>
+	    else
+<span class="fc" id="L1709">		newsz.___(pointfof(sz.x, sf.size.y + amt));</span>
+<span class="fc" id="L1710">	    resize_reclbl(sf, newsz, nojustify_p);</span>
+	}
+    }
+	} finally {
+<span class="fc" id="L1714">		LEAVING(&quot;blo8etwhtlcsld8ox0vryznfw&quot;,&quot;resize_reclbl&quot;);</span>
+	}
+<span class="fc" id="L1716">}</span>
+
+
+
+
+//3 ds4v2i9xw0hm4y53ggbt8z2yk
+// static void pos_reclbl(field_t * f, pointf ul, int sides) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;pos_reclbl&quot;, key=&quot;ds4v2i9xw0hm4y53ggbt8z2yk&quot;, definition=&quot;static void pos_reclbl(field_t * f, pointf ul, int sides)&quot;)
+public static void pos_reclbl(ST_field_t f, final ST_pointf ul, int sides) {
+	// WARNING!! STRUCT
+<span class="fc" id="L1727">	pos_reclbl_(f, ul.copy(), sides);</span>
+<span class="fc" id="L1728">}</span>
+private static void pos_reclbl_(ST_field_t f, final ST_pointf ul, int sides) {
+<span class="fc" id="L1730">    int i, last, mask=0;</span>
+<span class="fc" id="L1731">    f.sides = sides;</span>
+<span class="fc" id="L1732">    f.b.LL.___(pointfof(ul.x, ul.y - f.size.y));</span>
+<span class="fc" id="L1733">    f.b.UR.___(pointfof(ul.x + f.size.x, ul.y));</span>
+<span class="fc" id="L1734">    last = f.n_flds - 1;</span>
+<span class="fc bfc" id="L1735" title="All 2 branches covered.">    for (i = 0; i &lt;= last; i++) {</span>
+<span class="pc bpc" id="L1736" title="1 of 2 branches missed.">	if (sides!=0) {</span>
+<span class="fc bfc" id="L1737" title="All 2 branches covered.">	    if (f.LR) {</span>
+<span class="fc bfc" id="L1738" title="All 2 branches covered.">		if (i == 0) {</span>
+<span class="fc bfc" id="L1739" title="All 2 branches covered.">		    if (i == last)</span>
+<span class="fc" id="L1740">			mask = TOP | BOTTOM | RIGHT | LEFT;</span>
+		    else
+<span class="fc" id="L1742">			mask = TOP | BOTTOM | LEFT;</span>
+<span class="fc bfc" id="L1743" title="All 2 branches covered.">		} else if (i == last)</span>
+<span class="fc" id="L1744">		    mask = TOP | BOTTOM | RIGHT;</span>
+		else
+<span class="fc" id="L1746">		    mask = TOP | BOTTOM;</span>
+	    } else {
+<span class="fc bfc" id="L1748" title="All 2 branches covered.">		if (i == 0) {</span>
+<span class="pc bpc" id="L1749" title="1 of 2 branches missed.">		    if (i == last)</span>
+<span class="nc" id="L1750">UNSUPPORTED(&quot;rvq6ubzk0rezd88243ailv84&quot;); // 			mask = TOP | BOTTOM | RIGHT | LEFT;</span>
+		    else
+<span class="fc" id="L1752">			mask = TOP | RIGHT | LEFT;</span>
+<span class="pc bpc" id="L1753" title="1 of 2 branches missed.">		} else if (i == last)</span>
+<span class="fc" id="L1754">		    mask = LEFT | BOTTOM | RIGHT;</span>
+		else
+<span class="nc" id="L1756">		    mask = LEFT | RIGHT;</span>
+	    }
+	} else
+<span class="nc" id="L1759">	    mask = 0;</span>
+<span class="fc" id="L1760">	pos_reclbl(f.fld.get_(i), ul, sides &amp; mask);</span>
+<span class="fc bfc" id="L1761" title="All 2 branches covered.">	if (f.LR)</span>
+<span class="fc" id="L1762">	    ul.x = ul.x + f.fld.get_(i).size.x;</span>
+	else
+<span class="fc" id="L1764">	    ul.y = ul.y - f.fld.get_(i).size.y;</span>
+    }
+<span class="fc" id="L1766">}</span>
+
+
+
+<span class="fc" id="L1770">public static CFunction record_init = new CFunctionAbstract(&quot;record_init&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L1773">		record_init(zz, (ST_Agnode_s)args[0]);</span>
+<span class="fc" id="L1774">		return null;</span>
+	}};
+	
+@Unused
+@Doc(&quot;Init 'record' node&quot;)
+@Reviewed(when = &quot;02/12/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;record_init&quot;, key=&quot;h2lcuthzwljbcjwdeidw1jiv&quot;, definition=&quot;static void record_init(node_t * n)&quot;)
+public static void record_init(Globals zz, ST_Agnode_s n) {
+<span class="fc" id="L1782">ENTERING(&quot;h2lcuthzwljbcjwdeidw1jiv&quot;,&quot;record_init&quot;);</span>
+try {
+	ST_field_t info;
+<span class="fc" id="L1785">	final ST_pointf ul = new ST_pointf(), sz = new ST_pointf();</span>
+    boolean flip;
+    int len;
+    CString textbuf;		/* temp buffer for storing labels */
+    
+<span class="fc" id="L1790">	int sides = BOTTOM | RIGHT | TOP | LEFT;</span>
+	/* Always use rankdir to determine how records are laid out */
+<span class="pc bpc" id="L1792" title="1 of 2 branches missed.">	flip = GD_realflip(agraphof(n)) == 0;</span>
+<span class="fc" id="L1793">	zz.reclblp = ND_label(n).text;</span>
+<span class="fc" id="L1794">    len = zz.reclblp.length();</span>
+    /* For some forgotten reason, an empty label is parsed into a space, so
+     * we need at least two bytes in textbuf.
+     */
+<span class="fc" id="L1798">     len = Math.max(len, 1);</span>
+<span class="fc" id="L1799">     textbuf = CString.gmalloc(len + 1);</span>
+<span class="pc bpc" id="L1800" title="1 of 2 branches missed.">    if (((info = parse_reclbl(zz, n, flip, true, textbuf)))==null) {</span>
+<span class="nc" id="L1801">UNSUPPORTED(&quot;7iezaksu9hyxhmv3r4cp4o529&quot;); // 	agerr(AGERR, &quot;bad label format %s\n&quot;, ND_label(n)-&gt;text);</span>
+<span class="nc" id="L1802">UNSUPPORTED(&quot;8f1id7rqm71svssnxbjo0uwcu&quot;); // 	reclblp = &quot;\\N&quot;;</span>
+<span class="nc" id="L1803">UNSUPPORTED(&quot;2wv3zfqhq53941rwk4vu9p9th&quot;); // 	info = parse_reclbl(n, flip, NOT(0), textbuf);</span>
+    }
+<span class="fc" id="L1805">    Memory.free(textbuf);</span>
+<span class="fc" id="L1806">    size_reclbl(zz, n, info);</span>
+<span class="fc" id="L1807">    sz.x = POINTS(ND_width(n));</span>
+<span class="fc" id="L1808">    sz.y = POINTS(ND_height(n));</span>
+<span class="pc bpc" id="L1809" title="1 of 2 branches missed.">    if (mapbool(late_string(n, zz.N_fixed, new CString(&quot;false&quot;)))) {</span>
+<span class="nc" id="L1810">UNSUPPORTED(&quot;8iu51xbtntpdf5sc00g91djym&quot;); // 	if ((sz.x &lt; info-&gt;size.x) || (sz.y &lt; info-&gt;size.y)) {</span>
+<span class="nc" id="L1811">UNSUPPORTED(&quot;4vs5u30jzsrn6fpjd327xjf7r&quot;); // /* should check that the record really won't fit, e.g., there may be no text.</span>
+<span class="nc" id="L1812">UNSUPPORTED(&quot;7k6yytek9nu1ihxix2880667g&quot;); // 			agerr(AGWARN, &quot;node '%s' size may be too small\n&quot;, agnameof(n));</span>
+<span class="nc" id="L1813">UNSUPPORTED(&quot;bnetqzovnscxile7ao44kc0qd&quot;); // */</span>
+<span class="nc" id="L1814">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    } else {
+<span class="fc" id="L1816">	sz.x = Math.max(info.size.x, sz.x);</span>
+<span class="fc" id="L1817">	sz.y = Math.max(info.size.y, sz.y);</span>
+    }
+<span class="fc" id="L1819">    resize_reclbl(info, sz, mapbool(late_string(n, zz.N_nojustify, new CString(&quot;false&quot;))));</span>
+<span class="fc" id="L1820">    ul.___(pointfof(-sz.x / 2., sz.y / 2.));	/* FIXME - is this still true:    suspected to introduce ronding error - see Kluge below */</span>
+<span class="fc" id="L1821">    pos_reclbl(info, ul, sides);</span>
+<span class="fc" id="L1822">    ND_width(n, PS2INCH(info.size.x));</span>
+<span class="fc" id="L1823">    ND_height(n, PS2INCH(info.size.y + 1));	/* Kluge!!  +1 to fix rounding diff between layout and rendering </span>
+						   otherwise we can get -1 coords in output */
+<span class="fc" id="L1825">    ND_shape_info(n, info);</span>
+} finally {
+<span class="fc" id="L1827">LEAVING(&quot;h2lcuthzwljbcjwdeidw1jiv&quot;,&quot;poly_init&quot;);</span>
+}
+<span class="fc" id="L1829">}</span>
+
+
+
+
+<span class="fc" id="L1834">public static CFunction record_free = new CFunctionAbstract(&quot;record_free&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L1837">		return record_free(args);</span>
+	}}; 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;record_free&quot;, key=&quot;1lq2tksbz3nzqw9c3xqfs4ymf&quot;, definition=&quot;static void record_free(node_t * n)&quot;)
+public static Object record_free(Object... arg_) {
+<span class="nc" id="L1842">UNSUPPORTED(&quot;8anx9p03jsmcuhguyzf7q6qe3&quot;); // static void record_free(node_t * n)</span>
+<span class="nc" id="L1843">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1844">UNSUPPORTED(&quot;aiplewsp8j9h5b1bokpivfnqv&quot;); //     field_t *p = ND_shape_info(n);</span>
+<span class="nc" id="L1845">UNSUPPORTED(&quot;cn1q1h4lwj1gctn9nim9hdhpt&quot;); //     free_field(p);</span>
+<span class="nc" id="L1846">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1848">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 a005gfg4ujp2d29bpdrtowla0
+// static field_t *map_rec_port(field_t * f, char *str) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;&quot;, key=&quot;a005gfg4ujp2d29bpdrtowla0&quot;, definition=&quot;static field_t *map_rec_port(field_t * f, char *str)&quot;)
+public static ST_field_t map_rec_port(ST_field_t f, CString str) {
+<span class="fc" id="L1859">	ST_field_t rv = null;</span>
+    int sub;
+<span class="fc bfc" id="L1861" title="All 4 branches covered.">    if (f.id!=null &amp;&amp; f.id.isSame(str))</span>
+<span class="fc" id="L1862">	rv = f;</span>
+    else {
+<span class="fc" id="L1864">	rv = null;</span>
+<span class="fc bfc" id="L1865" title="All 2 branches covered.">	for (sub = 0; sub &lt; f.n_flds; sub++)</span>
+<span class="fc bfc" id="L1866" title="All 2 branches covered.">	    if ((rv = map_rec_port(f.fld.get_(sub), str))!=null)</span>
+<span class="fc" id="L1867">		break;</span>
+    }
+<span class="fc" id="L1869">    return rv;</span>
+}
+
+
+
+
+
+<span class="fc" id="L1876">public static CFunction record_port = new CFunctionAbstract(&quot;record_port&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L1879">		return record_port(zz, (ST_Agnode_s)args[0], (CString)args[1], (CString)args[2]);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;record_port&quot;, key=&quot;chsi0jlfodruvkjj5dlrv5ur3&quot;, definition=&quot;static port record_port(node_t * n, char *portname, char *compass)&quot;)
+public static ST_port record_port(Globals zz, ST_Agnode_s n, CString portname, CString compass) {
+    ST_field_t f;
+    ST_field_t subf;
+<span class="fc" id="L1886">    final ST_port rv = new ST_port();</span>
+    int sides;			/* bitmap of which sides the port lies along */
+<span class="fc bfc" id="L1888" title="All 2 branches covered.">    if (portname.charAt(0) == '\0')</span>
+<span class="fc" id="L1889">	return zz.Center;</span>
+<span class="fc" id="L1890">    sides = BOTTOM | RIGHT | TOP | LEFT;</span>
+<span class="pc bpc" id="L1891" title="1 of 2 branches missed.">    if (compass == null)</span>
+<span class="fc" id="L1892">	compass = new CString(&quot;_&quot;);</span>
+<span class="fc" id="L1893">    f = (ST_field_t) ND_shape_info(n);</span>
+<span class="pc bpc" id="L1894" title="1 of 2 branches missed.">    if ((subf = map_rec_port(f, portname))!=null) {</span>
+<span class="pc bpc" id="L1895" title="1 of 2 branches missed.">	if (compassPort(n, subf.b, rv, compass, subf.sides, null)) {</span>
+<span class="nc" id="L1896">UNSUPPORTED(&quot;cw5grwj6gbj94jcztvnp2ooyj&quot;); // 	    agerr(AGWARN,</span>
+<span class="nc" id="L1897">UNSUPPORTED(&quot;en2xpqtprfng8gmc77dzq7klv&quot;); // 		  &quot;node %s, port %s, unrecognized compass point '%s' - ignored\n&quot;,</span>
+<span class="nc" id="L1898">UNSUPPORTED(&quot;cmo03yl2q1wgn0c1r45y1ay5e&quot;); // 		  agnameof(n), portname, compass);</span>
+	}
+<span class="nc bnc" id="L1900" title="All 2 branches missed.">    } else if (compassPort(n, f.b, rv, portname, sides, null)) {</span>
+<span class="nc" id="L1901">    	unrecognized(n, portname);</span>
+    }
+<span class="fc" id="L1903">    return rv;</span>
+}
+
+
+
+
+<span class="fc" id="L1909">public static CFunction record_inside = new CFunctionAbstract(&quot;record_inside&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L1912">		return record_inside((ST_inside_t)args[0], (ST_pointf)args[1]);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;record_inside&quot;, key=&quot;1f7b6eq3csywqv96raw75jqxr&quot;, definition=&quot;static boolean record_inside(inside_t * inside_context, pointf p)&quot;)
+public static boolean record_inside(ST_inside_t inside_context, ST_pointf p) {
+	// WARNING!! STRUCT
+<span class="fc" id="L1918">	return record_inside_(inside_context, p.copy());</span>
+}
+private static boolean record_inside_(ST_inside_t inside_context, final ST_pointf p) {
+<span class="fc" id="L1921">ENTERING(&quot;1f7b6eq3csywqv96raw75jqxr&quot;,&quot;record_inside_&quot;);</span>
+try {
+    ST_field_t fld0;
+<span class="fc" id="L1924">    ST_boxf bp = inside_context.s_bp;</span>
+<span class="fc" id="L1925">    ST_Agnode_s n = inside_context.s_n;</span>
+<span class="fc" id="L1926">    final ST_boxf bbox = new ST_boxf();</span>
+    /* convert point to node coordinate system */
+<span class="fc" id="L1928">    p.___(ccwrotatepf(p, 90 * GD_rankdir(agraphof(n))));</span>
+<span class="pc bpc" id="L1929" title="1 of 2 branches missed.">    if (bp == null) {</span>
+<span class="fc" id="L1930">	fld0 = (ST_field_t) ND_shape_info(n);</span>
+<span class="fc" id="L1931">	bbox.___(fld0.b);</span>
+    } else
+<span class="nc" id="L1933">	bbox.___(bp);</span>
+<span class="fc" id="L1934">    return INSIDE(p, bbox);</span>
+} finally {
+<span class="fc" id="L1936">LEAVING(&quot;1f7b6eq3csywqv96raw75jqxr&quot;,&quot;record_inside_&quot;);</span>
+}
+}
+
+
+
+
+<span class="fc" id="L1943">public static CFunction record_path = new CFunctionAbstract(&quot;record_path&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L1946">		return record_path((ST_Agnode_s)args[0], (ST_port)args[1], (Integer)args[2], (ST_boxf)args[3], (int[])args[4]);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;record_path&quot;, key=&quot;3p54k8x2kyueort8kj41qvkty&quot;, definition=&quot;static int record_path(node_t * n, port * prt, int side, boxf rv[], 		       int *kptr)&quot;)
+public static int record_path(ST_Agnode_s n, ST_port prt, int side, ST_boxf rv, int[] kptr) {
+<span class="fc" id="L1951">    int i, ls=0, rs=0;</span>
+<span class="fc" id="L1952">    final ST_pointf p = new ST_pointf();</span>
+    ST_field_t info;
+<span class="pc bpc" id="L1954" title="1 of 2 branches missed.">    if (!prt.defined)</span>
+<span class="fc" id="L1955">	return 0;</span>
+<span class="nc" id="L1956">    p.___(prt.p);</span>
+<span class="nc" id="L1957">    info = (ST_field_t) ND_shape_info(n);</span>
+<span class="nc bnc" id="L1958" title="All 2 branches missed.">    for (i = 0; i &lt; info.n_flds; i++) {</span>
+<span class="nc bnc" id="L1959" title="All 2 branches missed.">	if (!GD_flip(agraphof(n))) {</span>
+<span class="nc" id="L1960">	    ls = (int) info.fld.get_(i).b.LL.x;</span>
+<span class="nc" id="L1961">	    rs = (int) info.fld.get_(i).b.UR.x;</span>
+	} else {
+<span class="nc" id="L1963">UNSUPPORTED(&quot;dm9w81fxfdqc5bhtaimpbisvl&quot;); // 	    ls = info-&gt;fld[i]-&gt;b.LL.y;</span>
+<span class="nc" id="L1964">UNSUPPORTED(&quot;3sqtp996aa7m19wv9gwkrvav1&quot;); // 	    rs = info-&gt;fld[i]-&gt;b.UR.y;</span>
+	}
+<span class="nc bnc" id="L1966" title="All 2 branches missed.">	if (BETWEEN(ls, p.x, rs)) {</span>
+	    /* FIXME: I don't understand this code */
+<span class="nc bnc" id="L1968" title="All 2 branches missed.">	    if (GD_flip(agraphof(n))) {</span>
+<span class="nc" id="L1969">UNSUPPORTED(&quot;8p9z8b0nypgkzi1b3k7sx0fyz&quot;); // 		rv[0] = flip_rec_boxf(info-&gt;fld[i]-&gt;b, ND_coord(n));</span>
+	    } else {
+<span class="nc" id="L1971">		rv.LL.x = ND_coord(n).x + ls;</span>
+<span class="nc" id="L1972">		rv.LL.y = ND_coord(n).y - (ND_ht(n) / 2);</span>
+<span class="nc" id="L1973">		rv.UR.x = ND_coord(n).x + rs;</span>
+	    }
+<span class="nc" id="L1975">	    rv.UR.y = ND_coord(n).y + (ND_ht(n) / 2);</span>
+<span class="nc" id="L1976">	    kptr[0] = 1;</span>
+<span class="nc" id="L1977">	    break;</span>
+	}
+    }
+<span class="nc" id="L1980">    return side;</span>
+}
+
+
+
+
+<span class="fc" id="L1986">public static CFunction record_gencode = new CFunctionAbstract(&quot;record_gencode&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L1989">		return record_gencode(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;record_gencode&quot;, key=&quot;3bum3y2gmowozskwp7e492wm7&quot;, definition=&quot;static void record_gencode(GVJ_t * job, node_t * n)&quot;)
+public static Object record_gencode(Object... arg) {
+<span class="nc" id="L1994">UNSUPPORTED(&quot;cpq4ylwlb0lwi7ibim51gndor&quot;); // static void record_gencode(GVJ_t * job, node_t * n)</span>
+<span class="nc" id="L1995">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1996">UNSUPPORTED(&quot;84llcpxtvxaggx841n2t03850&quot;); //     obj_state_t *obj = job-&gt;obj;</span>
+<span class="nc" id="L1997">UNSUPPORTED(&quot;bzz7vodjegzgwxp8jzgkq3uti&quot;); //     boxf BF;</span>
+<span class="nc" id="L1998">UNSUPPORTED(&quot;en6q26cyrg17g6yd6el73b3ns&quot;); //     pointf AF[4];</span>
+<span class="nc" id="L1999">UNSUPPORTED(&quot;b89hspuulkkzgmrj59tfy2fus&quot;); //     int style;</span>
+<span class="nc" id="L2000">UNSUPPORTED(&quot;30fmp9xlabtd67je318axlfiy&quot;); //     field_t *f;</span>
+<span class="nc" id="L2001">UNSUPPORTED(&quot;6ciz320nm1jdjxir808cycx3t&quot;); //     int doMap = obj-&gt;url || obj-&gt;explicit_tooltip;</span>
+<span class="nc" id="L2002">UNSUPPORTED(&quot;3ml0gugucwlbwt5mbcdlymm8b&quot;); //     int filled;</span>
+<span class="nc" id="L2003">UNSUPPORTED(&quot;bhtcyodd9jiazat6sqhp9pm4x&quot;); //     char* clrs[2];</span>
+<span class="nc" id="L2004">UNSUPPORTED(&quot;9xovezi85vdgw8han4h0wr87s&quot;); //     f = (field_t *) ND_shape_info(n);</span>
+<span class="nc" id="L2005">UNSUPPORTED(&quot;arohpr2hcj50a0nm6wiegz75n&quot;); //     BF = f-&gt;b;</span>
+<span class="nc" id="L2006">UNSUPPORTED(&quot;9dwww64wl2oaucxyyhoa2u5op&quot;); //     BF.LL.x += ND_coord(n).x;</span>
+<span class="nc" id="L2007">UNSUPPORTED(&quot;eqak8167f3whj617r6180val&quot;); //     BF.LL.y += ND_coord(n).y;</span>
+<span class="nc" id="L2008">UNSUPPORTED(&quot;3u5f15d4i1cs3igvot9majw8n&quot;); //     BF.UR.x += ND_coord(n).x;</span>
+<span class="nc" id="L2009">UNSUPPORTED(&quot;18gannqx4rafy1juoif3uog1p&quot;); //     BF.UR.y += ND_coord(n).y;</span>
+<span class="nc" id="L2010">UNSUPPORTED(&quot;7pfkga2nn8ltabo2ycvjgma6o&quot;); //     if (doMap &amp;&amp; !(job-&gt;flags &amp; (1&lt;&lt;2)))</span>
+<span class="nc" id="L2011">UNSUPPORTED(&quot;6e7g66eeo7n8h8mq556pt3xxy&quot;); // 	gvrender_begin_anchor(job,</span>
+<span class="nc" id="L2012">UNSUPPORTED(&quot;8g7o4dsbwgp9ggtiktgt2m41t&quot;); // 			      obj-&gt;url, obj-&gt;tooltip, obj-&gt;target,</span>
+<span class="nc" id="L2013">UNSUPPORTED(&quot;c8tk2e711ojwsnar0y39a73cf&quot;); // 			      obj-&gt;id);</span>
+<span class="nc" id="L2014">UNSUPPORTED(&quot;6yjfupcwvts03fbmr493ea2ja&quot;); //     style = stylenode(job, n);</span>
+<span class="nc" id="L2015">UNSUPPORTED(&quot;5qxdje5wxqq1c9786htlyohkx&quot;); //     penColor(job, n);</span>
+<span class="nc" id="L2016">UNSUPPORTED(&quot;92hvfvrwzs8dy1vdgk97mu8rm&quot;); //     clrs[0] = NULL;</span>
+<span class="nc" id="L2017">UNSUPPORTED(&quot;a0xb2wsthoxt62j0aks4aht13&quot;); //     if (style &amp; (1 &lt;&lt; 0)) {</span>
+<span class="nc" id="L2018">UNSUPPORTED(&quot;64vz86w7mg90duu37ik1bcm8m&quot;); // 	char* fillcolor = findFill (n);</span>
+<span class="nc" id="L2019">UNSUPPORTED(&quot;4xv0cmpfa4sol0pqmfumr0rnm&quot;); // 	float frac;</span>
+<span class="nc" id="L2020">UNSUPPORTED(&quot;dily1m3rwbo5mniq7aneh3qhu&quot;); // 	if (findStopColor (fillcolor, clrs, &amp;frac)) {</span>
+<span class="nc" id="L2021">UNSUPPORTED(&quot;5m1l4f0yk2x1r9n00p7xoarhk&quot;); //             gvrender_set_fillcolor(job, clrs[0]);</span>
+<span class="nc" id="L2022">UNSUPPORTED(&quot;850qgpdnne96gxnh244hf2rh2&quot;); // 	    if (clrs[1]) </span>
+<span class="nc" id="L2023">UNSUPPORTED(&quot;m1ck996y4kjzra9yxa5gif68&quot;); // 		gvrender_set_gradient_vals(job,clrs[1],late_int(n,N_gradientangle,0,0), frac);</span>
+<span class="nc" id="L2024">UNSUPPORTED(&quot;f3qa0cv737ikcre1vpqlkukio&quot;); // 	    else </span>
+<span class="nc" id="L2025">UNSUPPORTED(&quot;72n9vguy2n416qggkz5tpz279&quot;); // 		gvrender_set_gradient_vals(job,&quot;black&quot;,late_int(n,N_gradientangle,0,0), frac);</span>
+<span class="nc" id="L2026">UNSUPPORTED(&quot;5dn7m0lqq174sxj9ezr6p8anp&quot;); // 	    if (style &amp; (1 &lt;&lt; 1))</span>
+<span class="nc" id="L2027">UNSUPPORTED(&quot;s4xfcz4il9k9jw0w0dh9lzpj&quot;); // 		filled = 3;</span>
+<span class="nc" id="L2028">UNSUPPORTED(&quot;5c97f6vfxny0zz35l2bu4maox&quot;); // 	    else</span>
+<span class="nc" id="L2029">UNSUPPORTED(&quot;1ijl60mqfpjns1tss115yw4zp&quot;); // 		filled = 2;</span>
+<span class="nc" id="L2030">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L2031">UNSUPPORTED(&quot;8k75h069sv2k9b6tgz77dscwd&quot;); // 	else {</span>
+<span class="nc" id="L2032">UNSUPPORTED(&quot;7ek7aftv8z293izx886r01oqm&quot;); // 	    filled = 1;</span>
+<span class="nc" id="L2033">UNSUPPORTED(&quot;pufcu1p86jfo891eaibok4yb&quot;); //             gvrender_set_fillcolor(job, fillcolor);</span>
+<span class="nc" id="L2034">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L2035">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2036">UNSUPPORTED(&quot;53gluhbrz2oi6qw7sff0fb0hj&quot;); //     else filled = 0;</span>
+<span class="nc" id="L2037">UNSUPPORTED(&quot;a80jadmfy336hxiquc1baf16m&quot;); //     if ((*(ND_shape(n)-&gt;name)==*(&quot;Mrecord&quot;)&amp;&amp;!strcmp(ND_shape(n)-&gt;name,&quot;Mrecord&quot;)))</span>
+<span class="nc" id="L2038">UNSUPPORTED(&quot;6iazzglp38g7uxmnloiwk5ilq&quot;); // 	style |= (1 &lt;&lt; 2);</span>
+<span class="nc" id="L2039">UNSUPPORTED(&quot;gn97uo130dzjs4b5bnhnvlsq&quot;); //     if (((style) &amp; ((1 &lt;&lt; 2) | (1 &lt;&lt; 3) | (127 &lt;&lt; 24)))) {</span>
+<span class="nc" id="L2040">UNSUPPORTED(&quot;5rrbml0v0bc8c6x2ddgjh75p1&quot;); // 	AF[0] = BF.LL;</span>
+<span class="nc" id="L2041">UNSUPPORTED(&quot;8ctty3poiybj8vyrg3fy6s4ju&quot;); // 	AF[2] = BF.UR;</span>
+<span class="nc" id="L2042">UNSUPPORTED(&quot;bqdx8e632ko1pofmr5b91xpmh&quot;); // 	AF[1].x = AF[2].x;</span>
+<span class="nc" id="L2043">UNSUPPORTED(&quot;7gb7yo735gfv67doxjnyl8av7&quot;); // 	AF[1].y = AF[0].y;</span>
+<span class="nc" id="L2044">UNSUPPORTED(&quot;7w69hwqpw5l9f1rsaolr1ytmx&quot;); // 	AF[3].x = AF[0].x;</span>
+<span class="nc" id="L2045">UNSUPPORTED(&quot;cg5ir4ssc1l9d4x56swq1rw0k&quot;); // 	AF[3].y = AF[2].y;</span>
+<span class="nc" id="L2046">UNSUPPORTED(&quot;7gm0bhmoegfvu3uf7hnwfae67&quot;); // 	round_corners(job, AF, 4, style, filled);</span>
+<span class="nc" id="L2047">UNSUPPORTED(&quot;c07up7zvrnu2vhzy6d7zcu94g&quot;); //     } else {</span>
+<span class="nc" id="L2048">UNSUPPORTED(&quot;5sf771cxqfrvdu2vzl3t1687e&quot;); // 	gvrender_box(job, BF, filled);</span>
+<span class="nc" id="L2049">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2050">UNSUPPORTED(&quot;9rksrkk1y26l0lgodpusjgg6r&quot;); //     gen_fields(job, n, f);</span>
+<span class="nc" id="L2051">UNSUPPORTED(&quot;ovdkxg0m1si7d9k8lawdnq&quot;); //     if (clrs[0]) free (clrs[0]);</span>
+<span class="nc" id="L2052">UNSUPPORTED(&quot;amrlpbo0f5svfvv7e9lzhfzj9&quot;); //     if (doMap) {</span>
+<span class="nc" id="L2053">UNSUPPORTED(&quot;4drs7w0v5mk7ys9aylmo5lnq8&quot;); // 	if (job-&gt;flags &amp; (1&lt;&lt;2))</span>
+<span class="nc" id="L2054">UNSUPPORTED(&quot;12436nj34of615tb94t3cw2h0&quot;); // 	    gvrender_begin_anchor(job,</span>
+<span class="nc" id="L2055">UNSUPPORTED(&quot;2rwb38hipr5rxkwxfdzzwkdmy&quot;); // 				  obj-&gt;url, obj-&gt;tooltip, obj-&gt;target,</span>
+<span class="nc" id="L2056">UNSUPPORTED(&quot;4x188hxybttaubn1tt4tf710k&quot;); // 				  obj-&gt;id);</span>
+<span class="nc" id="L2057">UNSUPPORTED(&quot;e3o6yrnsv8lko5fql4f8a9gly&quot;); // 	gvrender_end_anchor(job);</span>
+<span class="nc" id="L2058">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2059">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2061">throw new UnsupportedOperationException();</span>
+}
+
+
+//1 7unoy39g6rhro6he8kci7oh4n
+// static shape_desc **UserShape
+
+
+//1 94927xsjiykujshql95ma97vb
+// static int N_UserShape
+
+
+
+
+//3 35sn43hohjmtc7uvkjrx6u7jt
+// shape_desc *find_user_shape(const char *name) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;&quot;, key=&quot;35sn43hohjmtc7uvkjrx6u7jt&quot;, definition=&quot;shape_desc *find_user_shape(const char *name)&quot;)
+public static Object find_user_shape(Object... arg) {
+<span class="nc" id="L2080">UNSUPPORTED(&quot;dn82ttgu4gvl5nnzl8cu29o63&quot;); // shape_desc *find_user_shape(const char *name)</span>
+<span class="nc" id="L2081">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L2082">UNSUPPORTED(&quot;b17di9c7wgtqm51bvsyxz6e2f&quot;); //     int i;</span>
+<span class="nc" id="L2083">UNSUPPORTED(&quot;757gomzjey403egq882hclnn0&quot;); //     if (UserShape) {</span>
+<span class="nc" id="L2084">UNSUPPORTED(&quot;30x6ygp0c6pjoq410g7sbl3lv&quot;); // 	for (i = 0; i &lt; N_UserShape; i++) {</span>
+<span class="nc" id="L2085">UNSUPPORTED(&quot;3ka0imewegdrxvt7cdk37mqgj&quot;); // 	    if ((*(UserShape[i]-&gt;name)==*(name)&amp;&amp;!strcmp(UserShape[i]-&gt;name,name)))</span>
+<span class="nc" id="L2086">UNSUPPORTED(&quot;5eh2ibmiqg7qx9z5fvoxfnfyo&quot;); // 		return UserShape[i];</span>
+<span class="nc" id="L2087">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L2088">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2089">UNSUPPORTED(&quot;o68dp934ebg4cplebgc5hv4v&quot;); //     return NULL;</span>
+<span class="nc" id="L2090">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2092">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;&quot;, key=&quot;bmt148wdf0a7gslm7hmp043jy&quot;, definition=&quot;shape_desc *bind_shape(char *name, node_t * np)&quot;)
+public static ST_shape_desc bind_shape(Globals zz, CString name, ST_Agnode_s np) {
+<span class="fc" id="L2101">ENTERING(&quot;bmt148wdf0a7gslm7hmp043jy&quot;,&quot;bind_shape&quot;);</span>
+try {
+<span class="fc" id="L2103">	ST_shape_desc rv = null;</span>
+    CString str;
+    
+<span class="fc" id="L2106">    str = safefile(agget(zz, np, new CString(&quot;shapefile&quot;)));</span>
+    /* If shapefile is defined and not epsf, set shape = custom */
+<span class="pc bpc" id="L2108" title="3 of 4 branches missed.">    if (str!=null &amp;&amp; UNSUPPORTED(&quot;!(*(name)==*(\&quot;epsf\&quot;)&amp;&amp;!strcmp(name,\&quot;epsf\&quot;))&quot;)!=null)</span>
+<span class="nc" id="L2109">	name = new CString(&quot;custom&quot;);</span>
+<span class="pc bpc" id="L2110" title="3 of 4 branches missed.">    if (!(name.charAt(0)=='c' &amp;&amp; strcmp(name,new CString(&quot;custom&quot;)) == 0)) {</span>
+<span class="pc bpc" id="L2111" title="1 of 2 branches missed.">	for (ST_shape_desc ptr : zz.Shapes) {</span>
+<span class="fc bfc" id="L2112" title="All 2 branches covered.">	    if ((strcmp(ptr.name,name) == 0)) {</span>
+<span class="fc" id="L2113">		rv = ptr;</span>
+<span class="fc" id="L2114">		break;</span>
+	    }
+	}
+    }
+<span class="pc bpc" id="L2118" title="1 of 2 branches missed.">    if (rv == null)</span>
+<span class="nc" id="L2119">UNSUPPORTED(&quot;7funuix8h6nhe6fqrjsec3kvk&quot;); // 	rv = user_shape(name);</span>
+<span class="fc" id="L2120">    return rv;</span>
+} finally {
+<span class="fc" id="L2122">LEAVING(&quot;bmt148wdf0a7gslm7hmp043jy&quot;,&quot;bind_shape&quot;);</span>
+}
+}
+
+
+
+
+//3 9n2zfdpzi6zgvnhcb3kz7nw1u
+// static boolean epsf_inside(inside_t * inside_context, pointf p) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;epsf_inside&quot;, key=&quot;9n2zfdpzi6zgvnhcb3kz7nw1u&quot;, definition=&quot;static boolean epsf_inside(inside_t * inside_context, pointf p)&quot;)
+public static Object epsf_inside(Object... arg) {
+<span class="nc" id="L2134">UNSUPPORTED(&quot;cq9kgtgzrb9sazy7y2fpt859x&quot;); // static boolean epsf_inside(inside_t * inside_context, pointf p)</span>
+<span class="nc" id="L2135">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L2136">UNSUPPORTED(&quot;7lh87lvufqsd73q9difg0omei&quot;); //     pointf P;</span>
+<span class="nc" id="L2137">UNSUPPORTED(&quot;9ikeydfq03qx7m09iencqsk36&quot;); //     double x2;</span>
+<span class="nc" id="L2138">UNSUPPORTED(&quot;d8oppi8gt9b4eaonkdgb7a54l&quot;); //     node_t *n = inside_context-&gt;s.n;</span>
+<span class="nc" id="L2139">UNSUPPORTED(&quot;823iiqtx9pt0gijqrohrd3zx7&quot;); //     P = ccwrotatepf(p, 90 * GD_rankdir(agraphof(n)));</span>
+<span class="nc" id="L2140">UNSUPPORTED(&quot;6uktb6bwhvglg7v3nygillmqx&quot;); //     x2 = ND_ht(n) / 2;</span>
+<span class="nc" id="L2141">UNSUPPORTED(&quot;3gki5ta81e51de9h4b5nvmoij&quot;); //     return ((P.y &gt;= -x2) &amp;&amp; (P.y &lt;= x2) &amp;&amp; (P.x &gt;= -ND_lw(n))</span>
+<span class="nc" id="L2142">UNSUPPORTED(&quot;3bzok6rkdjzamkk155dcqc8n2&quot;); // 	    &amp;&amp; (P.x &lt;= ND_rw(n)));</span>
+<span class="nc" id="L2143">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2145">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 6xv85fky6n2v03mt0dbvpz05e
+// static void epsf_gencode(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;epsf_gencode&quot;, key=&quot;6xv85fky6n2v03mt0dbvpz05e&quot;, definition=&quot;static void epsf_gencode(GVJ_t * job, node_t * n)&quot;)
+public static Object epsf_gencode(Object... arg) {
+<span class="nc" id="L2156">UNSUPPORTED(&quot;4mtkoc5bwv0wkraw1xv9ptjlo&quot;); // static void epsf_gencode(GVJ_t * job, node_t * n)</span>
+<span class="nc" id="L2157">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L2158">UNSUPPORTED(&quot;84llcpxtvxaggx841n2t03850&quot;); //     obj_state_t *obj = job-&gt;obj;</span>
+<span class="nc" id="L2159">UNSUPPORTED(&quot;31b47kcwg6z2ds4cugdfq5hft&quot;); //     epsf_t *desc;</span>
+<span class="nc" id="L2160">UNSUPPORTED(&quot;6ciz320nm1jdjxir808cycx3t&quot;); //     int doMap = obj-&gt;url || obj-&gt;explicit_tooltip;</span>
+<span class="nc" id="L2161">UNSUPPORTED(&quot;7wygkmvhwjn2l2fmpw5bj1o6g&quot;); //     desc = (epsf_t *) (ND_shape_info(n));</span>
+<span class="nc" id="L2162">UNSUPPORTED(&quot;c98tv4jn3ode5so0mefrwcut7&quot;); //     if (!desc)</span>
+<span class="nc" id="L2163">UNSUPPORTED(&quot;a7fgam0j0jm7bar0mblsv3no4&quot;); // 	return;</span>
+<span class="nc" id="L2164">UNSUPPORTED(&quot;7pfkga2nn8ltabo2ycvjgma6o&quot;); //     if (doMap &amp;&amp; !(job-&gt;flags &amp; (1&lt;&lt;2)))</span>
+<span class="nc" id="L2165">UNSUPPORTED(&quot;6e7g66eeo7n8h8mq556pt3xxy&quot;); // 	gvrender_begin_anchor(job,</span>
+<span class="nc" id="L2166">UNSUPPORTED(&quot;8g7o4dsbwgp9ggtiktgt2m41t&quot;); // 			      obj-&gt;url, obj-&gt;tooltip, obj-&gt;target,</span>
+<span class="nc" id="L2167">UNSUPPORTED(&quot;c8tk2e711ojwsnar0y39a73cf&quot;); // 			      obj-&gt;id);</span>
+<span class="nc" id="L2168">UNSUPPORTED(&quot;4i1fd7rw5klkjsnyehf6v44a3&quot;); //     if (desc)</span>
+<span class="nc" id="L2169">UNSUPPORTED(&quot;8yueq6sa0qe98f00ykgedfrzl&quot;); // 	fprintf(job-&gt;output_file,</span>
+<span class="nc" id="L2170">UNSUPPORTED(&quot;aqf73hied952lsirjjyf0hfr4&quot;); // 		&quot;%.5g %.5g translate newpath user_shape_%d\n&quot;,</span>
+<span class="nc" id="L2171">UNSUPPORTED(&quot;afxenk7cqa80e074cox3d04n5&quot;); // 		ND_coord(n).x + desc-&gt;offset.x,</span>
+<span class="nc" id="L2172">UNSUPPORTED(&quot;57mec07ttst0x3aspieywssni&quot;); // 		ND_coord(n).y + desc-&gt;offset.y, desc-&gt;macro_id);</span>
+<span class="nc" id="L2173">UNSUPPORTED(&quot;1bslo0pyyucx0zmdzt12sei6d&quot;); //     ND_label(n)-&gt;pos = ND_coord(n);</span>
+<span class="nc" id="L2174">UNSUPPORTED(&quot;8r8t0lgzzpigm1odig9a9yg1c&quot;); //     emit_label(job, EMIT_NLABEL, ND_label(n));</span>
+<span class="nc" id="L2175">UNSUPPORTED(&quot;amrlpbo0f5svfvv7e9lzhfzj9&quot;); //     if (doMap) {</span>
+<span class="nc" id="L2176">UNSUPPORTED(&quot;4drs7w0v5mk7ys9aylmo5lnq8&quot;); // 	if (job-&gt;flags &amp; (1&lt;&lt;2))</span>
+<span class="nc" id="L2177">UNSUPPORTED(&quot;12436nj34of615tb94t3cw2h0&quot;); // 	    gvrender_begin_anchor(job,</span>
+<span class="nc" id="L2178">UNSUPPORTED(&quot;2rwb38hipr5rxkwxfdzzwkdmy&quot;); // 				  obj-&gt;url, obj-&gt;tooltip, obj-&gt;target,</span>
+<span class="nc" id="L2179">UNSUPPORTED(&quot;4x188hxybttaubn1tt4tf710k&quot;); // 				  obj-&gt;id);</span>
+<span class="nc" id="L2180">UNSUPPORTED(&quot;e3o6yrnsv8lko5fql4f8a9gly&quot;); // 	gvrender_end_anchor(job);</span>
+<span class="nc" id="L2181">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2182">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2184">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 d0jsei60yky7c36q8bja8q58d
+// static pointf star_size (pointf sz0) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;star_size&quot;, key=&quot;d0jsei60yky7c36q8bja8q58d&quot;, definition=&quot;static pointf star_size (pointf sz0)&quot;)
+public static Object star_size(Object... arg) {
+<span class="nc" id="L2195">UNSUPPORTED(&quot;6bl2ntfn97yev6qvlwplor61o&quot;); // static pointf star_size (pointf sz0)</span>
+<span class="nc" id="L2196">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L2197">UNSUPPORTED(&quot;3zlnn621zia9mss7z1ay24myc&quot;); //     pointf sz;</span>
+<span class="nc" id="L2198">UNSUPPORTED(&quot;5u7lf36burm76yokjuxgcd4tn&quot;); //     double r0, r, rx, ry;</span>
+<span class="nc" id="L2199">UNSUPPORTED(&quot;9ya7hg30u0pmebfvhy4ba5kfp&quot;); //     rx = sz0.x/(2*cos((M_PI/10.0)));</span>
+<span class="nc" id="L2200">UNSUPPORTED(&quot;y09869s34d94qtdcsuuz4mjy&quot;); //     ry = sz0.y/(sin((M_PI/10.0)) + sin((3*(M_PI/10.0))));</span>
+<span class="nc" id="L2201">UNSUPPORTED(&quot;1qn336ppz1ubj5d9vmolmwhfa&quot;); //     r0 = MAX(rx,ry);</span>
+<span class="nc" id="L2202">UNSUPPORTED(&quot;99spig8n4dowh045zi2u054cf&quot;); //     r = (r0*sin((2*(2*(M_PI/10.0))))*cos((2*(M_PI/10.0))))/(cos((M_PI/10.0))*cos((2*(2*(M_PI/10.0)))));</span>
+<span class="nc" id="L2203">UNSUPPORTED(&quot;3h9e5okkzg8gzypvpzok96ikc&quot;); //     sz.x = 2*r*cos((M_PI/10.0));</span>
+<span class="nc" id="L2204">UNSUPPORTED(&quot;19ba70prhdthsxh7ukqn07tw9&quot;); //     sz.y = r*(1 + sin((3*(M_PI/10.0))));</span>
+<span class="nc" id="L2205">UNSUPPORTED(&quot;ban3s2canux7qwxava1n2e4v2&quot;); //     return sz;</span>
+<span class="nc" id="L2206">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2208">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 a7r80ro5nb15ttgfpqwayycmf
+// static void star_vertices (pointf* vertices, pointf* bb) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;star_vertices&quot;, key=&quot;a7r80ro5nb15ttgfpqwayycmf&quot;, definition=&quot;static void star_vertices (pointf* vertices, pointf* bb)&quot;)
+public static Object star_vertices(Object... arg) {
+<span class="nc" id="L2219">UNSUPPORTED(&quot;8p40gvc5ocryzfeoybiuc0tzd&quot;); // static void star_vertices (pointf* vertices, pointf* bb)</span>
+<span class="nc" id="L2220">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L2221">UNSUPPORTED(&quot;b17di9c7wgtqm51bvsyxz6e2f&quot;); //     int i;</span>
+<span class="nc" id="L2222">UNSUPPORTED(&quot;6ebg0h9irk3pcisrj710o7d79&quot;); //     pointf sz = *bb;</span>
+<span class="nc" id="L2223">UNSUPPORTED(&quot;daheewjo1ertfvnwnfdg2fcxr&quot;); //     double offset, a, aspect = (1 + sin((3*(M_PI/10.0))))/(2*cos((M_PI/10.0)));</span>
+<span class="nc" id="L2224">UNSUPPORTED(&quot;6ir3jujwrh6dpiqug6p2v3ttj&quot;); //     double r, r0, theta = M_PI/10.0;</span>
+<span class="nc" id="L2225">UNSUPPORTED(&quot;3dcxsdbybxzvk7jsod9d2ubvm&quot;); //     /* Scale up width or height to required aspect ratio */</span>
+<span class="nc" id="L2226">UNSUPPORTED(&quot;o422759cptua4yuo9guk3367&quot;); //     a = sz.y/sz.x;</span>
+<span class="nc" id="L2227">UNSUPPORTED(&quot;4czf228z5owjh6ew3vh3ugvdv&quot;); //     if (a &gt; aspect) {</span>
+<span class="nc" id="L2228">UNSUPPORTED(&quot;97gq966jokpf07dc3wv6hgk45&quot;); // 	sz.x = sz.y/aspect;</span>
+<span class="nc" id="L2229">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2230">UNSUPPORTED(&quot;7dnql7ghevwkt7vxe0s4wndha&quot;); //     else if (a &lt; aspect) {</span>
+<span class="nc" id="L2231">UNSUPPORTED(&quot;aeoxa8vdht2x8kc1xojdwlz3j&quot;); // 	sz.y = sz.x*aspect;</span>
+<span class="nc" id="L2232">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2233">UNSUPPORTED(&quot;a8zuo1xnr4jnza3araqzl5q43&quot;); //     /* for given sz, get radius */</span>
+<span class="nc" id="L2234">UNSUPPORTED(&quot;5j3gmpqii05zcp2ncicxs2si&quot;); //     r = sz.x/(2*cos((M_PI/10.0)));</span>
+<span class="nc" id="L2235">UNSUPPORTED(&quot;214oro38cddbf9fk06d0m6duf&quot;); //     r0 = (r*cos((M_PI/10.0))*cos((2*(2*(M_PI/10.0)))))/(sin((2*(2*(M_PI/10.0))))*cos((2*(M_PI/10.0))));</span>
+<span class="nc" id="L2236">UNSUPPORTED(&quot;4rot7vm0whb5r2oo8ne4pn1j4&quot;); //     /* offset is the y shift of circle center from bb center */</span>
+<span class="nc" id="L2237">UNSUPPORTED(&quot;aa1u9d9ckbucmn1eyvyyijwkf&quot;); //     offset = (r*(1 - sin((3*(M_PI/10.0)))))/2;</span>
+<span class="nc" id="L2238">UNSUPPORTED(&quot;5zsqst1ddsdoai9yogpi1mnfl&quot;); //     for (i = 0; i &lt; 10; i += 2) {</span>
+<span class="nc" id="L2239">UNSUPPORTED(&quot;dy5yk8kfoxfn3h4wby7vyciqz&quot;); // 	vertices[i].x = r*cos(theta);</span>
+<span class="nc" id="L2240">UNSUPPORTED(&quot;a3uapptgvfngiztwa4vm4pbuu&quot;); // 	vertices[i].y = r*sin(theta) - offset;</span>
+<span class="nc" id="L2241">UNSUPPORTED(&quot;7z0zntmu5ddcj6evxm9imjmv8&quot;); // 	theta += (2*(M_PI/10.0));</span>
+<span class="nc" id="L2242">UNSUPPORTED(&quot;da5vtvcsngi7wqtllzq8l190t&quot;); // 	vertices[i+1].x = r0*cos(theta);</span>
+<span class="nc" id="L2243">UNSUPPORTED(&quot;9zr96c70zwnim4wjqf6zn7p68&quot;); // 	vertices[i+1].y = r0*sin(theta) - offset;</span>
+<span class="nc" id="L2244">UNSUPPORTED(&quot;7z0zntmu5ddcj6evxm9imjmv8&quot;); // 	theta += (2*(M_PI/10.0));</span>
+<span class="nc" id="L2245">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2246">UNSUPPORTED(&quot;58zowxx0q5742vxn8iad1i1xe&quot;); //     *bb = sz;</span>
+<span class="nc" id="L2247">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2249">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 5sbhhjvptmhgl2v2zc12aemgv
+// static boolean star_inside(inside_t * inside_context, pointf p) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;star_inside&quot;, key=&quot;5sbhhjvptmhgl2v2zc12aemgv&quot;, definition=&quot;static boolean star_inside(inside_t * inside_context, pointf p)&quot;)
+public static Object star_inside(Object... arg) {
+<span class="nc" id="L2260">UNSUPPORTED(&quot;2s46vczrfqrysl35qtk55j8dq&quot;); // static boolean star_inside(inside_t * inside_context, pointf p)</span>
+<span class="nc" id="L2261">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L2262">UNSUPPORTED(&quot;4ogz1m3q9xn7z7hiecjp98bmt&quot;); //     static node_t *lastn;	/* last node argument */</span>
+<span class="nc" id="L2263">UNSUPPORTED(&quot;ehzu6nig1i3kg2wnd7f7k9j5n&quot;); //     static polygon_t *poly;</span>
+<span class="nc" id="L2264">UNSUPPORTED(&quot;cy02ifkuodmjjlsu0kxnyjpoh&quot;); //     static int outp, sides;</span>
+<span class="nc" id="L2265">UNSUPPORTED(&quot;53wr032f7cpvhrjze3ml553bu&quot;); //     static pointf *vertex;</span>
+<span class="nc" id="L2266">UNSUPPORTED(&quot;c173x9hgi0epjtbq9crz665t6&quot;); //     static pointf O;		/* point (0,0) */</span>
+<span class="nc" id="L2267">UNSUPPORTED(&quot;4rtja2mn137n7wcxryrmo12ko&quot;); //     boxf *bp = inside_context-&gt;s.bp;</span>
+<span class="nc" id="L2268">UNSUPPORTED(&quot;d8oppi8gt9b4eaonkdgb7a54l&quot;); //     node_t *n = inside_context-&gt;s.n;</span>
+<span class="nc" id="L2269">UNSUPPORTED(&quot;eu67sekaddiid7bjwclyd9lpq&quot;); //     pointf P, Q, R;</span>
+<span class="nc" id="L2270">UNSUPPORTED(&quot;dk1ablxthh1rqusv958glmv1k&quot;); //     int i, outcnt;</span>
+<span class="nc" id="L2271">UNSUPPORTED(&quot;823iiqtx9pt0gijqrohrd3zx7&quot;); //     P = ccwrotatepf(p, 90 * GD_rankdir(agraphof(n)));</span>
+<span class="nc" id="L2272">UNSUPPORTED(&quot;9nc5qvx5xechvyre5wvhjqpjk&quot;); //     /* Quick test if port rectangle is target */</span>
+<span class="nc" id="L2273">UNSUPPORTED(&quot;8ix20ei8mhm5e1r57koylhxmw&quot;); //     if (bp) {</span>
+<span class="nc" id="L2274">UNSUPPORTED(&quot;48wucupbjgeu51wy1djengl4f&quot;); // 	boxf bbox = *bp;</span>
+<span class="nc" id="L2275">UNSUPPORTED(&quot;b87pzpk1bdd2rzscbmza3pxyu&quot;); // 	return INSIDE(P, bbox);</span>
+<span class="nc" id="L2276">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2277">UNSUPPORTED(&quot;8rl2cn4oxr94675yld5eohkie&quot;); //     if (n != lastn) {</span>
+<span class="nc" id="L2278">UNSUPPORTED(&quot;a7zf42vgzubszo05gyqjhr4bb&quot;); // 	poly = (polygon_t *) ND_shape_info(n);</span>
+<span class="nc" id="L2279">UNSUPPORTED(&quot;2y1ov1roe3ma4wlkdj2w8r3sg&quot;); // 	vertex = poly-&gt;vertices;</span>
+<span class="nc" id="L2280">UNSUPPORTED(&quot;98ormfm5j66dmbja3sdsx38az&quot;); // 	sides = poly-&gt;sides;</span>
+<span class="nc" id="L2281">UNSUPPORTED(&quot;d41xba93s17axh19qsbhg0x8a&quot;); // 	/* index to outer-periphery */</span>
+<span class="nc" id="L2282">UNSUPPORTED(&quot;bmmroksk9aecg8ik0z1sxpzie&quot;); // 	outp = (poly-&gt;peripheries - 1) * sides;</span>
+<span class="nc" id="L2283">UNSUPPORTED(&quot;47l17pa0edzmfnlr8ysqs0qh4&quot;); // 	if (outp &lt; 0)</span>
+<span class="nc" id="L2284">UNSUPPORTED(&quot;jyf75douzxhfzxfyrq3kes6e&quot;); // 	    outp = 0;</span>
+<span class="nc" id="L2285">UNSUPPORTED(&quot;dz5401vppes7iz7b0c6pzkge6&quot;); // 	lastn = n;</span>
+<span class="nc" id="L2286">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2287">UNSUPPORTED(&quot;4zcxdh0y0cit31t1myzksbyc&quot;); //     outcnt = 0;</span>
+<span class="nc" id="L2288">UNSUPPORTED(&quot;bs8ipj0v83bijiw6u6kpz14s1&quot;); //     for (i = 0; i &lt; sides; i += 2) {</span>
+<span class="nc" id="L2289">UNSUPPORTED(&quot;cmwbnui44mpmy3kjz18pxp1cd&quot;); // 	Q = vertex[i + outp];</span>
+<span class="nc" id="L2290">UNSUPPORTED(&quot;4oudcajkxkcstsh2bvjaheadi&quot;); // 	R = vertex[((i+4) % sides) + outp];</span>
+<span class="nc" id="L2291">UNSUPPORTED(&quot;b4anc6i6r4xczgkhjcjudktb&quot;); // 	if (!(same_side(P, O, Q, R))) {</span>
+<span class="nc" id="L2292">UNSUPPORTED(&quot;b291xvw4hm8vcmlaoxcl8dj94&quot;); // 	    outcnt++;</span>
+<span class="nc" id="L2293">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L2294">UNSUPPORTED(&quot;3mpbcjrh8r4u6u2twxvyqx9v9&quot;); // 	if (outcnt == 2) {</span>
+<span class="nc" id="L2295">UNSUPPORTED(&quot;6f1138i13x0xz1bf1thxgjgka&quot;); // 	    return 0;</span>
+<span class="nc" id="L2296">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L2297">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L2298">UNSUPPORTED(&quot;8fwlqtemsmckleh6946lyd8mw&quot;); //     return NOT(0);</span>
+<span class="nc" id="L2299">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2301">throw new UnsupportedOperationException();</span>
+}
+
+
+//1 7nso0aprwwsa0je3az7h9nlue
+<span class="fc" id="L2306">static private CString side_port[] = { new CString(&quot;s&quot;), new CString(&quot;e&quot;), new CString(&quot;n&quot;), new CString(&quot;w&quot;) };</span>
+
+
+
+
+//3 8hx6dn19tost35djnvvnzh92y
+// static point cvtPt(pointf p, int rankdir) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;cvtPt&quot;, key=&quot;8hx6dn19tost35djnvvnzh92y&quot;, definition=&quot;static point cvtPt(pointf p, int rankdir)&quot;)
+public static ST_point cvtPt(final ST_pointf p, int rankdir) {
+<span class="fc" id="L2316">	return (ST_point) cvtPt_(p.copy(), rankdir).copy();</span>
+}
+private static ST_point cvtPt_(final ST_pointf p, int rankdir) {
+<span class="fc" id="L2319">    final ST_pointf q = new ST_pointf(); // { 0, 0 };</span>
+<span class="fc" id="L2320">    final ST_point Q = new ST_point();</span>
+<span class="pc bpc" id="L2321" title="4 of 5 branches missed.">    switch (rankdir) {</span>
+    case 0:
+<span class="fc" id="L2323">	q.___(p);</span>
+<span class="fc" id="L2324">	break;</span>
+    case 2:
+<span class="nc" id="L2326">UNSUPPORTED(&quot;drh1t5heo8w8z199n0vydnon7&quot;); // 	q.x = p.x;</span>
+<span class="nc" id="L2327">UNSUPPORTED(&quot;1sp6xbp6wduyl3r6q3ki03lj&quot;); // 	q.y = -p.y;</span>
+<span class="nc" id="L2328">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    case 1:
+<span class="nc" id="L2330">UNSUPPORTED(&quot;aqxuqmimmi2id7ukk2b64x1in&quot;); // 	q.y = p.x;</span>
+<span class="nc" id="L2331">UNSUPPORTED(&quot;djyedvti0u3rb22lyp3mp7i8n&quot;); // 	q.x = -p.y;</span>
+<span class="nc" id="L2332">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    case 3:
+<span class="nc" id="L2334">UNSUPPORTED(&quot;aqxuqmimmi2id7ukk2b64x1in&quot;); // 	q.y = p.x;</span>
+<span class="nc" id="L2335">UNSUPPORTED(&quot;7d33c84ojx2qc6awisfs88pf5&quot;); // 	q.x = p.y;</span>
+<span class="nc" id="L2336">UNSUPPORTED(&quot;6aw91xzjmqvmtdvt1di23af8y&quot;); // 	break;</span>
+    }
+<span class="fc" id="L2338">    PF2P(q, Q);</span>
+<span class="fc" id="L2339">    return Q;</span>
+}
+
+
+
+
+//3 cmt4wr13jgcd9ihg14t972aam
+// static char *closestSide(node_t * n, node_t * other, port * oldport) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;&quot;, key=&quot;cmt4wr13jgcd9ihg14t972aam&quot;, definition=&quot;static char *closestSide(node_t * n, node_t * other, port * oldport)&quot;)
+public static CString closestSide(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
+<span class="fc" id="L2350">    final ST_boxf b = new ST_boxf();</span>
+<span class="fc" id="L2351">    int rkd = GD_rankdir(agraphof(n).root);</span>
+<span class="fc" id="L2352">    final ST_point p = new ST_point(); // { 0, 0 };</span>
+<span class="fc" id="L2353">    final ST_point pt = cvtPt(ND_coord(n), rkd);</span>
+<span class="fc" id="L2354">    final ST_point opt = cvtPt(ND_coord(other), rkd);</span>
+<span class="fc" id="L2355">    int sides = oldport.side;</span>
+<span class="fc" id="L2356">    CString rv = null;</span>
+<span class="fc" id="L2357">    int i, d, mind = 0;</span>
+<span class="pc bpc" id="L2358" title="2 of 4 branches missed.">    if ((sides == 0) || (sides == (TOP | BOTTOM | LEFT | RIGHT)))</span>
+<span class="nc" id="L2359">	return rv;		/* use center */</span>
+<span class="pc bpc" id="L2360" title="1 of 2 branches missed.">    if (oldport.bp != null) {</span>
+<span class="fc" id="L2361">	b.___(oldport.bp);</span>
+    } else {
+<span class="nc" id="L2363">UNSUPPORTED(&quot;ek9a7u2yx8w4r9x5k7somxuup&quot;); // 	if (GD_flip(agraphof(n))) {</span>
+<span class="nc" id="L2364">UNSUPPORTED(&quot;5m0qxjiybs5ei0xyt8rztghk5&quot;); // 	    b.UR.x = ND_ht(n) / 2;</span>
+<span class="nc" id="L2365">UNSUPPORTED(&quot;1i4y4dgrig36gh0dq2jn8kde&quot;); // 	    b.LL.x = -b.UR.x;</span>
+<span class="nc" id="L2366">UNSUPPORTED(&quot;7luuqd8n7bpffoa8v27jp7tn3&quot;); // 	    b.UR.y = ND_lw(n);</span>
+<span class="nc" id="L2367">UNSUPPORTED(&quot;922vazdrkwhoxxy4yw5axu6i7&quot;); // 	    b.LL.y = -b.UR.y;</span>
+<span class="nc" id="L2368">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L2369">UNSUPPORTED(&quot;2kqd0a7y22hequs0ypjfw2ltw&quot;); // 	    b.UR.y = ND_ht(n) / 2;</span>
+<span class="nc" id="L2370">UNSUPPORTED(&quot;922vazdrkwhoxxy4yw5axu6i7&quot;); // 	    b.LL.y = -b.UR.y;</span>
+<span class="nc" id="L2371">UNSUPPORTED(&quot;59beisnsabbp6eavnuxrqch2d&quot;); // 	    b.UR.x = ND_lw(n);</span>
+<span class="nc" id="L2372">UNSUPPORTED(&quot;1i4y4dgrig36gh0dq2jn8kde&quot;); // 	    b.LL.x = -b.UR.x;</span>
+<span class="nc" id="L2373">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+<span class="fc bfc" id="L2375" title="All 2 branches covered.">    for (i = 0; i &lt; 4; i++) {</span>
+<span class="fc bfc" id="L2376" title="All 2 branches covered.">	if ((sides &amp; (1 &lt;&lt; i)) == 0)</span>
+<span class="fc" id="L2377">	    continue;</span>
+<span class="pc bpc" id="L2378" title="3 of 5 branches missed.">	switch (i) {</span>
+	case 0:
+<span class="fc" id="L2380">	    p.y = (int) b.LL.y;</span>
+<span class="fc" id="L2381">	    p.x = (int) (b.LL.x + b.UR.x) / 2;</span>
+<span class="fc" id="L2382">	    break;</span>
+	case 1:
+<span class="fc" id="L2384">	    p.x = (int) b.UR.x;</span>
+<span class="fc" id="L2385">	    p.y = (int) (b.LL.y + b.UR.y) / 2;</span>
+<span class="fc" id="L2386">	    break;</span>
+	case 2:
+<span class="nc" id="L2388">	    p.y = (int) b.UR.y;</span>
+<span class="nc" id="L2389">	    p.x = (int) (b.LL.x + b.UR.x) / 2;</span>
+<span class="nc" id="L2390">	    break;</span>
+	case 3:
+<span class="nc" id="L2392">	    p.x = (int) b.LL.x;</span>
+<span class="nc" id="L2393">	    p.y = (int) (b.LL.y + b.UR.y) / 2;</span>
+	    break;
+	}
+<span class="fc" id="L2396">	p.x += pt.x;</span>
+<span class="fc" id="L2397">	p.y += pt.y;</span>
+<span class="fc" id="L2398">	d = (int) DIST2(p, opt);</span>
+<span class="pc bpc" id="L2399" title="1 of 4 branches missed.">	if ((rv) == null || (d &lt; mind)) {</span>
+<span class="fc" id="L2400">	    mind = d;</span>
+<span class="fc" id="L2401">	    rv = side_port[i];</span>
+	}
+    }
+<span class="fc" id="L2404">    return rv;</span>
+}
+
+
+
+
+//3 ckbg1dyu9jzx7g0c9dbriez7r
+// port resolvePort(node_t * n, node_t * other, port * oldport) 
+@Unused
+@Doc(&quot;Choose closestSide of a node&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;resolvePort&quot;, key=&quot;ckbg1dyu9jzx7g0c9dbriez7r&quot;, definition=&quot;port resolvePort(node_t * n, node_t * other, port * oldport)&quot;)
+public static ST_port resolvePort(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
+// WARNING!! STRUCT
+<span class="fc" id="L2417">return resolvePort_w_(n, other, oldport).copy();</span>
+}
+private static ST_port resolvePort_w_(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
+<span class="fc" id="L2420">ENTERING(&quot;ckbg1dyu9jzx7g0c9dbriez7r&quot;,&quot;resolvePort&quot;);</span>
+try {
+<span class="fc" id="L2422">    final ST_port rv = new ST_port();</span>
+<span class="fc" id="L2423">    CString compass = closestSide(n, other, oldport);</span>
+    /* transfer name pointer; all other necessary fields will be regenerated */
+<span class="fc" id="L2425">    rv.name = oldport.name;</span>
+<span class="fc" id="L2426">    compassPort(n, oldport.bp, rv, compass, oldport.side, null);</span>
+<span class="fc" id="L2427">    return rv;</span>
+} finally {
+<span class="fc" id="L2429">LEAVING(&quot;ckbg1dyu9jzx7g0c9dbriez7r&quot;,&quot;resolvePort&quot;);</span>
+}
+}
+
+
+
+
+//3 9ttd9vkih0mogy1ps3khfjum6
+// void resolvePorts(edge_t * e) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/shapes.c&quot;, name=&quot;resolvePorts&quot;, key=&quot;9ttd9vkih0mogy1ps3khfjum6&quot;, definition=&quot;void resolvePorts(edge_t * e)&quot;)
+public static Object resolvePorts(Object... arg) {
+<span class="nc" id="L2441">UNSUPPORTED(&quot;ceen1bdr2y10gl9g3stj9dq13&quot;); // void resolvePorts(edge_t * e)</span>
+<span class="nc" id="L2442">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L2443">UNSUPPORTED(&quot;1avf6c49h37pc64khn45b3zla&quot;); //     if (ED_tail_port(e).dyna)</span>
+<span class="nc" id="L2444">UNSUPPORTED(&quot;bjgkohc8n22pf9yf5anfmfjdl&quot;); // 	ED_tail_port(e) =</span>
+<span class="nc" id="L2445">UNSUPPORTED(&quot;c5phu7zavynmooq4ykt058d6t&quot;); // 	    resolvePort(agtail(e), aghead(e), &amp;ED_tail_port(e));</span>
+<span class="nc" id="L2446">UNSUPPORTED(&quot;56ff4qr7o1xsl73k68f4kjmd1&quot;); //     if (ED_head_port(e).dyna)</span>
+<span class="nc" id="L2447">UNSUPPORTED(&quot;d4aylrk5xwagx7so633xn35ug&quot;); // 	ED_head_port(e) =</span>
+<span class="nc" id="L2448">UNSUPPORTED(&quot;ctvcevp7oejtitu1hunh3yj02&quot;); // 	    resolvePort(aghead(e), agtail(e), &amp;ED_head_port(e));</span>
+<span class="nc" id="L2449">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L2451">throw new UnsupportedOperationException();</span>
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

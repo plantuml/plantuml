@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>gvlayout__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.gvc</a> &gt; <span class="el_source">gvlayout__c.java</span></div><h1>gvlayout__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.gvc;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.cgraph.rec__c.agbindrec;
+import static gen.lib.common.emit__c.gv_fixLocale;
+import static gen.lib.common.input__c.graph_init;
+import static smetana.core.JUtils.LOG2;
+import static smetana.core.Macro.GD_cleanup;
+import static smetana.core.Macro.GD_drawing;
+import static smetana.core.Macro.GD_gvc;
+import static smetana.core.Macro.GVRENDER_PLUGIN;
+import static smetana.core.Macro.LAYOUT_USES_RANKDIR;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.EN_layout_type;
+import h.ST_Agraph_s;
+import h.ST_GVC_s;
+import h.ST_gvlayout_engine_s;
+import h.ST_gvlayout_features_t;
+import h.ST_gvplugin_installed_t;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.size_t;
+
+<span class="nc" id="L74">public class gvlayout__c {</span>
+
+
+<span class="fc" id="L77">private final static ST_gvlayout_features_t dotgen_features = new ST_gvlayout_features_t();</span>
+<span class="fc" id="L78">private final static ST_gvlayout_engine_s dotgen_engine = new ST_gvlayout_engine_s();</span>
+static {
+<span class="fc" id="L80">	dotgen_features.flags = LAYOUT_USES_RANKDIR;</span>
+<span class="fc" id="L81">	dotgen_engine.layout = gen.lib.dotgen.dotinit__c.dot_layout;</span>
+<span class="fc" id="L82">	dotgen_engine.cleanup = gen.lib.dotgen.dotinit__c.dot_cleanup;</span>
+<span class="fc" id="L83">}</span>
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/gvc/gvlayout.c&quot;, name=&quot;gvlayout_select&quot;, key=&quot;2g20jitdi8afuoei8p1mcfg9l&quot;, definition=&quot;int gvlayout_select(GVC_t * gvc, const char *layout)&quot;)
+public static int gvlayout_select(ST_GVC_s gvc, CString layout) {
+<span class="fc" id="L90">ENTERING(&quot;2g20jitdi8afuoei8p1mcfg9l&quot;,&quot;gvlayout_select&quot;);</span>
+try {
+<span class="fc" id="L92">	ST_gvplugin_installed_t gvlayout_dot_layout = new ST_gvplugin_installed_t();</span>
+<span class="fc" id="L93">	gvlayout_dot_layout.id = EN_layout_type.LAYOUT_DOT;</span>
+<span class="fc" id="L94">	gvlayout_dot_layout.type = new CString(&quot;dot&quot;);</span>
+<span class="fc" id="L95">	gvlayout_dot_layout.quality = 0;</span>
+<span class="fc" id="L96">	gvlayout_dot_layout.engine = dotgen_engine;</span>
+<span class="fc" id="L97">	gvlayout_dot_layout.features = dotgen_features;</span>
+
+//    gvplugin_available_t *plugin;
+<span class="fc" id="L100">	ST_gvplugin_installed_t typeptr = gvlayout_dot_layout;</span>
+//    plugin = gvplugin_load(gvc, API_layout, layout);
+//    if (plugin) {
+//	typeptr = plugin-&gt;typeptr;
+<span class="fc" id="L104">	gvc.layout.type = typeptr.type;</span>
+<span class="fc" id="L105">	gvc.layout.engine = typeptr.engine;</span>
+<span class="fc" id="L106">	gvc.layout.id = typeptr.id;</span>
+<span class="fc" id="L107">	gvc.layout.features = typeptr.features;</span>
+<span class="fc" id="L108">	return GVRENDER_PLUGIN;  /* FIXME - need better return code */</span>
+//    }
+//    return 999;
+} finally {
+<span class="fc" id="L112">LEAVING(&quot;2g20jitdi8afuoei8p1mcfg9l&quot;,&quot;gvlayout_select&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/gvc/gvlayout.c&quot;, name=&quot;gvLayoutJobs&quot;, key=&quot;991b7t7n0x8ifkp49zotjs78x&quot;, definition=&quot;int gvLayoutJobs(GVC_t * gvc, Agraph_t * g)&quot;)
+public static int gvLayoutJobs(Globals zz, ST_GVC_s gvc, ST_Agraph_s g) {
+<span class="fc" id="L122">ENTERING(&quot;991b7t7n0x8ifkp49zotjs78x&quot;,&quot;gvLayoutJobs&quot;);</span>
+try {
+	ST_gvlayout_engine_s gvle;
+<span class="fc" id="L125">    CString p = null;</span>
+    int rc;
+<span class="fc" id="L127">    agbindrec(zz, g, new CString(&quot;Agraphinfo_t&quot;), new size_t(ZType.ST_Agraphinfo_t), true);</span>
+<span class="fc" id="L128">    GD_gvc(g, gvc);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">    if ((g != agroot(g)))</span>
+<span class="nc" id="L130">UNSUPPORTED(&quot;ah9ygbaap1fyxr97z734juk0j&quot;); // 	GD_gvc(agroot(g)) = gvc;</span>
+/*    if ((p = agget(g, new CString(&quot;layout&quot;)))!=null) {
+UNSUPPORTED(&quot;dlm1jil8gt2pv7p8yrit1tuls&quot;); //         gvc-&gt;layout.engine = NULL;
+UNSUPPORTED(&quot;efl8rjna6ij4qjxb0xlyu3hh1&quot;); // 	rc = gvlayout_select(gvc, p);
+UNSUPPORTED(&quot;7smbmph5nldinro02iqf3qlxv&quot;); // 	if (rc == 999) {
+UNSUPPORTED(&quot;6ru23qpjrx893ivwviirr1ikc&quot;); // 	    agerr (AGERR, &quot;Layout type: \&quot;%s\&quot; not recognized. Use one of:%s\n&quot;,
+UNSUPPORTED(&quot;f3vrr10ga3mqymh2qxomxn326&quot;); // 	        p, gvplugin_list(gvc, API_layout, p));
+UNSUPPORTED(&quot;aivfd7ajlfz8o8oi68d4u5s5z&quot;); // 	    return -1;
+UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}
+    }*/
+    
+<span class="fc" id="L141">    rc = gvlayout_select(gvc, p); //Let's force things</span>
+    
+<span class="fc" id="L143">    gvle = (ST_gvlayout_engine_s) gvc.layout.engine;</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">    if ((gvle) == null)</span>
+<span class="nc" id="L145">	UNSUPPORTED(&quot;return -1;&quot;);</span>
+    
+    
+<span class="fc" id="L148">    gv_fixLocale (1);</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">    graph_init(zz, g, (gvc.layout.features.flags &amp; LAYOUT_USES_RANKDIR)!=0);</span>
+<span class="fc" id="L150">    GD_drawing(agroot(g), GD_drawing(g));</span>
+<span class="pc bpc" id="L151" title="2 of 4 branches missed.">    if (gvle!=null &amp;&amp; gvle.layout!=null) {</span>
+<span class="fc" id="L152">	gvle.layout.exe(zz, g);</span>
+
+	
+	
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">	if (gvle.cleanup!=null)</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (GD_cleanup(g)==null) </span>
+<span class="fc" id="L158">		LOG2(&quot;WARNING WE CHEAT GD_cleanup(g) is NULL&quot;); else</span>
+<span class="nc" id="L159">	    GD_cleanup(g, gvle.cleanup);</span>
+    }
+<span class="fc" id="L161">    gv_fixLocale (0);</span>
+<span class="fc" id="L162">    return 0;</span>
+} finally {
+<span class="fc" id="L164">LEAVING(&quot;991b7t7n0x8ifkp49zotjs78x&quot;,&quot;gvLayoutJobs&quot;);</span>
+}
+}
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

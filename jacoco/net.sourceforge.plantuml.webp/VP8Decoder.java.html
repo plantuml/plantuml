@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VP8Decoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">VP8Decoder.java</span></div><h1>VP8Decoder.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package net.sourceforge.plantuml.webp;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.imageio.stream.ImageInputStream;
+
+import net.sourceforge.plantuml.log.Logme;
+
+public class VP8Decoder {
+	private int[][][][] coefProbs;
+	VP8Frame f;
+<span class="nc" id="L29">	private int frameCount = 0;</span>
+
+<span class="nc" id="L31">	public VP8Decoder() {</span>
+<span class="nc" id="L32">		coefProbs = Globals.getDefaultCoefProbs();</span>
+<span class="nc" id="L33">	}</span>
+
+	public void decodeFrame(ImageInputStream stream) throws IOException {
+<span class="nc" id="L36">		final boolean debug = false;</span>
+<span class="nc" id="L37">		coefProbs = Globals.getDefaultCoefProbs();</span>
+<span class="nc" id="L38">		f = new VP8Frame(stream, coefProbs);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">		if (f.decodeFrame(debug)) {</span>
+
+		}
+<span class="nc" id="L42">		frameCount++;</span>
+<span class="nc" id="L43">	}</span>
+
+	public VP8Frame getFrame() {
+<span class="nc" id="L46">		return f;</span>
+	}
+
+	public int getHeight() {
+<span class="nc" id="L50">		return f.getHeight();</span>
+	}
+
+	public int getWidth() {
+<span class="nc" id="L54">		return f.getWidth();</span>
+	}
+
+	public void writePGMFile(String fileName, VP8Frame frame) {
+
+		FileOutputStream out;
+		try {
+<span class="nc" id="L61">			int[][] yData = frame.getYBuffer();</span>
+<span class="nc" id="L62">			int[][] uData = frame.getUBuffer();</span>
+<span class="nc" id="L63">			int[][] vData = frame.getVBuffer();</span>
+<span class="nc" id="L64">			int outStride = (f.getWidth() + 1) &amp; ~1;</span>
+<span class="nc" id="L65">			int uvHeight = (f.getHeight() + 1) / 2;</span>
+<span class="nc" id="L66">			out = new FileOutputStream(fileName);</span>
+<span class="nc" id="L67">			out.write((byte) 'P');</span>
+<span class="nc" id="L68">			out.write((byte) '5');</span>
+<span class="nc" id="L69">			out.write((byte) 0x0a);</span>
+<span class="nc" id="L70">			out.write((&quot;&quot; + outStride).getBytes());</span>
+<span class="nc" id="L71">			out.write((byte) ' ');</span>
+
+<span class="nc" id="L73">			out.write((&quot;&quot; + (f.getHeight() + uvHeight)).getBytes());</span>
+
+<span class="nc" id="L75">			out.write((byte) 0x0a);</span>
+<span class="nc" id="L76">			out.write((&quot;255&quot;).getBytes());</span>
+<span class="nc" id="L77">			out.write((byte) 0xa);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			for (int y = 0; y &lt; f.getHeight(); y++) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				for (int x = 0; x &lt; f.getWidth(); x++) {</span>
+<span class="nc" id="L80">					out.write(yData[x][y]);</span>
+				}
+<span class="nc bnc" id="L82" title="All 2 branches missed.">				if ((f.getWidth() &amp; 1) == 1)</span>
+<span class="nc" id="L83">					out.write(0x0);</span>
+			}
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			for (int y = 0; y &lt; (f.getHeight() + 1) / 2; y++) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				for (int x = 0; x &lt; (f.getWidth() + 1) / 2; x++) {</span>
+<span class="nc" id="L87">					out.write(uData[x][y]);</span>
+				}
+<span class="nc bnc" id="L89" title="All 2 branches missed.">				for (int x = 0; x &lt; (f.getWidth() + 1) / 2; x++) {</span>
+<span class="nc" id="L90">					out.write(vData[x][y]);</span>
+				}
+
+			}
+
+<span class="nc" id="L95">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L96">			Logme.error(e);</span>
+<span class="nc" id="L97">		} catch (IOException e) {</span>
+<span class="nc" id="L98">			Logme.error(e);</span>
+<span class="nc" id="L99">		}</span>
+<span class="nc" id="L100">	}</span>
+
+	public void writeYV12File(String fileName, VP8Frame frame) {
+
+		FileOutputStream out;
+		try {
+<span class="nc" id="L106">			int[][] yData = frame.getYBuffer();</span>
+<span class="nc" id="L107">			int[][] uData = frame.getUBuffer();</span>
+<span class="nc" id="L108">			int[][] vData = frame.getVBuffer();</span>
+<span class="nc" id="L109">			out = new FileOutputStream(fileName);</span>
+<span class="nc" id="L110">			out.write((byte) 'P');</span>
+<span class="nc" id="L111">			out.write((byte) '5');</span>
+<span class="nc" id="L112">			out.write((byte) 0x0a);</span>
+<span class="nc" id="L113">			out.write((&quot;&quot; + f.getWidth()).getBytes());</span>
+<span class="nc" id="L114">			out.write((byte) ' ');</span>
+
+<span class="nc" id="L116">			out.write((&quot;&quot; + (f.getHeight() * 3 / 2)).getBytes());</span>
+<span class="nc" id="L117">			out.write((byte) 0x0a);</span>
+<span class="nc" id="L118">			out.write((&quot;255&quot;).getBytes());</span>
+<span class="nc" id="L119">			out.write((byte) 0xa);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			for (int y = 0; y &lt; f.getHeight(); y++) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">				for (int x = 0; x &lt; f.getWidth(); x++) {</span>
+<span class="nc" id="L122">					out.write(yData[x][y]);</span>
+				}
+
+			}
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			for (int y = 0; y &lt; (f.getHeight() + 1) / 2; y++)</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">				for (int x = 0; x &lt; (f.getWidth() + 1) / 2; x++) {</span>
+<span class="nc" id="L128">					out.write(uData[x][y]);</span>
+				}
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			for (int y = 0; y &lt; (f.getHeight() + 1) / 2; y++)</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">				for (int x = 0; x &lt; (f.getWidth() + 1) / 2; x++) {</span>
+<span class="nc" id="L132">					out.write(vData[x][y]);</span>
+				}
+<span class="nc" id="L134">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L135">			Logme.error(e);</span>
+<span class="nc" id="L136">		} catch (IOException e) {</span>
+<span class="nc" id="L137">			Logme.error(e);</span>
+<span class="nc" id="L138">		}</span>
+<span class="nc" id="L139">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

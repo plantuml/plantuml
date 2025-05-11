@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Deflate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">Deflate.java</span></div><h1>Deflate.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+<span class="nc" id="L21">class Deflate {</span>
+
+<span class="nc" id="L23">	static enum BlockType {</span>
+<span class="nc" id="L24">		DYNAMIC, FIXED</span>
+	}
+
+	// final static int WINDOW_SIZE = 0x8000;
+	// final static int WINDOW_MASK = 0x7FFF;
+	// final static int MAX_MATCH = 258;
+	// final static int MIN_MATCH = 3;
+	// final static int MAX_CHAIN_HITS = 8192; // Should be less than WINDOW_SIZE
+
+	private static void getFixedTree(int[] llLengths, int[] dLengths) {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">		for (int i = 0; i &lt; 144; i++) {</span>
+<span class="nc" id="L35">			llLengths[i] = 8;</span>
+		}
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		for (int i = 144; i &lt; 256; i++) {</span>
+<span class="nc" id="L38">			llLengths[i] = 9;</span>
+		}
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		for (int i = 256; i &lt; 280; i++) {</span>
+<span class="nc" id="L41">			llLengths[i] = 7;</span>
+		}
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		for (int i = 280; i &lt; 288; i++) {</span>
+<span class="nc" id="L44">			llLengths[i] = 8;</span>
+		}
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		for (int i = 0; i &lt; 32; i++) {</span>
+<span class="nc" id="L47">			dLengths[i] = 5;</span>
+		}
+<span class="nc" id="L49">	}</span>
+
+	public static void greedy(Cookie cookie, LongestMatchCache lmc, byte[] input, int from, int to, LzStore store) {
+<span class="nc" id="L52">		Hash h = cookie.h;</span>
+<span class="nc" id="L53">		h.init(input, Math.max(from - 0x8000, 0), from, to);</span>
+<span class="nc" id="L54">		int prevLength = 0;</span>
+<span class="nc" id="L55">		int prevMatch = 0;</span>
+<span class="nc" id="L56">		char[] dummySubLen = cookie.c259a;</span>
+<span class="nc" id="L57">		boolean matchAvailable = false;</span>
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (int i = from; i &lt; to; i++) {</span>
+<span class="nc" id="L60">			h.updateHash(input, i, to);</span>
+<span class="nc" id="L61">			findLongestMatch(cookie, lmc, from, h, input, i, to, 258, dummySubLen);</span>
+<span class="nc" id="L62">			int len = cookie.lenVal;</span>
+<span class="nc" id="L63">			int dist = cookie.distVal;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			int lengthScore = dist &gt; 1024 ? len - 1 : len;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			int prevLengthScore = prevMatch &gt; 1024 ? prevLength - 1 : prevLength;</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (matchAvailable) {</span>
+<span class="nc" id="L68">				matchAvailable = false;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">				if (lengthScore &gt; prevLengthScore + 1) {</span>
+<span class="nc" id="L70">					store.append((char) (input[i - 1] &amp; 0xFF), (char) 0);</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">					if (lengthScore &gt;= 3 &amp;&amp; len &lt; 258) {</span>
+<span class="nc" id="L72">						matchAvailable = true;</span>
+<span class="nc" id="L73">						prevLength = len;</span>
+<span class="nc" id="L74">						prevMatch = dist;</span>
+<span class="nc" id="L75">						continue;</span>
+					}
+				} else {
+<span class="nc" id="L78">					store.append((char) prevLength, (char) prevMatch);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">					for (int j = 2; j &lt; prevLength; j++) {</span>
+<span class="nc" id="L80">						i++;</span>
+<span class="nc" id="L81">						h.updateHash(input, i, to);</span>
+					}
+<span class="nc" id="L83">					continue;</span>
+				}
+<span class="nc bnc" id="L85" title="All 4 branches missed.">			} else if (lengthScore &gt;= 3 &amp;&amp; len &lt; 258) {</span>
+<span class="nc" id="L86">				matchAvailable = true;</span>
+<span class="nc" id="L87">				prevLength = len;</span>
+<span class="nc" id="L88">				prevMatch = dist;</span>
+<span class="nc" id="L89">				continue;</span>
+			}
+
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (lengthScore &gt;= 3) {</span>
+<span class="nc" id="L93">				store.append((char) len, (char) dist);</span>
+			} else {
+<span class="nc" id="L95">				len = 1;</span>
+<span class="nc" id="L96">				store.append((char) (input[i] &amp; 0xFF), (char) 0);</span>
+			}
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			for (int j = 1; j &lt; len; j++) {</span>
+<span class="nc" id="L99">				i++;</span>
+<span class="nc" id="L100">				h.updateHash(input, i, to);</span>
+			}
+		}
+<span class="nc" id="L103">	}</span>
+
+	static void findLongestMatch(Cookie cookie, LongestMatchCache lmc, int blockStart, Hash h, byte[] array, int pos,
+			int size, int limit, char[] subLen) {
+		// # WINDOW_SIZE = 0x8000
+		// # WINDOW_MASK = 0x7FFF
+		// # MIN_MATCH = 3
+		// # MAX_MATCH = 258
+
+<span class="nc" id="L112">		int offset = pos - blockStart;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		char[] lmcLength = lmc != null ? lmc.length : null;</span>
+<span class="nc bnc" id="L114" title="All 12 branches missed.">		if (lmc != null &amp;&amp; ((lmcLength[offset] == 0 || lmc.dist[offset] != 0)) &amp;&amp; (limit == 258</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				|| lmcLength[offset] &lt;= limit || subLen != null &amp;&amp; lmc.maxCachedSubLen(offset) &gt;= limit)) {</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">			if (subLen == null || lmcLength[offset] &lt;= lmc.maxCachedSubLen(offset)) {</span>
+<span class="nc" id="L117">				cookie.lenVal = lmcLength[offset];</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">				if (cookie.lenVal &gt; limit) {</span>
+<span class="nc" id="L119">					cookie.lenVal = limit;</span>
+				}
+<span class="nc bnc" id="L121" title="All 2 branches missed.">				if (subLen != null) {</span>
+<span class="nc" id="L122">					lmc.cacheToSubLen(offset, cookie.lenVal, subLen);</span>
+<span class="nc" id="L123">					cookie.distVal = subLen[cookie.lenVal];</span>
+				} else {
+<span class="nc" id="L125">					cookie.distVal = lmc.dist[offset];</span>
+				}
+<span class="nc" id="L127">				return;</span>
+			}
+<span class="nc" id="L129">			limit = lmcLength[offset];</span>
+		}
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (size - pos &lt; 3) {</span>
+<span class="nc" id="L133">			cookie.lenVal = 0;</span>
+<span class="nc" id="L134">			cookie.distVal = 0;</span>
+<span class="nc" id="L135">			return;</span>
+		}
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (pos + limit &gt; size) {</span>
+<span class="nc" id="L139">			limit = size - pos;</span>
+		}
+
+<span class="nc" id="L142">		int bestDist = 0;</span>
+<span class="nc" id="L143">		int bestLength = 1;</span>
+<span class="nc" id="L144">		int arrayEnd = pos + limit;</span>
+<span class="nc" id="L145">		int chainCounter = 8192;</span>
+<span class="nc" id="L146">		int[] hPrev = h.prev;</span>
+<span class="nc" id="L147">		int[] hPrev2 = h.prev2;</span>
+<span class="nc" id="L148">		int pp = h.head[h.val];</span>
+<span class="nc" id="L149">		int threshold = h.same[pp];</span>
+<span class="nc" id="L150">		int[] hashVal2 = h.hashVal2;</span>
+<span class="nc" id="L151">		int marker = hashVal2[pp];</span>
+<span class="nc" id="L152">		int p = hPrev[pp];</span>
+<span class="nc" id="L153">		pp -= p;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		int dist = pp &gt; 0 ? pp : pp + 0x8000;</span>
+
+<span class="nc bnc" id="L156" title="All 4 branches missed.">		while (dist &lt; 0x8000 &amp;&amp; chainCounter &gt; 0) {</span>
+<span class="nc" id="L157">			int scan = pos;</span>
+<span class="nc" id="L158">			int match = pos - dist;</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (array[scan + bestLength] == array[match + bestLength]) {</span>
+<span class="nc" id="L161">				int same0 = h.same[pos &amp; 0x7FFF];</span>
+<span class="nc bnc" id="L162" title="All 4 branches missed.">				if (same0 &gt; 2 &amp;&amp; array[scan] == array[match]) {</span>
+<span class="nc" id="L163">					int same1 = h.same[match &amp; 0x7FFF];</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">					int same = same0 &lt; same1 ? same0 : same1;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">					if (same &gt; limit) {</span>
+<span class="nc" id="L166">						same = limit;</span>
+					}
+<span class="nc" id="L168">					scan += same;</span>
+<span class="nc" id="L169">					match += same;</span>
+				}
+<span class="nc bnc" id="L171" title="All 4 branches missed.">				while (scan != arrayEnd &amp;&amp; array[scan] == array[match]) {</span>
+<span class="nc" id="L172">					scan++;</span>
+<span class="nc" id="L173">					match++;</span>
+				}
+<span class="nc" id="L175">				scan -= pos;</span>
+
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (scan &gt; bestLength) {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">					if (subLen != null) {</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">						for (int j = bestLength + 1; j &lt;= scan; j++) {</span>
+<span class="nc" id="L180">							subLen[j] = (char) dist;</span>
+						}
+					}
+<span class="nc" id="L183">					bestDist = dist;</span>
+<span class="nc" id="L184">					bestLength = scan;</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">					if (scan &gt;= limit) {</span>
+<span class="nc" id="L186">						break;</span>
+					}
+				}
+			}
+
+<span class="nc bnc" id="L191" title="All 6 branches missed.">			if (hPrev != hPrev2 &amp;&amp; bestLength &gt;= threshold &amp;&amp; marker == hashVal2[p]) {</span>
+<span class="nc" id="L192">				hPrev = hPrev2;</span>
+			}
+
+<span class="nc" id="L195">			pp = p;</span>
+<span class="nc" id="L196">			p = hPrev[p];</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			if (p == pp) {</span>
+<span class="nc" id="L198">				break;</span>
+			}
+<span class="nc" id="L200">			pp -= p;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			dist += pp &gt; 0 ? pp : 0x8000 + pp;</span>
+
+<span class="nc" id="L203">			--chainCounter;</span>
+<span class="nc" id="L204">		}</span>
+
+<span class="nc bnc" id="L206" title="All 10 branches missed.">		if (lmc != null &amp;&amp; limit == 258 &amp;&amp; subLen != null &amp;&amp; lmcLength[offset] != 0 &amp;&amp; lmc.dist[offset] == 0) {</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">			if (bestLength &lt; 3) {</span>
+<span class="nc" id="L208">				lmc.dist[offset] = 0;</span>
+<span class="nc" id="L209">				lmcLength[offset] = 0;</span>
+			} else {
+<span class="nc" id="L211">				lmc.dist[offset] = (char) bestDist;</span>
+<span class="nc" id="L212">				lmcLength[offset] = (char) bestLength;</span>
+			}
+<span class="nc" id="L214">			lmc.subLenToCache(subLen, offset, bestLength);</span>
+		}
+
+<span class="nc" id="L217">		cookie.distVal = bestDist;</span>
+<span class="nc" id="L218">		cookie.lenVal = bestLength;</span>
+<span class="nc" id="L219">	}</span>
+
+	private static void deflatePart(Cookie cookie, Options options, byte[] input, int from, int to, boolean flush,
+			Buffer output) {
+		// assert from != to
+<span class="nc bnc" id="L224" title="All 4 branches missed.">		switch (options.blockSplitting) {</span>
+		case FIRST:
+<span class="nc" id="L226">			deflateSplittingFirst(cookie, options, flush, input, from, to, output);</span>
+<span class="nc" id="L227">			break;</span>
+
+		case LAST:
+<span class="nc" id="L230">			deflateSplittingLast(cookie, options, flush, input, from, to, output);</span>
+<span class="nc" id="L231">			break;</span>
+
+		case NONE:
+<span class="nc" id="L234">			deflateDynamicBlock(cookie, options, flush, input, from, to, output);</span>
+			break;
+		}
+<span class="nc" id="L237">	}</span>
+
+	private static void deflateDynamicBlock(Cookie cookie, Options options, boolean flush, byte[] input, int from,
+			int to, Buffer output) {
+		// assert from != to
+<span class="nc" id="L242">		LongestMatchCache lmc = cookie.lmc;</span>
+<span class="nc" id="L243">		lmc.init(to - from);</span>
+
+<span class="nc" id="L245">		BlockType type = BlockType.DYNAMIC;</span>
+<span class="nc" id="L246">		LzStore store = Squeeze.optimal(cookie, options.numIterations, lmc, input, from, to);</span>
+
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (store.size &lt; 1000) {</span>
+<span class="nc" id="L249">			LzStore fixedStore = cookie.store1;</span>
+<span class="nc" id="L250">			fixedStore.reset();</span>
+<span class="nc" id="L251">			Squeeze.bestFixedLengths(cookie, lmc, input, from, to, cookie.lengthArray, cookie.costs);</span>
+<span class="nc" id="L252">			Squeeze.optimalRun(cookie, lmc, input, from, to, cookie.lengthArray, fixedStore);</span>
+<span class="nc" id="L253">			int dynCost = calculateBlockSize(cookie, store.litLens, store.dists, 0, store.size);</span>
+<span class="nc" id="L254">			int fixedCost = calculateFixedBlockSize(cookie, fixedStore.litLens, fixedStore.dists, fixedStore.size);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">			if (fixedCost &lt; dynCost) {</span>
+<span class="nc" id="L256">				type = BlockType.FIXED;</span>
+<span class="nc" id="L257">				store = fixedStore;</span>
+			}
+		}
+
+<span class="nc" id="L261">		addLzBlock(cookie, type, flush, store.litLens, store.dists, 0, store.size, output);</span>
+<span class="nc" id="L262">	}</span>
+
+	private static void deflateSplittingLast(Cookie cookie, Options options, boolean flush, byte[] input, int from,
+			int to, Buffer output) {
+		// assert from != to
+<span class="nc" id="L267">		LongestMatchCache lmc = cookie.lmc;</span>
+<span class="nc" id="L268">		lmc.init(to - from);</span>
+
+<span class="nc" id="L270">		LzStore store = Squeeze.optimal(cookie, options.numIterations, lmc, input, from, to);</span>
+
+<span class="nc" id="L272">		int nPoints = BlockSplitter.splitLz(cookie, store.litLens, store.dists, store.size);</span>
+
+<span class="nc" id="L274">		int[] splitPoints = cookie.splitPoints;</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">		for (int i = 1; i &lt;= nPoints; i++) {</span>
+<span class="nc" id="L276">			int start = splitPoints[i - 1];</span>
+<span class="nc" id="L277">			int end = splitPoints[i];</span>
+<span class="nc bnc" id="L278" title="All 4 branches missed.">			addLzBlock(cookie, BlockType.DYNAMIC, i == nPoints &amp;&amp; flush, store.litLens, store.dists, start, end,</span>
+					output);
+		}
+<span class="nc" id="L281">	}</span>
+
+	private static void deflateSplittingFirst(Cookie cookie, Options options, boolean flush, byte[] input, int from,
+			int to, Buffer output) {
+		// assert from != to
+<span class="nc" id="L286">		int nPoints = BlockSplitter.split(cookie, input, from, to);</span>
+<span class="nc" id="L287">		int[] splitPoints = cookie.splitPoints;</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		for (int i = 1; i &lt;= nPoints; ++i) {</span>
+<span class="nc bnc" id="L289" title="All 4 branches missed.">			deflateDynamicBlock(cookie, options, i == nPoints &amp;&amp; flush, input, splitPoints[i - 1], splitPoints[i],</span>
+					output);
+		}
+<span class="nc" id="L292">	}</span>
+
+	static int calculateBlockSize(Cookie cookie, char[] litLens, char[] dists, int lStart, int lEnd) {
+<span class="nc" id="L295">		int[] llLengths = cookie.i288a;</span>
+<span class="nc" id="L296">		System.arraycopy(Cookie.intZeroes, 0, llLengths, 0, 288);</span>
+<span class="nc" id="L297">		int[] dLengths = cookie.i32a;</span>
+<span class="nc" id="L298">		System.arraycopy(Cookie.intZeroes, 0, dLengths, 0, 32);</span>
+
+<span class="nc" id="L300">		int result = 3;</span>
+
+<span class="nc" id="L302">		int[] llCounts = cookie.i288b;</span>
+<span class="nc" id="L303">		System.arraycopy(Cookie.intZeroes, 0, llCounts, 0, 288);</span>
+<span class="nc" id="L304">		int[] dCounts = cookie.i32b;</span>
+<span class="nc" id="L305">		System.arraycopy(Cookie.intZeroes, 0, dCounts, 0, 32);</span>
+
+<span class="nc" id="L307">		int[] lengthSymbol = Util.LENGTH_SYMBOL;</span>
+<span class="nc" id="L308">		int[] cachedDistSymbol = Util.CACHED_DIST_SYMBOL;</span>
+<span class="nc" id="L309">		int[] lengthExtraBits = Util.LENGTH_EXTRA_BITS;</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		for (int i = lStart; i &lt; lEnd; i++) {</span>
+<span class="nc" id="L311">			int d = dists[i];</span>
+<span class="nc" id="L312">			int l = litLens[i];</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			if (d == 0) {</span>
+<span class="nc" id="L314">				llCounts[l]++;</span>
+			} else {
+<span class="nc" id="L316">				llCounts[lengthSymbol[l]]++;</span>
+<span class="nc" id="L317">				int distSymbol = cachedDistSymbol[d];</span>
+<span class="nc" id="L318">				dCounts[distSymbol]++;</span>
+<span class="nc" id="L319">				result += lengthExtraBits[l];</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">				if (distSymbol &gt; 3) {</span>
+<span class="nc" id="L321">					result += (distSymbol / 2) - 1;</span>
+				}
+			}
+		}
+<span class="nc" id="L325">		llCounts[256] = 1;</span>
+
+<span class="nc" id="L327">		int[] llCountsCopy = cookie.i288c;</span>
+<span class="nc" id="L328">		System.arraycopy(llCounts, 0, llCountsCopy, 0, 288);</span>
+<span class="nc" id="L329">		optimizeHuffmanForRle(cookie, llCountsCopy);</span>
+<span class="nc" id="L330">		Katajainen.lengthLimitedCodeLengths(cookie, llCountsCopy, 15, llLengths);</span>
+
+<span class="nc" id="L332">		int[] dCountsCopy = cookie.i32c;</span>
+<span class="nc" id="L333">		System.arraycopy(dCounts, 0, dCountsCopy, 0, 32);</span>
+<span class="nc" id="L334">		optimizeHuffmanForRle(cookie, dCountsCopy);</span>
+<span class="nc" id="L335">		Katajainen.lengthLimitedCodeLengths(cookie, dCountsCopy, 15, dLengths);</span>
+<span class="nc" id="L336">		patchDistanceCodesForBuggyDecoders(dLengths);</span>
+
+<span class="nc" id="L338">		result += simulateAddDynamicTree(cookie, llLengths, dLengths);</span>
+
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		for (int i = 0; i &lt; 288; ++i) {</span>
+<span class="nc" id="L341">			result += llCounts[i] * llLengths[i];</span>
+		}
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		for (int i = 0; i &lt; 32; ++i) {</span>
+<span class="nc" id="L344">			result += dCounts[i] * dLengths[i];</span>
+		}
+<span class="nc" id="L346">		return result;</span>
+	}
+
+	private static int calculateFixedBlockSize(Cookie cookie, char[] litLens, char[] dists, int size) {
+<span class="nc" id="L350">		int[] llLengths = cookie.i288a;</span>
+<span class="nc" id="L351">		int[] dLengths = cookie.i32a;</span>
+<span class="nc" id="L352">		getFixedTree(llLengths, dLengths);</span>
+
+<span class="nc" id="L354">		int result = 3;</span>
+
+<span class="nc" id="L356">		int[] cachedDistExtraBits = Util.CACHED_DIST_EXTRA_BITS;</span>
+<span class="nc" id="L357">		int[] lengthExtraBits = Util.LENGTH_EXTRA_BITS;</span>
+<span class="nc" id="L358">		int[] lengthSymbol = Util.LENGTH_SYMBOL;</span>
+
+<span class="nc bnc" id="L360" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L361">			int d = dists[i];</span>
+<span class="nc" id="L362">			int l = litLens[i];</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">			if (d == 0) {</span>
+<span class="nc" id="L364">				result += llLengths[l];</span>
+			} else {
+<span class="nc" id="L366">				result += llLengths[lengthSymbol[l]];</span>
+<span class="nc" id="L367">				result += lengthExtraBits[l];</span>
+<span class="nc" id="L368">				result += 5;</span>
+<span class="nc bnc" id="L369" title="All 6 branches missed.">				result += d &lt; 4097 ? cachedDistExtraBits[d] : d &lt; 16385 ? d &lt; 8193 ? 11 : 12 : 13;</span>
+			}
+		}
+<span class="nc" id="L372">		result += llLengths[256];</span>
+
+<span class="nc" id="L374">		return result;</span>
+	}
+
+	private static void lzCounts(char[] litLens, char[] dists, int start, int end, int[] llCount, int[] dCount) {
+<span class="nc" id="L378">		int[] lengthSymbol = Util.LENGTH_SYMBOL;</span>
+<span class="nc" id="L379">		int[] cachedDistSymbol = Util.CACHED_DIST_SYMBOL;</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">		for (int i = start; i &lt; end; i++) {</span>
+<span class="nc" id="L381">			int d = dists[i];</span>
+<span class="nc" id="L382">			int l = litLens[i];</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">			if (d == 0) {</span>
+<span class="nc" id="L384">				llCount[l]++;</span>
+			} else {
+<span class="nc" id="L386">				llCount[lengthSymbol[l]]++;</span>
+<span class="nc" id="L387">				dCount[cachedDistSymbol[d]]++;</span>
+			}
+		}
+
+<span class="nc" id="L391">		llCount[256] = 1;</span>
+<span class="nc" id="L392">	}</span>
+
+	static void compress(Cookie cookie, Options options, byte[] input, Buffer output) {
+<span class="nc" id="L395">		int i = 0;</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">		while (i &lt; input.length) {</span>
+<span class="nc" id="L397">			int j = Math.min(i + cookie.masterBlockSize, input.length);</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">			deflatePart(cookie, options, input, i, j, j == input.length, output);</span>
+<span class="nc" id="L399">			i = j;</span>
+<span class="nc" id="L400">		}</span>
+<span class="nc" id="L401">	}</span>
+
+	private static void patchDistanceCodesForBuggyDecoders(int[] dLengths) {
+<span class="nc" id="L404">		int numDistCodes = 0;</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">		for (int i = 0; i &lt; 30; i++) {</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">			if (dLengths[i] != 0) {</span>
+<span class="nc" id="L407">				numDistCodes++;</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">				if (numDistCodes == 2) {</span>
+<span class="nc" id="L409">					return;</span>
+				}
+			}
+		}
+
+<span class="nc bnc" id="L414" title="All 2 branches missed.">		if (numDistCodes == 0) {</span>
+<span class="nc" id="L415">			dLengths[0] = 1;</span>
+<span class="nc" id="L416">			dLengths[1] = 1;</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">		} else if (numDistCodes == 1) {</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">			dLengths[dLengths[0] != 0 ? 1 : 0] = 1;</span>
+		}
+<span class="nc" id="L420">	}</span>
+
+	private static void addDynamicTree(Cookie cookie, int[] llLengths, int[] dLengths, Buffer output) {
+<span class="nc" id="L423">		int best = 0;</span>
+<span class="nc" id="L424">		int bestSize = Integer.MAX_VALUE;</span>
+
+<span class="nc bnc" id="L426" title="All 2 branches missed.">		for (int i = 0; i &lt; 8; i++) {</span>
+<span class="nc bnc" id="L427" title="All 6 branches missed.">			int size = simulateEncodeTree(cookie, llLengths, dLengths, (i &amp; 1) != 0, (i &amp; 2) != 0, (i &amp; 4) != 0);</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">			if (size &lt; bestSize) {</span>
+<span class="nc" id="L429">				bestSize = size;</span>
+<span class="nc" id="L430">				best = i;</span>
+			}
+		}
+
+<span class="nc bnc" id="L434" title="All 6 branches missed.">		encodeTree(cookie, llLengths, dLengths, (best &amp; 1) != 0, (best &amp; 2) != 0, (best &amp; 4) != 0, output);</span>
+<span class="nc" id="L435">	}</span>
+
+	private static void encodeTree(Cookie cookie, int[] llLengths, int[] dLengths, boolean use16, boolean use17,
+			boolean use18, Buffer output) {
+<span class="nc" id="L439">		int hLit = 29;</span>
+<span class="nc" id="L440">		int hDist = 29;</span>
+
+<span class="nc bnc" id="L442" title="All 4 branches missed.">		while (hLit &gt; 0 &amp;&amp; llLengths[256 + hLit] == 0) {</span>
+<span class="nc" id="L443">			hLit--;</span>
+		}
+<span class="nc bnc" id="L445" title="All 4 branches missed.">		while (hDist &gt; 0 &amp;&amp; dLengths[hDist] == 0) {</span>
+<span class="nc" id="L446">			hDist--;</span>
+		}
+
+<span class="nc" id="L449">		int lldTotal = hLit + 258 + hDist;</span>
+<span class="nc" id="L450">		int[] lldLengths = cookie.i320b;</span>
+<span class="nc" id="L451">		System.arraycopy(llLengths, 0, lldLengths, 0, 257 + hLit);</span>
+<span class="nc" id="L452">		System.arraycopy(dLengths, 0, lldLengths, 257 + hLit, hDist + 1);</span>
+
+<span class="nc" id="L454">		int rleSize = 0;</span>
+<span class="nc" id="L455">		int[] rle = cookie.i320a;</span>
+<span class="nc" id="L456">		int[] rleBits = cookie.i320c;</span>
+
+<span class="nc bnc" id="L458" title="All 2 branches missed.">		for (int i = 0; i &lt; lldTotal; i++) {</span>
+<span class="nc" id="L459">			int count = 1;</span>
+<span class="nc" id="L460">			int symbol = lldLengths[i];</span>
+<span class="nc bnc" id="L461" title="All 8 branches missed.">			if (use16 || (symbol == 0 &amp;&amp; (use17 || use18))) {</span>
+<span class="nc bnc" id="L462" title="All 4 branches missed.">				for (int j = i + 1; j &lt; lldTotal &amp;&amp; symbol == lldLengths[j]; j++) {</span>
+<span class="nc" id="L463">					count++;</span>
+				}
+			}
+<span class="nc" id="L466">			i += count - 1;</span>
+
+<span class="nc bnc" id="L468" title="All 4 branches missed.">			if (symbol == 0 &amp;&amp; count &gt; 2) {</span>
+<span class="nc bnc" id="L469" title="All 2 branches missed.">				if (use18) {</span>
+<span class="nc bnc" id="L470" title="All 2 branches missed.">					while (count &gt; 10) {</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">						int delta = count &gt; 138 ? 138 : count;</span>
+<span class="nc" id="L472">						rle[rleSize] = 18;</span>
+<span class="nc" id="L473">						rleBits[rleSize++] = delta - 11;</span>
+<span class="nc" id="L474">						count -= delta;</span>
+<span class="nc" id="L475">					}</span>
+				}
+<span class="nc bnc" id="L477" title="All 2 branches missed.">				if (use17) {</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">					while (count &gt; 2) {</span>
+<span class="nc bnc" id="L479" title="All 2 branches missed.">						int delta = count &gt; 10 ? 10 : count;</span>
+<span class="nc" id="L480">						rle[rleSize] = 17;</span>
+<span class="nc" id="L481">						rleBits[rleSize++] = delta - 3;</span>
+<span class="nc" id="L482">						count -= delta;</span>
+<span class="nc" id="L483">					}</span>
+				}
+			}
+
+<span class="nc bnc" id="L487" title="All 4 branches missed.">			if (use16 &amp;&amp; count &gt; 3) {</span>
+<span class="nc" id="L488">				count--;</span>
+<span class="nc" id="L489">				rle[rleSize] = symbol;</span>
+<span class="nc" id="L490">				rleBits[rleSize++] = 0;</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">				while (count &gt; 2) {</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">					int delta = count &gt; 6 ? 6 : count;</span>
+<span class="nc" id="L493">					rle[rleSize] = 16;</span>
+<span class="nc" id="L494">					rleBits[rleSize++] = delta - 3;</span>
+<span class="nc" id="L495">					count -= delta;</span>
+<span class="nc" id="L496">				}</span>
+			}
+
+<span class="nc bnc" id="L499" title="All 2 branches missed.">			while (count != 0) {</span>
+<span class="nc" id="L500">				rle[rleSize] = symbol;</span>
+<span class="nc" id="L501">				rleBits[rleSize++] = 0;</span>
+<span class="nc" id="L502">				count--;</span>
+			}
+		}
+
+<span class="nc" id="L506">		int[] clCounts = cookie.i19a;</span>
+<span class="nc" id="L507">		System.arraycopy(Cookie.intZeroes, 0, clCounts, 0, 19);</span>
+<span class="nc bnc" id="L508" title="All 2 branches missed.">		for (int i = 0; i &lt; rleSize; ++i) {</span>
+<span class="nc" id="L509">			clCounts[rle[i]]++;</span>
+		}
+
+<span class="nc" id="L512">		int[] clCl = cookie.i19b;</span>
+<span class="nc" id="L513">		System.arraycopy(Cookie.intZeroes, 0, clCl, 0, 19);</span>
+<span class="nc" id="L514">		Katajainen.lengthLimitedCodeLengths(cookie, clCounts, 7, clCl);</span>
+<span class="nc" id="L515">		int[] clSymbols = cookie.i19c;</span>
+<span class="nc" id="L516">		lengthsToSymbols(clCl, 19, 7, clSymbols, cookie.i16a, cookie.i16b);</span>
+
+<span class="nc" id="L518">		int[] order = Util.ORDER;</span>
+<span class="nc" id="L519">		int hcLen = 15;</span>
+<span class="nc bnc" id="L520" title="All 4 branches missed.">		while (hcLen &gt; 0 &amp;&amp; clCounts[order[hcLen + 3]] == 0) {</span>
+<span class="nc" id="L521">			hcLen--;</span>
+		}
+
+<span class="nc" id="L524">		output.addBits(hLit, 5);</span>
+<span class="nc" id="L525">		output.addBits(hDist, 5);</span>
+<span class="nc" id="L526">		output.addBits(hcLen, 4);</span>
+
+<span class="nc bnc" id="L528" title="All 2 branches missed.">		for (int i = 0; i &lt; hcLen + 4; i++) {</span>
+<span class="nc" id="L529">			output.addBits(clCl[order[i]], 3);</span>
+		}
+
+<span class="nc bnc" id="L532" title="All 2 branches missed.">		for (int i = 0; i &lt; rleSize; i++) {</span>
+<span class="nc" id="L533">			int symbol = clSymbols[rle[i]];</span>
+<span class="nc" id="L534">			output.addHuffmanBits(symbol, clCl[rle[i]]);</span>
+<span class="nc bnc" id="L535" title="All 2 branches missed.">			if (rle[i] == 16) {</span>
+<span class="nc" id="L536">				output.addBits(rleBits[i], 2);</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">			} else if (rle[i] == 17) {</span>
+<span class="nc" id="L538">				output.addBits(rleBits[i], 3);</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">			} else if (rle[i] == 18) {</span>
+<span class="nc" id="L540">				output.addBits(rleBits[i], 7);</span>
+			}
+		}
+<span class="nc" id="L543">	}</span>
+
+	private static int simulateAddDynamicTree(Cookie cookie, int[] llLengths, int[] dLengths) {
+<span class="nc" id="L546">		int bestSize = Integer.MAX_VALUE;</span>
+
+<span class="nc bnc" id="L548" title="All 2 branches missed.">		for (int i = 0; i &lt; 8; i++) {</span>
+<span class="nc bnc" id="L549" title="All 6 branches missed.">			int size = simulateEncodeTree(cookie, llLengths, dLengths, (i &amp; 1) != 0, (i &amp; 2) != 0, (i &amp; 4) != 0);</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">			if (size &lt; bestSize) {</span>
+<span class="nc" id="L551">				bestSize = size;</span>
+			}
+		}
+<span class="nc" id="L554">		return bestSize;</span>
+	}
+
+	// TODO: GetRid of RLE
+	private static int simulateEncodeTree(Cookie cookie, int[] llLengths, int[] dLengths, boolean use16, boolean use17,
+			boolean use18) {
+<span class="nc" id="L560">		int hLit = 29;</span>
+<span class="nc" id="L561">		int hDist = 29;</span>
+
+<span class="nc bnc" id="L563" title="All 4 branches missed.">		while (hLit &gt; 0 &amp;&amp; llLengths[256 + hLit] == 0) {</span>
+<span class="nc" id="L564">			hLit--;</span>
+		}
+<span class="nc bnc" id="L566" title="All 4 branches missed.">		while (hDist &gt; 0 &amp;&amp; dLengths[hDist] == 0) {</span>
+<span class="nc" id="L567">			hDist--;</span>
+		}
+
+<span class="nc" id="L570">		int lldTotal = hLit + 258 + hDist;</span>
+<span class="nc" id="L571">		int[] lldLengths = cookie.i320b;</span>
+<span class="nc" id="L572">		System.arraycopy(llLengths, 0, lldLengths, 0, 257 + hLit);</span>
+<span class="nc" id="L573">		System.arraycopy(dLengths, 0, lldLengths, 257 + hLit, hDist + 1);</span>
+
+<span class="nc" id="L575">		int[] rle = cookie.i320a;</span>
+<span class="nc" id="L576">		int rleSize = 0;</span>
+
+<span class="nc bnc" id="L578" title="All 2 branches missed.">		for (int i = 0; i &lt; lldTotal; i++) {</span>
+<span class="nc" id="L579">			int count = 1;</span>
+<span class="nc" id="L580">			int symbol = lldLengths[i];</span>
+<span class="nc bnc" id="L581" title="All 8 branches missed.">			if (use16 || (symbol == 0 &amp;&amp; (use17 || use18))) {</span>
+<span class="nc bnc" id="L582" title="All 4 branches missed.">				for (int j = i + 1; j &lt; lldTotal &amp;&amp; symbol == lldLengths[j]; j++) {</span>
+<span class="nc" id="L583">					count++;</span>
+				}
+			}
+<span class="nc" id="L586">			i += count - 1;</span>
+
+<span class="nc bnc" id="L588" title="All 4 branches missed.">			if (symbol == 0 &amp;&amp; count &gt; 2) {</span>
+<span class="nc bnc" id="L589" title="All 2 branches missed.">				if (use18) {</span>
+<span class="nc bnc" id="L590" title="All 2 branches missed.">					while (count &gt; 10) {</span>
+<span class="nc" id="L591">						rle[rleSize++] = 18;</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">						count -= count &gt; 138 ? 138 : count;</span>
+					}
+				}
+<span class="nc bnc" id="L595" title="All 2 branches missed.">				if (use17) {</span>
+<span class="nc bnc" id="L596" title="All 2 branches missed.">					while (count &gt; 2) {</span>
+<span class="nc" id="L597">						rle[rleSize++] = 17;</span>
+<span class="nc bnc" id="L598" title="All 2 branches missed.">						count -= count &gt; 10 ? 10 : count;</span>
+					}
+				}
+			}
+
+<span class="nc bnc" id="L603" title="All 4 branches missed.">			if (use16 &amp;&amp; count &gt; 3) {</span>
+<span class="nc" id="L604">				count--;</span>
+<span class="nc" id="L605">				rle[rleSize++] = symbol;</span>
+<span class="nc bnc" id="L606" title="All 2 branches missed.">				while (count &gt; 2) {</span>
+<span class="nc" id="L607">					rle[rleSize++] = 16;</span>
+<span class="nc bnc" id="L608" title="All 2 branches missed.">					count -= count &gt; 6 ? 6 : count;</span>
+				}
+			}
+
+<span class="nc bnc" id="L612" title="All 2 branches missed.">			while (count != 0) {</span>
+<span class="nc" id="L613">				rle[rleSize++] = symbol;</span>
+<span class="nc" id="L614">				count--;</span>
+			}
+		}
+
+<span class="nc" id="L618">		int[] clCounts = cookie.i19a;</span>
+<span class="nc" id="L619">		System.arraycopy(Cookie.intZeroes, 0, clCounts, 0, 19);</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">		for (int i = 0; i &lt; rleSize; ++i) {</span>
+<span class="nc" id="L621">			clCounts[rle[i]]++;</span>
+		}
+
+<span class="nc" id="L624">		int[] clCl = cookie.i19b;</span>
+<span class="nc" id="L625">		System.arraycopy(Cookie.intZeroes, 0, clCl, 0, 19);</span>
+<span class="nc" id="L626">		Katajainen.lengthLimitedCodeLengths(cookie, clCounts, 7, clCl);</span>
+<span class="nc" id="L627">		clCl[16] += 2;</span>
+<span class="nc" id="L628">		clCl[17] += 3;</span>
+<span class="nc" id="L629">		clCl[18] += 7;</span>
+
+<span class="nc" id="L631">		int[] order = Util.ORDER;</span>
+<span class="nc" id="L632">		int hcLen = 15;</span>
+<span class="nc bnc" id="L633" title="All 4 branches missed.">		while (hcLen &gt; 0 &amp;&amp; clCounts[order[hcLen + 3]] == 0) {</span>
+<span class="nc" id="L634">			hcLen--;</span>
+		}
+
+<span class="nc" id="L637">		int result = 5 + 5 + 4 + (hcLen + 4) * 3;</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">		for (int i = 0; i &lt; 19; i++) {</span>
+<span class="nc" id="L639">			result += clCl[i] * clCounts[i];</span>
+		}
+
+<span class="nc" id="L642">		return result;</span>
+	}
+
+	private static void addLzBlock(Cookie cookie, BlockType type, boolean last, char[] litLens, char[] dists,
+			int lStart, int lEnd, Buffer output) {
+<span class="nc" id="L647">		int[] llLengths = cookie.i288a;</span>
+<span class="nc" id="L648">		System.arraycopy(Cookie.intZeroes, 0, llLengths, 0, 288);</span>
+<span class="nc" id="L649">		int[] dLengths = cookie.i32a;</span>
+<span class="nc" id="L650">		System.arraycopy(Cookie.intZeroes, 0, dLengths, 0, 32);</span>
+<span class="nc" id="L651">		int[] llCounts = cookie.i288b;</span>
+<span class="nc" id="L652">		System.arraycopy(Cookie.intZeroes, 0, llCounts, 0, 288);</span>
+<span class="nc" id="L653">		int[] dCounts = cookie.i32b;</span>
+<span class="nc" id="L654">		System.arraycopy(Cookie.intZeroes, 0, dCounts, 0, 32);</span>
+
+<span class="nc bnc" id="L656" title="All 2 branches missed.">		output.addHuffmanBits(last ? 1 : 0, 1);</span>
+<span class="nc bnc" id="L657" title="All 2 branches missed.">		if (type == BlockType.FIXED) {</span>
+<span class="nc" id="L658">			output.addHuffmanBits(2, 2); // 1, 0</span>
+		} else { // DYNAMIC
+<span class="nc" id="L660">			output.addHuffmanBits(1, 2); // 0, 1</span>
+		}
+
+<span class="nc bnc" id="L663" title="All 2 branches missed.">		if (type == BlockType.FIXED) {</span>
+<span class="nc" id="L664">			getFixedTree(llLengths, dLengths);</span>
+		} else { // DYNAMIC
+<span class="nc" id="L666">			lzCounts(litLens, dists, lStart, lEnd, llCounts, dCounts);</span>
+<span class="nc" id="L667">			optimizeHuffmanForRle(cookie, llCounts);</span>
+<span class="nc" id="L668">			Katajainen.lengthLimitedCodeLengths(cookie, llCounts, 15, llLengths);</span>
+<span class="nc" id="L669">			optimizeHuffmanForRle(cookie, dCounts);</span>
+<span class="nc" id="L670">			Katajainen.lengthLimitedCodeLengths(cookie, dCounts, 15, dLengths);</span>
+<span class="nc" id="L671">			patchDistanceCodesForBuggyDecoders(dLengths);</span>
+<span class="nc" id="L672">			addDynamicTree(cookie, llLengths, dLengths, output);</span>
+		}
+
+<span class="nc" id="L675">		int[] llSymbols = cookie.i288c;</span>
+<span class="nc" id="L676">		System.arraycopy(Cookie.intZeroes, 0, llSymbols, 0, 288);</span>
+<span class="nc" id="L677">		lengthsToSymbols(llLengths, 288, 15, llSymbols, cookie.i16a, cookie.i16b);</span>
+
+<span class="nc" id="L679">		int[] dSymbols = cookie.i32b;</span>
+<span class="nc" id="L680">		System.arraycopy(Cookie.intZeroes, 0, dSymbols, 0, 32);</span>
+<span class="nc" id="L681">		lengthsToSymbols(dLengths, 32, 15, dSymbols, cookie.i16a, cookie.i16b);</span>
+
+<span class="nc" id="L683">		addLzData(litLens, dists, lStart, lEnd, llSymbols, llLengths, dSymbols, dLengths, output);</span>
+<span class="nc" id="L684">		output.addHuffmanBits(llSymbols[256], llLengths[256]);</span>
+<span class="nc" id="L685">	}</span>
+
+	private static void addLzData(char[] litLens, char[] dists, int lStart, int lEnd, int[] llSymbols, int[] llLengths,
+			int[] dSymbols, int[] dLengths, Buffer output) {
+<span class="nc" id="L689">		int[] cachedDistExtraBits = Util.CACHED_DIST_EXTRA_BITS;</span>
+<span class="nc" id="L690">		int[] lengthExtraBits = Util.LENGTH_EXTRA_BITS;</span>
+<span class="nc" id="L691">		int[] lengthExtraBitsValue = Util.LENGTH_EXTRA_BITS_VALUE;</span>
+<span class="nc" id="L692">		int[] lengthSymbol = Util.LENGTH_SYMBOL;</span>
+<span class="nc" id="L693">		int[] cachedDistSymbol = Util.CACHED_DIST_SYMBOL;</span>
+<span class="nc bnc" id="L694" title="All 2 branches missed.">		for (int i = lStart; i &lt; lEnd; i++) {</span>
+<span class="nc" id="L695">			int dist = dists[i];</span>
+<span class="nc" id="L696">			int litLen = litLens[i];</span>
+<span class="nc bnc" id="L697" title="All 2 branches missed.">			if (dist == 0) {</span>
+<span class="nc" id="L698">				output.addHuffmanBits(llSymbols[litLen], llLengths[litLen]);</span>
+			} else {
+<span class="nc" id="L700">				int lls = lengthSymbol[litLen];</span>
+<span class="nc" id="L701">				int ds = cachedDistSymbol[dist];</span>
+<span class="nc" id="L702">				output.addHuffmanBits(llSymbols[lls], llLengths[lls]);</span>
+<span class="nc" id="L703">				output.addBits(lengthExtraBitsValue[litLen], lengthExtraBits[litLen]);</span>
+<span class="nc" id="L704">				output.addHuffmanBits(dSymbols[ds], dLengths[ds]);</span>
+<span class="nc" id="L705">				output.addBits(Util.distExtraBitsValue(dist),</span>
+<span class="nc bnc" id="L706" title="All 6 branches missed.">						dist &lt; 4097 ? cachedDistExtraBits[dist] : dist &lt; 16385 ? dist &lt; 8193 ? 11 : 12 : 13);</span>
+			}
+		}
+<span class="nc" id="L709">	}</span>
+
+	private static void lengthsToSymbols(int[] lengths, int n, int maxBits, int[] symbols, int[] blCount,
+			int[] nextCode) {
+<span class="nc" id="L713">		System.arraycopy(Cookie.intZeroes, 0, blCount, 0, maxBits + 1);</span>
+<span class="nc" id="L714">		System.arraycopy(Cookie.intZeroes, 0, nextCode, 0, maxBits + 1);</span>
+<span class="nc bnc" id="L715" title="All 2 branches missed.">		for (int i = 0; i &lt; n; ++i) {</span>
+<span class="nc" id="L716">			blCount[lengths[i]]++;</span>
+		}
+<span class="nc" id="L718">		int code = 0;</span>
+<span class="nc" id="L719">		blCount[0] = 0;</span>
+<span class="nc bnc" id="L720" title="All 2 branches missed.">		for (int bits = 1; bits &lt;= maxBits; bits++) {</span>
+<span class="nc" id="L721">			code = (code + blCount[bits - 1]) &lt;&lt; 1;</span>
+<span class="nc" id="L722">			nextCode[bits] = code;</span>
+		}
+<span class="nc bnc" id="L724" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L725">			int len = lengths[i];</span>
+<span class="nc bnc" id="L726" title="All 2 branches missed.">			if (len != 0) {</span>
+<span class="nc" id="L727">				symbols[i] = nextCode[len];</span>
+<span class="nc" id="L728">				nextCode[len]++;</span>
+			}
+		}
+<span class="nc" id="L731">	}</span>
+
+	private static void optimizeHuffmanForRle(Cookie cookie, int[] counts) {
+<span class="nc" id="L734">		int[] goodForRle = cookie.i289a;</span>
+<span class="nc" id="L735">		int length = counts.length;</span>
+<span class="nc bnc" id="L736" title="All 2 branches missed.">		for (; length &gt;= 0; --length) {</span>
+<span class="nc bnc" id="L737" title="All 2 branches missed.">			if (length == 0) {</span>
+<span class="nc" id="L738">				return;</span>
+			}
+<span class="nc bnc" id="L740" title="All 2 branches missed.">			if (counts[length - 1] != 0) {</span>
+<span class="nc" id="L741">				break;</span>
+			}
+		}
+<span class="nc" id="L744">		System.arraycopy(Cookie.intZeroes, 0, goodForRle, 0, length + 1);</span>
+
+<span class="nc" id="L746">		int symbol = counts[0];</span>
+<span class="nc" id="L747">		int stride = 0;</span>
+<span class="nc bnc" id="L748" title="All 2 branches missed.">		for (int i = 0; i &lt; length + 1; ++i) {</span>
+<span class="nc bnc" id="L749" title="All 4 branches missed.">			if (i == length || counts[i] != symbol) {</span>
+<span class="nc bnc" id="L750" title="All 8 branches missed.">				if ((symbol == 0 &amp;&amp; stride &gt;= 5) || (symbol != 0 &amp;&amp; stride &gt;= 7)) {</span>
+<span class="nc bnc" id="L751" title="All 2 branches missed.">					for (int k = 0; k &lt; stride; ++k) {</span>
+<span class="nc" id="L752">						goodForRle[i - k - 1] = 1;</span>
+					}
+				}
+<span class="nc" id="L755">				stride = 1;</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">				if (i != length) {</span>
+<span class="nc" id="L757">					symbol = counts[i];</span>
+				}
+			} else {
+<span class="nc" id="L760">				++stride;</span>
+			}
+		}
+
+<span class="nc" id="L764">		stride = 0;</span>
+<span class="nc" id="L765">		int limit = counts[0];</span>
+<span class="nc" id="L766">		int sum = 0;</span>
+<span class="nc bnc" id="L767" title="All 2 branches missed.">		for (int i = 0; i &lt; length + 1; ++i) {</span>
+<span class="nc bnc" id="L768" title="All 8 branches missed.">			if ((i == length) || (goodForRle[i] != 0) || (counts[i] - limit &gt;= 4) || (limit - counts[i] &gt;= 4)) {</span>
+<span class="nc bnc" id="L769" title="All 6 branches missed.">				if ((stride &gt;= 4) || ((stride &gt;= 3) &amp;&amp; (sum == 0))) {</span>
+<span class="nc" id="L770">					int count = (sum + stride / 2) / stride;</span>
+<span class="nc bnc" id="L771" title="All 2 branches missed.">					if (count &lt; 1)</span>
+<span class="nc" id="L772">						count = 1;</span>
+<span class="nc bnc" id="L773" title="All 2 branches missed.">					if (sum == 0) {</span>
+<span class="nc" id="L774">						count = 0;</span>
+					}
+<span class="nc bnc" id="L776" title="All 2 branches missed.">					for (int k = 0; k &lt; stride; ++k) {</span>
+<span class="nc" id="L777">						counts[i - k - 1] = count;</span>
+					}
+				}
+<span class="nc" id="L780">				stride = 0;</span>
+<span class="nc" id="L781">				sum = 0;</span>
+<span class="nc bnc" id="L782" title="All 2 branches missed.">				if (i &lt; length - 3) {</span>
+<span class="nc" id="L783">					limit = (counts[i] + counts[i + 1] + counts[i + 2] + counts[i + 3] + 2) / 4;</span>
+<span class="nc bnc" id="L784" title="All 2 branches missed.">				} else if (i &lt; length) {</span>
+<span class="nc" id="L785">					limit = counts[i];</span>
+				} else {
+<span class="nc" id="L787">					limit = 0;</span>
+				}
+			}
+<span class="nc" id="L790">			++stride;</span>
+<span class="nc bnc" id="L791" title="All 2 branches missed.">			if (i != length) {</span>
+<span class="nc" id="L792">				sum += counts[i];</span>
+			}
+		}
+<span class="nc" id="L795">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

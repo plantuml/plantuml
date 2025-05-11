@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandHideShowByVisibility.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.classdiagram.command</a> &gt; <span class="el_source">CommandHideShowByVisibility.java</span></div><h1>CommandHideShowByVisibility.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.classdiagram.command;
+
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandHideShowByVisibility extends SingleLineCommand2&lt;UmlDiagram&gt; {
+
+<span class="fc" id="L58">	public static final CommandHideShowByVisibility ME = new CommandHideShowByVisibility();</span>
+
+	private CommandHideShowByVisibility() {
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L65">		return RegexConcat.build(CommandHideShowByVisibility.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;COMMAND&quot;, &quot;(hide|show)&quot;), //
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;VISIBILITY&quot;,
+						&quot;((?:public|private|protected|package)?(?:[,%s]+(?:public|private|protected|package))*)&quot;), //
+<span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L71">				new RegexLeaf(&quot;PORTION&quot;, &quot;(members?|attributes?|fields?|methods?)&quot;), RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (classDiagram instanceof ClassDiagram) {</span>
+<span class="nc" id="L77">			return executeArgClass((ClassDiagram) classDiagram, arg);</span>
+		}
+		// Just ignored
+<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
+	}
+
+	private CommandExecutionResult executeArgClass(ClassDiagram classDiagram, RegexResult arg) {
+
+<span class="nc" id="L85">		final EntityPortion portion = getEntityPortion(arg.get(&quot;PORTION&quot;, 0));</span>
+
+<span class="nc" id="L87">		final Set&lt;VisibilityModifier&gt; visibilities = EnumSet.&lt;VisibilityModifier&gt;noneOf(VisibilityModifier.class);</span>
+<span class="nc" id="L88">		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get(&quot;VISIBILITY&quot;, 0)), &quot; ,&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L90">			addVisibilities(st.nextToken(), portion, visibilities);</span>
+		}
+
+<span class="nc" id="L93">		classDiagram.hideOrShowVisibilityModifier(visibilities, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+
+<span class="nc" id="L95">		return CommandExecutionResult.ok();</span>
+	}
+
+	private void addVisibilities(String token, EntityPortion portion, Set&lt;VisibilityModifier&gt; result) {
+<span class="nc bnc" id="L99" title="All 6 branches missed.">		if (token.equals(&quot;public&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L100">			result.add(VisibilityModifier.PUBLIC_FIELD);</span>
+		}
+<span class="nc bnc" id="L102" title="All 6 branches missed.">		if (token.equals(&quot;public&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L103">			result.add(VisibilityModifier.PUBLIC_METHOD);</span>
+		}
+<span class="nc bnc" id="L105" title="All 6 branches missed.">		if (token.equals(&quot;private&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L106">			result.add(VisibilityModifier.PRIVATE_FIELD);</span>
+		}
+<span class="nc bnc" id="L108" title="All 6 branches missed.">		if (token.equals(&quot;private&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L109">			result.add(VisibilityModifier.PRIVATE_METHOD);</span>
+		}
+<span class="nc bnc" id="L111" title="All 6 branches missed.">		if (token.equals(&quot;protected&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L112">			result.add(VisibilityModifier.PROTECTED_FIELD);</span>
+		}
+<span class="nc bnc" id="L114" title="All 6 branches missed.">		if (token.equals(&quot;protected&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L115">			result.add(VisibilityModifier.PROTECTED_METHOD);</span>
+		}
+<span class="nc bnc" id="L117" title="All 6 branches missed.">		if (token.equals(&quot;package&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L118">			result.add(VisibilityModifier.PACKAGE_PRIVATE_FIELD);</span>
+		}
+<span class="nc bnc" id="L120" title="All 6 branches missed.">		if (token.equals(&quot;package&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L121">			result.add(VisibilityModifier.PACKAGE_PRIVATE_METHOD);</span>
+		}
+<span class="nc" id="L123">	}</span>
+
+	private EntityPortion getEntityPortion(String s) {
+<span class="nc" id="L126">		final String sub = StringUtils.goLowerCase(s.substring(0, 3));</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (sub.equals(&quot;met&quot;)) {</span>
+<span class="nc" id="L128">			return EntityPortion.METHOD;</span>
+		}
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (sub.equals(&quot;mem&quot;)) {</span>
+<span class="nc" id="L131">			return EntityPortion.MEMBER;</span>
+		}
+<span class="nc bnc" id="L133" title="All 4 branches missed.">		if (sub.equals(&quot;att&quot;) || sub.equals(&quot;fie&quot;)) {</span>
+<span class="nc" id="L134">			return EntityPortion.FIELD;</span>
+		}
+<span class="nc" id="L136">		throw new IllegalArgumentException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UTranslate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt</a> &gt; <span class="el_source">UTranslate.java</span></div><h1>UTranslate.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt;
+
+import java.awt.geom.AffineTransform;
+
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+
+public class UTranslate implements UChange {
+	private final double dx;
+	private final double dy;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L49">		return &quot;translate dx=&quot; + dx + &quot; dy=&quot; + dy;</span>
+	}
+
+	public static UTranslate none() {
+<span class="fc" id="L53">		return new UTranslate(0, 0);</span>
+	}
+
+<span class="fc" id="L56">	public UTranslate(double dx, double dy) {</span>
+<span class="fc" id="L57">		this.dx = dx;</span>
+<span class="fc" id="L58">		this.dy = dy;</span>
+<span class="fc" id="L59">	}</span>
+
+	public static UTranslate dx(double dx) {
+<span class="fc" id="L62">		return new UTranslate(dx, 0);</span>
+	}
+
+	public static UTranslate dy(double dy) {
+<span class="fc" id="L66">		return new UTranslate(0, dy);</span>
+	}
+
+	public static UTranslate point(XPoint2D p) {
+<span class="fc" id="L70">		return new UTranslate(p.getX(), p.getY());</span>
+	}
+
+	public double getDx() {
+<span class="fc" id="L74">		return dx;</span>
+	}
+
+	public double getDy() {
+<span class="fc" id="L78">		return dy;</span>
+	}
+
+	public boolean isAlmostSame(UTranslate other) {
+<span class="nc bnc" id="L82" title="All 4 branches missed.">		return this.dx == other.dx || this.dy == other.dy;</span>
+	}
+
+	public XPoint2D getTranslated(XPoint2D p) {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (p == null)</span>
+<span class="nc" id="L87">			return null;</span>
+
+<span class="fc" id="L89">		return new XPoint2D(p.getX() + dx, p.getY() + dy);</span>
+	}
+
+	public UTranslate scaled(double scale) {
+<span class="nc" id="L93">		return new UTranslate(dx * scale, dy * scale);</span>
+	}
+
+	public UTranslate compose(UTranslate other) {
+<span class="fc" id="L97">		return new UTranslate(dx + other.dx, dy + other.dy);</span>
+	}
+
+	public UTranslate reverse() {
+<span class="fc" id="L101">		return new UTranslate(-dx, -dy);</span>
+	}
+
+	public XRectangle2D apply(XRectangle2D rect) {
+<span class="nc" id="L105">		return new XRectangle2D(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());</span>
+	}
+
+	public UTranslate multiplyBy(double v) {
+<span class="nc" id="L109">		return new UTranslate(dx * v, dy * v);</span>
+	}
+
+	public UTranslate sym() {
+<span class="fc" id="L113">		return new UTranslate(dy, dx);</span>
+	}
+
+	public XPoint2D getPosition() {
+<span class="nc" id="L117">		return new XPoint2D(dx, dy);</span>
+	}
+
+	public UTranslate rotate(double angle) {
+<span class="fc" id="L121">		final AffineTransform rotate = AffineTransform.getRotateInstance(angle);</span>
+<span class="fc" id="L122">		return UTranslate.point(new XPoint2D(dx, dy).transform(rotate));</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

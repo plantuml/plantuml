@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EvalMath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">EvalMath.java</span></div><h1>EvalMath.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc;
+
+// http://stackoverflow.com/questions/3422673/evaluating-a-math-expression-given-in-string-form
+public class EvalMath {
+
+	private final String str;
+<span class="nc" id="L42">	private int pos = -1;</span>
+	private char ch;
+
+<span class="nc" id="L45">	public EvalMath(String str) {</span>
+<span class="nc" id="L46">		this.str = str;</span>
+<span class="nc" id="L47">	}</span>
+
+	private void nextChar() {
+<span class="nc" id="L50">		pos++;</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (pos &lt; str.length()) {</span>
+<span class="nc" id="L52">			ch = str.charAt(pos);</span>
+		} else {
+<span class="nc" id="L54">			ch = '\0';</span>
+		}
+<span class="nc" id="L56">	}</span>
+
+	private boolean eat(int charToEat) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		while (ch == ' ') {</span>
+<span class="nc" id="L60">			nextChar();</span>
+		}
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (ch == charToEat) {</span>
+<span class="nc" id="L63">			nextChar();</span>
+<span class="nc" id="L64">			return true;</span>
+		}
+<span class="nc" id="L66">		return false;</span>
+	}
+
+	private double parseExpression() {
+<span class="nc" id="L70">		double x = parseTerm();</span>
+		while (true) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			if (eat('+')) {</span>
+<span class="nc" id="L73">				x += parseTerm();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			} else if (eat('-')) {</span>
+<span class="nc" id="L75">				x -= parseTerm();</span>
+			} else {
+<span class="nc" id="L77">				return x;</span>
+			}
+		}
+	}
+
+	private double parseTerm() {
+<span class="nc" id="L83">		double x = parseFactor();</span>
+		while (true) {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (eat('*')) {</span>
+<span class="nc" id="L86">				x *= parseFactor();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			} else if (eat('/')) {</span>
+<span class="nc" id="L88">				x /= parseFactor();</span>
+			} else {
+<span class="nc" id="L90">				return x;</span>
+			}
+		}
+	}
+
+	private double parseFactor() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (eat('+')) {</span>
+<span class="nc" id="L97">			return parseFactor();</span>
+		}
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (eat('-')) {</span>
+<span class="nc" id="L100">			return -parseFactor();</span>
+		}
+
+		final double x;
+<span class="nc" id="L104">		final int startPos = pos;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (eat('(')) {</span>
+<span class="nc" id="L106">			x = parseExpression();</span>
+<span class="nc" id="L107">			eat(')');</span>
+<span class="nc bnc" id="L108" title="All 6 branches missed.">		} else if ((ch &gt;= '0' &amp;&amp; ch &lt;= '9') || ch == '.') {</span>
+<span class="nc bnc" id="L109" title="All 6 branches missed.">			while ((ch &gt;= '0' &amp;&amp; ch &lt;= '9') || ch == '.')</span>
+<span class="nc" id="L110">				nextChar();</span>
+<span class="nc" id="L111">			x = Double.parseDouble(str.substring(startPos, pos));</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">		} else if (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') {</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">			while (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') {</span>
+<span class="nc" id="L114">				nextChar();</span>
+			}
+<span class="nc" id="L116">			final String func = str.substring(startPos, pos);</span>
+<span class="nc" id="L117">			x = parseFactor();</span>
+<span class="nc" id="L118">			throw new RuntimeException(&quot;Unknown function: &quot; + func);</span>
+		} else {
+<span class="nc" id="L120">			throw new RuntimeException(&quot;Unexpected: &quot; + (char) ch);</span>
+		}
+
+<span class="nc" id="L123">		return x;</span>
+	}
+
+	public double eval() {
+<span class="nc" id="L127">		nextChar();</span>
+<span class="nc" id="L128">		double x = parseExpression();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (pos &lt; str.length()) {</span>
+<span class="nc" id="L130">			throw new RuntimeException(&quot;Unexpected: &quot; + (char) ch);</span>
+		}
+<span class="nc" id="L132">		return x;</span>
+	}
+
+	public static void main(String[] args) {
+<span class="nc" id="L136">		final EvalMath eval = new EvalMath(&quot;33+2*(4+1)&quot;);</span>
+<span class="nc" id="L137">		System.err.println(eval.eval());</span>
+<span class="nc" id="L138">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

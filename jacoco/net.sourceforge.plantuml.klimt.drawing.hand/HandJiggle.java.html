@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HandJiggle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.hand</a> &gt; <span class="el_source">HandJiggle.java</span></div><h1>HandJiggle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Adrian Vogt
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.hand;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+
+public class HandJiggle {
+<span class="nc" id="L47">	private final Collection&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+
+	private double startX;
+	private double startY;
+	private final double defaultVariation;
+	private final Random rnd;
+
+	private double randomMe() {
+<span class="nc" id="L55">		return rnd.nextDouble();</span>
+	}
+
+<span class="nc" id="L58">	public HandJiggle(double startX, double startY, double defaultVariation, Random rnd) {</span>
+<span class="nc" id="L59">		this.startX = startX;</span>
+<span class="nc" id="L60">		this.startY = startY;</span>
+<span class="nc" id="L61">		this.defaultVariation = defaultVariation;</span>
+<span class="nc" id="L62">		this.rnd = rnd;</span>
+<span class="nc" id="L63">		points.add(new XPoint2D(startX, startY));</span>
+<span class="nc" id="L64">	}</span>
+
+	public static HandJiggle create(XPoint2D start, double defaultVariation, Random rnd) {
+<span class="nc" id="L67">		return new HandJiggle(start.getX(), start.getY(), defaultVariation, rnd);</span>
+	}
+
+	public void lineTo(XPoint2D end) {
+<span class="nc" id="L71">		lineTo(end.getX(), end.getY());</span>
+<span class="nc" id="L72">	}</span>
+
+	public void arcTo(double angle0, double angle1, double centerX, double centerY, double rx, double ry) {
+<span class="nc" id="L75">		lineTo(pointOnCircle(centerX, centerY, (angle0 + angle1) / 2, rx, ry));</span>
+<span class="nc" id="L76">		lineTo(pointOnCircle(centerX, centerY, angle1, rx, ry));</span>
+<span class="nc" id="L77">	}</span>
+
+	private static XPoint2D pointOnCircle(double centerX, double centerY, double angle, double rx, double ry) {
+<span class="nc" id="L80">		final double x = centerX + Math.cos(angle) * rx;</span>
+<span class="nc" id="L81">		final double y = centerY + Math.sin(angle) * ry;</span>
+<span class="nc" id="L82">		return new XPoint2D(x, y);</span>
+
+	}
+
+	public void lineTo(final double endX, final double endY) {
+
+<span class="nc" id="L88">		final double diffX = Math.abs(endX - startX);</span>
+<span class="nc" id="L89">		final double diffY = Math.abs(endY - startY);</span>
+<span class="nc" id="L90">		final double distance = Math.sqrt(diffX * diffX + diffY * diffY);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (distance &lt; 0.001)</span>
+<span class="nc" id="L92">			return;</span>
+
+<span class="nc" id="L94">		int segments = (int) Math.round(distance / 10);</span>
+<span class="nc" id="L95">		double variation = defaultVariation;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (segments &lt; 5) {</span>
+<span class="nc" id="L97">			segments = 5;</span>
+<span class="nc" id="L98">			variation /= 3;</span>
+		}
+
+<span class="nc" id="L101">		final double stepX = Math.signum(endX - startX) * diffX / segments;</span>
+<span class="nc" id="L102">		final double stepY = Math.signum(endY - startY) * diffY / segments;</span>
+
+<span class="nc" id="L104">		final double fx = diffX / distance;</span>
+<span class="nc" id="L105">		final double fy = diffY / distance;</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (int s = 0; s &lt; segments; s++) {</span>
+<span class="nc" id="L108">			double x = stepX * s + startX;</span>
+<span class="nc" id="L109">			double y = stepY * s + startY;</span>
+
+<span class="nc" id="L111">			final double offset = (randomMe() - 0.5) * variation;</span>
+<span class="nc" id="L112">			points.add(new XPoint2D(x - offset * fy, y - offset * fx));</span>
+		}
+<span class="nc" id="L114">		points.add(new XPoint2D(endX, endY));</span>
+
+<span class="nc" id="L116">		this.startX = endX;</span>
+<span class="nc" id="L117">		this.startY = endY;</span>
+<span class="nc" id="L118">	}</span>
+
+	public void curveTo(XCubicCurve2D curve) {
+<span class="nc" id="L121">		final double flatness = curve.getFlatness();</span>
+<span class="nc" id="L122">		final double dist = curve.getP1().distance(curve.getP2());</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (flatness &gt; 0.1 &amp;&amp; dist &gt; 20) {</span>
+<span class="nc" id="L124">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
+<span class="nc" id="L125">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
+<span class="nc" id="L126">			curve.subdivide(left, right);</span>
+<span class="nc" id="L127">			curveTo(left);</span>
+<span class="nc" id="L128">			curveTo(right);</span>
+<span class="nc" id="L129">			return;</span>
+		}
+<span class="nc" id="L131">		lineTo(curve.getP2());</span>
+<span class="nc" id="L132">	}</span>
+
+	public UPolygon toUPolygon() {
+<span class="nc" id="L135">		final UPolygon result = new UPolygon();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (XPoint2D p : points)</span>
+<span class="nc" id="L137">			result.addPoint(p.getX(), p.getY());</span>
+
+<span class="nc" id="L139">		return result;</span>
+	}
+
+	public UPath toUPath() {
+<span class="nc" id="L143">		UPath path = null;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (XPoint2D p : points) {</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (path == null) {</span>
+<span class="nc" id="L146">				path = UPath.none();</span>
+<span class="nc" id="L147">				path.moveTo(p);</span>
+			} else {
+<span class="nc" id="L149">				path.lineTo(p);</span>
+			}
+<span class="nc" id="L151">		}</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (path == null)</span>
+<span class="nc" id="L153">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L155">		return path;</span>
+	}
+
+	public void appendTo(UPath result) {
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (XPoint2D p : points)</span>
+<span class="nc" id="L160">			result.lineTo(p);</span>
+
+<span class="nc" id="L162">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

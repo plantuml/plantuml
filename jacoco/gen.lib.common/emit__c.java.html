@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>emit__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">emit__c.java</span></div><h1>emit__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.common.geom__c.ptToLine2;
+import static gen.lib.common.utils__c.Bezier;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_Agraph_s;
+import h.ST_boxf;
+import h.ST_pointf;
+import smetana.core.CArray;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.__ptr__;
+
+<span class="nc" id="L66">public class emit__c {</span>
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/emit.c&quot;, name=&quot;init_xdot&quot;, key=&quot;7udip7yo3ddkp9ocjftokpm9y&quot;, definition=&quot;void* init_xdot (Agraph_t* g)&quot;)
+public static __ptr__ init_xdot(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L74">ENTERING(&quot;7udip7yo3ddkp9ocjftokpm9y&quot;,&quot;init_xdot&quot;);</span>
+try {
+    CString p;
+<span class="fc" id="L77">    __ptr__ xd = null;</span>
+<span class="pc bpc" id="L78" title="3 of 4 branches missed.">	if (!((p = agget(zz, g, new CString(&quot;_background&quot;)))!=null &amp;&amp; p.charAt(0)!='\0')) {</span>
+<span class="pc bpc" id="L79" title="3 of 4 branches missed.">	if (!((p = agget(zz, g, new CString(&quot;_draw_&quot;)))!=null  &amp;&amp; p.charAt(0)!='\0')) {</span>
+<span class="fc" id="L80">	    return null;</span>
+	}
+    }
+<span class="nc" id="L83">UNSUPPORTED(&quot;16fu50ud9qppkwxzdy0nde3lm&quot;); //     xd = parseXDotF (p, NULL, sizeof (exdot_op));</span>
+<span class="nc" id="L84">UNSUPPORTED(&quot;1x2xrqe9on9i2dlb07gj02n65&quot;); //     if (!xd) {</span>
+<span class="nc" id="L85">UNSUPPORTED(&quot;b4emzm37tsv7edlai0fhwoul1&quot;); // 	agerr(AGWARN, &quot;Could not parse \&quot;_background\&quot; attribute in graph %s\n&quot;, agnameof(g));</span>
+<span class="nc" id="L86">UNSUPPORTED(&quot;72v3r8ey2hvh1o9qskrji8im4&quot;); // 	agerr(AGPREV, &quot;  \&quot;%s\&quot;\n&quot;, p);</span>
+<span class="nc" id="L87">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L88">UNSUPPORTED(&quot;jujeh27uxxeyas8n09tnlnbu&quot;); //     return xd;</span>
+<span class="nc" id="L89">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L91">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L93">LEAVING(&quot;7udip7yo3ddkp9ocjftokpm9y&quot;,&quot;init_xdot&quot;);</span>
+}
+}
+
+
+
+/* check_control_points:
+ * check_control_points function checks the size of quadrilateral
+ * formed by four control points
+ * returns 1 if four points are in line (or close to line)
+ * else return 0
+ */
+//3 7nqmdkcnal35ollpstkk707t8
+// static int check_control_points(pointf *cp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/emit.c&quot;, name=&quot;check_control_points&quot;, key=&quot;7nqmdkcnal35ollpstkk707t8&quot;, definition=&quot;static int check_control_points(pointf *cp)&quot;)
+public static boolean check_control_points(CArray&lt;ST_pointf&gt; cp) {
+<span class="fc" id="L110">ENTERING(&quot;7nqmdkcnal35ollpstkk707t8&quot;,&quot;check_control_points&quot;);</span>
+try {
+<span class="fc" id="L112">    double dis1 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(1));</span>
+<span class="fc" id="L113">    double dis2 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(2));</span>
+<span class="fc bfc" id="L114" title="All 4 branches covered.">    if (dis1 &lt; 2.0*2.0 &amp;&amp; dis2 &lt; 2.0*2.0)</span>
+<span class="fc" id="L115">        return true;</span>
+    else
+<span class="fc" id="L117">        return false;</span>
+} finally {
+<span class="fc" id="L119">LEAVING(&quot;7nqmdkcnal35ollpstkk707t8&quot;,&quot;check_control_points&quot;);</span>
+}
+}
+
+
+
+
+/* update bounding box to contain a bezier segment */
+//3 5wldemr88fdxl6101ugewclw9
+// void update_bb_bz(boxf *bb, pointf *cp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/emit.c&quot;, name=&quot;update_bb_bz&quot;, key=&quot;5wldemr88fdxl6101ugewclw9&quot;, definition=&quot;void update_bb_bz(boxf *bb, pointf *cp)&quot;)
+public static void update_bb_bz(ST_boxf bb, CArray&lt;ST_pointf&gt; cp) {
+<span class="fc" id="L132">ENTERING(&quot;5wldemr88fdxl6101ugewclw9&quot;,&quot;update_bb_bz&quot;);</span>
+try {
+    /* if any control point of the segment is outside the bounding box */
+<span class="pc bpc" id="L135" title="2 of 4 branches missed.">    if (cp.get__(0).x &gt; bb.UR.x || cp.get__(0).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L136" title="2 of 4 branches missed.">        cp.get__(0).y &gt; bb.UR.y || cp.get__(0).y &lt; bb.LL.y ||</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">        cp.get__(1).x &gt; bb.UR.x || cp.get__(1).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L138" title="1 of 4 branches missed.">        cp.get__(1).y &gt; bb.UR.y || cp.get__(1).y &lt; bb.LL.y ||</span>
+<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        cp.get__(2).x &gt; bb.UR.x || cp.get__(2).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">        cp.get__(2).y &gt; bb.UR.y || cp.get__(2).y &lt; bb.LL.y ||</span>
+<span class="pc bpc" id="L141" title="1 of 4 branches missed.">        cp.get__(3).x &gt; bb.UR.x || cp.get__(3).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L142" title="2 of 4 branches missed.">        cp.get__(3).y &gt; bb.UR.y || cp.get__(3).y &lt; bb.LL.y) {</span>
+    	
+        /* if the segment is sufficiently refined */
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (check_control_points(cp)) {        </span>
+            int i;
+            /* expand the bounding box */
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            for (i = 0; i &lt; 4; i++) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">                if (cp.get__(i).x &gt; bb.UR.x)</span>
+<span class="fc" id="L150">                    bb.UR.x = cp.get__(i).x;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">                else if (cp.get__(i).x &lt; bb.LL.x)</span>
+<span class="fc" id="L152">                    bb.LL.x = cp.get__(i).x;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">                if (cp.get__(i).y &gt; bb.UR.y)</span>
+<span class="nc" id="L154">                    bb.UR.y = cp.get__(i).y;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">                else if (cp.get__(i).y &lt; bb.LL.y)</span>
+<span class="fc" id="L156">                    bb.LL.y = cp.get__(i).y;</span>
+            }
+<span class="fc" id="L158">        }</span>
+        else { /* else refine the segment */
+<span class="fc" id="L160">		    final CArray&lt;ST_pointf&gt; left = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+<span class="fc" id="L161">		    final CArray&lt;ST_pointf&gt; right = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+<span class="fc" id="L162">            Bezier (cp, 3, 0.5, left, right);</span>
+<span class="fc" id="L163">            update_bb_bz(bb, left);</span>
+<span class="fc" id="L164">            update_bb_bz(bb, right);</span>
+        }
+    }
+} finally {
+<span class="fc" id="L168">LEAVING(&quot;5wldemr88fdxl6101ugewclw9&quot;,&quot;update_bb_bz&quot;);</span>
+}
+<span class="fc" id="L170">}</span>
+
+
+
+
+@Reviewed(when = &quot;11/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/emit.c&quot;, name=&quot;gv_fixLocale&quot;, key=&quot;31vgctm6ydke1b6e0s06x85og&quot;, definition=&quot;void gv_fixLocale (int set)&quot;)
+public static void gv_fixLocale(int set) {
+<span class="fc" id="L178">ENTERING(&quot;31vgctm6ydke1b6e0s06x85og&quot;,&quot;gv_fixLocale&quot;);</span>
+try {
+	// System.out.println(&quot;SKIPPING gv_fixLocale&quot;);
+} finally {
+<span class="fc" id="L182">LEAVING(&quot;31vgctm6ydke1b6e0s06x85og&quot;,&quot;gv_fixLocale&quot;);</span>
+}
+<span class="fc" id="L184">}</span>
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

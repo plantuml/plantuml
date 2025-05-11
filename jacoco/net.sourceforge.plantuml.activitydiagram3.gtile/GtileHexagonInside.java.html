@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GtileHexagonInside.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.gtile</a> &gt; <span class="el_source">GtileHexagonInside.java</span></div><h1>GtileHexagonInside.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.gtile;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class GtileHexagonInside extends AbstractGtile {
+
+	protected final HColor backColor;
+	protected final HColor borderColor;
+
+	protected final TextBlock label;
+	protected final XDimension2D dimLabel;
+
+	protected final double shadowing;
+
+	final public StyleSignatureBasic getDefaultStyleDefinition() {
+<span class="nc" id="L64">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
+	}
+
+	// FtileDiamondInside
+
+	public GtileHexagonInsideLabelled withEastLabel(TextBlock eastLabel) {
+<span class="nc" id="L70">		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, eastLabel,</span>
+				TextBlockUtils.EMPTY_TEXT_BLOCK);
+	}
+
+	public GtileHexagonInsideLabelled withWestLabel(TextBlock westLabel) {
+<span class="nc" id="L75">		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, TextBlockUtils.EMPTY_TEXT_BLOCK,</span>
+				westLabel);
+	}
+
+	public AbstractGtileRoot withSouthLabel(TextBlock southLabel) {
+<span class="nc" id="L80">		return new GtileHexagonInsideLabelled(this, southLabel, TextBlockUtils.EMPTY_TEXT_BLOCK,</span>
+				TextBlockUtils.EMPTY_TEXT_BLOCK);
+	}
+
+	public GtileHexagonInside(StringBounder stringBounder, TextBlock label, ISkinParam skinParam, HColor backColor,
+			HColor borderColor, Swimlane swimlane) {
+<span class="nc" id="L86">		super(stringBounder, skinParam, swimlane);</span>
+
+<span class="nc" id="L88">		final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L89">		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L90">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L91">		this.shadowing = style.getShadowing();</span>
+
+<span class="nc" id="L93">		this.label = label;</span>
+<span class="nc" id="L94">		this.dimLabel = label.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L96">	}</span>
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim;
+<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
+<span class="nc" id="L102">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>
+		} else {
+<span class="nc" id="L104">			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)</span>
+<span class="nc" id="L105">					.delta(Hexagon.hexagonHalfSize * 2, 0);</span>
+		}
+<span class="nc" id="L107">		return dim;</span>
+	}
+
+	@Override
+	protected void drawUInternal(UGraphic ug) {
+<span class="nc" id="L112">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L113">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L114">		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());</span>
+<span class="nc" id="L115">		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));</span>
+
+<span class="nc" id="L117">		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
+<span class="nc" id="L118">		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;</span>
+<span class="nc" id="L119">		label.drawU(ug.apply(new UTranslate(lx, ly)));</span>
+<span class="nc" id="L120">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

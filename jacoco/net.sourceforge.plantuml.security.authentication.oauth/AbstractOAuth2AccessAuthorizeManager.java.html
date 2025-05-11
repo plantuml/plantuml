@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractOAuth2AccessAuthorizeManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.security.authentication.oauth</a> &gt; <span class="el_source">AbstractOAuth2AccessAuthorizeManager.java</span></div><h1>AbstractOAuth2AccessAuthorizeManager.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2021, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.security.authentication.oauth;
+
+import java.io.UnsupportedEncodingException;
+import java.net.Proxy;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
+
+/**
+ * Default abstract OAuth2 AccessAuthorizeManager for OAuth2 managers.
+ *
+ * @author Aljoscha Rittner
+ */
+<span class="fc" id="L58">public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAuthorizeManager {</span>
+    // ::remove folder when __HAXE__
+
+	/**
+	 * Default headers for token service access.
+	 * &lt;p&gt;
+	 * Initialize with:
+	 * 
+	 * &lt;pre&gt;
+	 * &quot;Content-Type&quot;=&quot;application/x-www-form-urlencoded; charset=UTF-8&quot;
+	 * &quot;Accept&quot;=&quot;application/json&quot;
+	 * &lt;/pre&gt;
+	 *
+	 * @return headers
+	 */
+	protected Map&lt;String, Object&gt; headers() {
+<span class="nc" id="L74">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L75">		map.put(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;);</span>
+<span class="nc" id="L76">		map.put(&quot;Accept&quot;, &quot;application/json&quot;);</span>
+<span class="nc" id="L77">		return map;</span>
+	}
+
+	/**
+	 * Builds the access parameter map.
+	 *
+	 * @param tokenResponse the JSOn object with the response data
+	 * @param tokenType     token type to use instead of token_type from response
+	 * @return data-map
+	 */
+	protected Map&lt;String, Object&gt; buildAccessDataFromResponse(JsonObject tokenResponse, String tokenType) {
+<span class="fc" id="L88">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L90">		toMap(map, tokenResponse, OAuth2Tokens.ACCESS_TOKEN);</span>
+<span class="fc" id="L91">		toMap(map, tokenResponse, OAuth2Tokens.SCOPE);</span>
+<span class="fc" id="L92">		toMap(map, tokenResponse, OAuth2Tokens.EXPIRES_IN);</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (tokenType == null) {</span>
+<span class="fc" id="L95">			toMap(map, tokenResponse, OAuth2Tokens.TOKEN_TYPE);</span>
+<span class="fc bfc" id="L96" title="All 4 branches covered.">			if (!map.isEmpty() &amp;&amp; !map.containsKey(OAuth2Tokens.TOKEN_TYPE.key())) {</span>
+				// default token type is bearer
+<span class="fc" id="L98">				map.put(OAuth2Tokens.TOKEN_TYPE.key(), &quot;bearer&quot;);</span>
+			}
+		} else {
+			// Caller don't belief in the token_type response
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (!map.isEmpty()) {</span>
+<span class="fc" id="L103">				map.put(OAuth2Tokens.TOKEN_TYPE.key(), tokenType);</span>
+			}
+		}
+
+<span class="fc" id="L107">		return map;</span>
+	}
+
+	/**
+	 * Translates the JSON value to a map key/value.
+	 *
+	 * @param map      collection to store
+	 * @param response values from response
+	 * @param name     name of the value
+	 */
+	private void toMap(Map&lt;String, Object&gt; map, JsonObject response, OAuth2Tokens name) {
+<span class="fc" id="L118">		JsonValue jsonValue = response.get(name.key());</span>
+<span class="pc bpc" id="L119" title="1 of 4 branches missed.">		if (jsonValue != null &amp;&amp; !jsonValue.isNull()) {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (jsonValue.isString()) {</span>
+<span class="fc" id="L121">				map.put(name.key(), jsonValue.asString());</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			} else if (jsonValue.isNumber()) {</span>
+<span class="fc" id="L123">				map.put(name.key(), jsonValue.asInt());</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			} else if (jsonValue.isBoolean()) {</span>
+<span class="nc" id="L125">				map.put(name.key(), jsonValue.asBoolean());</span>
+			}
+		}
+<span class="fc" id="L128">	}</span>
+
+	/**
+	 * Encodes the data to UTF-8 into {@code application/x-www-form-urlencoded}.
+	 *
+	 * @param data data to encode
+	 * @return the encoded data
+	 */
+	protected String urlEncode(String data) {
+		try {
+<span class="fc" id="L138">			return URLEncoder.encode(data, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L139">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L140">			Logme.error(e);</span>
+<span class="nc" id="L141">			return data;</span>
+		}
+	}
+
+	/**
+	 * Calls the endpoint to load the token response and create a
+	 * SecurityAuthentication.
+	 *
+	 * @param proxy        Proxy for the access
+	 * @param grantType    grant type
+	 * @param tokenType    token type to use instead of token_type from response
+	 * @param tokenService URL to token service
+	 * @param content      body content
+	 * @param basicAuth    principal basicAuth
+	 * @return the authentication object to access resources (or null)
+	 */
+	protected SecurityAuthentication requestAndCreateAuthFromResponse(Proxy proxy, String grantType, String tokenType,
+			SURL tokenService, String content, SecurityAuthentication basicAuth) {
+<span class="nc" id="L159">		byte[] bytes = tokenService.getBytesOnPost(proxy, basicAuth, content, headers());</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (bytes != null) {</span>
+<span class="nc" id="L161">			JsonValue tokenResponse = Json.parse(new String(bytes, StandardCharsets.UTF_8));</span>
+<span class="nc bnc" id="L162" title="All 4 branches missed.">			if (tokenResponse != null &amp;&amp; !tokenResponse.isNull()) {</span>
+<span class="nc" id="L163">				return new SecurityAuthentication(&quot;oauth2&quot;, null, grantType,</span>
+<span class="nc" id="L164">						buildAccessDataFromResponse(tokenResponse.asObject(), tokenType));</span>
+			}
+		}
+<span class="nc" id="L167">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

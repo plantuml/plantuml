@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EggUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.eggs</a> &gt; <span class="el_source">EggUtils.java</span></div><h1>EggUtils.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.eggs;
+
+import java.math.BigInteger;
+
+import net.sourceforge.plantuml.StringUtils;
+
+<span class="nc" id="L42">public class EggUtils {</span>
+	// ::remove file when __CORE__
+
+	public static String fromByteArrays(byte data[]) {
+<span class="nc" id="L46">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		for (byte b : data) {</span>
+<span class="nc" id="L48">			final String hex = Integer.toHexString(b &amp; 0xFF);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">			if (hex.length() == 1)</span>
+<span class="nc" id="L50">				sb.append('0');</span>
+
+<span class="nc" id="L52">			sb.append(hex);</span>
+		}
+<span class="nc" id="L54">		return sb.toString();</span>
+	}
+
+	public static byte[] toByteArrays(String s) {
+<span class="fc" id="L58">		final byte[] result = new byte[s.length() / 2];</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		for (int i = 0; i &lt; result.length; i++)</span>
+<span class="fc" id="L60">			result[i] = (byte) Integer.parseInt(s.substring(i * 2, i * 2 + 2), 16);</span>
+
+<span class="fc" id="L62">		return result;</span>
+	}
+
+	public static BigInteger fromSecretSentence(String s) {
+<span class="fc" id="L66">		BigInteger result = BigInteger.ZERO;</span>
+<span class="fc" id="L67">		final BigInteger twentySix = BigInteger.valueOf(26);</span>
+<span class="fc" id="L68">		s = s.replace('\u00E9', 'e');</span>
+<span class="fc" id="L69">		s = s.replace('\u00EA', 'e');</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (char c : s.toCharArray()) {</span>
+<span class="fc" id="L71">			final int num = convertChar(c);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (num != -1) {</span>
+<span class="fc" id="L73">				result = result.multiply(twentySix);</span>
+<span class="fc" id="L74">				result = result.add(BigInteger.valueOf(num));</span>
+			}
+		}
+<span class="fc" id="L77">		return result;</span>
+
+	}
+
+	private static int convertChar(char c) {
+<span class="fc" id="L82">		c = StringUtils.goLowerCase(c);</span>
+<span class="pc bpc" id="L83" title="1 of 4 branches missed.">		if (c &gt;= 'a' &amp;&amp; c &lt;= 'z')</span>
+<span class="fc" id="L84">			return c - 'a';</span>
+<span class="fc" id="L85">		return -1;</span>
+	}
+
+	public static byte[] xor(byte data[], byte key[]) {
+<span class="fc" id="L89">		final byte[] result = new byte[data.length];</span>
+<span class="fc" id="L90">		int pos = 0;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (int i = 0; i &lt; result.length; i++) {</span>
+<span class="fc" id="L92">			result[i] = (byte) (data[i] ^ key[pos++]);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (pos == key.length)</span>
+<span class="fc" id="L94">				pos = 0;</span>
+		}
+<span class="fc" id="L96">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

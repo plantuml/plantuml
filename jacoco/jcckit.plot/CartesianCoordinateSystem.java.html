@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CartesianCoordinateSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">CartesianCoordinateSystem.java</span></div><h1>CartesianCoordinateSystem.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import jcckit.data.DataPoint;
+import jcckit.graphic.ClippingRectangle;
+import jcckit.graphic.ClippingShape;
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.GraphicalComposite;
+import jcckit.graphic.GraphicalElement;
+import jcckit.graphic.LineAttributes;
+import jcckit.graphic.Polygon;
+import jcckit.graphic.Text;
+import jcckit.transformation.CartesianTransformation;
+import jcckit.transformation.Transformation;
+import jcckit.util.ConfigParameters;
+
+/**
+ *  A Cartesian coordinate system. One or both axes can be logarithmic.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class CartesianCoordinateSystem implements CoordinateSystem {
+  /** Configuration parameter key. */
+  public static final String ORIGIN_KEY = &quot;origin&quot;,
+                             X_AXIS_KEY = &quot;xAxis&quot;,
+                             Y_AXIS_KEY = &quot;yAxis&quot;;
+
+  private final CartesianTransformation _transformation;
+  private final GraphicalComposite _view;
+  private final ClippingRectangle _clippingRectangle;
+
+  /**
+   * Creates an instance from the specified configuration parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;origin = 0.15,&amp;nbsp;0.1&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Position (in device-independent coordinates) of the lower-left 
+   *         corner of the axis box.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;xAxis&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Parameters defining the x-axis. For definitions and default 
+   *         values see {@link AxisParameters#createXAxis
+   *         AxisParameters.createXAxis()}.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;yAxis&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Parameters defining the y-axis. For definitions and default 
+   *         values see {@link AxisParameters#createYAxis
+   *         AxisParameters.createYAxis()}.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+  public CartesianCoordinateSystem(ConfigParameters config) {
+<span class="nc" id="L72">    this(new GraphPoint(config.getDoubleArray(ORIGIN_KEY,</span>
+                                              new double[] {0.15, 0.1})),
+<span class="nc" id="L74">         AxisParameters.createXAxis(config.getNode(X_AXIS_KEY)),</span>
+<span class="nc" id="L75">         AxisParameters.createYAxis(config.getNode(Y_AXIS_KEY)));</span>
+<span class="nc" id="L76">  }</span>
+
+  /**
+   * Creates an instance for the specified origin and parameters
+   * of both axes.
+   * @param origin Position (in device-independent coordinates) of the 
+   *        lower-left corner of the axis box.
+   * @param xAxisParameters Parameters of the x-axis.
+   * @param yAxisParameters Parameters of the y-axis.
+   */
+  public CartesianCoordinateSystem(GraphPoint origin,
+                                   AxisParameters xAxisParameters,
+<span class="nc" id="L88">                                   AxisParameters yAxisParameters) {</span>
+<span class="nc" id="L89">    double x = origin.getX();</span>
+<span class="nc" id="L90">    double y = origin.getY();</span>
+<span class="nc" id="L91">    _transformation = new CartesianTransformation(xAxisParameters.logScale,</span>
+                                                  yAxisParameters.logScale,
+        new DataPoint(xAxisParameters.minimum, yAxisParameters.minimum),
+        new GraphPoint(x, y),
+        new DataPoint(xAxisParameters.maximum, yAxisParameters.maximum),
+        new GraphPoint(x + xAxisParameters.axisLength,
+                       y + yAxisParameters.axisLength));
+<span class="nc" id="L98">    _clippingRectangle = new ClippingRectangle(x, y,</span>
+                                               x + xAxisParameters.axisLength,
+                                               y + yAxisParameters.axisLength);
+<span class="nc" id="L101">    _view = new GraphicalComposite(null);</span>
+<span class="nc" id="L102">    createView(origin, xAxisParameters, yAxisParameters);</span>
+<span class="nc" id="L103">  }</span>
+
+  /** Creates the graphical representation of this coordinate system. */
+  private void createView(GraphPoint origin,
+                          AxisParameters xAxisParameters,
+                          AxisParameters yAxisParameters) {
+<span class="nc" id="L109">    double x0 = origin.getX();</span>
+<span class="nc" id="L110">    double x1 = x0 + xAxisParameters.axisLength;</span>
+<span class="nc" id="L111">    double y0 = origin.getY();</span>
+<span class="nc" id="L112">    double y1 = y0 + yAxisParameters.axisLength;</span>
+<span class="nc" id="L113">    GraphPoint lowerLeftCorner = new GraphPoint(x0, y0);</span>
+<span class="nc" id="L114">    GraphPoint upperLeftCorner = new GraphPoint(x0, y1);</span>
+<span class="nc" id="L115">    GraphPoint lowerRightCorner = new GraphPoint(x1, y0);</span>
+<span class="nc" id="L116">    GraphPoint upperRightCorner = new GraphPoint(x1, y1);</span>
+<span class="nc" id="L117">    LineAttributes xLineAttributes = xAxisParameters.axisAttributes;</span>
+<span class="nc" id="L118">    LineAttributes yLineAttributes = yAxisParameters.axisAttributes;</span>
+<span class="nc" id="L119">    createTicsAndGrid(true, y0, y1, xAxisParameters);</span>
+<span class="nc" id="L120">    createTicsAndGrid(false, x0, x1, yAxisParameters);</span>
+<span class="nc" id="L121">    addLine(lowerLeftCorner, lowerRightCorner, xLineAttributes);</span>
+<span class="nc" id="L122">    addLine(lowerLeftCorner, upperLeftCorner, yLineAttributes);</span>
+<span class="nc" id="L123">    addLine(upperLeftCorner, upperRightCorner, xLineAttributes);</span>
+<span class="nc" id="L124">    addLine(lowerRightCorner, upperRightCorner, yLineAttributes);</span>
+<span class="nc" id="L125">    createLabel(0.5 * (x0 + x1), y0, xAxisParameters);</span>
+<span class="nc" id="L126">    createLabel(x0, 0.5 * (y0 + y1), yAxisParameters);</span>
+<span class="nc" id="L127">  }</span>
+
+  private void createLabel(double x, double y, AxisParameters parameters) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">    if (parameters.axisLabel.length() &gt; 0) {</span>
+<span class="nc" id="L131">      _view.addElement(new Text(</span>
+<span class="nc" id="L132">          new GraphPoint(x + parameters.axisLabelPosition.getX(),</span>
+<span class="nc" id="L133">                         y + parameters.axisLabelPosition.getY()),</span>
+          parameters.axisLabel, parameters.axisLabelAttributes));
+    }
+<span class="nc" id="L136">  }</span>
+
+  private void createTicsAndGrid(boolean isXAxis, double low, double high,
+                                 AxisParameters parameters) {
+<span class="nc" id="L140">    double[] tics = parameters.calculateTics();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">    int offIndex = isXAxis ? 1 : 0;</span>
+<span class="nc" id="L142">    double[] point = new double[2]; // helper array</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">    for (int i = 0; i &lt; tics.length; i++) {</span>
+<span class="nc" id="L144">      point[1 - offIndex] = tics[i];</span>
+<span class="nc" id="L145">      point[offIndex] = 1;</span>
+<span class="nc" id="L146">      GraphPoint gPoint1 = </span>
+<span class="nc" id="L147">          _transformation.transformToGraph(new DataPoint(point[0], point[1]));</span>
+<span class="nc" id="L148">      point[0] = gPoint1.getX();</span>
+<span class="nc" id="L149">      point[1] = gPoint1.getY();</span>
+<span class="nc" id="L150">      point[offIndex] = high;</span>
+<span class="nc" id="L151">      gPoint1 = new GraphPoint(point[0], point[1]);</span>
+<span class="nc" id="L152">      point[offIndex] += parameters.ticLength;</span>
+<span class="nc" id="L153">      addLine(gPoint1, new GraphPoint(point[0], point[1]), </span>
+                                      parameters.ticAttributes);
+<span class="nc" id="L155">      point[offIndex] = low;</span>
+<span class="nc" id="L156">      GraphPoint gPoint2 = new GraphPoint(point[0], point[1]);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">      if (parameters.grid) {</span>
+<span class="nc" id="L158">        addLine(gPoint1, gPoint2, parameters.gridAttributes);</span>
+      }
+<span class="nc" id="L160">      point[offIndex] -= parameters.ticLength;</span>
+<span class="nc" id="L161">      addLine(gPoint2, new GraphPoint(point[0], point[1]), </span>
+                                      parameters.ticAttributes);
+<span class="nc bnc" id="L163" title="All 2 branches missed.">      if (parameters.ticLabelFormat != null) {</span>
+<span class="nc" id="L164">        point[offIndex] += parameters.ticLength;</span>
+<span class="nc" id="L165">        point[0] += parameters.ticLabelPosition.getX();</span>
+<span class="nc" id="L166">        point[1] += parameters.ticLabelPosition.getY();</span>
+<span class="nc" id="L167">        _view.addElement(new Text(new GraphPoint(point[0], point[1]),</span>
+<span class="nc" id="L168">                                  parameters.ticLabelFormat.form(tics[i]), </span>
+                                  parameters.ticLabelAttributes));
+      }
+    }
+<span class="nc" id="L172">  }</span>
+
+  private void addLine(GraphPoint point1, GraphPoint point2,
+                       GraphicAttributes attributes) {
+<span class="nc" id="L176">    Polygon line = new Polygon(attributes, false);</span>
+<span class="nc" id="L177">    line.addPoint(point1);</span>
+<span class="nc" id="L178">    line.addPoint(point2);</span>
+<span class="nc" id="L179">    _view.addElement(line);</span>
+<span class="nc" id="L180">  }</span>
+
+  /** 
+   * Returns the graphical representation of the coordinate system.
+   * In each call the same instance is returned.
+   */ 
+  public GraphicalElement getView() {
+<span class="nc" id="L187">    return _view;</span>
+  }
+
+  /** 
+   * Returns the clipping rectangle of specified by the axis.
+   * In each call the same instance is returned.
+   */ 
+  public ClippingShape getClippingShape() {
+<span class="nc" id="L195">    return _clippingRectangle;</span>
+  }
+
+  /** 
+   * Returns the transformation of data coordinates into the device-independent
+   * coordinates of the axis box.
+   * In each call the same instance is returned.
+   */ 
+  public Transformation getTransformation() {
+<span class="nc" id="L204">    return _transformation;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

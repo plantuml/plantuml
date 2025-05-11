@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandCreateJson.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.objectdiagram.command</a> &gt; <span class="el_source">CommandCreateJson.java</span></div><h1>CommandCreateJson.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.objectdiagram.command;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.CommandControl;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.NameAndCodeParser;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.cucadiagram.BodierJSon;
+import net.sourceforge.plantuml.json.Json.DefaultHandler;
+import net.sourceforge.plantuml.json.JsonParser;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandCreateJson extends CommandMultilines2&lt;AbstractEntityDiagram&gt; {
+
+	public CommandCreateJson() {
+<span class="fc" id="L73">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
+<span class="fc" id="L74">	}</span>
+
+	private static IRegex getRegexConcat() {
+<span class="fc" id="L77">		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;TYPE&quot;, &quot;json&quot;), //
+<span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L80">				NameAndCodeParser.nameAndCode(), //</span>
+<span class="fc" id="L81">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L83">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L84">				ColorParser.exp1(), //</span>
+<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;\\{&quot;), //
+<span class="fc" id="L87">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	public String getPatternEnd() {
+<span class="nc" id="L92">		return &quot;^[%s]*\\}[%s]*$&quot;;</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L98">		lines = lines.trim().removeEmptyLines();</span>
+<span class="nc" id="L99">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L100">		final Entity entity1 = executeArg0(lines.getLocation(), diagram, line0);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L102">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
+
+<span class="nc" id="L104">		final JsonValue json = getJsonValue(lines);</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (json == null)</span>
+<span class="nc" id="L107">			return CommandExecutionResult.error(&quot;Bad data&quot;);</span>
+<span class="nc" id="L108">		((BodierJSon) entity1.getBodier()).setJson(json);</span>
+
+<span class="nc" id="L110">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	protected CommandControl finalVerification(BlocLines lines) {
+<span class="nc" id="L115">		final JsonValue json = getJsonValue(lines);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (json == null)</span>
+<span class="nc" id="L117">			return CommandControl.OK_PARTIAL;</span>
+
+<span class="nc" id="L119">		return super.finalVerification(lines);</span>
+	}
+
+	private JsonValue getJsonValue(BlocLines lines) {
+<span class="nc" id="L123">		final DefaultHandler handler = new DefaultHandler();</span>
+<span class="nc" id="L124">		final JsonParser jsonParser = new JsonParser(handler);</span>
+		try {
+<span class="nc" id="L126">			final String sb = getJsonString(lines);</span>
+<span class="nc" id="L127">			jsonParser.parse(sb);</span>
+<span class="nc" id="L128">			return handler.getValue();</span>
+<span class="nc" id="L129">		} catch (Exception e1) {</span>
+			// Sorry, this is VERY ugly
+			// Let's see if wa could ignore external brackets...
+			try {
+<span class="nc" id="L133">				lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L134">				final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">				for (StringLocated sl : lines)</span>
+<span class="nc" id="L136">					sb.append(sl.getString());</span>
+
+<span class="nc" id="L138">				jsonParser.parse(sb.toString());</span>
+<span class="nc" id="L139">				return handler.getValue();</span>
+<span class="nc" id="L140">			} catch (Exception e2) {</span>
+<span class="nc" id="L141">				return null;</span>
+			}
+		}
+	}
+
+	private String getJsonString(BlocLines lines) {
+<span class="nc" id="L147">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L148">		final StringBuilder sb = new StringBuilder(&quot;{&quot;);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (StringLocated sl : lines)</span>
+<span class="nc" id="L150">			sb.append(sl.getString());</span>
+
+<span class="nc" id="L152">		sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L153">		return sb.toString();</span>
+	}
+
+	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
+<span class="nc" id="L157">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
+
+<span class="nc" id="L159">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L161">			return null;</span>
+<span class="nc" id="L162">		final String displayString = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L163">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+
+<span class="nc" id="L165">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L167">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
+
+<span class="nc" id="L169">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L171">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L172">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L173">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+
+<span class="nc" id="L175">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L176">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L178">		return entity;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

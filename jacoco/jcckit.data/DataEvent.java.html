@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataEvent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.data</a> &gt; <span class="el_source">DataEvent.java</span></div><h1>DataEvent.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.data;
+
+/**
+ *  Event to be sent to a {@link DataListener}.
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class DataEvent {
+  private final DataContainer _container;
+  private final DataEventType _type;
+  private final int _index;
+  private final DataElement _deletedElement;
+
+  /**
+   *  Creates an instance for the specified parameters.
+   *  @param container The container which has been changed.
+   *  @param type Type of change.
+   *  @param index Index of the element which has been added, inserted,
+   *               replaced, or removed.
+   *  @param deletedElement Element which has been replaced or removed.
+   */
+  private DataEvent(DataContainer container, DataEventType type, int index,
+<span class="nc" id="L41">                    DataElement deletedElement) {</span>
+<span class="nc" id="L42">    _container = container;</span>
+<span class="nc" id="L43">    _type = type;</span>
+<span class="nc" id="L44">    _index = index;</span>
+<span class="nc" id="L45">    _deletedElement = deletedElement;</span>
+<span class="nc" id="L46">  }</span>
+
+  /**
+   *  Creates an event of type {@link DataEventType#ELEMENT_ADDED} for the
+   *  specified container.
+   *  @param container Container where an element has been added.
+   *  @return &lt;tt&gt;ELEMENT_ADDED&lt;/tt&gt; event.
+   */
+  public static final DataEvent createAddEvent(DataContainer container) {
+<span class="nc" id="L55">    return new DataEvent(container, DataEventType.ELEMENT_ADDED,</span>
+<span class="nc" id="L56">                         container.getNumberOfElements() - 1, null);</span>
+  }
+
+  /**
+   *  Creates an event of type {@link DataEventType#ELEMENT_INSERTED} for the
+   *  specified container.
+   *  @param container Container where an element has been inserted.
+   *  @param index Index at which an element has been inserted.
+   *  @return &lt;tt&gt;ELEMENT_INSERTED&lt;/tt&gt; event.
+   */
+  public static final DataEvent createInsertEvent(DataContainer container,
+                                                  int index) {
+<span class="nc" id="L68">    return new DataEvent(container, DataEventType.ELEMENT_INSERTED, index, </span>
+                         null);
+  }
+
+  /**
+   *  Creates an event of type {@link DataEventType#ELEMENT_REPLACED} for the
+   *  specified container.
+   *  @param container Container where an element has been replaced.
+   *  @param index Index of the replaced element.
+   *  @param replacedElement The previous element at &lt;tt&gt;index&lt;/tt&gt;.
+   *  @return &lt;tt&gt;ELEMENT_REPLACED&lt;/tt&gt; event.
+   */
+  public static final DataEvent createReplaceEvent(DataContainer container,
+                                      int index, DataElement replacedElement) {
+<span class="nc" id="L82">    return new DataEvent(container, DataEventType.ELEMENT_REPLACED, index, </span>
+                         replacedElement);
+  }
+
+  /**
+   *  Creates an event of type {@link DataEventType#ELEMENT_REMOVED} for the
+   *  specified container.
+   *  @param container Container where an element has been removed.
+   *  @param index Index of the removed element.
+   *  @param removedElement The previous element at &lt;tt&gt;index&lt;/tt&gt;.
+   *  @return &lt;tt&gt;ELEMENT_REMOVED&lt;/tt&gt; event.
+   */
+  public static final DataEvent createRemoveEvent(DataContainer container,
+                                      int index, DataElement removedElement) {
+<span class="nc" id="L96">    return new DataEvent(container, DataEventType.ELEMENT_REMOVED, index, </span>
+                         removedElement);
+  }
+
+  /** Returns the container. */
+  public DataContainer getContainer() {
+<span class="nc" id="L102">    return _container;</span>
+  }
+
+  /** 
+   * Returns the event type. Will be one of the constants 
+   * {@link DataEventType#ELEMENT_ADDED}, 
+   * {@link DataEventType#ELEMENT_INSERTED}, 
+   * {@link DataEventType#ELEMENT_REMOVED}, or 
+   * {@link DataEventType#ELEMENT_REPLACED}.
+   */
+  public DataEventType getType() {
+<span class="nc" id="L113">    return _type;</span>
+  }
+
+  /** Returns the index. */
+  public int getIndex() {
+<span class="nc" id="L118">    return _index;</span>
+  }
+
+  /**
+   *  Returns the deleted element.
+   *  @return &lt;tt&gt;null&lt;/tt&gt; if either an element has been added or inserted.
+   */
+  public DataElement getDeletedElement() {
+<span class="nc" id="L126">    return _deletedElement;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

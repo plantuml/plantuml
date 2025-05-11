@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VariableManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">VariableManager.java</span></div><h1>VariableManager.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.text.TLineType;
+import net.sourceforge.plantuml.tim.expression.TValue;
+
+public class VariableManager {
+
+	private final TMemory memory;
+	private final TContext context;
+	private final StringLocated location;
+
+<span class="fc" id="L51">	public VariableManager(TContext context, TMemory memory, StringLocated location) {</span>
+<span class="fc" id="L52">		this.memory = memory;</span>
+<span class="fc" id="L53">		this.context = context;</span>
+<span class="fc" id="L54">		this.location = location;</span>
+<span class="fc" id="L55">	}</span>
+
+	public int replaceVariables(String str, int i, StringBuilder result) throws EaterException {
+<span class="fc" id="L58">		final String presentVariable = getVarnameAt(str, i);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (result.toString().endsWith(&quot;##&quot;))</span>
+<span class="nc" id="L60">			result.setLength(result.length() - 2);</span>
+
+<span class="fc" id="L62">		final TValue value = memory.getVariable(presentVariable);</span>
+<span class="fc" id="L63">		i += presentVariable.length() - 1;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (value.isJson()) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (value.toJson().isString()) {</span>
+<span class="fc" id="L66">				result.append(value.toJson().asString());</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			} else if (value.toJson().isNumber()) {</span>
+<span class="fc" id="L68">				result.append(value.toJson().toString());</span>
+			} else {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">				JsonValue jsonValue = (value.toJson().isArray()) ? (JsonArray) value.toJson()</span>
+<span class="fc" id="L71">						: (JsonObject) value.toJson();</span>
+<span class="fc" id="L72">				i++;</span>
+<span class="fc" id="L73">				i = replaceJson(jsonValue, str, i, result) - 1;</span>
+<span class="fc" id="L74">			}</span>
+		} else {
+<span class="fc" id="L76">			result.append(value.toString());</span>
+		}
+<span class="pc bpc" id="L78" title="3 of 6 branches missed.">		if (i + 2 &lt; str.length() &amp;&amp; str.charAt(i + 1) == '#' &amp;&amp; str.charAt(i + 2) == '#')</span>
+<span class="nc" id="L79">			i += 2;</span>
+
+<span class="fc" id="L81">		return i;</span>
+	}
+
+	private int replaceJson(JsonValue jsonValue, String str, int i, StringBuilder result) throws EaterException {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		while (i &lt; str.length()) {</span>
+<span class="fc" id="L86">			final char n = str.charAt(i);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">			if (n == '.') {</span>
+<span class="fc" id="L88">				i++;</span>
+<span class="fc" id="L89">				final StringBuilder fieldName = new StringBuilder();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">				while (i &lt; str.length()) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">					if (Character.isJavaIdentifierPart(str.charAt(i)) == false)</span>
+<span class="fc" id="L92">						break;</span>
+
+<span class="fc" id="L94">					fieldName.append(str.charAt(i));</span>
+<span class="fc" id="L95">					i++;</span>
+				}
+<span class="fc" id="L97">				jsonValue = ((JsonObject) jsonValue).get(fieldName.toString());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			} else if (n == '[') {</span>
+<span class="fc" id="L99">				i++;</span>
+<span class="fc" id="L100">				final StringBuilder inBracket = new StringBuilder();</span>
+<span class="fc" id="L101">				int level = 0;</span>
+				while (true) {
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">					if (str.charAt(i) == '[')</span>
+<span class="nc" id="L104">						level++;</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">					if (str.charAt(i) == ']') {</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">						if (level == 0)</span>
+<span class="fc" id="L108">							break;</span>
+<span class="nc" id="L109">						level--;</span>
+					}
+<span class="fc" id="L111">					inBracket.append(str.charAt(i));</span>
+<span class="fc" id="L112">					i++;</span>
+				}
+<span class="fc" id="L114">				final String nbString = context.applyFunctionsAndVariables(memory,</span>
+<span class="fc" id="L115">						new StringLocated(inBracket.toString(), location.getLocation()));</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">				if (jsonValue instanceof JsonArray) {</span>
+<span class="fc" id="L117">					final int nb = Integer.parseInt(nbString);</span>
+<span class="fc" id="L118">					jsonValue = ((JsonArray) jsonValue).get(nb);</span>
+<span class="pc bnc" id="L119" title="All 2 branches missed.">				} else if (jsonValue instanceof JsonObject) {</span>
+<span class="nc" id="L120">					jsonValue = ((JsonObject) jsonValue).get(nbString);</span>
+				} else {
+<span class="nc" id="L122">					throw new EaterException(&quot;Major parsing error&quot;, location);</span>
+				}
+
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">				if (jsonValue == null)</span>
+<span class="nc" id="L126">					throw new EaterException(&quot;Data parsing error&quot;, location);</span>
+
+<span class="fc" id="L128">				i++;</span>
+			} else {
+				break;
+			}
+<span class="fc" id="L132">		}</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (jsonValue != null) {</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			if (jsonValue.isString())</span>
+<span class="fc" id="L135">				result.append(jsonValue.asString());</span>
+			else
+<span class="fc" id="L137">				result.append(jsonValue.toString());</span>
+		}
+<span class="fc" id="L139">		return i;</span>
+	}
+
+	@JawsStrange
+	public String getVarnameAt(String s, int pos) {
+<span class="fc bfc" id="L144" title="All 4 branches covered.">		final boolean justAfterALetter = pos &gt; 0 &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">				&amp;&amp; justAfterBackslashN(s, pos) == false;</span>
+<span class="pc bpc" id="L146" title="1 of 4 branches missed.">		if (justAfterALetter &amp;&amp; s.charAt(pos) != '$')</span>
+<span class="fc" id="L147">			return null;</span>
+
+<span class="fc" id="L149">		final String varname = memory.variablesNames3().getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (varname.length() == 0)</span>
+<span class="fc" id="L151">			return null;</span>
+
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (pos + varname.length() == s.length()</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">				|| TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos + varname.length())) == false)</span>
+<span class="fc" id="L155">			return varname;</span>
+
+<span class="nc" id="L157">		return null;</span>
+	}
+
+	@JawsStrange
+	public static boolean justAfterBackslashN(String s, int pos) {
+<span class="fc bfc" id="L162" title="All 6 branches covered.">		return pos &gt; 1 &amp;&amp; s.charAt(pos - 2) == '\\' &amp;&amp; s.charAt(pos - 1) == 'n';</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

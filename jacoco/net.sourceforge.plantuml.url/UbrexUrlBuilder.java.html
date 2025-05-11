@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UbrexUrlBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.url</a> &gt; <span class="el_source">UbrexUrlBuilder.java</span></div><h1>UbrexUrlBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.url;
+
+import java.util.List;
+
+import com.plantuml.ubrex.TextNavigator;
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+
+// UrlUbrexTest
+public class UbrexUrlBuilder {
+	// ::remove file when __HAXE__
+
+//	public static final IRegex MANDATORY = new RegexLeaf(&quot;URL&quot;, &quot;(&quot; + UbrexUrlBuilder.getRegexp() + &quot;)&quot;);
+//	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);
+
+	private static final String START_PART = &quot;[[ 〇*〴s&quot;;
+	private static final String END_PART = &quot;〇*〴s  ]]&quot;;
+
+	private static final String S_QUOTED = START_PART + //
+			&quot;〃  〶$URL=〇+「〤〃」 〃&quot; + // Quoted part
+			&quot;〇?〘 〇*〴s { 〶$TOOLTIP=〇*「〤{}」 } 〙&quot; + // Optional tooltip
+			&quot;〇?〘 〴s 〶$LABEL=〘「〤〴s{}[]」  〇*「〤[]」〙  〙&quot; + // Optional label
+			END_PART;
+
+	private static final String S_ONLY_TOOLTIP = START_PART + //
+			&quot;{  〶$TOOLTIP=〄&gt;〘 }〇*〴s]]〙&quot;; // Tooltip WARNING!! Not exactly the same
+
+	private static final String S_ONLY_TOOLTIP_AND_LABEL = START_PART + //
+			&quot;{  〶$TOOLTIP=〇+「〤{}」 }&quot; + // Tooltip
+			&quot;〇*〴s&quot; + //
+			&quot;〶$LABEL=〘「〤〴s[]{}」 〇*「〤[]」〙&quot; // Label
+			+ END_PART;
+
+	private static final String S_LINK_TOOLTIP_NOLABEL = START_PART + //
+			&quot;〶$URL=〇+「〤〴s〴g{}[]」&quot; + // Link
+			&quot;〇*〴s&quot; + //
+			&quot;{  〶$TOOLTIP=〄&gt;〘 }〇*〴s]]〙&quot;; // Tooltip
+
+	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //
+			&quot;〶$URL=〇+「〤〴s〴g{}[]」&quot; + // Link
+			&quot;〇?〘  〇*〴s  {  〶$TOOLTIP=〇*「〤{}」  } 〙&quot; + // Optional tooltip
+			&quot;〇?〘  〴s 〶$LABEL=〘「〤〴s{}[]」 〇*「〤[]」〙  〙&quot; + // Optional label
+			END_PART;
+
+	private static final String S_LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //
+			&quot;〶$URL=〇+「〤〴s〴g[]」&quot; + // Link
+			&quot;〇?〘  〴s 〶$LABEL=〘「〤〴s{}[]」 〇*「〤[]」〙  〙&quot; + // Optional label
+			END_PART;
+
+//	public static String getRegexp() {
+//		return S_QUOTED + &quot;|&quot; + //
+//				S_ONLY_TOOLTIP + &quot;|&quot; + //
+//				S_ONLY_TOOLTIP_AND_LABEL + &quot;|&quot; + //
+//				S_LINK_TOOLTIP_NOLABEL + &quot;|&quot; + //
+//				S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL;
+//	}
+//
+<span class="fc" id="L93">	private static final UnicodeBracketedExpression QUOTED = UnicodeBracketedExpression.build(S_QUOTED);</span>
+<span class="fc" id="L94">	private static final UnicodeBracketedExpression ONLY_TOOLTIP = UnicodeBracketedExpression.build(S_ONLY_TOOLTIP);</span>
+<span class="fc" id="L95">	private static final UnicodeBracketedExpression ONLY_TOOLTIP_AND_LABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L96">			.build(S_ONLY_TOOLTIP_AND_LABEL);</span>
+<span class="fc" id="L97">	private static final UnicodeBracketedExpression LINK_TOOLTIP_NOLABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L98">			.build(S_LINK_TOOLTIP_NOLABEL);</span>
+<span class="fc" id="L99">	private static final UnicodeBracketedExpression LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L100">			.build(S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL);</span>
+<span class="fc" id="L101">	private static final UnicodeBracketedExpression LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L102">			.build(S_LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL);</span>
+
+	private final String topurl;
+	private UrlMode mode;
+
+<span class="fc" id="L107">	public UbrexUrlBuilder(String topurl, UrlMode mode) {</span>
+<span class="fc" id="L108">		this.topurl = topurl;</span>
+<span class="fc" id="L109">		this.mode = mode;</span>
+<span class="fc" id="L110">	}</span>
+
+	public Url getUrl(String s) {
+		UMatcher m;
+<span class="fc" id="L114">		m = getMatcher(QUOTED, s);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L116">			return buildUrl(m);</span>
+
+<span class="fc" id="L118">		m = getMatcher(ONLY_TOOLTIP, s);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L120">			return buildUrl(m);</span>
+
+<span class="fc" id="L122">		m = getMatcher(ONLY_TOOLTIP_AND_LABEL, s);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L124">			return buildUrl(m);</span>
+
+<span class="fc" id="L126">		m = getMatcher(LINK_TOOLTIP_NOLABEL, s);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L128">			return buildUrl(m);</span>
+
+<span class="fc" id="L130">		m = getMatcher(LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL, s);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L132">			return buildUrl(m);</span>
+
+<span class="fc" id="L134">		m = getMatcher(LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL, s);</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L136">			return buildUrl(m);</span>
+
+<span class="nc" id="L138">		return null;</span>
+	}
+
+	private UMatcher getMatcher(UnicodeBracketedExpression ubrex, String s) {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
+<span class="fc" id="L143">			return ubrex.match(s);</span>
+<span class="fc" id="L144">		final TextNavigator tn = TextNavigator.build(s);</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (int i = 0; i &lt; tn.length() - 2; i++) {</span>
+<span class="fc" id="L146">			final UMatcher matcher = ubrex.match(tn, i);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			if (matcher.startMatch())</span>
+<span class="fc" id="L148">				return matcher;</span>
+		}
+<span class="fc" id="L150">		return new UMatchNone();</span>
+	}
+
+	private Url buildUrl(UMatcher m) {
+<span class="fc" id="L154">		final String url = getValue(m, &quot;URL&quot;);</span>
+<span class="fc" id="L155">		final String tooltip = getValue(m, &quot;TOOLTIP&quot;);</span>
+<span class="fc" id="L156">		final String label = getValue(m, &quot;LABEL&quot;);</span>
+<span class="fc" id="L157">		return new Url(withTopUrl(url), tooltip, label);</span>
+	}
+
+	private String getValue(UMatcher m, String key) {
+<span class="fc" id="L161">		final List&lt;String&gt; list = m.getCapture(key);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (list.size() == 0)</span>
+<span class="fc" id="L163">			return null;</span>
+<span class="fc" id="L164">		return list.get(0);</span>
+	}
+
+	private boolean matchesOrFind(UMatcher m) {
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
+<span class="fc" id="L169">			return m.exactMatch();</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		else if (mode == UrlMode.ANYWHERE)</span>
+<span class="fc" id="L171">			return m.startMatch();</span>
+		else
+<span class="nc" id="L173">			throw new IllegalStateException();</span>
+
+	}
+
+	private String withTopUrl(String url) {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (url == null)</span>
+<span class="fc" id="L179">			return &quot;&quot;;</span>
+<span class="pc bpc" id="L180" title="3 of 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
+				&amp;&amp; topurl != null)
+<span class="nc" id="L182">			return topurl + url;</span>
+
+<span class="fc" id="L184">		return url;</span>
+	}
+
+<span class="fc" id="L187">	static class UMatchNone implements UMatcher {</span>
+
+		@Override
+		public boolean startMatch() {
+<span class="fc" id="L191">			return false;</span>
+		}
+
+		@Override
+		public boolean exactMatch() {
+<span class="nc" id="L196">			return false;</span>
+		}
+
+		@Override
+		public String getAcceptedMatch() {
+<span class="nc" id="L201">			throw new UnsupportedOperationException();</span>
+		}
+
+		@Override
+		public List&lt;String&gt; getCapture(String path) {
+<span class="nc" id="L206">			throw new UnsupportedOperationException();</span>
+		}
+
+		@Override
+		public List&lt;String&gt; getKeysToBeRefactored() {
+<span class="nc" id="L211">			throw new UnsupportedOperationException();</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

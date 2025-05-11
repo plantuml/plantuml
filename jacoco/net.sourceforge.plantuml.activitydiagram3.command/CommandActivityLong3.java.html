@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandActivityLong3.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.command</a> &gt; <span class="el_source">CommandActivityLong3.java</span></div><h1>CommandActivityLong3.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.command;
+
+import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines3;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.BlocLines;
+
+public class CommandActivityLong3 extends CommandMultilines3&lt;ActivityDiagram3&gt; {
+
+	public CommandActivityLong3() {
+<span class="fc" id="L58">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.NONE);</span>
+<span class="fc" id="L59">	}</span>
+
+	@Override
+	public RegexConcat getPatternEnd2() {
+<span class="fc" id="L63">		return new RegexConcat(//</span>
+				new RegexLeaf(&quot;TEXT&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L65">				new RegexLeaf(&quot;END&quot;, CommandActivity3.endingGroup()), //</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L70">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L74">		return RegexConcat.build(CommandActivityLong3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L75">				color().getRegex(), //</span>
+				new RegexLeaf(&quot;:&quot;), //
+				new RegexLeaf(&quot;DATA&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L78">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
+<span class="fc" id="L83">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L84">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L85">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L87">		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());</span>
+
+<span class="fc" id="L89">		final String end = lineLast.get(&quot;END&quot;, 0);</span>
+
+<span class="fc" id="L91">		Stereotype stereotype = null;</span>
+<span class="fc" id="L92">		String stereo = lineLast.get(&quot;END&quot;, 1);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L94">			stereotype = Stereotype.build(stereo);</span>
+
+<span class="fc" id="L96">		final BoxStyle style = BoxStyle.fromString(end);</span>
+<span class="fc" id="L97">		BoxStyle.checkDeprecatedWarning(diagram, end);</span>
+
+<span class="fc" id="L99">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), end.length());</span>
+<span class="fc" id="L100">		return diagram.addActivity(lines.toDisplay(), style, null, colors, stereotype);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

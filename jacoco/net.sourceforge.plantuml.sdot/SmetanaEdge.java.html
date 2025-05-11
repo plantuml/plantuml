@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SmetanaEdge.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sdot</a> &gt; <span class="el_source">SmetanaEdge.java</span></div><h1>SmetanaEdge.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sdot;
+
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_bezier;
+import h.ST_pointf;
+import h.ST_splines;
+import h.ST_textlabel_t;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkStrategy;
+import net.sourceforge.plantuml.cruise.XAbstractEdge;
+import net.sourceforge.plantuml.cruise.XEdge;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.skin.LineParam;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.Bibliotekon;
+import net.sourceforge.plantuml.svek.Cluster;
+import net.sourceforge.plantuml.svek.extremity.Extremity;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.Direction;
+
+public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
+
+	private final ST_Agedge_s edge;
+	private final YMirror ymirror;
+	private final TextBlock label;
+	private final TextBlock headLabel;
+	private final TextBlock tailLabel;
+
+	public SmetanaEdge(Link link, ST_Agedge_s edge, YMirror ymirror, TextBlock label,
+			TextBlock tailLabel, TextBlock headLabel, Bibliotekon bibliotekon, ISkinParam skinParam) {
+<span class="fc" id="L87">		super(link, skinParam, bibliotekon);</span>
+<span class="fc" id="L88">		this.edge = edge;</span>
+<span class="fc" id="L89">		this.ymirror = ymirror;</span>
+<span class="fc" id="L90">		this.label = label;</span>
+<span class="fc" id="L91">		this.tailLabel = tailLabel;</span>
+<span class="fc" id="L92">		this.headLabel = headLabel;</span>
+<span class="fc" id="L93">	}</span>
+
+	private LinkStrategy getLinkStrategy() {
+<span class="fc" id="L96">		return link.getLinkStrategy();</span>
+	}
+
+	public void drawU(UGraphic ug) {
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (link.isHidden())</span>
+<span class="nc" id="L102">			return;</span>
+
+<span class="fc" id="L104">		final UGroup group = new UGroup();</span>
+<span class="fc" id="L105">		group.put(UGroupType.CLASS, &quot;link&quot;);</span>
+<span class="fc" id="L106">		group.put(UGroupType.ID, &quot;link_&quot; + link.getEntity1().getName() + &quot;_&quot; + link.getEntity2().getName());</span>
+<span class="fc" id="L107">		group.put(UGroupType.DATA_UID, link.getUid());</span>
+<span class="fc" id="L108">		group.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());</span>
+<span class="fc" id="L109">		group.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());</span>
+<span class="fc" id="L110">		group.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());</span>
+<span class="fc" id="L111">		group.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());</span>
+<span class="fc" id="L112">		ug.startGroup(group);</span>
+
+<span class="fc" id="L114">		DotPath dotPath = getDotPathInternal();</span>
+
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (dotPath != null) {</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (ymirror != null)</span>
+<span class="fc" id="L118">				dotPath = ymirror.getMirrored(dotPath);</span>
+
+<span class="fc" id="L120">			RectangleArea rectangleArea1 = null;</span>
+<span class="fc" id="L121">			RectangleArea rectangleArea2 = null;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			if (link.getEntity1().isGroup()) {</span>
+<span class="nc" id="L123">				final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());</span>
+<span class="nc" id="L124">				rectangleArea1 = cluster1.getRectangleArea();</span>
+
+			}
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			if (link.getEntity2().isGroup()) {</span>
+<span class="nc" id="L128">				final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());</span>
+<span class="nc" id="L129">				rectangleArea2 = cluster2.getRectangleArea();</span>
+			}
+
+<span class="fc" id="L132">			dotPath = dotPath.simulateCompound(rectangleArea2, rectangleArea1);</span>
+
+<span class="fc" id="L134">			final Style styleLine = getStyle();</span>
+
+<span class="fc" id="L136">			final Rainbow rainbow = Rainbow.build(styleLine, skinParam.getIHtmlColorSet());</span>
+
+			// Warning: duplicated from SmetanaPath and SvekEdge
+<span class="fc" id="L139">			HColor arrowHeadColor = rainbow.getArrowHeadColor();</span>
+<span class="fc" id="L140">			HColor color = rainbow.getColor();</span>
+
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (this.link.getColors() != null) {</span>
+<span class="fc" id="L143">				final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">				if (newColor != null) {</span>
+<span class="fc" id="L145">					color = newColor;</span>
+<span class="fc" id="L146">					arrowHeadColor = color;</span>
+				}
+<span class="pc bnc" id="L148" title="All 2 branches missed.">			} else if (this.link.getSpecificColor() != null) {</span>
+<span class="nc" id="L149">				color = this.link.getSpecificColor();</span>
+<span class="nc" id="L150">				arrowHeadColor = color;</span>
+			}
+
+<span class="fc" id="L153">			ug = ug.apply(HColors.none().bg()).apply(color);</span>
+<span class="fc" id="L154">			final LinkType linkType = link.getType();</span>
+<span class="fc" id="L155">			final UStroke suggestedStroke = styleLine.getStroke();</span>
+<span class="fc" id="L156">			final UStroke defaultThickness = skinParam.getThickness(LineParam.arrow, null);</span>
+
+			UStroke stroke;
+<span class="pc bpc" id="L159" title="1 of 4 branches missed.">			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
+<span class="fc" id="L160">				stroke = linkType.getStroke3(defaultThickness);</span>
+			else
+<span class="fc" id="L162">				stroke = linkType.getStroke3(suggestedStroke);</span>
+
+<span class="pc bpc" id="L164" title="2 of 4 branches missed.">			if (link.getColors() != null &amp;&amp; link.getColors().getSpecificLineStroke() != null)</span>
+<span class="nc" id="L165">				stroke = link.getColors().getSpecificLineStroke();</span>
+
+<span class="fc" id="L167">			final Url url = link.getUrl();</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L169">				ug.startUrl(url);</span>
+
+<span class="fc" id="L171">			printExtremityAtStart(dotPath, ug.apply(color));</span>
+<span class="fc" id="L172">			printExtremityAtEnd(dotPath, ug.apply(color));</span>
+<span class="fc" id="L173">			ug.apply(stroke).apply(color).draw(dotPath);</span>
+
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L176">				ug.closeUrl();</span>
+
+		}
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;label&quot;) != null)</span>
+<span class="fc" id="L180">			label.drawU(ug.apply(getLabelRectangleTranslate(&quot;label&quot;)));</span>
+
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;head_label&quot;) != null)</span>
+<span class="fc" id="L183">			headLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;head_label&quot;)));</span>
+
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (getLabelRectangleTranslate(&quot;tail_label&quot;) != null)</span>
+<span class="nc" id="L186">			tailLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;tail_label&quot;)));</span>
+
+<span class="fc" id="L188">		ug.closeGroup();</span>
+		// printDebug(ug);
+<span class="fc" id="L190">	}</span>
+
+	private Style getStyle() {
+<span class="fc" id="L193">		final StyleSignature result = StyleSignatureBasic</span>
+<span class="fc" id="L194">				.of(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)</span>
+<span class="fc" id="L195">				.withTOBECHANGED(link.getStereotype());</span>
+<span class="fc" id="L196">		return result.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	public XPoint2D getStartPoint() {
+<span class="fc" id="L200">		final DotPath dotPath = getDotPathInternal();</span>
+<span class="fc" id="L201">		XPoint2D pt = dotPath.getStartPoint();</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (ymirror != null)</span>
+<span class="fc" id="L203">			pt = ymirror.getMirrored(pt);</span>
+
+<span class="fc" id="L205">		return pt;</span>
+	}
+
+	public XPoint2D getEndPoint() {
+<span class="fc" id="L209">		final DotPath dotPath = getDotPathInternal();</span>
+<span class="fc" id="L210">		XPoint2D pt = dotPath.getEndPoint();</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (ymirror != null)</span>
+<span class="fc" id="L212">			pt = ymirror.getMirrored(pt);</span>
+
+<span class="fc" id="L214">		return pt;</span>
+	}
+
+	private void printExtremityAtStart(DotPath dotPath, UGraphic ug) {
+<span class="fc" id="L218">		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()</span>
+<span class="fc" id="L219">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (extremityFactory2 == null)</span>
+<span class="fc" id="L221">			return;</span>
+
+<span class="fc" id="L223">		final XPoint2D p0 = dotPath.getStartPoint();</span>
+<span class="fc" id="L224">		final double startAngle = dotPath.getStartAngle() + Math.PI;</span>
+
+		try {
+<span class="fc" id="L227">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (extremity2 != null) {</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
+<span class="fc" id="L230">					final double decorationLength = extremity2.getDecorationLength();</span>
+<span class="fc" id="L231">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
+				}
+<span class="fc" id="L233">				extremity2.drawU(ug);</span>
+			}
+
+<span class="nc" id="L236">		} catch (UnsupportedOperationException e) {</span>
+<span class="nc" id="L237">			e.printStackTrace();</span>
+<span class="nc" id="L238">			System.err.println(&quot;CANNOT DRAW printExtremityAtStart&quot;);</span>
+<span class="fc" id="L239">		}</span>
+<span class="fc" id="L240">	}</span>
+
+	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug) {
+<span class="fc" id="L243">		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()</span>
+<span class="fc" id="L244">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		if (extremityFactory1 == null)</span>
+<span class="fc" id="L246">			return;</span>
+
+<span class="fc" id="L248">		final XPoint2D p0 = dotPath.getEndPoint();</span>
+<span class="fc" id="L249">		final double endAngle = dotPath.getEndAngle();</span>
+
+		try {
+<span class="fc" id="L252">			final Extremity extremity1 = (Extremity) extremityFactory1.createUDrawable(p0, endAngle, null);</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">			if (extremity1 != null) {</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
+<span class="fc" id="L255">					final double decorationLength = extremity1.getDecorationLength();</span>
+<span class="fc" id="L256">					dotPath.moveEndPoint(new UTranslate(decorationLength, 0).rotate(endAngle - Math.PI));</span>
+				}
+<span class="fc" id="L258">				extremity1.drawU(ug);</span>
+			}
+
+<span class="nc" id="L261">		} catch (UnsupportedOperationException e) {</span>
+<span class="nc" id="L262">			e.printStackTrace();</span>
+<span class="nc" id="L263">			System.err.println(&quot;CANNOT DRAW printExtremityAtEnd&quot;);</span>
+<span class="fc" id="L264">		}</span>
+<span class="fc" id="L265">	}</span>
+
+//	private void printDebug(UGraphic ug) {
+//		ug = ug.apply(HColors.BLUE).apply(HColors.BLUE.bg());
+//		final ST_splines splines = getSplines(edge);
+//		final ST_bezier beziers = splines.list.get__(0);
+//		for (int i = 0; i &lt; beziers.size; i++) {
+//			XPoint2D pt = getPoint(splines, i);
+//			if (ymirror != null)
+//				pt = ymirror.getMirrored(pt);
+//
+//			ug.apply(UTranslate.point(pt).compose(new UTranslate(-1, -1))).draw(UEllipse.build(3, 3));
+//		}
+//		if (getLabelRectangleTranslate(&quot;label&quot;) != null &amp;&amp; getLabelURectangle() != null) {
+//			ug = ug.apply(HColors.BLUE).apply(HColors.none().bg());
+//			ug.apply(getLabelRectangleTranslate(&quot;label&quot;)).draw(getLabelURectangle());
+//		}
+//
+//	}
+
+	private URectangle getLabelURectangle() {
+<span class="nc" id="L286">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data.castTo(ST_Agedgeinfo_t.class);</span>
+<span class="nc" id="L287">		ST_textlabel_t label = (ST_textlabel_t) data.label;</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		if (label == null)</span>
+<span class="nc" id="L289">			return null;</span>
+
+<span class="nc" id="L291">		final BoxInfo boxInfo = BoxInfo.fromTextlabel(label);</span>
+<span class="nc" id="L292">		return URectangle.build(boxInfo.getDimension());</span>
+	}
+
+	private UTranslate getLabelRectangleTranslate(String fieldName) {
+		// final String fieldName = &quot;label&quot;;
+<span class="fc" id="L297">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;</span>
+<span class="fc" id="L298">		ST_textlabel_t label = null;</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (fieldName.equals(&quot;label&quot;))</span>
+<span class="fc" id="L300">			label = data.label;</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		else if (fieldName.equals(&quot;head_label&quot;))</span>
+<span class="fc" id="L302">			label = data.head_label;</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">		else if (fieldName.equals(&quot;tail_label&quot;))</span>
+<span class="fc" id="L304">			label = data.tail_label;</span>
+
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		if (label == null)</span>
+<span class="fc" id="L307">			return null;</span>
+
+<span class="fc" id="L309">		final BoxInfo boxInfo = BoxInfo.fromTextlabel(label);</span>
+
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">		if (ymirror == null)</span>
+<span class="nc" id="L312">			return new UTranslate(boxInfo.getLowerLeft().getX(), boxInfo.getUpperRight().getY());</span>
+
+<span class="fc" id="L314">		return ymirror.getMirrored(UTranslate.point(boxInfo.getLowerLeft()));</span>
+	}
+
+	// private DotPath dotPath;
+
+	private DotPath getDotPathInternal() {
+//		if (dotPath != null)
+//			return dotPath;
+
+<span class="fc" id="L323">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;</span>
+<span class="fc" id="L324">		final ST_splines splines = data.spl;</span>
+
+<span class="fc" id="L326">		DotPath dotPath = new DotPath();</span>
+<span class="fc" id="L327">		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);</span>
+<span class="fc" id="L328">		final XPoint2D pt1 = getPoint(splines, 0);</span>
+<span class="fc" id="L329">		final XPoint2D pt2 = getPoint(splines, 1);</span>
+<span class="fc" id="L330">		final XPoint2D pt3 = getPoint(splines, 2);</span>
+<span class="fc" id="L331">		final XPoint2D pt4 = getPoint(splines, 3);</span>
+<span class="fc" id="L332">		dotPath = dotPath.addCurve(pt1, pt2, pt3, pt4);</span>
+<span class="fc" id="L333">		final int n = beziers.size;</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">		for (int i = 4; i &lt; n; i += 3) {</span>
+<span class="fc" id="L335">			final XPoint2D ppt2 = getPoint(splines, i);</span>
+<span class="fc" id="L336">			final XPoint2D ppt3 = getPoint(splines, i + 1);</span>
+<span class="fc" id="L337">			final XPoint2D ppt4 = getPoint(splines, i + 2);</span>
+<span class="fc" id="L338">			dotPath = dotPath.addCurve(ppt2, ppt3, ppt4);</span>
+		}
+
+<span class="fc" id="L341">		return dotPath;</span>
+	}
+
+	private XPoint2D getPoint(ST_splines splines, int i) {
+<span class="fc" id="L345">		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);</span>
+<span class="fc" id="L346">		final ST_pointf pt = beziers.list.get__(i);</span>
+<span class="fc" id="L347">		return new XPoint2D(pt.x, pt.y);</span>
+	}
+
+	@Override
+	public void moveDelta(double deltaX, double deltaY) {
+<span class="nc" id="L352">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+		
+	}
+
+	@Override
+	public boolean isHidden() {
+<span class="nc" id="L358">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+	}
+
+	@Override
+	public Direction getArrowDirection() {
+<span class="nc" id="L363">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+	}
+
+	@Override
+	public double getArrowDirectionInRadian() {
+<span class="nc" id="L368">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

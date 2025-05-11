@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractEntityDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.classdiagram</a> &gt; <span class="el_source">AbstractEntityDiagram.java</span></div><h1>AbstractEntityDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.classdiagram;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+public abstract class AbstractEntityDiagram extends CucaDiagram {
+	// ::remove folder when __HAXE__
+
+	public AbstractEntityDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L57">		super(source, type, previous, preprocessing);</span>
+<span class="fc" id="L58">	}</span>
+
+	final protected List&lt;String&gt; getDotStrings() {
+<span class="fc" id="L61">		final List&lt;String&gt; def = Arrays.asList(&quot;nodesep=.35;&quot;, &quot;ranksep=0.8;&quot;, &quot;edge [fontsize=11,labelfontsize=11];&quot;,</span>
+				&quot;node [fontsize=11,height=.35,width=.55];&quot;);
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (getPragma().isDefine(PragmaKey.GRAPH_ATTRIBUTES) == false)</span>
+<span class="fc" id="L64">			return def;</span>
+
+<span class="nc" id="L66">		final String attribute = getPragma().getValue(PragmaKey.GRAPH_ATTRIBUTES);</span>
+<span class="nc" id="L67">		final List&lt;String&gt; result = new ArrayList&lt;&gt;(def);</span>
+<span class="nc" id="L68">		result.add(attribute);</span>
+<span class="nc" id="L69">		return Collections.unmodifiableList(result);</span>
+	}
+
+	final public DiagramDescription getDescription() {
+<span class="fc" id="L73">		final StringBuilder result = new StringBuilder(&quot;(&quot; + this.leafs().size() + &quot; entities&quot;);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (getSource() != null) {</span>
+<span class="fc" id="L75">			final String id = getSource().getId();</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			if (id != null) {</span>
+<span class="nc" id="L77">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L78">				result.append(id);</span>
+			}
+		}
+<span class="fc" id="L81">		result.append(&quot;)&quot;);</span>
+<span class="fc" id="L82">		return new DiagramDescription(result.toString());</span>
+	}
+
+	protected final void packSomePackage() {
+<span class="nc" id="L86">		String separator = getNamespaceSeparator();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (separator == null)</span>
+<span class="nc" id="L88">			separator = &quot;.&quot;;</span>
+
+		while (true) {
+<span class="nc" id="L91">			boolean changed = false;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			for (Entity group : this.groups())</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">				if (group.canBePacked()) {</span>
+<span class="nc" id="L94">					final Entity child = group.groups().iterator().next();</span>
+<span class="nc" id="L95">					final String appended = group.getDisplay().get(0) + separator;</span>
+<span class="nc" id="L96">					final Display newDisplay = child.getDisplay().appendFirstLine(appended);</span>
+<span class="nc" id="L97">					child.setDisplay(newDisplay);</span>
+<span class="nc" id="L98">					group.setPacked(true);</span>
+<span class="nc" id="L99">					changed = true;</span>
+				}
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (changed == false)</span>
+<span class="nc" id="L103">				return;</span>
+<span class="nc" id="L104">		}</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

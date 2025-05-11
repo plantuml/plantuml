@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LeafType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.abel</a> &gt; <span class="el_source">LeafType.java</span></div><h1>LeafType.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ * Contribution :  Serge Wenger
+ * Contribution :  The-Lum
+ *
+ */
+package net.sourceforge.plantuml.abel;
+
+import net.sourceforge.plantuml.StringUtils;
+
+<span class="fc" id="L42">public enum LeafType {</span>
+
+<span class="fc" id="L44">	EMPTY_PACKAGE,</span>
+
+<span class="fc" id="L46">	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, PROTOCOL, STRUCT, EXCEPTION, METACLASS, STEREOTYPE, LOLLIPOP_FULL,</span>
+<span class="fc" id="L47">	LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, JSON, ASSOCIATION, ENUM, CIRCLE,</span>
+
+<span class="fc" id="L49">	USECASE, USECASE_BUSINESS,</span>
+
+<span class="fc" id="L51">	DESCRIPTION,</span>
+
+<span class="fc" id="L53">	ARC_CIRCLE,</span>
+
+<span class="fc" id="L55">	ACTIVITY, BRANCH, SYNCHRO_BAR, CIRCLE_START, CIRCLE_END, POINT_FOR_ASSOCIATION, ACTIVITY_CONCURRENT,</span>
+
+<span class="fc" id="L57">	STATE, STATE_CONCURRENT, PSEUDO_STATE, DEEP_HISTORY, STATE_CHOICE, STATE_FORK_JOIN,</span>
+
+<span class="fc" id="L59">	BLOCK, ENTITY,</span>
+
+<span class="fc" id="L61">	DOMAIN, REQUIREMENT,</span>
+
+<span class="fc" id="L63">	PORTIN, PORTOUT,</span>
+
+<span class="fc" id="L65">	CHEN_ENTITY, CHEN_RELATIONSHIP, CHEN_ATTRIBUTE, CHEN_CIRCLE,</span>
+
+<span class="fc" id="L67">	STILL_UNKNOWN;</span>
+
+	public static LeafType getLeafType(String type) {
+<span class="fc" id="L70">		type = StringUtils.goUpperCase(type);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (type.startsWith(&quot;ABSTRACT&quot;))</span>
+<span class="fc" id="L72">			return LeafType.ABSTRACT_CLASS;</span>
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (type.startsWith(&quot;DIAMOND&quot;))</span>
+<span class="nc" id="L75">			return LeafType.STATE_CHOICE;</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (type.startsWith(&quot;STATIC&quot;))</span>
+<span class="fc" id="L78">			return LeafType.CLASS;</span>
+
+<span class="fc" id="L80">		return LeafType.valueOf(type);</span>
+	}
+
+	public boolean isLikeClass() {
+<span class="pc bpc" id="L84" title="8 of 22 branches missed.">		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS</span>
+				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY
+				|| this == LeafType.PROTOCOL || this == LeafType.STRUCT || this == LeafType.EXCEPTION
+				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE;
+	}
+
+	public String toHtml() {
+<span class="nc" id="L91">		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));</span>
+<span class="nc" id="L92">		return StringUtils.capitalize(html);</span>
+	}
+
+//	public boolean manageModifier() {
+//		if (this == ANNOTATION || this == ABSTRACT_CLASS || this == CLASS || this == INTERFACE || this == ENUM
+//				|| this == OBJECT || this == ENTITY) {
+//			return true;
+//		}
+//		return false;
+//	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicTikz.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.tikz</a> &gt; <span class="el_source">UGraphicTikz.java</span></div><h1>UGraphicTikz.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.tikz;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.legacy.AtomText;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.tikz.TikzGraphics;
+import net.sourceforge.plantuml.url.Url;
+
+public class UGraphicTikz extends AbstractUGraphic&lt;TikzGraphics&gt; implements ClipContainer {
+
+	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale,
+			boolean withPreamble, Pragma pragma) {
+<span class="nc" id="L65">		super(stringBounder);</span>
+<span class="nc" id="L66">		copy(defaultBackground, colorMapper, new TikzGraphics(scale, withPreamble, colorMapper, pragma));</span>
+<span class="nc" id="L67">		register();</span>
+<span class="nc" id="L68">	}</span>
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+<span class="nc" id="L72">		final UGraphicTikz result = new UGraphicTikz(this);</span>
+<span class="nc" id="L73">		return result;</span>
+	}
+
+	private UGraphicTikz(UGraphicTikz other) {
+<span class="nc" id="L77">		super(other.getStringBounder());</span>
+<span class="nc" id="L78">		copy(other);</span>
+<span class="nc" id="L79">		register();</span>
+<span class="nc" id="L80">	}</span>
+
+	private void register() {
+<span class="nc" id="L83">		registerDriver(URectangle.class, new DriverRectangleTikz());</span>
+<span class="nc" id="L84">		registerDriver(UText.class, new DriverTextTikz());</span>
+<span class="nc" id="L85">		registerDriver(AtomText.class, new DriverAtomTextTikz());</span>
+<span class="nc" id="L86">		registerDriver(ULine.class, new DriverLineTikz());</span>
+<span class="nc" id="L87">		registerDriver(UPolygon.class, new DriverPolygonTikz());</span>
+<span class="nc" id="L88">		registerDriver(UEllipse.class, new DriverEllipseTikz());</span>
+<span class="nc" id="L89">		registerDriver(UImage.class, new DriverImageTikz());</span>
+<span class="nc" id="L90">		ignoreShape(UImageSvg.class);</span>
+<span class="nc" id="L91">		registerDriver(UPath.class, new DriverPathTikz());</span>
+<span class="nc" id="L92">		registerDriver(DotPath.class, new DriverDotPathTikz());</span>
+		// registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
+<span class="nc" id="L94">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());</span>
+<span class="nc" id="L95">	}</span>
+
+	@Override
+	public void startUrl(Url url) {
+<span class="nc" id="L99">		getGraphicObject().openLink(url.getUrl(), url.getTooltip());</span>
+<span class="nc" id="L100">	}</span>
+
+	@Override
+	public void closeUrl() {
+<span class="nc" id="L104">		getGraphicObject().closeLink();</span>
+<span class="nc" id="L105">	}</span>
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+<span class="nc" id="L109">		getGraphicObject().createData(os);</span>
+<span class="nc" id="L110">	}</span>
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (&quot;SPECIALTXT&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="nc" id="L115">			return true;</span>
+
+<span class="nc" id="L117">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegexExpression.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.regexdiagram</a> &gt; <span class="el_source">RegexExpression.java</span></div><h1>RegexExpression.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.regexdiagram;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.utils.CharInspector;
+
+<span class="nc" id="L43">public class RegexExpression {</span>
+	// ::remove folder when __HAXE__
+
+	public static List&lt;ReToken&gt; parse(CharInspector it) throws RegexParsingException {
+<span class="nc" id="L47">		final List&lt;ReToken&gt; result = new ArrayList&lt;&gt;();</span>
+		while (true) {
+<span class="nc" id="L49">			final char current = it.peek(0);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">			if (current == '\0')</span>
+<span class="nc" id="L51">				break;</span>
+			// System.err.println(&quot;current=&quot; + current);
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			if (isStartAnchor(it)) {</span>
+<span class="nc" id="L54">				final String s = readAnchor(it);</span>
+<span class="nc" id="L55">				result.add(new ReToken(ReTokenType.ANCHOR, s));</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			} else if (isEscapedChar(it)) {</span>
+<span class="nc" id="L57">				result.add(new ReToken(ReTokenType.ESCAPED_CHAR, &quot;&quot; + it.peek(1)));</span>
+<span class="nc" id="L58">				it.jump();</span>
+<span class="nc" id="L59">				it.jump();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			} else if (current == '|') {</span>
+<span class="nc" id="L61">				result.add(new ReToken(ReTokenType.ALTERNATIVE, &quot;|&quot;));</span>
+<span class="nc" id="L62">				it.jump();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			} else if (isStartPosixGroup(it)) {</span>
+<span class="nc" id="L64">				final String s = readGroupPosix(it);</span>
+<span class="nc" id="L65">				result.add(new ReToken(ReTokenType.CLASS, s));</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">			} else if (current == '[') {</span>
+<span class="nc" id="L67">				final String s = readGroup(it);</span>
+<span class="nc" id="L68">				result.add(new ReToken(ReTokenType.GROUP, s));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			} else if (isStartComment(it)) {</span>
+<span class="nc" id="L70">				skipComment(it);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			} else if (isStartLookAhead(it)) {</span>
+<span class="nc" id="L72">				final ReToken token = readLookAhead(it);</span>
+<span class="nc" id="L73">				result.add(token);</span>
+<span class="nc" id="L74">				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, &quot;(&quot;));</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			} else if (isStartLookBehind(it)) {</span>
+<span class="nc" id="L76">				final ReToken token = readLookBehind(it);</span>
+<span class="nc" id="L77">				result.add(token);</span>
+<span class="nc" id="L78">				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, &quot;(&quot;));</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			} else if (isStartNamedCapturingGroup(it)) {</span>
+<span class="nc" id="L80">				final ReToken token = readNamedGroup(it);</span>
+<span class="nc" id="L81">				result.add(token);</span>
+<span class="nc" id="L82">				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, &quot;(&quot;));</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			} else if (isStartOpenParenthesis(it)) {</span>
+<span class="nc" id="L84">				final ReToken token = readOpenParenthesis(it);</span>
+<span class="nc" id="L85">				result.add(token);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			} else if (current == ')') {</span>
+<span class="nc" id="L87">				result.add(new ReToken(ReTokenType.PARENTHESIS_CLOSE, &quot;)&quot;));</span>
+<span class="nc" id="L88">				it.jump();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			} else if (isStartQuantifier(it)) {</span>
+<span class="nc" id="L90">				final String s = readQuantifier(it);</span>
+<span class="nc" id="L91">				result.add(new ReToken(ReTokenType.QUANTIFIER, s));</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			} else if (isStartOctalEscape(it)) {</span>
+<span class="nc" id="L93">				final String s = readUnicodeOrOctalEscape(it, 4);</span>
+<span class="nc" id="L94">				result.add(new ReToken(ReTokenType.CLASS, s));</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			} else if (isStartUnicodeEscape(it)) {</span>
+<span class="nc" id="L96">				final String s = readUnicodeOrOctalEscape(it, 5);</span>
+<span class="nc" id="L97">				result.add(new ReToken(ReTokenType.CLASS, s));</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			} else if (isStartUnicodeClass(it)) {</span>
+<span class="nc" id="L99">				final String s = readUnicodeClass(it);</span>
+<span class="nc" id="L100">				result.add(new ReToken(ReTokenType.CLASS, s));</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			} else if (isStartClass(it)) {</span>
+<span class="nc" id="L102">				final String s = readClass(it);</span>
+<span class="nc" id="L103">				result.add(new ReToken(ReTokenType.CLASS, s));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			} else if (isSimpleLetter(current)) {</span>
+<span class="nc" id="L105">				result.add(new ReToken(ReTokenType.SIMPLE_CHAR, &quot;&quot; + current));</span>
+<span class="nc" id="L106">				it.jump();</span>
+			} else {
+<span class="nc" id="L108">				throw new IllegalStateException();</span>
+			}
+<span class="nc" id="L110">		}</span>
+		// System.err.println(&quot;result=&quot; + result);
+<span class="nc" id="L112">		return result;</span>
+
+	}
+
+	private static boolean isStartLookAhead(CharInspector it) {
+<span class="nc" id="L117">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L118" title="All 8 branches missed.">		if (current0 == '(' &amp;&amp; it.peek(1) == '?' &amp;&amp; (it.peek(2) == '=' || it.peek(2) == '!'))</span>
+<span class="nc" id="L119">			return true;</span>
+<span class="nc" id="L120">		return false;</span>
+	}
+
+	private static boolean isStartLookBehind(CharInspector it) {
+<span class="nc" id="L124">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L125" title="All 10 branches missed.">		if (current0 == '(' &amp;&amp; it.peek(1) == '?' &amp;&amp; it.peek(2) == '&lt;' &amp;&amp; (it.peek(3) == '=' || it.peek(3) == '!'))</span>
+<span class="nc" id="L126">			return true;</span>
+<span class="nc" id="L127">		return false;</span>
+	}
+
+	private static boolean isStartOpenParenthesis(CharInspector it) {
+<span class="nc" id="L131">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (current0 == '(')</span>
+<span class="nc" id="L133">			return true;</span>
+<span class="nc" id="L134">		return false;</span>
+	}
+
+	private static boolean isStartPosixGroup(CharInspector it) {
+<span class="nc" id="L138">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L139" title="All 6 branches missed.">		if (current0 == '[' &amp;&amp; it.peek(1) == '[' &amp;&amp; it.peek(2) == ':')</span>
+<span class="nc" id="L140">			return true;</span>
+<span class="nc" id="L141">		return false;</span>
+	}
+
+	private static boolean isStartNamedCapturingGroup(CharInspector it) {
+<span class="nc" id="L145">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L146" title="All 6 branches missed.">		if (current0 == '(' &amp;&amp; it.peek(1) == '?' &amp;&amp; it.peek(2) == '&lt;') {</span>
+<span class="nc" id="L147">			int i = 3;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			while (it.peek(i) != 0) {</span>
+<span class="nc bnc" id="L149" title="All 4 branches missed.">				if (it.peek(i) == '&gt;' &amp;&amp; i == 3)</span>
+<span class="nc" id="L150">					return false;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">				if (it.peek(i) == '&gt;')</span>
+<span class="nc" id="L152">					return true;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">				if (Character.isLetter(it.peek(i)) == false)</span>
+<span class="nc" id="L154">					return false;</span>
+<span class="nc" id="L155">				i++;</span>
+			}
+
+		}
+<span class="nc" id="L159">		return false;</span>
+	}
+
+	private static boolean isStartComment(CharInspector it) {
+<span class="nc" id="L163">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L164" title="All 6 branches missed.">		if (current0 == '(' &amp;&amp; it.peek(1) == '?' &amp;&amp; it.peek(2) == '#')</span>
+<span class="nc" id="L165">			return true;</span>
+<span class="nc" id="L166">		return false;</span>
+	}
+
+	private static void skipComment(CharInspector it) throws RegexParsingException {
+<span class="nc" id="L170">		it.jump();</span>
+<span class="nc" id="L171">		it.jump();</span>
+<span class="nc" id="L172">		it.jump();</span>
+<span class="nc" id="L173">		final StringBuilder comment = new StringBuilder();</span>
+		while (true) {
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (it.peek(0) == 0)</span>
+<span class="nc" id="L176">				throw new RegexParsingException(&quot;Unclosed comment&quot;);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (it.peek(0) == ')') {</span>
+<span class="nc" id="L178">				it.jump();</span>
+<span class="nc" id="L179">				return;</span>
+			}
+<span class="nc" id="L181">			comment.append(it.peek(0));</span>
+<span class="nc" id="L182">			it.jump();</span>
+		}
+	}
+
+	private static ReToken readLookAhead(CharInspector it) throws RegexParsingException {
+<span class="nc" id="L187">		it.jump();</span>
+<span class="nc" id="L188">		it.jump();</span>
+<span class="nc" id="L189">		final char ch = it.peek(0);</span>
+<span class="nc" id="L190">		it.jump();</span>
+<span class="nc" id="L191">		return new ReToken(ReTokenType.LOOK_AHEAD, &quot;?&quot; + ch);</span>
+	}
+
+	private static ReToken readLookBehind(CharInspector it) throws RegexParsingException {
+<span class="nc" id="L195">		it.jump();</span>
+<span class="nc" id="L196">		it.jump();</span>
+<span class="nc" id="L197">		it.jump();</span>
+<span class="nc" id="L198">		final char ch = it.peek(0);</span>
+<span class="nc" id="L199">		it.jump();</span>
+<span class="nc" id="L200">		return new ReToken(ReTokenType.LOOK_BEHIND, &quot;?&lt;&quot; + ch);</span>
+	}
+
+	private static ReToken readNamedGroup(CharInspector it) throws RegexParsingException {
+<span class="nc" id="L204">		it.jump();</span>
+<span class="nc" id="L205">		it.jump();</span>
+<span class="nc" id="L206">		it.jump();</span>
+<span class="nc" id="L207">		final StringBuilder namedGroup = new StringBuilder();</span>
+		while (true) {
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			if (it.peek(0) == 0)</span>
+<span class="nc" id="L210">				throw new RegexParsingException(&quot;Unclosed named capturing group&quot;);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (it.peek(0) == '&gt;') {</span>
+<span class="nc" id="L212">				it.jump();</span>
+<span class="nc" id="L213">				return new ReToken(ReTokenType.NAMED_GROUP, namedGroup.toString());</span>
+			}
+<span class="nc" id="L215">			namedGroup.append(it.peek(0));</span>
+<span class="nc" id="L216">			it.jump();</span>
+		}
+	}
+
+	private static ReToken readOpenParenthesis(CharInspector it) {
+<span class="nc" id="L221">		final char current0 = it.peek(0);</span>
+<span class="nc" id="L222">		it.jump();</span>
+<span class="nc" id="L223">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L224">		result.append(current0);</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">		if (it.peek(0) == '?' &amp;&amp; it.peek(1) == ':') {</span>
+<span class="nc" id="L226">			it.jump();</span>
+<span class="nc" id="L227">			it.jump();</span>
+<span class="nc" id="L228">			result.append(&quot;?:&quot;);</span>
+		}
+<span class="nc bnc" id="L230" title="All 4 branches missed.">		if (it.peek(0) == '?' &amp;&amp; it.peek(1) == '!') {</span>
+<span class="nc" id="L231">			it.jump();</span>
+<span class="nc" id="L232">			it.jump();</span>
+<span class="nc" id="L233">			result.append(&quot;?!&quot;);</span>
+		}
+<span class="nc" id="L235">		return new ReToken(ReTokenType.PARENTHESIS_OPEN, result.toString());</span>
+	}
+
+	private static boolean isStartQuantifier(CharInspector it) {
+<span class="nc" id="L239">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L240" title="All 8 branches missed.">		if (current0 == '*' || current0 == '+' || current0 == '?' || current0 == '{')</span>
+<span class="nc" id="L241">			return true;</span>
+<span class="nc" id="L242">		return false;</span>
+	}
+
+	private static String readQuantifier(CharInspector it) throws RegexParsingException {
+<span class="nc" id="L246">		final char current0 = it.peek(0);</span>
+<span class="nc" id="L247">		it.jump();</span>
+<span class="nc" id="L248">		final StringBuilder tmp = new StringBuilder();</span>
+<span class="nc" id="L249">		tmp.append(current0);</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (current0 == '{')</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">			while (it.peek(0) != 0) {</span>
+<span class="nc" id="L252">				final char ch = it.peek(0);</span>
+<span class="nc" id="L253">				tmp.append(ch);</span>
+<span class="nc" id="L254">				it.jump();</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">				if (ch == '}')</span>
+<span class="nc" id="L256">					break;</span>
+<span class="nc" id="L257">			}</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (it.peek(0) == '?') {</span>
+<span class="nc" id="L259">			tmp.append('?');</span>
+<span class="nc" id="L260">			it.jump();</span>
+		}
+		// System.err.println(&quot;RESULT=&quot; + tmp);
+<span class="nc" id="L263">		final String result = tmp.toString();</span>
+<span class="nc bnc" id="L264" title="All 4 branches missed.">		if (result.startsWith(&quot;{&quot;) &amp;&amp; result.matches(&quot;^\\{[0-9,]+\\}$&quot;) == false)</span>
+<span class="nc" id="L265">			throw new RegexParsingException(&quot;Bad quantifier &quot; + result);</span>
+<span class="nc" id="L266">		return result;</span>
+	}
+
+	private static boolean isEscapedChar(CharInspector it) {
+<span class="nc" id="L270">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (current0 == '\\') {</span>
+<span class="nc" id="L272">			final char current1 = it.peek(1);</span>
+<span class="nc bnc" id="L273" title="All 30 branches missed.">			if (current1 == '.' || current1 == '*' || current1 == '\\' || current1 == '?' || current1 == '^'</span>
+					|| current1 == '$' || current1 == '|' || current1 == '(' || current1 == ')' || current1 == '['
+					|| current1 == ']' || current1 == '{' || current1 == '}' || current1 == '&lt;' || current1 == '&gt;')
+<span class="nc" id="L276">				return true;</span>
+		}
+<span class="nc" id="L278">		return false;</span>
+	}
+
+	private static String readGroupPosix(CharInspector it) {
+<span class="nc" id="L282">		it.jump();</span>
+<span class="nc" id="L283">		it.jump();</span>
+<span class="nc" id="L284">		it.jump();</span>
+<span class="nc" id="L285">		final StringBuilder result = new StringBuilder(&quot;:&quot;);</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		while (it.peek(0) != 0) {</span>
+<span class="nc" id="L287">			char ch = it.peek(0);</span>
+<span class="nc" id="L288">			it.jump();</span>
+<span class="nc" id="L289">			result.append(ch);</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">			if (ch == ':')</span>
+<span class="nc" id="L291">				break;</span>
+<span class="nc" id="L292">		}</span>
+<span class="nc" id="L293">		it.jump();</span>
+<span class="nc" id="L294">		it.jump();</span>
+<span class="nc" id="L295">		return result.toString();</span>
+	}
+
+	private static String readGroup(CharInspector it) {
+<span class="nc" id="L299">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">		if (current0 != '[')</span>
+<span class="nc" id="L301">			throw new IllegalStateException();</span>
+<span class="nc" id="L302">		it.jump();</span>
+<span class="nc" id="L303">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		while (it.peek(0) != 0) {</span>
+<span class="nc" id="L305">			char ch = it.peek(0);</span>
+<span class="nc" id="L306">			it.jump();</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">			if (ch == ']')</span>
+<span class="nc" id="L308">				break;</span>
+<span class="nc" id="L309">			result.append(ch);</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">			if (ch == '\\') {</span>
+<span class="nc" id="L311">				ch = it.peek(0);</span>
+<span class="nc" id="L312">				it.jump();</span>
+<span class="nc" id="L313">				result.append(ch);</span>
+			}
+
+<span class="nc" id="L316">		}</span>
+<span class="nc" id="L317">		return result.toString();</span>
+	}
+
+	private static String readUnicodeClass(CharInspector it) throws RegexParsingException {
+<span class="nc" id="L321">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (current0 != '\\')</span>
+<span class="nc" id="L323">			throw new IllegalStateException();</span>
+<span class="nc" id="L324">		it.jump();</span>
+<span class="nc" id="L325">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L326">		result.append(current0);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		while (it.peek(0) != 0) {</span>
+<span class="nc" id="L328">			final char ch = it.peek(0);</span>
+<span class="nc" id="L329">			it.jump();</span>
+<span class="nc" id="L330">			result.append(ch);</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">			if (ch == '}')</span>
+<span class="nc" id="L332">				return result.toString();</span>
+<span class="nc" id="L333">		}</span>
+<span class="nc" id="L334">		throw new RegexParsingException(&quot;Unexpected end of data&quot;);</span>
+	}
+
+	private static String readUnicodeOrOctalEscape(CharInspector it, int nb) throws RegexParsingException {
+<span class="nc" id="L338">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		if (current0 != '\\')</span>
+<span class="nc" id="L340">			throw new IllegalStateException();</span>
+<span class="nc" id="L341">		it.jump();</span>
+<span class="nc" id="L342">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L343">		result.append(current0);</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L345">			final char ch = it.peek(0);</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">			if (ch == 0)</span>
+<span class="nc" id="L347">				throw new RegexParsingException(&quot;Unexpected end of data&quot;);</span>
+<span class="nc" id="L348">			result.append(ch);</span>
+<span class="nc" id="L349">			it.jump();</span>
+		}
+<span class="nc" id="L351">		return result.toString();</span>
+	}
+
+	private static String readClass(CharInspector it) {
+<span class="nc" id="L355">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (current0 == '.') {</span>
+<span class="nc" id="L357">			it.jump();</span>
+<span class="nc" id="L358">			return &quot;&quot; + current0;</span>
+		}
+<span class="nc bnc" id="L360" title="All 2 branches missed.">		if (current0 == '\\') {</span>
+<span class="nc" id="L361">			it.jump();</span>
+<span class="nc" id="L362">			final String result = &quot;&quot; + current0 + it.peek(0);</span>
+<span class="nc" id="L363">			it.jump();</span>
+<span class="nc" id="L364">			return result;</span>
+		}
+<span class="nc" id="L366">		throw new IllegalStateException();</span>
+	}
+
+	private static boolean isStartClass(CharInspector it) {
+<span class="nc" id="L370">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">		if (current0 == '.')</span>
+<span class="nc" id="L372">			return true;</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">		if (current0 == '\\')</span>
+<span class="nc" id="L374">			return true;</span>
+<span class="nc" id="L375">		return false;</span>
+	}
+
+	private static boolean isStartUnicodeClass(CharInspector it) {
+<span class="nc bnc" id="L379" title="All 6 branches missed.">		if (it.peek(0) == '\\' &amp;&amp; it.peek(1) == 'p' &amp;&amp; it.peek(2) == '{')</span>
+<span class="nc" id="L380">			return true;</span>
+<span class="nc bnc" id="L381" title="All 6 branches missed.">		if (it.peek(0) == '\\' &amp;&amp; it.peek(1) == 'x' &amp;&amp; it.peek(2) == '{')</span>
+<span class="nc" id="L382">			return true;</span>
+<span class="nc" id="L383">		return false;</span>
+	}
+
+	private static boolean isStartUnicodeEscape(CharInspector it) {
+<span class="nc bnc" id="L387" title="All 4 branches missed.">		if (it.peek(0) == '\\' &amp;&amp; it.peek(1) == 'u')</span>
+<span class="nc" id="L388">			return true;</span>
+<span class="nc" id="L389">		return false;</span>
+	}
+
+	private static boolean isStartOctalEscape(CharInspector it) {
+<span class="nc bnc" id="L393" title="All 4 branches missed.">		if (it.peek(0) == '\\' &amp;&amp; it.peek(1) == '0')</span>
+<span class="nc" id="L394">			return true;</span>
+<span class="nc" id="L395">		return false;</span>
+	}
+
+	private static boolean isSimpleLetter(char ch) {
+<span class="nc bnc" id="L399" title="All 4 branches missed.">		if (ch == '\\' || ch == '.')</span>
+<span class="nc" id="L400">			return false;</span>
+<span class="nc" id="L401">		return true;</span>
+	}
+
+	private static boolean isStartAnchor(CharInspector it) {
+<span class="nc" id="L405">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L406" title="All 4 branches missed.">		if (current0 == '^' || current0 == '$')</span>
+<span class="nc" id="L407">			return true;</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">		if (current0 == '\\') {</span>
+<span class="nc" id="L409">			final char current1 = it.peek(1);</span>
+<span class="nc bnc" id="L410" title="All 12 branches missed.">			if (current1 == 'A' || current1 == 'Z' || current1 == 'z' || current1 == 'G' || current1 == 'b'</span>
+					|| current1 == 'B')
+<span class="nc" id="L412">				return true;</span>
+		}
+<span class="nc" id="L414">		return false;</span>
+	}
+
+	private static String readAnchor(CharInspector it) {
+<span class="nc" id="L418">		final char current0 = it.peek(0);</span>
+<span class="nc bnc" id="L419" title="All 4 branches missed.">		if (current0 == '^' || current0 == '$') {</span>
+<span class="nc" id="L420">			it.jump();</span>
+<span class="nc" id="L421">			return &quot;&quot; + current0;</span>
+		}
+<span class="nc bnc" id="L423" title="All 2 branches missed.">		if (current0 == '\\') {</span>
+<span class="nc" id="L424">			it.jump();</span>
+<span class="nc" id="L425">			final String result = &quot;&quot; + current0 + it.peek(0);</span>
+<span class="nc" id="L426">			it.jump();</span>
+<span class="nc" id="L427">			return result;</span>
+		}
+<span class="nc" id="L429">		throw new IllegalStateException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

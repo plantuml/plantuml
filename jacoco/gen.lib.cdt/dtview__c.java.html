@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>dtview__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cdt</a> &gt; <span class="el_source">dtview__c.java</span></div><h1>dtview__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cdt;
+import static smetana.core.Macro.DT_CLEAR;
+import static smetana.core.Macro.DT_DELETE;
+import static smetana.core.Macro.DT_FIRST;
+import static smetana.core.Macro.DT_INSERT;
+import static smetana.core.Macro.DT_LAST;
+import static smetana.core.Macro.DT_MATCH;
+import static smetana.core.Macro.DT_NEXT;
+import static smetana.core.Macro.DT_OBAG;
+import static smetana.core.Macro.DT_OSET;
+import static smetana.core.Macro.DT_PREV;
+import static smetana.core.Macro.DT_RENEW;
+import static smetana.core.Macro.DT_SEARCH;
+import static smetana.core.Macro.UNFLATTEN;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro._DTCMP;
+import static smetana.core.Macro._DTKEY;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.ST_dt_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.FieldOffset;
+import smetana.core.Globals;
+import smetana.core.__ptr__;
+
+<span class="nc" id="L75">public class dtview__c {</span>
+
+<span class="fc" id="L77">public static CFunction dtvsearch = new CFunctionAbstract(&quot;dtvsearch&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L80">		return dtvsearch(zz, (ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);</span>
+	}};
+
+/*	Set a view path from dict to view.
+**
+**	Written by Kiem-Phong Vo (5/25/96)
+*/
+@Reviewed(when = &quot;13/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtview.c&quot;, name=&quot;dtvsearch&quot;, key=&quot;6spidg45w8teb64726drdswaa&quot;, definition=&quot;static void* dtvsearch(Dt_t* dt, register void* obj, register int type)&quot;)
+public static __ptr__ dtvsearch(Globals zz, ST_dt_s dt, __ptr__ obj, int type) {
+<span class="fc" id="L90">ENTERING(&quot;6spidg45w8teb64726drdswaa&quot;,&quot;dtvsearch&quot;);</span>
+try {
+	ST_dt_s		d, p;
+<span class="fc" id="L93">	__ptr__		o=null, n, ok, nk;</span>
+	int		cmp, sz; FieldOffset lk, ky;
+	CFunction	cmpf;
+	
+	
+	/* these operations only happen at the top level */
+<span class="fc bfc" id="L99" title="All 2 branches covered.">	if ((type&amp;(DT_INSERT|DT_DELETE|DT_CLEAR|DT_RENEW))!=0)</span>
+<span class="fc" id="L100">		return (__ptr__) dt.meth.searchf.exe(zz, dt, obj, type);</span>
+	
+	
+<span class="pc bpc" id="L103" title="1 of 6 branches missed.">	if(((type&amp;(DT_MATCH|DT_SEARCH))!=0) || /* order sets first/last done below */</span>
+	   (((type&amp;(DT_FIRST|DT_LAST))!=0) &amp;&amp; (dt.meth.type&amp;(DT_OBAG|DT_OSET)) == 0 ) )
+<span class="fc bfc" id="L105" title="All 2 branches covered.">	{	for(d = dt; d!=null; d = d.view)</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )</span>
+<span class="fc" id="L107">				break;</span>
+<span class="fc" id="L108">		dt.walk = d;</span>
+<span class="fc" id="L109">		return o;</span>
+	}
+	
+	
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">	if((dt.meth.type &amp; (DT_OBAG|DT_OSET) )!=0)</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">	{	if((type &amp; (DT_FIRST|DT_LAST|DT_NEXT|DT_PREV)) == 0 )</span>
+<span class="nc" id="L115">			return null;</span>
+	
+	
+<span class="fc" id="L118">		n = nk = null; p = null;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		for(d = dt; d!=null; d = d.view)</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		{	if((o = (__ptr__) d.meth.searchf.exe(zz, d, obj, type) ) == null)</span>
+<span class="fc" id="L121">				continue;</span>
+<span class="fc" id="L122">			ky = d.disc.key;</span>
+<span class="fc" id="L123">			sz = d.disc.size;</span>
+<span class="fc" id="L124">			lk = d.disc.link;</span>
+<span class="fc" id="L125">			cmpf = d.disc.comparf;</span>
+<span class="fc" id="L126">			ok = _DTKEY(o, ky, sz);</span>
+			
+			
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if(n!=null) /* get the right one among all dictionaries */</span>
+<span class="fc" id="L130">			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);</span>
+<span class="pc bpc" id="L131" title="5 of 8 branches missed.">				if(((type &amp; (DT_NEXT|DT_FIRST))!=0 &amp;&amp; cmp &lt; 0) ||</span>
+				   ((type &amp; (DT_PREV|DT_LAST))!=0 &amp;&amp; cmp &gt; 0) )
+<span class="nc" id="L133">UNSUPPORTED(&quot;5o3u9aaanyd9yh74sjfkkofmo&quot;); // 					goto a_dj;</span>
+			}
+			else /* looks good for now */
+<span class="fc" id="L136">			{ a_dj: p  = d;</span>
+<span class="fc" id="L137">				n  = o;</span>
+<span class="fc" id="L138">				nk = ok;</span>
+			}
+		}
+<span class="fc" id="L141">		dt.walk = p;</span>
+<span class="fc" id="L142">		return n;</span>
+	}
+	/* non-ordered methods */
+<span class="nc" id="L145">UNSUPPORTED(&quot;36qdhpbcwst6tc1gvwcyvg91u&quot;); // 	if(!(type &amp; (0000010|0000020)) )</span>
+<span class="nc" id="L146">UNSUPPORTED(&quot;5p6q7ip4om6y4nrsjz07ua456&quot;); // 		return ((void*)0);</span>
+<span class="nc" id="L147">UNSUPPORTED(&quot;bx84jj9durkqzcrq4l9h1b0za&quot;); // 	if(!dt-&gt;walk || obj != (dt-&gt;walk-&gt;disc-&gt;link &lt; 0 ? ((Dthold_t*)(dt-&gt;walk-&gt;data-&gt;here))-&gt;obj : (void*)((char*)(dt-&gt;walk-&gt;data-&gt;here) - dt-&gt;walk-&gt;disc-&gt;link) ) )</span>
+<span class="nc" id="L148">UNSUPPORTED(&quot;eh58afn12udc5q8yzr25advls&quot;); // 	{	for(d = dt; d; d = d-&gt;view)</span>
+<span class="nc" id="L149">UNSUPPORTED(&quot;de5yx4s0nsbgshd9seabcy2g9&quot;); // 			if((o = (*(d-&gt;meth-&gt;searchf))(d, obj, 0000004)) )</span>
+<span class="nc" id="L150">UNSUPPORTED(&quot;1dhrv6aj5eq8ntuvb7qbs8aot&quot;); // 				break;</span>
+<span class="nc" id="L151">UNSUPPORTED(&quot;66mzv36wy2mflr2u2a5pwa2vg&quot;); // 		dt-&gt;walk = d;</span>
+<span class="nc" id="L152">UNSUPPORTED(&quot;d4pllgr7b2ohssrhtxxtd1fbb&quot;); // 		if(!(obj = o) )</span>
+<span class="nc" id="L153">UNSUPPORTED(&quot;aihzmr4oo3tuh6kkxwtn9tlbd&quot;); // 			return ((void*)0);</span>
+<span class="nc" id="L154">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L155">UNSUPPORTED(&quot;6he3c07r1xjfepuku37yav920&quot;); // 	for(d = dt-&gt;walk, obj = (*d-&gt;meth-&gt;searchf)(d, obj, type);; )</span>
+<span class="nc" id="L156">UNSUPPORTED(&quot;d7hiatjof3gfyx3ab27oq4d74&quot;); // 	{	while(obj) /* keep moving until finding an uncovered object */</span>
+<span class="nc" id="L157">UNSUPPORTED(&quot;44tdztkynd140cqbaafbbxvqn&quot;); // 		{	for(p = dt; ; p = p-&gt;view)</span>
+<span class="nc" id="L158">UNSUPPORTED(&quot;72t51pabtpfsnn4qrcjvd6gkb&quot;); // 			{	if(p == d) /* adjacent object is uncovered */	</span>
+<span class="nc" id="L159">UNSUPPORTED(&quot;4an2jpd7xs9lm1jlfrbualsrv&quot;); // 					return obj;</span>
+<span class="nc" id="L160">UNSUPPORTED(&quot;bndt77eukkw8dnhl8sce4ts3d&quot;); // 				if((*(p-&gt;meth-&gt;searchf))(p, obj, 0000004) )</span>
+<span class="nc" id="L161">UNSUPPORTED(&quot;6ioth986rfbv208dp59shjy15&quot;); // 					break;</span>
+<span class="nc" id="L162">UNSUPPORTED(&quot;3to5h0rvqxdeqs38mhv47mm3o&quot;); // 			}</span>
+<span class="nc" id="L163">UNSUPPORTED(&quot;5bx9ax8tembk4pweu41m5yw43&quot;); // 			obj = (*d-&gt;meth-&gt;searchf)(d, obj, type);</span>
+<span class="nc" id="L164">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L165">UNSUPPORTED(&quot;3diupilxwbi5nroolxiy7e8b0&quot;); // 		if(!(d = dt-&gt;walk = d-&gt;view) ) /* move on to next dictionary */</span>
+<span class="nc" id="L166">UNSUPPORTED(&quot;aihzmr4oo3tuh6kkxwtn9tlbd&quot;); // 			return ((void*)0);</span>
+<span class="nc" id="L167">UNSUPPORTED(&quot;esje2igec9cwwteta36lbrdvc&quot;); // 		else if(type&amp;0000010)</span>
+<span class="nc" id="L168">UNSUPPORTED(&quot;aeh2pn8gp2xj4lehv52n4hp6b&quot;); // 			obj = (*(d-&gt;meth-&gt;searchf))(d,((void*)0),0000200);</span>
+<span class="nc" id="L169">UNSUPPORTED(&quot;1lfqka4p8e7w15b16wquy0vjx&quot;); // 		else	obj = (*(d-&gt;meth-&gt;searchf))(d,((void*)0),0000400);</span>
+<span class="nc" id="L170">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L171">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L173">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L175">LEAVING(&quot;6spidg45w8teb64726drdswaa&quot;,&quot;dtvsearch&quot;);</span>
+}
+}
+
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtview.c&quot;, name=&quot;dtview&quot;, key=&quot;dfryioch2xz35w8nq6lxbk5kh&quot;, definition=&quot;Dt_t* dtview(register Dt_t* dt, register Dt_t* view)&quot;)
+public static ST_dt_s dtview(ST_dt_s dt, ST_dt_s view) {
+<span class="fc" id="L186">ENTERING(&quot;dfryioch2xz35w8nq6lxbk5kh&quot;,&quot;dtview&quot;);</span>
+try {
+	ST_dt_s	d;
+	
+<span class="fc" id="L190">	UNFLATTEN(dt);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">	if(view!=null)</span>
+<span class="fc" id="L192">	{	UNFLATTEN(view);</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if(view.meth != dt.meth) /* must use the same method */</span>
+<span class="nc" id="L194">			UNSUPPORTED(&quot;return null;&quot;);</span>
+	}
+	
+	
+	/* make sure there won't be a cycle */
+<span class="fc bfc" id="L199" title="All 2 branches covered.">	for(d = view; d!=null; d = (ST_dt_s)d.view)</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if(d == dt)</span>
+<span class="nc" id="L201">			return null;</span>
+	
+	
+	/* no more viewing lower dictionary */
+<span class="fc bfc" id="L205" title="All 2 branches covered.">	if((d = dt.view)!=null )</span>
+<span class="fc" id="L206">		d.nview -= 1;</span>
+<span class="fc" id="L207">	dt.view = dt.walk = null;</span>
+
+<span class="fc bfc" id="L209" title="All 2 branches covered.">	if((view) == null)</span>
+<span class="fc" id="L210">	{	dt.searchf = dt.meth.searchf;</span>
+<span class="fc" id="L211">		return d;</span>
+	}
+	
+	/* ok */
+<span class="fc" id="L215">	dt.view = view;</span>
+<span class="fc" id="L216">	dt.searchf = dtview__c.dtvsearch;</span>
+<span class="fc" id="L217">	view.nview += 1;</span>
+	
+	
+<span class="fc" id="L220">	return view;</span>
+} finally {
+<span class="fc" id="L222">LEAVING(&quot;dfryioch2xz35w8nq6lxbk5kh&quot;,&quot;dtview&quot;);</span>
+}
+}
+
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

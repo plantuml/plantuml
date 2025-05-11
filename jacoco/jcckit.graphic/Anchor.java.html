@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Anchor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.graphic</a> &gt; <span class="el_source">Anchor.java</span></div><h1>Anchor.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.graphic;
+
+import jcckit.util.ConfigParameters;
+import jcckit.util.FactoryException;
+
+/**
+ *  Anchor of a graphical element. There exist only the three
+ *  instances {@link #LEFT_BOTTOM}, {@link #CENTER}, and
+ *  {@link #RIGHT_TOP}.
+ *  &lt;p&gt;
+ *  The anchor factor can be used in a position formular. Its value
+ *  for the three instances reads:
+ *  &lt;p&gt;
+ *  &lt;center&gt;
+ *  &lt;table border=1 cellpadding=5&gt;
+ *  &lt;tr&gt;&lt;th&gt;Instance&lt;/th&gt;&lt;th&gt;Factor&lt;/th&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;&lt;tt&gt;LEFT_BOTTOM&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;&lt;tt&gt;CENTER&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;tr&gt;&lt;td&gt;&lt;tt&gt;RIGHT_TOP&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+ *  &lt;/table&gt;
+ *  &lt;/center&gt;
+ *
+ *  @author Franz-Josef Elmer
+ */
+public class Anchor {
+  /** Anchor constant. */
+<span class="nc" id="L45">  public static final Anchor LEFT_BOTTOM = new Anchor(0),</span>
+<span class="nc" id="L46">                             CENTER = new Anchor(1),</span>
+<span class="nc" id="L47">                             RIGHT_TOP = new Anchor(2);</span>
+  private static final String LEFT_VALUE = &quot;left&quot;,
+                              RIGHT_VALUE = &quot;right&quot;,
+                              CENTER_VALUE = &quot;center&quot;,
+                              TOP_VALUE = &quot;top&quot;,
+                              BOTTOM_VALUE = &quot;bottom&quot;;
+
+  /**
+   *  Returns form the specified configuration parameters the
+   *  horizontal anchor defined by the specified key or the
+   *  specified default value.
+   *  @param config Configuration parameters.
+   *  @param key The key of the anchor. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   *  @param defaultValue The default value.
+   *  @return one of the three instances of &lt;tt&gt;Anchor&lt;/tt&gt;.
+   *  @throws FactoryException if the value of &lt;tt&gt;key&lt;/tt&gt; is
+   *          neither &lt;tt&gt;left&lt;/tt&gt;, &lt;tt&gt;center&lt;/tt&gt;,
+   *          nor &lt;tt&gt;right&lt;/tt&gt;. 
+   *          Note, that {@link FactoryException#getClassName()} 
+   *          returns the invalid value.
+   */
+  public static Anchor getHorizontalAnchor(ConfigParameters config, String key,
+                                           Anchor defaultValue) {
+<span class="nc" id="L70">    Anchor result = defaultValue;</span>
+<span class="nc" id="L71">    String anchor = config.get(key, null);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">    if (anchor != null) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">      if (anchor.equals(LEFT_VALUE)) {</span>
+<span class="nc" id="L74">        result = Anchor.LEFT_BOTTOM;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">      } else if (anchor.equals(CENTER_VALUE)) {</span>
+<span class="nc" id="L76">        result = Anchor.CENTER;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">      } else if (anchor.equals(RIGHT_VALUE)) {</span>
+<span class="nc" id="L78">        result = Anchor.RIGHT_TOP;</span>
+      } else {
+<span class="nc" id="L80">        throw new FactoryException(config, key, &quot;Invalid horizontal anchor.&quot;);</span>
+      }
+    }
+<span class="nc" id="L83">    return result;</span>
+  }
+
+  /**
+   *  Returns form the specified configuration parameters the
+   *  vertical anchor defined by the specified key or the
+   *  specified default value.
+   *  @param config Configuration parameters.
+   *  @param key The key of the anchor. &lt;tt&gt;null&lt;/tt&gt; is not allowed.
+   *  @param defaultValue The default value.
+   *  @return one of the three instances of &lt;tt&gt;Anchor&lt;/tt&gt;.
+   *  @throws FactoryException if the value of &lt;tt&gt;key&lt;/tt&gt; is
+   *          neither &lt;tt&gt;top&lt;/tt&gt;, &lt;tt&gt;center&lt;/tt&gt;,
+   *          nor &lt;tt&gt;bottom&lt;/tt&gt;.
+   *          Note, that {@link FactoryException#getClassName()} 
+   *          returns the invalid value.
+   */
+  public static Anchor getVerticalAnchor(ConfigParameters config, String key,
+                                  Anchor defaultValue) {
+<span class="nc" id="L102">    Anchor result = defaultValue;</span>
+<span class="nc" id="L103">    String anchor = config.get(key, null);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">    if (anchor != null) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">      if (anchor.equals(BOTTOM_VALUE)) {</span>
+<span class="nc" id="L106">        result = Anchor.LEFT_BOTTOM;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">      } else if (anchor.equals(CENTER_VALUE)) {</span>
+<span class="nc" id="L108">        result = Anchor.CENTER;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">      } else if (anchor.equals(TOP_VALUE)) {</span>
+<span class="nc" id="L110">        result = Anchor.RIGHT_TOP;</span>
+      } else {
+<span class="nc" id="L112">        throw new FactoryException(config, key, &quot;Invalid vertcal anchor.&quot;);</span>
+      }
+    }
+<span class="nc" id="L115">    return result;</span>
+  }
+
+  private final int _factor;
+
+<span class="nc" id="L120">  private Anchor(int factor) {</span>
+<span class="nc" id="L121">    _factor = factor;</span>
+<span class="nc" id="L122">  }</span>
+
+  /** Returns the factor. */
+  public int getFactor() {
+<span class="nc" id="L126">    return _factor;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

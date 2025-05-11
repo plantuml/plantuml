@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemSalt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.salt</a> &gt; <span class="el_source">PSystemSalt.java</span></div><h1>PSystemSalt.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.salt;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ScaleSimple;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.WithSprite;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandFactorySprite;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.salt.element.Element;
+import net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
+import net.sourceforge.plantuml.salt.factory.ElementFactory;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryBorder;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryButton;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryCheckboxOff;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryCheckboxOn;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryDroplist;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryImage;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryLine;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryMenu;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryPyramid;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryRadioOff;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryRadioOn;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryRetrieveFromDictonnary;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryScroll;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryTab;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryText;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.Log;
+
+public class PSystemSalt extends TitledDiagram implements WithSprite {
+
+	private final List&lt;String&gt; data;
+	private final SaltDictionary dictionary;
+
+	@Deprecated
+	public PSystemSalt(UmlSource source, List&lt;String&gt; data, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L102">		super(source, UmlDiagramType.SALT, null, preprocessing);</span>
+<span class="fc" id="L103">		this.dictionary = new SaltDictionary(preprocessing.getOption());</span>
+<span class="fc" id="L104">		this.data = data;</span>
+<span class="fc" id="L105">	}</span>
+
+	public PSystemSalt(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L108">		this(source, new ArrayList&lt;String&gt;(), preprocessing);</span>
+<span class="fc" id="L109">	}</span>
+
+	public void add(String s) {
+<span class="fc" id="L112">		data.addAll(StringLocated.expandsNewline(s));</span>
+<span class="fc" id="L113">	}</span>
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		try {
+<span class="fc" id="L119">			final Element salt = createElement(manageSprite());</span>
+<span class="fc" id="L120">			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="fc" id="L121">			final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);</span>
+<span class="fc" id="L122">			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);</span>
+<span class="nc" id="L123">		} catch (Exception e) {</span>
+<span class="nc" id="L124">			Logme.error(e);</span>
+<span class="nc" id="L125">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
+<span class="nc" id="L126">			report.anErrorHasOccured(e, getFlashData());</span>
+<span class="nc" id="L127">			report.addProperties();</span>
+<span class="nc" id="L128">			report.addEmptyLine();</span>
+<span class="nc" id="L129">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L130">			report.addEmptyLine();</span>
+<span class="nc" id="L131">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
+<span class="nc" id="L132">			return ImageDataSimple.error(e);</span>
+		}
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L138">		final Element salt = createElement(manageSprite());</span>
+<span class="nc" id="L139">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="nc" id="L140">		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);</span>
+<span class="nc" id="L141">		return getTextBlock(salt, size);</span>
+	}
+
+	private TextBlock getTextBlock(final Element salt, final XDimension2D size) {
+<span class="fc" id="L145">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L148">				ug = ug.apply(getBlack());</span>
+<span class="fc" id="L149">				salt.drawU(ug, 0, new XDimension2D(size.getWidth(), size.getHeight()));</span>
+<span class="fc" id="L150">				salt.drawU(ug, 1, new XDimension2D(size.getWidth(), size.getHeight()));</span>
+<span class="fc" id="L151">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L154">				return size;</span>
+			}
+
+			public HColor getBackcolor() {
+<span class="nc" id="L158">				return getSkinParam().getBackgroundColor();</span>
+			}
+		};
+	}
+
+	public DiagramDescription getDescription() {
+<span class="fc" id="L164">		return new DiagramDescription(&quot;(Salt)&quot;);</span>
+	}
+
+	public void addSprite(String name, Sprite sprite) {
+<span class="nc" id="L168">		dictionary.addSprite(name, sprite);</span>
+<span class="nc" id="L169">	}</span>
+
+	private List&lt;String&gt; manageSprite() {
+
+<span class="fc" id="L173">		final Command&lt;WithSprite&gt; cmd = new CommandFactorySprite().createMultiLine(false);</span>
+
+<span class="fc" id="L175">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L177">			String s = it.next();</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (s.equals(&quot;hide stereotype&quot;)) {</span>
+				// System.err.println(&quot;skipping &quot; + s);
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;skinparam &quot;)) {</span>
+				// System.err.println(&quot;skipping &quot; + s);
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;scale &quot;)) {</span>
+<span class="nc" id="L183">				final double scale = Double.parseDouble(s.substring(&quot;scale &quot;.length()));</span>
+<span class="nc" id="L184">				this.setScale(new ScaleSimple(scale));</span>
+				// System.err.println(&quot;skipping &quot; + s);
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;sprite $&quot;)) {</span>
+<span class="nc" id="L187">				BlocLines bloc = BlocLines.singleString(s);</span>
+				do {
+<span class="nc" id="L189">					s = it.next();</span>
+<span class="nc" id="L190">					bloc = bloc.addString(s);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">				} while (s.equals(&quot;}&quot;) == false);</span>
+				try {
+<span class="nc" id="L193">					final CommandExecutionResult cmdResult = cmd.execute(this, bloc, ParserPass.ONE);</span>
+<span class="nc" id="L194">				} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L195">				}</span>
+<span class="nc" id="L196">			} else {</span>
+<span class="fc" id="L197">				result.add(s);</span>
+			}
+<span class="fc" id="L199">		}</span>
+<span class="fc" id="L200">		return result;</span>
+	}
+
+	private Element createElement(List&lt;String&gt; data) {
+
+<span class="fc" id="L205">		final DataSourceImpl source = new DataSourceImpl(data);</span>
+
+<span class="fc" id="L207">		final Collection&lt;AbstractElementFactoryComplex&gt; cpx = new ArrayList&lt;&gt;();</span>
+
+		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
+<span class="fc" id="L210">		cpx.add(new ElementFactoryPyramid(source, dictionary));</span>
+<span class="fc" id="L211">		cpx.add(new ElementFactoryScroll(source, dictionary));</span>
+<span class="fc" id="L212">		cpx.add(new ElementFactoryBorder(source, dictionary));</span>
+
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f : cpx) {</span>
+<span class="fc" id="L215">			addSimpleFactory(f, source, dictionary);</span>
+<span class="fc" id="L216">		}</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f1 : cpx) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			for (AbstractElementFactoryComplex f2 : cpx) {</span>
+<span class="fc" id="L219">				f1.addFactory(f2);</span>
+<span class="fc" id="L220">			}</span>
+<span class="fc" id="L221">		}</span>
+
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		for (ElementFactory f : cpx) {</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">			if (f.ready()) {</span>
+<span class="fc" id="L225">				Log.info(&quot;Using &quot; + f);</span>
+<span class="fc" id="L226">				return f.create().getElement();</span>
+			}
+<span class="nc" id="L228">		}</span>
+
+<span class="nc" id="L230">		Log.println(&quot;data=&quot; + data);</span>
+<span class="nc" id="L231">		throw new IllegalArgumentException();</span>
+
+	}
+
+	private static void addSimpleFactory(final AbstractElementFactoryComplex cpxFactory, final DataSource source,
+			SaltDictionary dictionary) {
+<span class="fc" id="L237">		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));</span>
+<span class="fc" id="L238">		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));</span>
+<span class="fc" id="L239">		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));</span>
+<span class="fc" id="L240">		cpxFactory.addFactory(new ElementFactoryLine(source));</span>
+<span class="fc" id="L241">		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));</span>
+<span class="fc" id="L242">		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));</span>
+<span class="fc" id="L243">		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));</span>
+<span class="fc" id="L244">		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));</span>
+<span class="fc" id="L245">		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));</span>
+<span class="fc" id="L246">		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));</span>
+<span class="fc" id="L247">		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));</span>
+<span class="fc" id="L248">		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));</span>
+<span class="fc" id="L249">		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));</span>
+<span class="fc" id="L250">		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));</span>
+<span class="fc" id="L251">	}</span>
+
+	private boolean iamSalt;
+
+	public void setIamSalt(boolean iamSalt) {
+<span class="fc" id="L256">		this.iamSalt = true;</span>
+<span class="fc" id="L257">	}</span>
+
+	public final boolean isIamSalt() {
+<span class="fc" id="L260">		return iamSalt;</span>
+	}
+
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+<span class="fc" id="L265">		return ClockwiseTopRightBottomLeft.same(5);</span>
+	}
+
+	private HColor getBlack() {
+<span class="fc" id="L269">		return HColors.BLACK;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

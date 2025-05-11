@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GanttDiagramFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project</a> &gt; <span class="el_source">GanttDiagramFactory.java</span></div><h1>GanttDiagramFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project;
+
+import java.util.Arrays;
+import java.util.List;
+
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandNope;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.project.command.CommandColorTask;
+import net.sourceforge.plantuml.project.command.CommandFootbox;
+import net.sourceforge.plantuml.project.command.CommandGanttArrow;
+import net.sourceforge.plantuml.project.command.CommandGanttArrow2;
+import net.sourceforge.plantuml.project.command.CommandGroupEnd;
+import net.sourceforge.plantuml.project.command.CommandGroupStart;
+import net.sourceforge.plantuml.project.command.CommandHideClosed;
+import net.sourceforge.plantuml.project.command.CommandHideResourceFootbox;
+import net.sourceforge.plantuml.project.command.CommandHideResourceName;
+import net.sourceforge.plantuml.project.command.CommandLabelOnColumn;
+import net.sourceforge.plantuml.project.command.CommandLanguage;
+import net.sourceforge.plantuml.project.command.CommandNoteBottom;
+import net.sourceforge.plantuml.project.command.CommandPrintBetween;
+import net.sourceforge.plantuml.project.command.CommandPrintScale;
+import net.sourceforge.plantuml.project.command.CommandSeparator;
+import net.sourceforge.plantuml.project.command.CommandTaskCompleteDefault;
+import net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
+import net.sourceforge.plantuml.project.command.NaturalCommand;
+import net.sourceforge.plantuml.project.lang.SentenceAnd;
+import net.sourceforge.plantuml.project.lang.SentenceAndAnd;
+import net.sourceforge.plantuml.project.lang.SentenceSimple;
+import net.sourceforge.plantuml.project.lang.Subject;
+import net.sourceforge.plantuml.project.lang.SubjectDayAsDate;
+import net.sourceforge.plantuml.project.lang.SubjectDayOfWeek;
+import net.sourceforge.plantuml.project.lang.SubjectDaysAsDates;
+import net.sourceforge.plantuml.project.lang.SubjectProject;
+import net.sourceforge.plantuml.project.lang.SubjectResource;
+import net.sourceforge.plantuml.project.lang.SubjectSeparator;
+import net.sourceforge.plantuml.project.lang.SubjectTask;
+import net.sourceforge.plantuml.project.lang.SubjectToday;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.CommandStyleImport;
+import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
+
+public class GanttDiagramFactory extends PSystemCommandFactory {
+
+	static private final List&lt;Subject&lt;GanttDiagram&gt;&gt; subjects() {
+<span class="fc" id="L86">		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,</span>
+				SubjectDaysAsDates.ME, SubjectResource.ME, SubjectToday.ME, SubjectSeparator.ME);
+	}
+
+	public GanttDiagramFactory() {
+<span class="fc" id="L91">		super(DiagramType.GANTT);</span>
+<span class="fc" id="L92">	}</span>
+
+	@Override
+	protected void initCommandsList(List&lt;Command&gt; cmds) {
+<span class="fc" id="L96">		CommonCommands.addTitleCommands(cmds);</span>
+<span class="fc" id="L97">		CommonCommands.addCommonCommands2(cmds);</span>
+
+<span class="fc" id="L99">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
+<span class="fc" id="L100">		cmds.add(CommandStyleImport.ME);</span>
+
+<span class="fc" id="L102">		cmds.add(CommandNope.ME);</span>
+
+<span class="fc" id="L104">		addLanguageCommands(cmds);</span>
+
+<span class="fc" id="L106">		cmds.add(new CommandGanttArrow());</span>
+<span class="fc" id="L107">		cmds.add(new CommandGanttArrow2());</span>
+<span class="fc" id="L108">		cmds.add(new CommandColorTask());</span>
+<span class="fc" id="L109">		cmds.add(new CommandSeparator());</span>
+<span class="fc" id="L110">		cmds.add(new CommandWeekNumberStrategy());</span>
+<span class="fc" id="L111">		cmds.add(new CommandGroupStart());</span>
+<span class="fc" id="L112">		cmds.add(new CommandGroupEnd());</span>
+
+<span class="fc" id="L114">		cmds.add(new CommandLanguage());</span>
+<span class="fc" id="L115">		cmds.add(new CommandPrintScale());</span>
+<span class="fc" id="L116">		cmds.add(new CommandPrintBetween());</span>
+<span class="fc" id="L117">		cmds.add(new CommandNoteBottom());</span>
+<span class="fc" id="L118">		cmds.add(new CommandFootbox());</span>
+<span class="fc" id="L119">		cmds.add(new CommandLabelOnColumn());</span>
+<span class="fc" id="L120">		cmds.add(new CommandHideResourceName());</span>
+<span class="fc" id="L121">		cmds.add(new CommandHideResourceFootbox());</span>
+<span class="fc" id="L122">		cmds.add(new CommandHideClosed());</span>
+<span class="fc" id="L123">		cmds.add(new CommandTaskCompleteDefault());</span>
+<span class="fc" id="L124">	}</span>
+
+	private void addLanguageCommands(List&lt;Command&gt; cmd) {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">			for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences()) {</span>
+<span class="fc" id="L129">				cmd.add(NaturalCommand.create(sentenceA));</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences()) {</span>
+<span class="fc" id="L131">					final String signatureA = sentenceA.getSignature();</span>
+<span class="fc" id="L132">					final String signatureB = sentenceB.getSignature();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">					if (signatureA.equals(signatureB) == false)</span>
+<span class="fc" id="L134">						cmd.add(NaturalCommand.create(new SentenceAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB)));</span>
+
+<span class="fc" id="L136">				}</span>
+<span class="fc" id="L137">			}</span>
+
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">			for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences())</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences())</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">					for (SentenceSimple&lt;GanttDiagram&gt; sentenceC : subject.getSentences()) {</span>
+<span class="fc" id="L143">						final String signatureA = sentenceA.getSignature();</span>
+<span class="fc" id="L144">						final String signatureB = sentenceB.getSignature();</span>
+<span class="fc" id="L145">						final String signatureC = sentenceC.getSignature();</span>
+<span class="fc bfc" id="L146" title="All 4 branches covered.">						if (signatureA.equals(signatureB) == false &amp;&amp; signatureA.equals(signatureC) == false</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">								&amp;&amp; signatureC.equals(signatureB) == false)</span>
+<span class="fc" id="L148">							cmd.add(NaturalCommand.create(new SentenceAndAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB, sentenceC)));</span>
+<span class="fc" id="L149">					}</span>
+<span class="fc" id="L150">	}</span>
+
+	@Override
+	public GanttDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L154">		return new GanttDiagram(source, preprocessing);</span>
+	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+<span class="fc" id="L159">		return UmlDiagramType.GANTT;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

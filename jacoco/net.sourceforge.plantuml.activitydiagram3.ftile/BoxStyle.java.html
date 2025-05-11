@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoxStyle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile</a> &gt; <span class="el_source">BoxStyle.java</span></div><h1>BoxStyle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.warning.Warning;
+
+// Created from Luc Trudeau original work
+<span class="fc" id="L52">public enum BoxStyle {</span>
+<span class="fc" id="L53">	PLAIN(null, '\0', 0) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="fc" id="L56">			return URectangle.build(width, height).rounded(roundCorner);</span>
+		}
+	},
+<span class="fc" id="L59">	SDL_INPUT(&quot;input&quot;, '&lt;', 10) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L62">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L63">			result.addPoint(0, 0);</span>
+<span class="nc" id="L64">			result.addPoint(width + DELTA_INPUT_OUTPUT, 0);</span>
+<span class="nc" id="L65">			result.addPoint(width, height / 2);</span>
+<span class="nc" id="L66">			result.addPoint(width + DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L67">			result.addPoint(0, height);</span>
+<span class="nc" id="L68">			return result;</span>
+		}
+	},
+<span class="fc" id="L71">	SDL_OUTPUT(&quot;output&quot;, '&gt;', 10) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L74">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L75">			result.addPoint(0.0, 0.0);</span>
+<span class="nc" id="L76">			result.addPoint(width, 0.0);</span>
+<span class="nc" id="L77">			result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
+<span class="nc" id="L78">			result.addPoint(width, height);</span>
+<span class="nc" id="L79">			result.addPoint(0.0, height);</span>
+<span class="nc" id="L80">			return result;</span>
+		}
+	},
+<span class="fc" id="L83">	SDL_PROCEDURE(&quot;procedure&quot;, '|', 0) {</span>
+		@Override
+		protected void drawInternal(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
+<span class="nc" id="L86">			final URectangle rect = URectangle.build(width, height);</span>
+<span class="nc" id="L87">			rect.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L88">			ug.draw(rect);</span>
+<span class="nc" id="L89">			final ULine vline = ULine.vline(height);</span>
+<span class="nc" id="L90">			ug.apply(UTranslate.dx(PADDING)).draw(vline);</span>
+<span class="nc" id="L91">			ug.apply(UTranslate.dx(width - PADDING)).draw(vline);</span>
+<span class="nc" id="L92">		}</span>
+	},
+<span class="fc" id="L94">	SDL_SAVE(&quot;load&quot;, '\\', 0) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L97">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L98">			result.addPoint(0.0, 0.0);</span>
+<span class="nc" id="L99">			result.addPoint(width - DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L100">			result.addPoint(width, height);</span>
+<span class="nc" id="L101">			result.addPoint(DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L102">			return result;</span>
+		}
+	},
+<span class="fc" id="L105">	SDL_ANTISAVE(&quot;save&quot;, '/', 0) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L108">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L109">			result.addPoint(DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L110">			result.addPoint(width, 0.0);</span>
+<span class="nc" id="L111">			result.addPoint(width - DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L112">			result.addPoint(0, height);</span>
+<span class="nc" id="L113">			return result;</span>
+		}
+	},
+<span class="fc" id="L116">	SDL_CONTINUOUS(&quot;continuous&quot;, '}', 0) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L119">			final UPath result = UPath.none();</span>
+<span class="nc" id="L120">			final double c1[] = { DELTA_CONTINUOUS, 0 };</span>
+<span class="nc" id="L121">			final double c2[] = { 0, height / 2 };</span>
+<span class="nc" id="L122">			final double c3[] = { DELTA_CONTINUOUS, height };</span>
+
+<span class="nc" id="L124">			result.add(c1, USegmentType.SEG_MOVETO);</span>
+<span class="nc" id="L125">			result.add(c2, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L126">			result.add(c3, USegmentType.SEG_LINETO);</span>
+
+<span class="nc" id="L128">			final double c4[] = { width - DELTA_CONTINUOUS, 0 };</span>
+<span class="nc" id="L129">			final double c5[] = { width, height / 2 };</span>
+<span class="nc" id="L130">			final double c6[] = { width - DELTA_CONTINUOUS, height };</span>
+
+<span class="nc" id="L132">			result.add(c4, USegmentType.SEG_MOVETO);</span>
+<span class="nc" id="L133">			result.add(c5, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L134">			result.add(c6, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L135">			return result;</span>
+		}
+	},
+<span class="fc" id="L138">	SDL_TASK(&quot;task&quot;, ']', 0) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L141">			return URectangle.build(width, height);</span>
+		}
+	},
+<span class="fc" id="L144">	SDL_OBJECT(&quot;object&quot;, ']', 0) {</span>
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L147">			return URectangle.build(width, height);</span>
+		}
+	};
+
+	private final String stereotype;
+	private final char style;
+	private final double shield;
+
+<span class="fc" id="L155">	private static int DELTA_INPUT_OUTPUT = 10;</span>
+<span class="fc" id="L156">	private static double DELTA_CONTINUOUS = 5.0;</span>
+<span class="fc" id="L157">	private static int PADDING = 5;</span>
+
+<span class="fc" id="L159">	private BoxStyle(String stereotype, char style, double shield) {</span>
+<span class="fc" id="L160">		this.stereotype = stereotype;</span>
+<span class="fc" id="L161">		this.style = style;</span>
+<span class="fc" id="L162">		this.shield = shield;</span>
+<span class="fc" id="L163">	}</span>
+
+	public static void checkDeprecatedWarning(TitledDiagram diagram, String style) {
+<span class="pc bpc" id="L166" title="1 of 4 branches missed.">		if (style != null &amp;&amp; style.length() == 1) {</span>
+<span class="fc" id="L167">			final BoxStyle boxStyle = fromString(style);</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (boxStyle != PLAIN)</span>
+<span class="nc" id="L169">				diagram.addWarning(new Warning(//</span>
+						&quot;The syntax using the &quot; + boxStyle.style + &quot; character is now obsolete.&quot;,
+						&quot;Please use the &lt;&lt;&quot; + boxStyle.stereotype + &quot;&gt;&gt; stereotype instead.&quot;,
+						&quot;For more details, visit https://plantuml.com/activity-diagram-beta&quot;));
+		}
+
+<span class="fc" id="L175">	}</span>
+
+	public static BoxStyle fromString(String style) {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (style != null) {</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">			if (style.length() == 1)</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">				for (BoxStyle bs : BoxStyle.values())</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">					if (bs.style == style.charAt(0))</span>
+<span class="nc" id="L182">						return bs;</span>
+
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			for (String s : style.split(&quot;\\s&quot;)) {</span>
+<span class="fc" id="L185">				s = s.replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">				for (BoxStyle bs : BoxStyle.values())</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">					if (s.equalsIgnoreCase(bs.stereotype))</span>
+<span class="nc" id="L188">						return bs;</span>
+			}
+		}
+<span class="fc" id="L191">		return PLAIN;</span>
+	}
+
+	public final UDrawable getUDrawable(final double width, final double height, final double shadowing,
+			final double roundCorner) {
+<span class="fc" id="L196">		return new UDrawable() {</span>
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L198">				drawInternal(ug, width - getShield(), height, shadowing, roundCorner);</span>
+<span class="fc" id="L199">			}</span>
+		};
+	}
+
+	protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L204">		return null;</span>
+	}
+
+	protected void drawInternal(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
+<span class="fc" id="L208">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="fc" id="L209">		s.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L210">		ug.draw(s);</span>
+
+<span class="fc" id="L212">	}</span>
+
+	public final double getShield() {
+<span class="fc" id="L215">		return shield;</span>
+	}
+
+	public Stereotype getStereotype() {
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (stereotype == null)</span>
+<span class="fc" id="L220">			return null;</span>
+<span class="nc" id="L221">		return Stereotype.build(&quot;&lt;&lt;&quot; + stereotype + &quot;&gt;&gt;&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

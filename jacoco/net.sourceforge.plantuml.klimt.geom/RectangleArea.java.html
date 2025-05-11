@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RectangleArea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">RectangleArea.java</span></div><h1>RectangleArea.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.klimt.geom;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.utils.MathUtils;
+
+public class RectangleArea {
+
+	private final double minX;
+	private final double minY;
+	private final double maxX;
+	private final double maxY;
+
+<span class="fc" id="L48">	public RectangleArea(double minX, double minY, double maxX, double maxY) {</span>
+<span class="fc" id="L49">		this.minX = minX;</span>
+<span class="fc" id="L50">		this.minY = minY;</span>
+<span class="fc" id="L51">		this.maxX = maxX;</span>
+<span class="fc" id="L52">		this.maxY = maxY;</span>
+<span class="fc" id="L53">	}</span>
+
+	public static RectangleArea build(XPoint2D pt1, XPoint2D pt2) {
+<span class="fc" id="L56">		return new RectangleArea(MathUtils.min(pt1.x, pt2.x), MathUtils.min(pt1.y, pt2.y), MathUtils.max(pt1.x, pt2.x),</span>
+<span class="fc" id="L57">				MathUtils.max(pt1.y, pt2.y));</span>
+	}
+
+	public RectangleArea move(double deltaX, double deltaY) {
+<span class="nc" id="L61">		return new RectangleArea(minX + deltaX, minY + deltaY, maxX + deltaX, maxY + deltaY);</span>
+	}
+
+	public double getWidth() {
+<span class="fc" id="L65">		return maxX - minX;</span>
+	}
+
+	public double getHeight() {
+<span class="fc" id="L69">		return maxY - minY;</span>
+	}
+
+	public boolean contains(double x, double y) {
+<span class="nc bnc" id="L73" title="All 8 branches missed.">		return x &gt;= minX &amp;&amp; x &lt; maxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt; maxY;</span>
+	}
+
+	public RectangleArea merge(RectangleArea other) {
+<span class="nc" id="L77">		return new RectangleArea(Math.min(this.minX, other.minX), Math.min(this.minY, other.minY),</span>
+<span class="nc" id="L78">				Math.max(this.maxX, other.maxX), Math.max(this.maxY, other.maxY));</span>
+	}
+
+	public RectangleArea merge(XPoint2D point) {
+<span class="fc" id="L82">		final double x = point.getX();</span>
+<span class="fc" id="L83">		final double y = point.getY();</span>
+<span class="fc" id="L84">		return new RectangleArea(Math.min(this.minX, x), Math.min(this.minY, y), Math.max(this.maxX, x),</span>
+<span class="fc" id="L85">				Math.max(this.maxY, y));</span>
+	}
+
+	public boolean contains(XPoint2D p) {
+<span class="nc" id="L89">		return contains(p.getX(), p.getY());</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L94">		return &quot;minX=&quot; + minX + &quot; maxX=&quot; + maxX + &quot; minY=&quot; + minY + &quot; maxY=&quot; + maxY;</span>
+	}
+
+	public final double getMinX() {
+<span class="fc" id="L98">		return minX;</span>
+	}
+
+	public final double getMinY() {
+<span class="fc" id="L102">		return minY;</span>
+	}
+
+	public final double getMaxX() {
+<span class="fc" id="L106">		return maxX;</span>
+	}
+
+	public final double getMaxY() {
+<span class="fc" id="L110">		return maxY;</span>
+	}
+
+	public PointDirected getIntersection(XCubicCurve2D bez) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (contains(bez.x1, bez.y1) == contains(bez.x2, bez.y2))</span>
+<span class="nc" id="L115">			return null;</span>
+
+<span class="nc" id="L117">		final double dist = bez.getP1().distance(bez.getP2());</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (dist &lt; 2) {</span>
+<span class="nc" id="L119">			final double angle = BezierUtils.getStartingAngle(bez);</span>
+<span class="nc" id="L120">			return new PointDirected(bez.getP1(), angle);</span>
+		}
+<span class="nc" id="L122">		final XCubicCurve2D left = XCubicCurve2D.none();</span>
+<span class="nc" id="L123">		final XCubicCurve2D right = XCubicCurve2D.none();</span>
+<span class="nc" id="L124">		bez.subdivide(left, right);</span>
+<span class="nc" id="L125">		final PointDirected int1 = getIntersection(left);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (int1 != null)</span>
+<span class="nc" id="L127">			return int1;</span>
+
+<span class="nc" id="L129">		final PointDirected int2 = getIntersection(right);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (int2 != null)</span>
+<span class="nc" id="L131">			return int2;</span>
+
+<span class="nc" id="L133">		throw new IllegalStateException();</span>
+	}
+
+	public XPoint2D getPointCenter() {
+<span class="fc" id="L137">		return new XPoint2D((minX + maxX) / 2, (minY + maxY) / 2);</span>
+	}
+
+	public RectangleArea withMinX(double d) {
+<span class="nc" id="L141">		return new RectangleArea(d, minY, maxX, maxY);</span>
+	}
+
+	public RectangleArea withMaxX(double d) {
+<span class="fc" id="L145">		return new RectangleArea(minX, minY, d, maxY);</span>
+	}
+
+	public RectangleArea addMaxX(double d) {
+<span class="nc" id="L149">		return new RectangleArea(minX, minY, maxX + d, maxY);</span>
+	}
+
+	public RectangleArea addMaxY(double d) {
+<span class="nc" id="L153">		return new RectangleArea(minX, minY, maxX, maxY + d);</span>
+	}
+
+	public RectangleArea addMinX(double d) {
+<span class="fc" id="L157">		return new RectangleArea(minX + d, minY, maxX, maxY);</span>
+	}
+
+	public RectangleArea addMinY(double d) {
+<span class="nc" id="L161">		return new RectangleArea(minX, minY + d, maxX, maxY);</span>
+	}
+
+	public RectangleArea withMinY(double d) {
+<span class="fc" id="L165">		return new RectangleArea(minX, d, maxX, maxY);</span>
+	}
+
+	public RectangleArea withMaxY(double d) {
+<span class="fc" id="L169">		return new RectangleArea(minX, minY, maxX, d);</span>
+	}
+
+//	public XPoint2D getProjectionOnFrontier(XPoint2D pt) {
+//		final double x = pt.getX();
+//		final double y = pt.getY();
+//		if (x &gt; maxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY)
+//			return new XPoint2D(maxX - 1, y);
+//
+//		if (x &lt; minX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY)
+//			return new XPoint2D(minX + 1, y);
+//
+//		if (y &gt; maxY &amp;&amp; x &gt;= minX &amp;&amp; x &lt;= maxX)
+//			return new XPoint2D(x, maxY - 1);
+//
+//		if (y &lt; minY &amp;&amp; x &gt;= minX &amp;&amp; x &lt;= maxX)
+//			return new XPoint2D(x, minY + 1);
+//
+//		return new XPoint2D(x, y);
+//	}
+
+	public RectangleArea delta(double m1, double m2) {
+<span class="nc" id="L191">		return new RectangleArea(minX, minY, maxX + m1, maxY + m2);</span>
+	}
+
+	public XDimension2D getDimension() {
+<span class="nc" id="L195">		return new XDimension2D(maxX - minX, maxY - minY);</span>
+	}
+
+	public UTranslate getPosition() {
+<span class="fc" id="L199">		return new UTranslate(getMinX(), getMinY());</span>
+	}
+
+//	public boolean isPointJustUpper(XPoint2D pt) {
+//		if (pt.getX() &gt;= minX &amp;&amp; pt.getX() &lt;= maxX &amp;&amp; pt.getY() &lt;= minY) {
+//			return true;
+//		}
+//		return false;
+//	}
+
+	public Side getClosestSide(XPoint2D pt) {
+<span class="nc" id="L210">		final double distNorth = Math.abs(minY - pt.getY());</span>
+<span class="nc" id="L211">		final double distSouth = Math.abs(maxY - pt.getY());</span>
+<span class="nc" id="L212">		final double distWest = Math.abs(minX - pt.getX());</span>
+<span class="nc" id="L213">		final double distEast = Math.abs(maxX - pt.getX());</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (isSmallerThan(distNorth, distWest, distEast, distSouth))</span>
+<span class="nc" id="L215">			return Side.NORTH;</span>
+
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (isSmallerThan(distSouth, distNorth, distWest, distEast))</span>
+<span class="nc" id="L218">			return Side.SOUTH;</span>
+
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (isSmallerThan(distEast, distNorth, distWest, distSouth))</span>
+<span class="nc" id="L221">			return Side.EAST;</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (isSmallerThan(distWest, distNorth, distEast, distSouth))</span>
+<span class="nc" id="L224">			return Side.WEST;</span>
+
+<span class="nc" id="L226">		return null;</span>
+	}
+
+	private boolean isSmallerThan(double value, double a, double b, double c) {
+<span class="nc bnc" id="L230" title="All 6 branches missed.">		return value &lt;= a &amp;&amp; value &lt;= b &amp;&amp; value &lt;= c;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

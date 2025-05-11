@@ -1,0 +1,943 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OregonBasicGame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.oregon</a> &gt; <span class="el_source">OregonBasicGame.java</span></div><h1>OregonBasicGame.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.oregon;
+
+import java.util.Random;
+
+import net.sourceforge.plantuml.StringUtils;
+
+<span class="nc" id="L42">public class OregonBasicGame implements BasicGame {</span>
+
+	private Screen screen;
+	private SmartKeyboard skb;
+	private Random rnd;
+
+	private int ks;
+	private int kh;
+	private int kp;
+	private int kb;
+	private int km;
+	private int kq;
+
+	private double ma;
+
+<span class="nc" id="L57">	private final String da[] = new String[] { &quot;March 29&quot;, &quot;April 12&quot;, &quot;April 26&quot;, &quot;May 10&quot;, &quot;May 24&quot;, &quot;June 7&quot;,</span>
+			&quot;June 21&quot;, &quot;July 5&quot;, &quot;July 19&quot;, &quot;August 2&quot;, &quot;August 16&quot;, &quot;August 31&quot;, &quot;September 13&quot;, &quot;September 27&quot;,
+			&quot;October 11&quot;, &quot;October 25&quot;, &quot;November 8&quot;, &quot;November 22&quot;, &quot;December 6&quot;, &quot;December 20&quot; };
+
+<span class="nc" id="L61">	private final int ep[] = new int[] { 6, 11, 13, 15, 17, 22, 32, 35, 37, 42, 44, 54, 64, 69, 95 };</span>
+
+	public Screen getScreen() {
+<span class="nc" id="L64">		return screen;</span>
+	}
+
+	private void print(String s) {
+<span class="nc" id="L68">		screen.print(s);</span>
+<span class="nc" id="L69">	}</span>
+
+	private void printb(String s) {
+<span class="nc" id="L72">		screen.print(&quot;&lt;b&gt;** &quot; + s + &quot; **&lt;/b&gt;&quot;);</span>
+<span class="nc" id="L73">	}</span>
+
+	private void print() {
+<span class="nc" id="L76">		screen.print();</span>
+<span class="nc" id="L77">	}</span>
+
+	public void run(Keyboard keyboard) throws NoInputException {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (screen != null) {</span>
+<span class="nc" id="L81">			throw new IllegalStateException();</span>
+		}
+<span class="nc" id="L83">		screen = new Screen();</span>
+<span class="nc" id="L84">		skb = new SmartKeyboard(keyboard);</span>
+<span class="nc" id="L85">		init();</span>
+<span class="nc" id="L86">	}</span>
+
+	private double rnd() {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (this.rnd == null) {</span>
+<span class="nc" id="L90">			this.rnd = new Random(skb.getHistory().hashCode());</span>
+		}
+<span class="nc" id="L92">		return rnd.nextDouble();</span>
+	}
+
+	private void init() throws NoInputException {
+<span class="nc" id="L96">		printInitialScenario490();</span>
+<span class="nc" id="L97">		initialPurchasesOfPlayer690();</span>
+<span class="nc" id="L98">		initialShootingRanking920();</span>
+<span class="nc" id="L99">		screen.clear();</span>
+<span class="nc" id="L100">		print(&quot;&lt;i&gt;** Your trip is about to begin... **&lt;/i&gt;&quot;);</span>
+<span class="nc" id="L101">		print();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (int j = 0; j &lt; 20; j++) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (m &gt; 2039) {</span>
+<span class="nc" id="L104">				madeIt3190(j);</span>
+<span class="nc" id="L105">				break;</span>
+			}
+<span class="nc" id="L107">			print(&quot;&lt;b&gt;Monday, &quot; + da[j] + &quot;, 1847&lt;/b&gt;. You are &quot; + whereAreWe());</span>
+<span class="nc" id="L108">			print();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (f &lt; 6) {</span>
+<span class="nc" id="L110">				print(&quot;&lt;b&gt;** You're low on food. Better buy some or go hunting soon. **&quot;);</span>
+<span class="nc" id="L111">				print();</span>
+			}
+<span class="nc bnc" id="L113" title="All 4 branches missed.">			if (ks == 1 || kh == 1) {</span>
+<span class="nc" id="L114">				t = t - 10;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				if (t &lt; 0) {</span>
+<span class="nc" id="L116">					needDoctorBadly3010(j);</span>
+				}
+<span class="nc" id="L118">				print(&quot;Doctor charged &lt;b&gt;$10&lt;/b&gt; for his services&quot;);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">				print(&quot;to treat your &quot; + (ks == 1 ? &quot;illness.&quot; : &quot;injuries.&quot;));</span>
+			}
+			// MP flag to be done?
+
+<span class="nc" id="L123">			m = (int) (m + .5);</span>
+<span class="nc" id="L124">			print(&quot;Total mileage to date is: &lt;b&gt;&quot; + ((int) m) + &quot;&lt;/b&gt;&quot;);</span>
+<span class="nc" id="L125">			m += 200 + (a - 110) / 2.5 + 10 * rnd();</span>
+<span class="nc" id="L126">			print();</span>
+			// Calculate how far we travel in 2 weeks
+<span class="nc" id="L128">			print(&quot;Here's what you now have (no. of bullets, $ worth of other items) :&quot;);</span>
+<span class="nc" id="L129">			printInventory3350();</span>
+<span class="nc" id="L130">			question1000(j);</span>
+<span class="nc" id="L131">			eating1310(j);</span>
+<span class="nc" id="L132">			screen.clear();</span>
+<span class="nc" id="L133">			riders1390(j);</span>
+			// print();
+<span class="nc" id="L135">			events1800(j);</span>
+			// print();
+<span class="nc" id="L137">			montains2640(j);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (skb.hasMore()) {</span>
+<span class="nc" id="L139">				screen.clear();</span>
+			}
+		}
+<span class="nc" id="L142">	}</span>
+
+	private void events1800(int j) throws NoInputException {
+<span class="nc" id="L145">		final int rn = (int) (100.0 * rnd());</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		for (int i = 0; i &lt; ep.length; i++) {</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (rn &lt;= ep[i]) {</span>
+<span class="nc" id="L148">				execEvent(i, j);</span>
+<span class="nc" id="L149">				return;</span>
+			}
+		}
+<span class="nc" id="L152">		execEvent(ep.length, j);</span>
+<span class="nc" id="L153">	}</span>
+
+	private void execEvent(int i, int j) throws NoInputException {
+<span class="nc bnc" id="L156" title="All 17 branches missed.">		switch (i) {</span>
+		case 0:
+<span class="nc" id="L158">			printb(&quot;Your wagon breaks down. It costs you time and supplies to fix it.&quot;);</span>
+<span class="nc" id="L159">			m = m - 15 - 5 * rnd();</span>
+<span class="nc" id="L160">			r = r - 4;</span>
+<span class="nc" id="L161">			break;</span>
+		case 1:
+<span class="nc" id="L163">			printb(&quot;An ox gores your leg. That slows you down for the rest of the trip.&quot;);</span>
+<span class="nc" id="L164">			m = m - 25;</span>
+<span class="nc" id="L165">			a = a - 10;</span>
+<span class="nc" id="L166">			break;</span>
+		case 2:
+<span class="nc" id="L168">			printb(&quot;Bad luck... your daughter breaks her arm. You must stop and&quot;);</span>
+<span class="nc" id="L169">			printb(&quot;make a splint and sling with some of your medical supplies.&quot;);</span>
+<span class="nc" id="L170">			m = m - 5 - 4 * rnd();</span>
+<span class="nc" id="L171">			r = r - 1 - 2 * rnd();</span>
+<span class="nc" id="L172">			break;</span>
+		case 3:
+<span class="nc" id="L174">			printb(&quot;An ox wanders off and you have to spend time looking for it.&quot;);</span>
+<span class="nc" id="L175">			m = m - 17;</span>
+<span class="nc" id="L176">			break;</span>
+		case 4:
+<span class="nc" id="L178">			printb(&quot;Your son gets lost and you spend half a day searching for him.&quot;);</span>
+<span class="nc" id="L179">			m = m - 10;</span>
+<span class="nc" id="L180">			break;</span>
+		case 5:
+<span class="nc" id="L182">			printb(&quot;Nothing but contaminated and stagnant water near the trail.&quot;);</span>
+<span class="nc" id="L183">			printb(&quot;You lose time looking for a clean spring or creek.&quot;);</span>
+<span class="nc" id="L184">			m = m - 2 - 10 * rnd();</span>
+<span class="nc" id="L185">			break;</span>
+
+		case 6:
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (m &gt; 950) {</span>
+<span class="nc" id="L189">				int c1 = 0;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (c &lt; 11 + 2 * rnd()) {</span>
+<span class="nc" id="L191">					c1 = 1;</span>
+				}
+<span class="nc bnc" id="L193" title="All 2 branches missed.">				printb(&quot;Cold weather... Brrrrrrr! ... You &quot; + (c1 == 1 ? &quot;don't &quot; : &quot;&quot;)</span>
+						+ &quot;have enough clothing to keep warm.&quot;);
+<span class="nc bnc" id="L195" title="All 2 branches missed.">				if (c1 == 1) {</span>
+<span class="nc" id="L196">					dealWithIllness2880(j);</span>
+				}
+<span class="nc" id="L198">			} else {</span>
+<span class="nc" id="L199">				printb(&quot;Heavy rains. Traveling is slow in the mud and you break your spare&quot;);</span>
+<span class="nc" id="L200">				printb(&quot;ox yoke using it to pry your wagon out of the mud. Worse yet, some&quot;);</span>
+<span class="nc" id="L201">				printb(&quot;of your ammo is damaged by the water.&quot;);</span>
+<span class="nc" id="L202">				m = m - 5 - 10 * rnd();</span>
+<span class="nc" id="L203">				r = r - 7;</span>
+<span class="nc" id="L204">				b = b - 400;</span>
+<span class="nc" id="L205">				f = f - 5;</span>
+			}
+<span class="nc" id="L207">			break;</span>
+
+		case 7:
+<span class="nc" id="L210">			printb(&quot;Bandits attacking!&quot;);</span>
+<span class="nc" id="L211">			final int br1 = shoot3870();</span>
+<span class="nc" id="L212">			b = b - 20 * br1;</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (b &gt; 0) {</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">				if (br1 &lt;= 1) {</span>
+<span class="nc" id="L215">					print(&quot;That was the quickest draw outside of Dodge City.&quot;);</span>
+<span class="nc" id="L216">					print(&quot;You got at least one and drove 'em off.&quot;);</span>
+<span class="nc" id="L217">					return;</span>
+				}
+			} else {
+<span class="nc" id="L220">				t = t / 3;</span>
+<span class="nc" id="L221">				print(&quot;You try to drive them off but you run out of bullets.&quot;);</span>
+<span class="nc" id="L222">				print(&quot;They grab as much cash as they can find.&quot;);</span>
+
+			}
+<span class="nc" id="L225">			print(&quot;You get shot in the leg -&quot;);</span>
+<span class="nc" id="L226">			kh = 1;</span>
+<span class="nc" id="L227">			print(&quot;and they grab one of your oxen.&quot;);</span>
+<span class="nc" id="L228">			a = a - 10;</span>
+<span class="nc" id="L229">			r = r - 2;</span>
+<span class="nc" id="L230">			print(&quot;Better have a doc look at your leg... and soon!&quot;);</span>
+<span class="nc" id="L231">			break;</span>
+
+		case 8:
+<span class="nc" id="L234">			printb(&quot;You have a fire in your wagon. Food and supplies are damaged.&quot;);</span>
+<span class="nc" id="L235">			m = m - 15;</span>
+<span class="nc" id="L236">			f = f - 20;</span>
+<span class="nc" id="L237">			b = b - 400;</span>
+<span class="nc" id="L238">			r = r - 2 * 6 * rnd();</span>
+<span class="nc" id="L239">			break;</span>
+
+		case 9:
+<span class="nc" id="L242">			printb(&quot;You lose your way in heavy fog. Time lost regaining the trail.&quot;);</span>
+<span class="nc" id="L243">			m = m - 10 - 5 * rnd();</span>
+<span class="nc" id="L244">			break;</span>
+
+		case 10:
+<span class="nc" id="L247">			printb(&quot;You come upon a rattlesnake and before you are able to get your gun&quot;);</span>
+<span class="nc" id="L248">			printb(&quot;out, it bites you.&quot;);</span>
+<span class="nc" id="L249">			b = b - 10;</span>
+<span class="nc" id="L250">			r = r - 2;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">			if (r &lt; 0) {</span>
+<span class="nc" id="L252">				printb(&quot;You have no medical supplies left, and you die of poison.&quot;);</span>
+<span class="nc" id="L253">				die3060(j);</span>
+
+			}
+<span class="nc" id="L256">			print(&quot;Fortunately, you acted quickly, sucked out the poison, and&quot;);</span>
+<span class="nc" id="L257">			print(&quot;treated the wound. It is painful, but you'll survive.&quot;);</span>
+<span class="nc" id="L258">			break;</span>
+
+		case 11:
+<span class="nc" id="L261">			print(&quot;Your wagon gets swamped fording a river; you lose food and clothes.&quot;);</span>
+<span class="nc" id="L262">			m = m - 20 - 20 * rnd();</span>
+<span class="nc" id="L263">			f = f - 15;</span>
+<span class="nc" id="L264">			c = c - 10;</span>
+<span class="nc" id="L265">			break;</span>
+
+		case 12:
+<span class="nc" id="L268">			printb(&quot;You're sound asleep and you hear a noise... get up to investigate.&quot;);</span>
+<span class="nc" id="L269">			printb(&quot;It's wild animals! They attack you!&quot;);</span>
+<span class="nc" id="L270">			final int br2 = shoot3870();</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">			if (b &lt;= 39) {</span>
+<span class="nc" id="L272">				print(&quot;You're almost out of ammo; can't reach more.&quot;);</span>
+<span class="nc" id="L273">				print(&quot;The wolves come at you biting and clawing.&quot;);</span>
+<span class="nc" id="L274">				kh = 1;</span>
+<span class="nc" id="L275">				die3030(j);</span>
+			}
+<span class="nc bnc" id="L277" title="All 2 branches missed.">			if (br2 &lt;= 2) {</span>
+<span class="nc" id="L278">				print(&quot;Nice shooting, pardner... They didn't get much.&quot;);</span>
+			} else {
+<span class="nc" id="L280">				print(&quot;Kind of slow on the draw. The wolves got at your food and clothes.&quot;);</span>
+<span class="nc" id="L281">				b = b - 20 * br2;</span>
+<span class="nc" id="L282">				c = c - 2 * br2;</span>
+<span class="nc" id="L283">				f = f - 4 * br2;</span>
+			}
+<span class="nc" id="L285">			break;</span>
+
+		case 13:
+<span class="nc" id="L288">			printb(&quot;You're caught in a fierce hailstorm; ammo and supplies are damaged.&quot;);</span>
+<span class="nc" id="L289">			m = m - 5 - 10 * rnd();</span>
+<span class="nc" id="L290">			b = b - 150;</span>
+<span class="nc" id="L291">			r = r - 2 - 2 * rnd();</span>
+<span class="nc" id="L292">			break;</span>
+
+		case 14:
+<span class="nc bnc" id="L295" title="All 2 branches missed.">			if (e == 1) {</span>
+<span class="nc" id="L296">				dealWithIllness2880(j);</span>
+<span class="nc bnc" id="L297" title="All 4 branches missed.">			} else if (e == 2 &amp;&amp; rnd() &gt; .25) {</span>
+<span class="nc" id="L298">				dealWithIllness2880(j);</span>
+<span class="nc bnc" id="L299" title="All 4 branches missed.">			} else if (e == 3 &amp;&amp; rnd() &gt; .5) {</span>
+<span class="nc" id="L300">				dealWithIllness2880(j);</span>
+			}
+			break;
+
+		case 15:
+<span class="nc" id="L305">			printb(&quot;Helpful Indians show you where to find more food.&quot;);</span>
+<span class="nc" id="L306">			f = f + 7;</span>
+<span class="nc" id="L307">			break;</span>
+
+		default:
+<span class="nc" id="L310">			printb(&quot;EVENT &quot; + i);</span>
+		}
+<span class="nc" id="L312">		print();</span>
+
+<span class="nc" id="L314">	}</span>
+
+	private void madeIt3190(int j) throws NoInputException {
+<span class="nc" id="L317">		final double ml = (2040 - ma) / (m - ma);</span>
+<span class="nc" id="L318">		f = f + (1 - ml) * (8 + 5 * e);</span>
+<span class="nc" id="L319">		print(&quot;You finally arrived at Oregon City after 2040 long miles.&quot;);</span>
+<span class="nc" id="L320">		print(&quot;You're exhausted and haggard, but you made it! A real pioneer!&quot;);</span>
+<span class="nc" id="L321">		final int d = (int) (14 * (j + ml));</span>
+<span class="nc" id="L322">		final int dm = (int) (d / 30.5);</span>
+<span class="nc" id="L323">		final int dd = (int) (d - 30.5 * dm);</span>
+<span class="nc" id="L324">		print(&quot;You've been on the trail for &quot; + dm + &quot; months and &quot; + dd + &quot; days.&quot;);</span>
+<span class="nc" id="L325">		print(&quot;You have few supplies remaining :&quot;);</span>
+<span class="nc" id="L326">		printInventory3350();</span>
+<span class="nc" id="L327">		print();</span>
+<span class="nc" id="L328">		print(&quot;President James A. Polk sends you his heartiest&quot;);</span>
+
+<span class="nc" id="L330">		print(&quot;congratulations and wishes you a prosperous life in your new home.&quot;);</span>
+<span class="nc" id="L331">		throw new NoInputException();</span>
+	}
+
+	private boolean riders1390(int j) throws NoInputException {
+<span class="nc" id="L335">		final double value = (Math.pow(m / 100 - 4, 2) + 72) / (Math.pow(m / 100 - 4, 2) + 12) - 1;</span>
+<span class="nc" id="L336">		final double random = 10.0 * rnd();</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (random &gt; value) {</span>
+<span class="nc" id="L338">			return false;</span>
+		}
+<span class="nc" id="L340">		int gh = 0;</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		if (rnd() &gt; .2) {</span>
+<span class="nc" id="L342">			gh = 1;</span>
+		}
+<span class="nc" id="L344">		print();</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		print(&quot;Riders ahead! They &quot; + (gh == 1 ? &quot;don't &quot; : &quot;&quot;) + &quot;look hostile.&quot;);</span>
+		int gt;
+		do {
+<span class="nc" id="L348">			print(&quot;You can &lt;b&gt;(1)&lt;/b&gt; run, &lt;b&gt;(2)&lt;/b&gt; attack, &lt;b&gt;(3)&lt;/b&gt; ignore them, or &lt;b&gt;(4)&lt;/b&gt; circle wagons.&quot;);</span>
+<span class="nc" id="L349">			gt = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L350" title="All 4 branches missed.">		} while (gt &lt; 0 || gt &gt; 4);</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">		if (rnd() &lt; .2) {</span>
+<span class="nc" id="L352">			gh = 1 - gh;</span>
+		}
+<span class="nc bnc" id="L354" title="All 2 branches missed.">		if (gh == 1) {</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">			if (gt == 1) {</span>
+<span class="nc" id="L356">				m = m + 15;</span>
+<span class="nc" id="L357">				a = a - 5;</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">			} else if (gt == 2) {</span>
+<span class="nc" id="L359">				m = m - 5;</span>
+<span class="nc" id="L360">				b = b - 100;</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">			} else if (gt == 4) {</span>
+<span class="nc" id="L362">				m = m - 20;</span>
+			}
+<span class="nc" id="L364">			print(&quot;Riders were friendly, but check for possible losses.&quot;);</span>
+<span class="nc" id="L365">			return true;</span>
+		}
+<span class="nc bnc" id="L367" title="All 2 branches missed.">		if (gt == 1) {</span>
+<span class="nc" id="L368">			m = m + 20;</span>
+<span class="nc" id="L369">			r = r - 7;</span>
+<span class="nc" id="L370">			b = b - 150;</span>
+<span class="nc" id="L371">			a = a - 20;</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">		} else if (gt == 2) {</span>
+<span class="nc" id="L373">			final int br = shoot3870();</span>
+<span class="nc" id="L374">			b = b - br * 40 - 80;</span>
+<span class="nc" id="L375">			riderShoot(br);</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">		} else if (gt == 3) {</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">			if (rnd() &gt; .8) {</span>
+<span class="nc" id="L378">				print(&quot;They did not attack. Whew!&quot;);</span>
+<span class="nc" id="L379">				return true;</span>
+			}
+<span class="nc" id="L381">			b = b - 150;</span>
+<span class="nc" id="L382">			r = r - 7;</span>
+		} else {
+<span class="nc bnc" id="L384" title="All 2 branches missed.">			assert gt == 4;</span>
+<span class="nc" id="L385">			final int br = shoot3870();</span>
+<span class="nc" id="L386">			b = b - br * 30 - 80;</span>
+<span class="nc" id="L387">			m = m - 25;</span>
+<span class="nc" id="L388">			riderShoot(br);</span>
+		}
+<span class="nc" id="L390">		print(&quot;Riders were hostile. Better check for losses!&quot;);</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">		if (b &gt;= 0) {</span>
+<span class="nc" id="L392">			return true;</span>
+		}
+<span class="nc" id="L394">		print();</span>
+<span class="nc" id="L395">		print(&quot;&lt;b&gt;Oh, my gosh!&lt;/b&gt;&quot;);</span>
+<span class="nc" id="L396">		print(&quot;They're coming back and you're out of ammo! Your dreams turn to&quot;);</span>
+<span class="nc" id="L397">		print(&quot;dust as you and your family are massacred on the prairie.&quot;);</span>
+<span class="nc" id="L398">		print3110(j);</span>
+<span class="nc" id="L399">		return true;</span>
+
+	}
+
+	private void riderShoot(final int br) {
+<span class="nc bnc" id="L404" title="All 2 branches missed.">		if (br &lt;= 1) {</span>
+<span class="nc" id="L405">			print(&quot;Nice shooting - you drove them off.&quot;);</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		} else if (br &lt;= 4) {</span>
+<span class="nc" id="L407">			print(&quot;Kind of slow with your Colt .45.&quot;);</span>
+		} else {
+<span class="nc" id="L409">			print(&quot;Pretty slow on the draw, partner. You got a nasty flesh wound.&quot;);</span>
+<span class="nc" id="L410">			kh = 1;</span>
+<span class="nc" id="L411">			print(&quot;You'll have to see the doc soon as you can.&quot;);</span>
+		}
+<span class="nc" id="L413">	}</span>
+
+	private void montains2640(int j) throws NoInputException {
+<span class="nc bnc" id="L416" title="All 2 branches missed.">		if (m &lt;= 975) {</span>
+<span class="nc" id="L417">			return;</span>
+		}
+<span class="nc" id="L419">		final double mm = m / 100.0 - 15;</span>
+<span class="nc bnc" id="L420" title="All 2 branches missed.">		if (10 * rnd() &gt; 9 - (mm * mm + 72) / (mm * mm + 12)) {</span>
+<span class="nc" id="L421">			southPass2750(j);</span>
+<span class="nc" id="L422">			return;</span>
+		}
+<span class="nc" id="L424">		print(&quot;You're in rugged mountain country.&quot;);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">		if (rnd() &lt;= .1) {</span>
+<span class="nc" id="L426">			print(&quot;You get lost and lose valuable time trying to find the trail.&quot;);</span>
+<span class="nc" id="L427">			m = m - 60;</span>
+<span class="nc" id="L428">			southPass2750(j);</span>
+<span class="nc" id="L429">			return;</span>
+		}
+<span class="nc bnc" id="L431" title="All 2 branches missed.">		if (rnd() &gt; .11) {</span>
+<span class="nc" id="L432">			print(&quot;The going is really slow; oxen are very tired.&quot;);</span>
+<span class="nc" id="L433">			m = m - 45 - 50 * rnd();</span>
+		} else {
+<span class="nc" id="L435">			print(&quot;Trail cave in damages your wagon. You lose time and supplies.&quot;);</span>
+<span class="nc" id="L436">			m = m - 20 - 30 * rnd();</span>
+<span class="nc" id="L437">			b = b - 200;</span>
+<span class="nc" id="L438">			r = r - 3;</span>
+		}
+<span class="nc" id="L440">		southPass2750(j);</span>
+
+<span class="nc" id="L442">	}</span>
+
+	private void southPass2750(int j) throws NoInputException {
+<span class="nc bnc" id="L445" title="All 2 branches missed.">		if (kp == 0) {</span>
+<span class="nc" id="L446">			kp = 1;</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">			if (rnd() &lt; .8) {</span>
+<span class="nc" id="L448">				blizzard2840(j);</span>
+<span class="nc" id="L449">				return;</span>
+			}
+<span class="nc" id="L451">			print(&quot;You made it safely through the South Pass....no snow!&quot;);</span>
+		}
+<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (m &lt; 1700) {</span>
+<span class="nc" id="L454">			return;</span>
+		}
+<span class="nc bnc" id="L456" title="All 2 branches missed.">		if (km == 0) {</span>
+<span class="nc" id="L457">			km = 1;</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">			if (rnd() &lt; .7) {</span>
+<span class="nc" id="L459">				blizzard2840(j);</span>
+			}
+		}
+
+<span class="nc" id="L463">	}</span>
+
+	private void blizzard2840(int j) throws NoInputException {
+<span class="nc" id="L466">		print(&quot;Blizzard in the mountain pass. Going is slow; supplies are lost.&quot;);</span>
+<span class="nc" id="L467">		kb = 1;</span>
+<span class="nc" id="L468">		m = m - 30 - 40 * rnd();</span>
+<span class="nc" id="L469">		f = f - 12;</span>
+<span class="nc" id="L470">		b = b - 200;</span>
+<span class="nc" id="L471">		r = r - 5;</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">		if (c &lt; 18 + 2 * rnd()) {</span>
+<span class="nc" id="L473">			dealWithIllness2880(j);</span>
+		}
+<span class="nc" id="L475">	}</span>
+
+	private void dealWithIllness2880(int j) throws NoInputException {
+<span class="nc bnc" id="L478" title="All 2 branches missed.">		if (100 * rnd() &lt; 10 + 35 * (e - 1)) {</span>
+<span class="nc" id="L479">			print(&quot;Mild illness. Your own medicine will cure it.&quot;);</span>
+<span class="nc" id="L480">			m -= 5;</span>
+<span class="nc" id="L481">			r -= 1;</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">		} else if (100 * rnd() &lt; 100.0 - 40.0 / Math.pow(4.0, e - 1)) {</span>
+<span class="nc" id="L483">			print(&quot;The whole family is sick. Your medicine will probably work okay.&quot;);</span>
+<span class="nc" id="L484">			m -= 5;</span>
+<span class="nc" id="L485">			r -= 2.5;</span>
+		} else {
+<span class="nc" id="L487">			print(&quot;Serious illness in the family. You'll have to stop and see a doctor&quot;);</span>
+<span class="nc" id="L488">			print(&quot;soon. For now, your medicine will work.&quot;);</span>
+<span class="nc" id="L489">			r -= 5;</span>
+<span class="nc" id="L490">			ks = 1;</span>
+		}
+<span class="nc bnc" id="L492" title="All 2 branches missed.">		if (r &lt;= 0) {</span>
+<span class="nc" id="L493">			print(&quot;...if only you had enough.&quot;);</span>
+<span class="nc" id="L494">			outOfMedicalSupplies3020(j);</span>
+		}
+
+<span class="nc" id="L497">	}</span>
+
+	private void eating1310(int j) throws NoInputException {
+<span class="nc bnc" id="L500" title="All 2 branches missed.">		if (f &lt; 5) {</span>
+<span class="nc" id="L501">			die3000(j);</span>
+<span class="nc" id="L502">			return;</span>
+		}
+		do {
+<span class="nc" id="L505">			print(&quot;Do you want to eat &lt;b&gt;(1)&lt;/b&gt; poorly, &lt;b&gt;(2)&lt;/b&gt; moderately or &lt;b&gt;(3)&lt;/b&gt; well ?&quot;);</span>
+<span class="nc" id="L506">			e = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L507" title="All 4 branches missed.">			if (e &lt; 1 || e &gt; 3) {</span>
+<span class="nc" id="L508">				print(&quot;Enter 1, 2, or 3, please.&quot;);</span>
+<span class="nc" id="L509">				break;</span>
+			}
+<span class="nc" id="L511">			final int ee = (int) (4 + 2.5 * e);</span>
+<span class="nc bnc" id="L512" title="All 4 branches missed.">			if (e == 1 &amp;&amp; ee &gt; f) {</span>
+<span class="nc" id="L513">				f = 0;</span>
+<span class="nc" id="L514">				return;</span>
+			}
+<span class="nc bnc" id="L516" title="All 2 branches missed.">			if (ee &gt; f) {</span>
+<span class="nc" id="L517">				print(&quot;You don't have enough to eat that well.&quot;);</span>
+<span class="nc" id="L518">				break;</span>
+			}
+<span class="nc" id="L520">			f -= ee;</span>
+<span class="nc" id="L521">			return;</span>
+		} while (true);
+
+<span class="nc" id="L524">	}</span>
+
+	private void needDoctorBadly3010(int j) throws NoInputException {
+<span class="nc" id="L527">		print(&quot;&lt;b&gt;You need a doctor badly but can't afford one.&lt;/b&gt;&quot;);</span>
+<span class="nc" id="L528">		die3030(j);</span>
+<span class="nc" id="L529">	}</span>
+
+	private void outOfMedicalSupplies3020(int j) throws NoInputException {
+<span class="nc" id="L532">		print(&quot;&lt;b&gt;You have run out of all medical supplies.&lt;/b&gt;&quot;);</span>
+<span class="nc" id="L533">		print();</span>
+<span class="nc" id="L534">		die3030(j);</span>
+<span class="nc" id="L535">	}</span>
+
+	private void die3000(int j) throws NoInputException {
+<span class="nc" id="L538">		screen.clear();</span>
+<span class="nc" id="L539">		print(&quot;&lt;b&gt;You run out of food and starve to death.&lt;/b&gt;&quot;);</span>
+<span class="nc" id="L540">		print();</span>
+<span class="nc" id="L541">		print3110(j);</span>
+<span class="nc" id="L542">	}</span>
+
+	private void die3030(int j) throws NoInputException {
+<span class="nc bnc" id="L545" title="All 2 branches missed.">		print(&quot;The wilderness is unforgiving and you die of &quot; + (kh == 1 ? &quot;your injuries&quot; : &quot;pneumonia&quot;));</span>
+<span class="nc" id="L546">		die3060(j);</span>
+<span class="nc" id="L547">	}</span>
+
+	private void die3060(int j) throws NoInputException {
+<span class="nc" id="L550">		print(&quot;Your family tries to push on, but finds the going too rough&quot;);</span>
+<span class="nc" id="L551">		print(&quot; without you.&quot;);</span>
+<span class="nc" id="L552">		print3110(j);</span>
+<span class="nc" id="L553">	}</span>
+
+	private void print3110(int j) throws NoInputException {
+<span class="nc" id="L556">		print(&quot;Some travelers find the bodies of you and your&quot;);</span>
+<span class="nc" id="L557">		print(&quot;family the following spring. They give you a decent&quot;);</span>
+<span class="nc" id="L558">		print(&quot;burial and notify your next of kin.&quot;);</span>
+<span class="nc" id="L559">		print();</span>
+<span class="nc" id="L560">		print(&quot;At the time of your unfortunate demise, you had been on the trail&quot;);</span>
+<span class="nc" id="L561">		final int d = 14 * j;</span>
+<span class="nc" id="L562">		final int dm = (int) (d / 30.5);</span>
+<span class="nc" id="L563">		final int dd = (int) (d - 30.5 * dm);</span>
+<span class="nc" id="L564">		print(&quot;for &quot; + dm + &quot; months and &quot; + dd + &quot; days and had covered &quot; + (int) ((m + 70)) + &quot; miles.&quot;);</span>
+<span class="nc" id="L565">		print();</span>
+<span class="nc" id="L566">		print(&quot;You had a few supplies left :&quot;);</span>
+<span class="nc" id="L567">		printInventory3350();</span>
+<span class="nc" id="L568">		throw new NoInputException();</span>
+	}
+
+	private void question1000(int j) throws NoInputException {
+		int x;
+<span class="nc bnc" id="L573" title="All 2 branches missed.">		if (j % 2 == 1) {</span>
+			do {
+<span class="nc" id="L575">				print(&quot;Want to &lt;b&gt;(1)&lt;/b&gt; stop at the next fort, &lt;b&gt;(2)&lt;/b&gt; hunt, or &lt;b&gt;(3)&lt;/b&gt; push on ?&quot;);</span>
+<span class="nc" id="L576">				x = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L577" title="All 2 branches missed.">				if (x == 3) {</span>
+<span class="nc" id="L578">					return;</span>
+				}
+<span class="nc bnc" id="L580" title="All 2 branches missed.">				if (x == 1) {</span>
+<span class="nc" id="L581">					stopAtFort1100(j);</span>
+<span class="nc" id="L582">					return;</span>
+				}
+<span class="nc bnc" id="L584" title="All 2 branches missed.">				if (x == 2) {</span>
+<span class="nc" id="L585">					hunt1200(j);</span>
+<span class="nc bnc" id="L586" title="All 2 branches missed.">					if (kq == 0) {</span>
+<span class="nc" id="L587">						return;</span>
+					}
+				}
+			} while (true);
+		} else {
+			do {
+<span class="nc" id="L593">				print(&quot;Would you like to &lt;b&gt;(1)&lt;/b&gt; hunt or &lt;b&gt;(2)&lt;/b&gt; continue on ?&quot;);</span>
+<span class="nc" id="L594">				x = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L595" title="All 2 branches missed.">				if (x == 2) {</span>
+<span class="nc" id="L596">					return;</span>
+				}
+<span class="nc bnc" id="L598" title="All 4 branches missed.">			} while (x &lt; 1 || x &gt; 2);</span>
+<span class="nc bnc" id="L599" title="All 2 branches missed.">			if (x == 1) {</span>
+<span class="nc" id="L600">				hunt1200(j);</span>
+			}
+		}
+
+<span class="nc" id="L604">	}</span>
+
+	private void hunt1200(int j) throws NoInputException {
+<span class="nc" id="L607">		kq = 0;</span>
+<span class="nc bnc" id="L608" title="All 2 branches missed.">		if (b &lt;= 39) {</span>
+<span class="nc" id="L609">			print(&quot;Tough luck. You don't have enough ammo to hunt.&quot;);</span>
+<span class="nc" id="L610">			kq = 1;</span>
+<span class="nc" id="L611">			return;</span>
+		}
+<span class="nc" id="L613">		m = m - 45;</span>
+<span class="nc" id="L614">		final int br = shoot3870();</span>
+<span class="nc bnc" id="L615" title="All 2 branches missed.">		if (br &lt;= 1) {</span>
+<span class="nc" id="L616">			print(&quot;Right between the eyes... you got a big one!&quot;);</span>
+<span class="nc" id="L617">			print(&quot;Full bellies tonight!&quot;);</span>
+<span class="nc" id="L618">			b = b - 10 - 4 * rnd();</span>
+<span class="nc" id="L619">			f = f + 26 + 3 * rnd();</span>
+<span class="nc" id="L620">			return;</span>
+		}
+<span class="nc bnc" id="L622" title="All 2 branches missed.">		if (100.0 * rnd() &lt; 13 * br) {</span>
+<span class="nc" id="L623">			print(&quot;You missed completely... and your dinner got away.&quot;);</span>
+<span class="nc" id="L624">			return;</span>
+		}
+<span class="nc" id="L626">		print(&quot;Nice shot... right on target... good eatin' tonight!&quot;);</span>
+<span class="nc" id="L627">		f = f + 24 - 2 * br;</span>
+<span class="nc" id="L628">		b = b - 10 - 3 * br;</span>
+<span class="nc" id="L629">		return;</span>
+	}
+
+	private void stopAtFort1100(int j) throws NoInputException {
+<span class="nc bnc" id="L633" title="All 2 branches missed.">		if (t &lt;= 0) {</span>
+<span class="nc" id="L634">			print(&quot;You sing with the folks there and get a good&quot;);</span>
+<span class="nc" id="L635">			print(&quot;night's sleep, but you have no money to buy anything.&quot;);</span>
+<span class="nc" id="L636">			return;</span>
+		}
+
+		while (true) {
+<span class="nc" id="L640">			print(&quot;What would you like to spend on each of the following&quot;);</span>
+<span class="nc" id="L641">			print(&quot;Food?&quot;);</span>
+<span class="nc" id="L642">			final double p1 = skb.inputInt(screen);</span>
+<span class="nc" id="L643">			print(&quot;Ammunition?&quot;);</span>
+<span class="nc" id="L644">			final double p2 = skb.inputInt(screen);</span>
+<span class="nc" id="L645">			print(&quot;Clothing?&quot;);</span>
+<span class="nc" id="L646">			final double p3 = skb.inputInt(screen);</span>
+<span class="nc" id="L647">			print(&quot;Medicine and supplies?&quot;);</span>
+<span class="nc" id="L648">			final double p4 = skb.inputInt(screen);</span>
+<span class="nc" id="L649">			final double p = p1 + p2 + p3 + p4;</span>
+<span class="nc" id="L650">			print(&quot;The storekeeper tallies up your bill. It comes to $&quot; + ((int) p));</span>
+<span class="nc bnc" id="L651" title="All 2 branches missed.">			if (t &gt;= p) {</span>
+<span class="nc" id="L652">				t = t - p;</span>
+<span class="nc" id="L653">				f = f + .67 * p1;</span>
+<span class="nc" id="L654">				b = b + 33 * p2;</span>
+<span class="nc" id="L655">				c = c + .67 * p3;</span>
+<span class="nc" id="L656">				r = r + .67 * p4;</span>
+<span class="nc" id="L657">				return;</span>
+			}
+<span class="nc" id="L659">			print(&quot;Uh, oh. That's more than you have. Better start over.&quot;);</span>
+<span class="nc" id="L660">		}</span>
+	}
+
+	private void printInventory3350() {
+		// print(&quot;+------+------+------+---------+--------------------+&quot;);
+<span class="nc" id="L665">		print();</span>
+<span class="nc" id="L666">		print(&quot;| &lt;u&gt;Cash&lt;/u&gt; | &lt;u&gt;Food&lt;/u&gt; | &lt;u&gt;Ammo&lt;/u&gt; | &lt;u&gt;Clothes&lt;/u&gt; | &lt;u&gt;Medicine/parts/...&lt;/u&gt; |&quot;);</span>
+<span class="nc" id="L667">		print(&quot;+------+------+------+---------+--------------------+&quot;);</span>
+<span class="nc bnc" id="L668" title="All 2 branches missed.">		if (t &lt; 0) {</span>
+<span class="nc" id="L669">			t = 0;</span>
+		}
+<span class="nc bnc" id="L671" title="All 2 branches missed.">		if (f &lt; 0) {</span>
+<span class="nc" id="L672">			f = 0;</span>
+		}
+<span class="nc bnc" id="L674" title="All 2 branches missed.">		if (b &lt; 0) {</span>
+<span class="nc" id="L675">			b = 0;</span>
+		}
+<span class="nc bnc" id="L677" title="All 2 branches missed.">		if (c &lt; 0) {</span>
+<span class="nc" id="L678">			c = 0;</span>
+		}
+<span class="nc bnc" id="L680" title="All 2 branches missed.">		if (r &lt; 0) {</span>
+<span class="nc" id="L681">			r = 0;</span>
+		}
+<span class="nc" id="L683">		print(String.format(&quot;|%5d |%5d |%5d | %5d   |     %5d          |&quot;, (int) t, (int) f, (int) b, (int) c,</span>
+<span class="nc" id="L684">				(int) r));</span>
+<span class="nc" id="L685">		print(&quot;+------+------+------+---------+--------------------+&quot;);</span>
+<span class="nc" id="L686">		print();</span>
+<span class="nc" id="L687">	}</span>
+
+	private String whereAreWe() {
+<span class="nc bnc" id="L690" title="All 2 branches missed.">		if (m &lt; 5) {</span>
+<span class="nc" id="L691">			return &quot;on the high prairie.&quot;;</span>
+		}
+<span class="nc bnc" id="L693" title="All 2 branches missed.">		if (m &lt; 200) {</span>
+<span class="nc" id="L694">			return &quot;near Independence Crossing on the Big Blue River.&quot;;</span>
+		}
+<span class="nc bnc" id="L696" title="All 2 branches missed.">		if (m &lt; 350) {</span>
+<span class="nc" id="L697">			return &quot;following the Platte River.&quot;;</span>
+		}
+<span class="nc bnc" id="L699" title="All 2 branches missed.">		if (m &lt; 450) {</span>
+<span class="nc" id="L700">			return &quot;near Fort Kearney.&quot;;</span>
+		}
+<span class="nc bnc" id="L702" title="All 2 branches missed.">		if (m &lt; 600) {</span>
+<span class="nc" id="L703">			return &quot;following the North Platte River.&quot;;</span>
+		}
+<span class="nc bnc" id="L705" title="All 2 branches missed.">		if (m &lt; 750) {</span>
+<span class="nc" id="L706">			return &quot;within sight of Chimney Rock.&quot;;</span>
+		}
+<span class="nc bnc" id="L708" title="All 2 branches missed.">		if (m &lt; 850) {</span>
+<span class="nc" id="L709">			return &quot;near Fort Laramie.&quot;;</span>
+		}
+<span class="nc bnc" id="L711" title="All 2 branches missed.">		if (m &lt; 1000) {</span>
+<span class="nc" id="L712">			return &quot;close upon Independence Rock.&quot;;</span>
+		}
+<span class="nc bnc" id="L714" title="All 2 branches missed.">		if (m &lt; 1050) {</span>
+<span class="nc" id="L715">			return &quot;in the Big Horn Mountains.&quot;;</span>
+		}
+<span class="nc bnc" id="L717" title="All 2 branches missed.">		if (m &lt; 1150) {</span>
+<span class="nc" id="L718">			return &quot;following the Green River.&quot;;</span>
+		}
+<span class="nc bnc" id="L720" title="All 2 branches missed.">		if (m &lt; 1250) {</span>
+<span class="nc" id="L721">			return &quot;not too far from Fort Hall.&quot;;</span>
+		}
+<span class="nc bnc" id="L723" title="All 2 branches missed.">		if (m &lt; 1400) {</span>
+<span class="nc" id="L724">			return &quot;following the Snake River.&quot;;</span>
+		}
+<span class="nc bnc" id="L726" title="All 2 branches missed.">		if (m &lt; 1550) {</span>
+<span class="nc" id="L727">			return &quot;not far from Fort Boise.&quot;;</span>
+		}
+<span class="nc bnc" id="L729" title="All 2 branches missed.">		if (m &lt; 1850) {</span>
+<span class="nc" id="L730">			return &quot;in the Blue Mountains.&quot;;</span>
+		}
+<span class="nc" id="L732">		return &quot;following the Columbia River&quot;;</span>
+
+	}
+
+	private void printInitialScenario490() {
+<span class="nc" id="L737">		print(&quot;	Your journey over the Oregon Trail takes place in 1847.&quot;);</span>
+<span class="nc" id="L738">		print();</span>
+<span class="nc" id="L739">		print(&quot;Starting in Independence, Missouri, you plan to take your family of&quot;);</span>
+<span class="nc" id="L740">		print(&quot;five over 2040 tough miles to Oregon City.&quot;);</span>
+<span class="nc" id="L741">		print();</span>
+<span class="nc" id="L742">		print(&quot;	Having saved &lt;b&gt;$420&lt;/b&gt; for the trip, you bought a wagon for &lt;b&gt;$70&lt;/b&gt; and&quot;);</span>
+<span class="nc" id="L743">		print(&quot;now have to purchase the following items :&quot;);</span>
+<span class="nc" id="L744">		print();</span>
+<span class="nc" id="L745">		print(&quot; * &lt;b&gt;Oxen&lt;/b&gt; (spending more will buy you a larger and better team which&quot;);</span>
+<span class="nc" id="L746">		print(&quot;    will be faster so you'll be on the trail for less time)&quot;);</span>
+<span class="nc" id="L747">		print(&quot; * &lt;b&gt;Food&lt;/b&gt; (you'll need ample food to keep up your strength and health)&quot;);</span>
+<span class="nc" id="L748">		print(&quot; * &lt;b&gt;Ammunition&lt;/b&gt; ($1 buys a belt of 50 bullets. You'll need ammo for&quot;);</span>
+<span class="nc" id="L749">		print(&quot;    hunting and for fighting off attacks by bandits and animals)&quot;);</span>
+<span class="nc" id="L750">		print(&quot; * &lt;b&gt;Clothing&lt;/b&gt; (you'll need warm clothes, especially when you hit the&quot;);</span>
+<span class="nc" id="L751">		print(&quot;    snow and freezing weather in the mountains)&quot;);</span>
+<span class="nc" id="L752">		print(&quot; * &lt;b&gt;Other supplies&lt;/b&gt; (includes medicine, first-aid supplies, tools, and&quot;);</span>
+<span class="nc" id="L753">		print(&quot;    wagon parts for unexpected emergencies)&quot;);</span>
+<span class="nc" id="L754">		print();</span>
+<span class="nc" id="L755">		print(&quot; You can spend all your money at the start or save some to spend&quot;);</span>
+<span class="nc" id="L756">		print(&quot;at forts along the way. However, items cost more at the forts. You&quot;);</span>
+<span class="nc" id="L757">		print(&quot;can also hunt for food if you run low.&quot;);</span>
+<span class="nc" id="L758">		print();</span>
+
+<span class="nc" id="L760">	}</span>
+
+	private void initialPurchasesOfPlayer690() throws NoInputException {
+<span class="nc bnc" id="L763" title="All 2 branches missed.">		if (skb.hasMore()) {</span>
+<span class="nc" id="L764">			screen.clear();</span>
+		}
+		do {
+<span class="nc" id="L767">			print(&quot;How much do you want to pay for a team of oxen ?&quot;);</span>
+<span class="nc" id="L768">			a = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L769" title="All 2 branches missed.">			if (a &lt; 100) {</span>
+<span class="nc" id="L770">				print(&quot;No one in town has a team that cheap&quot;);</span>
+<span class="nc" id="L771">				continue;</span>
+			}
+			break;
+		} while (true);
+<span class="nc bnc" id="L775" title="All 2 branches missed.">		if (a &gt;= 151) {</span>
+<span class="nc" id="L776">			print(&quot;You choose an honest dealer who tells you that $&quot; + a + &quot; is too much for&quot;);</span>
+<span class="nc" id="L777">			print(&quot;a team of oxen. He charges you $150 and gives you $&quot; + (a - 150) + &quot; change.&quot;);</span>
+<span class="nc" id="L778">			a = 150;</span>
+		}
+		do {
+<span class="nc" id="L781">			print();</span>
+<span class="nc" id="L782">			print(&quot;How much do you want to spend on food ?&quot;);</span>
+<span class="nc" id="L783">			f = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L784" title="All 2 branches missed.">			if (f &lt;= 13) {</span>
+<span class="nc" id="L785">				print(&quot;That won't even get you to the Kansas River&quot;);</span>
+<span class="nc" id="L786">				print(&quot; - better spend a bit more.&quot;);</span>
+<span class="nc" id="L787">				continue;</span>
+			}
+<span class="nc bnc" id="L789" title="All 2 branches missed.">			if (a + f &gt; 300) {</span>
+<span class="nc" id="L790">				print(&quot;You wont't have any for ammo and clothes.&quot;);</span>
+<span class="nc" id="L791">				continue;</span>
+			}
+			break;
+		} while (true);
+		do {
+<span class="nc" id="L796">			print();</span>
+<span class="nc" id="L797">			print(&quot;How much do you want to spend on ammunition ?&quot;);</span>
+<span class="nc" id="L798">			b = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L799" title="All 2 branches missed.">			if (b &lt; 2) {</span>
+<span class="nc" id="L800">				print(&quot;Better take a bit just for protection.&quot;);</span>
+<span class="nc" id="L801">				continue;</span>
+			}
+<span class="nc bnc" id="L803" title="All 2 branches missed.">			if (a + f + b &gt; 320) {</span>
+<span class="nc" id="L804">				print(&quot;That won't leave any money for clothes.&quot;);</span>
+<span class="nc" id="L805">				continue;</span>
+			}
+			break;
+		} while (true);
+		do {
+<span class="nc" id="L810">			print();</span>
+<span class="nc" id="L811">			print(&quot;How much do you want to spend on clothes ?&quot;);</span>
+<span class="nc" id="L812">			c = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L813" title="All 2 branches missed.">			if (c &lt;= 24) {</span>
+<span class="nc" id="L814">				print(&quot;Your family is going to be mighty cold in.&quot;);</span>
+<span class="nc" id="L815">				print(&quot;the mountains.&quot;);</span>
+<span class="nc" id="L816">				print(&quot;Better spend a bit more.&quot;);</span>
+<span class="nc" id="L817">				continue;</span>
+			}
+<span class="nc bnc" id="L819" title="All 2 branches missed.">			if (a + f + b + c &gt; 345) {</span>
+<span class="nc" id="L820">				print(&quot;That leaves nothing for medicine.&quot;);</span>
+<span class="nc" id="L821">				continue;</span>
+			}
+			break;
+		} while (true);
+		do {
+<span class="nc" id="L826">			print();</span>
+<span class="nc" id="L827">			screen.print(&quot;How much for medicine, bandage, repair parts, etc. ?&quot;);</span>
+<span class="nc" id="L828">			r = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L829" title="All 2 branches missed.">			if (r &lt;= 5) {</span>
+<span class="nc" id="L830">				print(&quot;That's not at all wise.&quot;);</span>
+<span class="nc" id="L831">				continue;</span>
+			}
+<span class="nc bnc" id="L833" title="All 2 branches missed.">			if (a + f + b + c + r &gt; 350) {</span>
+<span class="nc" id="L834">				print(&quot;You don't have that much money.&quot;);</span>
+<span class="nc" id="L835">				continue;</span>
+			}
+			break;
+		} while (true);
+<span class="nc" id="L839">		t = 350 - a - f - b - c - r;</span>
+<span class="nc" id="L840">		print();</span>
+<span class="nc" id="L841">		print(&quot;You now have &lt;b&gt;$&quot; + ((int) t) + &quot; left.&lt;/b&gt;&quot;);</span>
+<span class="nc" id="L842">		b = 50 * b;</span>
+<span class="nc" id="L843">	}</span>
+
+	private void initialShootingRanking920() throws NoInputException {
+<span class="nc" id="L846">		print();</span>
+<span class="nc" id="L847">		print(&quot;Please rank your shooting (typing) ability as follows :&quot;);</span>
+<span class="nc" id="L848">		print(&quot; (1) Ace marksman  (2) Good shot  (3) Fair to middlin'&quot;);</span>
+<span class="nc" id="L849">		print(&quot; (4) Need more practice  (5) Shaky knees&quot;);</span>
+		do {
+<span class="nc" id="L851">			print();</span>
+<span class="nc" id="L852">			print(&quot;How do you rank yourself ?&quot;);</span>
+<span class="nc" id="L853">			dr = skb.inputInt(screen);</span>
+<span class="nc bnc" id="L854" title="All 4 branches missed.">			if (dr &gt;= 1 &amp;&amp; dr &lt;= 6) {</span>
+<span class="nc" id="L855">				return;</span>
+			}
+<span class="nc" id="L857">			print(&quot;Please enter 1, 2, 3, 4 or 5.&quot;);</span>
+<span class="nc" id="L858">		} while (true);</span>
+	}
+
+	private int e;
+	private int a;
+	private double b;
+	private double f;
+	private double c;
+	private double r;
+	private double t;
+	private int dr;
+	private double m;
+
+<span class="nc" id="L871">	enum ShootingWord {</span>
+<span class="nc" id="L872">		POW, BANG, BLAM, WHOP, WHAM, ZING, ZACK, ZANG, WOOSH, BAM, ZAP, BOOM, WOW, CLANG, BOING, ZOW, PANG, ZOSH, KAZ,</span>
+<span class="nc" id="L873">		KOOG, ZOOP, PONG, PING, BAZ, ZONG, PAM, POOM, DOING;</span>
+
+		public static ShootingWord safeValueOf(String s) {
+			try {
+<span class="nc" id="L877">				return valueOf(StringUtils.goUpperCase(s));</span>
+<span class="nc" id="L878">			} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L879">				return null;</span>
+			}
+		}
+
+		public int decode(ShootingWord key) {
+<span class="nc" id="L884">			return (ordinal() + key.ordinal()) % NB_WORDS;</span>
+		}
+
+		public ShootingWord encode(int v) {
+<span class="nc" id="L888">			v = v - this.ordinal();</span>
+<span class="nc bnc" id="L889" title="All 2 branches missed.">			if (v &lt; 0) {</span>
+<span class="nc" id="L890">				v += NB_WORDS;</span>
+			}
+<span class="nc" id="L892">			return ShootingWord.values()[v];</span>
+		}
+	}
+
+<span class="nc" id="L896">	private static int NB_WORDS = ShootingWord.values().length;</span>
+
+	private int getTime() {
+<span class="nc" id="L899">		return (int) ((System.currentTimeMillis() / 1000L) % NB_WORDS);</span>
+	}
+
+	private int shoot3870() throws NoInputException {
+<span class="nc" id="L903">		final int time1 = getTime();</span>
+<span class="nc" id="L904">		final ShootingWord word1Printed = ShootingWord.values()[time1];</span>
+<span class="nc bnc" id="L905" title="All 2 branches missed.">		if (skb.hasMore() == false) {</span>
+<span class="nc" id="L906">			print(&quot;Type: &quot; + word1Printed);</span>
+		}
+<span class="nc" id="L908">		final String typed1 = skb.input(screen);</span>
+<span class="nc" id="L909">		ShootingWord wordType1 = ShootingWord.safeValueOf(typed1);</span>
+		final int delta;
+<span class="nc bnc" id="L911" title="All 2 branches missed.">		if (wordType1 == null) {</span>
+<span class="nc" id="L912">			delta = NB_WORDS - 1;</span>
+<span class="nc" id="L913">			wordType1 = ShootingWord.values()[NB_WORDS - 1];</span>
+		} else {
+<span class="nc" id="L915">			delta = protect(getTime() - wordType1.ordinal());</span>
+		}
+		// print(&quot;delta=&quot;+delta);
+<span class="nc" id="L918">		final ShootingWord word2 = wordType1.encode(delta);</span>
+<span class="nc bnc" id="L919" title="All 2 branches missed.">		if (skb.hasMore() == false) {</span>
+<span class="nc" id="L920">			print(&quot;Type: &quot; + word2);</span>
+		}
+<span class="nc" id="L922">		final String typed2 = skb.input(screen);</span>
+<span class="nc" id="L923">		final ShootingWord wordType2 = ShootingWord.safeValueOf(typed2);</span>
+<span class="nc bnc" id="L924" title="All 2 branches missed.">		final int duration = wordType2 == null ? NB_WORDS : wordType1.decode(wordType2) - dr;</span>
+		// print(&quot;duration=&quot; + duration);
+<span class="nc bnc" id="L926" title="All 2 branches missed.">		if (duration &lt; 0) {</span>
+<span class="nc" id="L927">			return 0;</span>
+		}
+<span class="nc" id="L929">		return duration;</span>
+	}
+
+	private int protect(int v) {
+<span class="nc bnc" id="L933" title="All 2 branches missed.">		while (v &gt;= NB_WORDS) {</span>
+<span class="nc" id="L934">			v -= NB_WORDS;</span>
+		}
+<span class="nc bnc" id="L936" title="All 2 branches missed.">		while (v &lt; 0) {</span>
+<span class="nc" id="L937">			v += NB_WORDS;</span>
+		}
+<span class="nc" id="L939">		return v;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

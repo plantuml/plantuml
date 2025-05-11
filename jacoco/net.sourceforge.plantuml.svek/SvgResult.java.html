@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvgResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">SvgResult.java</span></div><h1>SvgResult.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+
+public class SvgResult {
+
+	public static final String D_EQUALS = &quot;d=\&quot;&quot;;
+	public static final String POINTS_EQUALS = &quot;points=\&quot;&quot;;
+
+	private final String svg;
+	private final Point2DFunction function;
+
+<span class="nc" id="L57">	public SvgResult(String svg, Point2DFunction function) {</span>
+<span class="nc" id="L58">		this.svg = svg;</span>
+<span class="nc" id="L59">		this.function = function;</span>
+<span class="nc" id="L60">	}</span>
+
+	public PointListIterator getPointsWithThisColor(int lineColor) {
+<span class="nc" id="L63">		return PointListIteratorImpl.create(this, lineColor);</span>
+	}
+
+	public List&lt;XPoint2D&gt; extractList(final String searched) {
+<span class="nc" id="L67">		final int p2 = this.indexOf(searched, 0);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (p2 == -1)</span>
+<span class="nc" id="L69">			return Collections.emptyList();</span>
+
+<span class="nc" id="L71">		final int p3 = this.indexOf(&quot;\&quot;&quot;, p2 + searched.length());</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (p3 == -1)</span>
+<span class="nc" id="L73">			return Collections.emptyList();</span>
+
+<span class="nc" id="L75">		return this.substring(p2 + searched.length(), p3).getPoints(&quot; MC&quot;);</span>
+	}
+
+	public int getIndexFromColor(int color) {
+<span class="nc" id="L79">		String s = &quot;stroke=\&quot;&quot; + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L80">		int idx = svg.indexOf(s);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (idx != -1)</span>
+<span class="nc" id="L82">			return idx;</span>
+
+<span class="nc" id="L84">		s = &quot;;stroke:&quot; + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + &quot;;&quot;;</span>
+<span class="nc" id="L85">		idx = svg.indexOf(s);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (idx != -1)</span>
+<span class="nc" id="L87">			return idx;</span>
+
+<span class="nc" id="L89">		s = &quot;fill=\&quot;&quot; + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L90">		idx = svg.indexOf(s);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (idx != -1)</span>
+<span class="nc" id="L92">			return idx;</span>
+
+		// Log.info(&quot;Cannot find color=&quot; + color + &quot; &quot; +
+		// StringUtils.goLowerCase(StringUtils.getAsHtml(color)));
+<span class="nc" id="L96">		return -1;</span>
+
+	}
+
+	public List&lt;XPoint2D&gt; getPoints(String separator) {
+		try {
+<span class="nc" id="L102">			final StringTokenizer st = new StringTokenizer(svg, separator);</span>
+<span class="nc" id="L103">			final List&lt;XPoint2D&gt; result = new ArrayList&lt;XPoint2D&gt;();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			while (st.hasMoreTokens())</span>
+<span class="nc" id="L105">				result.add(getFirstPoint(st.nextToken()));</span>
+
+<span class="nc" id="L107">			return result;</span>
+<span class="nc" id="L108">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L109">			return Collections.emptyList();</span>
+		}
+	}
+
+	public XPoint2D getNextPoint() {
+<span class="nc" id="L114">		return getFirstPoint(svg);</span>
+	}
+
+	private XPoint2D getFirstPoint(final String tmp) {
+<span class="nc" id="L118">		final StringTokenizer st = new StringTokenizer(tmp, &quot;,&quot;);</span>
+<span class="nc" id="L119">		final double startX = Double.parseDouble(st.nextToken());</span>
+<span class="nc" id="L120">		final double startY = Double.parseDouble(st.nextToken());</span>
+<span class="nc" id="L121">		return function.apply(new XPoint2D(startX, startY));</span>
+	}
+
+	public int indexOf(String s, int pos) {
+<span class="nc" id="L125">		return svg.indexOf(s, pos);</span>
+	}
+
+	public SvgResult substring(int pos) {
+<span class="nc" id="L129">		return new SvgResult(svg.substring(pos), function);</span>
+	}
+
+	public SvgResult substring(int start, int end) {
+<span class="nc" id="L133">		return new SvgResult(svg.substring(start, end), function);</span>
+	}
+
+	public final String getSvg() {
+<span class="nc" id="L137">		return svg;</span>
+	}
+
+	public DotPath toDotPath() {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (isPathConsistent() == false)</span>
+<span class="nc" id="L142">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L144">		final List&lt;XCubicCurve2D&gt; beziers = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L146">		final int posC = this.indexOf(&quot;C&quot;, 0);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (posC == -1)</span>
+<span class="nc" id="L148">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L150">		final XPoint2D start = this.substring(1, posC).getNextPoint();</span>
+
+<span class="nc" id="L152">		final List&lt;DotPath.TriPoints&gt; triPoints = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (Iterator&lt;XPoint2D&gt; it = this.substring(posC + 1).getPoints(&quot; &quot;).iterator(); it.hasNext();) {</span>
+<span class="nc" id="L154">			final XPoint2D p1 = it.next();</span>
+<span class="nc" id="L155">			final XPoint2D p2 = it.next();</span>
+<span class="nc" id="L156">			final XPoint2D p = it.next();</span>
+<span class="nc" id="L157">			triPoints.add(new DotPath.TriPoints(p1, p2, p));</span>
+<span class="nc" id="L158">		}</span>
+<span class="nc" id="L159">		double x = start.getX();</span>
+<span class="nc" id="L160">		double y = start.getY();</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		for (DotPath.TriPoints p : triPoints) {</span>
+<span class="nc" id="L162">			final XCubicCurve2D bezier = new XCubicCurve2D(x, y, p.x1, p.y1, p.x2, p.y2, p.x, p.y);</span>
+<span class="nc" id="L163">			beziers.add(bezier);</span>
+<span class="nc" id="L164">			x = p.x;</span>
+<span class="nc" id="L165">			y = p.y;</span>
+<span class="nc" id="L166">		}</span>
+
+<span class="nc" id="L168">		return DotPath.fromBeziers(beziers);</span>
+	}
+
+	public boolean isPathConsistent() {
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (this.getSvg().startsWith(&quot;M&quot;) == false)</span>
+<span class="nc" id="L173">			return false;</span>
+
+<span class="nc" id="L175">		return true;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

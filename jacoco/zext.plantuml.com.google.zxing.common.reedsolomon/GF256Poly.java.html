@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GF256Poly.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.common.reedsolomon</a> &gt; <span class="el_source">GF256Poly.java</span></div><h1>GF256Poly.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2007 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.common.reedsolomon;
+
+/**
+ * &lt;p&gt;Represents a polynomial whose coefficients are elements of GF(256).
+ * Instances of this class are immutable.&lt;/p&gt;
+ *
+ * &lt;p&gt;Much credit is due to William Rucklidge since portions of this code are an indirect
+ * port of his C++ Reed-Solomon implementation.&lt;/p&gt;
+ *
+ * @author Sean Owen
+ */
+final class GF256Poly {
+    // ::remove folder when __HAXE__
+
+  private final GF256 field;
+  private final int[] coefficients;
+
+  /**
+   * @param field the {@link GF256} instance representing the field to use
+   * to perform computations
+   * @param coefficients coefficients as ints representing elements of GF(256), arranged
+   * from most significant (highest-power term) coefficient to least significant
+   * @throws IllegalArgumentException if argument is null or empty,
+   * or if leading coefficient is 0 and this is not a
+   * constant polynomial (that is, it is not the monomial &quot;0&quot;)
+   */
+<span class="nc" id="L43">  GF256Poly(GF256 field, int[] coefficients) {</span>
+<span class="nc bnc" id="L44" title="All 4 branches missed.">    if (coefficients == null || coefficients.length == 0) {</span>
+<span class="nc" id="L45">      throw new IllegalArgumentException();</span>
+    }
+<span class="nc" id="L47">    this.field = field;</span>
+<span class="nc" id="L48">    int coefficientsLength = coefficients.length;</span>
+<span class="nc bnc" id="L49" title="All 4 branches missed.">    if (coefficientsLength &gt; 1 &amp;&amp; coefficients[0] == 0) {</span>
+      // Leading term must be non-zero for anything except the constant polynomial &quot;0&quot;
+<span class="nc" id="L51">      int firstNonZero = 1;</span>
+<span class="nc bnc" id="L52" title="All 4 branches missed.">      while (firstNonZero &lt; coefficientsLength &amp;&amp; coefficients[firstNonZero] == 0) {</span>
+<span class="nc" id="L53">        firstNonZero++;</span>
+      }
+<span class="nc bnc" id="L55" title="All 2 branches missed.">      if (firstNonZero == coefficientsLength) {</span>
+<span class="nc" id="L56">        this.coefficients = field.getZero().coefficients;</span>
+      } else {
+<span class="nc" id="L58">        this.coefficients = new int[coefficientsLength - firstNonZero];</span>
+<span class="nc" id="L59">        System.arraycopy(coefficients,</span>
+            firstNonZero,
+            this.coefficients,
+            0,
+            this.coefficients.length);
+      }
+<span class="nc" id="L65">    } else {</span>
+<span class="nc" id="L66">      this.coefficients = coefficients;</span>
+    }
+<span class="nc" id="L68">  }</span>
+
+  int[] getCoefficients() {
+<span class="nc" id="L71">    return coefficients;</span>
+  }
+
+  /**
+   * @return degree of this polynomial
+   */
+  int getDegree() {
+<span class="nc" id="L78">    return coefficients.length - 1;</span>
+  }
+
+  /**
+   * @return true iff this polynomial is the monomial &quot;0&quot;
+   */
+  boolean isZero() {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">    return coefficients[0] == 0;</span>
+  }
+
+  /**
+   * @return coefficient of x^degree term in this polynomial
+   */
+  int getCoefficient(int degree) {
+<span class="nc" id="L92">    return coefficients[coefficients.length - 1 - degree];</span>
+  }
+
+  /**
+   * @return evaluation of this polynomial at a given point
+   */
+  int evaluateAt(int a) {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">    if (a == 0) {</span>
+      // Just return the x^0 coefficient
+<span class="nc" id="L101">      return getCoefficient(0);</span>
+    }
+<span class="nc" id="L103">    int size = coefficients.length;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">    if (a == 1) {</span>
+      // Just the sum of the coefficients
+<span class="nc" id="L106">      int result = 0;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">      for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L108">        result = GF256.addOrSubtract(result, coefficients[i]);</span>
+      }
+<span class="nc" id="L110">      return result;</span>
+    }
+<span class="nc" id="L112">    int result = coefficients[0];</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">    for (int i = 1; i &lt; size; i++) {</span>
+<span class="nc" id="L114">      result = GF256.addOrSubtract(field.multiply(a, result), coefficients[i]);</span>
+    }
+<span class="nc" id="L116">    return result;</span>
+  }
+
+  GF256Poly addOrSubtract(GF256Poly other) {
+<span class="nc bnc" id="L120" title="All 2 branches missed.">    if (!field.equals(other.field)) {</span>
+<span class="nc" id="L121">      throw new IllegalArgumentException(&quot;GF256Polys do not have same GF256 field&quot;);</span>
+    }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">    if (isZero()) {</span>
+<span class="nc" id="L124">      return other;</span>
+    }
+<span class="nc bnc" id="L126" title="All 2 branches missed.">    if (other.isZero()) {</span>
+<span class="nc" id="L127">      return this;</span>
+    }
+
+<span class="nc" id="L130">    int[] smallerCoefficients = this.coefficients;</span>
+<span class="nc" id="L131">    int[] largerCoefficients = other.coefficients;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">    if (smallerCoefficients.length &gt; largerCoefficients.length) {</span>
+<span class="nc" id="L133">      int[] temp = smallerCoefficients;</span>
+<span class="nc" id="L134">      smallerCoefficients = largerCoefficients;</span>
+<span class="nc" id="L135">      largerCoefficients = temp;</span>
+    }
+<span class="nc" id="L137">    int[] sumDiff = new int[largerCoefficients.length];</span>
+<span class="nc" id="L138">    int lengthDiff = largerCoefficients.length - smallerCoefficients.length;</span>
+    // Copy high-order terms only found in higher-degree polynomial's coefficients
+<span class="nc" id="L140">    System.arraycopy(largerCoefficients, 0, sumDiff, 0, lengthDiff);</span>
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">    for (int i = lengthDiff; i &lt; largerCoefficients.length; i++) {</span>
+<span class="nc" id="L143">      sumDiff[i] = GF256.addOrSubtract(smallerCoefficients[i - lengthDiff], largerCoefficients[i]);</span>
+    }
+
+<span class="nc" id="L146">    return new GF256Poly(field, sumDiff);</span>
+  }
+
+  GF256Poly multiply(GF256Poly other) {
+<span class="nc bnc" id="L150" title="All 2 branches missed.">    if (!field.equals(other.field)) {</span>
+<span class="nc" id="L151">      throw new IllegalArgumentException(&quot;GF256Polys do not have same GF256 field&quot;);</span>
+    }
+<span class="nc bnc" id="L153" title="All 4 branches missed.">    if (isZero() || other.isZero()) {</span>
+<span class="nc" id="L154">      return field.getZero();</span>
+    }
+<span class="nc" id="L156">    int[] aCoefficients = this.coefficients;</span>
+<span class="nc" id="L157">    int aLength = aCoefficients.length;</span>
+<span class="nc" id="L158">    int[] bCoefficients = other.coefficients;</span>
+<span class="nc" id="L159">    int bLength = bCoefficients.length;</span>
+<span class="nc" id="L160">    int[] product = new int[aLength + bLength - 1];</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">    for (int i = 0; i &lt; aLength; i++) {</span>
+<span class="nc" id="L162">      int aCoeff = aCoefficients[i];</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">      for (int j = 0; j &lt; bLength; j++) {</span>
+<span class="nc" id="L164">        product[i + j] = GF256.addOrSubtract(product[i + j],</span>
+<span class="nc" id="L165">            field.multiply(aCoeff, bCoefficients[j]));</span>
+      }
+    }
+<span class="nc" id="L168">    return new GF256Poly(field, product);</span>
+  }
+
+  GF256Poly multiply(int scalar) {
+<span class="nc bnc" id="L172" title="All 2 branches missed.">    if (scalar == 0) {</span>
+<span class="nc" id="L173">      return field.getZero();</span>
+    }
+<span class="nc bnc" id="L175" title="All 2 branches missed.">    if (scalar == 1) {</span>
+<span class="nc" id="L176">      return this;</span>
+    }
+<span class="nc" id="L178">    int size = coefficients.length;</span>
+<span class="nc" id="L179">    int[] product = new int[size];</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">    for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L181">      product[i] = field.multiply(coefficients[i], scalar);</span>
+    }
+<span class="nc" id="L183">    return new GF256Poly(field, product);</span>
+  }
+
+  GF256Poly multiplyByMonomial(int degree, int coefficient) {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">    if (degree &lt; 0) {</span>
+<span class="nc" id="L188">      throw new IllegalArgumentException();</span>
+    }
+<span class="nc bnc" id="L190" title="All 2 branches missed.">    if (coefficient == 0) {</span>
+<span class="nc" id="L191">      return field.getZero();</span>
+    }
+<span class="nc" id="L193">    int size = coefficients.length;</span>
+<span class="nc" id="L194">    int[] product = new int[size + degree];</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">    for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L196">      product[i] = field.multiply(coefficients[i], coefficient);</span>
+    }
+<span class="nc" id="L198">    return new GF256Poly(field, product);</span>
+  }
+
+  GF256Poly[] divide(GF256Poly other) {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">    if (!field.equals(other.field)) {</span>
+<span class="nc" id="L203">      throw new IllegalArgumentException(&quot;GF256Polys do not have same GF256 field&quot;);</span>
+    }
+<span class="nc bnc" id="L205" title="All 2 branches missed.">    if (other.isZero()) {</span>
+<span class="nc" id="L206">      throw new IllegalArgumentException(&quot;Divide by 0&quot;);</span>
+    }
+
+<span class="nc" id="L209">    GF256Poly quotient = field.getZero();</span>
+<span class="nc" id="L210">    GF256Poly remainder = this;</span>
+
+<span class="nc" id="L212">    int denominatorLeadingTerm = other.getCoefficient(other.getDegree());</span>
+<span class="nc" id="L213">    int inverseDenominatorLeadingTerm = field.inverse(denominatorLeadingTerm);</span>
+
+<span class="nc bnc" id="L215" title="All 4 branches missed.">    while (remainder.getDegree() &gt;= other.getDegree() &amp;&amp; !remainder.isZero()) {</span>
+<span class="nc" id="L216">      int degreeDifference = remainder.getDegree() - other.getDegree();</span>
+<span class="nc" id="L217">      int scale = field.multiply(remainder.getCoefficient(remainder.getDegree()), inverseDenominatorLeadingTerm);</span>
+<span class="nc" id="L218">      GF256Poly term = other.multiplyByMonomial(degreeDifference, scale);</span>
+<span class="nc" id="L219">      GF256Poly iterationQuotient = field.buildMonomial(degreeDifference, scale);</span>
+<span class="nc" id="L220">      quotient = quotient.addOrSubtract(iterationQuotient);</span>
+<span class="nc" id="L221">      remainder = remainder.addOrSubtract(term);</span>
+<span class="nc" id="L222">    }</span>
+
+<span class="nc" id="L224">    return new GF256Poly[] { quotient, remainder };</span>
+  }
+
+  public String toString() {
+<span class="nc" id="L228">    StringBuilder result = new StringBuilder(8 * getDegree());</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">    for (int degree = getDegree(); degree &gt;= 0; degree--) {</span>
+<span class="nc" id="L230">      int coefficient = getCoefficient(degree);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">      if (coefficient != 0) {</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">        if (coefficient &lt; 0) {</span>
+<span class="nc" id="L233">          result.append(&quot; - &quot;);</span>
+<span class="nc" id="L234">          coefficient = -coefficient;</span>
+        } else {
+<span class="nc bnc" id="L236" title="All 2 branches missed.">          if (result.length() &gt; 0) {</span>
+<span class="nc" id="L237">            result.append(&quot; + &quot;);</span>
+          }
+        }
+<span class="nc bnc" id="L240" title="All 4 branches missed.">        if (degree == 0 || coefficient != 1) {</span>
+<span class="nc" id="L241">          int alphaPower = field.log(coefficient);</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">          if (alphaPower == 0) {</span>
+<span class="nc" id="L243">            result.append('1');</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">          } else if (alphaPower == 1) {</span>
+<span class="nc" id="L245">            result.append('a');</span>
+          } else {
+<span class="nc" id="L247">            result.append(&quot;a^&quot;);</span>
+<span class="nc" id="L248">            result.append(alphaPower);</span>
+          }
+        }
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        if (degree != 0) {</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">          if (degree == 1) {</span>
+<span class="nc" id="L253">            result.append('x');</span>
+          } else {
+<span class="nc" id="L255">            result.append(&quot;x^&quot;);</span>
+<span class="nc" id="L256">            result.append(degree);</span>
+          }
+        }
+      }
+    }
+<span class="nc" id="L261">    return result.toString();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

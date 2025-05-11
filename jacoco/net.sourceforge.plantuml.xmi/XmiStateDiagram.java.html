@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmiStateDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.xmi</a> &gt; <span class="el_source">XmiStateDiagram.java</span></div><h1>XmiStateDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.xmi;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.OutputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.xml.XmlFactories;
+
+public class XmiStateDiagram implements XmlDiagramTransformer {
+
+	private final StateDiagram diagram;
+	private final Document document;
+	private final Element ownedElement;
+
+<span class="nc" id="L68">	public XmiStateDiagram(StateDiagram diagram) throws ParserConfigurationException {</span>
+<span class="nc" id="L69">		this.diagram = diagram;</span>
+
+<span class="nc" id="L71">		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();</span>
+<span class="nc" id="L72">		this.document = builder.newDocument();</span>
+<span class="nc" id="L73">		document.setXmlVersion(&quot;1.0&quot;);</span>
+<span class="nc" id="L74">		document.setXmlStandalone(true);</span>
+
+<span class="nc" id="L76">		final Element xmi = document.createElement(&quot;XMI&quot;);</span>
+<span class="nc" id="L77">		xmi.setAttribute(&quot;xmi.version&quot;, &quot;1.1&quot;);</span>
+<span class="nc" id="L78">		xmi.setAttribute(&quot;xmlns:UML&quot;, &quot;href://org.omg/UML/1.3&quot;);</span>
+<span class="nc" id="L79">		document.appendChild(xmi);</span>
+
+<span class="nc" id="L81">		final Element header = document.createElement(&quot;XMI.header&quot;);</span>
+<span class="nc" id="L82">		xmi.appendChild(header);</span>
+
+<span class="nc" id="L84">		final Element metamodel = document.createElement(&quot;XMI.metamodel&quot;);</span>
+<span class="nc" id="L85">		metamodel.setAttribute(&quot;xmi.name&quot;, &quot;UML&quot;);</span>
+<span class="nc" id="L86">		metamodel.setAttribute(&quot;xmi.version&quot;, &quot;1.3&quot;);</span>
+<span class="nc" id="L87">		header.appendChild(metamodel);</span>
+
+<span class="nc" id="L89">		final Element content = document.createElement(&quot;XMI.content&quot;);</span>
+<span class="nc" id="L90">		xmi.appendChild(content);</span>
+
+<span class="nc" id="L92">		final Element model = document.createElement(&quot;UML:Model&quot;);</span>
+<span class="nc" id="L93">		model.setAttribute(&quot;xmi.id&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
+<span class="nc" id="L94">		model.setAttribute(&quot;name&quot;, &quot;PlantUML&quot;);</span>
+<span class="nc" id="L95">		content.appendChild(model);</span>
+
+		// &lt;UML:Namespace.ownedElement&gt;
+<span class="nc" id="L98">		this.ownedElement = document.createElement(&quot;UML:Namespace.ownedElement&quot;);</span>
+<span class="nc" id="L99">		model.appendChild(ownedElement);</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (final Entity gr : diagram.groups())</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (gr.getParentContainer().isRoot())</span>
+<span class="nc" id="L103">				addState(gr, ownedElement);</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (final Entity ent : diagram.leafs())</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (ent.getParentContainer().isRoot())</span>
+<span class="nc" id="L107">				addState(ent, ownedElement);</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (final Link link : diagram.getLinks())</span>
+<span class="nc" id="L110">			addLink(link);</span>
+
+<span class="nc" id="L112">	}</span>
+
+	private void addState(final Entity tobeAdded, Element container) {
+<span class="nc" id="L115">		final Element elementState = createEntityNode(tobeAdded);</span>
+<span class="nc" id="L116">		container.appendChild(elementState);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (final Entity ent : diagram.groups())</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (ent.getParentContainer() == tobeAdded)</span>
+<span class="nc" id="L119">				addState(ent, elementState);</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (final Entity ent : diagram.leafs())</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (ent.getParentContainer() == tobeAdded)</span>
+<span class="nc" id="L123">				addState(ent, elementState);</span>
+
+<span class="nc" id="L125">	}</span>
+
+	public static String forXMI(String s) {
+<span class="nc" id="L128">		return s.replace(':', ' ');</span>
+	}
+
+	public static String forXMI(Display s) {
+<span class="nc" id="L132">		return s.get(0).toString().replace(':', ' ');</span>
+	}
+
+	private void addLink(Link link) {
+<span class="nc" id="L136">		final String assId = diagram.getUniqueSequence(&quot;ass&quot;);</span>
+
+<span class="nc" id="L138">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
+<span class="nc" id="L139">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
+<span class="nc" id="L140">		association.setAttribute(&quot;namespace&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
+<span class="nc" id="L142">			association.setAttribute(&quot;name&quot;, forXMI(link.getLabel()));</span>
+
+<span class="nc" id="L144">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
+<span class="nc" id="L145">		final Element end1 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="nc" id="L146">		end1.setAttribute(&quot;xmi.id&quot;, diagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="nc" id="L147">		end1.setAttribute(&quot;association&quot;, assId);</span>
+<span class="nc" id="L148">		end1.setAttribute(&quot;type&quot;, link.getEntity1().getUid());</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (link.getQuantifier1() != null)</span>
+<span class="nc" id="L150">			end1.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier1()));</span>
+
+<span class="nc" id="L152">		final Element endparticipant1 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION)</span>
+<span class="nc" id="L155">			end1.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGREGATION)</span>
+<span class="nc" id="L158">			end1.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
+
+		// }
+<span class="nc" id="L161">		end1.appendChild(endparticipant1);</span>
+<span class="nc" id="L162">		connection.appendChild(end1);</span>
+
+<span class="nc" id="L164">		final Element end2 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="nc" id="L165">		end2.setAttribute(&quot;xmi.id&quot;, diagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="nc" id="L166">		end2.setAttribute(&quot;association&quot;, assId);</span>
+<span class="nc" id="L167">		end2.setAttribute(&quot;type&quot;, link.getEntity2().getUid());</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (link.getQuantifier2() != null)</span>
+<span class="nc" id="L169">			end2.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier2()));</span>
+
+<span class="nc" id="L171">		final Element endparticipant2 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION)</span>
+<span class="nc" id="L173">			end2.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
+
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGREGATION)</span>
+<span class="nc" id="L176">			end2.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
+
+		// }
+<span class="nc" id="L179">		end2.appendChild(endparticipant2);</span>
+<span class="nc" id="L180">		connection.appendChild(end2);</span>
+
+<span class="nc" id="L182">		association.appendChild(connection);</span>
+
+<span class="nc" id="L184">		ownedElement.appendChild(association);</span>
+
+<span class="nc" id="L186">	}</span>
+
+	private Element createEntityNode(Entity entity) {
+		// &lt;UML:Class xmi.id=&quot;UMLClass.5&quot; name=&quot;Class1&quot; visibility=&quot;public&quot;
+		// isSpecification=&quot;false&quot;
+		// namespace=&quot;UMLModel.4&quot; isRoot=&quot;false&quot; isLeaf=&quot;false&quot;
+		// isAbstract=&quot;false&quot; participant=&quot;UMLAssociationEnd.11&quot;
+		// isActive=&quot;false&quot;&gt;
+<span class="nc" id="L194">		final Element cla = document.createElement(&quot;UML:State&quot;);</span>
+
+<span class="nc" id="L196">		cla.setAttribute(&quot;xmi.id&quot;, entity.getUid());</span>
+<span class="nc" id="L197">		cla.setAttribute(&quot;name&quot;, entity.getDisplay().get(0).toString());</span>
+<span class="nc" id="L198">		cla.setAttribute(&quot;namespace&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
+
+<span class="nc" id="L200">		final Element feature = document.createElement(&quot;UML:Classifier.feature&quot;);</span>
+<span class="nc" id="L201">		cla.appendChild(feature);</span>
+
+//		for (Member m : entity.getBodier().getFieldsToDisplay()) {
+//			// &lt;UML:Attribute xmi.id=&quot;UMLAttribute.6&quot; name=&quot;Attribute1&quot;
+//			// visibility=&quot;public&quot; isSpecification=&quot;false&quot;
+//			// ownerScope=&quot;instance&quot; changeability=&quot;changeable&quot;
+//			// targetScope=&quot;instance&quot; type=&quot;&quot; owner=&quot;UMLClass.5&quot;/&gt;
+//			final Element attribute = document.createElement(&quot;UML:Attribute&quot;);
+//			attribute.setAttribute(&quot;xmi.id&quot;, &quot;att&quot; + UniqueSequence.getValue());
+//			attribute.setAttribute(&quot;name&quot;, m.getDisplay(false));
+//			feature.appendChild(attribute);
+//		}
+//
+//		for (Member m : entity.getBodier().getMethodsToDisplay()) {
+//			// &lt;UML:Operation xmi.id=&quot;UMLOperation.7&quot; name=&quot;Operation1&quot;
+//			// visibility=&quot;public&quot; isSpecification=&quot;false&quot;
+//			// ownerScope=&quot;instance&quot; isQuery=&quot;false&quot; concurrency=&quot;sequential&quot;
+//			// isRoot=&quot;false&quot; isLeaf=&quot;false&quot;
+//			// isAbstract=&quot;false&quot; specification=&quot;&quot; owner=&quot;UMLClass.5&quot;/&gt;
+//			final Element operation = document.createElement(&quot;UML:Operation&quot;);
+//			operation.setAttribute(&quot;xmi.id&quot;, &quot;att&quot; + UniqueSequence.getValue());
+//			operation.setAttribute(&quot;name&quot;, m.getDisplay(false));
+//			feature.appendChild(operation);
+//		}
+<span class="nc" id="L225">		return cla;</span>
+	}
+
+	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+<span class="nc" id="L229">		final Source source = new DOMSource(document);</span>
+
+<span class="nc" id="L231">		final Result resultat = new StreamResult(os);</span>
+
+<span class="nc" id="L233">		final Transformer transformer = XmlFactories.newTransformer();</span>
+<span class="nc" id="L234">		transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+		// transformer.setOutputProperty(OutputKeys.ENCODING, &quot;ISO-8859-1&quot;);
+<span class="nc" id="L236">		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());</span>
+		// tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);
+<span class="nc" id="L238">		transformer.transform(source, resultat);</span>
+<span class="nc" id="L239">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

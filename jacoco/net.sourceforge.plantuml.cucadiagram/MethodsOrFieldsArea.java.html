@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MethodsOrFieldsArea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">MethodsOrFieldsArea.java</span></div><h1>MethodsOrFieldsArea.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+
+import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.EmbeddedDiagram;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.PlacementStrategy;
+import net.sourceforge.plantuml.klimt.geom.PlacementStrategyVisibility;
+import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2Center;
+import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2Left;
+import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2Right;
+import net.sourceforge.plantuml.klimt.geom.ULayoutGroup;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockLineBefore;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.TextBlockWithUrl;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.CharHidder;
+
+public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock, WithPorts {
+
+	public TextBlock asBlockMemberImpl() {
+<span class="fc" id="L82">		return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),</span>
+<span class="fc" id="L83">				TextBlockUtils.withMargin(this, 6, 4));</span>
+	}
+
+	private final ISkinParam skinParam;
+
+	private final Display members;
+	private final HorizontalAlignment align;
+<span class="fc" id="L90">	private final List&lt;EmbeddedDiagram&gt; embeddeds = new ArrayList&lt;&gt;();</span>
+
+	private final Entity leaf;
+	private final Style style;
+
+	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, Entity leaf, Style style) {
+<span class="fc" id="L96">		this(members, skinParam, HorizontalAlignment.LEFT, leaf, style);</span>
+<span class="fc" id="L97">	}</span>
+
+	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, HorizontalAlignment align, Entity leaf,
+<span class="fc" id="L100">			Style style) {</span>
+<span class="fc" id="L101">		this.style = style;</span>
+<span class="fc" id="L102">		this.leaf = leaf;</span>
+
+<span class="fc" id="L104">		this.align = align;</span>
+<span class="fc" id="L105">		this.skinParam = skinParam;</span>
+
+<span class="fc" id="L107">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L108">		final Iterator&lt;CharSequence&gt; it = members.iterator();</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L111">			final CharSequence cs = it.next();</span>
+<span class="fc" id="L112">			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (type != null)</span>
+<span class="nc" id="L114">				embeddeds.add(EmbeddedDiagram.createAndSkip(type, it, skinParam));</span>
+			else
+<span class="fc" id="L116">				result.add(cs);</span>
+
+<span class="fc" id="L118">		}</span>
+
+<span class="fc" id="L120">		this.members = Display.create(result);</span>
+<span class="fc" id="L121">	}</span>
+
+	private boolean hasSmallIcon() {
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (skinParam.classAttributeIconSize() == 0)</span>
+<span class="nc" id="L125">			return false;</span>
+
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		for (CharSequence cs : members) {</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (cs instanceof Member == false)</span>
+<span class="nc" id="L129">				continue;</span>
+<span class="fc" id="L130">			final Member m = (Member) cs;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (m.getVisibilityModifier() != null)</span>
+<span class="fc" id="L132">				return true;</span>
+
+<span class="fc" id="L134">		}</span>
+<span class="fc" id="L135">		return false;</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L140">		final XDimension2D dim1 = calculateDimensionOnlyMembers(stringBounder);</span>
+<span class="fc" id="L141">		double x = dim1.getWidth();</span>
+<span class="fc" id="L142">		double y = dim1.getHeight();</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
+<span class="nc" id="L144">			final XDimension2D dim = embedded.calculateDimension(stringBounder);</span>
+<span class="nc" id="L145">			x = Math.max(dim.getWidth(), x);</span>
+<span class="nc" id="L146">			y += dim.getHeight();</span>
+<span class="nc" id="L147">		}</span>
+
+<span class="fc" id="L149">		return new XDimension2D(x, y);</span>
+	}
+
+	private XDimension2D calculateDimensionOnlyMembers(StringBounder stringBounder) {
+<span class="fc" id="L153">		double smallIcon = 0;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (hasSmallIcon())</span>
+<span class="fc" id="L155">			smallIcon = skinParam.getCircledCharacterRadius() + 3;</span>
+
+<span class="fc" id="L157">		double x = 0;</span>
+<span class="fc" id="L158">		double y = 0;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (CharSequence cs : members) {</span>
+<span class="fc" id="L160">			final TextBlock bloc = createTextBlock(cs);</span>
+<span class="fc" id="L161">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L162">			x = Math.max(dim.getWidth(), x);</span>
+<span class="fc" id="L163">			y += dim.getHeight();</span>
+<span class="fc" id="L164">		}</span>
+<span class="fc" id="L165">		x += smallIcon;</span>
+
+<span class="fc" id="L167">		return new XDimension2D(x, y);</span>
+	}
+
+	private Collection&lt;String&gt; sortBySize(Collection&lt;String&gt; all) {
+<span class="nc" id="L171">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;(all);</span>
+<span class="nc" id="L172">		Collections.sort(result, new Comparator&lt;String&gt;() {</span>
+			@Override
+			public int compare(String s1, String s2) {
+<span class="nc" id="L175">				final int diff = s2.length() - s1.length();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">				if (diff != 0)</span>
+<span class="nc" id="L177">					return diff;</span>
+<span class="nc" id="L178">				return s1.compareTo(s2);</span>
+			}
+		});
+<span class="nc" id="L181">		return result;</span>
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc" id="L186">		final Ports ports = new Ports();</span>
+<span class="nc" id="L187">		double y = 0;</span>
+
+<span class="nc" id="L189">		final Collection&lt;String&gt; shortNames = sortBySize(leaf.getPortShortNames());</span>
+
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (CharSequence cs : members) {</span>
+<span class="nc" id="L192">			final TextBlock bloc = createTextBlock(cs);</span>
+<span class="nc" id="L193">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L194">			final Elected elected = getElected(convert(cs), shortNames);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (elected != null)</span>
+<span class="nc" id="L196">				ports.add(elected.getShortName(), elected.getScore(), y, dim.getHeight());</span>
+
+<span class="nc" id="L198">			y += dim.getHeight();</span>
+<span class="nc" id="L199">		}</span>
+<span class="nc" id="L200">		return ports;</span>
+	}
+
+	private String convert(CharSequence cs) {
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (cs instanceof Member)</span>
+<span class="nc" id="L205">			return ((Member) cs).getDisplay(false);</span>
+<span class="nc" id="L206">		return cs.toString();</span>
+	}
+
+	public Elected getElected(String cs, Collection&lt;String&gt; shortNames) {
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		for (String shortName : shortNames) {</span>
+<span class="nc" id="L211">			final int score = getScore(cs, shortName);</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">			if (score &gt; 0)</span>
+<span class="nc" id="L213">				return new Elected(shortName, score);</span>
+<span class="nc" id="L214">		}</span>
+<span class="nc" id="L215">		return null;</span>
+	}
+
+	private int getScore(String cs, String shortName) {
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (cs.matches(&quot;.*\\b&quot; + shortName + &quot;\\b.*&quot;))</span>
+<span class="nc" id="L220">			return 100;</span>
+
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (cs.contains(shortName))</span>
+<span class="nc" id="L223">			return 50;</span>
+
+<span class="nc" id="L225">		return 0;</span>
+	}
+
+	private TextBlock createTextBlock(CharSequence cs) {
+
+<span class="fc" id="L230">		FontConfiguration config = FontConfiguration.create(skinParam, style, leaf.getColors());</span>
+
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (cs instanceof Member) {</span>
+<span class="fc" id="L233">			final Member m = (Member) cs;</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			final boolean withVisibilityChar = skinParam.classAttributeIconSize() == 0;</span>
+<span class="fc" id="L235">			String s = m.getDisplay(withVisibilityChar);</span>
+<span class="pc bpc" id="L236" title="3 of 4 branches missed.">			if (withVisibilityChar &amp;&amp; s.startsWith(&quot;#&quot;))</span>
+<span class="nc" id="L237">				s = CharHidder.addTileAtBegin(s);</span>
+
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">			if (m.isAbstract())</span>
+<span class="nc" id="L240">				config = config.italic();</span>
+
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">			if (m.isStatic())</span>
+<span class="nc" id="L243">				config = config.underline();</span>
+
+<span class="fc" id="L245">			TextBlock bloc = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,</span>
+<span class="fc" id="L246">					style.wrapWidth());</span>
+<span class="fc" id="L247">			bloc = TextBlockUtils.fullInnerPosition(bloc, m.getDisplay(false));</span>
+<span class="fc" id="L248">			return new TextBlockTracer(m, bloc);</span>
+		}
+
+//		if (cs instanceof EmbeddedDiagram)
+//			return ((EmbeddedDiagram) cs).asDraw(skinParam);
+
+<span class="nc" id="L254">		return Display.getWithNewlines(skinParam.getPragma(), cs.toString()).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,</span>
+<span class="nc" id="L255">				style.wrapWidth());</span>
+
+	}
+
+	static class TextBlockTracer extends AbstractTextBlock implements TextBlock {
+
+		private final TextBlock bloc;
+		private final Url url;
+
+<span class="fc" id="L264">		public TextBlockTracer(Member m, TextBlock bloc) {</span>
+<span class="fc" id="L265">			this.bloc = bloc;</span>
+<span class="fc" id="L266">			this.url = m.getUrl();</span>
+<span class="fc" id="L267">		}</span>
+
+		public void drawU(UGraphic ug) {
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L271">				ug.startUrl(url);</span>
+
+<span class="fc" id="L273">			bloc.drawU(ug);</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L275">				ug.closeUrl();</span>
+
+<span class="fc" id="L277">		}</span>
+
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L280">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L281">			return dim;</span>
+		}
+
+		@Override
+		public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L286">			return bloc.getInnerPosition(member, stringBounder, strategy);</span>
+		}
+
+	}
+
+	private TextBlock getUBlock(final VisibilityModifier modifier, Url url) {
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (modifier == null) {</span>
+<span class="nc" id="L293">			return new AbstractTextBlock() {</span>
+
+				public void drawU(UGraphic ug) {
+<span class="nc" id="L296">				}</span>
+
+				@Override
+				public XRectangle2D getInnerPosition(String member, StringBounder stringBounder,
+						InnerStrategy strategy) {
+<span class="nc" id="L301">					return null;</span>
+				}
+
+				public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L305">					return new XDimension2D(1, 1);</span>
+				}
+			};
+		}
+<span class="fc" id="L309">		final Style style = modifier.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L310">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L311">		final boolean isField = modifier.isField();</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">		final HColor backColor = isField ? null</span>
+<span class="fc" id="L313">				: style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), borderColor, backColor,</span>
+				url != null);
+<span class="fc" id="L317">		return TextBlockWithUrl.withUrl(uBlock, url);</span>
+	}
+
+	public boolean contains(String member) {
+<span class="nc bnc" id="L321" title="All 2 branches missed.">		for (CharSequence cs : members) {</span>
+<span class="nc" id="L322">			final Member att = (Member) cs;</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">			if (att.getDisplay(false).startsWith(member))</span>
+<span class="nc" id="L324">				return true;</span>
+
+<span class="nc" id="L326">		}</span>
+<span class="nc" id="L327">		return false;</span>
+	}
+
+	@Override
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+<span class="nc" id="L332">		final ULayoutGroup group = getLayout(stringBounder);</span>
+<span class="nc" id="L333">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L334">		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);</span>
+	}
+
+	private ULayoutGroup getLayout(final StringBounder stringBounder) {
+		final ULayoutGroup group;
+<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (hasSmallIcon()) {</span>
+<span class="fc" id="L340">			group = new ULayoutGroup(</span>
+<span class="fc" id="L341">					new PlacementStrategyVisibility(stringBounder, skinParam.getCircledCharacterRadius() + 3));</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
+<span class="fc" id="L343">				final TextBlock bloc = createTextBlock(cs);</span>
+//				if (cs instanceof EmbeddedDiagram) {
+//					group.add(getUBlock(null, null));
+//				} else {
+<span class="fc" id="L347">				final Member att = (Member) cs;</span>
+<span class="fc" id="L348">				final VisibilityModifier modifier = att.getVisibilityModifier();</span>
+<span class="fc" id="L349">				group.add(getUBlock(modifier, att.getUrl()));</span>
+//				}
+<span class="fc" id="L351">				group.add(bloc);</span>
+<span class="fc" id="L352">			}</span>
+		} else {
+			final PlacementStrategy placementStrategy;
+<span class="pc bpc" id="L355" title="1 of 2 branches missed.">			if (align == HorizontalAlignment.LEFT)</span>
+<span class="fc" id="L356">				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">			else if (align == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L358">				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);</span>
+			else
+<span class="nc" id="L360">				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);</span>
+
+<span class="fc" id="L362">			group = new ULayoutGroup(placementStrategy);</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
+<span class="fc" id="L364">				final TextBlock bloc = createTextBlock(cs);</span>
+<span class="fc" id="L365">				group.add(bloc);</span>
+<span class="fc" id="L366">			}</span>
+		}
+<span class="fc" id="L368">		return group;</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L372">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L373">		final ULayoutGroup group = getLayout(stringBounder);</span>
+<span class="fc" id="L374">		final XDimension2D dim = calculateDimensionOnlyMembers(stringBounder);</span>
+<span class="fc" id="L375">		group.drawU(ug, dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L376">		ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
+
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
+<span class="nc" id="L379">			embedded.drawU(ug);</span>
+<span class="nc" id="L380">			ug = ug.apply(UTranslate.dy(embedded.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L381">		}</span>
+<span class="fc" id="L382">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

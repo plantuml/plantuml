@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UMotif.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt</a> &gt; <span class="el_source">UMotif.java</span></div><h1>UMotif.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+
+<span class="nc" id="L47">public class UMotif {</span>
+	// ::remove file when __HAXE__
+
+<span class="nc" id="L50">	private final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L52">	public UMotif(int... data) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		assert data.length % 2 == 0;</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (int i = 0; i &lt; data.length; i += 2) {</span>
+<span class="nc" id="L55">			points.add(new XPoint2D(data[i], data[i + 1]));</span>
+		}
+<span class="nc" id="L57">	}</span>
+
+<span class="nc" id="L59">	public UMotif(String s) {</span>
+<span class="nc" id="L60">		XPoint2D last = new XPoint2D(0, 0);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L62">			final XPoint2D read = convertPoint(s.charAt(i));</span>
+<span class="nc" id="L63">			last = last.move(read);</span>
+<span class="nc" id="L64">			points.add(last);</span>
+		}
+<span class="nc" id="L66">	}</span>
+
+	public double getLength() {
+<span class="nc" id="L69">		return points.get(0).distance(points.get(points.size() - 1));</span>
+	}
+
+	List&lt;XPoint2D&gt; getPoints() {
+<span class="nc" id="L73">		return Collections.unmodifiableList(points);</span>
+	}
+
+	public DotPath getRectangle(double width, double height) {
+<span class="nc" id="L77">		final double len = getLength();</span>
+<span class="nc" id="L78">		final int nb1 = (int) (width / len);</span>
+<span class="nc" id="L79">		DotPath h1 = drawHorizontal(0, 0, nb1);</span>
+<span class="nc" id="L80">		final int nb2 = (int) (height / len);</span>
+<span class="nc" id="L81">		final DotPath v1 = drawVertical(h1.getEndPoint().getX(), h1.getEndPoint().getY(), nb2);</span>
+<span class="nc" id="L82">		h1 = h1.addAfter(v1);</span>
+<span class="nc" id="L83">		return h1;</span>
+	}
+
+	public static XPoint2D convertPoint(char c) {
+<span class="nc" id="L87">		final int v = convertFromChar(c);</span>
+<span class="nc" id="L88">		final int x = v % 7;</span>
+<span class="nc" id="L89">		final int y = v / 7;</span>
+<span class="nc" id="L90">		return new XPoint2D(x - 3, y - 3);</span>
+	}
+
+	public static int convertFromChar(char c) {
+<span class="nc bnc" id="L94" title="All 4 branches missed.">		if (c &gt;= 'A' &amp;&amp; c &lt;= 'Z') {</span>
+<span class="nc" id="L95">			return c - 'A';</span>
+		}
+<span class="nc bnc" id="L97" title="All 4 branches missed.">		if (c &gt;= 'a' &amp;&amp; c &lt;= 'w') {</span>
+<span class="nc" id="L98">			return c - 'a' + 26;</span>
+		}
+<span class="nc" id="L100">		throw new IllegalArgumentException();</span>
+	}
+
+	public void drawHorizontal(UGraphic ug, double x, double y, int nb) {
+<span class="nc" id="L104">		final DotPath path = drawHorizontal(x, y, nb);</span>
+<span class="nc" id="L105">		ug.draw(path);</span>
+<span class="nc" id="L106">	}</span>
+
+	public void drawVertical(UGraphic ug, double x, double y, int nb) {
+<span class="nc" id="L109">		final DotPath path = drawVertical(x, y, nb);</span>
+<span class="nc" id="L110">		ug.draw(path);</span>
+<span class="nc" id="L111">	}</span>
+
+	DotPath drawHorizontal(double x, double y, int nb) {
+<span class="nc" id="L114">		DotPath path = new DotPath();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L116">			path = addHorizontal(x, y, path);</span>
+<span class="nc" id="L117">			x = path.getEndPoint().getX();</span>
+<span class="nc" id="L118">			y = path.getEndPoint().getY();</span>
+		}
+<span class="nc" id="L120">		return path;</span>
+	}
+
+	DotPath drawVertical(double x, double y, int nb) {
+<span class="nc" id="L124">		DotPath path = new DotPath();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L126">			path = addVertical(x, y, path);</span>
+<span class="nc" id="L127">			x = path.getEndPoint().getX();</span>
+<span class="nc" id="L128">			y = path.getEndPoint().getY();</span>
+		}
+<span class="nc" id="L130">		return path;</span>
+	}
+
+	private DotPath addHorizontal(double x, double y, DotPath path) {
+<span class="nc" id="L134">		double lastx = 0;</span>
+<span class="nc" id="L135">		double lasty = 0;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (XPoint2D p : points) {</span>
+<span class="nc" id="L137">			final double x1 = lastx + x;</span>
+<span class="nc" id="L138">			final double y1 = lasty + y;</span>
+<span class="nc" id="L139">			final double x2 = p.getX() + x;</span>
+<span class="nc" id="L140">			final double y2 = p.getY() + y;</span>
+<span class="nc" id="L141">			path = path.addAfter(new XCubicCurve2D(x1, y1, x1, y1, x2, y2, x2, y2));</span>
+<span class="nc" id="L142">			lastx = p.getX();</span>
+<span class="nc" id="L143">			lasty = p.getY();</span>
+<span class="nc" id="L144">		}</span>
+<span class="nc" id="L145">		return path;</span>
+	}
+
+	private DotPath addVertical(double x, double y, DotPath path) {
+<span class="nc" id="L149">		double lastx = 0;</span>
+<span class="nc" id="L150">		double lasty = 0;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (XPoint2D p : points) {</span>
+<span class="nc" id="L152">			final double x1 = lastx + x;</span>
+<span class="nc" id="L153">			final double y1 = lasty + y;</span>
+<span class="nc" id="L154">			final double x2 = p.getY() + x;</span>
+<span class="nc" id="L155">			final double y2 = p.getX() + y;</span>
+<span class="nc" id="L156">			path = path.addAfter(new XCubicCurve2D(x1, y1, x1, y1, x2, y2, x2, y2));</span>
+<span class="nc" id="L157">			lastx = p.getY();</span>
+<span class="nc" id="L158">			lasty = p.getX();</span>
+<span class="nc" id="L159">		}</span>
+<span class="nc" id="L160">		return path;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

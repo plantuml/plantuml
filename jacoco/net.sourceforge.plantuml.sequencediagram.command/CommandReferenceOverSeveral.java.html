@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandReferenceOverSeveral.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.command</a> &gt; <span class="el_source">CommandReferenceOverSeveral.java</span></div><h1>CommandReferenceOverSeveral.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.Reference;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandReferenceOverSeveral extends SingleLineCommand2&lt;SequenceDiagram&gt; {
+
+	public CommandReferenceOverSeveral() {
+<span class="fc" id="L63">		super(getConcat());</span>
+<span class="fc" id="L64">	}</span>
+
+	private static RegexConcat getConcat() {
+<span class="fc" id="L67">		return RegexConcat.build(CommandReferenceOverSeveral.class.getName(), //</span>
+<span class="fc" id="L68">				RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;ref&quot;), //
+				new RegexLeaf(&quot;REF&quot;, &quot;(#\\w+)?&quot;), //
+<span class="fc" id="L71">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;over&quot;), //
+<span class="fc" id="L73">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;PARTS&quot;, &quot;(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)&quot;), //
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;URL&quot;, &quot;(\\[\\[.*?\\]\\])&quot;)), //
+<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">				new RegexLeaf(&quot;TEXT&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L86">		final String s1 = arg.get(&quot;REF&quot;, 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);</span>
+		// final HtmlColor backColorGeneral =
+		// HtmlColorSetSimple.instance().getColorIfValid(arg.get(&quot;REF&quot;).get(1));
+
+<span class="nc" id="L91">		final List&lt;String&gt; participants = StringUtils.splitComma(arg.get(&quot;PARTS&quot;, 0));</span>
+<span class="nc" id="L92">		final String url = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L93">		final String text = StringUtils.trin(arg.get(&quot;TEXT&quot;, 0));</span>
+
+<span class="nc" id="L95">		final List&lt;Participant&gt; p = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (String s : participants)</span>
+<span class="nc" id="L97">			p.add(diagram.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));</span>
+
+<span class="nc" id="L99">		final Display strings = Display.getWithNewlines(diagram.getPragma(), text);</span>
+
+<span class="nc" id="L101">		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L102">		Url u = null;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L104">			u = b.getUrl(url);</span>
+
+<span class="nc" id="L106">		final HColor backColorGeneral = null;</span>
+<span class="nc" id="L107">		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,</span>
+<span class="nc" id="L108">				diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L109">		diagram.addReference(ref);</span>
+<span class="nc" id="L110">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

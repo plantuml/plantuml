@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AtomicParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.ubrex</a> &gt; <span class="el_source">AtomicParser.java</span></div><h1>AtomicParser.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package com.plantuml.ubrex;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+<span class="fc" id="L41">public class AtomicParser {</span>
+
+	private static int getClosingBracket(TextNavigator input, char open, char close) {
+<span class="fc" id="L44">		int level = 0;</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		for (int i = 1; i &lt; input.length(); i++) {</span>
+<span class="fc" id="L46">			final char ch = input.charAt(i);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">			if (ch == open)</span>
+<span class="fc" id="L48">				level++;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			else if (ch == close)</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">				if (level == 0)</span>
+<span class="fc" id="L51">					return i;</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">				else if (--level &lt; 0)</span>
+<span class="nc" id="L53">					throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L55">		return -1;</span>
+	}
+
+	private Challenge parseSingle(TextNavigator input) {
+<span class="fc" id="L59">		final List&lt;Challenge&gt; result = parse(input);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (result.size() != 1)</span>
+<span class="nc" id="L61">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L62">		return result.get(0);</span>
+	}
+
+	public List&lt;Challenge&gt; parse(TextNavigator input) {
+<span class="pc bpc" id="L66" title="1 of 11 branches missed.">		switch (input.charAt(0)) {</span>
+		case '┇':
+<span class="nc" id="L68">			throw new IllegalArgumentException();</span>
+		case '〒':
+<span class="fc" id="L70">			return Collections.singletonList(manageLookAround(input));</span>
+		case '【':
+<span class="fc" id="L72">			return Collections.singletonList(manageAlternative(input));</span>
+		case '〇':
+<span class="fc" id="L74">			return Collections.singletonList(manageQuantifier(input));</span>
+		case '〄':
+<span class="fc" id="L76">			return manageUpTo(input);</span>
+		case '〘':
+<span class="fc" id="L78">			return Collections.singletonList(manageGroup(input));</span>
+		case '「':
+<span class="fc" id="L80">			return Collections.singletonList(manageCharacterSet(input));</span>
+		case '〴':
+<span class="fc" id="L82">			return Collections.singletonList(manageClass(input));</span>
+		case '〶':
+<span class="fc" id="L84">			return Collections.singletonList(manageNamed(input));</span>
+		case '〃':
+<span class="fc" id="L86">			return Collections.singletonList(manageDoubleQuote(input));</span>
+		default:
+<span class="fc" id="L88">			return Collections.singletonList(manageRegularCharacter(input));</span>
+		}
+	}
+
+	private Challenge manageLookAround(TextNavigator input) {
+<span class="fc" id="L93">		input.jump(1);</span>
+<span class="fc" id="L94">		final LookAround look = LookAround.from(input);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (look == null)</span>
+<span class="nc" id="L96">			throw new UnsupportedOperationException(&quot;Syntax error&quot;);</span>
+<span class="fc" id="L97">		input.jump(look.getDefinitionSize());</span>
+
+		final Challenge result;
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (look == LookAround.END_OF_TEXT) {</span>
+<span class="fc" id="L101">			result = new ChallengeEndOfText();</span>
+		} else {
+<span class="fc" id="L103">			final Challenge p1 = parseSingle(input);</span>
+
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			if (look.isLookBehind())</span>
+<span class="fc" id="L106">				result = new ChallengeLookBehind(p1, look);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">			else if (look.isLookAhead())</span>
+<span class="fc" id="L108">				result = new ChallengeLookAhead(p1, look);</span>
+			else
+<span class="nc" id="L110">				throw new UnsupportedOperationException();</span>
+		}
+
+<span class="fc" id="L113">		return result;</span>
+	}
+
+	private Challenge manageClass(TextNavigator input) {
+<span class="fc" id="L117">		input.jump(1);</span>
+<span class="fc" id="L118">		final CharClass result = CharClass.fromDefinition(input);</span>
+<span class="fc" id="L119">		input.jump(result.getDefinitionLength());</span>
+<span class="fc" id="L120">		return new ChallengeCharClass(result);</span>
+	}
+
+	private Challenge manageQuantifier(TextNavigator input) {
+<span class="fc" id="L124">		final char operator = input.charAt(1);</span>
+<span class="fc" id="L125">		input.jump(2);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (operator == '{')</span>
+<span class="fc" id="L127">			return manageQuantifierBracket(input);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		else if (operator == 'l')</span>
+<span class="fc" id="L129">			return manageQuantifierLazzy(input);</span>
+
+<span class="fc" id="L131">		final Challenge origin = parseSingle(input);</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		switch (operator) {</span>
+		case '+':
+<span class="fc" id="L134">			return new ChallengeOneOrMore(origin);</span>
+		case '*':
+<span class="fc" id="L136">			return new ChallengeZeroOrMore(origin);</span>
+		case '?':
+<span class="fc" id="L138">			return new ChallengeOptional(origin);</span>
+		default:
+<span class="nc" id="L140">			throw new UnsupportedOperationException(&quot;wip01&quot;);</span>
+		}
+	}
+
+	private Challenge manageQuantifierLazzy(TextNavigator input) {
+<span class="fc" id="L145">		input.jump(1);</span>
+<span class="fc" id="L146">		final Challenge origin = parseSingle(input);</span>
+<span class="fc" id="L147">		final CompositeList remaining = CompositeList.parseAndBuildFromTextNavigator(input);</span>
+
+<span class="fc" id="L149">		return new ChallengeLazzyOneOrMore(origin, remaining);</span>
+	}
+
+	private Challenge manageQuantifierBracket(TextNavigator input) {
+<span class="fc" id="L153">		final Repetition repetition = Repetition.parse(input);</span>
+<span class="fc" id="L154">		final Challenge origin = parseSingle(input);</span>
+<span class="fc" id="L155">		return new ChallengeRepetition(repetition, origin);</span>
+	}
+
+	private List&lt;Challenge&gt; manageUpTo(TextNavigator input) {
+<span class="fc" id="L159">		final char operator = input.charAt(1);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (operator == '&gt;') {</span>
+<span class="fc" id="L161">			input.jump(2);</span>
+<span class="fc" id="L162">			final Challenge p2 = parseSingle(input);</span>
+			// This is a terrible hack, because if this is used with named group, we do not
+			// want p2 to be captured
+<span class="fc" id="L165">			return Arrays.asList(new ChallengeUpTo(p2), p2);</span>
+		}
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (operator != '+')</span>
+<span class="nc" id="L168">			throw new UnsupportedOperationException(&quot;manageQuantifierUpTo1&quot;);</span>
+
+<span class="fc" id="L170">		input.jump(2);</span>
+<span class="fc" id="L171">		skipSpaces(input);</span>
+
+<span class="fc" id="L173">		final Challenge p1 = parseSingle(input);</span>
+
+<span class="fc" id="L175">		skipSpaces(input);</span>
+
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (input.charAt(0) != '-')</span>
+<span class="nc" id="L178">			throw new UnsupportedOperationException(&quot;manageQuantifierUpTo2&quot;);</span>
+
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (input.charAt(1) != '&gt;')</span>
+<span class="nc" id="L181">			throw new UnsupportedOperationException(&quot;manageQuantifierUpTo2&quot;);</span>
+
+<span class="fc" id="L183">		input.jump(2);</span>
+<span class="fc" id="L184">		skipSpaces(input);</span>
+
+<span class="fc" id="L186">		final Challenge p2 = parseSingle(input);</span>
+		// This is a terrible hack, because if this is used with named group, we do not
+		// want p2 to be captured
+<span class="fc" id="L189">		return Arrays.asList(new ChallengeOneOrMoreUpToOldVersion(p1, p2), p2);</span>
+	}
+
+	private void skipSpaces(TextNavigator input) {
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		while (input.charAt(0) == ' ')</span>
+<span class="fc" id="L194">			input.jump(1);</span>
+<span class="fc" id="L195">	}</span>
+
+	private Challenge manageGroup(TextNavigator input) {
+<span class="fc" id="L198">		final int end = getClosingBracket(input, '〘', '〙');</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (end == -1)</span>
+<span class="nc" id="L200">			throw new UnsupportedOperationException(&quot;wip99&quot;);</span>
+
+<span class="fc" id="L202">		final CompositeList result = CompositeList.parseAndBuild(input.subSequence(1, end));</span>
+<span class="fc" id="L203">		input.jump(end + 1);</span>
+<span class="fc" id="L204">		return result;</span>
+	}
+
+	private Challenge manageAlternative(TextNavigator input) {
+<span class="fc" id="L208">		final ChallengeAlternative result = new ChallengeAlternative();</span>
+
+<span class="fc" id="L210">		int start = 1;</span>
+<span class="fc" id="L211">		int level = 0;</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		for (int i = 1; i &lt; input.length(); i++) {</span>
+<span class="fc" id="L213">			final char ch = input.charAt(i);</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">			if (ch == '【')</span>
+<span class="nc" id="L215">				level++;</span>
+<span class="pc bpc" id="L216" title="1 of 4 branches missed.">			else if (level == 0 &amp;&amp; ch == '┇') {</span>
+<span class="fc" id="L217">				final CompositeList part = CompositeList.parseAndBuild(input.subSequence(start, i));</span>
+<span class="fc" id="L218">				result.addAlternative(part);</span>
+<span class="fc" id="L219">				start = i + 1;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			} else if (ch == '】')</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">				if (level == 0) {</span>
+<span class="fc" id="L222">					final CompositeList part = CompositeList.parseAndBuild(input.subSequence(start, i));</span>
+<span class="fc" id="L223">					result.addAlternative(part);</span>
+<span class="fc" id="L224">					input.jump(i + 1);</span>
+<span class="fc" id="L225">					return result;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">				} else if (--level &lt; 0)</span>
+<span class="nc" id="L227">					throw new IllegalArgumentException();</span>
+
+		}
+<span class="nc" id="L230">		throw new UnsupportedOperationException(&quot;wip32&quot;);</span>
+	}
+
+	private Challenge manageNamed(TextNavigator input) {
+<span class="fc" id="L234">		final StringBuilder name = new StringBuilder();</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (input.charAt(1) != '$')</span>
+<span class="nc" id="L236">			throw new UnsupportedOperationException(&quot;varname must have a $&quot;);</span>
+
+<span class="fc" id="L238">		input.jump(2);</span>
+		while (true) {
+<span class="fc" id="L240">			final char ch = input.charAt(0);</span>
+<span class="fc" id="L241">			input.jump(1);</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">			if (ch == '=') {</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">				if (name.length() == 0)</span>
+<span class="nc" id="L244">					throw new UnsupportedOperationException(&quot;no name!&quot;);</span>
+<span class="fc" id="L245">				final CompositeNamed result = new CompositeNamed(name.toString(), parse(input));</span>
+
+<span class="fc" id="L247">				return result;</span>
+			}
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">			if (Character.isJavaIdentifierPart(ch))</span>
+<span class="fc" id="L250">				name.append(ch);</span>
+			else
+<span class="nc" id="L252">				throw new UnsupportedOperationException(&quot;Unsupported name!&quot;);</span>
+<span class="fc" id="L253">		}</span>
+	}
+
+	private Challenge manageCharacterSet(TextNavigator input) {
+<span class="fc" id="L257">		final int end = input.indexOf('」');</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (end == -1)</span>
+<span class="nc" id="L259">			throw new UnsupportedOperationException(&quot;wip80&quot;);</span>
+<span class="fc" id="L260">		final ChallengeCharSet result = ChallengeCharSet.build(input.subSequence(1, end));</span>
+<span class="fc" id="L261">		input.jump(end + 1);</span>
+<span class="fc" id="L262">		return result;</span>
+	}
+
+	private Challenge manageRegularCharacter(TextNavigator input) {
+<span class="fc" id="L266">		char ch = input.charAt(0);</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (ch == ' ')</span>
+<span class="nc" id="L268">			throw new IllegalStateException(&quot;no space allowed&quot;);</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">		if (ch == '∙')</span>
+<span class="fc" id="L270">			ch = ' ';</span>
+<span class="fc" id="L271">		input.jump(1);</span>
+<span class="fc" id="L272">		return new ChallengeSingleChar(ch);</span>
+	}
+
+	private Challenge manageDoubleQuote(TextNavigator input) {
+<span class="fc" id="L276">		input.jump(1);</span>
+<span class="fc" id="L277">		return new ChallengeSingleChar('\&quot;');</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComplementIntervals.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">ComplementIntervals.java</span></div><h1>ComplementIntervals.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import net.sourceforge.plantuml.project.DaysAsDates;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+
+<span class="fc" id="L48">public class ComplementIntervals implements Something&lt;GanttDiagram&gt; {</span>
+
+	public IRegex toRegex(String suffix) {
+<span class="fc" id="L51">		return new RegexOr(toRegexB(suffix), toRegexE(suffix));</span>
+	}
+
+	private IRegex toRegexB(String suffix) {
+<span class="fc" id="L55">		final DayPattern dayPattern1 = new DayPattern(&quot;1&quot;);</span>
+<span class="fc" id="L56">		final DayPattern dayPattern2 = new DayPattern(&quot;2&quot;);</span>
+<span class="fc" id="L57">		return new RegexConcat( //</span>
+<span class="fc" id="L58">				dayPattern1.toRegex(), //</span>
+<span class="fc" id="L59">				Words.exactly(Words.TO), //</span>
+<span class="fc" id="L60">				Words.zeroOrMore(Words.THE), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				dayPattern2.toRegex() //</span>
+		);
+	}
+
+	private IRegex toRegexE(String suffix) {
+<span class="fc" id="L67">		return new RegexConcat( //</span>
+				new RegexLeaf(&quot;[dD]\\+&quot;), //
+				new RegexLeaf(&quot;ECOUNT1&quot; + suffix, &quot;([\\d]+)&quot;), //
+<span class="fc" id="L70">				Words.exactly(Words.TO), //</span>
+<span class="fc" id="L71">				Words.zeroOrMore(Words.THE), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;[dD]\\+&quot;), //
+				new RegexLeaf(&quot;ECOUNT2&quot; + suffix, &quot;([\\d]+)&quot;) //
+		);
+	}
+
+	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
+<span class="nc" id="L79">		final Day d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (d1 != null) {</span>
+<span class="nc" id="L81">			final Day d2 = new DayPattern(&quot;2&quot;).getDay(arg);</span>
+<span class="nc" id="L82">			return Failable.ok(new DaysAsDates(d1, d2));</span>
+		}
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT1&quot; + suffix, 0) != null)</span>
+<span class="nc" id="L86">			return Failable.ok(resultE(project, arg, suffix));</span>
+
+<span class="nc" id="L88">		throw new IllegalStateException();</span>
+
+	}
+
+	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {
+<span class="nc" id="L93">		final int day1 = Integer.parseInt(arg.get(&quot;ECOUNT1&quot; + suffix, 0));</span>
+<span class="nc" id="L94">		final Day date1 = project.getStartingDate().addDays(day1);</span>
+
+<span class="nc" id="L96">		final int day2 = Integer.parseInt(arg.get(&quot;ECOUNT2&quot; + suffix, 0));</span>
+<span class="nc" id="L97">		final Day date2 = project.getStartingDate().addDays(day2);</span>
+
+<span class="nc" id="L99">		return new DaysAsDates(date1, date2);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

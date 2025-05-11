@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HclParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.hcl</a> &gt; <span class="el_source">HclParser.java</span></div><h1>HclParser.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.hcl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonString;
+import net.sourceforge.plantuml.json.JsonValue;
+
+// https://github.com/hashicorp/hcl
+public class HclParser {
+
+<span class="nc" id="L55">	private final List&lt;HclTerm&gt; terms = new ArrayList&lt;HclTerm&gt;();</span>
+
+<span class="nc" id="L57">	public HclParser(Iterable&lt;Character&gt; source) {</span>
+<span class="nc" id="L58">		parse(source.iterator());</span>
+<span class="nc" id="L59">	}</span>
+
+	public JsonObject parseMe() {
+<span class="nc" id="L62">		final Map&lt;String, JsonObject&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L63">		final Iterator&lt;HclTerm&gt; it = terms.iterator();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		while (it.hasNext())</span>
+<span class="nc" id="L65">			map.putAll(getModuleOrSomething(it));</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (map.size() == 1)</span>
+<span class="nc" id="L68">			return map.values().iterator().next();</span>
+
+<span class="nc" id="L70">		final JsonObject result = new JsonObject();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (Entry&lt;String, JsonObject&gt; ent : map.entrySet())</span>
+<span class="nc" id="L72">			result.add(ent.getKey(), ent.getValue());</span>
+
+<span class="nc" id="L74">		return result;</span>
+	}
+
+	private Map&lt;String, JsonObject&gt; getModuleOrSomething(Iterator&lt;HclTerm&gt; it) {
+<span class="nc" id="L78">		final StringBuilder name = new StringBuilder();</span>
+		while (true) {
+<span class="nc" id="L80">			final HclTerm current = it.next();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (current.is(SymbolType.STRING_QUOTED))</span>
+<span class="nc" id="L82">				name.append(&quot;\&quot;&quot; + current.getData() + &quot;\&quot; &quot;);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			else if (current.is(SymbolType.STRING_SIMPLE))</span>
+<span class="nc" id="L84">				name.append(current.getData() + &quot; &quot;);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			else if (current.is(SymbolType.CURLY_BRACKET_OPEN)) {</span>
+<span class="nc" id="L86">				return Collections.singletonMap(name.toString().trim(), getBracketData(it));</span>
+			} else
+<span class="nc" id="L88">				throw new IllegalStateException(current.toString());</span>
+<span class="nc" id="L89">		}</span>
+	}
+
+	private JsonValue getFunctionData(String functionName, Iterator&lt;HclTerm&gt; it) {
+<span class="nc" id="L93">		final JsonArray args = new JsonArray();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (it.next().is(SymbolType.PARENTHESIS_OPEN) == false)</span>
+<span class="nc" id="L95">			throw new IllegalStateException();</span>
+
+		while (true) {
+<span class="nc" id="L98">			final Object value = getValue(it);</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">			if (value instanceof HclTerm &amp;&amp; ((HclTerm) value).is(SymbolType.PARENTHESIS_CLOSE)) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				if (args.size() == 0)</span>
+<span class="nc" id="L101">					return Json.value(functionName + &quot;()&quot;);</span>
+<span class="nc" id="L102">				final JsonObject result = new JsonObject();</span>
+<span class="nc" id="L103">				result.add(functionName + &quot;()&quot;, args);</span>
+<span class="nc" id="L104">				return result;</span>
+			}
+<span class="nc bnc" id="L106" title="All 4 branches missed.">			if (value instanceof HclTerm &amp;&amp; ((HclTerm) value).is(SymbolType.COMMA))</span>
+<span class="nc" id="L107">				continue;</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (value instanceof String)</span>
+<span class="nc" id="L110">				args.add((String) value);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			else if (value instanceof JsonArray)</span>
+<span class="nc" id="L112">				args.add((JsonArray) value);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			else if (value instanceof JsonObject)</span>
+<span class="nc" id="L114">				args.add((JsonObject) value);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			else if (value instanceof JsonString)</span>
+<span class="nc" id="L116">				args.add((JsonString) value);</span>
+			else
+<span class="nc" id="L118">				throw new IllegalStateException();</span>
+
+<span class="nc" id="L120">		}</span>
+	}
+
+	private JsonObject getBracketData(Iterator&lt;HclTerm&gt; it) {
+<span class="nc" id="L124">		final JsonObject result = new JsonObject();</span>
+		while (true) {
+<span class="nc" id="L126">			final HclTerm current = it.next();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (current.is(SymbolType.CURLY_BRACKET_CLOSE))</span>
+<span class="nc" id="L128">				return result;</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">			if (current.is(SymbolType.STRING_SIMPLE) || current.is(SymbolType.STRING_QUOTED)) {</span>
+<span class="nc" id="L130">				final String fieldName = current.getData();</span>
+<span class="nc" id="L131">				final HclTerm next = it.next();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">				if (next.is(SymbolType.EQUALS, SymbolType.TWO_POINTS) == false)</span>
+<span class="nc" id="L133">					throw new IllegalStateException(current.toString());</span>
+<span class="nc" id="L134">				final Object value = getValue(it);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">				if (value instanceof String)</span>
+<span class="nc" id="L136">					result.add(fieldName, (String) value);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">				else if (value instanceof JsonArray)</span>
+<span class="nc" id="L138">					result.add(fieldName, (JsonArray) value);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				else if (value instanceof JsonObject)</span>
+<span class="nc" id="L140">					result.add(fieldName, (JsonObject) value);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">				else if (value instanceof JsonString)</span>
+<span class="nc" id="L142">					result.add(fieldName, (JsonString) value);</span>
+				else
+<span class="nc" id="L144">					throw new IllegalStateException();</span>
+
+<span class="nc" id="L146">			} else</span>
+<span class="nc" id="L147">				throw new IllegalStateException(current.toString());</span>
+<span class="nc" id="L148">		}</span>
+	}
+
+	private Object getValue(Iterator&lt;HclTerm&gt; it) {
+<span class="nc" id="L152">		final HclTerm current = it.next();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (current.is(SymbolType.COMMA, SymbolType.PARENTHESIS_CLOSE))</span>
+<span class="nc" id="L154">			return current;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (current.is(SymbolType.STRING_QUOTED))</span>
+<span class="nc" id="L156">			return current.getData();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (current.is(SymbolType.STRING_SIMPLE))</span>
+<span class="nc" id="L158">			return current.getData();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (current.is(SymbolType.SQUARE_BRACKET_OPEN))</span>
+<span class="nc" id="L160">			return getArray(it);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (current.is(SymbolType.CURLY_BRACKET_OPEN))</span>
+<span class="nc" id="L162">			return getBracketData(it);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (current.is(SymbolType.FUNCTION_NAME))</span>
+<span class="nc" id="L164">			return getFunctionData(current.getData(), it);</span>
+<span class="nc" id="L165">		throw new IllegalStateException(current.toString());</span>
+	}
+
+	private Object getArray(Iterator&lt;HclTerm&gt; it) {
+<span class="nc" id="L169">		final JsonArray result = new JsonArray();</span>
+		while (true) {
+<span class="nc" id="L171">			final HclTerm current = it.next();</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">			if (current.is(SymbolType.CURLY_BRACKET_OPEN))</span>
+<span class="nc" id="L173">				result.add(getBracketData(it));</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (current.is(SymbolType.SQUARE_BRACKET_CLOSE))</span>
+<span class="nc" id="L175">				return result;</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">			if (current.is(SymbolType.COMMA))</span>
+<span class="nc" id="L177">				continue;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (current.is(SymbolType.STRING_QUOTED))</span>
+<span class="nc" id="L179">				result.add(current.getData());</span>
+<span class="nc" id="L180">		}</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L185">		return terms.toString();</span>
+	}
+
+	private void parse(Iterator&lt;Character&gt; it) {
+<span class="nc" id="L189">		final StringBuilder pendingString = new StringBuilder();</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L191">			final char c = it.next();</span>
+<span class="nc" id="L192">			final SymbolType type = getType(c);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">			if (type == SymbolType.PARENTHESIS_OPEN) {</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">				if (pendingString.length() == 0)</span>
+<span class="nc" id="L195">					throw new IllegalArgumentException();</span>
+<span class="nc" id="L196">				terms.add(new HclTerm(SymbolType.FUNCTION_NAME, pendingString.toString()));</span>
+<span class="nc" id="L197">				pendingString.setLength(0);</span>
+<span class="nc bnc" id="L198" title="All 4 branches missed.">			} else if (type != null &amp;&amp; pendingString.length() &gt; 0) {</span>
+<span class="nc" id="L199">				terms.add(new HclTerm(SymbolType.STRING_SIMPLE, pendingString.toString()));</span>
+<span class="nc" id="L200">				pendingString.setLength(0);</span>
+			}
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (type == SymbolType.SPACE)</span>
+<span class="nc" id="L204">				continue;</span>
+
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (type != null) {</span>
+<span class="nc" id="L207">				terms.add(new HclTerm(type));</span>
+<span class="nc" id="L208">				continue;</span>
+			}
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (c == '\&quot;') {</span>
+<span class="nc" id="L211">				final String s = eatUntilDoubleQuote(it);</span>
+<span class="nc" id="L212">				terms.add(new HclTerm(SymbolType.STRING_QUOTED, s));</span>
+<span class="nc" id="L213">				continue;</span>
+			}
+<span class="nc" id="L215">			pendingString.append(c);</span>
+<span class="nc" id="L216">		}</span>
+<span class="nc" id="L217">	}</span>
+
+	private String eatUntilDoubleQuote(Iterator&lt;Character&gt; it) {
+<span class="nc" id="L220">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L222">			final char c = it.next();</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (c == '\\') {</span>
+<span class="nc" id="L224">				sb.append(it.next());</span>
+<span class="nc" id="L225">				continue;</span>
+			}
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (c == '\&quot;')</span>
+<span class="nc" id="L228">				return sb.toString();</span>
+<span class="nc" id="L229">			sb.append(c);</span>
+<span class="nc" id="L230">		}</span>
+<span class="nc" id="L231">		return sb.toString();</span>
+	}
+
+	private SymbolType getType(final char c) {
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (Character.isSpaceChar(c))</span>
+<span class="nc" id="L236">			return SymbolType.SPACE;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		else if (c == '{')</span>
+<span class="nc" id="L238">			return SymbolType.CURLY_BRACKET_OPEN;</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		else if (c == '}')</span>
+<span class="nc" id="L240">			return SymbolType.CURLY_BRACKET_CLOSE;</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		else if (c == '[')</span>
+<span class="nc" id="L242">			return SymbolType.SQUARE_BRACKET_OPEN;</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		else if (c == ']')</span>
+<span class="nc" id="L244">			return SymbolType.SQUARE_BRACKET_CLOSE;</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		else if (c == '(')</span>
+<span class="nc" id="L246">			return SymbolType.PARENTHESIS_OPEN;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		else if (c == ')')</span>
+<span class="nc" id="L248">			return SymbolType.PARENTHESIS_CLOSE;</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		else if (c == '=')</span>
+<span class="nc" id="L250">			return SymbolType.EQUALS;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		else if (c == ',')</span>
+<span class="nc" id="L252">			return SymbolType.COMMA;</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		else if (c == ':')</span>
+<span class="nc" id="L254">			return SymbolType.TWO_POINTS;</span>
+
+<span class="nc" id="L256">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

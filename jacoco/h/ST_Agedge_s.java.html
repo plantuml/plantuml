@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ST_Agedge_s.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">h</a> &gt; <span class="el_source">ST_Agedge_s.java</span></div><h1>ST_Agedge_s.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package h;
+
+import smetana.core.FieldOffset;
+import smetana.core.__ptr__;
+import smetana.core.__struct__;
+
+<span class="fc" id="L52">final public class ST_Agedge_s extends ST_Agobj_s {</span>
+
+	public ST_Agedge_s PREV;
+	public ST_Agedge_s NEXT;
+
+<span class="fc" id="L57">	public final ST_Agobj_s base = this;</span>
+<span class="fc" id="L58">	public final ST_dtlink_s id_link = new ST_dtlink_s(this);</span>
+<span class="fc" id="L59">	public final ST_dtlink_s seq_link = new ST_dtlink_s(this);</span>
+	public ST_Agnode_s node;
+
+	public String NAME;
+
+//	@Override
+//	public String toString() {
+//		return NAME;
+//	}
+
+	@Override
+	public void ___(__struct__ arg) {
+<span class="nc" id="L71">		ST_Agedge_s this2 = (ST_Agedge_s) arg;</span>
+<span class="nc" id="L72">		this.tag.___(this2.tag);</span>
+<span class="nc" id="L73">		this.data = this2.data;</span>
+<span class="nc" id="L74">		this.id_link.___(this2.id_link);</span>
+<span class="nc" id="L75">		this.seq_link.___(this2.seq_link);</span>
+<span class="nc" id="L76">		this.node = this2.node;</span>
+<span class="nc" id="L77">	}</span>
+
+	@Override
+	public boolean isSameThan(__ptr__ other) {
+<span class="nc" id="L81">		ST_Agedge_s other2 = (ST_Agedge_s) other;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		return this == other2;</span>
+	}
+
+	@Override
+	public Object getTheField(FieldOffset offset) {
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		if (offset == null || offset.getSign() == 0) {</span>
+<span class="fc" id="L88">			return this;</span>
+		}
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (offset == FieldOffset.seq_link)</span>
+<span class="fc" id="L91">			return seq_link;</span>
+
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (offset == FieldOffset.id_link)</span>
+<span class="fc" id="L94">			return id_link;</span>
+
+<span class="nc" id="L96">		throw new UnsupportedOperationException();</span>
+	}
+
+	public ST_Agedge_s plus_(int pointerMove) {
+<span class="pc bpc" id="L100" title="1 of 4 branches missed.">		if (pointerMove == 1 &amp;&amp; NEXT != null) {</span>
+<span class="fc" id="L101">			return NEXT;</span>
+		}
+<span class="pc bpc" id="L103" title="2 of 4 branches missed.">		if (pointerMove == -1 &amp;&amp; PREV != null) {</span>
+<span class="fc" id="L104">			return PREV;</span>
+		}
+<span class="nc" id="L106">		throw new UnsupportedOperationException();</span>
+	}
+}
+
+// struct Agedge_s {
+// Agobj_t base;
+// Dtlink_t id_link; /* main graph only */
+// Dtlink_t seq_link;
+// Agnode_t *node; /* the endpoint node */
+// };
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

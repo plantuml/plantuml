@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubjectSeparator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">SubjectSeparator.java</span></div><h1>SubjectSeparator.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+
+public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L52">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectSeparator();</span>
+
+	private SubjectSeparator() {
+	}
+
+	public IRegex toRegex() {
+<span class="fc" id="L58">		return new RegexLeaf(&quot;SUBJECT&quot;, &quot;separator&quot;);</span>
+	}
+
+	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {
+<span class="nc" id="L62">		return Failable.ok(project);</span>
+	}
+
+	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
+<span class="fc" id="L66">		return Arrays.asList(new JustBefore(), new JustAfter(), new Just());</span>
+	}
+
+<span class="fc" id="L69">	class JustBefore extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+
+<span class="fc" id="L71">		public JustBefore() {</span>
+<span class="fc" id="L72">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.BEFORE), ComplementDate.any());</span>
+<span class="fc" id="L73">		}</span>
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L77">			final Day day = (Day) complement;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			assert project == subject;</span>
+<span class="nc" id="L79">			project.addVerticalSeparatorBefore(day);</span>
+<span class="nc" id="L80">			return CommandExecutionResult.ok();</span>
+		}
+
+	}
+
+<span class="fc" id="L85">	class JustAfter extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+
+<span class="fc" id="L87">		public JustAfter() {</span>
+<span class="fc" id="L88">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.AFTER), ComplementDate.any());</span>
+<span class="fc" id="L89">		}</span>
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L93">			final Day day = (Day) complement;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			assert project == subject;</span>
+<span class="nc" id="L95">			project.addVerticalSeparatorBefore(day.increment());</span>
+<span class="nc" id="L96">			return CommandExecutionResult.ok();</span>
+		}
+
+	}
+
+<span class="fc" id="L101">	class Just extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+
+<span class="fc" id="L103">		public Just() {</span>
+<span class="fc" id="L104">			super(SubjectSeparator.this, Verbs.just, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
+<span class="fc" id="L105">		}</span>
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L109">			final TaskInstant when = (TaskInstant) complement;</span>
+
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			assert project == subject;</span>
+<span class="nc" id="L112">			project.addVerticalSeparatorBefore(when.getInstantPrecise());</span>
+<span class="nc" id="L113">			return CommandExecutionResult.ok();</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

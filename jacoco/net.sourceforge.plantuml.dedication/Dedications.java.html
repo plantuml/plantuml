@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dedications.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.dedication</a> &gt; <span class="el_source">Dedications.java</span></div><h1>Dedications.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.dedication;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.log.Logme;
+
+public class Dedications {
+
+<span class="fc" id="L51">	private static final List&lt;Dedication&gt; all = new ArrayList&lt;&gt;();</span>
+
+	static {
+		try {
+<span class="fc" id="L55">			all.add(new DedicationSimple(load(&quot;dedication&quot;), &quot;Write your own dedication!&quot;));</span>
+<span class="fc" id="L56">			all.add(new DedicationSimple(load(&quot;linux_china&quot;), &quot;linux_china&quot;));</span>
+<span class="fc" id="L57">			all.add(new DedicationSimple(load(&quot;arkban&quot;), &quot;arkban&quot;));</span>
+<span class="fc" id="L58">			all.add(new DedicationSimple(load(&quot;boundaries&quot;), &quot;Boundaries allow discipline to create true strength&quot;));</span>
+<span class="fc" id="L59">			all.add(new DedicationSimple(load(&quot;dr_chet&quot;), &quot;Thank you, Dr. Chet. I wouldn't be where I am without you&quot;));</span>
+<span class="fc" id="L60">			all.add(new DedicationSimple(load(&quot;ben&quot;), &quot;Ben and Jen 2020&quot;));</span>
+<span class="fc" id="L61">			all.add(new DedicationSimple(load(&quot;baraye&quot;), &quot;baraye&quot;));</span>
+<span class="fc" id="L62">			all.add(new DedicationSimple(load(&quot;nothing&quot;), &quot;Nothing of value is ever easy&quot;));</span>
+<span class="fc" id="L63">			all.add(new DedicationSimple(load(&quot;friends&quot;), &quot;Have good friends and be a good friend to other people&quot;));</span>
+<span class="fc" id="L64">			all.add(new DedicationSimple(load(&quot;fatherson&quot;), &quot;By the time a man realizes that maybe his father was right, he usually has a son who thinks he is wrong&quot;));</span>
+<span class="fc" id="L65">			all.add(secret(5, &quot;835ff5d643b58cd35a20db6480071d05751aa6a0e01da78662ceafd0161f3f5e&quot;, new BigInteger(</span>
+					&quot;1182423723677118831606503500858825217076578422970565964857326298418401529955036896808663335300684244453386039908536275400945824932191521017102701344437753036730900076162922741167523337650578479960119614237031234925702200473053235777&quot;)));
+<span class="fc" id="L67">			all.add(secret(3, &quot;514816d583044efbd336882227deb822194ff63e3bdc3cf707a01f17770d5a6a&quot;, new BigInteger(</span>
+					&quot;538955952645999836068094511687012232127213955837942782605199622268460518023083462090291844640318324475656060087513198129259364840841077651829017347845508167869708224054456044836844382437974410757740941102771969965334031780041648873&quot;)));
+<span class="fc" id="L69">			all.add(secret(1, &quot;ae8a7cf3997ccd6418866fc59e596502e1bd1c0265bba2fc380ad7f51c76518f&quot;, new BigInteger(</span>
+					&quot;987988542836850639056829173787067531749177506648884857100630852970876999799588072360773169026225182488073794585127241896588994816566037813451743416913613428321215803586563629080034406083114565732322220091545330060636171674602040157&quot;)));
+<span class="nc" id="L71">		} catch (Throwable t) {</span>
+<span class="nc" id="L72">			Logme.error(t);</span>
+<span class="fc" id="L73">		}</span>
+<span class="fc" id="L74">	}</span>
+
+	private static DedicationCrypted secret(int tiny, String sig, BigInteger pq) throws IOException {
+<span class="fc" id="L77">		return new DedicationCrypted(load(sig), tiny, sig, pq);</span>
+	}
+
+	private static byte[] load(String name) throws IOException {
+<span class="fc" id="L81">		final InputStream tmp = PSystemDedication.class.getResourceAsStream(name + &quot;.png&quot;);</span>
+<span class="fc" id="L82">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L83">		FileUtils.copyInternal(tmp, baos, true);</span>
+<span class="fc" id="L84">		return baos.toByteArray();</span>
+	}
+
+	private Dedications() {
+	}
+
+	public synchronized static BufferedImage get(String line) {
+<span class="fc" id="L91">		final TinyHashableString sentence = new TinyHashableString(line);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (Dedication dedication : all) {</span>
+<span class="fc" id="L93">			final BufferedImage image = dedication.getImage(sentence);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (image != null)</span>
+<span class="nc" id="L95">				return image;</span>
+<span class="fc" id="L96">		}</span>
+<span class="fc" id="L97">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

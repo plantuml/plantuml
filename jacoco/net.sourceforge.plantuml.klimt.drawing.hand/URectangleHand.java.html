@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>URectangleHand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.hand</a> &gt; <span class="el_source">URectangleHand.java</span></div><h1>URectangleHand.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Adrian Vogt
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.hand;
+
+import java.util.Random;
+
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public class URectangleHand {
+
+	final private UPolygon poly;
+
+<span class="nc" id="L47">	public URectangleHand(URectangle rectangle, Random rnd) {</span>
+<span class="nc" id="L48">		final double width = rectangle.getWidth();</span>
+<span class="nc" id="L49">		final double height = rectangle.getHeight();</span>
+		final HandJiggle jiggle;
+<span class="nc" id="L51">		final double rx = Math.min(rectangle.getRx() / 2, width / 2);</span>
+<span class="nc" id="L52">		final double ry = Math.min(rectangle.getRy() / 2, height / 2);</span>
+		// System.err.println(&quot;rx=&quot; + rx + &quot; ry=&quot; + ry);
+<span class="nc bnc" id="L54" title="All 4 branches missed.">		if (rx == 0 &amp;&amp; ry == 0) {</span>
+<span class="nc" id="L55">			jiggle = new HandJiggle(0, 0, 1.5, rnd);</span>
+<span class="nc" id="L56">			jiggle.lineTo(width, 0);</span>
+<span class="nc" id="L57">			jiggle.lineTo(width, height);</span>
+<span class="nc" id="L58">			jiggle.lineTo(0, height);</span>
+<span class="nc" id="L59">			jiggle.lineTo(0, 0);</span>
+		} else {
+<span class="nc" id="L61">			jiggle = new HandJiggle(rx, 0, 1.5, rnd);</span>
+<span class="nc" id="L62">			jiggle.lineTo(width - rx, 0);</span>
+<span class="nc" id="L63">			jiggle.arcTo(-Math.PI / 2, 0, width - rx, ry, rx, ry);</span>
+<span class="nc" id="L64">			jiggle.lineTo(width, height - ry);</span>
+<span class="nc" id="L65">			jiggle.arcTo(0, Math.PI / 2, width - rx, height - ry, rx, ry);</span>
+<span class="nc" id="L66">			jiggle.lineTo(rx, height);</span>
+<span class="nc" id="L67">			jiggle.arcTo(Math.PI / 2, Math.PI, rx, height - ry, rx, ry);</span>
+<span class="nc" id="L68">			jiggle.lineTo(0, ry);</span>
+<span class="nc" id="L69">			jiggle.arcTo(Math.PI, 3 * Math.PI / 2, rx, ry, rx, ry);</span>
+		}
+
+<span class="nc" id="L72">		this.poly = jiggle.toUPolygon();</span>
+<span class="nc" id="L73">		this.poly.setDeltaShadow(rectangle.getDeltaShadow());</span>
+<span class="nc" id="L74">	}</span>
+
+	public Shadowable getHanddrawn() {
+<span class="nc" id="L77">		return this.poly;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

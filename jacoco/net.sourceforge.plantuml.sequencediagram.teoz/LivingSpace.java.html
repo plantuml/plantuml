@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LivingSpace.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">LivingSpace.java</span></div><h1>LivingSpace.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.Delay;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
+import net.sourceforge.plantuml.sequencediagram.ParticipantType;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.url.Url;
+
+public class LivingSpace {
+
+	private final Participant p;
+	private final ISkinParam skinParam;
+	private final ComponentType headType;
+	private final ComponentType tailType;
+	private final MutingLine mutingLine;
+<span class="fc" id="L67">	private final Rose rose = new Rose();</span>
+	private final LiveBoxes liveboxes;
+
+	// private final Rose skin;
+	// private final boolean useContinueLineBecauseOfDelay;
+	// private final LivingSpaceImpl previous;
+	// private LivingSpace next;
+
+	private final Real posB;
+	private Real posC;
+	private Real posD;
+
+<span class="fc" id="L79">	private boolean create = false;</span>
+<span class="fc" id="L80">	private double createY = 0;</span>
+
+	private final ParticipantEnglober englober;
+
+	public int getLevelAt(Tile tile, EventsHistoryMode mode) {
+		// assert mode == EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE;
+<span class="fc" id="L86">		return liveboxes.getLevelAt(tile.getEvent(), mode);</span>
+	}
+
+	public void addStepForLivebox(Event event, double y) {
+<span class="fc" id="L90">		liveboxes.addStep(event, y);</span>
+<span class="fc" id="L91">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L95">		return p.getCode() + &quot; B=&quot; + posB.getCurrentValue() + &quot;/C=&quot; + currentValue(posC) + &quot;/D=&quot; + currentValue(posD);</span>
+	}
+
+	private static String currentValue(Real pos) {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (pos == null) {</span>
+<span class="nc" id="L100">			return null;</span>
+		}
+<span class="nc" id="L102">		return &quot;&quot; + pos.getCurrentValue();</span>
+	}
+
+	public LivingSpace(Participant p, ParticipantEnglober englober, Rose skin, ISkinParam skinParam, Real position,
+<span class="fc" id="L106">			List&lt;Event&gt; events) {</span>
+<span class="fc" id="L107">		this.p = p;</span>
+		// this.skin = skin;
+<span class="fc" id="L109">		this.skinParam = skinParam;</span>
+<span class="fc" id="L110">		this.englober = englober;</span>
+<span class="fc" id="L111">		this.posB = position;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
+<span class="fc" id="L113">			headType = ComponentType.PARTICIPANT_HEAD;</span>
+<span class="fc" id="L114">			tailType = ComponentType.PARTICIPANT_TAIL;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		} else if (p.getType() == ParticipantType.ACTOR) {</span>
+<span class="fc" id="L116">			headType = ComponentType.ACTOR_HEAD;</span>
+<span class="fc" id="L117">			tailType = ComponentType.ACTOR_TAIL;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.BOUNDARY) {</span>
+<span class="nc" id="L119">			headType = ComponentType.BOUNDARY_HEAD;</span>
+<span class="nc" id="L120">			tailType = ComponentType.BOUNDARY_TAIL;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.CONTROL) {</span>
+<span class="nc" id="L122">			headType = ComponentType.CONTROL_HEAD;</span>
+<span class="nc" id="L123">			tailType = ComponentType.CONTROL_TAIL;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.ENTITY) {</span>
+<span class="nc" id="L125">			headType = ComponentType.ENTITY_HEAD;</span>
+<span class="nc" id="L126">			tailType = ComponentType.ENTITY_TAIL;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.QUEUE) {</span>
+<span class="nc" id="L128">			headType = ComponentType.QUEUE_HEAD;</span>
+<span class="nc" id="L129">			tailType = ComponentType.QUEUE_TAIL;</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.DATABASE) {</span>
+<span class="nc" id="L131">			headType = ComponentType.DATABASE_HEAD;</span>
+<span class="nc" id="L132">			tailType = ComponentType.DATABASE_TAIL;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.COLLECTIONS) {</span>
+<span class="nc" id="L134">			headType = ComponentType.COLLECTIONS_HEAD;</span>
+<span class="nc" id="L135">			tailType = ComponentType.COLLECTIONS_TAIL;</span>
+		} else {
+<span class="nc" id="L137">			throw new IllegalArgumentException();</span>
+		}
+		// this.stairs2.addStep2(0, p.getInitialLife());
+		// this.stairs2.addStep2(0, 0);
+		// this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
+<span class="fc" id="L142">		this.mutingLine = new MutingLine(skin, skinParam, events, p);</span>
+<span class="fc" id="L143">		this.liveboxes = new LiveBoxes(p, events, skin, skinParam);</span>
+<span class="fc" id="L144">	}</span>
+
+	private boolean useContinueLineBecauseOfDelay(List&lt;Event&gt; events) {
+<span class="nc" id="L147">		final String strategy = skinParam.getValue(&quot;lifelineStrategy&quot;);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (&quot;nosolid&quot;.equalsIgnoreCase(strategy)) {</span>
+<span class="nc" id="L149">			return false;</span>
+		}
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (Event ev : events) {</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			if (ev instanceof Delay) {</span>
+<span class="nc" id="L153">				return true;</span>
+			}
+<span class="nc" id="L155">		}</span>
+<span class="nc" id="L156">		return false;</span>
+	}
+
+	public void drawLineAndLiveboxes(UGraphic ug, double height, Context2D context) {
+<span class="fc" id="L160">		mutingLine.drawLine(ug, context, createY, height);</span>
+<span class="fc" id="L161">		liveboxes.drawBoxes(ug, context, createY, height);</span>
+<span class="fc" id="L162">	}</span>
+
+	// public void addDelayTile(DelayTile tile) {
+	// System.err.println(&quot;addDelayTile &quot; + this + &quot; &quot; + tile);
+	// }
+
+	public void drawHead(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
+			HorizontalAlignment horizontalAlignment) {
+<span class="pc bpc" id="L170" title="3 of 4 branches missed.">		if (create &amp;&amp; verticalAlignment == VerticalAlignment.BOTTOM) {</span>
+<span class="nc" id="L171">			return;</span>
+		}
+<span class="fc" id="L173">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
+<span class="fc" id="L174">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L175">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L177">			ug = ug.apply(UTranslate.dx(-dim.getWidth()));</span>
+		}
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.CENTER) {</span>
+<span class="nc" id="L180">			ug = ug.apply(UTranslate.dy(-dim.getHeight() / 2));</span>
+		}
+<span class="fc" id="L182">		final Area area = new Area(dim);</span>
+<span class="fc" id="L183">		final Url url = getParticipant().getUrl();</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L185">			ug.startUrl(url);</span>
+		}
+<span class="fc" id="L187">		comp.drawU(ug, area, context);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L189">			ug.closeUrl();</span>
+		}
+<span class="fc" id="L191">	}</span>
+
+	public XDimension2D getHeadPreferredDimension(StringBounder stringBounder) {
+<span class="fc" id="L194">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
+<span class="fc" id="L195">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L196">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L197">		return dim;</span>
+	}
+
+	private double getPreferredWidth(StringBounder stringBounder) {
+<span class="fc" id="L201">		return getHeadPreferredDimension(stringBounder).getWidth();</span>
+	}
+
+	public Real getPosC(StringBounder stringBounder) {
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (posC == null) {</span>
+<span class="fc" id="L206">			this.posC = posB.addFixed(this.getPreferredWidth(stringBounder) / 2);</span>
+		}
+<span class="fc" id="L208">		return posC;</span>
+	}
+
+	public Real getPosC2(StringBounder stringBounder) {
+<span class="fc" id="L212">		final double delta = liveboxes.getMaxPosition(stringBounder);</span>
+<span class="fc" id="L213">		return getPosC(stringBounder).addFixed(delta);</span>
+	}
+
+	public Real getPosD(StringBounder stringBounder) {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (posD == null) {</span>
+<span class="fc" id="L218">			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));</span>
+		}
+		// System.err.println(&quot;LivingSpace::getPosD &quot;+posD.getCurrentValue());
+<span class="fc" id="L221">		return posD;</span>
+	}
+
+	public Real getPosB(StringBounder stringBounder) {
+<span class="fc" id="L225">		return posB;</span>
+	}
+
+	public Participant getParticipant() {
+<span class="fc" id="L229">		return p;</span>
+	}
+
+	public void goCreate(double y) {
+<span class="nc" id="L233">		this.createY = y;</span>
+<span class="nc" id="L234">		this.create = true;</span>
+<span class="nc" id="L235">	}</span>
+
+	public void goCreate() {
+<span class="nc" id="L238">		this.create = true;</span>
+<span class="nc" id="L239">	}</span>
+
+	public void delayOn(double y, double height) {
+<span class="nc" id="L242">		mutingLine.delayOn(y, height);</span>
+<span class="nc" id="L243">		liveboxes.delayOn(y, height);</span>
+<span class="nc" id="L244">	}</span>
+
+	public ParticipantEnglober getEnglober() {
+<span class="fc" id="L247">		return englober;</span>
+	}
+
+	private double marginBefore;
+	private double marginAfter;
+
+	public void ensureMarginBefore(double margin) {
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L255">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L256">		this.marginBefore = Math.max(marginBefore, margin);</span>
+<span class="nc" id="L257">	}</span>
+
+	public void ensureMarginAfter(double margin) {
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L261">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L262">		this.marginAfter = Math.max(marginAfter, margin);</span>
+<span class="nc" id="L263">	}</span>
+
+	public Real getPosA(StringBounder stringBounder) {
+<span class="fc" id="L266">		return getPosB(stringBounder).addFixed(-marginBefore);</span>
+	}
+
+	public Real getPosE(StringBounder stringBounder) {
+<span class="fc" id="L270">		return getPosD(stringBounder).addFixed(marginAfter);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

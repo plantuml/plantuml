@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Graphics2DRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.renderer</a> &gt; <span class="el_source">Graphics2DRenderer.java</span></div><h1>Graphics2DRenderer.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.renderer;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+
+import jcckit.graphic.BasicGraphicalElement;
+import jcckit.graphic.ClippingRectangle;
+import jcckit.graphic.ClippingShape;
+import jcckit.graphic.FillAttributes;
+import jcckit.graphic.FontStyle;
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.GraphicalComposite;
+import jcckit.graphic.GraphicalCompositeRenderer;
+import jcckit.graphic.LineAttributes;
+import jcckit.graphic.Oval;
+import jcckit.graphic.OvalRenderer;
+import jcckit.graphic.Polygon;
+import jcckit.graphic.PolygonRenderer;
+import jcckit.graphic.Rectangle;
+import jcckit.graphic.RectangleRenderer;
+import jcckit.graphic.Text;
+import jcckit.graphic.TextAttributes;
+import jcckit.graphic.TextRenderer;
+
+/**
+ * Renderer who draws the {@link jcckit.graphic.GraphicalElement
+ * GraphicalElements} into a &lt;tt&gt;java.awt.Graphics2D&lt;/tt&gt; context.
+ * &lt;p&gt;
+ * The default color for lines and texts is determined by the current color of
+ * the &lt;tt&gt;Graphics2D&lt;/tt&gt; context when a new instance of
+ * &lt;tt&gt;Graphics2DRenderer&lt;/tt&gt; is created.
+ * &lt;p&gt;
+ * The default font is &lt;tt&gt;SansSerif-12&lt;/tt&gt;.
+ * 
+ * @author Franz-Josef Elmer
+ */
+<span class="nc" id="L64">public class Graphics2DRenderer implements GraphicalCompositeRenderer, PolygonRenderer, OvalRenderer, TextRenderer,</span>
+		RectangleRenderer {
+	private static final int FS = 1;
+	private static final String DEFAULT_FONT_NAME = &quot;SansSerif&quot;;
+<span class="nc" id="L68">	private static final FontStyle DEFAULT_FONT_STYLE = FontStyle.NORMAL;</span>
+	private static final int DEFAULT_FONT_SIZE = 12;
+
+	private Color _defaultColor;
+	private Graphics2D _graphics;
+
+	/**
+	 * Initializes this instance. During renderering the current transformation
+	 * will be leaved unchanged. But the current Clip may be cleared.
+	 * 
+	 * @param graphics
+	 *            Graphics2D context into which the
+	 *            {@link BasicGraphicalElement BaiscGraphicalElements} are
+	 *            painted.
+	 * @return this instance.
+	 */
+	public Graphics2DRenderer init(Graphics2D graphics) {
+<span class="nc" id="L85">		_graphics = graphics;</span>
+<span class="nc" id="L86">		_defaultColor = graphics.getColor(); // the foreground color</span>
+<span class="nc" id="L87">		return this;</span>
+	}
+
+	/**
+	 * Starts rendering of the specified composite. Does nothing except if
+	 * &lt;tt&gt;composite&lt;/tt&gt; has a {@link ClippingShape}. In this case the Clip
+	 * of the &lt;tt&gt;Graphics2D&lt;/tt&gt; context becomes the clipping rectangle
+	 * determined by the bounding box of the &lt;tt&gt;ClippingShape&lt;/tt&gt;.
+	 */
+	public void startRendering(GraphicalComposite composite) {
+<span class="nc" id="L97">		ClippingShape shape = composite.getClippingShape();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (shape != null) {</span>
+<span class="nc" id="L99">			ClippingRectangle rect = shape.getBoundingBox();</span>
+<span class="nc" id="L100">			_graphics.clip(new Rectangle2D.Double(rect.getMinX(), rect.getMinY(), rect.getMaxX() - rect.getMinX(), rect</span>
+<span class="nc" id="L101">					.getMaxY()</span>
+<span class="nc" id="L102">					- rect.getMinY()));</span>
+		}
+<span class="nc" id="L104">	}</span>
+
+	/**
+	 * Finishes rendering of the specified composite. Does nothing except if
+	 * &lt;tt&gt;composite&lt;/tt&gt; has a {@link ClippingShape}. In this case the Clip
+	 * of the &lt;tt&gt;Graphics2D&lt;/tt&gt; context will be cleared.
+	 */
+	public void finishRendering(GraphicalComposite composite) {
+<span class="nc" id="L112">		_graphics.setClip(null);</span>
+<span class="nc" id="L113">	}</span>
+
+	/** Paints the specified polygon into the &lt;tt&gt;Graphics2D&lt;/tt&gt; context. */
+	public void render(Polygon polygon) {
+<span class="nc" id="L117">		int numberOfPoints = polygon.getNumberOfPoints();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (numberOfPoints &gt; 0) {</span>
+<span class="nc" id="L119">			Color currentColor = _graphics.getColor();</span>
+<span class="nc" id="L120">			GeneralPath p = new GeneralPath(GeneralPath.WIND_EVEN_ODD, numberOfPoints);</span>
+<span class="nc" id="L121">			p.moveTo((float) polygon.getPoint(0).getX(), (float) polygon.getPoint(0).getY());</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			for (int i = 1; i &lt; numberOfPoints; i++) {</span>
+<span class="nc" id="L123">				p.lineTo((float) polygon.getPoint(i).getX(), (float) polygon.getPoint(i).getY());</span>
+			}
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (polygon.isClosed()) {</span>
+<span class="nc" id="L126">				p.closePath();</span>
+			}
+<span class="nc" id="L128">			drawShape(p, polygon, currentColor);</span>
+		}
+<span class="nc" id="L130">	}</span>
+
+	/**
+	 * Paints the specified rectangle into the current &lt;tt&gt;Graphics&lt;/tt&gt;
+	 * context.
+	 */
+	public void render(Rectangle rectangle) {
+<span class="nc" id="L137">		Color currentColor = _graphics.getColor();</span>
+<span class="nc" id="L138">		GraphPoint center = rectangle.getCenter();</span>
+<span class="nc" id="L139">		double width = rectangle.getWidth();</span>
+<span class="nc" id="L140">		double height = rectangle.getHeight();</span>
+<span class="nc" id="L141">		Rectangle2D rect = new Rectangle2D.Double(center.getX() - 0.5 * width, center.getY() - 0.5 * height, width,</span>
+				height);
+<span class="nc" id="L143">		drawShape(rect, rectangle, currentColor);</span>
+<span class="nc" id="L144">	}</span>
+
+	/**
+	 * Paints the specified oval into the current &lt;tt&gt;Graphics&lt;/tt&gt; context.
+	 */
+	public void render(Oval oval) {
+<span class="nc" id="L150">		Color currentColor = _graphics.getColor();</span>
+<span class="nc" id="L151">		GraphPoint center = oval.getCenter();</span>
+<span class="nc" id="L152">		double width = oval.getWidth();</span>
+<span class="nc" id="L153">		double height = oval.getHeight();</span>
+<span class="nc" id="L154">		Ellipse2D ellipse = new Ellipse2D.Double(center.getX() - 0.5 * width, center.getY() - 0.5 * height, width,</span>
+				height);
+<span class="nc" id="L156">		drawShape(ellipse, oval, currentColor);</span>
+<span class="nc" id="L157">	}</span>
+
+	private void drawShape(Shape shape, BasicGraphicalElement element, Color backupColor) {
+<span class="nc" id="L160">		GraphicAttributes attributes = element.getGraphicAttributes();</span>
+<span class="nc" id="L161">		Color fillColor = null;</span>
+<span class="nc bnc" id="L162" title="All 4 branches missed.">		if (element.isClosed() &amp;&amp; attributes instanceof FillAttributes) {</span>
+<span class="nc" id="L163">			fillColor = ((FillAttributes) attributes).getFillColor();</span>
+		}
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (fillColor != null) {</span>
+<span class="nc" id="L166">			_graphics.setColor(fillColor);</span>
+<span class="nc" id="L167">			_graphics.fill(shape);</span>
+		}
+<span class="nc" id="L169">		Color lineColor = _defaultColor;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (attributes instanceof LineAttributes) {</span>
+<span class="nc" id="L171">			LineAttributes la = (LineAttributes) attributes;</span>
+<span class="nc" id="L172">			BasicStroke stroke = new BasicStroke((float) la.getLineThickness());</span>
+<span class="nc" id="L173">			double[] linePattern = la.getLinePattern();</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (linePattern != null) {</span>
+<span class="nc" id="L175">				float[] dash = new float[linePattern.length];</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">				for (int i = 0; i &lt; dash.length; i++) {</span>
+<span class="nc" id="L177">					dash[i] = (float) la.getLinePattern()[i];</span>
+				}
+<span class="nc" id="L179">				stroke = new BasicStroke(stroke.getLineWidth(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f,</span>
+						dash, 0f);
+			}
+<span class="nc" id="L182">			_graphics.setStroke(stroke);</span>
+<span class="nc bnc" id="L183" title="All 4 branches missed.">			if (la.getLineColor() != null || fillColor != null) {</span>
+<span class="nc" id="L184">				lineColor = la.getLineColor();</span>
+			}
+		}
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (lineColor != null) {</span>
+<span class="nc" id="L188">			_graphics.setColor(lineColor);</span>
+<span class="nc" id="L189">			_graphics.draw(shape);</span>
+		}
+<span class="nc" id="L191">		_graphics.setColor(backupColor);</span>
+<span class="nc" id="L192">	}</span>
+
+	/**
+	 * Paints the specified text into the current &lt;tt&gt;Graphics&lt;/tt&gt; context.
+	 * &lt;p&gt;
+	 * If the font size is zero the default font size will be used.
+	 * &lt;p&gt;
+	 * If the orientation angle is unequal zero the text will first be painted
+	 * into an off-screen image and rotated. Finally, it will be drawn into the
+	 * current &lt;tt&gt;Graphics&lt;/tt&gt; context. Note, that only integer multiples of
+	 * 90 degree rotation are performed. Other orientation angles will be
+	 * adjusted to the nearest integer multiple of 90 degree.
+	 */
+	public void render(Text text) {
+<span class="nc" id="L206">		final GraphicAttributes ga = text.getGraphicAttributes();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (ga instanceof TextAttributes) {</span>
+<span class="nc" id="L208">			final TextAttributes ta = (TextAttributes) ga;</span>
+<span class="nc" id="L209">			final Color currentColor = _graphics.getColor();</span>
+<span class="nc" id="L210">			Color fontColor = ta.getTextColor();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (fontColor == null) {</span>
+<span class="nc" id="L212">				fontColor = _defaultColor;</span>
+			}
+<span class="nc" id="L214">			_graphics.setColor(fontColor);</span>
+
+<span class="nc" id="L216">			final double scale = _graphics.getTransform().getScaleX();</span>
+<span class="nc" id="L217">			final String str = text.getText();</span>
+
+<span class="nc" id="L219">			AffineTransform before = _graphics.getTransform();</span>
+<span class="nc" id="L220">			_graphics.setTransform(new AffineTransform());</span>
+
+<span class="nc" id="L222">			double fs = ta.getFontSize();</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			fs = fs == 0 ? 1 : fs * scale / DEFAULT_FONT_SIZE;</span>
+
+<span class="nc" id="L225">			Font font = createFont(ta, 0);</span>
+
+<span class="nc" id="L227">			AffineTransform fontTransform = new AffineTransform();</span>
+<span class="nc" id="L228">			fontTransform.scale(fs, fs);</span>
+<span class="nc" id="L229">			fontTransform.rotate(-ta.getOrientationAngle() * Math.PI / 180);</span>
+<span class="nc" id="L230">			font = font.deriveFont(fontTransform);</span>
+<span class="nc" id="L231">			_graphics.setFont(font);</span>
+<span class="nc" id="L232">			Rectangle2D bounds = _graphics.getFontMetrics().getStringBounds(str, _graphics);</span>
+
+<span class="nc" id="L234">			fontTransform.rotate(-ta.getOrientationAngle() * Math.PI / 180);</span>
+
+<span class="nc" id="L236">			final double yy = bounds.getHeight() + bounds.getY();</span>
+
+<span class="nc" id="L238">			Point2D.Double pos = new Point2D.Double(text.getPosition().getX(), text.getPosition().getY());</span>
+<span class="nc" id="L239">			before.transform(pos, pos);</span>
+
+<span class="nc" id="L241">			double x = 0;</span>
+<span class="nc" id="L242">			double y = 0;</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">			if (ta.getOrientationAngle() == 0) {</span>
+<span class="nc" id="L244">				x = -0.5 * ta.getHorizontalAnchor().getFactor() * bounds.getWidth();</span>
+<span class="nc" id="L245">				y = 0.5 * ta.getVerticalAnchor().getFactor() * bounds.getHeight() - yy;</span>
+<span class="nc" id="L246">				x = pos.x + x;</span>
+<span class="nc" id="L247">				y = pos.y + y;</span>
+			} else {
+<span class="nc" id="L249">				x = 0.5 * ta.getVerticalAnchor().getFactor() * bounds.getHeight();</span>
+<span class="nc" id="L250">				y = 0.5 * ta.getHorizontalAnchor().getFactor() * bounds.getWidth();</span>
+				// System.err.println(&quot;yy=&quot;+y+&quot; dx=&quot;+x+&quot; dy=&quot;+y);
+				// x = 0;
+				// y = 0;
+<span class="nc" id="L254">				x = pos.x + x;</span>
+<span class="nc" id="L255">				y = pos.y + y;</span>
+			}
+
+//			if (ta.getOrientationAngle() == 0) {
+////				System.err.println(&quot;x0=&quot; + x);
+////				System.err.println(&quot;y0=&quot; + y);
+//			} else {
+//				System.err.println(&quot;bounds=&quot; + bounds + &quot; y=&quot; + bounds.getY() + &quot; h=&quot; + bounds.getHeight() + &quot; vert=&quot;
+//						+ ta.getVerticalAnchor().getFactor()+&quot; horz=&quot;+ta.getHorizontalAnchor().getFactor());
+//				System.err.println(&quot;x1=&quot; + x);
+//				System.err.println(&quot;y1=&quot; + y);
+//			}
+
+			
+<span class="nc" id="L269">			_graphics.drawString(str, (float) x, (float) y);</span>
+			// _graphics.fillRect((int)x, (int)y, 5, 5);
+<span class="nc" id="L271">			_graphics.setTransform(before);</span>
+<span class="nc" id="L272">			_graphics.setColor(currentColor);</span>
+		}
+<span class="nc" id="L274">	}</span>
+
+	/**
+	 * Creates a font instance based on the specified text attributes and font
+	 * size.
+	 * 
+	 * @param attributes
+	 *            Text attributes (font name and style).
+	 * @param size
+	 *            Font size in pixel. If 0 {@link #DEFAULT_FONT_SIZE} will be
+	 *            used.
+	 * @return new font instance.
+	 */
+	static Font createFont(TextAttributes attributes, int size) {
+<span class="nc" id="L288">		String fontName = attributes.getFontName();</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">		if (fontName == null) {</span>
+<span class="nc" id="L290">			fontName = DEFAULT_FONT_NAME;</span>
+		}
+
+<span class="nc" id="L293">		FontStyle fontStyle = attributes.getFontStyle();</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">		if (fontStyle == null) {</span>
+<span class="nc" id="L295">			fontStyle = DEFAULT_FONT_STYLE;</span>
+		}
+<span class="nc" id="L297">		int style = Font.PLAIN;</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (fontStyle == FontStyle.BOLD) {</span>
+<span class="nc" id="L299">			style = Font.BOLD;</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">		} else if (fontStyle == FontStyle.ITALIC) {</span>
+<span class="nc" id="L301">			style = Font.ITALIC;</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">		} else if (fontStyle == FontStyle.BOLD_ITALIC) {</span>
+<span class="nc" id="L303">			style = Font.BOLD + Font.ITALIC;</span>
+		}
+
+<span class="nc bnc" id="L306" title="All 2 branches missed.">		if (size == 0) {</span>
+<span class="nc" id="L307">			size = DEFAULT_FONT_SIZE;</span>
+		}
+
+<span class="nc" id="L310">		return new Font(fontName, style, size);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

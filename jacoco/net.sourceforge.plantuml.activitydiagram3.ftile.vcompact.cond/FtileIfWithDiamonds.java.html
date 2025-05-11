@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtileIfWithDiamonds.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</a> &gt; <span class="el_source">FtileIfWithDiamonds.java</span></div><h1>FtileIfWithDiamonds.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock2;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.image.Opale;
+
+public class FtileIfWithDiamonds extends FtileIfNude {
+
+	private static final double SUPP_WIDTH = 20;
+	protected final Ftile diamond1;
+	protected final Ftile diamond2;
+<span class="nc" id="L75">	private TextBlock opaleLeft = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc" id="L76">	private TextBlock opaleRight = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+
+	public FtileIfWithDiamonds(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in,
+			StringBounder stringBounder, Collection&lt;PositionedNote&gt; notes) {
+<span class="nc" id="L80">		super(tile1, tile2, in);</span>
+<span class="nc" id="L81">		this.diamond1 = diamond1;</span>
+<span class="nc" id="L82">		this.diamond2 = diamond2;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (PositionedNote first : notes) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (first.getNotePosition() == NotePosition.LEFT) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if (this.opaleLeft != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L86">					continue;</span>
+<span class="nc" id="L87">				this.opaleLeft = createOpale(first, skinParam());</span>
+<span class="nc" id="L88">				final double pos1 = getTranslateDiamond1(stringBounder).getDx();</span>
+<span class="nc" id="L89">				final XDimension2D dimOpale = opaleLeft.calculateDimension(stringBounder);</span>
+<span class="nc" id="L90">				final double opaleWith = dimOpale.getWidth();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">				if (opaleWith &gt; pos1)</span>
+<span class="nc" id="L92">					xDeltaNote = opaleWith - pos1;</span>
+
+<span class="nc" id="L94">				yDeltaNote = Math.max(yDeltaNote, dimOpale.getHeight());</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			} else if (first.getNotePosition() == NotePosition.RIGHT) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (this.opaleRight != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L97">					continue;</span>
+<span class="nc" id="L98">				this.opaleRight = createOpale(first, skinParam());</span>
+<span class="nc" id="L99">				final XDimension2D dimOpale = opaleRight.calculateDimension(stringBounder);</span>
+<span class="nc" id="L100">				final double pos1 = getTranslateDiamond1(stringBounder).getDx()</span>
+<span class="nc" id="L101">						+ diamond1.calculateDimension(stringBounder).getWidth() + dimOpale.getWidth();</span>
+<span class="nc" id="L102">				final double pos2 = calculateDimensionInternalSlow(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">				if (pos1 &gt; pos2)</span>
+<span class="nc" id="L104">					suppWidthNode = pos1 - pos2;</span>
+
+<span class="nc" id="L106">				yDeltaNote = Math.max(yDeltaNote, dimOpale.getHeight());</span>
+			}
+<span class="nc" id="L108">			clearCacheDimensionInternal();</span>
+<span class="nc" id="L109">		}</span>
+
+<span class="nc" id="L111">	}</span>
+
+	public static Opale createOpale(final PositionedNote first, ISkinParam skinParam) {
+<span class="nc" id="L114">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())</span>
+<span class="nc" id="L115">				.eventuallyOverride(first.getColors());</span>
+<span class="nc" id="L116">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L117">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L118">		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L119">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L120">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="nc" id="L121">		final UStroke stroke = style.getStroke();</span>
+
+<span class="nc" id="L123">		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,</span>
+				false, null);
+<span class="nc" id="L125">		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(first.getDisplay());</span>
+<span class="nc" id="L126">		final SheetBlock1 tmp1 = new SheetBlock1(sheet, wrapWidth, skinParam.getPadding());</span>
+<span class="nc" id="L127">		final SheetBlock2 tmp2 = new SheetBlock2(tmp1, asStencil(tmp1), stroke);</span>
+
+<span class="nc" id="L129">		return new Opale(shadowing, borderColor, noteBackgroundColor, tmp2, false, stroke);</span>
+	}
+
+	private static Stencil asStencil(final SheetBlock1 tmp1) {
+<span class="nc" id="L133">		return new Stencil() {</span>
+
+			@Override
+			public double getStartingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L137">				return tmp1.getStartingX(stringBounder, y) - Opale.marginX1;</span>
+			}
+
+			@Override
+			public double getEndingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L142">				return tmp1.getEndingX(stringBounder, y) + Opale.marginX2;</span>
+			}
+		};
+	}
+
+	private static StyleSignatureBasic getStyleSignature() {
+<span class="nc" id="L148">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);</span>
+	}
+
+	@Override
+	public Collection&lt;Ftile&gt; getMyChildren() {
+<span class="nc" id="L153">		return Arrays.asList(diamond1, diamond2, tile1, tile2);</span>
+	}
+
+	protected int getYdelta1a(StringBounder stringBounder) {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (getSwimlanes().size() &gt; 1)</span>
+<span class="nc" id="L158">			return 20;</span>
+<span class="nc" id="L159">		return 10;</span>
+	}
+
+	protected int getYdelta1b(StringBounder stringBounder) {
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (getSwimlanes().size() &gt; 1)</span>
+<span class="nc" id="L164">			return 10;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		return hasTwoBranches(stringBounder) ? 6 : 0;</span>
+	}
+
+	protected double getYdeltaForLabels(StringBounder stringBounder) {
+<span class="nc" id="L169">		return 0;</span>
+	}
+
+	@Override
+	protected double widthInner(StringBounder stringBounder) {
+<span class="nc" id="L174">		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L175">		return Math.max(super.widthInner(stringBounder), dim1.getWidth() + SUPP_WIDTH);</span>
+	}
+
+	@Override
+	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
+<span class="nc" id="L180">		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L181">		final FtileGeometry dim2 = diamond2.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L183">		final FtileGeometry dimNude = super.calculateDimensionInternalSlow(stringBounder);</span>
+
+<span class="nc" id="L185">		final FtileGeometry all = dim1.appendBottom(dimNude).appendBottom(dim2);</span>
+
+<span class="nc" id="L187">		final double deltaHeight = getYdelta1a(stringBounder) + getYdelta1b(stringBounder)</span>
+<span class="nc" id="L188">				+ getYdeltaForLabels(stringBounder);</span>
+
+<span class="nc" id="L190">		final FtileGeometry result = all.addDim(0, deltaHeight).incInY(yDeltaNote);</span>
+<span class="nc" id="L191">		return result;</span>
+
+	}
+
+//	protected double getSuppWidthForNotes(StringBounder stringBounder) {
+//		return opale.calculateDimension(stringBounder).getWidth();
+//	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L201">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(opaleLeft, stringBounder) == false) {</span>
+<span class="nc" id="L204">			final double xOpale = getTranslateDiamond1(stringBounder).getDx()</span>
+<span class="nc" id="L205">					- opaleLeft.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L206">			opaleLeft.drawU(ug.apply(UTranslate.dx(xOpale)));</span>
+		}
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(opaleRight, stringBounder) == false) {</span>
+<span class="nc" id="L210">			final double xOpale = getTranslateDiamond1(stringBounder).getDx()</span>
+<span class="nc" id="L211">					+ diamond1.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L212">			opaleRight.drawU(ug.apply(UTranslate.dx(xOpale)));</span>
+		}
+
+<span class="nc" id="L215">		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);</span>
+<span class="nc" id="L216">		super.drawU(ug);</span>
+<span class="nc" id="L217">		ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);</span>
+<span class="nc" id="L218">	}</span>
+
+	@Override
+	protected UTranslate getTranslateBranch1(StringBounder stringBounder) {
+<span class="nc" id="L222">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L223">		return super.getTranslateBranch1(stringBounder)</span>
+<span class="nc" id="L224">				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));</span>
+	}
+
+	@Override
+	protected UTranslate getTranslateBranch2(StringBounder stringBounder) {
+<span class="nc" id="L229">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L230">		return super.getTranslateBranch2(stringBounder)</span>
+<span class="nc" id="L231">				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));</span>
+	}
+
+	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
+<span class="nc" id="L235">		final double y1 = yDeltaNote;</span>
+<span class="nc" id="L236">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc" id="L237">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L238">		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();</span>
+<span class="nc" id="L239">		return new UTranslate(x1, y1);</span>
+	}
+
+	protected UTranslate getTranslateDiamond2(StringBounder stringBounder) {
+<span class="nc" id="L243">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc" id="L244">		final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L245">		final double x2 = dimTotal.getLeft() - dimDiamond2.getWidth() / 2;</span>
+<span class="nc" id="L246">		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();</span>
+<span class="nc" id="L247">		return new UTranslate(x2, y2);</span>
+	}
+
+	public double computeMarginNeedForBranchLabe1(StringBounder stringBounder, XDimension2D label1) {
+<span class="nc" id="L251">		final double widthLabelBranch1 = label1.getWidth();</span>
+<span class="nc" id="L252">		final double dxDiamond = getTranslateDiamond1(stringBounder).getDx();</span>
+<span class="nc" id="L253">		final double diff = widthLabelBranch1 - dxDiamond;</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (diff &gt; 0)</span>
+<span class="nc" id="L255">			return diff;</span>
+
+<span class="nc" id="L257">		return 0;</span>
+	}
+
+	public double computeMarginNeedForBranchLabe2(StringBounder stringBounder, XDimension2D label2) {
+<span class="nc" id="L261">		final double widthLabelBranch2 = label2.getWidth();</span>
+<span class="nc" id="L262">		final double theoricalEndNeeded = getTranslateDiamond1(stringBounder).getDx()</span>
+<span class="nc" id="L263">				+ diamond1.calculateDimension(stringBounder).getWidth() + widthLabelBranch2;</span>
+<span class="nc" id="L264">		final double diff = theoricalEndNeeded - calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (diff &gt; 0)</span>
+<span class="nc" id="L266">			return diff;</span>
+
+<span class="nc" id="L268">		return 0;</span>
+	}
+
+	public double computeVerticalMarginNeedForBranchs(StringBounder stringBounder, XDimension2D label1,
+			XDimension2D label2) {
+<span class="nc" id="L273">		final double heightLabels = Math.max(label1.getHeight(), label2.getHeight());</span>
+<span class="nc" id="L274">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L275">		final double dyDiamond = dimDiamond1.getHeight();</span>
+<span class="nc" id="L276">		final double diff = heightLabels - dyDiamond;</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		if (diff &gt; 0)</span>
+<span class="nc" id="L278">			return diff;</span>
+
+<span class="nc" id="L280">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

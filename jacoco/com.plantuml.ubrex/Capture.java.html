@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Capture.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.ubrex</a> &gt; <span class="el_source">Capture.java</span></div><h1>Capture.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package com.plantuml.ubrex;
+
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class Capture {
+
+<span class="fc" id="L46">	public static final Capture EMPTY = new Capture();</span>
+
+	private Capture() {
+
+	}
+
+	private List&lt;Map.Entry&lt;String, String&gt;&gt; getList() {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (list == null)</span>
+<span class="fc" id="L54">			list = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L56">		return list;</span>
+	}
+
+	public List&lt;Map.Entry&lt;String, String&gt;&gt; getCaptures() {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (list == null)</span>
+<span class="nc" id="L61">			return Collections.emptyList();</span>
+<span class="nc" id="L62">		return Collections.unmodifiableList(list);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (list == null)</span>
+<span class="nc" id="L68">			return &quot;[]&quot;;</span>
+<span class="nc" id="L69">		return getCaptures().toString();</span>
+	}
+
+	public Capture withEntry(String key, String value) {
+<span class="fc" id="L73">		final Capture copy = new Capture();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (this.list != null)</span>
+<span class="fc" id="L75">			copy.getList().addAll(this.list);</span>
+
+<span class="fc" id="L77">		copy.getList().add(new AbstractMap.SimpleEntry&lt;&gt;(key, value));</span>
+<span class="fc" id="L78">		return copy;</span>
+	}
+
+	public Capture merge(Capture other) {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (other == EMPTY)</span>
+<span class="fc" id="L83">			return this;</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (this == EMPTY)</span>
+<span class="fc" id="L86">			return other;</span>
+
+<span class="fc" id="L88">		final Capture copy = new Capture();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (this.list != null)</span>
+<span class="fc" id="L90">			copy.getList().addAll(this.list);</span>
+
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (other.list != null)</span>
+<span class="fc" id="L93">			copy.getList().addAll(other.list);</span>
+
+<span class="fc" id="L95">		return copy;</span>
+	}
+
+	public Capture withPrefixedKeys(String prefix) {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (this.list == null)</span>
+<span class="fc" id="L100">			return this;</span>
+
+<span class="fc" id="L102">		final Capture copy = new Capture();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; entry : this.list)</span>
+<span class="fc" id="L104">			copy.getList().add(new AbstractMap.SimpleEntry&lt;&gt;(prefix + &quot;/&quot; + entry.getKey(), entry.getValue()));</span>
+
+<span class="fc" id="L106">		return copy;</span>
+	}
+
+	private List&lt;Map.Entry&lt;String, String&gt;&gt; list;
+
+
+	public List&lt;String&gt; findValuesByKey(String key) {
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (this.list == null)</span>
+<span class="fc" id="L114">			return Collections.emptyList();</span>
+
+<span class="fc" id="L116">		return this.list.stream() //</span>
+<span class="fc" id="L117">				.filter(e -&gt; e.getKey().equals(key)) //</span>
+<span class="fc" id="L118">				.map(Map.Entry::getValue) //</span>
+<span class="fc" id="L119">				.collect(Collectors.toList());</span>
+
+	}
+
+	
+	public List&lt;String&gt; getKeysToBeRefactored() {
+<span class="fc" id="L125">		return this.list.stream() //</span>
+<span class="fc" id="L126">				.map(Map.Entry::getKey) //</span>
+<span class="fc" id="L127">				.collect(Collectors.toList());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

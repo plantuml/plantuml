@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Instance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.argon2.model</a> &gt; <span class="el_source">Instance.java</span></div><h1>Instance.java</h1><pre class="source lang-java linenums">/* 	This file is taken from
+	https://github.com/andreas1327250/argon2-java
+
+	Original Author: Andreas Gadermaier &lt;up.gadermaier@gmail.com&gt;
+ */
+package net.sourceforge.plantuml.argon2.model;
+
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_SYNC_POINTS;
+
+import net.sourceforge.plantuml.argon2.Argon2;
+
+public class Instance {
+
+	public Block[] memory;
+	private int version;
+	private int iterations;
+	private int segmentLength;
+	private int laneLength;
+	private int lanes;
+
+	private Argon2Type type;
+
+<span class="nc" id="L23">	public Instance(Argon2 argon2) {</span>
+<span class="nc" id="L24">		this.version = argon2.getVersion();</span>
+<span class="nc" id="L25">		this.iterations = argon2.getIterations();</span>
+<span class="nc" id="L26">		this.lanes = argon2.getLanes();</span>
+<span class="nc" id="L27">		this.type = argon2.getType();</span>
+
+		/* 2. Align memory size */
+		/* Minimum memoryBlocks = 8L blocks, where L is the number of lanes */
+<span class="nc" id="L31">		int memoryBlocks = argon2.getMemory();</span>
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">		if (memoryBlocks &lt; 2 * ARGON2_SYNC_POINTS * argon2.getLanes()) {</span>
+<span class="nc" id="L34">			memoryBlocks = 2 * ARGON2_SYNC_POINTS * argon2.getLanes();</span>
+		}
+
+<span class="nc" id="L37">		this.segmentLength = memoryBlocks / (argon2.getLanes() * ARGON2_SYNC_POINTS);</span>
+<span class="nc" id="L38">		this.laneLength = segmentLength * ARGON2_SYNC_POINTS;</span>
+		/* Ensure that all segments have equal length */
+<span class="nc" id="L40">		memoryBlocks = segmentLength * (argon2.getLanes() * ARGON2_SYNC_POINTS);</span>
+
+<span class="nc" id="L42">		initMemory(memoryBlocks);</span>
+<span class="nc" id="L43">	}</span>
+
+	private void initMemory(int memoryBlocks) {
+<span class="nc" id="L46">		this.memory = new Block[memoryBlocks];</span>
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		for (int i = 0; i &lt; memory.length; i++) {</span>
+<span class="nc" id="L49">			memory[i] = new Block();</span>
+		}
+<span class="nc" id="L51">	}</span>
+
+	public void clear() {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (Block b : memory) {</span>
+<span class="nc" id="L55">			b.clear();</span>
+		}
+
+<span class="nc" id="L58">		memory = null;</span>
+<span class="nc" id="L59">	}</span>
+
+	public Block[] getMemory() {
+<span class="nc" id="L62">		return memory;</span>
+	}
+
+	public int getVersion() {
+<span class="nc" id="L66">		return version;</span>
+	}
+
+	public int getIterations() {
+<span class="nc" id="L70">		return iterations;</span>
+	}
+
+	public int getSegmentLength() {
+<span class="nc" id="L74">		return segmentLength;</span>
+	}
+
+	public int getLaneLength() {
+<span class="nc" id="L78">		return laneLength;</span>
+	}
+
+	public int getLanes() {
+<span class="nc" id="L82">		return lanes;</span>
+	}
+
+	public Argon2Type getType() {
+<span class="nc" id="L86">		return type;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

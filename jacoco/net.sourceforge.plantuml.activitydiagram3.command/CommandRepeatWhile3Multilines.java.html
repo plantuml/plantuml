@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandRepeatWhile3Multilines.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.command</a> &gt; <span class="el_source">CommandRepeatWhile3Multilines.java</span></div><h1>CommandRepeatWhile3Multilines.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.command;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines3;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.BlocLines;
+
+public class CommandRepeatWhile3Multilines extends CommandMultilines3&lt;ActivityDiagram3&gt; {
+
+	public CommandRepeatWhile3Multilines() {
+<span class="fc" id="L59">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
+<span class="fc" id="L60">	}</span>
+
+	@Override
+	public RegexConcat getPatternEnd2() {
+<span class="nc" id="L64">		return new RegexConcat(//</span>
+				new RegexLeaf(&quot;TEST1&quot;, &quot;(.*)&quot;), new RegexLeaf(&quot;\\)&quot;), //
+				new RegexLeaf(&quot;;?&quot;), //
+<span class="nc" id="L67">				RegexLeaf.end());</span>
+	}
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L71">		return RegexConcat.build(CommandRepeatWhile3Multilines.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;repeat&quot;), //
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;while&quot;), //
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;\\(&quot;), //
+				new RegexLeaf(&quot;TEST1&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L78">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
+<span class="nc" id="L83">		lines = lines.trim();</span>
+<span class="nc" id="L84">		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst().getString()));</span>
+<span class="nc" id="L85">		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());</span>
+
+		// System.err.println(&quot;line0=&quot; + line0);
+		// System.err.println(&quot;linesLast=&quot; + lineLast);
+
+		//
+		// final HtmlColor color =
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get(&quot;COLOR&quot;,
+		// 0));
+
+<span class="nc" id="L95">		final String test = line0.get(&quot;TEST1&quot;, 0);</span>
+<span class="nc" id="L96">		Display testDisplay = Display.getWithNewlines(diagram.getPragma(), test);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (StringLocated s : lines.subExtract(1, 1)) {</span>
+<span class="nc" id="L98">			testDisplay = testDisplay.add(s.getString());</span>
+<span class="nc" id="L99">		}</span>
+<span class="nc" id="L100">		final String trailTest = lineLast.get(&quot;TEST1&quot;, 0);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (StringUtils.isEmpty(trailTest) == false) {</span>
+<span class="nc" id="L102">			testDisplay = testDisplay.add(trailTest);</span>
+		}
+
+<span class="nc" id="L105">		Display yes = Display.NULL;// Display.getWithNewlines(&quot;arg.getLazzy(\&quot;WHEN\&quot;, 0)&quot;);</span>
+<span class="nc" id="L106">		final Display out = Display.NULL; // Display.getWithNewlines(&quot;arg.getLazzy(\&quot;OUT\&quot;, 0)&quot;);</span>
+<span class="nc" id="L107">		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(&quot;COLOR&quot;,</span>
+		// 0));
+<span class="nc" id="L109">		final Display linkLabel = Display.NULL; // Display.getWithNewlines(&quot;arg.get(\&quot;LABEL\&quot;, 0)&quot;);</span>
+<span class="nc" id="L110">		final List&lt;Display&gt; splitted = testDisplay.splitMultiline(MyPattern.cmpile(&quot;\\)[%s]*(is|equals?)[%s]*\\(&quot;));</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (splitted.size() == 2) {</span>
+<span class="nc" id="L112">			testDisplay = splitted.get(0);</span>
+<span class="nc" id="L113">			yes = splitted.get(1);</span>
+
+		}
+
+<span class="nc" id="L117">		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShapeEdge.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.graphics</a> &gt; <span class="el_source">ShapeEdge.java</span></div><h1>ShapeEdge.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.graphics;
+
+import java.awt.geom.GeneralPath;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+public class ShapeEdge {
+	
+	private static final boolean DEBUG = false;
+	
+	private static final int TYPE_HORIZONTAL = 0;
+	private static final int TYPE_VERTICAL = 1;
+	private static final int TYPE_SLOPED = 2;
+	
+	
+	private DiagramShape owner;
+	private ShapePoint startPoint;
+	private ShapePoint endPoint;
+	
+<span class="nc" id="L41">	public ShapeEdge(ShapePoint start, ShapePoint end, DiagramShape owner){</span>
+<span class="nc" id="L42">		this.startPoint = start;</span>
+<span class="nc" id="L43">		this.endPoint = end;</span>
+<span class="nc" id="L44">		this.owner = owner;</span>
+<span class="nc" id="L45">	}</span>
+	
+	public ShapeEdge(ShapeEdge other){
+<span class="nc" id="L48">		this(</span>
+			new ShapePoint(other.startPoint),
+			new ShapePoint(other.endPoint),
+			other.owner
+		);
+<span class="nc" id="L53">	}</span>
+	
+	private float getDistanceFromOrigin() {
+<span class="nc" id="L56">		int type = this.getType();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if(type == TYPE_SLOPED)</span>
+<span class="nc" id="L58">			throw new RuntimeException(&quot;Cannot calculate distance of sloped edge from origin&quot;);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if(type == TYPE_HORIZONTAL)</span>
+<span class="nc" id="L60">			return startPoint.y;</span>
+<span class="nc" id="L61">		return startPoint.x; //vertical</span>
+	}
+
+	//TODO: moveInwardsBy() not implemented
+	public void moveInwardsBy(float offset){
+<span class="nc" id="L66">		int type = this.getType();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if(type == TYPE_SLOPED)</span>
+<span class="nc" id="L68">			throw new RuntimeException(&quot;Cannot move a sloped edge inwards: &quot;+this);</span>
+		
+<span class="nc" id="L70">		float xOffset = 0;</span>
+<span class="nc" id="L71">		float yOffset = 0;</span>
+		
+<span class="nc" id="L73">		ShapePoint middle = getMiddle();</span>
+<span class="nc" id="L74">		GeneralPath path = owner.makeIntoPath();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if(type == TYPE_HORIZONTAL){</span>
+<span class="nc" id="L76">			xOffset = 0;</span>
+<span class="nc" id="L77">			ShapePoint up = new ShapePoint(middle.x, middle.y - 0.05f);</span>
+<span class="nc" id="L78">			ShapePoint down = new ShapePoint(middle.x, middle.y + 0.05f);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if(path.contains(up)) yOffset = -offset;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			else if(path.contains(down)) yOffset = offset;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		} else if(type == TYPE_VERTICAL){</span>
+<span class="nc" id="L82">			yOffset = 0;</span>
+<span class="nc" id="L83">			ShapePoint left = new ShapePoint(middle.x - 0.05f, middle.y);</span>
+<span class="nc" id="L84">			ShapePoint right = new ShapePoint(middle.x + 0.05f, middle.y);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if(path.contains(left)) xOffset = -offset;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			else if(path.contains(right)) xOffset = offset;</span>
+		}
+		if(DEBUG) System.out.println(&quot;Moved edge &quot;+this+&quot; by &quot;+xOffset+&quot;, &quot;+yOffset);
+<span class="nc" id="L89">		translate(xOffset, yOffset);</span>
+<span class="nc" id="L90">	}</span>
+
+	public void translate(float dx, float dy){
+<span class="nc" id="L93">		startPoint.x += dx;</span>
+<span class="nc" id="L94">		startPoint.y += dy;</span>
+<span class="nc" id="L95">		endPoint.x += dx;</span>
+<span class="nc" id="L96">		endPoint.y += dy;</span>
+<span class="nc" id="L97">	}</span>
+
+	public ShapePoint getMiddle(){
+<span class="nc" id="L100">		return new ShapePoint(</span>
+			(startPoint.x + endPoint.x) / 2,
+			(startPoint.y + endPoint.y) / 2
+		);
+	}
+
+	/**
+	 * Returns the type of the edge
+	 * (&lt;code&gt;TYPE_HORIZONTAL, TYPE_VERTICAL, TYPE_SLOPED).
+	 * 
+	 * @return
+	 */
+	private int getType(){
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if(isVertical()) return TYPE_VERTICAL;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if(isHorizontal()) return TYPE_HORIZONTAL;</span>
+<span class="nc" id="L115">		return TYPE_SLOPED;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public ShapePoint getEndPoint() {
+<span class="nc" id="L122">		return endPoint;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public ShapePoint getStartPoint() {
+<span class="nc" id="L129">		return startPoint;</span>
+	}
+
+	/**
+	 * @param point
+	 */
+	public void setEndPoint(ShapePoint point) {
+<span class="nc" id="L136">		endPoint = point;</span>
+<span class="nc" id="L137">	}</span>
+
+	/**
+	 * @param point
+	 */
+	public void setStartPoint(ShapePoint point) {
+<span class="nc" id="L143">		startPoint = point;</span>
+<span class="nc" id="L144">	}</span>
+
+	/**
+	 * @return
+	 */
+	public DiagramShape getOwner() {
+<span class="nc" id="L150">		return owner;</span>
+	}
+
+	/**
+	 * @param shape
+	 */
+	public void setOwner(DiagramShape shape) {
+<span class="nc" id="L157">		owner = shape;</span>
+<span class="nc" id="L158">	}</span>
+	
+	public boolean equals(Object object){
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if(!(object instanceof ShapeEdge)) return false;</span>
+<span class="nc" id="L162">		ShapeEdge edge = (ShapeEdge) object;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if(startPoint.equals(edge.getStartPoint())</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			&amp;&amp; endPoint.equals(edge.getEndPoint())) return true;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if(startPoint.equals(edge.getEndPoint())</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			&amp;&amp; endPoint.equals(edge.getStartPoint())) return true;</span>
+<span class="nc" id="L167">		return false;</span>
+	}
+
+	public boolean touchesWith(ShapeEdge other){
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if(this.equals(other)) return true;</span>
+		
+<span class="nc bnc" id="L173" title="All 4 branches missed.">		if(this.isHorizontal() &amp;&amp; other.isVertical()) return false;</span>
+<span class="nc bnc" id="L174" title="All 4 branches missed.">		if(other.isHorizontal() &amp;&amp; this.isVertical()) return false;</span>
+		
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if(this.getDistanceFromOrigin() != other.getDistanceFromOrigin()) return false;</span>
+
+		//covering this corner case (should produce false):
+		//      ---------
+		//              ---------
+		
+<span class="nc" id="L182">		ShapeEdge first = new ShapeEdge(this);</span>
+<span class="nc" id="L183">		ShapeEdge second = new ShapeEdge(other);</span>
+		
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if(first.isVertical()) {</span>
+<span class="nc" id="L186">			first.changeAxis();</span>
+<span class="nc" id="L187">			second.changeAxis();</span>
+		}
+		
+<span class="nc" id="L190">		first.fixDirection();</span>
+<span class="nc" id="L191">		second.fixDirection();</span>
+		
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if(first.startPoint.x &gt; second.startPoint.x) {</span>
+<span class="nc" id="L194">			ShapeEdge temp = first;</span>
+<span class="nc" id="L195">			first = second;</span>
+<span class="nc" id="L196">			second = temp;</span>
+		}
+		
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		if(first.endPoint.equals(second.startPoint)) return false;</span>
+		
+		// case 1:
+		// ----------
+		//      -----------
+		
+		// case 2:
+		//         ------
+		// -----------------
+		
+<span class="nc bnc" id="L209" title="All 4 branches missed.">		if(this.startPoint.isWithinEdge(other) || this.endPoint.isWithinEdge(other)) return true;</span>
+<span class="nc bnc" id="L210" title="All 4 branches missed.">		if(other.startPoint.isWithinEdge(this) || other.endPoint.isWithinEdge(this)) return true;	</span>
+		
+		
+<span class="nc" id="L213">		return false;</span>
+	}
+	
+	private void changeAxis(){
+<span class="nc" id="L217">		ShapePoint temp = new ShapePoint(startPoint);</span>
+<span class="nc" id="L218">		startPoint = new ShapePoint(endPoint.y, endPoint.x);</span>
+<span class="nc" id="L219">		endPoint = new ShapePoint(temp.y, temp.x);</span>
+<span class="nc" id="L220">	}</span>
+	
+	/**
+	 * if horizontal flips start and end points so that start is left of end
+	 * if vertical flips start and end points so that start is over of end
+	 *
+	 */
+	private void fixDirection(){
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if(isHorizontal()) {</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			if(startPoint.x &gt; endPoint.x) flipDirection();</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		} else if(isVertical()) {</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			if(startPoint.y &gt; endPoint.y) flipDirection();</span>
+		} else {
+<span class="nc" id="L233">			throw new RuntimeException(&quot;Cannot fix direction of sloped edge&quot;);</span>
+		}
+<span class="nc" id="L235">	}</span>
+	
+	private void flipDirection(){
+<span class="nc" id="L238">		ShapePoint temp = startPoint;</span>
+<span class="nc" id="L239">		startPoint = endPoint;</span>
+<span class="nc" id="L240">		endPoint = temp;</span>
+<span class="nc" id="L241">	}</span>
+	
+	public boolean isHorizontal(){
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if(startPoint.y == endPoint.y) return true;</span>
+<span class="nc" id="L245">		return false;</span>
+	}
+	
+	public boolean isVertical(){
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		if(startPoint.x == endPoint.x) return true;</span>
+<span class="nc" id="L250">		return false;</span>
+	}
+
+	public String toString(){
+<span class="nc" id="L254">		return startPoint+&quot; -&gt; &quot;+endPoint;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

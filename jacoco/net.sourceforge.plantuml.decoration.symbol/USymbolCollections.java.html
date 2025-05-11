@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>USymbolCollections.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.decoration.symbol</a> &gt; <span class="el_source">USymbolCollections.java</span></div><h1>USymbolCollections.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.decoration.symbol;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.SName;
+
+<span class="fc" id="L51">class USymbolCollections extends USymbol {</span>
+
+	@Override
+	public SName[] getSNames() {
+<span class="nc" id="L55">		return new SName[] { SName.collections };</span>
+	}
+
+	private void drawCollections(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
+<span class="nc" id="L59">		final URectangle small = URectangle.build(width - getDeltaCollection(), height - getDeltaCollection())</span>
+<span class="nc" id="L60">				.rounded(roundCorner);</span>
+<span class="nc" id="L61">		small.setDeltaShadow(shadowing);</span>
+
+<span class="nc" id="L63">		ug.apply(new UTranslate(getDeltaCollection(), getDeltaCollection())).draw(small);</span>
+<span class="nc" id="L64">		small.setDeltaShadow(0);</span>
+<span class="nc" id="L65">		ug.apply(UTranslate.dy(0)).draw(small);</span>
+<span class="nc" id="L66">	}</span>
+
+	private Margin getMargin() {
+<span class="nc" id="L69">		return new Margin(10, 10, 10, 10);</span>
+	}
+
+	private double getDeltaCollection() {
+<span class="nc" id="L73">		return 4;</span>
+	}
+
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
+<span class="nc" id="L79">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L82">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L83">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="nc" id="L84">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L85">				drawCollections(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
+<span class="nc" id="L86">						symbolContext.getRoundCorner());</span>
+<span class="nc" id="L87">				final Margin margin = getMargin();</span>
+<span class="nc" id="L88">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
+<span class="nc" id="L89">				tb.drawU(ug.apply(new UTranslate(margin.getX1() - getDeltaCollection() / 2,</span>
+<span class="nc" id="L90">						margin.getY1() - getDeltaCollection() / 2)));</span>
+<span class="nc" id="L91">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L94">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L95">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="nc" id="L96">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+			}
+		};
+	}
+
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final Fashion symbolContext,
+			final HorizontalAlignment stereoAlignment) {
+<span class="nc" id="L105">		return new AbstractTextBlock() {</span>
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L107">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L108">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L109">				drawCollections(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
+<span class="nc" id="L110">						symbolContext.getRoundCorner());</span>
+<span class="nc" id="L111">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
+				final double posStereoX;
+				final double posStereoY;
+<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (stereoAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L115">					posStereoX = width - dimStereo.getWidth() - getMargin().getX1() / 2;</span>
+<span class="nc" id="L116">					posStereoY = getMargin().getY1() / 2;</span>
+				} else {
+<span class="nc" id="L118">					posStereoX = (width - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L119">					posStereoY = 2;</span>
+				}
+<span class="nc" id="L121">				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));</span>
+<span class="nc" id="L122">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L123">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
+<span class="nc" id="L124">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
+<span class="nc" id="L125">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L128">				return new XDimension2D(width, height);</span>
+			}
+		};
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HColorMiddle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">HColorMiddle.java</span></div><h1>HColorMiddle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.color;
+
+import java.awt.Color;
+
+public class HColorMiddle extends HColor {
+	// ::remove file when __HAXE__
+
+	private final HColor color1;
+	private final HColor color2;
+
+<span class="fc" id="L46">	HColorMiddle(HColor c1, HColor c2) {</span>
+<span class="fc" id="L47">		this.color1 = c1;</span>
+<span class="fc" id="L48">		this.color2 = c2;</span>
+<span class="fc" id="L49">	}</span>
+
+	public final HColor getColor1() {
+<span class="fc" id="L52">		return color1;</span>
+	}
+
+	public final HColor getColor2() {
+<span class="nc" id="L56">		return color2;</span>
+	}
+
+	@Override
+	public Color toColor(ColorMapper mapper) {
+<span class="fc" id="L61">		final Color cc1 = color1.toColor(mapper);</span>
+<span class="fc" id="L62">		final Color cc2 = color2.toColor(mapper);</span>
+<span class="fc" id="L63">		final int r1 = cc1.getRed();</span>
+<span class="fc" id="L64">		final int g1 = cc1.getGreen();</span>
+<span class="fc" id="L65">		final int b1 = cc1.getBlue();</span>
+<span class="fc" id="L66">		final int r2 = cc2.getRed();</span>
+<span class="fc" id="L67">		final int g2 = cc2.getGreen();</span>
+<span class="fc" id="L68">		final int b2 = cc2.getBlue();</span>
+
+<span class="fc" id="L70">		final int r = (r1 + r2) / 2;</span>
+<span class="fc" id="L71">		final int g = (g1 + g2) / 2;</span>
+<span class="fc" id="L72">		final int b = (b1 + b2) / 2;</span>
+<span class="fc" id="L73">		return new Color(r, g, b);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

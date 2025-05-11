@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Context.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style.parser</a> &gt; <span class="el_source">Context.java</span></div><h1>Context.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style.parser;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.Value;
+
+<span class="fc" id="L53">class Context {</span>
+
+<span class="fc" id="L55">	private final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L56">	private final Map&lt;PName, Value&gt; map = new EnumMap&lt;&gt;(PName.class);</span>
+	private Context parent;
+
+	public Context push(String newString) {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (newString.startsWith(&quot;:&quot;))</span>
+<span class="nc" id="L61">			newString = newString.substring(1);</span>
+<span class="fc" id="L62">		final Context result = new Context();</span>
+<span class="fc" id="L63">		result.data.addAll(this.data);</span>
+<span class="fc" id="L64">		result.data.add(newString);</span>
+<span class="fc" id="L65">		result.parent = this;</span>
+<span class="fc" id="L66">		return result;</span>
+	}
+
+	public Context pop() {
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (size() == 0)</span>
+<span class="nc" id="L71">			throw new IllegalStateException();</span>
+<span class="fc" id="L72">		return this.parent;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L77">		return data.toString();</span>
+	}
+
+	public int size() {
+<span class="fc" id="L81">		return data.size();</span>
+	}
+
+	public Collection&lt;StyleSignatureBasic&gt; toSignatures() {
+<span class="fc" id="L85">		List&lt;StyleSignatureBasic&gt; results = new ArrayList&lt;&gt;(Collections.singletonList(StyleSignatureBasic.empty()));</span>
+<span class="fc" id="L86">		boolean star = false;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L88">			String s = it.next();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (s.endsWith(StyleSignatureBasic.STAR)) {</span>
+<span class="nc" id="L90">				star = true;</span>
+<span class="nc" id="L91">				s = s.substring(0, s.length() - 1);</span>
+			}
+<span class="fc" id="L93">			final String[] names = s.split(&quot;,&quot;);</span>
+<span class="fc" id="L94">			final List&lt;StyleSignatureBasic&gt; tmp = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			for (StyleSignatureBasic ss : results)</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">				for (String name : names)</span>
+<span class="fc" id="L97">					tmp.add(ss.add(name.trim()));</span>
+<span class="fc" id="L98">			results = tmp;</span>
+<span class="fc" id="L99">		}</span>
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (star)</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			for (ListIterator&lt;StyleSignatureBasic&gt; it = results.listIterator(); it.hasNext();) {</span>
+<span class="nc" id="L103">				final StyleSignatureBasic tmp = it.next().addStar();</span>
+<span class="nc" id="L104">				it.set(tmp);</span>
+<span class="nc" id="L105">			}</span>
+
+<span class="fc" id="L107">		return Collections.unmodifiableCollection(results);</span>
+	}
+
+	public void putInContext(PName key, Value value) {
+<span class="fc" id="L111">		map.put(key, value);</span>
+<span class="fc" id="L112">	}</span>
+
+	public Collection&lt;Style&gt; toStyles() {
+<span class="fc" id="L115">		final Collection&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L116">		final Collection&lt;StyleSignatureBasic&gt; signatures = toSignatures();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		for (StyleSignatureBasic signature : signatures) {</span>
+<span class="fc" id="L118">			Map&lt;PName, Value&gt; tmp = map;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			if (signature.isWithDot())</span>
+<span class="fc" id="L120">				tmp = StyleLoader.addPriorityForStereotype(tmp);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (tmp.size() &gt; 0)</span>
+<span class="fc" id="L122">				result.add(new Style(signature, tmp));</span>
+
+<span class="fc" id="L124">		}</span>
+<span class="fc" id="L125">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

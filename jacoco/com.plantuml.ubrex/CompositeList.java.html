@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CompositeList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.ubrex</a> &gt; <span class="el_source">CompositeList.java</span></div><h1>CompositeList.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package com.plantuml.ubrex;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CompositeList implements Challenge {
+
+<span class="fc" id="L42">	private final List&lt;Challenge&gt; challenges = new ArrayList&lt;&gt;();</span>
+
+	public void addChallenge(Challenge p) {
+<span class="fc" id="L45">		this.challenges.add(p);</span>
+<span class="fc" id="L46">	}</span>
+
+	public static CompositeList createEmpty() {
+<span class="fc" id="L49">		return new CompositeList();</span>
+	}
+
+	public static CompositeList parseAndBuild(CharSequence input) {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (input == null)</span>
+<span class="nc" id="L54">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L56">		return new CompositeList(input);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L61">		return challenges.toString();</span>
+	}
+
+<span class="fc" id="L64">	private CompositeList() {</span>
+
+<span class="fc" id="L66">	}</span>
+
+	public static CompositeList parseAndBuildFromTextNavigator(TextNavigator input) {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (input == null)</span>
+<span class="nc" id="L70">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L71">		final CompositeList result = new CompositeList();</span>
+<span class="fc" id="L72">		result.parseAndConsumeNow(input);</span>
+<span class="fc" id="L73">		return result;</span>
+	}
+
+<span class="fc" id="L76">	private CompositeList(CharSequence definition) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (definition.length() == 0)</span>
+<span class="nc" id="L78">			throw new UnsupportedOperationException();</span>
+
+<span class="fc" id="L80">		final TextNavigator input = TextNavigator.build(definition);</span>
+<span class="fc" id="L81">		parseAndConsumeNow(input);</span>
+
+<span class="fc" id="L83">	}</span>
+
+	private void parseAndConsumeNow(final TextNavigator input) {
+<span class="fc" id="L86">		final AtomicParser builder = new AtomicParser();</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		while (input.length() &gt; 0) {</span>
+<span class="fc" id="L88">			final char ch = input.charAt(0);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (ch == ' ')</span>
+<span class="fc" id="L90">				input.jump(1);</span>
+			else
+<span class="fc bfc" id="L92" title="All 2 branches covered.">				for (Challenge c : builder.parse(input))</span>
+<span class="fc" id="L93">					this.addChallenge(c);</span>
+
+<span class="fc" id="L95">		}</span>
+<span class="fc" id="L96">	}</span>
+
+	@Override
+	public ChallengeResult runChallenge(TextNavigator string, int position) {
+
+<span class="fc" id="L101">		Capture capture = Capture.EMPTY;</span>
+		// Capture nonMergeableCapture = Capture.EMPTY;
+
+<span class="fc" id="L104">		int current = position;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (Challenge challenge : challenges) {</span>
+<span class="fc" id="L106">			final ChallengeResult shallWePass = challenge.runChallenge(string, current);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			if (shallWePass.getFullCaptureLength() &lt; 0)</span>
+<span class="fc" id="L108">				return new ChallengeResult(NO_MATCH, capture);</span>
+
+<span class="fc" id="L110">			current += shallWePass.getFullCaptureLength();</span>
+<span class="fc" id="L111">			capture = capture.merge(shallWePass.getCapture());</span>
+<span class="fc" id="L112">			capture = capture.merge(shallWePass.getNonMergeableCapture());</span>
+<span class="fc" id="L113">		}</span>
+
+<span class="fc" id="L115">		return new ChallengeResult(current - position, capture);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

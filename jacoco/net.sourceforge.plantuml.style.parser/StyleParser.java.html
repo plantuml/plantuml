@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style.parser</a> &gt; <span class="el_source">StyleParser.java</span></div><h1>StyleParser.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style.parser;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.style.AutomaticCounter;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleScheme;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.Value;
+import net.sourceforge.plantuml.style.ValueImpl;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.CharInspector;
+import net.sourceforge.plantuml.utils.Peeker;
+import net.sourceforge.plantuml.utils.PeekerUtils;
+
+<span class="nc" id="L56">public class StyleParser {</span>
+
+	public static Collection&lt;Style&gt; parse(BlocLines lines, AutomaticCounter counter) throws StyleParsingException {
+
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (lines.size() == 0)</span>
+<span class="nc" id="L61">			return Collections.emptyList();</span>
+
+<span class="fc" id="L63">		final List&lt;StyleToken&gt; tokens = parse(lines.inspectorWithNewlines());</span>
+
+<span class="fc" id="L65">		final List&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L66">		final CssVariables variables = new CssVariables();</span>
+<span class="fc" id="L67">		StyleScheme scheme = StyleScheme.REGULAR;</span>
+
+<span class="fc" id="L69">		Context context = new Context();</span>
+
+//		System.err.println(&quot;tokens=&quot; + tokens.size());
+//		if (tokens.size() &lt; 100)
+//			for (StyleToken t : tokens)
+//				System.err.println(t);
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		for (Peeker&lt;StyleToken&gt; peeker = PeekerUtils.peeker(tokens); peeker.peek(0) != null;) {</span>
+<span class="fc" id="L77">			final StyleToken token = peeker.peek(0);</span>
+<span class="fc" id="L78">			peeker.jump();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">			if (token.getType() == StyleTokenType.NEWLINE)</span>
+<span class="fc" id="L80">				continue;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (token.getType() == StyleTokenType.SEMICOLON)</span>
+<span class="fc" id="L82">				continue;</span>
+
+<span class="pc bpc" id="L84" title="1 of 4 branches missed.">			if (token.getType() == StyleTokenType.STRING &amp;&amp; token.getData().equalsIgnoreCase(&quot;&lt;style&gt;&quot;))</span>
+<span class="nc" id="L85">				continue;</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">			if (token.getType() == StyleTokenType.STRING &amp;&amp; token.getData().equalsIgnoreCase(&quot;&lt;/style&gt;&quot;))</span>
+<span class="nc" id="L87">				continue;</span>
+
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (peeker.peek(0).getType() == StyleTokenType.COMMA) {</span>
+<span class="fc" id="L90">				final String full = token.getData() + readWithComma(peeker);</span>
+<span class="fc" id="L91">				skipNewLines(peeker);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				if (peeker.peek(0).getType() == StyleTokenType.OPEN_BRACKET) {</span>
+<span class="fc" id="L93">					context = context.push(full);</span>
+<span class="fc" id="L94">					peeker.jump();</span>
+<span class="fc" id="L95">					continue;</span>
+				}
+<span class="nc" id="L97">				throw new IllegalStateException();</span>
+			}
+<span class="fc bfc" id="L99" title="All 2 branches covered.">			if (token.getType() == StyleTokenType.STRING) {</span>
+<span class="fc" id="L100">				String full = token.getData();</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">				if (peeker.peek(0).getType() == StyleTokenType.STAR) {</span>
+<span class="nc" id="L102">					peeker.jump();</span>
+<span class="nc" id="L103">					full += StyleSignatureBasic.STAR;</span>
+				}
+<span class="fc" id="L105">				skipNewLines(peeker);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (peeker.peek(0).getType() == StyleTokenType.OPEN_BRACKET) {</span>
+<span class="fc" id="L107">					context = context.push(full);</span>
+<span class="fc" id="L108">					peeker.jump();</span>
+<span class="fc" id="L109">					continue;</span>
+				}
+<span class="fc" id="L111">				skipColon(peeker);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">				if (token.getData().startsWith(&quot;--&quot;)) {</span>
+<span class="fc" id="L113">					variables.learn(token.getData(), readValue(peeker));</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">				} else if (peeker.peek(0).getType() == StyleTokenType.STRING) {</span>
+<span class="fc" id="L115">					final String valueString = variables.value(readValue(peeker));</span>
+<span class="fc" id="L116">					final String keyString = token.getData();</span>
+<span class="fc" id="L117">					final PName key = PName.getFromName(keyString, scheme);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">					if (key == null) {</span>
+						// System.err.println(&quot;Error with key &quot; + keyString);
+					} else {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">						final Value value = scheme == StyleScheme.REGULAR ? //</span>
+<span class="fc" id="L122">								ValueImpl.regular(valueString, counter) : ValueImpl.dark(valueString, counter);</span>
+<span class="fc" id="L123">						context.putInContext(key, value);</span>
+					}
+<span class="fc" id="L125">				} else {</span>
+<span class="nc" id="L126">					throw new StyleParsingException(&quot;parsing&quot;);</span>
+				}
+
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			} else if (token.getType() == StyleTokenType.CLOSE_BRACKET) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">				for (Style st : context.toStyles())</span>
+<span class="fc" id="L131">					result.add(st);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">				if (context.size() &gt; 0)</span>
+<span class="fc" id="L133">					context = context.pop();</span>
+
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">			} else if (token.getType() == StyleTokenType.AROBASE_MEDIA) {</span>
+<span class="fc" id="L136">				scheme = StyleScheme.DARK;</span>
+<span class="fc" id="L137">				continue;</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">			} else if (token.getType() == StyleTokenType.COLON &amp;&amp; peeker.peek(0).getType() == StyleTokenType.STRING</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">					&amp;&amp; peeker.peek(1).getType() == StyleTokenType.OPEN_BRACKET) {</span>
+<span class="nc" id="L140">				final String full = token.getData() + peeker.peek(0).getData();</span>
+<span class="nc" id="L141">				context = context.push(full);</span>
+<span class="nc" id="L142">				peeker.jump();</span>
+<span class="nc" id="L143">				peeker.jump();</span>
+<span class="nc" id="L144">				continue;</span>
+<span class="nc bnc" id="L145" title="All 4 branches missed.">			} else if (token.getType() == StyleTokenType.COLON &amp;&amp; peeker.peek(0).getType() == StyleTokenType.STRING</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">					&amp;&amp; peeker.peek(1).getType() == StyleTokenType.STAR</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">					&amp;&amp; peeker.peek(2).getType() == StyleTokenType.OPEN_BRACKET) {</span>
+<span class="nc" id="L148">				final String full = token.getData() + peeker.peek(0).getData() + peeker.peek(1).getData();</span>
+<span class="nc" id="L149">				context = context.push(full);</span>
+<span class="nc" id="L150">				peeker.jump();</span>
+<span class="nc" id="L151">				peeker.jump();</span>
+<span class="nc" id="L152">				peeker.jump();</span>
+<span class="nc" id="L153">				continue;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			} else if (token.getType() == StyleTokenType.OPEN_BRACKET) {</span>
+<span class="nc" id="L155">				throw new StyleParsingException(&quot;Invalid open bracket&quot;);</span>
+			} else {
+<span class="nc" id="L157">				throw new IllegalStateException(token.toString());</span>
+			}
+<span class="fc" id="L159">		}</span>
+<span class="fc" id="L160">		return Collections.unmodifiableList(result);</span>
+	}
+
+	private static String readWithComma(Peeker&lt;StyleToken&gt; ins) {
+<span class="fc" id="L164">		final StringBuilder result = new StringBuilder();</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		while (ins.peek(0) != null) {</span>
+<span class="fc" id="L166">			final StyleToken current = ins.peek(0);</span>
+<span class="fc bfc" id="L167" title="All 4 branches covered.">			if (current.getType() != StyleTokenType.STRING &amp;&amp; current.getType() != StyleTokenType.COMMA)</span>
+<span class="fc" id="L168">				return result.toString();</span>
+<span class="fc" id="L169">			result.append(current.getData());</span>
+<span class="fc" id="L170">			ins.jump();</span>
+<span class="fc" id="L171">		}</span>
+<span class="nc" id="L172">		return result.toString();</span>
+	}
+
+	private static String readValue(Peeker&lt;StyleToken&gt; ins) throws StyleParsingException {
+<span class="fc" id="L176">		final StringBuilder result = new StringBuilder();</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		while (ins.peek(0) != null) {</span>
+<span class="fc" id="L178">			final StyleToken current = ins.peek(0);</span>
+<span class="fc bfc" id="L179" title="All 4 branches covered.">			if (current.getType() == StyleTokenType.NEWLINE || current.getType() == StyleTokenType.SEMICOLON</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">					|| current.getType() == StyleTokenType.CLOSE_BRACKET)</span>
+<span class="fc" id="L181">				return result.toString();</span>
+
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">			if (current.getType() == StyleTokenType.STRING) {</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">				if (result.length() &gt; 0)</span>
+<span class="fc" id="L185">					result.append(' ');</span>
+<span class="fc" id="L186">				result.append(current.getData());</span>
+<span class="fc" id="L187">				ins.jump();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			} else if (current.getType() == StyleTokenType.COMMA) {</span>
+<span class="nc" id="L189">				result.append(current.getData());</span>
+<span class="nc" id="L190">				ins.jump();</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			} else if (current.getType() == StyleTokenType.COLON) {</span>
+<span class="nc" id="L192">				result.append(current.getData());</span>
+<span class="nc" id="L193">				ins.jump();</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">				if (ins.peek(0).getType() == StyleTokenType.STRING) {</span>
+<span class="nc" id="L195">					result.append(ins.peek(0).getData());</span>
+<span class="nc" id="L196">					ins.jump();</span>
+				} else
+<span class="nc" id="L198">					throw new StyleParsingException(&quot;bad definition&quot;);</span>
+			} else
+<span class="nc" id="L200">				throw new StyleParsingException(&quot;bad definition&quot;);</span>
+
+<span class="fc" id="L202">		}</span>
+<span class="nc" id="L203">		return result.toString();</span>
+	}
+
+	private static void skipNewLines(Peeker&lt;StyleToken&gt; ins) {
+		while (true) {
+<span class="fc" id="L208">			final StyleToken token = ins.peek(0);</span>
+<span class="pc bpc" id="L209" title="2 of 4 branches missed.">			if (token == null || token.getType() != StyleTokenType.NEWLINE)</span>
+<span class="fc" id="L210">				return;</span>
+<span class="nc" id="L211">			ins.jump();</span>
+<span class="nc" id="L212">		}</span>
+	}
+
+	private static void skipColon(Peeker&lt;StyleToken&gt; ins) {
+		while (true) {
+<span class="fc" id="L217">			final StyleToken token = ins.peek(0);</span>
+<span class="pc bpc" id="L218" title="1 of 4 branches missed.">			if (token == null || token.getType() != StyleTokenType.COLON)</span>
+<span class="fc" id="L219">				return;</span>
+<span class="fc" id="L220">			ins.jump();</span>
+<span class="fc" id="L221">		}</span>
+	}
+
+	@JawsStrange
+	private static List&lt;StyleToken&gt; parse(CharInspector ins) throws StyleParsingException {
+<span class="fc" id="L226">		final List&lt;StyleToken&gt; result = new ArrayList&lt;&gt;();</span>
+		while (true) {
+<span class="fc" id="L228">			final char current = ins.peek(0);</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			if (current == '\0')</span>
+<span class="fc" id="L230">				break;</span>
+			// System.err.println(&quot;current=&quot; + current);
+<span class="pc bpc" id="L232" title="1 of 4 branches missed.">			if (current == ' ' || current == '\t') {</span>
+<span class="fc" id="L233">				ins.jump();</span>
+				// Skipping
+<span class="pc bpc" id="L235" title="3 of 4 branches missed.">			} else if (current == '/' &amp;&amp; ins.peek(1) == '/') {</span>
+<span class="nc" id="L236">				jumpUntil(ins, '\n');</span>
+<span class="pc bpc" id="L237" title="3 of 4 branches missed.">			} else if (current == '/' &amp;&amp; ins.peek(1) == '\'') {</span>
+<span class="nc" id="L238">				jumpUntil(ins, '\'', '/');</span>
+<span class="pc bpc" id="L239" title="3 of 4 branches missed.">			} else if (current == '/' &amp;&amp; ins.peek(1) == '*') {</span>
+<span class="nc" id="L240">				jumpUntil(ins, '*', '/');</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">			} else if (current == ',') {</span>
+<span class="fc" id="L242">				result.add(new StyleToken(StyleTokenType.COMMA, &quot;,&quot;));</span>
+<span class="fc" id="L243">				ins.jump();</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">			} else if (current == ';') {</span>
+<span class="fc" id="L245">				result.add(new StyleToken(StyleTokenType.SEMICOLON, &quot;;&quot;));</span>
+<span class="fc" id="L246">				ins.jump();</span>
+<span class="pc bpc" id="L247" title="1 of 4 branches missed.">			} else if (current == '\n' || current == '\r') {</span>
+<span class="fc" id="L248">				result.add(new StyleToken(StyleTokenType.NEWLINE, &quot;NEWLINE&quot;));</span>
+<span class="fc" id="L249">				ins.jump();</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">			} else if (current == '*') {</span>
+<span class="nc" id="L251">				result.add(new StyleToken(StyleTokenType.STAR, StyleSignatureBasic.STAR));</span>
+<span class="nc" id="L252">				ins.jump();</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			} else if (current == ':') {</span>
+<span class="fc" id="L254">				result.add(new StyleToken(StyleTokenType.COLON, &quot;:&quot;));</span>
+<span class="fc" id="L255">				ins.jump();</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">			} else if (current == '{') {</span>
+<span class="fc" id="L257">				result.add(new StyleToken(StyleTokenType.OPEN_BRACKET, &quot;{&quot;));</span>
+<span class="fc" id="L258">				ins.jump();</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">			} else if (current == '}') {</span>
+<span class="fc" id="L260">				result.add(new StyleToken(StyleTokenType.CLOSE_BRACKET, &quot;}&quot;));</span>
+<span class="fc" id="L261">				ins.jump();</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">			} else if (current == '@') {</span>
+<span class="fc" id="L263">				result.add(new StyleToken(StyleTokenType.AROBASE_MEDIA, readArobaseMedia(ins)));</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">			} else if (current == '\&quot;') {</span>
+<span class="nc" id="L265">				final String s = readQuotedString(ins);</span>
+<span class="nc" id="L266">				result.add(new StyleToken(StyleTokenType.STRING, s));</span>
+<span class="nc" id="L267">			} else {</span>
+<span class="fc" id="L268">				final String s = readString(ins);</span>
+<span class="fc" id="L269">				result.add(new StyleToken(StyleTokenType.STRING, s));</span>
+			}
+<span class="fc" id="L271">		}</span>
+<span class="fc" id="L272">		return result;</span>
+
+	}
+
+	private static void jumpUntil(CharInspector ins, char ch1) {
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		while (ins.peek(0) != 0) {</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">			if (ins.peek(0) == ch1) {</span>
+<span class="nc" id="L279">				ins.jump();</span>
+<span class="nc" id="L280">				return;</span>
+			}
+<span class="nc" id="L282">			ins.jump();</span>
+		}
+<span class="nc" id="L284">	}</span>
+
+	private static void jumpUntil(CharInspector ins, char ch1, char ch2) {
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		while (ins.peek(0) != 0) {</span>
+<span class="nc bnc" id="L288" title="All 4 branches missed.">			if (ins.peek(0) == ch1 &amp;&amp; ins.peek(1) == ch2) {</span>
+<span class="nc" id="L289">				ins.jump();</span>
+<span class="nc" id="L290">				ins.jump();</span>
+<span class="nc" id="L291">				return;</span>
+			}
+<span class="nc" id="L293">			ins.jump();</span>
+		}
+<span class="nc" id="L295">	}</span>
+
+	private static String readArobaseMedia(CharInspector ins) {
+<span class="fc" id="L298">		final char current0 = ins.peek(0);</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (current0 != '@')</span>
+<span class="nc" id="L300">			throw new IllegalStateException();</span>
+<span class="fc" id="L301">		ins.jump();</span>
+<span class="fc" id="L302">		final StringBuilder result = new StringBuilder();</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">		while (ins.peek(0) != 0) {</span>
+<span class="fc" id="L304">			char ch = ins.peek(0);</span>
+<span class="fc" id="L305">			ins.jump();</span>
+<span class="pc bpc" id="L306" title="2 of 6 branches missed.">			if (ch == '{' || ch == '}' || ch == ';')</span>
+<span class="nc" id="L307">				break;</span>
+<span class="fc" id="L308">			result.append(ch);</span>
+<span class="fc" id="L309">		}</span>
+<span class="fc" id="L310">		return result.toString();</span>
+	}
+
+	private static String readQuotedString(CharInspector ins) {
+<span class="nc" id="L314">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (ins.peek(0) != '\&quot;')</span>
+<span class="nc" id="L316">			throw new IllegalStateException();</span>
+<span class="nc" id="L317">		ins.jump();</span>
+<span class="nc bnc" id="L318" title="All 4 branches missed.">		while (ins.peek(0) != 0 &amp;&amp; ins.peek(0) != '\&quot;') {</span>
+<span class="nc" id="L319">			char ch = ins.peek(0);</span>
+<span class="nc" id="L320">			ins.jump();</span>
+<span class="nc" id="L321">			result.append(ch);</span>
+<span class="nc" id="L322">		}</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
+<span class="nc" id="L324">			ins.jump();</span>
+<span class="nc" id="L325">		return result.toString();</span>
+	}
+
+	private static String readString(CharInspector ins) {
+<span class="fc" id="L329">		final StringBuilder result = new StringBuilder();</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		while (ins.peek(0) != 0) {</span>
+<span class="fc" id="L331">			char ch = ins.peek(0);</span>
+<span class="pc bpc" id="L332" title="1 of 4 branches missed.">			if (ch == '\n' || ch == '\r')</span>
+<span class="nc" id="L333">				break;</span>
+<span class="fc bfc" id="L334" title="All 4 branches covered.">			if (ch == ' ' &amp;&amp; result.charAt(0) != '.')</span>
+<span class="fc" id="L335">				break;</span>
+<span class="pc bpc" id="L336" title="2 of 12 branches missed.">			if (ch == '{' || ch == '}' || ch == ';' || ch == ',' || ch == ':' || ch == '\t')</span>
+<span class="nc" id="L337">				break;</span>
+<span class="fc" id="L338">			ins.jump();</span>
+			// System.err.println(&quot;ch=&quot; + ch);
+<span class="fc" id="L340">			result.append(ch);</span>
+<span class="fc" id="L341">		}</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">		if (result.charAt(0) == '.')</span>
+<span class="fc" id="L343">			return result.toString().trim();</span>
+<span class="fc" id="L344">		return result.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

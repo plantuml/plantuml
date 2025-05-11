@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubjectProject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">SubjectProject.java</span></div><h1>SubjectProject.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+
+public class SubjectProject implements Subject&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L51">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectProject();</span>
+
+	private SubjectProject() {
+	}
+
+	public IRegex toRegex() {
+<span class="fc" id="L57">		return new RegexLeaf(&quot;SUBJECT&quot;, &quot;project&quot;);</span>
+	}
+
+	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {
+<span class="fc" id="L61">		return Failable.ok(project);</span>
+	}
+
+	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
+<span class="fc" id="L65">		return Arrays.asList(new Starts());</span>
+	}
+
+<span class="fc" id="L68">	class Starts extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+
+<span class="fc" id="L70">		public Starts() {</span>
+<span class="fc" id="L71">			super(SubjectProject.this, Verbs.starts, Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),</span>
+<span class="fc" id="L72">					ComplementDate.onlyAbsolute());</span>
+<span class="fc" id="L73">		}</span>
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="fc" id="L77">			final Day start = (Day) complement;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			assert project == subject;</span>
+<span class="fc" id="L79">			project.setProjectStartingDate(start);</span>
+<span class="fc" id="L80">			return CommandExecutionResult.ok();</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ThemeUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.theme</a> &gt; <span class="el_source">ThemeUtils.java</span></div><h1>ThemeUtils.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2021, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Matthew Leather
+ *
+ *
+ */
+package net.sourceforge.plantuml.theme;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.sprite.ResourcesUtils;
+import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.preproc.ReadLineReader;
+import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.utils.Log;
+
+// ::uncomment when __CORE__
+//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+// ::done
+
+<span class="nc" id="L59">public class ThemeUtils {</span>
+	// ::remove folder when __HAXE__
+
+	private static final String THEME_FILE_PREFIX = &quot;puml-theme-&quot;;
+
+	private static final String THEME_FILE_SUFFIX = &quot;.puml&quot;;
+
+	private static final String THEME_PATH = &quot;themes&quot;;
+
+	// ::uncomment when __CORE__
+//	public static ReadLine getReaderTheme(String filename) throws FileNotFoundException {
+//	Log.info(&quot;Loading theme &quot; + filename);
+//	final String fullpath = cheerpjPath + THEME_PATH + &quot;/&quot; + THEME_FILE_PREFIX + filename
+//			+ THEME_FILE_SUFFIX;
+//
+//	final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
+//	final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;
+//	final InputStream is = new FileInputStream(fullpath);
+//	return ReadLineReader.create(new InputStreamReader(is), description);
+//}
+	// ::done
+
+	// ::comment when __CORE__
+	public static Theme getReaderTheme(String realName, String from) {
+<span class="nc" id="L83">		final String description = realName + &quot; from &quot; + from;</span>
+<span class="nc" id="L84">		from = from.substring(1, from.length() - 1);</span>
+<span class="nc" id="L85">		final String res = from + &quot;/&quot; + THEME_FILE_PREFIX + realName + THEME_FILE_SUFFIX;</span>
+<span class="nc" id="L86">		final InputStream is = Stdlib.getResourceAsStream(res);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L88">			return null;</span>
+
+<span class="nc" id="L90">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
+	}
+
+	public static Theme getReaderTheme(String filename) {
+<span class="fc" id="L94">		Log.info(&quot;Loading theme &quot; + filename);</span>
+<span class="fc" id="L95">		final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
+<span class="fc" id="L96">		final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;</span>
+<span class="fc" id="L97">		final InputStream is = Stdlib.class.getResourceAsStream(res);</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L99">			return null;</span>
+
+<span class="fc" id="L101">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
+	}
+
+	public static List&lt;String&gt; getAllThemeNames() throws IOException {
+<span class="fc" id="L105">		final Collection&lt;String&gt; filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));</span>
+<span class="fc" id="L106">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (String f : filenames) {</span>
+<span class="pc bpc" id="L108" title="2 of 4 branches missed.">			if (f.startsWith(THEME_FILE_PREFIX) &amp;&amp; f.endsWith(THEME_FILE_SUFFIX)) {</span>
+<span class="fc" id="L109">				result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));</span>
+			}
+<span class="fc" id="L111">		}</span>
+<span class="fc" id="L112">		Collections.sort(result);</span>
+<span class="fc" id="L113">		return result;</span>
+	}
+	// ::done
+
+	public static String getFullPath(String from, String filename) {
+<span class="nc" id="L118">		final StringBuilder sb = new StringBuilder(from);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (from.endsWith(&quot;/&quot;) == false) {</span>
+<span class="nc" id="L120">			sb.append(&quot;/&quot;);</span>
+		}
+<span class="nc" id="L122">		return sb + getFilename(filename);</span>
+	}
+
+	public static String getFilename(String filename) {
+<span class="nc" id="L126">		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

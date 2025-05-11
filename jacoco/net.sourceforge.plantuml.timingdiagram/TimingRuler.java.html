@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimingRuler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram</a> &gt; <span class="el_source">TimingRuler.java</span></div><h1>TimingRuler.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram;
+
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class TimingRuler {
+
+<span class="fc" id="L65">	private final SortedSet&lt;TimeTick&gt; times = new TreeSet&lt;&gt;();</span>
+
+	private final ISkinParam skinParam;
+
+<span class="fc" id="L69">	private long tickIntervalInPixels = 50;</span>
+	private long forcedTickUnitary;
+
+<span class="fc" id="L72">	private TimingFormat format = TimingFormat.DECIMAL;</span>
+
+	static UGraphic applyForVLines(UGraphic ug, Style style, ISkinParam skinParam) {
+<span class="fc" id="L75">		final UStroke stroke = new UStroke(3, 5, 0.5);</span>
+<span class="fc" id="L76">		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="fc" id="L78">		return ug.apply(stroke).apply(color);</span>
+	}
+
+	public void ensureNotEmpty() {
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
+<span class="nc" id="L83">			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));</span>
+
+<span class="pc bpc" id="L85" title="2 of 4 branches missed.">		if (getMax().getTime().signum() &gt; 0 &amp;&amp; getMin().getTime().signum() &lt; 0)</span>
+<span class="nc" id="L86">			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));</span>
+
+<span class="fc" id="L88">	}</span>
+
+<span class="fc" id="L90">	public TimingRuler(ISkinParam skinParam) {</span>
+<span class="fc" id="L91">		this.skinParam = skinParam;</span>
+<span class="fc" id="L92">	}</span>
+
+	public void scaleInPixels(long tick, long pixel) {
+<span class="nc bnc" id="L95" title="All 4 branches missed.">		if (pixel &lt;= 0 || tick &lt;= 0)</span>
+<span class="nc" id="L96">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L97">		this.tickIntervalInPixels = pixel;</span>
+<span class="nc" id="L98">		this.forcedTickUnitary = tick;</span>
+<span class="nc" id="L99">	}</span>
+
+	private long getOptimalTickUnit() {
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (forcedTickUnitary == 0) {</span>
+<span class="fc" id="L103">			final long hcfTickUnit = calculateHighestCommonFactor();</span>
+<span class="fc" id="L104">			final double maxDiagramWidth = 4000.0;</span>
+<span class="pc bpc" id="L105" title="3 of 4 branches missed.">			if (hcfTickUnit == 1 &amp;&amp; calculateDiagramWidth(hcfTickUnit) &gt; maxDiagramWidth) {</span>
+				/*
+				 * Typically, we determine the optimal tick unit using the highest common factor
+				 * (HCF) of all significant timing values. However, when the HCF is too small
+				 * (e.g., equal to 1), the resulting diagram becomes excessively wide. In such
+				 * cases, we fall back to an approximate tick unit calculation based on the
+				 * diagram's pixel width and the total time range, ensuring the diagram remains
+				 * clear and readable.
+				 */
+<span class="nc" id="L114">				final double totalTimeRange = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();</span>
+<span class="nc" id="L115">				return Math.round(1 + (tickIntervalInPixels * totalTimeRange / maxDiagramWidth));</span>
+			}
+<span class="fc" id="L117">			return hcfTickUnit;</span>
+		}
+<span class="nc" id="L119">		return forcedTickUnitary;</span>
+	}
+
+	public double getWidth() {
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
+<span class="nc" id="L124">			return 100;</span>
+<span class="fc" id="L125">		return calculateDiagramWidth(getOptimalTickUnit());</span>
+	}
+
+	private double calculateDiagramWidth(final long tickUnitary) {
+<span class="fc" id="L129">		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();</span>
+<span class="fc" id="L130">		return (delta / tickUnitary + 1) * tickIntervalInPixels;</span>
+	}
+
+<span class="fc" id="L133">	private long highestCommonFactorInternal = -1;</span>
+
+	private long calculateHighestCommonFactor() {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (highestCommonFactorInternal == -1)</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			for (long tick : getAbsolutesTicks())</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">				if (highestCommonFactorInternal == -1)</span>
+<span class="fc" id="L139">					highestCommonFactorInternal = tick;</span>
+				else
+<span class="fc" id="L141">					highestCommonFactorInternal = computeHighestCommonFactor(highestCommonFactorInternal, tick);</span>
+
+<span class="fc" id="L143">		return highestCommonFactorInternal;</span>
+	}
+
+	private Set&lt;Long&gt; getAbsolutesTicks() {
+<span class="fc" id="L147">		final Set&lt;Long&gt; result = new TreeSet&lt;&gt;(new Comparator&lt;Long&gt;() {</span>
+			public int compare(Long o1, Long o2) {
+<span class="fc" id="L149">				return o2.compareTo(o1);</span>
+			}
+		});
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (TimeTick time : times) {</span>
+<span class="fc" id="L153">			final long value = Math.abs(time.getTime().longValue());</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			if (value &gt; 0)</span>
+<span class="fc" id="L155">				result.add(value);</span>
+
+<span class="fc" id="L157">		}</span>
+<span class="fc" id="L158">		return result;</span>
+	}
+
+	private int getNbTick() {
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
+<span class="nc" id="L163">			return 1;</span>
+
+<span class="fc" id="L165">		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();</span>
+<span class="fc" id="L166">		return Math.min(1000, (int) (1 + delta / getOptimalTickUnit()));</span>
+	}
+
+	public final double getPosInPixel(TimeTick when) {
+<span class="fc" id="L170">		return getPosInPixelInternal(when.getTime().doubleValue());</span>
+	}
+
+	private double getPosInPixelInternal(double time) {
+<span class="fc" id="L174">		time -= getMin().getTime().doubleValue();</span>
+<span class="fc" id="L175">		return time / getOptimalTickUnit() * tickIntervalInPixels;</span>
+	}
+
+	public void addTime(TimeTick time) {
+<span class="fc" id="L179">		this.highestCommonFactorInternal = -1;</span>
+<span class="fc" id="L180">		times.add(time);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (time.getFormat() != TimingFormat.DECIMAL)</span>
+<span class="nc" id="L182">			this.format = time.getFormat();</span>
+
+<span class="fc" id="L184">	}</span>
+
+	private Style getStyleTimegrid() {
+<span class="fc" id="L187">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.timegrid)</span>
+<span class="fc" id="L188">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	private Style getStyleTimeline() {
+<span class="fc" id="L192">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.timeline)</span>
+<span class="fc" id="L193">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	private TextBlock getTimeTextBlock(long time) {
+<span class="fc" id="L197">		return getTimeTextBlock(format.formatTime(time));</span>
+	}
+
+	private TextBlock getTimeTextBlock(String string) {
+<span class="fc" id="L201">		final Display display = Display.getWithNewlines(skinParam.getPragma(), string);</span>
+<span class="fc" id="L202">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, getStyleTimeline());</span>
+<span class="fc" id="L203">		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+	}
+
+	public void drawTimeAxis(UGraphic ug, TimeAxisStategy timeAxisStategy, Map&lt;String, TimeTick&gt; codes) {
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (timeAxisStategy == TimeAxisStategy.HIDDEN)</span>
+<span class="nc" id="L208">			return;</span>
+
+<span class="fc" id="L210">		final Style styleTimeline = getStyleTimeline();</span>
+<span class="fc" id="L211">		final Style styleTimegrid = getStyleTimegrid();</span>
+
+<span class="fc" id="L213">		final HColor color = styleTimeline.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L214">		final UStroke stroke = styleTimeline.getStroke();</span>
+
+<span class="fc" id="L216">		ug = ug.apply(stroke).apply(color);</span>
+
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC)</span>
+<span class="fc" id="L219">			drawTimeAxisAutomatic(ug);</span>
+		else
+<span class="nc" id="L221">			drawTimeAxisManual(ug, codes);</span>
+
+<span class="fc" id="L223">	}</span>
+
+	private void drawTimeAxisManual(UGraphic ug, Map&lt;String, TimeTick&gt; codes) {
+<span class="nc" id="L226">		final double tickHeight = 5;</span>
+<span class="nc" id="L227">		final ULine line = ULine.vline(tickHeight);</span>
+<span class="nc" id="L228">		final double firstTickPosition = getPosInPixelInternal(getFirstPositiveOrZeroValue().doubleValue());</span>
+<span class="nc" id="L229">		int nb = 0;</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		while (firstTickPosition + nb * tickIntervalInPixels &lt;= getWidth())</span>
+<span class="nc" id="L231">			nb++;</span>
+
+<span class="nc" id="L233">		ug.apply(UTranslate.dx(firstTickPosition)).draw(ULine.hline((nb - 1) * tickIntervalInPixels));</span>
+
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (TimeTick tick : times) {</span>
+<span class="nc" id="L236">			ug.apply(UTranslate.dx(getPosInPixel(tick))).draw(line);</span>
+<span class="nc" id="L237">			final String label = getLabel(tick, codes);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">			if (label.length() == 0)</span>
+<span class="nc" id="L239">				continue;</span>
+<span class="nc" id="L240">			final TextBlock text = getTimeTextBlock(label);</span>
+<span class="nc" id="L241">			final XDimension2D dim = text.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L242">			text.drawU(ug.apply(new UTranslate(getPosInPixel(tick) - dim.getWidth() / 2, tickHeight + 1)));</span>
+
+<span class="nc" id="L244">		}</span>
+<span class="nc" id="L245">	}</span>
+
+	private void drawTimeAxisAutomatic(UGraphic ug) {
+<span class="fc" id="L248">		final double tickHeight = 5;</span>
+<span class="fc" id="L249">		final ULine line = ULine.vline(tickHeight);</span>
+<span class="fc" id="L250">		final double firstTickPosition = getPosInPixelInternal(getFirstPositiveOrZeroValue().doubleValue());</span>
+<span class="fc" id="L251">		int nb = 0;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		while (firstTickPosition + nb * tickIntervalInPixels &lt;= getWidth()) {</span>
+<span class="fc" id="L253">			ug.apply(UTranslate.dx(firstTickPosition + nb * tickIntervalInPixels)).draw(line);</span>
+<span class="fc" id="L254">			nb++;</span>
+		}
+<span class="fc" id="L256">		ug.apply(UTranslate.dx(firstTickPosition)).draw(ULine.hline((nb - 1) * tickIntervalInPixels));</span>
+
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		for (long round : roundValues()) {</span>
+<span class="fc" id="L259">			final TextBlock text = getTimeTextBlock(round);</span>
+<span class="fc" id="L260">			final XDimension2D dim = text.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L261">			text.drawU(ug.apply(new UTranslate(getPosInPixelInternal(round) - dim.getWidth() / 2, tickHeight + 1)));</span>
+<span class="fc" id="L262">		}</span>
+<span class="fc" id="L263">	}</span>
+
+	private String getLabel(TimeTick tick, Map&lt;String, TimeTick&gt; codes) {
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		for (Entry&lt;String, TimeTick&gt; ent : codes.entrySet())</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			if (tick.equals(ent.getValue()))</span>
+<span class="nc" id="L268">				return ent.getKey();</span>
+
+<span class="nc" id="L270">		return format.formatTime(tick.getTime());</span>
+	}
+
+	private BigDecimal getFirstPositiveOrZeroValue() {
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		for (TimeTick time : times)</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">			if (time.getTime().signum() &gt;= 0)</span>
+<span class="fc" id="L276">				return time.getTime();</span>
+
+<span class="nc" id="L278">		throw new IllegalStateException();</span>
+	}
+
+	private Collection&lt;Long&gt; roundValues() {
+<span class="fc" id="L282">		final SortedSet&lt;Long&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		if (forcedTickUnitary == 0) {</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">			for (TimeTick tick : times) {</span>
+<span class="fc" id="L285">				final long round = tick.getTime().longValue();</span>
+<span class="fc" id="L286">				result.add(round);</span>
+<span class="fc" id="L287">			}</span>
+		} else {
+<span class="nc" id="L289">			final int nb = getNbTick();</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">			for (int i = 0; i &lt;= nb; i++) {</span>
+<span class="nc" id="L291">				final long round = tickToTime(i);</span>
+<span class="nc" id="L292">				result.add(round);</span>
+			}
+		}
+<span class="pc bpc" id="L295" title="3 of 4 branches missed.">		if (result.first() &lt; 0 &amp;&amp; result.last() &gt; 0)</span>
+<span class="nc" id="L296">			result.add(0L);</span>
+
+<span class="fc" id="L298">		return result;</span>
+	}
+
+	private long tickToTime(int i) {
+<span class="nc" id="L302">		return forcedTickUnitary * i + getMin().getTime().longValue();</span>
+	}
+
+	public void drawVlines(UGraphic ug, double height) {
+<span class="fc" id="L306">		ug = applyForVLines(ug, getStyleTimegrid(), skinParam);</span>
+<span class="fc" id="L307">		final ULine line = ULine.vline(height);</span>
+<span class="fc" id="L308">		final int nb = getNbTick();</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">		for (int i = 0; i &lt;= nb; i++)</span>
+<span class="fc" id="L310">			ug.apply(UTranslate.dx(tickIntervalInPixels * i)).draw(line);</span>
+
+<span class="fc" id="L312">	}</span>
+
+	public double getHeight(StringBounder stringBounder) {
+<span class="nc" id="L315">		return getTimeTextBlock(0).calculateDimension(stringBounder).getHeight();</span>
+	}
+
+	private TimeTick getMax() {
+<span class="fc" id="L319">		return times.last();</span>
+	}
+
+	private TimeTick getMin() {
+<span class="fc" id="L323">		return times.first();</span>
+	}
+
+	private static long computeHighestCommonFactor(long a, long b) {
+<span class="fc" id="L327">		long r = a;</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		while (r != 0) {</span>
+<span class="fc" id="L329">			r = a % b;</span>
+<span class="fc" id="L330">			a = b;</span>
+<span class="fc" id="L331">			b = r;</span>
+		}
+<span class="fc" id="L333">		return (Math.abs(a));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

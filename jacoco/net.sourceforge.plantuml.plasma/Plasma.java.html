@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Plasma.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.plasma</a> &gt; <span class="el_source">Plasma.java</span></div><h1>Plasma.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.plasma;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * A namespace for {@link Quark} objects.
+ *
+ * @see net.sourceforge.plantuml.plasma
+ */
+public class Plasma&lt;DATA&gt; {
+
+	public static final String MAGIC_SEPARATOR = &quot;\u0001&quot;;
+	
+<span class="fc" id="L54">	private String separator = MAGIC_SEPARATOR;</span>
+	private final Quark&lt;DATA&gt; root;
+<span class="fc" id="L56">	private final List&lt;Quark&lt;DATA&gt;&gt; quarks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">	private final Map&lt;String, PEntry&lt;DATA&gt;&gt; stats = new HashMap&lt;String, PEntry&lt;DATA&gt;&gt;();</span>
+
+<span class="fc" id="L59">	public Plasma() {</span>
+<span class="fc" id="L60">		this.root = new Quark&lt;DATA&gt;(this, null, &quot;&quot;);</span>
+<span class="fc" id="L61">	}</span>
+
+	protected void register(Quark&lt;DATA&gt; quark) {
+<span class="fc" id="L64">		quarks.add(quark);</span>
+<span class="fc" id="L65">		PEntry&lt;DATA&gt; ent = stats.get(quark.getName());</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (ent == null) {</span>
+<span class="fc" id="L67">			ent = new PEntry&lt;DATA&gt;(quark);</span>
+<span class="fc" id="L68">			stats.put(quark.getName(), ent);</span>
+		} else {
+<span class="nc" id="L70">			ent.counter++;</span>
+		}
+<span class="fc" id="L72">	}</span>
+
+	public Quark&lt;DATA&gt; root() {
+<span class="fc" id="L75">		return root;</span>
+	}
+
+	public final String getSeparator() {
+<span class="fc" id="L79">		return separator;</span>
+	}
+
+	public final void setSeparator(String separator) {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (separator == null)</span>
+<span class="fc" id="L84">			separator = MAGIC_SEPARATOR;</span>
+<span class="fc" id="L85">		this.separator = separator;</span>
+<span class="fc" id="L86">	}</span>
+
+	public final boolean hasSeparator() {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		return this.separator.equals(MAGIC_SEPARATOR) == false;</span>
+	}
+
+	public Collection&lt;Quark&lt;DATA&gt;&gt; quarks() {
+<span class="fc" id="L93">		return Collections.unmodifiableCollection(quarks);</span>
+	}
+
+	public Quark&lt;DATA&gt; firstWithName(String name) {
+<span class="fc" id="L97">		final PEntry&lt;DATA&gt; ent = stats.get(name);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (ent == null)</span>
+<span class="fc" id="L99">			return null;</span>
+<span class="fc" id="L100">		return ent.first;</span>
+	}
+
+	public int countByName(String name) {
+<span class="fc" id="L104">		final PEntry&lt;DATA&gt; ent = stats.get(name);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (ent == null)</span>
+<span class="fc" id="L106">			return 0;</span>
+<span class="fc" id="L107">		return ent.counter;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphvizWindowsOld.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.dot</a> &gt; <span class="el_source">GraphvizWindowsOld.java</span></div><h1>GraphvizWindowsOld.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.dot;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
+
+class GraphvizWindowsOld extends AbstractGraphviz {
+	// ::remove file when __CORE__
+
+	static private File specificDotExe;
+
+	@Override
+	protected File specificDotExe() {
+<span class="nc" id="L56">		synchronized (GraphvizWindowsOld.class) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">			if (specificDotExe == null) {</span>
+<span class="nc" id="L58">				specificDotExe = specificDotExeSlow();</span>
+			}
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (specificDotExe == null)</span>
+<span class="nc" id="L61">				specificDotExe = WindowsDotArchive.getInstance().getWindowsExeLite();</span>
+
+<span class="nc" id="L63">			return specificDotExe;</span>
+		}
+	}
+
+	public boolean graphviz244onWindows() {
+		try {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			return GraphvizRuntimeEnvironment.getInstance().getDotVersion() == 244;</span>
+<span class="nc" id="L70">		} catch (Exception e) {</span>
+<span class="nc" id="L71">			Logme.error(e);</span>
+<span class="nc" id="L72">			return false;</span>
+		}
+	}
+
+	private File specificDotExeSlow() {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (File tmp : new File(&quot;c:/&quot;).listFiles(new FileFilter() {</span>
+			public boolean accept(java.io.File pathname) {
+<span class="nc bnc" id="L79" title="All 4 branches missed.">				return pathname.isDirectory() &amp;&amp; pathname.canRead();</span>
+			}
+		})) {
+<span class="nc" id="L82">			final File result = searchInDir(tmp);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (result != null) {</span>
+<span class="nc" id="L84">				return result;</span>
+			}
+		}
+<span class="nc" id="L87">		return null;</span>
+	}
+
+	private static File searchInDir(final File dir) {
+<span class="nc bnc" id="L91" title="All 4 branches missed.">		if (dir.exists() == false || dir.isDirectory() == false) {</span>
+<span class="nc" id="L92">			return null;</span>
+		}
+<span class="nc" id="L94">		final List&lt;File&gt; dots = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L95">		final File[] files = dir.listFiles(new FileFilter() {</span>
+			public boolean accept(java.io.File pathname) {
+<span class="nc bnc" id="L97" title="All 4 branches missed.">				return pathname.isDirectory() &amp;&amp; StringUtils.goLowerCase(pathname.getName()).startsWith(&quot;graphviz&quot;);</span>
+			}
+		});
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (files == null) {</span>
+<span class="nc" id="L101">			return null;</span>
+		}
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (File f : files) {</span>
+<span class="nc" id="L104">			final File result = new File(new File(f, &quot;bin&quot;), &quot;dot.exe&quot;);</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">			if (result.exists() &amp;&amp; result.canRead()) {</span>
+<span class="nc" id="L106">				dots.add(result.getAbsoluteFile());</span>
+			}
+<span class="nc" id="L108">			final File result2 = new File(new File(f, &quot;release/bin&quot;), &quot;dot.exe&quot;);</span>
+<span class="nc bnc" id="L109" title="All 4 branches missed.">			if (result2.exists() &amp;&amp; result2.canRead()) {</span>
+<span class="nc" id="L110">				dots.add(result2.getAbsoluteFile());</span>
+			}
+		}
+<span class="nc" id="L113">		return higherVersion(dots);</span>
+	}
+
+	static File higherVersion(List&lt;File&gt; dots) {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (dots.size() == 0) {</span>
+<span class="nc" id="L118">			return null;</span>
+		}
+<span class="nc" id="L120">		Collections.sort(dots, Collections.reverseOrder());</span>
+<span class="nc" id="L121">		return dots.get(0);</span>
+	}
+
+	GraphvizWindowsOld(ISkinParam skinParam, String dotString, String... type) {
+<span class="nc" id="L125">		super(skinParam, dotString, type);</span>
+<span class="nc" id="L126">	}</span>
+
+	@Override
+	protected String getExeName() {
+<span class="nc" id="L130">		return &quot;dot.exe&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

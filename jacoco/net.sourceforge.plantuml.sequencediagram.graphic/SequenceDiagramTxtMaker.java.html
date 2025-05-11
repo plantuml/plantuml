@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SequenceDiagramTxtMaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">SequenceDiagramTxtMaker.java</span></div><h1>SequenceDiagramTxtMaker.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.asciiart.TextSkin;
+import net.sourceforge.plantuml.asciiart.TextStringBounder;
+import net.sourceforge.plantuml.asciiart.UmlCharArea;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+public class SequenceDiagramTxtMaker implements FileMaker {
+	// ::remove file when __CORE__
+
+	private final SequenceDiagram diagram;
+	private final DrawableSet drawableSet;
+	private final XDimension2D fullDimension;
+<span class="fc" id="L68">	private final StringBounder dummyStringBounder = new TextStringBounder();</span>
+<span class="fc" id="L69">	private final UGraphicTxt ug = new UGraphicTxt();</span>
+	private final FileFormat fileFormat;
+	private final TextSkin skin;
+
+<span class="fc" id="L73">	public SequenceDiagramTxtMaker(SequenceDiagram sequenceDiagram, FileFormat fileFormat) {</span>
+<span class="fc" id="L74">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L75">		this.diagram = sequenceDiagram;</span>
+<span class="fc" id="L76">		this.skin = new TextSkin(fileFormat);</span>
+
+<span class="fc" id="L78">		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, sequenceDiagram.getSkinParam(),</span>
+<span class="fc" id="L79">				sequenceDiagram.isShowFootbox(), sequenceDiagram.getAutonewpage(), sequenceDiagram.getCounter());</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (Participant p : sequenceDiagram.participants()) {</span>
+<span class="fc" id="L82">			initializer.addParticipant(p, null);</span>
+<span class="fc" id="L83">		}</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (Event ev : sequenceDiagram.events()) {</span>
+<span class="fc" id="L85">			initializer.addEvent(ev);</span>
+			// if (ev instanceof Message) {
+			// // TODO mieux faire
+			// final Message m = (Message) ev;
+			// for (LifeEvent lifeEvent : m.getLiveEvents()) {
+			// if (lifeEvent.getType() == LifeEventType.DESTROY
+			// /*
+			// * || lifeEvent.getType() == LifeEventType.CREATE
+			// */) {
+			// initializer.addEvent(lifeEvent);
+			// }
+			// }
+			// }
+<span class="fc" id="L98">		}</span>
+<span class="fc" id="L99">		drawableSet = initializer.createDrawableSet(dummyStringBounder);</span>
+		// final List&lt;Newpage&gt; newpages = new ArrayList&lt;&gt;();
+		// for (Event ev : drawableSet.getAllEvents()) {
+		// if (ev instanceof Newpage) {
+		// newpages.add((Newpage) ev);
+		// }
+		// }
+<span class="fc" id="L106">		fullDimension = drawableSet.getDimension();</span>
+<span class="fc" id="L107">		final double headerHeight = drawableSet.getHeadHeight(dummyStringBounder);</span>
+<span class="fc" id="L108">		final double tailHeight = drawableSet.getTailHeight(dummyStringBounder, diagram.isShowFootbox());</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		final double newpage2 = fullDimension.getHeight() - (diagram.isShowFootbox() ? tailHeight : 0) - headerHeight;</span>
+<span class="fc" id="L110">		final Page page = new Page(headerHeight, 0, newpage2, tailHeight, 0, null);</span>
+		// drawableSet.drawU_REMOVEDME_4243(ug, 0, fullDimension.getWidth(), page,
+		// diagram.isShowFootbox());
+
+<span class="fc" id="L114">		final Display title = diagram.getTitle().getDisplay();</span>
+
+		final UGraphicTxt ug2;
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (title.isWhite()) {</span>
+<span class="fc" id="L118">			ug2 = ug;</span>
+		} else {
+<span class="fc" id="L120">			ug2 = (UGraphicTxt) ug.apply(UTranslate.dy(title.asList().size() + 1));</span>
+		}
+<span class="fc" id="L122">		drawableSet.drawU22(ug2, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (title.isWhite() == false) {</span>
+<span class="fc" id="L124">			final int widthTitle = StringUtils.getWcWidth(title);</span>
+<span class="fc" id="L125">			final UmlCharArea charArea = ug.getCharArea();</span>
+<span class="fc" id="L126">			charArea.drawStringsLRSimple(title.asList(), (int) ((fullDimension.getWidth() - widthTitle) / 2), 0);</span>
+		}
+
+<span class="fc" id="L129">	}</span>
+
+	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="fc" id="L133">			final PrintStream ps = SecurityUtils.createPrintStream(os, true, UTF_8);</span>
+<span class="fc" id="L134">			ug.getCharArea().print(ps);</span>
+<span class="fc" id="L135">		} else {</span>
+<span class="nc" id="L136">			final PrintStream ps = SecurityUtils.createPrintStream(os);</span>
+<span class="nc" id="L137">			ug.getCharArea().print(ps);</span>
+		}
+<span class="fc" id="L139">		return new ImageDataSimple(1, 1);</span>
+	}
+
+	public int getNbPages() {
+<span class="nc" id="L143">		return 1;</span>
+	}
+
+	@Override
+	public void createOneGraphic(UGraphic ug) {
+<span class="nc" id="L148">		throw new UnsupportedOperationException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

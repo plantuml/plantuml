@@ -1,0 +1,1955 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>position__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.dotgen</a> &gt; <span class="el_source">position__c.java</span></div><h1>position__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.dotgen;
+import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.cgraph.edge__c.aghead;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.graph__c.agnnodes;
+import static gen.lib.cgraph.obj__c.agcontains;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.common.ns__c.rank;
+import static gen.lib.common.splines__c.selfRightSpace;
+import static gen.lib.common.utils__c.late_int;
+import static gen.lib.dotgen.cluster__c.mark_lowclusters;
+import static gen.lib.dotgen.conc__c.dot_concentrate;
+import static gen.lib.dotgen.dotinit__c.dot_root;
+import static gen.lib.dotgen.fastgr__c.fast_edge;
+import static gen.lib.dotgen.fastgr__c.find_fast_edge;
+import static gen.lib.dotgen.fastgr__c.virtual_node;
+import static gen.lib.dotgen.fastgr__c.zapinlist;
+import static gen.lib.dotgen.flat__c.flat_edges;
+import static smetana.core.JUtils.USHRT_MAX;
+import static smetana.core.JUtils.atof;
+import static smetana.core.Macro.AGINEDGE;
+import static smetana.core.Macro.AGOUTEDGE;
+import static smetana.core.Macro.AGTYPE;
+import static smetana.core.Macro.BOTTOM_IX;
+import static smetana.core.Macro.CL_OFFSET;
+import static smetana.core.Macro.ED_dist;
+import static smetana.core.Macro.ED_head_port;
+import static smetana.core.Macro.ED_label;
+import static smetana.core.Macro.ED_minlen;
+import static smetana.core.Macro.ED_tail_port;
+import static smetana.core.Macro.ED_to_orig;
+import static smetana.core.Macro.ED_weight;
+import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_border;
+import static smetana.core.Macro.GD_clust;
+import static smetana.core.Macro.GD_drawing;
+import static smetana.core.Macro.GD_exact_ranksep;
+import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_has_labels;
+import static smetana.core.Macro.GD_ht1;
+import static smetana.core.Macro.GD_ht2;
+import static smetana.core.Macro.GD_label;
+import static smetana.core.Macro.GD_ln;
+import static smetana.core.Macro.GD_maxrank;
+import static smetana.core.Macro.GD_minrank;
+import static smetana.core.Macro.GD_n_cluster;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_nodesep;
+import static smetana.core.Macro.GD_rank;
+import static smetana.core.Macro.GD_ranksep;
+import static smetana.core.Macro.GD_rn;
+import static smetana.core.Macro.INT_MAX;
+import static smetana.core.Macro.LEAFSET;
+import static smetana.core.Macro.LEFT_IX;
+import static smetana.core.Macro.M_aghead;
+import static smetana.core.Macro.M_agtail;
+import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_alg;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_coord;
+import static smetana.core.Macro.ND_flat_out;
+import static smetana.core.Macro.ND_ht;
+import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_inleaf;
+import static smetana.core.Macro.ND_lw;
+import static smetana.core.Macro.ND_mval;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_node_type;
+import static smetana.core.Macro.ND_order;
+import static smetana.core.Macro.ND_other;
+import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_outleaf;
+import static smetana.core.Macro.ND_prev;
+import static smetana.core.Macro.ND_rank;
+import static smetana.core.Macro.ND_ranktype;
+import static smetana.core.Macro.ND_rw;
+import static smetana.core.Macro.ND_save_in;
+import static smetana.core.Macro.ND_save_out;
+import static smetana.core.Macro.RIGHT_IX;
+import static smetana.core.Macro.ROUND;
+import static smetana.core.Macro.TOP_IX;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.UNSURE_ABOUT;
+import static smetana.core.Macro.alloc_elist;
+import static smetana.core.Macro.free_list;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Difficult;
+import gen.annotation.HasND_Rank;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Todo;
+import gen.annotation.Unused;
+import h.EN_ratio_t;
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agedgepair_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_aspect_t;
+import h.ST_point;
+import h.ST_pointf;
+import h.ST_rank_t;
+import smetana.core.CArray;
+import smetana.core.CArrayOfStar;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.Memory;
+import smetana.core.ZType;
+
+
+/*
+ * position(g): set ND_coord(n) (x and y) for all nodes n of g, using GD_rank(g).
+ * (the graph may be modified by merging certain edges with a common endpoint.)
+ * the coordinates are computed by constructing and ranking an auxiliary graph.
+ * then leaf nodes are inserted in the fast graph.  cluster boundary nodes are
+ * created and correctly separated.
+ */
+<span class="nc" id="L165">public class position__c {</span>
+
+
+	//3 ciez0pfggxdljedzsbklq49f0
+	// static inline point pointof(int x, int y) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;pointof&quot;, key=&quot;ciez0pfggxdljedzsbklq49f0&quot;, definition=&quot;static inline point pointof(int x, int y)&quot;)
+	public static Object pointof(Object... arg) {
+<span class="nc" id="L173">	UNSUPPORTED(&quot;8e4tj258yvfq5uhsdpk37n5eq&quot;); // static inline point pointof(int x, int y)</span>
+<span class="nc" id="L174">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L175">	UNSUPPORTED(&quot;c0j3k9xv06332q98k2pgpacto&quot;); //     point r;</span>
+<span class="nc" id="L176">	UNSUPPORTED(&quot;12jimkrzqxavaie0cpapbx18c&quot;); //     r.x = x;</span>
+<span class="nc" id="L177">	UNSUPPORTED(&quot;7ivmviysahgsc5nn9gtp7q2if&quot;); //     r.y = y;</span>
+<span class="nc" id="L178">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L179">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L181">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+
+
+
+	//3 7cufnfitrh935ew093mw0i4b7
+	// static inline box boxof(int llx, int lly, int urx, int ury) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;boxof&quot;, key=&quot;7cufnfitrh935ew093mw0i4b7&quot;, definition=&quot;static inline box boxof(int llx, int lly, int urx, int ury)&quot;)
+	public static Object boxof(Object... arg) {
+<span class="nc" id="L195">	UNSUPPORTED(&quot;3lzesfdd337h31jrlib1czocm&quot;); // static inline box boxof(int llx, int lly, int urx, int ury)</span>
+<span class="nc" id="L196">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L197">	UNSUPPORTED(&quot;52u27kayecy1i1e8bbo8f7s9r&quot;); //     box b;</span>
+<span class="nc" id="L198">	UNSUPPORTED(&quot;cylhjlutoc0sc0uy7g98m9fb8&quot;); //     b.LL.x = llx, b.LL.y = lly;</span>
+<span class="nc" id="L199">	UNSUPPORTED(&quot;242of6revxzx8hpe7yerrchz6&quot;); //     b.UR.x = urx, b.UR.y = ury;</span>
+<span class="nc" id="L200">	UNSUPPORTED(&quot;2vmm1j57brhn455f8f3iyw6mo&quot;); //     return b;</span>
+<span class="nc" id="L201">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L203">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+
+
+
+
+	//3 1n5xl70wxuabyf97mclvilsm6
+	// static inline point add_point(point p, point q) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;add_point&quot;, key=&quot;1n5xl70wxuabyf97mclvilsm6&quot;, definition=&quot;static inline point add_point(point p, point q)&quot;)
+	public static Object add_point(Object... arg) {
+<span class="nc" id="L218">	UNSUPPORTED(&quot;6iamka1fx8fk1rohzzse8phte&quot;); // static inline point add_point(point p, point q)</span>
+<span class="nc" id="L219">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L220">	UNSUPPORTED(&quot;c0j3k9xv06332q98k2pgpacto&quot;); //     point r;</span>
+<span class="nc" id="L221">	UNSUPPORTED(&quot;3n2sizjd0civbzm6iq7su1s2p&quot;); //     r.x = p.x + q.x;</span>
+<span class="nc" id="L222">	UNSUPPORTED(&quot;65ygdo31w09i5i6bd2f7azcd3&quot;); //     r.y = p.y + q.y;</span>
+<span class="nc" id="L223">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L224">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L226">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+
+	//3 ai2dprak5y6obdsflguh5qbd7
+	// static inline point sub_point(point p, point q) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;sub_point&quot;, key=&quot;ai2dprak5y6obdsflguh5qbd7&quot;, definition=&quot;static inline point sub_point(point p, point q)&quot;)
+	public static Object sub_point(Object... arg) {
+<span class="nc" id="L238">	UNSUPPORTED(&quot;cd602849h0bce8lu9xegka0ia&quot;); // static inline point sub_point(point p, point q)</span>
+<span class="nc" id="L239">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L240">	UNSUPPORTED(&quot;c0j3k9xv06332q98k2pgpacto&quot;); //     point r;</span>
+<span class="nc" id="L241">	UNSUPPORTED(&quot;4q4q9dveah93si8ajfv59gz27&quot;); //     r.x = p.x - q.x;</span>
+<span class="nc" id="L242">	UNSUPPORTED(&quot;9f90ik0o2yqhanzntpy3d2ydy&quot;); //     r.y = p.y - q.y;</span>
+<span class="nc" id="L243">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L244">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L246">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 16f6pyogcv3j7n2p0n8giqqgh
+	// static inline pointf sub_pointf(pointf p, pointf q) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;sub_pointf&quot;, key=&quot;16f6pyogcv3j7n2p0n8giqqgh&quot;, definition=&quot;static inline pointf sub_pointf(pointf p, pointf q)&quot;)
+	public static Object sub_pointf(Object... arg) {
+<span class="nc" id="L257">	UNSUPPORTED(&quot;dmufj44lddsnj0wjyxsg2fcso&quot;); // static inline pointf sub_pointf(pointf p, pointf q)</span>
+<span class="nc" id="L258">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L259">	UNSUPPORTED(&quot;cvexv13y9fq49v0j4d5t4cm9f&quot;); //     pointf r;</span>
+<span class="nc" id="L260">	UNSUPPORTED(&quot;4q4q9dveah93si8ajfv59gz27&quot;); //     r.x = p.x - q.x;</span>
+<span class="nc" id="L261">	UNSUPPORTED(&quot;9f90ik0o2yqhanzntpy3d2ydy&quot;); //     r.y = p.y - q.y;</span>
+<span class="nc" id="L262">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L263">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L265">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 9k50jgrhc4f9824vf8ony74rw
+	// static inline point mid_point(point p, point q) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;mid_point&quot;, key=&quot;9k50jgrhc4f9824vf8ony74rw&quot;, definition=&quot;static inline point mid_point(point p, point q)&quot;)
+	public static Object mid_point(Object... arg) {
+<span class="nc" id="L276">	UNSUPPORTED(&quot;evy44tdsmu3erff9dp2x835u2&quot;); // static inline point mid_point(point p, point q)</span>
+<span class="nc" id="L277">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L278">	UNSUPPORTED(&quot;c0j3k9xv06332q98k2pgpacto&quot;); //     point r;</span>
+<span class="nc" id="L279">	UNSUPPORTED(&quot;1a6p6fm57o0wt5ze2btsx06c7&quot;); //     r.x = (p.x + q.x) / 2;</span>
+<span class="nc" id="L280">	UNSUPPORTED(&quot;1kbj5tgdmfi6kf4jgg6skhr6e&quot;); //     r.y = (p.y + q.y) / 2;</span>
+<span class="nc" id="L281">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L282">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L284">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 59c4f7im0ftyowhnzzq2v9o1x
+	// static inline pointf mid_pointf(pointf p, pointf q) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;mid_pointf&quot;, key=&quot;59c4f7im0ftyowhnzzq2v9o1x&quot;, definition=&quot;static inline pointf mid_pointf(pointf p, pointf q)&quot;)
+	public static Object mid_pointf(Object... arg) {
+<span class="nc" id="L295">	UNSUPPORTED(&quot;381o63o9kb04d7gzg65v0r3q&quot;); // static inline pointf mid_pointf(pointf p, pointf q)</span>
+<span class="nc" id="L296">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L297">	UNSUPPORTED(&quot;cvexv13y9fq49v0j4d5t4cm9f&quot;); //     pointf r;</span>
+<span class="nc" id="L298">	UNSUPPORTED(&quot;c5vboetlr3mf43wns7iik6m1w&quot;); //     r.x = (p.x + q.x) / 2.;</span>
+<span class="nc" id="L299">	UNSUPPORTED(&quot;bcdf562ldr3bjn78hcay5xd63&quot;); //     r.y = (p.y + q.y) / 2.;</span>
+<span class="nc" id="L300">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L301">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L303">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 5r18p38gisvcx3zsvbb9saixx
+	// static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;interpolate_pointf&quot;, key=&quot;5r18p38gisvcx3zsvbb9saixx&quot;, definition=&quot;static inline pointf interpolate_pointf(double t, pointf p, pointf q)&quot;)
+	public static Object interpolate_pointf(Object... arg) {
+<span class="nc" id="L314">	UNSUPPORTED(&quot;894yimn33kmtm454llwdaotu8&quot;); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)</span>
+<span class="nc" id="L315">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L316">	UNSUPPORTED(&quot;ef2acl8wa2ooqcb5vz3098maz&quot;); //     pointf r; </span>
+<span class="nc" id="L317">	UNSUPPORTED(&quot;5tpwuyf5iidesy80v8o4nwkmk&quot;); //     r.x = p.x + t * (q.x - p.x);</span>
+<span class="nc" id="L318">	UNSUPPORTED(&quot;ewnrc5uloj3w5jbmsjcn3wja0&quot;); //     r.y = p.y + t * (q.y - p.y);</span>
+<span class="nc" id="L319">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L320">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L322">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 bxzrv2ghq04qk5cbyy68s4mol
+	// static inline point exch_xy(point p) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;exch_xy&quot;, key=&quot;bxzrv2ghq04qk5cbyy68s4mol&quot;, definition=&quot;static inline point exch_xy(point p)&quot;)
+	public static Object exch_xy(Object... arg) {
+<span class="nc" id="L333">	UNSUPPORTED(&quot;2vxya0v2fzlv5e0vjaa8d414&quot;); // static inline point exch_xy(point p)</span>
+<span class="nc" id="L334">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L335">	UNSUPPORTED(&quot;c0j3k9xv06332q98k2pgpacto&quot;); //     point r;</span>
+<span class="nc" id="L336">	UNSUPPORTED(&quot;60cojdwc2h7f0m51s9jdwvup7&quot;); //     r.x = p.y;</span>
+<span class="nc" id="L337">	UNSUPPORTED(&quot;evp2x66oa4s1tlnc0ytxq2qbq&quot;); //     r.y = p.x;</span>
+<span class="nc" id="L338">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L339">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L341">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 9lt3e03tac6h6sydljrcws8fd
+	// static inline pointf exch_xyf(pointf p) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;exch_xyf&quot;, key=&quot;9lt3e03tac6h6sydljrcws8fd&quot;, definition=&quot;static inline pointf exch_xyf(pointf p)&quot;)
+	public static Object exch_xyf(Object... arg) {
+<span class="nc" id="L352">	UNSUPPORTED(&quot;8qamrobrqi8jsvvfrxkimrsnw&quot;); // static inline pointf exch_xyf(pointf p)</span>
+<span class="nc" id="L353">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L354">	UNSUPPORTED(&quot;cvexv13y9fq49v0j4d5t4cm9f&quot;); //     pointf r;</span>
+<span class="nc" id="L355">	UNSUPPORTED(&quot;60cojdwc2h7f0m51s9jdwvup7&quot;); //     r.x = p.y;</span>
+<span class="nc" id="L356">	UNSUPPORTED(&quot;evp2x66oa4s1tlnc0ytxq2qbq&quot;); //     r.y = p.x;</span>
+<span class="nc" id="L357">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L358">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L360">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 8l9qhieokthntzdorlu5zn29b
+	// static inline box box_bb(box b0, box b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;box_bb&quot;, key=&quot;8l9qhieokthntzdorlu5zn29b&quot;, definition=&quot;static inline box box_bb(box b0, box b1)&quot;)
+	public static Object box_bb(Object... arg) {
+<span class="nc" id="L371">	UNSUPPORTED(&quot;36et5gmnjrby6o7bq9sgh1hx6&quot;); // static inline box box_bb(box b0, box b1)</span>
+<span class="nc" id="L372">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L373">	UNSUPPORTED(&quot;52u27kayecy1i1e8bbo8f7s9r&quot;); //     box b;</span>
+<span class="nc" id="L374">	UNSUPPORTED(&quot;8mr2c9xitsqi8z1plbp7ox1hu&quot;); //     b.LL.x = MIN(b0.LL.x, b1.LL.x);</span>
+<span class="nc" id="L375">	UNSUPPORTED(&quot;2egu55ef4u1i03nwz01k7kcrl&quot;); //     b.LL.y = MIN(b0.LL.y, b1.LL.y);</span>
+<span class="nc" id="L376">	UNSUPPORTED(&quot;9n6ei3odbgefwfxvql9whcpe&quot;); //     b.UR.x = MAX(b0.UR.x, b1.UR.x);</span>
+<span class="nc" id="L377">	UNSUPPORTED(&quot;19ocysbuh4pxyft2bqhyhigr1&quot;); //     b.UR.y = MAX(b0.UR.y, b1.UR.y);</span>
+<span class="nc" id="L378">	UNSUPPORTED(&quot;2vmm1j57brhn455f8f3iyw6mo&quot;); //     return b;</span>
+<span class="nc" id="L379">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L381">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 clws9h3bbjm0lw3hexf8nl4c4
+	// static inline boxf boxf_bb(boxf b0, boxf b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;boxf_bb&quot;, key=&quot;clws9h3bbjm0lw3hexf8nl4c4&quot;, definition=&quot;static inline boxf boxf_bb(boxf b0, boxf b1)&quot;)
+	public static Object boxf_bb(Object... arg) {
+<span class="nc" id="L392">	UNSUPPORTED(&quot;dyrqu4ww9osr9c86gqgmifcp6&quot;); // static inline boxf boxf_bb(boxf b0, boxf b1)</span>
+<span class="nc" id="L393">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L394">	UNSUPPORTED(&quot;c57pq0f87j6dnbcvygu7v6k84&quot;); //     boxf b;</span>
+<span class="nc" id="L395">	UNSUPPORTED(&quot;8mr2c9xitsqi8z1plbp7ox1hu&quot;); //     b.LL.x = MIN(b0.LL.x, b1.LL.x);</span>
+<span class="nc" id="L396">	UNSUPPORTED(&quot;2egu55ef4u1i03nwz01k7kcrl&quot;); //     b.LL.y = MIN(b0.LL.y, b1.LL.y);</span>
+<span class="nc" id="L397">	UNSUPPORTED(&quot;9n6ei3odbgefwfxvql9whcpe&quot;); //     b.UR.x = MAX(b0.UR.x, b1.UR.x);</span>
+<span class="nc" id="L398">	UNSUPPORTED(&quot;19ocysbuh4pxyft2bqhyhigr1&quot;); //     b.UR.y = MAX(b0.UR.y, b1.UR.y);</span>
+<span class="nc" id="L399">	UNSUPPORTED(&quot;2vmm1j57brhn455f8f3iyw6mo&quot;); //     return b;</span>
+<span class="nc" id="L400">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L402">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 bit6ycxo1iqd2al92y8gkzlvb
+	// static inline box box_intersect(box b0, box b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;box_intersect&quot;, key=&quot;bit6ycxo1iqd2al92y8gkzlvb&quot;, definition=&quot;static inline box box_intersect(box b0, box b1)&quot;)
+	public static Object box_intersect(Object... arg) {
+<span class="nc" id="L413">	UNSUPPORTED(&quot;34gv28cldst09bl71itjgviue&quot;); // static inline box box_intersect(box b0, box b1)</span>
+<span class="nc" id="L414">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L415">	UNSUPPORTED(&quot;52u27kayecy1i1e8bbo8f7s9r&quot;); //     box b;</span>
+<span class="nc" id="L416">	UNSUPPORTED(&quot;9slu7bixuymxttjic76ha2nl2&quot;); //     b.LL.x = MAX(b0.LL.x, b1.LL.x);</span>
+<span class="nc" id="L417">	UNSUPPORTED(&quot;3uv943c2f82yuif249pf5azob&quot;); //     b.LL.y = MAX(b0.LL.y, b1.LL.y);</span>
+<span class="nc" id="L418">	UNSUPPORTED(&quot;74tf5h16bc9zabq3s3dyny543&quot;); //     b.UR.x = MIN(b0.UR.x, b1.UR.x);</span>
+<span class="nc" id="L419">	UNSUPPORTED(&quot;d99gcv3i7xes7y7rqf8ii20ux&quot;); //     b.UR.y = MIN(b0.UR.y, b1.UR.y);</span>
+<span class="nc" id="L420">	UNSUPPORTED(&quot;2vmm1j57brhn455f8f3iyw6mo&quot;); //     return b;</span>
+<span class="nc" id="L421">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L423">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 8gfybie7k6pgb3o1a6llgpwng
+	// static inline boxf boxf_intersect(boxf b0, boxf b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;boxf_intersect&quot;, key=&quot;8gfybie7k6pgb3o1a6llgpwng&quot;, definition=&quot;static inline boxf boxf_intersect(boxf b0, boxf b1)&quot;)
+	public static Object boxf_intersect(Object... arg) {
+<span class="nc" id="L434">	UNSUPPORTED(&quot;ape22b8z6jfg17gvo42hok9eb&quot;); // static inline boxf boxf_intersect(boxf b0, boxf b1)</span>
+<span class="nc" id="L435">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L436">	UNSUPPORTED(&quot;c57pq0f87j6dnbcvygu7v6k84&quot;); //     boxf b;</span>
+<span class="nc" id="L437">	UNSUPPORTED(&quot;9slu7bixuymxttjic76ha2nl2&quot;); //     b.LL.x = MAX(b0.LL.x, b1.LL.x);</span>
+<span class="nc" id="L438">	UNSUPPORTED(&quot;3uv943c2f82yuif249pf5azob&quot;); //     b.LL.y = MAX(b0.LL.y, b1.LL.y);</span>
+<span class="nc" id="L439">	UNSUPPORTED(&quot;74tf5h16bc9zabq3s3dyny543&quot;); //     b.UR.x = MIN(b0.UR.x, b1.UR.x);</span>
+<span class="nc" id="L440">	UNSUPPORTED(&quot;d99gcv3i7xes7y7rqf8ii20ux&quot;); //     b.UR.y = MIN(b0.UR.y, b1.UR.y);</span>
+<span class="nc" id="L441">	UNSUPPORTED(&quot;2vmm1j57brhn455f8f3iyw6mo&quot;); //     return b;</span>
+<span class="nc" id="L442">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L444">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 7z8j2quq65govaaejrz7b4cvb
+	// static inline int box_overlap(box b0, box b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;box_overlap&quot;, key=&quot;7z8j2quq65govaaejrz7b4cvb&quot;, definition=&quot;static inline int box_overlap(box b0, box b1)&quot;)
+	public static Object box_overlap(Object... arg) {
+<span class="nc" id="L455">	UNSUPPORTED(&quot;1e9k599x7ygct7r4cfdxlk9u9&quot;); // static inline int box_overlap(box b0, box b1)</span>
+<span class="nc" id="L456">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L457">	UNSUPPORTED(&quot;7a9wwpu7dhdphd08y1ecw54w5&quot;); //     return OVERLAP(b0, b1);</span>
+<span class="nc" id="L458">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L460">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 4z0suuut2acsay5m8mg9dqjdu
+	// static inline int boxf_overlap(boxf b0, boxf b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;boxf_overlap&quot;, key=&quot;4z0suuut2acsay5m8mg9dqjdu&quot;, definition=&quot;static inline int boxf_overlap(boxf b0, boxf b1)&quot;)
+	public static Object boxf_overlap(Object... arg) {
+<span class="nc" id="L471">	UNSUPPORTED(&quot;905nejsewihwhhc3bhnrz9nwo&quot;); // static inline int boxf_overlap(boxf b0, boxf b1)</span>
+<span class="nc" id="L472">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L473">	UNSUPPORTED(&quot;7a9wwpu7dhdphd08y1ecw54w5&quot;); //     return OVERLAP(b0, b1);</span>
+<span class="nc" id="L474">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L476">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 dd34swz5rmdgu3a2np2a4h1dy
+	// static inline int box_contains(box b0, box b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;box_contains&quot;, key=&quot;dd34swz5rmdgu3a2np2a4h1dy&quot;, definition=&quot;static inline int box_contains(box b0, box b1)&quot;)
+	public static Object box_contains(Object... arg) {
+<span class="nc" id="L487">	UNSUPPORTED(&quot;aputfc30fjkvy6jx4otljaczq&quot;); // static inline int box_contains(box b0, box b1)</span>
+<span class="nc" id="L488">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L489">	UNSUPPORTED(&quot;87ap80vrh2a4gpprbxr33lrg3&quot;); //     return CONTAINS(b0, b1);</span>
+<span class="nc" id="L490">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L492">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 8laj1bspbu2i1cjd9upr7xt32
+	// static inline int boxf_contains(boxf b0, boxf b1) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;boxf_contains&quot;, key=&quot;8laj1bspbu2i1cjd9upr7xt32&quot;, definition=&quot;static inline int boxf_contains(boxf b0, boxf b1)&quot;)
+	public static Object boxf_contains(Object... arg) {
+<span class="nc" id="L503">	UNSUPPORTED(&quot;7ccnttkiwt834yfyw0evcm18v&quot;); // static inline int boxf_contains(boxf b0, boxf b1)</span>
+<span class="nc" id="L504">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L505">	UNSUPPORTED(&quot;87ap80vrh2a4gpprbxr33lrg3&quot;); //     return CONTAINS(b0, b1);</span>
+<span class="nc" id="L506">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L508">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 4wf5swkz24xx51ja2dynbycu1
+	// static inline pointf perp (pointf p) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;perp&quot;, key=&quot;4wf5swkz24xx51ja2dynbycu1&quot;, definition=&quot;static inline pointf perp (pointf p)&quot;)
+	public static Object perp(Object... arg) {
+<span class="nc" id="L519">	UNSUPPORTED(&quot;567wpqlg9rv63ynyvxd9sgkww&quot;); // static inline pointf perp (pointf p)</span>
+<span class="nc" id="L520">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L521">	UNSUPPORTED(&quot;cvexv13y9fq49v0j4d5t4cm9f&quot;); //     pointf r;</span>
+<span class="nc" id="L522">	UNSUPPORTED(&quot;2fyydy6t6yifjsczccsb9szeg&quot;); //     r.x = -p.y;</span>
+<span class="nc" id="L523">	UNSUPPORTED(&quot;evp2x66oa4s1tlnc0ytxq2qbq&quot;); //     r.y = p.x;</span>
+<span class="nc" id="L524">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L525">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L527">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+	//3 6dtlpzv4mvgzb9o0b252yweuv
+	// static inline pointf scale (double c, pointf p) 
+	@Unused
+	@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;scale&quot;, key=&quot;6dtlpzv4mvgzb9o0b252yweuv&quot;, definition=&quot;static inline pointf scale (double c, pointf p)&quot;)
+	public static Object scale(Object... arg) {
+<span class="nc" id="L538">	UNSUPPORTED(&quot;c1ngytew34bmkdb7vps5h3dh8&quot;); // static inline pointf scale (double c, pointf p)</span>
+<span class="nc" id="L539">	UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L540">	UNSUPPORTED(&quot;cvexv13y9fq49v0j4d5t4cm9f&quot;); //     pointf r;</span>
+<span class="nc" id="L541">	UNSUPPORTED(&quot;dznf7nac14snww4usquyd6r3r&quot;); //     r.x = c * p.x;</span>
+<span class="nc" id="L542">	UNSUPPORTED(&quot;33kk73m8vjcux5tnjl8co2pe6&quot;); //     r.y = c * p.y;</span>
+<span class="nc" id="L543">	UNSUPPORTED(&quot;a2hk6w52njqjx48nq3nnn2e5i&quot;); //     return r;</span>
+<span class="nc" id="L544">	UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L546">	throw new UnsupportedOperationException();</span>
+	}
+
+
+
+
+//3 6knxbdrmgk6294aw61s2lpvvf
+// static double largeMinlen (double l) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;largeMinlen&quot;, key=&quot;6knxbdrmgk6294aw61s2lpvvf&quot;, definition=&quot;static double largeMinlen (double l)&quot;)
+public static double largeMinlen(double l) {
+<span class="nc" id="L557">ENTERING(&quot;6knxbdrmgk6294aw61s2lpvvf&quot;,&quot;largeMinlen&quot;);</span>
+try {
+<span class="nc" id="L559"> UNSUPPORTED(&quot;lt6cippjix5bbvyhkcpl8g7g&quot;); // static double</span>
+<span class="nc" id="L560">UNSUPPORTED(&quot;e2f0xhw6om2fpgt48xyjjg3i&quot;); // largeMinlen (double l)</span>
+<span class="nc" id="L561">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L562">UNSUPPORTED(&quot;dad2o3vzemegi5fywxl7hcezk&quot;); //     agerr (AGERR, &quot;Edge length %f larger than maximum %u allowed.\nCheck for overwide node(s).\n&quot;, l, USHRT_MAX); </span>
+<span class="nc" id="L563">UNSUPPORTED(&quot;dlasv24dnuygpwagcamhyg15w&quot;); //     return (double)USHRT_MAX;</span>
+<span class="nc" id="L564">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L566">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="nc" id="L568">LEAVING(&quot;6knxbdrmgk6294aw61s2lpvvf&quot;,&quot;largeMinlen&quot;);</span>
+}
+}
+
+
+
+
+//3 ccowbxkwmrj75tojopmhcmubx
+// static void connectGraph (graph_t* g) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;connectGraph&quot;, key=&quot;ccowbxkwmrj75tojopmhcmubx&quot;, definition=&quot;static void connectGraph (graph_t* g)&quot;)
+public static void connectGraph(ST_Agraph_s g) {
+<span class="nc" id="L581">ENTERING(&quot;ccowbxkwmrj75tojopmhcmubx&quot;,&quot;connectGraph&quot;);</span>
+try {
+    int i, j, r, found;
+    ST_Agnode_s tp;
+    ST_Agnode_s hp;
+    ST_Agnode_s sn;
+    ST_Agedge_s e;
+    CArray&lt;ST_rank_t&gt; rp;
+    
+<span class="nc bnc" id="L590" title="All 2 branches missed.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="nc" id="L591">	rp = GD_rank(g).plus_(r);</span>
+<span class="nc" id="L592">	found =0;</span>
+<span class="nc" id="L593">        tp = null;</span>
+<span class="nc bnc" id="L594" title="All 2 branches missed.">	for (i = 0; i &lt; rp.get__(0).n; i++) {</span>
+<span class="nc" id="L595">	    tp = (ST_Agnode_s) rp.get__(0).v.get_(i);</span>
+<span class="nc bnc" id="L596" title="All 2 branches missed.">	    if (ND_save_out(tp).list!=null) {</span>
+<span class="nc bnc" id="L597" title="All 2 branches missed.">        	for (j = 0; (e = (ST_Agedge_s) ND_save_out(tp).list.get_(j))!=null; j++) {</span>
+<span class="nc bnc" id="L598" title="All 4 branches missed.">		    if ((ND_rank(aghead(e)) &gt; r) || (ND_rank(agtail(e)) &gt; r)) {</span>
+<span class="nc" id="L599">			found = 1;</span>
+<span class="nc" id="L600">			break;</span>
+		    }
+        	}
+<span class="nc bnc" id="L603" title="All 2 branches missed.">		if (found!=0) break;</span>
+	    }
+<span class="nc bnc" id="L605" title="All 2 branches missed.">	    if (ND_save_in(tp).list!=null) {</span>
+<span class="nc bnc" id="L606" title="All 2 branches missed.">        	for (j = 0; (e = (ST_Agedge_s) ND_save_in(tp).list.get_(j))!=null; j++) {</span>
+<span class="nc bnc" id="L607" title="All 4 branches missed.">		    if ((ND_rank(agtail(e)) &gt; r) || (ND_rank(aghead(e)) &gt; r)) {</span>
+<span class="nc" id="L608">			found = 1;</span>
+<span class="nc" id="L609">			break;</span>
+		    }
+        	}
+<span class="nc bnc" id="L612" title="All 2 branches missed.">		if (found!=0) break;</span>
+	    }
+	}
+<span class="nc bnc" id="L615" title="All 4 branches missed.">	if (found!=0 || (tp) == null) continue;</span>
+<span class="nc" id="L616">	tp = rp.get__(0).v.get_(0);</span>
+<span class="nc bnc" id="L617" title="All 2 branches missed.">	if (r &lt; GD_maxrank(g)) hp = (ST_Agnode_s) rp.get__(1).v.get_(0);</span>
+<span class="nc" id="L618">	else hp = (ST_Agnode_s) rp.get__(-1).v.get_(0);</span>
+	//assert (hp);
+<span class="nc" id="L620">	sn = virtual_node(g);</span>
+<span class="nc" id="L621">	ND_node_type(sn, 2);</span>
+<span class="nc" id="L622">	make_aux_edge(sn, tp, 0, 0);</span>
+<span class="nc" id="L623">	make_aux_edge(sn, hp, 0, 0);</span>
+<span class="nc" id="L624">	ND_rank(sn, Math.min(ND_rank(tp), ND_rank(hp)));</span>
+    }
+} finally {
+<span class="nc" id="L627">LEAVING(&quot;ccowbxkwmrj75tojopmhcmubx&quot;,&quot;connectGraph&quot;);</span>
+}
+<span class="nc" id="L629">}</span>
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;dot_position&quot;, key=&quot;33snzyd9z0loienur06dnily9&quot;, definition=&quot;void dot_position(graph_t * g, aspect_t* asp)&quot;)
+public static void dot_position(Globals zz, ST_Agraph_s g, ST_aspect_t asp) {
+<span class="fc" id="L637">ENTERING(&quot;33snzyd9z0loienur06dnily9&quot;,&quot;dot_position&quot;);</span>
+try {
+<span class="pc bpc" id="L639" title="1 of 2 branches missed.">    if (GD_nlist(g) == null)</span>
+<span class="nc" id="L640">	return;			/* ignore empty graph */</span>
+<span class="fc" id="L641">    mark_lowclusters(zz, g);	/* we could remove from splines.c now */</span>
+<span class="fc" id="L642">    set_ycoords(zz, g);</span>
+<span class="pc bpc" id="L643" title="1 of 2 branches missed.">    if (zz.Concentrate)</span>
+<span class="nc" id="L644">	dot_concentrate(g);</span>
+<span class="fc" id="L645">    expand_leaves(g);</span>
+<span class="pc bpc" id="L646" title="1 of 2 branches missed.">    if (flat_edges(zz, g))</span>
+<span class="nc" id="L647">	set_ycoords(zz, g);</span>
+<span class="fc" id="L648">    create_aux_edges(zz, g);</span>
+<span class="pc bpc" id="L649" title="1 of 2 branches missed.">    if (rank(zz, g, 2, nsiter2(zz, g))!=0) { /* LR balance == 2 */</span>
+<span class="nc" id="L650">	connectGraph (g);</span>
+	//assert(rank(g, 2, nsiter2(g)) == 0);
+    }
+<span class="fc" id="L653">    set_xcoords(g);</span>
+<span class="fc" id="L654">    set_aspect(g, asp);</span>
+<span class="fc" id="L655">    remove_aux_edges(g);	/* must come after set_aspect since we now</span>
+				 * use GD_ln and GD_rn for bbox width.
+				 */
+} finally {
+<span class="fc" id="L659">LEAVING(&quot;33snzyd9z0loienur06dnily9&quot;,&quot;dot_position&quot;);</span>
+}
+<span class="fc" id="L661">}</span>
+
+
+
+
+//3 90vn63m6v0w9fn9a2dgfxxx3h
+// static int nsiter2(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;nsiter2&quot;, key=&quot;90vn63m6v0w9fn9a2dgfxxx3h&quot;, definition=&quot;static int nsiter2(graph_t * g)&quot;)
+public static int nsiter2(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L671">ENTERING(&quot;90vn63m6v0w9fn9a2dgfxxx3h&quot;,&quot;nsiter2&quot;);</span>
+try {
+<span class="fc" id="L673">    int maxiter = INT_MAX;</span>
+    CString s;
+<span class="pc bpc" id="L675" title="1 of 2 branches missed.">    if ((s = agget(zz, g, new CString(&quot;nslimit&quot;)))!=null)</span>
+<span class="nc" id="L676">	maxiter = (int)(atof(s) * agnnodes(g));</span>
+<span class="fc" id="L677">    return maxiter;</span>
+} finally {
+<span class="fc" id="L679">LEAVING(&quot;90vn63m6v0w9fn9a2dgfxxx3h&quot;,&quot;nsiter2&quot;);</span>
+}
+}
+
+
+
+
+//3 5bax8ut6nnk4pr7yxdumk9chl
+// static int go(node_t * u, node_t * v) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;go&quot;, key=&quot;5bax8ut6nnk4pr7yxdumk9chl&quot;, definition=&quot;static int go(node_t * u, node_t * v)&quot;)
+public static boolean go(ST_Agnode_s u, ST_Agnode_s v) {
+<span class="nc" id="L691">ENTERING(&quot;5bax8ut6nnk4pr7yxdumk9chl&quot;,&quot;go&quot;);</span>
+try {
+    int i;
+    ST_Agedge_s e;
+<span class="nc bnc" id="L695" title="All 2 branches missed.">    if (u == v)</span>
+<span class="nc" id="L696">	return true;</span>
+<span class="nc bnc" id="L697" title="All 2 branches missed.">    for (i = 0; (e = (ST_Agedge_s) ND_out(u).list.get_(i))!=null; i++) {</span>
+<span class="nc bnc" id="L698" title="All 2 branches missed.">	if (go(aghead(e), v))</span>
+<span class="nc" id="L699">	    return true;</span>
+    }
+<span class="nc" id="L701">    return false;</span>
+} finally {
+<span class="nc" id="L703">LEAVING(&quot;5bax8ut6nnk4pr7yxdumk9chl&quot;,&quot;go&quot;);</span>
+}
+}
+
+
+
+
+//3 9xz8numztzj4qsq85pziahv1k
+// static int canreach(node_t * u, node_t * v) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;canreach&quot;, key=&quot;9xz8numztzj4qsq85pziahv1k&quot;, definition=&quot;static int canreach(node_t * u, node_t * v)&quot;)
+public static boolean canreach(ST_Agnode_s u, ST_Agnode_s v) {
+<span class="nc" id="L715">ENTERING(&quot;9xz8numztzj4qsq85pziahv1k&quot;,&quot;canreach&quot;);</span>
+try {
+<span class="nc" id="L717">    return go(u, v);</span>
+} finally {
+<span class="nc" id="L719">LEAVING(&quot;9xz8numztzj4qsq85pziahv1k&quot;,&quot;canreach&quot;);</span>
+}
+}
+
+
+
+
+//3 4cvgiatny97ou6mhqoq6aqwek
+// edge_t *make_aux_edge(node_t * u, node_t * v, double len, int wt) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;&quot;, key=&quot;4cvgiatny97ou6mhqoq6aqwek&quot;, definition=&quot;edge_t *make_aux_edge(node_t * u, node_t * v, double len, int wt)&quot;)
+public static ST_Agedge_s make_aux_edge(ST_Agnode_s u, ST_Agnode_s v, double len, int wt) {
+<span class="fc" id="L731">ENTERING(&quot;4cvgiatny97ou6mhqoq6aqwek&quot;,&quot;make_aux_edge&quot;);</span>
+try {
+    ST_Agedge_s e;
+<span class="fc" id="L734">    ST_Agedgepair_s e2 = new ST_Agedgepair_s();</span>
+<span class="fc" id="L735">    AGTYPE(e2.in, AGINEDGE);</span>
+<span class="fc" id="L736">    AGTYPE(e2.out, AGOUTEDGE);</span>
+<span class="fc" id="L737">    e2.out.base.data = new ST_Agedgeinfo_t();</span>
+<span class="fc" id="L738">    e = (ST_Agedge_s) e2.out;</span>
+<span class="fc" id="L739">    M_agtail(e, u);</span>
+<span class="fc" id="L740">    M_aghead(e, v);</span>
+<span class="pc bpc" id="L741" title="1 of 2 branches missed.">    if (len &gt; USHRT_MAX)</span>
+<span class="nc" id="L742">	len = largeMinlen (len);</span>
+<span class="fc" id="L743">    ED_minlen(e, ROUND(len));</span>
+<span class="fc" id="L744">    ED_weight(e, wt);</span>
+<span class="fc" id="L745">    fast_edge(e);</span>
+<span class="fc" id="L746">    return e;</span>
+} finally {
+<span class="fc" id="L748">LEAVING(&quot;4cvgiatny97ou6mhqoq6aqwek&quot;,&quot;make_aux_edge&quot;);</span>
+}
+}
+
+
+
+
+//3 53fvij7oun7aezlb7x66vzuyb
+// static void allocate_aux_edges(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;allocate_aux_edges&quot;, key=&quot;53fvij7oun7aezlb7x66vzuyb&quot;, definition=&quot;static void allocate_aux_edges(graph_t * g)&quot;)
+public static void allocate_aux_edges(ST_Agraph_s g) {
+<span class="fc" id="L760">ENTERING(&quot;53fvij7oun7aezlb7x66vzuyb&quot;,&quot;allocate_aux_edges&quot;);</span>
+try {
+    int i, j, n_in;
+    ST_Agnode_s n;
+    /* allocate space for aux edge lists */
+<span class="fc bfc" id="L765" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="fc" id="L766">	ND_save_in(n, ND_in(n));</span>
+<span class="fc" id="L767">	ND_save_out(n, ND_out(n));</span>
+<span class="fc bfc" id="L768" title="All 2 branches covered.">	for (i = 0; ND_out(n).list.get_(i)!=null; i++);</span>
+<span class="fc bfc" id="L769" title="All 2 branches covered.">	for (j = 0; ND_in(n).list.get_(j)!=null; j++);</span>
+<span class="fc" id="L770">	n_in = i + j;</span>
+<span class="fc" id="L771">	alloc_elist(n_in + 3, ND_in(n));</span>
+<span class="fc" id="L772">	alloc_elist(3, ND_out(n));</span>
+    }
+} finally {
+<span class="fc" id="L775">LEAVING(&quot;53fvij7oun7aezlb7x66vzuyb&quot;,&quot;allocate_aux_edges&quot;);</span>
+}
+<span class="fc" id="L777">}</span>
+
+
+
+
+//3 ah28nr6mxpjeosr85bhmzd3si
+// static void  make_LR_constraints(graph_t * g) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;make_LR_constraints&quot;, key=&quot;ah28nr6mxpjeosr85bhmzd3si&quot;, definition=&quot;static void  make_LR_constraints(graph_t * g)&quot;)
+public static void make_LR_constraints(ST_Agraph_s g) {
+<span class="fc" id="L788">ENTERING(&quot;ah28nr6mxpjeosr85bhmzd3si&quot;,&quot;make_LR_constraints&quot;);</span>
+try {
+    int i, j, k;
+    int sw;			/* self width */
+    int m0, m1;
+    double width;
+<span class="fc" id="L794">    int sep[] = new int[2];</span>
+    int nodesep;      /* separation between nodes on same rank */
+    ST_Agedge_s e, e0, e1, ff;
+    ST_Agnode_s u, v, t0, h0;
+<span class="fc" id="L798">    CArray&lt;ST_rank_t&gt; rank = GD_rank(g);</span>
+    /* Use smaller separation on odd ranks if g has edge labels */
+<span class="fc bfc" id="L800" title="All 2 branches covered.">    if ((GD_has_labels(g) &amp; (1 &lt;&lt; 0))!=0) {</span>
+<span class="fc" id="L801">	sep[0] = GD_nodesep(g);</span>
+<span class="fc" id="L802">	sep[1] = 5;</span>
+    }
+    else {
+<span class="fc" id="L805">	sep[1] = sep[0] = GD_nodesep(g);</span>
+    }
+    /* make edges to constrain left-to-right ordering */
+<span class="fc bfc" id="L808" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
+	double last;
+<span class="fc" id="L810">	ND_rank(rank.get__(i).v.get_(0), 0);</span>
+<span class="fc" id="L811">	last = 0;</span>
+<span class="fc" id="L812">	nodesep = sep[i &amp; 1];</span>
+<span class="fc bfc" id="L813" title="All 2 branches covered.">	for (j = 0; j &lt; rank.get__(i).n; j++) {</span>
+<span class="fc" id="L814">	    u = rank.get__(i).v.get_(j);</span>
+<span class="fc" id="L815">	    ND_mval(u, ND_rw(u));	/* keep it somewhere safe */</span>
+<span class="fc bfc" id="L816" title="All 2 branches covered.">	    if (ND_other(u).size &gt; 0) {	/* compute self size */</span>
+		/* FIX: dot assumes all self-edges go to the right. This
+                 * is no longer true, though makeSelfEdge still attempts to
+                 * put as many as reasonable on the right. The dot code
+                 * should be modified to allow a box reflecting the placement
+                 * of all self-edges, and use that to reposition the nodes.
+                 * Note that this would not only affect left and right
+                 * positioning but may also affect interrank spacing.
+                 */
+<span class="fc" id="L825">		sw = 0;</span>
+<span class="fc bfc" id="L826" title="All 2 branches covered.">		for (k = 0; (e = (ST_Agedge_s) ND_other(u).list.get_(k))!=null; k++) {</span>
+<span class="fc bfc" id="L827" title="All 2 branches covered.">		    if (agtail(e) == aghead(e)) {</span>
+<span class="fc" id="L828">			sw += selfRightSpace (e);</span>
+		    }
+		}
+<span class="fc" id="L831">		ND_rw(u, ND_rw(u) + sw);	/* increment to include self edges */</span>
+	    }
+<span class="fc" id="L833">	    v = rank.get__(i).v.get_(j + 1);</span>
+<span class="fc bfc" id="L834" title="All 2 branches covered.">	    if (v!=null) {</span>
+<span class="fc" id="L835">		width = ND_rw(u) + ND_lw(v) + nodesep;</span>
+<span class="fc" id="L836">		e0 = make_aux_edge(u, v, width, 0);</span>
+<span class="fc" id="L837">		ND_rank(v, (int)(last + width));</span>
+<span class="fc" id="L838">		last = (int)(last + width);</span>
+	    }
+	    /* constraints from labels of flat edges on previous rank */
+<span class="pc bpc" id="L841" title="1 of 2 branches missed.">	    if ((e = (ST_Agedge_s) ND_alg(u))!=null) {</span>
+<span class="nc" id="L842">		e0 = (ST_Agedge_s) ND_save_out(u).list.get_(0);</span>
+<span class="nc" id="L843">		e1 = (ST_Agedge_s) ND_save_out(u).list.get_(1);</span>
+<span class="nc bnc" id="L844" title="All 2 branches missed.">		if (ND_order(aghead(e0)) &gt; ND_order(aghead(e1))) {</span>
+<span class="nc" id="L845">		    ff = e0;</span>
+<span class="nc" id="L846">		    e0 = e1;</span>
+<span class="nc" id="L847">		    e1 = ff;</span>
+		}
+<span class="nc" id="L849">		m0 = (ED_minlen(e) * GD_nodesep(g)) / 2;</span>
+<span class="nc" id="L850">		m1 = m0 + ((int)(ND_rw(aghead(e0)) + ND_lw(agtail(e0))));</span>
+		/* these guards are needed because the flat edges
+		 * work very poorly with cluster layout */
+<span class="nc bnc" id="L853" title="All 2 branches missed.">		if (canreach(agtail(e0), aghead(e0)) == false)</span>
+<span class="nc" id="L854">		    make_aux_edge(aghead(e0), agtail(e0), m1,</span>
+<span class="nc" id="L855">			ED_weight(e));</span>
+<span class="nc" id="L856">		m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));</span>
+<span class="nc bnc" id="L857" title="All 2 branches missed.">		if (canreach(aghead(e1), agtail(e1)) == false)</span>
+<span class="nc" id="L858">		    make_aux_edge(agtail(e1), aghead(e1), m1,</span>
+<span class="nc" id="L859">			ED_weight(e));</span>
+	    }
+	    /* position flat edge endpoints */
+<span class="fc bfc" id="L862" title="All 2 branches covered.">	    for (k = 0; k &lt; ND_flat_out(u).size; k++) {</span>
+<span class="fc" id="L863">		e = (ST_Agedge_s) ND_flat_out(u).list.get_(k);</span>
+<span class="pc bpc" id="L864" title="1 of 2 branches missed.">		if (ND_order(agtail(e)) &lt; ND_order(aghead(e))) {</span>
+<span class="fc" id="L865">		    t0 = agtail(e);</span>
+<span class="fc" id="L866">		    h0 = aghead(e);</span>
+		} else {
+<span class="nc" id="L868">		    t0 = aghead(e);</span>
+<span class="nc" id="L869">		    h0 = agtail(e);</span>
+		}
+<span class="fc" id="L871">		width = ND_rw(t0) + ND_lw(h0);</span>
+<span class="fc" id="L872">		m0 = (int) (ED_minlen(e) * GD_nodesep(g) + width);</span>
+<span class="pc bpc" id="L873" title="1 of 2 branches missed.">		if ((e0 = find_fast_edge(t0, h0))!=null) {</span>
+		    /* flat edge between adjacent neighbors 
+                     * ED_dist contains the largest label width.
+                     */
+<span class="fc" id="L877">		    m0 = Math.max(m0, (int)(width + GD_nodesep(g) + ROUND(ED_dist(e))));</span>
+<span class="pc bpc" id="L878" title="1 of 2 branches missed.">		    if (m0 &gt; USHRT_MAX)</span>
+<span class="nc" id="L879">			m0 = (int) largeMinlen (m0);</span>
+<span class="fc" id="L880">		    ED_minlen(e0, Math.max(ED_minlen(e0), m0));</span>
+<span class="fc" id="L881">		    ED_weight(e0, Math.max(ED_weight(e0), ED_weight(e)));</span>
+		}
+<span class="nc bnc" id="L883" title="All 2 branches missed.">		else if ((ED_label(e)) == null) {</span>
+		    /* unlabeled flat edge between non-neighbors 
+		     * ED_minlen(e) is max of ED_minlen of all equivalent 
+                     * edges.
+                     */
+<span class="nc" id="L888">		    make_aux_edge(t0, h0, m0, ED_weight(e));</span>
+		}
+		/* labeled flat edges between non-neighbors have already
+                 * been constrained by the label above. 
+                 */ 
+	    }
+	}
+    }
+} finally {
+<span class="fc" id="L897">LEAVING(&quot;ah28nr6mxpjeosr85bhmzd3si&quot;,&quot;make_LR_constraints&quot;);</span>
+}
+<span class="fc" id="L899">}</span>
+
+
+
+
+//3 6uruo8mutxgcni9fm8jcrw4cr
+// static void make_edge_pairs(graph_t * g) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;make_edge_pairs&quot;, key=&quot;6uruo8mutxgcni9fm8jcrw4cr&quot;, definition=&quot;static void make_edge_pairs(graph_t * g)&quot;)
+public static void make_edge_pairs(ST_Agraph_s g) {
+<span class="fc" id="L910">ENTERING(&quot;6uruo8mutxgcni9fm8jcrw4cr&quot;,&quot;make_edge_pairs&quot;);</span>
+try {
+    int i, m0, m1;
+    ST_Agnode_s n, sn;
+    ST_Agedge_s e;
+<span class="fc bfc" id="L915" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="pc bpc" id="L916" title="1 of 2 branches missed.">	if (ND_save_out(n).list!=null)</span>
+<span class="fc bfc" id="L917" title="All 2 branches covered.">	    for (i = 0; (e = (ST_Agedge_s) ND_save_out(n).list.get_(i))!=null; i++) {</span>
+<span class="fc" id="L918">		sn = virtual_node(g);</span>
+<span class="fc" id="L919">		ND_node_type(sn, 2);</span>
+<span class="fc" id="L920">		m0 = (int)(ED_head_port(e).p.x - ED_tail_port(e).p.x);</span>
+<span class="pc bpc" id="L921" title="1 of 2 branches missed.">		if (m0 &gt; 0)</span>
+<span class="nc" id="L922">		    m1 = 0;</span>
+		else {
+<span class="fc" id="L924">		    m1 = -m0;</span>
+<span class="fc" id="L925">		    m0 = 0;</span>
+		}
+<span class="fc" id="L927">		make_aux_edge(sn, agtail(e), m0 + 1, ED_weight(e));</span>
+<span class="fc" id="L928">		make_aux_edge(sn, aghead(e), m1 + 1, ED_weight(e));</span>
+<span class="fc" id="L929">		ND_rank(sn,</span>
+<span class="fc" id="L930">		    Math.min(ND_rank(agtail(e)) - m0 - 1,</span>
+<span class="fc" id="L931">			ND_rank(aghead(e)) - m1 - 1));</span>
+	    }
+    }
+} finally {
+<span class="fc" id="L935">LEAVING(&quot;6uruo8mutxgcni9fm8jcrw4cr&quot;,&quot;make_edge_pairs&quot;);</span>
+}
+<span class="fc" id="L937">}</span>
+
+
+
+
+//3 79v3omwzni0nm3h05l3onjsbz
+// static void contain_clustnodes(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;contain_clustnodes&quot;, key=&quot;79v3omwzni0nm3h05l3onjsbz&quot;, definition=&quot;static void contain_clustnodes(graph_t * g)&quot;)
+public static void contain_clustnodes(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L947">ENTERING(&quot;79v3omwzni0nm3h05l3onjsbz&quot;,&quot;contain_clustnodes&quot;);</span>
+try {
+    int c;
+    ST_Agedge_s e;
+<span class="fc bfc" id="L951" title="All 2 branches covered.">    if ((g != dot_root(g))) {</span>
+<span class="fc" id="L952">	contain_nodes(zz, g);</span>
+<span class="pc bpc" id="L953" title="1 of 2 branches missed.">	if ((e = find_fast_edge(GD_ln(g),GD_rn(g)))!=null)	/* maybe from lrvn()?*/</span>
+<span class="fc" id="L954">	    ED_weight(e, ED_weight(e) + 128);</span>
+	else
+<span class="nc" id="L956">	    make_aux_edge(GD_ln(g), GD_rn(g), 1, 128);	/* clust compaction edge */</span>
+    }
+<span class="fc bfc" id="L958" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L959">	contain_clustnodes(zz, (ST_Agraph_s) GD_clust(g).get_(c));</span>
+} finally {
+<span class="fc" id="L961">LEAVING(&quot;79v3omwzni0nm3h05l3onjsbz&quot;,&quot;contain_clustnodes&quot;);</span>
+}
+<span class="fc" id="L963">}</span>
+
+
+
+
+//3 24yfgklubun581fbfyx62lzsm
+// static int vnode_not_related_to(graph_t * g, node_t * v) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;vnode_not_related_to&quot;, key=&quot;24yfgklubun581fbfyx62lzsm&quot;, definition=&quot;static int vnode_not_related_to(graph_t * g, node_t * v)&quot;)
+public static boolean vnode_not_related_to(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
+<span class="nc" id="L973">ENTERING(&quot;24yfgklubun581fbfyx62lzsm&quot;,&quot;vnode_not_related_to&quot;);</span>
+try {
+    ST_Agedge_s e;
+<span class="nc bnc" id="L976" title="All 2 branches missed.">    if (ND_node_type(v) != 1)</span>
+<span class="nc" id="L977">	return false;</span>
+<span class="nc bnc" id="L978" title="All 2 branches missed.">    for (e = (ST_Agedge_s) ND_save_out(v).list.get_(0); ED_to_orig(e)!=null; e = ED_to_orig(e));</span>
+<span class="nc bnc" id="L979" title="All 2 branches missed.">    if (agcontains(zz, g, agtail(e)))</span>
+<span class="nc" id="L980">	return false;</span>
+<span class="nc bnc" id="L981" title="All 2 branches missed.">    if (agcontains(zz, g, aghead(e)))</span>
+<span class="nc" id="L982">	return false;</span>
+<span class="nc" id="L983">    return true;</span>
+} finally {
+<span class="nc" id="L985">LEAVING(&quot;24yfgklubun581fbfyx62lzsm&quot;,&quot;vnode_not_related_to&quot;);</span>
+}
+}
+
+
+
+
+//3 73cdgjl47ohty2va766evbo4
+// static void keepout_othernodes(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;keepout_othernodes&quot;, key=&quot;73cdgjl47ohty2va766evbo4&quot;, definition=&quot;static void keepout_othernodes(graph_t * g)&quot;)
+public static void keepout_othernodes(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L997">ENTERING(&quot;73cdgjl47ohty2va766evbo4&quot;,&quot;keepout_othernodes&quot;);</span>
+try {
+    int i, c, r, margin;
+    ST_Agnode_s u, v;
+<span class="fc" id="L1001">    margin = late_int (g, zz.G_margin, 8, 0);</span>
+<span class="fc bfc" id="L1002" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="pc bpc" id="L1003" title="1 of 2 branches missed.">	if (GD_rank(g).get__(r).n == 0)</span>
+<span class="nc" id="L1004">	    continue;</span>
+<span class="fc" id="L1005">	v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(0);</span>
+<span class="pc bpc" id="L1006" title="1 of 2 branches missed.">	if (v == null)</span>
+<span class="nc" id="L1007">	    continue;</span>
+<span class="pc bfc" id="L1008" title="All 2 branches covered.">	for (i = ND_order(v) - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L1009">	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get__(r).v.get_(i);</span>
+	    /* can't use &quot;is_a_vnode_of&quot; because elists are swapped */
+<span class="pc bpc" id="L1011" title="3 of 4 branches missed.">	    if ((ND_node_type(u) == 0) || vnode_not_related_to(zz, g, u)) {</span>
+<span class="fc" id="L1012">		make_aux_edge(u, GD_ln(g), margin + ND_rw(u), 0);</span>
+<span class="fc" id="L1013">		break;</span>
+	    }
+	}
+<span class="fc bfc" id="L1016" title="All 2 branches covered.">	for (i = ND_order(v) + GD_rank(g).get__(r).n; i &lt; GD_rank(dot_root(g)).get__(r).n;</span>
+<span class="nc" id="L1017">	     i++) {</span>
+<span class="fc" id="L1018">	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get__(r).v.get_(i);</span>
+<span class="pc bpc" id="L1019" title="3 of 4 branches missed.">	    if ((ND_node_type(u) == 0) || vnode_not_related_to(zz, g, u)) {</span>
+<span class="fc" id="L1020">		make_aux_edge(GD_rn(g), u, margin + ND_lw(u), 0);</span>
+<span class="fc" id="L1021">		break;</span>
+	    }
+	}
+    }
+<span class="fc bfc" id="L1025" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L1026">	keepout_othernodes(zz, (ST_Agraph_s) GD_clust(g).get_(c));</span>
+} finally {
+<span class="fc" id="L1028">LEAVING(&quot;73cdgjl47ohty2va766evbo4&quot;,&quot;keepout_othernodes&quot;);</span>
+}
+<span class="fc" id="L1030">}</span>
+
+
+
+
+//3 c734mx1638sfqtl7vh7itaxyx
+// static void contain_subclust(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;contain_subclust&quot;, key=&quot;c734mx1638sfqtl7vh7itaxyx&quot;, definition=&quot;static void contain_subclust(graph_t * g)&quot;)
+public static void contain_subclust(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L1040">ENTERING(&quot;c734mx1638sfqtl7vh7itaxyx&quot;,&quot;contain_subclust&quot;);</span>
+try {
+    int margin, c;
+    ST_Agraph_s subg;
+<span class="fc" id="L1044">    margin = late_int (g, zz.G_margin, 8, 0);</span>
+<span class="fc" id="L1045">    make_lrvn(g);</span>
+<span class="fc bfc" id="L1046" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="fc" id="L1047">	subg = GD_clust(g).get_(c);</span>
+<span class="fc" id="L1048">	make_lrvn(subg);</span>
+<span class="fc" id="L1049">	make_aux_edge(GD_ln(g), GD_ln(subg),</span>
+<span class="fc" id="L1050">		      margin + GD_border(g)[3].x, 0);</span>
+<span class="fc" id="L1051">	make_aux_edge(GD_rn(subg), GD_rn(g),</span>
+<span class="fc" id="L1052">		      margin + GD_border(g)[1].x, 0);</span>
+<span class="fc" id="L1053">	contain_subclust(zz, subg);</span>
+    }
+} finally {
+<span class="fc" id="L1056">LEAVING(&quot;c734mx1638sfqtl7vh7itaxyx&quot;,&quot;contain_subclust&quot;);</span>
+}
+<span class="fc" id="L1058">}</span>
+
+
+
+
+//3 6oruu1p1b7kxr5moh3kmcmvr3
+// static void separate_subclust(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;separate_subclust&quot;, key=&quot;6oruu1p1b7kxr5moh3kmcmvr3&quot;, definition=&quot;static void separate_subclust(graph_t * g)&quot;)
+public static void separate_subclust(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L1068">ENTERING(&quot;6oruu1p1b7kxr5moh3kmcmvr3&quot;,&quot;separate_subclust&quot;);</span>
+try {
+    int i, j, margin;
+    ST_Agraph_s low, high;
+    ST_Agraph_s left, right;
+<span class="fc" id="L1073">    margin = late_int (g, zz.G_margin, 8, 0);</span>
+<span class="fc bfc" id="L1074" title="All 2 branches covered.">    for (i = 1; i &lt;= GD_n_cluster(g); i++)</span>
+<span class="fc" id="L1075">	make_lrvn(GD_clust(g).get_(i));</span>
+<span class="fc bfc" id="L1076" title="All 2 branches covered.">    for (i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
+<span class="fc bfc" id="L1077" title="All 2 branches covered.">	for (j = i + 1; j &lt;= GD_n_cluster(g); j++) {</span>
+<span class="fc" id="L1078">	    low = GD_clust(g).get_(i);</span>
+<span class="fc" id="L1079">	    high = GD_clust(g).get_(j);</span>
+<span class="pc bpc" id="L1080" title="1 of 2 branches missed.">	    if (GD_minrank(low) &gt; GD_minrank(high)) {</span>
+<span class="nc" id="L1081">		ST_Agraph_s temp = low;</span>
+<span class="nc" id="L1082">		low = high;</span>
+<span class="nc" id="L1083">		high = temp;</span>
+	    }
+<span class="fc bfc" id="L1085" title="All 2 branches covered.">	    if (GD_maxrank(low) &lt; GD_minrank(high))</span>
+<span class="fc" id="L1086">		continue;</span>
+<span class="fc" id="L1087">	    if (ND_order(GD_rank(low).get__(GD_minrank(high)).v.get_(0))</span>
+<span class="pc bpc" id="L1088" title="1 of 2 branches missed.">		&lt; ND_order(GD_rank(high).get__(GD_minrank(high)).v.get_(0))) {</span>
+<span class="fc" id="L1089">		left = low;</span>
+<span class="fc" id="L1090">		right = high;</span>
+	    } else {
+<span class="nc" id="L1092">		left = high;</span>
+<span class="nc" id="L1093">		right = low;</span>
+	    }
+<span class="fc" id="L1095">	    make_aux_edge(GD_rn(left), GD_ln(right), margin, 0);</span>
+	}
+<span class="fc" id="L1097">	separate_subclust(zz, GD_clust(g).get_(i));</span>
+    }
+} finally {
+<span class="fc" id="L1100">LEAVING(&quot;6oruu1p1b7kxr5moh3kmcmvr3&quot;,&quot;separate_subclust&quot;);</span>
+}
+<span class="fc" id="L1102">}</span>
+
+
+
+
+//3 8f8gs2zivo4pnd3hmtb9g23x4
+// static void pos_clusters(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;pos_clusters&quot;, key=&quot;8f8gs2zivo4pnd3hmtb9g23x4&quot;, definition=&quot;static void pos_clusters(graph_t * g)&quot;)
+public static void pos_clusters(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L1112">ENTERING(&quot;8f8gs2zivo4pnd3hmtb9g23x4&quot;,&quot;pos_clusters&quot;);</span>
+try {
+<span class="fc bfc" id="L1114" title="All 2 branches covered.">    if (GD_n_cluster(g) &gt; 0) {</span>
+<span class="fc" id="L1115">	contain_clustnodes(zz, g);</span>
+<span class="fc" id="L1116">	keepout_othernodes(zz, g);</span>
+<span class="fc" id="L1117">	contain_subclust(zz, g);</span>
+<span class="fc" id="L1118">	separate_subclust(zz, g);</span>
+    }
+} finally {
+<span class="fc" id="L1121">LEAVING(&quot;8f8gs2zivo4pnd3hmtb9g23x4&quot;,&quot;pos_clusters&quot;);</span>
+}
+<span class="fc" id="L1123">}</span>
+
+
+
+
+//3 fywsxto7yvl5wa2dfu7u7jj1
+// static void compress_graph(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;compress_graph&quot;, key=&quot;fywsxto7yvl5wa2dfu7u7jj1&quot;, definition=&quot;static void compress_graph(graph_t * g)&quot;)
+public static void compress_graph(ST_Agraph_s g) {
+<span class="fc" id="L1133">ENTERING(&quot;fywsxto7yvl5wa2dfu7u7jj1&quot;,&quot;compress_graph&quot;);</span>
+try {
+    double x;
+<span class="fc" id="L1136">    ST_pointf p = new ST_pointf();</span>
+<span class="pc bpc" id="L1137" title="1 of 2 branches missed.">    if (GD_drawing(g).ratio_kind != EN_ratio_t.R_COMPRESS)</span>
+<span class="fc" id="L1138">	return;</span>
+<span class="nc" id="L1139">UNSUPPORTED(&quot;79oeaf0u32si2chjcpas5whjl&quot;); //     p = GD_drawing(g)-&gt;size;</span>
+<span class="nc" id="L1140">UNSUPPORTED(&quot;6a2ue1i6kvwvpgapb4z8l27jn&quot;); //     if (p.x * p.y &lt;= 1)</span>
+<span class="nc" id="L1141">UNSUPPORTED(&quot;a7fgam0j0jm7bar0mblsv3no4&quot;); // 	return;</span>
+<span class="nc" id="L1142">UNSUPPORTED(&quot;5f3k9yz6btwxc8r5t8exytqqt&quot;); //     contain_nodes(g);</span>
+<span class="nc" id="L1143">UNSUPPORTED(&quot;4mvbrmj6dfhaz3burnpac7zsx&quot;); //     if (GD_flip(g) == 0)</span>
+<span class="nc" id="L1144">UNSUPPORTED(&quot;dzkztznjq2andjnjzqh8i5tij&quot;); // 	x = p.x;</span>
+<span class="nc" id="L1145">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
+<span class="nc" id="L1146">UNSUPPORTED(&quot;ddzjdkqij3y4gq9i3hikpoqvj&quot;); // 	x = p.y;</span>
+<span class="nc" id="L1147">UNSUPPORTED(&quot;e1xij2jh66kyaiikenemo1qza&quot;); //     /* Guard against huge size attribute since max. edge length is USHRT_MAX</span>
+<span class="nc" id="L1148">UNSUPPORTED(&quot;5ilmnsqirjhzn5q6s3f9pkgi3&quot;); //      * A warning might be called for. Also, one could check that the graph</span>
+<span class="nc" id="L1149">UNSUPPORTED(&quot;1nhxkt9jijvhw5gsp2pluh8g8&quot;); //      * already fits GD_drawing(g)-&gt;size and return immediately.</span>
+<span class="nc" id="L1150">UNSUPPORTED(&quot;795vpnc8yojryr8b46aidsu69&quot;); //      */</span>
+<span class="nc" id="L1151">UNSUPPORTED(&quot;dkqac1chvtsaao23vr43xqs5r&quot;); //     x = MIN(x,USHRT_MAX); </span>
+<span class="nc" id="L1152">UNSUPPORTED(&quot;5es2j3xrdatvha5uea2wlqcxp&quot;); //     make_aux_edge(GD_ln(g), GD_rn(g), x, 1000);</span>
+<span class="nc" id="L1153">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1155">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="fc" id="L1157">LEAVING(&quot;fywsxto7yvl5wa2dfu7u7jj1&quot;,&quot;compress_graph&quot;);</span>
+}
+}
+
+
+
+
+//3 b7y0htx4svbhaqb1a12dihlue
+// static void create_aux_edges(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;create_aux_edges&quot;, key=&quot;b7y0htx4svbhaqb1a12dihlue&quot;, definition=&quot;static void create_aux_edges(graph_t * g)&quot;)
+public static void create_aux_edges(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L1169">ENTERING(&quot;b7y0htx4svbhaqb1a12dihlue&quot;,&quot;create_aux_edges&quot;);</span>
+try {
+<span class="fc" id="L1171">    allocate_aux_edges(g);</span>
+<span class="fc" id="L1172">    make_LR_constraints(g);</span>
+<span class="fc" id="L1173">    make_edge_pairs(g);</span>
+<span class="fc" id="L1174">    pos_clusters(zz, g);</span>
+<span class="fc" id="L1175">    compress_graph(g);</span>
+} finally {
+<span class="fc" id="L1177">LEAVING(&quot;b7y0htx4svbhaqb1a12dihlue&quot;,&quot;create_aux_edges&quot;);</span>
+}
+<span class="fc" id="L1179">}</span>
+
+
+
+
+//3 euzeilq92ry8a4tcrij5s52t5
+// static void remove_aux_edges(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;remove_aux_edges&quot;, key=&quot;euzeilq92ry8a4tcrij5s52t5&quot;, definition=&quot;static void remove_aux_edges(graph_t * g)&quot;)
+public static void remove_aux_edges(ST_Agraph_s g) {
+<span class="fc" id="L1189">ENTERING(&quot;euzeilq92ry8a4tcrij5s52t5&quot;,&quot;remove_aux_edges&quot;);</span>
+try {
+    int i;
+    ST_Agnode_s n, nnext, nprev;
+    ST_Agedge_s e;
+<span class="fc bfc" id="L1194" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="fc bfc" id="L1195" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++) {</span>
+<span class="fc" id="L1196">	    Memory.free(e.base.data);</span>
+<span class="fc" id="L1197">	    Memory.free(e);</span>
+	}
+<span class="fc" id="L1199">	free_list(ND_out(n));</span>
+<span class="fc" id="L1200">	free_list(ND_in(n));</span>
+<span class="fc" id="L1201">	ND_out(n, ND_save_out(n));</span>
+<span class="fc" id="L1202">	ND_in(n, ND_save_in(n));</span>
+    }
+    /* cannot be merged with previous loop */
+<span class="fc" id="L1205">    nprev = null;</span>
+<span class="fc bfc" id="L1206" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = nnext) {</span>
+<span class="fc" id="L1207">	nnext = ND_next(n);</span>
+<span class="fc bfc" id="L1208" title="All 2 branches covered.">	if (ND_node_type(n) == 2) {</span>
+<span class="pc bpc" id="L1209" title="1 of 2 branches missed.">	    if (nprev!=null)</span>
+<span class="nc" id="L1210">		ND_next(nprev, nnext);</span>
+	    else
+<span class="fc" id="L1212">		GD_nlist(g, nnext);</span>
+<span class="fc" id="L1213">	    Memory.free(n.base.data);</span>
+<span class="fc" id="L1214">	    Memory.free(n);</span>
+	} else
+<span class="fc" id="L1216">	    nprev = n;</span>
+    }
+<span class="fc" id="L1218">    ND_prev(GD_nlist(g), null);</span>
+} finally {
+<span class="fc" id="L1220">LEAVING(&quot;euzeilq92ry8a4tcrij5s52t5&quot;,&quot;remove_aux_edges&quot;);</span>
+}
+<span class="fc" id="L1222">}</span>
+
+
+
+
+//3 1oobmglea9t819y95xeel37h8
+// static void  set_xcoords(graph_t * g) 
+@Unused
+@HasND_Rank
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;set_xcoords&quot;, key=&quot;1oobmglea9t819y95xeel37h8&quot;, definition=&quot;static void  set_xcoords(graph_t * g)&quot;)
+public static void set_xcoords(ST_Agraph_s g) {
+<span class="fc" id="L1233">ENTERING(&quot;1oobmglea9t819y95xeel37h8&quot;,&quot;set_xcoords&quot;);</span>
+try {
+    int i, j;
+    ST_Agnode_s v;
+<span class="fc" id="L1237">    CArray&lt;ST_rank_t&gt; rank = GD_rank(g);</span>
+<span class="fc bfc" id="L1238" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
+<span class="fc bfc" id="L1239" title="All 2 branches covered.">	for (j = 0; j &lt; rank.get__(i).n; j++) {</span>
+<span class="fc" id="L1240">	    v = (ST_Agnode_s) rank.get__(i).v.get_(j);</span>
+<span class="fc" id="L1241">	    ND_coord(v).x = ND_rank(v);</span>
+<span class="fc" id="L1242">	    ND_rank(v, i);</span>
+	}
+    }
+} finally {
+<span class="fc" id="L1246">LEAVING(&quot;1oobmglea9t819y95xeel37h8&quot;,&quot;set_xcoords&quot;);</span>
+}
+<span class="fc" id="L1248">}</span>
+
+
+
+
+//3 6mip7s1k9xt9tp6x6nnsbt34p
+//static void adjustSimple(graph_t * g, int delta, int margin_total) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;adjustSimple&quot;, key=&quot;6mip7s1k9xt9tp6x6nnsbt34p&quot;, definition=&quot;static void adjustSimple(graph_t * g, int delta, int margin_total)&quot;)
+public static void adjustSimple(ST_Agraph_s g, int delta, int margin_total) {
+<span class="nc" id="L1258">	ENTERING(&quot;6b5zs45snahyh3bzod53vasjx&quot;, &quot;adjustSimple&quot;);</span>
+	try {
+	    int r, bottom, deltop, delbottom;
+<span class="nc" id="L1261">	    ST_Agraph_s root = dot_root(g);</span>
+<span class="nc" id="L1262">	    CArray&lt;ST_rank_t&gt; rank = GD_rank(root);</span>
+<span class="nc" id="L1263">	    int maxr = GD_maxrank(g);</span>
+<span class="nc" id="L1264">	    int minr = GD_minrank(g);</span>
+	    
+<span class="nc" id="L1266">	    bottom = (delta+1) / 2;</span>
+<span class="nc" id="L1267">	    delbottom = (int)(GD_ht1(g) + bottom - (rank.get__(maxr).ht1 - margin_total));</span>
+	    
+<span class="nc bnc" id="L1269" title="All 2 branches missed.">	    if (delbottom &gt; 0) {</span>
+<span class="nc bnc" id="L1270" title="All 2 branches missed.">	    	for (r = maxr; r &gt;= minr; r--) {</span>
+<span class="nc bnc" id="L1271" title="All 2 branches missed.">	    	    if (rank.get__(r).n &gt; 0)</span>
+<span class="nc" id="L1272">	    		ND_coord(rank.get__(r).v.get_(0)).y += delbottom;</span>
+	     	}
+<span class="nc" id="L1274">	    	deltop = (int)(GD_ht2(g) + (delta-bottom) + delbottom - (rank.get__(minr).ht2 - margin_total));</span>
+	        }
+	    else
+<span class="nc" id="L1277">	    	deltop = (int)(GD_ht2(g) + (delta-bottom) - (rank.get__(minr).ht2 - margin_total));</span>
+<span class="nc bnc" id="L1278" title="All 2 branches missed.">	        if (deltop &gt; 0) {</span>
+<span class="nc bnc" id="L1279" title="All 2 branches missed.">	    	for (r = minr-1; r &gt;= GD_minrank(root); r--) {</span>
+<span class="nc bnc" id="L1280" title="All 2 branches missed.">	    	    if (rank.get__(r).n &gt; 0)</span>
+<span class="nc" id="L1281">	    		ND_coord(rank.get__(r).v.get_(0)).y += deltop;</span>
+	    	}
+	        }
+<span class="nc" id="L1284">	        GD_ht2(g, GD_ht2(g) + (delta - bottom));</span>
+<span class="nc" id="L1285">	        GD_ht1(g, GD_ht1(g) + bottom);</span>
+
+	} finally {
+<span class="nc" id="L1288">		LEAVING(&quot;47ywar141vmwjartmboxs38cz&quot;, &quot;adjustRanks&quot;);</span>
+	}
+<span class="nc" id="L1290">}</span>
+
+
+
+
+/* adjustRanks:
+ * Recursively adjust ranks to take into account
+ * wide cluster labels when rankdir=LR.
+ * We divide the extra space between the top and bottom.
+ * Adjust the ht1 and ht2 values in the process.
+ */
+
+//3 9sv968rni5moio662r9kjzai3
+//static void adjustRanks(graph_t * g, int margin_total) 
+@Unused
+@Original(version = &quot;2.38.0&quot;, path = &quot;lib/dotgen/position.c&quot;, name = &quot;adjustRanks&quot;, key = &quot;9sv968rni5moio662r9kjzai3&quot;, definition = &quot;static void adjustRanks(graph_t * g, int margin_total)&quot;)
+public static void adjustRanks(Globals zz, ST_Agraph_s g, int margin_total) {
+<span class="nc" id="L1307">	ENTERING(&quot;47ywar141vmwjartmboxs38cz&quot;, &quot;adjustRanks&quot;);</span>
+	try {
+	    double lht;			/* label height */
+	    double rht;			/* height between top and bottom ranks */
+	    int maxr, minr, margin;
+	    int c;
+	    double delta, ht1, ht2;
+
+<span class="nc" id="L1315">	    CArray&lt;ST_rank_t&gt; rank = GD_rank(dot_root(g));</span>
+<span class="nc bnc" id="L1316" title="All 2 branches missed.">	    if (g == dot_root(g))</span>
+<span class="nc" id="L1317">		margin = 0;</span>
+	    else
+<span class="nc" id="L1319">		margin = late_int (g, zz.G_margin, CL_OFFSET, 0);</span>
+
+<span class="nc" id="L1321">	    ht1 = GD_ht1(g);</span>
+<span class="nc" id="L1322">	    ht2 = GD_ht2(g);</span>
+
+<span class="nc bnc" id="L1324" title="All 2 branches missed.">	    for (c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="nc" id="L1325">	    	ST_Agraph_s subg = GD_clust(g).get_(c);</span>
+<span class="nc" id="L1326">	    	adjustRanks(zz, subg, margin+margin_total);</span>
+<span class="nc bnc" id="L1327" title="All 2 branches missed.">	    	if (GD_maxrank(subg) == GD_maxrank(g))</span>
+<span class="nc" id="L1328">	    	    ht1 = Math.max(ht1, GD_ht1(subg) + margin);</span>
+<span class="nc bnc" id="L1329" title="All 2 branches missed.">	    	if (GD_minrank(subg) == GD_minrank(g))</span>
+<span class="nc" id="L1330">	    	    ht2 = Math.max(ht2, GD_ht2(subg) + margin);</span>
+	        }
+
+<span class="nc" id="L1333">	    GD_ht1(g, ht1);</span>
+<span class="nc" id="L1334">	    GD_ht2(g, ht2);</span>
+
+<span class="nc bnc" id="L1336" title="All 4 branches missed.">	    if ((g != dot_root(g)) &amp;&amp; GD_label(g)!=null) {</span>
+<span class="nc" id="L1337">	    	lht = Math.max(GD_border(g)[LEFT_IX].y, GD_border(g)[RIGHT_IX].y);</span>
+<span class="nc" id="L1338">	    	maxr = GD_maxrank(g);</span>
+<span class="nc" id="L1339">	    	minr = GD_minrank(g);</span>
+<span class="nc" id="L1340">	    	rht = ND_coord(rank.get__(minr).v.get_(0)).y - ND_coord(rank.get__(maxr).v.get_(0)).y;</span>
+<span class="nc" id="L1341">	    	delta = lht - (rht + ht1 + ht2);</span>
+<span class="nc bnc" id="L1342" title="All 2 branches missed.">	    	if (delta &gt; 0) {</span>
+<span class="nc" id="L1343">	    	    adjustSimple(g, (int) delta, margin_total);</span>
+	    	}
+	        }
+
+	        /* update the global ranks */
+<span class="nc bnc" id="L1348" title="All 2 branches missed.">	    if (g != dot_root(g)) {</span>
+<span class="nc" id="L1349">	    	rank.get__(GD_minrank(g)).ht2 = Math.max(rank.get__(GD_minrank(g)).ht2, GD_ht2(g));</span>
+<span class="nc" id="L1350">	    	rank.get__(GD_maxrank(g)).ht1 = Math.max(rank.get__(GD_maxrank(g)).ht1, GD_ht1(g));</span>
+	        }
+
+	} finally {
+<span class="nc" id="L1354">		LEAVING(&quot;47ywar141vmwjartmboxs38cz&quot;, &quot;adjustRanks&quot;);</span>
+	}
+<span class="nc" id="L1356">}</span>
+
+
+
+
+
+
+/* clust_ht:
+ * recursively compute cluster ht requirements.  assumes GD_ht1(subg) and ht2
+ * are computed from primitive nodes only.  updates ht1 and ht2 to reflect
+ * cluster nesting and labels.  also maintains global rank ht1 and ht2.
+ * Return true if some cluster has a label.
+ */
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;clust_ht&quot;, key=&quot;emtrqv582hdma5aajqtjd76m1&quot;, definition=&quot;static int clust_ht(Agraph_t * g)&quot;)
+public static int clust_ht(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L1372">ENTERING(&quot;emtrqv582hdma5aajqtjd76m1&quot;,&quot;clust_ht&quot;);</span>
+try {
+    int c;
+    double ht1, ht2;
+    ST_Agraph_s subg;
+<span class="fc" id="L1377">    CArray&lt;ST_rank_t&gt; rank = GD_rank(dot_root(g));</span>
+<span class="fc" id="L1378">    int margin, haveClustLabel = 0;</span>
+    
+<span class="fc bfc" id="L1380" title="All 2 branches covered.">    if (g == dot_root(g)) </span>
+<span class="fc" id="L1381">	margin = CL_OFFSET;</span>
+    else
+<span class="fc" id="L1383">	margin = late_int (g, zz.G_margin, CL_OFFSET, 0);</span>
+    
+<span class="fc" id="L1385">    ht1 = GD_ht1(g);</span>
+<span class="fc" id="L1386">    ht2 = GD_ht2(g);</span>
+    
+    /* account for sub-clusters */
+<span class="fc bfc" id="L1389" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="fc" id="L1390">	subg = GD_clust(g).get_(c);</span>
+<span class="fc" id="L1391">	haveClustLabel |= clust_ht(zz, subg);</span>
+<span class="fc bfc" id="L1392" title="All 2 branches covered.">	if (GD_maxrank(subg) == GD_maxrank(g))</span>
+<span class="fc" id="L1393">	    ht1 = Math.max(ht1, GD_ht1(subg) + margin);</span>
+<span class="fc bfc" id="L1394" title="All 2 branches covered.">	if (GD_minrank(subg) == GD_minrank(g))</span>
+<span class="fc" id="L1395">	    ht2 = Math.max(ht2, GD_ht2(subg) + margin);</span>
+    }
+    
+    /* account for a possible cluster label in clusters */
+    /* room for root graph label is handled in dotneato_postprocess */
+<span class="pc bpc" id="L1400" title="1 of 4 branches missed.">    if ((g != dot_root(g)) &amp;&amp; GD_label(g)!=null) {</span>
+<span class="fc" id="L1401">	haveClustLabel = 1;</span>
+<span class="pc bpc" id="L1402" title="1 of 2 branches missed.">	if (!GD_flip(agroot(g))) {</span>
+<span class="fc" id="L1403">	    ht1 += GD_border(g)[BOTTOM_IX].y;</span>
+<span class="fc" id="L1404">	    ht2 += GD_border(g)[TOP_IX].y;</span>
+	}
+    }
+<span class="fc" id="L1407">    GD_ht1(g, ht1);</span>
+<span class="fc" id="L1408">    GD_ht2(g, ht2);</span>
+    
+    /* update the global ranks */
+<span class="fc bfc" id="L1411" title="All 2 branches covered.">    if ((g != dot_root(g))) {</span>
+<span class="fc" id="L1412">	rank.get__(GD_minrank(g)).ht2 = Math.max(rank.get__(GD_minrank(g)).ht2, ht2);</span>
+<span class="fc" id="L1413">	rank.get__(GD_maxrank(g)).ht1 = Math.max(rank.get__(GD_maxrank(g)).ht1, ht1);</span>
+    }
+<span class="fc" id="L1415">    return haveClustLabel;</span>
+} finally {
+<span class="fc" id="L1417">LEAVING(&quot;emtrqv582hdma5aajqtjd76m1&quot;,&quot;clust_ht&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;15/11/2020&quot;)
+@Difficult
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;set_ycoords&quot;, key=&quot;bp8vmol4ncadervcfossysdtd&quot;, definition=&quot;static void set_ycoords(graph_t * g)&quot;)
+public static void set_ycoords(Globals zz, ST_Agraph_s g) {
+<span class="fc" id="L1428">ENTERING(&quot;bp8vmol4ncadervcfossysdtd&quot;,&quot;set_ycoords&quot;);</span>
+try {
+    int i, j, r;
+    double ht2, maxht, delta, d0, d1;
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+<span class="fc" id="L1434">    CArray&lt;ST_rank_t&gt; rank = GD_rank(g);</span>
+    ST_Agraph_s clust;
+    int lbl;
+    
+<span class="fc" id="L1438">    ht2 = maxht = 0;</span>
+    
+    /* scan ranks for tallest nodes.  */
+<span class="fc bfc" id="L1441" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc bfc" id="L1442" title="All 2 branches covered.">	for (i = 0; i &lt; rank.get__(r).n; i++) {</span>
+<span class="fc" id="L1443">	    n = rank.get__(r).v.get_(i);</span>
+	    
+	    /* assumes symmetry, ht1 = ht2 */
+<span class="fc" id="L1446">	    ht2 = ND_ht(n) / 2;</span>
+	    
+	    
+	    /* have to look for high self-edge labels, too */
+<span class="fc bfc" id="L1450" title="All 2 branches covered.">	    if (ND_other(n).list!=null)</span>
+<span class="fc bfc" id="L1451" title="All 2 branches covered.">		for (j = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(j))!=null; j++) {</span>
+<span class="fc bfc" id="L1452" title="All 2 branches covered.">		    if (agtail(e) == aghead(e)) {</span>
+<span class="pc bpc" id="L1453" title="1 of 2 branches missed.">			if (ED_label(e)!=null)</span>
+<span class="fc" id="L1454">			    ht2 = Math.max(ht2, ED_label(e).dimen.y / 2);</span>
+		    }
+		}
+	    
+	    /* update global rank ht */
+<span class="fc bfc" id="L1459" title="All 2 branches covered.">	    if (rank.get__(r).pht2 &lt; ht2) {</span>
+<span class="fc" id="L1460">		rank.get__(r).ht2 = ht2;</span>
+<span class="fc" id="L1461">		rank.get__(r).pht2 = ht2;</span>
+		}
+<span class="fc bfc" id="L1463" title="All 2 branches covered.">	    if (rank.get__(r).pht1 &lt; ht2) {</span>
+<span class="fc" id="L1464">		rank.get__(r).ht1 = ht2;</span>
+<span class="fc" id="L1465">		rank.get__(r).pht1 = ht2;</span>
+		}
+	    
+	    /* update nearest enclosing cluster rank ht */
+<span class="pc bpc" id="L1469" title="1 of 2 branches missed.">	    if ((clust = ND_clust(n))!=null) {</span>
+<span class="fc bfc" id="L1470" title="All 2 branches covered.">		int yoff = (clust == g ? 0 : late_int (clust, zz.G_margin, CL_OFFSET, 0));</span>
+<span class="fc bfc" id="L1471" title="All 2 branches covered.">		if (ND_rank(n) == GD_minrank(clust))</span>
+<span class="fc" id="L1472">		    GD_ht2(clust, Math.max(GD_ht2(clust), ht2 + yoff));</span>
+<span class="fc bfc" id="L1473" title="All 2 branches covered.">		if (ND_rank(n) == GD_maxrank(clust))</span>
+<span class="fc" id="L1474">		    GD_ht1(clust, Math.max(GD_ht1(clust), ht2 + yoff));</span>
+	    }
+	}
+    }
+    
+    /* scan sub-clusters */
+<span class="fc" id="L1480">    lbl = clust_ht(zz, g);</span>
+    
+    /* make the initial assignment of ycoords to leftmost nodes by ranks */
+<span class="fc" id="L1483">    maxht = 0;</span>
+<span class="fc" id="L1484">    r = GD_maxrank(g);</span>
+<span class="fc" id="L1485">    ND_coord(rank.get__(r).v.get_(0)).y = rank.get__(r).ht1;</span>
+<span class="fc bfc" id="L1486" title="All 2 branches covered.">    while (--r &gt;= GD_minrank(g)) {</span>
+<span class="fc" id="L1487">	d0 = rank.get__(r + 1).pht2 + rank.get__(r).pht1 + GD_ranksep(g);	/* prim node sep */</span>
+<span class="fc" id="L1488">	d1 = rank.get__(r + 1).ht2 + rank.get__(r).ht1 + CL_OFFSET;	/* cluster sep */</span>
+<span class="fc" id="L1489">	delta = Math.max(d0, d1);</span>
+<span class="pc bpc" id="L1490" title="1 of 2 branches missed.">	if (rank.get__(r).n &gt; 0)	/* this may reflect some problem */</span>
+<span class="fc" id="L1491">		ND_coord(rank.get__(r).v.get_(0)).y = (ND_coord(rank.get__(r + 1).v.get_(0))).y + delta;</span>
+<span class="fc" id="L1492">	maxht = Math.max(maxht, delta);</span>
+    }
+    
+    /* If there are cluster labels and the drawing is rotated, we need special processing to
+     * allocate enough room. We use adjustRanks for this, and then recompute the maxht if
+     * the ranks are to be equally spaced. This seems simpler and appears to work better than
+     * handling equal spacing as a special case.
+     */
+<span class="pc bpc" id="L1500" title="1 of 4 branches missed.">    if (lbl!=0 &amp;&amp; GD_flip(g)) {</span>
+<span class="nc" id="L1501">    	adjustRanks(zz, g, 0);</span>
+<span class="nc bnc" id="L1502" title="All 2 branches missed.">    	if (GD_exact_ranksep(g)!=0) {  /* recompute maxht */</span>
+<span class="nc" id="L1503">    	    maxht = 0;</span>
+<span class="nc" id="L1504">    	    r = GD_maxrank(g);</span>
+<span class="nc" id="L1505">    	    d0 = (ND_coord(rank.get__(r).v.get_(0))).y;</span>
+<span class="nc bnc" id="L1506" title="All 2 branches missed.">    	    while (--r &gt;= GD_minrank(g)) {</span>
+<span class="nc" id="L1507">    		d1 = (ND_coord(rank.get__(r).v.get_(0))).y;</span>
+<span class="nc" id="L1508">    		delta = d1 - d0;</span>
+<span class="nc" id="L1509">    		maxht = Math.max(maxht, delta);</span>
+<span class="nc" id="L1510">    		d0 = d1;</span>
+    	    }
+    	}
+        }
+    
+    /* re-assign if ranks are equally spaced */
+<span class="pc bpc" id="L1516" title="1 of 2 branches missed.">    if (GD_exact_ranksep(g)!=0) {</span>
+<span class="nc" id="L1517">UNSUPPORTED(&quot;cyxbyjrdzywkc46nl8lkrngai&quot;); // 	for (r = GD_maxrank(g) - 1; r &gt;= GD_minrank(g); r--)</span>
+<span class="nc" id="L1518">UNSUPPORTED(&quot;5sd5ltavyp6llt0t2t0xmqwj5&quot;); // 	    if (rank[r].n &gt; 0)	/* this may reflect the same problem :-() */</span>
+<span class="nc" id="L1519">UNSUPPORTED(&quot;5zoeqpznt31feqxjcx2rg0o1f&quot;); // 			(ND_coord(rank[r].v[0])).y=</span>
+<span class="nc" id="L1520">UNSUPPORTED(&quot;e6dfx5uesysjaefb0djyfp7f&quot;); // 		    (ND_coord(rank[r + 1].v[0])).y + maxht;</span>
+    }
+    
+    /* copy ycoord assignment from leftmost nodes to others */
+<span class="fc bfc" id="L1524" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n))</span>
+<span class="fc" id="L1525">    ND_coord(n).y = ND_coord(rank.get__(ND_rank(n)).v.get_(0)).y;</span>
+} finally {
+<span class="fc" id="L1527">LEAVING(&quot;bp8vmol4ncadervcfossysdtd&quot;,&quot;set_ycoords&quot;);</span>
+}
+<span class="fc" id="L1529">}</span>
+
+
+
+
+/* dot_compute_bb:
+ * Compute bounding box of g.
+ * The x limits of clusters are given by the x positions of ln and rn.
+ * This information is stored in the rank field, since it was calculated
+ * using network simplex.
+ * For the root graph, we don't enforce all the constraints on lr and 
+ * rn, so we traverse the nodes and subclusters.
+ */
+//3 9ay2xnnmh407i32pfokujfda5
+//static void dot_compute_bb(graph_t * g, graph_t * root) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;dot_compute_bb&quot;, key=&quot;9ay2xnnmh407i32pfokujfda5&quot;, definition=&quot;tatic void dot_compute_bb(graph_t * g, graph_t * root)&quot;)
+public static void dot_compute_bb(ST_Agraph_s g, ST_Agraph_s root) {
+<span class="fc" id="L1547">ENTERING(&quot;9ay2xnnmh407i32pfokujfda5&quot;,&quot;dot_compute_bb&quot;);</span>
+try {
+ int r, c;
+ double x, offset;
+ ST_Agnode_s v;
+<span class="fc" id="L1552"> final ST_pointf LL = new ST_pointf();</span>
+<span class="fc" id="L1553"> final ST_pointf UR = new ST_pointf();</span>
+<span class="fc bfc" id="L1554" title="All 2 branches covered."> if (g == dot_root(g)) {</span>
+<span class="fc" id="L1555">	LL.x = INT_MAX;</span>
+<span class="fc" id="L1556">	UR.x = -((double)INT_MAX);</span>
+<span class="fc bfc" id="L1557" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L1558">	    int rnkn = GD_rank(g).get__(r).n;</span>
+<span class="pc bpc" id="L1559" title="1 of 2 branches missed.">	    if (rnkn == 0)</span>
+<span class="nc" id="L1560">		continue;</span>
+<span class="pc bpc" id="L1561" title="1 of 2 branches missed.">	    if ((v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(0)) == null)</span>
+<span class="nc" id="L1562">		continue;</span>
+<span class="fc bfc" id="L1563" title="All 4 branches covered.">	    for (c = 1; (ND_node_type(v) != 0) &amp;&amp; c &lt; rnkn; c++)</span>
+<span class="fc" id="L1564">		v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(c);</span>
+<span class="fc bfc" id="L1565" title="All 2 branches covered.">	    if (ND_node_type(v) == 0) {</span>
+<span class="fc" id="L1566">		x = ND_coord(v).x - ND_lw(v);</span>
+<span class="fc" id="L1567">		LL.x = (Math.min(LL.x, x));</span>
+	    }
+	    else continue;
+		/* At this point, we know the rank contains a NORMAL node */
+<span class="fc" id="L1571">	    v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(rnkn - 1);</span>
+<span class="fc bfc" id="L1572" title="All 2 branches covered.">	    for (c = rnkn-2; ND_node_type(v) != 0; c--)</span>
+<span class="fc" id="L1573">		v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(c);</span>
+<span class="fc" id="L1574">	    x = ND_coord(v).x + ND_rw(v);</span>
+<span class="fc" id="L1575">	    UR.x = Math.max(UR.x, x);</span>
+	}
+<span class="fc" id="L1577">	offset = 8;</span>
+<span class="fc bfc" id="L1578" title="All 2 branches covered.">	for (c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="fc" id="L1579">	    x = (double)(GD_bb(GD_clust(g).get_(c)).LL.x - offset);</span>
+<span class="fc" id="L1580">	    LL.x = Math.min(LL.x, x);</span>
+<span class="fc" id="L1581">	    x = (double)(GD_bb(GD_clust(g).get_(c)).UR.x + offset);</span>
+<span class="fc" id="L1582">	    UR.x = Math.max(UR.x, x);</span>
+	}
+ } else {
+<span class="fc" id="L1585">	LL.x = (double)(ND_rank(GD_ln(g)));</span>
+<span class="fc" id="L1586">	UR.x = (double)(ND_rank(GD_rn(g)));</span>
+ }
+<span class="fc" id="L1588"> LL.y = ND_coord(GD_rank(root).get__(GD_maxrank(g)).v.get_(0)).y - GD_ht1(g);</span>
+<span class="fc" id="L1589"> UR.y = ND_coord(GD_rank(root).get__(GD_minrank(g)).v.get_(0)).y + GD_ht2(g);</span>
+<span class="fc" id="L1590"> GD_bb(g).LL.___(LL);</span>
+<span class="fc" id="L1591"> GD_bb(g).UR.___(UR);</span>
+} finally {
+<span class="fc" id="L1593">LEAVING(&quot;9ay2xnnmh407i32pfokujfda5&quot;,&quot;dot_compute_bb&quot;);</span>
+}
+<span class="fc" id="L1595">}</span>
+
+
+
+
+
+//3 dlbpiimh9g9ff9w7wjoabf817
+// static void rec_bb(graph_t * g, graph_t * root) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;rec_bb&quot;, key=&quot;dlbpiimh9g9ff9w7wjoabf817&quot;, definition=&quot;static void rec_bb(graph_t * g, graph_t * root)&quot;)
+public static void rec_bb(ST_Agraph_s g, ST_Agraph_s root) {
+<span class="fc" id="L1606">ENTERING(&quot;dlbpiimh9g9ff9w7wjoabf817&quot;,&quot;rec_bb&quot;);</span>
+try {
+    int c;
+<span class="fc bfc" id="L1609" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L1610">	rec_bb((ST_Agraph_s) GD_clust(g).get_(c), root);</span>
+<span class="fc" id="L1611">    dot_compute_bb(g, root);</span>
+} finally {
+<span class="fc" id="L1613">LEAVING(&quot;dlbpiimh9g9ff9w7wjoabf817&quot;,&quot;rec_bb&quot;);</span>
+}
+<span class="fc" id="L1615">}</span>
+
+
+
+
+
+
+//3 53z9yhpfixulhgqsauulkllvc
+// static void adjustAspectRatio (graph_t* g, aspect_t* asp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;adjustAspectRatio&quot;, key=&quot;53z9yhpfixulhgqsauulkllvc&quot;, definition=&quot;static void adjustAspectRatio (graph_t* g, aspect_t* asp)&quot;)
+public static Object adjustAspectRatio(Object... arg_) {
+<span class="nc" id="L1627">UNSUPPORTED(&quot;ezldb6r0csirv1fmkq5itw1v2&quot;); // static void adjustAspectRatio (graph_t* g, aspect_t* asp)</span>
+<span class="nc" id="L1628">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1629">UNSUPPORTED(&quot;7rtldqefvdgcf4u50kulbxtvn&quot;); //     double AR = (GD_bb(g).UR.x - GD_bb(g).LL.x)/(GD_bb(g).UR.y - GD_bb(g).LL.y);</span>
+<span class="nc" id="L1630">UNSUPPORTED(&quot;cve2on8gll5i0vomy8lnwhai2&quot;); //     if (Verbose) {</span>
+<span class="nc" id="L1631">UNSUPPORTED(&quot;6z0q1m3yc6o11ejsa59eghqag&quot;); //         fprintf(stderr, &quot;AR=%0.4lf\t Area= %0.4lf\t&quot;, AR, (double)(GD_bb(g).UR.x - GD_bb(g).LL.x)*(GD_bb(g).UR.y - GD_bb(g).LL.y)/10000.0);</span>
+<span class="nc" id="L1632">UNSUPPORTED(&quot;2uealcdkjdgg8ne1cijkbagpu&quot;); //         fprintf(stderr, &quot;Dummy=%d\n&quot;, countDummyNodes(g));</span>
+<span class="nc" id="L1633">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1634">UNSUPPORTED(&quot;96mqnzcfbfghxkxkn1x8kdh8i&quot;); //     if (AR &gt; 1.1*asp-&gt;targetAR) {</span>
+<span class="nc" id="L1635">UNSUPPORTED(&quot;6gq7uj15zh138zyae50c8nh2z&quot;); //       asp-&gt;nextIter = (int)(asp-&gt;targetAR * (double)(asp-&gt;curIterations - asp-&gt;prevIterations)/(AR));</span>
+<span class="nc" id="L1636">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1637">UNSUPPORTED(&quot;e1443w2cx49ogpsf5m59zy4fq&quot;); //     else if (AR &lt;= 0.8 * asp-&gt;targetAR) {</span>
+<span class="nc" id="L1638">UNSUPPORTED(&quot;5awa0x1pxpta5wou27bzrtvoc&quot;); //       asp-&gt;nextIter = -1;</span>
+<span class="nc" id="L1639">UNSUPPORTED(&quot;5xdo0sx20rmxgmdkrm1giaige&quot;); //       if (Verbose)</span>
+<span class="nc" id="L1640">UNSUPPORTED(&quot;du5ztjo6nfo54ailmk1tqs05b&quot;); //         fprintf(stderr, &quot;Going to apply another expansion.\n&quot;);</span>
+<span class="nc" id="L1641">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1642">UNSUPPORTED(&quot;1nyzbeonram6636b1w955bypn&quot;); //     else {</span>
+<span class="nc" id="L1643">UNSUPPORTED(&quot;757eq4638npmb5w5e39iemxfo&quot;); // 	asp-&gt;nextIter = 0;</span>
+<span class="nc" id="L1644">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1645">UNSUPPORTED(&quot;2di5wqm6caczzl6bvqe35ry8y&quot;); //     if (Verbose)</span>
+<span class="nc" id="L1646">UNSUPPORTED(&quot;29wdml7g4931q8kgah8hgwjd0&quot;); //         fprintf(stderr, &quot;next#iter=%d\n&quot;, asp-&gt;nextIter);</span>
+<span class="nc" id="L1647">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1649">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 7effq6z6ur101wrch6ttozr26
+// static void set_aspect(graph_t * g, aspect_t* asp) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;set_aspect&quot;, key=&quot;7effq6z6ur101wrch6ttozr26&quot;, definition=&quot;static void set_aspect(graph_t * g, aspect_t* asp)&quot;)
+public static void set_aspect(ST_Agraph_s g, ST_aspect_t asp) {
+<span class="fc" id="L1660">ENTERING(&quot;7effq6z6ur101wrch6ttozr26&quot;,&quot;set_aspect&quot;);</span>
+try {
+<span class="fc" id="L1662">    double xf = 0.0, yf = 0.0, actual, desired;</span>
+    ST_Agnode_s n;
+    boolean scale_it, filled;
+<span class="fc" id="L1665">    ST_point sz = new ST_point();</span>
+<span class="fc" id="L1666">    rec_bb(g, g);</span>
+<span class="pc bpc" id="L1667" title="1 of 4 branches missed.">    if ((GD_maxrank(g) &gt; 0) &amp;&amp; (GD_drawing(g).ratio_kind!=EN_ratio_t.R_NONE)) {</span>
+<span class="nc" id="L1668">UNSUPPORTED(&quot;5wbmy4x78flo2ztfabki9lyjf&quot;); // 	sz.x = GD_bb(g).UR.x - GD_bb(g).LL.x;</span>
+<span class="nc" id="L1669">UNSUPPORTED(&quot;catd6eu5oc282ln95k9zz52f3&quot;); // 	sz.y = GD_bb(g).UR.y - GD_bb(g).LL.y;	/* normalize */</span>
+<span class="nc" id="L1670">UNSUPPORTED(&quot;21zvq2qx1j34j1i1879zyhzpj&quot;); // 	if (GD_flip(g)) {</span>
+<span class="nc" id="L1671">UNSUPPORTED(&quot;d55uzald1tvs7xodnua67pxv6&quot;); // 	    int t = sz.x;</span>
+<span class="nc" id="L1672">UNSUPPORTED(&quot;47s1klx0pfzda4e311w53ou7e&quot;); // 	    sz.x = sz.y;</span>
+<span class="nc" id="L1673">UNSUPPORTED(&quot;3tx1mj7j0rqw33y24a0gu4ali&quot;); // 	    sz.y = t;</span>
+<span class="nc" id="L1674">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1675">UNSUPPORTED(&quot;4ct8ztqxnsskgphsp1v3aw5ec&quot;); // 	scale_it = NOT(0);</span>
+<span class="nc" id="L1676">UNSUPPORTED(&quot;8v772n1u4wqlmskqfswlzcz2o&quot;); // 	if (GD_drawing(g)-&gt;ratio_kind == R_AUTO)</span>
+<span class="nc" id="L1677">UNSUPPORTED(&quot;8mtmgag5dxj8ttlcabbpd865p&quot;); // 	    filled = idealsize(g, .5);</span>
+<span class="nc" id="L1678">UNSUPPORTED(&quot;9352ql3e58qs4fzapgjfrms2s&quot;); // 	else</span>
+<span class="nc" id="L1679">UNSUPPORTED(&quot;bxtk5e5ls8qsd36eucvhufg9y&quot;); // 	    filled = GD_drawing(g)-&gt;ratio_kind == R_FILL;</span>
+<span class="nc" id="L1680">UNSUPPORTED(&quot;2atgu691bmn6h9jvk8lve5qzc&quot;); // 	if (filled) {</span>
+<span class="nc" id="L1681">UNSUPPORTED(&quot;1zx5etcjofceqjvogfn8urkdj&quot;); // 	    /* fill is weird because both X and Y can stretch */</span>
+<span class="nc" id="L1682">UNSUPPORTED(&quot;7ezqjon4u21dwg4qvxssrnwfc&quot;); // 	    if (GD_drawing(g)-&gt;size.x &lt;= 0)</span>
+<span class="nc" id="L1683">UNSUPPORTED(&quot;dao0fnoi65upcdtr9csqhhy41&quot;); // 		scale_it = 0;</span>
+<span class="nc" id="L1684">UNSUPPORTED(&quot;6q044im7742qhglc4553noina&quot;); // 	    else {</span>
+<span class="nc" id="L1685">UNSUPPORTED(&quot;6ifkww34s7php908n9wg0oiju&quot;); // 		xf = (double) GD_drawing(g)-&gt;size.x / (double) sz.x;</span>
+<span class="nc" id="L1686">UNSUPPORTED(&quot;6faiikvxwdge2ydblv90976hb&quot;); // 		yf = (double) GD_drawing(g)-&gt;size.y / (double) sz.y;</span>
+<span class="nc" id="L1687">UNSUPPORTED(&quot;5xkzvdrdnfd5afhhxgajbywya&quot;); // 		if ((xf &lt; 1.0) || (yf &lt; 1.0)) {</span>
+<span class="nc" id="L1688">UNSUPPORTED(&quot;cvkvyq93xp1itpomhj1r2xlzy&quot;); // 		    if (xf &lt; yf) {</span>
+<span class="nc" id="L1689">UNSUPPORTED(&quot;capfpf4tncicsp81elmwvf0l&quot;); // 			yf = yf / xf;</span>
+<span class="nc" id="L1690">UNSUPPORTED(&quot;7sdzyzqj65rbq6edfgf5x6xht&quot;); // 			xf = 1.0;</span>
+<span class="nc" id="L1691">UNSUPPORTED(&quot;d86r93g8nz9a1kfzgi7f8j8nh&quot;); // 		    } else {</span>
+<span class="nc" id="L1692">UNSUPPORTED(&quot;emwaipsi6kyqbpk2y26k3cxfw&quot;); // 			xf = xf / yf;</span>
+<span class="nc" id="L1693">UNSUPPORTED(&quot;1s91x56ftedjsc3m32dqgspqn&quot;); // 			yf = 1.0;</span>
+<span class="nc" id="L1694">UNSUPPORTED(&quot;dkxvw03k2gg9anv4dbze06axd&quot;); // 		    }</span>
+<span class="nc" id="L1695">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L1696">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1697">UNSUPPORTED(&quot;c48w89y9jw5baxqqucmiyfha7&quot;); // 	} else if (GD_drawing(g)-&gt;ratio_kind == R_EXPAND) {</span>
+<span class="nc" id="L1698">UNSUPPORTED(&quot;7ezqjon4u21dwg4qvxssrnwfc&quot;); // 	    if (GD_drawing(g)-&gt;size.x &lt;= 0)</span>
+<span class="nc" id="L1699">UNSUPPORTED(&quot;dao0fnoi65upcdtr9csqhhy41&quot;); // 		scale_it = 0;</span>
+<span class="nc" id="L1700">UNSUPPORTED(&quot;6q044im7742qhglc4553noina&quot;); // 	    else {</span>
+<span class="nc" id="L1701">UNSUPPORTED(&quot;akfs904fsk7cyl8wbv0x7fnvz&quot;); // 		xf = (double) GD_drawing(g)-&gt;size.x /</span>
+<span class="nc" id="L1702">UNSUPPORTED(&quot;1ewqbc4kglc2kg1n13euxrxzh&quot;); // 		    (double) GD_bb(g).UR.x;</span>
+<span class="nc" id="L1703">UNSUPPORTED(&quot;6fmkpg9ypaxceugi24gklvdra&quot;); // 		yf = (double) GD_drawing(g)-&gt;size.y /</span>
+<span class="nc" id="L1704">UNSUPPORTED(&quot;8mskb0mqou89myfbiihsjpbg6&quot;); // 		    (double) GD_bb(g).UR.y;</span>
+<span class="nc" id="L1705">UNSUPPORTED(&quot;a2jzgqbpoanzqdqc7vjk32vmz&quot;); // 		if ((xf &gt; 1.0) &amp;&amp; (yf &gt; 1.0)) {</span>
+<span class="nc" id="L1706">UNSUPPORTED(&quot;6np8qfg5qnlaypikhw0bdx84j&quot;); // 		    double scale = MIN(xf, yf);</span>
+<span class="nc" id="L1707">UNSUPPORTED(&quot;272bmuv1row7l9tla5bhot840&quot;); // 		    xf = yf = scale;</span>
+<span class="nc" id="L1708">UNSUPPORTED(&quot;738mi6h8ef0itznt34ngxe25o&quot;); // 		} else</span>
+<span class="nc" id="L1709">UNSUPPORTED(&quot;b5qs3ho2fcywk3sd5cw3m88kw&quot;); // 		    scale_it = 0;</span>
+<span class="nc" id="L1710">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1711">UNSUPPORTED(&quot;d7deewhp6akdb13j7ry364hbd&quot;); // 	} else if (GD_drawing(g)-&gt;ratio_kind == R_VALUE) {</span>
+<span class="nc" id="L1712">UNSUPPORTED(&quot;fpejwrlknxizaxxibhuyaxdt&quot;); // 	    desired = GD_drawing(g)-&gt;ratio;</span>
+<span class="nc" id="L1713">UNSUPPORTED(&quot;douwz2voka0puoeooqjn8kijk&quot;); // 	    actual = ((double) sz.y) / ((double) sz.x);</span>
+<span class="nc" id="L1714">UNSUPPORTED(&quot;7u9yvuqazzo19geppiphd9rfh&quot;); // 	    if (actual &lt; desired) {</span>
+<span class="nc" id="L1715">UNSUPPORTED(&quot;apqq3m2rezfl96zbvk7lut02&quot;); // 		yf = desired / actual;</span>
+<span class="nc" id="L1716">UNSUPPORTED(&quot;8po0oizki4figodjv9xku16gq&quot;); // 		xf = 1.0;</span>
+<span class="nc" id="L1717">UNSUPPORTED(&quot;175pyfe8j8mbhdwvrbx3gmew9&quot;); // 	    } else {</span>
+<span class="nc" id="L1718">UNSUPPORTED(&quot;84c3pp9xgnii11clyyxblqmy6&quot;); // 		xf = actual / desired;</span>
+<span class="nc" id="L1719">UNSUPPORTED(&quot;1tr1b9rp1b00pcafss87kadfe&quot;); // 		yf = 1.0;</span>
+<span class="nc" id="L1720">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1721">UNSUPPORTED(&quot;6to1esmb8qfrhzgtr7jdqleja&quot;); // 	} else</span>
+<span class="nc" id="L1722">UNSUPPORTED(&quot;csvnhx5mo535o6ue1tg3ktjhs&quot;); // 	    scale_it = 0;</span>
+<span class="nc" id="L1723">UNSUPPORTED(&quot;bh2d68e9s7cr7k1bl0h9fmr9a&quot;); // 	if (scale_it) {</span>
+<span class="nc" id="L1724">UNSUPPORTED(&quot;b8symsgdtoq84y3j1151pv0g4&quot;); // 	    if (GD_flip(g)) {</span>
+<span class="nc" id="L1725">UNSUPPORTED(&quot;bi983gfofc0blj8r4yetj14kb&quot;); // 		double t = xf;</span>
+<span class="nc" id="L1726">UNSUPPORTED(&quot;69pmocxfvmk0urni4fg0x4na5&quot;); // 		xf = yf;</span>
+<span class="nc" id="L1727">UNSUPPORTED(&quot;cyt895z1pa5arxz4d1kv0hqgq&quot;); // 		yf = t;</span>
+<span class="nc" id="L1728">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1729">UNSUPPORTED(&quot;crtcqz91ff5l8ntjbne40b5x4&quot;); // 	    for (n = GD_nlist(g); n; n = ND_next(n)) {</span>
+<span class="nc" id="L1730">UNSUPPORTED(&quot;brs6nych5z9m0a75ixbe5l80o&quot;); // 		ND_coord(n).x = ROUND(ND_coord(n).x * xf);</span>
+<span class="nc" id="L1731">UNSUPPORTED(&quot;cpe0pjsilppgrp2ofysn4y54w&quot;); // 		ND_coord(n).y = ROUND(ND_coord(n).y * yf);</span>
+<span class="nc" id="L1732">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1733">UNSUPPORTED(&quot;8f0d3etdet1pk8ikvltmz5h2s&quot;); // 	    scale_bb(g, g, xf, yf);</span>
+<span class="nc" id="L1734">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+<span class="pc bpc" id="L1736" title="1 of 2 branches missed.">    if (asp!=null) adjustAspectRatio (g, asp);</span>
+} finally {
+<span class="fc" id="L1738">LEAVING(&quot;7effq6z6ur101wrch6ttozr26&quot;,&quot;set_aspect&quot;);</span>
+}
+<span class="fc" id="L1740">}</span>
+
+
+
+
+/* make space for the leaf nodes of each rank */
+@Unused
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;make_leafslots&quot;, key=&quot;1lejhh3evsa10auyj7cgqj8ub&quot;, definition=&quot;static void make_leafslots(graph_t * g)&quot;)
+public static void make_leafslots(ST_Agraph_s g) {
+<span class="fc" id="L1750">ENTERING(&quot;1lejhh3evsa10auyj7cgqj8ub&quot;,&quot;make_leafslots&quot;);</span>
+try {
+    int i, j, r;
+    ST_Agnode_s v;
+    
+<span class="fc bfc" id="L1755" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L1756">	j = 0;</span>
+<span class="fc bfc" id="L1757" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L1758">	    v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc" id="L1759">	    ND_order(v, j);</span>
+<span class="pc bpc" id="L1760" title="1 of 2 branches missed.">	    if (ND_ranktype(v) == LEAFSET)</span>
+<span class="nc" id="L1761">		j = j + ND_UF_size(v);</span>
+	    else
+<span class="fc" id="L1763">		j++;</span>
+	}
+<span class="pc bpc" id="L1765" title="1 of 2 branches missed.">	if (j &lt;= GD_rank(g).get__(r).n)</span>
+<span class="fc" id="L1766">	    continue;</span>
+<span class="nc" id="L1767">	GD_rank(g).get__(r).v = CArrayOfStar.&lt;ST_Agnode_s&gt;REALLOC(j + 1, GD_rank(g).get__(r).v, ZType.ST_Agnode_s);</span>
+<span class="nc bnc" id="L1768" title="All 2 branches missed.">	for (i = GD_rank(g).get__(r).n - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L1769">	    v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="nc" id="L1770">	    GD_rank(g).get__(r).v.set_(ND_order(v), v);</span>
+	}
+<span class="nc" id="L1772">	GD_rank(g).get__(r).n = j;</span>
+<span class="nc" id="L1773">	GD_rank(g).get__(r).v.set_(j, null);</span>
+    }
+} finally {
+<span class="fc" id="L1776">LEAVING(&quot;1lejhh3evsa10auyj7cgqj8ub&quot;,&quot;make_leafslots&quot;);</span>
+}
+<span class="fc" id="L1778">}</span>
+
+
+
+
+//3 wb2wvxthkr2sp9u8113go3j3
+// static void do_leaves(graph_t * g, node_t * leader) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;do_leaves&quot;, key=&quot;wb2wvxthkr2sp9u8113go3j3&quot;, definition=&quot;static void do_leaves(graph_t * g, node_t * leader)&quot;)
+public static Object do_leaves(Object... arg_) {
+<span class="nc" id="L1788">UNSUPPORTED(&quot;5nmyuqyhfqfwbmgdj5aot9fp4&quot;); // static void do_leaves(graph_t * g, node_t * leader)</span>
+<span class="nc" id="L1789">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1790">UNSUPPORTED(&quot;2bs0wcp6367dz1o5x166ec7l8&quot;); //     int j;</span>
+<span class="nc" id="L1791">UNSUPPORTED(&quot;4bxv0pw87c31sbbz6x6s1cq9d&quot;); //     point lbound;</span>
+<span class="nc" id="L1792">UNSUPPORTED(&quot;cjx5v6hayed3q8eeub1cggqca&quot;); //     node_t *n;</span>
+<span class="nc" id="L1793">UNSUPPORTED(&quot;5gypxs09iuryx5a2eho9lgdcp&quot;); //     edge_t *e;</span>
+<span class="nc" id="L1794">UNSUPPORTED(&quot;b9upgllg8zjx49090hr3afv91&quot;); //     if (ND_UF_size(leader) &lt;= 1)</span>
+<span class="nc" id="L1795">UNSUPPORTED(&quot;a7fgam0j0jm7bar0mblsv3no4&quot;); // 	return;</span>
+<span class="nc" id="L1796">UNSUPPORTED(&quot;9m0hiwybw3dr0lcxmgq833heo&quot;); //     lbound.x = ND_coord(leader).x - ND_lw(leader);</span>
+<span class="nc" id="L1797">UNSUPPORTED(&quot;ev0phf24gpqz3xtvtueq72f7g&quot;); //     lbound.y = ND_coord(leader).y;</span>
+<span class="nc" id="L1798">UNSUPPORTED(&quot;90r9xqe4faj7b1g8907ord1x3&quot;); //     lbound = resize_leaf(leader, lbound);</span>
+<span class="nc" id="L1799">UNSUPPORTED(&quot;66ue8mvk3axhgbkcg3xqo94tb&quot;); //     if (ND_out(leader).size &gt; 0) {	/* in-edge leaves */</span>
+<span class="nc" id="L1800">UNSUPPORTED(&quot;9lq5udq73fgfeqyqsxw6i3pgm&quot;); // 	n = aghead(ND_out(leader).list[0]);</span>
+<span class="nc" id="L1801">UNSUPPORTED(&quot;4vp9ny4udt1jcmibfgpwgrnqo&quot;); // 	j = ND_order(leader) + 1;</span>
+<span class="nc" id="L1802">UNSUPPORTED(&quot;3ml0tasns5tz6d5xc2xdb6nc&quot;); // 	for (e = agfstin(g, n); e; e = agnxtin(g, e)) {</span>
+<span class="nc" id="L1803">UNSUPPORTED(&quot;e2y71fdc15yxylowp6ohlal9a&quot;); // 	    edge_t *e1 = AGMKOUT(e);</span>
+<span class="nc" id="L1804">UNSUPPORTED(&quot;ew4udmdawt257gbk5kzmi1n1&quot;); // 	    if ((agtail(e1) != leader) &amp;&amp; (UF_find(agtail(e1)) == leader)) {</span>
+<span class="nc" id="L1805">UNSUPPORTED(&quot;d2r94m7xk4qa9hn6s2td5nb6h&quot;); // 		lbound = place_leaf(g, agtail(e1), lbound, j++);</span>
+<span class="nc" id="L1806">UNSUPPORTED(&quot;5xk9d4ra447xucksge6c9mgos&quot;); // 		unmerge_oneway(e1);</span>
+<span class="nc" id="L1807">UNSUPPORTED(&quot;4dqun0n52lcyerkebva2hxh15&quot;); // 		elist_append(e1, ND_in(aghead(e1)));</span>
+<span class="nc" id="L1808">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1809">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1810">UNSUPPORTED(&quot;6owoaz61uf3928omhuf3rqjoa&quot;); //     } else {			/* out edge leaves */</span>
+<span class="nc" id="L1811">UNSUPPORTED(&quot;4lbkem8hb4jy3gdg6nt3cbtl9&quot;); // 	n = agtail(ND_in(leader).list[0]);</span>
+<span class="nc" id="L1812">UNSUPPORTED(&quot;4vp9ny4udt1jcmibfgpwgrnqo&quot;); // 	j = ND_order(leader) + 1;</span>
+<span class="nc" id="L1813">UNSUPPORTED(&quot;e20lm4qtccvgsfq5fzjv6sjyl&quot;); // 	for (e = agfstout(g, n); e; e = agnxtout(g, e)) {</span>
+<span class="nc" id="L1814">UNSUPPORTED(&quot;38a98cy0214odvsa98hgyce8q&quot;); // 	    if ((aghead(e) != leader) &amp;&amp; (UF_find(aghead(e)) == leader)) {</span>
+<span class="nc" id="L1815">UNSUPPORTED(&quot;9j9o79r2bdc6npidu38aq0cym&quot;); // 		lbound = place_leaf(g, aghead(e), lbound, j++);</span>
+<span class="nc" id="L1816">UNSUPPORTED(&quot;6wbwzuqqh5vxume7ga2kuejcf&quot;); // 		unmerge_oneway(e);</span>
+<span class="nc" id="L1817">UNSUPPORTED(&quot;dv9vv9pfcd3cibfjn258toxyv&quot;); // 		elist_append(e, ND_out(agtail(e)));</span>
+<span class="nc" id="L1818">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1819">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1820">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1821">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L1823">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 alpljm8o6nsam95ly6leelnbp
+// int ports_eq(edge_t * e, edge_t * f) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;ports_eq&quot;, key=&quot;alpljm8o6nsam95ly6leelnbp&quot;, definition=&quot;int ports_eq(edge_t * e, edge_t * f)&quot;)
+public static boolean ports_eq(ST_Agedge_s e, ST_Agedge_s f) {
+<span class="nc" id="L1834">ENTERING(&quot;alpljm8o6nsam95ly6leelnbp&quot;,&quot;ports_eq&quot;);</span>
+try {
+<span class="nc bnc" id="L1836" title="All 2 branches missed.">    return ((ED_head_port(e).defined == ED_head_port(f).defined)</span>
+<span class="nc bnc" id="L1837" title="All 2 branches missed.">	    &amp;&amp; (((ED_head_port(e).p.x == ED_head_port(f).p.x) &amp;&amp;</span>
+<span class="nc bnc" id="L1838" title="All 2 branches missed.">		 (ED_head_port(e).p.y == ED_head_port(f).p.y))</span>
+<span class="nc bnc" id="L1839" title="All 2 branches missed.">		|| (ED_head_port(e).defined == false))</span>
+<span class="nc bnc" id="L1840" title="All 2 branches missed.">	    &amp;&amp; (((ED_tail_port(e).p.x == ED_tail_port(f).p.x) &amp;&amp;</span>
+<span class="nc bnc" id="L1841" title="All 2 branches missed.">		 (ED_tail_port(e).p.y == ED_tail_port(f).p.y))</span>
+<span class="nc bnc" id="L1842" title="All 2 branches missed.">		|| (ED_tail_port(e).defined == false))</span>
+	);
+} finally {
+<span class="nc" id="L1845">LEAVING(&quot;alpljm8o6nsam95ly6leelnbp&quot;,&quot;ports_eq&quot;);</span>
+}
+}
+
+
+
+
+@Difficult
+@Todo(what = &quot;review zapinlist(&amp;(ND_other(n)), e);&quot;)
+@Reviewed(when = &quot;16/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;expand_leaves&quot;, key=&quot;cfotmdif5xv7n6oauyvzv0qwa&quot;, definition=&quot;static void expand_leaves(graph_t * g)&quot;)
+public static void expand_leaves(ST_Agraph_s g) {
+<span class="fc" id="L1857">ENTERING(&quot;cfotmdif5xv7n6oauyvzv0qwa&quot;,&quot;expand_leaves&quot;);</span>
+try {
+    int i, d;
+    ST_Agnode_s n;
+    ST_Agedge_s e, f;
+    
+<span class="fc" id="L1863">    make_leafslots(g);</span>
+<span class="fc bfc" id="L1864" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="pc bpc" id="L1865" title="1 of 2 branches missed.">	if (ND_inleaf(n)!=null)</span>
+<span class="nc" id="L1866">	    do_leaves(g, ND_inleaf(n));</span>
+<span class="pc bpc" id="L1867" title="1 of 2 branches missed.">	if (ND_outleaf(n)!=null)</span>
+<span class="nc" id="L1868">	    do_leaves(g, ND_outleaf(n));</span>
+<span class="fc bfc" id="L1869" title="All 2 branches covered.">	if (ND_other(n).list!=null)</span>
+<span class="fc bfc" id="L1870" title="All 2 branches covered.">	    for (i = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(i))!=null; i++) {</span>
+<span class="pc bpc" id="L1871" title="1 of 2 branches missed.">		if ((d = ND_rank(aghead(e)) - ND_rank(aghead(e))) == 0)</span>
+<span class="fc" id="L1872">		    continue;</span>
+<span class="nc" id="L1873">		f = ED_to_orig(e);</span>
+<span class="nc bnc" id="L1874" title="All 2 branches missed.">		if (ports_eq(e, f) == false) {</span>
+<span class="nc" id="L1875">			UNSURE_ABOUT(&quot;zapinlist(&amp;(ND_other(n)), e);&quot;);</span>
+<span class="nc" id="L1876">		    zapinlist(ND_other(n), e);</span>
+<span class="nc bnc" id="L1877" title="All 2 branches missed.">		    if (d == 1)</span>
+<span class="nc" id="L1878">			fast_edge(e);</span>
+		    /*else unitize(e); ### */
+<span class="nc" id="L1880">		    i--;</span>
+		}
+	    }
+    }
+} finally {
+<span class="fc" id="L1885">LEAVING(&quot;cfotmdif5xv7n6oauyvzv0qwa&quot;,&quot;expand_leaves&quot;);</span>
+}
+<span class="fc" id="L1887">}</span>
+
+
+
+
+//3 d4b57ugpwxy567pfmxn14ed8d
+// static void make_lrvn(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;make_lrvn&quot;, key=&quot;d4b57ugpwxy567pfmxn14ed8d&quot;, definition=&quot;static void make_lrvn(graph_t * g)&quot;)
+public static void make_lrvn(ST_Agraph_s g) {
+<span class="fc" id="L1897">ENTERING(&quot;d4b57ugpwxy567pfmxn14ed8d&quot;,&quot;make_lrvn&quot;);</span>
+try {
+    ST_Agnode_s ln, rn;
+<span class="fc bfc" id="L1900" title="All 2 branches covered.">    if (GD_ln(g)!=null)</span>
+<span class="fc" id="L1901">	return;</span>
+<span class="fc" id="L1902">    ln = virtual_node(dot_root(g));</span>
+<span class="fc" id="L1903">    ND_node_type(ln, 2);</span>
+<span class="fc" id="L1904">    rn = virtual_node(dot_root(g));</span>
+<span class="fc" id="L1905">    ND_node_type(rn, 2);</span>
+<span class="pc bpc" id="L1906" title="2 of 6 branches missed.">    if (GD_label(g)!=null &amp;&amp; (g != dot_root(g)) &amp;&amp; !GD_flip(agroot(g))) {</span>
+<span class="fc" id="L1907">	int w = Math.max((int)GD_border(g)[0].x, (int)GD_border(g)[2].x);</span>
+<span class="fc" id="L1908">	make_aux_edge(ln, rn, w, 0);</span>
+    }
+<span class="fc" id="L1910">    GD_ln(g, ln);</span>
+<span class="fc" id="L1911">    GD_rn(g, rn);</span>
+} finally {
+<span class="fc" id="L1913">LEAVING(&quot;d4b57ugpwxy567pfmxn14ed8d&quot;,&quot;make_lrvn&quot;);</span>
+}
+<span class="fc" id="L1915">}</span>
+
+
+
+
+//3 daz786541idcxnywckcbncazb
+// static void contain_nodes(graph_t * g) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;contain_nodes&quot;, key=&quot;daz786541idcxnywckcbncazb&quot;, definition=&quot;static void contain_nodes(graph_t * g)&quot;)
+public static void contain_nodes(Globals zz, ST_Agraph_s  g) {
+<span class="fc" id="L1925">ENTERING(&quot;daz786541idcxnywckcbncazb&quot;,&quot;contain_nodes&quot;);</span>
+try {
+    int margin, r;
+    ST_Agnode_s ln, rn, v;
+<span class="fc" id="L1929">    margin = late_int (g, zz.G_margin, 8, 0);</span>
+<span class="fc" id="L1930">    make_lrvn(g);</span>
+<span class="fc" id="L1931">    ln = GD_ln(g);</span>
+<span class="fc" id="L1932">    rn = GD_rn(g);</span>
+<span class="fc bfc" id="L1933" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="pc bpc" id="L1934" title="1 of 2 branches missed.">	if (GD_rank(g).get__(r).n == 0)</span>
+<span class="nc" id="L1935">	    continue;</span>
+<span class="fc" id="L1936">	v = GD_rank(g).get__(r).v.get_(0);</span>
+<span class="pc bpc" id="L1937" title="1 of 2 branches missed.">	if (v == null) {</span>
+<span class="nc" id="L1938">UNSUPPORTED(&quot;1f2esoodtcrdhljk1cq1klyao&quot;); // 	    agerr(AGERR, &quot;contain_nodes clust %s rank %d missing node\n&quot;,</span>
+<span class="nc" id="L1939">UNSUPPORTED(&quot;7w6lv4ywtczwz2y1mg0p3jdav&quot;); // 		  agnameof(g), r);</span>
+<span class="nc" id="L1940">UNSUPPORTED(&quot;6hqli9m8yickz1ox1qfgtdbnd&quot;); // 	    continue;</span>
+	}
+<span class="fc" id="L1942">	make_aux_edge(ln, v,</span>
+<span class="fc" id="L1943">		      ND_lw(v) + margin + GD_border(g)[3].x, 0);</span>
+<span class="fc" id="L1944">	v = GD_rank(g).get__(r).v.get_(GD_rank(g).get__(r).n - 1);</span>
+<span class="fc" id="L1945">	make_aux_edge(v, rn,</span>
+<span class="fc" id="L1946">		      ND_rw(v) + margin + GD_border(g)[1].x, 0);</span>
+    }
+} finally {
+<span class="fc" id="L1949">LEAVING(&quot;daz786541idcxnywckcbncazb&quot;,&quot;contain_nodes&quot;);</span>
+}
+<span class="fc" id="L1951">}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataMask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">zext.plantuml.com.google.zxing.qrcode.decoder</a> &gt; <span class="el_source">DataMask.java</span></div><h1>DataMask.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2007 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package zext.plantuml.com.google.zxing.qrcode.decoder;
+
+import zext.plantuml.com.google.zxing.common.BitMatrix;
+
+/**
+ * &lt;p&gt;Encapsulates data masks for the data bits in a QR code, per ISO 18004:2006 6.8. Implementations
+ * of this class can un-mask a raw BitMatrix. For simplicity, they will unmask the entire BitMatrix,
+ * including areas used for finder patterns, timing patterns, etc. These areas should be unused
+ * after the point they are unmasked anyway.&lt;/p&gt;
+ *
+ * &lt;p&gt;Note that the diagram in section 6.8.1 is misleading since it indicates that i is column position
+ * and j is row position. In fact, as the text says, i is row position and j is column position.&lt;/p&gt;
+ *
+ * @author Sean Owen
+ */
+abstract class DataMask {
+    // ::remove folder when __HAXE__
+
+  /**
+   * See ISO 18004:2006 6.8.1
+   */
+<span class="nc" id="L38">  private static final DataMask[] DATA_MASKS = {</span>
+      new DataMask000(),
+      new DataMask001(),
+      new DataMask010(),
+      new DataMask011(),
+      new DataMask100(),
+      new DataMask101(),
+      new DataMask110(),
+      new DataMask111(),
+  };
+
+  private DataMask() {
+  }
+
+  /**
+   * &lt;p&gt;Implementations of this method reverse the data masking process applied to a QR Code and
+   * make its bits ready to read.&lt;/p&gt;
+   *
+   * @param bits representation of QR Code bits
+   * @param dimension dimension of QR Code, represented by bits, being unmasked
+   */
+  final void unmaskBitMatrix(BitMatrix bits, int dimension) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">    for (int i = 0; i &lt; dimension; i++) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">      for (int j = 0; j &lt; dimension; j++) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (isMasked(i, j)) {</span>
+<span class="nc" id="L63">          bits.flip(j, i);</span>
+        }
+      }
+    }
+<span class="nc" id="L67">  }</span>
+
+  abstract boolean isMasked(int i, int j);
+
+  /**
+   * @param reference a value between 0 and 7 indicating one of the eight possible
+   * data mask patterns a QR Code may use
+   * @return {@link DataMask} encapsulating the data mask pattern
+   */
+  static DataMask forReference(int reference) {
+<span class="nc bnc" id="L77" title="All 4 branches missed.">    if (reference &lt; 0 || reference &gt; 7) {</span>
+<span class="nc" id="L78">      throw new IllegalArgumentException();</span>
+    }
+<span class="nc" id="L80">    return DATA_MASKS[reference];</span>
+  }
+
+  /**
+   * 000: mask bits for which (x + y) mod 2 == 0
+   */
+<span class="nc" id="L86">  private static class DataMask000 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc bnc" id="L88" title="All 2 branches missed.">      return ((i + j) &amp; 0x01) == 0;</span>
+    }
+  }
+
+  /**
+   * 001: mask bits for which x mod 2 == 0
+   */
+<span class="nc" id="L95">  private static class DataMask001 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc bnc" id="L97" title="All 2 branches missed.">      return (i &amp; 0x01) == 0;</span>
+    }
+  }
+
+  /**
+   * 010: mask bits for which y mod 3 == 0
+   */
+<span class="nc" id="L104">  private static class DataMask010 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">      return j % 3 == 0;</span>
+    }
+  }
+
+  /**
+   * 011: mask bits for which (x + y) mod 3 == 0
+   */
+<span class="nc" id="L113">  private static class DataMask011 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">      return (i + j) % 3 == 0;</span>
+    }
+  }
+
+  /**
+   * 100: mask bits for which (x/2 + y/3) mod 2 == 0
+   */
+<span class="nc" id="L122">  private static class DataMask100 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">      return (((i &gt;&gt;&gt; 1) + (j /3)) &amp; 0x01) == 0;</span>
+    }
+  }
+
+  /**
+   * 101: mask bits for which xy mod 2 + xy mod 3 == 0
+   */
+<span class="nc" id="L131">  private static class DataMask101 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc" id="L133">      int temp = i * j;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">      return (temp &amp; 0x01) + (temp % 3) == 0;</span>
+    }
+  }
+
+  /**
+   * 110: mask bits for which (xy mod 2 + xy mod 3) mod 2 == 0
+   */
+<span class="nc" id="L141">  private static class DataMask110 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc" id="L143">      int temp = i * j;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">      return (((temp &amp; 0x01) + (temp % 3)) &amp; 0x01) == 0;</span>
+    }
+  }
+
+  /**
+   * 111: mask bits for which ((x+y)mod 2 + xy mod 3) mod 2 == 0
+   */
+<span class="nc" id="L151">  private static class DataMask111 extends DataMask {</span>
+    boolean isMasked(int i, int j) {
+<span class="nc bnc" id="L153" title="All 2 branches missed.">      return ((((i + j) &amp; 0x01) + ((i * j) % 3)) &amp; 0x01) == 0;</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

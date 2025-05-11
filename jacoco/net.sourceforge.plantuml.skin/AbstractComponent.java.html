@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractComponent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">AbstractComponent.java</span></div><h1>AbstractComponent.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public abstract class AbstractComponent implements Component {
+
+	public final Style[] getUsedStyles() {
+<span class="nc" id="L50">		throw new UnsupportedOperationException();</span>
+	}
+
+	public StyleSignatureBasic getStyleSignature() {
+<span class="nc" id="L54">		throw new UnsupportedOperationException();</span>
+	}
+
+	private final Style style;
+	private final ISkinParam skinParam;
+
+<span class="fc" id="L60">	public AbstractComponent(Style style, ISkinParam skinParam) {</span>
+<span class="fc" id="L61">		this.style = style;</span>
+<span class="fc" id="L62">		this.skinParam = skinParam;</span>
+<span class="fc" id="L63">	}</span>
+
+	protected final Style getStyle() {
+<span class="fc" id="L66">		return style;</span>
+	}
+
+	protected final ISkinParam getSkinParam() {
+<span class="fc" id="L70">		return skinParam;</span>
+	}
+
+	protected HColorSet getIHtmlColorSet() {
+<span class="fc" id="L74">		return skinParam.getIHtmlColorSet();</span>
+	}
+
+	abstract protected void drawInternalU(UGraphic ug, Area area);
+
+	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
+<span class="fc" id="L80">	}</span>
+
+	public final void drawU(UGraphic ug, Area area, Context2D context) {
+<span class="fc" id="L83">		ug = ug.apply(new UTranslate(getPaddingX(), getPaddingY()));</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (context.isBackground())</span>
+<span class="fc" id="L85">			drawBackgroundInternalU(ug, area);</span>
+		else
+<span class="fc" id="L87">			drawInternalU(ug, area);</span>
+
+<span class="fc" id="L89">	}</span>
+
+	public double getPaddingX() {
+<span class="fc" id="L92">		return 0;</span>
+	}
+
+	public double getPaddingY() {
+<span class="fc" id="L96">		return 0;</span>
+	}
+
+	public abstract double getPreferredWidth(StringBounder stringBounder);
+
+	public abstract double getPreferredHeight(StringBounder stringBounder);
+
+	public final XDimension2D getPreferredDimension(StringBounder stringBounder) {
+<span class="fc" id="L104">		final double w = getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L105">		final double h = getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L106">		return new XDimension2D(w, h);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

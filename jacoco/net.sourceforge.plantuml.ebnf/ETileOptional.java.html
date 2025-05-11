@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ETileOptional.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ebnf</a> &gt; <span class="el_source">ETileOptional.java</span></div><h1>ETileOptional.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2020, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.ebnf;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+
+@Deprecated()
+public class ETileOptional extends ETile {
+
+	private final double deltax;
+<span class="nc" id="L56">	private final double deltay = 16;</span>
+	private final ETile orig;
+	private final ISkinParam skinParam;
+	private String commentAbove;
+	private String commentBelow;
+
+	private final boolean specialForAlternate;
+
+<span class="nc" id="L64">	public ETileOptional(ETile orig, ISkinParam skinParam) {</span>
+<span class="nc" id="L65">		this.skinParam = skinParam;</span>
+<span class="nc" id="L66">		this.orig = orig;</span>
+<span class="nc" id="L67">		this.specialForAlternate = orig instanceof ETileAlternation;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		this.deltax = this.specialForAlternate ? 0 : 15;</span>
+<span class="nc" id="L69">	}</span>
+
+	@Override
+	public double getH1(StringBounder stringBounder) {
+<span class="nc" id="L73">		final TextBlock note = getNoteAbove(stringBounder);</span>
+<span class="nc" id="L74">		return deltay + orig.getH1(stringBounder) + note.calculateDimension(stringBounder).getHeight();</span>
+	}
+
+	private double getDeltaY(StringBounder stringBounder) {
+<span class="nc" id="L78">		final TextBlock note = getNoteAbove(stringBounder);</span>
+<span class="nc" id="L79">		return deltay + note.calculateDimension(stringBounder).getHeight();</span>
+	}
+
+	@Override
+	public double getH2(StringBounder stringBounder) {
+<span class="nc" id="L84">		final TextBlock note = getNoteBelow(stringBounder);</span>
+<span class="nc" id="L85">		return orig.getH2(stringBounder) + note.calculateDimension(stringBounder).getHeight();</span>
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+<span class="nc" id="L90">		return orig.getWidth(stringBounder) + 2 * deltax;</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L95">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L96">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+		if (TRACE)
+			ug.apply(HColors.BLUE).draw(URectangle.build(dim));
+
+<span class="nc" id="L100">		final double linePos = getH1(stringBounder);</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		final double posA = specialForAlternate ? 12 : 8;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		final double corner = specialForAlternate ? 12 : 8;</span>
+<span class="nc" id="L104">		final double posB = dim.getWidth() - posA;</span>
+
+<span class="nc" id="L106">		final double posYoptionalLine = getDeltaY(stringBounder) - 11;</span>
+
+<span class="nc" id="L108">		CornerCurved.createSE(corner).drawU(ug.apply(new UTranslate(posA, linePos)));</span>
+<span class="nc" id="L109">		drawVline(ug, posA, corner + posYoptionalLine, linePos - corner);</span>
+<span class="nc" id="L110">		CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(posA, posYoptionalLine)));</span>
+
+<span class="nc" id="L112">		drawHlineDirected(ug, posYoptionalLine, posA + corner, posB - corner, 0.4, 0);</span>
+
+<span class="nc" id="L114">		CornerCurved.createSW(corner).drawU(ug.apply(new UTranslate(posB, linePos)));</span>
+<span class="nc" id="L115">		drawVline(ug, posB, corner + posYoptionalLine, linePos - corner);</span>
+<span class="nc" id="L116">		CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(posB, posYoptionalLine)));</span>
+
+<span class="nc" id="L118">		drawHline(ug, linePos, 0, deltax);</span>
+<span class="nc" id="L119">		drawHline(ug, linePos, dim.getWidth() - deltax, dim.getWidth());</span>
+
+<span class="nc" id="L121">		orig.drawU(ug.apply(new UTranslate(deltax, getDeltaY(stringBounder))));</span>
+
+<span class="nc" id="L123">		final TextBlock noteAbove = getNoteAbove(stringBounder);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (noteAbove != TextBlockUtils.EMPTY_TEXT_BLOCK) {</span>
+<span class="nc" id="L125">			final double pos2 = (dim.getWidth() - noteAbove.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L126">			noteAbove.drawU(ug.apply(UTranslate.dx(pos2)));</span>
+		}
+
+<span class="nc" id="L129">		final TextBlock noteBelow = getNoteBelow(stringBounder);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (noteBelow != TextBlockUtils.EMPTY_TEXT_BLOCK) {</span>
+<span class="nc" id="L131">			final XDimension2D dimBelow = noteBelow.calculateDimension(stringBounder);</span>
+<span class="nc" id="L132">			final double pos2 = (dim.getWidth() - dimBelow.getWidth()) / 2;</span>
+<span class="nc" id="L133">			noteBelow.drawU(ug.apply(new UTranslate(pos2, dim.getHeight() - dimBelow.getHeight())));</span>
+		}
+
+<span class="nc" id="L136">	}</span>
+
+	@Override
+	public void push(ETile tile) {
+<span class="nc" id="L140">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	protected void addCommentAbove(String comment) {
+<span class="nc" id="L145">		this.commentAbove = comment;</span>
+<span class="nc" id="L146">	}</span>
+
+	@Override
+	protected void addCommentBelow(String comment) {
+<span class="nc" id="L150">		this.commentBelow = comment;</span>
+<span class="nc" id="L151">	}</span>
+
+	@DuplicateCode(reference = &quot;ETileZeroOrMore&quot;)
+	private TextBlock getNoteAbove(StringBounder stringBounder) {
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (commentAbove == null)</span>
+<span class="nc" id="L156">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc" id="L157">		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentAbove), skinParam, SName.ebnf);</span>
+<span class="nc" id="L158">		return TextBlockUtils.withMargin(note, 0, 0, 0, 10);</span>
+	}
+
+	private TextBlock getNoteBelow(StringBounder stringBounder) {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (commentBelow == null)</span>
+<span class="nc" id="L163">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc" id="L164">		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentBelow), skinParam, SName.ebnf);</span>
+<span class="nc" id="L165">		return TextBlockUtils.withMargin(note, 0, 0, 10, 0);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

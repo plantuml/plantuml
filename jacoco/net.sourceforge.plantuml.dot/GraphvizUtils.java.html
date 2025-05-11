@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphvizUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.dot</a> &gt; <span class="el_source">GraphvizUtils.java</span></div><h1>GraphvizUtils.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.dot;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.crash.ReportLog;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
+
+<span class="nc" id="L48">public class GraphvizUtils {</span>
+	// ::remove file when __CORE__
+
+<span class="fc" id="L51">	private static int DOT_VERSION_LIMIT = 226;</span>
+
+
+<span class="fc" id="L54">	private static final ThreadLocal&lt;Integer&gt; limitSize = new ThreadLocal&lt;&gt;();</span>
+
+	public static void removeLocalLimitSize() {
+<span class="nc" id="L57">		limitSize.remove();</span>
+<span class="nc" id="L58">	}</span>
+
+	public static void setLocalImageLimit(int value) {
+<span class="nc" id="L61">		limitSize.set(value);</span>
+<span class="nc" id="L62">	}</span>
+
+	public static int getenvImageLimit() {
+<span class="fc" id="L65">		final Integer local = limitSize.get();</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (local != null)</span>
+<span class="nc" id="L67">			return local;</span>
+
+<span class="fc" id="L69">		final String env = SecurityUtils.getenv(&quot;PLANTUML_LIMIT_SIZE&quot;);</span>
+<span class="pc bpc" id="L70" title="3 of 4 branches missed.">		if (StringUtils.isNotEmpty(env) &amp;&amp; env.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L71">			return Integer.parseInt(env);</span>
+
+<span class="fc" id="L73">		return 4096;</span>
+	}
+
+	public static String getenvDefaultConfigFilename() {
+<span class="fc" id="L77">		return SecurityUtils.getenv(&quot;PLANTUML_DEFAULT_CONFIG_FILENAME&quot;);</span>
+	}
+
+	public static String getenvLogData() {
+<span class="nc" id="L81">		return SecurityUtils.getenv(&quot;PLANTUML_LOGDATA&quot;);</span>
+	}
+
+
+	static public int addDotStatus(ReportLog result, boolean withRichText) {
+<span class="nc" id="L86">		String red = &quot;&quot;;</span>
+<span class="nc" id="L87">		String bold = &quot;&quot;;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (withRichText) {</span>
+<span class="nc" id="L89">			red = &quot;&lt;b&gt;&lt;color:red&gt;&quot;;</span>
+<span class="nc" id="L90">			bold = &quot;&lt;b&gt;&quot;;</span>
+		}
+
+<span class="nc" id="L93">		int error = 0;</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (GraphvizRuntimeEnvironment.getInstance().useVizJs(null)) {</span>
+<span class="nc" id="L96">			result.add(&quot;VizJs library is used!&quot;);</span>
+			try {
+<span class="nc" id="L98">				final String err = getTestCreateSimpleFile();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (err == null)</span>
+<span class="nc" id="L100">					result.add(bold + &quot;Installation seems OK. File generation OK&quot;);</span>
+				else
+<span class="nc" id="L102">					result.add(red + err);</span>
+
+<span class="nc" id="L104">			} catch (Exception e) {</span>
+<span class="nc" id="L105">				result.add(red + e.toString());</span>
+<span class="nc" id="L106">				Logme.error(e);</span>
+<span class="nc" id="L107">				error = -1;</span>
+<span class="nc" id="L108">			}</span>
+<span class="nc" id="L109">			return error;</span>
+		}
+
+<span class="nc" id="L112">		final File dotExe = GraphvizRuntimeEnvironment.getInstance().getDotExe();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc" id="L114">			final String ent = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (ent == null)</span>
+<span class="nc" id="L116">				result.add(&quot;The environment variable GRAPHVIZ_DOT has not been set&quot;);</span>
+			else
+<span class="nc" id="L118">				result.add(&quot;The environment variable GRAPHVIZ_DOT has been set to &quot; + ent);</span>
+
+<span class="nc" id="L120">			result.add(&quot;Dot executable is &quot; + dotExe);</span>
+		}
+<span class="nc" id="L122">		final ExeState exeState = ExeState.checkFile(dotExe);</span>
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (exeState == ExeState.OK) {</span>
+			try {
+<span class="nc" id="L126">				final String version = GraphvizRuntimeEnvironment.getInstance().dotVersion();</span>
+<span class="nc" id="L127">				result.add(&quot;Dot version: &quot; + version);</span>
+<span class="nc" id="L128">				final int v = GraphvizRuntimeEnvironment.getInstance().getDotVersion();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">				if (v == -1) {</span>
+<span class="nc" id="L130">					result.add(&quot;Warning : cannot determine dot version&quot;);</span>
+<span class="nc" id="L131">					error = -2;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">				} else if (v &lt; DOT_VERSION_LIMIT) {</span>
+<span class="nc" id="L133">					result.add(bold + &quot;Warning : Your dot installation seems old&quot;);</span>
+<span class="nc" id="L134">					result.add(bold + &quot;Some diagrams may have issues&quot;);</span>
+<span class="nc" id="L135">					error = -3;</span>
+				} else {
+<span class="nc" id="L137">					final String err = getTestCreateSimpleFile();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">					if (err == null) {</span>
+<span class="nc" id="L139">						result.add(bold + &quot;Installation seems OK. File generation OK&quot;);</span>
+					} else {
+<span class="nc" id="L141">						result.add(red + err);</span>
+<span class="nc" id="L142">						error = -4;</span>
+					}
+				}
+<span class="nc" id="L145">			} catch (Exception e) {</span>
+<span class="nc" id="L146">				result.add(red + e.toString());</span>
+<span class="nc" id="L147">				Logme.error(e);</span>
+<span class="nc" id="L148">				error = -5;</span>
+<span class="nc" id="L149">			}</span>
+		} else {
+<span class="nc" id="L151">			result.add(red + &quot;Error: &quot; + exeState.getTextMessage());</span>
+<span class="nc" id="L152">			result.add(&quot;Error: only sequence diagrams will be generated&quot;);</span>
+<span class="nc" id="L153">			error = -6;</span>
+		}
+
+<span class="nc" id="L156">		return error;</span>
+	}
+
+	static String getTestCreateSimpleFile() throws IOException {
+<span class="nc" id="L160">		final Graphviz graphviz2 = GraphvizRuntimeEnvironment.getInstance().create(null, &quot;digraph foo { test; }&quot;, &quot;svg&quot;);</span>
+<span class="nc" id="L161">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L162">		final ProcessState state = graphviz2.createFile3(baos);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="nc" id="L164">			return &quot;Error: timeout &quot; + state;</span>
+
+<span class="nc" id="L166">		final byte data[] = baos.toByteArray();</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (data.length == 0)</span>
+<span class="nc" id="L169">			return &quot;Error: dot generates empty file. Check you dot installation.&quot;;</span>
+
+<span class="nc" id="L171">		final String s = new String(data);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (s.indexOf(&quot;&lt;svg&quot;) == -1)</span>
+<span class="nc" id="L173">			return &quot;Error: dot generates unreadable SVG file. Check you dot installation.&quot;;</span>
+
+<span class="nc" id="L175">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

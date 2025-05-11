@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.geom</a> &gt; <span class="el_source">MinMax.java</span></div><h1>MinMax.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.geom;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public class MinMax {
+
+	private final double maxX;
+	private final double maxY;
+	private final double minX;
+	private final double minY;
+
+	public boolean doesHorizontalCross(XPoint2D pt1, XPoint2D pt2) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (pt1.getY() != pt2.getY())</span>
+<span class="nc" id="L53">			throw new IllegalArgumentException();</span>
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (pt1.getX() == pt2.getX())</span>
+<span class="nc" id="L56">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L58">		final double y = pt1.getY();</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">		if (y &lt; minY || y &gt; maxY)</span>
+<span class="nc" id="L60">			return false;</span>
+
+<span class="nc bnc" id="L62" title="All 4 branches missed.">		if (pt1.getX() &lt; minX &amp;&amp; pt2.getX() &gt; maxX)</span>
+<span class="nc" id="L63">			return true;</span>
+
+<span class="nc bnc" id="L65" title="All 4 branches missed.">		if (pt2.getX() &lt; minX &amp;&amp; pt1.getX() &gt; maxX)</span>
+<span class="nc" id="L66">			return true;</span>
+
+<span class="nc" id="L68">		return false;</span>
+	}
+
+	public static MinMax getEmpty(boolean initToZero) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (initToZero)</span>
+<span class="fc" id="L73">			return new MinMax(0, 0, 0, 0);</span>
+
+<span class="fc" id="L75">		return new MinMax(Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L80">		return &quot;(&quot; + minX + &quot;,&quot; + minY + &quot;)-&gt;(&quot; + maxX + &quot;,&quot; + maxY + &quot;)&quot;;</span>
+	}
+
+	public static MinMax fromMutable(MinMaxMutable minmax) {
+<span class="fc" id="L84">		return new MinMax(minmax.getMinX(), minmax.getMinY(), minmax.getMaxX(), minmax.getMaxY());</span>
+	}
+
+<span class="fc" id="L87">	private MinMax(double minX, double minY, double maxX, double maxY) {</span>
+<span class="fc" id="L88">		this.minX = minX;</span>
+<span class="fc" id="L89">		this.minY = minY;</span>
+<span class="fc" id="L90">		this.maxX = maxX;</span>
+<span class="fc" id="L91">		this.maxY = maxY;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (Double.isNaN(minX))</span>
+<span class="nc" id="L93">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (Double.isNaN(maxX))</span>
+<span class="nc" id="L96">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (Double.isNaN(minY))</span>
+<span class="nc" id="L99">			throw new IllegalArgumentException();</span>
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (Double.isNaN(maxY))</span>
+<span class="nc" id="L102">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L104">	}</span>
+
+	public MinMax addPoint(XPoint2D pt) {
+<span class="nc" id="L107">		return addPoint(pt.getX(), pt.getY());</span>
+	}
+
+	public MinMax addPoint(double x, double y) {
+<span class="fc" id="L111">		return new MinMax(Math.min(x, minX), Math.min(y, minY), Math.max(x, maxX), Math.max(y, maxY));</span>
+	}
+
+	public MinMax addMinMax(MinMax other) {
+<span class="nc" id="L115">		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX),</span>
+<span class="nc" id="L116">				Math.max(other.maxY, maxY));</span>
+	}
+
+	public static MinMax fromMax(double maxX, double maxY) {
+<span class="nc" id="L120">		return MinMax.getEmpty(true).addPoint(maxX, maxY);</span>
+	}
+
+	public static MinMax fromDim(XDimension2D dim) {
+<span class="nc" id="L124">		return fromMax(dim.getWidth(), dim.getHeight());</span>
+	}
+
+	public final double getMaxX() {
+<span class="fc" id="L128">		return maxX;</span>
+	}
+
+	public final double getMaxY() {
+<span class="fc" id="L132">		return maxY;</span>
+	}
+
+	public final double getMinX() {
+<span class="fc" id="L136">		return minX;</span>
+	}
+
+	public final double getMinY() {
+<span class="fc" id="L140">		return minY;</span>
+	}
+
+	public double getHeight() {
+<span class="nc" id="L144">		return maxY - minY;</span>
+	}
+
+	public double getWidth() {
+<span class="fc" id="L148">		return maxX - minX;</span>
+	}
+
+	public XDimension2D getDimension() {
+<span class="fc" id="L152">		return new XDimension2D(maxX - minX, maxY - minY);</span>
+	}
+
+	// ::comment when __HAXE__
+	public void drawGray(UGraphic ug) {
+<span class="nc" id="L157">		draw(ug, HColors.GRAY, HColors.GRAY);</span>
+<span class="nc" id="L158">	}</span>
+
+	public void draw(UGraphic ug, HColor borderColor, HColor backgroundColor) {
+<span class="nc" id="L161">		ug = ug.apply(borderColor).apply(backgroundColor.bg());</span>
+<span class="nc" id="L162">		ug = ug.apply(new UTranslate(minX, minY));</span>
+<span class="nc" id="L163">		ug.draw(URectangle.build(getWidth(), getHeight()));</span>
+<span class="nc" id="L164">	}</span>
+	// ::done
+
+	public MinMax translate(UTranslate translate) {
+<span class="nc" id="L168">		final double dx = translate.getDx();</span>
+<span class="nc" id="L169">		final double dy = translate.getDy();</span>
+<span class="nc" id="L170">		return new MinMax(minX + dx, minY + dy, maxX + dx, maxY + dy);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

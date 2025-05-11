@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SegmentQuant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.webp</a> &gt; <span class="el_source">SegmentQuant.java</span></div><h1>SegmentQuant.java</h1><pre class="source lang-java linenums">/*	This file is part of javavp8decoder.
+
+    javavp8decoder is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    javavp8decoder is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with javavp8decoder.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package net.sourceforge.plantuml.webp;
+
+<span class="nc" id="L18">public class SegmentQuant {</span>
+	private int filterStrength;
+	private int Qindex;
+	private int uvac;
+	private int uvdc;
+	private int y1ac;
+	private int y1dc;
+	private int y2ac;
+	private int y2dc;
+
+	private int clip(int val, int max) {
+<span class="nc" id="L29">		int r = val;</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">		if (val &gt; max)</span>
+<span class="nc" id="L31">			r = max;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">		if (r &lt; 0)</span>
+<span class="nc" id="L33">			r = 0;</span>
+<span class="nc" id="L34">		return r;</span>
+	}
+
+	public int getQindex() {
+<span class="nc" id="L38">		return Qindex;</span>
+	}
+
+	public int getUvac_delta_q() {
+<span class="nc" id="L42">		return uvac;</span>
+	}
+
+	public int getUvdc_delta_q() {
+<span class="nc" id="L46">		return uvdc;</span>
+	}
+
+	public int getY1ac() {
+<span class="nc" id="L50">		return y1ac;</span>
+	}
+
+	public int getY1dc() {
+<span class="nc" id="L54">		return y1dc;</span>
+	}
+
+	public int getY2ac_delta_q() {
+<span class="nc" id="L58">		return y2ac;</span>
+	}
+
+	public int getY2dc() {
+<span class="nc" id="L62">		return y2dc;</span>
+	}
+
+	public void setFilterStrength(int value) {
+<span class="nc" id="L66">		this.filterStrength = value;</span>
+<span class="nc" id="L67">	}</span>
+
+	public void setQindex(int qindex) {
+<span class="nc" id="L70">		Qindex = qindex;</span>
+<span class="nc" id="L71">	}</span>
+
+	public void setUvac_delta_q(int uvac_delta_q) {
+<span class="nc" id="L74">		this.uvac = Globals.vp8AcQLookup[clip(Qindex + uvac_delta_q, 127)];</span>
+<span class="nc" id="L75">	}</span>
+
+	public void setUvdc_delta_q(int uvdc_delta_q) {
+<span class="nc" id="L78">		this.uvdc = Globals.vp8DcQLookup[clip(Qindex + uvdc_delta_q, 127)];</span>
+<span class="nc" id="L79">	}</span>
+
+	public void setY1ac() {
+<span class="nc" id="L82">		this.y1ac = Globals.vp8AcQLookup[clip(Qindex, 127)];</span>
+<span class="nc" id="L83">	}</span>
+
+	public void setY1dc(int y1dc) {
+<span class="nc" id="L86">		this.y1dc = Globals.vp8DcQLookup[clip(Qindex + y1dc, 127)];</span>
+<span class="nc" id="L87">		this.setY1ac();</span>
+<span class="nc" id="L88">	}</span>
+
+	public void setY2ac_delta_q(int y2ac_delta_q) {
+<span class="nc" id="L91">		this.y2ac = Globals.vp8AcQLookup[clip(Qindex + y2ac_delta_q, 127)] * 155 / 100;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (this.y2ac &lt; 8)</span>
+<span class="nc" id="L93">			this.y2ac = 8;</span>
+<span class="nc" id="L94">	}</span>
+
+	public void setY2dc(int y2dc_delta_q) {
+<span class="nc" id="L97">		this.y2dc = Globals.vp8DcQLookup[clip(Qindex + y2dc_delta_q, 127)] * 2;</span>
+<span class="nc" id="L98">	}</span>
+
+	public int getFilterStrength() {
+<span class="nc" id="L101">		return filterStrength;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

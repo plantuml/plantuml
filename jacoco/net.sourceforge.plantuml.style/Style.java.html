@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Style.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">Style.java</span></div><h1>Style.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+
+public class Style {
+	// ::remove file when __HAXE__
+
+	private final Map&lt;PName, Value&gt; map;
+	private final StyleSignatureBasic signature;
+
+<span class="fc" id="L66">	public Style(StyleSignatureBasic signature, Map&lt;PName, Value&gt; map) {</span>
+<span class="fc" id="L67">		this.map = map;</span>
+<span class="fc" id="L68">		this.signature = signature;</span>
+<span class="fc" id="L69">	}</span>
+
+	public Style deltaPriority(int delta) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (signature.isStarred() == false)</span>
+<span class="nc" id="L73">			throw new UnsupportedOperationException();</span>
+
+<span class="nc" id="L75">		final EnumMap&lt;PName, Value&gt; copy = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Entry&lt;PName, Value&gt; ent : this.map.entrySet())</span>
+<span class="nc" id="L77">			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));</span>
+
+<span class="nc" id="L79">		return new Style(this.signature, copy);</span>
+
+	}
+
+	public void printMe() {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (map.size() == 0)</span>
+<span class="nc" id="L85">			return;</span>
+
+<span class="nc" id="L87">		System.err.println(signature + &quot; {&quot;);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (Entry&lt;PName, Value&gt; ent : map.entrySet())</span>
+<span class="nc" id="L89">			System.err.println(&quot;  &quot; + ent.getKey() + &quot;: &quot; + ent.getValue().asString());</span>
+
+<span class="nc" id="L91">		System.err.println(&quot;}&quot;);</span>
+
+<span class="nc" id="L93">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L97">		return signature + &quot; &quot; + map;</span>
+	}
+
+	public Value value(PName name) {
+<span class="fc" id="L101">		final Value result = map.get(name);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L103">			return ValueNull.NULL;</span>
+
+<span class="fc" id="L105">		return result;</span>
+	}
+
+	public double getShadowing() {
+<span class="fc" id="L109">		final Value result = map.get(PName.Shadowing);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L111">			return 0;</span>
+
+<span class="fc" id="L113">		return value(PName.Shadowing).asDoubleDefaultTo(1.5);</span>
+	}
+
+	public boolean hasValue(PName name) {
+<span class="fc" id="L117">		return map.containsKey(name);</span>
+	}
+
+	public Style mergeWith(Style other, MergeStrategy strategy) {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (other == null)</span>
+<span class="fc" id="L122">			return this;</span>
+
+<span class="fc" id="L124">		final EnumMap&lt;PName, Value&gt; both = new EnumMap&lt;PName, Value&gt;(this.map);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : other.map.entrySet()) {</span>
+<span class="fc" id="L126">			final Value previous = this.map.get(ent.getKey());</span>
+<span class="fc bfc" id="L127" title="All 6 branches covered.">			if (previous != null &amp;&amp; previous.getPriority() &gt; StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE</span>
+					&amp;&amp; strategy == MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE)
+<span class="fc" id="L129">				continue;</span>
+<span class="fc" id="L130">			final PName key = ent.getKey();</span>
+<span class="fc" id="L131">			both.put(key, ((ValueImpl) ent.getValue()).mergeWith(previous));</span>
+<span class="fc" id="L132">		}</span>
+<span class="fc" id="L133">		return new Style(this.signature.mergeWith(other.getSignature()), both);</span>
+	}
+
+	public Style eventuallyOverride(PName param, HColor color) {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (color == null)</span>
+<span class="fc" id="L138">			return this;</span>
+
+<span class="fc" id="L140">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
+<span class="fc" id="L141">		final Value old = result.get(param);</span>
+<span class="fc" id="L142">		result.put(param, new ValueColor(color, old.getPriority()));</span>
+<span class="fc" id="L143">		return new Style(this.signature, result);</span>
+	}
+
+	public Style eventuallyOverride(PName param, double value) {
+<span class="fc" id="L147">		return eventuallyOverride(param, &quot;&quot; + value);</span>
+	}
+
+	public Style eventuallyOverride(PName param, String value) {
+<span class="fc" id="L151">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
+<span class="fc" id="L152">		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));</span>
+<span class="fc" id="L153">		return new Style(this.signature, result);</span>
+	}
+
+	public Style eventuallyOverride(Colors colors) {
+<span class="fc" id="L157">		Style result = this;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (colors != null) {</span>
+<span class="fc" id="L159">			final HColor back = colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">			if (back != null)</span>
+<span class="fc" id="L161">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
+
+<span class="fc" id="L163">			final HColor line = colors.getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (line != null)</span>
+<span class="nc" id="L165">				result = result.eventuallyOverride(PName.LineColor, line);</span>
+
+<span class="fc" id="L167">			final HColor text = colors.getColor(ColorType.TEXT);</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (text != null)</span>
+<span class="nc" id="L169">				result = result.eventuallyOverride(PName.FontColor, text);</span>
+
+		}
+<span class="fc" id="L172">		return result;</span>
+	}
+
+	public Style eventuallyOverride(Fashion symbolContext) {
+<span class="fc" id="L176">		Style result = this;</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (symbolContext != null) {</span>
+<span class="fc" id="L178">			final HColor back = symbolContext.getBackColor();</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (back != null)</span>
+<span class="fc" id="L180">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
+
+		}
+<span class="fc" id="L183">		return result;</span>
+	}
+
+	public StyleSignatureBasic getSignature() {
+<span class="fc" id="L187">		return signature;</span>
+	}
+
+	public UFont getUFont() {
+<span class="fc" id="L191">		final String fontName = value(PName.FontName).asString();</span>
+<span class="fc" id="L192">		final String family = UFont.getExistingFontFamily(fontName);</span>
+<span class="fc" id="L193">		final int fontStyle = value(PName.FontStyle).asFontStyle();</span>
+<span class="fc" id="L194">		int size = value(PName.FontSize).asInt(true);</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (size == -1)</span>
+<span class="nc" id="L196">			size = 14;</span>
+<span class="fc" id="L197">		return UFont.build(family, fontStyle, size);</span>
+	}
+
+	public FontConfiguration getFontConfiguration(HColorSet set) {
+<span class="fc" id="L201">		return getFontConfiguration(set, null);</span>
+	}
+
+	public FontConfiguration getFontConfiguration(HColorSet set, Colors colors) {
+<span class="fc" id="L205">		final UFont font = getUFont();</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc" id="L208">			color = value(PName.FontColor).asColor(set);</span>
+
+<span class="fc" id="L210">		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);</span>
+<span class="fc" id="L211">		final UStroke stroke = getStroke(PName.HyperlinkUnderlineThickness, PName.HyperlinkUnderlineStyle);</span>
+<span class="fc" id="L212">		return FontConfiguration.create(font, color, hyperlinkColor, stroke);</span>
+	}
+
+	public Fashion getSymbolContext(HColorSet set, Colors colors) {
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (backColor == null)</span>
+<span class="fc" id="L218">			backColor = value(PName.BackGroundColor).asColor(set);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (foreColor == null)</span>
+<span class="fc" id="L221">			foreColor = value(PName.LineColor).asColor(set);</span>
+<span class="fc" id="L222">		final double deltaShadowing = getShadowing();</span>
+<span class="fc" id="L223">		final double roundCorner = value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L224">		final double diagonalCorner = value(PName.DiagonalCorner).asDouble();</span>
+<span class="fc" id="L225">		return new Fashion(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing)</span>
+<span class="fc" id="L226">				.withCorner(roundCorner, diagonalCorner);</span>
+	}
+
+	public Fashion getSymbolContext(HColorSet set) {
+<span class="fc" id="L230">		return getSymbolContext(set, null);</span>
+	}
+
+	public Style eventuallyOverride(UStroke stroke) {
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (stroke == null)</span>
+<span class="nc" id="L235">			return this;</span>
+
+<span class="fc" id="L237">		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());</span>
+<span class="fc" id="L238">		final double space = stroke.getDashSpace();</span>
+<span class="fc" id="L239">		final double visible = stroke.getDashVisible();</span>
+<span class="fc" id="L240">		result = result.eventuallyOverride(PName.LineStyle, &quot;&quot; + visible + &quot;-&quot; + space);</span>
+<span class="fc" id="L241">		return result;</span>
+	}
+
+	public UStroke getStroke() {
+<span class="fc" id="L245">		return getStroke(PName.LineThickness, PName.LineStyle);</span>
+	}
+
+	private UStroke getStroke(final PName thicknessParam, final PName styleParam) {
+<span class="fc" id="L249">		final double thickness = value(thicknessParam).asDouble();</span>
+<span class="fc" id="L250">		final String dash = value(styleParam).asString();</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">		if (dash.length() == 0)</span>
+<span class="fc" id="L252">			return UStroke.withThickness(thickness);</span>
+
+		try {
+<span class="fc" id="L255">			final StringTokenizer st = new StringTokenizer(dash, &quot;-;,&quot;);</span>
+<span class="fc" id="L256">			final double dashVisible = Double.parseDouble(st.nextToken().trim());</span>
+<span class="fc" id="L257">			double dashSpace = dashVisible;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">			if (st.hasMoreTokens())</span>
+<span class="fc" id="L259">				dashSpace = Double.parseDouble(st.nextToken().trim());</span>
+
+<span class="fc" id="L261">			return new UStroke(dashVisible, dashSpace, thickness);</span>
+<span class="fc" id="L262">		} catch (Exception e) {</span>
+<span class="fc" id="L263">			return UStroke.withThickness(thickness);</span>
+		}
+	}
+
+	public UStroke getStroke(Colors colors) {
+<span class="fc" id="L268">		final UStroke stroke = colors.getSpecificLineStroke();</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (stroke == null)</span>
+<span class="fc" id="L270">			return getStroke();</span>
+
+<span class="nc" id="L272">		return stroke;</span>
+	}
+
+	public LineBreakStrategy wrapWidth() {
+<span class="fc" id="L276">		final String value = value(PName.MaximumWidth).asString();</span>
+<span class="fc" id="L277">		return new LineBreakStrategy(value);</span>
+	}
+
+	public ClockwiseTopRightBottomLeft getPadding() {
+<span class="fc" id="L281">		final String padding = value(PName.Padding).asString();</span>
+<span class="fc" id="L282">		return ClockwiseTopRightBottomLeft.read(padding);</span>
+	}
+
+	public ClockwiseTopRightBottomLeft getMargin() {
+<span class="fc" id="L286">		final String margin = value(PName.Margin).asString();</span>
+<span class="fc" id="L287">		return ClockwiseTopRightBottomLeft.read(margin);</span>
+	}
+
+	public HorizontalAlignment getHorizontalAlignment() {
+<span class="fc" id="L291">		return value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
+	}
+
+	public static final String ID_TITLE = &quot;_title&quot;;
+	public static final String ID_CAPTION = &quot;_caption&quot;;
+	public static final String ID_LEGEND = &quot;_legend&quot;;
+
+	public TextBlock createTextBlockBordered(Display note, HColorSet set, ISkinSimple spriteContainer, String id,
+			LineBreakStrategy lineBreak) {
+<span class="fc" id="L300">		final HorizontalAlignment alignment = this.getHorizontalAlignment();</span>
+<span class="fc" id="L301">		final FontConfiguration fc = this.getFontConfiguration(set);</span>
+
+<span class="fc" id="L303">		final TextBlock textBlock = note.create0(fc, alignment, spriteContainer, lineBreak, CreoleMode.FULL, null,</span>
+				null);
+
+<span class="fc" id="L306">		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);</span>
+<span class="fc" id="L307">		final HColor lineColor = this.value(PName.LineColor).asColor(set);</span>
+<span class="fc" id="L308">		final UStroke stroke = this.getStroke();</span>
+<span class="fc" id="L309">		final int cornersize = this.value(PName.RoundCorner).asInt(false);</span>
+<span class="fc" id="L310">		final ClockwiseTopRightBottomLeft margin = this.getMargin();</span>
+<span class="fc" id="L311">		final ClockwiseTopRightBottomLeft padding = this.getPadding();</span>
+<span class="fc" id="L312">		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, lineColor, backgroundColor, cornersize,</span>
+				padding, id);
+<span class="fc" id="L314">		return TextBlockUtils.withMargin(result, margin);</span>
+	}
+
+	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet) {
+<span class="fc" id="L318">		final HColor color = value(PName.LineColor).asColor(colorSet);</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L320">			ug = ug.apply(HColors.none());</span>
+		else
+<span class="fc" id="L322">			ug = ug.apply(color);</span>
+
+<span class="fc" id="L324">		ug = ug.apply(getStroke());</span>
+<span class="fc" id="L325">		return ug;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

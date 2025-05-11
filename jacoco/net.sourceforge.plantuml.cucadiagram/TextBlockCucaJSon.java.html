@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockCucaJSon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">TextBlockCucaJSon.java</span></div><h1>TextBlockCucaJSon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
+
+public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
+
+	private final ISkinParam skinParam;
+	private final FontConfiguration fontConfiguration;
+	private final JsonValue json;
+	private TextBlock jsonTextBlock;
+	private double mainTotalWidth;
+	private final LineBreakStrategy wordWrap;
+
+	public TextBlockCucaJSon(FontConfiguration fontConfiguration, ISkinParam skinParam, JsonValue json,
+<span class="nc" id="L68">			LineBreakStrategy wordWrap) {</span>
+<span class="nc" id="L69">		this.skinParam = skinParam;</span>
+<span class="nc" id="L70">		this.json = json;</span>
+<span class="nc" id="L71">		this.fontConfiguration = fontConfiguration;</span>
+<span class="nc" id="L72">		this.wordWrap = wordWrap;</span>
+<span class="nc" id="L73">	}</span>
+
+	private TextBlock getJsonTextBlock() {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (jsonTextBlock == null)</span>
+<span class="nc" id="L77">			this.jsonTextBlock = getTextBlockValue(json, 0);</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (jsonTextBlock instanceof TextBlockJson)</span>
+<span class="nc" id="L80">			((TextBlockJson) jsonTextBlock).jsonTotalWidth = mainTotalWidth;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (jsonTextBlock instanceof TextBlockArray)</span>
+<span class="nc" id="L82">			((TextBlockArray) jsonTextBlock).arrayTotalWidth = mainTotalWidth;</span>
+		
+<span class="nc" id="L84">		return jsonTextBlock;</span>
+	}
+
+	private TextBlock getTextBlockValue(JsonValue value, double width2) {
+<span class="nc bnc" id="L88" title="All 10 branches missed.">		if (value.isString() || value.isNull() || value.isTrue() || value.isFalse() || value.isNumber()) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			final String tmp = value.isString() ? value.asString() : value.toString();</span>
+<span class="nc" id="L90">			return getTextBlock(tmp);</span>
+		}
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (value.isArray())</span>
+<span class="nc" id="L93">			return new TextBlockArray(value.asArray(), width2);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (value.isObject())</span>
+<span class="nc" id="L95">			return new TextBlockJson(value.asObject(), width2);</span>
+
+<span class="nc" id="L97">		final String tmp = value.getClass().getSimpleName();</span>
+<span class="nc" id="L98">		return getTextBlock(tmp);</span>
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+<span class="nc" id="L103">		return new Ports();</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L107">		return getJsonTextBlock().calculateDimension(stringBounder);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L111">		getJsonTextBlock().drawU(ug);</span>
+<span class="nc" id="L112">	}</span>
+
+	class TextBlockJson extends AbstractTextBlock {
+
+		private final JsonObject obj;
+		private double jsonTotalWidth;
+
+<span class="nc" id="L119">		public TextBlockJson(JsonObject json, double totalWidth) {</span>
+<span class="nc" id="L120">			this.obj = json;</span>
+<span class="nc" id="L121">			this.jsonTotalWidth = totalWidth;</span>
+<span class="nc" id="L122">		}</span>
+
+		@Override
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L126">			return new XDimension2D(getWidth1(stringBounder) + getWidth2(stringBounder), getHeight(stringBounder));</span>
+		}
+
+		private double getWidth1(StringBounder stringBounder) {
+<span class="nc" id="L130">			double result = 0;</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
+<span class="nc" id="L132">				final TextBlock tb1 = getTextBlock(s.getName());</span>
+<span class="nc" id="L133">				result = Math.max(result, tb1.calculateDimension(stringBounder).getWidth());</span>
+<span class="nc" id="L134">			}</span>
+<span class="nc" id="L135">			return result;</span>
+		}
+
+		private double getWidth2(StringBounder stringBounder) {
+<span class="nc" id="L139">			double result = 0;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
+<span class="nc" id="L141">				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);</span>
+<span class="nc" id="L142">				result = Math.max(result, tb2.calculateDimension(stringBounder).getWidth());</span>
+<span class="nc" id="L143">			}</span>
+<span class="nc" id="L144">			return result;</span>
+		}
+
+		private double getHeight(StringBounder stringBounder) {
+<span class="nc" id="L148">			double result = 0;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
+<span class="nc" id="L150">				final TextBlock tb1 = getTextBlock(s.getName());</span>
+<span class="nc" id="L151">				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);</span>
+<span class="nc" id="L152">				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L153">				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L154">				result += Math.max(dim1.getHeight(), dim2.getHeight());</span>
+<span class="nc" id="L155">			}</span>
+<span class="nc" id="L156">			return result;</span>
+		}
+
+		@Override
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L161">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L162">			final double width1 = getWidth1(stringBounder);</span>
+<span class="nc" id="L163">			final double height = getHeight(stringBounder);</span>
+<span class="nc" id="L164">			ug.apply(UTranslate.dx(width1)).draw(ULine.vline(height));</span>
+<span class="nc" id="L165">			final ULine hline = ULine.hline(this.jsonTotalWidth);</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
+<span class="nc" id="L167">				final TextBlock tb1 = getTextBlock(s.getName());</span>
+<span class="nc" id="L168">				final TextBlock tb2 = getTextBlockValue(s.getValue(), this.jsonTotalWidth - width1);</span>
+<span class="nc" id="L169">				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L170">				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L171">				ug.draw(hline);</span>
+<span class="nc" id="L172">				tb1.drawU(ug);</span>
+<span class="nc" id="L173">				tb2.drawU(ug.apply(UTranslate.dx(width1)));</span>
+<span class="nc" id="L174">				ug = ug.apply(UTranslate.dy(Math.max(dim1.getHeight(), dim2.getHeight())));</span>
+<span class="nc" id="L175">			}</span>
+
+<span class="nc" id="L177">		}</span>
+
+	}
+
+	private TextBlock getTextBlock(String key) {
+<span class="nc" id="L182">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
+<span class="nc" id="L183">		TextBlock result = display.create0(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
+				CreoleMode.FULL, null, null);
+<span class="nc" id="L185">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="nc" id="L186">		return result;</span>
+	}
+
+	class TextBlockArray extends AbstractTextBlock {
+
+		private final JsonArray array;
+		private double arrayTotalWidth;
+
+<span class="nc" id="L194">		public TextBlockArray(JsonArray array, double totalWidth) {</span>
+<span class="nc" id="L195">			this.array = array;</span>
+<span class="nc" id="L196">			this.arrayTotalWidth = totalWidth;</span>
+<span class="nc" id="L197">		}</span>
+
+		@Override
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L201">			XDimension2D result = new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">			for (JsonValue element : array) {</span>
+<span class="nc" id="L203">				final TextBlock tb = getTextBlockValue(element, arrayTotalWidth);</span>
+<span class="nc" id="L204">				final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L205">				result = result.mergeTB(dim);</span>
+<span class="nc" id="L206">			}</span>
+<span class="nc" id="L207">			return result;</span>
+		}
+
+		@Override
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L212">			final ULine hline = ULine.hline(this.arrayTotalWidth);</span>
+<span class="nc" id="L213">			int nb = 0;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			for (JsonValue element : array) {</span>
+<span class="nc" id="L215">				final TextBlock tb = getTextBlockValue(element, arrayTotalWidth);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">				if (nb &gt; 0)</span>
+<span class="nc" id="L217">					ug.draw(hline);</span>
+<span class="nc" id="L218">				nb++;</span>
+<span class="nc" id="L219">				tb.drawU(ug);</span>
+<span class="nc" id="L220">				ug = ug.apply(UTranslate.dy(tb.calculateDimension(ug.getStringBounder()).getHeight()));</span>
+<span class="nc" id="L221">			}</span>
+<span class="nc" id="L222">		}</span>
+
+	}
+
+	private FontConfiguration getFontConfiguration() {
+<span class="nc" id="L227">		return fontConfiguration;</span>
+	}
+
+	public void setTotalWidth(double totalWidth) {
+<span class="nc" id="L231">		this.mainTotalWidth = totalWidth;</span>
+<span class="nc" id="L232">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstructionWhile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">InstructionWhile.java</span></div><h1>InstructionWhile.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWhile;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
+
+public class InstructionWhile extends WithNote implements Instruction, InstructionCollection {
+
+<span class="nc" id="L64">	private final InstructionList repeatList = InstructionList.empty();</span>
+	private final Instruction parent;
+	private final LinkRendering nextLinkRenderer;
+	private final HColor color;
+<span class="nc" id="L68">	private boolean killed = false;</span>
+
+	private final Display test;
+	private Display yes;
+
+<span class="nc" id="L73">	private boolean testCalled = false;</span>
+
+<span class="nc" id="L75">	private LinkRendering outColor = LinkRendering.none();</span>
+	private final Swimlane swimlane;
+
+	private Instruction specialOut;
+
+	private BoxStyle boxStyle;
+
+<span class="nc" id="L82">	private Display backward = Display.NULL;</span>
+	private Stereotype stereotype;
+
+<span class="nc" id="L85">	private LinkRendering incoming1 = LinkRendering.none();</span>
+<span class="nc" id="L86">	private LinkRendering incoming2 = LinkRendering.none();</span>
+	private boolean backwardCalled;
+	private final StyleBuilder currentStyleBuilder;
+
+	public void overwriteYes(Display yes) {
+<span class="nc" id="L91">		this.yes = yes;</span>
+<span class="nc" id="L92">	}</span>
+
+	public InstructionWhile(Swimlane swimlane, Instruction parent, Display test, LinkRendering nextLinkRenderer,
+<span class="nc" id="L95">			Display yes, HColor color, StyleBuilder currentStyleBuilder) {</span>
+<span class="nc" id="L96">		this.parent = parent;</span>
+<span class="nc" id="L97">		this.test = Objects.requireNonNull(test);</span>
+<span class="nc" id="L98">		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);</span>
+<span class="nc" id="L99">		this.yes = Objects.requireNonNull(yes);</span>
+<span class="nc" id="L100">		this.swimlane = swimlane;</span>
+<span class="nc" id="L101">		this.currentStyleBuilder = currentStyleBuilder;</span>
+<span class="nc" id="L102">		this.color = color;</span>
+<span class="nc" id="L103">	}</span>
+
+	@Override
+	public CommandExecutionResult add(Instruction ins) {
+<span class="nc" id="L107">		return repeatList.add(ins);</span>
+	}
+
+	// ::comment when __CORE__
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+<span class="nc" id="L113">		final Gtile back = null;</span>
+<span class="nc" id="L114">		Gtile tmp = repeatList.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L115">		tmp = GtileWhile.createWhile(swimlane, tmp, test, yes, specialOut, back);</span>
+<span class="nc" id="L116">		return tmp;</span>
+	}
+	// ::done
+
+	@Override
+	public Ftile createFtile(FtileFactory factory) {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		final Ftile back = Display.isNull(backward) ? null</span>
+<span class="nc" id="L123">				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), stereotype);</span>
+<span class="nc" id="L124">		Ftile tmp = repeatList.createFtile(factory);</span>
+<span class="nc" id="L125">		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2,</span>
+				currentStyleBuilder);
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (getPositionedNotes().size() &gt; 0)</span>
+<span class="nc" id="L128">			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), false, VerticalAlignment.CENTER);</span>
+
+<span class="nc bnc" id="L130" title="All 4 branches missed.">		if (killed || specialOut != null)</span>
+<span class="nc" id="L131">			return new FtileKilled(tmp);</span>
+
+<span class="nc" id="L133">		return tmp;</span>
+	}
+
+	public Instruction getParent() {
+<span class="nc" id="L137">		return parent;</span>
+	}
+
+	@Override
+	final public boolean kill() {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (testCalled) {</span>
+<span class="nc" id="L143">			this.killed = true;</span>
+<span class="nc" id="L144">			return true;</span>
+		}
+<span class="nc" id="L146">		return repeatList.kill();</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="nc" id="L151">		return nextLinkRenderer;</span>
+	}
+
+	public void outDisplay(Display out) {
+<span class="nc" id="L155">		this.outColor = outColor.withDisplay(Objects.requireNonNull(out));</span>
+<span class="nc" id="L156">	}</span>
+
+	public void outColor(Rainbow rainbow) {
+<span class="nc" id="L159">		this.outColor = outColor.withRainbow(rainbow);</span>
+<span class="nc" id="L160">	}</span>
+
+	@Override
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (repeatList.isEmpty())</span>
+<span class="nc" id="L165">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+		else
+<span class="nc" id="L167">			return repeatList.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	}
+
+	@Override
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L172">		return repeatList.getSwimlanes();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneIn() {
+<span class="nc" id="L177">		return parent.getSwimlaneIn();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlaneOut() {
+<span class="nc" id="L182">		return parent.getSwimlaneOut();</span>
+	}
+
+	@Override
+	public Instruction getLast() {
+<span class="nc" id="L187">		return repeatList.getLast();</span>
+	}
+
+	public void setSpecial(Instruction special) {
+<span class="nc" id="L191">		this.specialOut = special;</span>
+<span class="nc" id="L192">	}</span>
+
+	@Override
+	public boolean containsBreak() {
+<span class="nc" id="L196">		return repeatList.containsBreak();</span>
+	}
+
+	public void setBackward(Display label, BoxStyle boxStyle, LinkRendering incoming1, LinkRendering incoming2,
+			Stereotype stereotype) {
+<span class="nc" id="L201">		this.backward = label;</span>
+<span class="nc" id="L202">		this.boxStyle = boxStyle;</span>
+<span class="nc" id="L203">		this.incoming1 = incoming1;</span>
+<span class="nc" id="L204">		this.incoming2 = incoming2;</span>
+<span class="nc" id="L205">		this.backwardCalled = true;</span>
+<span class="nc" id="L206">		this.stereotype = stereotype;</span>
+<span class="nc" id="L207">	}</span>
+
+	public void incoming(LinkRendering incoming) {
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (backwardCalled == false) {</span>
+<span class="nc" id="L211">			this.incoming1 = incoming;</span>
+<span class="nc" id="L212">			this.incoming2 = incoming;</span>
+		}
+<span class="nc" id="L214">		this.testCalled = true;</span>
+<span class="nc" id="L215">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

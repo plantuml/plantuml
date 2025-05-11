@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FormatCounter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.stats</a> &gt; <span class="el_source">FormatCounter.java</span></div><h1>FormatCounter.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.stats;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.api.NumberAnalyzed;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.stats.api.StatsColumn;
+import net.sourceforge.plantuml.stats.api.StatsLine;
+import net.sourceforge.plantuml.stats.api.StatsTable;
+
+public class FormatCounter {
+
+<span class="nc" id="L54">	private ConcurrentMap&lt;FileFormat, NumberAnalyzed&gt; data = new ConcurrentHashMap&lt;FileFormat, NumberAnalyzed&gt;();</span>
+
+<span class="nc" id="L56">	public FormatCounter(String prefix) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (FileFormat format : FileFormat.values()) {</span>
+<span class="nc" id="L58">			final String key = prefix + format.name();</span>
+<span class="nc" id="L59">			data.put(format, new NumberAnalyzed(key));</span>
+		}
+
+<span class="nc" id="L62">	}</span>
+
+	public void plusOne(FileFormat fileFormat, long duration) {
+<span class="nc" id="L65">		final NumberAnalyzed n = data.get(fileFormat);</span>
+<span class="nc" id="L66">		n.addValue(duration);</span>
+<span class="nc" id="L67">	}</span>
+
+	private StatsLine createLine(String name, NumberAnalyzed n) {
+<span class="nc" id="L70">		final Map&lt;StatsColumn, Object&gt; result = new EnumMap&lt;StatsColumn, Object&gt;(StatsColumn.class);</span>
+<span class="nc" id="L71">		result.put(StatsColumn.FORMAT, name);</span>
+<span class="nc" id="L72">		result.put(StatsColumn.GENERATED_COUNT, n.getNb());</span>
+<span class="nc" id="L73">		result.put(StatsColumn.GENERATED_MEAN_TIME, n.getMean());</span>
+<span class="nc" id="L74">		result.put(StatsColumn.GENERATED_STANDARD_DEVIATION, n.getStandardDeviation());</span>
+<span class="nc" id="L75">		result.put(StatsColumn.GENERATED_MAX_TIME, n.getMax());</span>
+<span class="nc" id="L76">		return new StatsLineImpl(result);</span>
+	}
+
+	public StatsTable getStatsTable(String name) {
+<span class="nc" id="L80">		final StatsTableImpl result = new StatsTableImpl(name);</span>
+<span class="nc" id="L81">		final NumberAnalyzed total = new NumberAnalyzed();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (Map.Entry&lt;FileFormat, NumberAnalyzed&gt; ent : data.entrySet()) {</span>
+<span class="nc" id="L83">			final NumberAnalyzed n = ent.getValue();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (n.getNb() &gt; 0) {</span>
+<span class="nc" id="L85">				result.addLine(createLine(ent.getKey().name(), n));</span>
+<span class="nc" id="L86">				total.add(n);</span>
+			}
+<span class="nc" id="L88">		}</span>
+<span class="nc" id="L89">		result.addLine(createLine(&quot;Total&quot;, total));</span>
+<span class="nc" id="L90">		return result;</span>
+	}
+
+	public void reload(String prefix, Preferences prefs) throws BackingStoreException {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (String key : prefs.keys()) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (key.startsWith(prefix)) {</span>
+				try {
+<span class="nc" id="L97">					final String name = removeDotSaved(key);</span>
+<span class="nc" id="L98">					final NumberAnalyzed value = NumberAnalyzed.load(name, prefs);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">					if (value != null) {</span>
+<span class="nc" id="L100">						final String subname = name.substring(prefix.length());</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">						if (subname.equals(&quot;ANIMATED_GIF&quot;))</span>
+<span class="nc" id="L102">							continue;</span>
+<span class="nc" id="L103">						final FileFormat format = FileFormat.valueOf(subname);</span>
+<span class="nc" id="L104">						data.put(format, value);</span>
+					}
+<span class="nc" id="L106">				} catch (Exception e) {</span>
+<span class="nc" id="L107">					Logme.error(e);</span>
+<span class="nc" id="L108">				}</span>
+			}
+		}
+<span class="nc" id="L111">	}</span>
+
+	static String removeDotSaved(String key) {
+<span class="nc" id="L114">		return key.substring(0, key.length() - &quot;.saved&quot;.length());</span>
+	}
+
+	public void save(Preferences prefs, FileFormat fileFormat) {
+<span class="nc" id="L118">		data.get(fileFormat).save(prefs);</span>
+<span class="nc" id="L119">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

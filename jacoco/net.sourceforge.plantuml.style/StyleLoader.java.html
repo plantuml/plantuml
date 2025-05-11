@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">StyleLoader.java</span></div><h1>StyleLoader.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocationImpl;
+import net.sourceforge.plantuml.utils.Log;
+
+public class StyleLoader {
+    // ::remove file when __HAXE__
+
+	private final SkinParam skinParam;
+
+<span class="fc" id="L58">	public StyleLoader(SkinParam skinParam) {</span>
+<span class="fc" id="L59">		this.skinParam = skinParam;</span>
+<span class="fc" id="L60">	}</span>
+
+	private StyleBuilder styleBuilder;
+
+	public StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
+<span class="fc" id="L65">		this.styleBuilder = new StyleBuilder(skinParam);</span>
+
+<span class="fc" id="L67">		final InputStream internalIs = getInputStreamForStyle(filename);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (internalIs == null) {</span>
+<span class="nc" id="L69">			Log.error(&quot;No .skin file seems to be available&quot;);</span>
+<span class="nc" id="L70">			throw new NoStyleAvailableException();</span>
+		}
+<span class="fc" id="L72">		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));</span>
+<span class="fc" id="L73">		loadSkinInternal(lines2);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (this.styleBuilder == null) {</span>
+<span class="nc" id="L75">			Log.error(&quot;No .skin file seems to be available&quot;);</span>
+<span class="nc" id="L76">			throw new NoStyleAvailableException();</span>
+		}
+<span class="fc" id="L78">		return this.styleBuilder;</span>
+	}
+
+	public static InputStream getInputStreamForStyle(String filename) throws IOException {
+		// ::uncomment when __CORE__
+//		final String res = &quot;/skin/&quot; + filename;
+//		final InputStream is = StyleLoader.class.getResourceAsStream(res);
+//		return is;
+		// ::done
+
+		// ::comment when __CORE__
+<span class="fc" id="L89">		InputStream internalIs = null;</span>
+<span class="fc" id="L90">		SFile localFile = new SFile(filename);</span>
+<span class="fc" id="L91">		Log.info(&quot;Trying to load style &quot; + filename);</span>
+		try {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">			if (localFile.exists() == false)</span>
+<span class="fc" id="L94">				localFile = FileSystem.getInstance().getFile(filename);</span>
+<span class="nc" id="L95">		} catch (IOException e) {</span>
+<span class="nc" id="L96">			Log.info(&quot;Cannot open file. &quot; + e);</span>
+<span class="fc" id="L97">		}</span>
+
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (localFile.exists()) {</span>
+<span class="nc" id="L100">			Log.info(&quot;File found : &quot; + localFile.getPrintablePath());</span>
+<span class="nc" id="L101">			internalIs = localFile.openFile();</span>
+		} else {
+<span class="fc" id="L103">			Log.info(&quot;File not found : &quot; + localFile.getPrintablePath());</span>
+<span class="fc" id="L104">			final String res = &quot;/skin/&quot; + filename;</span>
+<span class="fc" id="L105">			internalIs = StyleLoader.class.getResourceAsStream(res);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (internalIs != null)</span>
+<span class="fc" id="L107">				Log.info(&quot;... but &quot; + filename + &quot; found inside the .jar&quot;);</span>
+
+		}
+<span class="fc" id="L110">		return internalIs;</span>
+		// ::done
+	}
+
+	private void loadSkinInternal(final BlocLines lines) throws StyleParsingException {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (Style newStyle : StyleParser.parse(lines, styleBuilder))</span>
+<span class="fc" id="L116">			this.styleBuilder.loadInternal(newStyle.getSignature(), newStyle);</span>
+<span class="fc" id="L117">	}</span>
+
+	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
+
+	public static Map&lt;PName, Value&gt; addPriorityForStereotype(Map&lt;PName, Value&gt; tmp) {
+<span class="fc" id="L122">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;&gt;(PName.class);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : tmp.entrySet())</span>
+<span class="fc" id="L124">			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));</span>
+
+<span class="fc" id="L126">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

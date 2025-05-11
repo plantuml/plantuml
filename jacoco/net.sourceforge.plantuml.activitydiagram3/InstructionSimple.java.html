@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstructionSimple.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">InstructionSimple.java</span></div><h1>InstructionSimple.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.util.Collection;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWithNoteOpale;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWithNotes;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.url.Url;
+
+public class InstructionSimple extends MonoSwimable implements Instruction {
+
+<span class="fc" id="L61">	private boolean killed = false;</span>
+	private final Display label;
+	private final Colors colors;
+	private final LinkRendering inlinkRendering;
+	private final BoxStyle boxStyle;
+	private final Url url;
+	private final Stereotype stereotype;
+
+	@Override
+	public boolean containsBreak() {
+<span class="nc" id="L71">		return false;</span>
+	}
+
+	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle boxStyle,
+			Url url, Colors colors, Stereotype stereotype) {
+<span class="fc" id="L76">		super(swimlane);</span>
+<span class="fc" id="L77">		this.stereotype = stereotype;</span>
+<span class="fc" id="L78">		this.url = url;</span>
+<span class="fc" id="L79">		this.boxStyle = boxStyle;</span>
+<span class="fc" id="L80">		this.label = label;</span>
+<span class="fc" id="L81">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="fc" id="L82">		this.colors = Objects.requireNonNull(colors);</span>
+<span class="fc" id="L83">	}</span>
+
+	// ::comment when __CORE__
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+<span class="nc" id="L88">		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), boxStyle,</span>
+				stereotype);
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (hasNotes()) {</span>
+<span class="nc" id="L91">			final Collection&lt;PositionedNote&gt; notes = getPositionedNotes();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (notes.size() == 0)</span>
+<span class="nc" id="L93">				throw new UnsupportedOperationException(&quot;wip&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (notes.size() &gt; 0)</span>
+<span class="nc" id="L95">				return new GtileWithNotes(result, notes, skinParam);</span>
+
+<span class="nc" id="L97">			return new GtileWithNoteOpale(result, notes.iterator().next(), skinParam, false);</span>
+
+		}
+<span class="nc" id="L100">		return result;</span>
+	}
+	// ::done
+
+	@Override
+	public Ftile createFtile(FtileFactory factory) {
+<span class="fc" id="L106">		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L108">			result = factory.addUrl(result, url);</span>
+		}
+<span class="fc" id="L110">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (killed) {</span>
+<span class="nc" id="L112">			return new FtileKilled(result);</span>
+		}
+<span class="fc" id="L114">		return result;</span>
+	}
+
+	@Override
+	public CommandExecutionResult add(Instruction other) {
+<span class="nc" id="L119">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	final public boolean kill() {
+<span class="nc" id="L124">		this.killed = true;</span>
+<span class="nc" id="L125">		return true;</span>
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+<span class="fc" id="L130">		return inlinkRendering;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

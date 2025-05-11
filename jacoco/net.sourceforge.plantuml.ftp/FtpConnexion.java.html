@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FtpConnexion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ftp</a> &gt; <span class="el_source">FtpConnexion.java</span></div><h1>FtpConnexion.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.ftp;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.core.DiagramDescription;
+
+public class FtpConnexion {
+	// ::remove folder when __CORE__
+
+	private final String user;
+<span class="nc" id="L59">	private final Map&lt;String, String&gt; incoming = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L60">	private final Map&lt;String, byte[]&gt; outgoing = new HashMap&lt;String, byte[]&gt;();</span>
+<span class="nc" id="L61">	private final Set&lt;String&gt; futureOutgoing = new HashSet&lt;&gt;();</span>
+
+	private FileFormat fileFormat;
+
+<span class="nc" id="L65">	public FtpConnexion(String user, FileFormat defaultfileFormat) {</span>
+<span class="nc" id="L66">		this.user = user;</span>
+<span class="nc" id="L67">		this.fileFormat = defaultfileFormat;</span>
+<span class="nc" id="L68">	}</span>
+
+	public synchronized void addIncoming(String fileName, String data) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (fileName.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L72">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L74">		incoming.put(fileName, data);</span>
+<span class="nc" id="L75">	}</span>
+
+	public synchronized void futureOutgoing(String fileName) {
+<span class="nc" id="L78">		outgoing.remove(fileName);</span>
+<span class="nc" id="L79">		futureOutgoing.add(fileName);</span>
+<span class="nc" id="L80">	}</span>
+
+	public synchronized Collection&lt;String&gt; getFiles() {
+<span class="nc" id="L83">		final List&lt;String&gt; result = new ArrayList&lt;&gt;(incoming.keySet());</span>
+<span class="nc" id="L84">		result.addAll(outgoing.keySet());</span>
+<span class="nc" id="L85">		result.addAll(futureOutgoing);</span>
+<span class="nc" id="L86">		return Collections.unmodifiableCollection(result);</span>
+	}
+
+	public synchronized boolean willExist(String fileName) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (incoming.containsKey(fileName))</span>
+<span class="nc" id="L91">			return true;</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (outgoing.containsKey(fileName))</span>
+<span class="nc" id="L94">			return true;</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (futureOutgoing.contains(fileName))</span>
+<span class="nc" id="L97">			return true;</span>
+
+<span class="nc" id="L99">		return false;</span>
+	}
+
+	public synchronized boolean doesExist(String fileName) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (incoming.containsKey(fileName))</span>
+<span class="nc" id="L104">			return true;</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (outgoing.containsKey(fileName))</span>
+<span class="nc" id="L107">			return true;</span>
+
+<span class="nc" id="L109">		return false;</span>
+	}
+
+	public synchronized byte[] getData(String fileName) throws InterruptedException {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (fileName.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L114">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L116">		final String data = incoming.get(fileName);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (data != null)</span>
+<span class="nc" id="L118">			return data.getBytes();</span>
+
+<span class="nc" id="L120">		final byte data2[] = outgoing.get(fileName);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (data2 == null)</span>
+<span class="nc" id="L122">			return new byte[1];</span>
+
+<span class="nc" id="L124">		return data2;</span>
+	}
+
+	public synchronized int getSize(String fileName) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (fileName.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L129">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L131">		final String data = incoming.get(fileName);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (data != null)</span>
+<span class="nc" id="L133">			return data.length();</span>
+
+<span class="nc" id="L135">		final byte data2[] = outgoing.get(fileName);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (data2 != null)</span>
+<span class="nc" id="L137">			return data2.length;</span>
+
+<span class="nc" id="L139">		return 0;</span>
+	}
+
+	public void processImage(String fileName) throws IOException {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (fileName.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L144">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L146">		final String pngFileName = getFutureFileName(fileName);</span>
+<span class="nc" id="L147">		boolean done = false;</span>
+		try {
+<span class="nc" id="L149">			final SourceStringReader sourceStringReader = new SourceStringReader(incoming.get(fileName));</span>
+<span class="nc" id="L150">			final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L151">			final FileFormat format = getFileFormat();</span>
+<span class="nc" id="L152">			final FileFormatOption fileFormatOption = new FileFormatOption(format);</span>
+<span class="nc" id="L153">			final DiagramDescription desc = sourceStringReader.generateDiagramDescription(fileFormatOption);</span>
+<span class="nc" id="L154">			final List&lt;BlockUml&gt; blocks = sourceStringReader.getBlocks();</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (blocks.size() &gt; 0)</span>
+<span class="nc" id="L156">				blocks.get(0).getDiagram().exportDiagram(baos, 0, fileFormatOption);</span>
+
+<span class="nc" id="L158">			final String errorFileName = pngFileName.substring(0, pngFileName.length() - 4) + &quot;.err&quot;;</span>
+<span class="nc" id="L159">			synchronized (this) {</span>
+<span class="nc" id="L160">				outgoing.remove(pngFileName);</span>
+<span class="nc" id="L161">				futureOutgoing.remove(pngFileName);</span>
+<span class="nc" id="L162">				outgoing.remove(errorFileName);</span>
+<span class="nc bnc" id="L163" title="All 4 branches missed.">				if (desc != null &amp;&amp; desc.getDescription() != null) {</span>
+<span class="nc" id="L164">					outgoing.put(pngFileName, baos.toByteArray());</span>
+<span class="nc" id="L165">					done = true;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">					if (desc.getDescription().startsWith(&quot;(Error)&quot;)) {</span>
+<span class="nc" id="L167">						final ByteArrayOutputStream errBaos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L168">						sourceStringReader.outputImage(errBaos, new FileFormatOption(FileFormat.ATXT));</span>
+<span class="nc" id="L169">						errBaos.close();</span>
+<span class="nc" id="L170">						outgoing.put(errorFileName, errBaos.toByteArray());</span>
+					}
+				}
+<span class="nc" id="L173">			}</span>
+		} finally {
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (done == false)</span>
+<span class="nc" id="L176">				outgoing.put(pngFileName, new byte[0]);</span>
+
+		}
+<span class="nc" id="L179">	}</span>
+
+	public String getFutureFileName(String fileName) {
+<span class="nc" id="L182">		return getFileFormat().changeName(fileName, 0);</span>
+	}
+
+	private FileFormat getFileFormat() {
+<span class="nc" id="L186">		return fileFormat;</span>
+	}
+
+	public synchronized void delete(String fileName) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (fileName.contains(&quot;*&quot;)) {</span>
+<span class="nc" id="L191">			incoming.clear();</span>
+<span class="nc" id="L192">			outgoing.clear();</span>
+<span class="nc" id="L193">			futureOutgoing.clear();</span>
+		} else {
+<span class="nc" id="L195">			incoming.remove(fileName);</span>
+<span class="nc" id="L196">			outgoing.remove(fileName);</span>
+<span class="nc" id="L197">			futureOutgoing.add(fileName);</span>
+		}
+<span class="nc" id="L199">	}</span>
+
+	public void setFileFormat(FileFormat fileFormat) {
+<span class="nc" id="L202">		this.fileFormat = fileFormat;</span>
+
+<span class="nc" id="L204">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

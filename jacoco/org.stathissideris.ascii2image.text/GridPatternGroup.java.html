@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GridPatternGroup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.text</a> &gt; <span class="el_source">GridPatternGroup.java</span></div><h1>GridPatternGroup.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.text;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+<span class="nc" id="L29">public class GridPatternGroup extends ArrayList&lt;GridPattern&gt; {</span>
+	public boolean areAllMatchedBy(TextGrid grid){
+<span class="nc" id="L31">		Iterator&lt;GridPattern&gt; it = iterator();</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L33">			GridPattern pattern = it.next();</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">			if(!pattern.isMatchedBy(grid)) return false;</span>
+<span class="nc" id="L35">		}</span>
+<span class="nc" id="L36">		return true;</span>
+	}
+
+	public boolean isAnyMatchedBy(TextGrid grid){
+<span class="nc" id="L40">		Iterator&lt;GridPattern&gt; it = iterator();</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L42">			GridPattern pattern = it.next();</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">			if(pattern.isMatchedBy(grid)) return true;</span>
+<span class="nc" id="L44">		}</span>
+<span class="nc" id="L45">		return false;</span>
+	}
+	
+	
+	public void add(GridPattern... patterns) {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		for(GridPattern p : patterns) add(p);</span>
+<span class="nc" id="L51">	}</span>
+	
+	//TODO: define criteria for on-line type?
+	
+<span class="nc" id="L55">	public static final GridPatternGroup cornerCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L56">	public static final GridPatternGroup normalCornerCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L57">	public static final GridPatternGroup roundCornerCriteria = new GridPatternGroup();</span>
+
+<span class="nc" id="L59">	public static final GridPatternGroup corner1Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L60">	public static final GridPatternGroup corner2Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L61">	public static final GridPatternGroup corner3Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L62">	public static final GridPatternGroup corner4Criteria = new GridPatternGroup();</span>
+
+	
+<span class="nc" id="L65">	public static final GridPatternGroup normalCorner1Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L66">	public static final GridPatternGroup normalCorner2Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L67">	public static final GridPatternGroup normalCorner3Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L68">	public static final GridPatternGroup normalCorner4Criteria = new GridPatternGroup();</span>
+
+<span class="nc" id="L70">	public static final GridPatternGroup roundCorner1Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L71">	public static final GridPatternGroup roundCorner2Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L72">	public static final GridPatternGroup roundCorner3Criteria = new GridPatternGroup();</span>
+<span class="nc" id="L73">	public static final GridPatternGroup roundCorner4Criteria = new GridPatternGroup();</span>
+	
+<span class="nc" id="L75">	public static final GridPatternGroup intersectionCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L76">	public static final GridPatternGroup TCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L77">	public static final GridPatternGroup inverseTCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L78">	public static final GridPatternGroup KCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L79">	public static final GridPatternGroup inverseKCriteria = new GridPatternGroup();</span>
+
+<span class="nc" id="L81">	public static final GridPatternGroup crossCriteria = new GridPatternGroup();</span>
+	
+<span class="nc" id="L83">	public static final GridPatternGroup stubCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L84">	public static final GridPatternGroup verticalLinesEndCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L85">	public static final GridPatternGroup horizontalLinesEndCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L86">	public static final GridPatternGroup linesEndCriteria = new GridPatternGroup();</span>
+	
+<span class="nc" id="L88">	public static final GridPatternGroup crossOnLineCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L89">	public static final GridPatternGroup horizontalCrossOnLineCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L90">	public static final GridPatternGroup verticalCrossOnLineCriteria = new GridPatternGroup();</span>
+
+<span class="nc" id="L92">	public static final GridPatternGroup starOnLineCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L93">	public static final GridPatternGroup horizontalStarOnLineCriteria = new GridPatternGroup();</span>
+<span class="nc" id="L94">	public static final GridPatternGroup verticalStarOnLineCriteria = new GridPatternGroup();</span>
+
+<span class="nc" id="L96">	public static final GridPatternGroup loneDiagonalCriteria = new GridPatternGroup();</span>
+
+	static {
+<span class="nc" id="L99">		GridPattern crossPattern1 = new GridPattern(</span>
+				&quot;.6.&quot;,
+				&quot;4+8&quot;,
+				&quot;.2.&quot;
+			);
+<span class="nc" id="L104">		crossCriteria.add(crossPattern1);</span>
+		
+<span class="nc" id="L106">		GridPattern KPattern1 = new GridPattern(</span>
+				&quot;.6.&quot;,
+				&quot;%4+8&quot;,
+				&quot;.2.&quot;
+			);
+<span class="nc" id="L111">		KCriteria.add(KPattern1);</span>
+
+<span class="nc" id="L113">		GridPattern inverseKPattern1 = new GridPattern(</span>
+				&quot;.6.&quot;,
+				&quot;4+%8&quot;,
+				&quot;.2.&quot;
+			);
+<span class="nc" id="L118">		inverseKCriteria.add(inverseKPattern1);</span>
+
+<span class="nc" id="L120">		GridPattern TPattern1 = new GridPattern(</span>
+				&quot;.%6.&quot;,
+				&quot;4+8&quot;,
+				&quot;.2.&quot;
+			);
+<span class="nc" id="L125">		TCriteria.add(TPattern1);</span>
+
+<span class="nc" id="L127">		GridPattern inverseTPattern1 = new GridPattern(</span>
+				&quot;.6.&quot;,
+				&quot;4+8&quot;,
+				&quot;.%2.&quot;
+			);
+<span class="nc" id="L132">		inverseTCriteria.add(inverseTPattern1);</span>
+
+
+		// ****** normal corners *******
+
+<span class="nc" id="L137">		GridPattern normalCorner1Pattern1 = new GridPattern(</span>
+				&quot;.[.&quot;,
+				&quot;~+(&quot;,
+				&quot;.^.&quot;
+			);
+<span class="nc" id="L142">		normalCorner1Criteria.add(normalCorner1Pattern1);</span>
+
+<span class="nc" id="L144">		GridPattern normalCorner2Pattern1 = new GridPattern(</span>
+				&quot;.[.&quot;,
+				&quot;(+~&quot;,
+				&quot;.^.&quot;
+			);
+<span class="nc" id="L149">		normalCorner2Criteria.add(normalCorner2Pattern1);</span>
+
+<span class="nc" id="L151">		GridPattern normalCorner3Pattern1 = new GridPattern(</span>
+				&quot;.^.&quot;,
+				&quot;(+~&quot;,
+				&quot;.[.&quot;
+			);
+<span class="nc" id="L156">		normalCorner3Criteria.add(normalCorner3Pattern1);</span>
+
+<span class="nc" id="L158">		GridPattern normalCorner4Pattern1 = new GridPattern(</span>
+				&quot;.^.&quot;,
+				&quot;~+(&quot;,
+				&quot;.[.&quot;
+			);
+<span class="nc" id="L163">		normalCorner4Criteria.add(normalCorner4Pattern1);</span>
+
+		// ******* round corners *******
+
+<span class="nc" id="L167">		GridPattern roundCorner1Pattern1 = new GridPattern(</span>
+				&quot;.[.&quot;,
+				&quot;~/4&quot;,
+				&quot;.2.&quot;
+			);
+<span class="nc" id="L172">		roundCorner1Criteria.add(roundCorner1Pattern1);</span>
+
+<span class="nc" id="L174">		GridPattern roundCorner2Pattern1 = new GridPattern(</span>
+				&quot;.[.&quot;,
+				&quot;4\\~&quot;,
+				&quot;.2.&quot;
+			);
+<span class="nc" id="L179">		roundCorner2Criteria.add(roundCorner2Pattern1);</span>
+
+<span class="nc" id="L181">		GridPattern roundCorner3Pattern1 = new GridPattern(</span>
+				&quot;.6.&quot;,
+				&quot;4/~&quot;,
+				&quot;.[.&quot;
+			);
+<span class="nc" id="L186">		roundCorner3Criteria.add(roundCorner3Pattern1);</span>
+
+<span class="nc" id="L188">		GridPattern roundCorner4Pattern1 = new GridPattern(</span>
+				&quot;.6.&quot;,
+				&quot;~\\8&quot;,
+				&quot;.[.&quot;
+			);
+<span class="nc" id="L193">		roundCorner4Criteria.add(roundCorner4Pattern1);</span>
+
+		//stubs
+
+<span class="nc" id="L197">		GridPattern stubPattern1 = new GridPattern(</span>
+				&quot;!^!&quot;,
+				&quot;!+!&quot;,
+				&quot;.!.&quot;
+			);
+<span class="nc" id="L202">		stubCriteria.add(stubPattern1);</span>
+
+<span class="nc" id="L204">		GridPattern stubPattern2 = new GridPattern(</span>
+				&quot;!^!&quot;,
+				&quot;!+!&quot;,
+				&quot;.-.&quot;
+			);
+<span class="nc" id="L209">		stubCriteria.add(stubPattern2);</span>
+
+<span class="nc" id="L211">		GridPattern stubPattern3 = new GridPattern(</span>
+				&quot;!!.&quot;,
+				&quot;(+!&quot;,
+				&quot;!!.&quot;
+			);
+<span class="nc" id="L216">		stubCriteria.add(stubPattern3);</span>
+
+<span class="nc" id="L218">		GridPattern stubPattern4 = new GridPattern(</span>
+				&quot;!!.&quot;,
+				&quot;(+|&quot;,
+				&quot;!!.&quot;
+			);
+<span class="nc" id="L223">		stubCriteria.add(stubPattern4);</span>
+
+<span class="nc" id="L225">		GridPattern stubPattern5 = new GridPattern(</span>
+				&quot;.!.&quot;,
+				&quot;!+!&quot;,
+				&quot;!^!&quot;
+			);
+<span class="nc" id="L230">		stubCriteria.add(stubPattern5);</span>
+
+<span class="nc" id="L232">		GridPattern stubPattern6 = new GridPattern(</span>
+				&quot;.-.&quot;,
+				&quot;!+!&quot;,
+				&quot;!^!&quot;
+			);
+<span class="nc" id="L237">		stubCriteria.add(stubPattern6);</span>
+		
+<span class="nc" id="L239">		GridPattern stubPattern7 = new GridPattern(</span>
+				&quot;.!!&quot;,
+				&quot;!+(&quot;,
+				&quot;.!!&quot;
+			);
+<span class="nc" id="L244">		stubCriteria.add(stubPattern7);</span>
+
+<span class="nc" id="L246">		GridPattern stubPattern8 = new GridPattern(</span>
+				&quot;.!!&quot;,
+				&quot;|+(&quot;,
+				&quot;.!!&quot;
+			);
+<span class="nc" id="L251">		stubCriteria.add(stubPattern8);</span>
+
+
+		// ****** ends of lines ******
+<span class="nc" id="L255">		GridPattern verticalLinesEndPattern1 = new GridPattern(</span>
+				&quot;.^.&quot;,
+				&quot;.|.&quot;,
+				&quot;.!.&quot;
+			);
+<span class="nc" id="L260">		verticalLinesEndCriteria.add(verticalLinesEndPattern1);</span>
+
+<span class="nc" id="L262">		GridPattern verticalLinesEndPattern2 = new GridPattern(</span>
+				&quot;.^.&quot;,
+				&quot;.|.&quot;,
+				&quot;.-.&quot;
+			);
+<span class="nc" id="L267">		verticalLinesEndCriteria.add(verticalLinesEndPattern2);</span>
+
+<span class="nc" id="L269">		GridPattern horizontalLinesEndPattern3 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;(-!&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L274">		horizontalLinesEndCriteria.add(horizontalLinesEndPattern3);</span>
+
+<span class="nc" id="L276">		GridPattern horizontalLinesEndPattern4 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;(-|&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L281">		horizontalLinesEndCriteria.add(horizontalLinesEndPattern4);</span>
+
+<span class="nc" id="L283">		GridPattern verticalLinesEndPattern5 = new GridPattern(</span>
+				&quot;.!.&quot;,
+				&quot;.|.&quot;,
+				&quot;.^.&quot;
+			);
+<span class="nc" id="L288">		verticalLinesEndCriteria.add(verticalLinesEndPattern5);</span>
+
+<span class="nc" id="L290">		GridPattern verticalLinesEndPattern6 = new GridPattern(</span>
+				&quot;.-.&quot;,
+				&quot;.|.&quot;,
+				&quot;.^.&quot;
+			);
+<span class="nc" id="L295">		verticalLinesEndCriteria.add(verticalLinesEndPattern6);</span>
+
+<span class="nc" id="L297">		GridPattern horizontalLinesEndPattern7 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;!-(&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L302">		horizontalLinesEndCriteria.add(horizontalLinesEndPattern7);</span>
+
+<span class="nc" id="L304">		GridPattern horizontalLinesEndPattern8 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;|-(&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L309">		horizontalLinesEndCriteria.add(horizontalLinesEndPattern8);</span>
+
+
+
+		// ****** others *******
+
+<span class="nc" id="L315">		GridPattern horizontalCrossOnLinePattern1 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;(+(&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L320">		horizontalCrossOnLineCriteria.add(horizontalCrossOnLinePattern1);</span>
+
+<span class="nc" id="L322">		GridPattern verticalCrossOnLinePattern1 = new GridPattern(</span>
+				&quot;.^.&quot;,
+				&quot;.+.&quot;,
+				&quot;.^.&quot;
+			);
+<span class="nc" id="L327">		verticalCrossOnLineCriteria.add(verticalCrossOnLinePattern1);</span>
+
+
+<span class="nc" id="L330">		GridPattern horizontalStarOnLinePattern1 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;(*(&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L335">		horizontalStarOnLineCriteria.add(horizontalStarOnLinePattern1);</span>
+
+<span class="nc" id="L337">		GridPattern horizontalStarOnLinePattern2 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;!*(&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L342">		horizontalStarOnLineCriteria.add(horizontalStarOnLinePattern2);</span>
+
+<span class="nc" id="L344">		GridPattern horizontalStarOnLinePattern3 = new GridPattern(</span>
+				&quot;...&quot;,
+				&quot;(*!&quot;,
+				&quot;...&quot;
+			);
+<span class="nc" id="L349">		horizontalStarOnLineCriteria.add(horizontalStarOnLinePattern3);</span>
+
+
+<span class="nc" id="L352">		GridPattern verticalStarOnLinePattern1 = new GridPattern(</span>
+				&quot;.^.&quot;,
+				&quot;.*.&quot;,
+				&quot;.^.&quot;
+			);
+<span class="nc" id="L357">		verticalStarOnLineCriteria.add(verticalStarOnLinePattern1);</span>
+
+<span class="nc" id="L359">		GridPattern verticalStarOnLinePattern2 = new GridPattern(</span>
+				&quot;.!.&quot;,
+				&quot;.*.&quot;,
+				&quot;.^.&quot;
+			);
+<span class="nc" id="L364">		verticalStarOnLineCriteria.add(verticalStarOnLinePattern2);</span>
+
+<span class="nc" id="L366">		GridPattern verticalStarOnLinePattern3 = new GridPattern(</span>
+				&quot;.^.&quot;,
+				&quot;.*.&quot;,
+				&quot;.!.&quot;
+			);
+<span class="nc" id="L371">		verticalStarOnLineCriteria.add(verticalStarOnLinePattern3);</span>
+
+		
+<span class="nc" id="L374">		GridPattern loneDiagonalPattern1 = new GridPattern(</span>
+				&quot;.%6%7&quot;,
+				&quot;%4/%8&quot;,
+				&quot;%3%2.&quot;
+			);
+<span class="nc" id="L379">		loneDiagonalCriteria.add(loneDiagonalPattern1);</span>
+
+<span class="nc" id="L381">		GridPattern loneDiagonalPattern2 = new GridPattern(</span>
+				&quot;%1%6.&quot;,
+				&quot;%4\\%8&quot;,
+				&quot;.%2%5&quot;
+			);
+<span class="nc" id="L386">		loneDiagonalCriteria.add(loneDiagonalPattern2);</span>
+
+
+		//groups
+		
+<span class="nc" id="L391">		intersectionCriteria.addAll(crossCriteria);</span>
+<span class="nc" id="L392">		intersectionCriteria.addAll(KCriteria);</span>
+<span class="nc" id="L393">		intersectionCriteria.addAll(TCriteria);</span>
+<span class="nc" id="L394">		intersectionCriteria.addAll(inverseKCriteria);</span>
+<span class="nc" id="L395">		intersectionCriteria.addAll(inverseTCriteria);</span>
+
+<span class="nc" id="L397">		normalCornerCriteria.addAll(normalCorner1Criteria);</span>
+<span class="nc" id="L398">		normalCornerCriteria.addAll(normalCorner2Criteria);</span>
+<span class="nc" id="L399">		normalCornerCriteria.addAll(normalCorner3Criteria);</span>
+<span class="nc" id="L400">		normalCornerCriteria.addAll(normalCorner4Criteria);</span>
+
+<span class="nc" id="L402">		roundCornerCriteria.addAll(roundCorner1Criteria);</span>
+<span class="nc" id="L403">		roundCornerCriteria.addAll(roundCorner2Criteria);</span>
+<span class="nc" id="L404">		roundCornerCriteria.addAll(roundCorner3Criteria);</span>
+<span class="nc" id="L405">		roundCornerCriteria.addAll(roundCorner4Criteria);</span>
+		
+<span class="nc" id="L407">		corner1Criteria.addAll(normalCorner1Criteria);</span>
+<span class="nc" id="L408">		corner1Criteria.addAll(roundCorner1Criteria);</span>
+
+<span class="nc" id="L410">		corner2Criteria.addAll(normalCorner2Criteria);</span>
+<span class="nc" id="L411">		corner2Criteria.addAll(roundCorner2Criteria);</span>
+
+<span class="nc" id="L413">		corner3Criteria.addAll(normalCorner3Criteria);</span>
+<span class="nc" id="L414">		corner3Criteria.addAll(roundCorner3Criteria);</span>
+
+<span class="nc" id="L416">		corner4Criteria.addAll(normalCorner4Criteria);</span>
+<span class="nc" id="L417">		corner4Criteria.addAll(roundCorner4Criteria);</span>
+
+<span class="nc" id="L419">		cornerCriteria.addAll(normalCornerCriteria);</span>
+<span class="nc" id="L420">		cornerCriteria.addAll(roundCornerCriteria);</span>
+		
+<span class="nc" id="L422">		crossOnLineCriteria.addAll(horizontalCrossOnLineCriteria);</span>
+<span class="nc" id="L423">		crossOnLineCriteria.addAll(verticalCrossOnLineCriteria);</span>
+
+<span class="nc" id="L425">		starOnLineCriteria.addAll(horizontalStarOnLineCriteria);</span>
+<span class="nc" id="L426">		starOnLineCriteria.addAll(verticalStarOnLineCriteria);</span>
+
+
+<span class="nc" id="L429">		linesEndCriteria.addAll(horizontalLinesEndCriteria);</span>
+<span class="nc" id="L430">		linesEndCriteria.addAll(verticalLinesEndCriteria);		</span>
+<span class="nc" id="L431">		linesEndCriteria.addAll(stubCriteria);</span>
+
+<span class="nc" id="L433">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

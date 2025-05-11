@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>YamlBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.yaml.parser</a> &gt; <span class="el_source">YamlBuilder.java</span></div><h1>YamlBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.yaml.parser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class YamlBuilder {
+
+<span class="fc" id="L42">	private final List&lt;Monomorph&gt; stack = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L44">	public YamlBuilder() {</span>
+<span class="fc" id="L45">		stack.add(new Monomorph());</span>
+<span class="fc" id="L46">	}</span>
+
+	public void increaseIndentation() {
+		// stack.addLast(new Monomorph());
+
+<span class="fc" id="L51">	}</span>
+
+	public void decreaseIndentation() {
+<span class="fc" id="L54">		stack.remove(stack.size() - 1);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (getLast().getType() == MonomorphType.LIST)</span>
+<span class="nc" id="L56">			stack.remove(stack.size() - 1);</span>
+<span class="fc" id="L57">	}</span>
+
+	public Monomorph getResult() {
+<span class="fc" id="L60">		return stack.get(0);</span>
+	}
+
+	private Monomorph getLast() {
+<span class="fc" id="L64">		return stack.get(stack.size() - 1);</span>
+	}
+
+	public void onListItemPlainDash() {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (isArrayAlreadyThere())</span>
+<span class="fc" id="L69">			stack.remove(stack.size() - 1);</span>
+<span class="fc" id="L70">		final Monomorph newElement = new Monomorph();</span>
+<span class="fc" id="L71">		getLast().addInList(newElement);</span>
+<span class="fc" id="L72">		stack.add(newElement);</span>
+<span class="fc" id="L73">	}</span>
+
+	private boolean isArrayAlreadyThere() {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (stack.size() &lt; 2)</span>
+<span class="fc" id="L77">			return false;</span>
+<span class="fc" id="L78">		final Monomorph potentialList = stack.get(stack.size() - 2);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (potentialList.getType() != MonomorphType.LIST)</span>
+<span class="fc" id="L80">			return false;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		return potentialList.getElementAt(potentialList.size() - 1) == stack.get(stack.size() - 1);</span>
+	}
+
+	public void onKeyAndValue(String key, String value) {
+<span class="fc" id="L85">		getLast().putInMap(key, Monomorph.scalar(value));</span>
+<span class="fc" id="L86">	}</span>
+
+	public void onKeyAndFlowSequence(String key, List&lt;String&gt; list) {
+<span class="fc" id="L89">		getLast().putInMap(key, Monomorph.list(list));</span>
+<span class="fc" id="L90">	}</span>
+
+	public void onOnlyKey(String key) {
+<span class="fc" id="L93">		final Monomorph newElement = new Monomorph();</span>
+<span class="fc" id="L94">		getLast().putInMap(key, newElement);</span>
+<span class="fc" id="L95">		stack.add(newElement);</span>
+<span class="fc" id="L96">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L100">		return stack.toString();</span>
+	}
+
+	public void onListItemOnlyKey(String key) {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (isArrayAlreadyThere())</span>
+<span class="fc" id="L105">			stack.remove(stack.size() - 1);</span>
+<span class="fc" id="L106">		final Monomorph newElement = new Monomorph();</span>
+<span class="fc" id="L107">		getLast().addInList(newElement);</span>
+<span class="fc" id="L108">		stack.add(newElement);</span>
+<span class="fc" id="L109">		final Monomorph newElement2 = new Monomorph();</span>
+<span class="fc" id="L110">		getLast().putInMap(key, newElement2);</span>
+<span class="fc" id="L111">		stack.add(newElement2);</span>
+
+<span class="fc" id="L113">	}</span>
+
+	public void onListItemOnlyValue(String value) {
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (isArrayAlreadyThere())</span>
+<span class="nc" id="L117">			stack.remove(stack.size() - 1);</span>
+<span class="fc" id="L118">		getLast().addInList(Monomorph.scalar(value));</span>
+
+<span class="fc" id="L120">	}</span>
+
+	public void onListItemKeyAndValue(String key, String value) {
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (isArrayAlreadyThere())</span>
+<span class="fc" id="L124">			stack.remove(stack.size() - 1);</span>
+<span class="fc" id="L125">		final Monomorph newElement = new Monomorph();</span>
+<span class="fc" id="L126">		getLast().addInList(newElement);</span>
+<span class="fc" id="L127">		stack.add(newElement);</span>
+<span class="fc" id="L128">		getLast().putInMap(key, Monomorph.scalar(value));</span>
+
+<span class="fc" id="L130">	}</span>
+
+	public void onListItemKeyAndFlowSequence(String key, List&lt;String&gt; values) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (isArrayAlreadyThere())</span>
+<span class="nc" id="L134">			stack.remove(stack.size() - 1);</span>
+<span class="nc" id="L135">		final Monomorph newElement = new Monomorph();</span>
+<span class="nc" id="L136">		getLast().addInList(newElement);</span>
+<span class="nc" id="L137">		stack.add(newElement);</span>
+<span class="nc" id="L138">		getLast().putInMap(key, Monomorph.list(values));</span>
+		
+<span class="nc" id="L140">	}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

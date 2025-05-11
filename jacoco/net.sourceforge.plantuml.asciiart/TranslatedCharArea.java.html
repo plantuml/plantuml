@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TranslatedCharArea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiart</a> &gt; <span class="el_source">TranslatedCharArea.java</span></div><h1>TranslatedCharArea.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiart;
+
+import java.io.PrintStream;
+import java.util.Collection;
+import java.util.List;
+
+public class TranslatedCharArea implements UmlCharArea {
+    // ::remove folder when __HAXE__
+
+	private final int dx;
+	private final int dy;
+	private final UmlCharArea charArea;
+
+<span class="fc" id="L49">	public TranslatedCharArea(UmlCharArea charArea, int dx, int dy) {</span>
+<span class="fc" id="L50">		this.charArea = charArea;</span>
+<span class="fc" id="L51">		this.dx = dx;</span>
+<span class="fc" id="L52">		this.dy = dy;</span>
+<span class="fc" id="L53">	}</span>
+
+	public void drawBoxSimple(int x, int y, int width, int height) {
+<span class="nc" id="L56">		charArea.drawBoxSimple(x + dx, y + dy, width, height);</span>
+
+<span class="nc" id="L58">	}</span>
+
+	public void drawBoxSimpleUnicode(int x, int y, int width, int height) {
+<span class="fc" id="L61">		charArea.drawBoxSimpleUnicode(x + dx, y + dy, width, height);</span>
+<span class="fc" id="L62">	}</span>
+
+	public void drawNoteSimple(int x, int y, int width, int height) {
+<span class="nc" id="L65">		charArea.drawNoteSimple(x + dx, y + dy, width, height);</span>
+<span class="nc" id="L66">	}</span>
+
+	public void drawNoteSimpleUnicode(int x, int y, int width, int height) {
+<span class="nc" id="L69">		charArea.drawNoteSimpleUnicode(x + dx, y + dy, width, height);</span>
+<span class="nc" id="L70">	}</span>
+
+	public void drawShape(AsciiShape shape, int x, int y) {
+<span class="nc" id="L73">		charArea.drawShape(shape, x + dx, y + dy);</span>
+<span class="nc" id="L74">	}</span>
+
+	public void drawChar(char c, int x, int y) {
+<span class="fc" id="L77">		charArea.drawChar(c, x + dx, y + dy);</span>
+<span class="fc" id="L78">	}</span>
+
+	public void drawHLine(char c, int line, int col1, int col2) {
+<span class="fc" id="L81">		charArea.drawHLine(c, line + dy, col1 + dx, col2 + dx);</span>
+<span class="fc" id="L82">	}</span>
+
+	public void drawHLine(char c, int line, int col1, int col2, char ifFound, char thenUse) {
+<span class="nc" id="L85">		charArea.drawHLine(c, line + dy, col1 + dx, col2 + dx, ifFound, thenUse);</span>
+<span class="nc" id="L86">	}</span>
+
+	public void drawStringLR(String string, int x, int y) {
+<span class="fc" id="L89">		charArea.drawStringLR(string, x + dx, y + dy);</span>
+<span class="fc" id="L90">	}</span>
+
+	public void drawStringTB(String string, int x, int y) {
+<span class="nc" id="L93">		charArea.drawStringTB(string, x + dx, y + dy);</span>
+<span class="nc" id="L94">	}</span>
+
+	public void drawVLine(char c, int col, int line1, int line2) {
+<span class="fc" id="L97">		charArea.drawVLine(c, col + dx, line1 + dy, line2 + dy);</span>
+<span class="fc" id="L98">	}</span>
+
+	public int getHeight() {
+<span class="nc" id="L101">		return charArea.getHeight();</span>
+	}
+
+	public int getWidth() {
+<span class="nc" id="L105">		return charArea.getWidth();</span>
+	}
+
+	public String getLine(int line) {
+<span class="nc" id="L109">		return charArea.getLine(line);</span>
+	}
+
+	public List&lt;String&gt; getLines() {
+<span class="nc" id="L113">		return charArea.getLines();</span>
+	}
+
+	public void print(PrintStream ps) {
+<span class="fc" id="L117">		charArea.print(ps);</span>
+<span class="fc" id="L118">	}</span>
+
+	public void drawStringsLRSimple(Collection&lt;? extends CharSequence&gt; strings, int x, int y) {
+<span class="fc" id="L121">		charArea.drawStringsLRSimple(strings, x + dx, y + dy);</span>
+<span class="fc" id="L122">	}</span>
+
+	public void drawStringsLRUnicode(Collection&lt;? extends CharSequence&gt; strings, int x, int y) {
+<span class="fc" id="L125">		charArea.drawStringsLRUnicode(strings, x + dx, y + dy);</span>
+<span class="fc" id="L126">	}</span>
+
+	public void fillRect(char c, int x, int y, int width, int height) {
+<span class="fc" id="L129">		charArea.fillRect(c, x + dx, y + dy, width, height);</span>
+<span class="fc" id="L130">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

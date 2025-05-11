@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiagramType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.core</a> &gt; <span class="el_source">DiagramType.java</span></div><h1>DiagramType.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.core;
+
+import net.sourceforge.plantuml.utils.StartUtils;
+
+// To be merged with UmlDiagramType
+<span class="fc" id="L41">public enum DiagramType {</span>
+	// ::remove folder when __HAXE__
+<span class="fc" id="L43">	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,</span>
+<span class="fc" id="L44">	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, UNKNOWN;</span>
+
+	static public DiagramType getTypeFromArobaseStart(String s) {
+<span class="fc" id="L47">		s = s.toLowerCase();</span>
+		// if (s.startsWith(&quot;@startuml2&quot;)) {
+		// return UML2;
+		// }
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startwire&quot;, s))</span>
+<span class="nc" id="L52">			return WIRE;</span>
+
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startbpm&quot;, s))</span>
+<span class="nc" id="L55">			return BPM;</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startuml&quot;, s))</span>
+<span class="fc" id="L58">			return UML;</span>
+
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startdot&quot;, s))</span>
+<span class="nc" id="L61">			return DOT;</span>
+
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or
+		// __LGPL__
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startjcckit&quot;, s))</span>
+<span class="nc" id="L66">			return JCCKIT;</span>
+		// ::done
+
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startditaa&quot;, s))</span>
+<span class="nc" id="L71">			return DITAA;</span>
+		// ::done
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startproject&quot;, s))</span>
+<span class="nc" id="L75">			return PROJECT;</span>
+
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startsalt&quot;, s))</span>
+<span class="nc" id="L78">			return SALT;</span>
+
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startflow&quot;, s))</span>
+<span class="nc" id="L81">			return FLOW;</span>
+
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startcreole&quot;, s))</span>
+<span class="nc" id="L84">			return CREOLE;</span>
+
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startmath&quot;, s))</span>
+<span class="nc" id="L87">			return MATH;</span>
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startlatex&quot;, s))</span>
+<span class="nc" id="L90">			return LATEX;</span>
+
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startdef&quot;, s))</span>
+<span class="fc" id="L93">			return DEFINITION;</span>
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startgantt&quot;, s))</span>
+<span class="fc" id="L96">			return GANTT;</span>
+
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startnwdiag&quot;, s))</span>
+<span class="nc" id="L99">			return NW;</span>
+
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startmindmap&quot;, s))</span>
+<span class="fc" id="L102">			return MINDMAP;</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startwbs&quot;, s))</span>
+<span class="fc" id="L105">			return WBS;</span>
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startjson&quot;, s))</span>
+<span class="fc" id="L108">			return JSON;</span>
+
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startgit&quot;, s))</span>
+<span class="nc" id="L111">			return GIT;</span>
+
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startboard&quot;, s))</span>
+<span class="nc" id="L114">			return BOARD;</span>
+
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startyaml&quot;, s))</span>
+<span class="nc" id="L117">			return YAML;</span>
+
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;starthcl&quot;, s))</span>
+<span class="nc" id="L120">			return HCL;</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startebnf&quot;, s))</span>
+<span class="fc" id="L123">			return EBNF;</span>
+
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startregex&quot;, s))</span>
+<span class="nc" id="L126">			return REGEX;</span>
+
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startfiles&quot;, s))</span>
+<span class="nc" id="L129">			return FILES;</span>
+
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startchronology&quot;, s))</span>
+<span class="nc" id="L132">			return CHRONOLOGY;</span>
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startchen&quot;, s))</span>
+<span class="fc" id="L135">			return CHEN_EER;</span>
+
+<span class="fc" id="L137">		return UNKNOWN;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

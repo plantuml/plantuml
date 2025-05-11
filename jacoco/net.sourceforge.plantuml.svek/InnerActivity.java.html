@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InnerActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">InnerActivity.java</span></div><h1>InnerActivity.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.svek;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+public final class InnerActivity extends AbstractTextBlock implements IEntityImage {
+
+	private final IEntityImage im;
+	private final HColor borderColor;
+	private final double shadowing;
+	private final HColor backColor;
+
+<span class="nc" id="L53">	public InnerActivity(final IEntityImage im, HColor borderColor, HColor backColor, double shadowing) {</span>
+<span class="nc" id="L54">		this.im = im;</span>
+<span class="nc" id="L55">		this.backColor = backColor;</span>
+<span class="nc" id="L56">		this.borderColor = borderColor;</span>
+<span class="nc" id="L57">		this.shadowing = shadowing;</span>
+<span class="nc" id="L58">	}</span>
+
+	public final static double THICKNESS_BORDER = 1.5;
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L63">		final XDimension2D total = calculateDimension(ug.getStringBounder());</span>
+
+<span class="nc" id="L65">		ug = ug.apply(backColor.bg()).apply(borderColor).apply(UStroke.withThickness(THICKNESS_BORDER));</span>
+<span class="nc" id="L66">		final URectangle rect = URectangle.build(total.getWidth(), total.getHeight()).rounded(IEntityImage.CORNER);</span>
+<span class="nc" id="L67">		rect.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L68">		ug.draw(rect);</span>
+<span class="nc" id="L69">		ug = ug.apply(UStroke.simple());</span>
+<span class="nc" id="L70">		im.drawU(ug);</span>
+<span class="nc" id="L71">	}</span>
+
+	public HColor getBackcolor() {
+<span class="nc" id="L74">		return im.getBackcolor();</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L78">		final XDimension2D img = im.calculateDimension(stringBounder);</span>
+<span class="nc" id="L79">		return img;</span>
+	}
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L83">		return ShapeType.ROUND_RECTANGLE;</span>
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+<span class="nc" id="L87">		return Margins.NONE;</span>
+	}
+
+	public boolean isHidden() {
+<span class="nc" id="L91">		return im.isHidden();</span>
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+<span class="nc" id="L95">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

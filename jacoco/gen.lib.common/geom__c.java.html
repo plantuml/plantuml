@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>geom__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">geom__c.java</span></div><h1>geom__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
+import h.ST_pointf;
+
+<span class="nc" id="L56">public class geom__c {</span>
+
+
+
+//3 3aiyj7urv33rvps5ds204tciu
+// static pointf rotatepf(pointf p, int cwrot) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/geom.c&quot;, name=&quot;rotatepf&quot;, key=&quot;3aiyj7urv33rvps5ds204tciu&quot;, definition=&quot;static pointf rotatepf(pointf p, int cwrot)&quot;)
+public static ST_pointf rotatepf(final ST_pointf p, int cwrot) {
+// WARNING!! STRUCT
+<span class="nc" id="L66">return rotatepf_w_(p.copy(), cwrot).copy();</span>
+}
+private static ST_pointf rotatepf_w_(final ST_pointf p, int cwrot) {
+<span class="nc" id="L69">ENTERING(&quot;3aiyj7urv33rvps5ds204tciu&quot;,&quot;rotatepf&quot;);</span>
+try {
+<span class="nc" id="L71"> UNSUPPORTED(&quot;adzi0wztceimu4ni3aonznmq7&quot;); // static pointf rotatepf(pointf p, int cwrot)</span>
+<span class="nc" id="L72">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L73">UNSUPPORTED(&quot;bvmbf4zjo22hbkaarrfpdlocf&quot;); //     static double sina, cosa;</span>
+<span class="nc" id="L74">UNSUPPORTED(&quot;2q61ok3mvkrnszcasq86sa47u&quot;); //     static int last_cwrot;</span>
+<span class="nc" id="L75">UNSUPPORTED(&quot;7lh87lvufqsd73q9difg0omei&quot;); //     pointf P;</span>
+<span class="nc" id="L76">UNSUPPORTED(&quot;apr20mshcgdjbln509cnpuysv&quot;); //     /* cosa is initially wrong for a cwrot of 0</span>
+<span class="nc" id="L77">UNSUPPORTED(&quot;7chgrmqliof6d9xytud69tz1u&quot;); //      * this caching only works because we are never called for 0 rotations */</span>
+<span class="nc" id="L78">UNSUPPORTED(&quot;bbm4jlwljjo7wmvr5ma5c3ybf&quot;); //     if (cwrot != last_cwrot) {</span>
+<span class="nc" id="L79">UNSUPPORTED(&quot;djdw08yi87cxa9gld79itcxte&quot;); // 	sincos(cwrot / (2 * M_PI), &amp;sina, &amp;cosa);</span>
+<span class="nc" id="L80">UNSUPPORTED(&quot;1p92a46pieij11gut3g3w5c8a&quot;); // 	last_cwrot = cwrot;</span>
+<span class="nc" id="L81">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L82">UNSUPPORTED(&quot;5ebfpnhj3mdplyf7cdm05fvqt&quot;); //     P.x = p.x * cosa - p.y * sina;</span>
+<span class="nc" id="L83">UNSUPPORTED(&quot;87v4w9w5q8h1qv8g0mktgna71&quot;); //     P.y = p.y * cosa + p.x * sina;</span>
+<span class="nc" id="L84">UNSUPPORTED(&quot;57gdhsck3pq8wsbtv00wvc7ca&quot;); //     return P;</span>
+<span class="nc" id="L85">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L87">throw new UnsupportedOperationException();</span>
+} finally {
+<span class="nc" id="L89">LEAVING(&quot;3aiyj7urv33rvps5ds204tciu&quot;,&quot;rotatepf&quot;);</span>
+}
+}
+
+
+
+//3 5q8h2tm3jifiasn423wrm0y60
+@Reviewed(when = &quot;01/12/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/geom.c&quot;, name=&quot;cwrotatepf&quot;, key=&quot;5q8h2tm3jifiasn423wrm0y60&quot;, definition=&quot;pointf cwrotatepf(pointf p, int cwrot)&quot;)
+public static ST_pointf cwrotatepf(final ST_pointf p, int cwrot) {
+// WARNING!! STRUCT
+<span class="fc" id="L100">return cwrotatepf_w_(p.copy(), cwrot).copy();</span>
+}
+private static ST_pointf cwrotatepf_w_(final ST_pointf p, int cwrot) {
+<span class="fc" id="L103">ENTERING(&quot;5q8h2tm3jifiasn423wrm0y60&quot;,&quot;cwrotatepf&quot;);</span>
+try {
+<span class="fc" id="L105">    double x = p.x, y = p.y;</span>
+<span class="pc bpc" id="L106" title="4 of 5 branches missed.">    switch (cwrot) {</span>
+    case 0:
+<span class="fc" id="L108">	break;</span>
+    case 90:
+<span class="nc" id="L110">	p.x = y;</span>
+<span class="nc" id="L111">	p.y = -x;</span>
+<span class="nc" id="L112">	break;</span>
+    case 180:
+<span class="nc" id="L114">	p.x = x;</span>
+<span class="nc" id="L115">	p.y = -y;</span>
+<span class="nc" id="L116">	break;</span>
+    case 270:
+<span class="nc" id="L118">	p.x = y;</span>
+<span class="nc" id="L119">	p.y = x;</span>
+<span class="nc" id="L120">	break;</span>
+    default:
+<span class="nc bnc" id="L122" title="All 2 branches missed.">	if (cwrot &lt; 0)</span>
+<span class="nc" id="L123">	    return ccwrotatepf(p, -cwrot);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (cwrot &gt; 360)</span>
+<span class="nc" id="L125">	    return cwrotatepf(p, cwrot%360);</span>
+<span class="nc" id="L126">	return rotatepf(p, cwrot);</span>
+    }
+<span class="fc" id="L128">    return p;</span>
+} finally {
+<span class="fc" id="L130">LEAVING(&quot;5q8h2tm3jifiasn423wrm0y60&quot;,&quot;cwrotatepf&quot;);</span>
+}
+}
+
+
+
+
+
+
+//3 6np74e9pfmv8uek8irqru2tma
+// pointf ccwrotatepf(pointf p, int ccwrot) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/geom.c&quot;, name=&quot;ccwrotatepf&quot;, key=&quot;6np74e9pfmv8uek8irqru2tma&quot;, definition=&quot;pointf ccwrotatepf(pointf p, int ccwrot)&quot;)
+public static ST_pointf ccwrotatepf(final ST_pointf p, int ccwrot) {
+// WARNING!! STRUCT
+<span class="fc" id="L145">return ccwrotatepf_w_(p.copy(), ccwrot).copy();</span>
+}
+private static ST_pointf ccwrotatepf_w_(final ST_pointf p, int ccwrot) {
+<span class="fc" id="L148">ENTERING(&quot;6np74e9pfmv8uek8irqru2tma&quot;,&quot;ccwrotatepf&quot;);</span>
+try {
+<span class="fc" id="L150">    double x = p.x, y = p.y;</span>
+<span class="pc bpc" id="L151" title="3 of 5 branches missed.">    switch (ccwrot) {</span>
+    case 0:
+<span class="fc" id="L153">	break;</span>
+    case 90:
+<span class="fc" id="L155">	p.x = -y;</span>
+<span class="fc" id="L156">	p.y = x;</span>
+<span class="fc" id="L157">	break;</span>
+    case 180:
+<span class="nc" id="L159">	p.x = x;</span>
+<span class="nc" id="L160">	p.y = -y;</span>
+<span class="nc" id="L161">	break;</span>
+    case 270:
+<span class="nc" id="L163">	p.x = y;</span>
+<span class="nc" id="L164">	p.y = x;</span>
+<span class="nc" id="L165">	break;</span>
+    default:
+<span class="nc bnc" id="L167" title="All 2 branches missed.">	if (ccwrot &lt; 0)</span>
+<span class="nc" id="L168">	    return cwrotatepf(p, -ccwrot);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (ccwrot &gt; 360)</span>
+<span class="nc" id="L170">	    return ccwrotatepf(p, ccwrot%360);</span>
+<span class="nc" id="L171">	return rotatepf(p, 360-ccwrot);</span>
+    }
+<span class="fc" id="L173">    return p;</span>
+} finally {
+<span class="fc" id="L175">LEAVING(&quot;6np74e9pfmv8uek8irqru2tma&quot;,&quot;ccwrotatepf&quot;);</span>
+}
+}
+
+
+
+
+
+//3 90k9l4o3khu3dw0fzkrcd97nk
+// double ptToLine2 (pointf a, pointf b, pointf p) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/geom.c&quot;, name=&quot;ptToLine2&quot;, key=&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;, definition=&quot;double ptToLine2 (pointf a, pointf b, pointf p)&quot;)
+public static double ptToLine2(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
+// WARNING!! STRUCT
+<span class="fc" id="L189">return ptToLine2_w_(a.copy(), b.copy(), p.copy());</span>
+}
+private static double ptToLine2_w_(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
+<span class="fc" id="L192">ENTERING(&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;,&quot;ptToLine2&quot;);</span>
+try {
+<span class="fc" id="L194">  double dx = b.x-a.x;</span>
+<span class="fc" id="L195">  double dy = b.y-a.y;</span>
+<span class="fc" id="L196">  double a2 = (p.y-a.y)*dx - (p.x-a.x)*dy;</span>
+<span class="fc" id="L197">  a2 *= a2;   /* square - ensures that it is positive */</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">  if (a2 &lt; 0.0000000001) return 0.;  /* avoid 0/0 problems */</span>
+<span class="fc" id="L199">  return a2 / (dx*dx + dy*dy);</span>
+} finally {
+<span class="fc" id="L201">LEAVING(&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;,&quot;ptToLine2&quot;);</span>
+}
+}
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

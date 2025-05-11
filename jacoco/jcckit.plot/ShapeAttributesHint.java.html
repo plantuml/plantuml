@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShapeAttributesHint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">ShapeAttributesHint.java</span></div><h1>ShapeAttributesHint.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import java.awt.Color;
+
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.ShapeAttributes;
+import jcckit.util.ConfigParameters;
+
+/**
+ * An {@link AttributesHint} which wraps {@link ShapeAttributes}.
+ * Each call of {@link #getNextHint()} returns a new instance of
+ * &lt;tt&gt;ShapeAttributes&lt;/tt&gt; where fill color, line color and/or 
+ * line thickness has been increased by a constant amount.
+ * 
+ * @author Franz-Josef Elmer
+ */
+public class ShapeAttributesHint implements AttributesHint, Cloneable {
+  /** Configuration parameter key. */
+  public static final String INITIAL_ATTRIBUTES_KEY = &quot;initialAttributes&quot;,
+                             FILL_COLOR_HSB_INCREMENT_KEY 
+                                            = &quot;fillColorHSBIncrement&quot;,
+                             LINE_COLOR_HSB_INCREMENT_KEY 
+                                            = &quot;lineColorHSBIncrement&quot;,
+                             LINE_THICKNESS_INCREMENT_KEY 
+                                            = &quot;lineThicknessIncrement&quot;;
+  private static float[] extractHSB(Color color) {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">    return color == null ? null </span>
+<span class="nc" id="L46">        : Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), </span>
+                         null);
+  }
+  
+  private static Color createColor(float[] colorHSB) {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">    return colorHSB == null ? null </span>
+<span class="nc" id="L52">        : Color.getHSBColor(colorHSB[0], colorHSB[1], colorHSB[2]);</span>
+  }
+
+  private static float[] incrementColor(float[] colorHSB, 
+                                        double[] increments) {
+<span class="nc" id="L57">    float[] result = null;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">    if (colorHSB != null) {</span>
+<span class="nc" id="L59">      result = (float[]) colorHSB.clone();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">      for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L61">        result[i] += increments[i];</span>
+      }
+    }
+<span class="nc" id="L64">    return result;</span>
+  }
+
+  private float[] _fillColorHSB;
+  private float[] _lineColorHSB;
+  private double _lineThickness;
+  private double[] _linePattern;
+  private double[] _fillColorHSBIncrement;
+  private double[] _lineColorHSBIncrement;
+  private double _lineThicknessIncrement;
+
+  /**
+   * Creates an instance from the specified configuration parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;initialAttributes = &lt;/tt&gt;&lt;i&gt;default values of
+   *         {@link ShapeAttributes}&lt;/i&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Initial values of shape attributes. Note, that default
+   *         fill and line colors are undefined (they depend on the
+   *         &lt;tt&gt;Renderer&lt;/tt&gt;). In this case color increments have no effects.
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;fillColorHSBIncrement = 0 0 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Hue, saturation, and brightness increments of the fill color.
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;lineColorHSBIncrement = 0 0 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double[]&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Hue, saturation, and brightness increments of the line color.
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;lineThicknessIncrement = 0&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Line thickness increment.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+<span class="nc" id="L100">  public ShapeAttributesHint(ConfigParameters config) {</span>
+<span class="nc" id="L101">    ShapeAttributes attributes </span>
+<span class="nc" id="L102">        = new ShapeAttributes(config.getNode(INITIAL_ATTRIBUTES_KEY));</span>
+<span class="nc" id="L103">    _fillColorHSB = extractHSB(attributes.getFillColor());</span>
+<span class="nc" id="L104">    _lineColorHSB = extractHSB(attributes.getLineColor());</span>
+<span class="nc" id="L105">    _lineThickness = attributes.getLineThickness();</span>
+<span class="nc" id="L106">    _linePattern = attributes.getLinePattern();</span>
+    
+<span class="nc" id="L108">    _fillColorHSBIncrement </span>
+<span class="nc" id="L109">          = config.getDoubleArray(FILL_COLOR_HSB_INCREMENT_KEY, new double[3]);</span>
+<span class="nc" id="L110">    _lineColorHSBIncrement </span>
+<span class="nc" id="L111">          = config.getDoubleArray(LINE_COLOR_HSB_INCREMENT_KEY, new double[3]);</span>
+<span class="nc" id="L112">    _lineThicknessIncrement </span>
+<span class="nc" id="L113">          = config.getDouble(LINE_THICKNESS_INCREMENT_KEY, 0);</span>
+<span class="nc" id="L114">  }</span>
+  
+  /**
+   * Creates a new &lt;tt&gt;ShapeAttributesHint&lt;/tt&gt; where all attributes has been
+   * incremented.
+   */
+  public AttributesHint getNextHint() {
+<span class="nc" id="L121">    ShapeAttributesHint nextHint = null;</span>
+    try {
+<span class="nc" id="L123">      nextHint = (ShapeAttributesHint) clone();</span>
+<span class="nc" id="L124">    } catch (CloneNotSupportedException e) {}</span>
+<span class="nc" id="L125">    nextHint._fillColorHSB </span>
+<span class="nc" id="L126">        = incrementColor(_fillColorHSB, _fillColorHSBIncrement);</span>
+<span class="nc" id="L127">    nextHint._lineColorHSB </span>
+<span class="nc" id="L128">        = incrementColor(_lineColorHSB, _lineColorHSBIncrement);</span>
+<span class="nc" id="L129">    nextHint._lineThickness </span>
+<span class="nc" id="L130">        = Math.max(0, _lineThickness + _lineThicknessIncrement);</span>
+<span class="nc" id="L131">    return nextHint;</span>
+  }
+
+  /** Returns the wrapped {@link ShapeAttributes} instance. */
+  public GraphicAttributes getAttributes() {
+<span class="nc" id="L136">    return new ShapeAttributes(createColor(_fillColorHSB),</span>
+<span class="nc" id="L137">                               createColor(_lineColorHSB), </span>
+                               _lineThickness, _linePattern);
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Util.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">Util.java</span></div><h1>Util.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+<span class="nc" id="L21">class Util {</span>
+
+<span class="nc" id="L23">	static final int[] LENGTH_SYMBOL = new int[] { 0, 0, 0, 257, 258, 259, 260, 261, 262, 263, 264, 265, 265, 266, 266,</span>
+			267, 267, 268, 268, 269, 269, 269, 269, 270, 270, 270, 270, 271, 271, 271, 271, 272, 272, 272, 272, 273,
+			273, 273, 273, 273, 273, 273, 273, 274, 274, 274, 274, 274, 274, 274, 274, 275, 275, 275, 275, 275, 275,
+			275, 275, 276, 276, 276, 276, 276, 276, 276, 276, 277, 277, 277, 277, 277, 277, 277, 277, 277, 277, 277,
+			277, 277, 277, 277, 277, 278, 278, 278, 278, 278, 278, 278, 278, 278, 278, 278, 278, 278, 278, 278, 278,
+			279, 279, 279, 279, 279, 279, 279, 279, 279, 279, 279, 279, 279, 279, 279, 279, 280, 280, 280, 280, 280,
+			280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 280, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281,
+			281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281, 281,
+			281, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282,
+			282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 282, 283, 283, 283, 283, 283, 283, 283, 283, 283,
+			283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283, 283,
+			283, 283, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284,
+			284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 284, 285 };
+
+<span class="nc" id="L37">	static final int[] LENGTH_EXTRA_BITS = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,</span>
+			2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+			3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+			4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+			4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+			5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+			5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+			5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0 };
+
+<span class="nc" id="L46">	static final int[] LENGTH_EXTRA_BITS_VALUE = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0,</span>
+			1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4,
+			5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6,
+			7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6,
+			7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+			21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+			18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+			12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 0 };
+
+<span class="nc" id="L56">	static final int[] ORDER = new int[] { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 };</span>
+
+<span class="nc" id="L58">	static final int[] CACHED_DIST_SYMBOL = cacheDistSymbol();</span>
+
+	private static int[] cacheDistSymbol() {
+<span class="nc" id="L61">		int[] r = new int[32768];</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (int i = 0; i &lt; 32768; ++i) {</span>
+<span class="nc" id="L63">			r[i] = distSymbol(i);</span>
+		}
+<span class="nc" id="L65">		return r;</span>
+	}
+
+	private static int distSymbol(int dist) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (dist &lt; 193) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (dist &lt; 13) { /* dist 0..13. */</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">				if (dist &lt; 5)</span>
+<span class="nc" id="L72">					return dist - 1;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">				else if (dist &lt; 7)</span>
+<span class="nc" id="L74">					return 4;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">				else if (dist &lt; 9)</span>
+<span class="nc" id="L76">					return 5;</span>
+				else
+<span class="nc" id="L78">					return 6;</span>
+			} else { /* dist 13..193. */
+<span class="nc bnc" id="L80" title="All 2 branches missed.">				if (dist &lt; 17)</span>
+<span class="nc" id="L81">					return 7;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">				else if (dist &lt; 25)</span>
+<span class="nc" id="L83">					return 8;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">				else if (dist &lt; 33)</span>
+<span class="nc" id="L85">					return 9;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				else if (dist &lt; 49)</span>
+<span class="nc" id="L87">					return 10;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">				else if (dist &lt; 65)</span>
+<span class="nc" id="L89">					return 11;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">				else if (dist &lt; 97)</span>
+<span class="nc" id="L91">					return 12;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				else if (dist &lt; 129)</span>
+<span class="nc" id="L93">					return 13;</span>
+				else
+<span class="nc" id="L95">					return 14;</span>
+			}
+		} else {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (dist &lt; 2049) { /* dist 193..2049. */</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (dist &lt; 257)</span>
+<span class="nc" id="L100">					return 15;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">				else if (dist &lt; 385)</span>
+<span class="nc" id="L102">					return 16;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">				else if (dist &lt; 513)</span>
+<span class="nc" id="L104">					return 17;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">				else if (dist &lt; 769)</span>
+<span class="nc" id="L106">					return 18;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">				else if (dist &lt; 1025)</span>
+<span class="nc" id="L108">					return 19;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				else if (dist &lt; 1537)</span>
+<span class="nc" id="L110">					return 20;</span>
+				else
+<span class="nc" id="L112">					return 21;</span>
+			} else { /* dist 2049..32768. */
+<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (dist &lt; 3073)</span>
+<span class="nc" id="L115">					return 22;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">				else if (dist &lt; 4097)</span>
+<span class="nc" id="L117">					return 23;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">				else if (dist &lt; 6145)</span>
+<span class="nc" id="L119">					return 24;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">				else if (dist &lt; 8193)</span>
+<span class="nc" id="L121">					return 25;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				else if (dist &lt; 12289)</span>
+<span class="nc" id="L123">					return 26;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">				else if (dist &lt; 16385)</span>
+<span class="nc" id="L125">					return 27;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">				else if (dist &lt; 24577)</span>
+<span class="nc" id="L127">					return 28;</span>
+				else
+<span class="nc" id="L129">					return 29;</span>
+			}
+		}
+	}
+
+<span class="nc" id="L134">	static final int[] CACHED_DIST_EXTRA_BITS = precacheDistExtraBits();</span>
+
+	private static int[] precacheDistExtraBits() {
+<span class="nc" id="L137">		int[] r = new int[4097];</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (int i = 0; i &lt; 4097; ++i) {</span>
+<span class="nc" id="L139">			r[i] = distExtraBits(i);</span>
+		}
+<span class="nc" id="L141">		return r;</span>
+	}
+
+	private static int distExtraBits(int dist) {
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (dist &lt; 5) {</span>
+<span class="nc" id="L146">			return 0;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		} else if (dist &lt; 9) {</span>
+<span class="nc" id="L148">			return 1;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		} else if (dist &lt; 17) {</span>
+<span class="nc" id="L150">			return 2;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		} else if (dist &lt; 33) {</span>
+<span class="nc" id="L152">			return 3;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		} else if (dist &lt; 65) {</span>
+<span class="nc" id="L154">			return 4;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		} else if (dist &lt; 129) {</span>
+<span class="nc" id="L156">			return 5;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		} else if (dist &lt; 257) {</span>
+<span class="nc" id="L158">			return 6;</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		} else if (dist &lt; 513) {</span>
+<span class="nc" id="L160">			return 7;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		} else if (dist &lt; 1025) {</span>
+<span class="nc" id="L162">			return 8;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		} else if (dist &lt; 2049) {</span>
+<span class="nc" id="L164">			return 9;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		} else if (dist &lt; 4097) {</span>
+<span class="nc" id="L166">			return 10;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		} else if (dist &lt; 8193) {</span>
+<span class="nc" id="L168">			return 11;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		} else if (dist &lt; 16385) {</span>
+<span class="nc" id="L170">			return 12;</span>
+		}
+<span class="nc" id="L172">		return 13;</span>
+	}
+
+	static int distExtraBitsValue(int dist) {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (dist &lt; 5) {</span>
+<span class="nc" id="L177">			return 0;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		} else if (dist &lt; 9) {</span>
+<span class="nc" id="L179">			return (dist - 5) &amp; 1;</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		} else if (dist &lt; 17) {</span>
+<span class="nc" id="L181">			return (dist - 9) &amp; 3;</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		} else if (dist &lt; 33) {</span>
+<span class="nc" id="L183">			return (dist - 17) &amp; 7;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		} else if (dist &lt; 65) {</span>
+<span class="nc" id="L185">			return (dist - 33) &amp; 15;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		} else if (dist &lt; 129) {</span>
+<span class="nc" id="L187">			return (dist - 65) &amp; 31;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		} else if (dist &lt; 257) {</span>
+<span class="nc" id="L189">			return (dist - 129) &amp; 63;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		} else if (dist &lt; 513) {</span>
+<span class="nc" id="L191">			return (dist - 257) &amp; 127;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		} else if (dist &lt; 1025) {</span>
+<span class="nc" id="L193">			return (dist - 513) &amp; 255;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		} else if (dist &lt; 2049) {</span>
+<span class="nc" id="L195">			return (dist - 1025) &amp; 511;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		} else if (dist &lt; 4097) {</span>
+<span class="nc" id="L197">			return (dist - 2049) &amp; 1023;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		} else if (dist &lt; 8193) {</span>
+<span class="nc" id="L199">			return (dist - 4097) &amp; 2047;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		} else if (dist &lt; 16385) {</span>
+<span class="nc" id="L201">			return (dist - 8193) &amp; 4095;</span>
+		}
+<span class="nc" id="L203">		return (dist - 16385) &amp; 8191;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

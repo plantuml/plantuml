@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GtileTopDown.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.gtile</a> &gt; <span class="el_source">GtileTopDown.java</span></div><h1>GtileTopDown.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.gtile;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.utils.MathUtils;
+
+public class GtileTopDown extends AbstractGtile {
+
+	protected final Gtile tile1;
+	protected final Gtile tile2;
+
+	private final XDimension2D dim1;
+	private final XDimension2D dim2;
+
+	private final UTranslate pos1;
+	private final UTranslate pos2;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L62">		return &quot;GtileTopDown(&quot; + tile1 + &quot; &amp;&amp; &quot; + tile2 + &quot;)&quot;;</span>
+	}
+
+	public GtileTopDown(Gtile tile1, Gtile tile2) {
+<span class="nc" id="L66">		super(tile1.getStringBounder(), tile1.skinParam());</span>
+<span class="nc" id="L67">		this.tile1 = tile1;</span>
+<span class="nc" id="L68">		this.tile2 = tile2;</span>
+
+<span class="nc" id="L70">		this.dim1 = tile1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L71">		this.dim2 = tile2.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L73">		final UTranslate vector1 = tile1.getCoord(GPoint.SOUTH_BORDER);</span>
+<span class="nc" id="L74">		final UTranslate vector2 = tile2.getCoord(GPoint.NORTH_BORDER);</span>
+
+<span class="nc" id="L76">		final double maxDx = Math.max(vector1.getDx(), vector2.getDx());</span>
+<span class="nc" id="L77">		this.pos1 = UTranslate.dx(maxDx - vector1.getDx());</span>
+<span class="nc" id="L78">		this.pos2 = new UTranslate(maxDx - vector2.getDx(), dim1.getHeight());</span>
+<span class="nc" id="L79">	}</span>
+
+	protected UTranslate supplementaryMove() {
+<span class="nc" id="L82">		return UTranslate.none();</span>
+	}
+
+	@Override
+	protected UTranslate getCoordImpl(String name) {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (name.equals(GPoint.NORTH_HOOK))</span>
+<span class="nc" id="L88">			return getPos1().compose(tile1.getCoord(name));</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (name.equals(GPoint.SOUTH_HOOK))</span>
+<span class="nc" id="L90">			return getPos2().compose(tile2.getCoord(name));</span>
+<span class="nc" id="L91">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public Swimlane getSwimlane(String name) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (name.equals(GPoint.NORTH_HOOK))</span>
+<span class="nc" id="L97">			return tile1.getSwimlane(name);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (name.equals(GPoint.SOUTH_HOOK))</span>
+<span class="nc" id="L99">			return tile2.getSwimlane(name);</span>
+<span class="nc" id="L100">		throw new UnsupportedOperationException();</span>
+	}
+
+	protected UTranslate getPos1() {
+<span class="nc" id="L104">		return pos1;</span>
+	}
+
+	protected UTranslate getPos2() {
+<span class="nc" id="L108">		return pos2.compose(supplementaryMove());</span>
+	}
+
+	@Override
+	protected void drawUInternal(UGraphic ug) {
+<span class="nc" id="L113">		ug.apply(getPos1()).draw(tile1);</span>
+<span class="nc" id="L114">		ug.apply(getPos2()).draw(tile2);</span>
+<span class="nc" id="L115">	}</span>
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L119">		final XDimension2D corner1 = dim1.applyTranslate(getPos1());</span>
+<span class="nc" id="L120">		final XDimension2D corner2 = dim2.applyTranslate(getPos2());</span>
+<span class="nc" id="L121">		return MathUtils.maxDim(corner1, corner2);</span>
+	}
+
+	public Set&lt;Swimlane&gt; getSwimlanes() {
+<span class="nc" id="L125">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L126">		result.addAll(tile1.getSwimlanes());</span>
+<span class="nc" id="L127">		result.addAll(tile2.getSwimlanes());</span>
+<span class="nc" id="L128">		return Collections.unmodifiableSet(result);</span>
+	}
+
+//	public Collection&lt;Gtile&gt; getMyChildren() {
+//		return Arrays.asList(tile1, tile2);
+//	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

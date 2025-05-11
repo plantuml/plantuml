@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Zopfli.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.zopfli</a> &gt; <span class="el_source">Zopfli.java</span></div><h1>Zopfli.java</h1><pre class="source lang-java linenums">/*
+Copyright 2014 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
+*/
+
+package net.sourceforge.plantuml.zopfli;
+
+public class Zopfli {
+
+	private static class Crc {
+
+<span class="nc" id="L25">		private final static int[] table = makeTable();</span>
+
+		private static int[] makeTable() {
+<span class="nc" id="L28">			int[] result = new int[256];</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">			for (int n = 0; n &lt; 256; ++n) {</span>
+<span class="nc" id="L31">				int c = n;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">				for (int k = 0; k &lt; 8; ++k) {</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">					if ((c &amp; 1) == 1) {</span>
+<span class="nc" id="L34">						c = 0xEDB88320 ^ (c &gt;&gt;&gt; 1);</span>
+					} else {
+<span class="nc" id="L36">						c = c &gt;&gt;&gt; 1;</span>
+					}
+				}
+<span class="nc" id="L39">				result[n] = c;</span>
+			}
+
+<span class="nc" id="L42">			return result;</span>
+		}
+
+		public static int calculate(byte[] input) {
+<span class="nc" id="L46">			int c = ~0;</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">			for (int i = 0, n = input.length; i &lt; n; ++i) {</span>
+<span class="nc" id="L48">				c = table[(c ^ input[i]) &amp; 0xFF] ^ (c &gt;&gt;&gt; 8);</span>
+			}
+<span class="nc" id="L50">			return ~c;</span>
+		}
+	}
+
+	private final Cookie cookie;
+
+	public synchronized Buffer compress(Options options, byte[] input) {
+<span class="nc" id="L57">		Buffer output = new Buffer();</span>
+<span class="nc bnc" id="L58" title="All 4 branches missed.">		switch (options.outputType) {</span>
+		case GZIP:
+<span class="nc" id="L60">			compressGzip(options, input, output);</span>
+<span class="nc" id="L61">			break;</span>
+
+		case ZLIB:
+<span class="nc" id="L64">			compressZlib(options, input, output);</span>
+<span class="nc" id="L65">			break;</span>
+		case DEFLATE:
+<span class="nc" id="L67">			Deflate.compress(cookie, options, input, output);</span>
+<span class="nc" id="L68">			break;</span>
+		default:
+<span class="nc" id="L70">			throw new IllegalArgumentException(&quot;Unexpected output format: &quot; + options.outputType);</span>
+		}
+<span class="nc" id="L72">		return output;</span>
+	}
+
+	/**
+	 * Calculates the adler32 checksum of the data
+	 */
+	private static int adler32(byte[] data) {
+<span class="nc" id="L79">		int s1 = 1;</span>
+<span class="nc" id="L80">		int s2 = 1 &gt;&gt; 16;</span>
+<span class="nc" id="L81">		int i = 0;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		while (i &lt; data.length) {</span>
+<span class="nc" id="L83">			int tick = Math.min(data.length, i + 1024);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			while (i &lt; tick) {</span>
+<span class="nc" id="L85">				s1 += data[i++];</span>
+<span class="nc" id="L86">				s2 += s1;</span>
+			}
+<span class="nc" id="L88">			s1 %= 65521;</span>
+<span class="nc" id="L89">			s2 %= 65521;</span>
+<span class="nc" id="L90">		}</span>
+
+<span class="nc" id="L92">		return (s2 &lt;&lt; 16) | s1;</span>
+	}
+
+	private void compressZlib(Options options, byte[] input, Buffer output) {
+<span class="nc" id="L96">		output.append((byte) 0x78);</span>
+<span class="nc" id="L97">		output.append((byte) 0x1E);</span>
+
+<span class="nc" id="L99">		Deflate.compress(cookie, options, input, output);</span>
+
+<span class="nc" id="L101">		int checksum = adler32(input);</span>
+<span class="nc" id="L102">		output.append((byte) ((checksum &gt;&gt; 24) &amp; 0xFF));</span>
+<span class="nc" id="L103">		output.append((byte) ((checksum &gt;&gt; 16) &amp; 0xFF));</span>
+<span class="nc" id="L104">		output.append((byte) ((checksum &gt;&gt; 8) &amp; 0xFF));</span>
+<span class="nc" id="L105">		output.append((byte) (checksum &amp; 0xFF));</span>
+<span class="nc" id="L106">	}</span>
+
+	private void compressGzip(Options options, byte[] input, Buffer output) {
+<span class="nc" id="L109">		output.append((byte) 31);</span>
+<span class="nc" id="L110">		output.append((byte) 139);</span>
+<span class="nc" id="L111">		output.append((byte) 8);</span>
+<span class="nc" id="L112">		output.append((byte) 0);</span>
+
+<span class="nc" id="L114">		output.append((byte) 0);</span>
+<span class="nc" id="L115">		output.append((byte) 0);</span>
+<span class="nc" id="L116">		output.append((byte) 0);</span>
+<span class="nc" id="L117">		output.append((byte) 0);</span>
+
+<span class="nc" id="L119">		output.append((byte) 2);</span>
+<span class="nc" id="L120">		output.append((byte) 3);</span>
+
+<span class="nc" id="L122">		Deflate.compress(cookie, options, input, output);</span>
+
+<span class="nc" id="L124">		int crc = Crc.calculate(input);</span>
+<span class="nc" id="L125">		output.append((byte) (crc &amp; 0xFF));</span>
+<span class="nc" id="L126">		output.append((byte) ((crc &gt;&gt; 8) &amp; 0xFF));</span>
+<span class="nc" id="L127">		output.append((byte) ((crc &gt;&gt; 16) &amp; 0xFF));</span>
+<span class="nc" id="L128">		output.append((byte) ((crc &gt;&gt; 24) &amp; 0xFF));</span>
+
+<span class="nc" id="L130">		int size = input.length;</span>
+<span class="nc" id="L131">		output.append((byte) (size &amp; 0xFF));</span>
+<span class="nc" id="L132">		output.append((byte) ((size &gt;&gt; 8) &amp; 0xFF));</span>
+<span class="nc" id="L133">		output.append((byte) ((size &gt;&gt; 16) &amp; 0xFF));</span>
+<span class="nc" id="L134">		output.append((byte) ((size &gt;&gt; 24) &amp; 0xFF));</span>
+<span class="nc" id="L135">	}</span>
+
+<span class="nc" id="L137">	public Zopfli(int masterBlockSize) {</span>
+<span class="nc" id="L138">		cookie = new Cookie(masterBlockSize);</span>
+<span class="nc" id="L139">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StereotypeDecoration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.stereo</a> &gt; <span class="el_source">StereotypeDecoration.java</span></div><h1>StereotypeDecoration.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.stereo;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Parser;
+import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.RegexComposed;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.text.Guillemet;
+
+public class StereotypeDecoration {
+<span class="fc" id="L60">	private final static RegexComposed circleChar = new RegexConcat( //</span>
+			new RegexLeaf(&quot;\\&lt;\\&lt;&quot;), //
+<span class="fc" id="L62">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexLeaf(&quot;\\(&quot;), //
+			new RegexLeaf(&quot;CHAR&quot;, &quot;(\\S)&quot;), //
+			new RegexOptional( //
+					new RegexConcat( //
+<span class="fc" id="L67">							RegexLeaf.spaceZeroOrMore(), //</span>
+							new RegexLeaf(&quot;,&quot;), //
+<span class="fc" id="L69">							RegexLeaf.spaceZeroOrMore(), //</span>
+							new RegexLeaf(&quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;), //
+<span class="fc" id="L71">							RegexLeaf.spaceZeroOrMore())), //</span>
+			new RegexLeaf(&quot;\\)&quot;), //
+			new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;[,]?(.*?)&quot;)), //
+			new RegexLeaf(&quot;\\&gt;\\&gt;&quot;) //
+	);
+
+<span class="fc" id="L77">	private final static RegexComposed circleSprite = new RegexConcat( //</span>
+			new RegexLeaf(&quot;\\&lt;\\&lt;&quot;), //
+<span class="fc" id="L79">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexLeaf(&quot;\\(?\\$&quot;), //
+			new RegexLeaf(&quot;NAME&quot;, &quot;(&quot; + SpriteUtils.SPRITE_NAME + &quot;)&quot;), //
+			new RegexLeaf(&quot;SCALE&quot;, &quot;((?:\\{scale=|\\*)([0-9.]+)\\}?)?&quot;), //
+<span class="fc" id="L83">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexOptional( //
+					new RegexConcat( //
+							new RegexLeaf(&quot;,&quot;), //
+<span class="fc" id="L87">							RegexLeaf.spaceZeroOrMore(), //</span>
+							new RegexLeaf(&quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;) //
+					)), //
+<span class="fc" id="L90">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;[),](.*?)&quot;)), //
+			new RegexLeaf(&quot;\\&gt;\\&gt;&quot;) //
+	);
+
+	public static final String PREFIX = &quot;%&quot;;
+
+	final String label;
+	final HColor htmlColor;
+	final char character;
+	final String spriteName;
+	final double spriteScale;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L105">		return &quot;label='&quot; + label + &quot;' spriteName='&quot; + spriteName + &quot;'&quot;;</span>
+	}
+
+	public List&lt;String&gt; getStyleNames() {
+<span class="fc" id="L109">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (String s : cutLabels(label, Guillemet.NONE))</span>
+<span class="fc" id="L111">			result.add(PREFIX + s);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (spriteName == null)</span>
+<span class="fc" id="L113">			return Collections.unmodifiableList(result);</span>
+
+<span class="fc" id="L115">		final int idx = spriteName.lastIndexOf('/');</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (idx != -1)</span>
+<span class="nc" id="L117">			result.add(PREFIX + spriteName.substring(idx + 1));</span>
+<span class="fc" id="L118">		return Collections.unmodifiableList(result);</span>
+	}
+
+	private StereotypeDecoration(String label, HColor htmlColor, char character, String spriteName,
+<span class="fc" id="L122">			double spriteScale) {</span>
+<span class="fc" id="L123">		this.label = label;</span>
+<span class="fc" id="L124">		this.htmlColor = htmlColor;</span>
+<span class="fc" id="L125">		this.character = character;</span>
+<span class="fc" id="L126">		this.spriteName = spriteName;</span>
+<span class="fc" id="L127">		this.spriteScale = spriteScale;</span>
+<span class="fc" id="L128">	}</span>
+
+	static StereotypeDecoration buildSimple(String name) {
+		final String spriteName;
+		final double spriteScale;
+<span class="pc bpc" id="L133" title="1 of 4 branches missed.">		if (name.startsWith(&quot;&lt;&lt;$&quot;) &amp;&amp; name.endsWith(&quot;&gt;&gt;&quot;)) {</span>
+<span class="fc" id="L134">			final RegexResult mCircleSprite = StereotypeDecoration.circleSprite.matcher(name);</span>
+<span class="fc" id="L135">			spriteName = mCircleSprite.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L136">			spriteScale = Parser.getScale(mCircleSprite.get(&quot;SCALE&quot;, 0), 1);</span>
+<span class="fc" id="L137">		} else {</span>
+<span class="fc" id="L138">			spriteName = null;</span>
+<span class="fc" id="L139">			spriteScale = 0;</span>
+		}
+<span class="fc" id="L141">		return new StereotypeDecoration(name, null, '\0', spriteName, spriteScale);</span>
+	}
+
+	public static StereotypeDecoration buildComplex(String full, HColorSet htmlColorSet) throws NoSuchColorException {
+
+<span class="fc" id="L146">		String label = &quot;&quot;;</span>
+<span class="fc" id="L147">		HColor htmlColor = null;</span>
+<span class="fc" id="L148">		char character = '\0';</span>
+<span class="fc" id="L149">		String spriteName = null;</span>
+<span class="fc" id="L150">		double spriteScale = 0;</span>
+
+<span class="fc" id="L152">		final List&lt;String&gt; list = cutLabels(full, Guillemet.DOUBLE_COMPARATOR);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (String name : list) {</span>
+<span class="fc" id="L154">			final RegexResult mCircleChar = circleChar.matcher(name);</span>
+<span class="fc" id="L155">			final RegexResult mCircleSprite = circleSprite.matcher(name);</span>
+
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			if (mCircleSprite != null) {</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">				if (StringUtils.isNotEmpty(mCircleSprite.get(&quot;LABEL&quot;, 0)))</span>
+<span class="nc" id="L159">					name = &quot;&lt;&lt;&quot; + mCircleSprite.get(&quot;LABEL&quot;, 0) + &quot;&gt;&gt;&quot;;</span>
+				else
+<span class="fc" id="L161">					name = &quot;&quot;;</span>
+
+<span class="fc" id="L163">				final String colName = mCircleSprite.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">				final HColor col = colName == null ? null : htmlColorSet.getColor(colName);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">				htmlColor = col == null ? HColors.BLACK : col;</span>
+<span class="fc" id="L166">				character = '\0';</span>
+<span class="fc" id="L167">				spriteName = mCircleSprite.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L168">				spriteScale = Parser.getScale(mCircleSprite.get(&quot;SCALE&quot;, 0), 1);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			} else if (mCircleChar != null) {</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (StringUtils.isNotEmpty(mCircleChar.get(&quot;LABEL&quot;, 0)))</span>
+<span class="fc" id="L171">					name = &quot;&lt;&lt;&quot; + mCircleChar.get(&quot;LABEL&quot;, 0) + &quot;&gt;&gt;&quot;;</span>
+				else
+<span class="nc" id="L173">					name = &quot;&quot;;</span>
+
+<span class="fc" id="L175">				final String colName = mCircleChar.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">				htmlColor = colName == null ? null : htmlColorSet.getColor(colName);</span>
+<span class="fc" id="L177">				character = mCircleChar.get(&quot;CHAR&quot;, 0).charAt(0);</span>
+			}
+
+<span class="fc" id="L180">			label = label + name;</span>
+<span class="fc" id="L181">		}</span>
+
+<span class="fc" id="L183">		return new StereotypeDecoration(label, htmlColor, character, spriteName, spriteScale);</span>
+	}
+
+	static List&lt;String&gt; cutLabels(final String label, Guillemet guillemet) {
+<span class="fc" id="L187">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L188">		final Pattern2 p = MyPattern.cmpile(&quot;\\&lt;{2,3}.*?\\&gt;{2,3}&quot;);</span>
+<span class="fc" id="L189">		final Matcher2 m = p.matcher(label);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L191">			final String group = m.group();</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">			if (group.startsWith(&quot;&lt;&lt;&lt;&quot;) == false)</span>
+<span class="fc" id="L193">				result.add(guillemet.manageGuillemetStrict(group));</span>
+<span class="fc" id="L194">		}</span>
+<span class="fc" id="L195">		return Collections.unmodifiableList(result);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

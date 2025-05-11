@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrowConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.skin</a> &gt; <span class="el_source">ArrowConfiguration.java</span></div><h1>ArrowConfiguration.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.skin;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.style.Style;
+
+public class ArrowConfiguration {
+
+	private final ArrowBody body;
+
+	private final ArrowDressing dressing1;
+	private final ArrowDressing dressing2;
+
+	private final ArrowDecoration decoration1;
+	private final ArrowDecoration decoration2;
+
+	private final HColor color;
+
+	private final boolean isSelf;
+	private final double thickness;
+	private final boolean reverseDefine;
+
+	private final int inclination;
+
+	private ArrowConfiguration(ArrowBody body, ArrowDressing dressing1, ArrowDressing dressing2,
+			ArrowDecoration decoration1, ArrowDecoration decoration2, HColor color, boolean isSelf, double thickness,
+<span class="fc" id="L65">			boolean reverseDefine, int inclination) {</span>
+<span class="fc" id="L66">		this.reverseDefine = reverseDefine;</span>
+<span class="fc" id="L67">		this.thickness = thickness;</span>
+<span class="fc" id="L68">		this.body = Objects.requireNonNull(body);</span>
+<span class="fc" id="L69">		this.dressing1 = Objects.requireNonNull(dressing1);</span>
+<span class="fc" id="L70">		this.dressing2 = Objects.requireNonNull(dressing2);</span>
+<span class="fc" id="L71">		this.decoration1 = decoration1;</span>
+<span class="fc" id="L72">		this.decoration2 = decoration2;</span>
+<span class="fc" id="L73">		this.color = color;</span>
+<span class="fc" id="L74">		this.isSelf = isSelf;</span>
+<span class="fc" id="L75">		this.inclination = inclination;</span>
+<span class="fc" id="L76">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L80">		return name();</span>
+	}
+
+	public String name() {
+<span class="nc" id="L84">		return body.name() + &quot;(&quot; + dressing1.name() + &quot; &quot; + decoration1 + &quot;)(&quot; + dressing2.name() + &quot; &quot; + decoration2</span>
+				+ &quot;)&quot; + isSelf + &quot; &quot; + color;
+	}
+
+	public static ArrowConfiguration withDirectionNormal() {
+<span class="fc" id="L89">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),</span>
+<span class="fc" id="L90">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
+				false, 1, false, 0);
+	}
+
+	public static ArrowConfiguration withDirectionBoth() {
+<span class="fc" id="L95">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),</span>
+<span class="fc" id="L96">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
+				false, 1, false, 0);
+	}
+
+	public static ArrowConfiguration withDirectionSelf(boolean reverseDefine) {
+<span class="fc" id="L101">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),</span>
+<span class="fc" id="L102">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
+				true, 1, reverseDefine, 0);
+	}
+
+	public static ArrowConfiguration withDirectionReverse() {
+<span class="nc" id="L107">		return withDirectionNormal().reverse();</span>
+	}
+
+	public ArrowConfiguration reverse() {
+<span class="fc" id="L111">		return new ArrowConfiguration(body, dressing2, dressing1, decoration2, decoration1, color, isSelf, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration self() {
+<span class="fc" id="L116">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration withBody(ArrowBody type) {
+<span class="fc" id="L121">		return new ArrowConfiguration(type, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration withHead(ArrowHead head) {
+<span class="fc" id="L126">		final ArrowDressing newDressing1 = addHead(dressing1, head);</span>
+<span class="fc" id="L127">		final ArrowDressing newDressing2 = addHead(dressing2, head);</span>
+<span class="fc" id="L128">		return new ArrowConfiguration(body, newDressing1, newDressing2, decoration1, decoration2, color, isSelf,</span>
+				thickness, reverseDefine, inclination);
+	}
+
+	private static ArrowDressing addHead(ArrowDressing dressing, ArrowHead head) {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (dressing.getHead() == ArrowHead.NONE)</span>
+<span class="fc" id="L134">			return dressing;</span>
+
+<span class="fc" id="L136">		return dressing.withHead(head);</span>
+	}
+
+	public ArrowConfiguration withHead1(ArrowHead head) {
+<span class="fc" id="L140">		return new ArrowConfiguration(body, dressing1.withHead(head), dressing2, decoration1, decoration2, color,</span>
+				isSelf, thickness, reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration withHead2(ArrowHead head) {
+<span class="fc" id="L145">		return new ArrowConfiguration(body, dressing1, dressing2.withHead(head), decoration1, decoration2, color,</span>
+				isSelf, thickness, reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration withPart(ArrowPart part) {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (dressing2.getHead() != ArrowHead.NONE)</span>
+<span class="fc" id="L151">			return new ArrowConfiguration(body, dressing1, dressing2.withPart(part), decoration1, decoration2, color,</span>
+					isSelf, thickness, reverseDefine, inclination);
+
+<span class="nc" id="L154">		return new ArrowConfiguration(body, dressing1.withPart(part), dressing2, decoration1, decoration2, color,</span>
+				isSelf, thickness, reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration withDecoration1(ArrowDecoration decoration1) {
+<span class="fc" id="L159">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration withDecoration2(ArrowDecoration decoration2) {
+<span class="fc" id="L164">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration withColor(HColor color) {
+<span class="fc" id="L169">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public final ArrowDecoration getDecoration1() {
+<span class="fc" id="L174">		return this.decoration1;</span>
+	}
+
+	public final ArrowDecoration getDecoration2() {
+<span class="fc" id="L178">		return this.decoration2;</span>
+	}
+
+	public final ArrowDirection getArrowDirection() {
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (isSelf)</span>
+<span class="fc" id="L183">			return ArrowDirection.SELF;</span>
+
+<span class="pc bpc" id="L185" title="1 of 4 branches missed.">		if (this.dressing1.getHead() == ArrowHead.NONE &amp;&amp; this.dressing2.getHead() != ArrowHead.NONE)</span>
+<span class="fc" id="L186">			return ArrowDirection.LEFT_TO_RIGHT_NORMAL;</span>
+
+<span class="pc bpc" id="L188" title="1 of 4 branches missed.">		if (this.dressing1.getHead() != ArrowHead.NONE &amp;&amp; this.dressing2.getHead() == ArrowHead.NONE)</span>
+<span class="fc" id="L189">			return ArrowDirection.RIGHT_TO_LEFT_REVERSE;</span>
+
+<span class="fc" id="L191">		return ArrowDirection.BOTH_DIRECTION;</span>
+	}
+
+	public boolean isSelfArrow() {
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		return getArrowDirection() == ArrowDirection.SELF;</span>
+	}
+
+	public boolean isDotted() {
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		return body == ArrowBody.DOTTED;</span>
+	}
+
+	public boolean isHidden() {
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		return body == ArrowBody.HIDDEN;</span>
+	}
+
+	public ArrowHead getHead() {
+<span class="nc bnc" id="L207" title="All 4 branches missed.">		if (dressing2 != null &amp;&amp; dressing2.getHead() != ArrowHead.NONE)</span>
+<span class="nc" id="L208">			return dressing2.getHead();</span>
+
+<span class="nc" id="L210">		return dressing1.getHead();</span>
+	}
+
+	public boolean isAsync1() {
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		return dressing1.getHead() == ArrowHead.ASYNC;</span>
+	}
+
+	public boolean isAsync2() {
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		return dressing2.getHead() == ArrowHead.ASYNC;</span>
+	}
+
+	public final ArrowPart getPart() {
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (dressing2.getHead() != ArrowHead.NONE)</span>
+<span class="fc" id="L223">			return dressing2.getPart();</span>
+
+<span class="nc" id="L225">		return dressing1.getPart();</span>
+	}
+
+	public HColor getColor() {
+<span class="fc" id="L229">		return color;</span>
+	}
+
+	public ArrowDressing getDressing1() {
+<span class="fc" id="L233">		return dressing1;</span>
+	}
+
+	public ArrowDressing getDressing2() {
+<span class="fc" id="L237">		return dressing2;</span>
+	}
+
+	public static UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
+<span class="fc" id="L241">		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));</span>
+	}
+
+	public UGraphic applyStroke(UGraphic ug, Style style) {
+<span class="fc" id="L245">		final UStroke stroke = style.getStroke();</span>
+
+		// Exception for return arrows
+<span class="pc bpc" id="L248" title="2 of 6 branches missed.">		if (isDotted() &amp;&amp; stroke.getDashVisible() == 0 &amp;&amp; stroke.getDashSpace() == 0)</span>
+<span class="fc" id="L249">			return ug.apply(new UStroke(2, 2, stroke.getThickness()));</span>
+
+<span class="fc" id="L251">		return ug.apply(stroke);</span>
+	}
+
+	@Deprecated
+	public UGraphic applyStroke(UGraphic ug) {
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (isDotted())</span>
+<span class="fc" id="L257">			return ug.apply(new UStroke(2, 2, thickness));</span>
+
+<span class="fc" id="L259">		return ug.apply(UStroke.withThickness(thickness));</span>
+	}
+
+	public UGraphic applyThicknessOnly(UGraphic ug) {
+<span class="fc" id="L263">		return ug.apply(UStroke.withThickness(thickness));</span>
+	}
+
+	public ArrowConfiguration withThickness(double thickness) {
+<span class="fc" id="L267">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public ArrowConfiguration reverseDefine() {
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+				!reverseDefine, inclination);
+	}
+
+	public final boolean isReverseDefine() {
+<span class="fc" id="L277">		return reverseDefine;</span>
+	}
+
+	public ArrowConfiguration withInclination(int inclination) {
+<span class="fc" id="L281">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+				reverseDefine, inclination);
+	}
+
+	public final int getInclination1() {
+<span class="fc bfc" id="L286" title="All 4 branches covered.">		if (dressing2.getHead() == ArrowHead.NONE || dressing2.getHead() == ArrowHead.CROSSX)</span>
+<span class="fc" id="L287">			return inclination;</span>
+<span class="fc" id="L288">		return 0;</span>
+	}
+
+	public final int getInclination2() {
+<span class="fc bfc" id="L292" title="All 4 branches covered.">		if (dressing1.getHead() == ArrowHead.NONE || dressing1.getHead() == ArrowHead.CROSSX)</span>
+<span class="fc" id="L293">			return inclination;</span>
+<span class="pc bpc" id="L294" title="1 of 4 branches missed.">		if (dressing1.getHead() == ArrowHead.NORMAL || dressing1.getHead() == ArrowHead.NORMAL)</span>
+<span class="fc" id="L295">			return inclination;</span>
+<span class="fc" id="L296">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

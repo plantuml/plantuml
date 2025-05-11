@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayPattern.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.lang</a> &gt; <span class="el_source">DayPattern.java</span></div><h1>DayPattern.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.lang;
+
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.Month;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+
+public class DayPattern {
+
+	private final String id;
+	private final String yearKeyA;
+	private final String yearKeyB;
+	private final String yearKeyC;
+	private final String monthKeyA;
+	private final String monthKeyB;
+	private final String monthKeyC;
+	private final String dayKeyA;
+	private final String dayKeyB;
+	private final String dayKeyC;
+
+<span class="fc" id="L59">	public DayPattern(String id) {</span>
+<span class="fc" id="L60">		this.id = id;</span>
+<span class="fc" id="L61">		this.yearKeyA = &quot;AYEAR&quot; + id;</span>
+<span class="fc" id="L62">		this.yearKeyB = &quot;BYEAR&quot; + id;</span>
+<span class="fc" id="L63">		this.yearKeyC = &quot;CYEAR&quot; + id;</span>
+<span class="fc" id="L64">		this.monthKeyA = &quot;AMONTH&quot; + id;</span>
+<span class="fc" id="L65">		this.monthKeyB = &quot;BMONTH&quot; + id;</span>
+<span class="fc" id="L66">		this.monthKeyC = &quot;CMONTH&quot; + id;</span>
+<span class="fc" id="L67">		this.dayKeyA = &quot;ADAY&quot; + id;</span>
+<span class="fc" id="L68">		this.dayKeyB = &quot;BDAY&quot; + id;</span>
+<span class="fc" id="L69">		this.dayKeyC = &quot;CDAY&quot; + id;</span>
+<span class="fc" id="L70">	}</span>
+
+	public IRegex toRegex() {
+<span class="fc" id="L73">		return new RegexOr(toRegexA_DD_MONTH_YYYY(), toRegexB_YYYY_MM_DD(), toRegexC_MONTH_DD_YYYY());</span>
+	}
+
+	public Day getDay(RegexResult arg) {
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (arg.get(dayKeyA, 0) != null)</span>
+<span class="nc" id="L78">			return resultA(arg);</span>
+
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (arg.get(dayKeyB, 0) != null)</span>
+<span class="fc" id="L81">			return resultB(arg);</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (arg.get(dayKeyC, 0) != null)</span>
+<span class="nc" id="L84">			return resultC(arg);</span>
+<span class="nc" id="L85">		return null;</span>
+	}
+
+	private IRegex toRegexA_DD_MONTH_YYYY() {
+<span class="fc" id="L89">		return new RegexConcat( //</span>
+				new RegexLeaf(dayKeyA, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+<span class="fc" id="L92">				new RegexLeaf(monthKeyA, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+				new RegexLeaf(yearKeyA, &quot;([\\d]{1,4})&quot;));
+	}
+
+	private Day resultA(RegexResult arg) {
+<span class="nc" id="L98">		final int day = Integer.parseInt(arg.get(dayKeyA, 0));</span>
+<span class="nc" id="L99">		final String month = arg.get(monthKeyA, 0);</span>
+<span class="nc" id="L100">		final int year = Integer.parseInt(arg.get(yearKeyA, 0));</span>
+<span class="nc" id="L101">		return Day.create(year, month, day);</span>
+	}
+
+	private IRegex toRegexB_YYYY_MM_DD() {
+<span class="fc" id="L105">		return new RegexConcat( //</span>
+				new RegexLeaf(yearKeyB, &quot;([\\d]{1,4})&quot;), //
+				new RegexLeaf(&quot;\\D&quot;), //
+				new RegexLeaf(monthKeyB, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(&quot;\\D&quot;), //
+				new RegexLeaf(dayKeyB, &quot;([\\d]{1,2})&quot;));
+	}
+
+	private Day resultB(RegexResult arg) {
+<span class="fc" id="L114">		final int day = Integer.parseInt(arg.get(dayKeyB, 0));</span>
+<span class="fc" id="L115">		final int month = Integer.parseInt(arg.get(monthKeyB, 0));</span>
+<span class="fc" id="L116">		final int year = Integer.parseInt(arg.get(yearKeyB, 0));</span>
+<span class="fc" id="L117">		return Day.create(year, month, day);</span>
+	}
+
+	private IRegex toRegexC_MONTH_DD_YYYY() {
+<span class="fc" id="L121">		return new RegexConcat( //</span>
+<span class="fc" id="L122">				new RegexLeaf(monthKeyC, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+				new RegexLeaf(dayKeyC, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
+				new RegexLeaf(yearKeyC, &quot;([\\d]{1,4})&quot;));
+	}
+
+	private Day resultC(RegexResult arg) {
+<span class="nc" id="L130">		final int day = Integer.parseInt(arg.get(dayKeyC, 0));</span>
+<span class="nc" id="L131">		final String month = arg.get(monthKeyC, 0);</span>
+<span class="nc" id="L132">		final int year = Integer.parseInt(arg.get(yearKeyC, 0));</span>
+<span class="nc" id="L133">		return Day.create(year, month, day);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

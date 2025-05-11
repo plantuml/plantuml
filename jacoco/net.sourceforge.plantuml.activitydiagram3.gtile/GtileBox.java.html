@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GtileBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.gtile</a> &gt; <span class="el_source">GtileBox.java</span></div><h1>GtileBox.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.gtile;
+
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock2;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.skin.SkinParamColors;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class GtileBox extends AbstractGtile {
+
+	private final ClockwiseTopRightBottomLeft padding;
+	private final ClockwiseTopRightBottomLeft margin;
+
+	private final TextBlock tb;
+<span class="nc" id="L77">	private double roundCorner = 25;</span>
+	private final double shadowing;
+	private final HorizontalAlignment horizontalAlignment;
+<span class="nc" id="L80">	private double minimumWidth = 0;</span>
+
+	private final LinkRendering inRendering;
+
+	private final BoxStyle boxStyle;
+
+	private final HColor borderColor;
+	private final HColor backColor;
+	private final Style style;
+
+	static public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
+<span class="nc" id="L91">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
+	}
+
+	static public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
+<span class="nc" id="L95">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	}
+
+	final public LinkRendering getInLinkRendering() {
+<span class="nc" id="L99">		return inRendering;</span>
+	}
+
+<span class="nc" id="L102">	class MyStencil implements Stencil {</span>
+
+		public double getStartingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L105">			return -padding.getLeft();</span>
+		}
+
+		public double getEndingX(StringBounder stringBounder, double y) {
+<span class="nc" id="L109">			final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L110">			return dim.getWidth() - padding.getRight();</span>
+		}
+
+	}
+
+	public static GtileBox create(StringBounder stringBounder, ISkinParam skinParam, Display label, Swimlane swimlane,
+			BoxStyle boxStyle, Stereotype stereotype) {
+<span class="nc" id="L117">		final Style style = getDefaultStyleDefinitionActivity().withTOBECHANGED(stereotype)</span>
+<span class="nc" id="L118">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L119">		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+<span class="nc" id="L121">		return new GtileBox(stringBounder, skinParam, label, swimlane, boxStyle, style, styleArrow);</span>
+	}
+
+	private GtileBox(StringBounder stringBounder, ISkinParam skinParam, Display label, Swimlane swimlane,
+			BoxStyle boxStyle, Style style, Style styleArrow) {
+<span class="nc" id="L126">		super(stringBounder, skinParam, swimlane);</span>
+<span class="nc" id="L127">		Colors specBack = null;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (skinParam instanceof SkinParamColors)</span>
+<span class="nc" id="L129">			specBack = ((SkinParamColors) skinParam).getColors();</span>
+
+<span class="nc" id="L131">		style = style.eventuallyOverride(specBack);</span>
+<span class="nc" id="L132">		this.style = style;</span>
+<span class="nc" id="L133">		this.boxStyle = boxStyle;</span>
+
+<span class="nc" id="L135">		this.inRendering = LinkRendering.create(Rainbow.build(styleArrow, getIHtmlColorSet()));</span>
+<span class="nc" id="L136">		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L137">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L138">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="nc" id="L139">		this.horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="nc" id="L140">		this.padding = style.getPadding();</span>
+<span class="nc" id="L141">		this.margin = style.getMargin();</span>
+<span class="nc" id="L142">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L143">		this.shadowing = style.getShadowing();</span>
+<span class="nc" id="L144">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="nc" id="L145">		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();</span>
+
+<span class="nc" id="L147">		final Sheet sheet = skinParam.sheet(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), CreoleMode.FULL)</span>
+<span class="nc" id="L148">				.createSheet(label);</span>
+<span class="nc" id="L149">		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), new MyStencil(),</span>
+<span class="nc" id="L150">				UStroke.withThickness(1));</span>
+<span class="nc" id="L151">		this.print = label.toString();</span>
+
+<span class="nc" id="L153">	}</span>
+
+	final private String print;
+
+	@Override
+	public String toString() {
+<span class="nc" id="L159">		return print;</span>
+	}
+
+	@Override
+	protected void drawUInternal(UGraphic ug) {
+<span class="nc" id="L164">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L165">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L166">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="nc" id="L167">		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);</span>
+
+<span class="nc" id="L169">		final UStroke thickness = style.getStroke();</span>
+
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (borderColor == null)</span>
+<span class="nc" id="L172">			ug = ug.apply(HColors.none());</span>
+		else
+<span class="nc" id="L174">			ug = ug.apply(borderColor);</span>
+
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (backColor == null)</span>
+<span class="nc" id="L177">			ug = ug.apply(HColors.none().bg());</span>
+		else
+<span class="nc" id="L179">			ug = ug.apply(backColor.bg());</span>
+
+<span class="nc" id="L181">		ug = ug.apply(thickness);</span>
+<span class="nc" id="L182">		shape.drawU(ug);</span>
+
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.LEFT) {</span>
+<span class="nc" id="L185">			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L187">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L188">			tb.drawU(ug.apply(</span>
+<span class="nc" id="L189">					new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom())));</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
+<span class="nc" id="L191">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L192">			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding.getBottom())));</span>
+		}
+<span class="nc" id="L194">	}</span>
+
+	@Override
+	public final XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L198">		XDimension2D dimRaw = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L199">		dimRaw = dimRaw.delta(padding.getLeft() + padding.getRight(), padding.getBottom() + padding.getTop());</span>
+<span class="nc" id="L200">		dimRaw = dimRaw.atLeast(minimumWidth, 0);</span>
+<span class="nc" id="L201">		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,</span>
+<span class="nc" id="L202">				dimRaw.getHeight());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

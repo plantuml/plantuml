@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CounterOutputStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.directdot</a> &gt; <span class="el_source">CounterOutputStream.java</span></div><h1>CounterOutputStream.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.directdot;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class CounterOutputStream extends OutputStream {
+    // ::remove folder when __HAXE__
+
+	private int length;
+	private final OutputStream os;
+
+<span class="nc" id="L47">	public CounterOutputStream(OutputStream os) {</span>
+<span class="nc" id="L48">		this.os = os;</span>
+<span class="nc" id="L49">	}</span>
+
+	/**
+	 * Writes to nowhere
+	 */
+	@Override
+	public void write(int b) throws IOException {
+<span class="nc" id="L56">		os.write(b);</span>
+<span class="nc" id="L57">		length++;</span>
+<span class="nc" id="L58">	}</span>
+
+	/**
+	 * Overridden for performance reason
+	 */
+	@Override
+	public void write(byte b[]) throws IOException {
+<span class="nc" id="L65">		os.write(b);</span>
+<span class="nc" id="L66">		length += b.length;</span>
+<span class="nc" id="L67">	}</span>
+
+	/**
+	 * Overridden for performance reason
+	 */
+	@Override
+	public void write(byte b[], int off, int len) throws IOException {
+<span class="nc" id="L74">		os.write(b, off, len);</span>
+<span class="nc" id="L75">		length += len;</span>
+<span class="nc" id="L76">	}</span>
+
+	public int getLength() {
+<span class="nc" id="L79">		return length;</span>
+	}
+
+	@Override
+	public void flush() throws IOException {
+<span class="nc" id="L84">		os.flush();</span>
+<span class="nc" id="L85">	}</span>
+
+	@Override
+	public void close() throws IOException {
+<span class="nc" id="L89">		os.close();</span>
+<span class="nc" id="L90">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

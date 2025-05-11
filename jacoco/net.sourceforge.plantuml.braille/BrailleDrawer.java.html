@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrailleDrawer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.braille</a> &gt; <span class="el_source">BrailleDrawer.java</span></div><h1>BrailleDrawer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.braille;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+
+public class BrailleDrawer implements UDrawable {
+
+	private final BrailleGrid grid;
+<span class="nc" id="L49">	private final double step = 9;</span>
+<span class="nc" id="L50">	private final double spotSize = 5;</span>
+
+<span class="nc" id="L52">	public BrailleDrawer(BrailleGrid grid) {</span>
+<span class="nc" id="L53">		this.grid = grid;</span>
+<span class="nc" id="L54">	}</span>
+
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L57">		ug = ug.apply(HColorSet.instance().getColorOrWhite(&quot;#F0F0F0&quot;));</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (int x = grid.getMinX(); x &lt;= grid.getMaxX(); x++) {</span>
+<span class="nc" id="L59">			ug.apply(UTranslate.dx(x * step + spotSize + 1))</span>
+<span class="nc" id="L60">					.draw(ULine.vline((grid.getMaxY() - grid.getMinY()) * step));</span>
+		}
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (int y = grid.getMinY(); y &lt;= grid.getMaxY(); y++) {</span>
+<span class="nc" id="L63">			ug.apply(UTranslate.dy(y * step + spotSize + 1))</span>
+<span class="nc" id="L64">					.draw(ULine.hline((grid.getMaxX() - grid.getMinX()) * step));</span>
+		}
+<span class="nc" id="L66">		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (int x = grid.getMinX(); x &lt;= grid.getMaxX(); x++) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			for (int y = grid.getMinY(); y &lt;= grid.getMaxY(); y++) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">				if (grid.getState(x, y)) {</span>
+<span class="nc" id="L70">					drawCircle(ug, x, y);</span>
+				}
+			}
+		}
+<span class="nc" id="L74">	}</span>
+
+	private void drawCircle(UGraphic ug, int x, int y) {
+<span class="nc" id="L77">		final double cx = x * step;</span>
+<span class="nc" id="L78">		final double cy = y * step;</span>
+<span class="nc" id="L79">		ug.apply(new UTranslate(cx, cy)).draw(UEllipse.build(spotSize, spotSize));</span>
+<span class="nc" id="L80">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

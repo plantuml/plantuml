@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>dtclose__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.cdt</a> &gt; <span class="el_source">dtclose__c.java</span></div><h1>dtclose__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.cdt;
+import static gen.lib.cdt.dtsize__c.dtsize_;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import smetana.core.Globals;
+import smetana.core.Memory;
+
+<span class="nc" id="L59">public class dtclose__c {</span>
+//1 9k44uhd5foylaeoekf3llonjq
+// extern Dtmethod_t* 	Dtset
+
+
+//1 1ahfywsmzcpcig2oxm7pt9ihj
+// extern Dtmethod_t* 	Dtbag
+
+
+//1 anhghfj3k7dmkudy2n7rvt31v
+// extern Dtmethod_t* 	Dtoset
+
+
+//1 5l6oj1ux946zjwvir94ykejbc
+// extern Dtmethod_t* 	Dtobag
+
+
+//1 2wtf222ak6cui8cfjnw6w377z
+// extern Dtmethod_t*	Dtlist
+
+
+//1 d1s1s6ibtcsmst88e3057u9r7
+// extern Dtmethod_t*	Dtstack
+
+
+//1 axa7mflo824p6fspjn1rdk0mt
+// extern Dtmethod_t*	Dtqueue
+
+
+//1 ega812utobm4xx9oa9w9ayij6
+// extern Dtmethod_t*	Dtdeque
+
+
+//1 cyfr996ur43045jv1tjbelzmj
+// extern Dtmethod_t*	Dtorder
+
+
+//1 wlofoiftbjgrrabzb2brkycg
+// extern Dtmethod_t*	Dttree
+
+
+//1 12bds94t7voj7ulwpcvgf6agr
+// extern Dtmethod_t*	Dthash
+
+
+//1 9lqknzty480cy7zsubmabkk8h
+// extern Dtmethod_t	_Dttree
+
+
+//1 bvn6zkbcp8vjdhkccqo1xrkrb
+// extern Dtmethod_t	_Dthash
+
+
+//1 9lidhtd6nsmmv3e7vjv9e10gw
+// extern Dtmethod_t	_Dtlist
+
+
+//1 34ujfamjxo7xn89u90oh2k6f8
+// extern Dtmethod_t	_Dtqueue
+
+
+//1 3jy4aceckzkdv950h89p4wjc8
+// extern Dtmethod_t	_Dtstack
+
+
+
+
+//3 7ggbhlblmrfr1wq1k20npwyxb
+// int dtclose(register Dt_t* dt)     
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtclose.c&quot;, name=&quot;dtclose&quot;, key=&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;, definition=&quot;int dtclose(register Dt_t* dt)&quot;)
+public static int dtclose(Globals zz, ST_dt_s dt) {
+<span class="fc" id="L131">ENTERING(&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;,&quot;dtclose&quot;);</span>
+	try {
+ 	ST_dtdisc_s	disc;
+<span class="fc" id="L134"> 	int		ev = 0;</span>
+<span class="pc bpc" id="L135" title="2 of 4 branches missed."> 	if((dt) == null || dt.nview &gt; 0 ) /* can't close if being viewed */</span>
+<span class="nc" id="L136"> 		return -1;</span>
+ 	/* announce the close event to see if we should continue */
+<span class="fc" id="L138"> 	disc = (ST_dtdisc_s) dt.disc;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed."> 	if(disc.eventf!=null &amp;&amp;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed."> 	   (ev = (Integer)disc.eventf.exe(zz, dt, 2, null, disc)) &lt; 0)</span>
+<span class="nc" id="L141"> 		return -1;</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed."> 	if(dt.view!=null)	/* turn off viewing */</span>
+<span class="nc" id="L143">UNSUPPORTED(&quot;1xbo7gf92fmqmu2tzpfeuc0wk&quot;); // 		dtview(dt,((Dt_t*)0));</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed."> 	if(ev == 0) /* release all allocated data */ {</span>
+<span class="fc" id="L145"> 		dt.meth.searchf.exe(zz, dt, null, 0000100);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed."> 		if(dtsize_(dt) &gt; 0)</span>
+<span class="nc" id="L147"> 			return -1;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">if(dt.data.ntab &gt; 0)</span>
+<span class="nc" id="L149">UNSUPPORTED(&quot;4ugmcpi8vkb013vuo4wykn0a3&quot;); // 			(*dt-&gt;memoryf)(dt,(void*)dt-&gt;data-&gt;hh._htab,0,disc);</span>
+<span class="fc" id="L150">dt.memoryf.exe(zz, dt, dt.data, null, disc);</span>
+ 	}
+<span class="pc bpc" id="L152" title="1 of 2 branches missed."> 	if(dt.type == 0)</span>
+<span class="fc" id="L153"> 		Memory.free(dt);</span>
+<span class="nc bnc" id="L154" title="All 4 branches missed."> 	else if(ev == 0 &amp;&amp; dt.type == 1)</span>
+<span class="nc" id="L155">UNSUPPORTED(&quot;6wqxv1f7tzvjk0lwmqdrcq8la&quot;); // 		(*dt-&gt;memoryf)(dt, (void*)dt, 0, disc);</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed."> 	if(disc.eventf!=null)</span>
+<span class="nc" id="L157">UNSUPPORTED(&quot;8bce06bdd64ypwb17ddloqzu8&quot;); // 		(void)(*disc-&gt;eventf)(dt, 6, ((void*)0), disc);</span>
+<span class="fc" id="L158"> 	return 0;</span>
+} finally {
+<span class="fc" id="L160">LEAVING(&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;,&quot;dtclose&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisioGraphics.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.visio</a> &gt; <span class="el_source">VisioGraphics.java</span></div><h1>VisioGraphics.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.visio;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.golem.MinMaxDouble;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.utils.Log;
+
+<span class="nc" id="L52">public class VisioGraphics {</span>
+
+<span class="nc" id="L54">	private final List&lt;VisioShape&gt; shapes = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L55">	private final MinMaxDouble limits = new MinMaxDouble();</span>
+
+	public void createVsd(OutputStream os) throws IOException {
+<span class="nc" id="L58">		final double width = toInches(limits.getMaxX());</span>
+<span class="nc" id="L59">		final double height = toInches(limits.getMaxY());</span>
+
+<span class="nc" id="L61">		out(os, &quot;&lt;?xml version='1.0' encoding='utf-8' ?&gt;&quot;);</span>
+<span class="nc" id="L62">		out(os, &quot;&lt;VisioDocument xml:space='preserve' xmlns='http://schemas.microsoft.com/visio/2003/core' xmlns:vx='http://schemas.microsoft.com/visio/2006/extension' xmlns:v14='http://schemas.microsoft.com/office/visio/2010/extension'&gt;&quot;);</span>
+<span class="nc" id="L63">		out(os, &quot;&lt;DocumentProperties&gt;&quot;);</span>
+<span class="nc" id="L64">		out(os, &quot;&lt;Creator&gt;PlantUML&lt;/Creator&gt;&quot;);</span>
+<span class="nc" id="L65">		out(os, &quot;&lt;/DocumentProperties&gt;&quot;);</span>
+<span class="nc" id="L66">		out(os, &quot;&lt;DocumentSheet NameU='TheDoc' LineStyle='0' FillStyle='0' TextStyle='0'&gt;&quot;);</span>
+<span class="nc" id="L67">		out(os, &quot;&lt;/DocumentSheet&gt;&quot;);</span>
+<span class="nc" id="L68">		out(os, &quot;&lt;Masters/&gt;&quot;);</span>
+<span class="nc" id="L69">		out(os, &quot;&lt;Pages&gt;&quot;);</span>
+<span class="nc" id="L70">		out(os, &quot;&lt;Page ID='0' NameU='Page-1' Name='Page 1' ViewScale='1' ViewCenterX='&quot; + (width / 2)</span>
+				+ &quot;' ViewCenterY='&quot; + (height / 2) + &quot;'&gt;&quot;);
+<span class="nc" id="L72">		out(os, &quot;&lt;PageSheet LineStyle='0' FillStyle='0' TextStyle='0'&gt;&quot;);</span>
+<span class="nc" id="L73">		out(os, &quot;&lt;PageProps&gt;&quot;);</span>
+<span class="nc" id="L74">		out(os, &quot;&lt;PageWidth Unit='IN_F'&gt;&quot; + width + &quot;&lt;/PageWidth&gt;&quot;);</span>
+<span class="nc" id="L75">		out(os, &quot;&lt;PageHeight Unit='IN_F'&gt;&quot; + height + &quot;&lt;/PageHeight&gt;&quot;);</span>
+<span class="nc" id="L76">		out(os, &quot;&lt;PageScale Unit='IN_F'&gt;1&lt;/PageScale&gt;&quot;);</span>
+<span class="nc" id="L77">		out(os, &quot;&lt;DrawingScale Unit='IN_F'&gt;2&lt;/DrawingScale&gt;&quot;); // change for scale</span>
+<span class="nc" id="L78">		out(os, &quot;&lt;DrawingSizeType&gt;3&lt;/DrawingSizeType&gt;&quot;);</span>
+<span class="nc" id="L79">		out(os, &quot;&lt;DrawingScaleType&gt;0&lt;/DrawingScaleType&gt;&quot;);</span>
+<span class="nc" id="L80">		out(os, &quot;&lt;InhibitSnap&gt;0&lt;/InhibitSnap&gt;&quot;);</span>
+<span class="nc" id="L81">		out(os, &quot;&lt;/PageProps&gt;&quot;);</span>
+<span class="nc" id="L82">		out(os, &quot;&lt;/PageSheet&gt;&quot;);</span>
+<span class="nc" id="L83">		out(os, &quot;&lt;Shapes&gt;&quot;);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (VisioShape sh : shapes) {</span>
+<span class="nc" id="L85">			sh.yReverse(height).print(os);</span>
+			// sh.print(os);
+<span class="nc" id="L87">		}</span>
+<span class="nc" id="L88">		out(os, &quot;&lt;/Shapes&gt;&quot;);</span>
+<span class="nc" id="L89">		out(os, &quot;&lt;/Page&gt;&quot;);</span>
+<span class="nc" id="L90">		out(os, &quot;&lt;/Pages&gt;&quot;);</span>
+<span class="nc" id="L91">		out(os, &quot;&lt;/VisioDocument&gt;&quot;);</span>
+<span class="nc" id="L92">	}</span>
+
+	private void out(OutputStream os, String s) throws IOException {
+<span class="nc" id="L95">		os.write(s.getBytes());</span>
+<span class="nc" id="L96">		os.write(&quot;\n&quot;.getBytes());</span>
+<span class="nc" id="L97">	}</span>
+
+	private double toInches(double val) {
+<span class="nc" id="L100">		return val / 72.0;</span>
+	}
+
+	private void ensureVisible(double x, double y) {
+<span class="nc" id="L104">		limits.manage(x, y);</span>
+<span class="nc" id="L105">	}</span>
+
+	public void rectangle(double x, double y, double width, double height) {
+<span class="nc" id="L108">		ensureVisible(x, y);</span>
+<span class="nc" id="L109">		ensureVisible(x + width, y + height);</span>
+<span class="nc" id="L110">		final VisioRectangle rect = VisioRectangle.createInches(shapes.size() + 1, x, y, width, height);</span>
+<span class="nc" id="L111">		shapes.add(rect);</span>
+<span class="nc" id="L112">	}</span>
+
+	public void text(String text, double x, double y, String family, int fontSize, double width, double height,
+			Map&lt;String, String&gt; attributes) {
+		// System.err.println(&quot;x=&quot; + x);
+		// System.err.println(&quot;y=&quot; + y);
+		// System.err.println(&quot;text=&quot; + text);
+		// System.err.println(&quot;family=&quot; + family);
+		// System.err.println(&quot;fontSize=&quot; + fontSize);
+		// System.err.println(&quot;width=&quot; + width);
+		// System.err.println(&quot;attributes=&quot; + attributes);
+<span class="nc" id="L123">		ensureVisible(x, y);</span>
+<span class="nc" id="L124">		final VisioText txt = VisioText.createInches(shapes.size() + 1, text, fontSize, x, y, width, height);</span>
+<span class="nc" id="L125">		shapes.add(txt);</span>
+
+<span class="nc" id="L127">	}</span>
+
+	public void line(double x1, double y1, double x2, double y2) {
+<span class="nc" id="L130">		ensureVisible(x1, y1);</span>
+<span class="nc bnc" id="L131" title="All 4 branches missed.">		if (x1 == x2 &amp;&amp; y1 == y2) {</span>
+<span class="nc" id="L132">			return;</span>
+		}
+<span class="nc" id="L134">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L135">		final VisioLine line = VisioLine.createInches(shapes.size() + 1, x1, y1, x2, y2);</span>
+<span class="nc" id="L136">		shapes.add(line);</span>
+<span class="nc" id="L137">	}</span>
+
+	private void line(XPoint2D p1, XPoint2D p2) {
+<span class="nc" id="L140">		line(p1.getX(), p1.getY(), p2.getX(), p2.getY());</span>
+<span class="nc" id="L141">	}</span>
+
+	public void upath(final double x, final double y, UPath path) {
+<span class="nc" id="L144">		double lx = x;</span>
+<span class="nc" id="L145">		double ly = y;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		for (USegment seg : path) {</span>
+<span class="nc" id="L147">			final USegmentType type = seg.getSegmentType();</span>
+<span class="nc" id="L148">			final double coord[] = seg.getCoord();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="nc" id="L150">				lx = coord[0] + x;</span>
+<span class="nc" id="L151">				ly = coord[1] + y;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="nc" id="L153">				line(lx, ly, coord[0] + x, coord[1] + y);</span>
+<span class="nc" id="L154">				lx = coord[0] + x;</span>
+<span class="nc" id="L155">				ly = coord[1] + y;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="nc" id="L157">				line(lx, ly, coord[2] + x, coord[3] + y);</span>
+<span class="nc" id="L158">				lx = coord[2] + x;</span>
+<span class="nc" id="L159">				ly = coord[3] + y;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="nc" id="L161">				line(lx, ly, coord[4] + x, coord[5] + y);</span>
+				// linePoint(lx, ly, coord[0] + x, coord[1] + y);
+				// linePoint(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+				// linePoint(coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+<span class="nc" id="L165">				lx = coord[4] + x;</span>
+<span class="nc" id="L166">				ly = coord[5] + y;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
+				// Nothing
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+				// Nothing
+			} else {
+<span class="nc" id="L172">				Log.println(&quot;unknown5 &quot; + seg);</span>
+			}
+
+<span class="nc" id="L175">		}</span>
+
+<span class="nc" id="L177">	}</span>
+
+	public void polygon(UPolygon poly) {
+<span class="nc" id="L180">		XPoint2D last = null;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		for (XPoint2D pt : poly.getPoints()) {</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">			if (last != null) {</span>
+<span class="nc" id="L183">				line(last, pt);</span>
+			}
+<span class="nc" id="L185">			last = pt;</span>
+<span class="nc" id="L186">		}</span>
+<span class="nc" id="L187">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

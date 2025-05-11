@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemDitaaFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.ditaa</a> &gt; <span class="el_source">PSystemDitaaFactory.java</span></div><h1>PSystemDitaaFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.ditaa;
+
+import java.awt.Font;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+public class PSystemDitaaFactory extends PSystemBasicFactory&lt;PSystemDitaa&gt; {
+	// ::remove folder when __HAXE__
+
+	// private StringBuilder data;
+	// // -E,--no-separation
+	// private boolean performSeparationOfCommonEdges;
+	//
+	// // -S,--no-shadows
+	// private boolean dropShadows;
+
+	public PSystemDitaaFactory() {
+<span class="fc" id="L58">		super(DiagramType.DITAA);</span>
+<span class="fc" id="L59">	}</span>
+
+	@Override
+	public PSystemDitaa initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L63">		boolean performSeparationOfCommonEdges = true;</span>
+<span class="nc bnc" id="L64" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-E&quot;) || startLine.contains(&quot;--no-separation&quot;)))</span>
+<span class="nc" id="L65">			performSeparationOfCommonEdges = false;</span>
+
+<span class="nc" id="L67">		boolean dropShadows = true;</span>
+<span class="nc bnc" id="L68" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-S&quot;) || startLine.contains(&quot;--no-shadows&quot;)))</span>
+<span class="nc" id="L69">			dropShadows = false;</span>
+
+<span class="nc" id="L71">		boolean allCornersAreRound = false;</span>
+<span class="nc bnc" id="L72" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-r&quot;) || startLine.contains(&quot;--round-corners&quot;)))</span>
+<span class="nc" id="L73">			allCornersAreRound = true;</span>
+
+<span class="nc" id="L75">		boolean transparentBackground = false;</span>
+<span class="nc bnc" id="L76" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-T&quot;) || startLine.contains(&quot;--transparent&quot;)))</span>
+<span class="nc" id="L77">			transparentBackground = true;</span>
+
+//		boolean forceFontSize = false;
+//		if (startLine != null &amp;&amp; startLine.contains(&quot;--font-size&quot;))
+//			forceFontSize = true;
+
+<span class="nc" id="L83">		final float scale = extractScale(startLine);</span>
+		// final Font font = extractFont(startLine);
+
+<span class="nc" id="L86">		return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,</span>
+				transparentBackground, scale, preprocessing);
+
+	}
+
+	@Override
+	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line,
+			PreprocessingArtifact preprocessing) {
+<span class="nc bnc" id="L94" title="All 6 branches missed.">		if (system == null &amp;&amp; (line.equals(&quot;ditaa&quot;) || line.startsWith(&quot;ditaa(&quot;))) {</span>
+<span class="nc" id="L95">			boolean performSeparationOfCommonEdges = true;</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">			if (line.contains(&quot;-E&quot;) || line.contains(&quot;--no-separation&quot;))</span>
+<span class="nc" id="L97">				performSeparationOfCommonEdges = false;</span>
+
+<span class="nc" id="L99">			boolean dropShadows = true;</span>
+<span class="nc bnc" id="L100" title="All 4 branches missed.">			if (line.contains(&quot;-S&quot;) || line.contains(&quot;--no-shadows&quot;))</span>
+<span class="nc" id="L101">				dropShadows = false;</span>
+
+<span class="nc" id="L103">			boolean allCornersAreRound = false;</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">			if (line.contains(&quot;-r&quot;) || line.contains(&quot;--round-corners&quot;))</span>
+<span class="nc" id="L105">				allCornersAreRound = true;</span>
+
+<span class="nc" id="L107">			boolean transparentBackground = false;</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">			if (line.contains(&quot;-T&quot;) || line.contains(&quot;--transparent&quot;))</span>
+<span class="nc" id="L109">				transparentBackground = true;</span>
+
+//			boolean forceFontSize = false;
+//			if (line.contains(&quot;--font-size&quot;))
+//				forceFontSize = true;
+
+<span class="nc" id="L115">			final float scale = extractScale(line);</span>
+			// final Font font = extractFont(line);
+<span class="nc" id="L117">			return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,</span>
+					transparentBackground, scale, preprocessing);
+		}
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (system == null)</span>
+<span class="nc" id="L121">			return null;</span>
+
+<span class="nc" id="L123">		system.add(line);</span>
+<span class="nc" id="L124">		return system;</span>
+	}
+
+	private float extractScale(String line) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (line == null)</span>
+<span class="nc" id="L129">			return 1;</span>
+
+<span class="nc" id="L131">		final Pattern p = Pattern.compile(&quot;scale=([\\d.]+)&quot;);</span>
+<span class="nc" id="L132">		final Matcher m = p.matcher(line);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L134">			final String number = m.group(1);</span>
+<span class="nc" id="L135">			return Float.parseFloat(number);</span>
+		}
+<span class="nc" id="L137">		return 1;</span>
+	}
+
+	private Font extractFont(String line) {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (line == null)</span>
+<span class="nc" id="L142">			return new Font(&quot;Dialog&quot;, Font.BOLD, 12);</span>
+
+<span class="nc" id="L144">		final Pattern pName = Pattern.compile(&quot;font-family=([a-zA-Z0-0 ]+)&quot;);</span>
+<span class="nc" id="L145">		final Matcher mName = pName.matcher(line);</span>
+<span class="nc" id="L146">		String fontName = &quot;Dialog&quot;;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (mName.find()) {</span>
+<span class="nc" id="L148">			fontName = mName.group(1);</span>
+		}
+
+<span class="nc" id="L151">		final Pattern pVariant = Pattern.compile(&quot;font-variant=(BOLD|ITALIC|PLAIN)&quot;);</span>
+<span class="nc" id="L152">		final Matcher mVariant = pVariant.matcher(line);</span>
+<span class="nc" id="L153">		int fontVariant = Font.BOLD;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (mVariant.find()) {</span>
+<span class="nc bnc" id="L155" title="All 4 branches missed.">			switch (mVariant.group(1)) {</span>
+			case &quot;BOLD&quot;:
+<span class="nc" id="L157">				fontVariant = Font.BOLD;</span>
+<span class="nc" id="L158">				break;</span>
+			case &quot;ITALIC&quot;:
+<span class="nc" id="L160">				fontVariant = Font.ITALIC;</span>
+<span class="nc" id="L161">				break;</span>
+			case &quot;PLAIN&quot;:
+<span class="nc" id="L163">				fontVariant = Font.PLAIN;</span>
+				break;
+			}
+		}
+
+<span class="nc" id="L168">		final Pattern pSize = Pattern.compile(&quot;font-size=([\\d]+)&quot;);</span>
+<span class="nc" id="L169">		final Matcher mSize = pSize.matcher(line);</span>
+<span class="nc" id="L170">		int fontSize = 12;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (mSize.find())</span>
+<span class="nc" id="L172">			fontSize = Integer.parseInt(mSize.group(1));</span>
+
+<span class="nc" id="L174">		return new Font(fontName, fontVariant, fontSize);</span>
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+<span class="nc" id="L179">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

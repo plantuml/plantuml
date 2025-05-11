@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommunicationTileNoteRight.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">CommunicationTileNoteRight.java</span></div><h1>CommunicationTileNoteRight.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NoteStyle;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class CommunicationTileNoteRight extends AbstractTile {
+
+	private final Tile tile;
+	private final AbstractMessage message;
+	private final Rose skin;
+	private final ISkinParam skinParam;
+	private final LivingSpace livingSpace;
+	private final Note noteOnMessage;
+	private final YGauge yGauge;
+
+	public Event getEvent() {
+<span class="fc" id="L66">		return message;</span>
+	}
+
+	private boolean isCreate() {
+<span class="fc" id="L70">		return message.isCreate();</span>
+	}
+
+	@Override
+	public double getContactPointRelative() {
+<span class="fc" id="L75">		return tile.getContactPointRelative();</span>
+	}
+
+	public CommunicationTileNoteRight(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
+			LivingSpace livingSpace, Note noteOnMessage, YGauge currentY) {
+<span class="fc" id="L80">		super(((AbstractTile) tile).getStringBounder(), currentY);</span>
+<span class="fc" id="L81">		this.tile = tile;</span>
+<span class="fc" id="L82">		this.message = message;</span>
+<span class="fc" id="L83">		this.skin = skin;</span>
+<span class="fc" id="L84">		this.skinParam = skinParam;</span>
+<span class="fc" id="L85">		this.noteOnMessage = noteOnMessage;</span>
+<span class="fc" id="L86">		this.livingSpace = livingSpace;</span>
+<span class="fc" id="L87">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L88">	}</span>
+
+	@Override
+	public YGauge getYGauge() {
+<span class="nc" id="L92">		return yGauge;</span>
+	}
+
+	@Override
+	final protected void callbackY_internal(TimeHook y) {
+<span class="fc" id="L97">		super.callbackY_internal(y);</span>
+<span class="fc" id="L98">		tile.callbackY(y);</span>
+<span class="fc" id="L99">	}</span>
+
+	private Component getComponent(StringBounder stringBounder) {
+<span class="fc" id="L102">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),</span>
+<span class="fc" id="L103">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
+<span class="fc" id="L104">				noteOnMessage.getColors());</span>
+<span class="fc" id="L105">		return comp;</span>
+	}
+
+	private Real getNotePosition(StringBounder stringBounder) {
+		// final Component comp = getComponent(stringBounder);
+		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (isCreate()) {</span>
+<span class="nc" id="L112">			return livingSpace.getPosD(stringBounder);</span>
+		}
+<span class="fc" id="L114">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L115">		return livingSpace.getPosC(stringBounder).addFixed(level * CommunicationTile.LIVE_DELTA_SIZE);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L119">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L120">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L122">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L123">		((UDrawable) tile).drawU(ug);</span>
+<span class="fc" id="L124">		final Real p = getNotePosition(stringBounder);</span>
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+
+<span class="fc" id="L128">		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);</span>
+<span class="fc" id="L129">	}</span>
+
+	public double getPreferredHeight() {
+<span class="fc" id="L132">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L133">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L134">		return Math.max(tile.getPreferredHeight(), dim.getHeight());</span>
+	}
+
+	public void addConstraints() {
+<span class="fc" id="L138">		tile.addConstraints();</span>
+<span class="fc" id="L139">	}</span>
+
+	public Real getMinX() {
+<span class="fc" id="L142">		return tile.getMinX();</span>
+	}
+
+	public Real getMaxX() {
+<span class="fc" id="L146">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L147">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L148">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

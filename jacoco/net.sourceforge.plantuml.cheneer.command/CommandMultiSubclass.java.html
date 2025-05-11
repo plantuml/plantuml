@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandMultiSubclass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cheneer.command</a> &gt; <span class="el_source">CommandMultiSubclass.java</span></div><h1>CommandMultiSubclass.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.cheneer.command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandMultiSubclass extends SingleLineCommand2&lt;ChenEerDiagram&gt; {
+
+	public CommandMultiSubclass() {
+<span class="fc" id="L66">		super(getRegexConcat());</span>
+<span class="fc" id="L67">	}</span>
+
+	protected static IRegex getRegexConcat() {
+<span class="fc" id="L70">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;SUPERCLASS&quot;, &quot;([%pLN_.-]+)&quot;), //
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;PARTICIPATION&quot;, &quot;([-=])&quot;), //
+				new RegexLeaf(&quot;(&gt;)&quot;), //
+				new RegexLeaf(&quot;PARTICIPATION2&quot;, &quot;([-=])&quot;), //
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;SYMBOL&quot;, &quot;([doU])&quot;), //
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;\\{&quot;), //
+				new RegexLeaf(&quot;SUBCLASSES&quot;, &quot;(.+)&quot;), //
+				new RegexLeaf(&quot;\\}&quot;), //
+<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">				color().getRegex(), //</span>
+<span class="fc" id="L84">				RegexLeaf.end());</span>
+	}
+
+	private static ColorParser color() {
+<span class="fc" id="L88">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="fc" id="L94">		final String superclass = diagram.cleanId(arg.get(&quot;SUPERCLASS&quot;, 0));</span>
+<span class="fc" id="L95">		final String subclasses = arg.get(&quot;SUBCLASSES&quot;, 0);</span>
+
+<span class="fc" id="L97">		final List&lt;String&gt; subclassIds = new ArrayList&lt;String&gt;();</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (String subclass : subclasses.split(&quot;,&quot;))</span>
+<span class="fc" id="L100">			subclassIds.add(diagram.cleanId(subclass.trim()));</span>
+
+<span class="fc" id="L102">		final boolean isDouble = arg.get(&quot;PARTICIPATION&quot;, 0).equals(&quot;=&quot;);</span>
+<span class="fc" id="L103">		final String symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
+
+<span class="fc" id="L105">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L107">		final Quark&lt;Entity&gt; centerQuark = diagram.quarkInContext(false,</span>
+				superclass + &quot;/&quot; + symbol + subclasses + &quot;/center&quot;);
+<span class="fc" id="L109">		final Entity centerEntity = diagram.reallyCreateLeaf(location, centerQuark, Display.create(symbol), LeafType.CHEN_CIRCLE,</span>
+				null);
+
+<span class="fc" id="L112">		centerEntity.setColors(colors);</span>
+
+<span class="fc" id="L114">		final Quark&lt;Entity&gt; superclassQuark = diagram.quarkInContext(true, superclass);</span>
+<span class="fc" id="L115">		final Entity superclassEntity = superclassQuark.getData();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (superclassEntity == null) {</span>
+<span class="nc" id="L117">			return CommandExecutionResult.error(&quot;No such entity: &quot; + superclass);</span>
+		}
+
+<span class="fc" id="L120">		LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (isDouble) {</span>
+<span class="fc" id="L122">			linkType = linkType.goBold();</span>
+		}
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (symbol.equals(&quot;U&quot;)) {</span>
+<span class="fc" id="L125">			linkType = linkType.withMiddleSuperset();</span>
+		}
+<span class="fc" id="L127">		final Link link = new Link(location, diagram, diagram.getCurrentStyleBuilder(), superclassEntity,</span>
+<span class="fc" id="L128">				centerEntity, linkType, LinkArg.build(Display.NULL, 2));</span>
+<span class="fc" id="L129">		link.setPortMembers(diagram.getPortId(superclassEntity.getName()), diagram.getPortId(centerEntity.getName()));</span>
+<span class="fc" id="L130">		link.setColors(colors);</span>
+<span class="fc" id="L131">		diagram.addLink(link);</span>
+
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (String subclass : subclassIds) {</span>
+<span class="fc" id="L134">			final Quark&lt;Entity&gt; subclassQuark = diagram.quarkInContext(true, subclass);</span>
+<span class="fc" id="L135">			final Entity subclassEntity = subclassQuark.getData();</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			if (subclassEntity == null) {</span>
+<span class="nc" id="L137">				return CommandExecutionResult.error(&quot;No such entity: &quot; + subclass);</span>
+			}
+
+<span class="fc" id="L140">			LinkType subclassLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (!symbol.equals(&quot;U&quot;)) {</span>
+<span class="fc" id="L142">				subclassLinkType = subclassLinkType.withMiddleSuperset();</span>
+			}
+<span class="fc" id="L144">			final Link subclassLink = new Link(location, diagram, diagram.getCurrentStyleBuilder(), centerEntity,</span>
+<span class="fc" id="L145">					subclassEntity, subclassLinkType, LinkArg.build(Display.NULL, 3));</span>
+<span class="fc" id="L146">			subclassLink.setColors(colors);</span>
+<span class="fc" id="L147">			diagram.addLink(subclassLink);</span>
+<span class="fc" id="L148">		}</span>
+
+<span class="fc" id="L150">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

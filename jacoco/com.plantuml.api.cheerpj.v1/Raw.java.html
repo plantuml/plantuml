@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Raw.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.api.cheerpj.v1</a> &gt; <span class="el_source">Raw.java</span></div><h1>Raw.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package com.plantuml.api.cheerpj.v1;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.StringReader;
+import java.util.Collections;
+import java.util.List;
+
+import com.plantuml.api.cheerpj.JsonResult;
+import com.plantuml.api.cheerpj.Utils;
+import com.plantuml.api.cheerpj.WasmLog;
+
+import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.BlockUmlBuilder;
+import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.preproc.Defines;
+
+<span class="nc" id="L71">public class Raw {</span>
+
+	private static final int MAX = 2000;
+	static private BufferedImage im;
+	static private Graphics2D g2d;
+
+	public static Object convertToBlob(String mode, String text, String pathOut) {
+<span class="nc" id="L78">		final long start = System.currentTimeMillis();</span>
+<span class="nc" id="L79">		WasmLog.start = start;</span>
+<span class="nc" id="L80">		WasmLog.log(&quot;Starting processing&quot;);</span>
+
+		try {
+<span class="nc" id="L83">			text = Utils.cleanText(text);</span>
+<span class="nc" id="L84">			final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.&lt;String&gt;emptyList(), UTF_8,</span>
+<span class="nc" id="L85">					Defines.createEmpty(), new StringReader(text), null, &quot;string&quot;);</span>
+<span class="nc" id="L86">			List&lt;BlockUml&gt; blocks = builder.getBlockUmls();</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (blocks.size() == 0)</span>
+<span class="nc" id="L89">				return JsonResult.noDataFound(start);</span>
+
+<span class="nc" id="L91">			WasmLog.log(&quot;...loading data...&quot;);</span>
+
+<span class="nc" id="L93">			final Diagram system = blocks.get(0).getDiagram();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (system instanceof PSystemError) {</span>
+<span class="nc" id="L95">				final ErrorUml error = ((PSystemError) system).getFirstError();</span>
+<span class="nc" id="L96">				WasmLog.log(&quot;[&quot; + error.getPosition() + &quot;] &quot; + error.getError());</span>
+<span class="nc" id="L97">				return JsonResult.fromError(start, (PSystemError) system);</span>
+			}
+
+<span class="nc" id="L100">			WasmLog.log(&quot;...processing...&quot;);</span>
+
+<span class="nc" id="L102">			final boolean dark = &quot;dark&quot;.equalsIgnoreCase(mode);</span>
+
+<span class="nc" id="L104">			final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (im == null) {</span>
+<span class="nc" id="L107">				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,</span>
+						stringBounder);
+<span class="nc" id="L109">				im = imageBuilder.getBufferedImage();</span>
+<span class="nc" id="L110">				g2d = im.createGraphics();</span>
+			}
+
+			final HColor back;
+			final ColorMapper mapper;
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (dark) {</span>
+<span class="nc" id="L116">				back = HColors.simple(Color.BLACK);</span>
+<span class="nc" id="L117">				mapper = ColorMapper.DARK_MODE;</span>
+			} else {
+<span class="nc" id="L119">				back = HColors.simple(Color.WHITE);</span>
+<span class="nc" id="L120">				mapper = ColorMapper.IDENTITY;</span>
+			}
+<span class="nc" id="L122">			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);</span>
+<span class="nc" id="L123">			WasmLog.log(&quot;...cleaning...&quot;);</span>
+<span class="nc" id="L124">			ug.apply(back).apply(back.bg()).draw(URectangle.build(MAX, MAX));</span>
+<span class="nc" id="L125">			ug.resetMax();</span>
+<span class="nc" id="L126">			WasmLog.log(&quot;...drawing...&quot;);</span>
+
+<span class="nc" id="L128">			system.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.PNG));</span>
+
+<span class="nc" id="L130">			final int width = (int) (2 + ug.getMaxX());</span>
+<span class="nc" id="L131">			final int height = (int) (2 + ug.getMaxY());</span>
+<span class="nc" id="L132">			WasmLog.log(&quot;...size is &quot; + width + &quot; x &quot; + height + &quot; ...&quot;);</span>
+
+<span class="nc" id="L134">			final FileOutputStream fos = new FileOutputStream(new File(pathOut));</span>
+
+<span class="nc" id="L136">			fos.write(((width &amp; 0xFF00) &gt;&gt; 8));</span>
+<span class="nc" id="L137">			fos.write((width &amp; 0xFF));</span>
+<span class="nc" id="L138">			fos.write(((height &amp; 0xFF00) &gt;&gt; 8));</span>
+<span class="nc" id="L139">			fos.write((height &amp; 0xFF));</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			for (int j = 0; j &lt; height; j++)</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">				for (int i = 0; i &lt; width; i++) {</span>
+<span class="nc" id="L143">					int pixel = im.getRGB(i, j);</span>
+<span class="nc" id="L144">					fos.write(((pixel &amp; 0xFF0000) &gt;&gt; 16));</span>
+<span class="nc" id="L145">					fos.write(((pixel &amp; 0x00FF00) &gt;&gt; 8));</span>
+<span class="nc" id="L146">					fos.write((pixel &amp; 0xFF));</span>
+<span class="nc" id="L147">					fos.write((255));</span>
+//				// line.scanline[j++] = (((sample &amp; 0xFF000000) &gt;&gt; 24) &amp; 0xFF); // A
+				}
+
+<span class="nc" id="L151">			WasmLog.log(&quot;done!&quot;);</span>
+<span class="nc" id="L152">			final ImageData imageData = new ImageDataSimple(width, height);</span>
+<span class="nc" id="L153">			return JsonResult.ok(start, imageData, system);</span>
+
+<span class="nc" id="L155">		} catch (Throwable t) {</span>
+<span class="nc" id="L156">			WasmLog.log(&quot;Fatal error &quot; + t);</span>
+<span class="nc" id="L157">			return JsonResult.fromCrash(start, t);</span>
+		}
+	}
+
+	public static Object convert(String mode, String text) {
+<span class="nc" id="L162">		final long start = System.currentTimeMillis();</span>
+<span class="nc" id="L163">		WasmLog.start = start;</span>
+<span class="nc" id="L164">		WasmLog.log(&quot;Starting processing&quot;);</span>
+
+		try {
+<span class="nc" id="L167">			text = Utils.cleanText(text);</span>
+<span class="nc" id="L168">			final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.&lt;String&gt;emptyList(), UTF_8,</span>
+<span class="nc" id="L169">					Defines.createEmpty(), new StringReader(text), null, &quot;string&quot;);</span>
+<span class="nc" id="L170">			List&lt;BlockUml&gt; blocks = builder.getBlockUmls();</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">			if (blocks.size() == 0)</span>
+<span class="nc" id="L173">				return JsonResult.noDataFound(start);</span>
+
+<span class="nc" id="L175">			WasmLog.log(&quot;...loading data...&quot;);</span>
+
+<span class="nc" id="L177">			final Diagram system = blocks.get(0).getDiagram();</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (system instanceof PSystemError) {</span>
+<span class="nc" id="L179">				final ErrorUml error = ((PSystemError) system).getFirstError();</span>
+<span class="nc" id="L180">				WasmLog.log(&quot;[&quot; + error.getPosition() + &quot;] &quot; + error.getError());</span>
+<span class="nc" id="L181">				return JsonResult.fromError(start, (PSystemError) system);</span>
+			}
+
+<span class="nc" id="L184">			WasmLog.log(&quot;...processing...&quot;);</span>
+
+<span class="nc" id="L186">			final boolean dark = &quot;dark&quot;.equalsIgnoreCase(mode);</span>
+
+<span class="nc" id="L188">			final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
+
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			if (im == null) {</span>
+<span class="nc" id="L191">				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,</span>
+						stringBounder);
+<span class="nc" id="L193">				im = imageBuilder.getBufferedImage();</span>
+<span class="nc" id="L194">				g2d = im.createGraphics();</span>
+			}
+
+			final HColor back;
+			final ColorMapper mapper;
+<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (dark) {</span>
+<span class="nc" id="L200">				back = HColors.simple(Color.BLACK);</span>
+<span class="nc" id="L201">				mapper = ColorMapper.DARK_MODE;</span>
+			} else {
+<span class="nc" id="L203">				back = HColors.simple(Color.WHITE);</span>
+<span class="nc" id="L204">				mapper = ColorMapper.IDENTITY;</span>
+			}
+<span class="nc" id="L206">			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);</span>
+<span class="nc" id="L207">			WasmLog.log(&quot;...cleaning...&quot;);</span>
+<span class="nc" id="L208">			ug.apply(back).apply(back.bg()).draw(URectangle.build(MAX, MAX));</span>
+<span class="nc" id="L209">			ug.resetMax();</span>
+<span class="nc" id="L210">			WasmLog.log(&quot;...drawing...&quot;);</span>
+
+<span class="nc" id="L212">			system.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.PNG));</span>
+
+<span class="nc" id="L214">			final int width = (int) (2 + ug.getMaxX());</span>
+<span class="nc" id="L215">			final int height = (int) (2 + ug.getMaxY());</span>
+<span class="nc" id="L216">			WasmLog.log(&quot;...size is &quot; + width + &quot; x &quot; + height + &quot; ...&quot;);</span>
+
+<span class="nc" id="L218">			final byte[] data = new byte[width * height * 4];</span>
+<span class="nc" id="L219">			WasmLog.log(&quot;...allocating array...&quot;);</span>
+
+<span class="nc" id="L221">			int pos = 0;</span>
+<span class="nc" id="L222">			data[pos++] = (byte) ((width &amp; 0xFF00) &gt;&gt; 8);</span>
+<span class="nc" id="L223">			data[pos++] = (byte) (width &amp; 0xFF);</span>
+<span class="nc" id="L224">			data[pos++] = (byte) ((height &amp; 0xFF00) &gt;&gt; 8);</span>
+<span class="nc" id="L225">			data[pos++] = (byte) (height &amp; 0xFF);</span>
+
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			for (int j = 0; j &lt; height; j++)</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">				for (int i = 0; i &lt; width; i++) {</span>
+<span class="nc" id="L229">					int pixel = im.getRGB(i, j);</span>
+<span class="nc" id="L230">					data[pos++] = (byte) ((pixel &amp; 0xFF0000) &gt;&gt; 16);</span>
+<span class="nc" id="L231">					data[pos++] = (byte) ((pixel &amp; 0x00FF00) &gt;&gt; 8);</span>
+<span class="nc" id="L232">					data[pos++] = (byte) (pixel &amp; 0xFF);</span>
+<span class="nc" id="L233">					data[pos++] = (byte) (255);</span>
+//					// line.scanline[j++] = (((sample &amp; 0xFF000000) &gt;&gt; 24) &amp; 0xFF); // A
+				}
+
+<span class="nc" id="L237">			WasmLog.log(&quot;done!&quot;);</span>
+
+<span class="nc" id="L239">			return data;</span>
+
+<span class="nc" id="L241">		} catch (Throwable t) {</span>
+<span class="nc" id="L242">			WasmLog.log(&quot;Fatal error &quot; + t);</span>
+<span class="nc" id="L243">			return JsonResult.fromCrash(start, t);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

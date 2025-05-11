@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageClassHeader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageClassHeader.java</span></div><h1>EntityImageClassHeader.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.CircledCharacter;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockGeneric;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.SkinParamUtils;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.HeaderLayout;
+import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.text.Guillemet;
+
+import java.util.List;
+
+<span class="fc" id="L73">public class EntityImageClassHeader extends AbstractEntityImage {</span>
+
+	final private HeaderLayout headerLayout;
+
+	public EntityImageClassHeader(Entity entity, PortionShower portionShower) {
+<span class="fc" id="L78">		super(entity);</span>
+
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">				|| entity.getLeafType() == LeafType.INTERFACE;</span>
+
+<span class="fc" id="L83">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="fc" id="L84">		final boolean displayGenericWithOldFashion = getSkinParam().displayGenericWithOldFashion();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();</span>
+
+<span class="fc" id="L87">		final Style styleHeader = StyleSignatureBasic</span>
+<span class="fc" id="L88">				.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //</span>
+<span class="fc" id="L89">				.withTOBECHANGED(stereotype) //</span>
+<span class="fc" id="L90">				.with(entity.getStereostyles()) //</span>
+<span class="fc" id="L91">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+		
+<span class="fc" id="L93">		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader, entity.getColors());</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (italic)</span>
+<span class="fc" id="L95">			fontConfigurationName = fontConfigurationName.italic();</span>
+
+<span class="fc" id="L97">		Display display = entity.getDisplay();</span>
+<span class="pc bpc" id="L98" title="3 of 4 branches missed.">		if (displayGenericWithOldFashion &amp;&amp; entity.getGeneric() != null)</span>
+<span class="nc" id="L99">			display = display.addGeneric(entity.getGeneric());</span>
+
+<span class="fc" id="L101">		TextBlock name = display.create8(fontConfigurationName, HorizontalAlignment.CENTER, getSkinParam(),</span>
+<span class="fc" id="L102">				CreoleMode.FULL_BUT_UNDERSCORE, styleHeader.wrapWidth());</span>
+<span class="fc" id="L103">		final VisibilityModifier modifier = entity.getVisibilityModifier();</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (modifier == null) {</span>
+<span class="fc" id="L105">			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);</span>
+		} else {
+<span class="nc" id="L107">			final Rose rose = new Rose();</span>
+<span class="nc" id="L108">			final HColor back = rose.getHtmlColor(getSkinParam(), modifier.getBackground());</span>
+<span class="nc" id="L109">			final HColor fore = rose.getHtmlColor(getSkinParam(), modifier.getForeground());</span>
+
+<span class="nc" id="L111">			final TextBlock uBlock = modifier.getUBlock(getSkinParam().classAttributeIconSize(), fore, back, false);</span>
+<span class="nc" id="L112">			name = TextBlockUtils.mergeLR(uBlock, name, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L113">			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);</span>
+		}
+
+		final TextBlock stereo;
+<span class="fc" id="L117">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
+<span class="pc bpc" id="L118" title="1 of 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">				|| stereotypeLabels.isEmpty())</span>
+<span class="fc" id="L120">			stereo = null;</span>
+		else
+<span class="fc" id="L122">			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(</span>
+<span class="fc" id="L123">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
+<span class="fc" id="L124">					HorizontalAlignment.CENTER, getSkinParam()), 1, 0);</span>
+
+		TextBlock genericBlock;
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (generic == null) {</span>
+<span class="fc" id="L128">			genericBlock = null;</span>
+		} else {			
+<span class="fc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
+<span class="fc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
+<span class="fc" id="L132">					.withTOBECHANGED(stereotype) //</span>
+<span class="fc" id="L133">					.with(entity.getStereostyles()) //</span>
+<span class="fc" id="L134">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+
+<span class="fc" id="L136">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
+<span class="fc" id="L137">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
+<span class="fc" id="L138">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="fc" id="L139">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+
+<span class="fc" id="L141">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L142">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+
+<span class="fc" id="L144">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
+<span class="fc" id="L145">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+		}
+
+		final TextBlock circledCharacter;
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (Entity) getEntity()))</span>
+<span class="fc" id="L150">			circledCharacter = TextBlockUtils.withMargin(getCircledCharacter(entity, getSkinParam()), 4, 0, 5, 5);</span>
+		else
+<span class="nc" id="L152">			circledCharacter = null;</span>
+
+<span class="fc" id="L154">		this.headerLayout = new HeaderLayout(circledCharacter, stereo, name, genericBlock);</span>
+<span class="fc" id="L155">	}</span>
+
+	private TextBlock getCircledCharacter(Entity entity, ISkinParam skinParam) {
+<span class="fc" id="L158">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="pc bpc" id="L159" title="1 of 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.getSprite(skinParam) != null)</span>
+<span class="nc" id="L160">			return stereotype.getSprite(skinParam);</span>
+
+<span class="fc" id="L162">		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);</span>
+
+<span class="fc" id="L164">		final LeafType leafType = entity.getLeafType();</span>
+
+<span class="fc" id="L166">		final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L167">		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L168">		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="fc" id="L170">		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="fc bfc" id="L172" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; stereotype.getCharacter() != 0)</span>
+<span class="fc" id="L173">			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">					stereotype.getHtmlColor() == null ? spotBackColor : stereotype.getHtmlColor(), spotBorder,</span>
+					fontColor);
+
+<span class="fc" id="L177">		char circledChar = 0;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L179">			circledChar = getSkinParam().getCircledCharacter(stereotype);</span>
+
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (circledChar == 0)</span>
+<span class="fc" id="L182">			circledChar = getCircledChar(leafType);</span>
+
+<span class="fc" id="L184">		return new CircledCharacter(circledChar, getSkinParam().getCircledCharacterRadius(), font, spotBackColor,</span>
+				spotBorder, fontColor);
+	}
+
+	private StyleSignatureBasic spotStyleSignature(LeafType leafType) {
+<span class="pc bpc" id="L189" title="10 of 12 branches missed.">		switch (leafType) {</span>
+		case ANNOTATION:
+<span class="nc" id="L191">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAnnotation);</span>
+		case ABSTRACT_CLASS:
+<span class="nc" id="L193">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAbstractClass);</span>
+		case CLASS:
+<span class="fc" id="L195">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotClass);</span>
+		case INTERFACE:
+<span class="fc" id="L197">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotInterface);</span>
+		case ENUM:
+<span class="nc" id="L199">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEnum);</span>
+		case ENTITY:
+<span class="nc" id="L201">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEntity);</span>
+		case PROTOCOL:
+<span class="nc" id="L203">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotProtocol);</span>
+		case STRUCT:
+<span class="nc" id="L205">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStruct);</span>
+		case EXCEPTION:
+<span class="nc" id="L207">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotException);</span>
+		case METACLASS:
+<span class="nc" id="L209">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotMetaClass);</span>
+		case STEREOTYPE:
+<span class="nc" id="L211">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStereotype);</span>
+		}
+<span class="nc" id="L213">		throw new IllegalStateException();</span>
+	}
+
+	private char getCircledChar(LeafType leafType) {
+<span class="pc bpc" id="L217" title="10 of 12 branches missed.">		switch (leafType) {</span>
+		case ANNOTATION:
+<span class="nc" id="L219">			return '@';</span>
+		case ABSTRACT_CLASS:
+<span class="nc" id="L221">			return 'A';</span>
+		case CLASS:
+<span class="fc" id="L223">			return 'C';</span>
+		case INTERFACE:
+<span class="fc" id="L225">			return 'I';</span>
+		case ENUM:
+<span class="nc" id="L227">			return 'E';</span>
+		case ENTITY:
+<span class="nc" id="L229">			return 'E';</span>
+		case PROTOCOL:
+<span class="nc" id="L231">			return 'P';</span>
+		case STRUCT:
+<span class="nc" id="L233">			return 'S';</span>
+		case EXCEPTION:
+<span class="nc" id="L235">			return 'X';</span>
+		case METACLASS:
+<span class="nc" id="L237">			return 'M';</span>
+		case STEREOTYPE:
+<span class="nc" id="L239">			return 'S';</span>
+		}
+<span class="nc" id="L241">		assert false;</span>
+<span class="nc" id="L242">		return '?';</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L246">		return headerLayout.getDimension(stringBounder);</span>
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="nc" id="L250">		throw new UnsupportedOperationException();</span>
+	}
+
+	public void drawU(UGraphic ug, double width, double height) {
+<span class="fc" id="L254">		headerLayout.drawU(ug, width, height);</span>
+<span class="fc" id="L255">	}</span>
+
+	public ShapeType getShapeType() {
+<span class="nc" id="L258">		return ShapeType.RECTANGLE;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

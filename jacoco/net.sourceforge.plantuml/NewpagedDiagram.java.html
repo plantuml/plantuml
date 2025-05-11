@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NewpagedDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">NewpagedDiagram.java</span></div><h1>NewpagedDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.utils.BlocLines;
+
+public class NewpagedDiagram extends AbstractPSystem {
+	// ::remove file when __HAXE__
+
+<span class="nc" id="L58">	private final List&lt;Diagram&gt; diagrams = new ArrayList&lt;&gt;();</span>
+
+	public NewpagedDiagram(UmlSource source, AbstractPSystem diag1, AbstractPSystem diag2,
+			PreprocessingArtifact preprocessingArtifact) {
+<span class="nc" id="L62">		super(source, preprocessingArtifact);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (diag1 instanceof NewpagedDiagram)</span>
+<span class="nc" id="L64">			throw new IllegalArgumentException();</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (diag2 instanceof NewpagedDiagram)</span>
+<span class="nc" id="L67">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L69">		this.diagrams.add(diag1);</span>
+<span class="nc" id="L70">		this.diagrams.add(diag2);</span>
+<span class="nc" id="L71">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L75">		return super.toString() + &quot; SIZE=&quot; + diagrams.size() + &quot; &quot; + diagrams;</span>
+	}
+
+	public Diagram getLastDiagram() {
+<span class="nc" id="L79">		return diagrams.get(diagrams.size() - 1);</span>
+	}
+
+	@Override
+	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
+<span class="nc" id="L84">		final int nb = diagrams.size();</span>
+		try {
+<span class="nc" id="L86">			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines, currentPass);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (tmp.getNewDiagram() instanceof NewpagedDiagram) {</span>
+<span class="nc" id="L88">				final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();</span>
+				// System.err.println(&quot;this=&quot; + this);
+				// System.err.println(&quot;new1=&quot; + new1);
+<span class="nc bnc" id="L91" title="All 2 branches missed.">				if (new1.size() != 2)</span>
+<span class="nc" id="L92">					throw new IllegalStateException();</span>
+
+<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (new1.diagrams.get(0) != this.diagrams.get(nb - 1))</span>
+<span class="nc" id="L95">					throw new IllegalStateException();</span>
+
+<span class="nc" id="L97">				this.diagrams.add(new1.diagrams.get(1));</span>
+<span class="nc" id="L98">				return tmp.withDiagram(this);</span>
+
+			}
+<span class="nc" id="L101">			return tmp;</span>
+<span class="nc" id="L102">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L103">			return CommandExecutionResult.badColor();</span>
+		}
+	}
+
+	private int size() {
+<span class="nc" id="L108">		return diagrams.size();</span>
+	}
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
+<span class="nc" id="L114">		return diagrams.get(num).exportDiagram(os, 0, fileFormat);</span>
+	}
+
+	public int getNbImages() {
+<span class="nc" id="L118">		int nb = 0;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (Diagram d : diagrams)</span>
+<span class="nc" id="L120">			nb += d.getNbImages();</span>
+
+<span class="nc" id="L122">		return nb;</span>
+	}
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L126">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		for (Diagram d : diagrams) {</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L129">				sb.append(&quot; &quot;);</span>
+
+<span class="nc" id="L131">			sb.append(d.getDescription());</span>
+<span class="nc" id="L132">		}</span>
+<span class="nc" id="L133">		return new DiagramDescription(sb.toString());</span>
+	}
+
+	public String getWarningOrError() {
+<span class="nc" id="L137">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (Diagram d : diagrams) {</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L140">				sb.append(&quot; &quot;);</span>
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (d.getWarningOrError() != null)</span>
+<span class="nc" id="L143">				sb.append(d.getWarningOrError());</span>
+
+<span class="nc" id="L145">		}</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (sb.length() == 0)</span>
+<span class="nc" id="L147">			return null;</span>
+
+<span class="nc" id="L149">		return sb.toString();</span>
+	}
+
+	@Override
+	public void makeDiagramReady() {
+<span class="nc" id="L154">		super.makeDiagramReady();</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (Diagram diagram : diagrams)</span>
+<span class="nc" id="L156">			((AbstractPSystem) diagram).makeDiagramReady();</span>
+
+<span class="nc" id="L158">	}</span>
+
+	@Override
+	public String checkFinalError() {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (Diagram p : getDiagrams()) {</span>
+<span class="nc" id="L163">			final String check = ((AbstractPSystem) p).checkFinalError();</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (check != null)</span>
+<span class="nc" id="L165">				return check;</span>
+
+<span class="nc" id="L167">		}</span>
+<span class="nc" id="L168">		return super.checkFinalError();</span>
+	}
+
+	public final List&lt;Diagram&gt; getDiagrams() {
+<span class="nc" id="L172">		return Collections.unmodifiableList(diagrams);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BodyEnhanced2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">BodyEnhanced2.java</span></div><h1>BodyEnhanced2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.EmbeddedDiagram;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.TextBlockVertical2;
+import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+
+public class BodyEnhanced2 extends BodyEnhancedAbstract {
+
+	private final Display rawBody;
+	private final ISkinSimple skinParam;
+
+	private final LineBreakStrategy lineBreakStrategy;
+
+	BodyEnhanced2(Display rawBody, ISkinSimple skinParam, HorizontalAlignment align, FontConfiguration titleConfig,
+			LineBreakStrategy lineBreakStrategy, Style style) {
+<span class="fc" id="L65">		super(align, titleConfig, style);</span>
+<span class="fc" id="L66">		this.rawBody = rawBody;</span>
+<span class="fc" id="L67">		this.lineBreakStrategy = lineBreakStrategy;</span>
+<span class="fc" id="L68">		this.skinParam = skinParam;</span>
+
+<span class="fc" id="L70">	}</span>
+
+	@Override
+	protected double getMarginX() {
+<span class="fc" id="L74">		return 0;</span>
+	}
+
+	@Override
+	protected TextBlock getArea(StringBounder stringBounder) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (area != null)</span>
+<span class="fc" id="L80">			return area;</span>
+
+		// urls.clear();
+<span class="fc" id="L83">		final List&lt;TextBlock&gt; blocks = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L85">		char separator = 0;</span>
+<span class="fc" id="L86">		TextBlock title = null;</span>
+<span class="fc" id="L87">		Display display = Display.empty();</span>
+<span class="fc" id="L88">		final Iterator&lt;CharSequence&gt; it = rawBody.iterator();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L90">			final CharSequence s = it.next();</span>
+<span class="fc" id="L91">			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s));</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (type != null) {</span>
+<span class="fc" id="L93">				display = display.add(s);</span>
+<span class="fc" id="L94">				display = addOneSingleLineManageEmbedded2(it, display);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			} else if (isBlockSeparator(s.toString())) {</span>
+<span class="fc" id="L96">				blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));</span>
+<span class="fc" id="L97">				separator = s.charAt(0);</span>
+<span class="fc" id="L98">				title = getTitle(s.toString(), skinParam);</span>
+<span class="fc" id="L99">				display = Display.empty();</span>
+			} else {
+				// if (s instanceof String)
+				// s = Guillemet.GUILLEMET.manageGuillemet(s.toString());
+<span class="fc" id="L103">				display = display.add(s);</span>
+			}
+<span class="fc" id="L105">		}</span>
+
+<span class="fc" id="L107">		blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (blocks.size() == 1)</span>
+<span class="fc" id="L110">			this.area = blocks.get(0);</span>
+		else
+<span class="fc" id="L112">			this.area = new TextBlockVertical2(blocks, align);</span>
+
+<span class="fc" id="L114">		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (minClassWidth &gt; 0)</span>
+<span class="nc" id="L116">			this.area = TextBlockUtils.withMinWidth(this.area, minClassWidth, align);</span>
+
+<span class="fc" id="L118">		return area;</span>
+	}
+
+	private static Display addOneSingleLineManageEmbedded2(Iterator&lt;CharSequence&gt; it, Display display) {
+<span class="fc" id="L122">		int nested = 1;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="fc" id="L124">			final CharSequence s = it.next();</span>
+<span class="fc" id="L125">			display = display.add(s);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s)) != null)</span>
+				// if (s.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
+<span class="nc" id="L128">				nested++;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			else if (StringUtils.trinNoTrace(s).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
+<span class="fc" id="L130">				nested--;</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (nested == 0)</span>
+<span class="fc" id="L132">					return display;</span>
+			}
+<span class="fc" id="L134">		}</span>
+<span class="nc" id="L135">		return display;</span>
+	}
+
+	private TextBlock getTextBlock(Display display) {
+<span class="fc" id="L139">		final TextBlock result = display.create9(titleConfig, align, skinParam, lineBreakStrategy);</span>
+<span class="fc" id="L140">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeArrow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.graphic</a> &gt; <span class="el_source">TimeArrow.java</span></div><h1>TimeArrow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.graphic;
+
+import net.sourceforge.plantuml.decoration.WithLinkType;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class TimeArrow implements UDrawable {
+
+	private final XPoint2D start;
+	private final XPoint2D end;
+	private final Display label;
+	private final ISkinParam skinParam;
+	private final StyleBuilder styleBuilder;
+	private final WithLinkType type;
+
+	public static TimeArrow create(IntricatedPoint pt1, IntricatedPoint pt2, Display label, ISkinParam spriteContainer,
+			WithLinkType type) {
+<span class="fc" id="L66">		final TimeArrow arrow1 = new TimeArrow(pt1.getPointA(), pt2.getPointA(), label, spriteContainer, type);</span>
+<span class="fc" id="L67">		final TimeArrow arrow2 = new TimeArrow(pt1.getPointA(), pt2.getPointB(), label, spriteContainer, type);</span>
+<span class="fc" id="L68">		final TimeArrow arrow3 = new TimeArrow(pt1.getPointB(), pt2.getPointA(), label, spriteContainer, type);</span>
+<span class="fc" id="L69">		final TimeArrow arrow4 = new TimeArrow(pt1.getPointB(), pt2.getPointB(), label, spriteContainer, type);</span>
+<span class="fc" id="L70">		return shorter(arrow1, arrow2, arrow3, arrow4);</span>
+	}
+
+<span class="fc" id="L73">	private TimeArrow(XPoint2D start, XPoint2D end, Display label, ISkinParam skinParam, WithLinkType type) {</span>
+<span class="fc" id="L74">		this.start = start;</span>
+<span class="fc" id="L75">		this.type = type;</span>
+<span class="fc" id="L76">		this.end = end;</span>
+<span class="fc" id="L77">		this.label = label;</span>
+<span class="fc" id="L78">		this.skinParam = skinParam;</span>
+<span class="fc" id="L79">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L80">	}</span>
+
+	private double getAngle() {
+<span class="fc" id="L83">		return Math.atan2(end.getX() - start.getX(), end.getY() - start.getY());</span>
+	}
+
+	private static TimeArrow shorter(TimeArrow arrow1, TimeArrow arrow2) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (arrow1.len() &lt; arrow2.len()) {</span>
+<span class="fc" id="L88">			return arrow1;</span>
+		}
+<span class="fc" id="L90">		return arrow2;</span>
+	}
+
+	private static TimeArrow shorter(TimeArrow arrow1, TimeArrow arrow2, TimeArrow arrow3, TimeArrow arrow4) {
+<span class="fc" id="L94">		return shorter(shorter(arrow1, arrow2), shorter(arrow3, arrow4));</span>
+	}
+
+	private double len() {
+<span class="fc" id="L98">		return start.distance(end);</span>
+	}
+
+	public TimeArrow translate(UTranslate translate) {
+<span class="nc" id="L102">		return new TimeArrow(translate.getTranslated(start), translate.getTranslated(end), label, skinParam,</span>
+				type);
+	}
+
+	public static XPoint2D onCircle(XPoint2D pt, double alpha) {
+<span class="fc" id="L107">		final double radius = 8;</span>
+<span class="fc" id="L108">		final double x = pt.getX() - Math.sin(alpha) * radius;</span>
+<span class="fc" id="L109">		final double y = pt.getY() - Math.cos(alpha) * radius;</span>
+<span class="fc" id="L110">		return new XPoint2D(x, y);</span>
+	}
+
+	private FontConfiguration getFontConfiguration() {
+<span class="fc" id="L114">		return getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L118">		final double angle = getAngle();</span>
+
+<span class="fc" id="L120">		ug = ug.apply(type.getSpecificColor()).apply(type.getUStroke());</span>
+<span class="fc" id="L121">		final ULine line = new ULine(end.getX() - start.getX(), end.getY() - start.getY());</span>
+<span class="fc" id="L122">		ug.apply(UTranslate.point(start)).draw(line);</span>
+
+<span class="fc" id="L124">		final double delta = 20.0 * Math.PI / 180.0;</span>
+<span class="fc" id="L125">		final XPoint2D pt1 = onCircle(end, angle + delta);</span>
+<span class="fc" id="L126">		final XPoint2D pt2 = onCircle(end, angle - delta);</span>
+
+<span class="fc" id="L128">		final UPolygon polygon = new UPolygon();</span>
+<span class="fc" id="L129">		polygon.addPoint(pt1.getX(), pt1.getY());</span>
+<span class="fc" id="L130">		polygon.addPoint(pt2.getX(), pt2.getY());</span>
+<span class="fc" id="L131">		polygon.addPoint(end.getX(), end.getY());</span>
+
+<span class="fc" id="L133">		ug = ug.apply(type.getSpecificColor().bg());</span>
+<span class="fc" id="L134">		ug.draw(polygon);</span>
+
+<span class="fc" id="L136">		final TextBlock textLabel = getTextBlock(label);</span>
+<span class="fc" id="L137">		double xText = (pt1.getX() + pt2.getX()) / 2;</span>
+<span class="fc" id="L138">		double yText = (pt1.getY() + pt2.getY()) / 2;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (start.getY() &lt; end.getY()) {</span>
+<span class="nc" id="L140">			final XDimension2D dimLabel = textLabel.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L141">			yText -= dimLabel.getHeight();</span>
+		}
+<span class="fc" id="L143">		textLabel.drawU(ug.apply(new UTranslate(xText, yText)));</span>
+
+<span class="fc" id="L145">	}</span>
+
+	private TextBlock getTextBlock(Display display) {
+<span class="fc" id="L148">		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
+	}
+
+	private Style getStyle() {
+<span class="fc" id="L152">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
+	}
+
+	private StyleSignatureBasic getStyleSignature() {
+<span class="fc" id="L156">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,SName.arrow);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

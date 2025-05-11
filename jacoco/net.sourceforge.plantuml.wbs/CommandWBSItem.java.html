@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandWBSItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.wbs</a> &gt; <span class="el_source">CommandWBSItem.java</span></div><h1>CommandWBSItem.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.wbs;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandWBSItem extends SingleLineCommand2&lt;WBSDiagram&gt; {
+
+	public CommandWBSItem(int mode) {
+<span class="fc" id="L55">		super(false, getRegexConcat(mode));</span>
+<span class="fc" id="L56">	}</span>
+
+	static IRegex getRegexConcat(int mode) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (mode == 0)</span>
+<span class="fc" id="L60">			return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //</span>
+					new RegexLeaf(&quot;TYPE&quot;, &quot;([ \t]*[*+-]+)&quot;), //
+					new RegexOptional(new RegexLeaf(&quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
+					new RegexOptional(new RegexLeaf(&quot;CODE&quot;, &quot;\\(([%pLN_]+)\\)&quot;)), //
+					new RegexLeaf(&quot;SHAPE&quot;, &quot;(_)?&quot;), //
+					new RegexLeaf(&quot;DIRECTION&quot;, &quot;([&lt;&gt;])?&quot;), //
+<span class="fc" id="L66">					RegexLeaf.spaceOneOrMore(), //</span>
+					new RegexLeaf(&quot;LABEL&quot;, &quot;([^%s].*)&quot;), //
+<span class="fc" id="L68">					RegexLeaf.end());</span>
+
+<span class="fc" id="L70">		return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;TYPE&quot;, &quot;([ \t]*[*+-]+)&quot;), //
+				new RegexOptional(new RegexLeaf(&quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
+				new RegexLeaf(&quot;SHAPE&quot;, &quot;(_)?&quot;), //
+				new RegexLeaf(&quot;DIRECTION&quot;, &quot;([&lt;&gt;])?&quot;), //
+<span class="fc" id="L75">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;LABEL&quot;, &quot;[%g](.*)[%g]&quot;), //
+<span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_]+)&quot;), //
+<span class="fc" id="L81">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="fc" id="L87">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L88">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="fc" id="L89">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L90">		final String stringColor = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="fc" id="L91">		HColor backColor = null;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L93">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		Direction dir = type.contains(&quot;-&quot;) ? Direction.LEFT : Direction.RIGHT;</span>
+<span class="fc" id="L96">		final String direction = arg.get(&quot;DIRECTION&quot;, 0);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (&quot;&lt;&quot;.equals(direction))</span>
+<span class="fc" id="L98">			dir = Direction.LEFT;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		else if (&quot;&gt;&quot;.equals(direction))</span>
+<span class="fc" id="L100">			dir = Direction.RIGHT;</span>
+
+<span class="fc" id="L102">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,</span>
+<span class="fc" id="L103">				IdeaShape.fromDesc(arg.get(&quot;SHAPE&quot;, 0)));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

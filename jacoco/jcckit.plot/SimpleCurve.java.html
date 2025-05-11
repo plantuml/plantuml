@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimpleCurve.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">SimpleCurve.java</span></div><h1>SimpleCurve.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import java.awt.Color;
+
+import jcckit.graphic.ClippingShape;
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicalComposite;
+import jcckit.graphic.GraphicalElement;
+import jcckit.graphic.LineAttributes;
+import jcckit.graphic.Polygon;
+import jcckit.graphic.ShapeAttributes;
+import jcckit.util.ConfigParameters;
+import jcckit.util.Factory;
+
+/**
+ *  A simple curve is the basic implementation of the {@link Curve} interface.
+ * 
+ *  @author Franz-Josef Elmer
+ */
+public class SimpleCurve implements Curve {
+    // ::remove folder when __HAXE__
+  /** Configuration parameter key. */
+  public static final String SYMBOL_FACTORY_KEY = &quot;symbolFactory&quot;,
+                             WITH_LINE_KEY = &quot;withLine&quot;,
+                             SOFT_CLIPPING_KEY = &quot;softClipping&quot;,
+                             LINE_ATTRIBUTES_KEY = &quot;lineAttributes&quot;,
+                             INITIAL_HINT_FOR_NEXT_POINT_KEY
+                                      = &quot;initialHintForNextPoint&quot;;  
+  private final ClippingShape _clippingShape;
+  private final SymbolFactory _symbolFactory;
+  private final GraphicalComposite _symbols;
+  private final GraphicalComposite _completeCurve;
+  private final GraphicalElement _legendSymbol;
+  private final Hint _initialHintForNextPoint;
+  private final Polygon _curve;
+  private final boolean _softClipping;
+  private Hint _hintForNextPoint;
+
+  /**
+   * Creates a new curve. The parameter &lt;tt&gt;config&lt;/tt&gt; contains:
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;initialHintForNextPoint = null&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Definition of an initial {@link Hint} for the first curve point.
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;lineAttributes = &lt;/tt&gt;a {@link ShapeAttributes}
+   *         instances with default values and line colors based on
+   *         the formula &lt;tt&gt;Color.getHSBColor(curveIndex/6,1,0.8)&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Configuration parameters of an instances of 
+   *         {@link jcckit.graphic.GraphicAttributes} for the 
+   *         {@link Polygon Polygons} connecting curve points.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;symbolFactory = null&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Configuration parameters defining an instances of 
+   *         {@link SymbolFactory} for the {@link Symbol Symbols} 
+   *         decorating curve points.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;softClipping = true&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; no explicit clipping takes
+   *         place but the symbol is not drawn if the corresponding curve
+   *         point is outside the axis box.&lt;br&gt; 
+   *         If &lt;tt&gt;false&lt;/tt&gt; the symbol is
+   *         drawn in any case but it may be clipped by the axis box.
+   *         Soft-clipping should be set to &lt;tt&gt;false&lt;/tt&gt; if the 
+   *         symbols are not located around the curve point (like for bars).
+   *         &lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;withLine = true&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;boolean&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;If &lt;tt&gt;true&lt;/tt&gt; curve points are connected by a 
+   *         {@link jcckit.graphic.Polygon}.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   * @param config Configuration parameters described above.
+   * @param curveIndex Index of this curve in the collection of curves
+   *        defining a {@link Plot}. 
+   * @param numberOfCurves Number of curves in this collection.
+   * @param clippingShape Clipping shape. Can be &lt;tt&gt;null&lt;/tt&gt;. 
+   * @param legend Legend. Will be used to calculate the legend symbol.
+   * @throws IllegalArgumentException if &lt;tt&gt;symbolFactory == null&lt;/tt&gt; and
+   *         &lt;tt&gt;withLine == false&lt;/tt&gt;.
+   *
+   */
+  public SimpleCurve(ConfigParameters config, int curveIndex, 
+                     int numberOfCurves, ClippingShape clippingShape, 
+<span class="nc" id="L105">                     Legend legend) {</span>
+<span class="nc" id="L106">    _symbolFactory = (SymbolFactory) Factory.createOrGet(</span>
+<span class="nc" id="L107">        config.getNode(SYMBOL_FACTORY_KEY), null);</span>
+<span class="nc" id="L108">    boolean withLine = config.getBoolean(WITH_LINE_KEY, true);</span>
+<span class="nc" id="L109">    LineAttributes lineAttributes = (LineAttributes) Factory.createOrGet(</span>
+<span class="nc" id="L110">        config.getNode(LINE_ATTRIBUTES_KEY),</span>
+<span class="nc" id="L111">        new ShapeAttributes(null, Color.getHSBColor((curveIndex % 6) / 6f, </span>
+                                                    1f, 0.8f), 
+                            0, null));
+<span class="nc bnc" id="L114" title="All 4 branches missed.">    if (_symbolFactory != null || withLine) {</span>
+<span class="nc" id="L115">      _clippingShape = clippingShape;</span>
+<span class="nc" id="L116">      _completeCurve = new GraphicalComposite(null);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">      if (withLine) {</span>
+<span class="nc" id="L118">        GraphicalComposite container = new GraphicalComposite(clippingShape);</span>
+<span class="nc" id="L119">        _curve = new Polygon(lineAttributes, false);</span>
+<span class="nc" id="L120">        container.addElement(_curve);</span>
+<span class="nc" id="L121">       _completeCurve.addElement(container);</span>
+<span class="nc" id="L122">      } else {</span>
+<span class="nc" id="L123">        _curve = null;</span>
+      }
+<span class="nc" id="L125">      _softClipping = config.getBoolean(SOFT_CLIPPING_KEY, true);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">      if (_symbolFactory != null) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        _symbols = new GraphicalComposite(_softClipping ? null </span>
+<span class="nc" id="L128">                                                        : clippingShape);</span>
+<span class="nc" id="L129">        _completeCurve.addElement(_symbols);</span>
+      } else {
+<span class="nc" id="L131">        _symbols = null;</span>
+      }
+    } else {
+<span class="nc" id="L134">      throw new IllegalArgumentException(</span>
+          &quot;Either a SymbolFactory must exist or withLines == true.&quot;);
+    }
+<span class="nc" id="L137">    _hintForNextPoint = _initialHintForNextPoint </span>
+<span class="nc" id="L138">        = (Hint) Factory.createOrGet(</span>
+<span class="nc" id="L139">            config.getNode(INITIAL_HINT_FOR_NEXT_POINT_KEY), null);</span>
+<span class="nc" id="L140">    _legendSymbol = legend.createSymbol(curveIndex, numberOfCurves, </span>
+                                        _symbolFactory, withLine, 
+                                        lineAttributes);
+<span class="nc" id="L143">  }</span>
+
+  /**
+   * Returns the graphical representation of a curve. 
+   * @return always the same instance.
+   */
+  public GraphicalElement getView() {
+<span class="nc" id="L150">    return _completeCurve;</span>
+  }
+
+  /** Returns the legend symbol. */
+  public GraphicalElement getLegendSymbol() {
+<span class="nc" id="L155">    return _legendSymbol;</span>
+  }
+
+  /** Appends a new point to the curve if inside the clipping shape. */
+  public Hint addPoint(GraphPoint point, Hint hintFromPreviousCurve) {
+<span class="nc bnc" id="L160" title="All 2 branches missed.">    if (_curve != null) {</span>
+<span class="nc" id="L161">      _curve.addPoint(point);</span>
+    }
+<span class="nc" id="L163">    Hint hintForNextCurve = hintFromPreviousCurve;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">    if (_symbolFactory != null) {</span>
+<span class="nc" id="L165">      Symbol symbol = _symbolFactory.createSymbol(point, _hintForNextPoint,</span>
+                                                  hintFromPreviousCurve);
+<span class="nc bnc" id="L167" title="All 4 branches missed.">      if (_clippingShape == null || !_softClipping </span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">          || _clippingShape.isInside(point)) {</span>
+<span class="nc" id="L169">        _symbols.addElement(symbol.getSymbol());</span>
+      }
+<span class="nc" id="L171">      _hintForNextPoint = symbol.getHintForNextPoint();</span>
+<span class="nc" id="L172">      hintForNextCurve = symbol.getHintForNextCurve();</span>
+    }
+<span class="nc" id="L174">    return hintForNextCurve;</span>
+  }
+
+  public void removeAllPoints() {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">    if (_curve != null) {</span>
+<span class="nc" id="L179">      _curve.removeAllPoints();</span>
+    }
+<span class="nc bnc" id="L181" title="All 2 branches missed.">    if (_symbols != null) {</span>
+<span class="nc" id="L182">      _symbols.removeAllElements();</span>
+    }
+<span class="nc" id="L184">    _hintForNextPoint = _initialHintForNextPoint;</span>
+<span class="nc" id="L185">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

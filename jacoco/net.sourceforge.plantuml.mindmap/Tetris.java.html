@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tetris.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.mindmap</a> &gt; <span class="el_source">Tetris.java</span></div><h1>Tetris.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.mindmap;
+
+import java.awt.geom.Line2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+<span class="fc" id="L43">public class Tetris {</span>
+
+<span class="fc" id="L45">	private final StripeFrontier frontier = new StripeFrontier();</span>
+<span class="fc" id="L46">	private final List&lt;SymetricalTeePositioned&gt; elements = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L47">	private double minY = Double.MAX_VALUE;</span>
+<span class="fc" id="L48">	private double maxY = -Double.MAX_VALUE;</span>
+	private String name;
+
+<span class="fc" id="L51">	public Tetris(String name) {</span>
+<span class="fc" id="L52">		this.name = name;</span>
+<span class="fc" id="L53">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L57">		return name + &quot;(&quot; + elements.size() + &quot;)&quot;;</span>
+	}
+
+	public void balance() {
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (elements.size() == 0)</span>
+<span class="nc" id="L62">			return;</span>
+
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (minY != Double.MAX_VALUE)</span>
+<span class="nc" id="L65">			throw new IllegalStateException();</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		for (SymetricalTeePositioned element : elements) {</span>
+<span class="fc" id="L68">			minY = Math.min(minY, element.getMinY());</span>
+<span class="fc" id="L69">			maxY = Math.max(maxY, element.getMaxY());</span>
+<span class="fc" id="L70">		}</span>
+<span class="fc" id="L71">		final double mean = (minY + maxY) / 2;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (SymetricalTeePositioned stp : elements)</span>
+<span class="fc" id="L73">			stp.move(-mean);</span>
+
+		// System.err.println(&quot;Balanced=&quot; + this + &quot; &quot; + elements);
+<span class="fc" id="L76">	}</span>
+
+	public double getHeight() {
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (elements.size() == 0)</span>
+<span class="nc" id="L80">			return 0;</span>
+
+<span class="fc" id="L82">		return maxY - minY;</span>
+	}
+
+	public double getWidth() {
+<span class="fc" id="L86">		double result = 0;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (SymetricalTeePositioned tee : elements)</span>
+<span class="fc" id="L88">			result = Math.max(result, tee.getMaxX());</span>
+
+<span class="fc" id="L90">		return result;</span>
+	}
+
+	public void add(SymetricalTee tee) {
+		// System.err.println(&quot;Adding in &quot; + this + &quot; &quot; + tee);
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (frontier.isEmpty()) {</span>
+<span class="fc" id="L97">			final SymetricalTeePositioned p1 = new SymetricalTeePositioned(tee);</span>
+<span class="fc" id="L98">			addInternal(p1);</span>
+<span class="fc" id="L99">			return;</span>
+		}
+
+		// System.err.println(&quot;frontier=&quot; + frontier);
+
+<span class="fc" id="L104">		final double c1 = frontier.getContact(0, tee.getElongation1());</span>
+<span class="fc" id="L105">		final double c2 = frontier.getContact(tee.getElongation1(), tee.getElongation1() + tee.getElongation2());</span>
+
+		// System.err.println(&quot;c1=&quot; + c1 + &quot; c2=&quot; + c2);
+
+<span class="fc" id="L109">		final SymetricalTeePositioned p1 = new SymetricalTeePositioned(tee);</span>
+<span class="fc" id="L110">		p1.moveSoThatSegmentA1isOn(c1);</span>
+
+<span class="fc" id="L112">		final SymetricalTeePositioned p2 = new SymetricalTeePositioned(tee);</span>
+<span class="fc" id="L113">		p2.moveSoThatSegmentA2isOn(c2);</span>
+
+<span class="fc" id="L115">		final SymetricalTeePositioned result = p1.getMax(p2);</span>
+
+		// System.err.println(&quot;p1=&quot; + p1.getY() + &quot; p2=&quot; + p2.getY());
+		// System.err.println(&quot;result=&quot; + result.getY());
+<span class="fc" id="L119">		addInternal(result);</span>
+<span class="fc" id="L120">	}</span>
+
+	private void addInternal(SymetricalTeePositioned result) {
+<span class="fc" id="L123">		this.elements.add(result);</span>
+<span class="fc" id="L124">		final Line2D b1 = result.getSegmentB1();</span>
+<span class="fc" id="L125">		frontier.addSegment(b1.getX1(), b1.getX2(), b1.getY1());</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		assert b1.getY1() == b1.getY2();</span>
+
+<span class="fc" id="L128">		final Line2D b2 = result.getSegmentB2();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (b2.getX1() != b2.getX2())</span>
+<span class="fc" id="L130">			frontier.addSegment(b2.getX1(), b2.getX2(), b2.getY1());</span>
+
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		assert b2.getY1() == b2.getY2();</span>
+<span class="fc" id="L133">	}</span>
+
+	public List&lt;SymetricalTeePositioned&gt; getElements() {
+<span class="fc" id="L136">		return Collections.unmodifiableList(elements);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

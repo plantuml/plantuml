@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonArray.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.json</a> &gt; <span class="el_source">JsonArray.java</span></div><h1>JsonArray.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2016 EclipseSource.
+ *
+ * Distributed under MIT license
+ * See https://github.com/ralfstx/minimal-json/blob/master/LICENSE
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package net.sourceforge.plantuml.json;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * Represents a JSON array, an ordered collection of JSON values.
+ * &lt;p&gt;
+ * Elements can be added using the &lt;code&gt;add(...)&lt;/code&gt; methods which accept
+ * instances of {@link JsonValue}, strings, primitive numbers, and boolean
+ * values. To replace an element of an array, use the &lt;code&gt;set(int, ...)&lt;/code&gt;
+ * methods.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Elements can be accessed by their index using {@link #get(int)}. This class
+ * also supports iterating over the elements in document order using an
+ * {@link #iterator()} or an enhanced for loop:
+ * &lt;/p&gt;
+ * 
+ * &lt;pre&gt;
+ * for (JsonValue value : jsonArray) {
+ *   ...
+ * }
+ * &lt;/pre&gt;
+ * &lt;p&gt;
+ * An equivalent {@link List} can be obtained from the method {@link #values()}.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Note that this class is &lt;strong&gt;not thread-safe&lt;/strong&gt;. If multiple threads
+ * access a &lt;code&gt;JsonArray&lt;/code&gt; instance concurrently, while at least one of
+ * these threads modifies the contents of this array, access to the instance
+ * must be synchronized externally. Failure to do so may lead to an inconsistent
+ * state.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * This class is &lt;strong&gt;not supposed to be extended&lt;/strong&gt; by clients.
+ * &lt;/p&gt;
+ */
+@SuppressWarnings(&quot;serial&quot;) // use default serial UID
+public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
+	
+	/**
+	 * Added for PlantUML
+	 */
+	public JsonValue cloneMe() {
+<span class="fc" id="L74">		final JsonArray copy = new JsonArray();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (JsonValue value : values)</span>
+<span class="fc" id="L76">			copy.values.add(value.cloneMe());</span>
+<span class="fc" id="L77">		return copy;</span>
+	}
+
+
+	private final List&lt;JsonValue&gt; values;
+
+	/**
+	 * Creates a new empty JsonArray.
+	 */
+<span class="fc" id="L86">	public JsonArray() {</span>
+<span class="fc" id="L87">		values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L88">	}</span>
+	
+	/**
+	 * Creates a new JsonArray with the contents of the specified JSON array.
+	 *
+	 * @param array the JsonArray to get the initial contents from, must not be
+	 *              &lt;code&gt;null&lt;/code&gt;
+	 */
+	public JsonArray(JsonArray array) {
+<span class="nc" id="L97">		this(array, false);</span>
+<span class="nc" id="L98">	}</span>
+
+<span class="nc" id="L100">	private JsonArray(JsonArray array, boolean unmodifiable) {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (array == null) {</span>
+<span class="nc" id="L102">			throw new NullPointerException(&quot;array is null&quot;);</span>
+		}
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (unmodifiable) {</span>
+<span class="nc" id="L105">			values = Collections.unmodifiableList(array.values);</span>
+		} else {
+<span class="nc" id="L107">			values = new ArrayList&lt;&gt;(array.values);</span>
+		}
+<span class="nc" id="L109">	}</span>
+
+	/**
+	 * Reads a JSON array from the given reader.
+	 * &lt;p&gt;
+	 * Characters are read in chunks and buffered internally, therefore wrapping an
+	 * existing reader in an additional &lt;code&gt;BufferedReader&lt;/code&gt; does
+	 * &lt;strong&gt;not&lt;/strong&gt; improve reading performance.
+	 * &lt;/p&gt;
+	 *
+	 * @param reader the reader to read the JSON array from
+	 * @return the JSON array that has been read
+	 * @throws IOException                   if an I/O error occurs in the reader
+	 * @throws ParseException                if the input is not valid JSON
+	 * @throws UnsupportedOperationException if the input does not contain a JSON
+	 *                                       array
+	 * @deprecated Use {@link Json#parse(Reader)}{@link JsonValue#asArray()
+	 *             .asArray()} instead
+	 */
+	@Deprecated
+	public static JsonArray readFrom(Reader reader) throws IOException {
+<span class="nc" id="L130">		return JsonValue.readFrom(reader).asArray();</span>
+	}
+
+	/**
+	 * Reads a JSON array from the given string.
+	 *
+	 * @param string the string that contains the JSON array
+	 * @return the JSON array that has been read
+	 * @throws ParseException                if the input is not valid JSON
+	 * @throws UnsupportedOperationException if the input does not contain a JSON
+	 *                                       array
+	 * @deprecated Use {@link Json#parse(String)}{@link JsonValue#asArray()
+	 *             .asArray()} instead
+	 */
+	@Deprecated
+	public static JsonArray readFrom(String string) {
+<span class="nc" id="L146">		return JsonValue.readFrom(string).asArray();</span>
+	}
+
+	/**
+	 * Returns an unmodifiable wrapper for the specified JsonArray. This method
+	 * allows to provide read-only access to a JsonArray.
+	 * &lt;p&gt;
+	 * The returned JsonArray is backed by the given array and reflects subsequent
+	 * changes. Attempts to modify the returned JsonArray result in an
+	 * &lt;code&gt;UnsupportedOperationException&lt;/code&gt;.
+	 * &lt;/p&gt;
+	 *
+	 * @param array the JsonArray for which an unmodifiable JsonArray is to be
+	 *              returned
+	 * @return an unmodifiable view of the specified JsonArray
+	 */
+	public static JsonArray unmodifiableArray(JsonArray array) {
+<span class="nc" id="L163">		return new JsonArray(array, true);</span>
+	}
+
+	/**
+	 * Appends the JSON representation of the specified &lt;code&gt;int&lt;/code&gt; value to
+	 * the end of this array.
+	 *
+	 * @param value the value to add to the array
+	 * @return the array itself, to enable method chaining
+	 */
+	public JsonArray add(int value) {
+<span class="nc" id="L174">		values.add(Json.value(value));</span>
+<span class="nc" id="L175">		return this;</span>
+	}
+
+	/**
+	 * Appends the JSON representation of the specified &lt;code&gt;long&lt;/code&gt; value to
+	 * the end of this array.
+	 *
+	 * @param value the value to add to the array
+	 * @return the array itself, to enable method chaining
+	 */
+	public JsonArray add(long value) {
+<span class="nc" id="L186">		values.add(Json.value(value));</span>
+<span class="nc" id="L187">		return this;</span>
+	}
+
+	/**
+	 * Appends the JSON representation of the specified &lt;code&gt;float&lt;/code&gt; value to
+	 * the end of this array.
+	 *
+	 * @param value the value to add to the array
+	 * @return the array itself, to enable method chaining
+	 */
+	public JsonArray add(float value) {
+<span class="nc" id="L198">		values.add(Json.value(value));</span>
+<span class="nc" id="L199">		return this;</span>
+	}
+
+	/**
+	 * Appends the JSON representation of the specified &lt;code&gt;double&lt;/code&gt; value to
+	 * the end of this array.
+	 *
+	 * @param value the value to add to the array
+	 * @return the array itself, to enable method chaining
+	 */
+	public JsonArray add(double value) {
+<span class="nc" id="L210">		values.add(Json.value(value));</span>
+<span class="nc" id="L211">		return this;</span>
+	}
+
+	/**
+	 * Appends the JSON representation of the specified &lt;code&gt;boolean&lt;/code&gt; value
+	 * to the end of this array.
+	 *
+	 * @param value the value to add to the array
+	 * @return the array itself, to enable method chaining
+	 */
+	public JsonArray add(boolean value) {
+<span class="nc" id="L222">		values.add(Json.value(value));</span>
+<span class="nc" id="L223">		return this;</span>
+	}
+
+	/**
+	 * Appends the JSON representation of the specified string to the end of this
+	 * array.
+	 *
+	 * @param value the string to add to the array
+	 * @return the array itself, to enable method chaining
+	 */
+	public JsonArray add(String value) {
+<span class="fc" id="L234">		values.add(Json.value(value));</span>
+<span class="fc" id="L235">		return this;</span>
+	}
+
+	/**
+	 * Appends the specified JSON value to the end of this array.
+	 *
+	 * @param value the JsonValue to add to the array, must not be &lt;code&gt;null&lt;/code&gt;
+	 * @return the array itself, to enable method chaining
+	 */
+	public JsonArray add(JsonValue value) {
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L246">			throw new NullPointerException(&quot;value is null&quot;);</span>
+		}
+<span class="fc" id="L248">		values.add(value);</span>
+<span class="fc" id="L249">		return this;</span>
+	}
+
+	/**
+	 * Replaces the element at the specified position in this array with the JSON
+	 * representation of the specified &lt;code&gt;int&lt;/code&gt; value.
+	 *
+	 * @param index the index of the array element to replace
+	 * @param value the value to be stored at the specified array position
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray set(int index, int value) {
+<span class="nc" id="L264">		values.set(index, Json.value(value));</span>
+<span class="nc" id="L265">		return this;</span>
+	}
+
+	/**
+	 * Replaces the element at the specified position in this array with the JSON
+	 * representation of the specified &lt;code&gt;long&lt;/code&gt; value.
+	 *
+	 * @param index the index of the array element to replace
+	 * @param value the value to be stored at the specified array position
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray set(int index, long value) {
+<span class="nc" id="L280">		values.set(index, Json.value(value));</span>
+<span class="nc" id="L281">		return this;</span>
+	}
+
+	/**
+	 * Replaces the element at the specified position in this array with the JSON
+	 * representation of the specified &lt;code&gt;float&lt;/code&gt; value.
+	 *
+	 * @param index the index of the array element to replace
+	 * @param value the value to be stored at the specified array position
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray set(int index, float value) {
+<span class="nc" id="L296">		values.set(index, Json.value(value));</span>
+<span class="nc" id="L297">		return this;</span>
+	}
+
+	/**
+	 * Replaces the element at the specified position in this array with the JSON
+	 * representation of the specified &lt;code&gt;double&lt;/code&gt; value.
+	 *
+	 * @param index the index of the array element to replace
+	 * @param value the value to be stored at the specified array position
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray set(int index, double value) {
+<span class="nc" id="L312">		values.set(index, Json.value(value));</span>
+<span class="nc" id="L313">		return this;</span>
+	}
+
+	/**
+	 * Replaces the element at the specified position in this array with the JSON
+	 * representation of the specified &lt;code&gt;boolean&lt;/code&gt; value.
+	 *
+	 * @param index the index of the array element to replace
+	 * @param value the value to be stored at the specified array position
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray set(int index, boolean value) {
+<span class="nc" id="L328">		values.set(index, Json.value(value));</span>
+<span class="nc" id="L329">		return this;</span>
+	}
+
+	/**
+	 * Replaces the element at the specified position in this array with the JSON
+	 * representation of the specified string.
+	 *
+	 * @param index the index of the array element to replace
+	 * @param value the string to be stored at the specified array position
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray set(int index, String value) {
+<span class="nc" id="L344">		values.set(index, Json.value(value));</span>
+<span class="nc" id="L345">		return this;</span>
+	}
+
+	/**
+	 * Replaces the element at the specified position in this array with the
+	 * specified JSON value.
+	 *
+	 * @param index the index of the array element to replace
+	 * @param value the value to be stored at the specified array position, must not
+	 *              be &lt;code&gt;null&lt;/code&gt;
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray set(int index, JsonValue value) {
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L362">			throw new NullPointerException(&quot;value is null&quot;);</span>
+		}
+<span class="fc" id="L364">		values.set(index, value);</span>
+<span class="fc" id="L365">		return this;</span>
+	}
+
+	/**
+	 * Removes the element at the specified index from this array.
+	 *
+	 * @param index the index of the element to remove
+	 * @return the array itself, to enable method chaining
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonArray remove(int index) {
+<span class="fc" id="L378">		values.remove(index);</span>
+<span class="fc" id="L379">		return this;</span>
+	}
+
+	/**
+	 * Returns the number of elements in this array.
+	 *
+	 * @return the number of elements in this array
+	 */
+	public int size() {
+<span class="fc" id="L388">		return values.size();</span>
+	}
+
+	/**
+	 * Returns &lt;code&gt;true&lt;/code&gt; if this array contains no elements.
+	 *
+	 * @return &lt;code&gt;true&lt;/code&gt; if this array contains no elements
+	 */
+	public boolean isEmpty() {
+<span class="nc" id="L397">		return values.isEmpty();</span>
+	}
+
+	/**
+	 * Returns the value of the element at the specified position in this array.
+	 *
+	 * @param index the index of the array element to return
+	 * @return the value of the element at the specified position
+	 * @throws IndexOutOfBoundsException if the index is out of range, i.e.
+	 *                                   &lt;code&gt;index &amp;lt; 0&lt;/code&gt; or
+	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
+	 */
+	public JsonValue get(int index) {
+<span class="fc" id="L410">		return values.get(index);</span>
+	}
+
+	/**
+	 * Returns a list of the values in this array in document order. The returned
+	 * list is backed by this array and will reflect subsequent changes. It cannot
+	 * be used to modify this array. Attempts to modify the returned list will
+	 * result in an exception.
+	 *
+	 * @return a list of the values in this array
+	 */
+	public List&lt;JsonValue&gt; values() {
+<span class="nc" id="L422">		return Collections.unmodifiableList(values);</span>
+	}
+
+	/**
+	 * Returns an iterator over the values of this array in document order. The
+	 * returned iterator cannot be used to modify this array.
+	 *
+	 * @return an iterator over the values of this array
+	 */
+	public Iterator&lt;JsonValue&gt; iterator() {
+<span class="fc" id="L432">		final Iterator&lt;JsonValue&gt; iterator = values.iterator();</span>
+<span class="fc" id="L433">		return new Iterator&lt;JsonValue&gt;() {</span>
+
+			public boolean hasNext() {
+<span class="fc" id="L436">				return iterator.hasNext();</span>
+			}
+
+			public JsonValue next() {
+<span class="fc" id="L440">				return iterator.next();</span>
+			}
+
+			public void remove() {
+<span class="nc" id="L444">				throw new UnsupportedOperationException();</span>
+			}
+		};
+	}
+
+	@Override
+	void write(JsonWriter writer) throws IOException {
+<span class="fc" id="L451">		writer.writeArrayOpen();</span>
+<span class="fc" id="L452">		Iterator&lt;JsonValue&gt; iterator = iterator();</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">		if (iterator.hasNext()) {</span>
+<span class="fc" id="L454">			iterator.next().write(writer);</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">			while (iterator.hasNext()) {</span>
+<span class="fc" id="L456">				writer.writeArraySeparator();</span>
+<span class="fc" id="L457">				iterator.next().write(writer);</span>
+			}
+		}
+<span class="fc" id="L460">		writer.writeArrayClose();</span>
+<span class="fc" id="L461">	}</span>
+
+	@Override
+	public boolean isArray() {
+<span class="fc" id="L465">		return true;</span>
+	}
+
+	@Override
+	public JsonArray asArray() {
+<span class="fc" id="L470">		return this;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L475">		return values.hashCode();</span>
+	}
+
+	/**
+	 * Indicates whether a given object is &quot;equal to&quot; this JsonArray. An object is
+	 * considered equal if it is also a &lt;code&gt;JsonArray&lt;/code&gt; and both arrays
+	 * contain the same list of values.
+	 * &lt;p&gt;
+	 * If two JsonArrays are equal, they will also produce the same JSON output.
+	 * &lt;/p&gt;
+	 *
+	 * @param object the object to be compared with this JsonArray
+	 * @return &lt;tt&gt;true&lt;/tt&gt; if the specified object is equal to this JsonArray,
+	 *         &lt;code&gt;false&lt;/code&gt; otherwise
+	 */
+	@Override
+	public boolean equals(Object object) {
+<span class="nc bnc" id="L492" title="All 2 branches missed.">		if (this == object) {</span>
+<span class="nc" id="L493">			return true;</span>
+		}
+<span class="nc bnc" id="L495" title="All 2 branches missed.">		if (object == null) {</span>
+<span class="nc" id="L496">			return false;</span>
+		}
+<span class="nc bnc" id="L498" title="All 2 branches missed.">		if (getClass() != object.getClass()) {</span>
+<span class="nc" id="L499">			return false;</span>
+		}
+<span class="nc" id="L501">		JsonArray other = (JsonArray) object;</span>
+<span class="nc" id="L502">		return values.equals(other.values);</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

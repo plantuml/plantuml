@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrailleGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.braille</a> &gt; <span class="el_source">BrailleGrid.java</span></div><h1>BrailleGrid.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.braille;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+
+public class BrailleGrid {
+
+	private int minX;
+	private int minY;
+	private int maxX;
+	private int maxY;
+
+	private final double quanta;
+<span class="nc" id="L54">	private final Set&lt;Coords&gt; on = new HashSet&lt;&gt;();</span>
+
+<span class="nc" id="L56">	public BrailleGrid(double quanta) {</span>
+<span class="nc" id="L57">		this.quanta = quanta;</span>
+<span class="nc" id="L58">	}</span>
+
+	public boolean getState(int x, int y) {
+<span class="nc" id="L61">		final Coords coords = new Coords(x, y);</span>
+<span class="nc" id="L62">		return on.contains(coords);</span>
+	}
+
+	private void setStateDouble(double x, double y, boolean state) {
+<span class="nc" id="L66">		setState(toInt(x), toInt(y), state);</span>
+<span class="nc" id="L67">	}</span>
+
+	public void setState(int x, int y, boolean state) {
+<span class="nc" id="L70">		final Coords coords = new Coords(x, y);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (state) {</span>
+<span class="nc" id="L72">			on.add(coords);</span>
+		} else {
+<span class="nc" id="L74">			on.remove(coords);</span>
+		}
+<span class="nc" id="L76">		minX = Math.min(minX, x);</span>
+<span class="nc" id="L77">		maxX = Math.max(maxX, x);</span>
+<span class="nc" id="L78">		minY = Math.min(minY, y);</span>
+<span class="nc" id="L79">		maxY = Math.max(maxY, y);</span>
+<span class="nc" id="L80">	}</span>
+
+	public int getMinX() {
+<span class="nc" id="L83">		return minX;</span>
+	}
+
+	public int getMinY() {
+<span class="nc" id="L87">		return minY;</span>
+	}
+
+	public int getMaxX() {
+<span class="nc" id="L91">		return maxX;</span>
+	}
+
+	public int getMaxY() {
+<span class="nc" id="L95">		return maxY;</span>
+	}
+
+	public void rectangle(double x, double y, double width, double height) {
+<span class="nc" id="L99">		hline(y, x, x + width);</span>
+<span class="nc" id="L100">		hline(y + height, x, x + width);</span>
+<span class="nc" id="L101">		vline(x, y, y + height);</span>
+<span class="nc" id="L102">		vline(x + width, y, y + height);</span>
+
+<span class="nc" id="L104">	}</span>
+
+	private void vline(double x, double y1, double y2) {
+<span class="nc" id="L107">		final int i = toInt(x);</span>
+<span class="nc" id="L108">		final int j1 = toInt(y1);</span>
+<span class="nc" id="L109">		final int j2 = toInt(y2);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (int j = j1; j &lt;= j2; j++) {</span>
+<span class="nc" id="L111">			setState(i, j, true);</span>
+		}
+<span class="nc" id="L113">	}</span>
+
+	private void hline(double y, double x1, double x2) {
+<span class="nc" id="L116">		final int j = toInt(y);</span>
+<span class="nc" id="L117">		final int i1 = toInt(x1);</span>
+<span class="nc" id="L118">		final int i2 = toInt(x2);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (int i = i1; i &lt;= i2; i++) {</span>
+<span class="nc" id="L120">			setState(i, j, true);</span>
+		}
+<span class="nc" id="L122">	}</span>
+
+	public int toInt(double value) {
+<span class="nc" id="L125">		return (int) Math.round(value / quanta);</span>
+	}
+
+	public void line(double x1, double y1, double x2, double y2) {
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (x1 == x2) {</span>
+<span class="nc" id="L130">			vline(x1, y1, y2);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		} else if (y1 == y2) {</span>
+<span class="nc" id="L132">			hline(y1, x1, x2);</span>
+		} else {
+<span class="nc" id="L134">			System.err.println(&quot;warning line&quot;);</span>
+		}
+
+<span class="nc" id="L137">	}</span>
+
+	public double getQuanta() {
+<span class="nc" id="L140">		return quanta;</span>
+	}
+
+	public void drawDotPath(double x, double y, DotPath shape) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (XCubicCurve2D bez : shape.getBeziers()) {</span>
+<span class="nc" id="L145">			drawCubic(x, y, bez);</span>
+
+<span class="nc" id="L147">		}</span>
+<span class="nc" id="L148">	}</span>
+
+	private void drawCubic(double x, double y, XCubicCurve2D bez) {
+<span class="nc" id="L151">		drawPointInternal(x, y, bez.getP1());</span>
+<span class="nc" id="L152">		drawPointInternal(x, y, bez.getP2());</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (bez.getP1().distance(bez.getP2()) &gt; quanta) {</span>
+<span class="nc" id="L154">			final XCubicCurve2D part1 = XCubicCurve2D.none();</span>
+<span class="nc" id="L155">			final XCubicCurve2D part2 = XCubicCurve2D.none();</span>
+<span class="nc" id="L156">			bez.subdivide(part1, part2);</span>
+<span class="nc" id="L157">			drawCubic(x, y, part1);</span>
+<span class="nc" id="L158">			drawCubic(x, y, part2);</span>
+		}
+<span class="nc" id="L160">	}</span>
+
+	private void drawPointInternal(double x, double y, XPoint2D pt) {
+<span class="nc" id="L163">		setStateDouble(x + pt.getX(), y + pt.getY(), true);</span>
+<span class="nc" id="L164">	}</span>
+
+	public void drawPolygon(List&lt;XPoint2D&gt; points) {
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (int i = 0; i &lt; points.size() - 1; i++) {</span>
+<span class="nc" id="L168">			drawLineInternal(points.get(i), points.get(i + 1));</span>
+		}
+<span class="nc" id="L170">		drawLineInternal(points.get(points.size() - 1), points.get(0));</span>
+
+<span class="nc" id="L172">	}</span>
+
+	private void drawLineInternal(XPoint2D a, XPoint2D b) {
+<span class="nc" id="L175">		drawPointInternal(0, 0, a);</span>
+<span class="nc" id="L176">		drawPointInternal(0, 0, b);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (a.distance(b) &gt; quanta) {</span>
+<span class="nc" id="L178">			final XPoint2D middle = new XPoint2D((a.getX() + b.getX()) / 2, (a.getY() + b.getY()) / 2);</span>
+<span class="nc" id="L179">			drawLineInternal(a, middle);</span>
+<span class="nc" id="L180">			drawLineInternal(middle, b);</span>
+
+		}
+<span class="nc" id="L183">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

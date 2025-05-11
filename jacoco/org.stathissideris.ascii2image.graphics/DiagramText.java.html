@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiagramText.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.graphics</a> &gt; <span class="el_source">DiagramText.java</span></div><h1>DiagramText.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.graphics;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.geom.Rectangle2D;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+public class DiagramText extends DiagramComponent {
+
+<span class="nc" id="L32">	public static final Color DEFAULT_COLOR = Color.black;</span>
+	
+	private String text;
+	private Font font;
+	private int xPos, yPos;
+<span class="nc" id="L37">	private Color color = Color.black;</span>
+<span class="nc" id="L38">	private boolean isTextOnLine = false;</span>
+<span class="nc" id="L39">	private boolean hasOutline = false;</span>
+<span class="nc" id="L40">	private Color outlineColor = Color.white;</span>
+
+<span class="nc" id="L42">	public DiagramText(int x, int y, String text, Font font){</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if(text == null) throw new IllegalArgumentException(&quot;DiagramText cannot be initialised with a null string&quot;);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if(font == null) throw new IllegalArgumentException(&quot;DiagramText cannot be initialised with a null font&quot;);</span>
+
+<span class="nc" id="L46">		this.xPos = x;</span>
+<span class="nc" id="L47">		this.yPos = y;</span>
+<span class="nc" id="L48">		this.text = text;</span>
+<span class="nc" id="L49">		this.font = font;</span>
+<span class="nc" id="L50">	}</span>
+
+	public void centerInBounds(Rectangle2D bounds){
+<span class="nc" id="L53">		centerHorizontallyBetween((int) bounds.getMinX(), (int) bounds.getMaxX());</span>
+<span class="nc" id="L54">		centerVerticallyBetween((int) bounds.getMinY(), (int) bounds.getMaxY());</span>
+<span class="nc" id="L55">	}</span>
+
+	public void centerHorizontallyBetween(int minX, int maxX){
+<span class="nc" id="L58">		int width = FontMeasurer.instance().getWidthFor(text, font);</span>
+<span class="nc" id="L59">		int center = Math.abs(maxX - minX) / 2;</span>
+<span class="nc" id="L60">		xPos += Math.abs(center - width / 2);</span>
+		
+<span class="nc" id="L62">	}</span>
+
+	public void centerVerticallyBetween(int minY, int maxY){
+<span class="nc" id="L65">		int zHeight = FontMeasurer.instance().getZHeight(font);</span>
+<span class="nc" id="L66">		int center = Math.abs(maxY - minY) / 2;</span>
+<span class="nc" id="L67">		yPos -= Math.abs(center - zHeight / 2);</span>
+<span class="nc" id="L68">	}</span>
+
+	public void alignRightEdgeTo(int x){
+<span class="nc" id="L71">		int width = FontMeasurer.instance().getWidthFor(text, font);</span>
+<span class="nc" id="L72">		xPos = x - width;</span>
+<span class="nc" id="L73">	}</span>
+
+
+	/**
+	 * @return
+	 */
+	public Color getColor() {
+<span class="nc" id="L80">		return color;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public Font getFont() {
+<span class="nc" id="L87">		return font;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public String getText() {
+<span class="nc" id="L94">		return text;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public int getXPos() {
+<span class="nc" id="L101">		return xPos;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public int getYPos() {
+<span class="nc" id="L108">		return yPos;</span>
+	}
+
+	/**
+	 * @param color
+	 */
+	public void setColor(Color color) {
+<span class="nc" id="L115">		this.color = color;</span>
+<span class="nc" id="L116">	}</span>
+
+	/**
+	 * @param font
+	 */
+	public void setFont(Font font) {
+<span class="nc" id="L122">		this.font = font;</span>
+<span class="nc" id="L123">	}</span>
+
+	/**
+	 * @param string
+	 */
+	public void setText(String string) {
+<span class="nc" id="L129">		text = string;</span>
+<span class="nc" id="L130">	}</span>
+
+	/**
+	 * @param i
+	 */
+	public void setXPos(int i) {
+<span class="nc" id="L136">		xPos = i;</span>
+<span class="nc" id="L137">	}</span>
+
+	/**
+	 * @param i
+	 */
+	public void setYPos(int i) {
+<span class="nc" id="L143">		yPos = i;</span>
+<span class="nc" id="L144">	}</span>
+
+	public Rectangle2D getBounds(){
+<span class="nc" id="L147">		Rectangle2D bounds = FontMeasurer.instance().getBoundsFor(text, font);</span>
+<span class="nc" id="L148">		bounds.setRect(</span>
+<span class="nc" id="L149">			bounds.getMinX() + xPos,</span>
+<span class="nc" id="L150">			bounds.getMinY() + yPos,</span>
+<span class="nc" id="L151">			bounds.getWidth(),</span>
+<span class="nc" id="L152">			bounds.getHeight());</span>
+<span class="nc" id="L153">		return bounds;</span>
+	}
+	
+	public String toString(){
+<span class="nc" id="L157">		return &quot;DiagramText, at (&quot;+xPos+&quot;, &quot;+yPos+&quot;), within &quot;+getBounds()+&quot; '&quot;+text+&quot;', &quot;+color+&quot; &quot;+font;</span>
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isTextOnLine() {
+<span class="nc" id="L164">		return isTextOnLine;</span>
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setTextOnLine(boolean b) {
+<span class="nc" id="L171">		isTextOnLine = b;</span>
+<span class="nc" id="L172">	}</span>
+
+	public boolean hasOutline() {
+<span class="nc" id="L175">		return hasOutline;</span>
+	}
+
+	public void setHasOutline(boolean hasOutline) {
+<span class="nc" id="L179">		this.hasOutline = hasOutline;</span>
+<span class="nc" id="L180">	}</span>
+
+	public Color getOutlineColor() {
+<span class="nc" id="L183">		return outlineColor;</span>
+	}
+
+	public void setOutlineColor(Color outlineColor) {
+<span class="nc" id="L187">		this.outlineColor = outlineColor;</span>
+<span class="nc" id="L188">	}</span>
+
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

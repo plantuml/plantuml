@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkRendering.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3</a> &gt; <span class="el_source">LinkRendering.java</span></div><h1>LinkRendering.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3;
+
+import java.util.Objects;
+
+import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.creole.Display;
+
+public class LinkRendering {
+
+	private final Rainbow rainbow;
+	private final Display display;
+
+	public static LinkRendering create(Rainbow rainbow) {
+<span class="fc" id="L49">		return new LinkRendering(rainbow, Display.NULL);</span>
+	}
+
+	public static LinkRendering none() {
+<span class="fc" id="L53">		return LinkRendering.create(Rainbow.none());</span>
+	}
+
+<span class="fc" id="L56">	private LinkRendering(Rainbow rainbow, Display display) {</span>
+<span class="fc" id="L57">		this.rainbow = Objects.requireNonNull(rainbow);</span>
+<span class="fc" id="L58">		this.display = display;</span>
+<span class="fc" id="L59">	}</span>
+
+	public LinkRendering withRainbow(Rainbow rainbow) {
+<span class="nc" id="L62">		return new LinkRendering(rainbow, display);</span>
+	}
+
+	public LinkRendering withDisplay(Display display) {
+<span class="fc" id="L66">		return new LinkRendering(rainbow, display);</span>
+	}
+
+	public Display getDisplay() {
+<span class="fc" id="L70">		return display;</span>
+	}
+
+	public Rainbow getRainbow() {
+<span class="fc" id="L74">		return rainbow;</span>
+	}
+
+	public Rainbow getRainbow(Rainbow defaultColor) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (rainbow.size() == 0) {</span>
+<span class="fc" id="L79">			return defaultColor;</span>
+		}
+<span class="fc" id="L81">		return rainbow;</span>
+	}
+
+	public boolean isNone() {
+<span class="pc bpc" id="L85" title="2 of 4 branches missed.">		return Display.isNull(display) &amp;&amp; rainbow.size() == 0;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L90">		return super.toString() + &quot; &quot; + display + &quot; &quot; + rainbow;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

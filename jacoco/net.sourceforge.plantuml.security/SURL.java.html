@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SURL.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.security</a> &gt; <span class="el_source">SURL.java</span></div><h1>SURL.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.security;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.swing.ImageIcon;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
+//::uncomment when __CORE__
+//import net.sourceforge.plantuml.FileUtils;
+//::done
+
+/**
+ * Secure replacement for java.net.URL.
+ * &lt;p&gt;
+ * This class should be used instead of java.net.URL.
+ * &lt;p&gt;
+ * This class does some control access and manages access-tokens via URL. If a
+ * URL contains a access-token, similar to a user prefix, SURL loads the
+ * authorization config for this user-token and passes the credentials to the
+ * host.
+ * &lt;p&gt;
+ * Example:&lt;br/&gt;
+ *
+ * &lt;pre&gt;
+ *     SURL url = SURL.create (&quot;https://jenkins-access@jenkins.mycompany.com/api/json&quot;)
+ * &lt;/pre&gt;
+ *
+ * The {@code jenkins-access} will checked against the Security context access
+ * token configuration. If a configuration exists for this token name, the token
+ * will be removed from the URL and the credentials will be added to the
+ * headers. If the token is not found, the URL remains as it is and no separate
+ * authentication will be performed.
+ * &lt;p&gt;
+ * TODO: Some methods should be moved to a HttpClient implementation, because
+ * SURL is not the valid class to manage it. &lt;br/&gt;
+ * TODO: BAD_HOSTS implementation should be reviewed and moved to HttpClient
+ * implementation with a circuit-breaker. &lt;br/&gt;
+ * TODO: Token expiration with refresh should be implemented in future. &lt;br/&gt;
+ */
+public class SURL {
+
+	/**
+	 * Indicates, that we have no authentication to access the URL.
+	 */
+	public static final String WITHOUT_AUTHENTICATION = SecurityUtils.NO_CREDENTIALS;
+
+	/**
+	 * Internal URL, maybe cleaned from user-token.
+	 */
+	private final URL internal;
+
+	/**
+	 * Assigned credentials to this URL.
+	 */
+	private final String securityIdentifier;
+
+<span class="fc" id="L126">	private SURL(URL url, String securityIdentifier) {</span>
+<span class="fc" id="L127">		this.internal = Objects.requireNonNull(url);</span>
+<span class="fc" id="L128">		this.securityIdentifier = Objects.requireNonNull(securityIdentifier);</span>
+<span class="fc" id="L129">	}</span>
+
+	/**
+	 * Create a secure URL from a String.
+	 * &lt;p&gt;
+	 * The url must be http or https. Return null in case of error or if
+	 * &lt;code&gt;url&lt;/code&gt; is null
+	 *
+	 * @param url plain url starting by http:// or https//
+	 * @return the secure URL or null
+	 */
+	public static SURL create(String url) {
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L142">			return null;</span>
+
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (url.startsWith(&quot;http://&quot;) || url.startsWith(&quot;https://&quot;))</span>
+			try {
+<span class="fc" id="L146">				return create(new URI(url).toURL());</span>
+<span class="nc" id="L147">			} catch (MalformedURLException | URISyntaxException e) {</span>
+<span class="nc" id="L148">				Logme.error(e);</span>
+			}
+<span class="nc" id="L150">		return null;</span>
+	}
+
+	/**
+	 * Create a secure URL from a &lt;code&gt;java.net.URL&lt;/code&gt; object.
+	 * &lt;p&gt;
+	 * It takes into account credentials.
+	 *
+	 * @param url
+	 * @return the secure URL
+	 * @throws MalformedURLException if &lt;code&gt;url&lt;/code&gt; is null
+	 * @throws URISyntaxException
+	 */
+	public static SURL create(URL url) throws MalformedURLException, URISyntaxException {
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L165">			throw new MalformedURLException(&quot;URL cannot be null&quot;);</span>
+
+		// ::comment when __CORE__
+<span class="fc" id="L168">		final String credentialId = url.getUserInfo();</span>
+
+<span class="fc bfc" id="L170" title="All 4 branches covered.">		if (credentialId == null || credentialId.indexOf(':') &gt; 0)</span>
+			// No user info at all, or a user with password (This is a legacy BasicAuth
+			// access, and we bypass it):
+<span class="fc" id="L173">			return new SURL(url, WITHOUT_AUTHENTICATION);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		else if (SecurityUtils.existsSecurityCredentials(credentialId))</span>
+			// Given userInfo, but without a password. We try to find SecurityCredentials
+<span class="fc" id="L176">			return new SURL(removeUserInfo(url), credentialId);</span>
+		else
+			// ::done
+<span class="fc" id="L179">			return new SURL(url, WITHOUT_AUTHENTICATION);</span>
+	}
+
+	// ::uncomment when __CORE__
+//	public InputStream openStream() {
+//	try {
+//		return internal.openStream();
+//	} catch (IOException e) {
+//		System.err.println(&quot;SURL::openStream &quot; + e);
+//		return null;
+//	}
+//}
+//public byte[] getBytes() {
+//	final InputStream is = openStream();
+//	if (is != null)
+//		try {
+//			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			FileUtils.copyInternal(is, baos, true);
+//			return baos.toByteArray();
+//		} catch (IOException e) {
+//			System.err.println(&quot;SURL::getBytes &quot; + e);
+//		}
+//	return null;
+//}
+	// ::done
+
+	public BufferedImage readRasterImageFromURL() {
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (isUrlOk())</span>
+			try {
+<span class="nc" id="L208">				final byte[] bytes = getBytes();</span>
+<span class="nc bnc" id="L209" title="All 4 branches missed.">				if (bytes == null || bytes.length == 0)</span>
+<span class="nc" id="L210">					return null;</span>
+<span class="nc" id="L211">				final ImageIcon tmp = new ImageIcon(bytes);</span>
+<span class="nc" id="L212">				return SecurityUtils.readRasterImage(tmp);</span>
+<span class="nc" id="L213">			} catch (Exception e) {</span>
+<span class="nc" id="L214">				Logme.error(e);</span>
+			}
+<span class="nc" id="L216">		return null;</span>
+	}
+
+	/**
+	 * Check SecurityProfile to see if this URL can be opened.
+	 */
+	public boolean isUrlOk() {
+		// ::comment when __CORE__
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)</span>
+			// In SANDBOX, we cannot read any URL
+<span class="nc" id="L226">			return false;</span>
+
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (isInUrlAllowList())</span>
+			// ::done
+<span class="nc" id="L230">			return true;</span>
+		// ::comment when __CORE__
+
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))</span>
+<span class="nc" id="L235">				return false;</span>
+<span class="nc" id="L236">			return true;</span>
+		}
+
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+			// We are UNSECURE anyway
+<span class="nc" id="L241">			return true;</span>
+
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))</span>
+<span class="nc" id="L245">				return false;</span>
+
+<span class="nc" id="L247">			final int port = internal.getPort();</span>
+			// Using INTERNET profile, port 80 and 443 are ok
+<span class="nc bnc" id="L249" title="All 6 branches missed.">			return port == 80 || port == 443 || port == -1;</span>
+		}
+<span class="nc" id="L251">		return false;</span>
+		// ::done
+	}
+
+	// ::comment when __CORE__
+	/**
+	 * Regex to remove the UserInfo part from a URL.
+	 */
+<span class="fc" id="L259">	private static final Pattern PATTERN_USERINFO = Pattern.compile(&quot;(^https?://)([-_0-9a-zA-Z]+@)([^@]*)$&quot;);</span>
+
+<span class="fc" id="L261">	private static final ExecutorService EXE = Executors.newCachedThreadPool(new ThreadFactory() {</span>
+		public Thread newThread(Runnable r) {
+<span class="nc" id="L263">			final Thread t = Executors.defaultThreadFactory().newThread(r);</span>
+<span class="nc" id="L264">			t.setDaemon(true);</span>
+<span class="nc" id="L265">			return t;</span>
+		}
+	});
+
+<span class="fc" id="L269">	private static final Map&lt;String, Long&gt; BAD_HOSTS = new ConcurrentHashMap&lt;String, Long&gt;();</span>
+
+	/**
+	 * Creates a URL without UserInfo part and without SecurityCredentials.
+	 *
+	 * @param url plain URL
+	 * @return SURL without any user credential information.
+	 * @throws MalformedURLException
+	 * @throws URISyntaxException
+	 */
+	static SURL createWithoutUser(URL url) throws MalformedURLException, URISyntaxException {
+<span class="fc" id="L280">		return new SURL(removeUserInfo(url), WITHOUT_AUTHENTICATION);</span>
+	}
+
+	/**
+	 * Clears the bad hosts cache.
+	 * &lt;p&gt;
+	 * In some test cases (and maybe also needed for other functionality) the bad
+	 * hosts cache must be cleared.&lt;br/&gt;
+	 * E.g., in a test we check the failure on missing credentials and then a test
+	 * with existing credentials. With a bad host cache the second test will fail,
+	 * or we have unpredicted results.
+	 */
+	static void resetBadHosts() {
+<span class="nc" id="L293">		BAD_HOSTS.clear();</span>
+<span class="nc" id="L294">	}</span>
+
+	@Override
+	public String toString() {
+<span class="fc" id="L298">		return internal.toString();</span>
+	}
+
+	private boolean isInUrlAllowList() {
+<span class="nc" id="L302">		final String full = cleanPath(internal.toString());</span>
+		// Thanks to Agasthya Kasturi
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (full.contains(&quot;@&quot;))</span>
+<span class="nc" id="L305">			return false;</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">		for (String allow : getUrlAllowList())</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">			if (full.startsWith(cleanPath(allow)))</span>
+<span class="nc" id="L308">				return true;</span>
+
+<span class="nc" id="L310">		return false;</span>
+	}
+
+	private String cleanPath(String path) {
+		// Remove user information, because we don't like to store user/password or
+		// userTokens in allow-list
+<span class="nc" id="L316">		path = removeUserInfoFromUrlPath(path);</span>
+<span class="nc" id="L317">		path = path.trim().toLowerCase(Locale.US);</span>
+		// We simplify/normalize the url, removing default ports
+<span class="nc" id="L319">		path = path.replace(&quot;:80/&quot;, &quot;&quot;);</span>
+<span class="nc" id="L320">		path = path.replace(&quot;:443/&quot;, &quot;&quot;);</span>
+<span class="nc" id="L321">		return path;</span>
+	}
+
+	private List&lt;String&gt; getUrlAllowList() {
+<span class="nc" id="L325">		final String env = SecurityUtils.getenv(SecurityUtils.ALLOWLIST_URL);</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">		if (env == null)</span>
+<span class="nc" id="L327">			return Collections.emptyList();</span>
+
+<span class="nc" id="L329">		return Arrays.asList(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env).split(&quot;;&quot;));</span>
+	}
+
+	/**
+	 * Reads from an endpoint (with configured credentials and proxy) the response
+	 * as blob.
+	 * &lt;p&gt;
+	 * This method allows access to an endpoint, with a configured
+	 * SecurityCredentials object. The credentials will load on the fly and
+	 * authentication fetched from an authentication-manager. Caching of tokens is
+	 * not supported.
+	 * &lt;p&gt;
+	 * authors: Alain Corbiere, Aljoscha Rittner
+	 *
+	 * @return data loaded data from endpoint
+	 */
+	public byte[] getBytes() {
+<span class="nc bnc" id="L346" title="All 2 branches missed.">		if (isUrlOk() == false)</span>
+<span class="nc" id="L347">			return null;</span>
+
+<span class="nc" id="L349">		final SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(securityIdentifier);</span>
+<span class="nc" id="L350">		final SecurityAuthentication authentication = SecurityUtils.getAuthenticationManager(credentials)</span>
+<span class="nc" id="L351">				.create(credentials);</span>
+		try {
+<span class="nc" id="L353">			final String host = internal.getHost();</span>
+<span class="nc" id="L354">			final Long bad = BAD_HOSTS.get(host);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">			if (bad != null) {</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">				if ((System.currentTimeMillis() - bad) &lt; 1000L * 60)</span>
+<span class="nc" id="L357">					return null;</span>
+<span class="nc" id="L358">				BAD_HOSTS.remove(host);</span>
+			}
+
+			try {
+<span class="nc" id="L362">				final Future&lt;byte[]&gt; result = EXE</span>
+<span class="nc" id="L363">						.submit(requestWithGetAndResponse(internal, credentials.getProxy(), authentication, null));</span>
+<span class="nc" id="L364">				final byte[] data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">				if (data != null)</span>
+<span class="nc" id="L366">					return data;</span>
+
+<span class="nc" id="L368">			} catch (Exception e) {</span>
+<span class="nc" id="L369">				System.err.println(&quot;issue &quot; + host + &quot; &quot; + e);</span>
+<span class="nc" id="L370">			}</span>
+
+<span class="nc" id="L372">			BAD_HOSTS.put(host, System.currentTimeMillis());</span>
+<span class="nc" id="L373">			return null;</span>
+		} finally {
+			// clean up. We don't cache tokens, no expire handling. All time a re-request.
+<span class="nc" id="L376">			credentials.eraseCredentials();</span>
+<span class="nc" id="L377">			authentication.eraseCredentials();</span>
+		}
+	}
+
+	/**
+	 * Reads from an endpoint with a given authentication and proxy the response as
+	 * blob.
+	 * &lt;p&gt;
+	 * This method allows a parametrized access to an endpoint, without a configured
+	 * SecurityCredentials object. This is useful to access internally identity
+	 * providers (IDP), or authorization servers (to request access tokens).
+	 * &lt;p&gt;
+	 * This method don't use the &quot;bad-host&quot; functionality, because the access to
+	 * infrastructure services should not be obfuscated by some internal management.
+	 * &lt;p&gt;
+	 * &lt;strong&gt;Please don't use this method directly from DSL scripts.&lt;/strong&gt;
+	 *
+	 * @param authentication authentication object data. Caller is responsible to
+	 *                       erase credentials
+	 * @param proxy          proxy configuration
+	 * @param headers        additional headers, if needed
+	 * @return loaded data from endpoint
+	 */
+	private byte[] getBytes(Proxy proxy, SecurityAuthentication authentication, Map&lt;String, Object&gt; headers) {
+<span class="nc bnc" id="L401" title="All 2 branches missed.">		if (isUrlOk() == false)</span>
+<span class="nc" id="L402">			return null;</span>
+
+<span class="nc" id="L404">		final Future&lt;byte[]&gt; result = EXE.submit(requestWithGetAndResponse(internal, proxy, authentication, headers));</span>
+
+		try {
+<span class="nc" id="L407">			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L408">		} catch (Exception e) {</span>
+<span class="nc" id="L409">			System.err.println(&quot;SURL response issue to &quot; + internal.getHost() + &quot; &quot; + e);</span>
+<span class="nc" id="L410">			return null;</span>
+		}
+	}
+
+	/**
+	 * Post to an endpoint with a given authentication and proxy the response as
+	 * blob.
+	 * &lt;p&gt;
+	 * This method allows a parametrized access to an endpoint, without a configured
+	 * SecurityCredentials object. This is useful to access internally identity
+	 * providers (IDP), or authorization servers (to request access tokens).
+	 * &lt;p&gt;
+	 * This method don't use the &quot;bad-host&quot; functionality, because the access to
+	 * infrastructure services should not be obfuscated by some internal management.
+	 * &lt;p&gt;
+	 * &lt;strong&gt;Please don't use this method directly from DSL scripts.&lt;/strong&gt;
+	 *
+	 * @param authentication authentication object data. Caller is responsible to
+	 *                       erase credentials
+	 * @param proxy          proxy configuration
+	 * @param data           content to post
+	 * @param headers        headers, if needed
+	 * @return loaded data from endpoint
+	 */
+	public byte[] getBytesOnPost(Proxy proxy, SecurityAuthentication authentication, String data,
+			Map&lt;String, Object&gt; headers) {
+<span class="nc bnc" id="L436" title="All 2 branches missed.">		if (isUrlOk() == false)</span>
+<span class="nc" id="L437">			return null;</span>
+
+<span class="nc" id="L439">		final Future&lt;byte[]&gt; result = EXE</span>
+<span class="nc" id="L440">				.submit(requestWithPostAndResponse(internal, proxy, authentication, data, headers));</span>
+
+		try {
+<span class="nc" id="L443">			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L444">		} catch (Exception e) {</span>
+<span class="nc" id="L445">			System.err.println(&quot;SURL response issue to &quot; + internal.getHost() + &quot; &quot; + e);</span>
+<span class="nc" id="L446">			return null;</span>
+		}
+	}
+
+    /**
+     * Configures the specified {@link URLConnection} with security-related settings.
+     * &lt;p&gt;
+     * This method disables user interactions for the connection and, if the connection 
+     * is an instance of {@link HttpURLConnection}, it also disables automatic 
+     * following of HTTP redirects, unless the security profile is set to 
+     * {@link SecurityProfile#UNSECURE}.
+     * &lt;/p&gt;
+     *
+     * @param connection the {@link URLConnection} to be configured
+     *
+     * @see URLConnection#setAllowUserInteraction(boolean)
+     * @see HttpURLConnection#setInstanceFollowRedirects(boolean)
+     * @see SecurityUtils#getSecurityProfile()
+     * @see SecurityProfile
+     */
+	protected static void configure(URLConnection connection) {
+<span class="nc" id="L467">		connection.setAllowUserInteraction(false);</span>
+
+<span class="nc bnc" id="L469" title="All 4 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE &amp;&amp; connection instanceof HttpURLConnection)</span>
+<span class="nc" id="L470">			((HttpURLConnection) connection).setInstanceFollowRedirects(false);</span>
+<span class="nc" id="L471">	}</span>
+
+	/**
+	 * Creates a GET request and response handler
+	 *
+	 * @param url            URL to request
+	 * @param proxy          proxy to apply
+	 * @param authentication the authentication to use
+	 * @param headers        additional headers, if needed
+	 * @return the callable handler.
+	 */
+	private static Callable&lt;byte[]&gt; requestWithGetAndResponse(final URL url, final Proxy proxy,
+			final SecurityAuthentication authentication, final Map&lt;String, Object&gt; headers) {
+<span class="nc" id="L484">		return new Callable&lt;byte[]&gt;() {</span>
+
+			private HttpURLConnection openConnection(final URL url) throws IOException {
+				// Add proxy, if passed throw parameters
+<span class="nc bnc" id="L488" title="All 2 branches missed.">				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">				if (connection == null)</span>
+<span class="nc" id="L490">					return null;</span>
+<span class="nc" id="L491">				configure(connection);</span>
+
+<span class="nc" id="L493">				final HttpURLConnection http = (HttpURLConnection) connection;</span>
+
+<span class="nc" id="L495">				applyEndpointAccessAuthentication(http, authentication);</span>
+<span class="nc" id="L496">				applyAdditionalHeaders(http, headers);</span>
+<span class="nc" id="L497">				return http;</span>
+			}
+
+			public byte[] call() throws IOException, URISyntaxException {
+<span class="nc" id="L501">				final HttpURLConnection http = openConnection(url);</span>
+				// final int responseCode = http.getResponseCode();
+
+//				if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP
+//						|| responseCode == HttpURLConnection.HTTP_MOVED_PERM) {
+//					final String newUrl = http.getHeaderField(&quot;Location&quot;);
+//					http = openConnection(new URI(newUrl).toURL());
+//				}
+
+<span class="nc" id="L510">				return retrieveResponseAsBytes(http);</span>
+			}
+		};
+	}
+
+	/**
+	 * Creates a POST request and response handler with a simple String content. The
+	 * content will be identified as form or JSON data. The charset encoding can be
+	 * set by header parameters or will be set to UTF-8. The method to some fancy
+	 * logic to simplify it for the user.
+	 *
+	 * @param url            URL to request via POST method
+	 * @param proxy          proxy to apply
+	 * @param authentication the authentication to use
+	 * @param headers        additional headers, if needed
+	 * @return the callable handler.
+	 */
+	private static Callable&lt;byte[]&gt; requestWithPostAndResponse(final URL url, final Proxy proxy,
+			final SecurityAuthentication authentication, final String data, final Map&lt;String, Object&gt; headers) {
+<span class="nc" id="L529">		return new Callable&lt;byte[]&gt;() {</span>
+			public byte[] call() throws IOException {
+				// Add proxy, if passed throw parameters
+<span class="nc bnc" id="L532" title="All 2 branches missed.">				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);</span>
+<span class="nc bnc" id="L533" title="All 2 branches missed.">				if (connection == null)</span>
+<span class="nc" id="L534">					return null;</span>
+
+<span class="nc" id="L536">				configure(connection);</span>
+<span class="nc" id="L537">				final boolean withContent = StringUtils.isNotEmpty(data);</span>
+
+<span class="nc" id="L539">				final HttpURLConnection http = (HttpURLConnection) connection;</span>
+<span class="nc" id="L540">				http.setRequestMethod(&quot;POST&quot;);</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">				if (withContent)</span>
+<span class="nc" id="L542">					http.setDoOutput(true);</span>
+
+<span class="nc" id="L544">				applyEndpointAccessAuthentication(http, authentication);</span>
+<span class="nc" id="L545">				applyAdditionalHeaders(http, headers);</span>
+
+<span class="nc" id="L547">				final Charset charSet = extractCharset(http.getRequestProperty(&quot;Content-Type&quot;));</span>
+
+<span class="nc bnc" id="L549" title="All 2 branches missed.">				if (withContent)</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">					sendRequestAsBytes(http, data.getBytes(charSet != null ? charSet : StandardCharsets.UTF_8));</span>
+
+<span class="nc" id="L552">				return retrieveResponseAsBytes(http);</span>
+			}
+		};
+	}
+
+	private static Charset extractCharset(String contentType) {
+<span class="nc bnc" id="L558" title="All 2 branches missed.">		if (StringUtils.isEmpty(contentType))</span>
+<span class="nc" id="L559">			return null;</span>
+
+<span class="nc" id="L561">		final Matcher matcher = Pattern.compile(&quot;(?i)\\bcharset=\\s*\&quot;?([^\\s;\&quot;]*)&quot;).matcher(contentType);</span>
+<span class="nc bnc" id="L562" title="All 2 branches missed.">		if (matcher.find())</span>
+			try {
+<span class="nc" id="L564">				return Charset.forName(matcher.group(1));</span>
+<span class="nc" id="L565">			} catch (Exception e) {</span>
+<span class="nc" id="L566">				Logme.error(e);</span>
+			}
+
+<span class="nc" id="L569">		return null;</span>
+	}
+
+	/**
+	 * Loads a response from an endpoint as a byte[] array.
+	 *
+	 * @param connection the URL connection
+	 * @return the loaded byte arrays
+	 * @throws IOException an exception, if the connection cannot establish or the
+	 *                     download was broken
+	 */
+	private static byte[] retrieveResponseAsBytes(HttpURLConnection connection) throws IOException {
+<span class="nc" id="L581">		final int responseCode = connection.getResponseCode();</span>
+<span class="nc bnc" id="L582" title="All 2 branches missed.">		if (responseCode &lt; HttpURLConnection.HTTP_BAD_REQUEST) {</span>
+<span class="nc" id="L583">			try (InputStream input = connection.getInputStream()) {</span>
+<span class="nc" id="L584">				return retrieveData(input);</span>
+			}
+		} else {
+<span class="nc" id="L587">			try (InputStream error = connection.getErrorStream()) {</span>
+<span class="nc" id="L588">				final byte[] bytes = retrieveData(error);</span>
+<span class="nc" id="L589">				throw new IOException(</span>
+						&quot;HTTP error &quot; + responseCode + &quot; with &quot; + new String(bytes, StandardCharsets.UTF_8));
+			}
+		}
+	}
+
+	/**
+	 * Reads data in a byte[] array.
+	 *
+	 * @param input input stream
+	 * @return byte data
+	 * @throws IOException if something went wrong
+	 */
+	private static byte[] retrieveData(InputStream input) throws IOException {
+<span class="nc" id="L603">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L604">		final byte[] buffer = new byte[1024];</span>
+		int read;
+<span class="nc bnc" id="L606" title="All 2 branches missed.">		while ((read = input.read(buffer)) &gt; 0) {</span>
+<span class="nc" id="L607">			out.write(buffer, 0, read);</span>
+		}
+<span class="nc" id="L609">		out.close();</span>
+<span class="nc" id="L610">		return out.toByteArray();</span>
+	}
+
+	/**
+	 * Sends a request content payload to an endpoint.
+	 *
+	 * @param connection HTTP connection
+	 * @param data       data as byte array
+	 * @throws IOException if something went wrong
+	 */
+	private static void sendRequestAsBytes(HttpURLConnection connection, byte[] data) throws IOException {
+<span class="nc" id="L621">		connection.setFixedLengthStreamingMode(data.length);</span>
+<span class="nc" id="L622">		try (OutputStream os = connection.getOutputStream()) {</span>
+<span class="nc" id="L623">			os.write(data);</span>
+		}
+<span class="nc" id="L625">	}</span>
+
+	public InputStream openStream() {
+<span class="nc bnc" id="L628" title="All 2 branches missed.">		if (isUrlOk()) {</span>
+<span class="nc" id="L629">			final byte[] data = getBytes();</span>
+<span class="nc bnc" id="L630" title="All 2 branches missed.">			if (data != null)</span>
+<span class="nc" id="L631">				return new ByteArrayInputStream(data);</span>
+
+		}
+<span class="nc" id="L634">		return null;</span>
+	}
+
+	/**
+	 * Informs, if SecurityCredentials are configured for this connection.
+	 *
+	 * @return true, if credentials will be used for a connection
+	 */
+	public boolean isAuthorizationConfigured() {
+<span class="fc bfc" id="L643" title="All 2 branches covered.">		return WITHOUT_AUTHENTICATION.equals(securityIdentifier) == false;</span>
+	}
+
+	/**
+	 * Applies the given authentication data to the http connection.
+	 *
+	 * @param http           HTTP URL connection (must be an encrypted https-TLS/SSL
+	 *                       connection, or http must be activated with a property)
+	 * @param authentication the data to request the access
+	 * @see SecurityUtils#getAccessInterceptor(SecurityAuthentication)
+	 * @see SecurityUtils#isNonSSLAuthenticationAllowed()
+	 */
+	private static void applyEndpointAccessAuthentication(URLConnection http, SecurityAuthentication authentication) {
+<span class="nc bnc" id="L656" title="All 2 branches missed.">		if (authentication.isPublic())</span>
+			// Shortcut: No need to apply authentication.
+<span class="nc" id="L658">			return;</span>
+
+<span class="nc bnc" id="L660" title="All 4 branches missed.">		if (http instanceof HttpsURLConnection || SecurityUtils.isNonSSLAuthenticationAllowed()) {</span>
+<span class="nc" id="L661">			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);</span>
+<span class="nc" id="L662">			accessInterceptor.apply(authentication, http);</span>
+<span class="nc" id="L663">		} else {</span>
+			// We cannot allow applying secret tokens on plain connections. Everyone can
+			// read the data.
+<span class="nc" id="L666">			throw new IllegalStateException(</span>
+					&quot;The transport of authentication data over an unencrypted http connection is not allowed&quot;);
+		}
+<span class="nc" id="L669">	}</span>
+
+	/**
+	 * Set the headers for a URL connection
+	 *
+	 * @param headers map Keys with values (can be String or list of String)
+	 */
+	private static void applyAdditionalHeaders(URLConnection http, Map&lt;String, Object&gt; headers) {
+<span class="nc bnc" id="L677" title="All 4 branches missed.">		if (headers == null || headers.isEmpty())</span>
+<span class="nc" id="L678">			return;</span>
+
+<span class="nc bnc" id="L680" title="All 2 branches missed.">		for (Map.Entry&lt;String, Object&gt; header : headers.entrySet()) {</span>
+<span class="nc" id="L681">			final Object value = header.getValue();</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">			if (value instanceof String)</span>
+<span class="nc" id="L683">				http.setRequestProperty(header.getKey(), (String) value);</span>
+<span class="nc bnc" id="L684" title="All 2 branches missed.">			else if (value instanceof List)</span>
+<span class="nc bnc" id="L685" title="All 2 branches missed.">				for (Object item : (List&lt;?&gt;) value)</span>
+<span class="nc bnc" id="L686" title="All 2 branches missed.">					if (item != null)</span>
+<span class="nc" id="L687">						http.addRequestProperty(header.getKey(), item.toString());</span>
+
+<span class="nc" id="L689">		}</span>
+<span class="nc" id="L690">	}</span>
+
+	/**
+	 * Removes the userInfo part from the URL, because we want to use the
+	 * SecurityCredentials instead.
+	 *
+	 * @param url URL with UserInfo part
+	 * @return url without UserInfo part
+	 * @throws MalformedURLException
+	 * @throws URISyntaxException
+	 */
+	private static URL removeUserInfo(URL url) throws MalformedURLException, URISyntaxException {
+<span class="fc" id="L702">		return new URI(removeUserInfoFromUrlPath(url.toExternalForm())).toURL();</span>
+	}
+
+	/**
+	 * Removes the userInfo part from the URL, because we want to use the
+	 * SecurityCredentials instead.
+	 *
+	 * @param url URL with UserInfo part
+	 * @return url without UserInfo part
+	 */
+	private static String removeUserInfoFromUrlPath(String url) {
+		// Simple solution:
+<span class="fc" id="L714">		final Matcher matcher = PATTERN_USERINFO.matcher(url);</span>
+<span class="fc bfc" id="L715" title="All 2 branches covered.">		if (matcher.find())</span>
+<span class="fc" id="L716">			return matcher.replaceFirst(&quot;$1$3&quot;);</span>
+
+<span class="fc" id="L718">		return url;</span>
+	}
+	// ::done
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

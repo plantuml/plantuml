@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkConstraint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">LinkConstraint.java</span></div><h1>LinkConstraint.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+public class LinkConstraint {
+
+	private final Link link1;
+	private final Link link2;
+	private final Display display;
+
+	private double x1;
+	private double y1;
+	private double x2;
+	private double y2;
+
+<span class="nc" id="L64">	public LinkConstraint(Link link1, Link link2, Display display) {</span>
+<span class="nc" id="L65">		this.link1 = link1;</span>
+<span class="nc" id="L66">		this.link2 = link2;</span>
+<span class="nc" id="L67">		this.display = display;</span>
+<span class="nc" id="L68">	}</span>
+
+	public void setPosition(Link link, XPoint2D pt) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (link == link1) {</span>
+<span class="nc" id="L72">			x1 = pt.getX();</span>
+<span class="nc" id="L73">			y1 = pt.getY();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		} else if (link == link2) {</span>
+<span class="nc" id="L75">			x2 = pt.getX();</span>
+<span class="nc" id="L76">			y2 = pt.getY();</span>
+		} else {
+<span class="nc" id="L78">			throw new IllegalArgumentException();</span>
+		}
+<span class="nc" id="L80">	}</span>
+
+	public void drawMe(UGraphic ug, ISkinParam skinParam) {
+<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (x1 == 0 &amp;&amp; y1 == 0) {</span>
+<span class="nc" id="L84">			return;</span>
+		}
+<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (x2 == 0 &amp;&amp; y2 == 0) {</span>
+<span class="nc" id="L87">			return;</span>
+		}
+<span class="nc" id="L89">		ug = ug.apply(HColors.BLACK);</span>
+//		ug.apply(new UTranslate(x1, y1)).draw(URectangle.build(10, 10));
+//		ug.apply(new UTranslate(x2, y2)).draw(URectangle.build(10, 10));
+
+<span class="nc" id="L93">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="nc" id="L94">		ug = ug.apply(new UStroke(3, 3, 1));</span>
+<span class="nc" id="L95">		ug.apply(new UTranslate(x1, y1)).draw(line);</span>
+
+<span class="nc" id="L97">		final TextBlock label = display.create(FontConfiguration.create(skinParam, FontParam.ARROW, null),</span>
+				HorizontalAlignment.CENTER, skinParam);
+<span class="nc" id="L99">		final XDimension2D dimLabel = label.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L100">		final double x = (x1 + x2) / 2 - dimLabel.getWidth() / 2;</span>
+<span class="nc" id="L101">		final double y = (y1 + y2) / 2 - dimLabel.getHeight() / 2;</span>
+<span class="nc" id="L102">		label.drawU(ug.apply(new UTranslate(x, y)));</span>
+
+<span class="nc" id="L104">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

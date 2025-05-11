@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Memory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">smetana.core</a> &gt; <span class="el_source">Memory.java</span></div><h1>Memory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program.
+ * 
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package smetana.core;
+
+import com.plantuml.api.cheerpj.WasmLog;
+
+<span class="nc" id="L40">final public class Memory {</span>
+
+	public static void free(Object arg) {
+<span class="fc" id="L43">	}</span>
+
+	public static int identityHashCode(Globals zz, CString data) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (data == null)</span>
+<span class="fc" id="L47">			return 0;</span>
+
+<span class="fc" id="L49">		int result = data.getUid();</span>
+<span class="fc" id="L50">		zz.all.put(result, data);</span>
+<span class="fc" id="L51">		WasmLog.log(&quot;hashsize = &quot; + zz.all.size());</span>
+<span class="fc" id="L52">		return result;</span>
+	}
+
+	public static CString fromIdentityHashCode(Globals zz, int hash) {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (hash % 2 != 0)</span>
+<span class="nc" id="L57">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L59">		Object result = zz.all.get(hash);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L61">			throw new UnsupportedOperationException();</span>
+
+<span class="fc" id="L63">		return (CString) result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

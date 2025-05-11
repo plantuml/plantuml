@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Labels.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.descdiagram.command</a> &gt; <span class="el_source">Labels.java</span></div><h1>Labels.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
+ *
+ */
+package net.sourceforge.plantuml.descdiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.LinkArrow;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.Pragma;
+
+public class Labels {
+
+	private String firstLabel;
+	private String secondLabel;
+	private final StringWithArrow stringWithArrow;
+
+<span class="fc" id="L53">	public Labels(RegexResult arg) {</span>
+<span class="fc" id="L54">		this.firstLabel = arg.get(&quot;FIRST_LABEL&quot;, 0);</span>
+<span class="fc" id="L55">		this.secondLabel = arg.get(&quot;SECOND_LABEL&quot;, 0);</span>
+<span class="fc" id="L56">		String labelLink = arg.get(&quot;LABEL_LINK&quot;, 0);</span>
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (labelLink != null)</span>
+<span class="fc" id="L59">			labelLink = init(labelLink);</span>
+
+<span class="fc" id="L61">		this.stringWithArrow = new StringWithArrow(labelLink);</span>
+
+<span class="fc" id="L63">	}</span>
+
+	private String init(String labelLink) {
+<span class="pc bpc" id="L66" title="2 of 4 branches missed.">		if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
+<span class="fc" id="L67">			final Pattern2 p1 = MyPattern.cmpile(&quot;^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$&quot;);</span>
+<span class="fc" id="L68">			final Matcher2 m1 = p1.matcher(labelLink);</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (m1.matches()) {</span>
+<span class="nc" id="L70">				firstLabel = m1.group(1);</span>
+<span class="nc" id="L71">				secondLabel = m1.group(3);</span>
+<span class="nc" id="L72">				return StringUtils</span>
+<span class="nc" id="L73">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));</span>
+			}
+<span class="fc" id="L75">			final Pattern2 p2 = MyPattern.cmpile(&quot;^[%g]([^%g]+)[%g]([^%g]+)$&quot;);</span>
+<span class="fc" id="L76">			final Matcher2 m2 = p2.matcher(labelLink);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			if (m2.matches()) {</span>
+<span class="nc" id="L78">				firstLabel = m2.group(1);</span>
+<span class="nc" id="L79">				secondLabel = null;</span>
+<span class="nc" id="L80">				return StringUtils</span>
+<span class="nc" id="L81">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));</span>
+			}
+<span class="fc" id="L83">			final Pattern2 p3 = MyPattern.cmpile(&quot;^([^%g]+)[%g]([^%g]+)[%g]$&quot;);</span>
+<span class="fc" id="L84">			final Matcher2 m3 = p3.matcher(labelLink);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			if (m3.matches()) {</span>
+<span class="nc" id="L86">				firstLabel = null;</span>
+<span class="nc" id="L87">				secondLabel = m3.group(2);</span>
+<span class="nc" id="L88">				return StringUtils</span>
+<span class="nc" id="L89">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));</span>
+			}
+		}
+<span class="fc" id="L92">		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink, &quot;\&quot;&quot;);</span>
+	}
+
+	public final String getFirstLabel() {
+<span class="fc" id="L96">		return firstLabel;</span>
+	}
+
+	public final String getSecondLabel() {
+<span class="fc" id="L100">		return secondLabel;</span>
+	}
+
+	public final String getLabelLink() {
+<span class="fc" id="L104">		return stringWithArrow.getLabel();</span>
+	}
+
+	public final LinkArrow getLinkArrow() {
+<span class="fc" id="L108">		return stringWithArrow.getLinkArrow();</span>
+	}
+
+	public Display getDisplay(Pragma pragma) {
+<span class="fc" id="L112">		return stringWithArrow.getDisplay(pragma);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

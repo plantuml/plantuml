@@ -1,0 +1,919 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>arrows__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.common</a> &gt; <span class="el_source">arrows__c.java</span></div><h1>arrows__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.common;
+import static gen.lib.cgraph.attr__c.agxget;
+import static gen.lib.cgraph.graph__c.agisdirected;
+import static gen.lib.cgraph.obj__c.agraphof;
+import static gen.lib.common.splines__c.bezier_clip;
+import static gen.lib.common.utils__c.late_double;
+import static smetana.core.JUtils.EQ_CSTRING;
+import static smetana.core.JUtils.strncmp;
+import static smetana.core.Macro.ARR_TYPE_GAP;
+import static smetana.core.Macro.ARR_TYPE_NONE;
+import static smetana.core.Macro.ARR_TYPE_NORM;
+import static smetana.core.Macro.BITS_PER_ARROW;
+import static smetana.core.Macro.BITS_PER_ARROW_TYPE;
+import static smetana.core.Macro.DIST2;
+import static smetana.core.Macro.ED_conc_opp_flag;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Doc;
+import gen.annotation.Original;
+import gen.annotation.Todo;
+import gen.annotation.Unused;
+import h.ST_Agedge_s;
+import h.ST_arrowdir_t;
+import h.ST_arrowname_t;
+import h.ST_bezier;
+import h.ST_inside_t;
+import h.ST_pointf;
+import smetana.core.CArray;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+
+<span class="nc" id="L82">public class arrows__c {</span>
+
+//3 3apnay8wumntfkvud64ov7fcf
+// static char *arrow_match_name_frag(char *name, arrowname_t * arrownames, int *flag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;&quot;, key=&quot;3apnay8wumntfkvud64ov7fcf&quot;, definition=&quot;static char *arrow_match_name_frag(char *name, arrowname_t * arrownames, int *flag)&quot;)
+public static CString arrow_match_name_frag(CString name, ST_arrowname_t[] arrownames, int flag[]) {
+<span class="fc" id="L89">ENTERING(&quot;3apnay8wumntfkvud64ov7fcf&quot;,&quot;arrow_match_name_frag&quot;);</span>
+try {
+    int arrowname;
+<span class="fc" id="L92">    int namelen = 0;</span>
+<span class="fc" id="L93">    CString rest = name;</span>
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">    for (arrowname = 0; arrownames[arrowname].name!=null; arrowname++) {</span>
+<span class="fc" id="L96">	namelen = arrownames[arrowname].name.length();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">	if (strncmp(name, arrownames[arrowname].name, namelen) == 0) {</span>
+<span class="fc" id="L98">	    flag[0] |= arrownames[arrowname].type;</span>
+<span class="fc" id="L99">	    rest =  rest.plus_(namelen);</span>
+<span class="fc" id="L100">	    break;</span>
+	}
+    }
+<span class="fc" id="L103">    return rest;</span>
+} finally {
+<span class="fc" id="L105">LEAVING(&quot;3apnay8wumntfkvud64ov7fcf&quot;,&quot;arrow_match_name_frag&quot;);</span>
+}
+}
+
+
+
+
+//3 b669zec8aznq4obnil98j5lby
+// static char *arrow_match_shape(char *name, int *flag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;&quot;, key=&quot;b669zec8aznq4obnil98j5lby&quot;, definition=&quot;static char *arrow_match_shape(char *name, int *flag)&quot;)
+public static CString arrow_match_shape(Globals zz, CString name, int flag[]) {
+<span class="fc" id="L117">ENTERING(&quot;b669zec8aznq4obnil98j5lby&quot;,&quot;arrow_match_shape&quot;);</span>
+try {
+<span class="fc" id="L119">    CString next=null, rest=null;</span>
+<span class="fc" id="L120">    int f[] = new int[] {0};</span>
+<span class="fc" id="L121">    rest = arrow_match_name_frag(name, zz.Arrowsynonyms, f);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">    if (EQ_CSTRING(rest, name)) {</span>
+	do {
+<span class="fc" id="L124">	    next = rest;</span>
+<span class="fc" id="L125">	    rest = arrow_match_name_frag(next, zz.Arrowmods, f);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">	} while (!EQ_CSTRING(next,rest));</span>
+<span class="fc" id="L127">	rest = arrow_match_name_frag(rest, zz.Arrownames, f);</span>
+    }
+<span class="pc bpc" id="L129" title="2 of 4 branches missed.">    if (f[0]!=0 &amp;&amp; (f[0] &amp; ((1 &lt;&lt; BITS_PER_ARROW_TYPE) - 1)) == 0)</span>
+<span class="nc" id="L130">UNSUPPORTED(&quot;2mly07gipiope02mgflzcie3e&quot;); // 	f |= 1;</span>
+<span class="fc" id="L131">    flag[0] |= f[0];</span>
+<span class="fc" id="L132">    return rest;</span>
+} finally {
+<span class="fc" id="L134">LEAVING(&quot;b669zec8aznq4obnil98j5lby&quot;,&quot;arrow_match_shape&quot;);</span>
+}
+}
+
+
+
+
+private static final int NUMB_OF_ARROW_HEADS = 4;
+
+//3 2pveqb5qcgfxcqp410ub942eg
+// static void arrow_match_name(char *name, int *flag) 
+@Unused
+@Doc(&quot;update flags for arrow. Warning: implementation changed in Java&quot;)
+@Todo(what = &quot;Check why C is strange&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_match_name&quot;, key=&quot;2pveqb5qcgfxcqp410ub942eg&quot;, definition=&quot;static void arrow_match_name(char *name, int *flag)&quot;)
+public static void arrow_match_name(Globals zz, CString name, int flag[]) {
+<span class="fc" id="L150">ENTERING(&quot;2pveqb5qcgfxcqp410ub942eg&quot;,&quot;arrow_match_name&quot;);</span>
+try {
+<span class="fc" id="L152">    CString rest = name;</span>
+    CString next;
+<span class="fc" id="L154">    int i; int f[] = new int[] {0};</span>
+<span class="fc" id="L155">    flag[0] = 0;</span>
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">    for (i = 0; rest.charAt(0) != '\0' &amp;&amp; i &lt; NUMB_OF_ARROW_HEADS; ) {</span>
+<span class="fc" id="L157">	f[0] = ARR_TYPE_NONE;</span>
+<span class="fc" id="L158">	next = rest;</span>
+<span class="fc" id="L159">        rest = arrow_match_shape(zz, next, f);</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">	if (f[0] == ARR_TYPE_NONE) {</span>
+<span class="nc" id="L161">	    System.err.println(&quot;Arrow type \&quot;%s\&quot; unknown - ignoring\n&quot;);</span>
+<span class="nc" id="L162">	    return;</span>
+	}
+<span class="pc bpc" id="L164" title="1 of 4 branches missed.">	if (f[0] == ARR_TYPE_GAP &amp;&amp; i == (NUMB_OF_ARROW_HEADS -1))</span>
+<span class="nc" id="L165">	    f[0] = ARR_TYPE_NONE;</span>
+<span class="pc bpc" id="L166" title="2 of 6 branches missed.">	if ((f[0] == ARR_TYPE_GAP) &amp;&amp; (i == 0) &amp;&amp; (rest.charAt(0) == '\0'))</span>
+<span class="fc" id="L167">	    f[0] = ARR_TYPE_NONE;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">	if (f[0] != ARR_TYPE_NONE)</span>
+<span class="fc" id="L169">	    flag[0] |= (f[0]);</span>
+        // flag[0] |= (f[0] &lt;&lt; (i++ * BITS_PER_ARROW));
+    }
+} finally {
+<span class="fc" id="L173">LEAVING(&quot;2pveqb5qcgfxcqp410ub942eg&quot;,&quot;arrow_match_name&quot;);</span>
+}
+<span class="fc" id="L175">}</span>
+
+
+
+
+//3 2szgwtfieaw58pea2ohjyu8ea
+// void arrow_flags(Agedge_t * e, int *sflag, int *eflag) 
+@Unused
+@Doc(&quot;update flags for arrow. Warning: implementation changed in Java&quot;)
+@Todo(what = &quot;Check why C is strange&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_flags&quot;, key=&quot;2szgwtfieaw58pea2ohjyu8ea&quot;, definition=&quot;void arrow_flags(Agedge_t * e, int *sflag, int *eflag)&quot;)
+public static void arrow_flags(Globals zz, ST_Agedge_s e, int sflag[], int eflag[]) {
+<span class="fc" id="L187">ENTERING(&quot;2szgwtfieaw58pea2ohjyu8ea&quot;,&quot;arrow_flags&quot;);</span>
+try {
+    CString attr;
+    ST_arrowdir_t arrowdir;
+<span class="fc" id="L191">    sflag[0] = ARR_TYPE_NONE;</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">    eflag[0] = agisdirected(agraphof(e)) ? ARR_TYPE_NORM : ARR_TYPE_NONE;</span>
+
+<span class="fc" id="L194">    sflag[0] = ARR_TYPE_NORM;</span>
+<span class="fc" id="L195">    eflag[0] = ARR_TYPE_NORM;</span>
+
+<span class="pc bpc" id="L197" title="3 of 4 branches missed.">    if (zz.E_dir!=null &amp;&amp; ((attr = agxget(e, zz.E_dir))).charAt(0)!='\0') {</span>
+<span class="nc" id="L198">UNSUPPORTED(&quot;em7x45v09orjeey5u06gf9b4s&quot;); // 	for (arrowdir = Arrowdirs; arrowdir-&gt;dir; arrowdir++) {</span>
+<span class="nc" id="L199">UNSUPPORTED(&quot;dhaookuw0a1xqmh07lldcvlgi&quot;); // 	    if ((*(attr)==*(arrowdir-&gt;dir)&amp;&amp;!strcmp(attr,arrowdir-&gt;dir))) {</span>
+<span class="nc" id="L200">UNSUPPORTED(&quot;1d32qbc447n7nmmvedj3bnhr4&quot;); // 		*sflag = arrowdir-&gt;sflag;</span>
+<span class="nc" id="L201">UNSUPPORTED(&quot;4bwlkonvn34iwi5ea1o8zov3o&quot;); // 		*eflag = arrowdir-&gt;eflag;</span>
+<span class="nc" id="L202">UNSUPPORTED(&quot;9ekmvj13iaml5ndszqyxa8eq&quot;); // 		break;</span>
+<span class="nc" id="L203">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L204">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+<span class="pc bpc" id="L206" title="3 of 6 branches missed.">    if (zz.E_arrowhead!=null &amp;&amp; (eflag[0] == ARR_TYPE_NORM) &amp;&amp; ((attr = agxget(e,zz.E_arrowhead))).charAt(0)!='\0')</span>
+<span class="fc" id="L207">	arrow_match_name(zz, attr, eflag);</span>
+<span class="pc bpc" id="L208" title="3 of 6 branches missed.">    if (zz.E_arrowtail!=null &amp;&amp; (sflag[0] == ARR_TYPE_NORM) &amp;&amp; ((attr = agxget(e, zz.E_arrowtail))).charAt(0)!='\0')</span>
+<span class="fc" id="L209">	arrow_match_name(zz, attr, sflag);</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">    if (ED_conc_opp_flag(e)) {</span>
+<span class="nc" id="L211">UNSUPPORTED(&quot;1p2usipxeqlorwroqo37t3yfy&quot;); // 	edge_t *f;</span>
+<span class="nc" id="L212">UNSUPPORTED(&quot;6ne3pu2bnhx6tyx81t4td4up6&quot;); // 	int s0, e0;</span>
+<span class="nc" id="L213">UNSUPPORTED(&quot;8vccx8sm1c228dqm7l1jm2hfs&quot;); // 	/* pick up arrowhead of opposing edge */</span>
+<span class="nc" id="L214">UNSUPPORTED(&quot;cu21qrxyz93ly7l96af2gcsle&quot;); // 	f = (agedge(agraphof(aghead(e)),aghead(e),agtail(e),NULL,0));</span>
+<span class="nc" id="L215">UNSUPPORTED(&quot;9u6scg3h7baww90tcykvjhajo&quot;); // 	arrow_flags(f, &amp;s0, &amp;e0);</span>
+<span class="nc" id="L216">UNSUPPORTED(&quot;157il4mnbenpon7knxfdb4fwb&quot;); // 	*eflag = *eflag | s0;</span>
+<span class="nc" id="L217">UNSUPPORTED(&quot;7wucod5xwp24vblpcbjbmmcq1&quot;); // 	*sflag = *sflag | e0;</span>
+    }
+} finally {
+<span class="fc" id="L220">LEAVING(&quot;2szgwtfieaw58pea2ohjyu8ea&quot;,&quot;arrow_flags&quot;);</span>
+}
+<span class="fc" id="L222">}</span>
+
+
+
+
+//3 1yk5wl46i7rlzcern0tefd24s
+// double arrow_length(edge_t * e, int flag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_length&quot;, key=&quot;1yk5wl46i7rlzcern0tefd24s&quot;, definition=&quot;double arrow_length(edge_t * e, int flag)&quot;)
+public static double arrow_length(Globals zz, ST_Agedge_s e, int flag) {
+<span class="fc" id="L232">ENTERING(&quot;1yk5wl46i7rlzcern0tefd24s&quot;,&quot;arrow_length&quot;);</span>
+try {
+<span class="fc" id="L234">    double lenfact = 0.0;</span>
+    int f, i;
+<span class="fc bfc" id="L236" title="All 2 branches covered.">    for (i = 0; i &lt; NUMB_OF_ARROW_HEADS; i++) {</span>
+        /* we don't simply index with flag because arrowtypes are not necessarily sorted */
+<span class="fc" id="L238">        f = (flag &gt;&gt; (i * BITS_PER_ARROW)) &amp; ((1 &lt;&lt; BITS_PER_ARROW_TYPE) - 1);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        for (int arrowtype = 0; zz.Arrowtypes[arrowtype].gen!=null; arrowtype++) {</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">	    if (f == zz.Arrowtypes[arrowtype].type) {</span>
+<span class="fc" id="L241">	        lenfact += zz.Arrowtypes[arrowtype].lenfact;</span>
+<span class="fc" id="L242">	        break;</span>
+	    }
+        }
+    }
+    /* The original was missing the factor E_arrowsz, but I believe it
+       should be here for correct arrow clipping */
+<span class="fc" id="L248">    return 10. * lenfact * late_double(e, zz.E_arrowsz, 1.0, 0.0);</span>
+} finally {
+<span class="fc" id="L250">LEAVING(&quot;1yk5wl46i7rlzcern0tefd24s&quot;,&quot;arrow_length&quot;);</span>
+}
+}
+
+
+
+
+<span class="fc" id="L257">public static CFunction inside = new CFunctionAbstract(&quot;inside&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="fc" id="L260">		return inside((ST_inside_t)args[0], (ST_pointf)args[1]);</span>
+	}};
+
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;inside&quot;, key=&quot;7ymcsnwqkr1crisrga0kezh1f&quot;, definition=&quot;static boolean inside(inside_t * inside_context, pointf p)&quot;)
+public static boolean inside(ST_inside_t inside_context, final ST_pointf p) {
+// WARNING!! STRUCT
+<span class="fc" id="L267">return inside_w_(inside_context, p.copy());</span>
+}
+private static boolean inside_w_(ST_inside_t inside_context, final ST_pointf p) {
+<span class="fc" id="L270">ENTERING(&quot;7ymcsnwqkr1crisrga0kezh1f&quot;,&quot;inside&quot;);</span>
+try {
+<span class="fc bfc" id="L272" title="All 2 branches covered.">    return DIST2(p, inside_context.a_p.get__(0)) &lt;= inside_context.a_r[0];</span>
+} finally {
+<span class="fc" id="L274">LEAVING(&quot;7ymcsnwqkr1crisrga0kezh1f&quot;,&quot;inside&quot;);</span>
+}
+}
+
+
+
+
+//3 9eellwhg4gsa2pdszpeqihs2d
+// int arrowEndClip(edge_t* e, pointf * ps, int startp, 		 int endp, bezier * spl, int eflag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrowEndClip&quot;, key=&quot;9eellwhg4gsa2pdszpeqihs2d&quot;, definition=&quot;int arrowEndClip(edge_t* e, pointf * ps, int startp, 		 int endp, bezier * spl, int eflag)&quot;)
+public static int arrowEndClip(Globals zz, ST_Agedge_s e, CArray&lt;ST_pointf&gt; ps, int startp, int endp, ST_bezier spl, int eflag) {
+<span class="fc" id="L286">ENTERING(&quot;9eellwhg4gsa2pdszpeqihs2d&quot;,&quot;arrowEndClip&quot;);</span>
+try {
+<span class="fc" id="L288">    final ST_inside_t inside_context = new ST_inside_t();</span>
+<span class="fc" id="L289">    final CArray&lt;ST_pointf&gt; sp = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+    double elen;
+<span class="fc" id="L291">    final double elen2[] = new double[] {0};</span>
+    
+<span class="fc" id="L293">    elen = arrow_length(zz, e, eflag);</span>
+<span class="fc" id="L294">    elen2[0] =elen * elen;</span>
+<span class="fc" id="L295">    spl.eflag = eflag;</span>
+<span class="fc" id="L296">    spl.ep.___(ps.get__(endp + 3));</span>
+<span class="pc bpc" id="L297" title="3 of 4 branches missed.">    if (endp &gt; startp &amp;&amp; DIST2(ps.get__(endp), ps.get__(endp + 3)) &lt; elen2[0]) {</span>
+<span class="nc" id="L298">	endp -= 3;</span>
+    }
+<span class="fc" id="L300">    sp.get__(3).___(ps.get__(endp));</span>
+<span class="fc" id="L301">    sp.get__(2).___(ps.get__(endp+1));</span>
+<span class="fc" id="L302">    sp.get__(1).___(ps.get__(endp+2));</span>
+<span class="fc" id="L303">    sp.get__(0).___(spl.ep); /* ensure endpoint starts inside */</span>
+    
+<span class="fc" id="L305">    inside_context.a_p = sp;</span>
+<span class="fc" id="L306">    inside_context.a_r = elen2;</span>
+<span class="fc" id="L307">    bezier_clip(zz, inside_context, arrows__c.inside, sp, true);</span>
+    
+<span class="fc" id="L309">    ps.get__(endp).___(sp.get__(3));</span>
+<span class="fc" id="L310">    ps.get__(endp+1).___(sp.get__(2));</span>
+<span class="fc" id="L311">    ps.get__(endp+2).___(sp.get__(1));</span>
+<span class="fc" id="L312">    ps.get__(endp+3).___(sp.get__(0));</span>
+<span class="fc" id="L313">    return endp;</span>
+} finally {
+<span class="fc" id="L315">LEAVING(&quot;9eellwhg4gsa2pdszpeqihs2d&quot;,&quot;arrowEndClip&quot;);</span>
+}
+}
+
+
+
+
+//3 q7y4oxn0paexbgynmtg2zmiv
+// int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrowStartClip&quot;, key=&quot;q7y4oxn0paexbgynmtg2zmiv&quot;, definition=&quot;int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag)&quot;)
+public static int arrowStartClip(Globals zz, ST_Agedge_s e, CArray&lt;ST_pointf&gt; ps, int startp, int endp, ST_bezier spl, int sflag) {
+<span class="nc" id="L327">ENTERING(&quot;q7y4oxn0paexbgynmtg2zmiv&quot;,&quot;arrowStartClip&quot;);</span>
+try {
+<span class="nc" id="L329">    final ST_inside_t inside_context = new ST_inside_t();</span>
+<span class="nc" id="L330">    final CArray&lt;ST_pointf&gt; sp = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+    double slen;
+    
+<span class="nc" id="L333">    final double[] slen2 = new double[] {0};</span>
+<span class="nc" id="L334">    slen = arrow_length(zz, e, sflag);</span>
+<span class="nc" id="L335">    slen2[0] = slen * slen;</span>
+<span class="nc" id="L336">    spl.sflag = sflag;</span>
+<span class="nc" id="L337">    spl.sp.___(ps.get__(startp));</span>
+<span class="nc bnc" id="L338" title="All 4 branches missed.">    if (endp &gt; startp &amp;&amp; DIST2(ps.get__(startp), ps.get__(startp + 3)) &lt; slen2[0]) {</span>
+<span class="nc" id="L339">    	startp += 3;</span>
+    }
+<span class="nc" id="L341">    sp.get__(0).___(ps.get__(startp+3));</span>
+<span class="nc" id="L342">    sp.get__(1).___(ps.get__(startp+2));</span>
+<span class="nc" id="L343">    sp.get__(2).___(ps.get__(startp+1));</span>
+<span class="nc" id="L344">    sp.get__(3).___(spl.sp);    /* ensure endpoint starts inside */</span>
+    
+<span class="nc" id="L346">    inside_context.a_p = sp.plus_(3);</span>
+<span class="nc" id="L347">    inside_context.a_r = slen2;</span>
+<span class="nc" id="L348">    bezier_clip(zz, inside_context, arrows__c.inside, sp, false);</span>
+    
+<span class="nc" id="L350">    ps.get__(startp).___(sp.get__(3));</span>
+<span class="nc" id="L351">    ps.get__(startp+1).___(sp.get__(2));</span>
+<span class="nc" id="L352">    ps.get__(startp+2).___(sp.get__(1));</span>
+<span class="nc" id="L353">    ps.get__(startp+3).___(sp.get__(0));</span>
+<span class="nc" id="L354">    return startp;</span>
+} finally {
+<span class="nc" id="L356">LEAVING(&quot;9eellwhg4gsa2pdszpeqihs2d&quot;,&quot;arrowEndClip&quot;);</span>
+}
+}
+
+
+
+
+//3 5i0vg914q5v5dzz5vo7rg9omc
+// void arrowOrthoClip(edge_t* e, pointf* ps, int startp, int endp, bezier* spl, int sflag, int eflag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrowOrthoClip&quot;, key=&quot;5i0vg914q5v5dzz5vo7rg9omc&quot;, definition=&quot;void arrowOrthoClip(edge_t* e, pointf* ps, int startp, int endp, bezier* spl, int sflag, int eflag)&quot;)
+public static Object arrowOrthoClip(Object... arg) {
+<span class="nc" id="L368">UNSUPPORTED(&quot;5cmga0193q90gs5y2r0l9ekgq&quot;); // void arrowOrthoClip(edge_t* e, pointf* ps, int startp, int endp, bezier* spl, int sflag, int eflag)</span>
+<span class="nc" id="L369">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L370">UNSUPPORTED(&quot;y7yudkjc31udfiam6z6lkpyz&quot;); //     pointf p, q, r, s, t;</span>
+<span class="nc" id="L371">UNSUPPORTED(&quot;3kkc3p6yj8romhqyooa86wcf7&quot;); //     double d, tlen, hlen, maxd;</span>
+<span class="nc" id="L372">UNSUPPORTED(&quot;c69aoxg5blb5c27rwb7uvguna&quot;); //     if (sflag &amp;&amp; eflag &amp;&amp; (endp == startp)) { /* handle special case of two arrows on a single segment */</span>
+<span class="nc" id="L373">UNSUPPORTED(&quot;eb6qp4f6c1liqz5gv8yr4nt2u&quot;); // 	p = ps[endp];</span>
+<span class="nc" id="L374">UNSUPPORTED(&quot;ecphms6syi9sh7jtisdvhb8hr&quot;); // 	q = ps[endp+3];</span>
+<span class="nc" id="L375">UNSUPPORTED(&quot;2pzsi9r63yv2o8qeounzv6cny&quot;); // 	tlen = arrow_length (e, sflag);</span>
+<span class="nc" id="L376">UNSUPPORTED(&quot;f4d86okjchj0qyg2roq13hufh&quot;); // 	hlen = arrow_length (e, eflag);</span>
+<span class="nc" id="L377">UNSUPPORTED(&quot;3sbhjktcu1u1avngc5ej62mw4&quot;); //         d = DIST(p, q);</span>
+<span class="nc" id="L378">UNSUPPORTED(&quot;bsdcbs5e8tkm1802lidu0jtw8&quot;); // 	if (hlen + tlen &gt;= d) {</span>
+<span class="nc" id="L379">UNSUPPORTED(&quot;8gpoj60hh2teibwc83s0ii79w&quot;); // 	    hlen = tlen = d/3.0;</span>
+<span class="nc" id="L380">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L381">UNSUPPORTED(&quot;6xtkcedj7la7fqplc0unqj0wx&quot;); // 	if (p.y == q.y) { /* horz segment */</span>
+<span class="nc" id="L382">UNSUPPORTED(&quot;9n0q5j1nqa19z0zoz3mpmwpdv&quot;); // 	    s.y = t.y = p.y;</span>
+<span class="nc" id="L383">UNSUPPORTED(&quot;c2tle7mztwggexoad4drqjw0a&quot;); // 	    if (p.x &lt; q.x) {</span>
+<span class="nc" id="L384">UNSUPPORTED(&quot;183kgzstrmgynznfkfj0jl3df&quot;); // 		t.x = q.x - hlen;</span>
+<span class="nc" id="L385">UNSUPPORTED(&quot;7cugpgpm4lyr66kkhauqj5qvy&quot;); // 		s.x = p.x + tlen;</span>
+<span class="nc" id="L386">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L387">UNSUPPORTED(&quot;6q044im7742qhglc4553noina&quot;); // 	    else {</span>
+<span class="nc" id="L388">UNSUPPORTED(&quot;a8lrkw50xbjo3ntsv0r1mz5i9&quot;); // 		t.x = q.x + hlen;</span>
+<span class="nc" id="L389">UNSUPPORTED(&quot;37zp6lexzsbm2vomf22x7i5r&quot;); // 		s.x = p.x - tlen;</span>
+<span class="nc" id="L390">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L391">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L392">UNSUPPORTED(&quot;4l6yfu81669thfh19tmcn44pu&quot;); // 	else {            /* vert segment */</span>
+<span class="nc" id="L393">UNSUPPORTED(&quot;bc0n1oxhmb3wgphgm1w4n9dz1&quot;); // 	    s.x = t.x = p.x;</span>
+<span class="nc" id="L394">UNSUPPORTED(&quot;d2pzq44lkkxam6rx01xnozquf&quot;); // 	    if (p.y &lt; q.y) {</span>
+<span class="nc" id="L395">UNSUPPORTED(&quot;5k5qyffqi7gacnu4jwl6efngx&quot;); // 		t.y = q.y - hlen;</span>
+<span class="nc" id="L396">UNSUPPORTED(&quot;7ppaznbfc8awmm6e9d9qzw4ms&quot;); // 		s.y = p.y + tlen;</span>
+<span class="nc" id="L397">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L398">UNSUPPORTED(&quot;6q044im7742qhglc4553noina&quot;); // 	    else {</span>
+<span class="nc" id="L399">UNSUPPORTED(&quot;8ohhvcqa5v7oor1gbpznb6faq&quot;); // 		t.y = q.y + hlen;</span>
+<span class="nc" id="L400">UNSUPPORTED(&quot;4j6guu6e5ddqobe77kt7sbmjq&quot;); // 		s.y = p.y - tlen;</span>
+<span class="nc" id="L401">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L402">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L403">UNSUPPORTED(&quot;a4d4fgiq4l3sbeb9ud8dowkby&quot;); // 	ps[endp] = ps[endp + 1] = s;</span>
+<span class="nc" id="L404">UNSUPPORTED(&quot;db740uoo9pfyknnmi2yx0glgb&quot;); // 	ps[endp + 2] = ps[endp + 3] = t;</span>
+<span class="nc" id="L405">UNSUPPORTED(&quot;ewajj4utlr95mfmaswtc9yeiv&quot;); // 	spl-&gt;eflag = eflag, spl-&gt;ep = p;</span>
+<span class="nc" id="L406">UNSUPPORTED(&quot;9bgf1pn9yx1vlolgcjos2emsl&quot;); // 	spl-&gt;sflag = sflag, spl-&gt;sp = q;</span>
+<span class="nc" id="L407">UNSUPPORTED(&quot;a7fgam0j0jm7bar0mblsv3no4&quot;); // 	return;</span>
+<span class="nc" id="L408">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L409">UNSUPPORTED(&quot;5zse8mf1iyqtzzlq2txqcym6x&quot;); //     if (eflag) {</span>
+<span class="nc" id="L410">UNSUPPORTED(&quot;bpf9snlwegftq8d78l9hsz76b&quot;); // 	hlen = arrow_length(e, eflag);</span>
+<span class="nc" id="L411">UNSUPPORTED(&quot;eb6qp4f6c1liqz5gv8yr4nt2u&quot;); // 	p = ps[endp];</span>
+<span class="nc" id="L412">UNSUPPORTED(&quot;ecphms6syi9sh7jtisdvhb8hr&quot;); // 	q = ps[endp+3];</span>
+<span class="nc" id="L413">UNSUPPORTED(&quot;3sbhjktcu1u1avngc5ej62mw4&quot;); //         d = DIST(p, q);</span>
+<span class="nc" id="L414">UNSUPPORTED(&quot;9b0ae4jocdkvqt8r3iw39yf5d&quot;); // 	maxd = 0.9*d;</span>
+<span class="nc" id="L415">UNSUPPORTED(&quot;bwzkrhk431iwhs6c467tb0yh9&quot;); // 	if (hlen &gt;= maxd) {   /* arrow too long */</span>
+<span class="nc" id="L416">UNSUPPORTED(&quot;23uwvl5a8msik1u1crb262nqj&quot;); // 	    hlen = maxd;</span>
+<span class="nc" id="L417">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L418">UNSUPPORTED(&quot;6xtkcedj7la7fqplc0unqj0wx&quot;); // 	if (p.y == q.y) { /* horz segment */</span>
+<span class="nc" id="L419">UNSUPPORTED(&quot;a851ewci39wssny4nn99f4nmr&quot;); // 	    r.y = p.y;</span>
+<span class="nc" id="L420">UNSUPPORTED(&quot;a2dyb0em7hwd4qdx1u0tuc8pl&quot;); // 	    if (p.x &lt; q.x) r.x = q.x - hlen;</span>
+<span class="nc" id="L421">UNSUPPORTED(&quot;90ksto8lyojedi0p77l4zm7x&quot;); // 	    else r.x = q.x + hlen;</span>
+<span class="nc" id="L422">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L423">UNSUPPORTED(&quot;4l6yfu81669thfh19tmcn44pu&quot;); // 	else {            /* vert segment */</span>
+<span class="nc" id="L424">UNSUPPORTED(&quot;4rh9lai2dcsutwg48bb2qljyg&quot;); // 	    r.x = p.x;</span>
+<span class="nc" id="L425">UNSUPPORTED(&quot;6gnp9tso58zn1rn4j7jv3i1y0&quot;); // 	    if (p.y &lt; q.y) r.y = q.y - hlen;</span>
+<span class="nc" id="L426">UNSUPPORTED(&quot;3wd6fw8km4tp6a1p9ijk343ih&quot;); // 	    else r.y = q.y + hlen;</span>
+<span class="nc" id="L427">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L428">UNSUPPORTED(&quot;bxxlk6noh1kzyi93fptcz29j4&quot;); // 	ps[endp + 1] = p;</span>
+<span class="nc" id="L429">UNSUPPORTED(&quot;d3kionq4ycqr87orc5vkdnse0&quot;); // 	ps[endp + 2] = ps[endp + 3] = r;</span>
+<span class="nc" id="L430">UNSUPPORTED(&quot;4uwxjmxybnuriwua5xoo17bfa&quot;); // 	spl-&gt;eflag = eflag;</span>
+<span class="nc" id="L431">UNSUPPORTED(&quot;25oo9o1uy5fisoodt43sio6zx&quot;); // 	spl-&gt;ep = q;</span>
+<span class="nc" id="L432">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L433">UNSUPPORTED(&quot;3297fx8lk8bjyg998l9ujeeph&quot;); //     if (sflag) {</span>
+<span class="nc" id="L434">UNSUPPORTED(&quot;5slqgq5wsgplyy9uj9mg5pkrc&quot;); // 	tlen = arrow_length(e, sflag);</span>
+<span class="nc" id="L435">UNSUPPORTED(&quot;ayxhimnpo6p08kshlux75qpcu&quot;); // 	p = ps[startp];</span>
+<span class="nc" id="L436">UNSUPPORTED(&quot;2ydx1urmjnn1tgx6ffzsvwimx&quot;); // 	q = ps[startp+3];</span>
+<span class="nc" id="L437">UNSUPPORTED(&quot;3sbhjktcu1u1avngc5ej62mw4&quot;); //         d = DIST(p, q);</span>
+<span class="nc" id="L438">UNSUPPORTED(&quot;9b0ae4jocdkvqt8r3iw39yf5d&quot;); // 	maxd = 0.9*d;</span>
+<span class="nc" id="L439">UNSUPPORTED(&quot;1uya1cfbkj8b6j38zbvdxmgrq&quot;); // 	if (tlen &gt;= maxd) {   /* arrow too long */</span>
+<span class="nc" id="L440">UNSUPPORTED(&quot;3ydle9u127f7saxiibosc2lxs&quot;); // 	    tlen = maxd;</span>
+<span class="nc" id="L441">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L442">UNSUPPORTED(&quot;6xtkcedj7la7fqplc0unqj0wx&quot;); // 	if (p.y == q.y) { /* horz segment */</span>
+<span class="nc" id="L443">UNSUPPORTED(&quot;a851ewci39wssny4nn99f4nmr&quot;); // 	    r.y = p.y;</span>
+<span class="nc" id="L444">UNSUPPORTED(&quot;7xq2f46jfu6rsd83fqyr71z26&quot;); // 	    if (p.x &lt; q.x) r.x = p.x + tlen;</span>
+<span class="nc" id="L445">UNSUPPORTED(&quot;8gtrjqabiq8x8jl0j2eveiugg&quot;); // 	    else r.x = p.x - tlen;</span>
+<span class="nc" id="L446">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L447">UNSUPPORTED(&quot;4l6yfu81669thfh19tmcn44pu&quot;); // 	else {            /* vert segment */</span>
+<span class="nc" id="L448">UNSUPPORTED(&quot;4rh9lai2dcsutwg48bb2qljyg&quot;); // 	    r.x = p.x;</span>
+<span class="nc" id="L449">UNSUPPORTED(&quot;es4i2rg7sahthpreieu5hcwl7&quot;); // 	    if (p.y &lt; q.y) r.y = p.y + tlen;</span>
+<span class="nc" id="L450">UNSUPPORTED(&quot;26o5nwhklplaxveikjpxzxoom&quot;); // 	    else r.y = p.y - tlen;</span>
+<span class="nc" id="L451">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L452">UNSUPPORTED(&quot;5pnx91gtz1gahdprf0syc4yk5&quot;); // 	ps[startp] = ps[startp + 1] = r;</span>
+<span class="nc" id="L453">UNSUPPORTED(&quot;3e3iux8uecaf6eu2s9q46clr5&quot;); // 	ps[startp + 2] = q;</span>
+<span class="nc" id="L454">UNSUPPORTED(&quot;bmeeipd0o72kslox40628z9gj&quot;); // 	spl-&gt;sflag = sflag;</span>
+<span class="nc" id="L455">UNSUPPORTED(&quot;dwq656v3u8zmbqdetlo0wmyeb&quot;); // 	spl-&gt;sp = p;</span>
+<span class="nc" id="L456">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L457">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L459">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L465">public static CFunction arrow_type_normal = new CFunctionAbstract(&quot;arrow_type_normal&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L468">		return arrow_type_normal(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_normal&quot;, key=&quot;b7nm38od2nxotpyzxg0ychqdb&quot;, definition=&quot;static void arrow_type_normal(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_normal(Object... arg_) {
+<span class="nc" id="L473">UNSUPPORTED(&quot;bk3aihjbdtkitpdvvtmzbt2zu&quot;); // static void arrow_type_normal(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L474">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L475">UNSUPPORTED(&quot;4z3ehq6q8ofvyjy4r4mrg86cl&quot;); //     pointf q, v, a[5];</span>
+<span class="nc" id="L476">UNSUPPORTED(&quot;5qr741c2e1pdivv0bbjcr6cik&quot;); //     double arrowwidth;</span>
+<span class="nc" id="L477">UNSUPPORTED(&quot;9gahmv6psjnccqesq7xt6q6hx&quot;); //     arrowwidth = 0.35;</span>
+<span class="nc" id="L478">UNSUPPORTED(&quot;bih7b1ef9lfxy4uy4o07ae3bk&quot;); //     if (penwidth &gt; 4)</span>
+<span class="nc" id="L479">UNSUPPORTED(&quot;o3yn0730zlzconddqarivq05&quot;); //         arrowwidth *= penwidth / 4;</span>
+<span class="nc" id="L480">UNSUPPORTED(&quot;949z3586m713okvlu1ymyw1us&quot;); //     v.x = -u.y * arrowwidth;</span>
+<span class="nc" id="L481">UNSUPPORTED(&quot;c8xqr3hfd006yf1uuh47ndi71&quot;); //     v.y = u.x * arrowwidth;</span>
+<span class="nc" id="L482">UNSUPPORTED(&quot;eh1wtktxp1goqc7akjgyqf00j&quot;); //     q.x = p.x + u.x;</span>
+<span class="nc" id="L483">UNSUPPORTED(&quot;3op9xoxcy2m0v7q790ta7f9hl&quot;); //     q.y = p.y + u.y;</span>
+<span class="nc" id="L484">UNSUPPORTED(&quot;eh6fh3kco3kvywuta8d8yb5v0&quot;); //     if (flag &amp; (1&lt;&lt;(4+1))) {</span>
+<span class="nc" id="L485">UNSUPPORTED(&quot;3by9fwhdnq30ll5nt8qbfwx0p&quot;); // 	a[0] = a[4] = p;</span>
+<span class="nc" id="L486">UNSUPPORTED(&quot;4ut2bmvsgdsemxiv8urham7m3&quot;); // 	a[1].x = p.x - v.x;</span>
+<span class="nc" id="L487">UNSUPPORTED(&quot;asa1ffrrxd6dkzm1sdamgofuu&quot;); // 	a[1].y = p.y - v.y;</span>
+<span class="nc" id="L488">UNSUPPORTED(&quot;60oc061ln68pvrg7zp8s3ncog&quot;); // 	a[2] = q;</span>
+<span class="nc" id="L489">UNSUPPORTED(&quot;591i8kbz6r8bskar4gy0vpsus&quot;); // 	a[3].x = p.x + v.x;</span>
+<span class="nc" id="L490">UNSUPPORTED(&quot;7i9sj4qz5f52w1wiz47bo6dv2&quot;); // 	a[3].y = p.y + v.y;</span>
+<span class="nc" id="L491">UNSUPPORTED(&quot;c07up7zvrnu2vhzy6d7zcu94g&quot;); //     } else {</span>
+<span class="nc" id="L492">UNSUPPORTED(&quot;6ofxgqmmh2ikk8818bf8aw2mw&quot;); // 	a[0] = a[4] = q;</span>
+<span class="nc" id="L493">UNSUPPORTED(&quot;4l3g4pagkn0dto3bwi2e0bukd&quot;); // 	a[1].x = q.x - v.x;</span>
+<span class="nc" id="L494">UNSUPPORTED(&quot;9wv7w8vdiedhkfehzqwyyv897&quot;); // 	a[1].y = q.y - v.y;</span>
+<span class="nc" id="L495">UNSUPPORTED(&quot;d0mui3zxt1cx6mx5wfax35iah&quot;); // 	a[2] = p;</span>
+<span class="nc" id="L496">UNSUPPORTED(&quot;b5arwmpck5jtms8g1zgnojj5o&quot;); // 	a[3].x = q.x + v.x;</span>
+<span class="nc" id="L497">UNSUPPORTED(&quot;3viyneb6qkp0alwghd7mo06cc&quot;); // 	a[3].y = q.y + v.y;</span>
+<span class="nc" id="L498">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L499">UNSUPPORTED(&quot;3kac8n2z06u2z5pqkm7c4z4nl&quot;); //     if (flag &amp; (1&lt;&lt;(4+2)))</span>
+<span class="nc" id="L500">UNSUPPORTED(&quot;52punwd4fhhq1arhez8cuwvam&quot;); // 	gvrender_polygon(job, a, 3, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L501">UNSUPPORTED(&quot;9i420px3t1z2sosclutiev22e&quot;); //     else if (flag &amp; (1&lt;&lt;(4+3)))</span>
+<span class="nc" id="L502">UNSUPPORTED(&quot;gu9pg6c0d0uzlztdiq2o96zh&quot;); // 	gvrender_polygon(job, &amp;a[2], 3, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L503">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
+<span class="nc" id="L504">UNSUPPORTED(&quot;7c6e70h4efa2wpa155lfy3er5&quot;); // 	gvrender_polygon(job, &amp;a[1], 3, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L505">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L507">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L513">public static CFunction arrow_type_crow = new CFunctionAbstract(&quot;arrow_type_crow&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L516">		return arrow_type_crow(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_crow&quot;, key=&quot;b6y46a44yguy7zuhgxukxnq79&quot;, definition=&quot;static void arrow_type_crow(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_crow(Object... arg) {
+<span class="nc" id="L521">UNSUPPORTED(&quot;6rtaogz992ixfhc4qfzpl9pw8&quot;); // static void arrow_type_crow(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L522">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L523">UNSUPPORTED(&quot;1hutab8l2bf18ywdh16qls7ix&quot;); //     pointf m, q, v, w, a[9];</span>
+<span class="nc" id="L524">UNSUPPORTED(&quot;9riilhm03el22oazbpvsntuyd&quot;); //     double arrowwidth, shaftwidth;</span>
+<span class="nc" id="L525">UNSUPPORTED(&quot;3pjnxs55moxekjdkzcgmes60h&quot;); //     arrowwidth = 0.45;</span>
+<span class="nc" id="L526">UNSUPPORTED(&quot;7k8ulzafyheqq2wcj2ued1mll&quot;); //     if (penwidth &gt; (4 * arrowsize) &amp;&amp; (flag &amp; (1&lt;&lt;(4+1))))</span>
+<span class="nc" id="L527">UNSUPPORTED(&quot;85aamjzbblwnk2bp9jvnetpmf&quot;); //         arrowwidth *= penwidth / (4 * arrowsize);</span>
+<span class="nc" id="L528">UNSUPPORTED(&quot;ykk0490b4cs8a1v9gpqx95we&quot;); //     shaftwidth = 0;</span>
+<span class="nc" id="L529">UNSUPPORTED(&quot;61i60vknj2akb0ojgfdcnjjyh&quot;); //     if (penwidth &gt; 1 &amp;&amp; (flag &amp; (1&lt;&lt;(4+1))))</span>
+<span class="nc" id="L530">UNSUPPORTED(&quot;ak0a6438e5b0b2nu2wl572f6d&quot;); // 	shaftwidth = 0.05 * (penwidth - 1) / arrowsize;   /* arrowsize to cancel the arrowsize term already in u */</span>
+<span class="nc" id="L531">UNSUPPORTED(&quot;949z3586m713okvlu1ymyw1us&quot;); //     v.x = -u.y * arrowwidth;</span>
+<span class="nc" id="L532">UNSUPPORTED(&quot;c8xqr3hfd006yf1uuh47ndi71&quot;); //     v.y = u.x * arrowwidth;</span>
+<span class="nc" id="L533">UNSUPPORTED(&quot;56jq7ic46net8ort3ve4st2tw&quot;); //     w.x = -u.y * shaftwidth;</span>
+<span class="nc" id="L534">UNSUPPORTED(&quot;ampfe31k0mn8vsflzy5cx4lgv&quot;); //     w.y = u.x * shaftwidth;</span>
+<span class="nc" id="L535">UNSUPPORTED(&quot;eh1wtktxp1goqc7akjgyqf00j&quot;); //     q.x = p.x + u.x;</span>
+<span class="nc" id="L536">UNSUPPORTED(&quot;3op9xoxcy2m0v7q790ta7f9hl&quot;); //     q.y = p.y + u.y;</span>
+<span class="nc" id="L537">UNSUPPORTED(&quot;cfk5fnc73y4ey68iwqxlsr7u9&quot;); //     m.x = p.x + u.x * 0.5;</span>
+<span class="nc" id="L538">UNSUPPORTED(&quot;2mtpxqz0h7jsb7bmao9g1vkar&quot;); //     m.y = p.y + u.y * 0.5;</span>
+<span class="nc" id="L539">UNSUPPORTED(&quot;5rymactsr9099qy69qf1bkwdr&quot;); //     if (flag &amp; (1&lt;&lt;(4+1))) {  /* vee */</span>
+<span class="nc" id="L540">UNSUPPORTED(&quot;4s8pxkc9kbvhabi2gbpxic5sm&quot;); // 	a[0] = a[8] = p;</span>
+<span class="nc" id="L541">UNSUPPORTED(&quot;4l3g4pagkn0dto3bwi2e0bukd&quot;); // 	a[1].x = q.x - v.x;</span>
+<span class="nc" id="L542">UNSUPPORTED(&quot;9wv7w8vdiedhkfehzqwyyv897&quot;); // 	a[1].y = q.y - v.y;</span>
+<span class="nc" id="L543">UNSUPPORTED(&quot;6rqmfaf4g98cg0t1qaax08e69&quot;); // 	a[2].x = m.x - w.x;</span>
+<span class="nc" id="L544">UNSUPPORTED(&quot;1nwyu905ao88kvq8pgnfwerf5&quot;); // 	a[2].y = m.y - w.y;</span>
+<span class="nc" id="L545">UNSUPPORTED(&quot;9z1frd2w5h9zvfo4pszqlzp30&quot;); // 	a[3].x = q.x - w.x;</span>
+<span class="nc" id="L546">UNSUPPORTED(&quot;1s86b9xef6phy3gt70ojgn6ip&quot;); // 	a[3].y = q.y - w.y;</span>
+<span class="nc" id="L547">UNSUPPORTED(&quot;4zd6xleeq5n1l2zznquvnlw7v&quot;); // 	a[4] = q;</span>
+<span class="nc" id="L548">UNSUPPORTED(&quot;2wb1104b1x08j7tecfcwk25uj&quot;); // 	a[5].x = q.x + w.x;</span>
+<span class="nc" id="L549">UNSUPPORTED(&quot;6tq7rnp0h0p9xtxibo13g8v3t&quot;); // 	a[5].y = q.y + w.y;</span>
+<span class="nc" id="L550">UNSUPPORTED(&quot;7byonl28yipw4lk1syuuj51it&quot;); // 	a[6].x = m.x + w.x;</span>
+<span class="nc" id="L551">UNSUPPORTED(&quot;lwb6vnlr2dq5ysijij21wbgl&quot;); // 	a[6].y = m.y + w.y;</span>
+<span class="nc" id="L552">UNSUPPORTED(&quot;eh4rkk1h3ciybh0u0hgehkdxx&quot;); // 	a[7].x = q.x + v.x;</span>
+<span class="nc" id="L553">UNSUPPORTED(&quot;bxhyoes561jf42tw73tjj33sj&quot;); // 	a[7].y = q.y + v.y;</span>
+<span class="nc" id="L554">UNSUPPORTED(&quot;54abbljqrd361peswxjtohjg0&quot;); //     } else {                     /* crow */</span>
+<span class="nc" id="L555">UNSUPPORTED(&quot;5i9r1mehhwkkn8ojo8csm0piw&quot;); // 	a[0] = a[8] = q;</span>
+<span class="nc" id="L556">UNSUPPORTED(&quot;4ut2bmvsgdsemxiv8urham7m3&quot;); // 	a[1].x = p.x - v.x;</span>
+<span class="nc" id="L557">UNSUPPORTED(&quot;asa1ffrrxd6dkzm1sdamgofuu&quot;); // 	a[1].y = p.y - v.y;</span>
+<span class="nc" id="L558">UNSUPPORTED(&quot;6rqmfaf4g98cg0t1qaax08e69&quot;); // 	a[2].x = m.x - w.x;</span>
+<span class="nc" id="L559">UNSUPPORTED(&quot;1nwyu905ao88kvq8pgnfwerf5&quot;); // 	a[2].y = m.y - w.y;</span>
+<span class="nc" id="L560">UNSUPPORTED(&quot;5yhpyznqsxb2ga5si6phvakqg&quot;); // 	a[3].x = p.x;</span>
+<span class="nc" id="L561">UNSUPPORTED(&quot;3eko75yr046fkm2yulawhw236&quot;); // 	a[3].y = p.y;</span>
+<span class="nc" id="L562">UNSUPPORTED(&quot;7nofpsbtwg78gooeo8makz5bb&quot;); // 	a[4] = p;</span>
+<span class="nc" id="L563">UNSUPPORTED(&quot;dl1jq9xglce6cfpe03mzu3p22&quot;); // 	a[5].x = p.x;</span>
+<span class="nc" id="L564">UNSUPPORTED(&quot;8kqrguezr1d2awpazfz88cw5&quot;); // 	a[5].y = p.y;</span>
+<span class="nc" id="L565">UNSUPPORTED(&quot;7byonl28yipw4lk1syuuj51it&quot;); // 	a[6].x = m.x + w.x;</span>
+<span class="nc" id="L566">UNSUPPORTED(&quot;lwb6vnlr2dq5ysijij21wbgl&quot;); // 	a[6].y = m.y + w.y;</span>
+<span class="nc" id="L567">UNSUPPORTED(&quot;egqlf021ldci9s31jrpk2m1pk&quot;); // 	a[7].x = p.x + v.x;</span>
+<span class="nc" id="L568">UNSUPPORTED(&quot;60b7k5jzqw1ndaxnese0cnx2t&quot;); // 	a[7].y = p.y + v.y;</span>
+<span class="nc" id="L569">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L570">UNSUPPORTED(&quot;3kac8n2z06u2z5pqkm7c4z4nl&quot;); //     if (flag &amp; (1&lt;&lt;(4+2)))</span>
+<span class="nc" id="L571">UNSUPPORTED(&quot;8vyuq79k664wims1n1ltnudbt&quot;); // 	gvrender_polygon(job, a, 6, 1);</span>
+<span class="nc" id="L572">UNSUPPORTED(&quot;9i420px3t1z2sosclutiev22e&quot;); //     else if (flag &amp; (1&lt;&lt;(4+3)))</span>
+<span class="nc" id="L573">UNSUPPORTED(&quot;ap1vbm2kxsjtcp3pezwq2jwln&quot;); // 	gvrender_polygon(job, &amp;a[3], 6, 1);</span>
+<span class="nc" id="L574">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
+<span class="nc" id="L575">UNSUPPORTED(&quot;d0npn4cmn6nd0ytaww7u7ghrw&quot;); // 	gvrender_polygon(job, a, 9, 1);</span>
+<span class="nc" id="L576">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L578">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L584">public static CFunction arrow_type_gap = new CFunctionAbstract(&quot;arrow_type_gap&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L587">		return arrow_type_gap(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_gap&quot;, key=&quot;e8w54seijyii7km6zl3sivjpu&quot;, definition=&quot;static void arrow_type_gap(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_gap(Object... arg) {
+<span class="nc" id="L592">UNSUPPORTED(&quot;anlswsxb36i1znu2805bu47t2&quot;); // static void arrow_type_gap(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L593">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L594">UNSUPPORTED(&quot;brf7jajkh244o41ekaw2tyora&quot;); //     pointf q, a[2];</span>
+<span class="nc" id="L595">UNSUPPORTED(&quot;eh1wtktxp1goqc7akjgyqf00j&quot;); //     q.x = p.x + u.x;</span>
+<span class="nc" id="L596">UNSUPPORTED(&quot;3op9xoxcy2m0v7q790ta7f9hl&quot;); //     q.y = p.y + u.y;</span>
+<span class="nc" id="L597">UNSUPPORTED(&quot;dhfgavaa2js7qt2ciwujmmrpv&quot;); //     a[0] = p;</span>
+<span class="nc" id="L598">UNSUPPORTED(&quot;7b2bztb06255tydz21zauq8qq&quot;); //     a[1] = q;</span>
+<span class="nc" id="L599">UNSUPPORTED(&quot;9hbag2bcttyxj9vas0kvof5qp&quot;); //     gvrender_polyline(job, a, 2);</span>
+<span class="nc" id="L600">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L602">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L608">public static CFunction arrow_type_tee = new CFunctionAbstract(&quot;arrow_type_tee&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L611">		return arrow_type_tee(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_tee&quot;, key=&quot;eg7sgk8umcqfthbo1t0plohbt&quot;, definition=&quot;static void arrow_type_tee(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_tee(Object... arg) {
+<span class="nc" id="L616">UNSUPPORTED(&quot;9u6pwrzl9t5i0kfvnwn7uufrp&quot;); // static void arrow_type_tee(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L617">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L618">UNSUPPORTED(&quot;1hwyzphi1ihi2lx3engtta1qa&quot;); //     pointf m, n, q, v, a[4];</span>
+<span class="nc" id="L619">UNSUPPORTED(&quot;e8sltpxlu9ln6k3zn49u46zau&quot;); //     v.x = -u.y;</span>
+<span class="nc" id="L620">UNSUPPORTED(&quot;1wxxf464go09wrecpyo3y2k25&quot;); //     v.y = u.x;</span>
+<span class="nc" id="L621">UNSUPPORTED(&quot;eh1wtktxp1goqc7akjgyqf00j&quot;); //     q.x = p.x + u.x;</span>
+<span class="nc" id="L622">UNSUPPORTED(&quot;3op9xoxcy2m0v7q790ta7f9hl&quot;); //     q.y = p.y + u.y;</span>
+<span class="nc" id="L623">UNSUPPORTED(&quot;61cj5vg96f8j145swk5v2nz5a&quot;); //     m.x = p.x + u.x * 0.2;</span>
+<span class="nc" id="L624">UNSUPPORTED(&quot;25zmgst5hb9ya664up64k51tt&quot;); //     m.y = p.y + u.y * 0.2;</span>
+<span class="nc" id="L625">UNSUPPORTED(&quot;9wrt18toae33nd3tmifyahyt8&quot;); //     n.x = p.x + u.x * 0.6;</span>
+<span class="nc" id="L626">UNSUPPORTED(&quot;1151hzer2rx55qz715on0gexs&quot;); //     n.y = p.y + u.y * 0.6;</span>
+<span class="nc" id="L627">UNSUPPORTED(&quot;4ihm8x9khys2bcoivyqzf4dth&quot;); //     a[0].x = m.x + v.x;</span>
+<span class="nc" id="L628">UNSUPPORTED(&quot;941h30wfi9u1c17vhabko438l&quot;); //     a[0].y = m.y + v.y;</span>
+<span class="nc" id="L629">UNSUPPORTED(&quot;7qtkiyjyg6pzhhoyslv8pmp1q&quot;); //     a[1].x = m.x - v.x;</span>
+<span class="nc" id="L630">UNSUPPORTED(&quot;24iwwf6paxfgux41w93obhwp4&quot;); //     a[1].y = m.y - v.y;</span>
+<span class="nc" id="L631">UNSUPPORTED(&quot;314g2i9mvbz4um5y7oiyuldvw&quot;); //     a[2].x = n.x - v.x;</span>
+<span class="nc" id="L632">UNSUPPORTED(&quot;7ebhg7671hxu0useo7ewi26kn&quot;); //     a[2].y = n.y - v.y;</span>
+<span class="nc" id="L633">UNSUPPORTED(&quot;8mc60oc3vsykq69a5zb6h72u4&quot;); //     a[3].x = n.x + v.x;</span>
+<span class="nc" id="L634">UNSUPPORTED(&quot;6q0rldgbg1rfr4skqzq0v099f&quot;); //     a[3].y = n.y + v.y;</span>
+<span class="nc" id="L635">UNSUPPORTED(&quot;9u73bl75ej5xy9pe46nac6ih5&quot;); //     if (flag &amp; (1&lt;&lt;(4+2))) {</span>
+<span class="nc" id="L636">UNSUPPORTED(&quot;6omh7vjmab159riw0fejjpwk0&quot;); // 	a[0] = m;</span>
+<span class="nc" id="L637">UNSUPPORTED(&quot;3w139dwzvrzrghf5w8hox1qen&quot;); // 	a[3] = n;</span>
+<span class="nc" id="L638">UNSUPPORTED(&quot;2u9qb4zvcio06wzd2nb3bjrs4&quot;); //     } else if (flag &amp; (1&lt;&lt;(4+3))) {</span>
+<span class="nc" id="L639">UNSUPPORTED(&quot;7g1lyxw6yo0ycv1l688mehedr&quot;); // 	a[1] = m;</span>
+<span class="nc" id="L640">UNSUPPORTED(&quot;72r460jtb2id4k8ri9sdwuqy4&quot;); // 	a[2] = n;</span>
+<span class="nc" id="L641">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L642">UNSUPPORTED(&quot;15b4dosag4vcx31fnicxczw81&quot;); //     gvrender_polygon(job, a, 4, 1);</span>
+<span class="nc" id="L643">UNSUPPORTED(&quot;dhfgavaa2js7qt2ciwujmmrpv&quot;); //     a[0] = p;</span>
+<span class="nc" id="L644">UNSUPPORTED(&quot;7b2bztb06255tydz21zauq8qq&quot;); //     a[1] = q;</span>
+<span class="nc" id="L645">UNSUPPORTED(&quot;9hbag2bcttyxj9vas0kvof5qp&quot;); //     gvrender_polyline(job, a, 2);</span>
+<span class="nc" id="L646">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L648">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L654">public static CFunction arrow_type_box = new CFunctionAbstract(&quot;arrow_type_box&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L657">		return arrow_type_box(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_box&quot;, key=&quot;3hdgy0baje1akb7fjw9yovjwz&quot;, definition=&quot;static void arrow_type_box(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_box(Object... arg) {
+<span class="nc" id="L662">UNSUPPORTED(&quot;4u7yj9rhqxdonlyd5taprxs28&quot;); // static void arrow_type_box(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L663">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L664">UNSUPPORTED(&quot;5lmvyh791uemv9zn9qfakp4qb&quot;); //     pointf m, q, v, a[4];</span>
+<span class="nc" id="L665">UNSUPPORTED(&quot;ep2toe83b4kkoeb00wqwru73t&quot;); //     v.x = -u.y * 0.4;</span>
+<span class="nc" id="L666">UNSUPPORTED(&quot;8c686kltb5ewlt4qkf7ljmmc8&quot;); //     v.y = u.x * 0.4;</span>
+<span class="nc" id="L667">UNSUPPORTED(&quot;66oe3r3caie8ddr9mgkqkk0r3&quot;); //     m.x = p.x + u.x * 0.8;</span>
+<span class="nc" id="L668">UNSUPPORTED(&quot;1mowxzv768r12lzc4blbkl873&quot;); //     m.y = p.y + u.y * 0.8;</span>
+<span class="nc" id="L669">UNSUPPORTED(&quot;eh1wtktxp1goqc7akjgyqf00j&quot;); //     q.x = p.x + u.x;</span>
+<span class="nc" id="L670">UNSUPPORTED(&quot;3op9xoxcy2m0v7q790ta7f9hl&quot;); //     q.y = p.y + u.y;</span>
+<span class="nc" id="L671">UNSUPPORTED(&quot;apz7b1n6lnsr7u47d661qkf7r&quot;); //     a[0].x = p.x + v.x;</span>
+<span class="nc" id="L672">UNSUPPORTED(&quot;eqdvtg0j9avxbrpfozktn2358&quot;); //     a[0].y = p.y + v.y;</span>
+<span class="nc" id="L673">UNSUPPORTED(&quot;f0vjjdkq6txr0nrc7xjvcxpa9&quot;); //     a[1].x = p.x - v.x;</span>
+<span class="nc" id="L674">UNSUPPORTED(&quot;4e5dina8t36xvh3bfr8y98a9m&quot;); //     a[1].y = p.y - v.y;</span>
+<span class="nc" id="L675">UNSUPPORTED(&quot;4npxatuz83si51hcyaeshl3x3&quot;); //     a[2].x = m.x - v.x;</span>
+<span class="nc" id="L676">UNSUPPORTED(&quot;br2saagm87ysykkosh9e0xjab&quot;); //     a[2].y = m.y - v.y;</span>
+<span class="nc" id="L677">UNSUPPORTED(&quot;8kb1ee4fjdywi21l0xydfefb4&quot;); //     a[3].x = m.x + v.x;</span>
+<span class="nc" id="L678">UNSUPPORTED(&quot;coalhyxqy4kj07zi50yoc48fy&quot;); //     a[3].y = m.y + v.y;</span>
+<span class="nc" id="L679">UNSUPPORTED(&quot;9u73bl75ej5xy9pe46nac6ih5&quot;); //     if (flag &amp; (1&lt;&lt;(4+2))) {</span>
+<span class="nc" id="L680">UNSUPPORTED(&quot;5fbtaluh9dcnwehl25ff3obkc&quot;); // 	a[0] = p;</span>
+<span class="nc" id="L681">UNSUPPORTED(&quot;9bjq8dynp7r5d7sbwtodjucxc&quot;); // 	a[3] = m;</span>
+<span class="nc" id="L682">UNSUPPORTED(&quot;2u9qb4zvcio06wzd2nb3bjrs4&quot;); //     } else if (flag &amp; (1&lt;&lt;(4+3))) {</span>
+<span class="nc" id="L683">UNSUPPORTED(&quot;e2cqpiig8ac96q5ovh3nyr7t1&quot;); // 	a[1] = p;</span>
+<span class="nc" id="L684">UNSUPPORTED(&quot;4uekqgdzqn4bhxlllod39w27b&quot;); // 	a[2] = m;</span>
+<span class="nc" id="L685">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L686">UNSUPPORTED(&quot;7y7z0oxvzng5clk605r3p4zz8&quot;); //     gvrender_polygon(job, a, 4, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L687">UNSUPPORTED(&quot;1p9lzfwbik1778u5gdeqpxm31&quot;); //     a[0] = m;</span>
+<span class="nc" id="L688">UNSUPPORTED(&quot;7b2bztb06255tydz21zauq8qq&quot;); //     a[1] = q;</span>
+<span class="nc" id="L689">UNSUPPORTED(&quot;9hbag2bcttyxj9vas0kvof5qp&quot;); //     gvrender_polyline(job, a, 2);</span>
+<span class="nc" id="L690">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L692">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L698">public static CFunction arrow_type_diamond = new CFunctionAbstract(&quot;arrow_type_diamond&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L701">		return arrow_type_diamond(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_diamond&quot;, key=&quot;equc1q4r6wcoe2pwwnk2u01og&quot;, definition=&quot;static void arrow_type_diamond(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_diamond(Object... arg) {
+<span class="nc" id="L706">UNSUPPORTED(&quot;4wg2b1eyit9ve72uqrds41jk2&quot;); // static void arrow_type_diamond(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L707">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L708">UNSUPPORTED(&quot;7ww1c4ncz55av20zgtif7choz&quot;); //     pointf q, r, v, a[5];</span>
+<span class="nc" id="L709">UNSUPPORTED(&quot;1xsjvcsxdwie2v666ry6ihghq&quot;); //     v.x = -u.y / 3.;</span>
+<span class="nc" id="L710">UNSUPPORTED(&quot;9xea2lahdijfjgz0skow4ps5m&quot;); //     v.y = u.x / 3.;</span>
+<span class="nc" id="L711">UNSUPPORTED(&quot;4p3vbsracdkwmi6dly3odymvb&quot;); //     r.x = p.x + u.x / 2.;</span>
+<span class="nc" id="L712">UNSUPPORTED(&quot;7y5j7ecroy4fci5jzh6mk2sl9&quot;); //     r.y = p.y + u.y / 2.;</span>
+<span class="nc" id="L713">UNSUPPORTED(&quot;eh1wtktxp1goqc7akjgyqf00j&quot;); //     q.x = p.x + u.x;</span>
+<span class="nc" id="L714">UNSUPPORTED(&quot;3op9xoxcy2m0v7q790ta7f9hl&quot;); //     q.y = p.y + u.y;</span>
+<span class="nc" id="L715">UNSUPPORTED(&quot;8n36qnwzpe2hugs30s3am1zsg&quot;); //     a[0] = a[4] = q;</span>
+<span class="nc" id="L716">UNSUPPORTED(&quot;e97x8nztsokegzu9u2tgwssgi&quot;); //     a[1].x = r.x + v.x;</span>
+<span class="nc" id="L717">UNSUPPORTED(&quot;3yv64xfvqgiyturtkz9pnkbtd&quot;); //     a[1].y = r.y + v.y;</span>
+<span class="nc" id="L718">UNSUPPORTED(&quot;3isw1pofpfafh53xdqo1gmbrr&quot;); //     a[2] = p;</span>
+<span class="nc" id="L719">UNSUPPORTED(&quot;655732redrvi9o3a3dyjh90af&quot;); //     a[3].x = r.x - v.x;</span>
+<span class="nc" id="L720">UNSUPPORTED(&quot;55u2biopicz70n81k5ml5lzjp&quot;); //     a[3].y = r.y - v.y;</span>
+<span class="nc" id="L721">UNSUPPORTED(&quot;3kac8n2z06u2z5pqkm7c4z4nl&quot;); //     if (flag &amp; (1&lt;&lt;(4+2)))</span>
+<span class="nc" id="L722">UNSUPPORTED(&quot;gu9pg6c0d0uzlztdiq2o96zh&quot;); // 	gvrender_polygon(job, &amp;a[2], 3, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L723">UNSUPPORTED(&quot;9i420px3t1z2sosclutiev22e&quot;); //     else if (flag &amp; (1&lt;&lt;(4+3)))</span>
+<span class="nc" id="L724">UNSUPPORTED(&quot;52punwd4fhhq1arhez8cuwvam&quot;); // 	gvrender_polygon(job, a, 3, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L725">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
+<span class="nc" id="L726">UNSUPPORTED(&quot;6qac6zmwtg6rwpmn73fq6poje&quot;); // 	gvrender_polygon(job, a, 4, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L727">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L729">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L735">public static CFunction arrow_type_dot = new CFunctionAbstract(&quot;arrow_type_dot&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L738">		return arrow_type_dot(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_dot&quot;, key=&quot;dxl50r7ooipvtkyjb0sleittd&quot;, definition=&quot;static void arrow_type_dot(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_dot(Object... arg) {
+<span class="nc" id="L743">UNSUPPORTED(&quot;bsrxktb5cvoy4qewxrb3z3ht&quot;); // static void arrow_type_dot(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L744">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L745">UNSUPPORTED(&quot;e077smjlsfuq1ptdwqpn7lcf0&quot;); //     double r;</span>
+<span class="nc" id="L746">UNSUPPORTED(&quot;c1555k4n8zggr5m5nozuhequ8&quot;); //     pointf AF[2];</span>
+<span class="nc" id="L747">UNSUPPORTED(&quot;9nadrv289g5ravobyhu05u9or&quot;); //     r = sqrt(u.x * u.x + u.y * u.y) / 2.;</span>
+<span class="nc" id="L748">UNSUPPORTED(&quot;bxxvjt8g03vytuyx531n55b1g&quot;); //     AF[0].x = p.x + u.x / 2. - r;</span>
+<span class="nc" id="L749">UNSUPPORTED(&quot;8lbe9l6h0hqnth5j5skwrhxx1&quot;); //     AF[0].y = p.y + u.y / 2. - r;</span>
+<span class="nc" id="L750">UNSUPPORTED(&quot;1krebba2swwkp12jt15xqkjqd&quot;); //     AF[1].x = p.x + u.x / 2. + r;</span>
+<span class="nc" id="L751">UNSUPPORTED(&quot;btubzlppo1x1284g7zu99lk03&quot;); //     AF[1].y = p.y + u.y / 2. + r;</span>
+<span class="nc" id="L752">UNSUPPORTED(&quot;7mu57g14vmt1bdc523s4wiy22&quot;); //     gvrender_ellipse(job, AF, 2, !(flag &amp; (1&lt;&lt;(4+0))));</span>
+<span class="nc" id="L753">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L755">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+<span class="fc" id="L761">public static CFunction arrow_type_curve = new CFunctionAbstract(&quot;arrow_type_curve&quot;) {</span>
+	
+	public Object exe(Globals zz, Object... args) {
+<span class="nc" id="L764">		return arrow_type_curve(args);</span>
+	}};
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_type_curve&quot;, key=&quot;5oioemwdl3g1maj3ikzleo0nm&quot;, definition=&quot;static void arrow_type_curve(GVJ_t* job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_type_curve(Object... arg) {
+<span class="nc" id="L769">UNSUPPORTED(&quot;2rt93fe18qb092yomrw5l6mko&quot;); // static void arrow_type_curve(GVJ_t* job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L770">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L771">UNSUPPORTED(&quot;7127v6bnaxe4g216ue7fn3fyp&quot;); //     double arrowwidth = penwidth &gt; 4 ? 0.5 * penwidth / 4 : 0.5;</span>
+<span class="nc" id="L772">UNSUPPORTED(&quot;euvu8ayo5swdxux8kyjmrywr5&quot;); //     pointf q, v, w;</span>
+<span class="nc" id="L773">UNSUPPORTED(&quot;9jc1l9d43c00gutvyto6snss3&quot;); //     pointf AF[4], a[2];</span>
+<span class="nc" id="L774">UNSUPPORTED(&quot;eh1wtktxp1goqc7akjgyqf00j&quot;); //     q.x = p.x + u.x;</span>
+<span class="nc" id="L775">UNSUPPORTED(&quot;4qmtmdrrceo9h0mka0fkj5xci&quot;); //     q.y = p.y + u.y; </span>
+<span class="nc" id="L776">UNSUPPORTED(&quot;bvibgke8hnjr9rlyzfdumk5w&quot;); //     v.x = -u.y * arrowwidth; </span>
+<span class="nc" id="L777">UNSUPPORTED(&quot;c8xqr3hfd006yf1uuh47ndi71&quot;); //     v.y = u.x * arrowwidth;</span>
+<span class="nc" id="L778">UNSUPPORTED(&quot;duqsnax25spvj38rnd9v32b4d&quot;); //     w.x = v.y; // same direction as u, same magnitude as v.</span>
+<span class="nc" id="L779">UNSUPPORTED(&quot;4srsifkr8qc1viu2xijhnt66s&quot;); //     w.y = -v.x;</span>
+<span class="nc" id="L780">UNSUPPORTED(&quot;dhfgavaa2js7qt2ciwujmmrpv&quot;); //     a[0] = p;</span>
+<span class="nc" id="L781">UNSUPPORTED(&quot;7b2bztb06255tydz21zauq8qq&quot;); //     a[1] = q;</span>
+<span class="nc" id="L782">UNSUPPORTED(&quot;11fvrbnzwbuar9l5gc9wurbor&quot;); //     AF[0].x = p.x + v.x + w.x;</span>
+<span class="nc" id="L783">UNSUPPORTED(&quot;34xjxb9aaiworzwsfodegww0g&quot;); //     AF[0].y = p.y + v.y + w.y;</span>
+<span class="nc" id="L784">UNSUPPORTED(&quot;73ax76wsls8wr2c86mm6umxkl&quot;); //     AF[3].x = p.x - v.x + w.x;</span>
+<span class="nc" id="L785">UNSUPPORTED(&quot;7q0ly8njmscobyx3v5u7xb59c&quot;); //     AF[3].y = p.y - v.y + w.y;</span>
+<span class="nc" id="L786">UNSUPPORTED(&quot;9qmj4a7f67dltmu1pte8pzqox&quot;); //     AF[1].x = p.x + 0.95 * v.x + w.x - w.x * 4.0 / 3.0;</span>
+<span class="nc" id="L787">UNSUPPORTED(&quot;5spg9wtj9dwqh43yhk0dqfija&quot;); //     AF[1].y = AF[0].y - w.y * 4.0 / 3.0;</span>
+<span class="nc" id="L788">UNSUPPORTED(&quot;ab3yikrvtlncw10ivdxvr4a52&quot;); //     AF[2].x = p.x - 0.95 * v.x + w.x - w.x * 4.0 / 3.0;</span>
+<span class="nc" id="L789">UNSUPPORTED(&quot;45ok1xa7ia1ugs2o8ediwmd5p&quot;); //     AF[2].y = AF[3].y - w.y * 4.0 / 3.0;</span>
+<span class="nc" id="L790">UNSUPPORTED(&quot;9hbag2bcttyxj9vas0kvof5qp&quot;); //     gvrender_polyline(job, a, 2);</span>
+<span class="nc" id="L791">UNSUPPORTED(&quot;3kac8n2z06u2z5pqkm7c4z4nl&quot;); //     if (flag &amp; (1&lt;&lt;(4+2)))</span>
+<span class="nc" id="L792">UNSUPPORTED(&quot;58oum3y30wqa0bofgze20unn7&quot;); // 	Bezier(AF, 3, 0.5, NULL, AF);</span>
+<span class="nc" id="L793">UNSUPPORTED(&quot;9i420px3t1z2sosclutiev22e&quot;); //     else if (flag &amp; (1&lt;&lt;(4+3)))</span>
+<span class="nc" id="L794">UNSUPPORTED(&quot;8dngt8wih972oouawx4wska6k&quot;); // 	Bezier(AF, 3, 0.5, AF, NULL);</span>
+<span class="nc" id="L795">UNSUPPORTED(&quot;78tsqk66ihei67oy2ptr6t6f3&quot;); //     gvrender_beziercurve(job, AF, sizeof(AF) / sizeof(pointf), 0, 0, 0);</span>
+<span class="nc" id="L796">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L798">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 ruebmb0rzoin79tmkp4o357x
+// static pointf arrow_gen_type(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_gen_type&quot;, key=&quot;ruebmb0rzoin79tmkp4o357x&quot;, definition=&quot;static pointf arrow_gen_type(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_gen_type(Object... arg) {
+<span class="nc" id="L809">UNSUPPORTED(&quot;6eekmrou08qiz0zielzyhyn4g&quot;); // static pointf arrow_gen_type(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L810">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L811">UNSUPPORTED(&quot;9rrbht5x8qg377l1khejt2as2&quot;); //     int f;</span>
+<span class="nc" id="L812">UNSUPPORTED(&quot;aed0rb6bb02eluj3o0ugcfqv9&quot;); //     arrowtype_t *arrowtype;</span>
+<span class="nc" id="L813">UNSUPPORTED(&quot;ml2ttdehp7agi83yijbgk49r&quot;); //     f = flag &amp; ((1 &lt;&lt; 4) - 1);</span>
+<span class="nc" id="L814">UNSUPPORTED(&quot;f036frj7aawxz98ctbodsj666&quot;); //     for (arrowtype = Arrowtypes; arrowtype-&gt;type; arrowtype++) {</span>
+<span class="nc" id="L815">UNSUPPORTED(&quot;6qf8zxk5crelbhxfi42gd00l3&quot;); // 	if (f == arrowtype-&gt;type) {</span>
+<span class="nc" id="L816">UNSUPPORTED(&quot;epoo24e6zcp2uaje5ukce1yvh&quot;); // 	    u.x *= arrowtype-&gt;lenfact * arrowsize;</span>
+<span class="nc" id="L817">UNSUPPORTED(&quot;bcfjvd5s3jub6wo9roe0xmn0g&quot;); // 	    u.y *= arrowtype-&gt;lenfact * arrowsize;</span>
+<span class="nc" id="L818">UNSUPPORTED(&quot;5wc1a7bb8k1d528kxw2uchm7c&quot;); // 	    (arrowtype-&gt;gen) (job, p, u, arrowsize, penwidth, flag);</span>
+<span class="nc" id="L819">UNSUPPORTED(&quot;3wwns14fz356e6p4s8byp3d6i&quot;); // 	    p.x = p.x + u.x;</span>
+<span class="nc" id="L820">UNSUPPORTED(&quot;3rzld1v7nkscibpukz3bdox3v&quot;); // 	    p.y = p.y + u.y;</span>
+<span class="nc" id="L821">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L822">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L823">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L824">UNSUPPORTED(&quot;91xduilalb406jjyw2g1i07th&quot;); //     return p;</span>
+<span class="nc" id="L825">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L827">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 2u4vcl57jl62dmf8fy80ioppm
+// boxf arrow_bb(pointf p, pointf u, double arrowsize, int flag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_bb&quot;, key=&quot;2u4vcl57jl62dmf8fy80ioppm&quot;, definition=&quot;boxf arrow_bb(pointf p, pointf u, double arrowsize, int flag)&quot;)
+public static Object arrow_bb(Object... arg) {
+<span class="nc" id="L838">UNSUPPORTED(&quot;67tfc7x1j056na7s6itymoeol&quot;); // boxf arrow_bb(pointf p, pointf u, double arrowsize, int flag)</span>
+<span class="nc" id="L839">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L840">UNSUPPORTED(&quot;2fvgbj82ham8m0frx5hn9dyi&quot;); //     double s;</span>
+<span class="nc" id="L841">UNSUPPORTED(&quot;2lzsl1e035wt5epd1h8f4bn8m&quot;); //     boxf bb;</span>
+<span class="nc" id="L842">UNSUPPORTED(&quot;94ds3z1i0vt5rbv13ja90fdfp&quot;); //     double ax,ay,bx,by,cx,cy,dx,dy;</span>
+<span class="nc" id="L843">UNSUPPORTED(&quot;6r1gp4hfea5imwnuiyfuxzh6k&quot;); //     double ux2, uy2;</span>
+<span class="nc" id="L844">UNSUPPORTED(&quot;d5vh8if7unojun6hmulj4il7u&quot;); //     /* generate arrowhead vector */</span>
+<span class="nc" id="L845">UNSUPPORTED(&quot;5yc3jb0utnnay4x88h644puhz&quot;); //     u.x -= p.x;</span>
+<span class="nc" id="L846">UNSUPPORTED(&quot;egh8lzpdfrza6k11lopupxykp&quot;); //     u.y -= p.y;</span>
+<span class="nc" id="L847">UNSUPPORTED(&quot;bh7ueu6dokefdmej3xz79c7ty&quot;); //     /* the EPSILONs are to keep this stable as length of u approaches 0.0 */</span>
+<span class="nc" id="L848">UNSUPPORTED(&quot;3oao4fejxee2cop1fhd4m8tae&quot;); //     s = 10. * arrowsize / (sqrt(u.x * u.x + u.y * u.y) + .0001);</span>
+<span class="nc" id="L849">UNSUPPORTED(&quot;8qxmhdlg9d49yg9gxkjw043&quot;); //     u.x += (u.x &gt;= 0.0) ? .0001 : -.0001;</span>
+<span class="nc" id="L850">UNSUPPORTED(&quot;4vxtvwh3x5b3i33sdyppe3trq&quot;); //     u.y += (u.y &gt;= 0.0) ? .0001 : -.0001;</span>
+<span class="nc" id="L851">UNSUPPORTED(&quot;bwi3f8xk8t2nbzy5tjtgeewjl&quot;); //     u.x *= s;</span>
+<span class="nc" id="L852">UNSUPPORTED(&quot;do56zsbrbn95ovnoqu6zzjjmw&quot;); //     u.y *= s;</span>
+<span class="nc" id="L853">UNSUPPORTED(&quot;alix1e6k9ywov3xxcwxcgo1hh&quot;); //     /* compute all 4 corners of rotated arrowhead bounding box */</span>
+<span class="nc" id="L854">UNSUPPORTED(&quot;9bdmzamsx8jasbcfy2mk0v7yt&quot;); //     ux2 = u.x / 2.;</span>
+<span class="nc" id="L855">UNSUPPORTED(&quot;3k8htwk7cas9gfe4j797zk3b&quot;); //     uy2 = u.y / 2.;</span>
+<span class="nc" id="L856">UNSUPPORTED(&quot;ar2s2pmmxun5v6p0d4mlij1ro&quot;); //     ax = p.x - uy2;</span>
+<span class="nc" id="L857">UNSUPPORTED(&quot;d9cpq1pbscjxjhkyi57s76o4r&quot;); //     ay = p.y - ux2;</span>
+<span class="nc" id="L858">UNSUPPORTED(&quot;7m3bdjur8btdn3q1dzd4o751s&quot;); //     bx = p.x + uy2;</span>
+<span class="nc" id="L859">UNSUPPORTED(&quot;bhn3rg0stek17iytsy7bgbwqw&quot;); //     by = p.y + ux2;</span>
+<span class="nc" id="L860">UNSUPPORTED(&quot;ai8hjx4uwhzow4nolep1478xn&quot;); //     cx = ax + u.x;</span>
+<span class="nc" id="L861">UNSUPPORTED(&quot;15l0cqg7njm4ebimncczi9uho&quot;); //     cy = ay + u.y;</span>
+<span class="nc" id="L862">UNSUPPORTED(&quot;29117dcz6pcm4ibiebo4cemeh&quot;); //     dx = bx + u.x;</span>
+<span class="nc" id="L863">UNSUPPORTED(&quot;7s3y5imd0u3woy1d0q58g1wlh&quot;); //     dy = by + u.y;</span>
+<span class="nc" id="L864">UNSUPPORTED(&quot;7lzozmdnkd5c06cyxy2skrar5&quot;); //     /* compute a right bb */</span>
+<span class="nc" id="L865">UNSUPPORTED(&quot;4shnxc3z5z4wj3l0pl7tml625&quot;); //     bb.UR.x = MAX(ax, MAX(bx, MAX(cx, dx)));</span>
+<span class="nc" id="L866">UNSUPPORTED(&quot;2igw3asrvk13qlfbw4sgn7vxt&quot;); //     bb.UR.y = MAX(ay, MAX(by, MAX(cy, dy)));</span>
+<span class="nc" id="L867">UNSUPPORTED(&quot;7fz9fiabx9i87t8t6bgjeso5a&quot;); //     bb.LL.x = MIN(ax, MIN(bx, MIN(cx, dx)));</span>
+<span class="nc" id="L868">UNSUPPORTED(&quot;c6v20rdx0lfdvypx8l4tomnri&quot;); //     bb.LL.y = MIN(ay, MIN(by, MIN(cy, dy)));</span>
+<span class="nc" id="L869">UNSUPPORTED(&quot;5v5hh30squmit8o2i5hs25eig&quot;); //     return bb;</span>
+<span class="nc" id="L870">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L872">throw new UnsupportedOperationException();</span>
+}
+
+
+
+
+//3 8ss8m9a0p5v0yx2oqggh0rx57
+// void arrow_gen(GVJ_t * job, emit_state_t emit_state, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/arrows.c&quot;, name=&quot;arrow_gen&quot;, key=&quot;8ss8m9a0p5v0yx2oqggh0rx57&quot;, definition=&quot;void arrow_gen(GVJ_t * job, emit_state_t emit_state, pointf p, pointf u, double arrowsize, double penwidth, int flag)&quot;)
+public static Object arrow_gen(Object... arg) {
+<span class="nc" id="L883">UNSUPPORTED(&quot;ag73i6wbc5lb0d46ul40euyur&quot;); // void arrow_gen(GVJ_t * job, emit_state_t emit_state, pointf p, pointf u, double arrowsize, double penwidth, int flag)</span>
+<span class="nc" id="L884">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L885">UNSUPPORTED(&quot;84llcpxtvxaggx841n2t03850&quot;); //     obj_state_t *obj = job-&gt;obj;</span>
+<span class="nc" id="L886">UNSUPPORTED(&quot;2fvgbj82ham8m0frx5hn9dyi&quot;); //     double s;</span>
+<span class="nc" id="L887">UNSUPPORTED(&quot;66oipfshtfj4imr4j2x2drib0&quot;); //     int i, f;</span>
+<span class="nc" id="L888">UNSUPPORTED(&quot;ecr1y7qy0ikxkidkdfvwv88ir&quot;); //     emit_state_t old_emit_state;</span>
+<span class="nc" id="L889">UNSUPPORTED(&quot;c3lqudp40feg72zp97ngqkww9&quot;); //     old_emit_state = obj-&gt;emit_state;</span>
+<span class="nc" id="L890">UNSUPPORTED(&quot;3ook7gsw0rr7b6uwm9f5a5dtx&quot;); //     obj-&gt;emit_state = emit_state;</span>
+<span class="nc" id="L891">UNSUPPORTED(&quot;exvy7jlggpvu1zhz08fo1jbvi&quot;); //     /* Dotted and dashed styles on the arrowhead are ugly (dds) */</span>
+<span class="nc" id="L892">UNSUPPORTED(&quot;em34eidklzv0dobtybvgz9gwu&quot;); //     /* linewidth needs to be reset */</span>
+<span class="nc" id="L893">UNSUPPORTED(&quot;4g8oyutwebzej18aaiz74zb9k&quot;); //     gvrender_set_style(job, job-&gt;gvc-&gt;defaultlinestyle);</span>
+<span class="nc" id="L894">UNSUPPORTED(&quot;eertb1vvqryb308a1uuff8s0&quot;); //     gvrender_set_penwidth(job, penwidth);</span>
+<span class="nc" id="L895">UNSUPPORTED(&quot;d5vh8if7unojun6hmulj4il7u&quot;); //     /* generate arrowhead vector */</span>
+<span class="nc" id="L896">UNSUPPORTED(&quot;5yc3jb0utnnay4x88h644puhz&quot;); //     u.x -= p.x;</span>
+<span class="nc" id="L897">UNSUPPORTED(&quot;egh8lzpdfrza6k11lopupxykp&quot;); //     u.y -= p.y;</span>
+<span class="nc" id="L898">UNSUPPORTED(&quot;bh7ueu6dokefdmej3xz79c7ty&quot;); //     /* the EPSILONs are to keep this stable as length of u approaches 0.0 */</span>
+<span class="nc" id="L899">UNSUPPORTED(&quot;9s182w6wdwxo0pwu9hljlyofe&quot;); //     s = 10. / (sqrt(u.x * u.x + u.y * u.y) + .0001);</span>
+<span class="nc" id="L900">UNSUPPORTED(&quot;8qxmhdlg9d49yg9gxkjw043&quot;); //     u.x += (u.x &gt;= 0.0) ? .0001 : -.0001;</span>
+<span class="nc" id="L901">UNSUPPORTED(&quot;4vxtvwh3x5b3i33sdyppe3trq&quot;); //     u.y += (u.y &gt;= 0.0) ? .0001 : -.0001;</span>
+<span class="nc" id="L902">UNSUPPORTED(&quot;bwi3f8xk8t2nbzy5tjtgeewjl&quot;); //     u.x *= s;</span>
+<span class="nc" id="L903">UNSUPPORTED(&quot;do56zsbrbn95ovnoqu6zzjjmw&quot;); //     u.y *= s;</span>
+<span class="nc" id="L904">UNSUPPORTED(&quot;3zei0bi63grn37qiuxn09n7hz&quot;); //     /* the first arrow head - closest to node */</span>
+<span class="nc" id="L905">UNSUPPORTED(&quot;a2n8aqfq0cqpx8elstmfn9oq6&quot;); //     for (i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L906">UNSUPPORTED(&quot;8sgyt5ym5jt73oknb4tdj2zpl&quot;); //         f = (flag &gt;&gt; (i * 8)) &amp; ((1 &lt;&lt; 8) - 1);</span>
+<span class="nc" id="L907">UNSUPPORTED(&quot;5vg3retgvi5ekir9xbw8j4zoq&quot;); // 	if (f == (0))</span>
+<span class="nc" id="L908">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L909">UNSUPPORTED(&quot;biq7xz2uj7ksjrqn6tqr9glzj&quot;); //         p = arrow_gen_type(job, p, u, arrowsize, penwidth, f);</span>
+<span class="nc" id="L910">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L911">UNSUPPORTED(&quot;b1bkq4eyrmepbxyb3qiuhi8b8&quot;); //     obj-&gt;emit_state = old_emit_state;</span>
+<span class="nc" id="L912">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+
+<span class="nc" id="L914">throw new UnsupportedOperationException();</span>
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

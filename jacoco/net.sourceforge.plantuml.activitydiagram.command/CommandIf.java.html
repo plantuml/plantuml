@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandIf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram.command</a> &gt; <span class="el_source">CommandIf.java</span></div><h1>CommandIf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram.command;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.DeadCode;
+import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+@DeadCode
+public class CommandIf extends SingleLineCommand2&lt;ActivityDiagram&gt; {
+
+	private CommandIf() {
+<span class="nc" id="L65">		super(getRegexConcat());</span>
+<span class="nc" id="L66">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="nc" id="L69">		return RegexConcat.build(CommandIf.class.getName(), RegexLeaf.start(), //</span>
+				new RegexOptional(//
+						new RegexOr(&quot;FIRST&quot;, //
+								new RegexLeaf(&quot;STAR&quot;, &quot;(\\(\\*(top)?\\))&quot;), //
+								new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
+								new RegexLeaf(&quot;BAR&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
+								new RegexLeaf(&quot;QUOTED&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?&quot;))), //
+<span class="nc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+				// new RegexOptional(new RegexLeaf(&quot;ARROW&quot;,
+				// &quot;([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[=-]*\\&gt;)&quot;)), //
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf(&quot;ARROW_BODY1&quot;, &quot;([-.]+)&quot;), //
+						new RegexLeaf(&quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+						new RegexLeaf(&quot;ARROW_DIRECTION&quot;, &quot;(\\*|left|right|up|down|le?|ri?|up?|do?)?&quot;), //
+						new RegexLeaf(&quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+						new RegexLeaf(&quot;ARROW_BODY2&quot;, &quot;([-.]*)&quot;), //
+						new RegexLeaf(&quot;\\&gt;&quot;) //
+				)), //
+<span class="nc" id="L87">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;BRACKET&quot;, &quot;\\[([^\\]*]+[^\\]]*)\\]&quot;)), //
+<span class="nc" id="L89">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOr(//
+						new RegexLeaf(&quot;IF1&quot;, &quot;if[%s]*[%g]([^%g]*)[%g][%s]*(?:as[%s]+([%pLN_.]+)[%s]+)?&quot;), //
+						new RegexLeaf(&quot;IF2&quot;, &quot;if[%s]+(.+?)&quot;)), //
+<span class="nc" id="L93">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(&quot;then&quot;)), //
+<span class="nc" id="L95">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+<span class="nc" id="L100">		final Entity entity1 = CommandLinkActivity.getEntity(location, diagram, arg, true);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L102">			return CommandExecutionResult.error(&quot;No if possible at this point&quot;);</span>
+
+		final String ifCode;
+		final String ifLabel;
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (arg.get(&quot;IF2&quot;, 0) == null) {</span>
+<span class="nc" id="L107">			ifCode = arg.get(&quot;IF1&quot;, 1);</span>
+<span class="nc" id="L108">			ifLabel = arg.get(&quot;IF1&quot;, 0);</span>
+		} else {
+<span class="nc" id="L110">			ifCode = null;</span>
+<span class="nc" id="L111">			ifLabel = arg.get(&quot;IF2&quot;, 0);</span>
+		}
+<span class="nc" id="L113">		diagram.startIf(location, ifCode);</span>
+
+<span class="nc" id="L115">		int lenght = 2;</span>
+
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0) != null) {</span>
+//			final String arrow = StringUtils.manageArrowForCuca(arg.get(&quot;ARROW&quot;, 0));
+//			lenght = arrow.length() - 1;
+<span class="nc" id="L120">			final String arrowBody1 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0));</span>
+<span class="nc" id="L121">			final String arrowBody2 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY2&quot;, 0));</span>
+<span class="nc" id="L122">			final String arrowDirection = CommandLinkClass.notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
+
+<span class="nc" id="L124">			final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
+<span class="nc" id="L125">			lenght = arrow.length() - 1;</span>
+		}
+
+<span class="nc" id="L128">		final Entity branch = diagram.getCurrentContext().getBranch();</span>
+
+<span class="nc" id="L130">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0)), lenght);</span>
+<span class="nc" id="L131">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,</span>
+<span class="nc" id="L132">				branch, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)</span>
+<span class="nc" id="L133">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (arg.get(&quot;ARROW&quot;, 0) != null) {</span>
+<span class="nc" id="L135">			final Direction direction = StringUtils.getArrowDirection(arg.get(&quot;ARROW&quot;, 0));</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">			if (direction == Direction.LEFT || direction == Direction.UP)</span>
+<span class="nc" id="L137">				link = link.getInv();</span>
+
+		}
+
+<span class="nc" id="L141">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="nc" id="L142">		diagram.addLink(link);</span>
+
+<span class="nc" id="L144">		return CommandExecutionResult.ok();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractionGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.text</a> &gt; <span class="el_source">AbstractionGrid.java</span></div><h1>AbstractionGrid.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.text;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+public class AbstractionGrid {
+
+	private static final boolean DEBUG = false;
+	
+	private TextGrid grid;
+	
+	/**
+	 * Makes an AbstractionGrid using &lt;code&gt;internalGrid&lt;/code&gt; as
+	 * its internal buffer
+	 * 
+	 * @param internalGrid
+	 * @return
+	 */
+	public static AbstractionGrid makeUsingBuffer(TextGrid internalGrid){
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if(internalGrid.getWidth() % 3 != 0</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">			|| internalGrid.getHeight() % 3 != 0) throw new IllegalArgumentException(&quot;Passed TextGrid must have dimensions that are divisible by 3.&quot;); </span>
+<span class="nc" id="L45">		AbstractionGrid result = new AbstractionGrid(internalGrid.getWidth() / 3, internalGrid.getHeight() / 3);</span>
+<span class="nc" id="L46">		result.setInternalBuffer(internalGrid);</span>
+<span class="nc" id="L47">		return result;</span>
+	}
+	
+	/**
+	 * Makes an AbstractionGrid using the &lt;code&gt;cellSet&lt;/code&gt;
+	 * of &lt;code&gt;textGrid&lt;/code&gt;.
+	 * 
+	 * @param textGrid
+	 * @param cellSet
+	 */
+	public AbstractionGrid(TextGrid textGrid, CellSet cellSet){
+<span class="nc" id="L58">		this(textGrid.getWidth(), textGrid.getHeight());</span>
+		/*this(cellSet.getWidth(), cellSet.getHeight());
+		
+		cellSet = new CellSet(cellSet);
+		cellSet.translate( - cellSet.getMinX(), - cellSet.getMinY());*/
+		
+		if(DEBUG){
+			System.out.println(&quot;Making AbstractionGrid using buffer:&quot;);
+			textGrid.printDebug();
+			System.out.println(&quot;...and the following CellSet:&quot;);
+			cellSet.printAsGrid();
+		}
+		
+<span class="nc" id="L71">		Iterator it = cellSet.iterator();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L73">			TextGrid.Cell cell = (TextGrid.Cell) it.next();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if(textGrid.isBlank(cell)) continue;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if(textGrid.isCross(cell)){</span>
+<span class="nc" id="L76">				set(cell.x, cell.y, AbstractCell.makeCross());</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">			} else if(textGrid.isT(cell)){</span>
+<span class="nc" id="L78">				set(cell.x, cell.y, AbstractCell.makeT());</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			} else if(textGrid.isK(cell)){</span>
+<span class="nc" id="L80">				set(cell.x, cell.y, AbstractCell.makeK());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			} else if(textGrid.isInverseT(cell)){</span>
+<span class="nc" id="L82">				set(cell.x, cell.y, AbstractCell.makeInverseT());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			} else if(textGrid.isInverseK(cell)){</span>
+<span class="nc" id="L84">				set(cell.x, cell.y, AbstractCell.makeInverseK());</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			} else if(textGrid.isCorner1(cell)){</span>
+<span class="nc" id="L86">				set(cell.x, cell.y, AbstractCell.makeCorner1());</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			} else if(textGrid.isCorner2(cell)){</span>
+<span class="nc" id="L88">				set(cell.x, cell.y, AbstractCell.makeCorner2());</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			} else if(textGrid.isCorner3(cell)){</span>
+<span class="nc" id="L90">				set(cell.x, cell.y, AbstractCell.makeCorner3());</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			} else if(textGrid.isCorner4(cell)){</span>
+<span class="nc" id="L92">				set(cell.x, cell.y, AbstractCell.makeCorner4());</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			} else if(textGrid.isHorizontalLine(cell)){</span>
+<span class="nc" id="L94">				set(cell.x, cell.y, AbstractCell.makeHorizontalLine());</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			} else if(textGrid.isVerticalLine(cell)){</span>
+<span class="nc" id="L96">				set(cell.x, cell.y, AbstractCell.makeVerticalLine());</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			} else if(textGrid.isCrossOnLine(cell)){</span>
+<span class="nc" id="L98">				set(cell.x, cell.y, AbstractCell.makeCross());</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			} else if(textGrid.isStarOnLine(cell)){</span>
+<span class="nc" id="L100">				set(cell.x, cell.y, AbstractCell.makeStar());</span>
+			}
+<span class="nc" id="L102">		}</span>
+
+		if(DEBUG){
+			System.out.println(&quot;...the resulting AbstractionGrid is:&quot;);
+			grid.printDebug();
+		}
+<span class="nc" id="L108">	}</span>
+	
+<span class="nc" id="L110">	private AbstractionGrid(int width, int height){</span>
+<span class="nc" id="L111">		grid = new TextGrid(width*3, height*3);</span>
+<span class="nc" id="L112">	}</span>
+	
+	public TextGrid getCopyOfInternalBuffer(){
+<span class="nc" id="L115">		return new TextGrid(grid);</span>
+	}
+
+	private void setInternalBuffer(TextGrid grid){
+<span class="nc" id="L119">		this.grid = grid;</span>
+<span class="nc" id="L120">	}</span>
+
+	
+	public int getWidth(){
+<span class="nc" id="L124">		return grid.getWidth() / 3;</span>
+	}
+
+	public int getHeight(){
+<span class="nc" id="L128">		return grid.getHeight() / 3;</span>
+	}
+
+	public TextGrid getAsTextGrid(){
+<span class="nc" id="L132">		TextGrid result = new TextGrid(getWidth(), getHeight());</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		for(int y = 0; y &lt; grid.getHeight(); y++){</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			for(int x = 0; x &lt; grid.getWidth(); x++){</span>
+<span class="nc" id="L135">				TextGrid.Cell cell = grid.new Cell(x, y);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">				if(!grid.isBlank(cell)) result.set(x/3, y/3, '*');</span>
+			}
+		}
+		if (DEBUG){
+			System.out.println(&quot;Getting AbstractionGrid as textGrid.\nAbstractionGrid:&quot;);
+			grid.printDebug();
+			System.out.println(&quot;...as text grid:&quot;);
+			result.printDebug();
+		}
+
+<span class="nc" id="L146">		return result;</span>
+	}
+
+	public ArrayList&lt;CellSet&gt; getDistinctShapes(){
+<span class="nc" id="L150">		ArrayList&lt;CellSet&gt; result = new ArrayList&lt;CellSet&gt;();</span>
+		
+<span class="nc" id="L152">		CellSet nonBlank = grid.getAllNonBlank();</span>
+<span class="nc" id="L153">		ArrayList&lt;CellSet&gt; distinct = nonBlank.breakIntoDistinctBoundaries();</span>
+		
+<span class="nc" id="L155">		Iterator&lt;CellSet&gt; it = distinct.iterator();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L157">			CellSet set = it.next();</span>
+<span class="nc" id="L158">			AbstractionGrid temp = new AbstractionGrid(this.getWidth(), this.getHeight());</span>
+<span class="nc" id="L159">			temp.fillCells(set);</span>
+<span class="nc" id="L160">			result.add(temp.getAsTextGrid().getAllNonBlank());</span>
+<span class="nc" id="L161">		}</span>
+		
+<span class="nc" id="L163">		return result; </span>
+	}
+	
+	protected void fillCells(CellSet cells){
+<span class="nc" id="L167">		grid.fillCellsWith(cells, '*');</span>
+<span class="nc" id="L168">	}</span>
+	
+	public void set(int xPos, int yPos, AbstractCell cell){
+<span class="nc" id="L171">		xPos *= 3;</span>
+<span class="nc" id="L172">		yPos *= 3;</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for(int y = 0; y &lt; 3; y++){</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			for(int x = 0; x &lt; 3; x++){</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">				if(cell.rows[x][y] == 1){</span>
+<span class="nc" id="L176">					grid.set(xPos + x, yPos + y, '*');</span>
+				}
+			}
+		}
+<span class="nc" id="L180">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

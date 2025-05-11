@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrowAndNoteBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.graphic</a> &gt; <span class="el_source">ArrowAndNoteBox.java</span></div><h1>ArrowAndNoteBox.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.sequencediagram.InGroupable;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
+
+class ArrowAndNoteBox extends Arrow implements InGroupable {
+
+	private final Arrow arrow;
+<span class="fc" id="L53">	private final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
+
+	public ArrowAndNoteBox(AtomicInteger counter, Pragma pragma, StringBounder stringBounder, Arrow arrow, List&lt;NoteBox&gt; noteBoxes) {
+<span class="fc" id="L56">		super(counter, pragma, arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());</span>
+<span class="fc" id="L57">		this.arrow = arrow;</span>
+<span class="fc" id="L58">		this.noteBoxes.addAll(noteBoxes);</span>
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (NoteBox noteBox : noteBoxes) {</span>
+<span class="fc" id="L61">			final double arrowHeight = arrow.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L62">			final double noteHeight = noteBox.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L63">			final double myHeight = getPreferredHeight(stringBounder);</span>
+
+<span class="fc" id="L65">			final double diffHeightArrow = myHeight - arrowHeight;</span>
+<span class="fc" id="L66">			final double diffHeightNote = myHeight - noteHeight;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			if (diffHeightArrow &gt; 0) {</span>
+<span class="fc" id="L68">				arrow.pushToDown(diffHeightArrow / 2);</span>
+			}
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			if (diffHeightNote &gt; 0) {</span>
+<span class="fc" id="L71">				noteBox.pushToDown(diffHeightNote / 2);</span>
+			}
+<span class="fc" id="L73">		}</span>
+<span class="fc" id="L74">	}</span>
+
+	@Override
+	final public double getArrowOnlyWidth(StringBounder stringBounder) {
+<span class="fc" id="L78">		return arrow.getPreferredWidth(stringBounder);</span>
+	}
+
+	@Override
+	public void setMaxX(double m) {
+<span class="fc" id="L83">		super.setMaxX(m);</span>
+<span class="fc" id="L84">		arrow.setMaxX(m);</span>
+<span class="fc" id="L85">	}</span>
+
+	@Override
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+<span class="fc" id="L89">		arrow.drawU(ug, maxX, context);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (NoteBox noteBox : noteBoxes) {</span>
+<span class="fc" id="L91">			noteBox.drawU(ug, maxX, context);</span>
+<span class="fc" id="L92">		}</span>
+<span class="fc" id="L93">	}</span>
+
+	@Override
+	public double getPreferredHeight(StringBounder stringBounder) {
+<span class="fc" id="L97">		double result = arrow.getPreferredHeight(stringBounder);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (NoteBox noteBox : noteBoxes) {</span>
+<span class="fc" id="L99">			result = Math.max(result, noteBox.getPreferredHeight(stringBounder));</span>
+<span class="fc" id="L100">		}</span>
+<span class="fc" id="L101">		return result;</span>
+	}
+
+	@Override
+	public double getPreferredWidth(StringBounder stringBounder) {
+<span class="fc" id="L106">		double w = arrow.getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L107">		w = Math.max(w, arrow.getActualWidth(stringBounder));</span>
+<span class="fc" id="L108">		double result = w;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (NoteBox noteBox : noteBoxes) {</span>
+<span class="fc" id="L110">			result += noteBox.getPreferredWidth(stringBounder);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			if (noteBox.getNotePosition() == NotePosition.RIGHT) {</span>
+<span class="fc" id="L112">				result += noteBox.getRightShift(arrow.getStartingY());</span>
+			}
+<span class="fc" id="L114">		}</span>
+<span class="fc" id="L115">		return result;</span>
+	}
+
+	@Override
+	public double getActualWidth(StringBounder stringBounder) {
+<span class="fc" id="L120">		return getPreferredWidth(stringBounder);</span>
+	}
+
+	@Override
+	public double getStartingX(StringBounder stringBounder) {
+<span class="fc" id="L125">		double result = arrow.getStartingX(stringBounder);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (NoteBox noteBox : noteBoxes) {</span>
+<span class="fc" id="L127">			result = Math.min(result, noteBox.getStartingX(stringBounder));</span>
+<span class="fc" id="L128">		}</span>
+<span class="fc" id="L129">		return result;</span>
+	}
+
+	@Override
+	public int getDirection(StringBounder stringBounder) {
+<span class="nc" id="L134">		return arrow.getDirection(stringBounder);</span>
+	}
+
+	@Override
+	public double getArrowYStartLevel(StringBounder stringBounder) {
+<span class="fc" id="L139">		return arrow.getArrowYStartLevel(stringBounder);</span>
+	}
+
+	@Override
+	public double getArrowYEndLevel(StringBounder stringBounder) {
+<span class="fc" id="L144">		return arrow.getArrowYEndLevel(stringBounder);</span>
+	}
+
+	public double getMaxX(StringBounder stringBounder) {
+<span class="fc" id="L148">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
+	}
+
+	public double getMinX(StringBounder stringBounder) {
+<span class="fc" id="L152">		return getStartingX(stringBounder);</span>
+	}
+
+	public String toString(StringBounder stringBounder) {
+<span class="nc" id="L156">		return toString();</span>
+	}
+
+	@Override
+	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
+<span class="nc" id="L161">		return arrow.getParticipantAt(stringBounder, position);</span>
+	}
+
+	@Override
+	protected Participant getParticipant1() {
+<span class="nc" id="L166">		return arrow.getParticipant1();</span>
+	}
+
+	@Override
+	protected Participant getParticipant2() {
+<span class="nc" id="L171">		return arrow.getParticipant2();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

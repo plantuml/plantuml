@@ -1,0 +1,1321 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnimatedGifEncoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">AnimatedGifEncoder.java</span></div><h1>AnimatedGifEncoder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.IOException;
+import java.io.OutputStream;
+
+/**
+ * Class AnimatedGifEncoder - Encodes a GIF file consisting of one or more
+ * frames.
+ * 
+ * &lt;pre&gt;
+ *  Example:
+ *     AnimatedGifEncoder e = new AnimatedGifEncoder();
+ *     e.start(outputFileName);
+ *     e.setDelay(1000);   // 1 frame per sec
+ *     e.addFrame(image1);
+ *     e.addFrame(image2);
+ *     e.finish();
+ * &lt;/pre&gt;
+ * 
+ * No copyright asserted on the source code of this class. May be used for any
+ * purpose, however, refer to the Unisys LZW patent for restrictions on use of
+ * the associated LZWEncoder class. Please forward any corrections to
+ * kweiner@fmsware.com.
+ * 
+ * @author Kevin Weiner, FM Software
+ * @version 1.03 November 2003
+ * 
+ */
+
+<span class="nc" id="L69">public class AnimatedGifEncoder {</span>
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
+
+	protected int width; // image size
+
+	protected int height;
+
+<span class="nc" id="L77">	protected Color transparent = null; // transparent color if given</span>
+
+	protected int transIndex; // transparent index in color table
+
+<span class="nc" id="L81">	protected int repeat = -1; // no repeat</span>
+
+<span class="nc" id="L83">	protected int delay = 0; // frame delay (hundredths)</span>
+
+<span class="nc" id="L85">	protected boolean started = false; // ready to output frames</span>
+
+	protected OutputStream out;
+
+	protected BufferedImage image; // current frame
+
+	protected byte[] pixels; // BGR byte array from frame
+
+	protected byte[] indexedPixels; // converted frame indexed to palette
+
+	protected int colorDepth; // number of bit planes
+
+	protected byte[] colorTab; // RGB palette
+
+<span class="nc" id="L99">	protected boolean[] usedEntry = new boolean[256]; // active palette</span>
+														// entries
+
+<span class="nc" id="L102">	protected int palSize = 7; // color table size (bits-1)</span>
+
+<span class="nc" id="L104">	protected int dispose = -1; // disposal code (-1 = use default)</span>
+
+<span class="nc" id="L106">	protected boolean closeStream = false; // close stream when finished</span>
+
+<span class="nc" id="L108">	protected boolean firstFrame = true;</span>
+
+<span class="nc" id="L110">	protected boolean sizeSet = false; // if false, get size from first frame</span>
+
+<span class="nc" id="L112">	protected int sample = 10; // default sample interval for quantizer</span>
+
+	/**
+	 * Sets the delay time between each frame, or changes it for subsequent frames
+	 * (applies to last frame added).
+	 * 
+	 * @param ms int delay time in milliseconds
+	 */
+	public void setDelay(int ms) {
+<span class="nc" id="L121">		delay = Math.round(ms / 10.0f);</span>
+<span class="nc" id="L122">	}</span>
+
+	/**
+	 * Sets the GIF frame disposal code for the last added frame and any subsequent
+	 * frames. Default is 0 if no transparent color has been set, otherwise 2.
+	 * 
+	 * @param code int disposal code.
+	 */
+	public void setDispose(int code) {
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (code &gt;= 0) {</span>
+<span class="nc" id="L132">			dispose = code;</span>
+		}
+<span class="nc" id="L134">	}</span>
+
+	/**
+	 * Sets the number of times the set of GIF frames should be played. Default is
+	 * 1; 0 means play indefinitely. Must be invoked before the first image is
+	 * added.
+	 * 
+	 * @param iter int number of iterations.
+	 */
+	public void setRepeat(int iter) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (iter &gt;= 0) {</span>
+<span class="nc" id="L145">			repeat = iter;</span>
+		}
+<span class="nc" id="L147">	}</span>
+
+	/**
+	 * Sets the transparent color for the last added frame and any subsequent
+	 * frames. Since all colors are subject to modification in the quantization
+	 * process, the color in the final palette for each frame closest to the given
+	 * color becomes the transparent color for that frame. May be set to null to
+	 * indicate no transparent color.
+	 * 
+	 * @param c Color to be treated as transparent on display.
+	 */
+	public void setTransparent(Color c) {
+<span class="nc" id="L159">		transparent = c;</span>
+<span class="nc" id="L160">	}</span>
+
+	/**
+	 * Adds next GIF frame. The frame is not written immediately, but is actually
+	 * deferred until the next frame is received so that timing data can be
+	 * inserted. Invoking &lt;code&gt;finish()&lt;/code&gt; flushes all frames. If
+	 * &lt;code&gt;setSize&lt;/code&gt; was not invoked, the size of the first image is used for
+	 * all subsequent frames.
+	 * 
+	 * @param im BufferedImage containing frame to write.
+	 * @return true if successful.
+	 */
+	public boolean addFrame(BufferedImage im) {
+<span class="nc bnc" id="L173" title="All 4 branches missed.">		if ((im == null) || !started) {</span>
+<span class="nc" id="L174">			return false;</span>
+		}
+<span class="nc" id="L176">		boolean ok = true;</span>
+		try {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (!sizeSet) {</span>
+				// use first frame's size
+<span class="nc" id="L180">				setSize(im.getWidth(), im.getHeight());</span>
+			}
+<span class="nc" id="L182">			image = im;</span>
+<span class="nc" id="L183">			getImagePixels(); // convert to correct format if necessary</span>
+<span class="nc" id="L184">			analyzePixels(); // build color table &amp; map pixels</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (firstFrame) {</span>
+<span class="nc" id="L186">				writeLSD(); // logical screen descriptior</span>
+<span class="nc" id="L187">				writePalette(); // global color table</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">				if (repeat &gt;= 0) {</span>
+					// use NS app extension to indicate reps
+<span class="nc" id="L190">					writeNetscapeExt();</span>
+				}
+			}
+<span class="nc" id="L193">			writeGraphicCtrlExt(); // write graphic control extension</span>
+<span class="nc" id="L194">			writeImageDesc(); // image descriptor</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (!firstFrame) {</span>
+<span class="nc" id="L196">				writePalette(); // local color table</span>
+			}
+<span class="nc" id="L198">			writePixels(); // encode and write pixel data</span>
+<span class="nc" id="L199">			firstFrame = false;</span>
+<span class="nc" id="L200">		} catch (IOException e) {</span>
+<span class="nc" id="L201">			ok = false;</span>
+<span class="nc" id="L202">		}</span>
+
+<span class="nc" id="L204">		return ok;</span>
+	}
+
+	/**
+	 * Flushes any pending data and closes output file. If writing to an
+	 * OutputStream, the stream is not closed.
+	 */
+	public boolean finish() {
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (!started)</span>
+<span class="nc" id="L213">			return false;</span>
+<span class="nc" id="L214">		boolean ok = true;</span>
+<span class="nc" id="L215">		started = false;</span>
+		try {
+<span class="nc" id="L217">			out.write(0x3b); // gif trailer</span>
+<span class="nc" id="L218">			out.flush();</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">			if (closeStream) {</span>
+<span class="nc" id="L220">				out.close();</span>
+			}
+<span class="nc" id="L222">		} catch (IOException e) {</span>
+<span class="nc" id="L223">			ok = false;</span>
+<span class="nc" id="L224">		}</span>
+
+		// reset for subsequent use
+<span class="nc" id="L227">		transIndex = 0;</span>
+<span class="nc" id="L228">		out = null;</span>
+<span class="nc" id="L229">		image = null;</span>
+<span class="nc" id="L230">		pixels = null;</span>
+<span class="nc" id="L231">		indexedPixels = null;</span>
+<span class="nc" id="L232">		colorTab = null;</span>
+<span class="nc" id="L233">		closeStream = false;</span>
+<span class="nc" id="L234">		firstFrame = true;</span>
+
+<span class="nc" id="L236">		return ok;</span>
+	}
+
+	/**
+	 * Sets frame rate in frames per second. Equivalent to
+	 * &lt;code&gt;setDelay(1000/fps)&lt;/code&gt;.
+	 * 
+	 * @param fps float frame rate (frames per second)
+	 */
+	public void setFrameRate(float fps) {
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (fps != 0f) {</span>
+<span class="nc" id="L247">			delay = Math.round(100f / fps);</span>
+		}
+<span class="nc" id="L249">	}</span>
+
+	/**
+	 * Sets quality of color quantization (conversion of images to the maximum 256
+	 * colors allowed by the GIF specification). Lower values (minimum = 1) produce
+	 * better colors, but slow processing significantly. 10 is the default, and
+	 * produces good color mapping at reasonable speeds. Values greater than 20 do
+	 * not yield significant improvements in speed.
+	 * 
+	 * @param quality int greater than 0.
+	 */
+	public void setQuality(int quality) {
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (quality &lt; 1)</span>
+<span class="nc" id="L262">			quality = 1;</span>
+<span class="nc" id="L263">		sample = quality;</span>
+<span class="nc" id="L264">	}</span>
+
+	/**
+	 * Sets the GIF frame size. The default size is the size of the first frame
+	 * added if this method is not invoked.
+	 * 
+	 * @param w int frame width.
+	 * @param h int frame width.
+	 */
+	public void setSize(int w, int h) {
+<span class="nc bnc" id="L274" title="All 4 branches missed.">		if (started &amp;&amp; !firstFrame)</span>
+<span class="nc" id="L275">			return;</span>
+<span class="nc" id="L276">		width = w;</span>
+<span class="nc" id="L277">		height = h;</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">		if (width &lt; 1)</span>
+<span class="nc" id="L279">			width = 320;</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">		if (height &lt; 1)</span>
+<span class="nc" id="L281">			height = 240;</span>
+<span class="nc" id="L282">		sizeSet = true;</span>
+<span class="nc" id="L283">	}</span>
+
+	/**
+	 * Initiates GIF file creation on the given stream. The stream is not closed
+	 * automatically.
+	 * 
+	 * @param os OutputStream on which GIF images are written.
+	 * @return false if initial write failed.
+	 */
+	public boolean start(OutputStream os) {
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (os == null)</span>
+<span class="nc" id="L294">			return false;</span>
+<span class="nc" id="L295">		boolean ok = true;</span>
+<span class="nc" id="L296">		closeStream = false;</span>
+<span class="nc" id="L297">		out = os;</span>
+		try {
+<span class="nc" id="L299">			writeString(&quot;GIF89a&quot;); // header</span>
+<span class="nc" id="L300">		} catch (IOException e) {</span>
+<span class="nc" id="L301">			ok = false;</span>
+<span class="nc" id="L302">		}</span>
+<span class="nc" id="L303">		return started = ok;</span>
+	}
+
+//	/**
+//	 * Initiates writing of a GIF file with the specified name.
+//	 * 
+//	 * @param file String containing output file name.
+//	 * @return false if open or initial write failed.
+//	 */
+//	public boolean start(String file) {
+//		boolean ok = true;
+//		try {
+//			out = SecurityUtils.createBufferedOutputStream(file);
+//			ok = start(out);
+//			closeStream = true;
+//		} catch (IOException e) {
+//			ok = false;
+//		}
+//		return started = ok;
+//	}
+
+	/**
+	 * Analyzes image colors and creates color map.
+	 */
+	protected void analyzePixels() {
+<span class="nc" id="L328">		int len = pixels.length;</span>
+<span class="nc" id="L329">		int nPix = len / 3;</span>
+<span class="nc" id="L330">		indexedPixels = new byte[nPix];</span>
+<span class="nc" id="L331">		NeuQuant nq = new NeuQuant(pixels, len, sample);</span>
+		// initialize quantizer
+<span class="nc" id="L333">		colorTab = nq.process(); // create reduced palette</span>
+		// convert map from BGR to RGB
+<span class="nc bnc" id="L335" title="All 2 branches missed.">		for (int i = 0; i &lt; colorTab.length; i += 3) {</span>
+<span class="nc" id="L336">			byte temp = colorTab[i];</span>
+<span class="nc" id="L337">			colorTab[i] = colorTab[i + 2];</span>
+<span class="nc" id="L338">			colorTab[i + 2] = temp;</span>
+<span class="nc" id="L339">			usedEntry[i / 3] = false;</span>
+		}
+		// map image pixels to new palette
+<span class="nc" id="L342">		int k = 0;</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		for (int i = 0; i &lt; nPix; i++) {</span>
+<span class="nc" id="L344">			int index = nq.map(pixels[k++] &amp; 0xff, pixels[k++] &amp; 0xff, pixels[k++] &amp; 0xff);</span>
+<span class="nc" id="L345">			usedEntry[index] = true;</span>
+<span class="nc" id="L346">			indexedPixels[i] = (byte) index;</span>
+		}
+<span class="nc" id="L348">		pixels = null;</span>
+<span class="nc" id="L349">		colorDepth = 8;</span>
+<span class="nc" id="L350">		palSize = 7;</span>
+		// get closest match to transparent color if specified
+<span class="nc bnc" id="L352" title="All 2 branches missed.">		if (transparent != null) {</span>
+<span class="nc" id="L353">			transIndex = findClosest(transparent);</span>
+		}
+<span class="nc" id="L355">	}</span>
+
+	/**
+	 * Returns index of palette color closest to c
+	 * 
+	 */
+	protected int findClosest(Color c) {
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		if (colorTab == null)</span>
+<span class="nc" id="L363">			return -1;</span>
+<span class="nc" id="L364">		int r = c.getRed();</span>
+<span class="nc" id="L365">		int g = c.getGreen();</span>
+<span class="nc" id="L366">		int b = c.getBlue();</span>
+<span class="nc" id="L367">		int minpos = 0;</span>
+<span class="nc" id="L368">		int dmin = 256 * 256 * 256;</span>
+<span class="nc" id="L369">		int len = colorTab.length;</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">		for (int i = 0; i &lt; len;) {</span>
+<span class="nc" id="L371">			int dr = r - (colorTab[i++] &amp; 0xff);</span>
+<span class="nc" id="L372">			int dg = g - (colorTab[i++] &amp; 0xff);</span>
+<span class="nc" id="L373">			int db = b - (colorTab[i] &amp; 0xff);</span>
+<span class="nc" id="L374">			int d = dr * dr + dg * dg + db * db;</span>
+<span class="nc" id="L375">			int index = i / 3;</span>
+<span class="nc bnc" id="L376" title="All 4 branches missed.">			if (usedEntry[index] &amp;&amp; (d &lt; dmin)) {</span>
+<span class="nc" id="L377">				dmin = d;</span>
+<span class="nc" id="L378">				minpos = index;</span>
+			}
+<span class="nc" id="L380">			i++;</span>
+<span class="nc" id="L381">		}</span>
+<span class="nc" id="L382">		return minpos;</span>
+	}
+
+	/**
+	 * Extracts image pixels into byte array &quot;pixels&quot;
+	 */
+	protected void getImagePixels() {
+<span class="nc" id="L389">		int w = image.getWidth();</span>
+<span class="nc" id="L390">		int h = image.getHeight();</span>
+<span class="nc" id="L391">		int type = image.getType();</span>
+<span class="nc bnc" id="L392" title="All 6 branches missed.">		if ((w != width) || (h != height) || (type != BufferedImage.TYPE_3BYTE_BGR)) {</span>
+			// create new image with right size/format
+<span class="nc" id="L394">			BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);</span>
+<span class="nc" id="L395">			Graphics2D g = temp.createGraphics();</span>
+<span class="nc" id="L396">			g.drawImage(image, 0, 0, null);</span>
+<span class="nc" id="L397">			image = temp;</span>
+		}
+<span class="nc" id="L399">		pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();</span>
+<span class="nc" id="L400">	}</span>
+
+	/**
+	 * Writes Graphic Control Extension
+	 */
+	protected void writeGraphicCtrlExt() throws IOException {
+<span class="nc" id="L406">		out.write(0x21); // extension introducer</span>
+<span class="nc" id="L407">		out.write(0xf9); // GCE label</span>
+<span class="nc" id="L408">		out.write(4); // data block size</span>
+		int transp, disp;
+<span class="nc bnc" id="L410" title="All 2 branches missed.">		if (transparent == null) {</span>
+<span class="nc" id="L411">			transp = 0;</span>
+<span class="nc" id="L412">			disp = 0; // dispose = no action</span>
+		} else {
+<span class="nc" id="L414">			transp = 1;</span>
+<span class="nc" id="L415">			disp = 2; // force clear if using transparent color</span>
+		}
+<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (dispose &gt;= 0) {</span>
+<span class="nc" id="L418">			disp = dispose &amp; 7; // user override</span>
+		}
+<span class="nc" id="L420">		disp &lt;&lt;= 2;</span>
+
+		// packed fields
+<span class="nc" id="L423">		out.write(0 | // 1:3 reserved</span>
+				disp | // 4:6 disposal
+				0 | // 7 user input - 0 = none
+				transp); // 8 transparency flag
+
+<span class="nc" id="L428">		writeShort(delay); // delay x 1/100 sec</span>
+<span class="nc" id="L429">		out.write(transIndex); // transparent color index</span>
+<span class="nc" id="L430">		out.write(0); // block terminator</span>
+<span class="nc" id="L431">	}</span>
+
+	/**
+	 * Writes Image Descriptor
+	 */
+	protected void writeImageDesc() throws IOException {
+<span class="nc" id="L437">		out.write(0x2c); // image separator</span>
+<span class="nc" id="L438">		writeShort(0); // image position x,y = 0,0</span>
+<span class="nc" id="L439">		writeShort(0);</span>
+<span class="nc" id="L440">		writeShort(width); // image size</span>
+<span class="nc" id="L441">		writeShort(height);</span>
+		// packed fields
+<span class="nc bnc" id="L443" title="All 2 branches missed.">		if (firstFrame) {</span>
+			// no LCT - GCT is used for first (or only) frame
+<span class="nc" id="L445">			out.write(0);</span>
+		} else {
+			// specify normal LCT
+<span class="nc" id="L448">			out.write(0x80 | // 1 local color table 1=yes</span>
+					0 | // 2 interlace - 0=no
+					0 | // 3 sorted - 0=no
+					0 | // 4-5 reserved
+					palSize); // 6-8 size of color table
+		}
+<span class="nc" id="L454">	}</span>
+
+	/**
+	 * Writes Logical Screen Descriptor
+	 */
+	protected void writeLSD() throws IOException {
+		// logical screen size
+<span class="nc" id="L461">		writeShort(width);</span>
+<span class="nc" id="L462">		writeShort(height);</span>
+		// packed fields
+<span class="nc" id="L464">		out.write((0x80 | // 1 : global color table flag = 1 (gct used)</span>
+				0x70 | // 2-4 : color resolution = 7
+				0x00 | // 5 : gct sort flag = 0
+				palSize)); // 6-8 : gct size
+
+<span class="nc" id="L469">		out.write(0); // background color index</span>
+<span class="nc" id="L470">		out.write(0); // pixel aspect ratio - assume 1:1</span>
+<span class="nc" id="L471">	}</span>
+
+	/**
+	 * Writes Netscape application extension to define repeat count.
+	 */
+	protected void writeNetscapeExt() throws IOException {
+<span class="nc" id="L477">		out.write(0x21); // extension introducer</span>
+<span class="nc" id="L478">		out.write(0xff); // app extension label</span>
+<span class="nc" id="L479">		out.write(11); // block size</span>
+<span class="nc" id="L480">		writeString(&quot;NETSCAPE&quot; + &quot;2.0&quot;); // app id + auth code</span>
+<span class="nc" id="L481">		out.write(3); // sub-block size</span>
+<span class="nc" id="L482">		out.write(1); // loop sub-block id</span>
+<span class="nc" id="L483">		writeShort(repeat); // loop count (extra iterations, 0=repeat forever)</span>
+<span class="nc" id="L484">		out.write(0); // block terminator</span>
+<span class="nc" id="L485">	}</span>
+
+	/**
+	 * Writes color table
+	 */
+	protected void writePalette() throws IOException {
+<span class="nc" id="L491">		out.write(colorTab, 0, colorTab.length);</span>
+<span class="nc" id="L492">		int n = (3 * 256) - colorTab.length;</span>
+<span class="nc bnc" id="L493" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L494">			out.write(0);</span>
+		}
+<span class="nc" id="L496">	}</span>
+
+	/**
+	 * Encodes and writes pixel data
+	 */
+	protected void writePixels() throws IOException {
+<span class="nc" id="L502">		LZWEncoder encoder = new LZWEncoder(width, height, indexedPixels, colorDepth);</span>
+<span class="nc" id="L503">		encoder.encode(out);</span>
+<span class="nc" id="L504">	}</span>
+
+	/**
+	 * Write 16-bit value to output stream, LSB first
+	 */
+	protected void writeShort(int value) throws IOException {
+<span class="nc" id="L510">		out.write(value &amp; 0xff);</span>
+<span class="nc" id="L511">		out.write((value &gt;&gt; 8) &amp; 0xff);</span>
+<span class="nc" id="L512">	}</span>
+
+	/**
+	 * Writes string to output stream
+	 */
+	protected void writeString(String s) throws IOException {
+<span class="nc bnc" id="L518" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L519">			out.write((byte) s.charAt(i));</span>
+		}
+<span class="nc" id="L521">	}</span>
+}
+
+/*
+ * NeuQuant Neural-Net Quantization Algorithm
+ * ------------------------------------------
+ * 
+ * Copyright (c) 1994 Anthony Dekker
+ * 
+ * NEUQUANT Neural-Net quantization algorithm by Anthony Dekker, 1994. See
+ * &quot;Kohonen neural networks for optimal colour quantization&quot; in &quot;Network:
+ * Computation in Neural Systems&quot; Vol. 5 (1994) pp 351-367. for a discussion of
+ * the algorithm.
+ * 
+ * Any party obtaining a copy of these files from the author, directly or
+ * indirectly, is granted, free of charge, a full and unrestricted irrevocable,
+ * world-wide, paid up, royalty-free, nonexclusive right and license to deal in
+ * this software and documentation files (the &quot;Software&quot;), including without
+ * limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons who
+ * receive copies from any such party to do so, with the only requirement being
+ * that this copyright notice remain intact.
+ */
+
+// Ported to Java 12/00 K Weiner
+class NeuQuant {
+
+	protected static final int netsize = 256; /* number of colours used */
+
+	/* four primes near 500 - assume no image has a length so large */
+	/* that it is divisible by all four primes */
+	protected static final int prime1 = 499;
+
+	protected static final int prime2 = 491;
+
+	protected static final int prime3 = 487;
+
+	protected static final int prime4 = 503;
+
+	protected static final int minpicturebytes = (3 * prime4);
+
+	/* minimum size for input image */
+
+	/*
+	 * Program Skeleton ---------------- [select samplefac in range 1..30] [read
+	 * image from input file] pic = (unsigned char*) malloc(3*width*height);
+	 * initnet(pic,3*width*height,samplefac); learn(); unbiasnet(); [write output
+	 * image header, using writecolourmap(f)] inxbuild(); write output image using
+	 * inxsearch(b,g,r)
+	 */
+
+	/*
+	 * Network Definitions -------------------
+	 */
+
+	protected static final int maxnetpos = (netsize - 1);
+
+	protected static final int netbiasshift = 4; /* bias for colour values */
+
+	protected static final int ncycles = 100; /* no. of learning cycles */
+
+	/* defs for freq and bias */
+	protected static final int intbiasshift = 16; /* bias for fractions */
+
+	protected static final int intbias = (((int) 1) &lt;&lt; intbiasshift);
+
+	protected static final int gammashift = 10; /* gamma = 1024 */
+
+	protected static final int gamma = (((int) 1) &lt;&lt; gammashift);
+
+	protected static final int betashift = 10;
+
+	protected static final int beta = (intbias &gt;&gt; betashift); /* beta = 1/1024 */
+
+	protected static final int betagamma = (intbias &lt;&lt; (gammashift - betashift));
+
+	/* defs for decreasing radius factor */
+	protected static final int initrad = (netsize &gt;&gt; 3); /*
+															 * for 256 cols, radius starts
+															 */
+
+	protected static final int radiusbiasshift = 6; /* at 32.0 biased by 6 bits */
+
+	protected static final int radiusbias = (((int) 1) &lt;&lt; radiusbiasshift);
+
+	protected static final int initradius = (initrad * radiusbias); /*
+																	 * and decreases by a
+																	 */
+
+	protected static final int radiusdec = 30; /* factor of 1/30 each cycle */
+
+	/* defs for decreasing alpha factor */
+	protected static final int alphabiasshift = 10; /* alpha starts at 1.0 */
+
+	protected static final int initalpha = (((int) 1) &lt;&lt; alphabiasshift);
+
+	protected int alphadec; /* biased by 10 bits */
+
+	/* radbias and alpharadbias used for radpower calculation */
+	protected static final int radbiasshift = 8;
+
+	protected static final int radbias = (((int) 1) &lt;&lt; radbiasshift);
+
+	protected static final int alpharadbshift = (alphabiasshift + radbiasshift);
+
+	protected static final int alpharadbias = (((int) 1) &lt;&lt; alpharadbshift);
+
+	/*
+	 * Types and Global Variables --------------------------
+	 */
+
+	protected byte[] thepicture; /* the input image itself */
+
+	protected int lengthcount; /* lengthcount = H*W*3 */
+
+	protected int samplefac; /* sampling factor 1..30 */
+
+	// typedef int pixel[4]; /* BGRc */
+	protected int[][] network; /* the network itself - [netsize][4] */
+
+<span class="nc" id="L641">	protected int[] netindex = new int[256];</span>
+
+	/* for network lookup - really 256 */
+
+<span class="nc" id="L645">	protected int[] bias = new int[netsize];</span>
+
+	/* bias and freq arrays for learning */
+<span class="nc" id="L648">	protected int[] freq = new int[netsize];</span>
+
+<span class="nc" id="L650">	protected int[] radpower = new int[initrad];</span>
+
+	/* radpower for precomputation */
+
+	/*
+	 * Initialise network in range (0,0,0) to (255,255,255) and set parameters
+	 * -----------------------------------------------------------------------
+	 */
+<span class="nc" id="L658">	public NeuQuant(byte[] thepic, int len, int sample) {</span>
+
+		int i;
+		int[] p;
+
+<span class="nc" id="L663">		thepicture = thepic;</span>
+<span class="nc" id="L664">		lengthcount = len;</span>
+<span class="nc" id="L665">		samplefac = sample;</span>
+
+<span class="nc" id="L667">		network = new int[netsize][];</span>
+<span class="nc bnc" id="L668" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L669">			network[i] = new int[4];</span>
+<span class="nc" id="L670">			p = network[i];</span>
+<span class="nc" id="L671">			p[0] = p[1] = p[2] = (i &lt;&lt; (netbiasshift + 8)) / netsize;</span>
+<span class="nc" id="L672">			freq[i] = intbias / netsize; /* 1/netsize */</span>
+<span class="nc" id="L673">			bias[i] = 0;</span>
+		}
+<span class="nc" id="L675">	}</span>
+
+	public byte[] colorMap() {
+<span class="nc" id="L678">		byte[] map = new byte[3 * netsize];</span>
+<span class="nc" id="L679">		int[] index = new int[netsize];</span>
+<span class="nc bnc" id="L680" title="All 2 branches missed.">		for (int i = 0; i &lt; netsize; i++)</span>
+<span class="nc" id="L681">			index[network[i][3]] = i;</span>
+<span class="nc" id="L682">		int k = 0;</span>
+<span class="nc bnc" id="L683" title="All 2 branches missed.">		for (int i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L684">			int j = index[i];</span>
+<span class="nc" id="L685">			map[k++] = (byte) (network[j][0]);</span>
+<span class="nc" id="L686">			map[k++] = (byte) (network[j][1]);</span>
+<span class="nc" id="L687">			map[k++] = (byte) (network[j][2]);</span>
+		}
+<span class="nc" id="L689">		return map;</span>
+	}
+
+	/*
+	 * Insertion sort of network and building of netindex[0..255] (to do after
+	 * unbias)
+	 * -----------------------------------------------------------------------------
+	 * --
+	 */
+	public void inxbuild() {
+
+		int i, j, smallpos, smallval;
+		int[] p;
+		int[] q;
+		int previouscol, startpos;
+
+<span class="nc" id="L705">		previouscol = 0;</span>
+<span class="nc" id="L706">		startpos = 0;</span>
+<span class="nc bnc" id="L707" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L708">			p = network[i];</span>
+<span class="nc" id="L709">			smallpos = i;</span>
+<span class="nc" id="L710">			smallval = p[1]; /* index on g */</span>
+			/* find smallest in i..netsize-1 */
+<span class="nc bnc" id="L712" title="All 2 branches missed.">			for (j = i + 1; j &lt; netsize; j++) {</span>
+<span class="nc" id="L713">				q = network[j];</span>
+<span class="nc bnc" id="L714" title="All 2 branches missed.">				if (q[1] &lt; smallval) { /* index on g */</span>
+<span class="nc" id="L715">					smallpos = j;</span>
+<span class="nc" id="L716">					smallval = q[1]; /* index on g */</span>
+				}
+			}
+<span class="nc" id="L719">			q = network[smallpos];</span>
+			/* swap p (i) and q (smallpos) entries */
+<span class="nc bnc" id="L721" title="All 2 branches missed.">			if (i != smallpos) {</span>
+<span class="nc" id="L722">				j = q[0];</span>
+<span class="nc" id="L723">				q[0] = p[0];</span>
+<span class="nc" id="L724">				p[0] = j;</span>
+<span class="nc" id="L725">				j = q[1];</span>
+<span class="nc" id="L726">				q[1] = p[1];</span>
+<span class="nc" id="L727">				p[1] = j;</span>
+<span class="nc" id="L728">				j = q[2];</span>
+<span class="nc" id="L729">				q[2] = p[2];</span>
+<span class="nc" id="L730">				p[2] = j;</span>
+<span class="nc" id="L731">				j = q[3];</span>
+<span class="nc" id="L732">				q[3] = p[3];</span>
+<span class="nc" id="L733">				p[3] = j;</span>
+			}
+			/* smallval entry is now in position i */
+<span class="nc bnc" id="L736" title="All 2 branches missed.">			if (smallval != previouscol) {</span>
+<span class="nc" id="L737">				netindex[previouscol] = (startpos + i) &gt;&gt; 1;</span>
+<span class="nc bnc" id="L738" title="All 2 branches missed.">				for (j = previouscol + 1; j &lt; smallval; j++)</span>
+<span class="nc" id="L739">					netindex[j] = i;</span>
+<span class="nc" id="L740">				previouscol = smallval;</span>
+<span class="nc" id="L741">				startpos = i;</span>
+			}
+		}
+<span class="nc" id="L744">		netindex[previouscol] = (startpos + maxnetpos) &gt;&gt; 1;</span>
+<span class="nc bnc" id="L745" title="All 2 branches missed.">		for (j = previouscol + 1; j &lt; 256; j++)</span>
+<span class="nc" id="L746">			netindex[j] = maxnetpos; /* really 256 */</span>
+<span class="nc" id="L747">	}</span>
+
+	/*
+	 * Main Learning Loop ------------------
+	 */
+	public void learn() {
+
+		int i, j, b, g, r;
+		int radius, rad, alpha, step, delta, samplepixels;
+		byte[] p;
+		int pix, lim;
+
+<span class="nc bnc" id="L759" title="All 2 branches missed.">		if (lengthcount &lt; minpicturebytes)</span>
+<span class="nc" id="L760">			samplefac = 1;</span>
+<span class="nc" id="L761">		alphadec = 30 + ((samplefac - 1) / 3);</span>
+<span class="nc" id="L762">		p = thepicture;</span>
+<span class="nc" id="L763">		pix = 0;</span>
+<span class="nc" id="L764">		lim = lengthcount;</span>
+<span class="nc" id="L765">		samplepixels = lengthcount / (3 * samplefac);</span>
+<span class="nc" id="L766">		delta = samplepixels / ncycles;</span>
+<span class="nc" id="L767">		alpha = initalpha;</span>
+<span class="nc" id="L768">		radius = initradius;</span>
+
+<span class="nc" id="L770">		rad = radius &gt;&gt; radiusbiasshift;</span>
+<span class="nc bnc" id="L771" title="All 2 branches missed.">		if (rad &lt;= 1)</span>
+<span class="nc" id="L772">			rad = 0;</span>
+<span class="nc bnc" id="L773" title="All 2 branches missed.">		for (i = 0; i &lt; rad; i++)</span>
+<span class="nc" id="L774">			radpower[i] = alpha * (((rad * rad - i * i) * radbias) / (rad * rad));</span>
+
+		// fprintf(stderr,&quot;beginning 1D learning: initial radius=%d\n&quot;, rad);
+
+<span class="nc bnc" id="L778" title="All 2 branches missed.">		if (lengthcount &lt; minpicturebytes)</span>
+<span class="nc" id="L779">			step = 3;</span>
+<span class="nc bnc" id="L780" title="All 2 branches missed.">		else if ((lengthcount % prime1) != 0)</span>
+<span class="nc" id="L781">			step = 3 * prime1;</span>
+		else {
+<span class="nc bnc" id="L783" title="All 2 branches missed.">			if ((lengthcount % prime2) != 0)</span>
+<span class="nc" id="L784">				step = 3 * prime2;</span>
+			else {
+<span class="nc bnc" id="L786" title="All 2 branches missed.">				if ((lengthcount % prime3) != 0)</span>
+<span class="nc" id="L787">					step = 3 * prime3;</span>
+				else
+<span class="nc" id="L789">					step = 3 * prime4;</span>
+			}
+		}
+
+<span class="nc" id="L793">		i = 0;</span>
+<span class="nc bnc" id="L794" title="All 2 branches missed.">		while (i &lt; samplepixels) {</span>
+<span class="nc" id="L795">			b = (p[pix + 0] &amp; 0xff) &lt;&lt; netbiasshift;</span>
+<span class="nc" id="L796">			g = (p[pix + 1] &amp; 0xff) &lt;&lt; netbiasshift;</span>
+<span class="nc" id="L797">			r = (p[pix + 2] &amp; 0xff) &lt;&lt; netbiasshift;</span>
+<span class="nc" id="L798">			j = contest(b, g, r);</span>
+
+<span class="nc" id="L800">			altersingle(alpha, j, b, g, r);</span>
+<span class="nc bnc" id="L801" title="All 2 branches missed.">			if (rad != 0)</span>
+<span class="nc" id="L802">				alterneigh(rad, j, b, g, r); /* alter neighbours */</span>
+
+<span class="nc" id="L804">			pix += step;</span>
+<span class="nc bnc" id="L805" title="All 2 branches missed.">			if (pix &gt;= lim)</span>
+<span class="nc" id="L806">				pix -= lengthcount;</span>
+
+<span class="nc" id="L808">			i++;</span>
+<span class="nc bnc" id="L809" title="All 2 branches missed.">			if (delta == 0)</span>
+<span class="nc" id="L810">				delta = 1;</span>
+<span class="nc bnc" id="L811" title="All 2 branches missed.">			if (i % delta == 0) {</span>
+<span class="nc" id="L812">				alpha -= alpha / alphadec;</span>
+<span class="nc" id="L813">				radius -= radius / radiusdec;</span>
+<span class="nc" id="L814">				rad = radius &gt;&gt; radiusbiasshift;</span>
+<span class="nc bnc" id="L815" title="All 2 branches missed.">				if (rad &lt;= 1)</span>
+<span class="nc" id="L816">					rad = 0;</span>
+<span class="nc bnc" id="L817" title="All 2 branches missed.">				for (j = 0; j &lt; rad; j++)</span>
+<span class="nc" id="L818">					radpower[j] = alpha * (((rad * rad - j * j) * radbias) / (rad * rad));</span>
+			}
+		}
+		// fprintf(stderr,&quot;finished 1D learning: final alpha=%f
+		// !\n&quot;,((float)alpha)/initalpha);
+<span class="nc" id="L823">	}</span>
+
+	/*
+	 * Search for BGR values 0..255 (after net is unbiased) and return colour index
+	 * ----------------------------------------------------------------------------
+	 */
+	public int map(int b, int g, int r) {
+
+		int i, j, dist, a, bestd;
+		int[] p;
+		int best;
+
+<span class="nc" id="L835">		bestd = 1000; /* biggest possible dist is 256*3 */</span>
+<span class="nc" id="L836">		best = -1;</span>
+<span class="nc" id="L837">		i = netindex[g]; /* index on g */</span>
+<span class="nc" id="L838">		j = i - 1; /* start at netindex[g] and work outwards */</span>
+
+<span class="nc bnc" id="L840" title="All 4 branches missed.">		while ((i &lt; netsize) || (j &gt;= 0)) {</span>
+<span class="nc bnc" id="L841" title="All 2 branches missed.">			if (i &lt; netsize) {</span>
+<span class="nc" id="L842">				p = network[i];</span>
+<span class="nc" id="L843">				dist = p[1] - g; /* inx key */</span>
+<span class="nc bnc" id="L844" title="All 2 branches missed.">				if (dist &gt;= bestd)</span>
+<span class="nc" id="L845">					i = netsize; /* stop iter */</span>
+				else {
+<span class="nc" id="L847">					i++;</span>
+<span class="nc bnc" id="L848" title="All 2 branches missed.">					if (dist &lt; 0)</span>
+<span class="nc" id="L849">						dist = -dist;</span>
+<span class="nc" id="L850">					a = p[0] - b;</span>
+<span class="nc bnc" id="L851" title="All 2 branches missed.">					if (a &lt; 0)</span>
+<span class="nc" id="L852">						a = -a;</span>
+<span class="nc" id="L853">					dist += a;</span>
+<span class="nc bnc" id="L854" title="All 2 branches missed.">					if (dist &lt; bestd) {</span>
+<span class="nc" id="L855">						a = p[2] - r;</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">						if (a &lt; 0)</span>
+<span class="nc" id="L857">							a = -a;</span>
+<span class="nc" id="L858">						dist += a;</span>
+<span class="nc bnc" id="L859" title="All 2 branches missed.">						if (dist &lt; bestd) {</span>
+<span class="nc" id="L860">							bestd = dist;</span>
+<span class="nc" id="L861">							best = p[3];</span>
+						}
+					}
+				}
+			}
+<span class="nc bnc" id="L866" title="All 2 branches missed.">			if (j &gt;= 0) {</span>
+<span class="nc" id="L867">				p = network[j];</span>
+<span class="nc" id="L868">				dist = g - p[1]; /* inx key - reverse dif */</span>
+<span class="nc bnc" id="L869" title="All 2 branches missed.">				if (dist &gt;= bestd)</span>
+<span class="nc" id="L870">					j = -1; /* stop iter */</span>
+				else {
+<span class="nc" id="L872">					j--;</span>
+<span class="nc bnc" id="L873" title="All 2 branches missed.">					if (dist &lt; 0)</span>
+<span class="nc" id="L874">						dist = -dist;</span>
+<span class="nc" id="L875">					a = p[0] - b;</span>
+<span class="nc bnc" id="L876" title="All 2 branches missed.">					if (a &lt; 0)</span>
+<span class="nc" id="L877">						a = -a;</span>
+<span class="nc" id="L878">					dist += a;</span>
+<span class="nc bnc" id="L879" title="All 2 branches missed.">					if (dist &lt; bestd) {</span>
+<span class="nc" id="L880">						a = p[2] - r;</span>
+<span class="nc bnc" id="L881" title="All 2 branches missed.">						if (a &lt; 0)</span>
+<span class="nc" id="L882">							a = -a;</span>
+<span class="nc" id="L883">						dist += a;</span>
+<span class="nc bnc" id="L884" title="All 2 branches missed.">						if (dist &lt; bestd) {</span>
+<span class="nc" id="L885">							bestd = dist;</span>
+<span class="nc" id="L886">							best = p[3];</span>
+						}
+					}
+				}
+			}
+		}
+<span class="nc" id="L892">		return (best);</span>
+	}
+
+	public byte[] process() {
+<span class="nc" id="L896">		learn();</span>
+<span class="nc" id="L897">		unbiasnet();</span>
+<span class="nc" id="L898">		inxbuild();</span>
+<span class="nc" id="L899">		return colorMap();</span>
+	}
+
+	/*
+	 * Unbias network to give byte values 0..255 and record position i to prepare
+	 * for sort
+	 * -----------------------------------------------------------------------------
+	 * ------
+	 */
+	public void unbiasnet() {
+
+		int i, j;
+
+<span class="nc bnc" id="L912" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L913">			network[i][0] &gt;&gt;= netbiasshift;</span>
+<span class="nc" id="L914">			network[i][1] &gt;&gt;= netbiasshift;</span>
+<span class="nc" id="L915">			network[i][2] &gt;&gt;= netbiasshift;</span>
+<span class="nc" id="L916">			network[i][3] = i; /* record colour no */</span>
+		}
+<span class="nc" id="L918">	}</span>
+
+	/*
+	 * Move adjacent neurons by precomputed alpha*(1-((i-j)^2/[r]^2)) in
+	 * radpower[|i-j|]
+	 * -----------------------------------------------------------------------------
+	 * ----
+	 */
+	protected void alterneigh(int rad, int i, int b, int g, int r) {
+
+		int j, k, lo, hi, a, m;
+		int[] p;
+
+<span class="nc" id="L931">		lo = i - rad;</span>
+<span class="nc bnc" id="L932" title="All 2 branches missed.">		if (lo &lt; -1)</span>
+<span class="nc" id="L933">			lo = -1;</span>
+<span class="nc" id="L934">		hi = i + rad;</span>
+<span class="nc bnc" id="L935" title="All 2 branches missed.">		if (hi &gt; netsize)</span>
+<span class="nc" id="L936">			hi = netsize;</span>
+
+<span class="nc" id="L938">		j = i + 1;</span>
+<span class="nc" id="L939">		k = i - 1;</span>
+<span class="nc" id="L940">		m = 1;</span>
+<span class="nc bnc" id="L941" title="All 4 branches missed.">		while ((j &lt; hi) || (k &gt; lo)) {</span>
+<span class="nc" id="L942">			a = radpower[m++];</span>
+<span class="nc bnc" id="L943" title="All 2 branches missed.">			if (j &lt; hi) {</span>
+<span class="nc" id="L944">				p = network[j++];</span>
+				try {
+<span class="nc" id="L946">					p[0] -= (a * (p[0] - b)) / alpharadbias;</span>
+<span class="nc" id="L947">					p[1] -= (a * (p[1] - g)) / alpharadbias;</span>
+<span class="nc" id="L948">					p[2] -= (a * (p[2] - r)) / alpharadbias;</span>
+<span class="nc" id="L949">				} catch (Exception e) {</span>
+<span class="nc" id="L950">				} // prevents 1.3 miscompilation</span>
+			}
+<span class="nc bnc" id="L952" title="All 2 branches missed.">			if (k &gt; lo) {</span>
+<span class="nc" id="L953">				p = network[k--];</span>
+				try {
+<span class="nc" id="L955">					p[0] -= (a * (p[0] - b)) / alpharadbias;</span>
+<span class="nc" id="L956">					p[1] -= (a * (p[1] - g)) / alpharadbias;</span>
+<span class="nc" id="L957">					p[2] -= (a * (p[2] - r)) / alpharadbias;</span>
+<span class="nc" id="L958">				} catch (Exception e) {</span>
+<span class="nc" id="L959">				}</span>
+			}
+		}
+<span class="nc" id="L962">	}</span>
+
+	/*
+	 * Move neuron i towards biased (b,g,r) by factor alpha
+	 * ----------------------------------------------------
+	 */
+	protected void altersingle(int alpha, int i, int b, int g, int r) {
+
+		/* alter hit neuron */
+<span class="nc" id="L971">		int[] n = network[i];</span>
+<span class="nc" id="L972">		n[0] -= (alpha * (n[0] - b)) / initalpha;</span>
+<span class="nc" id="L973">		n[1] -= (alpha * (n[1] - g)) / initalpha;</span>
+<span class="nc" id="L974">		n[2] -= (alpha * (n[2] - r)) / initalpha;</span>
+<span class="nc" id="L975">	}</span>
+
+	/*
+	 * Search for biased BGR values ----------------------------
+	 */
+	protected int contest(int b, int g, int r) {
+
+		/* finds closest neuron (min dist) and updates freq */
+		/* finds best neuron (min dist-bias) and returns position */
+		/*
+		 * for frequently chosen neurons, freq[i] is high and bias[i] is negative
+		 */
+		/* bias[i] = gamma*((1/netsize)-freq[i]) */
+
+		int i, dist, a, biasdist, betafreq;
+		int bestpos, bestbiaspos, bestd, bestbiasd;
+		int[] n;
+
+<span class="nc" id="L993">		bestd = ~(((int) 1) &lt;&lt; 31);</span>
+<span class="nc" id="L994">		bestbiasd = bestd;</span>
+<span class="nc" id="L995">		bestpos = -1;</span>
+<span class="nc" id="L996">		bestbiaspos = bestpos;</span>
+
+<span class="nc bnc" id="L998" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L999">			n = network[i];</span>
+<span class="nc" id="L1000">			dist = n[0] - b;</span>
+<span class="nc bnc" id="L1001" title="All 2 branches missed.">			if (dist &lt; 0)</span>
+<span class="nc" id="L1002">				dist = -dist;</span>
+<span class="nc" id="L1003">			a = n[1] - g;</span>
+<span class="nc bnc" id="L1004" title="All 2 branches missed.">			if (a &lt; 0)</span>
+<span class="nc" id="L1005">				a = -a;</span>
+<span class="nc" id="L1006">			dist += a;</span>
+<span class="nc" id="L1007">			a = n[2] - r;</span>
+<span class="nc bnc" id="L1008" title="All 2 branches missed.">			if (a &lt; 0)</span>
+<span class="nc" id="L1009">				a = -a;</span>
+<span class="nc" id="L1010">			dist += a;</span>
+<span class="nc bnc" id="L1011" title="All 2 branches missed.">			if (dist &lt; bestd) {</span>
+<span class="nc" id="L1012">				bestd = dist;</span>
+<span class="nc" id="L1013">				bestpos = i;</span>
+			}
+<span class="nc" id="L1015">			biasdist = dist - ((bias[i]) &gt;&gt; (intbiasshift - netbiasshift));</span>
+<span class="nc bnc" id="L1016" title="All 2 branches missed.">			if (biasdist &lt; bestbiasd) {</span>
+<span class="nc" id="L1017">				bestbiasd = biasdist;</span>
+<span class="nc" id="L1018">				bestbiaspos = i;</span>
+			}
+<span class="nc" id="L1020">			betafreq = (freq[i] &gt;&gt; betashift);</span>
+<span class="nc" id="L1021">			freq[i] -= betafreq;</span>
+<span class="nc" id="L1022">			bias[i] += (betafreq &lt;&lt; gammashift);</span>
+		}
+<span class="nc" id="L1024">		freq[bestpos] += beta;</span>
+<span class="nc" id="L1025">		bias[bestpos] -= betagamma;</span>
+<span class="nc" id="L1026">		return (bestbiaspos);</span>
+	}
+}
+
+// ==============================================================================
+// Adapted from Jef Poskanzer's Java port by way of J. M. G. Elliott.
+// K Weiner 12/00
+
+class LZWEncoder {
+
+	private static final int EOF = -1;
+
+	private int imgW, imgH;
+
+	private byte[] pixAry;
+
+	private int initCodeSize;
+
+	private int remaining;
+
+	private int curPixel;
+
+	// GIFCOMPR.C - GIF Image compression routines
+	//
+	// Lempel-Ziv compression based on 'compress'. GIF modifications by
+	// David Rowley (mgardi@watdcsu.waterloo.edu)
+
+	// General DEFINEs
+
+	static final int BITS = 12;
+
+	static final int HSIZE = 5003; // 80% occupancy
+
+	// GIF Image compression - modified 'compress'
+	//
+	// Based on: compress.c - File compression ala IEEE Computer, June 1984.
+	//
+	// By Authors: Spencer W. Thomas (decvax!harpo!utah-cs!utah-gr!thomas)
+	// Jim McKie (decvax!mcvax!jim)
+	// Steve Davies (decvax!vax135!petsd!peora!srd)
+	// Ken Turkowski (decvax!decwrl!turtlevax!ken)
+	// James A. Woods (decvax!ihnp4!ames!jaw)
+	// Joe Orost (decvax!vax135!petsd!joe)
+
+	int n_bits; // number of bits/code
+
+<span class="nc" id="L1072">	int maxbits = BITS; // user settable max # bits/code</span>
+
+	int maxcode; // maximum code, given n_bits
+
+<span class="nc" id="L1076">	int maxmaxcode = 1 &lt;&lt; BITS; // should NEVER generate this code</span>
+
+<span class="nc" id="L1078">	int[] htab = new int[HSIZE];</span>
+
+<span class="nc" id="L1080">	int[] codetab = new int[HSIZE];</span>
+
+<span class="nc" id="L1082">	int hsize = HSIZE; // for dynamic table sizing</span>
+
+<span class="nc" id="L1084">	int free_ent = 0; // first unused entry</span>
+
+	// block compression parameters -- after all codes are used up,
+	// and compression rate changes, start over.
+<span class="nc" id="L1088">	boolean clear_flg = false;</span>
+
+	// Algorithm: use open addressing double hashing (no chaining) on the
+	// prefix code / next character combination. We do a variant of Knuth's
+	// algorithm D (vol. 3, sec. 6.4) along with G. Knott's relatively-prime
+	// secondary probe. Here, the modular division first probe is gives way
+	// to a faster exclusive-or manipulation. Also do block compression with
+	// an adaptive reset, whereby the code table is cleared when the compression
+	// ratio decreases, but after the table fills. The variable-length output
+	// codes are re-sized at this point, and a special CLEAR code is generated
+	// for the decompressor. Late addition: construct the table according to
+	// file size for noticeable speed improvement on small files. Please direct
+	// questions about this implementation to ames!jaw.
+
+	int g_init_bits;
+
+	int ClearCode;
+
+	int EOFCode;
+
+	// output
+	//
+	// Output the given code.
+	// Inputs:
+	// code: A n_bits-bit integer. If == -1, then EOF. This assumes
+	// that n_bits =&lt; wordsize - 1.
+	// Outputs:
+	// Outputs code to the file.
+	// Assumptions:
+	// Chars are 8 bits long.
+	// Algorithm:
+	// Maintain a BITS character long buffer (so that 8 codes will
+	// fit in it exactly). Use the VAX insv instruction to insert each
+	// code in turn. When the buffer fills up empty it and start over.
+
+<span class="nc" id="L1123">	int cur_accum = 0;</span>
+
+<span class="nc" id="L1125">	int cur_bits = 0;</span>
+
+<span class="nc" id="L1127">	int masks[] = { 0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F, 0x003F, 0x007F, 0x00FF, 0x01FF, 0x03FF, 0x07FF,</span>
+			0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF };
+
+	// Number of characters so far in this 'packet'
+	int a_count;
+
+	// Define the storage for the packet accumulator
+<span class="nc" id="L1134">	byte[] accum = new byte[256];</span>
+
+	// ----------------------------------------------------------------------------
+<span class="nc" id="L1137">	LZWEncoder(int width, int height, byte[] pixels, int color_depth) {</span>
+<span class="nc" id="L1138">		imgW = width;</span>
+<span class="nc" id="L1139">		imgH = height;</span>
+<span class="nc" id="L1140">		pixAry = pixels;</span>
+<span class="nc" id="L1141">		initCodeSize = Math.max(2, color_depth);</span>
+<span class="nc" id="L1142">	}</span>
+
+	// Add a character to the end of the current packet, and if it is 254
+	// characters, flush the packet to disk.
+	void char_out(byte c, OutputStream outs) throws IOException {
+<span class="nc" id="L1147">		accum[a_count++] = c;</span>
+<span class="nc bnc" id="L1148" title="All 2 branches missed.">		if (a_count &gt;= 254)</span>
+<span class="nc" id="L1149">			flush_char(outs);</span>
+<span class="nc" id="L1150">	}</span>
+
+	// Clear out the hash table
+
+	// table clear for block compress
+	void cl_block(OutputStream outs) throws IOException {
+<span class="nc" id="L1156">		cl_hash(hsize);</span>
+<span class="nc" id="L1157">		free_ent = ClearCode + 2;</span>
+<span class="nc" id="L1158">		clear_flg = true;</span>
+
+<span class="nc" id="L1160">		output(ClearCode, outs);</span>
+<span class="nc" id="L1161">	}</span>
+
+	// reset code table
+	void cl_hash(int hsize) {
+<span class="nc bnc" id="L1165" title="All 2 branches missed.">		for (int i = 0; i &lt; hsize; ++i)</span>
+<span class="nc" id="L1166">			htab[i] = -1;</span>
+<span class="nc" id="L1167">	}</span>
+
+	void compress(int init_bits, OutputStream outs) throws IOException {
+		int fcode;
+		int i /* = 0 */;
+		int c;
+		int ent;
+		int disp;
+		int hsize_reg;
+		int hshift;
+
+		// Set up the globals: g_init_bits - initial number of bits
+<span class="nc" id="L1179">		g_init_bits = init_bits;</span>
+
+		// Set up the necessary values
+<span class="nc" id="L1182">		clear_flg = false;</span>
+<span class="nc" id="L1183">		n_bits = g_init_bits;</span>
+<span class="nc" id="L1184">		maxcode = MAXCODE(n_bits);</span>
+
+<span class="nc" id="L1186">		ClearCode = 1 &lt;&lt; (init_bits - 1);</span>
+<span class="nc" id="L1187">		EOFCode = ClearCode + 1;</span>
+<span class="nc" id="L1188">		free_ent = ClearCode + 2;</span>
+
+<span class="nc" id="L1190">		a_count = 0; // clear packet</span>
+
+<span class="nc" id="L1192">		ent = nextPixel();</span>
+
+<span class="nc" id="L1194">		hshift = 0;</span>
+<span class="nc bnc" id="L1195" title="All 2 branches missed.">		for (fcode = hsize; fcode &lt; 65536; fcode *= 2)</span>
+<span class="nc" id="L1196">			++hshift;</span>
+<span class="nc" id="L1197">		hshift = 8 - hshift; // set hash code range bound</span>
+
+<span class="nc" id="L1199">		hsize_reg = hsize;</span>
+<span class="nc" id="L1200">		cl_hash(hsize_reg); // clear hash table</span>
+
+<span class="nc" id="L1202">		output(ClearCode, outs);</span>
+
+<span class="nc bnc" id="L1204" title="All 2 branches missed.">		outer_loop: while ((c = nextPixel()) != EOF) {</span>
+<span class="nc" id="L1205">			fcode = (c &lt;&lt; maxbits) + ent;</span>
+<span class="nc" id="L1206">			i = (c &lt;&lt; hshift) ^ ent; // xor hashing</span>
+
+<span class="nc bnc" id="L1208" title="All 2 branches missed.">			if (htab[i] == fcode) {</span>
+<span class="nc" id="L1209">				ent = codetab[i];</span>
+<span class="nc" id="L1210">				continue;</span>
+<span class="nc bnc" id="L1211" title="All 2 branches missed.">			} else if (htab[i] &gt;= 0) // non-empty slot</span>
+			{
+<span class="nc" id="L1213">				disp = hsize_reg - i; // secondary hash (after G. Knott)</span>
+<span class="nc bnc" id="L1214" title="All 2 branches missed.">				if (i == 0)</span>
+<span class="nc" id="L1215">					disp = 1;</span>
+				do {
+<span class="nc bnc" id="L1217" title="All 2 branches missed.">					if ((i -= disp) &lt; 0)</span>
+<span class="nc" id="L1218">						i += hsize_reg;</span>
+
+<span class="nc bnc" id="L1220" title="All 2 branches missed.">					if (htab[i] == fcode) {</span>
+<span class="nc" id="L1221">						ent = codetab[i];</span>
+<span class="nc" id="L1222">						continue outer_loop;</span>
+					}
+<span class="nc bnc" id="L1224" title="All 2 branches missed.">				} while (htab[i] &gt;= 0);</span>
+			}
+<span class="nc" id="L1226">			output(ent, outs);</span>
+<span class="nc" id="L1227">			ent = c;</span>
+<span class="nc bnc" id="L1228" title="All 2 branches missed.">			if (free_ent &lt; maxmaxcode) {</span>
+<span class="nc" id="L1229">				codetab[i] = free_ent++; // code -&gt; hashtable</span>
+<span class="nc" id="L1230">				htab[i] = fcode;</span>
+			} else
+<span class="nc" id="L1232">				cl_block(outs);</span>
+		}
+		// Put out the final code.
+<span class="nc" id="L1235">		output(ent, outs);</span>
+<span class="nc" id="L1236">		output(EOFCode, outs);</span>
+<span class="nc" id="L1237">	}</span>
+
+	// ----------------------------------------------------------------------------
+	void encode(OutputStream os) throws IOException {
+<span class="nc" id="L1241">		os.write(initCodeSize); // write &quot;initial code size&quot; byte</span>
+
+<span class="nc" id="L1243">		remaining = imgW * imgH; // reset navigation variables</span>
+<span class="nc" id="L1244">		curPixel = 0;</span>
+
+<span class="nc" id="L1246">		compress(initCodeSize + 1, os); // compress and write the pixel data</span>
+
+<span class="nc" id="L1248">		os.write(0); // write block terminator</span>
+<span class="nc" id="L1249">	}</span>
+
+	// Flush the packet to disk, and reset the accumulator
+	void flush_char(OutputStream outs) throws IOException {
+<span class="nc bnc" id="L1253" title="All 2 branches missed.">		if (a_count &gt; 0) {</span>
+<span class="nc" id="L1254">			outs.write(a_count);</span>
+<span class="nc" id="L1255">			outs.write(accum, 0, a_count);</span>
+<span class="nc" id="L1256">			a_count = 0;</span>
+		}
+<span class="nc" id="L1258">	}</span>
+
+	final int MAXCODE(int n_bits) {
+<span class="nc" id="L1261">		return (1 &lt;&lt; n_bits) - 1;</span>
+	}
+
+	// ----------------------------------------------------------------------------
+	// Return the next pixel from the image
+	// ----------------------------------------------------------------------------
+	private int nextPixel() {
+<span class="nc bnc" id="L1268" title="All 2 branches missed.">		if (remaining == 0)</span>
+<span class="nc" id="L1269">			return EOF;</span>
+
+<span class="nc" id="L1271">		--remaining;</span>
+
+<span class="nc" id="L1273">		byte pix = pixAry[curPixel++];</span>
+
+<span class="nc" id="L1275">		return pix &amp; 0xff;</span>
+	}
+
+	void output(int code, OutputStream outs) throws IOException {
+<span class="nc" id="L1279">		cur_accum &amp;= masks[cur_bits];</span>
+
+<span class="nc bnc" id="L1281" title="All 2 branches missed.">		if (cur_bits &gt; 0)</span>
+<span class="nc" id="L1282">			cur_accum |= (code &lt;&lt; cur_bits);</span>
+		else
+<span class="nc" id="L1284">			cur_accum = code;</span>
+
+<span class="nc" id="L1286">		cur_bits += n_bits;</span>
+
+<span class="nc bnc" id="L1288" title="All 2 branches missed.">		while (cur_bits &gt;= 8) {</span>
+<span class="nc" id="L1289">			char_out((byte) (cur_accum &amp; 0xff), outs);</span>
+<span class="nc" id="L1290">			cur_accum &gt;&gt;= 8;</span>
+<span class="nc" id="L1291">			cur_bits -= 8;</span>
+		}
+
+		// If the next entry is going to be too big for the code size,
+		// then increase it, if possible.
+<span class="nc bnc" id="L1296" title="All 4 branches missed.">		if (free_ent &gt; maxcode || clear_flg) {</span>
+<span class="nc bnc" id="L1297" title="All 2 branches missed.">			if (clear_flg) {</span>
+<span class="nc" id="L1298">				maxcode = MAXCODE(n_bits = g_init_bits);</span>
+<span class="nc" id="L1299">				clear_flg = false;</span>
+			} else {
+<span class="nc" id="L1301">				++n_bits;</span>
+<span class="nc bnc" id="L1302" title="All 2 branches missed.">				if (n_bits == maxbits)</span>
+<span class="nc" id="L1303">					maxcode = maxmaxcode;</span>
+				else
+<span class="nc" id="L1305">					maxcode = MAXCODE(n_bits);</span>
+			}
+		}
+
+<span class="nc bnc" id="L1309" title="All 2 branches missed.">		if (code == EOFCode) {</span>
+			// At EOF, write the rest of the buffer.
+<span class="nc bnc" id="L1311" title="All 2 branches missed.">			while (cur_bits &gt; 0) {</span>
+<span class="nc" id="L1312">				char_out((byte) (cur_accum &amp; 0xff), outs);</span>
+<span class="nc" id="L1313">				cur_accum &gt;&gt;= 8;</span>
+<span class="nc" id="L1314">				cur_bits -= 8;</span>
+			}
+
+<span class="nc" id="L1317">			flush_char(outs);</span>
+		}
+<span class="nc" id="L1319">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

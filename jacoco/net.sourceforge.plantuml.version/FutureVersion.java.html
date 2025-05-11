@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FutureVersion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.version</a> &gt; <span class="el_source">FutureVersion.java</span></div><h1>FutureVersion.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.version;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.utils.SignatureUtils;
+
+<span class="nc" id="L49">public class FutureVersion {</span>
+	// ::remove folder when __HAXE__
+
+	public static String versionString() {
+<span class="nc" id="L53">		readVersionTxtIfNeeded();</span>
+<span class="nc" id="L54">		return versionCache.get(0);</span>
+	}
+
+	public static long compileTime() {
+<span class="nc" id="L58">		readVersionTxtIfNeeded();</span>
+<span class="nc" id="L59">		return compileTimeCache.get(0);</span>
+	}
+
+<span class="nc" id="L62">	private static List&lt;String&gt; versionCache = new CopyOnWriteArrayList&lt;String&gt;();</span>
+<span class="nc" id="L63">	private static List&lt;Long&gt; compileTimeCache = new CopyOnWriteArrayList&lt;Long&gt;();</span>
+<span class="nc" id="L64">	private static List&lt;String&gt; etagCache = new CopyOnWriteArrayList&lt;String&gt;();</span>
+
+	private static void readVersionTxtIfNeeded() {
+<span class="nc bnc" id="L67" title="All 4 branches missed.">		if (compileTimeCache.size() == 0 || versionCache.size() == 0) {</span>
+			try {
+<span class="nc" id="L69">				final InputStream is = FutureVersion.class.getResourceAsStream(&quot;version.txt&quot;);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">				if (is != null)</span>
+<span class="nc" id="L71">					try (final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="nc" id="L72">						versionCache.add(br.readLine());</span>
+<span class="nc" id="L73">						compileTimeCache.add(Long.parseLong(br.readLine()));</span>
+					}
+<span class="nc" id="L75">			} catch (Exception e) {</span>
+<span class="nc" id="L76">				e.printStackTrace();</span>
+<span class="nc" id="L77">			}</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (versionCache.size() == 0)</span>
+<span class="nc" id="L79">				versionCache.add(&quot;Unknown version&quot;);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (compileTimeCache.size() == 0)</span>
+<span class="nc" id="L81">				compileTimeCache.add(0L);</span>
+		}
+
+<span class="nc" id="L84">	}</span>
+
+	public static String fullDescription() {
+<span class="nc" id="L87">		return &quot;PlantUML version &quot; + FutureVersion.versionString() + &quot; (&quot; + FutureVersion.compileTimeString() + &quot;)&quot;;</span>
+	}
+
+	public static String versionString(int size) {
+<span class="nc" id="L91">		final StringBuilder sb = new StringBuilder(versionString());</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		while (sb.length() &lt; size)</span>
+<span class="nc" id="L93">			sb.append(' ');</span>
+
+<span class="nc" id="L95">		return sb.toString();</span>
+	}
+
+	public static String etag() {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (etagCache.size() == 0)</span>
+<span class="nc" id="L100">			etagCache.add(SignatureUtils.getMD5Hex(versionString()));</span>
+
+<span class="nc" id="L102">		return etagCache.get(0);</span>
+	}
+
+	public static String turningId() {
+<span class="nc" id="L106">		return etag();</span>
+	}
+
+	public static String compileTimeString() {
+<span class="nc" id="L110">		return new Date(FutureVersion.compileTime()).toString();</span>
+	}
+
+	// ::comment when __CORE__
+	public static String getJarPath() {
+		try {
+<span class="nc" id="L116">			final ClassLoader loader = FutureVersion.class.getClassLoader();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (loader == null)</span>
+<span class="nc" id="L118">				return &quot;No ClassLoader?&quot;;</span>
+
+<span class="nc" id="L120">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L122">				return &quot;No URL?&quot;;</span>
+
+<span class="nc" id="L124">			String fullpath = url.toString();</span>
+<span class="nc" id="L125">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
+<span class="nc" id="L126">			return fullpath;</span>
+<span class="nc" id="L127">		} catch (Throwable t) {</span>
+<span class="nc" id="L128">			Logme.error(t);</span>
+<span class="nc" id="L129">			return t.toString();</span>
+		}
+	}
+	// ::done
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

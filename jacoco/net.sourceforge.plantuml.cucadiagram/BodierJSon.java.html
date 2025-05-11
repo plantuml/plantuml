@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BodierJSon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cucadiagram</a> &gt; <span class="el_source">BodierJSon.java</span></div><h1>BodierJSon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.cucadiagram;
+
+import java.util.List;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+public class BodierJSon implements Bodier {
+
+	private Entity leaf;
+	private JsonValue json;
+
+	@Override
+	public void muteClassToObject() {
+<span class="nc" id="L58">		throw new UnsupportedOperationException();</span>
+	}
+
+<span class="nc" id="L61">	public BodierJSon() {</span>
+<span class="nc" id="L62">	}</span>
+
+	@Override
+	public void setLeaf(Entity leaf) {
+<span class="nc" id="L66">		this.leaf = Objects.requireNonNull(leaf);</span>
+
+<span class="nc" id="L68">	}</span>
+
+	@Override
+	public Display getMethodsToDisplay() {
+<span class="nc" id="L72">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public Display getFieldsToDisplay() {
+<span class="nc" id="L77">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public boolean hasUrl() {
+<span class="nc" id="L82">		return false;</span>
+	}
+
+	@Override
+	public TextBlock getBody(ISkinParam skinParam, final boolean showMethods, final boolean showFields,
+			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
+<span class="nc" id="L88">		return new TextBlockCucaJSon(fontConfiguration, skinParam, json, style.wrapWidth());</span>
+	}
+
+	@Override
+	public List&lt;CharSequence&gt; getRawBody() {
+<span class="nc" id="L93">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public boolean addFieldOrMethod(String s) throws NoSuchColorException {
+<span class="nc" id="L98">		throw new UnsupportedOperationException();</span>
+	}
+
+	public void setJson(JsonValue json) {
+<span class="nc" id="L102">		this.json = json;</span>
+<span class="nc" id="L103">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

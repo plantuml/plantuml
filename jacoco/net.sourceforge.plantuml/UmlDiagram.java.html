@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UmlDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">UmlDiagram.java</span></div><h1>UmlDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.dot.UnparsableGraphvizException;
+import net.sourceforge.plantuml.file.SuggestedFile;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.pdf.PdfConverter;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
+import net.sourceforge.plantuml.svek.EmptySvgException;
+import net.sourceforge.plantuml.version.Version;
+
+public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
+	// ::remove file when __HAXE__
+
+	private boolean rotation;
+
+<span class="fc" id="L70">	private int minwidth = Integer.MAX_VALUE;</span>
+
+//	public UmlDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type) {
+//		super(style, source, type);
+//	}
+
+	public UmlDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L77">		super(source, type, previous, preprocessing);</span>
+<span class="fc" id="L78">	}</span>
+
+	final public int getMinwidth() {
+<span class="nc" id="L81">		return minwidth;</span>
+	}
+
+	final public void setMinwidth(int minwidth) {
+<span class="nc" id="L85">		this.minwidth = minwidth;</span>
+<span class="nc" id="L86">	}</span>
+
+	final public boolean isRotation() {
+<span class="nc" id="L89">		return rotation;</span>
+	}
+
+	final public void setRotation(boolean rotation) {
+<span class="nc" id="L93">		this.rotation = rotation;</span>
+<span class="nc" id="L94">	}</span>
+
+	public final DisplayPositioned getFooterOrHeaderTeoz(FontParam param) {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (param == FontParam.FOOTER)</span>
+<span class="fc" id="L98">			return getFooter();</span>
+
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (param == FontParam.HEADER)</span>
+<span class="fc" id="L101">			return getHeader();</span>
+
+<span class="nc" id="L103">		throw new IllegalArgumentException();</span>
+	}
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="fc" id="L110">		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());</span>
+<span class="fc" id="L111">		fileFormatOption.getTikzFontDistortion().updateFromPragma(getPragma());</span>
+
+		// ::comment when __CORE__
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (fileFormatOption.getFileFormat() == FileFormat.PDF)</span>
+<span class="nc" id="L115">			return exportDiagramInternalPdf(os, index);</span>
+		// ::done
+
+		try {
+<span class="fc" id="L119">			final ImageData imageData = exportDiagramInternal(os, index, fileFormatOption);</span>
+<span class="fc" id="L120">			this.lastInfo = new XDimension2D(imageData.getWidth(), imageData.getHeight());</span>
+<span class="fc" id="L121">			return imageData;</span>
+<span class="nc" id="L122">		} catch (NoStyleAvailableException e) {</span>
+<span class="nc" id="L123">			Logme.error(e);</span>
+<span class="nc" id="L124">			final CrashReportHandler report = new CrashReportHandler(null, getMetadata(), getFlashData());</span>
+
+<span class="nc" id="L126">			report.add(&quot;There is an issue with your plantuml.jar file:&quot;);</span>
+<span class="nc" id="L127">			report.add(&quot;We cannot load any style from it!&quot;);</span>
+
+<span class="nc" id="L129">			report.checkOldVersionWarning();</span>
+<span class="nc" id="L130">			report.addProperties();</span>
+<span class="nc" id="L131">			report.addEmptyLine();</span>
+
+<span class="nc" id="L133">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
+<span class="nc" id="L134">			return ImageDataSimple.error(e);</span>
+<span class="nc" id="L135">		} catch (UnparsableGraphvizException e) {</span>
+<span class="nc" id="L136">			Logme.error(e);</span>
+<span class="nc" id="L137">			final CrashReportHandler report = new CrashReportHandler(e.getCause(), getMetadata(), getFlashData());</span>
+
+<span class="nc" id="L139">			report.anErrorHasOccured(e.getCause(), getFlashData());</span>
+<span class="nc" id="L140">			report.add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) cannot parse result from dot/GraphViz.&quot;);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (e.getCause() instanceof EmptySvgException)</span>
+<span class="nc" id="L142">				report.add(&quot;Because dot/GraphViz returns an empty string.&quot;);</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (e.getGraphvizVersion() != null) {</span>
+<span class="nc" id="L145">				report.addEmptyLine();</span>
+<span class="nc" id="L146">				report.add(&quot;GraphViz version used : &quot; + e.getGraphvizVersion());</span>
+			}
+<span class="nc" id="L148">			report.pleaseCheckYourGraphVizVersion();</span>
+<span class="nc" id="L149">			report.addProperties();</span>
+<span class="nc" id="L150">			report.addEmptyLine();</span>
+<span class="nc" id="L151">			report.thisMayBeCaused();</span>
+<span class="nc" id="L152">			report.addEmptyLine();</span>
+<span class="nc" id="L153">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L154">			report.addEmptyLine();</span>
+
+<span class="nc" id="L156">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
+<span class="nc" id="L157">			return ImageDataSimple.error(e);</span>
+<span class="nc" id="L158">		} catch (Throwable e) {</span>
+<span class="nc" id="L159">			Logme.error(e);</span>
+<span class="nc" id="L160">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
+<span class="nc" id="L161">			report.anErrorHasOccured(e, getFlashData());</span>
+<span class="nc" id="L162">			report.addProperties();</span>
+<span class="nc" id="L163">			report.addEmptyLine();</span>
+<span class="nc" id="L164">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L165">			report.addEmptyLine();</span>
+<span class="nc" id="L166">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
+<span class="nc" id="L167">			return ImageDataSimple.error(e);</span>
+		}
+	}
+
+	// ::comment when __CORE__
+	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
+<span class="nc" id="L173">		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);</span>
+<span class="nc" id="L174">		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);</span>
+		final ImageData result;
+<span class="nc" id="L176">		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {</span>
+<span class="nc" id="L177">			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));</span>
+		}
+<span class="nc" id="L179">		PdfConverter.convert(svg, pdfFile);</span>
+<span class="nc" id="L180">		FileUtils.copyToStream(pdfFile, os);</span>
+<span class="nc" id="L181">		return result;</span>
+	}
+
+	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
+			throws FileNotFoundException {
+<span class="fc" id="L186">		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());</span>
+<span class="fc" id="L187">		final SFile cmapFile = new SFile(name);</span>
+<span class="fc" id="L188">		try (PrintWriter pw = cmapFile.createPrintWriter()) {</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(cmapFile) == false)</span>
+<span class="nc" id="L190">				return;</span>
+
+<span class="fc" id="L192">			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		}</span>
+<span class="fc" id="L194">	}</span>
+
+	static String changeName(String name) {
+<span class="fc" id="L197">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
+	}
+	// ::done
+
+	private XDimension2D lastInfo;
+
+	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException;
+
+	@Override
+	public String getWarningOrError() {
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
+<span class="fc" id="L209">			return null;</span>
+
+<span class="nc" id="L211">		final double actualWidth = lastInfo.getWidth();</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (actualWidth == 0)</span>
+<span class="nc" id="L213">			return null;</span>
+
+<span class="nc" id="L215">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L217">			return null;</span>
+
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (value.matches(&quot;\\d+&quot;) == false)</span>
+<span class="nc" id="L220">			return null;</span>
+
+<span class="nc" id="L222">		final int widthwarning = Integer.parseInt(value);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
+<span class="nc" id="L224">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
+
+<span class="nc" id="L226">		return null;</span>
+	}
+
+	public void setHideEmptyDescription(boolean hideEmptyDescription) {
+<span class="nc" id="L230">	}</span>
+
+	public Previous getPrevious() {
+<span class="nc" id="L233">		return Previous.createFrom(getSkinParam().values());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

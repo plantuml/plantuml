@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractSymbolFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">jcckit.plot</a> &gt; <span class="el_source">AbstractSymbolFactory.java</span></div><h1>AbstractSymbolFactory.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2003-2004, Franz-Josef Elmer, All rights reserved
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details
+ * (http://www.gnu.org/copyleft/lesser.html).
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jcckit.plot;
+
+import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.GraphicalElement;
+import jcckit.util.ConfigParameters;
+import jcckit.util.Factory;
+
+/**
+ * Abstract superclass of all {@link SymbolFactory SymbolFactories}.
+ * Subclasses have to implement {@link #createPlainSymbol createPlainSymbol()}.
+ *
+ * @author Franz-Josef Elmer
+ */
+public abstract class AbstractSymbolFactory implements SymbolFactory {
+  /** Size of all symbols. */
+  protected final double _size;
+  
+  /** Attributes of all symbols. */
+  protected final GraphicAttributes _attributes;
+
+  /**
+   * Creates an instance from the specified configuration parameters.
+   * &lt;table border=1 cellpadding=5&gt;
+   * &lt;tr&gt;&lt;th&gt;Key &amp;amp; Default Value&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Mandatory&lt;/th&gt;
+   *     &lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;size = &lt;/tt&gt;0.01&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;double&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Size of the symbol in device-independent units.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;tr&gt;&lt;td&gt;&lt;tt&gt;attributes&lt;/tt&gt;&lt;/td&gt;
+   *     &lt;td&gt;&lt;tt&gt;ConfigParameters&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;no&lt;/td&gt;
+   *     &lt;td&gt;Configuration parameters for the attributes of the symbol.
+   *         &lt;tt&gt;className&lt;/tt&gt; has to be a class which is an instance of
+   *         {@link GraphicAttributes}.&lt;/td&gt;&lt;/tr&gt;
+   * &lt;/table&gt;
+   */
+<span class="nc" id="L55">  public AbstractSymbolFactory(ConfigParameters config) {</span>
+<span class="nc" id="L56">    _size = config.getDouble(SIZE_KEY, DEFAULT_SIZE);</span>
+<span class="nc" id="L57">    _attributes = (GraphicAttributes) Factory.createOrGet(</span>
+<span class="nc" id="L58">                                        config.getNode(ATTRIBUTES_KEY), null);</span>
+<span class="nc" id="L59">  }</span>
+
+  /** 
+   * Creates a symbol.
+   * Evaluate &lt;tt&gt;hintFromPreviousPoint&lt;/tt&gt; if it is a {@link AttributesHint}.
+   * Calls {@link #createSymbol(GraphPoint, GraphicAttributes, Hint, Hint)}.
+   * @param point Symbol position.
+   * @param hintFromPreviousPoint Hint from the previous point.
+   * @param hintFromPreviousCurve Hint from the previous curve.
+   */
+  public Symbol createSymbol(GraphPoint point, Hint hintFromPreviousPoint,
+                             Hint hintFromPreviousCurve) {
+<span class="nc" id="L71">    GraphicAttributes attributes = _attributes;</span>
+<span class="nc" id="L72">    Hint hintForNextPoint = hintFromPreviousPoint;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">    if (hintFromPreviousPoint instanceof AttributesHint) {</span>
+<span class="nc" id="L74">      attributes = ((AttributesHint) hintFromPreviousPoint).getAttributes();</span>
+<span class="nc" id="L75">      hintForNextPoint </span>
+<span class="nc" id="L76">          = ((AttributesHint) hintFromPreviousPoint).getNextHint();</span>
+    }
+<span class="nc" id="L78">    return createSymbol(point,  attributes, hintForNextPoint,</span>
+                        hintFromPreviousCurve);
+  }
+
+  /**
+   * Creates a symbol.
+   * Uses {@link #createPlainSymbol createPlainSymbol()}.
+   * @param point Symbol position.
+   * @param attributes Symbol attributes.
+   * @param hintForNextPoint Hint for the next point. Will be delivered
+   *        unchanged in the return &lt;tt&gt;Symbol&lt;/tt&gt; object.
+   * @param hintFromPreviousCurve Hint from the previous curve.
+   *        Will be delivered unchanged in the return &lt;tt&gt;Symbol&lt;/tt&gt; object.
+   *        Subclasses may override this behavior.
+   */
+  protected Symbol createSymbol(GraphPoint point, GraphicAttributes attributes,
+                                Hint hintForNextPoint, 
+                                Hint hintFromPreviousCurve) {
+<span class="nc" id="L96">    return new Symbol(createPlainSymbol(point, _size, attributes),</span>
+                      hintForNextPoint, hintFromPreviousCurve);
+  }
+
+  /**
+   * Creates a symbol for the legend at the specified position.
+   * Uses {@link #createPlainSymbol createPlainSymbol()} 
+   * @param centerPosition Center position of the symbol.
+   * @param size The size of the symbol. Will be ignored because the value
+   *         given in the constructor will be used.
+   */
+  public GraphicalElement createLegendSymbol(GraphPoint centerPosition,
+                                             double size) {
+<span class="nc" id="L109">    return createPlainSymbol(centerPosition, _size, _attributes);</span>
+  }
+
+  /**
+   * Creates the graphical element of the plain symbol.
+   * @param centerPosition Center position of the symbol.
+   * @param size The size of the symbol.
+   * @param attributes The attributes of the symbol.
+   */
+  protected abstract GraphicalElement createPlainSymbol(
+      GraphPoint centerPosition, double size, GraphicAttributes attributes);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

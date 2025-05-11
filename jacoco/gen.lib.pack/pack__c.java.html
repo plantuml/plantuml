@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>pack__c.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">gen.lib.pack</a> &gt; <span class="el_source">pack__c.java</span></div><h1>pack__c.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of Smetana.
+ * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
+ *
+ * (C) Copyright 2009-2022, Arnaud Roques
+ *
+ * This translation is distributed under the same Licence as the original C program:
+ * 
+ *************************************************************************
+ * Copyright (c) 2011 AT&amp;T Intellectual Property 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: See CVS logs. Details at http://www.graphviz.org/
+ *************************************************************************
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
+ * LICENSE (&quot;AGREEMENT&quot;). [Eclipse Public License - v 1.0]
+ * 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ * 
+ * You may obtain a copy of the License at
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package gen.lib.pack;
+import static gen.lib.cgraph.attr__c.agget;
+import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import h.EN_pack_mode;
+import h.ST_Agraph_s;
+import h.ST_pack_info;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+<span class="nc" id="L60">public class pack__c {</span>
+    // ::remove folder when __HAXE__
+
+
+
+/* parsePackModeInfo;
+ * Return pack_mode of graph using &quot;packmode&quot; attribute.
+ * If not defined, return dflt
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;parsePackModeInfo&quot;, key=&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;, definition=&quot;pack_mode  parsePackModeInfo(char* p, pack_mode dflt, pack_info* pinfo)&quot;)
+public static EN_pack_mode parsePackModeInfo(CString p, EN_pack_mode dflt, ST_pack_info pinfo) {
+<span class="fc" id="L72">ENTERING(&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;,&quot;parsePackModeInfo&quot;);</span>
+try {
+    float v;
+    int i;
+    //assert (pinfo);
+<span class="fc" id="L77">    pinfo.flags = 0;</span>
+<span class="fc" id="L78">    pinfo.mode = dflt;</span>
+<span class="fc" id="L79">    pinfo.sz = 0;</span>
+<span class="fc" id="L80">    pinfo.vals = null;</span>
+<span class="pc bpc" id="L81" title="3 of 4 branches missed.">    if (p!=null &amp;&amp; p.charAt(0)!='\0') {</span>
+<span class="nc" id="L82">UNSUPPORTED(&quot;2ybrtqq8efxouph8wjbrnowxz&quot;); // 	switch (*p) {</span>
+<span class="nc" id="L83">UNSUPPORTED(&quot;2v5u3irq50r1n2ccuna0y09lk&quot;); // 	case 'a':</span>
+<span class="nc" id="L84">UNSUPPORTED(&quot;4o68zbwd6291pxryyntjh2432&quot;); // 	    if ((!strncmp(p,&quot;array&quot;,(sizeof(&quot;array&quot;)/sizeof(char) - 1)))) {</span>
+<span class="nc" id="L85">UNSUPPORTED(&quot;3cxht114gc0fn4wl8xjy515bv&quot;); // 		pinfo-&gt;mode = l_array;</span>
+<span class="nc" id="L86">UNSUPPORTED(&quot;edkaa80od81ojkn7d4h0q1zbu&quot;); // 		p += (sizeof(&quot;array&quot;)/sizeof(char) - 1);</span>
+<span class="nc" id="L87">UNSUPPORTED(&quot;106zhcf9a6frvafctbbgrbws3&quot;); // 		p = chkFlags (p, pinfo);</span>
+<span class="nc" id="L88">UNSUPPORTED(&quot;epac8gmlq3r1q3g6lh3fb9nzh&quot;); // 		if ((sscanf (p, &quot;%d&quot;, &amp;i)&gt;0) &amp;&amp; (i &gt; 0))</span>
+<span class="nc" id="L89">UNSUPPORTED(&quot;2e563kaxakuuou2t5kqvv33w5&quot;); // 		    pinfo-&gt;sz = i;</span>
+<span class="nc" id="L90">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L91">UNSUPPORTED(&quot;38dve3snq2grkwui6y1tpc6r1&quot;); // 	    else if ((!strncmp(p,&quot;aspect&quot;,(sizeof(&quot;aspect&quot;)/sizeof(char) - 1)))) {</span>
+<span class="nc" id="L92">UNSUPPORTED(&quot;ems4wqj0nbd0vi3sttf36tnir&quot;); // 		pinfo-&gt;mode = l_aspect;</span>
+<span class="nc" id="L93">UNSUPPORTED(&quot;3ckdfsy55ba8os2xhymh002al&quot;); // 		if ((sscanf (p + (sizeof(&quot;array&quot;)/sizeof(char) - 1), &quot;%f&quot;, &amp;v)&gt;0) &amp;&amp; (v &gt; 0))</span>
+<span class="nc" id="L94">UNSUPPORTED(&quot;1i6xlg2sfqvjqjdu811xm5398&quot;); // 		    pinfo-&gt;aspect = v;</span>
+<span class="nc" id="L95">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L96">UNSUPPORTED(&quot;b3tzhasiwa1p83l47nhl6k5x8&quot;); // 		    pinfo-&gt;aspect = 1;</span>
+<span class="nc" id="L97">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L98">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L99">UNSUPPORTED(&quot;f3lyz2cejs6yn5fyckhn7ba1&quot;); // 	case 'c':</span>
+<span class="nc" id="L100">UNSUPPORTED(&quot;d6yjom2gtqleeq1vf5l72eazl&quot;); // 	    if ((*(p)==*(&quot;cluster&quot;)&amp;&amp;!strcmp(p,&quot;cluster&quot;)))</span>
+<span class="nc" id="L101">UNSUPPORTED(&quot;2xe2y3s32q27l74dshw3831hu&quot;); // 		pinfo-&gt;mode = l_clust;</span>
+<span class="nc" id="L102">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L103">UNSUPPORTED(&quot;e00kor2k58i044hvvxytt9dhg&quot;); // 	case 'g':</span>
+<span class="nc" id="L104">UNSUPPORTED(&quot;8vzhimdinzz48u15tcx34gzgs&quot;); // 	    if ((*(p)==*(&quot;graph&quot;)&amp;&amp;!strcmp(p,&quot;graph&quot;)))</span>
+<span class="nc" id="L105">UNSUPPORTED(&quot;coafx7pn3ah1ulp0o7a0z119r&quot;); // 		pinfo-&gt;mode = l_graph;</span>
+<span class="nc" id="L106">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L107">UNSUPPORTED(&quot;f187wptsr73liavtlyoyfovp3&quot;); // 	case 'n':</span>
+<span class="nc" id="L108">UNSUPPORTED(&quot;aqi1ed010xc3cj8xoye8vqkqe&quot;); // 	    if ((*(p)==*(&quot;node&quot;)&amp;&amp;!strcmp(p,&quot;node&quot;)))</span>
+<span class="nc" id="L109">UNSUPPORTED(&quot;epewq8yin5pr1meeofxvntjes&quot;); // 		pinfo-&gt;mode = l_node;</span>
+<span class="nc" id="L110">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L111">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+    }
+    //if (Verbose) {
+	//fprintf (stderr, &quot;pack info:\n&quot;);
+	//fprintf (stderr, &quot;  mode   %s\n&quot;, mode2Str(pinfo-&gt;mode));
+	//if (pinfo-&gt;mode == l_aspect)
+	//    fprintf (stderr, &quot;  aspect %f\n&quot;, pinfo-&gt;aspect);
+	//fprintf (stderr, &quot;  size   %d\n&quot;, pinfo-&gt;sz);
+	//fprintf (stderr, &quot;  flags  %d\n&quot;, pinfo-&gt;flags);
+    //}
+<span class="fc" id="L121">    return pinfo.mode;</span>
+} finally {
+<span class="fc" id="L123">LEAVING(&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;,&quot;parsePackModeInfo&quot;);</span>
+}
+}
+
+
+
+
+/* getPackModeInfo;
+ * Return pack_mode of graph using &quot;packmode&quot; attribute.
+ * If not defined, return dflt
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;getPackModeInfo&quot;, key=&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;, definition=&quot;pack_mode  getPackModeInfo(Agraph_t * g, pack_mode dflt, pack_info* pinfo)&quot;)
+public static EN_pack_mode getPackModeInfo(Globals zz, ST_Agraph_s g, EN_pack_mode dflt, ST_pack_info pinfo) {
+<span class="fc" id="L137">ENTERING(&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;,&quot;getPackModeInfo&quot;);</span>
+try {
+<span class="fc" id="L139">    return parsePackModeInfo (agget(zz, g, new CString(&quot;packmode&quot;)), dflt, pinfo);</span>
+} finally {
+<span class="fc" id="L141">LEAVING(&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;,&quot;getPackModeInfo&quot;);</span>
+}
+}
+
+
+
+
+
+/* getPack:
+ * Return &quot;pack&quot; attribute of g.
+ * If not defined or negative, return not_def.
+ * If defined but not specified, return dflt.
+ */
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;getPack&quot;, key=&quot;ata97fmix5q1oikrmk5pezvrf&quot;, definition=&quot;int getPack(Agraph_t * g, int not_def, int dflt)&quot;)
+public static int getPack(Globals zz, ST_Agraph_s g, int not_def, int dflt) {
+<span class="fc" id="L157">ENTERING(&quot;ata97fmix5q1oikrmk5pezvrf&quot;,&quot;getPack&quot;);</span>
+try {
+    CString p;
+    int i;
+<span class="fc" id="L161">    int v = not_def;</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">    if ((p = agget(zz, g, new CString(&quot;pack&quot;)))!=null) {</span>
+<span class="nc" id="L163">UNSUPPORTED(&quot;enpqar7c7okvibe7xhe0vjtfn&quot;); // 	if ((sscanf(p, &quot;%d&quot;, &amp;i) == 1) &amp;&amp; (i &gt;= 0))</span>
+<span class="nc" id="L164">UNSUPPORTED(&quot;3puzxwczcmpxvlw8cvmeyio74&quot;); // 	    v = i;</span>
+<span class="nc" id="L165">UNSUPPORTED(&quot;65w8fxtw319slbg2c6nvtmow8&quot;); // 	else if ((*p == 't') || (*p == 'T'))</span>
+<span class="nc" id="L166">UNSUPPORTED(&quot;5lifdir9mxnvpi8ur34qo0jej&quot;); // 	    v = dflt;</span>
+    }
+<span class="fc" id="L168">    return v;</span>
+} finally {
+<span class="fc" id="L170">LEAVING(&quot;ata97fmix5q1oikrmk5pezvrf&quot;,&quot;getPack&quot;);</span>
+}
+}
+
+
+
+
+@Reviewed(when = &quot;12/11/2020&quot;)
+@Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;getPackInfo&quot;, key=&quot;ce4a70w8ddkj4l9efi74h61s6&quot;, definition=&quot;pack_mode  getPackInfo(Agraph_t * g, pack_mode dflt, int dfltMargin, pack_info* pinfo)&quot;)
+public static EN_pack_mode getPackInfo(Globals zz, ST_Agraph_s g, EN_pack_mode dflt, int dfltMargin, ST_pack_info pinfo) {
+<span class="fc" id="L180">ENTERING(&quot;ce4a70w8ddkj4l9efi74h61s6&quot;,&quot;getPackInfo&quot;);</span>
+try {
+<span class="fc" id="L182">    pinfo.margin = getPack(zz, g, dfltMargin, dfltMargin);</span>
+    //if (Verbose) {
+	//fprintf (stderr, &quot;  margin %d\n&quot;, pinfo-&gt;margin);
+    //}
+<span class="fc" id="L186">    pinfo.doSplines = 0;</span>
+<span class="fc" id="L187">    pinfo.fixed = null;</span>
+<span class="fc" id="L188">    getPackModeInfo(zz, g, dflt, pinfo);</span>
+<span class="fc" id="L189">    return pinfo.mode;</span>
+} finally {
+<span class="fc" id="L191">LEAVING(&quot;ce4a70w8ddkj4l9efi74h61s6&quot;,&quot;getPackInfo&quot;);</span>
+}
+}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

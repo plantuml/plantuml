@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Huffman.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.brotli</a> &gt; <span class="el_source">Huffman.java</span></div><h1>Huffman.java</h1><pre class="source lang-java linenums">/* Copyright 2015 Google Inc. All Rights Reserved.
+
+   https://github.com/google/brotli/blob/master/LICENSE
+
+   Distributed under MIT license.
+   See file LICENSE for detail or copy at https://opensource.org/licenses/MIT
+*/
+
+package net.sourceforge.plantuml.brotli;
+
+/**
+ * Utilities for building Huffman decoding tables.
+ */
+<span class="nc" id="L14">final class Huffman {</span>
+
+	private static final int MAX_LENGTH = 15;
+
+	/**
+	 * Returns reverse(reverse(key, len) + 1, len).
+	 *
+	 * &lt;p&gt;
+	 * reverse(key, len) is the bit-wise reversal of the len least significant bits
+	 * of key.
+	 */
+	private static int getNextKey(int key, int len) {
+<span class="fc" id="L26">		int step = 1 &lt;&lt; (len - 1);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		while ((key &amp; step) != 0) {</span>
+<span class="fc" id="L28">			step &gt;&gt;= 1;</span>
+		}
+<span class="fc" id="L30">		return (key &amp; (step - 1)) + step;</span>
+	}
+
+	/**
+	 * Stores {@code item} in
+	 * {@code table[0], table[step], table[2 * step] .., table[end]}.
+	 *
+	 * &lt;p&gt;
+	 * Assumes that end is an integer multiple of step.
+	 */
+	private static void replicateValue(int[] table, int offset, int step, int end, int item) {
+		do {
+<span class="fc" id="L42">			end -= step;</span>
+<span class="fc" id="L43">			table[offset + end] = item;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		} while (end &gt; 0);</span>
+<span class="fc" id="L45">	}</span>
+
+	/**
+	 * @param count histogram of bit lengths for the remaining symbols,
+	 * @param len   code length of the next processed symbol.
+	 * @return table width of the next 2nd level table.
+	 */
+	private static int nextTableBitSize(int[] count, int len, int rootBits) {
+<span class="fc" id="L53">		int left = 1 &lt;&lt; (len - rootBits);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		while (len &lt; MAX_LENGTH) {</span>
+<span class="fc" id="L55">			left -= count[len];</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">			if (left &lt;= 0) {</span>
+<span class="fc" id="L57">				break;</span>
+			}
+<span class="fc" id="L59">			len++;</span>
+<span class="fc" id="L60">			left &lt;&lt;= 1;</span>
+		}
+<span class="fc" id="L62">		return len - rootBits;</span>
+	}
+
+	/**
+	 * Builds Huffman lookup table assuming code lengths are in symbol order.
+	 */
+	static void buildHuffmanTable(int[] rootTable, int tableOffset, int rootBits, int[] codeLengths,
+			int codeLengthsSize) {
+		int key; // Reversed prefix code.
+<span class="fc" id="L71">		int[] sorted = new int[codeLengthsSize]; // Symbols sorted by code length.</span>
+		// TODO: fill with zeroes?
+<span class="fc" id="L73">		int[] count = new int[MAX_LENGTH + 1]; // Number of codes of each length.</span>
+<span class="fc" id="L74">		int[] offset = new int[MAX_LENGTH + 1]; // Offsets in sorted table for each length.</span>
+		int symbol;
+
+		// Build histogram of code lengths.
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (symbol = 0; symbol &lt; codeLengthsSize; symbol++) {</span>
+<span class="fc" id="L79">			count[codeLengths[symbol]]++;</span>
+		}
+
+		// Generate offsets into sorted symbol table by code length.
+<span class="fc" id="L83">		offset[1] = 0;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (int len = 1; len &lt; MAX_LENGTH; len++) {</span>
+<span class="fc" id="L85">			offset[len + 1] = offset[len] + count[len];</span>
+		}
+
+		// Sort symbols by length, by symbol order within each length.
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (symbol = 0; symbol &lt; codeLengthsSize; symbol++) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			if (codeLengths[symbol] != 0) {</span>
+<span class="fc" id="L91">				sorted[offset[codeLengths[symbol]]++] = symbol;</span>
+			}
+		}
+
+<span class="fc" id="L95">		int tableBits = rootBits;</span>
+<span class="fc" id="L96">		int tableSize = 1 &lt;&lt; tableBits;</span>
+<span class="fc" id="L97">		int totalSize = tableSize;</span>
+
+		// Special case code with only one value.
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (offset[MAX_LENGTH] == 1) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			for (key = 0; key &lt; totalSize; key++) {</span>
+<span class="fc" id="L102">				rootTable[tableOffset + key] = sorted[0];</span>
+			}
+<span class="fc" id="L104">			return;</span>
+		}
+
+		// Fill in root table.
+<span class="fc" id="L108">		key = 0;</span>
+<span class="fc" id="L109">		symbol = 0;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (int len = 1, step = 2; len &lt;= rootBits; len++, step &lt;&lt;= 1) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			for (; count[len] &gt; 0; count[len]--) {</span>
+<span class="fc" id="L112">				replicateValue(rootTable, tableOffset + key, step, tableSize, len &lt;&lt; 16 | sorted[symbol++]);</span>
+<span class="fc" id="L113">				key = getNextKey(key, len);</span>
+			}
+		}
+
+		// Fill in 2nd level tables and add pointers to root table.
+<span class="fc" id="L118">		int mask = totalSize - 1;</span>
+<span class="fc" id="L119">		int low = -1;</span>
+<span class="fc" id="L120">		int currentOffset = tableOffset;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (int len = rootBits + 1, step = 2; len &lt;= MAX_LENGTH; len++, step &lt;&lt;= 1) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			for (; count[len] &gt; 0; count[len]--) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">				if ((key &amp; mask) != low) {</span>
+<span class="fc" id="L124">					currentOffset += tableSize;</span>
+<span class="fc" id="L125">					tableBits = nextTableBitSize(count, len, rootBits);</span>
+<span class="fc" id="L126">					tableSize = 1 &lt;&lt; tableBits;</span>
+<span class="fc" id="L127">					totalSize += tableSize;</span>
+<span class="fc" id="L128">					low = key &amp; mask;</span>
+<span class="fc" id="L129">					rootTable[tableOffset + low] = (tableBits + rootBits) &lt;&lt; 16 | (currentOffset - tableOffset - low);</span>
+				}
+<span class="fc" id="L131">				replicateValue(rootTable, currentOffset + (key &gt;&gt; rootBits), step, tableSize,</span>
+						(len - rootBits) &lt;&lt; 16 | sorted[symbol++]);
+<span class="fc" id="L133">				key = getNextKey(key, len);</span>
+			}
+		}
+<span class="fc" id="L136">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

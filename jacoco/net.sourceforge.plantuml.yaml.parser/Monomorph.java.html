@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Monomorph.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.yaml.parser</a> &gt; <span class="el_source">Monomorph.java</span></div><h1>Monomorph.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.yaml.parser;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class Monomorph {
+
+	private MonomorphType type;
+
+	// Only one of this 3 cannot be null.
+	private String value;
+	private List&lt;Monomorph&gt; list;
+	private Map&lt;String, Monomorph&gt; map;
+
+<span class="fc" id="L52">	public Monomorph() {</span>
+		// At creation, the Monomorph is undetermined
+<span class="fc" id="L54">		this.type = MonomorphType.UNDETERMINATE;</span>
+<span class="fc" id="L55">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc bnc" id="L59" title="All 5 branches missed.">		switch (type) {</span>
+		case UNDETERMINATE:
+<span class="nc" id="L61">			return &quot;???&quot;;</span>
+		case SCALAR:
+<span class="nc" id="L63">			return getValue();</span>
+		case LIST:
+<span class="nc" id="L65">			return list.toString();</span>
+		case MAP:
+<span class="nc" id="L67">			return map.toString();</span>
+		}
+<span class="nc" id="L69">		return super.toString();</span>
+	}
+
+	public void setValue(String value) {
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">		if (this.type == MonomorphType.LIST || this.type == MonomorphType.MAP)</span>
+<span class="nc" id="L74">			throw new IllegalStateException();</span>
+<span class="fc" id="L75">		this.value = value;</span>
+<span class="fc" id="L76">		this.list = null;</span>
+<span class="fc" id="L77">		this.map = null;</span>
+<span class="fc" id="L78">		this.type = MonomorphType.SCALAR;</span>
+<span class="fc" id="L79">	}</span>
+
+	public void addInList(Monomorph elementToBeAdded) {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (this.type == MonomorphType.UNDETERMINATE) {</span>
+<span class="fc" id="L83">			this.list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L84">			this.type = MonomorphType.LIST;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		} else if (this.type != MonomorphType.LIST) {</span>
+<span class="nc" id="L86">			throw new IllegalStateException(&quot;Monomorph is not of type LIST.&quot;);</span>
+		}
+<span class="fc" id="L88">		this.list.add(elementToBeAdded);</span>
+<span class="fc" id="L89">	}</span>
+
+	public void putInMap(String key, Monomorph value) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this.type == MonomorphType.UNDETERMINATE) {</span>
+<span class="fc" id="L93">			this.map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L94">			this.type = MonomorphType.MAP;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		} else if (this.type != MonomorphType.MAP) {</span>
+<span class="nc" id="L96">			throw new IllegalStateException(&quot;Monomorph is not of type MAP.&quot;);</span>
+		}
+<span class="fc" id="L98">		this.map.put(key, value);</span>
+<span class="fc" id="L99">	}</span>
+
+	public MonomorphType getType() {
+<span class="fc" id="L102">		return type;</span>
+	}
+
+	public String getValue() {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (this.type != MonomorphType.SCALAR)</span>
+<span class="nc" id="L107">			throw new IllegalStateException(&quot;Not a scalar value.&quot;);</span>
+
+<span class="fc" id="L109">		return this.value;</span>
+	}
+
+	public Monomorph getElementAt(int index) {
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (this.type != MonomorphType.LIST)</span>
+<span class="nc" id="L114">			throw new IllegalStateException(&quot;Not a list.&quot;);</span>
+
+<span class="fc" id="L116">		return this.list.get(index);</span>
+	}
+
+	public Monomorph getMapValue(String key) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
+<span class="nc" id="L121">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
+
+<span class="fc" id="L123">		return this.map.get(key);</span>
+	}
+
+	public Set&lt;String&gt; keys() {
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
+<span class="nc" id="L128">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
+
+<span class="fc" id="L130">		return this.map.keySet();</span>
+	}
+
+	public int size() {
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (this.type == MonomorphType.LIST)</span>
+<span class="fc" id="L135">			return this.list.size();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		else if (this.type == MonomorphType.MAP)</span>
+<span class="nc" id="L137">			return this.map.size();</span>
+
+<span class="nc" id="L139">		throw new IllegalStateException(&quot;Not a container type.&quot;);</span>
+	}
+
+	public static Monomorph scalar(String value) {
+<span class="fc" id="L143">		final Monomorph result = new Monomorph();</span>
+<span class="fc" id="L144">		result.setValue(value);</span>
+<span class="fc" id="L145">		return result;</span>
+	}
+
+	public static Monomorph list(List&lt;String&gt; input) {
+<span class="fc" id="L149">		final Monomorph result = new Monomorph();</span>
+		// If input is an empty list!
+<span class="fc" id="L151">		result.list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L152">		result.type = MonomorphType.LIST;</span>
+
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (String s : input)</span>
+<span class="fc" id="L155">			result.addInList(Monomorph.scalar(s));</span>
+
+<span class="fc" id="L157">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

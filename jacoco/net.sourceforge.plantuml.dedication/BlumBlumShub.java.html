@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlumBlumShub.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.dedication</a> &gt; <span class="el_source">BlumBlumShub.java</span></div><h1>BlumBlumShub.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.dedication;
+
+import java.math.BigInteger;
+
+public class BlumBlumShub {
+	// ::remove folder when __CORE__
+
+<span class="nc" id="L8">	private static final BigInteger two = BigInteger.valueOf(2L);</span>
+
+	private BigInteger state;
+	private final BigInteger pq;
+
+<span class="nc" id="L13">	public BlumBlumShub(BigInteger pq, byte[] seed) {</span>
+<span class="nc" id="L14">		this.pq = pq;</span>
+<span class="nc" id="L15">		this.state = new BigInteger(1, seed).mod(pq);</span>
+<span class="nc" id="L16">	}</span>
+
+	public int nextRnd(int numBits) {
+<span class="nc" id="L19">		int result = 0;</span>
+<span class="nc bnc" id="L20" title="All 2 branches missed.">		for (int i = numBits; i != 0; --i) {</span>
+<span class="nc" id="L21">			state = state.modPow(two, pq);</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">			final int bit = state.testBit(0) ? 1 : 0;</span>
+<span class="nc" id="L23">			result = (result &lt;&lt; 1) | bit;</span>
+		}
+<span class="nc" id="L25">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GridPattern.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.stathissideris.ascii2image.text</a> &gt; <span class="el_source">GridPattern.java</span></div><h1>GridPattern.java</h1><pre class="source lang-java linenums">/**
+ * ditaa - Diagrams Through Ascii Art
+ * 
+ * Copyright (C) 2004-2011 Efstathios Sideris
+ *
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * ditaa is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ *   
+ */
+package org.stathissideris.ascii2image.text;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Pattern;
+
+/**
+ * This is a TextGrid (usually 3x3) that contains the equivalent of a
+ * 2D reqular expression (which uses custom syntax to make things more
+ * visual, but standard syntax is also possible).
+ * 
+ * The custom syntax is:
+ * . means anything
+ * b means any boundary (any of  - = / \ + | :)
+ * ! means not boundary (none of  - = / \ + | :)
+ * - means - or =
+ * | means | or :
+ * [ means not | nor :
+ * ~ means not - nor =
+ * ^ means a boundary but not - nor =
+ * ( means a boundary but not | nor :
+ * s means a straight boundary (one of - = + | :)
+ * S means not a straight boundary (none of - = + | :)
+ * 
+ * 1 means a cell that has entry point 1
+ * 2 means a cell that has entry point 2
+ * 3 means a cell that has entry point 3 etc. up to number 8
+ * 
+ * %1 means a cell that does not have entry point 1 etc.
+ * 
+ * See below for an explanation of entry points
+ * 
+ * +, \, / and the space are literal (as is any other character)
+ * 
+ * 
+ * Entry points
+ * 
+ * &lt;pre&gt;
+ * 1   2   3
+ *  *--*--*
+ *  |     |
+ * 8*     *4
+ *  |     |
+ *  *--*--*
+ * 7   6   5
+ * &lt;/pre&gt;
+ * 
+ * We number the entry points for each cell as in the diagram
+ * above. If a cell is occupied by a character, we define as
+ * entry points the points of the above diagram that the character
+ * can touch with the end of its lines. For example - has
+ * entry points 8 and 4, | and : have entry points 2 and 6,
+ * / has 3 and 7, \ has 1 and 5, + has 2, 6, 8 and 4 etc.   
+ * 
+ * 
+ * @author Efstathios Sideris
+ */
+public class GridPattern extends TextGrid {
+	
+<span class="nc" id="L79">	private ArrayList&lt;Pattern&gt; regExps = new ArrayList&lt;Pattern&gt;(); //TODO optimise: store as PatternS</span>
+<span class="nc" id="L80">	private boolean regExpsAreValid = false;</span>
+	
+	private static final boolean DEBUG = false;
+	
+<span class="nc" id="L84">	private boolean usesStandardSyntax = false;</span>
+
+	public GridPattern(){
+<span class="nc" id="L87">		super(3, 3);</span>
+<span class="nc" id="L88">	}</span>
+
+	public GridPattern(String row1, String row2, String row3){
+<span class="nc" id="L91">		super(Math.max(Math.max(row1.length(), row2.length()), row3.length()), 3);</span>
+<span class="nc" id="L92">		setTo(row1, row2, row3);</span>
+<span class="nc" id="L93">		regExpsAreValid = false;</span>
+<span class="nc" id="L94">	}</span>
+
+	public boolean usesStandardSyntax() {
+<span class="nc" id="L97">		return usesStandardSyntax;</span>
+	}
+
+	public void setUsesStandardSyntax(boolean b) {
+<span class="nc" id="L101">		usesStandardSyntax = b;</span>
+<span class="nc" id="L102">		regExpsAreValid = false;</span>
+<span class="nc" id="L103">	}</span>
+
+	public boolean isMatchedBy(TextGrid grid){
+		/*if(grid.getHeight() != this.getHeight()
+			|| grid.getWidth() != this.getWidth()) return false;*/
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if(!regExpsAreValid) prepareRegExps(); </span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for(int i = 0; i &lt; grid.getHeight(); i++) {</span>
+<span class="nc" id="L111">			String row = grid.getRow(i).toString();</span>
+<span class="nc" id="L112">			Pattern regexp = regExps.get(i);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if(!regexp.matcher(row).matches()) {</span>
+				if(DEBUG)
+					System.out.println(row+&quot; does not match &quot;+regexp);
+<span class="nc" id="L116">				return false;</span>
+			} 
+		}
+<span class="nc" id="L119">		return true;</span>
+	}
+	
+	private void prepareRegExps(){
+<span class="nc" id="L123">		regExpsAreValid = true;</span>
+<span class="nc" id="L124">		regExps.clear();</span>
+		if (DEBUG)
+			System.out.println(&quot;Trying to match:&quot;);
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if(!usesStandardSyntax){</span>
+<span class="nc" id="L128">			Iterator&lt;StringBuilder&gt; it = getRows().iterator();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			while (it.hasNext()) {</span>
+<span class="nc" id="L130">				String row = it.next().toString();</span>
+<span class="nc" id="L131">				regExps.add(Pattern.compile(makeRegExp(row)));</span>
+				if(DEBUG)
+					System.out.println(row+&quot; becomes &quot;+makeRegExp(row));
+<span class="nc" id="L134">			}			</span>
+<span class="nc" id="L135">		} else {</span>
+<span class="nc" id="L136">			Iterator&lt;StringBuilder&gt; it = getRows().iterator();</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			while (it.hasNext()) {</span>
+<span class="nc" id="L138">				String row = it.next().toString();</span>
+<span class="nc" id="L139">				regExps.add(Pattern.compile(row));</span>
+<span class="nc" id="L140">			}</span>
+		}
+<span class="nc" id="L142">	}</span>
+	
+	private String makeRegExp(String pattern){
+<span class="nc" id="L145">		StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L146">		int tokensHandled = 0;</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">		for(int i = 0; i &lt; pattern.length() &amp;&amp; tokensHandled &lt; 3; i++){</span>
+<span class="nc" id="L148">			char c = pattern.charAt(i);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if(c == '[') {</span>
+<span class="nc" id="L150">				result.append(&quot;[^|:]&quot;);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			} else if(c == '|') {</span>
+<span class="nc" id="L152">				result.append(&quot;[|:]&quot;);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			} else if(c == '-') {</span>
+<span class="nc" id="L154">				result.append(&quot;[-=]&quot;);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			} else if(c == '!') {</span>
+<span class="nc" id="L156">				result.append(&quot;[^-=\\/\\\\+|:]&quot;);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			} else if(c == 'b') {</span>
+<span class="nc" id="L158">				result.append(&quot;[-=\\/\\\\+|:]&quot;);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			} else if(c == '^') {</span>
+<span class="nc" id="L160">				result.append(&quot;[\\/\\\\+|:]&quot;);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			} else if(c == '(') {</span>
+<span class="nc" id="L162">				result.append(&quot;[-=\\/\\\\+]&quot;);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			} else if(c == '~') {</span>
+<span class="nc" id="L164">				result.append(&quot;.&quot;);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			} else if(c == '+') {</span>
+<span class="nc" id="L166">				result.append(&quot;\\+&quot;);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			} else if(c == '\\') {</span>
+<span class="nc" id="L168">				result.append(&quot;\\\\&quot;);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			} else if(c == 's') {</span>
+<span class="nc" id="L170">				result.append(&quot;[-=+|:]&quot;);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			} else if(c == 'S') {</span>
+<span class="nc" id="L172">				result.append(&quot;[\\/\\\\]&quot;);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			} else if(c == '*') {</span>
+<span class="nc" id="L174">				result.append(&quot;\\*&quot;);</span>
+			
+			//entry points
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			} else if(c == '1') {</span>
+<span class="nc" id="L178">				result.append(&quot;[\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			} else if(c == '2') {</span>
+<span class="nc" id="L181">				result.append(&quot;[|:+\\/\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			} else if(c == '3') {</span>
+<span class="nc" id="L184">				result.append(&quot;[\\/]&quot;);</span>
+
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			} else if(c == '4') {</span>
+<span class="nc" id="L187">				result.append(&quot;[-=+\\/\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			} else if(c == '5') {</span>
+<span class="nc" id="L190">				result.append(&quot;[\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			} else if(c == '6') {</span>
+<span class="nc" id="L193">				result.append(&quot;[|:+\\/\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			} else if(c == '7') {</span>
+<span class="nc" id="L196">				result.append(&quot;[\\/]&quot;);</span>
+
+<span class="nc bnc" id="L198" title="All 2 branches missed.">			} else if(c == '8') {</span>
+<span class="nc" id="L199">				result.append(&quot;[-=+\\/\\\\]&quot;);</span>
+				
+			//entry point negations
+<span class="nc bnc" id="L202" title="All 2 branches missed.">			} else if(c == '%') {</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">				if(i+1 &gt; pattern.length()){</span>
+<span class="nc" id="L204">					throw new RuntimeException(&quot;Invalid pattern, found % at the end&quot;);</span>
+				}
+<span class="nc" id="L206">				c = pattern.charAt(++i);</span>
+				
+<span class="nc bnc" id="L208" title="All 2 branches missed.">				if(c == '1') {</span>
+<span class="nc" id="L209">					result.append(&quot;[^\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L211" title="All 2 branches missed.">				} else if(c == '2') {</span>
+<span class="nc" id="L212">					result.append(&quot;[^|:+\\/\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L214" title="All 2 branches missed.">				} else if(c == '3') {</span>
+<span class="nc" id="L215">					result.append(&quot;[^\\/]&quot;);</span>
+
+<span class="nc bnc" id="L217" title="All 2 branches missed.">				} else if(c == '4') {</span>
+<span class="nc" id="L218">					result.append(&quot;[^-=+\\/\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L220" title="All 2 branches missed.">				} else if(c == '5') {</span>
+<span class="nc" id="L221">					result.append(&quot;[^\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">				} else if(c == '6') {</span>
+<span class="nc" id="L224">					result.append(&quot;[^|:+\\/\\\\]&quot;);</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">				} else if(c == '7') {</span>
+<span class="nc" id="L227">					result.append(&quot;[^\\/]&quot;);</span>
+
+<span class="nc bnc" id="L229" title="All 2 branches missed.">				} else if(c == '8') {</span>
+<span class="nc" id="L230">					result.append(&quot;[^-=+\\/\\\\]&quot;);</span>
+				}
+<span class="nc" id="L232">			} else result.append(String.valueOf(c));</span>
+<span class="nc" id="L233">			tokensHandled++;</span>
+		}
+<span class="nc" id="L235">		return result.toString();</span>
+	}
+
+
+	public void setTo(String row1, String row2, String row3){
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		if(getHeight() != 3) throw new RuntimeException(&quot;This method can only be called for GridPatternS with height 3&quot;);</span>
+<span class="nc" id="L241">		regExpsAreValid = false;</span>
+<span class="nc" id="L242">		writeStringTo(0, 0, row1);</span>
+<span class="nc" id="L243">		writeStringTo(0, 1, row2);</span>
+<span class="nc" id="L244">		writeStringTo(0, 2, row3);</span>
+		//don't use setRow() here!
+<span class="nc" id="L246">	}</span>
+
+	public static void main(String[] args) {		
+<span class="nc" id="L249">		TextGrid grid = new TextGrid(3, 3);</span>
+//		grid.setRow(0, &quot;   &quot;);
+//		grid.setRow(1, &quot;-\\ &quot;);
+//		grid.setRow(2, &quot; | &quot;);
+//		
+//		if(GridPatternGroup.corner2Criteria.isAnyMatchedBy(grid)){
+//			System.out.println(&quot;Grid is corner 2&quot;);
+//		} else {
+//			System.out.println(&quot;Grid is not corner 2&quot;);
+//		}
+//
+//		if(grid.isCorner2(grid.new Cell(1,1))){
+//			System.out.println(&quot;Grid is corner 2&quot;);
+//		} else {
+//			System.out.println(&quot;Grid is not corner 2&quot;);
+//		}
+//
+//		
+//		grid.setRow(0, &quot;-+ &quot;);
+//		grid.setRow(1, &quot; | &quot;);
+//		grid.setRow(2, &quot;-+ &quot;);
+//
+//		if(GridPatternGroup.cornerCriteria.isAnyMatchedBy(grid)){			
+//			System.out.println(&quot;Grid is corner&quot;);
+//		} else {
+//			System.out.println(&quot;Grid is not corner&quot;);
+//		}
+//
+//		if(grid.isCorner(grid.new Cell(1,1))){			
+//			System.out.println(&quot;Grid is corner&quot;);
+//		} else {
+//			System.out.println(&quot;Grid is not corner&quot;);
+//		}
+
+<span class="nc" id="L283">		grid.setRow(0, &quot;---&quot;);</span>
+<span class="nc" id="L284">		grid.setRow(1, &quot; / &quot;);</span>
+<span class="nc" id="L285">		grid.setRow(2, &quot;---&quot;);</span>
+<span class="nc" id="L286">		grid.printDebug();</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		if(GridPatternGroup.loneDiagonalCriteria.isAnyMatchedBy(grid)){			</span>
+<span class="nc" id="L288">			System.out.println(&quot;Grid is lone diagonal&quot;);</span>
+		} else {
+<span class="nc" id="L290">			System.out.println(&quot;Grid is not lone diagonal&quot;);</span>
+		}
+
+<span class="nc" id="L293">		grid.setRow(0, &quot;--/&quot;);</span>
+<span class="nc" id="L294">		grid.setRow(1, &quot; / &quot;);</span>
+<span class="nc" id="L295">		grid.setRow(2, &quot;---&quot;);</span>
+<span class="nc" id="L296">		grid.printDebug();</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">		if(GridPatternGroup.loneDiagonalCriteria.isAnyMatchedBy(grid)){			</span>
+<span class="nc" id="L298">			System.out.println(&quot;Grid is lone diagonal&quot;);</span>
+		} else {
+<span class="nc" id="L300">			System.out.println(&quot;Grid is not lone diagonal&quot;);</span>
+		}
+
+<span class="nc" id="L303">		grid.setRow(0, &quot;-- &quot;);</span>
+<span class="nc" id="L304">		grid.setRow(1, &quot; \\ &quot;);</span>
+<span class="nc" id="L305">		grid.setRow(2, &quot;---&quot;);</span>
+<span class="nc" id="L306">		grid.printDebug();</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">		if(GridPatternGroup.loneDiagonalCriteria.isAnyMatchedBy(grid)){			</span>
+<span class="nc" id="L308">			System.out.println(&quot;Grid is lone diagonal&quot;);</span>
+		} else {
+<span class="nc" id="L310">			System.out.println(&quot;Grid is not lone diagonal&quot;);</span>
+		}
+
+<span class="nc" id="L313">		grid.setRow(0, &quot;-- &quot;);</span>
+<span class="nc" id="L314">		grid.setRow(1, &quot; \\ &quot;);</span>
+<span class="nc" id="L315">		grid.setRow(2, &quot;--\\&quot;);</span>
+<span class="nc" id="L316">		grid.printDebug();</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">		if(GridPatternGroup.loneDiagonalCriteria.isAnyMatchedBy(grid)){			</span>
+<span class="nc" id="L318">			System.out.println(&quot;Grid is lone diagonal&quot;);</span>
+		} else {
+<span class="nc" id="L320">			System.out.println(&quot;Grid is not lone diagonal&quot;);</span>
+		}
+
+<span class="nc" id="L323">		grid.setRow(0, &quot;   &quot;); </span>
+<span class="nc" id="L324">		grid.setRow(1, &quot;-\\/&quot;); </span>
+<span class="nc" id="L325">		grid.setRow(2, &quot; ||&quot;);</span>
+<span class="nc" id="L326">		grid.printDebug();</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		if(GridPatternGroup.loneDiagonalCriteria.isAnyMatchedBy(grid)){			</span>
+<span class="nc" id="L328">			System.out.println(&quot;Grid is lone diagonal&quot;);</span>
+		} else {
+<span class="nc" id="L330">			System.out.println(&quot;Grid is not lone diagonal&quot;);</span>
+		}
+<span class="nc" id="L332">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

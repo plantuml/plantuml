@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TilesField.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.golem</a> &gt; <span class="el_source">TilesField.java</span></div><h1>TilesField.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.golem;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+
+<span class="nc" id="L55">public class TilesField extends AbstractTextBlock implements TextBlock {</span>
+
+<span class="nc" id="L57">	private int size = 1;</span>
+<span class="nc" id="L58">	private final Tile root = new Tile(0);</span>
+<span class="nc" id="L59">	private final Map&lt;Tile, Position&gt; positions = new HashMap&lt;Tile, Position&gt;();</span>
+<span class="nc" id="L60">	private final List&lt;Path&gt; paths = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L62">	public TilesField() {</span>
+<span class="nc" id="L63">		positions.put(root, new Position(0, 0, 1, 1));</span>
+<span class="nc" id="L64">	}</span>
+
+	public Tile getRoot() {
+<span class="nc" id="L67">		return root;</span>
+	}
+
+	public Tile createTile(Tile start, TileGeometry position) {
+<span class="nc" id="L71">		final Tile result = new Tile(size++);</span>
+<span class="nc" id="L72">		final Position p = getFreePosition(start, position);</span>
+<span class="nc" id="L73">		positions.put(result, p);</span>
+<span class="nc" id="L74">		paths.add(buildPath(start.getArea(position), result.getArea(position.opposite())));</span>
+<span class="nc" id="L75">		return result;</span>
+	}
+
+	public void addPath(Tile start, Tile dest, TileGeometry startDirection) {
+<span class="nc" id="L79">		paths.add(buildPath(start.getArea(startDirection), dest.getArea(startDirection.opposite())));</span>
+<span class="nc" id="L80">	}</span>
+
+	private Path buildPath(TileArea tileArea1, TileArea tileArea2) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (isAdjoining(tileArea1, tileArea2)) {</span>
+<span class="nc" id="L84">			return Path.build(tileArea1, tileArea2);</span>
+		}
+<span class="nc" id="L86">		final Tile tile1 = tileArea1.getTile();</span>
+<span class="nc" id="L87">		final Tile tile2 = tileArea2.getTile();</span>
+<span class="nc" id="L88">		final Position pos1 = getPosition(tile1);</span>
+<span class="nc" id="L89">		final Position pos2 = getPosition(tile2);</span>
+<span class="nc" id="L90">		final TileGeometry geom1 = tileArea1.getGeometry();</span>
+<span class="nc" id="L91">		final TileGeometry geom2 = tileArea2.getGeometry();</span>
+<span class="nc bnc" id="L92" title="All 8 branches missed.">		if (pos1.getYmin() == pos2.getYmin() &amp;&amp; pos1.getYmax() == pos2.getYmax() &amp;&amp; geom1 == TileGeometry.WEST</span>
+				&amp;&amp; geom2 == TileGeometry.EAST) {
+<span class="nc" id="L94">			return Path.build(tileArea1, tileArea2);</span>
+
+		}
+<span class="nc" id="L97">		throw new IllegalArgumentException();</span>
+	}
+
+	private boolean isAdjoining(TileArea tileArea1, TileArea tileArea2) {
+<span class="nc" id="L101">		final Tile tile1 = tileArea1.getTile();</span>
+<span class="nc" id="L102">		final Tile tile2 = tileArea2.getTile();</span>
+<span class="nc" id="L103">		final Position pos1 = getPosition(tile1);</span>
+<span class="nc" id="L104">		final Position pos2 = getPosition(tile2);</span>
+<span class="nc" id="L105">		final TileGeometry geom1 = tileArea1.getGeometry();</span>
+<span class="nc" id="L106">		final TileGeometry geom2 = tileArea2.getGeometry();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (pos1.equals(pos2)) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			assert tile1 == tile2;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (geom1 == geom2) {</span>
+<span class="nc" id="L110">				throw new IllegalArgumentException();</span>
+			}
+<span class="nc" id="L112">			return true;</span>
+		}
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (geom1.equals(geom2.opposite()) == false) {</span>
+<span class="nc" id="L115">			return false;</span>
+		}
+<span class="nc bnc" id="L117" title="All 6 branches missed.">		switch (geom1) {</span>
+		case EAST:
+<span class="nc bnc" id="L119" title="All 4 branches missed.">			return pos1.getYmin() == pos2.getYmin() &amp;&amp; pos1.getYmax() == pos2.getYmax()</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">					&amp;&amp; pos1.getXmax() + 1 == pos2.getXmin();</span>
+		case WEST:
+<span class="nc bnc" id="L122" title="All 4 branches missed.">			return pos1.getYmin() == pos2.getYmin() &amp;&amp; pos1.getYmax() == pos2.getYmax()</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">					&amp;&amp; pos1.getXmin() == pos2.getXmax() + 1;</span>
+		case SOUTH:
+<span class="nc bnc" id="L125" title="All 4 branches missed.">			return pos1.getXmin() == pos2.getXmin() &amp;&amp; pos1.getXmax() == pos2.getXmax()</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">					&amp;&amp; pos1.getYmax() + 1 == pos2.getYmin();</span>
+		case NORTH:
+<span class="nc bnc" id="L128" title="All 4 branches missed.">			return pos1.getXmin() == pos2.getXmin() &amp;&amp; pos1.getXmax() == pos2.getXmax()</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">					&amp;&amp; pos1.getYmin() == pos2.getYmax() + 1;</span>
+		case CENTER:
+<span class="nc" id="L131">			return false;</span>
+
+		default:
+<span class="nc" id="L134">			throw new IllegalStateException();</span>
+		}
+
+	}
+
+	private Tile getTileAt(Position p) {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, Position&gt; ent : positions.entrySet()) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (p.equals(ent.getValue())) {</span>
+<span class="nc" id="L142">				return ent.getKey();</span>
+			}
+<span class="nc" id="L144">		}</span>
+<span class="nc" id="L145">		return null;</span>
+	}
+
+	private Position getFreePosition(Tile start, TileGeometry position) {
+<span class="nc" id="L149">		final Position p = getPosition(start).move(position, 2);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		while (isOccuped(p)) {</span>
+			// p = p.move(TileGeometry.EAST, 2);
+<span class="nc" id="L152">			moveAllToEast(p);</span>
+		}
+<span class="nc" id="L154">		return p;</span>
+	}
+
+	private void moveAllToEast(Position startingPosition) {
+<span class="nc" id="L158">		final List&lt;Position&gt; toMove = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (Position p : positions.values()) {</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (p.getXmax() &lt; startingPosition.getXmin()) {</span>
+<span class="nc" id="L161">				continue;</span>
+			}
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (p.getYmax() &lt; startingPosition.getYmin()) {</span>
+<span class="nc" id="L164">				continue;</span>
+			}
+<span class="nc" id="L166">			toMove.add(p);</span>
+<span class="nc" id="L167">		}</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		for (Position p : toMove) {</span>
+<span class="nc" id="L169">			positions.put(getTileAt(p), p.move(TileGeometry.EAST, 2));</span>
+<span class="nc" id="L170">		}</span>
+
+<span class="nc" id="L172">	}</span>
+
+	private boolean isOccuped(Position test) {
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		for (Position p : positions.values()) {</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">			if (p.equals(test)) {</span>
+<span class="nc" id="L177">				return true;</span>
+			}
+<span class="nc" id="L179">		}</span>
+<span class="nc" id="L180">		return false;</span>
+	}
+
+	public Position getPosition(Tile tile) {
+<span class="nc" id="L184">		final Position result = Objects.requireNonNull(positions.get(tile));</span>
+<span class="nc" id="L185">		return result;</span>
+	}
+
+	private int getXmin() {
+<span class="nc" id="L189">		int result = Integer.MAX_VALUE;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (Position p : positions.values()) {</span>
+<span class="nc" id="L191">			final int v = p.getXmin();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (v &lt; result) {</span>
+<span class="nc" id="L193">				result = v;</span>
+			}
+<span class="nc" id="L195">		}</span>
+<span class="nc" id="L196">		return result;</span>
+	}
+
+	private int getYmin() {
+<span class="nc" id="L200">		int result = Integer.MAX_VALUE;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		for (Position p : positions.values()) {</span>
+<span class="nc" id="L202">			final int v = p.getYmin();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (v &lt; result) {</span>
+<span class="nc" id="L204">				result = v;</span>
+			}
+<span class="nc" id="L206">		}</span>
+<span class="nc" id="L207">		return result;</span>
+	}
+
+	private int getXmax() {
+<span class="nc" id="L211">		int result = Integer.MIN_VALUE;</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (Position p : positions.values()) {</span>
+<span class="nc" id="L213">			final int v = p.getXmax();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (v &gt; result) {</span>
+<span class="nc" id="L215">				result = v;</span>
+			}
+<span class="nc" id="L217">		}</span>
+<span class="nc" id="L218">		return result;</span>
+	}
+
+	private int getYmax() {
+<span class="nc" id="L222">		int result = Integer.MIN_VALUE;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		for (Position p : positions.values()) {</span>
+<span class="nc" id="L224">			final int v = p.getYmax();</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">			if (v &gt; result) {</span>
+<span class="nc" id="L226">				result = v;</span>
+			}
+<span class="nc" id="L228">		}</span>
+<span class="nc" id="L229">		return result;</span>
+	}
+
+	public List&lt;Path&gt; getPaths() {
+<span class="nc" id="L233">		return Collections.unmodifiableList(paths);</span>
+	}
+
+	// -----------
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L238">		double x = 0;</span>
+<span class="nc" id="L239">		double y = 0;</span>
+<span class="nc" id="L240">		final int xmin = getXmin();</span>
+<span class="nc" id="L241">		final int ymin = getYmin();</span>
+<span class="nc" id="L242">		final XDimension2D dimSingle = root.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L243">		x -= xmin * dimSingle.getWidth() / 2;</span>
+<span class="nc" id="L244">		y -= ymin * dimSingle.getHeight() / 2;</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, Position&gt; ent : positions.entrySet()) {</span>
+<span class="nc" id="L246">			final Position p = ent.getValue();</span>
+<span class="nc" id="L247">			final Tile t = ent.getKey();</span>
+<span class="nc" id="L248">			final double xt = p.getXmin() * dimSingle.getWidth() / 2;</span>
+<span class="nc" id="L249">			final double yt = p.getYmin() * dimSingle.getHeight() / 2;</span>
+<span class="nc" id="L250">			t.drawU(ug.apply(new UTranslate((x + xt), (y + yt))));</span>
+<span class="nc" id="L251">		}</span>
+<span class="nc" id="L252">		ug = ug.apply(HColors.RED);</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		for (Path p : paths) {</span>
+<span class="nc" id="L254">			final TileArea start = p.getStart();</span>
+<span class="nc" id="L255">			final TileArea dest = p.getDest();</span>
+<span class="nc" id="L256">			final XPoint2D pstart = getPoint2D(dimSingle, start);</span>
+<span class="nc" id="L257">			final XPoint2D pdest = getPoint2D(dimSingle, dest);</span>
+<span class="nc" id="L258">			ug.apply(new UTranslate(x + pstart.getX(), y + pstart.getY()))</span>
+<span class="nc" id="L259">					.draw(new ULine(pdest.getX() - pstart.getX(), pdest.getY() - pstart.getY()));</span>
+<span class="nc" id="L260">		}</span>
+<span class="nc" id="L261">	}</span>
+
+	private XPoint2D getPoint2D(XDimension2D dimSingle, TileArea area) {
+<span class="nc" id="L264">		final Position p = getPosition(area.getTile());</span>
+<span class="nc" id="L265">		double xt = p.getXmin() * dimSingle.getWidth() / 2;</span>
+<span class="nc" id="L266">		double yt = p.getYmin() * dimSingle.getHeight() / 2;</span>
+<span class="nc" id="L267">		xt += dimSingle.getWidth() / 2;</span>
+<span class="nc" id="L268">		yt += dimSingle.getHeight() / 2;</span>
+<span class="nc" id="L269">		final double coef = 0.33;</span>
+<span class="nc bnc" id="L270" title="All 5 branches missed.">		switch (area.getGeometry()) {</span>
+		case NORTH:
+<span class="nc" id="L272">			yt -= dimSingle.getHeight() * coef;</span>
+<span class="nc" id="L273">			break;</span>
+		case SOUTH:
+<span class="nc" id="L275">			yt += dimSingle.getHeight() * coef;</span>
+<span class="nc" id="L276">			break;</span>
+		case EAST:
+<span class="nc" id="L278">			xt += dimSingle.getWidth() * coef;</span>
+<span class="nc" id="L279">			break;</span>
+		case WEST:
+<span class="nc" id="L281">			xt -= dimSingle.getWidth() * coef;</span>
+<span class="nc" id="L282">			break;</span>
+		default:
+<span class="nc" id="L284">			throw new IllegalStateException();</span>
+		}
+<span class="nc" id="L286">		return new XPoint2D(xt, yt);</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L290">		final int xmin = getXmin();</span>
+<span class="nc" id="L291">		final int xmax = getXmax();</span>
+<span class="nc" id="L292">		final int ymin = getYmin();</span>
+<span class="nc" id="L293">		final int ymax = getYmax();</span>
+<span class="nc" id="L294">		final int width = (xmax - xmin) / 2 + 1;</span>
+<span class="nc" id="L295">		final int height = (ymax - ymin) / 2 + 1;</span>
+<span class="nc" id="L296">		final XDimension2D dimSingle = root.calculateDimension(stringBounder);</span>
+<span class="nc" id="L297">		return new XDimension2D(width * dimSingle.getWidth(), height * dimSingle.getHeight());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

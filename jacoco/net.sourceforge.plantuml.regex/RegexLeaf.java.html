@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegexLeaf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.regex</a> &gt; <span class="el_source">RegexLeaf.java</span></div><h1>RegexLeaf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.regex;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.text.FoxSignature;
+import net.sourceforge.plantuml.text.StringLocated;
+
+public class RegexLeaf implements IRegex {
+
+<span class="fc" id="L50">	private static final RegexLeaf END = new RegexLeaf(&quot;$&quot;);</span>
+<span class="fc" id="L51">	private static final RegexLeaf START = new RegexLeaf(&quot;^&quot;);</span>
+	private final String pattern;
+	private final String name;
+
+<span class="fc" id="L55">	private int count = -1;</span>
+
+	public RegexLeaf(String regex) {
+<span class="fc" id="L58">		this(null, regex);</span>
+<span class="fc" id="L59">	}</span>
+
+<span class="fc" id="L61">	public RegexLeaf(String name, String regex) {</span>
+<span class="fc" id="L62">		this.pattern = regex;</span>
+<span class="fc" id="L63">		this.name = name;</span>
+<span class="fc" id="L64">	}</span>
+
+	public static RegexLeaf spaceZeroOrMore() {
+<span class="fc" id="L67">		return new RegexLeaf(&quot;[%s]*&quot;);</span>
+	}
+
+	public static RegexLeaf spaceOneOrMore() {
+<span class="fc" id="L71">		return new RegexLeaf(&quot;[%s]+&quot;);</span>
+	}
+
+	public static RegexLeaf start() {
+<span class="fc" id="L75">		return START;</span>
+	}
+
+	public static RegexLeaf end() {
+<span class="fc" id="L79">		return END;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L84">		return super.toString() + &quot; &quot; + name + &quot; &quot; + pattern;</span>
+	}
+
+	public String getName() {
+<span class="nc" id="L88">		return name;</span>
+	}
+
+	public String getPattern() {
+<span class="fc" id="L92">		return pattern;</span>
+	}
+
+	public int count() {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (count == -1)</span>
+<span class="fc" id="L97">			count = MyPattern.cmpile(pattern).matcher(&quot;&quot;).groupCount();</span>
+
+<span class="fc" id="L99">		return count;</span>
+	}
+
+	public Map&lt;String, RegexPartialMatch&gt; createPartialMatch(Iterator&lt;String&gt; it) {
+<span class="fc" id="L103">		final RegexPartialMatch m = new RegexPartialMatch(name);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int i = 0; i &lt; count(); i++) {</span>
+<span class="fc" id="L105">			final String group = it.next();</span>
+<span class="fc" id="L106">			m.add(group);</span>
+		}
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (name == null)</span>
+<span class="fc" id="L109">			return Collections.emptyMap();</span>
+
+<span class="fc" id="L111">		return Collections.singletonMap(name, m);</span>
+	}
+
+	public boolean match(StringLocated full) {
+<span class="nc" id="L115">		throw new UnsupportedOperationException();</span>
+	}
+
+	public RegexResult matcher(String full) {
+<span class="nc" id="L119">		throw new UnsupportedOperationException();</span>
+	}
+
+	// static private final Set&lt;String&gt; UNKNOWN = new HashSet&lt;&gt;();
+
+<span class="fc" id="L124">	static private final Pattern p1 = Pattern.compile(</span>
+			&quot;^\\(?((?:[-0A-Za-z_!:@;/=,\&quot; ][?+*]?|\\\\[b$(){}&lt;&gt;|*.+^\\[\\]][?+*]?|\\.\\*|\\.\\+)+)(?:\\)\\+|\\))?$&quot;);
+
+<span class="fc" id="L127">	static private final Pattern p2 = Pattern.compile(&quot;^\\([-?a-z ]+(\\|[-?a-z ]+)+\\)$&quot;);</span>
+
+<span class="fc" id="L129">	static private final Pattern p3 = Pattern.compile(&quot;^\\(?\\[[-=.~]+\\]\\+\\)?$&quot;);</span>
+
+	private static long getSignatureP2(String s) {
+<span class="fc" id="L132">		long result = -1L;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (StringTokenizer st = new StringTokenizer(s, &quot;()|&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L134">			final String val = st.nextToken();</span>
+<span class="fc" id="L135">			result = result &amp; FoxSignature.getFoxSignatureFromRegex(val);</span>
+<span class="fc" id="L136">		}</span>
+<span class="fc" id="L137">		return result;</span>
+	}
+
+	public long getFoxSignature() {
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]+&quot;))</span>
+<span class="fc" id="L142">			return FoxSignature.getSpecialSpaces();</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]*&quot;))</span>
+<span class="fc" id="L144">			return 0;</span>
+<span class="fc" id="L145">		final String pattern2 = pattern.replaceAll(&quot;\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?&quot;, &quot;&quot;);</span>
+
+<span class="fc" id="L147">		final Matcher m1 = p1.matcher(pattern2);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (m1.matches())</span>
+<span class="fc" id="L149">			return FoxSignature.getFoxSignatureFromRegex(m1.group(1));</span>
+
+<span class="fc" id="L151">		final Matcher m2 = p2.matcher(pattern2);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (m2.matches())</span>
+<span class="fc" id="L153">			return getSignatureP2(pattern2);</span>
+
+<span class="fc" id="L155">		final Matcher m3 = p3.matcher(pattern2);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (m3.matches())</span>
+<span class="fc" id="L157">			return FoxSignature.getSpecial1();</span>
+
+//		synchronized (UNKNOWN) {
+//			final boolean changed = UNKNOWN.add(pattern2);
+//			if (changed) {
+//				if (pattern.equals(pattern2))
+//					System.err.println(&quot;unknow=&quot; + UNKNOWN.size() + &quot; &quot; + pattern);
+//				else
+//					System.err.println(&quot;unknow=&quot; + UNKNOWN.size() + &quot; &quot; + pattern2 + &quot;        &quot; + pattern);
+//				// Thread.dumpStack();
+//			}
+//		}
+<span class="fc" id="L169">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

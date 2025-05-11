@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Fashion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt</a> &gt; <span class="el_source">Fashion.java</span></div><h1>Fashion.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+
+public class Fashion {
+	// ::remove file when __HAXE__
+
+	private final HColor backColor;
+	private final HColor foreColor;
+	private final UStroke stroke;
+	private final double deltaShadow;
+	private final double roundCorner;
+	private final double diagonalCorner;
+
+	private Fashion(HColor backColor, HColor foreColor, UStroke stroke, double deltaShadow, double roundCorner,
+<span class="fc" id="L53">			double diagonalCorner) {</span>
+<span class="fc" id="L54">		this.backColor = backColor;</span>
+<span class="fc" id="L55">		this.foreColor = foreColor;</span>
+<span class="fc" id="L56">		this.stroke = stroke;</span>
+<span class="fc" id="L57">		this.deltaShadow = deltaShadow;</span>
+<span class="fc" id="L58">		this.roundCorner = roundCorner;</span>
+<span class="fc" id="L59">		this.diagonalCorner = diagonalCorner;</span>
+<span class="fc" id="L60">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L64">		return super.toString() + &quot; backColor=&quot; + backColor + &quot; foreColor=&quot; + foreColor;</span>
+	}
+
+	final public UGraphic apply(UGraphic ug) {
+<span class="fc" id="L68">		ug = applyColors(ug);</span>
+<span class="fc" id="L69">		ug = applyStroke(ug);</span>
+<span class="fc" id="L70">		return ug;</span>
+	}
+
+	public UGraphic applyColors(UGraphic ug) {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (foreColor == null)</span>
+<span class="nc" id="L75">			ug = ug.apply(HColors.none());</span>
+		else
+<span class="fc" id="L77">			ug = ug.apply(foreColor);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (backColor == null)</span>
+<span class="nc" id="L79">			ug = ug.apply(HColors.none().bg());</span>
+		else
+<span class="fc" id="L81">			ug = ug.apply(backColor.bg());</span>
+
+<span class="fc" id="L83">		return ug;</span>
+	}
+
+	public UGraphic applyStroke(UGraphic ug) {
+<span class="fc" id="L87">		return ug.apply(stroke);</span>
+	}
+
+	public Fashion(HColor backColor, HColor foreColor) {
+<span class="fc" id="L91">		this(backColor, foreColor, UStroke.simple(), 0, 0, 0);</span>
+<span class="fc" id="L92">	}</span>
+
+	public Fashion withShadow(double deltaShadow2) {
+<span class="fc" id="L95">		return new Fashion(backColor, foreColor, stroke, deltaShadow2, roundCorner, diagonalCorner);</span>
+	}
+
+	public Fashion withDeltaShadow(double deltaShadow2) {
+<span class="fc" id="L99">		return new Fashion(backColor, foreColor, stroke, deltaShadow2, roundCorner, diagonalCorner);</span>
+	}
+
+	public Fashion withStroke(UStroke newStroke) {
+<span class="fc" id="L103">		return new Fashion(backColor, foreColor, newStroke, deltaShadow, roundCorner, diagonalCorner);</span>
+	}
+
+	public Fashion withBackColor(HColor backColor) {
+<span class="nc" id="L107">		return new Fashion(backColor, foreColor, stroke, deltaShadow, roundCorner, diagonalCorner);</span>
+	}
+
+	public Fashion withForeColor(HColor foreColor) {
+<span class="fc" id="L111">		return new Fashion(backColor, foreColor, stroke, deltaShadow, roundCorner, diagonalCorner);</span>
+	}
+
+	public Fashion withCorner(double roundCorner, double diagonalCorner) {
+<span class="fc" id="L115">		return new Fashion(backColor, foreColor, stroke, deltaShadow, roundCorner, diagonalCorner);</span>
+	}
+
+	public HColor getBackColor() {
+<span class="fc" id="L119">		return backColor;</span>
+	}
+
+	public HColor getForeColor() {
+<span class="fc" id="L123">		return foreColor;</span>
+	}
+
+	public UStroke getStroke() {
+<span class="fc" id="L127">		return stroke;</span>
+	}
+
+	public boolean isShadowing() {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		return deltaShadow &gt; 0;</span>
+	}
+
+	public double getDeltaShadow() {
+<span class="fc" id="L135">		return deltaShadow;</span>
+	}
+
+	public double getRoundCorner() {
+<span class="fc" id="L139">		return roundCorner;</span>
+	}
+
+	public double getDiagonalCorner() {
+<span class="fc" id="L143">		return diagonalCorner;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

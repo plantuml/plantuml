@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LatexBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.math</a> &gt; <span class="el_source">LatexBuilder.java</span></div><h1>LatexBuilder.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.math;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.Icon;
+
+import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+
+public class LatexBuilder implements ScientificEquation {
+
+	private final String tex;
+
+<span class="nc" id="L54">	public LatexBuilder(String tex) {</span>
+<span class="nc" id="L55">		this.tex = tex;</span>
+<span class="nc" id="L56">	}</span>
+
+	private XDimension2D dimension;
+
+	public XDimension2D getDimension() {
+<span class="nc" id="L61">		return dimension;</span>
+	}
+
+	private Icon buildIcon(Color foregroundColor)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+<span class="nc" id="L67">		return new TeXIconBuilder(tex, foregroundColor).getIcon();</span>
+	}
+
+	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor)
+			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, InstantiationException, IOException {
+<span class="nc" id="L73">		final Icon icon = buildIcon(foregroundColor);</span>
+<span class="nc" id="L74">		final ConverterSvg converterSvg = new ConverterSvg(icon);</span>
+<span class="nc" id="L75">		final String svg = converterSvg.getSvg(scale, true, backgroundColor);</span>
+<span class="nc" id="L76">		dimension = converterSvg.getDimension();</span>
+<span class="nc" id="L77">		return new UImageSvg(svg, scale);</span>
+	}
+
+	public MutableImage getImage(Color foregroundColor, Color backgroundColor)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+<span class="nc" id="L83">		final Icon icon = buildIcon(foregroundColor);</span>
+<span class="nc" id="L84">		return new LatexImage(icon, 1, foregroundColor, backgroundColor);</span>
+	}
+
+	class LatexImage implements MutableImage {
+
+		private final double scale;
+		private final Icon icon;
+		private final Color foregroundColor;
+		private final Color backgroundColor;
+<span class="nc" id="L93">		private BufferedImage cache = null;</span>
+
+<span class="nc" id="L95">		public LatexImage(Icon icon, double scale, Color foregroundColor, Color backgroundColor) {</span>
+<span class="nc" id="L96">			this.scale = scale;</span>
+<span class="nc" id="L97">			this.foregroundColor = foregroundColor;</span>
+<span class="nc" id="L98">			this.backgroundColor = backgroundColor;</span>
+<span class="nc" id="L99">			this.icon = icon;</span>
+<span class="nc" id="L100">		}</span>
+
+		@Override
+		public BufferedImage getImage() {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (cache == null) {</span>
+<span class="nc" id="L105">				cache = new BufferedImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),</span>
+						BufferedImage.TYPE_INT_ARGB);
+<span class="nc" id="L107">				final Graphics2D g2 = cache.createGraphics();</span>
+<span class="nc" id="L108">				g2.scale(scale, scale);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (backgroundColor != null) {</span>
+<span class="nc" id="L110">					g2.setColor(backgroundColor);</span>
+<span class="nc" id="L111">					g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());</span>
+				}
+<span class="nc" id="L113">				icon.paintIcon(null, g2, 0, 0);</span>
+			}
+<span class="nc" id="L115">			return cache;</span>
+		}
+
+		public MutableImage withScale(double scale) {
+<span class="nc" id="L119">			return new LatexImage(icon, this.scale * scale, foregroundColor, backgroundColor);</span>
+		}
+
+		@Override
+		public MutableImage muteColor(Color newColor) {
+<span class="nc" id="L124">			return this;</span>
+		}
+
+		@Override
+		public MutableImage muteTransparentColor(Color newColor) {
+<span class="nc" id="L129">			return this;</span>
+		}
+
+		@Override
+		public MutableImage monochrome() {
+<span class="nc" id="L134">			return this;</span>
+		}
+
+		@Override
+		public double getScale() {
+<span class="nc" id="L139">			return scale;</span>
+		}
+
+	}
+
+	public String getSource() {
+<span class="nc" id="L145">		return tex;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
