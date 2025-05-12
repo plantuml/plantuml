@@ -30,7 +30,8 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * Contribution: Luc Trudeau
+ * Contribution: The-Lum
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
@@ -49,176 +50,405 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.warning.Warning;
 
 // Created from Luc Trudeau original work
-<span class="fc" id="L52">public enum BoxStyle {</span>
-<span class="fc" id="L53">	PLAIN(null, '\0', 0) {</span>
+/**
+ * The BoxStyle enum represents different styles of boxes used in Activity Diagrams.
+ * Each enum constant specifies a unique box style, its associated stereotype,
+ * and the shield value for rendering.
+ * 
+ * The enum also provides methods to generate shapes and drawable representations
+ * of the box, as well as utilities for parsing and validating styles.
+ */
+<span class="fc" id="L61">public enum BoxStyle {</span>
+
+    /**
+     * Plain box style with no additional shape or decorations.
+     */
+<span class="fc" id="L66">	PLAIN(null, '\0', 0) {</span>
+		// Shape: (=)
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="fc" id="L56">			return URectangle.build(width, height).rounded(roundCorner);</span>
+<span class="fc" id="L70">			return URectangle.build(width, height).rounded(roundCorner);</span>
 		}
 	},
-<span class="fc" id="L59">	SDL_INPUT(&quot;input&quot;, '&lt;', 10) {</span>
+
+    /**
+     * SDL input box style, represented with an input arrow shape.
+     */
+<span class="fc" id="L77">	SDL_INPUT(&quot;input&quot;, '&lt;', 10) {</span>
+		// Shape: |=&lt;
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L62">			final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L63">			result.addPoint(0, 0);</span>
-<span class="nc" id="L64">			result.addPoint(width + DELTA_INPUT_OUTPUT, 0);</span>
-<span class="nc" id="L65">			result.addPoint(width, height / 2);</span>
-<span class="nc" id="L66">			result.addPoint(width + DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L67">			result.addPoint(0, height);</span>
-<span class="nc" id="L68">			return result;</span>
+<span class="nc" id="L81">			return getShapeInput(width, height);</span>
 		}
 	},
-<span class="fc" id="L71">	SDL_OUTPUT(&quot;output&quot;, '&gt;', 10) {</span>
+
+    /**
+     * SDL output box style, represented with an output arrow shape.
+     */
+<span class="fc" id="L88">	SDL_OUTPUT(&quot;output&quot;, '&gt;', 10) {</span>
+		// Shape: |=&gt;
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L74">			final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L75">			result.addPoint(0.0, 0.0);</span>
-<span class="nc" id="L76">			result.addPoint(width, 0.0);</span>
-<span class="nc" id="L77">			result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
-<span class="nc" id="L78">			result.addPoint(width, height);</span>
-<span class="nc" id="L79">			result.addPoint(0.0, height);</span>
-<span class="nc" id="L80">			return result;</span>
+<span class="nc" id="L92">			return getShapeOutput(width, height);</span>
 		}
 	},
-<span class="fc" id="L83">	SDL_PROCEDURE(&quot;procedure&quot;, '|', 0) {</span>
+
+    /**
+     * SDL procedure box style, represented with vertical bars on both sides.
+     */
+<span class="fc" id="L99">	SDL_PROCEDURE(&quot;procedure&quot;, '|', 0) {</span>
+		// Shape: [|=|]
 		@Override
 		protected void drawInternal(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L86">			final URectangle rect = URectangle.build(width, height);</span>
-<span class="nc" id="L87">			rect.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L88">			ug.draw(rect);</span>
-<span class="nc" id="L89">			final ULine vline = ULine.vline(height);</span>
-<span class="nc" id="L90">			ug.apply(UTranslate.dx(PADDING)).draw(vline);</span>
-<span class="nc" id="L91">			ug.apply(UTranslate.dx(width - PADDING)).draw(vline);</span>
-<span class="nc" id="L92">		}</span>
+<span class="nc" id="L103">			final URectangle rect = URectangle.build(width, height);</span>
+<span class="nc" id="L104">			rect.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L105">			ug.draw(rect);</span>
+<span class="nc" id="L106">			final ULine vline = ULine.vline(height);</span>
+<span class="nc" id="L107">			ug.apply(UTranslate.dx(PADDING)).draw(vline);</span>
+<span class="nc" id="L108">			ug.apply(UTranslate.dx(width - PADDING)).draw(vline);</span>
+<span class="nc" id="L109">		}</span>
 	},
-<span class="fc" id="L94">	SDL_SAVE(&quot;load&quot;, '\\', 0) {</span>
-		@Override
-		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L97">			final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L98">			result.addPoint(0.0, 0.0);</span>
-<span class="nc" id="L99">			result.addPoint(width - DELTA_INPUT_OUTPUT, 0.0);</span>
-<span class="nc" id="L100">			result.addPoint(width, height);</span>
-<span class="nc" id="L101">			result.addPoint(DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L102">			return result;</span>
-		}
-	},
-<span class="fc" id="L105">	SDL_ANTISAVE(&quot;save&quot;, '/', 0) {</span>
-		@Override
-		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L108">			final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L109">			result.addPoint(DELTA_INPUT_OUTPUT, 0.0);</span>
-<span class="nc" id="L110">			result.addPoint(width, 0.0);</span>
-<span class="nc" id="L111">			result.addPoint(width - DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L112">			result.addPoint(0, height);</span>
-<span class="nc" id="L113">			return result;</span>
-		}
-	},
-<span class="fc" id="L116">	SDL_CONTINUOUS(&quot;continuous&quot;, '}', 0) {</span>
-		@Override
-		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L119">			final UPath result = UPath.none();</span>
-<span class="nc" id="L120">			final double c1[] = { DELTA_CONTINUOUS, 0 };</span>
-<span class="nc" id="L121">			final double c2[] = { 0, height / 2 };</span>
-<span class="nc" id="L122">			final double c3[] = { DELTA_CONTINUOUS, height };</span>
 
-<span class="nc" id="L124">			result.add(c1, USegmentType.SEG_MOVETO);</span>
-<span class="nc" id="L125">			result.add(c2, USegmentType.SEG_LINETO);</span>
-<span class="nc" id="L126">			result.add(c3, USegmentType.SEG_LINETO);</span>
-
-<span class="nc" id="L128">			final double c4[] = { width - DELTA_CONTINUOUS, 0 };</span>
-<span class="nc" id="L129">			final double c5[] = { width, height / 2 };</span>
-<span class="nc" id="L130">			final double c6[] = { width - DELTA_CONTINUOUS, height };</span>
-
-<span class="nc" id="L132">			result.add(c4, USegmentType.SEG_MOVETO);</span>
-<span class="nc" id="L133">			result.add(c5, USegmentType.SEG_LINETO);</span>
-<span class="nc" id="L134">			result.add(c6, USegmentType.SEG_LINETO);</span>
-<span class="nc" id="L135">			return result;</span>
-		}
-	},
-<span class="fc" id="L138">	SDL_TASK(&quot;task&quot;, ']', 0) {</span>
+    /**
+     * SDL load box style, represented with a backslash diamond pattern.
+     */
+<span class="fc" id="L115">	SDL_LOAD(&quot;load&quot;, '\\', 0) {</span>
+		// Shape: \=\
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L141">			return URectangle.build(width, height);</span>
+<span class="nc" id="L119">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L120">			result.addPoint(0.0, 0.0);</span>
+<span class="nc" id="L121">			result.addPoint(width - DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L122">			result.addPoint(width, height);</span>
+<span class="nc" id="L123">			result.addPoint(DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L124">			return result;</span>
 		}
 	},
-<span class="fc" id="L144">	SDL_OBJECT(&quot;object&quot;, ']', 0) {</span>
+
+    /**
+     * SDL save box style, represented with a forward slash diamond pattern.
+     */
+<span class="fc" id="L131">	SDL_SAVE(&quot;save&quot;, '/', 0) {</span>
+		// Shape: /=/
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L147">			return URectangle.build(width, height);</span>
+<span class="nc" id="L135">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L136">			result.addPoint(DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L137">			result.addPoint(width, 0.0);</span>
+<span class="nc" id="L138">			result.addPoint(width - DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L139">			result.addPoint(0, height);</span>
+<span class="nc" id="L140">			return result;</span>
+		}
+	},
+
+    /**
+     * SDL continuous box style, represented with a continuous curve shape.
+     */
+<span class="fc" id="L147">	SDL_CONTINUOUS(&quot;continuous&quot;, '}', 0) {</span>
+		// Shape: &lt; &gt;
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L151">			final UPath result = UPath.none();</span>
+<span class="nc" id="L152">			final double c1[] = { DELTA_CONTINUOUS, 0 };</span>
+<span class="nc" id="L153">			final double c2[] = { 0, height / 2 };</span>
+<span class="nc" id="L154">			final double c3[] = { DELTA_CONTINUOUS, height };</span>
+
+<span class="nc" id="L156">			result.add(c1, USegmentType.SEG_MOVETO);</span>
+<span class="nc" id="L157">			result.add(c2, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L158">			result.add(c3, USegmentType.SEG_LINETO);</span>
+
+<span class="nc" id="L160">			final double c4[] = { width - DELTA_CONTINUOUS, 0 };</span>
+<span class="nc" id="L161">			final double c5[] = { width, height / 2 };</span>
+<span class="nc" id="L162">			final double c6[] = { width - DELTA_CONTINUOUS, height };</span>
+
+<span class="nc" id="L164">			result.add(c4, USegmentType.SEG_MOVETO);</span>
+<span class="nc" id="L165">			result.add(c5, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L166">			result.add(c6, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L167">			return result;</span>
+		}
+	},
+
+    /**
+     * SDL task box style, represented with square brackets.
+     */
+<span class="fc" id="L174">	SDL_TASK(&quot;task&quot;, ']', 0) {</span>
+		// Shape: [=]
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L178">			return URectangle.build(width, height);</span>
+		}
+	},
+
+    /**
+     * UML object box style, represented with square brackets.
+     */
+<span class="fc" id="L185">	UML_OBJECT(&quot;object&quot;, ']', 0) {</span>
+		// Shape: [=]
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L189">			return URectangle.build(width, height);</span>
+		}
+	},
+
+    /**
+     * UML object signal box style, represented with a signal arrow shape.
+     */
+<span class="fc" id="L196">	UML_OBJECT_SIGNAL(&quot;objectSignal&quot;, '\0', 10) {</span>
+		// Shape: &gt;=&gt;
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L200">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L201">			result.addPoint(- DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L202">			result.addPoint(width, 0.0);</span>
+<span class="nc" id="L203">			result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
+<span class="nc" id="L204">			result.addPoint(width, height);</span>
+<span class="nc" id="L205">			result.addPoint(- DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L206">			result.addPoint(0, height / 2);</span>
+<span class="nc" id="L207">			return result;</span>
+		}
+	},
+
+    /**
+     * UML trigger box style, represented with an input arrow shape.
+     */
+<span class="fc" id="L214">	UML_TRIGGER(&quot;trigger&quot;, '\0', 10) {</span>
+		// Shape: |=&lt;
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L218">			return getShapeInput(width, height);</span>
+		}
+	},
+
+    /**
+     * UML send signal box style, represented with an output arrow shape.
+     */
+<span class="fc" id="L225">	UML_SEND_SIGNAL(&quot;sendSignal&quot;, '\0', 10) {</span>
+		// Shape: |=&gt;
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L229">			return getShapeOutput(width, height);</span>
+		}
+	},
+
+    /**
+     * UML accept event box style, represented with an accept signal arrow shape.
+     */
+<span class="fc" id="L236">	UML_ACCEPT_EVENT(&quot;acceptEvent&quot;, '\0', 10) {</span>
+		// Shape: &gt;=|
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L240">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L241">			result.addPoint(- DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L242">			result.addPoint(width, 0.0);</span>
+<span class="nc" id="L243">			result.addPoint(width, height);</span>
+<span class="nc" id="L244">			result.addPoint(- DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L245">			result.addPoint(0, height / 2);</span>
+<span class="nc" id="L246">			return result;</span>
+		}
+	},
+
+    /**
+     * UML time event box style, represented with an hour glass shape.
+     */
+<span class="fc" id="L253">	UML_TIME_EVENT(&quot;timeEvent&quot;, '\0', 10) {</span>
+		// Shape: X
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+<span class="nc" id="L257">			final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L258">			final double halfWidth = width / 2;</span>
+<span class="nc" id="L259">			final double thirdHeight = height / 3;</span>
+<span class="nc" id="L260">			result.addPoint(halfWidth - thirdHeight, thirdHeight);</span>
+<span class="nc" id="L261">			result.addPoint(halfWidth + thirdHeight, thirdHeight);</span>
+<span class="nc" id="L262">			result.addPoint(halfWidth - thirdHeight, height);</span>
+<span class="nc" id="L263">			result.addPoint(halfWidth + thirdHeight, height);</span>
+<span class="nc" id="L264">			return result;</span>
 		}
 	};
 
+    /**
+     * Represents the stereotype associated with the box style.
+     * This is used for rendering and identifying the style uniquely.
+     */
 	private final String stereotype;
+
+    /**
+     * Represents the character style of the box.
+     * This is used for parsing and identifying the style.
+     */
 	private final char style;
+
+    /**
+     * Represents the shield value, which is used in rendering.
+     */
 	private final double shield;
 
-<span class="fc" id="L155">	private static int DELTA_INPUT_OUTPUT = 10;</span>
-<span class="fc" id="L156">	private static double DELTA_CONTINUOUS = 5.0;</span>
-<span class="fc" id="L157">	private static int PADDING = 5;</span>
+<span class="fc" id="L285">	private static int DELTA_INPUT_OUTPUT = 10;</span>
+<span class="fc" id="L286">	private static double DELTA_CONTINUOUS = 5.0;</span>
+<span class="fc" id="L287">	private static int PADDING = 5;</span>
 
-<span class="fc" id="L159">	private BoxStyle(String stereotype, char style, double shield) {</span>
-<span class="fc" id="L160">		this.stereotype = stereotype;</span>
-<span class="fc" id="L161">		this.style = style;</span>
-<span class="fc" id="L162">		this.shield = shield;</span>
-<span class="fc" id="L163">	}</span>
+    /**
+     * Constructor for BoxStyle enum with the specified parameters.
+     * 
+     * @param stereotype The stereotype associated with the box style.
+     * @param style The character style of the box.
+     * @param shield The shield value for rendering.
+     */
+<span class="fc" id="L296">	private BoxStyle(String stereotype, char style, double shield) {</span>
+<span class="fc" id="L297">		this.stereotype = stereotype;</span>
+<span class="fc" id="L298">		this.style = style;</span>
+<span class="fc" id="L299">		this.shield = shield;</span>
+<span class="fc" id="L300">	}</span>
 
+    /**
+     * Checks for deprecated styles and adds a warning to the diagram.
+     * 
+     * @param diagram The diagram to which warnings will be added.
+     * @param style The style to check for deprecation.
+     */
 	public static void checkDeprecatedWarning(TitledDiagram diagram, String style) {
-<span class="pc bpc" id="L166" title="1 of 4 branches missed.">		if (style != null &amp;&amp; style.length() == 1) {</span>
-<span class="fc" id="L167">			final BoxStyle boxStyle = fromString(style);</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (boxStyle != PLAIN)</span>
-<span class="nc" id="L169">				diagram.addWarning(new Warning(//</span>
+<span class="pc bpc" id="L309" title="1 of 4 branches missed.">		if (style != null &amp;&amp; style.length() == 1) {</span>
+<span class="fc" id="L310">			final BoxStyle boxStyle = fromString(style);</span>
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">			if (boxStyle != PLAIN)</span>
+<span class="nc" id="L312">				diagram.addWarning(new Warning(//</span>
 						&quot;The syntax using the &quot; + boxStyle.style + &quot; character is now obsolete.&quot;,
 						&quot;Please use the &lt;&lt;&quot; + boxStyle.stereotype + &quot;&gt;&gt; stereotype instead.&quot;,
 						&quot;For more details, visit https://plantuml.com/activity-diagram-beta&quot;));
 		}
 
-<span class="fc" id="L175">	}</span>
+<span class="fc" id="L318">	}</span>
 
+    /**
+     * Parses a string to determine the corresponding BoxStyle.
+     * 
+     * @param style The string representation of the style.
+     * @return The BoxStyle corresponding to the input string.
+     */
 	public static BoxStyle fromString(String style) {
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (style != null) {</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">			if (style.length() == 1)</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">				for (BoxStyle bs : BoxStyle.values())</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">					if (bs.style == style.charAt(0))</span>
-<span class="nc" id="L182">						return bs;</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		if (style != null) {</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">			if (style.length() == 1)</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">				for (BoxStyle bs : BoxStyle.values())</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">					if (bs.style == style.charAt(0))</span>
+<span class="nc" id="L331">						return bs;</span>
 
-<span class="fc bfc" id="L184" title="All 2 branches covered.">			for (String s : style.split(&quot;\\s&quot;)) {</span>
-<span class="fc" id="L185">				s = s.replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">				for (BoxStyle bs : BoxStyle.values())</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">					if (s.equalsIgnoreCase(bs.stereotype))</span>
-<span class="nc" id="L188">						return bs;</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">			for (String s : style.split(&quot;\\s&quot;)) {</span>
+<span class="fc" id="L334">				s = s.replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">				for (BoxStyle bs : BoxStyle.values())</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">					if (s.equalsIgnoreCase(bs.stereotype))</span>
+<span class="nc" id="L337">						return bs;</span>
 			}
 		}
-<span class="fc" id="L191">		return PLAIN;</span>
+<span class="fc" id="L340">		return PLAIN;</span>
 	}
 
+    /**
+     * Generates a drawable representation of the box style.
+     * This method returns a {@link UDrawable} object that encapsulates the rendering logic
+     * for the box style with the specified dimensions and effects.
+     * 
+     * @param width The width of the box.
+     * @param height The height of the box.
+     * @param shadowing The shadowing effect to apply.
+     * @param roundCorner The corner radius for rounding.
+     * @return A {@link UDrawable} object for rendering the box style.
+     */
 	public final UDrawable getUDrawable(final double width, final double height, final double shadowing,
 			final double roundCorner) {
-<span class="fc" id="L196">		return new UDrawable() {</span>
+<span class="fc" id="L356">		return new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L198">				drawInternal(ug, width - getShield(), height, shadowing, roundCorner);</span>
-<span class="fc" id="L199">			}</span>
+<span class="fc" id="L358">				drawInternal(ug, width - getShield(), height, shadowing, roundCorner);</span>
+<span class="fc" id="L359">			}</span>
 		};
 	}
 
+    /**
+     * Generates a shape representation of the box style.
+     * This method is overridden by each enum constant to define its specific shape.
+     * 
+     * @param width The width of the box.
+     * @param height The height of the box.
+     * @param roundCorner The corner radius for rounding.
+     * @return A {@link Shadowable} object representing the shape of the box.
+     */
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L204">		return null;</span>
+<span class="nc" id="L373">		return null;</span>
 	}
 
+    /**
+     * Draws the box style using a graphical context.
+     * This method can be overridden by specific box styles to apply custom drawing logic.
+     * 
+     * @param ug The {@link UGraphic} object used for drawing.
+     * @param width The width of the box.
+     * @param height The height of the box.
+     * @param shadowing The shadowing effect to apply.
+     * @param roundCorner The corner radius for rounding.
+     */
 	protected void drawInternal(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="fc" id="L208">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="fc" id="L209">		s.setDeltaShadow(shadowing);</span>
-<span class="fc" id="L210">		ug.draw(s);</span>
+<span class="fc" id="L387">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="fc" id="L388">		s.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L389">		ug.draw(s);</span>
 
-<span class="fc" id="L212">	}</span>
+<span class="fc" id="L391">	}</span>
 
+    /**
+     * Retrieves the shield value associated with the box style.
+     * The shield value is used to adjust the rendering dimensions of the box.
+     * 
+     * @return The shield value.
+     */
 	public final double getShield() {
-<span class="fc" id="L215">		return shield;</span>
+<span class="fc" id="L400">		return shield;</span>
 	}
 
+    /**
+     * Retrieves the stereotype associated with the box style.
+     * The stereotype is represented as a {@link Stereotype} object, which includes
+     * additional metadata for rendering and identification.
+     * 
+     * @return A {@link Stereotype} object representing the stereotype, or {@code null} if none is defined.
+     */
 	public Stereotype getStereotype() {
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (stereotype == null)</span>
-<span class="fc" id="L220">			return null;</span>
-<span class="nc" id="L221">		return Stereotype.build(&quot;&lt;&lt;&quot; + stereotype + &quot;&gt;&gt;&quot;);</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">		if (stereotype == null)</span>
+<span class="fc" id="L412">			return null;</span>
+<span class="nc" id="L413">		return Stereotype.build(&quot;&lt;&lt;&quot; + stereotype + &quot;&gt;&gt;&quot;);</span>
+	}
+
+	// Shape: |=&lt;
+    /**
+     * Generates the shape for an SDL input style box.
+     * This helper method creates a custom {@link UPolygon} shape with an input arrow.
+     * 
+     * @param width The width of the box.
+     * @param height The height of the box.
+     * @return A {@link Shadowable} object representing the SDL input box shape.
+     */
+	private static Shadowable getShapeInput(double width, double height) {
+<span class="nc" id="L426">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L427">		result.addPoint(0, 0);</span>
+<span class="nc" id="L428">		result.addPoint(width + DELTA_INPUT_OUTPUT, 0);</span>
+<span class="nc" id="L429">		result.addPoint(width, height / 2);</span>
+<span class="nc" id="L430">		result.addPoint(width + DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L431">		result.addPoint(0, height);</span>
+<span class="nc" id="L432">		return result;</span>
+	}
+
+	// Shape: |=&gt;
+    /**
+     * Generates the shape for an SDL output style box.
+     * This helper method creates a custom {@link UPolygon} shape with an output arrow.
+     * 
+     * @param width The width of the box.
+     * @param height The height of the box.
+     * @return A {@link Shadowable} object representing the SDL output box shape.
+     */
+	private static Shadowable getShapeOutput(double width, double height) {
+<span class="nc" id="L445">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L446">		result.addPoint(0.0, 0.0);</span>
+<span class="nc" id="L447">		result.addPoint(width, 0.0);</span>
+<span class="nc" id="L448">		result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
+<span class="nc" id="L449">		result.addPoint(width, height);</span>
+<span class="nc" id="L450">		result.addPoint(0.0, height);</span>
+<span class="nc" id="L451">		return result;</span>
 	}
 
 }

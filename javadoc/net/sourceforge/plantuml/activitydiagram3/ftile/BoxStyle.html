@@ -85,6 +85,12 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public enum </span><span class="element-name type-name-label">BoxStyle</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a>&gt;</span></div>
+<div class="block">The BoxStyle enum represents different styles of boxes used in Activity Diagrams.
+ Each enum constant specifies a unique box style, its associated stereotype,
+ and the shield value for rendering.
+ 
+ The enum also provides methods to generate shapes and drawable representations
+ of the box, as well as utilities for parsing and validating styles.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -106,23 +112,61 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="#PLAIN" class="member-name-link">PLAIN</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#SDL_ANTISAVE" class="member-name-link">SDL_ANTISAVE</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#SDL_CONTINUOUS" class="member-name-link">SDL_CONTINUOUS</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#SDL_INPUT" class="member-name-link">SDL_INPUT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#SDL_OBJECT" class="member-name-link">SDL_OBJECT</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#SDL_OUTPUT" class="member-name-link">SDL_OUTPUT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#SDL_PROCEDURE" class="member-name-link">SDL_PROCEDURE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#SDL_SAVE" class="member-name-link">SDL_SAVE</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#SDL_TASK" class="member-name-link">SDL_TASK</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Plain box style with no additional shape or decorations.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#SDL_CONTINUOUS" class="member-name-link">SDL_CONTINUOUS</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">SDL continuous box style, represented with a continuous curve shape.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#SDL_INPUT" class="member-name-link">SDL_INPUT</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">SDL input box style, represented with an input arrow shape.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#SDL_LOAD" class="member-name-link">SDL_LOAD</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">SDL load box style, represented with a backslash diamond pattern.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#SDL_OUTPUT" class="member-name-link">SDL_OUTPUT</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">SDL output box style, represented with an output arrow shape.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#SDL_PROCEDURE" class="member-name-link">SDL_PROCEDURE</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">SDL procedure box style, represented with vertical bars on both sides.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#SDL_SAVE" class="member-name-link">SDL_SAVE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">SDL save box style, represented with a forward slash diamond pattern.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#SDL_TASK" class="member-name-link">SDL_TASK</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">SDL task box style, represented with square brackets.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#UML_ACCEPT_EVENT" class="member-name-link">UML_ACCEPT_EVENT</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">UML accept event box style, represented with an accept signal arrow shape.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#UML_OBJECT" class="member-name-link">UML_OBJECT</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">UML object box style, represented with square brackets.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#UML_OBJECT_SIGNAL" class="member-name-link">UML_OBJECT_SIGNAL</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">UML object signal box style, represented with a signal arrow shape.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#UML_SEND_SIGNAL" class="member-name-link">UML_SEND_SIGNAL</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">UML send signal box style, represented with an output arrow shape.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#UML_TIME_EVENT" class="member-name-link">UML_TIME_EVENT</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">UML time event box style, represented with an hour glass shape.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#UML_TRIGGER" class="member-name-link">UML_TRIGGER</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">UML trigger box style, represented with an input arrow shape.</div>
+</div>
 </div>
 </section>
 </li>
@@ -140,34 +184,48 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#checkDeprecatedWarning(net.sourceforge.plantuml.TitledDiagram,java.lang.String)" class="member-name-link">checkDeprecatedWarning</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;style)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Checks for deprecated styles and adds a warning to the diagram.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawInternal(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,double,double,double)" class="member-name-link">drawInternal</a><wbr>(<a href="../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  double&nbsp;width,
  double&nbsp;height,
  double&nbsp;shadowing,
  double&nbsp;roundCorner)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draws the box style using a graphical context.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromString(java.lang.String)" class="member-name-link">fromString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;style)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Parses a string to determine the corresponding BoxStyle.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../klimt/Shadowable.html" title="interface in net.sourceforge.plantuml.klimt">Shadowable</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShape(double,double,double)" class="member-name-link">getShape</a><wbr>(double&nbsp;width,
  double&nbsp;height,
  double&nbsp;roundCorner)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Generates a shape representation of the box style.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShield()" class="member-name-link">getShield</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the shield value associated with the box style.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStereotype()" class="member-name-link">getStereotype</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the stereotype associated with the box style.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../../klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUDrawable(double,double,double,double)" class="member-name-link">getUDrawable</a><wbr>(double&nbsp;width,
  double&nbsp;height,
  double&nbsp;shadowing,
  double&nbsp;roundCorner)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Generates a drawable representation of the box style.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -203,54 +261,98 @@ the order they are declared.</div>
 <section class="detail" id="PLAIN">
 <h3>PLAIN</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">PLAIN</span></div>
+<div class="block">Plain box style with no additional shape or decorations.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SDL_INPUT">
 <h3>SDL_INPUT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_INPUT</span></div>
+<div class="block">SDL input box style, represented with an input arrow shape.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SDL_OUTPUT">
 <h3>SDL_OUTPUT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_OUTPUT</span></div>
+<div class="block">SDL output box style, represented with an output arrow shape.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SDL_PROCEDURE">
 <h3>SDL_PROCEDURE</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_PROCEDURE</span></div>
+<div class="block">SDL procedure box style, represented with vertical bars on both sides.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SDL_LOAD">
+<h3>SDL_LOAD</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_LOAD</span></div>
+<div class="block">SDL load box style, represented with a backslash diamond pattern.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SDL_SAVE">
 <h3>SDL_SAVE</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_SAVE</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="SDL_ANTISAVE">
-<h3>SDL_ANTISAVE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_ANTISAVE</span></div>
+<div class="block">SDL save box style, represented with a forward slash diamond pattern.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SDL_CONTINUOUS">
 <h3>SDL_CONTINUOUS</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_CONTINUOUS</span></div>
+<div class="block">SDL continuous box style, represented with a continuous curve shape.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SDL_TASK">
 <h3>SDL_TASK</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_TASK</span></div>
+<div class="block">SDL task box style, represented with square brackets.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="SDL_OBJECT">
-<h3>SDL_OBJECT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">SDL_OBJECT</span></div>
+<section class="detail" id="UML_OBJECT">
+<h3>UML_OBJECT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">UML_OBJECT</span></div>
+<div class="block">UML object box style, represented with square brackets.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="UML_OBJECT_SIGNAL">
+<h3>UML_OBJECT_SIGNAL</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">UML_OBJECT_SIGNAL</span></div>
+<div class="block">UML object signal box style, represented with a signal arrow shape.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="UML_TRIGGER">
+<h3>UML_TRIGGER</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">UML_TRIGGER</span></div>
+<div class="block">UML trigger box style, represented with an input arrow shape.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="UML_SEND_SIGNAL">
+<h3>UML_SEND_SIGNAL</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">UML_SEND_SIGNAL</span></div>
+<div class="block">UML send signal box style, represented with an output arrow shape.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="UML_ACCEPT_EVENT">
+<h3>UML_ACCEPT_EVENT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">UML_ACCEPT_EVENT</span></div>
+<div class="block">UML accept event box style, represented with an accept signal arrow shape.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="UML_TIME_EVENT">
+<h3>UML_TIME_EVENT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">UML_TIME_EVENT</span></div>
+<div class="block">UML time event box style, represented with an hour glass shape.</div>
 </section>
 </li>
 </ul>
@@ -297,12 +399,25 @@ not permitted.)</div>
 <h3>checkDeprecatedWarning</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">checkDeprecatedWarning</span><wbr><span class="parameters">(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;style)</span></div>
+<div class="block">Checks for deprecated styles and adds a warning to the diagram.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>diagram</code> - The diagram to which warnings will be added.</dd>
+<dd><code>style</code> - The style to check for deprecation.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="fromString(java.lang.String)">
 <h3>fromString</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BoxStyle.html" title="enum class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></span>&nbsp;<span class="element-name">fromString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;style)</span></div>
+<div class="block">Parses a string to determine the corresponding BoxStyle.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>style</code> - The string representation of the style.</dd>
+<dt>Returns:</dt>
+<dd>The BoxStyle corresponding to the input string.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -312,6 +427,18 @@ not permitted.)</div>
  double&nbsp;height,
  double&nbsp;shadowing,
  double&nbsp;roundCorner)</span></div>
+<div class="block">Generates a drawable representation of the box style.
+ This method returns a <a href="../../klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>UDrawable</code></a> object that encapsulates the rendering logic
+ for the box style with the specified dimensions and effects.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>width</code> - The width of the box.</dd>
+<dd><code>height</code> - The height of the box.</dd>
+<dd><code>shadowing</code> - The shadowing effect to apply.</dd>
+<dd><code>roundCorner</code> - The corner radius for rounding.</dd>
+<dt>Returns:</dt>
+<dd>A <a href="../../klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>UDrawable</code></a> object for rendering the box style.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -320,6 +447,16 @@ not permitted.)</div>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../klimt/Shadowable.html" title="interface in net.sourceforge.plantuml.klimt">Shadowable</a></span>&nbsp;<span class="element-name">getShape</span><wbr><span class="parameters">(double&nbsp;width,
  double&nbsp;height,
  double&nbsp;roundCorner)</span></div>
+<div class="block">Generates a shape representation of the box style.
+ This method is overridden by each enum constant to define its specific shape.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>width</code> - The width of the box.</dd>
+<dd><code>height</code> - The height of the box.</dd>
+<dd><code>roundCorner</code> - The corner radius for rounding.</dd>
+<dt>Returns:</dt>
+<dd>A <a href="../../klimt/Shadowable.html" title="interface in net.sourceforge.plantuml.klimt"><code>Shadowable</code></a> object representing the shape of the box.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -330,18 +467,41 @@ not permitted.)</div>
  double&nbsp;height,
  double&nbsp;shadowing,
  double&nbsp;roundCorner)</span></div>
+<div class="block">Draws the box style using a graphical context.
+ This method can be overridden by specific box styles to apply custom drawing logic.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ug</code> - The <a href="../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing"><code>UGraphic</code></a> object used for drawing.</dd>
+<dd><code>width</code> - The width of the box.</dd>
+<dd><code>height</code> - The height of the box.</dd>
+<dd><code>shadowing</code> - The shadowing effect to apply.</dd>
+<dd><code>roundCorner</code> - The corner radius for rounding.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getShield()">
 <h3>getShield</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getShield</span>()</div>
+<div class="block">Retrieves the shield value associated with the box style.
+ The shield value is used to adjust the rendering dimensions of the box.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The shield value.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getStereotype()">
 <h3>getStereotype</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a></span>&nbsp;<span class="element-name">getStereotype</span>()</div>
+<div class="block">Retrieves the stereotype associated with the box style.
+ The stereotype is represented as a <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo"><code>Stereotype</code></a> object, which includes
+ additional metadata for rendering and identification.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>A <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo"><code>Stereotype</code></a> object representing the stereotype, or <code>null</code> if none is defined.</dd>
+</dl>
 </section>
 </li>
 </ul>
