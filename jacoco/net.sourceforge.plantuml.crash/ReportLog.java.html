@@ -77,67 +77,78 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L77">	}</span>
 
 	public void checkOldVersionWarning() {
-<span class="fc" id="L80">		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (days &gt;= 90) {</span>
-<span class="fc" id="L82">			addEmptyLine();</span>
-<span class="fc" id="L83">			add(&quot;&lt;b&gt;This version of PlantUML is &quot; + days + &quot; days old, so you should&quot;);</span>
-<span class="fc" id="L84">			add(&quot;&lt;b&gt;consider upgrading from https://plantuml.com/download&quot;);</span>
+<span class="nc" id="L80">		checkOldVersionWarning(&quot;&lt;b&gt;&quot;);</span>
+<span class="nc" id="L81">	}</span>
+
+	public void checkOldVersionWarningRaw() {
+<span class="fc" id="L84">		checkOldVersionWarning(&quot;&quot;);</span>
+<span class="fc" id="L85">	}</span>
+
+	public void checkOldVersionWarning(String lineFormating) {
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (Version.versionString().contains(&quot;beta&quot;))</span>
+<span class="fc" id="L89">			return;</span>
+
+<span class="nc" id="L91">		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (days &gt;= 90) {</span>
+<span class="nc" id="L93">			addEmptyLine();</span>
+<span class="nc" id="L94">			add(lineFormating + &quot;This version of PlantUML is &quot; + days + &quot; days old, so you should&quot;);</span>
+<span class="nc" id="L95">			add(lineFormating + &quot;consider upgrading from https://plantuml.com/download&quot;);</span>
 		}
-<span class="fc" id="L86">	}</span>
+<span class="nc" id="L97">	}</span>
 
 	public void addEmptyLine() {
-<span class="fc" id="L89">		add(&quot; &quot;);</span>
-<span class="fc" id="L90">	}</span>
+<span class="nc" id="L100">		add(&quot; &quot;);</span>
+<span class="nc" id="L101">	}</span>
 
 	public void anErrorHasOccured(Throwable exception, String fullDiagramText) {
 		
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (exception == null)</span>
-<span class="nc" id="L95">			add(&quot;An error has occured!&quot;);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (exception == null)</span>
+<span class="nc" id="L106">			add(&quot;An error has occured!&quot;);</span>
 		else
-<span class="nc" id="L97">			add(&quot;An error has occured : &quot; + exception);</span>
-<span class="nc" id="L98">		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());</span>
-<span class="nc" id="L99">		add(&quot;&lt;i&gt;&quot; + quote);</span>
-<span class="nc" id="L100">		addEmptyLine();</span>
+<span class="nc" id="L108">			add(&quot;An error has occured : &quot; + exception);</span>
+<span class="nc" id="L109">		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());</span>
+<span class="nc" id="L110">		add(&quot;&lt;i&gt;&quot; + quote);</span>
+<span class="nc" id="L111">		addEmptyLine();</span>
 
-<span class="nc" id="L102">		add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) has crashed.&quot;);</span>
-<span class="nc" id="L103">		addEmptyLine();</span>
-<span class="nc" id="L104">		checkOldVersionWarning();</span>
-<span class="nc" id="L105">		add(&quot;Diagram size: &quot; + lines(fullDiagramText) + &quot; lines / &quot; + fullDiagramText.length() + &quot; characters.&quot;);</span>
-<span class="nc" id="L106">		addEmptyLine();</span>
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L113">		add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) has crashed.&quot;);</span>
+<span class="nc" id="L114">		addEmptyLine();</span>
+<span class="nc" id="L115">		checkOldVersionWarning();</span>
+<span class="nc" id="L116">		add(&quot;Diagram size: &quot; + lines(fullDiagramText) + &quot; lines / &quot; + fullDiagramText.length() + &quot; characters.&quot;);</span>
+<span class="nc" id="L117">		addEmptyLine();</span>
+<span class="nc" id="L118">	}</span>
 
 	private int lines(String text) {
-<span class="nc" id="L110">		int result = 0;</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (int i = 0; i &lt; text.length(); i++)</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (text.charAt(i) == BackSlash.CHAR_NEWLINE)</span>
-<span class="nc" id="L113">				result++;</span>
+<span class="nc" id="L121">		int result = 0;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (int i = 0; i &lt; text.length(); i++)</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			if (text.charAt(i) == BackSlash.CHAR_NEWLINE)</span>
+<span class="nc" id="L124">				result++;</span>
 
-<span class="nc" id="L115">		return result;</span>
+<span class="nc" id="L126">		return result;</span>
 	}
 
 	public void pleaseCheckYourGraphVizVersion() {
-<span class="nc" id="L119">		addEmptyLine();</span>
-<span class="nc" id="L120">		add(&quot;Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.&quot;);</span>
-<span class="nc" id="L121">		addEmptyLine();</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L130">		addEmptyLine();</span>
+<span class="nc" id="L131">		add(&quot;Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.&quot;);</span>
+<span class="nc" id="L132">		addEmptyLine();</span>
+<span class="nc" id="L133">	}</span>
 
 	public void thisMayBeCaused() {
-<span class="nc" id="L125">		add(&quot;This may be caused by :&quot;);</span>
-<span class="nc" id="L126">		add(&quot; - a bug in PlantUML&quot;);</span>
-<span class="nc" id="L127">		add(&quot; - a problem in GraphViz&quot;);</span>
-<span class="nc" id="L128">	}</span>
+<span class="nc" id="L136">		add(&quot;This may be caused by :&quot;);</span>
+<span class="nc" id="L137">		add(&quot; - a bug in PlantUML&quot;);</span>
+<span class="nc" id="L138">		add(&quot; - a problem in GraphViz&quot;);</span>
+<span class="nc" id="L139">	}</span>
 
 	public void addDecodeHint() {
-<span class="nc" id="L131">		addEmptyLine();</span>
-<span class="nc" id="L132">		add(&quot; Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)&quot;);</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L142">		addEmptyLine();</span>
+<span class="nc" id="L143">		add(&quot; Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)&quot;);</span>
+<span class="nc" id="L144">	}</span>
 
 	public void addProperties() {
 		// ::comment when __CORE__
-<span class="nc" id="L137">		addAll(OptionPrint.interestingProperties());</span>
-<span class="nc" id="L138">		addAll(OptionPrint.interestingValues());</span>
+<span class="nc" id="L148">		addAll(OptionPrint.interestingProperties());</span>
+<span class="nc" id="L149">		addAll(OptionPrint.interestingValues());</span>
 		// ::done
-<span class="nc" id="L140">	}</span>
+<span class="nc" id="L151">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
