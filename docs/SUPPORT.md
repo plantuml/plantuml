@@ -48,7 +48,8 @@ We welcome contributions to PlantUML! If you're interested in contributing:
 
 ## Additional Resources
 
-- For comprehensive documentation, refer to the [official PlantUML Javadoc](https://plantuml.github.io/plantuml/).
+- For comprehensive documentation, refer to the [official PlantUML Javadoc](https://plantuml.github.io/plantuml/javadoc).
+- See also the [_Jacoco_ Code Coverage Report](https://plantuml.github.io/plantuml/jacoco).
 - Explore the [GitHub issues](https://github.com/plantuml/plantuml/issues/) for discussions and known problems.
 
 ## 🧑‍🤝‍🧑 Community Support
