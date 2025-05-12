@@ -169,7 +169,7 @@ public abstract class PSystemError extends PlainDiagram {
 	private List<String> header() {
 		final ReportLog result = new ReportLog();
 		result.add("PlantUML " + Version.versionString());
-		result.checkOldVersionWarning();
+		result.checkOldVersionWarningRaw();
 		return result.asList();
 	}
 
