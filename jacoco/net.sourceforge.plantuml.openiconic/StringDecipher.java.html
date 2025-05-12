@@ -38,17 +38,17 @@ package net.sourceforge.plantuml.openiconic;
 <span class="nc" id="L38">public class StringDecipher {</span>
 
 	public static String decipher(String path) {
-<span class="nc" id="L41">		path = path.trim();</span>
-<span class="nc" id="L42">		path = path.replace(',', ' ');</span>
-<span class="nc" id="L43">		path = path.replaceAll(&quot;\\s+&quot;, &quot; &quot;);</span>
-<span class="nc" id="L44">		path = path.replaceAll(&quot;([^e\\s])-&quot;, &quot;$1 -&quot;);</span>
-<span class="nc" id="L45">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
-<span class="nc" id="L46">		path = path.replaceAll(&quot;(\\S)([a-df-zA-Z])&quot;, &quot;$1 $2&quot;);</span>
-<span class="nc" id="L47">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		while (path.matches(&quot;.*\\.\\d+\\..*&quot;))</span>
-<span class="nc" id="L49">			path = path.replaceAll(&quot;(\\.\\d+)\\.&quot;, &quot;$1 .&quot;);</span>
+<span class="fc" id="L41">		path = path.trim();</span>
+<span class="fc" id="L42">		path = path.replace(',', ' ');</span>
+<span class="fc" id="L43">		path = path.replaceAll(&quot;\\s+&quot;, &quot; &quot;);</span>
+<span class="fc" id="L44">		path = path.replaceAll(&quot;([^e\\s])-&quot;, &quot;$1 -&quot;);</span>
+<span class="fc" id="L45">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
+<span class="fc" id="L46">		path = path.replaceAll(&quot;(\\S)([a-df-zA-Z])&quot;, &quot;$1 $2&quot;);</span>
+<span class="fc" id="L47">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		while (path.matches(&quot;.*\\.\\d+\\..*&quot;))</span>
+<span class="fc" id="L49">			path = path.replaceAll(&quot;(\\.\\d+)\\.&quot;, &quot;$1 .&quot;);</span>
 
-<span class="nc" id="L51">		return path;</span>
+<span class="fc" id="L51">		return path;</span>
 	}
 
 }
