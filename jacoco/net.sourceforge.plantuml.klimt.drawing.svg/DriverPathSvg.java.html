@@ -57,20 +57,22 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver&lt;UPath
 <span class="pc bpc" id="L57" title="3 of 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y, shape) == false)</span>
 <span class="nc" id="L58">			return;</span>
 
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (shape.isOpenIconic()) {</span>
-<span class="nc" id="L61">			final HColor color = param.getColor();</span>
-<span class="nc" id="L62">			svg.setFillColor(color.toSvg(mapper));</span>
-<span class="nc" id="L63">			svg.setStrokeColor(&quot;&quot;);</span>
-<span class="nc" id="L64">			svg.setStrokeWidth(0, &quot;&quot;);</span>
-<span class="nc" id="L65">		} else {</span>
-<span class="fc" id="L66">			DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
-<span class="fc" id="L67">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="fc" id="L60">		final HColor color = param.getColor();</span>
+<span class="fc" id="L61">		final HColor back = param.getBackcolor();</span>
 
-<span class="fc" id="L69">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="pc bpc" id="L63" title="3 of 6 branches missed.">		if (color != null &amp;&amp; back != null &amp;&amp; color.equals(back)) {</span>
+<span class="nc" id="L64">			svg.setFillColor(color.toSvg(mapper));</span>
+<span class="nc" id="L65">			svg.setStrokeColor(&quot;&quot;);</span>
+<span class="nc" id="L66">			svg.setStrokeWidth(0, &quot;&quot;);</span>
+		} else {
+<span class="fc" id="L68">			DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
+<span class="fc" id="L69">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+
+<span class="fc" id="L71">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 		}
 
-<span class="fc" id="L72">		svg.svgPath(x, y, shape, shape.getDeltaShadow());</span>
+<span class="fc" id="L74">		svg.svgPath(x, y, shape, shape.getDeltaShadow());</span>
 
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L76">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -58,112 +59,113 @@ import net.sourceforge.plantuml.security.SFile;
 
 public class OpenIcon {
 
-<span class="nc" id="L61">	private final static Pattern patternTranslate = Pattern.compile(&quot;translate\\((\\d+)\\s*(\\d*)\\)&quot;);</span>
+<span class="nc" id="L62">	private final static Pattern patternTranslate = Pattern.compile(&quot;translate\\((\\d+)\\s*(\\d*)\\)&quot;);</span>
 
 	private SvgPath svgPath;
-<span class="nc" id="L64">	private List&lt;String&gt; rawData = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L65">	private List&lt;String&gt; rawData = new ArrayList&lt;&gt;();</span>
 	private final String id;
 
 	public static OpenIcon retrieve(String name) {
-<span class="nc" id="L68">		final InputStream is = getResource(name);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L70">			return null;</span>
+<span class="nc" id="L69">		final InputStream is = getResource(name);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L71">			return null;</span>
 
 		try {
-<span class="nc" id="L73">			return new OpenIcon(is, name);</span>
-<span class="nc" id="L74">		} catch (IOException e) {</span>
-<span class="nc" id="L75">			Logme.error(e);</span>
-<span class="nc" id="L76">			return null;</span>
+<span class="nc" id="L74">			return new OpenIcon(is, name);</span>
+<span class="nc" id="L75">		} catch (IOException e) {</span>
+<span class="nc" id="L76">			Logme.error(e);</span>
+<span class="nc" id="L77">			return null;</span>
 		}
 	}
 
 	OpenIcon(String name) throws IOException {
-<span class="nc" id="L81">		this(getResource(name), name);</span>
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L82">		this(getResource(name), name);</span>
+<span class="nc" id="L83">	}</span>
 
 	private static InputStream getResource(String name) {
 		// System.err.println(&quot;OPENING &quot; + name);
-<span class="nc" id="L86">		return DummyIcon.class.getResourceAsStream(name + &quot;.svg&quot;);</span>
+<span class="nc" id="L87">		return DummyIcon.class.getResourceAsStream(name + &quot;.svg&quot;);</span>
 	}
 
-<span class="nc" id="L89">	private OpenIcon(InputStream is, String id) throws IOException {</span>
-<span class="nc" id="L90">		this.id = id;</span>
-<span class="nc" id="L91">		UTranslate translate = UTranslate.none();</span>
-<span class="nc" id="L92">		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
-<span class="nc" id="L93">			String s = null;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			while ((s = br.readLine()) != null) {</span>
-<span class="nc" id="L95">				rawData.add(s);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (s.contains(&quot;transform=\&quot;&quot;))</span>
-<span class="nc" id="L97">					translate = getTranslate(s);</span>
+<span class="nc" id="L90">	private OpenIcon(InputStream is, String id) throws IOException {</span>
+<span class="nc" id="L91">		this.id = id;</span>
+<span class="nc" id="L92">		UTranslate translate = UTranslate.none();</span>
+<span class="nc" id="L93">		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="nc" id="L94">			String s = null;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			while ((s = br.readLine()) != null) {</span>
+<span class="nc" id="L96">				rawData.add(s);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				if (s.contains(&quot;transform=\&quot;&quot;))</span>
+<span class="nc" id="L98">					translate = getTranslate(s);</span>
 			}
 		}
-<span class="nc bnc" id="L100" title="All 4 branches missed.">		if (rawData.size() != 3 &amp;&amp; rawData.size() != 4)</span>
-<span class="nc" id="L101">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (rawData.size() != 3 &amp;&amp; rawData.size() != 4)</span>
+<span class="nc" id="L102">			throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (String s : rawData)</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (s.contains(&quot;&lt;path&quot;)) {</span>
-<span class="nc" id="L105">				final int x1 = s.indexOf('&quot;');</span>
-<span class="nc" id="L106">				final int x2 = s.indexOf('&quot;', x1 + 1);</span>
-<span class="nc" id="L107">				svgPath = new SvgPath(s.substring(x1 + 1, x2), translate);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (String s : rawData)</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (s.contains(&quot;&lt;path&quot;)) {</span>
+<span class="nc" id="L106">				final int x1 = s.indexOf('&quot;');</span>
+<span class="nc" id="L107">				final int x2 = s.indexOf('&quot;', x1 + 1);</span>
+<span class="nc" id="L108">				svgPath = new SvgPath(s.substring(x1 + 1, x2), translate);</span>
 			}
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L110">	}</span>
 
 	private static UTranslate getTranslate(String s) {
-<span class="nc" id="L112">		final Matcher matcher = patternTranslate.matcher(s);</span>
+<span class="nc" id="L113">		final Matcher matcher = patternTranslate.matcher(s);</span>
 
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (matcher.find()) {</span>
-<span class="nc" id="L115">			final String xStr = matcher.group(1);</span>
-<span class="nc" id="L116">			final String yStr = matcher.group(2);</span>
-<span class="nc" id="L117">			final int x = Integer.parseInt(xStr);</span>
-<span class="nc bnc" id="L118" title="All 4 branches missed.">			final int y = (yStr == null || yStr.isEmpty()) ? 0 : Integer.parseInt(yStr);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (matcher.find()) {</span>
+<span class="nc" id="L116">			final String xStr = matcher.group(1);</span>
+<span class="nc" id="L117">			final String yStr = matcher.group(2);</span>
+<span class="nc" id="L118">			final int x = Integer.parseInt(xStr);</span>
+<span class="nc bnc" id="L119" title="All 4 branches missed.">			final int y = (yStr == null || yStr.isEmpty()) ? 0 : Integer.parseInt(yStr);</span>
 
-<span class="nc" id="L120">			return new UTranslate(x, y);</span>
+<span class="nc" id="L121">			return new UTranslate(x, y);</span>
 		}
 
-<span class="nc" id="L123">		return UTranslate.none();</span>
+<span class="nc" id="L124">		return UTranslate.none();</span>
 	}
 
 	// ::comment when __CORE__
 	void saveCopy(SFile fnew) throws IOException {
-<span class="nc" id="L128">		try (PrintWriter pw = fnew.createPrintWriter()) {</span>
-<span class="nc" id="L129">			pw.println(rawData.get(0));</span>
-<span class="nc" id="L130">			pw.println(svgPath.toSvg());</span>
-<span class="nc" id="L131">			pw.println(rawData.get(rawData.size() - 1));</span>
+<span class="nc" id="L129">		try (PrintWriter pw = fnew.createPrintWriter()) {</span>
+<span class="nc" id="L130">			pw.println(rawData.get(0));</span>
+<span class="nc" id="L131">			pw.println(svgPath.toSvg());</span>
+<span class="nc" id="L132">			pw.println(rawData.get(rawData.size() - 1));</span>
 		}
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L134">	}</span>
 	// ::done
 
 	private XDimension2D getDimension(double factor) {
-<span class="nc" id="L137">		final String width = getNumber(rawData.get(0), &quot;width&quot;);</span>
-<span class="nc" id="L138">		final String height = getNumber(rawData.get(0), &quot;height&quot;);</span>
-<span class="nc" id="L139">		return new XDimension2D(Integer.parseInt(width) * factor, Integer.parseInt(height) * factor);</span>
+<span class="nc" id="L138">		final String width = getNumber(rawData.get(0), &quot;width&quot;);</span>
+<span class="nc" id="L139">		final String height = getNumber(rawData.get(0), &quot;height&quot;);</span>
+<span class="nc" id="L140">		return new XDimension2D(Integer.parseInt(width) * factor, Integer.parseInt(height) * factor);</span>
 	}
 
 	private String getNumber(String s, String arg) {
-<span class="nc" id="L143">		int x1 = s.indexOf(arg);</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (x1 == -1)</span>
-<span class="nc" id="L145">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L144">		int x1 = s.indexOf(arg);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (x1 == -1)</span>
+<span class="nc" id="L146">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L147">		x1 = s.indexOf(&quot;\&quot;&quot;, x1);</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (x1 == -1)</span>
-<span class="nc" id="L149">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L148">		x1 = s.indexOf(&quot;\&quot;&quot;, x1);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (x1 == -1)</span>
+<span class="nc" id="L150">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L151">		final int x2 = s.indexOf(&quot;\&quot;&quot;, x1 + 1);</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (x2 == -1)</span>
-<span class="nc" id="L153">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L152">		final int x2 = s.indexOf(&quot;\&quot;&quot;, x1 + 1);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (x2 == -1)</span>
+<span class="nc" id="L154">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L155">		return s.substring(x1 + 1, x2);</span>
+<span class="nc" id="L156">		return s.substring(x1 + 1, x2);</span>
 	}
 
 	public TextBlock asTextBlock(final HColor color, final double factor) {
-<span class="nc" id="L159">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L160">		return new AbstractTextBlock() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L161">				final HColor textColor = color.getAppropriateColor(ug.getParam().getBackcolor());</span>
-<span class="nc" id="L162">				svgPath.drawMe(ug.apply(textColor), factor);</span>
-<span class="nc" id="L163">			}</span>
+<span class="nc" id="L162">				final HColor textColor = color.getAppropriateColor(ug.getParam().getBackcolor());</span>
+<span class="nc" id="L163">				ug = ug.apply(textColor).apply(textColor.bg());</span>
+<span class="nc" id="L164">				svgPath.drawMe(ug, factor);</span>
+<span class="nc" id="L165">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L166">				return getDimension(factor);</span>
+<span class="nc" id="L168">				return getDimension(factor);</span>
 			}
 		};
 	}
