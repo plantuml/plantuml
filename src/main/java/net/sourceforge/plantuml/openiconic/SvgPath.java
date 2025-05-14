@@ -60,16 +60,13 @@ public class SvgPath {
 	public SvgPath(String path, UTranslate translate) {
 		this.translate = translate;
 		// System.err.println("before=" + path);
-		path = StringDecipher.decipher(path);
-		// System.err.println("after=" + path);
+		final List<CharSequence> decipher = StringDecipher.decipher(path);
 
-		for (final StringTokenizer st = new StringTokenizer(path); st.hasMoreTokens();) {
-			final String token = st.nextToken();
-
+		for (final CharSequence token : decipher) {
 			if (token.length() == 1 && Character.isLetter(token.charAt(0)))
-				commands.add(new SvgCommandLetter(token));
+				commands.add(new SvgCommandLetter(token.toString()));
 			else
-				commands.add(new SvgCommandNumber(token));
+				commands.add(new SvgCommandNumber(token.toString()));
 
 		}
 		commands = insertMissingLetter(commands);
