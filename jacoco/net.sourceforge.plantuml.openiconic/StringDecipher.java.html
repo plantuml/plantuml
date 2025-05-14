@@ -35,20 +35,104 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-<span class="nc" id="L38">public class StringDecipher {</span>
+import java.util.ArrayList;
+import java.util.List;
+
+import com.plantuml.ubrex.TextNavigator;
+
+<span class="nc" id="L43">public class StringDecipher {</span>
+
+	public static List&lt;CharSequence&gt; decipherNew(String path) {
+<span class="fc" id="L46">		final TextNavigator input = TextNavigator.build(path);</span>
+<span class="fc" id="L47">		final List&lt;CharSequence&gt; numbers = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		while (input.length() &gt; 0) {</span>
+<span class="fc" id="L50">			System.err.println(&quot;input=&quot; + input);</span>
+
+			// Step 1: Skip any separator characters (whitespace or commas)
+<span class="pc bpc" id="L53" title="2 of 6 branches missed.">			while (input.length() &gt; 0 &amp;&amp; (Character.isWhitespace(input.charAt(0)) || input.charAt(0) == ','))</span>
+<span class="fc" id="L54">				input.jump(1);</span>
+
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (input.length() == 0)</span>
+<span class="nc" id="L57">				break;</span>
+
+			// Step 2: If the next character is a command letter (e.g. M, L, C...), isolate
+			// it
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (Character.isLetter(input.charAt(0))) {</span>
+<span class="fc" id="L62">				numbers.add(input.subSequence(0, 1));</span>
+<span class="fc" id="L63">				input.jump(1);</span>
+<span class="fc" id="L64">				continue;</span>
+			}
+
+<span class="fc" id="L67">			int i = 0;</span>
+
+			// Step 3: Handle optional sign for the mantissa
+<span class="fc" id="L70">			char c = input.charAt(i);</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">			if (c == '+' || c == '-')</span>
+<span class="fc" id="L72">				i++;</span>
+
+			// Step 4: Read mantissa (digits with optional dot, only one allowed)
+<span class="fc" id="L75">			boolean seenDot = false;</span>
+<span class="fc" id="L76">			boolean seenMantissaDigit = false;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			while (i &lt; input.length()) {</span>
+<span class="fc" id="L78">				c = input.charAt(i);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">				if (Character.isDigit(c)) {</span>
+<span class="fc" id="L80">					seenMantissaDigit = true;</span>
+<span class="fc" id="L81">					i++;</span>
+<span class="fc bfc" id="L82" title="All 4 branches covered.">				} else if (c == '.' &amp;&amp; !seenDot) {</span>
+<span class="fc" id="L83">					seenDot = true;</span>
+<span class="fc" id="L84">					i++;</span>
+				} else
+					break;
+
+			}
+
+			// If no digit has been read, it's not a valid number
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			if (!seenMantissaDigit)</span>
+<span class="nc" id="L92">				break;</span>
+
+			// Step 5: Optionally parse scientific notation (e.g. 1.2e-3)
+<span class="fc bfc" id="L95" title="All 6 branches covered.">			if (i &lt; input.length() &amp;&amp; (input.charAt(i) == 'e' || input.charAt(i) == 'E')) {</span>
+<span class="fc" id="L96">				final int expStart = i;</span>
+<span class="fc" id="L97">				i++; // consume 'e' or 'E'</span>
+
+				// Optional sign in exponent
+<span class="pc bpc" id="L100" title="1 of 6 branches missed.">				if (i &lt; input.length() &amp;&amp; (input.charAt(i) == '+' || input.charAt(i) == '-'))</span>
+<span class="fc" id="L101">					i++;</span>
+
+<span class="fc" id="L103">				boolean seenExpDigit = false;</span>
+<span class="fc bfc" id="L104" title="All 4 branches covered.">				while (i &lt; input.length() &amp;&amp; Character.isDigit(input.charAt(i))) {</span>
+<span class="fc" id="L105">					seenExpDigit = true;</span>
+<span class="fc" id="L106">					i++;</span>
+				}
+
+				// If exponent is not valid (no digit), backtrack
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				if (!seenExpDigit)</span>
+<span class="nc" id="L111">					i = expStart;</span>
+			}
+
+			// Step 6: Store the parsed numeric token
+<span class="fc" id="L115">			numbers.add(input.subSequence(0, i));</span>
+
+			// Step 7: Move forward in the input
+<span class="fc" id="L118">			input.jump(i);</span>
+<span class="fc" id="L119">		}</span>
+
+<span class="fc" id="L121">		return numbers;</span>
+	}
 
 	public static String decipher(String path) {
-<span class="fc" id="L41">		path = path.trim();</span>
-<span class="fc" id="L42">		path = path.replace(',', ' ');</span>
-<span class="fc" id="L43">		path = path.replaceAll(&quot;\\s+&quot;, &quot; &quot;);</span>
-<span class="fc" id="L44">		path = path.replaceAll(&quot;([^e\\s])-&quot;, &quot;$1 -&quot;);</span>
-<span class="fc" id="L45">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
-<span class="fc" id="L46">		path = path.replaceAll(&quot;(\\S)([a-df-zA-Z])&quot;, &quot;$1 $2&quot;);</span>
-<span class="fc" id="L47">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">		while (path.matches(&quot;.*\\.\\d+\\..*&quot;))</span>
-<span class="fc" id="L49">			path = path.replaceAll(&quot;(\\.\\d+)\\.&quot;, &quot;$1 .&quot;);</span>
+<span class="fc" id="L125">		path = path.trim();</span>
+<span class="fc" id="L126">		path = path.replace(',', ' ');</span>
+<span class="fc" id="L127">		path = path.replaceAll(&quot;\\s+&quot;, &quot; &quot;);</span>
+<span class="fc" id="L128">		path = path.replaceAll(&quot;([^e\\s])-&quot;, &quot;$1 -&quot;);</span>
+<span class="fc" id="L129">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
+<span class="fc" id="L130">		path = path.replaceAll(&quot;(\\S)([a-df-zA-Z])&quot;, &quot;$1 $2&quot;);</span>
+<span class="fc" id="L131">		path = path.replaceAll(&quot;([a-df-zA-Z])(\\S)&quot;, &quot;$1 $2&quot;);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		while (path.matches(&quot;.*\\.\\d+\\..*&quot;))</span>
+<span class="fc" id="L133">			path = path.replaceAll(&quot;(\\.\\d+)\\.&quot;, &quot;$1 .&quot;);</span>
 
-<span class="fc" id="L51">		return path;</span>
+<span class="fc" id="L135">		return path;</span>
 	}
 
 }
