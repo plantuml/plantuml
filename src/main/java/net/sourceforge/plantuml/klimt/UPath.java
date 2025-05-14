@@ -56,7 +56,6 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 	private final List<USegment> segments = new ArrayList<>();
 	private MinMax minmax = MinMax.getEmpty(false);
 
-	private boolean isOpenIconic;
 	private boolean ignoreForCompressionOnX;
 	private boolean ignoreForCompressionOnY;
 
@@ -192,14 +191,6 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 
 	public Iterator<USegment> iterator() {
 		return segments.iterator();
-	}
-
-	public boolean isOpenIconic() {
-		return isOpenIconic;
-	}
-
-	public void setOpenIconic(boolean isOpenIconic) {
-		this.isOpenIconic = isOpenIconic;
 	}
 
 	public final String getComment() {

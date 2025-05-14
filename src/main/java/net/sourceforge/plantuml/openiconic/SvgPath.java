@@ -39,7 +39,6 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -187,7 +186,6 @@ public class SvgPath {
 			}
 		}
 		result = result.translate(translate.getDx() * factorx, translate.getDy() * factory);
-		result.setOpenIconic(true);
 		return result;
 	}
 
@@ -240,7 +238,6 @@ public class SvgPath {
 			previous = move;
 		}
 		result = result.translate(translate.getDx() * at.getScaleX(), translate.getDy() * at.getScaleY());
-		result.setOpenIconic(true);
 		return result;
 	}
 

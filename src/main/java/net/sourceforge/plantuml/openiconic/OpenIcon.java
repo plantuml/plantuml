@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -159,7 +160,8 @@ public class OpenIcon {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				final HColor textColor = color.getAppropriateColor(ug.getParam().getBackcolor());
-				svgPath.drawMe(ug.apply(textColor), factor);
+				ug = ug.apply(textColor).apply(textColor.bg());
+				svgPath.drawMe(ug, factor);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

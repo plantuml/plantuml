@@ -60,6 +60,7 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 		DriverLineG2d.manageStroke(param, g2d);
 
 		final HColor back = param.getBackcolor();
+		final HColor color = param.getColor();
 
 		final ExtendedGeneralPath p = new ExtendedGeneralPath();
 		MinMax minMax = MinMax.getEmpty(false);
@@ -81,13 +82,6 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 			} else {
 				throw new UnsupportedOperationException();
 			}
-		}
-
-		if (shape.isOpenIconic()) {
-			p.closePath();
-			g2d.setColor(param.getColor().toColor(mapper));
-			g2d.fill(p);
-			return;
 		}
 
 		// Shadow
@@ -125,8 +119,8 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 			g2d.fill(p);
 		}
 
-		if (param.getColor().isTransparent() == false) {
-			g2d.setColor(param.getColor().toColor(mapper));
+		if (color.isTransparent() == false && color.equals(back) == false) {
+			g2d.setColor(color.toColor(mapper));
 			g2d.draw(p);
 		}
 	}

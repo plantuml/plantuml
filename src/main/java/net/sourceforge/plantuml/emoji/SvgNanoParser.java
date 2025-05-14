@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.emoji;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -129,7 +128,6 @@ public class SvgNanoParser implements Sprite {
 
 	public SvgNanoParser(List<String> svg) {
 		this.svg = svg;
-
 	}
 
 	public void drawU(UGraphic ug, double scale, HColor forcedColor) {
@@ -154,7 +152,7 @@ public class SvgNanoParser implements Sprite {
 			} else if (s.startsWith("<g ")) {
 				stack.add(0, ugs);
 				stackG.addFirst(s);
-				ugs = applyFill(ugs, s, stackG);
+				ugs = applyFillAndStroke(ugs, s, stackG);
 				ugs = applyTransform(ugs, s);
 			} else if (s.startsWith("<circle ")) {
 				drawCircle(ugs, s, stackG);
@@ -190,71 +188,62 @@ public class SvgNanoParser implements Sprite {
 	private void computeMinMaxGray() {
 		for (String s : getData()) {
 			if (s.contains("<path ") || s.contains("<g ") || s.contains("<circle ") || s.contains("<ellipse ")) {
-				final HColor color = justExtractColor(s);
-				if (color != null) {
-					final int gray = getGray(color);
-					minGray = Math.min(minGray, gray);
-					maxGray = Math.max(maxGray, gray);
-				}
+				final String fillString = getFillString(s, null);
+				final String strokeString = extract(DATA_STROKE, s);
+
+				updateMinMax(strokeString);
+				updateMinMax(fillString);
+
 			} else {
 				// Nothing
 			}
 		}
 	}
 
-	private int getGray(HColor col) {
-		final Color tmp = ColorUtils.getGrayScaleColor(col.toColor(ColorMapper.MONOCHROME));
-		return tmp.getGreen();
+	private void updateMinMax(String colorString) {
+		if (colorString != null) {
+			final HColor color = HColorSet.instance().getColorOrWhite(colorString);
+			final int gray = ColorUtils.getGrayScaleColor(color.toColor(ColorMapper.MONOCHROME)).getGreen();
+			minGray = Math.min(minGray, gray);
+			maxGray = Math.max(maxGray, gray);
+		}
 	}
 
-	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, Deque<String> stackG) {
-		String fillString = getTextFontColor(s, null);
+	private UGraphicWithScale applyFillAndStroke(UGraphicWithScale ugs, String s, Deque<String> stackG) {
+		final String fillString = getFillString(s, stackG);
+		final String strokeString = extract(DATA_STROKE, s);
 
-		if (fillString == null) {
-			return ugs;
-		} else if (fillString.equals("none")) {
-			final String strokeString = extract(DATA_STROKE, s);
-			if (strokeString == null)
-				return ugs;
-			ugs = ugs.apply(HColors.none().bg());
+		final String strokeWidth = extract(DATA_STROKE_WIDTH, s);
+		if (strokeWidth != null) {
+			final double scale = ugs.getScale();
+			ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));
+		}
+
+		if (strokeString != null) {
 			final HColor stroke = ugs.getTrueColor(strokeString);
 			ugs = ugs.apply(stroke);
-			final String strokeWidth = extract(DATA_STROKE_WIDTH, s);
-			if (strokeWidth != null) {
-				final double scale = ugs.getScale();
-				ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));
-			}
+			if (fillString == null)
+				return ugs.apply(HColors.none().bg());
+		}
 
+		if (fillString == null)
+			return ugs;
+
+		if (fillString.equals("none")) {
+			ugs = ugs.apply(HColors.none().bg());
 		} else {
 			final HColor fill = ugs.getTrueColor(fillString);
-			ugs = ugs.apply(fill).apply(fill.bg());
+
+			if (strokeString == null)
+				ugs = ugs.apply(fill);
+			ugs = ugs.apply(fill.bg());
 		}
 
 		return ugs;
 	}
 
-	private HColor justExtractColor(String s) {
-		final String fillString = getTextFontColor(s, null);
-		if (fillString == null)
-			return null;
-
-		if (fillString.equals("none")) {
-			final String strokeString = extract(DATA_STROKE, s);
-			if (strokeString == null)
-				return null;
-
-			final HColor stroke = HColorSet.instance().getColorOrWhite(strokeString);
-			return stroke;
-
-		} else {
-			final HColor fill = HColorSet.instance().getColorOrWhite(fillString);
-			return fill;
-		}
-
-	}
-
 	private void drawCircle(UGraphicWithScale ugs, String s, Deque<String> stackG) {
-		ugs = applyFill(ugs, s, stackG);
+		ugs = applyFillAndStroke(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
 
 		final double scalex = ugs.getAffineTransform().getScaleX();
@@ -274,7 +263,7 @@ public class SvgNanoParser implements Sprite {
 
 	private void drawEllipse(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		final boolean debug = false;
-		ugs = applyFill(ugs, s, stackG);
+		ugs = applyFillAndStroke(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
 
 		final double cx = Double.parseDouble(extract(DATA_CX, s));
@@ -317,7 +306,7 @@ public class SvgNanoParser implements Sprite {
 	private void drawText(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		final double x = Double.parseDouble(extract(DATA_X, s));
 		final double y = Double.parseDouble(extract(DATA_Y, s));
-		final String fontColor = getTextFontColor(s, stackG);
+		final String fontColor = getFillString(s, stackG);
 		final int fontSize = getTextFontSize(s);
 
 		final Matcher m = P_TEXT.matcher(s);
@@ -353,21 +342,21 @@ public class SvgNanoParser implements Sprite {
 		return family;
 	}
 
-	private String getTextFontColor(String s, Deque<String> stackG) {
+	private String getFillString(String s, Deque<String> stackG) {
 		String color = extract(DATA_FILL, s);
 		if (color == null) {
 			final String style = extract(DATA_STYLE, s);
 			if (style != null)
 				color = extract(STYLE_FILL, style);
 		}
-		
-		if (color == null && stackG != null) 
+
+		if (color == null && stackG != null)
 			for (String g : stackG) {
-				color = getTextFontColor(g, null);
+				color = getFillString(g, null);
 				if (color != null)
 					return color;
 			}
-		
+
 		return color;
 	}
 
@@ -393,7 +382,7 @@ public class SvgNanoParser implements Sprite {
 
 	private void drawPath(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		s = s.replace("id=\"", "ID=\"");
-		ugs = applyFill(ugs, s, stackG);
+		ugs = applyFillAndStroke(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
 
 		final int x1 = s.indexOf("d=\"");
