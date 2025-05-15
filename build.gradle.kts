@@ -55,7 +55,6 @@ dependencies {
     "pdfJarDeps"(libs.fop)
     "pdfJarDeps"(libs.batik.all)
 
-    testImplementation("junit:junit:4.13.2")
 }
 
 repositories {

@@ -34,6 +34,8 @@
 package net.sourceforge.plantuml.preproc;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -47,33 +49,29 @@ public class EvalMathTest {
 
 	private static final double DELTA = 0.0001;
 
-	@Test
-	public void testBasicOperations() {
-		assertEquals(5.0, new EvalMath("2+3").eval(), DELTA);
-		assertEquals(-1.0, new EvalMath("2-3").eval(), DELTA);
-		assertEquals(6.0, new EvalMath("2*3").eval(), DELTA);
-		assertEquals(2.0, new EvalMath("6/3").eval(), DELTA);
+	@ParameterizedTest
+	@CsvSource({"'2+3', 5.0", "'2-3', -1.0", "'2*3', 6.0", "'6/3', 2.0"})
+	void testBasicOperations(String expression, double expected) {
+		assertEquals(expected, new EvalMath(expression).eval(), DELTA);
 	}
 
-	@Test
-	public void testPEMDAS() {
-		assertEquals(43.0, new EvalMath("33+2*(4+1)").eval(), DELTA);
-		assertEquals(11.0, new EvalMath("3+4*2").eval(), DELTA);
-		assertEquals(14.0, new EvalMath("(3+4)*2").eval(), DELTA);
-		assertEquals(7.0, new EvalMath("3+8/ 2").eval(), DELTA);
+	@ParameterizedTest
+	@CsvSource({"'33+2*(4+1)', 43.0", "'3+4*2', 11.0", "'(3+4)*2', 14.0", "'3+8/ 2', 7.0"})
+	//Parentheses, Exponents, Multiplication and Division and Addition and Subtraction. In that order.
+	void testPEMDAS(String expression, double expected) {
+		assertEquals(expected, new EvalMath(expression).eval(), DELTA);
 	}
 
-	@Test
-	public void testUnaryOperators() {
-		assertEquals(-5.0, new EvalMath("-5").eval(), DELTA);
-		assertEquals(5.0, new EvalMath("+5").eval(), DELTA);
-		assertEquals(8.0, new EvalMath("-(2-10)").eval(), DELTA);
+	@ParameterizedTest
+	@CsvSource({"'-5', -5.0", "'+5', 5.0", "'-(2-10)', 8.0"})
+	void testUnaryOperators(String expression, double expected) {
+		assertEquals(expected, new EvalMath(expression).eval(), DELTA);
 	}
 
-	@Test
-	public void testDecimalNumbers() {
-		assertEquals(3.14, new EvalMath("3.14").eval(), DELTA);
-		assertEquals(4.24, new EvalMath("2.12+2.12").eval(), DELTA);
+	@ParameterizedTest
+	@CsvSource({"'3.14', 3.14", "'2.12+2.12', 4.24"})
+	void testDecimalNumbers(String expression, double expected) {
+		assertEquals(expected, new EvalMath(expression).eval(), DELTA);
 	}
 
 	@Test
@@ -87,4 +85,3 @@ public class EvalMathTest {
 		assertEquals(43.0, new EvalMath("33+2*(4+1)").eval(), DELTA);
 	}
 }
-
