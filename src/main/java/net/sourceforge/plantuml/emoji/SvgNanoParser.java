@@ -130,13 +130,13 @@ public class SvgNanoParser implements Sprite {
 		this.svg = svg;
 	}
 
-	public void drawU(UGraphic ug, double scale, HColor forcedColor) {
+	public void drawU(UGraphic ug, double scale, HColor fontColor, HColor forcedColor) {
 		synchronized (this) {
 			if (forcedColor != null && maxGray == -1)
 				computeMinMaxGray();
 		}
 
-		UGraphicWithScale ugs = new UGraphicWithScale(ug, forcedColor, scale, minGray, maxGray);
+		UGraphicWithScale ugs = new UGraphicWithScale(ug, fontColor, forcedColor, scale, minGray, maxGray);
 
 		final List<UGraphicWithScale> stack = new ArrayList<>();
 		final Deque<String> stackG = new ArrayDeque<>();
@@ -223,16 +223,13 @@ public class SvgNanoParser implements Sprite {
 			final HColor stroke = ugs.getTrueColor(strokeString);
 			ugs = ugs.apply(stroke);
 			if (fillString == null)
-				return ugs.apply(HColors.none().bg());
+				return ugs.apply(ugs.getDefaultColor().bg());
 		}
 
-		if (fillString == null)
-			return ugs;
-
-		if (fillString.equals("none")) {
+		if ("none".equals(fillString)) {
 			ugs = ugs.apply(HColors.none().bg());
 		} else {
-			final HColor fill = ugs.getTrueColor(fillString);
+			final HColor fill = fillString == null ? ugs.getDefaultColor() : ugs.getTrueColor(fillString);
 
 			if (strokeString == null)
 				ugs = ugs.apply(fill);
@@ -483,7 +480,7 @@ public class SvgNanoParser implements Sprite {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				SvgNanoParser.this.drawU(ug, scale, forcedColor);
+				SvgNanoParser.this.drawU(ug, scale, fontColor, forcedColor);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

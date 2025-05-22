@@ -138,7 +138,7 @@ public class Emoji {
 		} catch (IOException e) {
 			Logme.error(e);
 		}
-		nano.drawU(ug, scale, colorForMonochrome);
+		nano.drawU(ug, scale, colorForMonochrome, colorForMonochrome);
 	}
 
 	public String getShortcut() {

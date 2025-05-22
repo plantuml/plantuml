@@ -51,23 +51,30 @@ public class UGraphicWithScale {
 	final private AffineTransform at;
 	final private double angle;
 	final private double scale;
+	final private HColor fontColor;
 	final private HColor forcedColor;
 	final private int minGray;
 	final private int maxGray;
 
-	public UGraphicWithScale(UGraphic ug, HColor forcedColor, double scale, int minGray, int maxGray) {
-		this(updateColor(ug, forcedColor), forcedColor, AffineTransform.getScaleInstance(scale, scale), 0, scale,
-				minGray, maxGray);
+	public UGraphicWithScale(UGraphic ug, HColor fontColor, HColor forcedColor, double scale, int minGray,
+			int maxGray) {
+		this(updateColor(ug, fontColor, forcedColor), fontColor, forcedColor,
+				AffineTransform.getScaleInstance(scale, scale), 0, scale, minGray, maxGray);
 	}
 
-	private static UGraphic updateColor(UGraphic ug, HColor forcedColor) {
-		final HColor color = forcedColor == null ? HColors.BLACK : forcedColor;
+	private static UGraphic updateColor(UGraphic ug, HColor fontColor, HColor forcedColor) {
+		final HColor color;
+		if (fontColor == null && forcedColor == null)
+			color = HColors.BLACK;
+		else
+			color = forcedColor == null ? fontColor : forcedColor;
 		return ug.apply(color).apply(color.bg());
 	}
 
-	private UGraphicWithScale(UGraphic ug, HColor forcedColor, AffineTransform at, double angle, double scale,
-			int minGray, int maxGray) {
+	private UGraphicWithScale(UGraphic ug, HColor fontColor, HColor forcedColor, AffineTransform at, double angle,
+			double scale, int minGray, int maxGray) {
 		this.ug = ug;
+		this.fontColor = fontColor == null ? HColors.BLACK : fontColor;
 		this.forcedColor = forcedColor;
 		this.minGray = minGray;
 		this.maxGray = maxGray;
@@ -81,10 +88,12 @@ public class UGraphicWithScale {
 	}
 
 	public UGraphicWithScale apply(UChange change) {
-		return new UGraphicWithScale(ug.apply(change), forcedColor, at, angle, scale, minGray, maxGray);
+		return new UGraphicWithScale(ug.apply(change), fontColor, forcedColor, at, angle, scale, minGray, maxGray);
 	}
 
 	public HColor getTrueColor(String code) {
+		if (code.equalsIgnoreCase("none"))
+			return HColors.none();
 		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);
 		if (forcedColor == null)
 			return result;
@@ -94,12 +103,18 @@ public class UGraphicWithScale {
 		return result.asMonochrome(color, this.minGray, this.maxGray);
 	}
 
+	public HColor getDefaultColor() {
+		if (forcedColor == null)
+			return fontColor;
+		return forcedColor;
+	}
+
 	public UGraphicWithScale applyScale(double changex, double changey) {
 		if (changex != changey)
 			throw new IllegalArgumentException();
 		final AffineTransform copy = new AffineTransform(at);
 		copy.scale(changex, changey);
-		return new UGraphicWithScale(ug, forcedColor, copy, angle, 1 * changex, minGray, maxGray);
+		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, angle, 1 * changex, minGray, maxGray);
 	}
 
 	public void draw(UShape shape) {
@@ -109,13 +124,14 @@ public class UGraphicWithScale {
 	public UGraphicWithScale applyRotate(double delta_angle, double x, double y) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.rotate(delta_angle * Math.PI / 180, x, y);
-		return new UGraphicWithScale(ug, forcedColor, copy, this.angle + delta_angle, this.scale, minGray, maxGray);
+		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, this.angle + delta_angle, this.scale, minGray,
+				maxGray);
 	}
 
 	public UGraphicWithScale applyTranslate(double x, double y) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.translate(x, y);
-		return new UGraphicWithScale(ug, forcedColor, copy, angle, this.scale, minGray, maxGray);
+		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, angle, this.scale, minGray, maxGray);
 	}
 
 	public AffineTransform getAffineTransform() {
@@ -125,7 +141,7 @@ public class UGraphicWithScale {
 	public UGraphicWithScale applyMatrix(double v1, double v2, double v3, double v4, double v5, double v6) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.concatenate(new AffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));
-		return new UGraphicWithScale(ug, forcedColor, copy, angle, this.scale, minGray, maxGray);
+		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, angle, this.scale, minGray, maxGray);
 	}
 
 	public final double getAngle() {
