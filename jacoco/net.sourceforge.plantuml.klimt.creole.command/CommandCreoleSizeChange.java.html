@@ -50,8 +50,8 @@ public class CommandCreoleSizeChange implements Command {
 
 	private final Pattern2 mypattern;
 
-<span class="fc" id="L53">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.fontSizePattern2 + &quot;(.*?)\\&lt;/size\\&gt;)&quot;);</span>
-<span class="fc" id="L54">	private static final Pattern2 patternEol = MyPattern.cmpile(&quot;^(&quot; + Splitter.fontSizePattern2 + &quot;(.*)$)&quot;);</span>
+<span class="fc" id="L53">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.fontSizePattern + &quot;(.*?)\\&lt;/size\\&gt;)&quot;);</span>
+<span class="fc" id="L54">	private static final Pattern2 patternEol = MyPattern.cmpile(&quot;^(&quot; + Splitter.fontSizePattern + &quot;(.*)$)&quot;);</span>
 
 	public static Command create() {
 <span class="fc" id="L57">		return new CommandCreoleSizeChange(pattern);</span>

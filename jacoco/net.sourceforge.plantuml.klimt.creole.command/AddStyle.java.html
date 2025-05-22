@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 
-public class AddStyle implements FontChange {
+public class AddStyle {
 
 	private final FontStyle style;
 	private final HColor extendedColor;
@@ -55,9 +55,9 @@ public class AddStyle implements FontChange {
 
 	public FontConfiguration apply(FontConfiguration initial) {
 <span class="fc" id="L57">		initial = initial.add(style);</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (extendedColor != null) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (extendedColor != null)</span>
 <span class="fc" id="L59">			initial = initial.changeExtendedColor(extendedColor);</span>
-		}
+
 <span class="fc" id="L61">		return initial;</span>
 	}
 

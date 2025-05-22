@@ -50,7 +50,7 @@ public class CommandCreoleSprite implements Command {
 <span class="fc" id="L50">		return &quot;&lt;&quot;;</span>
 	}
 
-<span class="fc" id="L53">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.spritePattern2 + &quot;)&quot;);</span>
+<span class="fc" id="L53">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.spritePattern + &quot;)&quot;);</span>
 
 	private CommandCreoleSprite() {
 	}
@@ -72,16 +72,19 @@ public class CommandCreoleSprite implements Command {
 <span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L73">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L75">		final String src = m.group(2);</span>
-<span class="fc" id="L76">		final double scale = Parser.getScale(m.group(3), 1);</span>
-<span class="fc" id="L77">		final String colorName = Parser.getColor(m.group(3));</span>
-<span class="fc" id="L78">		HColor color = null;</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (colorName != null) {</span>
-<span class="nc" id="L80">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
-<span class="nc" id="L81">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
+<span class="fc" id="L75">		final String src = m.group(3);</span>
+<span class="fc" id="L76">		final double scale = Parser.getScale(m.group(4), 1);</span>
+<span class="fc" id="L77">		String colorName = m.group(2);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (colorName == null)</span>
+<span class="fc" id="L79">			colorName = Parser.getColor(m.group(4));</span>
+		
+<span class="fc" id="L81">		HColor color = null;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (colorName != null) {</span>
+<span class="nc" id="L83">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
+<span class="nc" id="L84">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
 		}
-<span class="fc" id="L83">		stripe.addSprite(src, scale, color);</span>
-<span class="fc" id="L84">		return line.substring(m.group(1).length());</span>
+<span class="fc" id="L86">		stripe.addSprite(src, scale, color);</span>
+<span class="fc" id="L87">		return line.substring(m.group(1).length());</span>
 	}
 
 }

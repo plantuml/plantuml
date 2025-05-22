@@ -78,7 +78,7 @@ import java.util.regex.Pattern;
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (s == null)</span>
 <span class="nc" id="L79">			return null;</span>
 
-<span class="fc" id="L81">		final Pattern p = Pattern.compile(&quot;color[= :](#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|\\w+)&quot;);</span>
+<span class="fc" id="L81">		final Pattern p = Pattern.compile(&quot;color[= :](#[0-9a-fA-F]{1,6}|\\w+)&quot;);</span>
 <span class="fc" id="L82">		final Matcher m = p.matcher(s);</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (m.find())</span>
 <span class="nc" id="L84">			return m.group(1);</span>

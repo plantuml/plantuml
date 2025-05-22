@@ -1292,17 +1292,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Constant Field</div>
 <div class="table-header col-last">Value</div>
-<div class="col-first even-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.fontColorPattern2">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#fontColorPattern2">fontColorPattern2</a></code></div>
-<div class="col-last even-row-color"><code>"\\&lt;color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)[%s]*\\&gt;"</code></div>
+<div class="col-first even-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.fontColorPattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#fontColorPattern">fontColorPattern</a></code></div>
+<div class="col-last even-row-color"><code>"\\&lt;color[\\s:]+(#[0-9a-fA-F]{1,6}|#?\\w+)[%s]*\\&gt;"</code></div>
 <div class="col-first odd-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.fontFamilyPattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#fontFamilyPattern">fontFamilyPattern</a></code></div>
 <div class="col-last odd-row-color"><code>"\\&lt;font[\\s:]+([^&gt;]+)/?\\&gt;"</code></div>
 <div class="col-first even-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.fontPattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#fontPattern">fontPattern</a></code></div>
-<div class="col-last even-row-color"><code>"\\&lt;font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\&gt;"</code></div>
-<div class="col-first odd-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.fontSizePattern2">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#fontSizePattern2">fontSizePattern2</a></code></div>
+<div class="col-last even-row-color"><code>"\\&lt;font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{1,6}|\\w+)[%g]?)+[%s]*\\&gt;"</code></div>
+<div class="col-first odd-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.fontSizePattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#fontSizePattern">fontSizePattern</a></code></div>
 <div class="col-last odd-row-color"><code>"\\&lt;size[\\s:]+(\\d+)[%s]*\\&gt;"</code></div>
 <div class="col-first even-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.imgPatternNoSrcColon">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#imgPatternNoSrcColon">imgPatternNoSrcColon</a></code></div>
@@ -1315,19 +1315,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color"><code>"\\&lt;math\\&gt;(.+?)\\&lt;/math\\&gt;"</code></div>
 <div class="col-first odd-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.openiconPattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#openiconPattern">openiconPattern</a></code></div>
-<div class="col-last odd-row-color"><code>"\\&lt;&amp;([-\\w]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|\\w+))?\\}?)?\\&gt;"</code></div>
+<div class="col-last odd-row-color"><code>"\\&lt;&amp;([-\\w]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,?color[= :](?:#[0-9a-fA-F]{1,8}|\\w+))?\\}?)?\\&gt;"</code></div>
 <div class="col-first even-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.qrcodePattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#qrcodePattern">qrcodePattern</a></code></div>
 <div class="col-last even-row-color"><code>"\\&lt;qrcode[\\s:]+([^&gt;{}]+)(\\{scale=(?:[0-9.]+)\\})?\\&gt;"</code></div>
-<div class="col-first odd-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.spritePattern2">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#spritePattern2">spritePattern2</a></code></div>
-<div class="col-last odd-row-color"><code>"\\&lt;\\$([-\\p{L}0-9_/]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|\\w+))?\\}?)?\\&gt;"</code></div>
-<div class="col-first even-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.spritePatternForMatch">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#spritePatternForMatch">spritePatternForMatch</a></code></div>
-<div class="col-last even-row-color"><code>"\\&lt;\\$([-\\p{L}0-9_/]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|\\w+))?\\}?)?\\&gt;"</code></div>
-<div class="col-first odd-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.svgAttributePattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#svgAttributePattern">svgAttributePattern</a></code></div>
-<div class="col-last odd-row-color"><code>"\\&lt;text[\\s:]+([^&gt;]+)/?\\&gt;"</code></div>
+<div class="col-first odd-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.spritePattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#spritePattern">spritePattern</a></code></div>
+<div class="col-last odd-row-color"><code>"\\&lt;(#\\w+)?\\$([-\\p{L}0-9_/]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,?color[= :](?:#[0-9a-fA-F]{1,8}|\\w+))?\\}?)?\\&gt;"</code></div>
+<div class="col-first even-row-color"><code id="net.sourceforge.plantuml.klimt.creole.command.Splitter.svgAttributePattern">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="net/sourceforge/plantuml/klimt/creole/command/Splitter.html#svgAttributePattern">svgAttributePattern</a></code></div>
+<div class="col-last even-row-color"><code>"\\&lt;text[\\s:]+([^&gt;]+)/?\\&gt;"</code></div>
 </div>
 </li>
 </ul>
