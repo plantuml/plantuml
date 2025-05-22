@@ -50,7 +50,7 @@ public class CommandCreoleSprite implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.spritePattern2 + ")");
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.spritePattern + ")");
 
 	private CommandCreoleSprite() {
 	}
@@ -72,9 +72,12 @@ public class CommandCreoleSprite implements Command {
 		if (m.find() == false)
 			throw new IllegalStateException();
 
-		final String src = m.group(2);
-		final double scale = Parser.getScale(m.group(3), 1);
-		final String colorName = Parser.getColor(m.group(3));
+		final String src = m.group(3);
+		final double scale = Parser.getScale(m.group(4), 1);
+		String colorName = m.group(2);
+		if (colorName == null)
+			colorName = Parser.getColor(m.group(4));
+		
 		HColor color = null;
 		if (colorName != null) {
 			final ISkinSimple skinParam = stripe.getSkinParam();

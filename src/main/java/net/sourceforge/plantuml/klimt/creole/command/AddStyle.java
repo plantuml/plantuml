@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 
-public class AddStyle implements FontChange {
+public class AddStyle {
 
 	private final FontStyle style;
 	private final HColor extendedColor;
@@ -55,9 +55,9 @@ public class AddStyle implements FontChange {
 
 	public FontConfiguration apply(FontConfiguration initial) {
 		initial = initial.add(style);
-		if (extendedColor != null) {
+		if (extendedColor != null)
 			initial = initial.changeExtendedColor(extendedColor);
-		}
+
 		return initial;
 	}
 
