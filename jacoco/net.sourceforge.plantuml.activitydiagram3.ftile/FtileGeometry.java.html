@@ -41,182 +41,162 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class FtileGeometry extends XDimension2D {
 
-	private final double width;
-	private final double height;
 	private final double left;
 	private final double inY;
 	private final double outY;
 
 	public XPoint2D getPointA() {
-<span class="nc" id="L51">		return new XPoint2D(left, inY);</span>
+<span class="nc" id="L49">		return new XPoint2D(left, inY);</span>
 	}
 
 	public XPoint2D getPointIn() {
-<span class="fc" id="L55">		return new XPoint2D(left, inY);</span>
+<span class="fc" id="L53">		return new XPoint2D(left, inY);</span>
 	}
 
 	public XPoint2D getPointB() {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
-<span class="nc" id="L60">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
+<span class="nc" id="L58">			throw new UnsupportedOperationException();</span>
 
-<span class="nc" id="L62">		return new XPoint2D(width, (inY + outY) / 2);</span>
+<span class="nc" id="L60">		return new XPoint2D(getWidth(), (inY + outY) / 2);</span>
 	}
 
 	public XPoint2D getPointC() {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
-<span class="nc" id="L67">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
+<span class="nc" id="L65">			throw new UnsupportedOperationException();</span>
 
-<span class="nc" id="L69">		return new XPoint2D(left, outY);</span>
+<span class="nc" id="L67">		return new XPoint2D(left, outY);</span>
 	}
 
 	public XPoint2D getPointD() {
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
-<span class="nc" id="L74">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
+<span class="nc" id="L72">			throw new UnsupportedOperationException();</span>
 
-<span class="nc" id="L76">		return new XPoint2D(0, (inY + outY) / 2);</span>
+<span class="nc" id="L74">		return new XPoint2D(0, (inY + outY) / 2);</span>
 	}
 
 	public XPoint2D getPointOut() {
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
-<span class="nc" id="L81">			throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (outY == Double.MIN_NORMAL)</span>
+<span class="nc" id="L79">			throw new UnsupportedOperationException();</span>
 
-<span class="fc" id="L83">		return new XPoint2D(left, outY);</span>
+<span class="fc" id="L81">		return new XPoint2D(left, outY);</span>
 	}
 
 	public FtileGeometry(XDimension2D dim, double left, double inY) {
-<span class="nc" id="L87">		this(dim.getWidth(), dim.getHeight(), left, inY);</span>
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L85">		this(dim.getWidth(), dim.getHeight(), left, inY);</span>
+<span class="nc" id="L86">	}</span>
 
 	public FtileGeometry(double width, double height, double left, double inY) {
-<span class="fc" id="L91">		this(width, height, left, inY, Double.MIN_NORMAL);</span>
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L89">		this(width, height, left, inY, Double.MIN_NORMAL);</span>
+<span class="fc" id="L90">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L96">		return &quot;[&quot; + width + &quot;x&quot; + height + &quot; left=&quot; + left + &quot;]&quot;;</span>
+<span class="nc" id="L94">		return &quot;[&quot; + getWidth() + &quot;x&quot; + getHeight() + &quot; left=&quot; + left + &quot;]&quot;;</span>
 	}
 
 	public FtileGeometry(double width, double height, double left, double inY, double outY) {
-<span class="fc" id="L100">		super(width, height);</span>
-<span class="fc" id="L101">		this.left = left;</span>
-<span class="fc" id="L102">		this.inY = inY;</span>
-<span class="fc" id="L103">		this.outY = outY;</span>
-<span class="fc" id="L104">		this.width = width;</span>
-<span class="fc" id="L105">		this.height = height;</span>
-<span class="fc" id="L106">	}</span>
+<span class="fc" id="L98">		super(width, height);</span>
+<span class="fc" id="L99">		this.left = left;</span>
+<span class="fc" id="L100">		this.inY = inY;</span>
+<span class="fc" id="L101">		this.outY = outY;</span>
+<span class="fc" id="L102">	}</span>
 
 	public FtileGeometry incHeight(double northHeight) {
-<span class="fc" id="L109">		return new FtileGeometry(width, height + northHeight, left, inY, outY);</span>
+<span class="fc" id="L105">		return new FtileGeometry(getWidth(), getHeight() + northHeight, left, inY, outY);</span>
 	}
 
 	public FtileGeometry addTop(double northHeight) {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (hasPointOut())</span>
-<span class="nc" id="L114">			return new FtileGeometry(width, height + northHeight, left, inY + northHeight, outY + northHeight);</span>
-<span class="nc" id="L115">		return new FtileGeometry(width, height + northHeight, left, inY + northHeight, Double.MIN_NORMAL);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (hasPointOut())</span>
+<span class="nc" id="L110">			return new FtileGeometry(getWidth(), getHeight() + northHeight, left, inY + northHeight, outY + northHeight);</span>
+<span class="nc" id="L111">		return new FtileGeometry(getWidth(), getHeight() + northHeight, left, inY + northHeight, Double.MIN_NORMAL);</span>
 	}
 
 	public FtileGeometry addBottom(double southHeight) {
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (hasPointOut())</span>
-<span class="nc" id="L120">			return new FtileGeometry(width, height + southHeight, left, inY, outY);</span>
-<span class="nc" id="L121">		return new FtileGeometry(width, height + southHeight, left, inY, Double.MIN_NORMAL);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (hasPointOut())</span>
+<span class="nc" id="L116">			return new FtileGeometry(getWidth(), getHeight() + southHeight, left, inY, outY);</span>
+<span class="nc" id="L117">		return new FtileGeometry(getWidth(), getHeight() + southHeight, left, inY, Double.MIN_NORMAL);</span>
 	}
 
 	public FtileGeometry incRight(double missing) {
-<span class="nc" id="L125">		return new FtileGeometry(width + missing, height, left, inY, outY);</span>
+<span class="nc" id="L121">		return new FtileGeometry(getWidth() + missing, getHeight(), left, inY, outY);</span>
 	}
 
 	public FtileGeometry incLeft(double missing) {
-<span class="nc" id="L129">		return new FtileGeometry(width + missing, height, left + missing, inY, outY);</span>
+<span class="nc" id="L125">		return new FtileGeometry(getWidth() + missing, getHeight(), left + missing, inY, outY);</span>
 	}
 
 	public FtileGeometry incVertically(double missing1, double missing2) {
-<span class="fc" id="L133">		return new FtileGeometry(width, height + missing1 + missing2, left, inY + missing1,</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">				hasPointOut() ? outY + missing1 : outY);</span>
+<span class="fc" id="L129">		return new FtileGeometry(getWidth(), getHeight() + missing1 + missing2, left, inY + missing1,</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">				hasPointOut() ? outY + missing1 : outY);</span>
 	}
 
 	public FtileGeometry incInY(double missing) {
-<span class="nc" id="L138">		return new FtileGeometry(width, height, left, inY + missing, outY);</span>
+<span class="nc" id="L134">		return new FtileGeometry(getWidth(), getHeight(), left, inY + missing, outY);</span>
 	}
 
 	public FtileGeometry(XDimension2D dim, double left, double inY, double outY) {
-<span class="fc" id="L142">		this(dim.getWidth(), dim.getHeight(), left, inY, outY);</span>
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L138">		this(dim.getWidth(), dim.getHeight(), left, inY, outY);</span>
+<span class="fc" id="L139">	}</span>
 
 	public boolean hasPointOut() {
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		return outY != Double.MIN_NORMAL;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		return outY != Double.MIN_NORMAL;</span>
 	}
 
 	public FtileGeometry withoutPointOut() {
-<span class="nc" id="L150">		return new FtileGeometry(width, height, left, inY);</span>
+<span class="nc" id="L146">		return new FtileGeometry(getWidth(), getHeight(), left, inY);</span>
 	}
 
 	public FtileGeometry translate(UTranslate translate) {
-<span class="fc" id="L154">		final double dx = translate.getDx();</span>
-<span class="fc" id="L155">		final double dy = translate.getDy();</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (this.outY == Double.MIN_NORMAL)</span>
-<span class="fc" id="L157">			return new FtileGeometry(width, height, left + dx, inY + dy);</span>
+<span class="fc" id="L150">		final double dx = translate.getDx();</span>
+<span class="fc" id="L151">		final double dy = translate.getDy();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (this.outY == Double.MIN_NORMAL)</span>
+<span class="fc" id="L153">			return new FtileGeometry(getWidth(), getHeight(), left + dx, inY + dy);</span>
 
-<span class="fc" id="L159">		return new FtileGeometry(width, height, left + dx, inY + dy, outY + dy);</span>
+<span class="fc" id="L155">		return new FtileGeometry(getWidth(), getHeight(), left + dx, inY + dy, outY + dy);</span>
 	}
 
 	public final double getInY() {
-<span class="fc" id="L163">		return inY;</span>
+<span class="fc" id="L159">		return inY;</span>
 	}
 
 	public final double getLeft() {
-<span class="fc" id="L167">		return left;</span>
+<span class="fc" id="L163">		return left;</span>
 	}
 
 	public final double getRight() {
-<span class="nc" id="L171">		return width - left;</span>
+<span class="nc" id="L167">		return getWidth() - left;</span>
 	}
 
 	public double getOutY() {
-<span class="fc" id="L175">		return outY;</span>
-	}
-
-	public final double getWidth() {
-<span class="fc" id="L179">		return width;</span>
-	}
-
-	public final double getHeight() {
-<span class="fc" id="L183">		return height;</span>
+<span class="fc" id="L171">		return outY;</span>
 	}
 
 	public FtileGeometry addDim(double deltaWidth, double deltaHeight) {
-<span class="nc" id="L187">		return new FtileGeometry(width + deltaWidth, height + deltaHeight, left, inY, outY + deltaHeight);</span>
+<span class="nc" id="L175">		return new FtileGeometry(getWidth() + deltaWidth, getHeight() + deltaHeight, left, inY, outY + deltaHeight);</span>
 	}
 
 	public FtileGeometry addMarginX(double marginx) {
-<span class="nc" id="L191">		return new FtileGeometry(width + 2 * marginx, height, left + marginx, inY, outY);</span>
+<span class="nc" id="L179">		return new FtileGeometry(getWidth() + 2 * marginx, getHeight(), left + marginx, inY, outY);</span>
 	}
 
 	public FtileGeometry addMarginX(double margin1, double margin2) {
-<span class="nc" id="L195">		return new FtileGeometry(width + margin1 + margin2, height, left + margin1, inY, outY);</span>
+<span class="nc" id="L183">		return new FtileGeometry(getWidth() + margin1 + margin2, getHeight(), left + margin1, inY, outY);</span>
 	}
 
 	public FtileGeometry fixedHeight(double fixedHeight) {
-<span class="nc" id="L199">		return new FtileGeometry(width, fixedHeight, left, inY, outY);</span>
+<span class="nc" id="L187">		return new FtileGeometry(getWidth(), fixedHeight, left, inY, outY);</span>
 	}
 
 	public FtileGeometry appendBottom(FtileGeometry other) {
-<span class="fc" id="L203">		return new FtileGeometryMerger(this, other).getResult();</span>
+<span class="fc" id="L191">		return new FtileGeometryMerger(this, other).getResult();</span>
 	}
 
 	public FtileGeometry ensureHeight(double newHeight) {
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (this.height &gt; newHeight)</span>
-<span class="nc" id="L208">			return this;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (this.getHeight() &gt; newHeight)</span>
+<span class="nc" id="L196">			return this;</span>
 
-<span class="nc" id="L210">		return fixedHeight(newHeight);</span>
+<span class="nc" id="L198">		return fixedHeight(newHeight);</span>
 	}
-
-//	private FtileGeometry ensureRightStrange(double newRight) {
-//		final double right = this.width - this.left;
-//		if (right &gt; newRight)
-//			return this;
-//
-//		return addMarginX(0, newRight);
-//	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
