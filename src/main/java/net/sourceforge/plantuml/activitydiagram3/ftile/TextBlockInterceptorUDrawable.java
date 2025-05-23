@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.HashMap;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -47,13 +48,17 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
+	private final HColor gotoColor;
+	private final boolean isDebug;
 
-	public TextBlockInterceptorUDrawable(TextBlock textBlock) {
+	public TextBlockInterceptorUDrawable(TextBlock textBlock, HColor gotoColor, boolean isDebug) {
 		this.textBlock = textBlock;
+		this.gotoColor = gotoColor;
+		this.isDebug = isDebug;
 	}
 
 	public void drawU(UGraphic ug) {
-		new UGraphicInterceptorUDrawable2(ug, emptyHashMap()).draw(textBlock);
+		new UGraphicInterceptorUDrawable2(ug, emptyHashMap(), gotoColor, isDebug).draw(textBlock);
 		ug.flushUg();
 	}
 

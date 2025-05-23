@@ -231,13 +231,17 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		// ::done
 
 		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
+			StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final boolean isDebug = false;
 
 		ug = new UGraphicForSnake(ug);
 		if (swimlanes().size() > 1) {
 			drawWhenSwimlanes(ug, full);
 		} else {
 			// BUG42
-			full = new TextBlockInterceptorUDrawable(full);
+			full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);
 			full.drawU(ug);
 			ug.flushUg();
 		}
@@ -247,11 +251,16 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private void drawGtile(UGraphic ug) {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
+			StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final boolean isDebug = true;
+
 		ug = new UGraphicForSnake(ug);
 		if (swimlanes().size() > 1) {
 			drawWhenSwimlanes(ug, full);
 		} else {
-			full = new TextBlockInterceptorUDrawable(full);
+			full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);
 			full.drawU(ug);
 			ug.flushUg();
 		}

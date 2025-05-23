@@ -93,6 +93,7 @@ public enum SName {
 	frame, //
 	ganttDiagram, //
 	generic, //
+	goto_, //
 	group, //
 	groupHeader, //
 	header, //
