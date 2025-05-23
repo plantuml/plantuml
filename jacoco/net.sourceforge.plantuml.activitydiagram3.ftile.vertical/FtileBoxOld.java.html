@@ -183,7 +183,7 @@ public class FtileBoxOld extends AbstractFtile {
 <span class="fc" id="L183">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
 <span class="fc" id="L184">		final double widthTotal = dimTotal.getWidth();</span>
 <span class="fc" id="L185">		final double heightTotal = dimTotal.getHeight();</span>
-<span class="fc" id="L186">		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);</span>
+		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
 
 <span class="fc" id="L188">		final UStroke thickness = style.getStroke();</span>
 
@@ -198,14 +198,15 @@ public class FtileBoxOld extends AbstractFtile {
 <span class="fc" id="L198">			ug = ug.apply(backColor.bg());</span>
 
 <span class="fc" id="L200">		ug = ug.apply(thickness);</span>
-<span class="fc" id="L201">		shape.drawU(ug);</span>
+		// shape.drawU(ug);
+<span class="fc" id="L202">		boxStyle.drawMe(ug, widthTotal, heightTotal, shadowing, roundCorner);</span>
 
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (horizontalAlignment == HorizontalAlignment.LEFT)</span>
-<span class="fc" id="L204">			tb.drawU(ug);</span>
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		else if (horizontalAlignment == HorizontalAlignment.RIGHT)</span>
-<span class="nc" id="L206">			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder), 0)));</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		else if (horizontalAlignment == HorizontalAlignment.CENTER)</span>
-<span class="fc" id="L208">			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - tbWidth(stringBounder)) / 2, 0)));</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (horizontalAlignment == HorizontalAlignment.LEFT)</span>
+<span class="fc" id="L205">			tb.drawU(ug);</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		else if (horizontalAlignment == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L207">			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder), 0)));</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		else if (horizontalAlignment == HorizontalAlignment.CENTER)</span>
+<span class="fc" id="L209">			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - tbWidth(stringBounder)) / 2, 0)));</span>
 
 //		if (horizontalAlignment == HorizontalAlignment.LEFT)
 //			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));
@@ -215,24 +216,24 @@ public class FtileBoxOld extends AbstractFtile {
 //		else if (horizontalAlignment == HorizontalAlignment.CENTER)
 //			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - tbWidth(stringBounder)) / 2, padding.getBottom())));
 //
-<span class="fc" id="L218">	}</span>
+<span class="fc" id="L219">	}</span>
 
 	private double tbWidth(final StringBounder stringBounder) {
-<span class="fc" id="L221">		return Math.max(minimumWidth, tb.calculateDimension(stringBounder).getWidth());</span>
+<span class="fc" id="L222">		return Math.max(minimumWidth, tb.calculateDimension(stringBounder).getWidth());</span>
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="fc" id="L226">		XDimension2D dimRaw = tb.calculateDimension(stringBounder);</span>
+<span class="fc" id="L227">		XDimension2D dimRaw = tb.calculateDimension(stringBounder);</span>
 //		dimRaw = Dimension2DDouble.delta(dimRaw, padding.getLeft() + padding.getRight(),
 //				padding.getBottom() + padding.getTop());
-<span class="fc" id="L229">		dimRaw = dimRaw.atLeast(minimumWidth, 0);</span>
-<span class="fc" id="L230">		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,</span>
-<span class="fc" id="L231">				dimRaw.getHeight());</span>
+<span class="fc" id="L230">		dimRaw = dimRaw.atLeast(minimumWidth, 0);</span>
+<span class="fc" id="L231">		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,</span>
+<span class="fc" id="L232">				dimRaw.getHeight());</span>
 	}
 
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L235">		return Collections.emptyList();</span>
+<span class="nc" id="L236">		return Collections.emptyList();</span>
 	}
 
 }
