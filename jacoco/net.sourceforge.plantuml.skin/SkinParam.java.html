@@ -151,7 +151,7 @@ public class SkinParam implements ISkinParam {
 <span class="fc" id="L151">	}</span>
 
 	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException, StyleParsingException {
-<span class="fc" id="L154">		final StyleLoader tmp = new StyleLoader(this);</span>
+<span class="fc" id="L154">		final StyleLoader tmp = new StyleLoader();</span>
 <span class="fc" id="L155">		StyleBuilder result = tmp.loadSkin(this.getDefaultSkin());</span>
 <span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (result == null)</span>
 <span class="nc" id="L157">			result = tmp.loadSkin(&quot;plantuml.skin&quot;);</span>

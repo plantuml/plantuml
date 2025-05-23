@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -72,7 +73,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	private CenterBorderColor colors;
 
-<span class="fc" id="L75">	private int completion = 100;</span>
+<span class="fc" id="L76">	private int completion = 100;</span>
 	protected Url url;
 	protected Display note;
 	protected Stereotype noteStereotype;
@@ -83,68 +84,68 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	private final StyleBuilder styleBuilder;
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
-	private final ISkinSimple skinSimple;
+	private final ISkinParam skinParam;
 
 
 	@Override
 	final public String toString() {
-<span class="nc" id="L91">		return super.toString() + &quot; &quot; + task;</span>
+<span class="nc" id="L92">		return super.toString() + &quot; &quot; + task;</span>
 	}
 
 	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note,
 			Stereotype noteStereotype) {
-<span class="fc" id="L96">		this.colors = colors;</span>
-<span class="fc" id="L97">		this.completion = completion;</span>
-<span class="fc" id="L98">		this.url = url;</span>
-<span class="fc" id="L99">		this.note = note;</span>
-<span class="fc" id="L100">		this.noteStereotype = noteStereotype;</span>
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L97">		this.colors = colors;</span>
+<span class="fc" id="L98">		this.completion = completion;</span>
+<span class="fc" id="L99">		this.url = url;</span>
+<span class="fc" id="L100">		this.note = note;</span>
+<span class="fc" id="L101">		this.noteStereotype = noteStereotype;</span>
+<span class="fc" id="L102">	}</span>
 
 	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
-<span class="fc" id="L104">			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinSimple skinSimple) {</span>
-<span class="fc" id="L105">		this.y = y;</span>
-<span class="fc" id="L106">		this.skinSimple = skinSimple;</span>
-<span class="fc" id="L107">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L108">		this.toTaskDraw = toTaskDraw;</span>
-<span class="fc" id="L109">		this.start = start;</span>
-<span class="fc" id="L110">		this.prettyDisplay = prettyDisplay;</span>
-<span class="fc" id="L111">		this.timeScale = timeScale;</span>
-<span class="fc" id="L112">		this.task = task;</span>
+<span class="fc" id="L105">			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {</span>
+<span class="fc" id="L106">		this.y = y;</span>
+<span class="fc" id="L107">		this.skinParam = skinParam;</span>
+<span class="fc" id="L108">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L109">		this.toTaskDraw = toTaskDraw;</span>
+<span class="fc" id="L110">		this.start = start;</span>
+<span class="fc" id="L111">		this.prettyDisplay = prettyDisplay;</span>
+<span class="fc" id="L112">		this.timeScale = timeScale;</span>
+<span class="fc" id="L113">		this.task = task;</span>
 
-<span class="fc" id="L114">	}</span>
+<span class="fc" id="L115">	}</span>
 
 	abstract StyleSignature getStyleSignature();
 
 	private StyleSignatureBasic getStyleSignatureUnstarted() {
-<span class="fc" id="L119">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);</span>
+<span class="fc" id="L120">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);</span>
 	}
 
 	final protected HColor getLineColor() {
-<span class="fc" id="L123">		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.LineColor)</span>
-<span class="fc" id="L124">				.asColor(getColorSet());</span>
-<span class="fc" id="L125">		final HColor regular = getStyle().value(PName.LineColor).asColor(getColorSet());</span>
-<span class="fc" id="L126">		return HColors.unlinear(unstarted, regular, completion);</span>
+<span class="fc" id="L124">		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.LineColor)</span>
+<span class="fc" id="L125">				.asColor(getColorSet());</span>
+<span class="fc" id="L126">		final HColor regular = getStyle().value(PName.LineColor).asColor(getColorSet());</span>
+<span class="fc" id="L127">		return HColors.unlinear(unstarted, regular, completion);</span>
 	}
 
 	final protected HColor getBackgroundColor() {
-<span class="fc" id="L130">		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.BackGroundColor)</span>
-<span class="fc" id="L131">				.asColor(getColorSet());</span>
-<span class="fc" id="L132">		final HColor regular = getStyle().value(PName.BackGroundColor).asColor(getColorSet());</span>
-<span class="fc" id="L133">		return HColors.unlinear(unstarted, regular, completion);</span>
+<span class="fc" id="L131">		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.BackGroundColor)</span>
+<span class="fc" id="L132">				.asColor(getColorSet());</span>
+<span class="fc" id="L133">		final HColor regular = getStyle().value(PName.BackGroundColor).asColor(getColorSet());</span>
+<span class="fc" id="L134">		return HColors.unlinear(unstarted, regular, completion);</span>
 	}
 
 	final protected FontConfiguration getFontConfiguration() {
-<span class="fc" id="L137">		return getStyle().getFontConfiguration(getColorSet());</span>
+<span class="fc" id="L138">		return getStyle().getFontConfiguration(getColorSet());</span>
 	}
 
 	final protected Style getStyle() {
-<span class="fc" id="L141">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L142">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
 	}
 
 	final public double getTitleWidth(StringBounder stringBounder) {
-<span class="nc" id="L145">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
-<span class="nc" id="L146">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="nc" id="L147">		return margin.getLeft() + getTitle().calculateDimension(stringBounder).getWidth() + margin.getRight();</span>
+<span class="nc" id="L146">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="nc" id="L147">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L148">		return margin.getLeft() + getTitle().calculateDimension(stringBounder).getWidth() + margin.getRight();</span>
 	}
 
 	protected abstract TextBlock getTitle();
@@ -152,94 +153,94 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	abstract protected double getShapeHeight(StringBounder stringBounder);
 
 	final public double getFullHeightTask(StringBounder stringBounder) {
-<span class="fc" id="L155">		final Style style = getStyle();</span>
-<span class="fc" id="L156">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="fc" id="L157">		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();</span>
+<span class="fc" id="L156">		final Style style = getStyle();</span>
+<span class="fc" id="L157">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L158">		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();</span>
 	}
 
 	final public TaskDraw getTrueRow() {
-<span class="fc" id="L161">		return toTaskDraw.getTaskDraw(task.getRow());</span>
+<span class="fc" id="L162">		return toTaskDraw.getTaskDraw(task.getRow());</span>
 	}
 
 	@Override
 	final public Real getY(StringBounder stringBounder) {
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (task.getRow() == null)</span>
-<span class="fc" id="L167">			return y;</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (task.getRow() == null)</span>
+<span class="fc" id="L168">			return y;</span>
 
-<span class="nc" id="L169">		return getTrueRow().getY(stringBounder);</span>
+<span class="nc" id="L170">		return getTrueRow().getY(stringBounder);</span>
 	}
 
 	public final Task getTask() {
-<span class="fc" id="L173">		return task;</span>
+<span class="fc" id="L174">		return task;</span>
 	}
 
 	@Override
 	public double getY(StringBounder stringBounder, GSide side) {
-<span class="fc" id="L178">		final Style style = getStyle();</span>
-<span class="fc" id="L179">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L179">		final Style style = getStyle();</span>
+<span class="fc" id="L180">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="fc" id="L181">		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L182">		final double y2 = y1 + getShapeHeight(stringBounder);</span>
+<span class="fc" id="L182">		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L183">		final double y2 = y1 + getShapeHeight(stringBounder);</span>
 
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (side.isTop())</span>
-<span class="nc" id="L185">			return y1;</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (side.isTop())</span>
+<span class="nc" id="L186">			return y1;</span>
 
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (side.isBottom())</span>
-<span class="fc" id="L188">			return y2;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (side.isBottom())</span>
+<span class="fc" id="L189">			return y2;</span>
 
-<span class="fc" id="L190">		return (y1 + y2) / 2;</span>
+<span class="fc" id="L191">		return (y1 + y2) / 2;</span>
 
 	}
 
 	protected final StyleBuilder getStyleBuilder() {
-<span class="fc" id="L195">		return styleBuilder;</span>
+<span class="fc" id="L196">		return styleBuilder;</span>
 	}
 
 	protected final HColorSet getColorSet() {
-<span class="fc" id="L199">		return toTaskDraw.getIHtmlColorSet();</span>
+<span class="fc" id="L200">		return toTaskDraw.getIHtmlColorSet();</span>
 	}
 
 	protected CenterBorderColor getColors() {
-<span class="fc" id="L203">		return colors;</span>
+<span class="fc" id="L204">		return colors;</span>
 	}
 
 	protected int getCompletion() {
-<span class="fc" id="L207">		return completion;</span>
+<span class="fc" id="L208">		return completion;</span>
 	}
 
 	protected Pragma getPragma() {
-<span class="fc" id="L211">		return styleBuilder.getSkinParam().getPragma();</span>
+<span class="fc" id="L212">		return skinParam.getPragma();</span>
 	}
 	
 	protected Opale getOpaleNote() {
-<span class="nc" id="L215">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)</span>
-<span class="nc" id="L216">				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());</span>
+<span class="nc" id="L216">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)</span>
+<span class="nc" id="L217">				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());</span>
 
-<span class="nc" id="L218">		final FontConfiguration fc = style.getFontConfiguration(getColorSet());</span>
+<span class="nc" id="L219">		final FontConfiguration fc = style.getFontConfiguration(getColorSet());</span>
 
-<span class="nc" id="L220">		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
-<span class="nc" id="L221">		final Sheet sheet = skinSimple.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);</span>
-<span class="nc" id="L222">		final double padding = style.value(PName.Padding).asDouble();</span>
-<span class="nc" id="L223">		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);</span>
+<span class="nc" id="L221">		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
+<span class="nc" id="L222">		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);</span>
+<span class="nc" id="L223">		final double padding = style.value(PName.Padding).asDouble();</span>
+<span class="nc" id="L224">		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);</span>
 
-<span class="nc" id="L225">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());</span>
-<span class="nc" id="L226">		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());</span>
-<span class="nc" id="L227">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L226">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());</span>
+<span class="nc" id="L227">		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());</span>
+<span class="nc" id="L228">		final double shadowing = style.getShadowing();</span>
 
-<span class="nc" id="L229">		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());</span>
+<span class="nc" id="L230">		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());</span>
 	}
 	
 	protected void drawNote(UGraphic ug) {
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (note == null)</span>
-<span class="fc" id="L234">			return;</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (note == null)</span>
+<span class="fc" id="L235">			return;</span>
 
-<span class="nc" id="L236">		getOpaleNote().drawU(ug);</span>
+<span class="nc" id="L237">		getOpaleNote().drawU(ug);</span>
 
-<span class="nc" id="L238">	}</span>
+<span class="nc" id="L239">	}</span>
 
-
-
-
+//	public ISkinParam getSkinParam() {
+//		return skinParam;
+//	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

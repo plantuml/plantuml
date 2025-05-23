@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -74,158 +75,160 @@ public class TaskDrawSeparator implements TaskDraw {
 	private final String name;
 	private final StyleBuilder styleBuilder;
 	private final HColorSet colorSet;
+	private final ISkinParam skinParam;
 
 	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, Day min, Day max, StyleBuilder styleBuilder,
-<span class="nc" id="L79">			HColorSet colorSet) {</span>
-<span class="nc" id="L80">		this.styleBuilder = styleBuilder;</span>
-<span class="nc" id="L81">		this.colorSet = colorSet;</span>
-<span class="nc" id="L82">		this.name = name;</span>
-<span class="nc" id="L83">		this.y = y;</span>
-<span class="nc" id="L84">		this.timeScale = timeScale;</span>
-<span class="nc" id="L85">		this.min = min;</span>
-<span class="nc" id="L86">		this.max = max;</span>
-<span class="nc" id="L87">	}</span>
+<span class="nc" id="L81">			ISkinParam skinParam) {</span>
+<span class="nc" id="L82">		this.styleBuilder = styleBuilder;</span>
+<span class="nc" id="L83">		this.skinParam = skinParam;</span>
+<span class="nc" id="L84">		this.colorSet = skinParam.getIHtmlColorSet();</span>
+<span class="nc" id="L85">		this.name = name;</span>
+<span class="nc" id="L86">		this.y = y;</span>
+<span class="nc" id="L87">		this.timeScale = timeScale;</span>
+<span class="nc" id="L88">		this.min = min;</span>
+<span class="nc" id="L89">		this.max = max;</span>
+<span class="nc" id="L90">	}</span>
 
 	@Override
 	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars) {
-<span class="nc" id="L91">		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();</span>
-<span class="nc" id="L92">		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();</span>
-<span class="nc" id="L93">		final double dx = margin.getLeft() + padding.getLeft();</span>
-<span class="nc" id="L94">		final double dy = margin.getTop() + padding.getTop();</span>
+<span class="nc" id="L94">		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();</span>
+<span class="nc" id="L95">		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();</span>
+<span class="nc" id="L96">		final double dx = margin.getLeft() + padding.getLeft();</span>
+<span class="nc" id="L97">		final double dy = margin.getTop() + padding.getTop();</span>
 		final double x;
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (labelStrategy.titleInFirstColumn())</span>
-<span class="nc" id="L97">			x = colTitles;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (labelStrategy.titleInFirstColumn())</span>
+<span class="nc" id="L100">			x = colTitles;</span>
 		else
-<span class="nc" id="L99">			x = 0;</span>
+<span class="nc" id="L102">			x = 0;</span>
 
-<span class="nc" id="L101">		getTitle().drawU(ug.apply(new UTranslate(x + dx, dy)));</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc" id="L104">		getTitle().drawU(ug.apply(new UTranslate(x + dx, dy)));</span>
+<span class="nc" id="L105">	}</span>
 
 	@Override
 	public double getTitleWidth(StringBounder stringBounder) {
 		// Never used in first column
-<span class="nc" id="L107">		return 0;</span>
+<span class="nc" id="L110">		return 0;</span>
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L111">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.separator);</span>
+<span class="nc" id="L114">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.separator);</span>
 	}
 
 	private Style getStyle() {
-<span class="nc" id="L115">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L118">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
 	}
 
 	private TextBlock getTitle() {
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (name == null)</span>
-<span class="nc" id="L120">			return TextBlockUtils.empty(0, 0);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (name == null)</span>
+<span class="nc" id="L123">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="nc" id="L122">		return Display.getWithNewlines(styleBuilder.getSkinParam().getPragma(), this.name)</span>
-<span class="nc" id="L123">				.create(getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
+<span class="nc" id="L125">		return Display.getWithNewlines(skinParam.getPragma(), this.name).create(getFontConfiguration(),</span>
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	private FontConfiguration getFontConfiguration() {
-<span class="nc" id="L127">		return getStyle().getFontConfiguration(colorSet);</span>
+<span class="nc" id="L130">		return getStyle().getFontConfiguration(colorSet);</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L132">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L133">		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L134">		final double start = timeScale.getStartingPosition(min);</span>
+<span class="nc" id="L135">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L136">		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L137">		final double start = timeScale.getStartingPosition(min);</span>
 		// final double start2 = start1 + widthTitle;
-<span class="nc" id="L136">		final double end = timeScale.getEndingPosition(max);</span>
+<span class="nc" id="L139">		final double end = timeScale.getEndingPosition(max);</span>
 
-<span class="nc" id="L138">		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();</span>
-<span class="nc" id="L139">		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();</span>
-<span class="nc" id="L140">		ug = ug.apply(new UTranslate(0, margin.getTop()));</span>
+<span class="nc" id="L141">		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();</span>
+<span class="nc" id="L142">		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();</span>
+<span class="nc" id="L143">		ug = ug.apply(new UTranslate(0, margin.getTop()));</span>
 
-<span class="nc" id="L142">		final HColor backColor = getStyle().value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="nc" id="L145">		final HColor backColor = getStyle().value(PName.BackGroundColor).asColor(colorSet);</span>
 
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (backColor.isTransparent() == false) {</span>
-<span class="nc" id="L145">			final double height = padding.getTop() + getTextHeight(stringBounder) + padding.getBottom();</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (height &gt; 0) {</span>
-<span class="nc" id="L147">				final URectangle rect = URectangle.build(end - start, height);</span>
-<span class="nc" id="L148">				ug.apply(backColor.bg()).draw(rect);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (backColor.isTransparent() == false) {</span>
+<span class="nc" id="L148">			final double height = padding.getTop() + getTextHeight(stringBounder) + padding.getBottom();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (height &gt; 0) {</span>
+<span class="nc" id="L150">				final URectangle rect = URectangle.build(end - start, height);</span>
+<span class="nc" id="L151">				ug.apply(backColor.bg()).draw(rect);</span>
 			}
 		}
 
-<span class="nc" id="L152">		final HColor lineColor = getStyle().value(PName.LineColor).asColor(colorSet);</span>
-<span class="nc" id="L153">		ug = ug.apply(lineColor);</span>
-<span class="nc" id="L154">		ug = ug.apply(UTranslate.dy(padding.getTop() + getTextHeight(stringBounder) / 2));</span>
+<span class="nc" id="L155">		final HColor lineColor = getStyle().value(PName.LineColor).asColor(colorSet);</span>
+<span class="nc" id="L156">		ug = ug.apply(lineColor);</span>
+<span class="nc" id="L157">		ug = ug.apply(UTranslate.dy(padding.getTop() + getTextHeight(stringBounder) / 2));</span>
 
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (widthTitle == 0) {</span>
-<span class="nc" id="L157">			final ULine line = ULine.hline(end - start);</span>
-<span class="nc" id="L158">			ug.draw(line);</span>
-<span class="nc" id="L159">		} else {</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (padding.getLeft() &gt; 1) {</span>
-<span class="nc" id="L161">				final ULine line1 = ULine.hline(padding.getLeft());</span>
-<span class="nc" id="L162">				ug.draw(line1);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (widthTitle == 0) {</span>
+<span class="nc" id="L160">			final ULine line = ULine.hline(end - start);</span>
+<span class="nc" id="L161">			ug.draw(line);</span>
+<span class="nc" id="L162">		} else {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (padding.getLeft() &gt; 1) {</span>
+<span class="nc" id="L164">				final ULine line1 = ULine.hline(padding.getLeft());</span>
+<span class="nc" id="L165">				ug.draw(line1);</span>
 			}
-<span class="nc" id="L164">			final double x1 = padding.getLeft() + margin.getLeft() + widthTitle + margin.getRight();</span>
-<span class="nc" id="L165">			final double x2 = end - 1;</span>
-<span class="nc" id="L166">			final ULine line2 = ULine.hline(x2 - x1);</span>
-<span class="nc" id="L167">			ug.apply(UTranslate.dx(x1)).draw(line2);</span>
+<span class="nc" id="L167">			final double x1 = padding.getLeft() + margin.getLeft() + widthTitle + margin.getRight();</span>
+<span class="nc" id="L168">			final double x2 = end - 1;</span>
+<span class="nc" id="L169">			final ULine line2 = ULine.hline(x2 - x1);</span>
+<span class="nc" id="L170">			ug.apply(UTranslate.dx(x1)).draw(line2);</span>
 		}
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L172">	}</span>
 
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
-<span class="nc" id="L173">		final double h = getFullHeightTask(stringBounder);</span>
-<span class="nc" id="L174">		final double end = timeScale.getEndingPosition(max);</span>
-<span class="nc" id="L175">		return new FingerPrint(0, getY(stringBounder).getCurrentValue(), end,</span>
-<span class="nc" id="L176">				getY(stringBounder).getCurrentValue() + h);</span>
+<span class="nc" id="L176">		final double h = getFullHeightTask(stringBounder);</span>
+<span class="nc" id="L177">		final double end = timeScale.getEndingPosition(max);</span>
+<span class="nc" id="L178">		return new FingerPrint(0, getY(stringBounder).getCurrentValue(), end,</span>
+<span class="nc" id="L179">				getY(stringBounder).getCurrentValue() + h);</span>
 	}
 
 	@Override
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
-<span class="nc" id="L181">		return null;</span>
+<span class="nc" id="L184">		return null;</span>
 	}
 
 	@Override
 	public double getFullHeightTask(StringBounder stringBounder) {
-<span class="nc" id="L186">		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();</span>
-<span class="nc" id="L187">		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();</span>
-<span class="nc" id="L188">		return margin.getTop() + padding.getTop() + getTextHeight(stringBounder) + padding.getBottom()</span>
-<span class="nc" id="L189">				+ margin.getBottom();</span>
+<span class="nc" id="L189">		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();</span>
+<span class="nc" id="L190">		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();</span>
+<span class="nc" id="L191">		return margin.getTop() + padding.getTop() + getTextHeight(stringBounder) + padding.getBottom()</span>
+<span class="nc" id="L192">				+ margin.getBottom();</span>
 	}
 
 	private double getTextHeight(StringBounder stringBounder) {
-<span class="nc" id="L193">		return getTitle().calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L196">		return getTitle().calculateDimension(stringBounder).getHeight();</span>
 	}
 
 	@Override
 	public Real getY(StringBounder stringBounder) {
-<span class="nc" id="L198">		return y;</span>
+<span class="nc" id="L201">		return y;</span>
 	}
 
 	@Override
 	public TaskDraw getTrueRow() {
-<span class="nc" id="L203">		return null;</span>
+<span class="nc" id="L206">		return null;</span>
 	}
 
 	@Override
 	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note,
 			Stereotype noteStereotype) {
-<span class="nc" id="L209">	}</span>
+<span class="nc" id="L212">	}</span>
 
 	@Override
 	public Task getTask() {
-<span class="nc" id="L213">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L216">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public double getY(StringBounder stringBounder, GSide side) {
-<span class="nc" id="L218">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L221">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public double getHeightMax(StringBounder stringBounder) {
-<span class="nc" id="L223">		return getFullHeightTask(stringBounder);</span>
+<span class="nc" id="L226">		return getFullHeightTask(stringBounder);</span>
 	}
 
 	@Override
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
-<span class="nc" id="L228">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L231">		throw new UnsupportedOperationException();</span>
 	}
 
 }

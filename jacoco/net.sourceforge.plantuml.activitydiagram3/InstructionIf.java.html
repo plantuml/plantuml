@@ -102,7 +102,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 <span class="nc" id="L102">		this.swimlane = swimlane;</span>
 <span class="nc" id="L103">		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();</span>
 <span class="nc" id="L104">		this.thens.add(new Branch(currentStyleBuilder, swimlane, whenThen, labelTest, color, LinkRendering.none(),</span>
-				stereotype));
+<span class="nc" id="L105">				stereotype, skinParam.getIHtmlColorSet()));</span>
 <span class="nc" id="L106">		this.current = this.thens.get(0);</span>
 <span class="nc" id="L107">	}</span>
 
@@ -141,8 +141,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 <span class="nc" id="L141">			branch.updateFtile(factory);</span>
 
 <span class="nc bnc" id="L143" title="All 2 branches missed.">		if (elseBranch == null)</span>
-<span class="nc" id="L144">			this.elseBranch = new Branch(currentStyleBuilder, swimlane, LinkRendering.none(),</span>
-<span class="nc" id="L145">					Display.NULL, null, LinkRendering.none(), stereotype);</span>
+<span class="nc" id="L144">			this.elseBranch = new Branch(currentStyleBuilder, swimlane, LinkRendering.none(), Display.NULL, null,</span>
+<span class="nc" id="L145">					LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());</span>
 
 <span class="nc" id="L147">		elseBranch.updateFtile(factory);</span>
 <span class="nc" id="L148">		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,</span>
@@ -173,7 +173,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 <span class="nc" id="L174">		this.current.setInlinkRendering(nextLinkRenderer);</span>
 <span class="nc" id="L175">		this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenElse, Display.NULL, null,</span>
-<span class="nc" id="L176">				LinkRendering.none(), stereotype);</span>
+<span class="nc" id="L176">				LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());</span>
 <span class="nc" id="L177">		this.current = elseBranch;</span>
 <span class="nc" id="L178">		return true;</span>
 	}
@@ -185,7 +185,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 <span class="nc" id="L186">		this.current.setSpecial(nextLinkRenderer);</span>
 <span class="nc" id="L187">		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, test, color, inlabel,</span>
-				stereotype);
+<span class="nc" id="L188">				stereotype, skinParam.getIHtmlColorSet());</span>
 <span class="nc" id="L189">		this.thens.add(current);</span>
 <span class="nc" id="L190">		return true;</span>
 
@@ -195,7 +195,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 <span class="nc" id="L195">		endifCalled = true;</span>
 <span class="nc bnc" id="L196" title="All 2 branches missed.">		if (elseBranch == null)</span>
 <span class="nc" id="L197">			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),</span>
-<span class="nc" id="L198">					Display.NULL, null, LinkRendering.none(), stereotype);</span>
+<span class="nc" id="L198">					Display.NULL, null, LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());</span>
 
 <span class="nc" id="L200">		this.elseBranch.setSpecial(nextLinkRenderer);</span>
 <span class="nc" id="L201">		this.current.setInlinkRendering(nextLinkRenderer);</span>
@@ -223,50 +223,51 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="nc bnc" id="L227" title="All 4 branches missed.">		if (endifCalled || current.isEmpty())</span>
-<span class="nc" id="L228">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
+<span class="nc bnc" id="L228" title="All 4 branches missed.">		if (endifCalled || current.isEmpty())</span>
+<span class="nc" id="L229">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 		else
-<span class="nc" id="L230">			return current.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc" id="L231">			return current.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L236">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (swimlane != null)</span>
-<span class="nc" id="L238">			result.add(swimlane);</span>
+<span class="nc" id="L237">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (swimlane != null)</span>
+<span class="nc" id="L239">			result.add(swimlane);</span>
 
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		for (Branch branch : thens)</span>
-<span class="nc" id="L241">			result.addAll(branch.getSwimlanes());</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		for (Branch branch : thens)</span>
+<span class="nc" id="L242">			result.addAll(branch.getSwimlanes());</span>
 
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (elseBranch != null)</span>
-<span class="nc" id="L244">			result.addAll(elseBranch.getSwimlanes());</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (elseBranch != null)</span>
+<span class="nc" id="L245">			result.addAll(elseBranch.getSwimlanes());</span>
 
-<span class="nc" id="L246">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L247">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L251">		return swimlane;</span>
+<span class="nc" id="L252">		return swimlane;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L256">		return swimlane;</span>
+<span class="nc" id="L257">		return swimlane;</span>
 	}
 
 	@Override
 	public Instruction getLast() {
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (elseBranch == null)</span>
-<span class="nc" id="L262">			return thens.get(thens.size() - 1).getLast();</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (elseBranch == null)</span>
+<span class="nc" id="L263">			return thens.get(thens.size() - 1).getLast();</span>
 
-<span class="nc" id="L264">		return elseBranch.getLast();</span>
+<span class="nc" id="L265">		return elseBranch.getLast();</span>
 	}
 
 	public void outColor(LinkRendering outColor) {
-<span class="nc" id="L268">		this.outColor = outColor;</span>
-<span class="nc" id="L269">	}</span>
+<span class="nc" id="L269">		this.outColor = outColor;</span>
+<span class="nc" id="L270">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
