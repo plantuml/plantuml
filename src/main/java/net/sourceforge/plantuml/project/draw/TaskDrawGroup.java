@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -67,8 +67,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	private final Day end;
 
 	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinSimple skinSimple) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinSimple);
+			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 		this.end = end;
 	}
 

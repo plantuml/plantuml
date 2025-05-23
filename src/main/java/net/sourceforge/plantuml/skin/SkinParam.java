@@ -151,7 +151,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException, StyleParsingException {
-		final StyleLoader tmp = new StyleLoader(this);
+		final StyleLoader tmp = new StyleLoader();
 		StyleBuilder result = tmp.loadSkin(this.getDefaultSkin());
 		if (result == null)
 			result = tmp.loadSkin("plantuml.skin");

@@ -102,7 +102,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		this.swimlane = swimlane;
 		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();
 		this.thens.add(new Branch(currentStyleBuilder, swimlane, whenThen, labelTest, color, LinkRendering.none(),
-				stereotype));
+				stereotype, skinParam.getIHtmlColorSet()));
 		this.current = this.thens.get(0);
 	}
 
@@ -141,8 +141,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			branch.updateFtile(factory);
 
 		if (elseBranch == null)
-			this.elseBranch = new Branch(currentStyleBuilder, swimlane, LinkRendering.none(),
-					Display.NULL, null, LinkRendering.none(), stereotype);
+			this.elseBranch = new Branch(currentStyleBuilder, swimlane, LinkRendering.none(), Display.NULL, null,
+					LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());
 
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,
@@ -173,7 +173,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 		this.current.setInlinkRendering(nextLinkRenderer);
 		this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenElse, Display.NULL, null,
-				LinkRendering.none(), stereotype);
+				LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());
 		this.current = elseBranch;
 		return true;
 	}
@@ -185,7 +185,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 		this.current.setSpecial(nextLinkRenderer);
 		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, test, color, inlabel,
-				stereotype);
+				stereotype, skinParam.getIHtmlColorSet());
 		this.thens.add(current);
 		return true;
 
@@ -195,7 +195,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		endifCalled = true;
 		if (elseBranch == null)
 			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),
-					Display.NULL, null, LinkRendering.none(), stereotype);
+					Display.NULL, null, LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());
 
 		this.elseBranch.setSpecial(nextLinkRenderer);
 		this.current.setInlinkRendering(nextLinkRenderer);
@@ -223,7 +223,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
 		if (endifCalled || current.isEmpty())
 			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);
 		else

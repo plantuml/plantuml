@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
@@ -50,7 +49,6 @@ public class StyleBuilder implements AutomaticCounter {
 
 	private final Map<StyleSignatureBasic, Style> stylesMap = new LinkedHashMap<StyleSignatureBasic, Style>();
 	private final Set<StyleSignatureBasic> printedForLog;
-	private final SkinParam skinParam;
 	private int counter;
 
 	public void printMe() {
@@ -59,17 +57,12 @@ public class StyleBuilder implements AutomaticCounter {
 
 	}
 
-	private StyleBuilder(SkinParam skinParam, Set<StyleSignatureBasic> printedForLog) {
-		this.skinParam = skinParam;
+	private StyleBuilder(Set<StyleSignatureBasic> printedForLog) {
 		this.printedForLog = new LinkedHashSet<>();
 	}
 
-	public StyleBuilder(SkinParam skinParam) {
-		this(skinParam, new LinkedHashSet<StyleSignatureBasic>());
-	}
-
-	public final SkinParam getSkinParam() {
-		return skinParam;
+	public StyleBuilder() {
+		this(new LinkedHashSet<StyleSignatureBasic>());
 	}
 
 	public Style createStyle(String name) {
@@ -95,7 +88,7 @@ public class StyleBuilder implements AutomaticCounter {
 			final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 			copy.put(signature, tmp);
 		}
-		final StyleBuilder result = new StyleBuilder(skinParam, this.printedForLog);
+		final StyleBuilder result = new StyleBuilder(this.printedForLog);
 		result.stylesMap.putAll(copy);
 		result.counter = this.counter;
 		return result;

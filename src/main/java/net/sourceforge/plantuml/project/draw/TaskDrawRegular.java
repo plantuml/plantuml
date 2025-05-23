@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -78,9 +78,9 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private final Collection<GanttConstraint> constraints;
 
 	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, boolean oddStart,
-			boolean oddEnd, ISkinSimple skinSimple, Task task, ToTaskDraw toTaskDraw,
+			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
 			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinSimple);
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 		this.constraints = constraints;
 		this.end = end;
 		this.oddStart = oddStart;

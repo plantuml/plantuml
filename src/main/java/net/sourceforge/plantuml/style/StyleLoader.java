@@ -43,7 +43,6 @@ import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -53,16 +52,10 @@ import net.sourceforge.plantuml.utils.Log;
 public class StyleLoader {
     // ::remove file when __HAXE__
 
-	private final SkinParam skinParam;
-
-	public StyleLoader(SkinParam skinParam) {
-		this.skinParam = skinParam;
-	}
-
 	private StyleBuilder styleBuilder;
 
 	public StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
-		this.styleBuilder = new StyleBuilder(skinParam);
+		this.styleBuilder = new StyleBuilder();
 
 		final InputStream internalIs = getInputStreamForStyle(filename);
 		if (internalIs == null) {

@@ -449,7 +449,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			if (task instanceof TaskSeparator) {
 				final TaskSeparator taskSeparator = (TaskSeparator) task;
 				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, min, max, task.getStyleBuilder(),
-						getSkinParam().getIHtmlColorSet());
+						getSkinParam());
 			} else if (task instanceof TaskGroup) {
 				final TaskGroup taskGroup = (TaskGroup) task;
 				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getDisplay(), getStart(taskGroup),
@@ -458,7 +458,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				final TaskImpl tmp = (TaskImpl) task;
 				final String disp = hideResourceName ? tmp.getCode().getDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder(), getSkinParam());
+					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder(),
+							getSkinParam());
 				} else {
 					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
 					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;
