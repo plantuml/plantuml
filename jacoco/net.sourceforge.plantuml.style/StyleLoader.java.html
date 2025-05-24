@@ -37,9 +37,11 @@ package net.sourceforge.plantuml.style;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
@@ -49,22 +51,38 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="fc" id="L52">public class StyleLoader {</span>
+public final class StyleLoader {
 	// ::remove file when __HAXE__
 
-	public StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
-<span class="fc" id="L56">		final StyleBuilder styleBuilder = new StyleBuilder();</span>
+<span class="fc" id="L57">	private static final Map&lt;String, SoftReference&lt;StyleBuilder&gt;&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
 
-<span class="fc" id="L58">		final InputStream internalIs = getInputStreamForStyle(filename);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (internalIs == null) {</span>
-<span class="nc" id="L60">			Log.error(&quot;No .skin file seems to be available&quot;);</span>
-<span class="nc" id="L61">			throw new NoStyleAvailableException();</span>
+	private StyleLoader() {
+	}
+
+	public static StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
+<span class="fc" id="L63">		final SoftReference&lt;StyleBuilder&gt; ref = cache.get(filename);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		StyleBuilder builder = (ref == null) ? null : ref.get();</span>
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (builder == null) {</span>
+<span class="fc" id="L67">			builder = loadSkinSlow(filename);</span>
+<span class="fc" id="L68">			cache.put(filename, new SoftReference&lt;&gt;(builder));</span>
 		}
-<span class="fc" id="L63">		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (Style newStyle : StyleParser.parse(lines2, styleBuilder))</span>
-<span class="fc" id="L65">			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);</span>
+<span class="fc" id="L70">		return builder.cloneMe();</span>
+	}
 
-<span class="fc" id="L67">		return styleBuilder;</span>
+	private static StyleBuilder loadSkinSlow(String filename) throws IOException, StyleParsingException {
+<span class="fc" id="L74">		final StyleBuilder styleBuilder = new StyleBuilder();</span>
+
+<span class="fc" id="L76">		final InputStream internalIs = getInputStreamForStyle(filename);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (internalIs == null) {</span>
+<span class="nc" id="L78">			Log.error(&quot;No .skin file seems to be available&quot;);</span>
+<span class="nc" id="L79">			throw new NoStyleAvailableException();</span>
+		}
+<span class="fc" id="L81">		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (Style newStyle : StyleParser.parse(lines2, styleBuilder))</span>
+<span class="fc" id="L83">			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);</span>
+
+<span class="fc" id="L85">		return styleBuilder;</span>
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
@@ -75,39 +93,39 @@ import net.sourceforge.plantuml.utils.Log;
 		// ::done
 
 		// ::comment when __CORE__
-<span class="fc" id="L78">		InputStream internalIs = null;</span>
-<span class="fc" id="L79">		SFile localFile = new SFile(filename);</span>
-<span class="fc" id="L80">		Log.info(&quot;Trying to load style &quot; + filename);</span>
+<span class="fc" id="L96">		InputStream internalIs = null;</span>
+<span class="fc" id="L97">		SFile localFile = new SFile(filename);</span>
+<span class="fc" id="L98">		Log.info(&quot;Trying to load style &quot; + filename);</span>
 		try {
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (localFile.exists() == false)</span>
-<span class="fc" id="L83">				localFile = FileSystem.getInstance().getFile(filename);</span>
-<span class="nc" id="L84">		} catch (IOException e) {</span>
-<span class="nc" id="L85">			Log.info(&quot;Cannot open file. &quot; + e);</span>
-<span class="fc" id="L86">		}</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (localFile.exists() == false)</span>
+<span class="fc" id="L101">				localFile = FileSystem.getInstance().getFile(filename);</span>
+<span class="nc" id="L102">		} catch (IOException e) {</span>
+<span class="nc" id="L103">			Log.info(&quot;Cannot open file. &quot; + e);</span>
+<span class="fc" id="L104">		}</span>
 
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (localFile.exists()) {</span>
-<span class="nc" id="L89">			Log.info(&quot;File found : &quot; + localFile.getPrintablePath());</span>
-<span class="nc" id="L90">			internalIs = localFile.openFile();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (localFile.exists()) {</span>
+<span class="nc" id="L107">			Log.info(&quot;File found : &quot; + localFile.getPrintablePath());</span>
+<span class="nc" id="L108">			internalIs = localFile.openFile();</span>
 		} else {
-<span class="fc" id="L92">			Log.info(&quot;File not found : &quot; + localFile.getPrintablePath());</span>
-<span class="fc" id="L93">			final String res = &quot;/skin/&quot; + filename;</span>
-<span class="fc" id="L94">			internalIs = StyleLoader.class.getResourceAsStream(res);</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (internalIs != null)</span>
-<span class="fc" id="L96">				Log.info(&quot;... but &quot; + filename + &quot; found inside the .jar&quot;);</span>
+<span class="fc" id="L110">			Log.info(&quot;File not found : &quot; + localFile.getPrintablePath());</span>
+<span class="fc" id="L111">			final String res = &quot;/skin/&quot; + filename;</span>
+<span class="fc" id="L112">			internalIs = StyleLoader.class.getResourceAsStream(res);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (internalIs != null)</span>
+<span class="fc" id="L114">				Log.info(&quot;... but &quot; + filename + &quot; found inside the .jar&quot;);</span>
 
 		}
-<span class="fc" id="L99">		return internalIs;</span>
+<span class="fc" id="L117">		return internalIs;</span>
 		// ::done
 	}
 
 	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
 
 	public static Map&lt;PName, Value&gt; addPriorityForStereotype(Map&lt;PName, Value&gt; tmp) {
-<span class="fc" id="L106">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;&gt;(PName.class);</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : tmp.entrySet())</span>
-<span class="fc" id="L108">			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));</span>
+<span class="fc" id="L124">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;&gt;(PName.class);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : tmp.entrySet())</span>
+<span class="fc" id="L126">			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));</span>
 
-<span class="fc" id="L110">		return result;</span>
+<span class="fc" id="L128">		return result;</span>
 	}
 
 }
