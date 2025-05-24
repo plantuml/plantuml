@@ -37,9 +37,11 @@ package net.sourceforge.plantuml.style;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
@@ -49,10 +51,26 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
 
-public class StyleLoader {
+public final class StyleLoader {
 	// ::remove file when __HAXE__
 
-	public StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
+	private static final Map<String, SoftReference<StyleBuilder>> cache = new ConcurrentHashMap<>();
+
+	private StyleLoader() {
+	}
+
+	public static StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
+		final SoftReference<StyleBuilder> ref = cache.get(filename);
+		StyleBuilder builder = (ref == null) ? null : ref.get();
+
+		if (builder == null) {
+			builder = loadSkinSlow(filename);
+			cache.put(filename, new SoftReference<>(builder));
+		}
+		return builder.cloneMe();
+	}
+
+	private static StyleBuilder loadSkinSlow(String filename) throws IOException, StyleParsingException {
 		final StyleBuilder styleBuilder = new StyleBuilder();
 
 		final InputStream internalIs = getInputStreamForStyle(filename);

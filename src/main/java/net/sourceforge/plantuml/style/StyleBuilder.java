@@ -45,7 +45,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final Map<StyleSignatureBasic, Style> stylesMap = new LinkedHashMap<StyleSignatureBasic, Style>();
 	private final Set<StyleSignatureBasic> printedForLog;
@@ -63,6 +63,14 @@ public class StyleBuilder implements AutomaticCounter {
 
 	public StyleBuilder() {
 		this(new LinkedHashSet<StyleSignatureBasic>());
+	}
+
+	public StyleBuilder cloneMe() {
+		final StyleBuilder result = new StyleBuilder();
+		result.stylesMap.putAll(this.stylesMap);
+		result.counter = this.counter;
+		return result;
+
 	}
 
 	public Style createStyle(String name) {
