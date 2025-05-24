@@ -54,10 +54,14 @@ import net.sourceforge.plantuml.svek.UGraphicForSnake;
 public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 
 	private final Map<String, UTranslate> positions;
+	private final HColor gotoColor;
+	private final boolean isDebug;
 
-	public UGraphicInterceptorUDrawable2(UGraphic ug, Map<String, UTranslate> positions) {
+	public UGraphicInterceptorUDrawable2(UGraphic ug, Map<String, UTranslate> positions, HColor gotoColor, boolean isDebug) {
 		super(ug);
 		this.positions = positions;
+		this.gotoColor = gotoColor;
+		this.isDebug = isDebug;
 	}
 
 	public void draw(UShape shape) {
@@ -94,7 +98,7 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	}
 
 	private void drawGoto(FtileGoto ftile) {
-		final HColor gotoColor = HColors.MY_RED;
+		//final HColor gotoColor = HColors.MY_RED;
 
 		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());
 		final XPoint2D pt = geom.getPointIn();
@@ -106,15 +110,17 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 			return;
 		final double dx = dest.getDx() - posNow.getDx();
 		final double dy = dest.getDy() - posNow.getDy();
+		if (isDebug) {
 		ugGoto.draw(UEllipse.build(3, 3));
 		ugGoto.apply(new UTranslate(dx, dy)).draw(UEllipse.build(3, 3));
+		}
 		ugGoto.draw(ULine.hline(dx));
 		ugGoto.apply(UTranslate.dx(dx)).draw(ULine.vline(dy));
 		// ugGoto.draw(new ULine(dx, dy));
 	}
 
 	public UGraphic apply(UChange change) {
-		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions);
+		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions, gotoColor, isDebug);
 	}
 
 }
