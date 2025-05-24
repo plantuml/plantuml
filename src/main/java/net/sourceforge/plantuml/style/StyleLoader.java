@@ -50,12 +50,10 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleLoader {
-    // ::remove file when __HAXE__
-
-	private StyleBuilder styleBuilder;
+	// ::remove file when __HAXE__
 
 	public StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
-		this.styleBuilder = new StyleBuilder();
+		final StyleBuilder styleBuilder = new StyleBuilder();
 
 		final InputStream internalIs = getInputStreamForStyle(filename);
 		if (internalIs == null) {
@@ -63,12 +61,10 @@ public class StyleLoader {
 			throw new NoStyleAvailableException();
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
-		loadSkinInternal(lines2);
-		if (this.styleBuilder == null) {
-			Log.error("No .skin file seems to be available");
-			throw new NoStyleAvailableException();
-		}
-		return this.styleBuilder;
+		for (Style newStyle : StyleParser.parse(lines2, styleBuilder))
+			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);
+
+		return styleBuilder;
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
@@ -102,11 +98,6 @@ public class StyleLoader {
 		}
 		return internalIs;
 		// ::done
-	}
-
-	private void loadSkinInternal(final BlocLines lines) throws StyleParsingException {
-		for (Style newStyle : StyleParser.parse(lines, styleBuilder))
-			this.styleBuilder.loadInternal(newStyle.getSignature(), newStyle);
 	}
 
 	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
