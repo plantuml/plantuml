@@ -103,30 +103,30 @@ public class AtomTextUtils {
 			if (sb.length() > 0)
 				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO, true));
 
-			final String valOpenicon = m.group(1);
-			final String valSprite = m.group(4);
-			final String valImg = m.group(6);
-			final String valEmoji = m.group(8);
+			final String valOpenicon = m.group(2);
+			final String valSprite = m.group(5);
+			final String valImg = m.group(7);
+			final String valEmoji = m.group(9);
 			if (valEmoji != null)
 				throw new UnsupportedOperationException();
 
 			if (valOpenicon != null) {
 				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);
 				if (openIcon != null) {
-					final double scale = Parser.getScale(m.group(2), 1);
+					final double scale = Parser.getScale(m.group(3), 1);
 					result.add(new AtomOpenIcon(null, scale, openIcon, fontConfiguration, url));
 				}
 			} else if (valSprite != null) {
 				// Note: sprites are probably not working in URL
 				final Sprite sprite = skinSimple.getSprite(valSprite);
 				if (sprite != null) {
-					final double scale = Parser.getScale(m.group(5), 1);
+					final double scale = Parser.getScale(m.group(6), 1);
 					final HColor fontColor = fontConfiguration.getColor();
 					final HColor forcedColor = null;
 					result.add(new AtomSprite(fontColor, forcedColor, scale, sprite, url));
 				}
 			} else if (valImg != null) {
-				final double scale = Parser.getScale(m.group(7), 1);
+				final double scale = Parser.getScale(m.group(8), 1);
 				result.add(AtomImg.create(valImg, ImgValign.TOP, 0, scale, url));
 
 			}

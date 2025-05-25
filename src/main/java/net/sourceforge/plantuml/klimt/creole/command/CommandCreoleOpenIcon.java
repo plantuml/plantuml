@@ -72,9 +72,12 @@ public class CommandCreoleOpenIcon implements Command {
 		if (m.find() == false)
 			throw new IllegalStateException();
 
-		final String src = m.group(2);
-		final double scale = Parser.getScale(m.group(3), 1);
-		final String colorName = Parser.getColor(m.group(3));
+		final String colorName1 = m.group(2);
+		final String src = m.group(3);
+		final double scale = Parser.getScale(m.group(4), 1);
+		final String colorName2 = Parser.getColor(m.group(4));
+		
+		final String colorName = colorName1 == null ? colorName2 : colorName1;
 		HColor color = null;
 		if (colorName != null) {
 			final ISkinSimple skinParam = stripe.getSkinParam();

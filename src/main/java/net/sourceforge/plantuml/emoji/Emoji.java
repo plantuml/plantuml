@@ -98,16 +98,16 @@ public class Emoji {
 		ALL.put(unicode, this);
 	}
 
-	public static String pattern() {
-		final StringBuilder sb = new StringBuilder("\\<(#\\w+)?:(");
-		for (String s : ALL.keySet()) {
-			if (sb.toString().endsWith("(") == false)
-				sb.append("|");
-			sb.append(s);
-		}
-		sb.append("):\\>");
-		return sb.toString();
-	}
+//	private static String patternOld() {
+//		final StringBuilder sb = new StringBuilder("\\<(#\\w+)?:(");
+//		for (String s : ALL.keySet()) {
+//			if (sb.toString().endsWith("(") == false)
+//				sb.append("|");
+//			sb.append(s);
+//		}
+//		sb.append("):\\>");
+//		return sb.toString();
+//	}
 
 	public static Emoji retrieve(String name) {
 		return ALL.get(name.toLowerCase());

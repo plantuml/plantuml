@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
@@ -69,9 +70,15 @@ public class CommandCreoleEmoji implements Command {
 		if (m.find() == false)
 			throw new IllegalStateException();
 
-		final String color = m.group(2);
+		final String colorName1 = m.group(2);
 		final String emoji = m.group(3);
-		stripe.addEmoji(emoji, color);
+		final double scale = Parser.getScale(m.group(4), 1);
+		final String colorName2 = Parser.getColor(m.group(4));
+		
+		final String colorName = colorName1 == null ? colorName2 : colorName1;
+
+
+		stripe.addEmoji(emoji, scale, colorName);
 		return line.substring(m.group(1).length());
 	}
 

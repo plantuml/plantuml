@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.openiconic.SvgPath;
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
-public class SvgNanoParser implements Sprite {
+public class SvgNanoParser implements Sprite, GrayLevelRange {
 
 	private static final Pattern P_TEXT_OR_DRAW = Pattern
 			.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
@@ -131,12 +131,8 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	public void drawU(UGraphic ug, double scale, HColor fontColor, HColor forcedColor) {
-		synchronized (this) {
-			if (forcedColor != null && maxGray == -1)
-				computeMinMaxGray();
-		}
-
-		UGraphicWithScale ugs = new UGraphicWithScale(ug, fontColor, forcedColor, scale, minGray, maxGray);
+		final ColorResolver colorResolver = new ColorResolver(fontColor, forcedColor, this);
+		UGraphicWithScale ugs = new UGraphicWithScale(ug, colorResolver, scale);
 
 		final List<UGraphicWithScale> stack = new ArrayList<>();
 		final Deque<String> stackG = new ArrayDeque<>();
@@ -183,30 +179,6 @@ public class SvgNanoParser implements Sprite {
 			}
 		}
 		return Collections.unmodifiableCollection(data);
-	}
-
-	private void computeMinMaxGray() {
-		for (String s : getData()) {
-			if (s.contains("<path ") || s.contains("<g ") || s.contains("<circle ") || s.contains("<ellipse ")) {
-				final String fillString = getFillString(s, null);
-				final String strokeString = extract(DATA_STROKE, s);
-
-				updateMinMax(strokeString);
-				updateMinMax(fillString);
-
-			} else {
-				// Nothing
-			}
-		}
-	}
-
-	private void updateMinMax(String colorString) {
-		if (colorString != null) {
-			final HColor color = HColorSet.instance().getColorOrWhite(colorString);
-			final int gray = ColorUtils.getGrayScaleColor(color.toColor(ColorMapper.MONOCHROME)).getGreen();
-			minGray = Math.min(minGray, gray);
-			maxGray = Math.max(maxGray, gray);
-		}
 	}
 
 	private UGraphicWithScale applyFillAndStroke(UGraphicWithScale ugs, String s, Deque<String> stackG) {
@@ -487,6 +459,46 @@ public class SvgNanoParser implements Sprite {
 				return new XDimension2D(width, height);
 			}
 		};
+	}
+
+	private void computeMinMaxGray() {
+		for (String s : getData()) {
+			if (s.contains("<path ") || s.contains("<g ") || s.contains("<circle ") || s.contains("<ellipse ")) {
+				final String fillString = getFillString(s, null);
+				final String strokeString = extract(DATA_STROKE, s);
+
+				updateMinMax(strokeString);
+				updateMinMax(fillString);
+
+			} else {
+				// Nothing
+			}
+		}
+	}
+
+	private void updateMinMax(String colorString) {
+		if (colorString != null) {
+			final HColor color = HColorSet.instance().getColorOrWhite(colorString);
+			final int gray = ColorUtils.getGrayScaleColor(color.toColor(ColorMapper.MONOCHROME)).getGreen();
+			minGray = Math.min(minGray, gray);
+			maxGray = Math.max(maxGray, gray);
+		}
+	}
+
+	@Override
+	public int getMinGrayLevel() {
+		if (maxGray == -1)
+			computeMinMaxGray();
+
+		return minGray;
+	}
+
+	@Override
+	public int getMaxGrayLevel() {
+		if (maxGray == -1)
+			computeMinMaxGray();
+		
+		return maxGray;
 	}
 
 }

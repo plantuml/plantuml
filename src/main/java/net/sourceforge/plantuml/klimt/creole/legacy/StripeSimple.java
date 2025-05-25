@@ -44,6 +44,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.emoji.Emoji;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.CreoleContext;
 import net.sourceforge.plantuml.klimt.creole.CreoleHorizontalLine;
@@ -273,10 +274,12 @@ public class StripeSimple implements Stripe {
 			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));
 	}
 
-	public void addEmoji(String emojiName, String forcedColor) {
+	public void addEmoji(String emojiName, double scale, String forcedColor) {
 		final Emoji emoji = Emoji.retrieve(emojiName);
-		if (emoji == null)
+		if (emoji == null) {
+			atoms.add(AtomTextUtils.create("\u00BF" + emojiName + "?", fontConfiguration.changeColor(HColors.RED)));
 			return;
+		}
 
 		HColor col = null;
 		if (forcedColor == null)
@@ -290,7 +293,7 @@ public class StripeSimple implements Stripe {
 				col = null;
 			}
 
-		atoms.add(new AtomEmoji(emoji, 1, fontConfiguration.getSize2D(), col));
+		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));
 	}
 
 	// ::comment when __CORE__

@@ -69,10 +69,11 @@ public class Splitter {
 			"\\}?" + //
 			")?";
 
-	// 		final StringBuilder sb = new StringBuilder("\\<(#\\w+)?:(");
+	// final StringBuilder sb = new StringBuilder("\\<(#\\w+)?:(");
 
-	public static final String emojiPattern = Emoji.pattern();
-	public static final String openiconPattern = "\\<&([-\\w]+)" + scaleOrColor + "\\>";
+	public static final String emojiPattern = "\\<(#\\w+)?:([0-9a-z][0-9_a-z]*):" + scaleOrColor + "\\>";
+	public static final String openiconPattern = "\\<(#\\w+)?&([-\\w]+)" + scaleOrColor + "\\>";
+
 	public static final String spritePattern = "\\<(#\\w+)?\\$(" + SpriteUtils.SPRITE_NAME + ")" + scaleOrColor + "\\>";
 
 	static final String htmlTag;
@@ -142,7 +143,6 @@ public class Splitter {
 	public static String purgeAllTag(String s) {
 		return s.replaceAll(htmlTag, "");
 	}
-
 
 //	@JawsStrange
 //	private Collection<PlainText> splitText(PlainText cmd) {
