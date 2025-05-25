@@ -74,7 +74,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private SwimlaneStrategy swimlaneStrategy;
 
-	private final Swimlanes swimlanes = new Swimlanes(getSkinParam(), getPragma());
+	private final Swimlanes swimlanes = new Swimlanes(getSkinParam(), getPragma(), getPreprocessingArtifact());
 
 	public ActivityDiagram3(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, UmlDiagramType.ACTIVITY, previous, preprocessing);
