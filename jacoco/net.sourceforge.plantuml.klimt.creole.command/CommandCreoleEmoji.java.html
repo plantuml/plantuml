@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
@@ -44,35 +45,41 @@ public class CommandCreoleEmoji implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L47">		return &quot;&lt;&quot;;</span>
+<span class="fc" id="L48">		return &quot;&lt;&quot;;</span>
 	}
 
-<span class="fc" id="L50">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.emojiPattern + &quot;)&quot;);</span>
+<span class="fc" id="L51">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.emojiPattern + &quot;)&quot;);</span>
 
 	private CommandCreoleEmoji() {
 	}
 
 	public static Command create() {
-<span class="fc" id="L56">		return new CommandCreoleEmoji();</span>
+<span class="fc" id="L57">		return new CommandCreoleEmoji();</span>
 	}
 
 	public int matchingSize(String line) {
-<span class="fc" id="L60">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (m.find() == false)</span>
-<span class="fc" id="L62">			return 0;</span>
+<span class="fc" id="L61">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L63">			return 0;</span>
 
-<span class="nc" id="L64">		return m.group(1).length();</span>
+<span class="nc" id="L65">		return m.group(1).length();</span>
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-<span class="nc" id="L68">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L70">			throw new IllegalStateException();</span>
+<span class="nc" id="L69">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L71">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L72">		final String color = m.group(2);</span>
-<span class="nc" id="L73">		final String emoji = m.group(3);</span>
-<span class="nc" id="L74">		stripe.addEmoji(emoji, color);</span>
-<span class="nc" id="L75">		return line.substring(m.group(1).length());</span>
+<span class="nc" id="L73">		final String colorName1 = m.group(2);</span>
+<span class="nc" id="L74">		final String emoji = m.group(3);</span>
+<span class="nc" id="L75">		final double scale = Parser.getScale(m.group(4), 1);</span>
+<span class="nc" id="L76">		final String colorName2 = Parser.getColor(m.group(4));</span>
+		
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
+
+
+<span class="nc" id="L81">		stripe.addEmoji(emoji, scale, colorName);</span>
+<span class="nc" id="L82">		return line.substring(m.group(1).length());</span>
 	}
 
 }

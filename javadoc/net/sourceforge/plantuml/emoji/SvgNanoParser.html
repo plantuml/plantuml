@@ -78,12 +78,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a></code></dd>
+<dd><code><a href="GrayLevelRange.html" title="interface in net.sourceforge.plantuml.emoji">GrayLevelRange</a></code>, <code><a href="../klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SvgNanoParser</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a></span></div>
+implements <a href="../klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a>, <a href="GrayLevelRange.html" title="interface in net.sourceforge.plantuml.emoji">GrayLevelRange</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -123,6 +123,12 @@ implements <a href="../klimt/sprite/Sprite.html" title="interface in net.sourcef
  double&nbsp;scale,
  <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fontColor,
  <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;forcedColor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxGrayLevel()" class="member-name-link">getMaxGrayLevel</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinGrayLevel()" class="member-name-link">getMinGrayLevel</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -179,6 +185,26 @@ implements <a href="../klimt/sprite/Sprite.html" title="interface in net.sourcef
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../klimt/sprite/Sprite.html#asTextBlock(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor,double)">asTextBlock</a></code>&nbsp;in interface&nbsp;<code><a href="../klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getMinGrayLevel()">
+<h3>getMinGrayLevel</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMinGrayLevel</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="GrayLevelRange.html#getMinGrayLevel()">getMinGrayLevel</a></code>&nbsp;in interface&nbsp;<code><a href="GrayLevelRange.html" title="interface in net.sourceforge.plantuml.emoji">GrayLevelRange</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getMaxGrayLevel()">
+<h3>getMaxGrayLevel</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMaxGrayLevel</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="GrayLevelRange.html#getMaxGrayLevel()">getMaxGrayLevel</a></code>&nbsp;in interface&nbsp;<code><a href="GrayLevelRange.html" title="interface in net.sourceforge.plantuml.emoji">GrayLevelRange</a></code></dd>
 </dl>
 </section>
 </li>

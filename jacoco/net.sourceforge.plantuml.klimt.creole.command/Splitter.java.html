@@ -69,10 +69,11 @@ public class Splitter {
 			&quot;\\}?&quot; + //
 			&quot;)?&quot;;
 
-	// 		final StringBuilder sb = new StringBuilder(&quot;\\&lt;(#\\w+)?:(&quot;);
+	// final StringBuilder sb = new StringBuilder(&quot;\\&lt;(#\\w+)?:(&quot;);
 
-<span class="fc" id="L74">	public static final String emojiPattern = Emoji.pattern();</span>
-	public static final String openiconPattern = &quot;\\&lt;&amp;([-\\w]+)&quot; + scaleOrColor + &quot;\\&gt;&quot;;
+	public static final String emojiPattern = &quot;\\&lt;(#\\w+)?:([0-9a-z][0-9_a-z]*):&quot; + scaleOrColor + &quot;\\&gt;&quot;;
+	public static final String openiconPattern = &quot;\\&lt;(#\\w+)?&amp;([-\\w]+)&quot; + scaleOrColor + &quot;\\&gt;&quot;;
+
 	public static final String spritePattern = &quot;\\&lt;(#\\w+)?\\$(&quot; + SpriteUtils.SPRITE_NAME + &quot;)&quot; + scaleOrColor + &quot;\\&gt;&quot;;
 
 	static final String htmlTag;
@@ -84,65 +85,64 @@ public class Splitter {
 	private static final Pattern2 tagOrText;
 
 	static {
-<span class="fc" id="L87">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L88">		final StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {</span>
-<span class="fc" id="L90">			sb.append(style.getActivationPattern());</span>
-<span class="fc" id="L91">			sb.append('|');</span>
-<span class="fc" id="L92">			sb.append(style.getDeactivationPattern());</span>
-<span class="fc" id="L93">			sb.append('|');</span>
-<span class="fc" id="L94">		}</span>
-<span class="fc" id="L95">		sb.append(fontPattern);</span>
-<span class="fc" id="L96">		sb.append('|');</span>
-<span class="fc" id="L97">		sb.append(fontColorPattern);</span>
-<span class="fc" id="L98">		sb.append('|');</span>
-<span class="fc" id="L99">		sb.append(fontSizePattern);</span>
-<span class="fc" id="L100">		sb.append('|');</span>
-<span class="fc" id="L101">		sb.append(fontSup);</span>
-<span class="fc" id="L102">		sb.append('|');</span>
-<span class="fc" id="L103">		sb.append(fontSub);</span>
-<span class="fc" id="L104">		sb.append('|');</span>
-<span class="fc" id="L105">		sb.append(endFontPattern);</span>
-<span class="fc" id="L106">		sb.append('|');</span>
-<span class="fc" id="L107">		sb.append(endSupSub);</span>
-<span class="fc" id="L108">		sb.append('|');</span>
-<span class="fc" id="L109">		sb.append(qrcodePattern);</span>
-<span class="fc" id="L110">		sb.append('|');</span>
-<span class="fc" id="L111">		sb.append(imgPattern);</span>
-<span class="fc" id="L112">		sb.append('|');</span>
-<span class="fc" id="L113">		sb.append(imgPatternNoSrcColon);</span>
-<span class="fc" id="L114">		sb.append('|');</span>
-<span class="fc" id="L115">		sb.append(fontFamilyPattern);</span>
-<span class="fc" id="L116">		sb.append('|');</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {</span>
+<span class="nc" id="L91">			sb.append(style.getActivationPattern());</span>
+<span class="nc" id="L92">			sb.append('|');</span>
+<span class="nc" id="L93">			sb.append(style.getDeactivationPattern());</span>
+<span class="nc" id="L94">			sb.append('|');</span>
+<span class="nc" id="L95">		}</span>
+<span class="nc" id="L96">		sb.append(fontPattern);</span>
+<span class="nc" id="L97">		sb.append('|');</span>
+<span class="nc" id="L98">		sb.append(fontColorPattern);</span>
+<span class="nc" id="L99">		sb.append('|');</span>
+<span class="nc" id="L100">		sb.append(fontSizePattern);</span>
+<span class="nc" id="L101">		sb.append('|');</span>
+<span class="nc" id="L102">		sb.append(fontSup);</span>
+<span class="nc" id="L103">		sb.append('|');</span>
+<span class="nc" id="L104">		sb.append(fontSub);</span>
+<span class="nc" id="L105">		sb.append('|');</span>
+<span class="nc" id="L106">		sb.append(endFontPattern);</span>
+<span class="nc" id="L107">		sb.append('|');</span>
+<span class="nc" id="L108">		sb.append(endSupSub);</span>
+<span class="nc" id="L109">		sb.append('|');</span>
+<span class="nc" id="L110">		sb.append(qrcodePattern);</span>
+<span class="nc" id="L111">		sb.append('|');</span>
+<span class="nc" id="L112">		sb.append(imgPattern);</span>
+<span class="nc" id="L113">		sb.append('|');</span>
+<span class="nc" id="L114">		sb.append(imgPatternNoSrcColon);</span>
+<span class="nc" id="L115">		sb.append('|');</span>
+<span class="nc" id="L116">		sb.append(fontFamilyPattern);</span>
+<span class="nc" id="L117">		sb.append('|');</span>
 		// sb.append(spritePattern);
 		// sb.append('|');
-<span class="fc" id="L119">		sb.append(linkPattern);</span>
-<span class="fc" id="L120">		sb.append('|');</span>
-<span class="fc" id="L121">		sb.append(svgAttributePattern);</span>
+<span class="nc" id="L120">		sb.append(linkPattern);</span>
+<span class="nc" id="L121">		sb.append('|');</span>
+<span class="nc" id="L122">		sb.append(svgAttributePattern);</span>
 
-<span class="fc" id="L123">		htmlTag = sb.toString();</span>
-<span class="fc" id="L124">		tagOrText = MyPattern.cmpile(htmlTag + &quot;|.+?(?=&quot; + htmlTag + &quot;)|.+$&quot;);</span>
-<span class="fc" id="L125">	}</span>
+<span class="nc" id="L124">		htmlTag = sb.toString();</span>
+<span class="nc" id="L125">		tagOrText = MyPattern.cmpile(htmlTag + &quot;|.+?(?=&quot; + htmlTag + &quot;)|.+$&quot;);</span>
+<span class="nc" id="L126">	}</span>
 
-<span class="nc" id="L127">	private final List&lt;String&gt; splitted = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L128">	private final List&lt;String&gt; splitted = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L129">	public Splitter(String s) {</span>
-<span class="nc" id="L130">		final Matcher2 matcher = tagOrText.matcher(s);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		while (matcher.find()) {</span>
-<span class="nc" id="L132">			String part = matcher.group(0);</span>
-<span class="nc" id="L133">			part = StringUtils.showComparatorCharacters(part);</span>
-<span class="nc" id="L134">			splitted.add(part);</span>
-<span class="nc" id="L135">		}</span>
-<span class="nc" id="L136">	}</span>
+<span class="nc" id="L130">	public Splitter(String s) {</span>
+<span class="nc" id="L131">		final Matcher2 matcher = tagOrText.matcher(s);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		while (matcher.find()) {</span>
+<span class="nc" id="L133">			String part = matcher.group(0);</span>
+<span class="nc" id="L134">			part = StringUtils.showComparatorCharacters(part);</span>
+<span class="nc" id="L135">			splitted.add(part);</span>
+<span class="nc" id="L136">		}</span>
+<span class="nc" id="L137">	}</span>
 
 	List&lt;String&gt; getSplittedInternal() {
-<span class="nc" id="L139">		return splitted;</span>
+<span class="nc" id="L140">		return splitted;</span>
 	}
 
 	public static String purgeAllTag(String s) {
-<span class="nc" id="L143">		return s.replaceAll(htmlTag, &quot;&quot;);</span>
+<span class="nc" id="L144">		return s.replaceAll(htmlTag, &quot;&quot;);</span>
 	}
-
 
 //	@JawsStrange
 //	private Collection&lt;PlainText&gt; splitText(PlainText cmd) {

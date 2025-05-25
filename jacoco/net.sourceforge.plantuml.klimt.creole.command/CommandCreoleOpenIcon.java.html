@@ -72,16 +72,19 @@ public class CommandCreoleOpenIcon implements Command {
 <span class="nc bnc" id="L72" title="All 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L73">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L75">		final String src = m.group(2);</span>
-<span class="nc" id="L76">		final double scale = Parser.getScale(m.group(3), 1);</span>
-<span class="nc" id="L77">		final String colorName = Parser.getColor(m.group(3));</span>
-<span class="nc" id="L78">		HColor color = null;</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (colorName != null) {</span>
-<span class="nc" id="L80">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
-<span class="nc" id="L81">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
+<span class="nc" id="L75">		final String colorName1 = m.group(2);</span>
+<span class="nc" id="L76">		final String src = m.group(3);</span>
+<span class="nc" id="L77">		final double scale = Parser.getScale(m.group(4), 1);</span>
+<span class="nc" id="L78">		final String colorName2 = Parser.getColor(m.group(4));</span>
+		
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
+<span class="nc" id="L81">		HColor color = null;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (colorName != null) {</span>
+<span class="nc" id="L83">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
+<span class="nc" id="L84">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
 		}
-<span class="nc" id="L83">		stripe.addOpenIcon(src, scale, color);</span>
-<span class="nc" id="L84">		return line.substring(m.group(1).length());</span>
+<span class="nc" id="L86">		stripe.addOpenIcon(src, scale, color);</span>
+<span class="nc" id="L87">		return line.substring(m.group(1).length());</span>
 	}
 
 }

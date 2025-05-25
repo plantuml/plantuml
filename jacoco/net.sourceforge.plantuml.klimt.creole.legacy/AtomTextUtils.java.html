@@ -103,30 +103,30 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc bnc" id="L103" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
 <span class="nc" id="L104">				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO, true));</span>
 
-<span class="nc" id="L106">			final String valOpenicon = m.group(1);</span>
-<span class="nc" id="L107">			final String valSprite = m.group(4);</span>
-<span class="nc" id="L108">			final String valImg = m.group(6);</span>
-<span class="nc" id="L109">			final String valEmoji = m.group(8);</span>
+<span class="nc" id="L106">			final String valOpenicon = m.group(2);</span>
+<span class="nc" id="L107">			final String valSprite = m.group(5);</span>
+<span class="nc" id="L108">			final String valImg = m.group(7);</span>
+<span class="nc" id="L109">			final String valEmoji = m.group(9);</span>
 <span class="nc bnc" id="L110" title="All 2 branches missed.">			if (valEmoji != null)</span>
 <span class="nc" id="L111">				throw new UnsupportedOperationException();</span>
 
 <span class="nc bnc" id="L113" title="All 2 branches missed.">			if (valOpenicon != null) {</span>
 <span class="nc" id="L114">				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);</span>
 <span class="nc bnc" id="L115" title="All 2 branches missed.">				if (openIcon != null) {</span>
-<span class="nc" id="L116">					final double scale = Parser.getScale(m.group(2), 1);</span>
+<span class="nc" id="L116">					final double scale = Parser.getScale(m.group(3), 1);</span>
 <span class="nc" id="L117">					result.add(new AtomOpenIcon(null, scale, openIcon, fontConfiguration, url));</span>
 				}
 <span class="nc bnc" id="L119" title="All 2 branches missed.">			} else if (valSprite != null) {</span>
 				// Note: sprites are probably not working in URL
 <span class="nc" id="L121">				final Sprite sprite = skinSimple.getSprite(valSprite);</span>
 <span class="nc bnc" id="L122" title="All 2 branches missed.">				if (sprite != null) {</span>
-<span class="nc" id="L123">					final double scale = Parser.getScale(m.group(5), 1);</span>
+<span class="nc" id="L123">					final double scale = Parser.getScale(m.group(6), 1);</span>
 <span class="nc" id="L124">					final HColor fontColor = fontConfiguration.getColor();</span>
 <span class="nc" id="L125">					final HColor forcedColor = null;</span>
 <span class="nc" id="L126">					result.add(new AtomSprite(fontColor, forcedColor, scale, sprite, url));</span>
 				}
 <span class="nc bnc" id="L128" title="All 2 branches missed.">			} else if (valImg != null) {</span>
-<span class="nc" id="L129">				final double scale = Parser.getScale(m.group(7), 1);</span>
+<span class="nc" id="L129">				final double scale = Parser.getScale(m.group(8), 1);</span>
 <span class="nc" id="L130">				result.add(AtomImg.create(valImg, ImgValign.TOP, 0, scale, url));</span>
 
 			}

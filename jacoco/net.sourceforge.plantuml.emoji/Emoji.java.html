@@ -61,20 +61,20 @@ import net.sourceforge.plantuml.log.Logme;
 
 public class Emoji {
 	// ::remove folder when __HAXE__
-<span class="fc" id="L64">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L64">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
 
 	static {
-<span class="fc" id="L67">		final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (is != null)</span>
-<span class="fc" id="L69">			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
-<span class="fc" id="L70">				String s = null;</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">				while ((s = br.readLine()) != null)</span>
-<span class="fc" id="L72">					new Emoji(s);</span>
+<span class="nc" id="L67">		final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (is != null)</span>
+<span class="nc" id="L69">			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="nc" id="L70">				String s = null;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">				while ((s = br.readLine()) != null)</span>
+<span class="nc" id="L72">					new Emoji(s);</span>
 
 <span class="nc" id="L74">			} catch (IOException e) {</span>
 <span class="nc" id="L75">				Logme.error(e);</span>
-<span class="fc" id="L76">			}</span>
-<span class="fc" id="L77">	}</span>
+<span class="nc" id="L76">			}</span>
+<span class="nc" id="L77">	}</span>
 
 	public static Map&lt;String, Emoji&gt; getAll() {
 <span class="nc" id="L80">		return Collections.unmodifiableMap(new TreeMap&lt;&gt;(ALL));</span>
@@ -85,29 +85,29 @@ public class Emoji {
 	private final String unicode;
 	private final String shortcut;
 
-<span class="fc" id="L88">	private Emoji(String unicode) {</span>
-<span class="fc" id="L89">		final int x = unicode.indexOf(';');</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (x == -1) {</span>
-<span class="fc" id="L91">			this.shortcut = null;</span>
+<span class="nc" id="L88">	private Emoji(String unicode) {</span>
+<span class="nc" id="L89">		final int x = unicode.indexOf(';');</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (x == -1) {</span>
+<span class="nc" id="L91">			this.shortcut = null;</span>
 		} else {
-<span class="fc" id="L93">			this.shortcut = unicode.substring(x + 1);</span>
-<span class="fc" id="L94">			ALL.put(this.shortcut, this);</span>
-<span class="fc" id="L95">			unicode = unicode.substring(0, x);</span>
+<span class="nc" id="L93">			this.shortcut = unicode.substring(x + 1);</span>
+<span class="nc" id="L94">			ALL.put(this.shortcut, this);</span>
+<span class="nc" id="L95">			unicode = unicode.substring(0, x);</span>
 		}
-<span class="fc" id="L97">		this.unicode = unicode;</span>
-<span class="fc" id="L98">		ALL.put(unicode, this);</span>
-<span class="fc" id="L99">	}</span>
+<span class="nc" id="L97">		this.unicode = unicode;</span>
+<span class="nc" id="L98">		ALL.put(unicode, this);</span>
+<span class="nc" id="L99">	}</span>
 
-	public static String pattern() {
-<span class="fc" id="L102">		final StringBuilder sb = new StringBuilder(&quot;\\&lt;(#\\w+)?:(&quot;);</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (String s : ALL.keySet()) {</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (sb.toString().endsWith(&quot;(&quot;) == false)</span>
-<span class="fc" id="L105">				sb.append(&quot;|&quot;);</span>
-<span class="fc" id="L106">			sb.append(s);</span>
-<span class="fc" id="L107">		}</span>
-<span class="fc" id="L108">		sb.append(&quot;):\\&gt;&quot;);</span>
-<span class="fc" id="L109">		return sb.toString();</span>
-	}
+//	private static String patternOld() {
+//		final StringBuilder sb = new StringBuilder(&quot;\\&lt;(#\\w+)?:(&quot;);
+//		for (String s : ALL.keySet()) {
+//			if (sb.toString().endsWith(&quot;(&quot;) == false)
+//				sb.append(&quot;|&quot;);
+//			sb.append(s);
+//		}
+//		sb.append(&quot;):\\&gt;&quot;);
+//		return sb.toString();
+//	}
 
 	public static Emoji retrieve(String name) {
 <span class="nc" id="L113">		return ALL.get(name.toLowerCase());</span>

@@ -40,9 +40,6 @@ import java.awt.geom.AffineTransform;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.color.HColorSimple;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public class UGraphicWithScale {
@@ -51,105 +48,82 @@ public class UGraphicWithScale {
 	final private AffineTransform at;
 	final private double angle;
 	final private double scale;
-	final private HColor fontColor;
-	final private HColor forcedColor;
-	final private int minGray;
-	final private int maxGray;
+	final private ColorResolver colorResolver;
 
-	public UGraphicWithScale(UGraphic ug, HColor fontColor, HColor forcedColor, double scale, int minGray,
-			int maxGray) {
-<span class="nc" id="L61">		this(updateColor(ug, fontColor, forcedColor), fontColor, forcedColor,</span>
-<span class="nc" id="L62">				AffineTransform.getScaleInstance(scale, scale), 0, scale, minGray, maxGray);</span>
-<span class="nc" id="L63">	}</span>
+	public UGraphicWithScale(UGraphic ug, ColorResolver colorResolver, double scale) {
+<span class="nc" id="L54">		this(updateColor(ug, colorResolver), colorResolver, AffineTransform.getScaleInstance(scale, scale), 0, scale);</span>
+<span class="nc" id="L55">	}</span>
 
-	private static UGraphic updateColor(UGraphic ug, HColor fontColor, HColor forcedColor) {
-		final HColor color;
-<span class="nc bnc" id="L67" title="All 4 branches missed.">		if (fontColor == null &amp;&amp; forcedColor == null)</span>
-<span class="nc" id="L68">			color = HColors.BLACK;</span>
-		else
-<span class="nc bnc" id="L70" title="All 2 branches missed.">			color = forcedColor == null ? fontColor : forcedColor;</span>
-<span class="nc" id="L71">		return ug.apply(color).apply(color.bg());</span>
+	private static UGraphic updateColor(UGraphic ug, ColorResolver colorResolver) {
+<span class="nc" id="L58">		final HColor color = colorResolver.getDefaultColor();</span>
+<span class="nc" id="L59">		return ug.apply(color).apply(color.bg());</span>
 	}
 
-	private UGraphicWithScale(UGraphic ug, HColor fontColor, HColor forcedColor, AffineTransform at, double angle,
-<span class="nc" id="L75">			double scale, int minGray, int maxGray) {</span>
-<span class="nc" id="L76">		this.ug = ug;</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		this.fontColor = fontColor == null ? HColors.BLACK : fontColor;</span>
-<span class="nc" id="L78">		this.forcedColor = forcedColor;</span>
-<span class="nc" id="L79">		this.minGray = minGray;</span>
-<span class="nc" id="L80">		this.maxGray = maxGray;</span>
-<span class="nc" id="L81">		this.at = at;</span>
-<span class="nc" id="L82">		this.angle = angle;</span>
-<span class="nc" id="L83">		this.scale = scale;</span>
-<span class="nc" id="L84">	}</span>
+	private UGraphicWithScale(UGraphic ug, ColorResolver colorResolver, AffineTransform at, double angle,
+<span class="nc" id="L63">			double scale) {</span>
+<span class="nc" id="L64">		this.ug = ug;</span>
+<span class="nc" id="L65">		this.colorResolver = colorResolver;</span>
+<span class="nc" id="L66">		this.at = at;</span>
+<span class="nc" id="L67">		this.angle = angle;</span>
+<span class="nc" id="L68">		this.scale = scale;</span>
+<span class="nc" id="L69">	}</span>
 
 	public UGraphic getUg() {
-<span class="nc" id="L87">		return ug;</span>
+<span class="nc" id="L72">		return ug;</span>
 	}
 
 	public UGraphicWithScale apply(UChange change) {
-<span class="nc" id="L91">		return new UGraphicWithScale(ug.apply(change), fontColor, forcedColor, at, angle, scale, minGray, maxGray);</span>
+<span class="nc" id="L76">		return new UGraphicWithScale(ug.apply(change), colorResolver, at, angle, scale);</span>
 	}
 
 	public HColor getTrueColor(String code) {
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (code.equalsIgnoreCase(&quot;none&quot;))</span>
-<span class="nc" id="L96">			return HColors.none();</span>
-<span class="nc" id="L97">		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (forcedColor == null)</span>
-<span class="nc" id="L99">			return result;</span>
-<span class="nc" id="L100">		final HColorSimple color = (HColorSimple) forcedColor;</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (color.isGray())</span>
-<span class="nc" id="L102">			return result.asMonochrome();</span>
-<span class="nc" id="L103">		return result.asMonochrome(color, this.minGray, this.maxGray);</span>
+<span class="nc" id="L80">		return colorResolver.getTrueColor(code);</span>
 	}
 
 	public HColor getDefaultColor() {
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (forcedColor == null)</span>
-<span class="nc" id="L108">			return fontColor;</span>
-<span class="nc" id="L109">		return forcedColor;</span>
+<span class="nc" id="L84">		return colorResolver.getDefaultColor();</span>
 	}
 
 	public UGraphicWithScale applyScale(double changex, double changey) {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (changex != changey)</span>
-<span class="nc" id="L114">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L115">		final AffineTransform copy = new AffineTransform(at);</span>
-<span class="nc" id="L116">		copy.scale(changex, changey);</span>
-<span class="nc" id="L117">		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, angle, 1 * changex, minGray, maxGray);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (changex != changey)</span>
+<span class="nc" id="L89">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L90">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L91">		copy.scale(changex, changey);</span>
+<span class="nc" id="L92">		return new UGraphicWithScale(ug, colorResolver, copy, angle, 1 * changex);</span>
 	}
 
 	public void draw(UShape shape) {
-<span class="nc" id="L121">		ug.draw(shape);</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L96">		ug.draw(shape);</span>
+<span class="nc" id="L97">	}</span>
 
 	public UGraphicWithScale applyRotate(double delta_angle, double x, double y) {
-<span class="nc" id="L125">		final AffineTransform copy = new AffineTransform(at);</span>
-<span class="nc" id="L126">		copy.rotate(delta_angle * Math.PI / 180, x, y);</span>
-<span class="nc" id="L127">		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, this.angle + delta_angle, this.scale, minGray,</span>
-				maxGray);
+<span class="nc" id="L100">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L101">		copy.rotate(delta_angle * Math.PI / 180, x, y);</span>
+<span class="nc" id="L102">		return new UGraphicWithScale(ug, colorResolver, copy, this.angle + delta_angle, this.scale);</span>
 	}
 
 	public UGraphicWithScale applyTranslate(double x, double y) {
-<span class="nc" id="L132">		final AffineTransform copy = new AffineTransform(at);</span>
-<span class="nc" id="L133">		copy.translate(x, y);</span>
-<span class="nc" id="L134">		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, angle, this.scale, minGray, maxGray);</span>
+<span class="nc" id="L106">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L107">		copy.translate(x, y);</span>
+<span class="nc" id="L108">		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);</span>
 	}
 
 	public AffineTransform getAffineTransform() {
-<span class="nc" id="L138">		return at;</span>
+<span class="nc" id="L112">		return at;</span>
 	}
 
 	public UGraphicWithScale applyMatrix(double v1, double v2, double v3, double v4, double v5, double v6) {
-<span class="nc" id="L142">		final AffineTransform copy = new AffineTransform(at);</span>
-<span class="nc" id="L143">		copy.concatenate(new AffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));</span>
-<span class="nc" id="L144">		return new UGraphicWithScale(ug, fontColor, forcedColor, copy, angle, this.scale, minGray, maxGray);</span>
+<span class="nc" id="L116">		final AffineTransform copy = new AffineTransform(at);</span>
+<span class="nc" id="L117">		copy.concatenate(new AffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));</span>
+<span class="nc" id="L118">		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);</span>
 	}
 
 	public final double getAngle() {
-<span class="nc" id="L148">		return angle;</span>
+<span class="nc" id="L122">		return angle;</span>
 	}
 
 	public double getScale() {
-<span class="nc" id="L152">		return scale;</span>
+<span class="nc" id="L126">		return scale;</span>
 	}
 
 }
