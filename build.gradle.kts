@@ -164,7 +164,7 @@ tasks.test {
 	testLogging.showStandardStreams = true
 }
 
-tasks.register<Test>("run Dev. IntermediateTest") {
+tasks.register<Test>("runIntermediateTest") {
     description = "Runs the 'IntermediateTest'"
     group = "dev"
     useJUnitPlatform()
