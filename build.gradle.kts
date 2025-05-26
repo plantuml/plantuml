@@ -165,6 +165,15 @@ tasks.test {
 	testLogging.showStandardStreams = true
 }
 
+tasks.register<Test>("run Dev. IntermediateTest") {
+    description = "Runs the 'IntermediateTest'"
+    group = "dev"
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching("IntermediateTest*")
+    }
+}
+
 val pdfJar by tasks.registering(Jar::class) {
 	group = "build" // OR for example, "build"
 	description = "Assembles a jar containing dependencies to create PDFs."
