@@ -73,6 +73,11 @@ public class PngIOMetadata {
 
 		final ImageWriter writer = javax.imageio.ImageIO.getImageWritersByFormatName("png").next();
 		final ImageWriteParam writeParam = writer.getDefaultWriteParam();
+		if (writeParam.canWriteCompressed()) {
+			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			writeParam.setCompressionQuality(1.0f);
+		}
+
 		final ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier
 				.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
 
@@ -172,14 +177,13 @@ public class PngIOMetadata {
 
 	private static ImageWriter getImageWriter() {
 		final Iterator<ImageWriter> iterator = SImageIO.getImageWritersBySuffix("png");
-		for (final Iterator<ImageWriter> it = SImageIO.getImageWritersBySuffix("png"); it.hasNext();) {
+		while (iterator.hasNext()) {
 			final ImageWriter imagewriter = iterator.next();
-			Log.debug("PngIOMetadata countImageWriter = " + it.next());
+			Log.debug("PngIOMetadata imagewriter=" + imagewriter);
 			if (imagewriter.getClass().getName().equals("com.sun.imageio.plugins.png.PNGImageWriter")) {
 				Log.debug("PngIOMetadata Found sun PNGImageWriter");
 				return imagewriter;
 			}
-
 		}
 		Log.debug("Using first one");
 		return SImageIO.getImageWritersBySuffix("png").next();
