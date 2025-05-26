@@ -6,9 +6,9 @@
 [versions]
 ant                 = "1.10.15"
 assertj             = "3.27.3"
-batik               = "1.18"
+batik               = "1.19"
 elk                 = "0.10.0"
-fop                 = "2.10"
+fop                 = "2.11"
 glytching-junit-ext = "2.6.0"
 graalvm-native      = "0.10.6"
 jlatexmath          = "1.0.7"
@@ -17,7 +17,7 @@ junit-platform-launcher = "1.12.2"
 mockito-j8          = "4.+"
 mockito             = "5.+"
 adarshr-test-logger = "4.0.0"
-xmlunit-core        = "2.10.0"
+xmlunit-core        = "2.10.2"
 
 
 [libraries]

@@ -236,7 +236,7 @@ public class SequenceDiagram extends UmlDiagram {
 		if (ignoreNewpage)
 			return;
 
-		events.add(new Newpage(strings));
+		events.add(new Newpage(strings, getSkinParam().getCurrentStyleBuilder()));
 	}
 
 	private boolean ignoreNewpage = false;

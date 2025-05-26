@@ -186,7 +186,7 @@ jobs:
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
 
-  deploy_javadoc:
+  deploy_javadoc_jacoco:
     needs: [ build_artifacts, test_linux ]
     if: needs.workflow_config.outputs.do_javadoc == 'true'
     runs-on: ubuntu-latest
@@ -203,11 +203,20 @@ jobs:
       - name: Build Javadoc
         run: gradle javadoc
 
-      - name: Deploy Javadoc to GitHub Pages
+      - name: Make Test
+        run: gradle test
+
+      - name: Build Jacoco HTML Report
+        run: gradle jacocoTestReport
+
+      - name: Move Jacoco HTML Report to docs folder
+        run: mv ./build/reports/jacoco/test/html ./build/docs/jacoco
+
+      - name: Deploy Javadoc and Jacoco to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/docs/javadoc
+          publish_dir: ./build/docs
 
 
   upload:

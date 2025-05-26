@@ -98,16 +98,16 @@ public class Emoji {
 		ALL.put(unicode, this);
 	}
 
-	public static String pattern() {
-		final StringBuilder sb = new StringBuilder("\\<(#\\w+)?:(");
-		for (String s : ALL.keySet()) {
-			if (sb.toString().endsWith("(") == false)
-				sb.append("|");
-			sb.append(s);
-		}
-		sb.append("):\\>");
-		return sb.toString();
-	}
+//	private static String patternOld() {
+//		final StringBuilder sb = new StringBuilder("\\<(#\\w+)?:(");
+//		for (String s : ALL.keySet()) {
+//			if (sb.toString().endsWith("(") == false)
+//				sb.append("|");
+//			sb.append(s);
+//		}
+//		sb.append("):\\>");
+//		return sb.toString();
+//	}
 
 	public static Emoji retrieve(String name) {
 		return ALL.get(name.toLowerCase());
@@ -129,7 +129,7 @@ public class Emoji {
 			final String singleLine = br.readLine();
 			data.add(singleLine);
 		}
-		this.nano = new SvgNanoParser(data, false);
+		this.nano = new SvgNanoParser(data);
 	}
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
@@ -138,7 +138,7 @@ public class Emoji {
 		} catch (IOException e) {
 			Logme.error(e);
 		}
-		nano.drawU(ug, scale, colorForMonochrome);
+		nano.drawU(ug, scale, colorForMonochrome, colorForMonochrome);
 	}
 
 	public String getShortcut() {

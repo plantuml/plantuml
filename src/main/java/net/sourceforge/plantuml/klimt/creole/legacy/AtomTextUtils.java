@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
@@ -81,18 +82,18 @@ public class AtomTextUtils {
 		if (display.size() > 1) {
 			final List<Atom> all = new ArrayList<>();
 			for (CharSequence s : display.asList())
-				all.add(createAtomText(s.toString(), url, fontConfiguration, skinSimple));
+				all.add(createAtomTextForUrl(s.toString(), url, fontConfiguration, skinSimple));
 
 			return new AtomVerticalTexts(all);
 
 		}
-		return createAtomText(url.getLabel(), url, fontConfiguration, skinSimple);
+		return createAtomTextForUrl(url.getLabel(), url, fontConfiguration, skinSimple);
 	}
 
-	private static final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|"
+	private static final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern + "|"
 			+ Splitter.imgPatternNoSrcColon + "|" + Splitter.emojiPattern);
 
-	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
+	private static Atom createAtomTextForUrl(final String text, Url url, FontConfiguration fontConfiguration,
 			ISkinSimple skinSimple) {
 		final Matcher m = p.matcher(text);
 		final List<Atom> result = new ArrayList<>();
@@ -102,27 +103,30 @@ public class AtomTextUtils {
 			if (sb.length() > 0)
 				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO, true));
 
-			final String valOpenicon = m.group(1);
-			final String valSprite = m.group(3);
-			final String valImg = m.group(5);
-			final String valEmoji = m.group(7);
+			final String valOpenicon = m.group(2);
+			final String valSprite = m.group(5);
+			final String valImg = m.group(7);
+			final String valEmoji = m.group(9);
 			if (valEmoji != null)
 				throw new UnsupportedOperationException();
 
 			if (valOpenicon != null) {
 				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);
 				if (openIcon != null) {
-					final double scale = Parser.getScale(m.group(2), 1);
+					final double scale = Parser.getScale(m.group(3), 1);
 					result.add(new AtomOpenIcon(null, scale, openIcon, fontConfiguration, url));
 				}
 			} else if (valSprite != null) {
+				// Note: sprites are probably not working in URL
 				final Sprite sprite = skinSimple.getSprite(valSprite);
 				if (sprite != null) {
-					final double scale = Parser.getScale(m.group(4), 1);
-					result.add(new AtomSprite(null, scale, fontConfiguration, sprite, url));
+					final double scale = Parser.getScale(m.group(6), 1);
+					final HColor fontColor = fontConfiguration.getColor();
+					final HColor forcedColor = null;
+					result.add(new AtomSprite(fontColor, forcedColor, scale, sprite, url));
 				}
 			} else if (valImg != null) {
-				final double scale = Parser.getScale(m.group(6), 1);
+				final double scale = Parser.getScale(m.group(8), 1);
 				result.add(AtomImg.create(valImg, ImgValign.TOP, 0, scale, url));
 
 			}

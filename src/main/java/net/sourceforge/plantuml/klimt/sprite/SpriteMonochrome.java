@@ -191,7 +191,7 @@ public class SpriteMonochrome implements Sprite {
 			for (int line = 0; line < height; line++)
 				maxCoef = Math.max(maxCoef, 1.0 * gray[line][col] / (grayLevel - 1));
 
-		for (int col = 0; col < width; col++) {
+		for (int col = 0; col < width; col++)
 			for (int line = 0; line < height; line++) {
 				final int grayValue = gray[line][col];
 				final double coef = 1.0 * grayValue / (grayLevel - 1);
@@ -203,15 +203,16 @@ public class SpriteMonochrome implements Sprite {
 				final Color c = gradient.getColor(colorMapper, coef, alpha);
 				im.setRGB(col, line, c.getRGB());
 			}
-		}
+
 		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), color);
+				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),
+						forcedColor == null ? fontColor : forcedColor);
 				ug.draw(image.scale(scale));
 			}
 
@@ -222,13 +223,13 @@ public class SpriteMonochrome implements Sprite {
 	}
 
 	public void exportSprite1(OutputStream fos) throws IOException {
-		for (int y = 0; y < this.getHeight(); y += 2) {
+		for (int y = 0; y < this.getHeight(); y += 2)
 			for (int x = 0; x < this.getWidth(); x += 1) {
 				int b1 = this.getGray(x, y);
 				int b2 = y + 1 < this.getHeight() ? this.getGray(x, y + 1) : b1;
 				fos.write(b1 * 16 + b2);
 			}
-		}
+
 	}
 
 }

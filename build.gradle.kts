@@ -14,6 +14,7 @@ plugins {
 	`maven-publish`
 	signing
     eclipse
+	jacoco
 //	alias(libs.plugins.adarshr.test.logger)
 }
 
@@ -36,7 +37,6 @@ dependencies {
 
 	testImplementation(libs.glytching.junit.extensions)
 	testImplementation(libs.assertj.core)
-	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.xmlunit.core)
 	if (JavaVersion.current().isJava8) {
 		testImplementation(libs.mockito.core.j8)
@@ -162,6 +162,15 @@ tasks.test {
 	}
 	useJUnitPlatform()
 	testLogging.showStandardStreams = true
+}
+
+tasks.register<Test>("runIntermediateTest") {
+    description = "Runs the 'IntermediateTest'"
+    group = "dev"
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching("IntermediateTest*")
+    }
 }
 
 val pdfJar by tasks.registering(Jar::class) {

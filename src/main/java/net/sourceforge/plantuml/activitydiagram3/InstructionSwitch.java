@@ -167,7 +167,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 			this.current.setSpecial(nextLinkRenderer);
 		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane,
 				LinkRendering.none().withDisplay(labelCase), labelCase, null,
-				LinkRendering.none().withDisplay(labelCase), null);
+				LinkRendering.none().withDisplay(labelCase), null, skinParam.getIHtmlColorSet());
 		this.switches.add(this.current);
 		return true;
 	}
@@ -182,7 +182,8 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
 		if (current == null || current.isEmpty())
 			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);
 		else

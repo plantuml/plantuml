@@ -33,11 +33,11 @@
  * 
  *
  */
-package net.sourceforge.plantuml.klimt.creole.command;
+package net.sourceforge.plantuml.emoji;
 
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+public interface GrayLevelRange {
+	
+	int getMinGrayLevel();
 
-public interface FontChange extends HtmlCommand {
-
-	FontConfiguration apply(FontConfiguration initial);
+	int getMaxGrayLevel();
 }

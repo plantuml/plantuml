@@ -62,17 +62,17 @@ public class SpriteSvgNanoParser implements Sprite {
 		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final ColorMapper colorMapper = ug.getColorMapper();
 				if (colorMapper == ColorMapper.MONOCHROME) {
 					ug.draw(img.monochrome().scale(scale));
-				} else if (color == null)
+				} else if (forcedColor == null)
 					ug.draw(img.scale(scale));
 				else
-					ug.draw(img.muteColor(color.toColor(colorMapper)).scale(scale));
+					ug.draw(img.muteColor(forcedColor.toColor(colorMapper)).scale(scale));
 
 //				ug.draw(img.muteColor(((HColorSimple) color).getColor999()).scale(scale));
 

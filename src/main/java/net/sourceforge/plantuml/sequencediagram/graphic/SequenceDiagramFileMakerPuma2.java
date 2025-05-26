@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
@@ -127,7 +128,10 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final double headerHeight = drawableSet.getHeadHeight(stringBounder);
 		final double tailHeight = drawableSet.getTailHeight(stringBounder, showFootbox);
 		final double signatureHeight = 0;
-		final double newpageHeight = drawableSet.getSkin().createComponentNewPage(drawableSet.getSkinParam())
+		final double newpageHeight = drawableSet.getSkin().createComponentNewPage(
+					new Style[] { ComponentType.NEWPAGE.getStyleSignature()
+ 						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },
+					drawableSet.getSkinParam())
 				.getPreferredHeight(stringBounder);
 
 		return new PageSplitter(fullDimension.getHeight(), headerHeight, positions, tailHeight, signatureHeight,

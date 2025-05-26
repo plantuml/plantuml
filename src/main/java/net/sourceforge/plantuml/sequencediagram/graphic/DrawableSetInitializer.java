@@ -166,8 +166,14 @@ class DrawableSetInitializer {
 			final ParticipantRange range = getParticipantRange(ev);
 			final double diffY = freeY2.getFreeY(range) - lastFreeY2.getFreeY(range);
 			// final double diffY = freeY2.diff(lastFreeY2);
+
 			if (autonewpage > 0 && diffY > 0 && diffY + getTotalHeight(0, stringBounder) > autonewpage)
-				prepareNewpageSpecial(stringBounder, new Newpage(null), ev, range);
+				// We create a temporary Newpage object used internally by the
+				// getPreferredHeight() method,
+				// which is hardcoded in ComponentRoseNewpage. The title is irrelevant in this
+				// context.
+				prepareNewpageSpecial(stringBounder,
+						new Newpage(null, drawableSet.getSkinParam().getCurrentStyleBuilder()), ev, range);
 
 			if (ev instanceof MessageExo)
 				prepareMessageExo(stringBounder, (MessageExo) ev, range);
@@ -303,7 +309,7 @@ class DrawableSetInitializer {
 
 	private void prepareNewpage(StringBounder stringBounder, Newpage newpage, ParticipantRange range) {
 		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range),
-				drawableSet.getSkin().createComponentNewPage(drawableSet.getSkinParam()));
+				drawableSet.getSkin().createComponentNewPage(newpage.getUsedStyles(), drawableSet.getSkinParam()));
 		this.lastFreeY2 = freeY2;
 		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);
 		drawableSet.addEvent(newpage, graphicalNewpage);
@@ -312,7 +318,7 @@ class DrawableSetInitializer {
 	private void prepareNewpageSpecial(StringBounder stringBounder, Newpage newpage, Event justBefore,
 			ParticipantRange range) {
 		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range),
-				drawableSet.getSkin().createComponentNewPage(drawableSet.getSkinParam()));
+				drawableSet.getSkin().createComponentNewPage(newpage.getUsedStyles(), drawableSet.getSkinParam()));
 		this.lastFreeY2 = freeY2;
 		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);
 		drawableSet.addEvent(newpage, graphicalNewpage, justBefore);
@@ -643,8 +649,8 @@ class DrawableSetInitializer {
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final Component line = drawableSet.getSkin().createComponent(new Style[] { style }, this.defaultLineType, null,
 				drawableSet.getSkinParam(), participantDisplay);
-		final Component delayLine = drawableSet.getSkin().createComponent(new Style[] { style }, ComponentType.DELAY_LINE, null,
-				drawableSet.getSkinParam(), participantDisplay);
+		final Component delayLine = drawableSet.getSkin().createComponent(new Style[] { style },
+				ComponentType.DELAY_LINE, null, drawableSet.getSkinParam(), participantDisplay);
 		final ParticipantBox box = new ParticipantBox(skinParam.getPragma(), p.getLocation(), head, line, tail,
 				delayLine, this.freeX, skinParam.maxAsciiMessageLength() > 0 ? 1 : 5, p);
 

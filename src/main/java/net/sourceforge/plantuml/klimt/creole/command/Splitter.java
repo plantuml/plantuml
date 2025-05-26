@@ -36,13 +36,11 @@
 package net.sourceforge.plantuml.klimt.creole.command;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.emoji.Emoji;
-import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -53,9 +51,9 @@ public class Splitter {
 
 	static final String endFontPattern = "\\</font\\>|\\</color\\>|\\</size\\>|\\</text\\>";
 	static final String endSupSub = "\\</sup\\>|\\</sub\\>";
-	public static final String fontPattern = "\\<font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\>";
-	public static final String fontColorPattern2 = "\\<color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)[%s]*\\>";
-	public static final String fontSizePattern2 = "\\<size[\\s:]+(\\d+)[%s]*\\>";
+	public static final String fontPattern = "\\<font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{1,6}|\\w+)[%g]?)+[%s]*\\>";
+	public static final String fontColorPattern = "\\<color[\\s:]+(#[0-9a-fA-F]{1,6}|#?\\w+)[%s]*\\>";
+	public static final String fontSizePattern = "\\<size[\\s:]+(\\d+)[%s]*\\>";
 	static final String fontSup = "\\<sup\\>";
 	static final String fontSub = "\\<sub\\>";
 	public static final String qrcodePattern = "\\<qrcode[\\s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
@@ -64,20 +62,19 @@ public class Splitter {
 	public static final String fontFamilyPattern = "\\<font[\\s:]+([^>]+)/?\\>";
 	public static final String svgAttributePattern = "\\<text[\\s:]+([^>]+)/?\\>";
 
-	private static final String scale2 = "(" + "(?:\\{scale=|\\*)[0-9.]+\\}?" + ")?";
-	private static final String scale = "(" + //
+	private static final String scaleOrColor = "(" + //
 			"[\\{,]?" + //
 			"(?:(?:scale=|\\*)[0-9.]+)?" + //
-			"(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?" + //
+			"(?:,?color[= :](?:#[0-9a-fA-F]{1,8}|\\w+))?" + //
 			"\\}?" + //
 			")?";
 
-	public static final String emojiPattern = Emoji.pattern();
-	public static final String openiconPattern = "\\<&([-\\w]+)" + scale + "\\>";
-	public static final String spritePattern2 = "\\<\\$(" + SpriteUtils.SPRITE_NAME + ")" + scale + "\\>";
+	// final StringBuilder sb = new StringBuilder("\\<(#\\w+)?:(");
 
-	public static final String spritePatternForMatch = spritePattern2;
-	// "\\<\\$" + SpriteUtils.SPRITE_NAME + "(?:\\{scale=(?:[0-9.]+)\\})?" + "\\>";
+	public static final String emojiPattern = "\\<(#\\w+)?:([0-9a-z][0-9_a-z]*):" + scaleOrColor + "\\>";
+	public static final String openiconPattern = "\\<(#\\w+)?&([-\\w]+)" + scaleOrColor + "\\>";
+
+	public static final String spritePattern = "\\<(#\\w+)?\\$(" + SpriteUtils.SPRITE_NAME + ")" + scaleOrColor + "\\>";
 
 	static final String htmlTag;
 
@@ -98,9 +95,9 @@ public class Splitter {
 		}
 		sb.append(fontPattern);
 		sb.append('|');
-		sb.append(fontColorPattern2);
+		sb.append(fontColorPattern);
 		sb.append('|');
-		sb.append(fontSizePattern2);
+		sb.append(fontSizePattern);
 		sb.append('|');
 		sb.append(fontSup);
 		sb.append('|');
@@ -145,21 +142,6 @@ public class Splitter {
 
 	public static String purgeAllTag(String s) {
 		return s.replaceAll(htmlTag, "");
-	}
-
-	@JawsStrange
-	public List<HtmlCommand> getHtmlCommands(boolean newLineAlone) {
-		final HtmlCommandFactory factory = new HtmlCommandFactory();
-		final List<HtmlCommand> result = new ArrayList<>();
-		for (String s : getSplittedInternal()) {
-			final HtmlCommand cmd = factory.getHtmlCommand(s);
-//			if (newLineAlone && cmd instanceof PlainText) {
-//				result.addAll(splitText((PlainText) cmd));
-//			} else {
-			result.add(cmd);
-//			}
-		}
-		return Collections.unmodifiableList(result);
 	}
 
 //	@JawsStrange

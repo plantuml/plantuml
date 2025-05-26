@@ -39,7 +39,6 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -60,16 +59,13 @@ public class SvgPath {
 	public SvgPath(String path, UTranslate translate) {
 		this.translate = translate;
 		// System.err.println("before=" + path);
-		path = StringDecipher.decipher(path);
-		// System.err.println("after=" + path);
+		final List<CharSequence> decipher = StringDecipher.decipher(path);
 
-		for (final StringTokenizer st = new StringTokenizer(path); st.hasMoreTokens();) {
-			final String token = st.nextToken();
-
-			if (token.matches("[a-zA-Z]"))
-				commands.add(new SvgCommandLetter(token));
+		for (final CharSequence token : decipher) {
+			if (token.length() == 1 && Character.isLetter(token.charAt(0)))
+				commands.add(new SvgCommandLetter(token.toString()));
 			else
-				commands.add(new SvgCommandNumber(token));
+				commands.add(new SvgCommandNumber(token.toString()));
 
 		}
 		commands = insertMissingLetter(commands);
@@ -190,7 +186,6 @@ public class SvgPath {
 			}
 		}
 		result = result.translate(translate.getDx() * factorx, translate.getDy() * factory);
-		result.setOpenIconic(true);
 		return result;
 	}
 
@@ -210,13 +205,20 @@ public class SvgPath {
 				final SvgPosition ctl = move.getSvgPosition(0);
 				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
 			} else if (letter == 'T') {
-				if (previous.getLetter() != 'Q')
-					throw new IllegalArgumentException();
-				// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
-				final SvgPosition lastCtl = previous.getSvgPosition(0);
-				final SvgPosition lastP = previous.lastPosition();
-				final SvgPosition ctl = lastP.getMirror(lastCtl);
-				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
+				if (previous.getLetter() == 'Q') {
+					// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
+					final SvgPosition lastCtl = previous.getSvgPosition(0);
+					final SvgPosition lastP = previous.lastPosition();
+					final SvgPosition ctl = lastP.getMirror(lastCtl);
+					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
+				} else if (previous.getLetter() == 'T') {
+					// Same logic as for Q followed by T: reflect the previous control point
+					final SvgPosition lastCtl = previous.getSvgPosition(0);
+					final SvgPosition lastP = previous.lastPosition();
+					final SvgPosition ctl = lastP.getMirror(lastCtl);
+					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
+				} else
+					throw new IllegalArgumentException("" + previous.getLetter());
 			} else if (letter == 'L') {
 				result.lineTo(position.affine(at));
 			} else if (letter == 'A') {
@@ -236,7 +238,6 @@ public class SvgPath {
 			previous = move;
 		}
 		result = result.translate(translate.getDx() * at.getScaleX(), translate.getDy() * at.getScaleY());
-		result.setOpenIconic(true);
 		return result;
 	}
 

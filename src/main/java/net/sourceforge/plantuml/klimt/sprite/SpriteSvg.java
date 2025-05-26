@@ -51,7 +51,7 @@ public class SpriteSvg implements Sprite {
 		this.svg = svg;
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
 		final UImageSvg img = new UImageSvg(svg, scale);
 		return new AbstractTextBlock() {
 

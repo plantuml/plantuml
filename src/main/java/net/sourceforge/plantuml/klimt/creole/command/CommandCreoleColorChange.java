@@ -52,9 +52,9 @@ public class CommandCreoleColorChange implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.fontColorPattern2 + "(.*?)\\</color\\>)");
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.fontColorPattern + "(.*?)\\</color\\>)");
 
-	private static final Pattern2 patternEol = MyPattern.cmpile("^(" + Splitter.fontColorPattern2 + "(.*)$)");
+	private static final Pattern2 patternEol = MyPattern.cmpile("^(" + Splitter.fontColorPattern + "(.*)$)");
 
 	private final Pattern2 mypattern;
 

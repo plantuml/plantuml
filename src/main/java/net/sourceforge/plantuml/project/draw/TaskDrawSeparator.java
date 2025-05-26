@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -74,11 +75,13 @@ public class TaskDrawSeparator implements TaskDraw {
 	private final String name;
 	private final StyleBuilder styleBuilder;
 	private final HColorSet colorSet;
+	private final ISkinParam skinParam;
 
 	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, Day min, Day max, StyleBuilder styleBuilder,
-			HColorSet colorSet) {
+			ISkinParam skinParam) {
 		this.styleBuilder = styleBuilder;
-		this.colorSet = colorSet;
+		this.skinParam = skinParam;
+		this.colorSet = skinParam.getIHtmlColorSet();
 		this.name = name;
 		this.y = y;
 		this.timeScale = timeScale;
@@ -119,8 +122,8 @@ public class TaskDrawSeparator implements TaskDraw {
 		if (name == null)
 			return TextBlockUtils.empty(0, 0);
 
-		return Display.getWithNewlines(styleBuilder.getSkinParam().getPragma(), this.name)
-				.create(getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		return Display.getWithNewlines(skinParam.getPragma(), this.name).create(getFontConfiguration(),
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	private FontConfiguration getFontConfiguration() {

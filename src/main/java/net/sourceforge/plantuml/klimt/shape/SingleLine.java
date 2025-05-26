@@ -39,21 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.creole.command.FontChange;
-import net.sourceforge.plantuml.klimt.creole.command.HtmlCommand;
-import net.sourceforge.plantuml.klimt.creole.command.Img;
-import net.sourceforge.plantuml.klimt.creole.command.PlainText;
-import net.sourceforge.plantuml.klimt.creole.command.Splitter;
-import net.sourceforge.plantuml.klimt.creole.command.SpriteCommand;
-import net.sourceforge.plantuml.klimt.creole.command.TextLink;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.sprite.Sprite;
-import net.sourceforge.plantuml.klimt.sprite.SpriteContainer;
-import net.sourceforge.plantuml.url.Url;
 
 public class SingleLine extends AbstractTextBlock implements Line {
     // ::remove file when __HAXE__
@@ -61,37 +51,6 @@ public class SingleLine extends AbstractTextBlock implements Line {
 	private final List<TextBlock> blocs = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
-	public static SingleLine withSomeHtmlTag(String text, FontConfiguration fontConfiguration,
-			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
-		final SingleLine result = new SingleLine(horizontalAlignment);
-
-		if (text.length() == 0)
-			text = " ";
-
-		final Splitter lineSplitter = new Splitter(text);
-
-		for (HtmlCommand cmd : lineSplitter.getHtmlCommands(false)) {
-			if (cmd instanceof PlainText) {
-				final String s = ((PlainText) cmd).getText();
-				result.blocs.add(new TileText(s, fontConfiguration, null));
-			} else if (cmd instanceof TextLink) {
-				final String s = ((TextLink) cmd).getText();
-				final Url url = ((TextLink) cmd).getUrl();
-				// blocs.add(new TileText(s, fontConfiguration.add(FontStyle.UNDERLINE), url));
-				result.blocs.add(new TileText(s, fontConfiguration, url));
-			} else if (cmd instanceof Img) {
-				result.blocs.add(((Img) cmd).createMonoImage());
-			} else if (cmd instanceof SpriteCommand) {
-				final Sprite sprite = spriteContainer.getSprite(((SpriteCommand) cmd).getSprite());
-				if (sprite != null)
-					result.blocs.add(sprite.asTextBlock(fontConfiguration.getColor(), 1));
-
-			} else if (cmd instanceof FontChange) {
-				fontConfiguration = ((FontChange) cmd).apply(fontConfiguration);
-			}
-		}
-		return result;
-	}
 
 	public static SingleLine rawText(String text, FontConfiguration fontConfiguration) {
 		final SingleLine result = new SingleLine(HorizontalAlignment.LEFT);

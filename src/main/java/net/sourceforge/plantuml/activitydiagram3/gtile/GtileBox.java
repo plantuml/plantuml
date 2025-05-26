@@ -164,7 +164,7 @@ public class GtileBox extends AbstractGtile {
 		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
+		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
 
 		final UStroke thickness = style.getStroke();
 
@@ -179,7 +179,9 @@ public class GtileBox extends AbstractGtile {
 			ug = ug.apply(backColor.bg());
 
 		ug = ug.apply(thickness);
-		shape.drawU(ug);
+		// shape.drawU(ug);
+		boxStyle.drawMe(ug, widthTotal, heightTotal, shadowing, roundCorner);
+
 
 		if (horizontalAlignment == HorizontalAlignment.LEFT) {
 			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));

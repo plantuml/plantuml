@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -65,8 +66,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinSimple skinSimple) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinSimple);
+			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 	}
 
 	@Override
@@ -142,13 +143,12 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	protected TextBlock getTitle() {
-		return Display.getWithNewlines(getStyleBuilder().getSkinParam().getPragma(), prettyDisplay)
-				.create(getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		return Display.getWithNewlines(getPragma(), prettyDisplay).create(getFontConfiguration(),
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-
 
 		final double x1 = timeScale.getStartingPosition(start);
 		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));
@@ -162,7 +162,6 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		ug = ug.apply(UTranslate.dy(margin.getTop()));
 
-
 		ug = ug.apply(UTranslate.dx(x1));
 
 		if (displayString == null) {
@@ -172,13 +171,12 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 			ug = ug.apply(UTranslate.dx(delta / 2));
 			drawShape(applyColors(ug));
 		} else {
-			final TextBlock draw = Display.getWithNewlines(getStyleBuilder().getSkinParam().getPragma(), displayString)
-					.create(getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			final TextBlock draw = Display.getWithNewlines(getPragma(), displayString).create(getFontConfiguration(),
+					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			draw.drawU(ug);
 		}
 		if (url != null)
 			ug.closeUrl();
-
 
 	}
 

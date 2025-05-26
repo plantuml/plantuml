@@ -237,7 +237,7 @@
 
 ## V1.2023.13 (December 11, 2023)
 
-- [Javadoc improvement](https://plantuml.github.io/plantuml)
+- [Javadoc improvement](https://plantuml.github.io/plantuml/javadoc)
 - [Bug with activity diagram arrows fork](https://github.com/plantuml/plantuml/issues/1622#issuecomment-1847091587)
 - [Is is possible to change the milestone icon from a diamond?](https://forum.plantuml.net/18011/is-is-possible-to-change-the-milestone-icon-from-a-diamond)
 - [Gantt crashes with specific Project start dates](https://forum.plantuml.net/18262/gantt-crashes-with-specific-project-start-dates)

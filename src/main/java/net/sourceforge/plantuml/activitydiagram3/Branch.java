@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -96,15 +97,13 @@ public class Branch {
 	}
 
 	public Branch(StyleBuilder styleBuilder, Swimlane swimlane, LinkRendering labelPositive, Display labelTest,
-			HColor color, LinkRendering inlabel, Stereotype stereotype) {
+			HColor color, LinkRendering inlabel, Stereotype stereotype, HColorSet colorSet) {
 		this.inlabel = Objects.requireNonNull(inlabel);
 		this.labelTest = Objects.requireNonNull(labelTest);
 		this.labelPositive = Objects.requireNonNull(labelPositive);
 
 		final Style style = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
-		this.color = color == null
-				? style.value(PName.BackGroundColor).asColor(styleBuilder.getSkinParam().getIHtmlColorSet())
-				: color;
+		this.color = color == null ? style.value(PName.BackGroundColor).asColor(colorSet) : color;
 
 		this.list = new InstructionList(swimlane);
 	}
@@ -122,7 +121,8 @@ public class Branch {
 		return list.kill();
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
 		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);
 	}
 

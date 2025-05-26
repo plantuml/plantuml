@@ -77,11 +77,22 @@ public class ReportLog implements Iterable<String> {
 	}
 
 	public void checkOldVersionWarning() {
+		checkOldVersionWarning("<b>");
+	}
+
+	public void checkOldVersionWarningRaw() {
+		checkOldVersionWarning("");
+	}
+
+	public void checkOldVersionWarning(String lineFormating) {
+		if (Version.versionString().contains("beta"))
+			return;
+
 		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;
 		if (days >= 90) {
 			addEmptyLine();
-			add("<b>This version of PlantUML is " + days + " days old, so you should");
-			add("<b>consider upgrading from https://plantuml.com/download");
+			add(lineFormating + "This version of PlantUML is " + days + " days old, so you should");
+			add(lineFormating + "consider upgrading from https://plantuml.com/download");
 		}
 	}
 

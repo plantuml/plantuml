@@ -123,11 +123,11 @@ public class SpriteColor implements Sprite {
 		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), color);
+				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), fontColor);
 				ug.draw(image.scale(scale));
 			}
 
