@@ -37,7 +37,6 @@ dependencies {
 
 	testImplementation(libs.glytching.junit.extensions)
 	testImplementation(libs.assertj.core)
-	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.xmlunit.core)
 	if (JavaVersion.current().isJava8) {
 		testImplementation(libs.mockito.core.j8)
