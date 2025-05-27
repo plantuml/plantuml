@@ -89,6 +89,7 @@ public enum FileFormat {
 	DEBUG("text/plain"), //
 	// ::done
 	PNG("image/png"), //
+	PNG_EMPTY("image/png"), //
 	RAW("image/raw"), //
 	SVG("image/svg+xml"); //
 

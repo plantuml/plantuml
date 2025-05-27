@@ -377,6 +377,7 @@ public class ImageBuilder {
 		final ColorMapper colorMapper = fileFormatOption.getColorMapper();
 		switch (fileFormatOption.getFileFormat()) {
 		case PNG:
+		case PNG_EMPTY:
 		case RAW:
 			return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),
 					fileFormatOption.getFileFormat());
