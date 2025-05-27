@@ -76,7 +76,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 <span class="fc" id="L76">		this.skin = new TextSkin(fileFormat);</span>
 
 <span class="fc" id="L78">		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, sequenceDiagram.getSkinParam(),</span>
-<span class="fc" id="L79">				sequenceDiagram.isShowFootbox(), sequenceDiagram.getAutonewpage(), sequenceDiagram.getCounter());</span>
+<span class="fc" id="L79">				sequenceDiagram.isShowFootbox(), /*sequenceDiagram.getAutonewpage(),*/ sequenceDiagram.getCounter());</span>
 
 <span class="fc bfc" id="L81" title="All 2 branches covered.">		for (Participant p : sequenceDiagram.participants()) {</span>
 <span class="fc" id="L82">			initializer.addParticipant(p, null);</span>
