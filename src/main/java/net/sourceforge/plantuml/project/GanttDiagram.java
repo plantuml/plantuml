@@ -319,7 +319,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.WEEKLY)
 			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, nameDays,
-					printStart);
+					printStart, weekStartingNumber);
 		else if (printScale == PrintScale.MONTHLY)
 			return new TimeHeaderMonthly(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.QUARTERLY)
@@ -859,9 +859,11 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private WeeklyHeaderStrategy weeklyHeaderStrategy;
+	private int weekStartingNumber;
 
-	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy) {
+	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy, int weekStartingNumber) {
 		this.weeklyHeaderStrategy = weeklyHeaderStrategy;
+		this.weekStartingNumber = weekStartingNumber;
 	}
 
 	private boolean hideResourceName;
