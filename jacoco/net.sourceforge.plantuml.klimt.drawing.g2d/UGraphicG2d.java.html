@@ -208,13 +208,15 @@ public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements E
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="fc" id="L211">		final BufferedImage im = getBufferedImage();</span>
-<span class="fc" id="L212">		PngIO.write(im, getColorMapper(), os, metadata, dpi);</span>
-<span class="fc" id="L213">	}</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (format == FileFormat.PNG_EMPTY)</span>
+<span class="nc" id="L212">			return;</span>
+<span class="fc" id="L213">		final BufferedImage im = getBufferedImage();</span>
+<span class="fc" id="L214">		PngIO.write(im, getColorMapper(), os, metadata, dpi);</span>
+<span class="fc" id="L215">	}</span>
 
 	@Override
 	public double dpiFactor() {
-<span class="nc" id="L217">		return dpiFactor;</span>
+<span class="nc" id="L219">		return dpiFactor;</span>
 	}
 
 }
