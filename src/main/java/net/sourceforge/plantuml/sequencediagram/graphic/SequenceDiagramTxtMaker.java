@@ -76,7 +76,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		this.skin = new TextSkin(fileFormat);
 
 		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, sequenceDiagram.getSkinParam(),
-				sequenceDiagram.isShowFootbox(), sequenceDiagram.getAutonewpage(), sequenceDiagram.getCounter());
+				sequenceDiagram.isShowFootbox(), /*sequenceDiagram.getAutonewpage(),*/ sequenceDiagram.getCounter());
 
 		for (Participant p : sequenceDiagram.participants()) {
 			initializer.addParticipant(p, null);

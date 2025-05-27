@@ -85,15 +85,15 @@ class DrawableSetInitializer {
 	private Frontier freeY2 = null;
 	private Frontier lastFreeY2 = null;
 
-	private final double autonewpage;
+	// private final double autonewpage;
 
 	private ConstraintSet constraintSet;
 
-	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage,
+	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, /*double autonewpage,*/
 			AtomicInteger counter) {
 		this.drawableSet = new DrawableSet(skin, skinParam, counter);
 		this.showTail = showTail;
-		this.autonewpage = autonewpage;
+		// this.autonewpage = autonewpage;
 
 	}
 
@@ -167,13 +167,13 @@ class DrawableSetInitializer {
 			final double diffY = freeY2.getFreeY(range) - lastFreeY2.getFreeY(range);
 			// final double diffY = freeY2.diff(lastFreeY2);
 
-			if (autonewpage > 0 && diffY > 0 && diffY + getTotalHeight(0, stringBounder) > autonewpage)
-				// We create a temporary Newpage object used internally by the
-				// getPreferredHeight() method,
-				// which is hardcoded in ComponentRoseNewpage. The title is irrelevant in this
-				// context.
-				prepareNewpageSpecial(stringBounder,
-						new Newpage(null, drawableSet.getSkinParam().getCurrentStyleBuilder()), ev, range);
+//			if (autonewpage > 0 && diffY > 0 && diffY + getTotalHeight(0, stringBounder) > autonewpage)
+//				// We create a temporary Newpage object used internally by the
+//				// getPreferredHeight() method,
+//				// which is hardcoded in ComponentRoseNewpage. The title is irrelevant in this
+//				// context.
+//				prepareNewpageSpecial(stringBounder,
+//						new Newpage(null, drawableSet.getSkinParam().getCurrentStyleBuilder()), ev, range);
 
 			if (ev instanceof MessageExo)
 				prepareMessageExo(stringBounder, (MessageExo) ev, range);

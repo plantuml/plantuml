@@ -245,14 +245,14 @@ public class SequenceDiagram extends UmlDiagram {
 		this.ignoreNewpage = true;
 	}
 
-	private int autonewpage = -1;
+	// private int autonewpage = -1;
 
-	public final int getAutonewpage() {
-		return autonewpage;
-	}
+//	public final int getAutonewpage() {
+//		return autonewpage;
+//	}
 
 	public void setAutonewpage(int autonewpage) {
-		this.autonewpage = autonewpage;
+//		this.autonewpage = autonewpage;
 	}
 
 	public void divider(Display strings) {
