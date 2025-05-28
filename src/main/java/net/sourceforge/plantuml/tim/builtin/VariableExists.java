@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class VariableExists extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%variable_exists", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%variable_exists", 1);
+		return SIGNATURE;
 	}
 
 	@Override

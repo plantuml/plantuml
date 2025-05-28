@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Dirpath extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%dirpath", 0);
 	private final String value;
 
 	public Dirpath(Defines defines) {
@@ -55,7 +56,7 @@ public class Dirpath extends SimpleReturnFunction {
 	}
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%dirpath", 0);
+		return SIGNATURE;
 	}
 
 	@Override

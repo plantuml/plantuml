@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Hex2dec extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%hex2dec", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%hex2dec", 1);
+		return SIGNATURE;
 	}
 
 	@Override

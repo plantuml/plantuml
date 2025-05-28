@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Filedate extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%filedate", 0);
 	private final String value;
 
 	public Filedate(Defines defines) {
@@ -55,7 +56,7 @@ public class Filedate extends SimpleReturnFunction {
 	}
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%filedate", 0);
+		return SIGNATURE;
 	}
 
 	@Override

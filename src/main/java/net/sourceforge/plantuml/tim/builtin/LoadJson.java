@@ -93,12 +93,14 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  */
 public class LoadJson extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%load_json", 3);
+
 	private static final String VALUE_CHARSET_DEFAULT = "UTF-8";
 
 	private static final String VALUE_DEFAULT_DEFAULT = "{}";
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%load_json", 3);
+		return SIGNATURE;
 	}
 
 	@Override

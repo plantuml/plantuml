@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Strpos extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%strpos", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%strpos", 2);
+		return SIGNATURE;
 	}
 
 	@Override

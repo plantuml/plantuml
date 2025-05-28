@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.version.Version;
 
 public class GetVersion extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%version", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%version", 0);
+		return SIGNATURE;
 	}
 
 	@Override

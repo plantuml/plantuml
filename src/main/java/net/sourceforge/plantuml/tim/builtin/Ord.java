@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Ord extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%ord", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%ord", 1);
+		return SIGNATURE;
 	}
 
 	@Override

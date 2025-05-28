@@ -50,8 +50,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class ReverseHsluvColor extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%reverse_hsluv_color", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%reverse_hsluv_color", 1);
+		return SIGNATURE;
 	}
 
 	@Override

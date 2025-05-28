@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class RandomFunction extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%random", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%random", 2);
+		return SIGNATURE;
 	}
 
 	@Override

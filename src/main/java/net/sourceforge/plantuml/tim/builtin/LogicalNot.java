@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class LogicalNot extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%not", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%not", 1);
+		return SIGNATURE;
 	}
 
 	@Override

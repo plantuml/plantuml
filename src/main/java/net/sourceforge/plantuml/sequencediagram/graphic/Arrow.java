@@ -60,7 +60,7 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	private double maxX;
 	private final Url url;
 	private final Pragma pragma;
-	private final String uid;;
+	private final String uid;
 
 	public void setMaxX(double m) {
 		if (maxX != 0)

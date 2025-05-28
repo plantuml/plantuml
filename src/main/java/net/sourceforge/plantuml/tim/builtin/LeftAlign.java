@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class LeftAlign extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%left_align", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%left_align", 0);
+		return SIGNATURE;
 	}
 
 	@Override

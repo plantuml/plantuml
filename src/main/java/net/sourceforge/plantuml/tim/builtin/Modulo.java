@@ -48,9 +48,11 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Modulo extends SimpleReturnFunction {
 
-    @Override
+    private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%mod", 2);
+
+	@Override
     public TFunctionSignature getSignature() {
-        return new TFunctionSignature("%mod", 2);
+        return SIGNATURE;
     }
 
     @Override

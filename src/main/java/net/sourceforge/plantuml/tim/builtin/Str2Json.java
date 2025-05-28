@@ -40,8 +40,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonArray;
-import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -52,8 +50,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Str2Json extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%str2json", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%str2json", 1);
+		return SIGNATURE;
 	}
 
 	@Override

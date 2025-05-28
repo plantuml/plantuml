@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class NewlineShort extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%n", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%n", 0);
+		return SIGNATURE;
 	}
 
 	@Override

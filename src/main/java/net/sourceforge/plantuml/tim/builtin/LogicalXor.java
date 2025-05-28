@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class LogicalXor extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%xor", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%xor", 2);
+		return SIGNATURE;
 	}
 
 	@Override

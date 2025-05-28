@@ -46,8 +46,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Dollar extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%dollar", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%dollar", 0);
+		return SIGNATURE;
 	}
 
 	@Override

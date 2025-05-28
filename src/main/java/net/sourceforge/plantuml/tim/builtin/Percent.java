@@ -46,8 +46,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Percent extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%percent", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%percent", 0);
+		return SIGNATURE;
 	}
 
 	@Override

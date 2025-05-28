@@ -91,8 +91,8 @@ public abstract class USymbols {
 	public final static USymbol RECTANGLE = record("RECTANGLE", new USymbolRectangle(SName.rectangle));
 	public final static USymbol STACK = record("STACK", new USymbolStack());
 	public final static USymbol STORAGE = record("STORAGE", new USymbolStorage());
-	public final static USymbol USECASE = record("USECASE", new USymbolUsecase(false));;
-	public final static USymbol USECASE_BUSINESS = record("USECASE_BUSINESS", new USymbolUsecase(true));;
+	public final static USymbol USECASE = record("USECASE", new USymbolUsecase(false));
+	public final static USymbol USECASE_BUSINESS = record("USECASE_BUSINESS", new USymbolUsecase(true));
 
 
 	public static USymbol fromString(String s, ActorStyle actorStyle, ComponentStyle componentStyle,

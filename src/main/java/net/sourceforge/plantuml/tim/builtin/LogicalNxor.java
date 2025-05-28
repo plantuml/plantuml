@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class LogicalNxor extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%nxor", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%nxor", 2);
+		return SIGNATURE;
 	}
 
 	@Override

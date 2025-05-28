@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Filename extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%filename", 0);
 	private final String value;
 
 	public Filename(Defines defines) {
@@ -55,7 +56,7 @@ public class Filename extends SimpleReturnFunction {
 	}
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%filename", 0);
+		return SIGNATURE;
 	}
 
 	@Override

@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class GetCurrentTheme extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%get_current_theme", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%get_current_theme", 0);
+		return SIGNATURE;
 	}
 
 	@Override

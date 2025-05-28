@@ -56,8 +56,10 @@ public class GetAllStdlib extends SimpleReturnFunction {
 	// Maybe the function %get_all_stdlib() will be removed and replaced by
 	// %get_stdlib()
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%get_all_stdlib", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%get_all_stdlib", 1);
+		return SIGNATURE;
 	}
 
 	@Override

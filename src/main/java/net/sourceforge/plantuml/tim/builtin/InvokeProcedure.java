@@ -49,8 +49,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class InvokeProcedure implements TFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%invoke_procedure", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%invoke_procedure", 1);
+		return SIGNATURE;
 	}
 
 	@Override

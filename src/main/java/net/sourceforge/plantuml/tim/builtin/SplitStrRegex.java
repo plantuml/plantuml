@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class SplitStrRegex extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%splitstr_regex", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%splitstr_regex", 2);
+		return SIGNATURE;
 	}
 
 	@Override

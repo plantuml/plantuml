@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Backslash extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%backslash", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%backslash", 0);
+		return SIGNATURE;
 	}
 
 	@Override

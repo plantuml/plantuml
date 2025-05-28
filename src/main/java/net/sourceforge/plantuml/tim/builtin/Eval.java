@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Eval extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%eval", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%eval", 1);
+		return SIGNATURE;
 	}
 
 	@Override

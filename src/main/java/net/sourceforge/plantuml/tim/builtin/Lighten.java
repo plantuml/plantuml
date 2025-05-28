@@ -50,9 +50,11 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Lighten extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%lighten", 2);
+
 	// Inspired from https://github.com/Qix-/color
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%lighten", 2);
+		return SIGNATURE;
 	}
 
 	@Override

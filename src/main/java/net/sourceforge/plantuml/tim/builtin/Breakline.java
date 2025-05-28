@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Breakline extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%breakline", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%breakline", 0);
+		return SIGNATURE;
 	}
 
 	@Override

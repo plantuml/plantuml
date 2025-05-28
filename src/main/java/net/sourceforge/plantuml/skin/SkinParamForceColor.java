@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 public class SkinParamForceColor extends SkinParamDelegator {
 
-	final private ColorParam colorParam;;
+	final private ColorParam colorParam;
 	final private HColor color;
 
 	public SkinParamForceColor(ISkinParam skinParam, ColorParam colorParam, HColor color) {

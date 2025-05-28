@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class LogicalOr extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%or", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%or", 2);
+		return SIGNATURE;
 	}
 
 	@Override

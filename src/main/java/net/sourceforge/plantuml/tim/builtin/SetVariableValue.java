@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class SetVariableValue extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%set_variable_value", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%set_variable_value", 2);
+		return SIGNATURE;
 	}
 
 	@Override

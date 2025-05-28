@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Chr extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%chr", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%chr", 1);
+		return SIGNATURE;
 	}
 
 	@Override

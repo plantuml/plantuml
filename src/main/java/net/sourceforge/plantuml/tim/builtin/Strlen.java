@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Strlen extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%strlen", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%strlen", 1);
+		return SIGNATURE;
 	}
 
 	@Override

@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class LogicalNand extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%nand", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%nand", 2);
+		return SIGNATURE;
 	}
 
 	@Override

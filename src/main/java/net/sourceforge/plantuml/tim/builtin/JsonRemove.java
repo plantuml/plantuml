@@ -49,8 +49,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class JsonRemove extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%json_remove", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%json_remove", 2);
+		return SIGNATURE;
 	}
 
 	@Override

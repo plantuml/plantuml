@@ -50,9 +50,11 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class IsLight extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%is_light", 1);
+
 	// Inspired from https://github.com/Qix-/color
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%is_light", 1);
+		return SIGNATURE;
 	}
 
 	@Override

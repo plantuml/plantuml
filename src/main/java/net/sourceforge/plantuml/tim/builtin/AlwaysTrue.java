@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class AlwaysTrue extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%true", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%true", 0);
+		return SIGNATURE;
 	}
 
 	@Override

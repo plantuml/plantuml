@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class LogicalNor extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%nor", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%nor", 2);
+		return SIGNATURE;
 	}
 
 	@Override

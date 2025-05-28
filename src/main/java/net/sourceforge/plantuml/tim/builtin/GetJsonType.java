@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class GetJsonType extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%get_json_type", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%get_json_type", 1);
+		return SIGNATURE;
 	}
 
 	@Override

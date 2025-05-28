@@ -49,8 +49,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class JsonKeyExists extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%json_key_exists", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%json_key_exists", 1);
+		return SIGNATURE;
 	}
 
 	@Override

@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Getenv extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%getenv", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%getenv", 1);
+		return SIGNATURE;
 	}
 
 	@Override

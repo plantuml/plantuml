@@ -49,8 +49,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class JsonSet extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%json_set", 3);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%json_set", 3);
+		return SIGNATURE;
 	}
 
 	@Override

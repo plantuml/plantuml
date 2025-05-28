@@ -49,8 +49,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class DateFunction extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%date", 2);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%date", 2);
+		return SIGNATURE;
 	}
 
 	@Override

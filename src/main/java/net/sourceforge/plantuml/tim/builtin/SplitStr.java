@@ -49,8 +49,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class SplitStr extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%splitstr", 3);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%splitstr", 3);
+		return SIGNATURE;
 	}
 
 	@Override

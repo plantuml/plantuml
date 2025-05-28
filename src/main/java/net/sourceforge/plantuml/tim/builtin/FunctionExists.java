@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public class FunctionExists extends SimpleReturnFunction {
 	// ::remove folder when __HAXE__
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%function_exists", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%function_exists", 1);
+		return SIGNATURE;
 	}
 
 	@Override

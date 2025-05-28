@@ -50,8 +50,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class HslColor extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%hsl_color", 3);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%hsl_color", 3);
+		return SIGNATURE;
 	}
 
 	@Override

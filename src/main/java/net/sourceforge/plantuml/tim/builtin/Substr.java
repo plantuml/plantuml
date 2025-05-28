@@ -47,8 +47,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Substr extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%substr", 3);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%substr", 3);
+		return SIGNATURE;
 	}
 
 	@Override

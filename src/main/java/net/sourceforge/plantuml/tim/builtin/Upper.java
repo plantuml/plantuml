@@ -46,8 +46,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Upper extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%upper", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%upper", 1);
+		return SIGNATURE;
 	}
 
 	@Override

@@ -92,7 +92,7 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable {
 
-	private final ISkinParam skinParam;;
+	private final ISkinParam skinParam;
 	private final Pragma pragma;
 	private final PreprocessingArtifact preprocessing;
 

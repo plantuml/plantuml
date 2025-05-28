@@ -44,12 +44,13 @@ import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.Log;
 
 public class IntVal extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%intval", 1);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%intval", 1);
+		return SIGNATURE;
 	}
 
 	@Override

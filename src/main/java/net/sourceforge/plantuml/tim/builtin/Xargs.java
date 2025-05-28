@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Xargs extends SimpleReturnFunction {
 
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%xargs", 0);
+
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%xargs", 0);
+		return SIGNATURE;
 	}
 
 	@Override
