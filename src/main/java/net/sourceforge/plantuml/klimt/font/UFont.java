@@ -46,6 +46,9 @@ public class UFont {
 
 	private final Font font;
 	private final String family;
+	private final int style;
+	private final int size;
+	private final int hash;
 
 	// ::comment when __HAXE__
 	private static final Set<String> names = new HashSet<>();
@@ -72,12 +75,23 @@ public class UFont {
 	public static UFont build(String fontFamily, int fontStyle, int fontSize) {
 		final String family = getExistingFontFamily(fontFamily);
 		final Font font = new Font(family, fontStyle, fontSize);
-		return new UFont(font, fontFamily);
+		return new UFont(font, fontFamily, fontStyle, fontSize);
 	}
 
-	private UFont(Font font, String family) {
+	private UFont(Font font, String family, int style, int size) {
 		this.font = font;
 		this.family = family;
+		this.style = style;
+		this.size = size;
+		this.hash = computeFontHash(family, style, size);
+	}
+
+	public static int computeFontHash(String family, int style, int size) {
+		int hash = 17;
+		hash = 31 * hash + family.hashCode();
+		hash = 31 * hash + style;
+		hash = 31 * hash + size;
+		return hash;
 	}
 
 	public static String getExistingFontFamily(String fontFamily) {
@@ -116,7 +130,7 @@ public class UFont {
 	}
 
 	public UFont goTikz(int delta) {
-		return new UFont(new Font("Serif", getStyle(), getSize() + delta), "Serif");
+		return new UFont(new Font("Serif", getStyle(), getSize() + delta), "Serif", this.style, this.size + delta);
 	}
 
 	public static UFont monospaced(int size) {
@@ -128,11 +142,11 @@ public class UFont {
 	}
 
 	public UFont withSize(float size) {
-		return new UFont(font.deriveFont(size), family);
+		return new UFont(font.deriveFont(size), family, this.style, (int) size);
 	}
 
 	public UFont withStyle(int style) {
-		return new UFont(font.deriveFont(style), family);
+		return new UFont(font.deriveFont(style), family, style, this.size);
 	}
 
 	public UFont bold() {
@@ -203,7 +217,7 @@ public class UFont {
 
 	@Override
 	public int hashCode() {
-		return font.hashCode();
+		return hash;
 	}
 
 	@Override
