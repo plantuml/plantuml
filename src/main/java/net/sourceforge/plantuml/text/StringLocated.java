@@ -106,12 +106,13 @@ final public class StringLocated {
 		int level = 0;
 		StringBuilder pending = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
-			if (s.substring(i).startsWith("{{"))
+			final char ch = s.charAt(i);
+
+			if (ch == '{' && i + 1 < s.length() && s.charAt(i + 1) == '{')
 				level++;
-			else if (s.substring(i).startsWith("}}"))
+			else if (ch == '}' && i + 1 < s.length() && s.charAt(i + 1) == '}')
 				level--;
 
-			final char ch = s.charAt(i);
 			if (level > 0) {
 				pending.append(ch);
 			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {
