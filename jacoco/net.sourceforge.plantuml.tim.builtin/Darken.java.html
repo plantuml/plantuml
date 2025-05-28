@@ -50,27 +50,29 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L51">public class Darken extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L53">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%darken&quot;, 2);</span>
+
 	// Inspired from https://github.com/Qix-/color
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L55">		return new TFunctionSignature(&quot;%darken&quot;, 2);</span>
+<span class="fc" id="L57">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg == 2;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		return nbArg == 2;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L66">		final String colorString = values.get(0).toString();</span>
-<span class="fc" id="L67">		final int ratio = values.get(1).toInt();</span>
+<span class="fc" id="L68">		final String colorString = values.get(0).toString();</span>
+<span class="fc" id="L69">		final int ratio = values.get(1).toInt();</span>
 		try {
-<span class="fc" id="L69">			HColor color = HColorSet.instance().getColor(colorString);</span>
-<span class="fc" id="L70">			color = color.darken(ratio);</span>
-<span class="fc" id="L71">			return TValue.fromString(color.asString());</span>
-<span class="nc" id="L72">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L73">			throw new EaterException(&quot;No such color&quot;, location);</span>
+<span class="fc" id="L71">			HColor color = HColorSet.instance().getColor(colorString);</span>
+<span class="fc" id="L72">			color = color.darken(ratio);</span>
+<span class="fc" id="L73">			return TValue.fromString(color.asString());</span>
+<span class="nc" id="L74">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L75">			throw new EaterException(&quot;No such color&quot;, location);</span>
 		}
 	}
 }

@@ -49,28 +49,30 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L50">public class SplitStr extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L52">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%splitstr&quot;, 3);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L53">		return new TFunctionSignature(&quot;%splitstr&quot;, 3);</span>
+<span class="fc" id="L55">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nbArg == 2;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg == 2;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L64">		final JsonArray result = new JsonArray();</span>
+<span class="fc" id="L66">		final JsonArray result = new JsonArray();</span>
 
-<span class="fc" id="L66">		final String str = values.get(0).toString();</span>
-<span class="fc" id="L67">		final String separator = values.get(1).toString();</span>
+<span class="fc" id="L68">		final String str = values.get(0).toString();</span>
+<span class="fc" id="L69">		final String separator = values.get(1).toString();</span>
 
-<span class="fc" id="L69">		final StringTokenizer tokenizer = new StringTokenizer(str, separator);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		while (tokenizer.hasMoreElements())</span>
-<span class="fc" id="L71">			result.add(tokenizer.nextToken());</span>
+<span class="fc" id="L71">		final StringTokenizer tokenizer = new StringTokenizer(str, separator);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		while (tokenizer.hasMoreElements())</span>
+<span class="fc" id="L73">			result.add(tokenizer.nextToken());</span>
 
-<span class="fc" id="L73">		return TValue.fromJson(result);</span>
+<span class="fc" id="L75">		return TValue.fromJson(result);</span>
 	}
 
 }

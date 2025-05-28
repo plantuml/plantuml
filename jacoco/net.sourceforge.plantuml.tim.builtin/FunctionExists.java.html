@@ -48,20 +48,22 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 <span class="fc" id="L48">public class FunctionExists extends SimpleReturnFunction {</span>
 	// ::remove folder when __HAXE__
 
+<span class="fc" id="L51">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%function_exists&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L52">		return new TFunctionSignature(&quot;%function_exists&quot;, 1);</span>
+<span class="fc" id="L54">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		return nbArg == 1;</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L63">		final String name = values.get(0).toString();</span>
-<span class="fc" id="L64">		return TValue.fromBoolean(context.doesFunctionExist(name));</span>
+<span class="fc" id="L65">		final String name = values.get(0).toString();</span>
+<span class="fc" id="L66">		return TValue.fromBoolean(context.doesFunctionExist(name));</span>
 	}
 
 }

@@ -50,25 +50,27 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L51">public class IsLight extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L53">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%is_light&quot;, 1);</span>
+
 	// Inspired from https://github.com/Qix-/color
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L55">		return new TFunctionSignature(&quot;%is_light&quot;, 1);</span>
+<span class="fc" id="L57">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg == 1;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L66">		final String colorString = values.get(0).toString();</span>
+<span class="fc" id="L68">		final String colorString = values.get(0).toString();</span>
 		try {
-<span class="fc" id="L68">			final HColor color = HColorSet.instance().getColor(colorString);</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">			return TValue.fromBoolean(!color.isDark());</span>
-<span class="nc" id="L70">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L71">			throw new EaterException(&quot;No such color&quot;, location);</span>
+<span class="fc" id="L70">			final HColor color = HColorSet.instance().getColor(colorString);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			return TValue.fromBoolean(!color.isDark());</span>
+<span class="nc" id="L72">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L73">			throw new EaterException(&quot;No such color&quot;, location);</span>
 		}
 	}
 }

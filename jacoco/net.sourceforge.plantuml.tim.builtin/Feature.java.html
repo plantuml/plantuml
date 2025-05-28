@@ -47,26 +47,28 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L48">public class Feature extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L50">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%feature&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L51">		return new TFunctionSignature(&quot;%feature&quot;, 1);</span>
+<span class="fc" id="L53">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		return nbArg == 1;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L62">		final String arg = values.get(0).toString();</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (&quot;style&quot;.equalsIgnoreCase(arg))</span>
-<span class="fc" id="L64">			return TValue.fromInt(1);</span>
+<span class="fc" id="L64">		final String arg = values.get(0).toString();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (&quot;style&quot;.equalsIgnoreCase(arg))</span>
+<span class="fc" id="L66">			return TValue.fromInt(1);</span>
 
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (&quot;theme&quot;.equalsIgnoreCase(arg))</span>
-<span class="fc" id="L67">			return TValue.fromInt(1);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (&quot;theme&quot;.equalsIgnoreCase(arg))</span>
+<span class="fc" id="L69">			return TValue.fromInt(1);</span>
 
-<span class="fc" id="L69">		return TValue.fromInt(0);</span>
+<span class="fc" id="L71">		return TValue.fromInt(0);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

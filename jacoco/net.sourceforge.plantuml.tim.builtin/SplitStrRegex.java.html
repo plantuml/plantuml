@@ -48,28 +48,30 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L49">public class SplitStrRegex extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L51">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%splitstr_regex&quot;, 2);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L52">		return new TFunctionSignature(&quot;%splitstr_regex&quot;, 2);</span>
+<span class="fc" id="L54">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		return nbArg == 2;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		return nbArg == 2;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L63">		final JsonArray result = new JsonArray();</span>
+<span class="fc" id="L65">		final JsonArray result = new JsonArray();</span>
 
-<span class="fc" id="L65">		final String str = values.get(0).toString();</span>
-<span class="fc" id="L66">		final String separator = values.get(1).toString();</span>
+<span class="fc" id="L67">		final String str = values.get(0).toString();</span>
+<span class="fc" id="L68">		final String separator = values.get(1).toString();</span>
 
-<span class="fc" id="L68">		final String[] parts = str.split(separator);</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		for(String part : parts)</span>
-<span class="fc" id="L70">			result.add(part);</span>
+<span class="fc" id="L70">		final String[] parts = str.split(separator);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for(String part : parts)</span>
+<span class="fc" id="L72">			result.add(part);</span>
 
-<span class="fc" id="L72">		return TValue.fromJson(result);</span>
+<span class="fc" id="L74">		return TValue.fromJson(result);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

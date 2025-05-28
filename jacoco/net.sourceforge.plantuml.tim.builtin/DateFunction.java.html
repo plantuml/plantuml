@@ -49,32 +49,34 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L50">public class DateFunction extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L52">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%date&quot;, 2);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L53">		return new TFunctionSignature(&quot;%date&quot;, 2);</span>
+<span class="fc" id="L55">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L58" title="All 6 branches missed.">		return nbArg == 0 || nbArg == 1 || nbArg == 2;</span>
+<span class="nc bnc" id="L60" title="All 6 branches missed.">		return nbArg == 0 || nbArg == 1 || nbArg == 2;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (values.size() == 0)</span>
-<span class="fc" id="L65">			return TValue.fromString(new Date().toString());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (values.size() == 0)</span>
+<span class="fc" id="L67">			return TValue.fromString(new Date().toString());</span>
 
-<span class="fc" id="L67">		final String format = values.get(0).toString();</span>
+<span class="fc" id="L69">		final String format = values.get(0).toString();</span>
 		final long now;
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (values.size() == 2)</span>
-<span class="fc" id="L70">			now = 1000L * values.get(1).toInt();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (values.size() == 2)</span>
+<span class="fc" id="L72">			now = 1000L * values.get(1).toInt();</span>
 		else
-<span class="fc" id="L72">			now = System.currentTimeMillis();</span>
+<span class="fc" id="L74">			now = System.currentTimeMillis();</span>
 
 		try {
-<span class="fc" id="L75">			return TValue.fromString(new SimpleDateFormat(format).format(now));</span>
-<span class="fc" id="L76">		} catch (Exception e) {</span>
-<span class="nc" id="L77">			throw new EaterException(&quot;Bad date pattern&quot;, location);</span>
+<span class="fc" id="L77">			return TValue.fromString(new SimpleDateFormat(format).format(now));</span>
+<span class="fc" id="L78">		} catch (Exception e) {</span>
+<span class="nc" id="L79">			throw new EaterException(&quot;Bad date pattern&quot;, location);</span>
 		}
 	}
 }

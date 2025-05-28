@@ -50,34 +50,36 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L51">public class Size extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L53">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%size&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L54">		return new TFunctionSignature(&quot;%size&quot;, 1);</span>
+<span class="fc" id="L56">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		return nbArg == 1;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L65">		final TValue value = values.get(0);</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (value.isNumber())</span>
-<span class="fc" id="L67">			return TValue.fromInt(0);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (value.isString())</span>
-<span class="fc" id="L69">			return TValue.fromInt(value.toString().length());</span>
+<span class="fc" id="L67">		final TValue value = values.get(0);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (value.isNumber())</span>
+<span class="fc" id="L69">			return TValue.fromInt(0);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (value.isString())</span>
+<span class="fc" id="L71">			return TValue.fromInt(value.toString().length());</span>
 
-<span class="fc" id="L71">		final JsonValue json = value.toJson();</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (json instanceof JsonArray) {</span>
-<span class="fc" id="L73">			final JsonArray array = (JsonArray) json;</span>
-<span class="fc" id="L74">			return TValue.fromInt(array.size());</span>
+<span class="fc" id="L73">		final JsonValue json = value.toJson();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (json instanceof JsonArray) {</span>
+<span class="fc" id="L75">			final JsonArray array = (JsonArray) json;</span>
+<span class="fc" id="L76">			return TValue.fromInt(array.size());</span>
 		}
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (json instanceof JsonObject) {</span>
-<span class="fc" id="L77">			final JsonObject object = (JsonObject) json;</span>
-<span class="fc" id="L78">			return TValue.fromInt(object.size());</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (json instanceof JsonObject) {</span>
+<span class="fc" id="L79">			final JsonObject object = (JsonObject) json;</span>
+<span class="fc" id="L80">			return TValue.fromInt(object.size());</span>
 		}
-<span class="fc" id="L80">		return TValue.fromInt(0);</span>
+<span class="fc" id="L82">		return TValue.fromInt(0);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -48,38 +48,40 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L49">public class GetJsonType extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L51">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_json_type&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L52">		return new TFunctionSignature(&quot;%get_json_type&quot;, 1);</span>
+<span class="fc" id="L54">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		return nbArg == 1;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L63">		final TValue data = values.get(0);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (data.isString())</span>
-<span class="fc" id="L65">			return TValue.fromString(&quot;string&quot;);</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (data.isNumber())</span>
-<span class="fc" id="L67">			return TValue.fromString(&quot;number&quot;);</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (data.isJson() == false)</span>
-<span class="nc" id="L69">			return TValue.fromString(&quot;not_json&quot;);</span>
-<span class="fc" id="L70">		final JsonValue json = data.toJson();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (json.isArray())</span>
-<span class="fc" id="L72">			return TValue.fromString(&quot;array&quot;);</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (json.isObject())</span>
-<span class="fc" id="L74">			return TValue.fromString(&quot;object&quot;);</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (json.isBoolean())</span>
-<span class="fc" id="L76">			return TValue.fromString(&quot;boolean&quot;);</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (json.isNumber())</span>
-<span class="fc" id="L78">			return TValue.fromString(&quot;number&quot;);</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (json.isString())</span>
-<span class="fc" id="L80">			return TValue.fromString(&quot;string&quot;);</span>
+<span class="fc" id="L65">		final TValue data = values.get(0);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (data.isString())</span>
+<span class="fc" id="L67">			return TValue.fromString(&quot;string&quot;);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (data.isNumber())</span>
+<span class="fc" id="L69">			return TValue.fromString(&quot;number&quot;);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (data.isJson() == false)</span>
+<span class="nc" id="L71">			return TValue.fromString(&quot;not_json&quot;);</span>
+<span class="fc" id="L72">		final JsonValue json = data.toJson();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (json.isArray())</span>
+<span class="fc" id="L74">			return TValue.fromString(&quot;array&quot;);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (json.isObject())</span>
+<span class="fc" id="L76">			return TValue.fromString(&quot;object&quot;);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (json.isBoolean())</span>
+<span class="fc" id="L78">			return TValue.fromString(&quot;boolean&quot;);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (json.isNumber())</span>
+<span class="fc" id="L80">			return TValue.fromString(&quot;number&quot;);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (json.isString())</span>
+<span class="fc" id="L82">			return TValue.fromString(&quot;string&quot;);</span>
 
-<span class="fc" id="L82">		return TValue.fromString(&quot;json&quot;);</span>
+<span class="fc" id="L84">		return TValue.fromString(&quot;json&quot;);</span>
 	}
 
 }

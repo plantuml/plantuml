@@ -50,44 +50,46 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L51">public class GetJsonKey extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L53">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_json_keys&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L54">		return new TFunctionSignature(&quot;%get_json_keys&quot;, 1);</span>
+<span class="fc" id="L56">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		return nbArg == 1;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L65">		final TValue data = values.get(0);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (data.isJson() == false)</span>
-<span class="nc" id="L67">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
+<span class="fc" id="L67">		final TValue data = values.get(0);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (data.isJson() == false)</span>
+<span class="nc" id="L69">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
 
-<span class="fc" id="L69">		final JsonValue json = data.toJson();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (json.isObject()) {</span>
-<span class="fc" id="L71">			final JsonObject object = (JsonObject) json;</span>
-<span class="fc" id="L72">			final JsonArray result = new JsonArray();</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">			for (String key : object.names())</span>
-<span class="fc" id="L74">				result.add(key);</span>
-<span class="fc" id="L75">			return TValue.fromJson(result);</span>
+<span class="fc" id="L71">		final JsonValue json = data.toJson();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (json.isObject()) {</span>
+<span class="fc" id="L73">			final JsonObject object = (JsonObject) json;</span>
+<span class="fc" id="L74">			final JsonArray result = new JsonArray();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			for (String key : object.names())</span>
+<span class="fc" id="L76">				result.add(key);</span>
+<span class="fc" id="L77">			return TValue.fromJson(result);</span>
 		}
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (json.isArray()) {</span>
-<span class="fc" id="L78">			final JsonArray array = (JsonArray) json;</span>
-<span class="fc" id="L79">			final JsonArray result = new JsonArray();</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">			for (JsonValue tmp : array) {</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">				if (tmp.isObject()) {</span>
-<span class="fc" id="L82">					final JsonObject object = (JsonObject) tmp;</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">					for (String key : object.names())</span>
-<span class="fc" id="L84">						result.add(key);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (json.isArray()) {</span>
+<span class="fc" id="L80">			final JsonArray array = (JsonArray) json;</span>
+<span class="fc" id="L81">			final JsonArray result = new JsonArray();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			for (JsonValue tmp : array) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">				if (tmp.isObject()) {</span>
+<span class="fc" id="L84">					final JsonObject object = (JsonObject) tmp;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">					for (String key : object.names())</span>
+<span class="fc" id="L86">						result.add(key);</span>
 				}
-<span class="fc" id="L86">			}</span>
-<span class="fc" id="L87">			return TValue.fromJson(result);</span>
+<span class="fc" id="L88">			}</span>
+<span class="fc" id="L89">			return TValue.fromJson(result);</span>
 		}
 
-<span class="nc" id="L90">		throw new EaterException(&quot;Bad JSON type&quot;, location);</span>
+<span class="nc" id="L92">		throw new EaterException(&quot;Bad JSON type&quot;, location);</span>
 
 	}
 

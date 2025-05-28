@@ -49,40 +49,42 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L50">public class InvokeProcedure implements TFunction {</span>
 
+<span class="fc" id="L52">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%invoke_procedure&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L53">		return new TFunctionSignature(&quot;%invoke_procedure&quot;, 1);</span>
+<span class="fc" id="L55">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nbArg &gt; 0;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg &gt; 0;</span>
 	}
 
 	public TFunctionType getFunctionType() {
-<span class="fc" id="L62">		return TFunctionType.PROCEDURE;</span>
+<span class="fc" id="L64">		return TFunctionType.PROCEDURE;</span>
 	}
 
 	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; args,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc" id="L68">		final String fname = args.get(0).toString();</span>
-<span class="nc" id="L69">		final List&lt;TValue&gt; sublist = args.subList(1, args.size());</span>
-<span class="nc" id="L70">		final TFunctionSignature signature = new TFunctionSignature(fname, sublist.size());</span>
-<span class="nc" id="L71">		final TFunction func = context.getFunctionSmart(signature);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (func == null)</span>
-<span class="nc" id="L73">			throw new EaterException(&quot;Cannot find void function &quot; + fname, location);</span>
+<span class="nc" id="L70">		final String fname = args.get(0).toString();</span>
+<span class="nc" id="L71">		final List&lt;TValue&gt; sublist = args.subList(1, args.size());</span>
+<span class="nc" id="L72">		final TFunctionSignature signature = new TFunctionSignature(fname, sublist.size());</span>
+<span class="nc" id="L73">		final TFunction func = context.getFunctionSmart(signature);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (func == null)</span>
+<span class="nc" id="L75">			throw new EaterException(&quot;Cannot find void function &quot; + fname, location);</span>
 
-<span class="nc" id="L75">		func.executeProcedureInternal(context, memory, location, sublist, named);</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L77">		func.executeProcedureInternal(context, memory, location, sublist, named);</span>
+<span class="nc" id="L78">	}</span>
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) {
-<span class="nc" id="L81">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L83">		throw new UnsupportedOperationException();</span>
 	}
 
 	public boolean isUnquoted() {
-<span class="nc" id="L85">		return false;</span>
+<span class="nc" id="L87">		return false;</span>
 	}
 
 }

@@ -48,28 +48,29 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Filedate extends SimpleReturnFunction {
 
+<span class="fc" id="L51">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%filedate&quot;, 0);</span>
 	private final String value;
 
-<span class="fc" id="L53">	public Filedate(Defines defines) {</span>
-<span class="fc" id="L54">		this.value = defines.getEnvironmentValue(&quot;filedate&quot;);</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L54">	public Filedate(Defines defines) {</span>
+<span class="fc" id="L55">		this.value = defines.getEnvironmentValue(&quot;filedate&quot;);</span>
+<span class="fc" id="L56">	}</span>
 
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L58">		return new TFunctionSignature(&quot;%filedate&quot;, 0);</span>
+<span class="fc" id="L59">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		return nbArg == 0;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		return nbArg == 0;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (value == null) {</span>
-<span class="nc" id="L70">			return TValue.fromString(&quot;&quot;);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L71">			return TValue.fromString(&quot;&quot;);</span>
 		}
-<span class="nc" id="L72">		return TValue.fromString(value);</span>
+<span class="nc" id="L73">		return TValue.fromString(value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

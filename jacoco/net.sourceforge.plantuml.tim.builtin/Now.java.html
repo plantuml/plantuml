@@ -47,20 +47,22 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L48">public class Now extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L50">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%now&quot;, 0);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L51">		return new TFunctionSignature(&quot;%now&quot;, 0);</span>
+<span class="fc" id="L53">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		return nbArg == 0;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nbArg == 0;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc" id="L62">		final long now = System.currentTimeMillis() / 1000L;</span>
-<span class="nc" id="L63">		return TValue.fromInt((int) now);</span>
+<span class="nc" id="L64">		final long now = System.currentTimeMillis() / 1000L;</span>
+<span class="nc" id="L65">		return TValue.fromInt((int) now);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

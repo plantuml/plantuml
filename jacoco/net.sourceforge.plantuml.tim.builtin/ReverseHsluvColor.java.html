@@ -50,25 +50,27 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L51">public class ReverseHsluvColor extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L53">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%reverse_hsluv_color&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L54">		return new TFunctionSignature(&quot;%reverse_hsluv_color&quot;, 1);</span>
+<span class="fc" id="L56">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		return nbArg == 1;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L65">		final String colorString = values.get(0).toString();</span>
+<span class="fc" id="L67">		final String colorString = values.get(0).toString();</span>
 		try {
-<span class="fc" id="L67">			HColor color = HColorSet.instance().getColor(colorString);</span>
-<span class="fc" id="L68">			color = color.reverseHsluv();</span>
-<span class="fc" id="L69">			return TValue.fromString(color.asString());</span>
-<span class="nc" id="L70">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L71">			throw new EaterException(&quot;No such color&quot;, location);</span>
+<span class="fc" id="L69">			HColor color = HColorSet.instance().getColor(colorString);</span>
+<span class="fc" id="L70">			color = color.reverseHsluv();</span>
+<span class="fc" id="L71">			return TValue.fromString(color.asString());</span>
+<span class="nc" id="L72">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L73">			throw new EaterException(&quot;No such color&quot;, location);</span>
 		}
 	}
 }

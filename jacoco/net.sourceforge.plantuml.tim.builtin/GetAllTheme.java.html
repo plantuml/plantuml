@@ -51,27 +51,29 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L52">public class GetAllTheme extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L54">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_all_theme&quot;, 0);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L55">		return new TFunctionSignature(&quot;%get_all_theme&quot;, 0);</span>
+<span class="fc" id="L57">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg == 0;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		return nbArg == 0;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L66">		final JsonArray result = new JsonArray();</span>
+<span class="fc" id="L68">		final JsonArray result = new JsonArray();</span>
 		try {
-<span class="fc bfc" id="L68" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
-<span class="fc" id="L69">				result.add(theme);</span>
-<span class="fc" id="L70">			}</span>
-<span class="fc" id="L71">			return TValue.fromJson(result);</span>
-<span class="nc" id="L72">		} catch (IOException e) {</span>
-<span class="nc" id="L73">			Logme.error(e);</span>
-<span class="nc" id="L74">			return TValue.fromJson(result);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
+<span class="fc" id="L71">				result.add(theme);</span>
+<span class="fc" id="L72">			}</span>
+<span class="fc" id="L73">			return TValue.fromJson(result);</span>
+<span class="nc" id="L74">		} catch (IOException e) {</span>
+<span class="nc" id="L75">			Logme.error(e);</span>
+<span class="nc" id="L76">			return TValue.fromJson(result);</span>
 		}
 	}
 }

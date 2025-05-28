@@ -93,36 +93,38 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  */
 <span class="fc" id="L94">public class LoadJson extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L96">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%load_json&quot;, 3);</span>
+
 	private static final String VALUE_CHARSET_DEFAULT = &quot;UTF-8&quot;;
 
 	private static final String VALUE_DEFAULT_DEFAULT = &quot;{}&quot;;
 
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L101">		return new TFunctionSignature(&quot;%load_json&quot;, 3);</span>
+<span class="fc" id="L103">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="pc bpc" id="L106" title="3 of 6 branches missed.">		return nbArg == 1 || nbArg == 2 || nbArg == 3;</span>
+<span class="pc bpc" id="L108" title="3 of 6 branches missed.">		return nbArg == 1 || nbArg == 2 || nbArg == 3;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L112">		final String path = values.get(0).toString();</span>
+<span class="fc" id="L114">		final String path = values.get(0).toString();</span>
 		try {
-<span class="fc" id="L114">			String data = loadStringData(path, getCharset(values));</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">			if (data == null)</span>
-<span class="fc" id="L116">				data = getDefaultJson(values);</span>
+<span class="fc" id="L116">			String data = loadStringData(path, getCharset(values));</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">			if (data == null)</span>
+<span class="fc" id="L118">				data = getDefaultJson(values);</span>
 
-<span class="fc" id="L118">			JsonValue jsonValue = Json.parse(data);</span>
-<span class="fc" id="L119">			return TValue.fromJson(jsonValue);</span>
-<span class="nc" id="L120">		} catch (ParseException pe) {</span>
-<span class="nc" id="L121">			Logme.error(pe);</span>
-<span class="nc" id="L122">			throw new EaterException(&quot;JSON parse issue in source &quot; + path + &quot; on location &quot; + pe.getLocation(), location);</span>
-<span class="nc" id="L123">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L124">			Logme.error(e);</span>
-<span class="nc" id="L125">			throw new EaterException(&quot;JSON encoding issue in source &quot; + path + &quot;: &quot; + e.getMessage(), location);</span>
+<span class="fc" id="L120">			JsonValue jsonValue = Json.parse(data);</span>
+<span class="fc" id="L121">			return TValue.fromJson(jsonValue);</span>
+<span class="nc" id="L122">		} catch (ParseException pe) {</span>
+<span class="nc" id="L123">			Logme.error(pe);</span>
+<span class="nc" id="L124">			throw new EaterException(&quot;JSON parse issue in source &quot; + path + &quot; on location &quot; + pe.getLocation(), location);</span>
+<span class="nc" id="L125">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L126">			Logme.error(e);</span>
+<span class="nc" id="L127">			throw new EaterException(&quot;JSON encoding issue in source &quot; + path + &quot;: &quot; + e.getMessage(), location);</span>
 		}
 	}
 
@@ -133,10 +135,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	 * @return the defined default JSON or {@code &quot;{}&quot;}
 	 */
 	private String getDefaultJson(List&lt;TValue&gt; values) {
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (values.size() &gt; 1)</span>
-<span class="fc" id="L137">			return values.get(1).toString();</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (values.size() &gt; 1)</span>
+<span class="fc" id="L139">			return values.get(1).toString();</span>
 
-<span class="fc" id="L139">		return VALUE_DEFAULT_DEFAULT;</span>
+<span class="fc" id="L141">		return VALUE_DEFAULT_DEFAULT;</span>
 	}
 
 	/**
@@ -146,10 +148,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	 * @return defined charset or {@code &quot;UTF-8&quot;}
 	 */
 	private String getCharset(List&lt;TValue&gt; values) {
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (values.size() == 3)</span>
-<span class="nc" id="L150">			return values.get(2).toString();</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (values.size() == 3)</span>
+<span class="nc" id="L152">			return values.get(2).toString();</span>
 
-<span class="fc" id="L152">		return VALUE_CHARSET_DEFAULT;</span>
+<span class="fc" id="L154">		return VALUE_CHARSET_DEFAULT;</span>
 	}
 
 	/**
@@ -164,30 +166,30 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	private String loadStringData(String path, String charset)
 			throws EaterException, UnsupportedEncodingException {
 
-<span class="fc" id="L167">		byte[] byteData = null;</span>
-<span class="pc bpc" id="L168" title="2 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
-<span class="nc" id="L169">			final SURL url = SURL.create(path);</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L171">				byteData = url.getBytes();</span>
+<span class="fc" id="L169">		byte[] byteData = null;</span>
+<span class="pc bpc" id="L170" title="2 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
+<span class="nc" id="L171">			final SURL url = SURL.create(path);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L173">				byteData = url.getBytes();</span>
 			// ::comment when __CORE__
-<span class="nc" id="L173">		} else {</span>
+<span class="nc" id="L175">		} else {</span>
 			try {
-<span class="fc" id="L175">				final SFile file = FileSystem.getInstance().getFile(path);</span>
-<span class="pc bpc" id="L176" title="3 of 8 branches missed.">				if (file != null &amp;&amp; file.exists() &amp;&amp; file.canRead() &amp;&amp; !file.isDirectory()) {</span>
-<span class="fc" id="L177">					final ByteArrayOutputStream out = new ByteArrayOutputStream(1024 * 8);</span>
-<span class="fc" id="L178">					FileUtils.copyToStream(file, out);</span>
-<span class="fc" id="L179">					byteData = out.toByteArray();</span>
+<span class="fc" id="L177">				final SFile file = FileSystem.getInstance().getFile(path);</span>
+<span class="pc bpc" id="L178" title="3 of 8 branches missed.">				if (file != null &amp;&amp; file.exists() &amp;&amp; file.canRead() &amp;&amp; !file.isDirectory()) {</span>
+<span class="fc" id="L179">					final ByteArrayOutputStream out = new ByteArrayOutputStream(1024 * 8);</span>
+<span class="fc" id="L180">					FileUtils.copyToStream(file, out);</span>
+<span class="fc" id="L181">					byteData = out.toByteArray();</span>
 				}
-<span class="nc" id="L181">			} catch (IOException e) {</span>
-<span class="nc" id="L182">				Logme.error(e);</span>
-<span class="fc" id="L183">			}</span>
+<span class="nc" id="L183">			} catch (IOException e) {</span>
+<span class="nc" id="L184">				Logme.error(e);</span>
+<span class="fc" id="L185">			}</span>
 			// ::done
 		}
 
-<span class="pc bpc" id="L187" title="1 of 4 branches missed.">		if (byteData == null || byteData.length == 0)</span>
-<span class="fc" id="L188">			return null; // no length, no data (we want the default)</span>
+<span class="pc bpc" id="L189" title="1 of 4 branches missed.">		if (byteData == null || byteData.length == 0)</span>
+<span class="fc" id="L190">			return null; // no length, no data (we want the default)</span>
 
-<span class="fc" id="L190">		return new String(byteData, charset);</span>
+<span class="fc" id="L192">		return new String(byteData, charset);</span>
 
 	}
 }

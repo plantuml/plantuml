@@ -49,43 +49,45 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L50">public class JsonMerge extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L52">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%json_merge&quot;, 2);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L53">		return new TFunctionSignature(&quot;%json_merge&quot;, 2);</span>
+<span class="fc" id="L55">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nbArg == 2;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg == 2;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L64">		final TValue data0 = values.get(0);</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (!data0.isJson())</span>
-<span class="nc" id="L66">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
-<span class="fc" id="L67">		final TValue data1 = values.get(1);</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (!data1.isJson())</span>
-<span class="nc" id="L69">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
+<span class="fc" id="L66">		final TValue data0 = values.get(0);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (!data0.isJson())</span>
+<span class="nc" id="L68">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
+<span class="fc" id="L69">		final TValue data1 = values.get(1);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (!data1.isJson())</span>
+<span class="nc" id="L71">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
 
-<span class="fc" id="L71">		final JsonValue json0 = data0.toJson().cloneMe();</span>
-<span class="fc" id="L72">		final JsonValue json1 = data1.toJson();</span>
+<span class="fc" id="L73">		final JsonValue json0 = data0.toJson().cloneMe();</span>
+<span class="fc" id="L74">		final JsonValue json1 = data1.toJson();</span>
 
-<span class="pc bpc" id="L74" title="5 of 8 branches missed.">		if ((!json0.isArray() &amp;&amp; !json0.isObject() &amp;&amp; !json1.isArray() &amp;&amp; !json1.isObject())</span>
-<span class="fc bfc" id="L75" title="All 8 branches covered.">				|| ((json0.isArray() &amp;&amp; json1.isObject()) || (json0.isObject() &amp;&amp; json1.isArray())))</span>
-<span class="fc" id="L76">			return data0;</span>
+<span class="pc bpc" id="L76" title="5 of 8 branches missed.">		if ((!json0.isArray() &amp;&amp; !json0.isObject() &amp;&amp; !json1.isArray() &amp;&amp; !json1.isObject())</span>
+<span class="fc bfc" id="L77" title="All 8 branches covered.">				|| ((json0.isArray() &amp;&amp; json1.isObject()) || (json0.isObject() &amp;&amp; json1.isArray())))</span>
+<span class="fc" id="L78">			return data0;</span>
 
-<span class="pc bpc" id="L78" title="1 of 4 branches missed.">		if (json0.isArray() &amp;&amp; json1.isArray()) {</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">			for (JsonValue j1 : json1.asArray()) {</span>
-<span class="fc" id="L80">				json0.asArray().add(j1);</span>
-<span class="fc" id="L81">			}</span>
-<span class="fc" id="L82">			return TValue.fromJson(json0);</span>
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">		if (json0.isArray() &amp;&amp; json1.isArray()) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (JsonValue j1 : json1.asArray()) {</span>
+<span class="fc" id="L82">				json0.asArray().add(j1);</span>
+<span class="fc" id="L83">			}</span>
+<span class="fc" id="L84">			return TValue.fromJson(json0);</span>
 		}
-<span class="pc bpc" id="L84" title="2 of 4 branches missed.">		if (json0.isObject() &amp;&amp; json1.isObject()) {	</span>
-<span class="fc" id="L85">			json0.asObject().merge(json1.asObject());</span>
-<span class="fc" id="L86">			return TValue.fromJson(json0);</span>
+<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		if (json0.isObject() &amp;&amp; json1.isObject()) {	</span>
+<span class="fc" id="L87">			json0.asObject().merge(json1.asObject());</span>
+<span class="fc" id="L88">			return TValue.fromJson(json0);</span>
 		}
-<span class="nc" id="L88">		throw new EaterException(&quot;Bad JSON type&quot;, location);</span>
+<span class="nc" id="L90">		throw new EaterException(&quot;Bad JSON type&quot;, location);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

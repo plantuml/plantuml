@@ -48,13 +48,15 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L49">public class SetVariableValue extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L51">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%set_variable_value&quot;, 2);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L52">		return new TFunctionSignature(&quot;%set_variable_value&quot;, 2);</span>
+<span class="fc" id="L54">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		return nbArg == 2;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		return nbArg == 2;</span>
 	}
 
 	@Override
@@ -63,10 +65,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 		// if (memory instanceof TMemoryLocal) {
 		// memory = ((TMemoryLocal) memory).getGlobalForInternalUseOnly();
 		// }
-<span class="fc" id="L66">		final String name = values.get(0).toString();</span>
-<span class="fc" id="L67">		final TValue value = values.get(1);</span>
-<span class="fc" id="L68">		memory.putVariable(name, value, TVariableScope.GLOBAL, location);</span>
-<span class="fc" id="L69">		return TValue.fromString(&quot;&quot;);</span>
+<span class="fc" id="L68">		final String name = values.get(0).toString();</span>
+<span class="fc" id="L69">		final TValue value = values.get(1);</span>
+<span class="fc" id="L70">		memory.putVariable(name, value, TVariableScope.GLOBAL, location);</span>
+<span class="fc" id="L71">		return TValue.fromString(&quot;&quot;);</span>
 	}
 
 }

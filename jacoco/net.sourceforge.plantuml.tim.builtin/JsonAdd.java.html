@@ -39,8 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.json.JsonArray;
-import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -49,10 +47,12 @@ import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-<span class="fc" id="L52">public class JsonAdd extends SimpleReturnFunction {</span>
+<span class="fc" id="L50">public class JsonAdd extends SimpleReturnFunction {</span>
+
+<span class="fc" id="L52">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%json_add&quot;, 3);</span>
 
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L55">		return new TFunctionSignature(&quot;%json_add&quot;, 3);</span>
+<span class="fc" id="L55">		return SIGNATURE;</span>
 	}
 
 	@Override

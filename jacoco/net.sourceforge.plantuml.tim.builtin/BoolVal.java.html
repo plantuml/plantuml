@@ -49,29 +49,31 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L50">public class BoolVal extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L52">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%boolval&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L53">		return new TFunctionSignature(&quot;%boolval&quot;, 1);</span>
+<span class="fc" id="L55">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nbArg == 1;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L64">		final String s = values.get(0).toString().toLowerCase();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (trueValues.contains(s)) {</span>
-<span class="fc" id="L66">			return TValue.fromBoolean(true);</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">		} else if (falseValues.contains(s)) {</span>
-<span class="fc" id="L68">			return TValue.fromBoolean(false);</span>
+<span class="fc" id="L66">		final String s = values.get(0).toString().toLowerCase();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (trueValues.contains(s)) {</span>
+<span class="fc" id="L68">			return TValue.fromBoolean(true);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		} else if (falseValues.contains(s)) {</span>
+<span class="fc" id="L70">			return TValue.fromBoolean(false);</span>
 		}
 
-<span class="fc" id="L71">		throw new EaterException(&quot;Cannot convert &quot; + s + &quot; to boolean.&quot;, location);</span>
+<span class="fc" id="L73">		throw new EaterException(&quot;Cannot convert &quot; + s + &quot; to boolean.&quot;, location);</span>
 	}
 
-<span class="fc" id="L74">	private final List&lt;String&gt; trueValues = Arrays.asList(&quot;true&quot;, &quot;1&quot;);</span>
-<span class="fc" id="L75">	private final List&lt;String&gt; falseValues = Arrays.asList(&quot;false&quot;, &quot;0&quot;);</span>
+<span class="fc" id="L76">	private final List&lt;String&gt; trueValues = Arrays.asList(&quot;true&quot;, &quot;1&quot;);</span>
+<span class="fc" id="L77">	private final List&lt;String&gt; falseValues = Arrays.asList(&quot;false&quot;, &quot;0&quot;);</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

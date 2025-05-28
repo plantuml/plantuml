@@ -49,26 +49,28 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L50">public class RetrieveProcedure extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L52">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%retrieve_procedure&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L53">		return new TFunctionSignature(&quot;%retrieve_procedure&quot;, 1);</span>
+<span class="fc" id="L55">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nbArg &gt; 0;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nbArg &gt; 0;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc" id="L64">		final String fname = values.get(0).toString();</span>
-<span class="nc" id="L65">		final List&lt;TValue&gt; args = values.subList(1, values.size());</span>
-<span class="nc" id="L66">		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());</span>
-<span class="nc" id="L67">		final TFunction func = context.getFunctionSmart(signature);</span>
-<span class="nc" id="L68">		final int n1 = context.getResultList().size();</span>
-<span class="nc" id="L69">		func.executeProcedureInternal(context, memory, location, args, Collections.&lt;String, TValue&gt;emptyMap());</span>
-<span class="nc" id="L70">		final String extracted = context.extractFromResultList(n1);</span>
-<span class="nc" id="L71">		return TValue.fromString(extracted);</span>
+<span class="nc" id="L66">		final String fname = values.get(0).toString();</span>
+<span class="nc" id="L67">		final List&lt;TValue&gt; args = values.subList(1, values.size());</span>
+<span class="nc" id="L68">		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());</span>
+<span class="nc" id="L69">		final TFunction func = context.getFunctionSmart(signature);</span>
+<span class="nc" id="L70">		final int n1 = context.getResultList().size();</span>
+<span class="nc" id="L71">		func.executeProcedureInternal(context, memory, location, args, Collections.&lt;String, TValue&gt;emptyMap());</span>
+<span class="nc" id="L72">		final String extracted = context.extractFromResultList(n1);</span>
+<span class="nc" id="L73">		return TValue.fromString(extracted);</span>
 	}
 
 }

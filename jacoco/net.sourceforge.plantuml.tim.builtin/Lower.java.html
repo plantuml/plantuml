@@ -46,19 +46,21 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L47">public class Lower extends SimpleReturnFunction {</span>
 
+<span class="fc" id="L49">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%lower&quot;, 1);</span>
+
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L50">		return new TFunctionSignature(&quot;%lower&quot;, 1);</span>
+<span class="fc" id="L52">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		return nbArg == 1;</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		return nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) {
-<span class="fc" id="L61">		return TValue.fromString(values.get(0).toString().toLowerCase());</span>
+<span class="fc" id="L63">		return TValue.fromString(values.get(0).toString().toLowerCase());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

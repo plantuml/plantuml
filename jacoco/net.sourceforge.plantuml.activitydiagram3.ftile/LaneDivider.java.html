@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class LaneDivider extends AbstractTextBlock {
 
-	private final ISkinParam skinParam;;
+	private final ISkinParam skinParam;
 
 	private final double x1;
 	private final double x2;
