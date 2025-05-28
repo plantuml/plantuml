@@ -145,7 +145,7 @@ public class Stdlib {
 		return (read1byte(is) << 8) + read1byte(is);
 	}
 
-	/*private*/ public String loadResource(String file) throws IOException {
+	/* private */ public String loadResource(String file) throws IOException {
 		final SoftReference<String> cached = cache.get(file.toLowerCase());
 		if (cached != null) {
 			final String cachedResult = cached.get();
@@ -261,6 +261,8 @@ public class Stdlib {
 		inputStream.skip(nbLines * width);
 	}
 
+	private static final char[] HEX = "0123456789ABCDEF".toCharArray();
+
 	private String readSprite(int width, int height, InputStream inputStream) throws IOException {
 		final int nbLines = (height + 1) / 2;
 		final StringBuilder result = new StringBuilder();
@@ -272,8 +274,8 @@ public class Stdlib {
 				final int b = inputStream.read();
 				final int b1 = (b & 0xF0) >> 4;
 				final int b2 = (b & 0x0F);
-				sb1.append(toHexString(b1));
-				sb2.append(toHexString(b2));
+				sb1.append(HEX[b1]);
+				sb2.append(HEX[b2]);
 			}
 			result.append(sb1.toString());
 			result.append("\n");
@@ -285,10 +287,6 @@ public class Stdlib {
 			}
 		}
 		return result.toString();
-	}
-
-	private String toHexString(final int b) {
-		return Integer.toHexString(b).toUpperCase();
 	}
 
 	private boolean isSpriteLine(String s) {
