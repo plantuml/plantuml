@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -134,9 +135,16 @@ public class StyleSignatureBasic implements StyleSignature {
 		return this.names.equals(other.names);
 	}
 
+	private final AtomicInteger cachedHashCode = new AtomicInteger(0);
+
 	@Override
 	public int hashCode() {
-		return names.hashCode();
+		int hash = cachedHashCode.get();
+		if (hash == 0) {
+			hash = names.hashCode();
+			cachedHashCode.set(hash);
+		}
+		return hash;
 	}
 
 	@Override
