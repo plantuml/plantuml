@@ -189,117 +189,119 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="fc" id="L189">		final SpriteMonochrome result = new SpriteMonochrome(strings.get(0).length(), strings.size(), 16);</span>
 <span class="fc bfc" id="L190" title="All 2 branches covered.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
 <span class="fc bfc" id="L191" title="All 2 branches covered.">			for (int line = 0; line &lt; result.getHeight(); line++) {</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
-<span class="nc" id="L193">					continue;</span>
+<span class="fc" id="L192">				final String sline = strings.get(line);</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">				if (col &gt;= sline.length())</span>
+<span class="nc" id="L194">					continue;</span>
+
+<span class="fc" id="L196">				final char c = strings.get(line).charAt(col);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">				if (c != '0') {</span>
+<span class="fc" id="L198">					final int x = Character.digit(c, 16);</span>
+<span class="fc" id="L199">					result.setGray(col, line, x);</span>
 				}
-<span class="fc bfc" id="L195" title="All 2 branches covered.">				if (strings.get(line).charAt(col) != '0') {</span>
-<span class="fc" id="L196">					final String s = &quot;&quot; + strings.get(line).charAt(col);</span>
-<span class="fc" id="L197">					final int x = Integer.parseInt(StringUtils.goUpperCase(s), 16);</span>
-<span class="fc" id="L198">					result.setGray(col, line, x);</span>
-				}
+
 			}
 		}
-<span class="fc" id="L202">		return result;</span>
+<span class="fc" id="L204">		return result;</span>
 	}
 
 	private Sprite buildSprite8(int width, int height, List&lt;String&gt; strings) {
-<span class="nc" id="L206">		final SpriteMonochrome result = new SpriteMonochrome(width, height, 8);</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">			for (int line = 0; line &lt; strings.size(); line++) {</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
-<span class="nc" id="L210">					continue;</span>
+<span class="nc" id="L208">		final SpriteMonochrome result = new SpriteMonochrome(width, height, 8);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			for (int line = 0; line &lt; strings.size(); line++) {</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
+<span class="nc" id="L212">					continue;</span>
 				}
-<span class="nc" id="L212">				final int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));</span>
-<span class="nc" id="L213">				final int w1 = v / 8;</span>
-<span class="nc" id="L214">				final int w2 = v % 8;</span>
-<span class="nc" id="L215">				result.setGray(col, line * 2, w1);</span>
-<span class="nc" id="L216">				result.setGray(col, line * 2 + 1, w2);</span>
+<span class="nc" id="L214">				final int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));</span>
+<span class="nc" id="L215">				final int w1 = v / 8;</span>
+<span class="nc" id="L216">				final int w2 = v % 8;</span>
+<span class="nc" id="L217">				result.setGray(col, line * 2, w1);</span>
+<span class="nc" id="L218">				result.setGray(col, line * 2 + 1, w2);</span>
 
 			}
 		}
-<span class="nc" id="L220">		return result;</span>
+<span class="nc" id="L222">		return result;</span>
 	}
 
 	private Sprite buildSprite4(int width, int height, List&lt;String&gt; strings) {
-<span class="nc" id="L224">		final SpriteMonochrome result = new SpriteMonochrome(width, height, 4);</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">			for (int line = 0; line &lt; strings.size(); line++) {</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
-<span class="nc" id="L228">					continue;</span>
+<span class="nc" id="L226">		final SpriteMonochrome result = new SpriteMonochrome(width, height, 4);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			for (int line = 0; line &lt; strings.size(); line++) {</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
+<span class="nc" id="L230">					continue;</span>
 				}
-<span class="nc" id="L230">				int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));</span>
-<span class="nc" id="L231">				final int w1 = v / 16;</span>
-<span class="nc" id="L232">				v = v % 16;</span>
-<span class="nc" id="L233">				final int w2 = v / 4;</span>
-<span class="nc" id="L234">				final int w3 = v % 4;</span>
-<span class="nc" id="L235">				result.setGray(col, line * 3, w1);</span>
-<span class="nc" id="L236">				result.setGray(col, line * 3 + 1, w2);</span>
-<span class="nc" id="L237">				result.setGray(col, line * 3 + 2, w3);</span>
+<span class="nc" id="L232">				int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));</span>
+<span class="nc" id="L233">				final int w1 = v / 16;</span>
+<span class="nc" id="L234">				v = v % 16;</span>
+<span class="nc" id="L235">				final int w2 = v / 4;</span>
+<span class="nc" id="L236">				final int w3 = v % 4;</span>
+<span class="nc" id="L237">				result.setGray(col, line * 3, w1);</span>
+<span class="nc" id="L238">				result.setGray(col, line * 3 + 1, w2);</span>
+<span class="nc" id="L239">				result.setGray(col, line * 3 + 2, w3);</span>
 
 			}
 		}
-<span class="nc" id="L241">		return result;</span>
+<span class="nc" id="L243">		return result;</span>
 	}
 
 	// ::comment when __CORE__
 	public List&lt;String&gt; encodeZ(BufferedImage img) {
-<span class="nc" id="L246">		final int width = img.getWidth();</span>
-<span class="nc" id="L247">		final int height = img.getHeight();</span>
-<span class="nc" id="L248">		final byte raw[] = new byte[width * height];</span>
-<span class="nc" id="L249">		int cpt = 0;</span>
-<span class="nc" id="L250">		final int coef = 16 / nbColor;</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
-<span class="nc" id="L253">				final int color = getGrayOn16(img, x, y) / coef;</span>
-<span class="nc" id="L254">				raw[cpt++] = (byte) color;</span>
+<span class="nc" id="L248">		final int width = img.getWidth();</span>
+<span class="nc" id="L249">		final int height = img.getHeight();</span>
+<span class="nc" id="L250">		final byte raw[] = new byte[width * height];</span>
+<span class="nc" id="L251">		int cpt = 0;</span>
+<span class="nc" id="L252">		final int coef = 16 / nbColor;</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
+<span class="nc" id="L255">				final int color = getGrayOn16(img, x, y) / coef;</span>
+<span class="nc" id="L256">				raw[cpt++] = (byte) color;</span>
 			}
 		}
 		// final byte[] comp = new CompressionZlib().compress(raw);
-<span class="nc" id="L258">		final byte[] comp = new CompressionZopfliZlib().compress(raw);</span>
-<span class="nc" id="L259">		return cut(new AsciiEncoderFinalZeros().encode(comp));</span>
+<span class="nc" id="L260">		final byte[] comp = new CompressionZopfliZlib().compress(raw);</span>
+<span class="nc" id="L261">		return cut(new AsciiEncoderFinalZeros().encode(comp));</span>
 	}
 
 	private List&lt;String&gt; encodeZSpiral(BufferedImage img) {
-<span class="nc" id="L263">		final int width = img.getWidth();</span>
-<span class="nc" id="L264">		final int height = img.getHeight();</span>
-<span class="nc" id="L265">		final byte raw[] = new byte[width * height];</span>
-<span class="nc" id="L266">		final int coef = 16 / nbColor;</span>
-<span class="nc" id="L267">		final SpiralOnRectangle spiral = new SpiralOnRectangle(width, height);</span>
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		for (int cpt = 0; cpt &lt; width * height; cpt++) {</span>
-<span class="nc" id="L269">			final PairInt pt = spiral.nextPoint();</span>
-<span class="nc" id="L270">			final int color = getGrayOn16(img, pt.getX(), pt.getY()) / coef;</span>
-<span class="nc" id="L271">			raw[cpt] = (byte) color;</span>
+<span class="nc" id="L265">		final int width = img.getWidth();</span>
+<span class="nc" id="L266">		final int height = img.getHeight();</span>
+<span class="nc" id="L267">		final byte raw[] = new byte[width * height];</span>
+<span class="nc" id="L268">		final int coef = 16 / nbColor;</span>
+<span class="nc" id="L269">		final SpiralOnRectangle spiral = new SpiralOnRectangle(width, height);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		for (int cpt = 0; cpt &lt; width * height; cpt++) {</span>
+<span class="nc" id="L271">			final PairInt pt = spiral.nextPoint();</span>
+<span class="nc" id="L272">			final int color = getGrayOn16(img, pt.getX(), pt.getY()) / coef;</span>
+<span class="nc" id="L273">			raw[cpt] = (byte) color;</span>
 		}
 		// final byte[] comp = new CompressionZlib().compress(raw);
-<span class="nc" id="L274">		final byte[] comp = new CompressionZopfliZlib().compress(raw);</span>
-<span class="nc" id="L275">		return cut(new AsciiEncoderFinalZeros().encode(comp));</span>
+<span class="nc" id="L276">		final byte[] comp = new CompressionZopfliZlib().compress(raw);</span>
+<span class="nc" id="L277">		return cut(new AsciiEncoderFinalZeros().encode(comp));</span>
 	}
 
 	private List&lt;String&gt; cut(String s) {
-<span class="nc" id="L279">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L280" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i += 120) {</span>
-<span class="nc" id="L281">			final int j = Math.min(i + 120, s.length());</span>
-<span class="nc" id="L282">			result.add(s.substring(i, j));</span>
+<span class="nc" id="L281">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i += 120) {</span>
+<span class="nc" id="L283">			final int j = Math.min(i + 120, s.length());</span>
+<span class="nc" id="L284">			result.add(s.substring(i, j));</span>
 
 		}
-<span class="nc" id="L285">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L287">		return Collections.unmodifiableList(result);</span>
 	}
 	// ::done
 
 	public Sprite buildSpriteZ(int width, int height, String compressed) {
-<span class="nc" id="L290">		final byte comp[] = new AsciiEncoder().decode(compressed);</span>
+<span class="nc" id="L292">		final byte comp[] = new AsciiEncoder().decode(compressed);</span>
 		try {
-<span class="nc" id="L292">			final ByteArray img = new CompressionZlib().decompress(comp);</span>
-<span class="nc" id="L293">			final SpriteMonochrome result = new SpriteMonochrome(width, height, nbColor);</span>
-<span class="nc" id="L294">			int cpt = 0;</span>
-<span class="nc bnc" id="L295" title="All 2 branches missed.">			for (int line = 0; line &lt; result.getHeight(); line++)</span>
-<span class="nc bnc" id="L296" title="All 2 branches missed.">				for (int col = 0; col &lt; result.getWidth(); col++)</span>
-<span class="nc" id="L297">					result.setGray(col, line, img.getByteAt(cpt++));</span>
+<span class="nc" id="L294">			final ByteArray img = new CompressionZlib().decompress(comp);</span>
+<span class="nc" id="L295">			final SpriteMonochrome result = new SpriteMonochrome(width, height, nbColor);</span>
+<span class="nc" id="L296">			int cpt = 0;</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">			for (int line = 0; line &lt; result.getHeight(); line++)</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">				for (int col = 0; col &lt; result.getWidth(); col++)</span>
+<span class="nc" id="L299">					result.setGray(col, line, img.getByteAt(cpt++));</span>
 
-<span class="nc" id="L299">			return result;</span>
-<span class="nc" id="L300">		} catch (NoPlantumlCompressionException e) {</span>
-<span class="nc" id="L301">			Logme.error(e);</span>
-<span class="nc" id="L302">			return null;</span>
+<span class="nc" id="L301">			return result;</span>
+<span class="nc" id="L302">		} catch (NoPlantumlCompressionException e) {</span>
+<span class="nc" id="L303">			Logme.error(e);</span>
+<span class="nc" id="L304">			return null;</span>
 		}
 	}
 

@@ -187,10 +187,10 @@ class DrawableSetInitializer {
 <span class="fc" id="L187">				prepareLiveEvent(stringBounder, (LifeEvent) ev, range);</span>
 <span class="fc bfc" id="L188" title="All 2 branches covered.">			else if (ev instanceof GroupingLeaf)</span>
 <span class="fc" id="L189">				prepareGroupingLeaf(stringBounder, (GroupingLeaf) ev, range);</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">			else if (ev instanceof GroupingStart)</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			else if (ev instanceof GroupingStart)</span>
 <span class="fc" id="L191">				prepareGroupingStart(stringBounder, (GroupingStart) ev, range);</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">			else if (ev instanceof Newpage)</span>
-<span class="fc" id="L193">				prepareNewpage(stringBounder, (Newpage) ev, range);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			else if (ev instanceof Newpage)</span>
+<span class="nc" id="L193">				prepareNewpage(stringBounder, (Newpage) ev, range);</span>
 <span class="nc bnc" id="L194" title="All 2 branches missed.">			else if (ev instanceof Divider)</span>
 <span class="nc" id="L195">				prepareDivider(stringBounder, (Divider) ev, range);</span>
 <span class="nc bnc" id="L196" title="All 2 branches missed.">			else if (ev instanceof HSpace)</span>
@@ -253,9 +253,9 @@ class DrawableSetInitializer {
 	}
 
 	public double getYposition(StringBounder stringBounder, Newpage newpage) {
-<span class="fc" id="L256">		final GraphicalNewpage graphicalNewpage = (GraphicalNewpage) drawableSet</span>
-<span class="fc" id="L257">				.getEvent(Objects.requireNonNull(newpage));</span>
-<span class="fc" id="L258">		return graphicalNewpage.getStartingY();</span>
+<span class="nc" id="L256">		final GraphicalNewpage graphicalNewpage = (GraphicalNewpage) drawableSet</span>
+<span class="nc" id="L257">				.getEvent(Objects.requireNonNull(newpage));</span>
+<span class="nc" id="L258">		return graphicalNewpage.getStartingY();</span>
 	}
 
 	private void prepareMissingSpace(StringBounder stringBounder) {
@@ -308,12 +308,12 @@ class DrawableSetInitializer {
 <span class="fc" id="L308">	}</span>
 
 	private void prepareNewpage(StringBounder stringBounder, Newpage newpage, ParticipantRange range) {
-<span class="fc" id="L311">		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range),</span>
-<span class="fc" id="L312">				drawableSet.getSkin().createComponentNewPage(newpage.getUsedStyles(), drawableSet.getSkinParam()));</span>
-<span class="fc" id="L313">		this.lastFreeY2 = freeY2;</span>
-<span class="fc" id="L314">		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);</span>
-<span class="fc" id="L315">		drawableSet.addEvent(newpage, graphicalNewpage);</span>
-<span class="fc" id="L316">	}</span>
+<span class="nc" id="L311">		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range),</span>
+<span class="nc" id="L312">				drawableSet.getSkin().createComponentNewPage(newpage.getUsedStyles(), drawableSet.getSkinParam()));</span>
+<span class="nc" id="L313">		this.lastFreeY2 = freeY2;</span>
+<span class="nc" id="L314">		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);</span>
+<span class="nc" id="L315">		drawableSet.addEvent(newpage, graphicalNewpage);</span>
+<span class="nc" id="L316">	}</span>
 
 	private void prepareNewpageSpecial(StringBounder stringBounder, Newpage newpage, Event justBefore,
 			ParticipantRange range) {

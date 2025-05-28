@@ -106,24 +106,25 @@ final public class StringLocated {
 <span class="fc" id="L106">		int level = 0;</span>
 <span class="fc" id="L107">		StringBuilder pending = new StringBuilder();</span>
 <span class="fc bfc" id="L108" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (s.substring(i).startsWith(&quot;{{&quot;))</span>
-<span class="fc" id="L110">				level++;</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">			else if (s.substring(i).startsWith(&quot;}}&quot;))</span>
-<span class="fc" id="L112">				level--;</span>
+<span class="fc" id="L109">			final char ch = s.charAt(i);</span>
 
-<span class="fc" id="L114">			final char ch = s.charAt(i);</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">			if (level &gt; 0) {</span>
-<span class="fc" id="L116">				pending.append(ch);</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {</span>
-<span class="nc" id="L118">				copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
-<span class="nc" id="L119">				pending.setLength(0);</span>
+<span class="fc bfc" id="L111" title="All 6 branches covered.">			if (ch == '{' &amp;&amp; i + 1 &lt; s.length() &amp;&amp; s.charAt(i + 1) == '{')</span>
+<span class="fc" id="L112">				level++;</span>
+<span class="fc bfc" id="L113" title="All 6 branches covered.">			else if (ch == '}' &amp;&amp; i + 1 &lt; s.length() &amp;&amp; s.charAt(i + 1) == '}')</span>
+<span class="fc" id="L114">				level--;</span>
+
+<span class="fc bfc" id="L116" title="All 2 branches covered.">			if (level &gt; 0) {</span>
+<span class="fc" id="L117">				pending.append(ch);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {</span>
+<span class="nc" id="L119">				copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
+<span class="nc" id="L120">				pending.setLength(0);</span>
 			} else {
-<span class="fc" id="L121">				pending.append(ch);</span>
+<span class="fc" id="L122">				pending.append(ch);</span>
 			}
 		}
-<span class="fc" id="L124">		copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
+<span class="fc" id="L125">		copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
 
-<span class="fc" id="L126">		return copy;</span>
+<span class="fc" id="L127">		return copy;</span>
 	}
 
 //	public List&lt;StringLocated&gt; expandsJaws51() {
@@ -180,127 +181,127 @@ final public class StringLocated {
 //	}
 
 	public StringLocated jawsHideBackslash() {
-<span class="nc" id="L183">		return new StringLocated(s.replace('\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);</span>
+<span class="nc" id="L184">		return new StringLocated(s.replace('\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);</span>
 	}
 
 	public static List&lt;String&gt; expandsNewline(String s) {
-<span class="fc" id="L187">		return Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE));</span>
+<span class="fc" id="L188">		return Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE));</span>
 	}
 
 	public StringLocated(String s, LineLocation location) {
-<span class="fc" id="L191">		this(s, location, null);</span>
-<span class="fc" id="L192">	}</span>
+<span class="fc" id="L192">		this(s, location, null);</span>
+<span class="fc" id="L193">	}</span>
 
-<span class="fc" id="L194">	public StringLocated(String s, LineLocation location, String preprocessorError) {</span>
-<span class="fc" id="L195">		this.s = Objects.requireNonNull(s);</span>
-<span class="fc" id="L196">		this.location = location;</span>
-<span class="fc" id="L197">		this.preprocessorError = preprocessorError;</span>
-<span class="fc" id="L198">	}</span>
+<span class="fc" id="L195">	public StringLocated(String s, LineLocation location, String preprocessorError) {</span>
+<span class="fc" id="L196">		this.s = Objects.requireNonNull(s);</span>
+<span class="fc" id="L197">		this.location = location;</span>
+<span class="fc" id="L198">		this.preprocessorError = preprocessorError;</span>
+<span class="fc" id="L199">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L202">		return s;</span>
+<span class="nc" id="L203">		return s;</span>
 	}
 
 	public StringLocated append(String endOfLine) {
-<span class="fc" id="L206">		return new StringLocated(s + endOfLine, location, preprocessorError);</span>
+<span class="fc" id="L207">		return new StringLocated(s + endOfLine, location, preprocessorError);</span>
 	}
 
 	public StringLocated append(char endOfLine) {
-<span class="nc" id="L210">		return new StringLocated(s + endOfLine, location, preprocessorError);</span>
+<span class="nc" id="L211">		return new StringLocated(s + endOfLine, location, preprocessorError);</span>
 	}
 
 	public StringLocated mergeEndBackslash(StringLocated next) {
-<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		if (StringUtils.endsWithBackslash(s) == false)</span>
-<span class="nc" id="L215">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (StringUtils.endsWithBackslash(s) == false)</span>
+<span class="nc" id="L216">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L217">		return new StringLocated(s.substring(0, s.length() - 1) + next.s, location, preprocessorError);</span>
+<span class="fc" id="L218">		return new StringLocated(s.substring(0, s.length() - 1) + next.s, location, preprocessorError);</span>
 	}
 
 	public StringLocated withErrorPreprocessor(String preprocessorError) {
-<span class="fc" id="L221">		return new StringLocated(s, location, preprocessorError);</span>
+<span class="fc" id="L222">		return new StringLocated(s, location, preprocessorError);</span>
 	}
 
 	public StringLocated substring(int start, int end) {
-<span class="fc" id="L225">		return new StringLocated(this.getString().substring(start, end), this.getLocation(),</span>
-<span class="fc" id="L226">				this.getPreprocessorError());</span>
+<span class="fc" id="L226">		return new StringLocated(this.getString().substring(start, end), this.getLocation(),</span>
+<span class="fc" id="L227">				this.getPreprocessorError());</span>
 	}
 
 	public StringLocated substring(int start) {
-<span class="nc" id="L230">		return new StringLocated(this.getString().substring(start), this.getLocation(), this.getPreprocessorError());</span>
+<span class="nc" id="L231">		return new StringLocated(this.getString().substring(start), this.getLocation(), this.getPreprocessorError());</span>
 	}
 
 	public StringLocated getTrimmed() {
-<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (trimmed == null) {</span>
-<span class="fc" id="L235">			this.trimmed = new StringLocated(StringUtils.trin(this.getString()), location, preprocessorError);</span>
-<span class="fc" id="L236">			trimmed.fox = this.fox;</span>
-<span class="fc" id="L237">			trimmed.trimmed = trimmed;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		if (trimmed == null) {</span>
+<span class="fc" id="L236">			this.trimmed = new StringLocated(StringUtils.trin(this.getString()), location, preprocessorError);</span>
+<span class="fc" id="L237">			trimmed.fox = this.fox;</span>
+<span class="fc" id="L238">			trimmed.trimmed = trimmed;</span>
 		}
-<span class="fc" id="L239">		return trimmed;</span>
+<span class="fc" id="L240">		return trimmed;</span>
 	}
 
 	@JawsStrange
 	public StringLocated removeInnerComment() {
-<span class="fc" id="L244">		final String string = s.toString();</span>
-<span class="fc" id="L245">		final String trim = string.replace('\t', ' ').trim();</span>
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (trim.startsWith(&quot;/'&quot;)) {</span>
-<span class="nc" id="L247">			final int idx = string.indexOf(&quot;'/&quot;);</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">			if (idx != -1)</span>
-<span class="nc" id="L249">				return new StringLocated(removeSpecialInnerComment(s.substring(idx + 2, s.length())), location,</span>
+<span class="fc" id="L245">		final String string = s.toString();</span>
+<span class="fc" id="L246">		final String trim = string.replace('\t', ' ').trim();</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">		if (trim.startsWith(&quot;/'&quot;)) {</span>
+<span class="nc" id="L248">			final int idx = string.indexOf(&quot;'/&quot;);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			if (idx != -1)</span>
+<span class="nc" id="L250">				return new StringLocated(removeSpecialInnerComment(s.substring(idx + 2, s.length())), location,</span>
 						preprocessorError);
 
 		}
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (trim.endsWith(&quot;'/&quot;)) {</span>
-<span class="nc" id="L254">			final int idx = string.lastIndexOf(&quot;/'&quot;);</span>
-<span class="nc bnc" id="L255" title="All 2 branches missed.">			if (idx != -1)</span>
-<span class="nc" id="L256">				return new StringLocated(removeSpecialInnerComment(s.substring(0, idx)), location, preprocessorError);</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (trim.endsWith(&quot;'/&quot;)) {</span>
+<span class="nc" id="L255">			final int idx = string.lastIndexOf(&quot;/'&quot;);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">			if (idx != -1)</span>
+<span class="nc" id="L257">				return new StringLocated(removeSpecialInnerComment(s.substring(0, idx)), location, preprocessorError);</span>
 
 		}
-<span class="pc bpc" id="L259" title="3 of 4 branches missed.">		if (trim.contains(&quot;/'''&quot;) &amp;&amp; trim.contains(&quot;'''/&quot;))</span>
-<span class="nc" id="L260">			return new StringLocated(removeSpecialInnerComment(s), location, preprocessorError);</span>
+<span class="pc bpc" id="L260" title="3 of 4 branches missed.">		if (trim.contains(&quot;/'''&quot;) &amp;&amp; trim.contains(&quot;'''/&quot;))</span>
+<span class="nc" id="L261">			return new StringLocated(removeSpecialInnerComment(s), location, preprocessorError);</span>
 
-<span class="fc" id="L262">		return this;</span>
+<span class="fc" id="L263">		return this;</span>
 	}
 
 	private String removeSpecialInnerComment(String s) {
-<span class="nc bnc" id="L266" title="All 4 branches missed.">		if (s.contains(&quot;/'''&quot;) &amp;&amp; s.contains(&quot;'''/&quot;))</span>
-<span class="nc" id="L267">			return s.replaceAll(&quot;/'''[-\\w]*'''/&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L267" title="All 4 branches missed.">		if (s.contains(&quot;/'''&quot;) &amp;&amp; s.contains(&quot;'''/&quot;))</span>
+<span class="nc" id="L268">			return s.replaceAll(&quot;/'''[-\\w]*'''/&quot;, &quot;&quot;);</span>
 
-<span class="nc" id="L269">		return s;</span>
+<span class="nc" id="L270">		return s;</span>
 	}
 
 	public String getString() {
-<span class="fc" id="L273">		return s;</span>
+<span class="fc" id="L274">		return s;</span>
 	}
 
 	public LineLocation getLocation() {
-<span class="fc" id="L277">		return location;</span>
+<span class="fc" id="L278">		return location;</span>
 	}
 
 	public String getPreprocessorError() {
-<span class="fc" id="L281">		return preprocessorError;</span>
+<span class="fc" id="L282">		return preprocessorError;</span>
 	}
 
 	public long getFoxSignature() {
-<span class="fc bfc" id="L285" title="All 2 branches covered.">		if (fox == -1)</span>
-<span class="fc" id="L286">			fox = FoxSignature.getFoxSignatureFromRealString(getString());</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">		if (fox == -1)</span>
+<span class="fc" id="L287">			fox = FoxSignature.getFoxSignatureFromRealString(getString());</span>
 
-<span class="fc" id="L288">		return fox;</span>
+<span class="fc" id="L289">		return fox;</span>
 	}
 
 	public TLineType getType() {
-<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (type == null)</span>
-<span class="fc" id="L293">			type = TLineType.getFromLineInternal(s);</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (type == null)</span>
+<span class="fc" id="L294">			type = TLineType.getFromLineInternal(s);</span>
 
-<span class="fc" id="L295">		return type;</span>
+<span class="fc" id="L296">		return type;</span>
 	}
 
 	public int length() {
-<span class="fc" id="L299">		return s.length();</span>
+<span class="fc" id="L300">		return s.length();</span>
 	}
 
 	public char charAt(int i) {
-<span class="fc" id="L303">		return s.charAt(i);</span>
+<span class="fc" id="L304">		return s.charAt(i);</span>
 	}
 
 }

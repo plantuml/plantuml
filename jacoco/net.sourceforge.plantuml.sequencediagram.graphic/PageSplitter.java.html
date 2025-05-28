@@ -61,10 +61,10 @@ class PageSplitter {
 <span class="fc" id="L61">		this.titles = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L62">		this.positions = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (Map.Entry&lt;Newpage, Double&gt; ent : newpages.entrySet()) {</span>
-<span class="fc" id="L65">			titles.add(ent.getKey().getTitle());</span>
-<span class="fc" id="L66">			positions.add(ent.getValue());</span>
-<span class="fc" id="L67">		}</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		for (Map.Entry&lt;Newpage, Double&gt; ent : newpages.entrySet()) {</span>
+<span class="nc" id="L65">			titles.add(ent.getKey().getTitle());</span>
+<span class="nc" id="L66">			positions.add(ent.getValue());</span>
+<span class="nc" id="L67">		}</span>
 
 <span class="fc" id="L69">		this.headerHeight = headerHeight;</span>
 <span class="fc" id="L70">		this.tailHeight = tailHeight;</span>
@@ -74,31 +74,31 @@ class PageSplitter {
 
 	public List&lt;Page&gt; getPages() {
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (positions.size() == 0) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (positions.size() == 0) {</span>
 <span class="fc" id="L78">			return Arrays.asList(onePage());</span>
 		}
-<span class="fc" id="L80">		final List&lt;Page&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L80">		final List&lt;Page&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L82">		result.add(firstPage());</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		for (int i = 0; i &lt; positions.size() - 1; i++) {</span>
+<span class="nc" id="L82">		result.add(firstPage());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (int i = 0; i &lt; positions.size() - 1; i++) {</span>
 <span class="nc" id="L84">			result.add(createPage(i));</span>
 		}
-<span class="fc" id="L86">		result.add(lastPage());</span>
+<span class="nc" id="L86">		result.add(lastPage());</span>
 
-<span class="fc" id="L88">		return result;</span>
+<span class="nc" id="L88">		return result;</span>
 	}
 
 	private Page lastPage() {
-<span class="fc" id="L92">		final double newpage1 = positions.get(positions.size() - 1) - this.newpageHeight;</span>
-<span class="fc" id="L93">		final double newpage2 = this.fullHeight - this.tailHeight - this.signatureHeight;</span>
-<span class="fc" id="L94">		final Display title = titles.get(positions.size() - 1);</span>
-<span class="fc" id="L95">		return new Page(headerHeight, newpage1, newpage2, tailHeight, signatureHeight, title);</span>
+<span class="nc" id="L92">		final double newpage1 = positions.get(positions.size() - 1) - this.newpageHeight;</span>
+<span class="nc" id="L93">		final double newpage2 = this.fullHeight - this.tailHeight - this.signatureHeight;</span>
+<span class="nc" id="L94">		final Display title = titles.get(positions.size() - 1);</span>
+<span class="nc" id="L95">		return new Page(headerHeight, newpage1, newpage2, tailHeight, signatureHeight, title);</span>
 	}
 
 	private Page firstPage() {
-<span class="fc" id="L99">		final double newpage1 = this.headerHeight;</span>
-<span class="fc" id="L100">		final double newpage2 = positions.get(0) + this.newpageHeight;</span>
-<span class="fc" id="L101">		return new Page(headerHeight, newpage1, newpage2, tailHeight, 0, diagramTitle);</span>
+<span class="nc" id="L99">		final double newpage1 = this.headerHeight;</span>
+<span class="nc" id="L100">		final double newpage2 = positions.get(0) + this.newpageHeight;</span>
+<span class="nc" id="L101">		return new Page(headerHeight, newpage1, newpage2, tailHeight, 0, diagramTitle);</span>
 	}
 
 	private Page onePage() {

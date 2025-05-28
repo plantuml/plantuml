@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.tim;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TFunctionSignature {
 
@@ -45,49 +46,57 @@ public class TFunctionSignature {
 	private final Set&lt;String&gt; namedArguments;
 
 	public TFunctionSignature(String functionName, int nbArg) {
-<span class="fc" id="L48">		this(functionName, nbArg, Collections.&lt;String&gt;emptySet());</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L49">		this(functionName, nbArg, Collections.&lt;String&gt;emptySet());</span>
+<span class="fc" id="L50">	}</span>
 
-<span class="fc" id="L51">	public TFunctionSignature(String functionName, int nbArg, Set&lt;String&gt; namedArguments) {</span>
-<span class="fc" id="L52">		this.functionName = Objects.requireNonNull(functionName);</span>
-<span class="fc" id="L53">		this.nbArg = nbArg;</span>
-<span class="fc" id="L54">		this.namedArguments = namedArguments;</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L52">	public TFunctionSignature(String functionName, int nbArg, Set&lt;String&gt; namedArguments) {</span>
+<span class="fc" id="L53">		this.functionName = Objects.requireNonNull(functionName);</span>
+<span class="fc" id="L54">		this.nbArg = nbArg;</span>
+<span class="fc" id="L55">		this.namedArguments = namedArguments;</span>
+<span class="fc" id="L56">	}</span>
 
 	public boolean sameFunctionNameAs(TFunctionSignature other) {
-<span class="fc" id="L58">		return getFunctionName().equals(other.getFunctionName());</span>
+<span class="fc" id="L59">		return getFunctionName().equals(other.getFunctionName());</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L63">		return functionName + &quot;/&quot; + nbArg + &quot; &quot; + namedArguments;</span>
+<span class="nc" id="L64">		return functionName + &quot;/&quot; + nbArg + &quot; &quot; + namedArguments;</span>
 	}
+
+<span class="fc" id="L67">	private final AtomicInteger cachedHashCode = new AtomicInteger();</span>
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L68">		final int prime = 31;</span>
-<span class="fc" id="L69">		int result = 1;</span>
-<span class="fc" id="L70">		result = prime * result + functionName.hashCode();</span>
-<span class="fc" id="L71">		result = prime * result + nbArg;</span>
-<span class="fc" id="L72">		return result;</span>
+
+<span class="fc" id="L72">		int currentHash = cachedHashCode.get();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (currentHash != 0)</span>
+<span class="fc" id="L74">			return currentHash;</span>
+
+<span class="fc" id="L76">		final int prime = 31;</span>
+<span class="fc" id="L77">		int result = 1;</span>
+<span class="fc" id="L78">		result = prime * result + functionName.hashCode();</span>
+<span class="fc" id="L79">		result = prime * result + nbArg;</span>
+<span class="fc" id="L80">		cachedHashCode.set(result);</span>
+<span class="fc" id="L81">		return result;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc" id="L77">		final TFunctionSignature other = (TFunctionSignature) obj;</span>
-<span class="pc bpc" id="L78" title="2 of 4 branches missed.">		return functionName.equals(other.functionName) &amp;&amp; nbArg == other.nbArg;</span>
+<span class="fc" id="L86">		final TFunctionSignature other = (TFunctionSignature) obj;</span>
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		return functionName.equals(other.functionName) &amp;&amp; nbArg == other.nbArg;</span>
 	}
 
 	public final String getFunctionName() {
-<span class="fc" id="L82">		return functionName;</span>
+<span class="fc" id="L91">		return functionName;</span>
 	}
 
 	public final int getNbArg() {
-<span class="fc" id="L86">		return nbArg;</span>
+<span class="fc" id="L95">		return nbArg;</span>
 	}
 
 	public final Set&lt;String&gt; getNamedArguments() {
-<span class="fc" id="L90">		return namedArguments;</span>
+<span class="fc" id="L99">		return namedArguments;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

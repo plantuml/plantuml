@@ -107,19 +107,19 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 <span class="fc" id="L107">		drawableSet = initializer.createDrawableSet(stringBounder);</span>
 <span class="fc" id="L108">		final List&lt;Newpage&gt; newpages = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		for (Event ev : drawableSet.getAllEvents())</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (ev instanceof Newpage)</span>
-<span class="fc" id="L111">				newpages.add((Newpage) ev);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (ev instanceof Newpage)</span>
+<span class="nc" id="L111">				newpages.add((Newpage) ev);</span>
 
 <span class="fc" id="L113">		fullDimension = drawableSet.getDimension();</span>
 <span class="fc" id="L114">		final Map&lt;Newpage, Double&gt; positions = new LinkedHashMap&lt;Newpage, Double&gt;();</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (Newpage n : newpages)</span>
-<span class="fc" id="L116">			positions.put(n, initializer.getYposition(stringBounder, n));</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		for (Newpage n : newpages)</span>
+<span class="nc" id="L116">			positions.put(n, initializer.getYposition(stringBounder, n));</span>
 
 <span class="fc" id="L118">		pages = create(drawableSet, positions, diagram.isShowFootbox(), diagram.getTitle().getDisplay()).getPages();</span>
 <span class="fc" id="L119">	}</span>
 
 	public int getNbPages() {
-<span class="fc" id="L122">		return pages.size();</span>
+<span class="nc" id="L122">		return pages.size();</span>
 	}
 
 	private PageSplitter create(DrawableSet drawableSet, Map&lt;Newpage, Double&gt; positions, boolean showFootbox,

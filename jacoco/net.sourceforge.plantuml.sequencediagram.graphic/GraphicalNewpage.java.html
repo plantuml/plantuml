@@ -48,9 +48,9 @@ class GraphicalNewpage extends GraphicalElement {
 	private final Component comp;
 
 	public GraphicalNewpage(double startingY, Component comp) {
-<span class="fc" id="L51">		super(startingY);</span>
-<span class="fc" id="L52">		this.comp = comp;</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L51">		super(startingY);</span>
+<span class="nc" id="L52">		this.comp = comp;</span>
+<span class="nc" id="L53">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
@@ -63,17 +63,17 @@ class GraphicalNewpage extends GraphicalElement {
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L66">		return comp.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L66">		return comp.getPreferredHeight(stringBounder);</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L71">		return comp.getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L71">		return comp.getPreferredWidth(stringBounder);</span>
 	}
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-<span class="fc" id="L76">		return 0;</span>
+<span class="nc" id="L76">		return 0;</span>
 	}
 
 }
