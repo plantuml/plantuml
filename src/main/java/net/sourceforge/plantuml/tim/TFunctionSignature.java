@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.tim;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TFunctionSignature {
 
@@ -63,12 +64,20 @@ public class TFunctionSignature {
 		return functionName + "/" + nbArg + " " + namedArguments;
 	}
 
+	private final AtomicInteger cachedHashCode = new AtomicInteger();
+
 	@Override
 	public int hashCode() {
+
+		int currentHash = cachedHashCode.get();
+		if (currentHash != 0)
+			return currentHash;
+
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + functionName.hashCode();
 		result = prime * result + nbArg;
+		cachedHashCode.set(result);
 		return result;
 	}
 
