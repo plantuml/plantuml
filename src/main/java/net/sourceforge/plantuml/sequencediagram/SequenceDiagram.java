@@ -237,9 +237,11 @@ public class SequenceDiagram extends UmlDiagram {
 			return;
 
 		events.add(new Newpage(strings, getSkinParam().getCurrentStyleBuilder()));
+		countNewpage++;
 	}
 
 	private boolean ignoreNewpage = false;
+	private int countNewpage = 0;
 
 	public void ignoreNewpage() {
 		this.ignoreNewpage = true;
@@ -283,7 +285,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 		// We reset the counter for messages
 		this.cpt.set(1);
-		
+
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		// ::comment when __CORE__
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
@@ -347,7 +349,8 @@ public class SequenceDiagram extends UmlDiagram {
 		if (lastDelay != null)
 			return "You cannot Activate/Deactivate just after a ...";
 
-		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor), getSkinParam().getCurrentStyleBuilder());
+		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor),
+				getSkinParam().getCurrentStyleBuilder());
 		events.add(lifeEvent);
 		if (lifeEventType == LifeEventType.CREATE) {
 			pendingCreate = lifeEvent;
@@ -485,17 +488,18 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public int getNbImages() {
-		// ::comment when __CORE__
-		try {
-			// The DEBUG StringBounder is ok just to compute the number of pages here.
-			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();
-		} catch (Throwable t) {
-			Logme.error(t);
-			// ::done
-			return 1;
-			// ::comment when __CORE__
-		}
-		// ::done
+		return countNewpage + 1;
+//		// ::comment when __CORE__
+//		try {
+//			// The DEBUG StringBounder is ok just to compute the number of pages here.
+//			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();
+//		} catch (Throwable t) {
+//			Logme.error(t);
+//			// ::done
+//		return 1;
+//			// ::comment when __CORE__
+//		}
+//		// ::done
 	}
 
 	public void removeHiddenParticipants() {
