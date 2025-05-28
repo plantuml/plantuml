@@ -189,14 +189,16 @@ public enum SpriteGrayLevel {
 		final SpriteMonochrome result = new SpriteMonochrome(strings.get(0).length(), strings.size(), 16);
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < result.getHeight(); line++) {
-				if (col >= strings.get(line).length()) {
+				final String sline = strings.get(line);
+				if (col >= sline.length())
 					continue;
-				}
-				if (strings.get(line).charAt(col) != '0') {
-					final String s = "" + strings.get(line).charAt(col);
-					final int x = Integer.parseInt(StringUtils.goUpperCase(s), 16);
+
+				final char c = strings.get(line).charAt(col);
+				if (c != '0') {
+					final int x = Character.digit(c, 16);
 					result.setGray(col, line, x);
 				}
+
 			}
 		}
 		return result;
