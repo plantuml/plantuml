@@ -42,6 +42,8 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import net.sourceforge.plantuml.braille.BrailleCharFactory;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
@@ -193,15 +195,55 @@ public enum FileFormat {
 		};
 	}
 
+	private static final int CACHE_SIZE = 10_000;
+
+	private static final Map<FontTextKey, XDimension2D> DIMENSION_CACHE = new LinkedHashMap<FontTextKey, XDimension2D>(
+			CACHE_SIZE, 0.75f, true) {
+		@Override
+		protected boolean removeEldestEntry(Map.Entry<FontTextKey, XDimension2D> eldest) {
+			return size() > CACHE_SIZE;
+		}
+	};
+
+	private static class FontTextKey {
+		private final UFont font;
+		private final String text;
+
+		FontTextKey(UFont font, String text) {
+			this.font = font;
+			this.text = text;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			final FontTextKey other = (FontTextKey) obj;
+			return font.equals(other.font) && text.equals(other.text);
+		}
+
+		@Override
+		public int hashCode() {
+			return font.hashCode() * 31 + text.hashCode();
+		}
+	}
+
 	static private XDimension2D getJavaDimension(UFont font, String text) {
-		// System.err.println("text=" + text.length() + " " + text);
 		if (text.length() == 0)
 			return new XDimension2D(0, 0);
 
-		final Font javaFont = font.getUnderlayingFont(UFontContext.G2D);
-		final FontMetrics fm = gg.getFontMetrics(javaFont);
-		final Rectangle2D rect = fm.getStringBounds(text, gg);
-		return new XDimension2D(rect.getWidth(), rect.getHeight());
+		final FontTextKey key = new FontTextKey(font, text);
+
+		synchronized (DIMENSION_CACHE) {
+			XDimension2D cached = DIMENSION_CACHE.get(key);
+			if (cached != null)
+				return cached;
+
+			final Font javaFont = font.getUnderlayingFont(UFontContext.G2D);
+			final FontMetrics fm = gg.getFontMetrics(javaFont);
+			final Rectangle2D rect = fm.getStringBounds(text, gg);
+			final XDimension2D result = new XDimension2D(rect.getWidth(), rect.getHeight());
+			DIMENSION_CACHE.put(key, result);
+			return result;
+		}
 	}
 
 	// ::comment when __CORE__
@@ -234,7 +276,8 @@ public enum FileFormat {
 	private StringBounder getTikzStringBounder(final TikzFontDistortion tikzFontDistortion) {
 		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 
-			private final LatexManager latexManager = new LatexManager(tikzFontDistortion.getTexSystem(), tikzFontDistortion.getTexPreamble());
+			private final LatexManager latexManager = new LatexManager(tikzFontDistortion.getTexSystem(),
+					tikzFontDistortion.getTexPreamble());
 
 			public String toString() {
 				return "FileFormat::getTikzStringBounder";
