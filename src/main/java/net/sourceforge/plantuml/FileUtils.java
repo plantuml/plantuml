@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -172,6 +173,14 @@ public class FileUtils {
 		final InputStream fis = new BufferedInputStream(is);
 		final OutputStream fos = new BufferedOutputStream(os);
 		copyInternal(fis, fos, true);
+	}
+
+	public static byte[] copyToByteArray(InputStream is) throws IOException {
+		try (BufferedInputStream bis = new BufferedInputStream(is);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+			copyInternal(bis, bos, true);
+			return bos.toByteArray();
+		}
 	}
 
 	static public void copyToFile(byte[] src, SFile dest) throws IOException {

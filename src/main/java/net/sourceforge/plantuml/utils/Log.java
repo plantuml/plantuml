@@ -35,6 +35,12 @@
  */
 package net.sourceforge.plantuml.utils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.ProgressBar;
 
@@ -82,7 +88,7 @@ public abstract class Log {
 		sb.append(s);
 		return sb.toString();
 	}
-	
+
 	public static void println(Object s) {
 	}
 	// ::done
@@ -107,5 +113,33 @@ public abstract class Log {
 	}
 
 	public static void header(String s) {
+	}
+
+	private static final String PERFLOG_FILENAME = "perflog.txt";
+	private static boolean firstCall = true;
+
+	public static void perflog(String line) {
+		// perflogInternal(line);
+	}
+
+	private synchronized static void perflogInternal(String line) {
+		try {
+			if (firstCall) {
+				File file = new File(PERFLOG_FILENAME);
+				if (file.exists()) {
+					if (!file.delete()) {
+						error("Cannot del " + PERFLOG_FILENAME);
+					}
+				}
+				firstCall = false;
+			}
+			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					PrintWriter out = new PrintWriter(bw)) {
+				out.println(line);
+			}
+		} catch (IOException e) {
+			error("Cannot write in " + PERFLOG_FILENAME + " : " + e.getMessage());
+		}
 	}
 }

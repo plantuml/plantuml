@@ -43,13 +43,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.SoftReference;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.ReadLine;
@@ -94,10 +98,18 @@ public class PreprocessorUtils {
 		return null;
 	}
 
-	private static InputStream getStdlibInputStream(String filename) {
-		final InputStream result = Stdlib.getResourceAsStream(filename);
-		// Log.info("Loading sdlib " + filename + " ok");
-		return result;
+	private static final Map<String, SoftReference<byte[]>> cache = new ConcurrentHashMap<>();
+
+	private static InputStream getStdlibInputStream(String filename) throws IOException {
+		final SoftReference<byte[]> ref = cache.get(filename);
+		byte[] data = (ref != null) ? ref.get() : null;
+
+		if (data == null) {
+			data = FileUtils.copyToByteArray(Stdlib.getResourceAsStream(filename));
+			cache.put(filename, new SoftReference<>(data));
+		}
+
+		return new ByteArrayInputStream(data);
 	}
 
 	// ::comment when __CORE__
@@ -116,7 +128,7 @@ public class PreprocessorUtils {
 	}
 	// ::done
 
-	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) {
+	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
 		Log.info("Loading sdlib " + filename);
 		InputStream is = getStdlibInputStream(filename);
 		if (is == null)
