@@ -159,44 +159,62 @@ public class StyleSignatureBasic implements StyleSignature {
 		return result.toString() + " " + withDot;
 	}
 
+	private final AtomicInteger cachedDepth = new AtomicInteger(Integer.MIN_VALUE);
+
+	private int depthFromTokens() {
+		final int result = cachedDepth.get();
+		if (result != Integer.MIN_VALUE)
+			return result;
+
+		for (String token : names) {
+			final int depth = depthFromSingleToken(token);
+			if (depth != -1) {
+				cachedDepth.set(depth);
+				return depth;
+			}
+
+		}
+		cachedDepth.set(-1);
+		return -1;
+	}
+
 	public boolean matchAll(StyleSignatureBasic other) {
 		final boolean namesContainsStar = names.contains(STAR);
 		if (other.isStarred() && namesContainsStar == false)
 			return false;
 
-		final int depthInNames = depthFromTokens(other.names);
+		final int depthInNames = other.depthFromTokens();
 
 		for (String token : names) {
 			if (token.equals(STAR))
 				continue;
 
-			if (namesContainsStar && depthInNames != -1 && depthFromToken(token) != -1) {
-				// depth comparaison
-				if (depthInNames < depthFromToken(token))
+			int tokenDepth = -1;
+			if (namesContainsStar && depthInNames != -1)
+				tokenDepth = depthFromSingleToken(token);
+
+			if (namesContainsStar && depthInNames != -1 && tokenDepth != -1) {
+				if (depthInNames < tokenDepth)
 					return false;
 			} else {
 				if (other.names.contains(token) == false)
 					return false;
 			}
-
 		}
+
 		return true;
 	}
 
-	private static int depthFromToken(String token) {
-		if (token.startsWith("depth("))
-			return Integer.parseInt(token.substring("depth(".length(), token.length() - 1));
-		return -1;
-	}
-
-	private static int depthFromTokens(Collection<String> tokens) {
-		for (String token : tokens) {
-			final int depth = depthFromToken(token);
-			if (depth != -1)
-				return depth;
+	private static int depthFromSingleToken(String token) {
+		final String prefix = "depth(";
+		final int prefixLen = prefix.length();
+		if (token.length() > prefixLen + 1 && token.startsWith(prefix) && token.charAt(token.length() - 1) == ')') {
+			try {
+				return Integer.parseInt(token.substring(prefixLen, token.length() - 1));
+			} catch (NumberFormatException e) {
+			}
 		}
 		return -1;
-
 	}
 
 	public final Set<String> getNames() {

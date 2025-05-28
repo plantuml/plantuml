@@ -47,10 +47,11 @@ import java.util.TreeSet;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 
 public class HColorSet {
 
-	private static final String COLOR_GRADIENT_SEPARATOR = "[-\\\\|/]";
+	private static final Pattern2 COLOR_GRADIENT_SEPARATOR = MyPattern.cmpile("[-\\\\|/]");
 
 	private final static HColorSet singleton = new HColorSet();
 
@@ -226,7 +227,7 @@ public class HColorSet {
 	}
 
 	private void register(String s, String color) {
-		htmlNames.put(StringUtils.goLowerCase(s), color);
+		htmlNames.put(removeFirstDieseAndgoLowerCase(s), color);
 		names.add(s);
 	}
 
@@ -295,7 +296,7 @@ public class HColorSet {
 
 	private Gradient gradientFromString(String s) {
 		// ::comment when __HAXE__
-		final Matcher2 m = MyPattern.cmpile(COLOR_GRADIENT_SEPARATOR).matcher(s);
+		final Matcher2 m = COLOR_GRADIENT_SEPARATOR.matcher(s);
 		if (m.find()) {
 			final char sep = m.group(0).charAt(0);
 			final int idx = s.indexOf(sep);
@@ -351,18 +352,35 @@ public class HColorSet {
 		if (gradient != null)
 			return gradient.isValid();
 
-		if (s.matches("[0-9A-Fa-f]|[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8}|automatic|transparent"))
+		if (isColorKeywordOrHex(s))
 			return true;
 
 		if (htmlNames.containsKey(s))
 			return true;
 
 		return false;
+	}
 
+	private static boolean isColorKeywordOrHex(String s) {
+		final int len = s.length();
+		if (s.equalsIgnoreCase("automatic") || s.equalsIgnoreCase("transparent"))
+			return true;
+
+		if (len == 1 || len == 3 || len == 6 || len == 8) {
+			for (int i = 0; i < len; i++)
+				if (isHexDigit(s.charAt(i)) == false)
+					return false;
+
+			return true;
+		}
+		
+		return false;
 	}
 
 	private HColor build(String s) {
 		s = removeFirstDieseAndgoLowerCase(s);
+		final int len = s.length();
+
 		final Color color;
 		if (s.equalsIgnoreCase("transparent") || s.equalsIgnoreCase("background")) {
 			return HColors.none();
@@ -370,21 +388,33 @@ public class HColorSet {
 		} else if (s.equalsIgnoreCase("automatic")) {
 			return new HColorAutomagic();
 			// ::done
-		} else if (s.matches("[0-9A-Fa-f]")) {
+		} else if (len == 1 && isHexDigit(s.charAt(0))) {
 			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0);
 			color = new Color(Integer.parseInt(s, 16));
-		} else if (s.matches("[0-9A-Fa-f]{3}")) {
+		} else if (len == 3 && isHexColor(s)) {
 			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(1) + s.charAt(1) + s.charAt(2) + s.charAt(2);
 			color = new Color(Integer.parseInt(s, 16));
-		} else if (s.matches("[0-9A-Fa-f]{6}")) {
+		} else if (len == 6 && isHexColor(s)) {
 			color = new Color(Integer.parseInt(s, 16));
-		} else if (s.matches("[0-9A-Fa-f]{8}")) {
+		} else if (len == 8 && isHexColor(s)) {
 			color = fromRGBa(s);
 		} else {
 			final String value = Objects.requireNonNull(htmlNames.get(s));
 			color = new Color(Integer.parseInt(value.substring(1), 16));
 		}
 		return HColors.simple(color);
+	}
+
+	private static boolean isHexColor(String s) {
+		for (int i = 0; i < s.length(); i++)
+			if (!isHexDigit(s.charAt(i)))
+				return false;
+
+		return true;
+	}
+
+	private static boolean isHexDigit(final char c) {
+		return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
 	}
 
 	private Color fromRGBa(String s) {
@@ -400,10 +430,23 @@ public class HColorSet {
 	}
 
 	private String removeFirstDieseAndgoLowerCase(String s) {
-		s = StringUtils.goLowerCase(s);
-		if (s.startsWith("#"))
-			s = s.substring(1);
+		int len = s.length();
+		int start = 0;
+		if (len > 0 && s.charAt(0) == '#') {
+			start = 1;
+			len--;
+		}
 
-		return s;
+		final StringBuilder sb = new StringBuilder(len);
+		for (int i = start; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c >= 'A' && c <= 'Z')
+				sb.append((char) (c + ('a' - 'A')));
+			else
+				sb.append(c);
+
+		}
+		return sb.toString();
 	}
+
 }

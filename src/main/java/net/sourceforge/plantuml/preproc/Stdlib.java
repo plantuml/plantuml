@@ -265,11 +265,12 @@ public class Stdlib {
 
 	private String readSprite(int width, int height, InputStream inputStream) throws IOException {
 		final int nbLines = (height + 1) / 2;
-		final StringBuilder result = new StringBuilder();
+		final int estimatedResultCapacity = (width + 1) * height;
+		final StringBuilder result = new StringBuilder(estimatedResultCapacity);
 		int line = 0;
 		for (int j = 0; j < nbLines; j++) {
-			final StringBuilder sb1 = new StringBuilder();
-			final StringBuilder sb2 = new StringBuilder();
+			final StringBuilder sb1 = new StringBuilder(width);
+			final StringBuilder sb2 = new StringBuilder(width);
 			for (int i = 0; i < width; i++) {
 				final int b = inputStream.read();
 				final int b1 = (b & 0xF0) >> 4;
