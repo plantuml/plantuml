@@ -180,13 +180,13 @@ public class CreoleParser implements SheetBuilder {
 		return sheet;
 	}
 
-	public static void checkColor(Display result) throws NoSuchColorException {
-		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.byDefault(10));
-		try {
-			new CreoleParser(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), CreoleMode.FULL, fc)
-					.createSheetSlow(result, true);
-		} catch (NoSuchColorRuntimeException e) {
-			throw new NoSuchColorException();
-		}
-	}
+//	public static void checkColor(Display result) throws NoSuchColorException {
+//		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.byDefault(10));
+//		try {
+//			new CreoleParser(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), CreoleMode.FULL, fc)
+//					.createSheetSlow(result, true);
+//		} catch (NoSuchColorRuntimeException e) {
+//			throw new NoSuchColorException();
+//		}
+//	}
 }

@@ -183,7 +183,7 @@ public class Display implements Iterable<CharSequence> {
 			tmp.add(s.getString());
 
 		final Display result = create(tmp);
-		CreoleParser.checkColor(result);
+		// CreoleParser.checkColor(result);
 		return result;
 	}
 
@@ -216,7 +216,7 @@ public class Display implements Iterable<CharSequence> {
 
 	public static Display getWithNewlines2(Pragma pragma, String s) throws NoSuchColorException {
 		final Display result = getWithNewlines(pragma, s);
-		CreoleParser.checkColor(result);
+		// CreoleParser.checkColor(result);
 		return result;
 	}
 
