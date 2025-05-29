@@ -291,7 +291,7 @@ final public class StringLocated {
 
 	public TLineType getType() {
 		if (type == null)
-			type = TLineType.getFromLineInternal(s);
+			type = TLineType.getFromLineInternal(this);
 
 		return type;
 	}

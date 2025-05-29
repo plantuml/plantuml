@@ -36,23 +36,28 @@ package net.sourceforge.plantuml.text;
 
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+
 public enum TLineType {
 
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
 	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE,
-	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY,
-	COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;
+	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG,
+	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;
 
-	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile("^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\(.*");
+	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile(
+			"^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\(.*");
 
-	private static final Pattern PATTERN_LEGACY_DEFINELONG = Pattern
-			.compile("^\\s*!definelong\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
+	private static final Pattern PATTERN_LEGACY_DEFINELONG = Pattern.compile(
+			"^\\s*!definelong\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
 
-	private static final Pattern PATTERN_AFFECTATION_DEFINE = Pattern
-			.compile("^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
+	private static final Pattern PATTERN_AFFECTATION_DEFINE = Pattern.compile(
+			"^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
 
-	private static final Pattern PATTERN_AFFECTATION = Pattern
-			.compile("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\s*\\??=.*");
+	private static final Pattern PATTERN_AFFECTATION = Pattern.compile(
+			"^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\s*\\??=.*");
 
 	private static final Pattern PATTERN_COMMENT_SIMPLE1 = Pattern.compile("^\\s*'.*");
 
@@ -60,67 +65,72 @@ public enum TLineType {
 
 	private static final Pattern PATTERN_COMMENT_LONG_START = Pattern.compile("^\\s*/'.*");
 
-	private static final Pattern PATTERN_IFDEF = Pattern.compile("^\\s*!ifdef\\s+.*");
+	private static RegexConcat simpleKeyword(String word) {
+		return new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(word),
+				new RegexLeaf("\\b"));
+	}
 
-	private static final Pattern PATTERN_UNDEF = Pattern.compile("^\\s*!undef\\s+.*");
+	private static final IRegex PATTERN_IFDEF = simpleKeyword("!ifdef");
 
-	private static final Pattern PATTERN_IFNDEF = Pattern.compile("^\\s*!ifndef\\s+.*");
+	private static final IRegex PATTERN_UNDEF = simpleKeyword("!undef");
 
-	private static final Pattern PATTERN_ASSERT = Pattern.compile("^\\s*!assert\\s+.*");
+	private static final IRegex PATTERN_IFNDEF = simpleKeyword("!ifndef");
 
-	private static final Pattern PATTERN_IF = Pattern.compile("^\\s*!if\\s+.*");
+	private static final IRegex PATTERN_ASSERT = simpleKeyword("!assert");
 
-	private static final Pattern PATTERN_DECLARE_RETURN_FUNCTION = Pattern
-			.compile("^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
+	private static final IRegex PATTERN_IF = simpleKeyword("!if");
 
-	private static final Pattern PATTERN_DECLARE_PROCEDURE = Pattern
-			.compile("^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
+	private static final Pattern PATTERN_DECLARE_RETURN_FUNCTION = Pattern.compile(
+			"^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
 
-	private static final Pattern PATTERN_ELSE = Pattern.compile("^\\s*!else\\b.*");
+	private static final Pattern PATTERN_DECLARE_PROCEDURE = Pattern.compile(
+			"^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
 
-	private static final Pattern PATTERN_ELSEIF = Pattern.compile("^\\s*!elseif\\b.*");
+	private static final IRegex PATTERN_ELSE = simpleKeyword("!else");
 
-	private static final Pattern PATTERN_ENDIF = Pattern.compile("^\\s*!endif\\b.*");
+	private static final IRegex PATTERN_ELSEIF = simpleKeyword("!elseif");
 
-	private static final Pattern PATTERN_WHILE = Pattern.compile("^\\s*!while\\s+.*");
+	private static final IRegex PATTERN_ENDIF = simpleKeyword("!endif");
 
-	private static final Pattern PATTERN_ENDWHILE = Pattern.compile("^\\s*!endwhile\\b.*");
+	private static final IRegex PATTERN_WHILE = simpleKeyword("!while");
 
-	private static final Pattern PATTERN_FOREACH = Pattern.compile("^\\s*!foreach\\s+.*");
+	private static final IRegex PATTERN_ENDWHILE = simpleKeyword("!endwhile");
 
-	private static final Pattern PATTERN_ENDFOREACH = Pattern.compile("^\\s*!endfor\\b.*");
+	private static final IRegex PATTERN_FOREACH = simpleKeyword("!foreach");
+
+	private static final IRegex PATTERN_ENDFOREACH = simpleKeyword("!endfor");
 
 	private static final Pattern PATTERN_END_FUNCTION = Pattern
 			.compile("^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*");
 
-	private static final Pattern PATTERN_RETURN = Pattern.compile("^\\s*!return\\b.*");
+	private static final IRegex PATTERN_RETURN = simpleKeyword("!return");
 
-	private static final Pattern PATTERN_THEME = Pattern.compile("^\\s*!theme\\b.*");
+	private static final IRegex PATTERN_THEME = simpleKeyword("!theme");
 
 	private static final Pattern PATTERN_INCLUDE = Pattern
 			.compile("^\\s*!(include|includeurl|include_many|include_once)\\b.*");
 
-	private static final Pattern PATTERN_INCLUDE_SPRITES = Pattern
-			.compile("^\\s*!(include_sprites)\\b.*");
+	private static final IRegex PATTERN_INCLUDE_SPRITES = simpleKeyword("!include_sprites");
 
-	private static final Pattern PATTERN_INCLUDE_DEF = Pattern.compile("^\\s*!(includedef)\\b.*");
+	private static final IRegex PATTERN_INCLUDE_DEF = simpleKeyword("!includedef");
 
-	private static final Pattern PATTERN_IMPORT = Pattern.compile("^\\s*!(import)\\b.*");
+	private static final IRegex PATTERN_IMPORT = simpleKeyword("!import");
 
-	private static final Pattern PATTERN_STARTSUB = Pattern.compile("^\\s*!startsub\\s+.*");
+	private static final IRegex PATTERN_STARTSUB = simpleKeyword("!startsub");
 
-	private static final Pattern PATTERN_ENDSUB = Pattern.compile("^\\s*!endsub\\b.*");
+	private static final IRegex PATTERN_ENDSUB = simpleKeyword("!endsub");
 
-	private static final Pattern PATTERN_INCLUDESUB = Pattern.compile("^\\s*!includesub\\b.*");
+	private static final IRegex PATTERN_INCLUDESUB = simpleKeyword("!includesub");
 
-	private static final Pattern PATTERN_LOG = Pattern.compile("^\\s*!(log)\\b.*");
+	private static final IRegex PATTERN_LOG = simpleKeyword("!log");
 
-	private static final Pattern PATTERN_DUMP_MEMORY = Pattern.compile("^\\s*!(dump_memory)\\b.*");
-	
-	private static final Pattern PATTERN_OPTION = Pattern.compile("^\\s*!option\\b.*");
+	private static final IRegex PATTERN_DUMP_MEMORY = simpleKeyword("!dump_memory");
 
+	private static final IRegex PATTERN_OPTION = simpleKeyword("!option");
 
-	public static TLineType getFromLineInternal(String s) {
+	public static TLineType getFromLineInternal(StringLocated sl) {
+		final String s = sl.getString();
+
 		if (PATTERN_LEGACY_DEFINE.matcher(s).matches())
 			return LEGACY_DEFINE;
 
@@ -142,19 +152,19 @@ public enum TLineType {
 		if (PATTERN_COMMENT_LONG_START.matcher(s).matches() && s.contains("'/") == false)
 			return COMMENT_LONG_START;
 
-		if (PATTERN_IFDEF.matcher(s).matches())
+		if (PATTERN_IFDEF.match(sl))
 			return IFDEF;
 
-		if (PATTERN_UNDEF.matcher(s).matches())
+		if (PATTERN_UNDEF.match(sl))
 			return UNDEF;
 
-		if (PATTERN_IFNDEF.matcher(s).matches())
+		if (PATTERN_IFNDEF.match(sl))
 			return IFNDEF;
 
-		if (PATTERN_ASSERT.matcher(s).matches())
+		if (PATTERN_ASSERT.match(sl))
 			return ASSERT;
 
-		if (PATTERN_IF.matcher(s).matches())
+		if (PATTERN_IF.match(sl))
 			return IF;
 
 		if (PATTERN_DECLARE_RETURN_FUNCTION.matcher(s).matches())
@@ -163,66 +173,65 @@ public enum TLineType {
 		if (PATTERN_DECLARE_PROCEDURE.matcher(s).matches())
 			return DECLARE_PROCEDURE;
 
-		if (PATTERN_ELSE.matcher(s).matches())
+		if (PATTERN_ELSE.match(sl))
 			return ELSE;
 
-		if (PATTERN_ELSEIF.matcher(s).matches())
+		if (PATTERN_ELSEIF.match(sl))
 			return ELSEIF;
 
-		if (PATTERN_ENDIF.matcher(s).matches())
+		if (PATTERN_ENDIF.match(sl))
 			return ENDIF;
 
-		if (PATTERN_WHILE.matcher(s).matches())
+		if (PATTERN_WHILE.match(sl))
 			return WHILE;
 
-		if (PATTERN_ENDWHILE.matcher(s).matches())
+		if (PATTERN_ENDWHILE.match(sl))
 			return ENDWHILE;
 
-		if (PATTERN_FOREACH.matcher(s).matches())
+		if (PATTERN_FOREACH.match(sl))
 			return FOREACH;
 
-		if (PATTERN_ENDFOREACH.matcher(s).matches())
+		if (PATTERN_ENDFOREACH.match(sl))
 			return ENDFOREACH;
 
 		if (PATTERN_END_FUNCTION.matcher(s).matches())
 			return END_FUNCTION;
 
-		if (PATTERN_RETURN.matcher(s).matches())
+		if (PATTERN_RETURN.match(sl))
 			return RETURN;
 
-		if (PATTERN_THEME.matcher(s).matches())
+		if (PATTERN_THEME.match(sl))
 			return THEME;
 
 		if (PATTERN_INCLUDE.matcher(s).matches())
 			return INCLUDE;
 
-		if (PATTERN_INCLUDE_SPRITES.matcher(s).matches())
+		if (PATTERN_INCLUDE_SPRITES.match(sl))
 			return INCLUDE_SPRITES;
 
-		if (PATTERN_INCLUDE_DEF.matcher(s).matches())
+		if (PATTERN_INCLUDE_DEF.match(sl))
 			return INCLUDE_DEF;
 
-		if (PATTERN_IMPORT.matcher(s).matches())
+		if (PATTERN_IMPORT.match(sl))
 			return IMPORT;
 
-		if (PATTERN_STARTSUB.matcher(s).matches())
+		if (PATTERN_STARTSUB.match(sl))
 			return STARTSUB;
 
-		if (PATTERN_ENDSUB.matcher(s).matches())
+		if (PATTERN_ENDSUB.match(sl))
 			return ENDSUB;
 
-		if (PATTERN_INCLUDESUB.matcher(s).matches())
+		if (PATTERN_INCLUDESUB.match(sl))
 			return INCLUDESUB;
 
-		if (PATTERN_LOG.matcher(s).matches())
+		if (PATTERN_LOG.match(sl))
 			return LOG;
 
-		if (PATTERN_DUMP_MEMORY.matcher(s).matches())
+		if (PATTERN_DUMP_MEMORY.match(sl))
 			return DUMP_MEMORY;
-		
-		if (PATTERN_OPTION.matcher(s).matches())
-			return OPTION;
 
+		if (PATTERN_OPTION.match(sl))
+			return OPTION;
 
 		return PLAIN;
 	}
@@ -256,8 +265,7 @@ public enum TLineType {
 	}
 
 	private static boolean isEmoji(char ch) {
-		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch) ;
+		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch);
 	}
-
 
 }
