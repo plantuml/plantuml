@@ -148,8 +148,8 @@ public class CreoleParser implements SheetBuilder {
 <span class="fc" id="L148">				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
 <span class="fc bfc" id="L149" title="All 2 branches covered.">				if (type != null) {</span>
 <span class="fc" id="L150">					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">					if (checkColor)</span>
-<span class="fc" id="L152">						stripes = null;</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">					if (checkColor)</span>
+<span class="nc" id="L152">						stripes = null;</span>
 					else {
 <span class="fc" id="L154">						stripes = Arrays.asList(new Stripe() {</span>
 							public Atom getLHeader() {
@@ -180,14 +180,14 @@ public class CreoleParser implements SheetBuilder {
 <span class="fc" id="L180">		return sheet;</span>
 	}
 
-	public static void checkColor(Display result) throws NoSuchColorException {
-<span class="fc" id="L184">		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.byDefault(10));</span>
-		try {
-<span class="fc" id="L186">			new CreoleParser(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), CreoleMode.FULL, fc)</span>
-<span class="fc" id="L187">					.createSheetSlow(result, true);</span>
-<span class="nc" id="L188">		} catch (NoSuchColorRuntimeException e) {</span>
-<span class="nc" id="L189">			throw new NoSuchColorException();</span>
-<span class="fc" id="L190">		}</span>
-<span class="fc" id="L191">	}</span>
+//	public static void checkColor(Display result) throws NoSuchColorException {
+//		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.byDefault(10));
+//		try {
+//			new CreoleParser(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), CreoleMode.FULL, fc)
+//					.createSheetSlow(result, true);
+//		} catch (NoSuchColorRuntimeException e) {
+//			throw new NoSuchColorException();
+//		}
+//	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

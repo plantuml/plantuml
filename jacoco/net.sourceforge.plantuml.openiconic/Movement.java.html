@@ -90,10 +90,10 @@ public class Movement {
 <span class="nc" id="L90">			throw new UnsupportedOperationException();</span>
 		}
 <span class="nc bnc" id="L92" title="All 2 branches missed.">		if (mirrorControlPoint == null) {</span>
-<span class="nc" id="L93">			return new Movement(new SvgCommandLetter(&quot;C&quot;), this.getSvgPosition(0), this.getSvgPosition(0),</span>
+<span class="nc" id="L93">			return new Movement(new SvgCommandLetter('C'), this.getSvgPosition(0), this.getSvgPosition(0),</span>
 <span class="nc" id="L94">					lastPosition());</span>
 		}
-<span class="nc" id="L96">		return new Movement(new SvgCommandLetter(&quot;C&quot;), mirrorControlPoint, this.getSvgPosition(0), lastPosition());</span>
+<span class="nc" id="L96">		return new Movement(new SvgCommandLetter('C'), mirrorControlPoint, this.getSvgPosition(0), lastPosition());</span>
 	}
 
 	public String toSvg() {
@@ -126,50 +126,50 @@ public class Movement {
 <span class="nc" id="L126">		Objects.requireNonNull(delta);</span>
 <span class="nc bnc" id="L127" title="All 2 branches missed.">		if (letter.is('H')) {</span>
 <span class="nc" id="L128">			final SvgCommandNumber tmp = arguments.get(0);</span>
-<span class="nc" id="L129">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(tmp, delta.getY()));</span>
+<span class="nc" id="L129">			return new Movement(new SvgCommandLetter('L'), new SvgPosition(tmp, delta.getY()));</span>
 		}
 <span class="nc bnc" id="L131" title="All 2 branches missed.">		if (letter.is('V')) {</span>
 <span class="nc" id="L132">			final SvgCommandNumber tmp = arguments.get(0);</span>
-<span class="nc" id="L133">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(delta.getX(), tmp));</span>
+<span class="nc" id="L133">			return new Movement(new SvgCommandLetter('L'), new SvgPosition(delta.getX(), tmp));</span>
 		}
 <span class="nc bnc" id="L135" title="All 2 branches missed.">		if (letter.is('h')) {</span>
 <span class="nc" id="L136">			final SvgCommandNumber tmp = arguments.get(0);</span>
-<span class="nc" id="L137">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(delta.getX().add(tmp), delta.getY()));</span>
+<span class="nc" id="L137">			return new Movement(new SvgCommandLetter('L'), new SvgPosition(delta.getX().add(tmp), delta.getY()));</span>
 		}
 <span class="nc bnc" id="L139" title="All 2 branches missed.">		if (letter.is('v')) {</span>
 <span class="nc" id="L140">			final SvgCommandNumber tmp = arguments.get(0);</span>
-<span class="nc" id="L141">			return new Movement(new SvgCommandLetter(&quot;L&quot;), new SvgPosition(delta.getX(), delta.getY().add(tmp)));</span>
+<span class="nc" id="L141">			return new Movement(new SvgCommandLetter('L'), new SvgPosition(delta.getX(), delta.getY().add(tmp)));</span>
 		}
 
 <span class="nc bnc" id="L144" title="All 2 branches missed.">		if (letter.isUpperCase())</span>
 <span class="nc" id="L145">			return this;</span>
 
 <span class="nc bnc" id="L147" title="All 2 branches missed.">		if (letter.is('m'))</span>
-<span class="nc" id="L148">			return new Movement(new SvgCommandLetter(&quot;M&quot;), delta.add(getSvgPosition(0)));</span>
+<span class="nc" id="L148">			return new Movement(new SvgCommandLetter('M'), delta.add(getSvgPosition(0)));</span>
 
 <span class="nc bnc" id="L150" title="All 2 branches missed.">		if (letter.is('l'))</span>
-<span class="nc" id="L151">			return new Movement(new SvgCommandLetter(&quot;L&quot;), delta.add(getSvgPosition(0)));</span>
+<span class="nc" id="L151">			return new Movement(new SvgCommandLetter('L'), delta.add(getSvgPosition(0)));</span>
 
 <span class="nc bnc" id="L153" title="All 2 branches missed.">		if (letter.is('t'))</span>
-<span class="nc" id="L154">			return new Movement(new SvgCommandLetter(&quot;T&quot;), delta.add(getSvgPosition(0)));</span>
+<span class="nc" id="L154">			return new Movement(new SvgCommandLetter('T'), delta.add(getSvgPosition(0)));</span>
 
 <span class="nc bnc" id="L156" title="All 2 branches missed.">		if (letter.is('z'))</span>
-<span class="nc" id="L157">			return new Movement(new SvgCommandLetter(&quot;Z&quot;));</span>
+<span class="nc" id="L157">			return new Movement(new SvgCommandLetter('Z'));</span>
 
 <span class="nc bnc" id="L159" title="All 2 branches missed.">		if (letter.is('c'))</span>
-<span class="nc" id="L160">			return new Movement(new SvgCommandLetter(&quot;C&quot;), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)),</span>
+<span class="nc" id="L160">			return new Movement(new SvgCommandLetter('C'), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)),</span>
 <span class="nc" id="L161">					delta.add(getSvgPosition(4)));</span>
 
 <span class="nc bnc" id="L163" title="All 2 branches missed.">		if (letter.is('q'))</span>
-<span class="nc" id="L164">			return new Movement(new SvgCommandLetter(&quot;Q&quot;), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));</span>
+<span class="nc" id="L164">			return new Movement(new SvgCommandLetter('Q'), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));</span>
 
 <span class="nc bnc" id="L166" title="All 2 branches missed.">		if (letter.is('s'))</span>
-<span class="nc" id="L167">			return new Movement(new SvgCommandLetter(&quot;S&quot;), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));</span>
+<span class="nc" id="L167">			return new Movement(new SvgCommandLetter('S'), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));</span>
 
 <span class="nc bnc" id="L169" title="All 2 branches missed.">		if (letter.is('a')) {</span>
 <span class="nc" id="L170">			final SvgPosition last = delta.add(lastPosition());</span>
 			// System.err.println(&quot;LAST=&quot; + last);
-<span class="nc" id="L172">			return new Movement(new SvgCommandLetter(&quot;A&quot;), arguments.get(0), arguments.get(1), arguments.get(2),</span>
+<span class="nc" id="L172">			return new Movement(new SvgCommandLetter('A'), arguments.get(0), arguments.get(1), arguments.get(2),</span>
 <span class="nc" id="L173">					arguments.get(3), arguments.get(4), last.getX(), last.getY());</span>
 		}
 <span class="nc" id="L175">		throw new UnsupportedOperationException(&quot;Movement::goUpperCase &quot; + letter);</span>

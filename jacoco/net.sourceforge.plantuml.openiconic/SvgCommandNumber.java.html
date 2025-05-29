@@ -39,34 +39,26 @@ import java.util.Locale;
 
 public class SvgCommandNumber implements SvgCommand {
 
-	final private String number;
+	final private double number;
 
-<span class="nc" id="L44">	public SvgCommandNumber(String number) {</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (number.matches(&quot;[-.0-9e]+&quot;) == false) {</span>
-<span class="nc" id="L46">			throw new IllegalArgumentException();</span>
-		}
-<span class="nc" id="L48">		this.number = number;</span>
-<span class="nc" id="L49">	}</span>
-
-	@Override
-	public String toString() {
-<span class="nc" id="L53">		return &quot; &quot; + number;</span>
+	public static SvgCommandNumber parse(String number) {
+<span class="nc" id="L45">		return new SvgCommandNumber(Double.parseDouble(number));</span>
 	}
 
-<span class="nc" id="L56">	public SvgCommandNumber(double number) {</span>
-<span class="nc" id="L57">		this.number = String.format(Locale.US, &quot;%1.4f&quot;, number);</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L48">	public SvgCommandNumber(double number) {</span>
+<span class="nc" id="L49">		this.number = number;</span>
+<span class="nc" id="L50">	}</span>
 
 	public SvgCommandNumber add(SvgCommandNumber other) {
-<span class="nc" id="L61">		return new SvgCommandNumber(getDouble() + other.getDouble());</span>
+<span class="nc" id="L53">		return new SvgCommandNumber(getDouble() + other.getDouble());</span>
 	}
 
 	public String toSvg() {
-<span class="nc" id="L65">		return number;</span>
+<span class="nc" id="L57">		return String.format(Locale.US, &quot;%1.4f&quot;, number);</span>
 	}
 
 	public double getDouble() {
-<span class="nc" id="L69">		return Double.parseDouble(number);</span>
+<span class="nc" id="L61">		return number;</span>
 	}
 
 }

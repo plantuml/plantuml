@@ -63,9 +63,9 @@ public class SvgPath {
 
 <span class="nc bnc" id="L64" title="All 2 branches missed.">		for (final CharSequence token : decipher) {</span>
 <span class="nc bnc" id="L65" title="All 4 branches missed.">			if (token.length() == 1 &amp;&amp; Character.isLetter(token.charAt(0)))</span>
-<span class="nc" id="L66">				commands.add(new SvgCommandLetter(token.toString()));</span>
+<span class="nc" id="L66">				commands.add(new SvgCommandLetter(token.charAt(0)));</span>
 			else
-<span class="nc" id="L68">				commands.add(new SvgCommandNumber(token.toString()));</span>
+<span class="nc" id="L68">				commands.add(SvgCommandNumber.parse(token.toString()));</span>
 
 <span class="nc" id="L70">		}</span>
 <span class="nc" id="L71">		commands = insertMissingLetter(commands);</span>
