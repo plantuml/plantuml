@@ -34,11 +34,11 @@
  */
 package net.sourceforge.plantuml.text;
 
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 
 <span class="fc" id="L43">public enum TLineType {</span>
 
@@ -47,225 +47,245 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 <span class="fc" id="L47">	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG,</span>
 <span class="fc" id="L48">	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;</span>
 
-<span class="fc" id="L50">	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile(</span>
-			&quot;^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\(.*&quot;);
-
-<span class="fc" id="L53">	private static final Pattern PATTERN_LEGACY_DEFINELONG = Pattern.compile(</span>
-			&quot;^\\s*!definelong\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*&quot;);
-
-<span class="fc" id="L56">	private static final Pattern PATTERN_AFFECTATION_DEFINE = Pattern.compile(</span>
-			&quot;^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*&quot;);
-
-<span class="fc" id="L59">	private static final Pattern PATTERN_AFFECTATION = Pattern.compile(</span>
-			&quot;^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\s*\\??=.*&quot;);
-
-<span class="fc" id="L62">	private static final Pattern PATTERN_COMMENT_SIMPLE1 = Pattern.compile(&quot;^\\s*'.*&quot;);</span>
-
-<span class="fc" id="L64">	private static final Pattern PATTERN_COMMENT_SIMPLE2 = Pattern.compile(&quot;^\\s*/'.*'/\\s*$&quot;);</span>
-
-<span class="fc" id="L66">	private static final Pattern PATTERN_COMMENT_LONG_START = Pattern.compile(&quot;^\\s*/'.*&quot;);</span>
+<span class="fc" id="L50">	private static final RegexLeaf IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT = new RegexLeaf(</span>
+			&quot;[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*&quot;);
 
 	private static RegexConcat simpleKeyword(String word) {
-<span class="fc" id="L69">		return new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(word),</span>
+<span class="fc" id="L54">		return new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(word),</span>
 				new RegexLeaf(&quot;\\b&quot;));
 	}
 
-<span class="fc" id="L73">	private static final IRegex PATTERN_IFDEF = simpleKeyword(&quot;!ifdef&quot;);</span>
+<span class="fc" id="L58">	private static final IRegex PATTERN_LEGACY_DEFINE = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),</span>
+<span class="fc" id="L59">			new RegexLeaf(&quot;!define&quot;), RegexLeaf.spaceOneOrMore(), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,</span>
+			new RegexLeaf(&quot;\\(&quot;));
 
-<span class="fc" id="L75">	private static final IRegex PATTERN_UNDEF = simpleKeyword(&quot;!undef&quot;);</span>
+<span class="fc" id="L62">	private static final IRegex PATTERN_LEGACY_DEFINELONG = new RegexConcat(RegexLeaf.start(),</span>
+<span class="fc" id="L63">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!definelong&quot;), RegexLeaf.spaceOneOrMore(),</span>
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf(&quot;\\b&quot;));
 
-<span class="fc" id="L77">	private static final IRegex PATTERN_IFNDEF = simpleKeyword(&quot;!ifndef&quot;);</span>
+<span class="fc" id="L66">	private static final IRegex PATTERN_AFFECTATION_DEFINE = new RegexConcat(RegexLeaf.start(),</span>
+<span class="fc" id="L67">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!define&quot;), RegexLeaf.spaceOneOrMore(),</span>
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf(&quot;\\b&quot;));
 
-<span class="fc" id="L79">	private static final IRegex PATTERN_ASSERT = simpleKeyword(&quot;!assert&quot;);</span>
+<span class="fc" id="L70">	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),</span>
+<span class="fc" id="L71">			new RegexLeaf(&quot;!&quot;), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;(local|global)?&quot;),</span>
+<span class="fc" id="L72">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\$?&quot;), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,</span>
+<span class="fc" id="L73">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\??=&quot;));</span>
 
-<span class="fc" id="L81">	private static final IRegex PATTERN_IF = simpleKeyword(&quot;!if&quot;);</span>
+<span class="fc" id="L75">	private static final IRegex PATTERN_COMMENT_SIMPLE1 = new RegexConcat(RegexLeaf.start(),</span>
+<span class="fc" id="L76">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;'&quot;));</span>
 
-<span class="fc" id="L83">	private static final Pattern PATTERN_DECLARE_RETURN_FUNCTION = Pattern.compile(</span>
-			&quot;^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*&quot;);
+<span class="fc" id="L78">	private static final IRegex PATTERN_COMMENT_SIMPLE2 = new RegexConcat(RegexLeaf.start(),</span>
+<span class="fc" id="L79">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;/'&quot;), new RegexLeaf(&quot;.*&quot;), new RegexLeaf(&quot;'/&quot;),</span>
+<span class="fc" id="L80">			RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 
-<span class="fc" id="L86">	private static final Pattern PATTERN_DECLARE_PROCEDURE = Pattern.compile(</span>
-			&quot;^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*&quot;);
+<span class="fc" id="L82">	private static final IRegex PATTERN_COMMENT_LONG_START = new RegexConcat(RegexLeaf.start(),</span>
+<span class="fc" id="L83">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;/'&quot;));</span>
 
-<span class="fc" id="L89">	private static final IRegex PATTERN_ELSE = simpleKeyword(&quot;!else&quot;);</span>
+<span class="fc" id="L85">	private static final IRegex PATTERN_IFDEF = simpleKeyword(&quot;!ifdef&quot;);</span>
 
-<span class="fc" id="L91">	private static final IRegex PATTERN_ELSEIF = simpleKeyword(&quot;!elseif&quot;);</span>
+<span class="fc" id="L87">	private static final IRegex PATTERN_UNDEF = simpleKeyword(&quot;!undef&quot;);</span>
 
-<span class="fc" id="L93">	private static final IRegex PATTERN_ENDIF = simpleKeyword(&quot;!endif&quot;);</span>
+<span class="fc" id="L89">	private static final IRegex PATTERN_IFNDEF = simpleKeyword(&quot;!ifndef&quot;);</span>
 
-<span class="fc" id="L95">	private static final IRegex PATTERN_WHILE = simpleKeyword(&quot;!while&quot;);</span>
+<span class="fc" id="L91">	private static final IRegex PATTERN_ASSERT = simpleKeyword(&quot;!assert&quot;);</span>
 
-<span class="fc" id="L97">	private static final IRegex PATTERN_ENDWHILE = simpleKeyword(&quot;!endwhile&quot;);</span>
+<span class="fc" id="L93">	private static final IRegex PATTERN_IF = simpleKeyword(&quot;!if&quot;);</span>
 
-<span class="fc" id="L99">	private static final IRegex PATTERN_FOREACH = simpleKeyword(&quot;!foreach&quot;);</span>
+<span class="fc" id="L95">	private static final IRegex PATTERN_DECLARE_RETURN_FUNCTION = new RegexConcat(RegexLeaf.start(),</span>
+<span class="fc" id="L96">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!&quot;), new RegexLeaf(&quot;(unquoted\\s|final\\s)*&quot;),</span>
+<span class="fc" id="L97">			new RegexLeaf(&quot;function&quot;), RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;\\$?&quot;),</span>
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
-<span class="fc" id="L101">	private static final IRegex PATTERN_ENDFOREACH = simpleKeyword(&quot;!endfor&quot;);</span>
+<span class="fc" id="L100">	private static final IRegex PATTERN_DECLARE_PROCEDURE = new RegexConcat(RegexLeaf.start(),</span>
+<span class="fc" id="L101">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!&quot;), new RegexLeaf(&quot;(unquoted\\s|final\\s)*&quot;),</span>
+<span class="fc" id="L102">			new RegexLeaf(&quot;procedure&quot;), RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;\\$?&quot;),</span>
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
-<span class="fc" id="L103">	private static final Pattern PATTERN_END_FUNCTION = Pattern</span>
-<span class="fc" id="L104">			.compile(&quot;^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*&quot;);</span>
+<span class="fc" id="L105">	private static final IRegex PATTERN_ELSE = simpleKeyword(&quot;!else&quot;);</span>
 
-<span class="fc" id="L106">	private static final IRegex PATTERN_RETURN = simpleKeyword(&quot;!return&quot;);</span>
+<span class="fc" id="L107">	private static final IRegex PATTERN_ELSEIF = simpleKeyword(&quot;!elseif&quot;);</span>
 
-<span class="fc" id="L108">	private static final IRegex PATTERN_THEME = simpleKeyword(&quot;!theme&quot;);</span>
+<span class="fc" id="L109">	private static final IRegex PATTERN_ENDIF = simpleKeyword(&quot;!endif&quot;);</span>
 
-<span class="fc" id="L110">	private static final Pattern PATTERN_INCLUDE = Pattern</span>
-<span class="fc" id="L111">			.compile(&quot;^\\s*!(include|includeurl|include_many|include_once)\\b.*&quot;);</span>
+<span class="fc" id="L111">	private static final IRegex PATTERN_WHILE = simpleKeyword(&quot;!while&quot;);</span>
 
-<span class="fc" id="L113">	private static final IRegex PATTERN_INCLUDE_SPRITES = simpleKeyword(&quot;!include_sprites&quot;);</span>
+<span class="fc" id="L113">	private static final IRegex PATTERN_ENDWHILE = simpleKeyword(&quot;!endwhile&quot;);</span>
 
-<span class="fc" id="L115">	private static final IRegex PATTERN_INCLUDE_DEF = simpleKeyword(&quot;!includedef&quot;);</span>
+<span class="fc" id="L115">	private static final IRegex PATTERN_FOREACH = simpleKeyword(&quot;!foreach&quot;);</span>
 
-<span class="fc" id="L117">	private static final IRegex PATTERN_IMPORT = simpleKeyword(&quot;!import&quot;);</span>
+<span class="fc" id="L117">	private static final IRegex PATTERN_ENDFOREACH = simpleKeyword(&quot;!endfor&quot;);</span>
 
-<span class="fc" id="L119">	private static final IRegex PATTERN_STARTSUB = simpleKeyword(&quot;!startsub&quot;);</span>
+<span class="fc" id="L119">	private static final IRegex PATTERN_END_FUNCTION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),</span>
+<span class="fc" id="L120">			new RegexLeaf(&quot;!end&quot;), RegexLeaf.spaceZeroOrMore(),</span>
+			new RegexOr(new RegexLeaf(&quot;function&quot;), new RegexLeaf(&quot;definelong&quot;), new RegexLeaf(&quot;procedure&quot;)),
+			new RegexLeaf(&quot;\\b&quot;));
 
-<span class="fc" id="L121">	private static final IRegex PATTERN_ENDSUB = simpleKeyword(&quot;!endsub&quot;);</span>
+<span class="fc" id="L124">	private static final IRegex PATTERN_RETURN = simpleKeyword(&quot;!return&quot;);</span>
 
-<span class="fc" id="L123">	private static final IRegex PATTERN_INCLUDESUB = simpleKeyword(&quot;!includesub&quot;);</span>
+<span class="fc" id="L126">	private static final IRegex PATTERN_THEME = simpleKeyword(&quot;!theme&quot;);</span>
 
-<span class="fc" id="L125">	private static final IRegex PATTERN_LOG = simpleKeyword(&quot;!log&quot;);</span>
+<span class="fc" id="L128">	private static final IRegex PATTERN_INCLUDE = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),</span>
+<span class="fc" id="L129">			new RegexLeaf(&quot;!include&quot;), RegexLeaf.spaceZeroOrMore(),</span>
+			new RegexOptional(new RegexOr(new RegexLeaf(&quot;url&quot;), new RegexLeaf(&quot;_many&quot;), new RegexLeaf(&quot;_once&quot;))),
+			new RegexLeaf(&quot;\\b&quot;));
 
-<span class="fc" id="L127">	private static final IRegex PATTERN_DUMP_MEMORY = simpleKeyword(&quot;!dump_memory&quot;);</span>
+<span class="fc" id="L133">	private static final IRegex PATTERN_INCLUDE_SPRITES = simpleKeyword(&quot;!include_sprites&quot;);</span>
 
-<span class="fc" id="L129">	private static final IRegex PATTERN_OPTION = simpleKeyword(&quot;!option&quot;);</span>
+<span class="fc" id="L135">	private static final IRegex PATTERN_INCLUDE_DEF = simpleKeyword(&quot;!includedef&quot;);</span>
+
+<span class="fc" id="L137">	private static final IRegex PATTERN_IMPORT = simpleKeyword(&quot;!import&quot;);</span>
+
+<span class="fc" id="L139">	private static final IRegex PATTERN_STARTSUB = simpleKeyword(&quot;!startsub&quot;);</span>
+
+<span class="fc" id="L141">	private static final IRegex PATTERN_ENDSUB = simpleKeyword(&quot;!endsub&quot;);</span>
+
+<span class="fc" id="L143">	private static final IRegex PATTERN_INCLUDESUB = simpleKeyword(&quot;!includesub&quot;);</span>
+
+<span class="fc" id="L145">	private static final IRegex PATTERN_LOG = simpleKeyword(&quot;!log&quot;);</span>
+
+<span class="fc" id="L147">	private static final IRegex PATTERN_DUMP_MEMORY = simpleKeyword(&quot;!dump_memory&quot;);</span>
+
+<span class="fc" id="L149">	private static final IRegex PATTERN_OPTION = simpleKeyword(&quot;!option&quot;);</span>
 
 	public static TLineType getFromLineInternal(StringLocated sl) {
-<span class="fc" id="L132">		final String s = sl.getString();</span>
+<span class="fc" id="L152">		final String s = sl.getString();</span>
 
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (PATTERN_LEGACY_DEFINE.matcher(s).matches())</span>
-<span class="fc" id="L135">			return LEGACY_DEFINE;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (PATTERN_LEGACY_DEFINE.match(sl))</span>
+<span class="fc" id="L155">			return LEGACY_DEFINE;</span>
 
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (PATTERN_LEGACY_DEFINELONG.matcher(s).matches())</span>
-<span class="nc" id="L138">			return LEGACY_DEFINELONG;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (PATTERN_LEGACY_DEFINELONG.match(sl))</span>
+<span class="nc" id="L158">			return LEGACY_DEFINELONG;</span>
 
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (PATTERN_AFFECTATION_DEFINE.matcher(s).matches())</span>
-<span class="nc" id="L141">			return AFFECTATION_DEFINE;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (PATTERN_AFFECTATION_DEFINE.match(sl))</span>
+<span class="nc" id="L161">			return AFFECTATION_DEFINE;</span>
 
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (PATTERN_AFFECTATION.matcher(s).matches())</span>
-<span class="fc" id="L144">			return AFFECTATION;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (PATTERN_AFFECTATION.match(sl))</span>
+<span class="fc" id="L164">			return AFFECTATION;</span>
 
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE1.matcher(s).matches())</span>
-<span class="fc" id="L147">			return COMMENT_SIMPLE;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE1.match(sl))</span>
+<span class="fc" id="L167">			return COMMENT_SIMPLE;</span>
 
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE2.matcher(s).matches())</span>
-<span class="fc" id="L150">			return COMMENT_SIMPLE;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE2.match(sl))</span>
+<span class="fc" id="L170">			return COMMENT_SIMPLE;</span>
 
-<span class="pc bpc" id="L152" title="3 of 4 branches missed.">		if (PATTERN_COMMENT_LONG_START.matcher(s).matches() &amp;&amp; s.contains(&quot;'/&quot;) == false)</span>
-<span class="nc" id="L153">			return COMMENT_LONG_START;</span>
+<span class="pc bpc" id="L172" title="3 of 4 branches missed.">		if (PATTERN_COMMENT_LONG_START.match(sl) &amp;&amp; s.contains(&quot;'/&quot;) == false)</span>
+<span class="nc" id="L173">			return COMMENT_LONG_START;</span>
 
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (PATTERN_IFDEF.match(sl))</span>
-<span class="nc" id="L156">			return IFDEF;</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (PATTERN_IFDEF.match(sl))</span>
+<span class="nc" id="L176">			return IFDEF;</span>
 
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (PATTERN_UNDEF.match(sl))</span>
-<span class="nc" id="L159">			return UNDEF;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (PATTERN_UNDEF.match(sl))</span>
+<span class="nc" id="L179">			return UNDEF;</span>
 
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (PATTERN_IFNDEF.match(sl))</span>
-<span class="fc" id="L162">			return IFNDEF;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (PATTERN_IFNDEF.match(sl))</span>
+<span class="fc" id="L182">			return IFNDEF;</span>
 
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (PATTERN_ASSERT.match(sl))</span>
-<span class="nc" id="L165">			return ASSERT;</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (PATTERN_ASSERT.match(sl))</span>
+<span class="nc" id="L185">			return ASSERT;</span>
 
-<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (PATTERN_IF.match(sl))</span>
-<span class="fc" id="L168">			return IF;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (PATTERN_IF.match(sl))</span>
+<span class="fc" id="L188">			return IF;</span>
 
-<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (PATTERN_DECLARE_RETURN_FUNCTION.matcher(s).matches())</span>
-<span class="fc" id="L171">			return DECLARE_RETURN_FUNCTION;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (PATTERN_DECLARE_RETURN_FUNCTION.match(sl))</span>
+<span class="fc" id="L191">			return DECLARE_RETURN_FUNCTION;</span>
 
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (PATTERN_DECLARE_PROCEDURE.matcher(s).matches())</span>
-<span class="fc" id="L174">			return DECLARE_PROCEDURE;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (PATTERN_DECLARE_PROCEDURE.match(sl))</span>
+<span class="fc" id="L194">			return DECLARE_PROCEDURE;</span>
 
-<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (PATTERN_ELSE.match(sl))</span>
-<span class="fc" id="L177">			return ELSE;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (PATTERN_ELSE.match(sl))</span>
+<span class="fc" id="L197">			return ELSE;</span>
 
-<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (PATTERN_ELSEIF.match(sl))</span>
-<span class="fc" id="L180">			return ELSEIF;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (PATTERN_ELSEIF.match(sl))</span>
+<span class="fc" id="L200">			return ELSEIF;</span>
 
-<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (PATTERN_ENDIF.match(sl))</span>
-<span class="fc" id="L183">			return ENDIF;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (PATTERN_ENDIF.match(sl))</span>
+<span class="fc" id="L203">			return ENDIF;</span>
 
-<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (PATTERN_WHILE.match(sl))</span>
-<span class="fc" id="L186">			return WHILE;</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (PATTERN_WHILE.match(sl))</span>
+<span class="fc" id="L206">			return WHILE;</span>
 
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (PATTERN_ENDWHILE.match(sl))</span>
-<span class="fc" id="L189">			return ENDWHILE;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (PATTERN_ENDWHILE.match(sl))</span>
+<span class="fc" id="L209">			return ENDWHILE;</span>
 
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (PATTERN_FOREACH.match(sl))</span>
-<span class="fc" id="L192">			return FOREACH;</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (PATTERN_FOREACH.match(sl))</span>
+<span class="fc" id="L212">			return FOREACH;</span>
 
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (PATTERN_ENDFOREACH.match(sl))</span>
-<span class="fc" id="L195">			return ENDFOREACH;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (PATTERN_ENDFOREACH.match(sl))</span>
+<span class="fc" id="L215">			return ENDFOREACH;</span>
 
-<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (PATTERN_END_FUNCTION.matcher(s).matches())</span>
-<span class="fc" id="L198">			return END_FUNCTION;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (PATTERN_END_FUNCTION.match(sl))</span>
+<span class="fc" id="L218">			return END_FUNCTION;</span>
 
-<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (PATTERN_RETURN.match(sl))</span>
-<span class="fc" id="L201">			return RETURN;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (PATTERN_RETURN.match(sl))</span>
+<span class="fc" id="L221">			return RETURN;</span>
 
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (PATTERN_THEME.match(sl))</span>
-<span class="fc" id="L204">			return THEME;</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (PATTERN_THEME.match(sl))</span>
+<span class="fc" id="L224">			return THEME;</span>
 
-<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (PATTERN_INCLUDE.matcher(s).matches())</span>
-<span class="fc" id="L207">			return INCLUDE;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (PATTERN_INCLUDE.match(sl))</span>
+<span class="fc" id="L227">			return INCLUDE;</span>
 
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_SPRITES.match(sl))</span>
-<span class="nc" id="L210">			return INCLUDE_SPRITES;</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_SPRITES.match(sl))</span>
+<span class="nc" id="L230">			return INCLUDE_SPRITES;</span>
 
-<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_DEF.match(sl))</span>
-<span class="nc" id="L213">			return INCLUDE_DEF;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_DEF.match(sl))</span>
+<span class="nc" id="L233">			return INCLUDE_DEF;</span>
 
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (PATTERN_IMPORT.match(sl))</span>
-<span class="nc" id="L216">			return IMPORT;</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (PATTERN_IMPORT.match(sl))</span>
+<span class="nc" id="L236">			return IMPORT;</span>
 
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (PATTERN_STARTSUB.match(sl))</span>
-<span class="nc" id="L219">			return STARTSUB;</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (PATTERN_STARTSUB.match(sl))</span>
+<span class="nc" id="L239">			return STARTSUB;</span>
 
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (PATTERN_ENDSUB.match(sl))</span>
-<span class="nc" id="L222">			return ENDSUB;</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (PATTERN_ENDSUB.match(sl))</span>
+<span class="nc" id="L242">			return ENDSUB;</span>
 
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (PATTERN_INCLUDESUB.match(sl))</span>
-<span class="nc" id="L225">			return INCLUDESUB;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (PATTERN_INCLUDESUB.match(sl))</span>
+<span class="nc" id="L245">			return INCLUDESUB;</span>
 
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (PATTERN_LOG.match(sl))</span>
-<span class="fc" id="L228">			return LOG;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		if (PATTERN_LOG.match(sl))</span>
+<span class="fc" id="L248">			return LOG;</span>
 
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (PATTERN_DUMP_MEMORY.match(sl))</span>
-<span class="nc" id="L231">			return DUMP_MEMORY;</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		if (PATTERN_DUMP_MEMORY.match(sl))</span>
+<span class="nc" id="L251">			return DUMP_MEMORY;</span>
 
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (PATTERN_OPTION.match(sl))</span>
-<span class="nc" id="L234">			return OPTION;</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (PATTERN_OPTION.match(sl))</span>
+<span class="nc" id="L254">			return OPTION;</span>
 
-<span class="fc" id="L236">		return PLAIN;</span>
+<span class="fc" id="L256">		return PLAIN;</span>
 	}
 
 	public static boolean isQuote(char ch) {
-<span class="fc bfc" id="L240" title="All 4 branches covered.">		return ch == '\&quot;' || ch == '\'';</span>
+<span class="fc bfc" id="L260" title="All 4 branches covered.">		return ch == '\&quot;' || ch == '\'';</span>
 	}
 
 	public static boolean isSpaceChar(char ch) {
-<span class="fc" id="L244">		return Character.isSpaceChar(ch);</span>
+<span class="fc" id="L264">		return Character.isSpaceChar(ch);</span>
 	}
 
 	public static boolean isLatinDigit(char ch) {
-<span class="fc bfc" id="L248" title="All 4 branches covered.">		return ch &gt;= '0' &amp;&amp; ch &lt;= '9';</span>
+<span class="fc bfc" id="L268" title="All 4 branches covered.">		return ch &gt;= '0' &amp;&amp; ch &lt;= '9';</span>
 	}
 
 	public static boolean isLetterOrEmojiOrUnderscoreOrDigit(char ch) {
-<span class="fc bfc" id="L252" title="All 6 branches covered.">		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);</span>
+<span class="fc bfc" id="L272" title="All 6 branches covered.">		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);</span>
 	}
 
 	public static boolean isLetterOrEmojiOrUnderscoreOrDollar(char ch) {
-<span class="pc bpc" id="L256" title="1 of 6 branches missed.">		return isLetterOrUnderscore(ch) || ch == '$' || isEmoji(ch);</span>
+<span class="pc bpc" id="L276" title="1 of 6 branches missed.">		return isLetterOrUnderscore(ch) || ch == '$' || isEmoji(ch);</span>
 	}
 
 	private static boolean isLetterOrUnderscore(char ch) {
-<span class="fc bfc" id="L260" title="All 4 branches covered.">		return isLetter(ch) || ch == '_';</span>
+<span class="fc bfc" id="L280" title="All 4 branches covered.">		return isLetter(ch) || ch == '_';</span>
 	}
 
 	private static boolean isLetter(char ch) {
-<span class="fc" id="L264">		return Character.isLetter(ch);</span>
+<span class="fc" id="L284">		return Character.isLetter(ch);</span>
 	}
 
 	private static boolean isEmoji(char ch) {
-<span class="fc bfc" id="L268" title="All 4 branches covered.">		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch);</span>
+<span class="fc bfc" id="L288" title="All 4 branches covered.">		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch);</span>
 	}
 
 }
