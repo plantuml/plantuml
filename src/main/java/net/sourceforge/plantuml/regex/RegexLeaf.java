@@ -122,7 +122,7 @@ public class RegexLeaf implements IRegex {
 	// static private final Set<String> UNKNOWN = new HashSet<>();
 
 	static private final Pattern p1 = Pattern.compile(
-			"^\\(?((?:[-0A-Za-z_!:@;/=,\" ][?+*]?|\\\\[b$(){}<>|*.+^\\[\\]][?+*]?|\\.\\*|\\.\\+)+)(?:\\)\\+|\\))?$");
+			"^\\(?((?:[-0A-Za-z_!:@;/=,\"\' ][?+*]?|\\\\[b$(){}<>|*.+^\\[\\]][?+*]?|\\.\\*|\\.\\+)+)(?:\\)\\+|\\))?$");
 
 	static private final Pattern p2 = Pattern.compile("^\\([-?a-z ]+(\\|[-?a-z ]+)+\\)$");
 

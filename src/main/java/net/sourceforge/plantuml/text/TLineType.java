@@ -34,11 +34,11 @@
  */
 package net.sourceforge.plantuml.text;
 
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 
 public enum TLineType {
 
@@ -47,28 +47,40 @@ public enum TLineType {
 	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG,
 	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;
 
-	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile(
-			"^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\(.*");
-
-	private static final Pattern PATTERN_LEGACY_DEFINELONG = Pattern.compile(
-			"^\\s*!definelong\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
-
-	private static final Pattern PATTERN_AFFECTATION_DEFINE = Pattern.compile(
-			"^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
-
-	private static final Pattern PATTERN_AFFECTATION = Pattern.compile(
-			"^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\s*\\??=.*");
-
-	private static final Pattern PATTERN_COMMENT_SIMPLE1 = Pattern.compile("^\\s*'.*");
-
-	private static final Pattern PATTERN_COMMENT_SIMPLE2 = Pattern.compile("^\\s*/'.*'/\\s*$");
-
-	private static final Pattern PATTERN_COMMENT_LONG_START = Pattern.compile("^\\s*/'.*");
+	private static final RegexLeaf IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT = new RegexLeaf(
+			"[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*");
 
 	private static RegexConcat simpleKeyword(String word) {
 		return new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(word),
 				new RegexLeaf("\\b"));
 	}
+
+	private static final IRegex PATTERN_LEGACY_DEFINE = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
+			new RegexLeaf("!define"), RegexLeaf.spaceOneOrMore(), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
+			new RegexLeaf("\\("));
+
+	private static final IRegex PATTERN_LEGACY_DEFINELONG = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!definelong"), RegexLeaf.spaceOneOrMore(),
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
+
+	private static final IRegex PATTERN_AFFECTATION_DEFINE = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!define"), RegexLeaf.spaceOneOrMore(),
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
+
+	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
+			new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("(local|global)?"),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\$?"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\??="));
+
+	private static final IRegex PATTERN_COMMENT_SIMPLE1 = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("'"));
+
+	private static final IRegex PATTERN_COMMENT_SIMPLE2 = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("/'"), new RegexLeaf(".*"), new RegexLeaf("'/"),
+			RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+
+	private static final IRegex PATTERN_COMMENT_LONG_START = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("/'"));
 
 	private static final IRegex PATTERN_IFDEF = simpleKeyword("!ifdef");
 
@@ -80,11 +92,15 @@ public enum TLineType {
 
 	private static final IRegex PATTERN_IF = simpleKeyword("!if");
 
-	private static final Pattern PATTERN_DECLARE_RETURN_FUNCTION = Pattern.compile(
-			"^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
+	private static final IRegex PATTERN_DECLARE_RETURN_FUNCTION = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf("(unquoted\\s|final\\s)*"),
+			new RegexLeaf("function"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("\\$?"),
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
-	private static final Pattern PATTERN_DECLARE_PROCEDURE = Pattern.compile(
-			"^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
+	private static final IRegex PATTERN_DECLARE_PROCEDURE = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf("(unquoted\\s|final\\s)*"),
+			new RegexLeaf("procedure"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("\\$?"),
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
 	private static final IRegex PATTERN_ELSE = simpleKeyword("!else");
 
@@ -100,15 +116,19 @@ public enum TLineType {
 
 	private static final IRegex PATTERN_ENDFOREACH = simpleKeyword("!endfor");
 
-	private static final Pattern PATTERN_END_FUNCTION = Pattern
-			.compile("^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*");
+	private static final IRegex PATTERN_END_FUNCTION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
+			new RegexLeaf("!end"), RegexLeaf.spaceZeroOrMore(),
+			new RegexOr(new RegexLeaf("function"), new RegexLeaf("definelong"), new RegexLeaf("procedure")),
+			new RegexLeaf("\\b"));
 
 	private static final IRegex PATTERN_RETURN = simpleKeyword("!return");
 
 	private static final IRegex PATTERN_THEME = simpleKeyword("!theme");
 
-	private static final Pattern PATTERN_INCLUDE = Pattern
-			.compile("^\\s*!(include|includeurl|include_many|include_once)\\b.*");
+	private static final IRegex PATTERN_INCLUDE = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
+			new RegexLeaf("!include"), RegexLeaf.spaceZeroOrMore(),
+			new RegexOptional(new RegexOr(new RegexLeaf("url"), new RegexLeaf("_many"), new RegexLeaf("_once"))),
+			new RegexLeaf("\\b"));
 
 	private static final IRegex PATTERN_INCLUDE_SPRITES = simpleKeyword("!include_sprites");
 
@@ -131,25 +151,25 @@ public enum TLineType {
 	public static TLineType getFromLineInternal(StringLocated sl) {
 		final String s = sl.getString();
 
-		if (PATTERN_LEGACY_DEFINE.matcher(s).matches())
+		if (PATTERN_LEGACY_DEFINE.match(sl))
 			return LEGACY_DEFINE;
 
-		if (PATTERN_LEGACY_DEFINELONG.matcher(s).matches())
+		if (PATTERN_LEGACY_DEFINELONG.match(sl))
 			return LEGACY_DEFINELONG;
 
-		if (PATTERN_AFFECTATION_DEFINE.matcher(s).matches())
+		if (PATTERN_AFFECTATION_DEFINE.match(sl))
 			return AFFECTATION_DEFINE;
 
-		if (PATTERN_AFFECTATION.matcher(s).matches())
+		if (PATTERN_AFFECTATION.match(sl))
 			return AFFECTATION;
 
-		if (PATTERN_COMMENT_SIMPLE1.matcher(s).matches())
+		if (PATTERN_COMMENT_SIMPLE1.match(sl))
 			return COMMENT_SIMPLE;
 
-		if (PATTERN_COMMENT_SIMPLE2.matcher(s).matches())
+		if (PATTERN_COMMENT_SIMPLE2.match(sl))
 			return COMMENT_SIMPLE;
 
-		if (PATTERN_COMMENT_LONG_START.matcher(s).matches() && s.contains("'/") == false)
+		if (PATTERN_COMMENT_LONG_START.match(sl) && s.contains("'/") == false)
 			return COMMENT_LONG_START;
 
 		if (PATTERN_IFDEF.match(sl))
@@ -167,10 +187,10 @@ public enum TLineType {
 		if (PATTERN_IF.match(sl))
 			return IF;
 
-		if (PATTERN_DECLARE_RETURN_FUNCTION.matcher(s).matches())
+		if (PATTERN_DECLARE_RETURN_FUNCTION.match(sl))
 			return DECLARE_RETURN_FUNCTION;
 
-		if (PATTERN_DECLARE_PROCEDURE.matcher(s).matches())
+		if (PATTERN_DECLARE_PROCEDURE.match(sl))
 			return DECLARE_PROCEDURE;
 
 		if (PATTERN_ELSE.match(sl))
@@ -194,7 +214,7 @@ public enum TLineType {
 		if (PATTERN_ENDFOREACH.match(sl))
 			return ENDFOREACH;
 
-		if (PATTERN_END_FUNCTION.matcher(s).matches())
+		if (PATTERN_END_FUNCTION.match(sl))
 			return END_FUNCTION;
 
 		if (PATTERN_RETURN.match(sl))
@@ -203,7 +223,7 @@ public enum TLineType {
 		if (PATTERN_THEME.match(sl))
 			return THEME;
 
-		if (PATTERN_INCLUDE.matcher(s).matches())
+		if (PATTERN_INCLUDE.match(sl))
 			return INCLUDE;
 
 		if (PATTERN_INCLUDE_SPRITES.match(sl))
