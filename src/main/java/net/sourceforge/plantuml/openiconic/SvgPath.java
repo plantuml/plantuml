@@ -63,9 +63,9 @@ public class SvgPath {
 
 		for (final CharSequence token : decipher) {
 			if (token.length() == 1 && Character.isLetter(token.charAt(0)))
-				commands.add(new SvgCommandLetter(token.toString()));
+				commands.add(new SvgCommandLetter(token.charAt(0)));
 			else
-				commands.add(new SvgCommandNumber(token.toString()));
+				commands.add(SvgCommandNumber.parse(token.toString()));
 
 		}
 		commands = insertMissingLetter(commands);

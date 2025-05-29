@@ -45,7 +45,7 @@ public class SvgPosition {
 	final private SvgCommandNumber y;
 
 	public SvgPosition() {
-		this(new SvgCommandNumber("0"), new SvgCommandNumber("0"));
+		this(new SvgCommandNumber(0), new SvgCommandNumber(0));
 	}
 
 	public SvgPosition(SvgCommandNumber x, SvgCommandNumber y) {

@@ -41,11 +41,8 @@ public class SvgCommandLetter implements SvgCommand {
 
 	final private char letter;
 
-	public SvgCommandLetter(String letter) {
-		if (letter.matches("[mlhvzsacqtMLHVZSACQT]") == false)
-			throw new IllegalArgumentException(letter);
-
-		this.letter = letter.charAt(0);
+	public SvgCommandLetter(char letter) {
+		this.letter = letter;
 	}
 
 	@Override
@@ -94,10 +91,10 @@ public class SvgCommandLetter implements SvgCommand {
 	public SvgCommandLetter implicit() {
 		// https://stackoverflow.com/questions/29251389/svg-path-spec-moveto-and-implicit-lineto
 		if (letter == 'm')
-			return new SvgCommandLetter("l");
+			return new SvgCommandLetter('l');
 
 		if (letter == 'M')
-			return new SvgCommandLetter("L");
+			return new SvgCommandLetter('L');
 
 		return this;
 	}

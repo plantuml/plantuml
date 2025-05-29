@@ -90,10 +90,10 @@ public class Movement {
 			throw new UnsupportedOperationException();
 		}
 		if (mirrorControlPoint == null) {
-			return new Movement(new SvgCommandLetter("C"), this.getSvgPosition(0), this.getSvgPosition(0),
+			return new Movement(new SvgCommandLetter('C'), this.getSvgPosition(0), this.getSvgPosition(0),
 					lastPosition());
 		}
-		return new Movement(new SvgCommandLetter("C"), mirrorControlPoint, this.getSvgPosition(0), lastPosition());
+		return new Movement(new SvgCommandLetter('C'), mirrorControlPoint, this.getSvgPosition(0), lastPosition());
 	}
 
 	public String toSvg() {
@@ -126,50 +126,50 @@ public class Movement {
 		Objects.requireNonNull(delta);
 		if (letter.is('H')) {
 			final SvgCommandNumber tmp = arguments.get(0);
-			return new Movement(new SvgCommandLetter("L"), new SvgPosition(tmp, delta.getY()));
+			return new Movement(new SvgCommandLetter('L'), new SvgPosition(tmp, delta.getY()));
 		}
 		if (letter.is('V')) {
 			final SvgCommandNumber tmp = arguments.get(0);
-			return new Movement(new SvgCommandLetter("L"), new SvgPosition(delta.getX(), tmp));
+			return new Movement(new SvgCommandLetter('L'), new SvgPosition(delta.getX(), tmp));
 		}
 		if (letter.is('h')) {
 			final SvgCommandNumber tmp = arguments.get(0);
-			return new Movement(new SvgCommandLetter("L"), new SvgPosition(delta.getX().add(tmp), delta.getY()));
+			return new Movement(new SvgCommandLetter('L'), new SvgPosition(delta.getX().add(tmp), delta.getY()));
 		}
 		if (letter.is('v')) {
 			final SvgCommandNumber tmp = arguments.get(0);
-			return new Movement(new SvgCommandLetter("L"), new SvgPosition(delta.getX(), delta.getY().add(tmp)));
+			return new Movement(new SvgCommandLetter('L'), new SvgPosition(delta.getX(), delta.getY().add(tmp)));
 		}
 
 		if (letter.isUpperCase())
 			return this;
 
 		if (letter.is('m'))
-			return new Movement(new SvgCommandLetter("M"), delta.add(getSvgPosition(0)));
+			return new Movement(new SvgCommandLetter('M'), delta.add(getSvgPosition(0)));
 
 		if (letter.is('l'))
-			return new Movement(new SvgCommandLetter("L"), delta.add(getSvgPosition(0)));
+			return new Movement(new SvgCommandLetter('L'), delta.add(getSvgPosition(0)));
 
 		if (letter.is('t'))
-			return new Movement(new SvgCommandLetter("T"), delta.add(getSvgPosition(0)));
+			return new Movement(new SvgCommandLetter('T'), delta.add(getSvgPosition(0)));
 
 		if (letter.is('z'))
-			return new Movement(new SvgCommandLetter("Z"));
+			return new Movement(new SvgCommandLetter('Z'));
 
 		if (letter.is('c'))
-			return new Movement(new SvgCommandLetter("C"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)),
+			return new Movement(new SvgCommandLetter('C'), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)),
 					delta.add(getSvgPosition(4)));
 
 		if (letter.is('q'))
-			return new Movement(new SvgCommandLetter("Q"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));
+			return new Movement(new SvgCommandLetter('Q'), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));
 
 		if (letter.is('s'))
-			return new Movement(new SvgCommandLetter("S"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));
+			return new Movement(new SvgCommandLetter('S'), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));
 
 		if (letter.is('a')) {
 			final SvgPosition last = delta.add(lastPosition());
 			// System.err.println("LAST=" + last);
-			return new Movement(new SvgCommandLetter("A"), arguments.get(0), arguments.get(1), arguments.get(2),
+			return new Movement(new SvgCommandLetter('A'), arguments.get(0), arguments.get(1), arguments.get(2),
 					arguments.get(3), arguments.get(4), last.getX(), last.getY());
 		}
 		throw new UnsupportedOperationException("Movement::goUpperCase " + letter);

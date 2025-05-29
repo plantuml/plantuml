@@ -39,22 +39,14 @@ import java.util.Locale;
 
 public class SvgCommandNumber implements SvgCommand {
 
-	final private String number;
+	final private double number;
 
-	public SvgCommandNumber(String number) {
-		if (number.matches("[-.0-9e]+") == false) {
-			throw new IllegalArgumentException();
-		}
-		this.number = number;
-	}
-
-	@Override
-	public String toString() {
-		return " " + number;
+	public static SvgCommandNumber parse(String number) {
+		return new SvgCommandNumber(Double.parseDouble(number));
 	}
 
 	public SvgCommandNumber(double number) {
-		this.number = String.format(Locale.US, "%1.4f", number);
+		this.number = number;
 	}
 
 	public SvgCommandNumber add(SvgCommandNumber other) {
@@ -62,11 +54,11 @@ public class SvgCommandNumber implements SvgCommand {
 	}
 
 	public String toSvg() {
-		return number;
+		return String.format(Locale.US, "%1.4f", number);
 	}
 
 	public double getDouble() {
-		return Double.parseDouble(number);
+		return number;
 	}
 
 }
