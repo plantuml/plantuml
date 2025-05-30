@@ -53,6 +53,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private final WeekNumberStrategy weekNumberStrategy;
 	private final WeeklyHeaderStrategy headerStrategy;
+	private final int weekStartingNumber;
 
 	private double getH1(StringBounder stringBounder) {
 		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;
@@ -93,12 +94,13 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
 			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map<Day, String> nameDays,
-			Day printStart) {
+			Day printStart, int weekStartingNumber) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
 				thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;
 		this.headerStrategy = headerStrategy;
 		this.nameDays = nameDays;
+		this.weekStartingNumber = weekStartingNumber;
 	}
 
 	@Override
@@ -184,11 +186,11 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {
-		int counter = 1;
+		int counter = weekStartingNumber;
 		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
-				if (headerStrategy == WeeklyHeaderStrategy.FROM_1)
+				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)
 					num = "" + (counter++);
 				else if (headerStrategy == WeeklyHeaderStrategy.DAY_OF_MONTH)
 					num = "" + wink.getDayOfMonth();

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.project.command;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -71,7 +74,7 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexOr("OPTION", //
 								new RegexLeaf("(with\\s+calendar\\s+date)"),
-								new RegexLeaf("(with\\s+week\\s+numbering\\s+from\\s+1)")))), //
+								new RegexLeaf("NUMBER", "(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))")))), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("zoom"), //
@@ -93,10 +96,12 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 		final String option = arg.get("OPTION", 0);
 		if (option != null)
 			if (option.contains("date"))
-				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.DAY_OF_MONTH);
-			else if (option.contains("1"))
-				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_1);
-
+				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.DAY_OF_MONTH, 0);
+			else if (option.contains("numbering")) {
+				final String number = arg.get("NUMBER", 0);
+				final int weekStartingNumber = Integer.parseInt(number);
+				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_N, weekStartingNumber);
+			}
 		return CommandExecutionResult.ok();
 	}
 

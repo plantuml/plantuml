@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.project.draw;
 
 public enum WeeklyHeaderStrategy {
 
-	WEEK_OF_YEAR, DAY_OF_MONTH, FROM_1;
+	WEEK_OF_YEAR, DAY_OF_MONTH, FROM_N;
 
 }
