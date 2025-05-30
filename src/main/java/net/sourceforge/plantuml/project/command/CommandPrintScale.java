@@ -74,7 +74,7 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexOr("OPTION", //
 								new RegexLeaf("(with\\s+calendar\\s+date)"),
-								new RegexLeaf("(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))")))), //
+								new RegexLeaf("NUMBER", "(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))")))), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("zoom"), //
@@ -97,14 +97,10 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 		if (option != null)
 			if (option.contains("date"))
 				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.DAY_OF_MONTH, 0);
-			else {
-				//int weekStartingNumber = -11;
-				final Pattern p = Pattern.compile("[^-\\d]*(-?\\d+)");
-				final Matcher m = p.matcher(option);
-				if (m.find()) {
-					final int weekStartingNumber = Integer.parseInt(m.group(1));
-					diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_N, weekStartingNumber);
-				}
+			else if (option.contains("numbering")) {
+				final String number = arg.get("NUMBER", 0);
+				final int weekStartingNumber = Integer.parseInt(number);
+				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_N, weekStartingNumber);
 			}
 		return CommandExecutionResult.ok();
 	}
