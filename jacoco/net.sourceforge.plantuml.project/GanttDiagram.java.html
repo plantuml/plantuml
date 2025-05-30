@@ -319,7 +319,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 <span class="nc" id="L319">			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);</span>
 <span class="pc bpc" id="L320" title="1 of 2 branches missed.">		else if (printScale == PrintScale.WEEKLY)</span>
 <span class="fc" id="L321">			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, nameDays,</span>
-					printStart);
+					printStart, weekStartingNumber);
 <span class="nc bnc" id="L323" title="All 2 branches missed.">		else if (printScale == PrintScale.MONTHLY)</span>
 <span class="nc" id="L324">			return new TimeHeaderMonthly(stringBounder, thParam(), nameDays, printStart);</span>
 <span class="nc bnc" id="L325" title="All 2 branches missed.">		else if (printScale == PrintScale.QUARTERLY)</span>
@@ -859,66 +859,68 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 <span class="nc" id="L859">	}</span>
 
 	private WeeklyHeaderStrategy weeklyHeaderStrategy;
+	private int weekStartingNumber;
 
-	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy) {
-<span class="nc" id="L864">		this.weeklyHeaderStrategy = weeklyHeaderStrategy;</span>
-<span class="nc" id="L865">	}</span>
+	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy, int weekStartingNumber) {
+<span class="nc" id="L865">		this.weeklyHeaderStrategy = weeklyHeaderStrategy;</span>
+<span class="nc" id="L866">		this.weekStartingNumber = weekStartingNumber;</span>
+<span class="nc" id="L867">	}</span>
 
 	private boolean hideResourceName;
 	private boolean hideResourceFoobox;
 
 	public CommandExecutionResult hideResourceName() {
-<span class="nc" id="L871">		this.hideResourceName = true;</span>
-<span class="nc" id="L872">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L873">		this.hideResourceName = true;</span>
+<span class="nc" id="L874">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult hideResourceFootbox() {
-<span class="nc" id="L876">		this.hideResourceFoobox = true;</span>
-<span class="nc" id="L877">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L878">		this.hideResourceFoobox = true;</span>
+<span class="nc" id="L879">		return CommandExecutionResult.ok();</span>
 	}
 
-<span class="fc" id="L880">	private final Set&lt;Day&gt; verticalSeparatorBefore = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L882">	private final Set&lt;Day&gt; verticalSeparatorBefore = new HashSet&lt;&gt;();</span>
 
 	public void addVerticalSeparatorBefore(Day day) {
-<span class="nc" id="L883">		verticalSeparatorBefore.add(day);</span>
-<span class="nc" id="L884">	}</span>
+<span class="nc" id="L885">		verticalSeparatorBefore.add(day);</span>
+<span class="nc" id="L886">	}</span>
 
 	public void setTaskDefaultCompletion(int defaultCompletion) {
-<span class="nc" id="L887">		this.defaultCompletion = defaultCompletion;</span>
-<span class="nc" id="L888">	}</span>
+<span class="nc" id="L889">		this.defaultCompletion = defaultCompletion;</span>
+<span class="nc" id="L890">	}</span>
 
 	public List&lt;TaskDrawRegular&gt; getAllTasksForResource(Resource res) {
-<span class="nc" id="L891">		final List&lt;TaskDrawRegular&gt; result = new ArrayList&lt;TaskDrawRegular&gt;();</span>
-<span class="nc bnc" id="L892" title="All 2 branches missed.">		for (Task task : tasks.values())</span>
-<span class="nc bnc" id="L893" title="All 2 branches missed.">			if (task.isAssignedTo(res)) {</span>
-<span class="nc" id="L894">				final TaskDrawRegular draw = (TaskDrawRegular) draws.get(task);</span>
-<span class="nc" id="L895">				result.add(draw);</span>
+<span class="nc" id="L893">		final List&lt;TaskDrawRegular&gt; result = new ArrayList&lt;TaskDrawRegular&gt;();</span>
+<span class="nc bnc" id="L894" title="All 2 branches missed.">		for (Task task : tasks.values())</span>
+<span class="nc bnc" id="L895" title="All 2 branches missed.">			if (task.isAssignedTo(res)) {</span>
+<span class="nc" id="L896">				final TaskDrawRegular draw = (TaskDrawRegular) draws.get(task);</span>
+<span class="nc" id="L897">				result.add(draw);</span>
 			}
 
-<span class="nc" id="L898">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L900">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public void setIt(Task result) {
-<span class="fc" id="L902">		this.it = result;</span>
-<span class="fc" id="L903">	}</span>
+<span class="fc" id="L904">		this.it = result;</span>
+<span class="fc" id="L905">	}</span>
 
 	public Task getIt() {
-<span class="nc" id="L906">		return it;</span>
+<span class="nc" id="L908">		return it;</span>
 	}
 
 	public final Resource getThey() {
-<span class="nc" id="L910">		return they;</span>
+<span class="nc" id="L912">		return they;</span>
 	}
 
 	public final void setThey(Resource they) {
-<span class="nc" id="L914">		this.they = they;</span>
-<span class="nc" id="L915">	}</span>
+<span class="nc" id="L916">		this.they = they;</span>
+<span class="nc" id="L917">	}</span>
 
-<span class="fc" id="L917">	private boolean hideClosed = false;</span>
+<span class="fc" id="L919">	private boolean hideClosed = false;</span>
 
 	public void setHideClosed(boolean hideClosed) {
-<span class="nc" id="L920">		this.hideClosed = hideClosed;</span>
-<span class="nc" id="L921">	}</span>
+<span class="nc" id="L922">		this.hideClosed = hideClosed;</span>
+<span class="nc" id="L923">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

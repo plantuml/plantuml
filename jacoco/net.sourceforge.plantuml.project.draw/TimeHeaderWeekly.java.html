@@ -53,163 +53,165 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private final WeekNumberStrategy weekNumberStrategy;
 	private final WeeklyHeaderStrategy headerStrategy;
+	private final int weekStartingNumber;
 
 	private double getH1(StringBounder stringBounder) {
-<span class="fc" id="L58">		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;</span>
-<span class="fc" id="L59">		return h;</span>
+<span class="fc" id="L59">		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;</span>
+<span class="fc" id="L60">		return h;</span>
 	}
 
 	private double getH2(StringBounder stringBounder) {
-<span class="fc" id="L63">		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 1;</span>
-<span class="fc" id="L64">		return getH1(stringBounder) + h;</span>
+<span class="fc" id="L64">		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 1;</span>
+<span class="fc" id="L65">		return getH1(stringBounder) + h;</span>
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-<span class="fc" id="L69">		return getH2(stringBounder);</span>
+<span class="fc" id="L70">		return getH2(stringBounder);</span>
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-<span class="fc" id="L74">		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;</span>
-<span class="fc" id="L75">		return h;</span>
+<span class="fc" id="L75">		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;</span>
+<span class="fc" id="L76">		return h;</span>
 	}
 
 	private double getHeaderNameDayHeight() {
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (nameDays.size() &gt; 0) {</span>
-<span class="nc" id="L80">			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;</span>
-<span class="nc" id="L81">			return h;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (nameDays.size() &gt; 0) {</span>
+<span class="nc" id="L81">			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;</span>
+<span class="nc" id="L82">			return h;</span>
 		}
 
-<span class="fc" id="L84">		return 0;</span>
+<span class="fc" id="L85">		return 0;</span>
 	}
 
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
-<span class="fc" id="L89">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
+<span class="fc" id="L90">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
 	}
 
 	private final Map&lt;Day, String&gt; nameDays;
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
 			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map&lt;Day, String&gt; nameDays,
-			Day printStart) {
-<span class="fc" id="L97">		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),</span>
-<span class="fc" id="L98">				thParam.getScale(), printStart));</span>
-<span class="fc" id="L99">		this.weekNumberStrategy = weekNumberStrategy;</span>
-<span class="fc" id="L100">		this.headerStrategy = headerStrategy;</span>
-<span class="fc" id="L101">		this.nameDays = nameDays;</span>
-<span class="fc" id="L102">	}</span>
+			Day printStart, int weekStartingNumber) {
+<span class="fc" id="L98">		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),</span>
+<span class="fc" id="L99">				thParam.getScale(), printStart));</span>
+<span class="fc" id="L100">		this.weekNumberStrategy = weekNumberStrategy;</span>
+<span class="fc" id="L101">		this.headerStrategy = headerStrategy;</span>
+<span class="fc" id="L102">		this.nameDays = nameDays;</span>
+<span class="fc" id="L103">		this.weekStartingNumber = weekStartingNumber;</span>
+<span class="fc" id="L104">	}</span>
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc" id="L106">		drawTextsBackground(ug, totalHeightWithoutFooter);</span>
-<span class="fc" id="L107">		drawCalendar(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L108">		drawTextsBackground(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L109">		drawCalendar(ug, totalHeightWithoutFooter);</span>
 		
-<span class="fc" id="L109">		printNamedDays(ug);</span>
+<span class="fc" id="L111">		printNamedDays(ug);</span>
 
 		
-<span class="fc" id="L112">		drawHline(ug, 0);</span>
-<span class="fc" id="L113">		drawHline(ug, getH1(ug.getStringBounder()));</span>
-<span class="fc" id="L114">		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L114">		drawHline(ug, 0);</span>
+<span class="fc" id="L115">		drawHline(ug, getH1(ug.getStringBounder()));</span>
+<span class="fc" id="L116">		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));</span>
+<span class="fc" id="L117">	}</span>
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-<span class="fc" id="L119">		drawHline(ug, 0);</span>
-<span class="fc" id="L120">		printMonths(ug);</span>
-<span class="fc" id="L121">		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));</span>
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L121">		drawHline(ug, 0);</span>
+<span class="fc" id="L122">		printMonths(ug);</span>
+<span class="fc" id="L123">		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));</span>
+<span class="fc" id="L124">	}</span>
 
 	private void drawCalendar(final UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc" id="L125">		printDaysOfMonth(ug);</span>
-<span class="fc" id="L126">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
-<span class="fc" id="L127">		printMonths(ug);</span>
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L127">		printDaysOfMonth(ug);</span>
+<span class="fc" id="L128">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L129">		printMonths(ug);</span>
+<span class="fc" id="L130">	}</span>
 
 	private void printMonths(final UGraphic ug) {
-<span class="fc" id="L131">		MonthYear last = null;</span>
-<span class="fc" id="L132">		double lastChangeMonth = -1;</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
-<span class="fc" id="L134">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (wink.monthYear().equals(last) == false) {</span>
-<span class="fc" id="L136">				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">				if (last != null)</span>
-<span class="fc" id="L138">					printMonth(ug, last, lastChangeMonth, x1);</span>
+<span class="fc" id="L133">		MonthYear last = null;</span>
+<span class="fc" id="L134">		double lastChangeMonth = -1;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
+<span class="fc" id="L136">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			if (wink.monthYear().equals(last) == false) {</span>
+<span class="fc" id="L138">				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">				if (last != null)</span>
+<span class="fc" id="L140">					printMonth(ug, last, lastChangeMonth, x1);</span>
 
-<span class="fc" id="L140">				lastChangeMonth = x1;</span>
-<span class="fc" id="L141">				last = wink.monthYear();</span>
+<span class="fc" id="L142">				lastChangeMonth = x1;</span>
+<span class="fc" id="L143">				last = wink.monthYear();</span>
 			}
 		}
-<span class="fc" id="L144">		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), (double) 0,</span>
-<span class="fc" id="L145">				getH1(ug.getStringBounder()));</span>
-<span class="fc" id="L146">		final double x1 = getTimeScale().getStartingPosition(getMax().increment());</span>
-<span class="pc bpc" id="L147" title="2 of 4 branches missed.">		if (last != null &amp;&amp; x1 &gt; lastChangeMonth)</span>
-<span class="fc" id="L148">			printMonth(ug, last, lastChangeMonth, x1);</span>
+<span class="fc" id="L146">		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), (double) 0,</span>
+<span class="fc" id="L147">				getH1(ug.getStringBounder()));</span>
+<span class="fc" id="L148">		final double x1 = getTimeScale().getStartingPosition(getMax().increment());</span>
+<span class="pc bpc" id="L149" title="2 of 4 branches missed.">		if (last != null &amp;&amp; x1 &gt; lastChangeMonth)</span>
+<span class="fc" id="L150">			printMonth(ug, last, lastChangeMonth, x1);</span>
 
-<span class="fc" id="L150">	}</span>
+<span class="fc" id="L152">	}</span>
 	
 	private void printNamedDays(final UGraphic ug) {
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (nameDays.size() &gt; 0) {</span>
-<span class="nc" id="L154">			String last = null;</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">			for (Day wink = getMin(); wink.compareTo(getMax().increment()) &lt;= 0; wink = wink.increment()) {</span>
-<span class="nc" id="L156">				final String name = nameDays.get(wink);</span>
-<span class="nc bnc" id="L157" title="All 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
-<span class="nc" id="L158">					final double x1 = getTimeScale().getStartingPosition(wink);</span>
-<span class="nc" id="L159">					final double x2 = getTimeScale().getEndingPosition(wink);</span>
-<span class="nc" id="L160">					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());</span>
-<span class="nc" id="L161">					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="nc" id="L162">					double y1 = getTimeHeaderHeight(ug.getStringBounder());</span>
-<span class="nc" id="L163">					double y2 = getFullHeaderHeight(ug.getStringBounder());</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (nameDays.size() &gt; 0) {</span>
+<span class="nc" id="L156">			String last = null;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			for (Day wink = getMin(); wink.compareTo(getMax().increment()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="nc" id="L158">				final String name = nameDays.get(wink);</span>
+<span class="nc bnc" id="L159" title="All 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
+<span class="nc" id="L160">					final double x1 = getTimeScale().getStartingPosition(wink);</span>
+<span class="nc" id="L161">					final double x2 = getTimeScale().getEndingPosition(wink);</span>
+<span class="nc" id="L162">					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());</span>
+<span class="nc" id="L163">					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L164">					double y1 = getTimeHeaderHeight(ug.getStringBounder());</span>
+<span class="nc" id="L165">					double y2 = getFullHeaderHeight(ug.getStringBounder());</span>
 
-<span class="nc" id="L165">					final double position = getH2(ug.getStringBounder());</span>
-<span class="nc" id="L166">					label.drawU(ug.apply(new UTranslate(x1, position)));</span>
+<span class="nc" id="L167">					final double position = getH2(ug.getStringBounder());</span>
+<span class="nc" id="L168">					label.drawU(ug.apply(new UTranslate(x1, position)));</span>
 				}
-<span class="nc" id="L168">				last = name;</span>
+<span class="nc" id="L170">				last = name;</span>
 			}
 		}
-<span class="fc" id="L171">	}</span>
+<span class="fc" id="L173">	}</span>
 
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc bfc" id="L176" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())</span>
-<span class="fc" id="L178">				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink),</span>
-<span class="fc" id="L179">						getH1(ug.getStringBounder()), totalHeightWithoutFooter);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())</span>
+<span class="fc" id="L180">				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink),</span>
+<span class="fc" id="L181">						getH1(ug.getStringBounder()), totalHeightWithoutFooter);</span>
 
-<span class="fc" id="L181">		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), getH1(ug.getStringBounder()),</span>
+<span class="fc" id="L183">		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), getH1(ug.getStringBounder()),</span>
 				totalHeightWithoutFooter);
-<span class="fc" id="L183">		super.printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
-<span class="fc" id="L184">	}</span>
+<span class="fc" id="L185">		super.printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L186">	}</span>
 
 	private void printDaysOfMonth(final UGraphic ug) {
-<span class="fc" id="L187">		int counter = 1;</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {</span>
+<span class="fc" id="L189">		int counter = weekStartingNumber;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {</span>
 				final String num;
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">				if (headerStrategy == WeeklyHeaderStrategy.FROM_1)</span>
-<span class="nc" id="L192">					num = &quot;&quot; + (counter++);</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">				else if (headerStrategy == WeeklyHeaderStrategy.DAY_OF_MONTH)</span>
-<span class="nc" id="L194">					num = &quot;&quot; + wink.getDayOfMonth();</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)</span>
+<span class="nc" id="L194">					num = &quot;&quot; + (counter++);</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">				else if (headerStrategy == WeeklyHeaderStrategy.DAY_OF_MONTH)</span>
+<span class="nc" id="L196">					num = &quot;&quot; + wink.getDayOfMonth();</span>
 				else
-<span class="fc" id="L196">					num = &quot;&quot; + wink.getWeekOfYear(weekNumberStrategy);</span>
-<span class="fc" id="L197">				final TextBlock textBlock = getTextBlock(SName.day, num, false, openFontColor());</span>
-<span class="fc" id="L198">				printLeft(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))), textBlock,</span>
-<span class="fc" id="L199">						getTimeScale().getStartingPosition(wink) + 5);</span>
+<span class="fc" id="L198">					num = &quot;&quot; + wink.getWeekOfYear(weekNumberStrategy);</span>
+<span class="fc" id="L199">				final TextBlock textBlock = getTextBlock(SName.day, num, false, openFontColor());</span>
+<span class="fc" id="L200">				printLeft(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))), textBlock,</span>
+<span class="fc" id="L201">						getTimeScale().getStartingPosition(wink) + 5);</span>
 			}
 		}
-<span class="fc" id="L202">	}</span>
+<span class="fc" id="L204">	}</span>
 
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-<span class="fc" id="L205">		final TextBlock small = getTextBlock(SName.month, monthYear.shortName(locale()), true, openFontColor());</span>
-<span class="fc" id="L206">		final TextBlock big = getTextBlock(SName.month, monthYear.shortNameYYYY(locale()), true, openFontColor());</span>
-<span class="fc" id="L207">		printCentered(ug, false, start, end, small, big);</span>
-<span class="fc" id="L208">	}</span>
+<span class="fc" id="L207">		final TextBlock small = getTextBlock(SName.month, monthYear.shortName(locale()), true, openFontColor());</span>
+<span class="fc" id="L208">		final TextBlock big = getTextBlock(SName.month, monthYear.shortNameYYYY(locale()), true, openFontColor());</span>
+<span class="fc" id="L209">		printCentered(ug, false, start, end, small, big);</span>
+<span class="fc" id="L210">	}</span>
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {
-<span class="fc" id="L211">		text.drawU(ug.apply(UTranslate.dx(start)));</span>
-<span class="fc" id="L212">	}</span>
+<span class="fc" id="L213">		text.drawU(ug.apply(UTranslate.dx(start)));</span>
+<span class="fc" id="L214">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
