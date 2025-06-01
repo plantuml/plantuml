@@ -89,7 +89,7 @@ public class ReportLog implements Iterable<String> {
 			return;
 
 		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;
-		if (days >= 90) {
+		if (days >= 140) {
 			addEmptyLine();
 			add(lineFormating + "This version of PlantUML is " + days + " days old, so you should");
 			add(lineFormating + "consider upgrading from https://plantuml.com/download");
