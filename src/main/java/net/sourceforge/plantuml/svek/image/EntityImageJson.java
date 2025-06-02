@@ -42,6 +42,8 @@ import net.sourceforge.plantuml.abel.LineConfigurable;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.TextBlockCucaJSon;
 import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -169,8 +171,18 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 		ug = ug.apply(borderColor).apply(backcolor.bg());
 
+		
 		if (url != null)
 			ug.startUrl(url);
+		
+		final UGroup group = new UGroup(getEntity().getLocation());
+		group.put(UGroupType.CLASS, "entity");
+		group.put(UGroupType.ID, "entity_" + getEntity().getName());
+		group.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		group.put(UGroupType.DATA_UID, getEntity().getUid());
+		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		ug.startGroup(group);
+
 
 		ug.apply(stroke).draw(rect);
 		if (headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
@@ -190,10 +202,11 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 		((TextBlockCucaJSon) entries).setTotalWidth(dimTotal.getWidth());
 		entries.drawU(ug2.apply(UTranslate.dy(dimTitle.getHeight())));
 
+		ug.closeGroup();
+
 		if (url != null)
 			ug.closeUrl();
 
-		ug.closeGroup();
 	}
 
 	private double getMethodOrFieldHeight(final XDimension2D dim) {
