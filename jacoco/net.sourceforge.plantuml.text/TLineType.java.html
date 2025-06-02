@@ -151,141 +151,144 @@ import net.sourceforge.plantuml.regex.RegexOr;
 	public static TLineType getFromLineInternal(StringLocated sl) {
 <span class="fc" id="L152">		final String s = sl.getString();</span>
 
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (PATTERN_LEGACY_DEFINE.match(sl))</span>
-<span class="fc" id="L155">			return LEGACY_DEFINE;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE1.match(sl))</span>
+<span class="fc" id="L155">			return COMMENT_SIMPLE;</span>
 
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (PATTERN_LEGACY_DEFINELONG.match(sl))</span>
-<span class="nc" id="L158">			return LEGACY_DEFINELONG;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE2.match(sl))</span>
+<span class="fc" id="L158">			return COMMENT_SIMPLE;</span>
 
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (PATTERN_AFFECTATION_DEFINE.match(sl))</span>
-<span class="nc" id="L161">			return AFFECTATION_DEFINE;</span>
+<span class="pc bpc" id="L160" title="3 of 4 branches missed.">		if (PATTERN_COMMENT_LONG_START.match(sl) &amp;&amp; s.contains(&quot;'/&quot;) == false)</span>
+<span class="nc" id="L161">			return COMMENT_LONG_START;</span>
 
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (PATTERN_AFFECTATION.match(sl))</span>
-<span class="fc" id="L164">			return AFFECTATION;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (sl.containsExclamationMark() == false)</span>
+<span class="fc" id="L164">			return PLAIN;</span>
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE1.match(sl))</span>
-<span class="fc" id="L167">			return COMMENT_SIMPLE;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (PATTERN_LEGACY_DEFINE.match(sl))</span>
+<span class="fc" id="L167">			return LEGACY_DEFINE;</span>
 
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE2.match(sl))</span>
-<span class="fc" id="L170">			return COMMENT_SIMPLE;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (PATTERN_LEGACY_DEFINELONG.match(sl))</span>
+<span class="nc" id="L170">			return LEGACY_DEFINELONG;</span>
 
-<span class="pc bpc" id="L172" title="3 of 4 branches missed.">		if (PATTERN_COMMENT_LONG_START.match(sl) &amp;&amp; s.contains(&quot;'/&quot;) == false)</span>
-<span class="nc" id="L173">			return COMMENT_LONG_START;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (PATTERN_AFFECTATION_DEFINE.match(sl))</span>
+<span class="nc" id="L173">			return AFFECTATION_DEFINE;</span>
 
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (PATTERN_IFDEF.match(sl))</span>
-<span class="nc" id="L176">			return IFDEF;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (PATTERN_AFFECTATION.match(sl))</span>
+<span class="fc" id="L176">			return AFFECTATION;</span>
 
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (PATTERN_UNDEF.match(sl))</span>
-<span class="nc" id="L179">			return UNDEF;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (PATTERN_IFDEF.match(sl))</span>
+<span class="nc" id="L179">			return IFDEF;</span>
 
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (PATTERN_IFNDEF.match(sl))</span>
-<span class="fc" id="L182">			return IFNDEF;</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (PATTERN_UNDEF.match(sl))</span>
+<span class="nc" id="L182">			return UNDEF;</span>
 
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (PATTERN_ASSERT.match(sl))</span>
-<span class="nc" id="L185">			return ASSERT;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (PATTERN_IFNDEF.match(sl))</span>
+<span class="fc" id="L185">			return IFNDEF;</span>
 
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (PATTERN_IF.match(sl))</span>
-<span class="fc" id="L188">			return IF;</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (PATTERN_ASSERT.match(sl))</span>
+<span class="nc" id="L188">			return ASSERT;</span>
 
-<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (PATTERN_DECLARE_RETURN_FUNCTION.match(sl))</span>
-<span class="fc" id="L191">			return DECLARE_RETURN_FUNCTION;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (PATTERN_IF.match(sl))</span>
+<span class="fc" id="L191">			return IF;</span>
 
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (PATTERN_DECLARE_PROCEDURE.match(sl))</span>
-<span class="fc" id="L194">			return DECLARE_PROCEDURE;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (PATTERN_DECLARE_RETURN_FUNCTION.match(sl))</span>
+<span class="fc" id="L194">			return DECLARE_RETURN_FUNCTION;</span>
 
-<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (PATTERN_ELSE.match(sl))</span>
-<span class="fc" id="L197">			return ELSE;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (PATTERN_DECLARE_PROCEDURE.match(sl))</span>
+<span class="fc" id="L197">			return DECLARE_PROCEDURE;</span>
 
-<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (PATTERN_ELSEIF.match(sl))</span>
-<span class="fc" id="L200">			return ELSEIF;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (PATTERN_ELSE.match(sl))</span>
+<span class="fc" id="L200">			return ELSE;</span>
 
-<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (PATTERN_ENDIF.match(sl))</span>
-<span class="fc" id="L203">			return ENDIF;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (PATTERN_ELSEIF.match(sl))</span>
+<span class="fc" id="L203">			return ELSEIF;</span>
 
-<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (PATTERN_WHILE.match(sl))</span>
-<span class="fc" id="L206">			return WHILE;</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (PATTERN_ENDIF.match(sl))</span>
+<span class="fc" id="L206">			return ENDIF;</span>
 
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (PATTERN_ENDWHILE.match(sl))</span>
-<span class="fc" id="L209">			return ENDWHILE;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (PATTERN_WHILE.match(sl))</span>
+<span class="fc" id="L209">			return WHILE;</span>
 
-<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (PATTERN_FOREACH.match(sl))</span>
-<span class="fc" id="L212">			return FOREACH;</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (PATTERN_ENDWHILE.match(sl))</span>
+<span class="fc" id="L212">			return ENDWHILE;</span>
 
-<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (PATTERN_ENDFOREACH.match(sl))</span>
-<span class="fc" id="L215">			return ENDFOREACH;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (PATTERN_FOREACH.match(sl))</span>
+<span class="fc" id="L215">			return FOREACH;</span>
 
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (PATTERN_END_FUNCTION.match(sl))</span>
-<span class="fc" id="L218">			return END_FUNCTION;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (PATTERN_ENDFOREACH.match(sl))</span>
+<span class="fc" id="L218">			return ENDFOREACH;</span>
 
-<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (PATTERN_RETURN.match(sl))</span>
-<span class="fc" id="L221">			return RETURN;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (PATTERN_END_FUNCTION.match(sl))</span>
+<span class="fc" id="L221">			return END_FUNCTION;</span>
 
-<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (PATTERN_THEME.match(sl))</span>
-<span class="fc" id="L224">			return THEME;</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (PATTERN_RETURN.match(sl))</span>
+<span class="fc" id="L224">			return RETURN;</span>
 
-<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (PATTERN_INCLUDE.match(sl))</span>
-<span class="fc" id="L227">			return INCLUDE;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (PATTERN_THEME.match(sl))</span>
+<span class="fc" id="L227">			return THEME;</span>
 
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_SPRITES.match(sl))</span>
-<span class="nc" id="L230">			return INCLUDE_SPRITES;</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		if (PATTERN_INCLUDE.match(sl))</span>
+<span class="fc" id="L230">			return INCLUDE;</span>
 
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_DEF.match(sl))</span>
-<span class="nc" id="L233">			return INCLUDE_DEF;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_SPRITES.match(sl))</span>
+<span class="nc" id="L233">			return INCLUDE_SPRITES;</span>
 
-<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (PATTERN_IMPORT.match(sl))</span>
-<span class="nc" id="L236">			return IMPORT;</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_DEF.match(sl))</span>
+<span class="nc" id="L236">			return INCLUDE_DEF;</span>
 
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (PATTERN_STARTSUB.match(sl))</span>
-<span class="nc" id="L239">			return STARTSUB;</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (PATTERN_IMPORT.match(sl))</span>
+<span class="nc" id="L239">			return IMPORT;</span>
 
-<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (PATTERN_ENDSUB.match(sl))</span>
-<span class="nc" id="L242">			return ENDSUB;</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (PATTERN_STARTSUB.match(sl))</span>
+<span class="nc" id="L242">			return STARTSUB;</span>
 
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (PATTERN_INCLUDESUB.match(sl))</span>
-<span class="nc" id="L245">			return INCLUDESUB;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (PATTERN_ENDSUB.match(sl))</span>
+<span class="nc" id="L245">			return ENDSUB;</span>
 
-<span class="fc bfc" id="L247" title="All 2 branches covered.">		if (PATTERN_LOG.match(sl))</span>
-<span class="fc" id="L248">			return LOG;</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">		if (PATTERN_INCLUDESUB.match(sl))</span>
+<span class="nc" id="L248">			return INCLUDESUB;</span>
 
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		if (PATTERN_DUMP_MEMORY.match(sl))</span>
-<span class="nc" id="L251">			return DUMP_MEMORY;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (PATTERN_LOG.match(sl))</span>
+<span class="fc" id="L251">			return LOG;</span>
 
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (PATTERN_OPTION.match(sl))</span>
-<span class="nc" id="L254">			return OPTION;</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (PATTERN_DUMP_MEMORY.match(sl))</span>
+<span class="nc" id="L254">			return DUMP_MEMORY;</span>
 
-<span class="fc" id="L256">		return PLAIN;</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (PATTERN_OPTION.match(sl))</span>
+<span class="nc" id="L257">			return OPTION;</span>
+
+<span class="fc" id="L259">		return PLAIN;</span>
 	}
 
 	public static boolean isQuote(char ch) {
-<span class="fc bfc" id="L260" title="All 4 branches covered.">		return ch == '\&quot;' || ch == '\'';</span>
+<span class="fc bfc" id="L263" title="All 4 branches covered.">		return ch == '\&quot;' || ch == '\'';</span>
 	}
 
 	public static boolean isSpaceChar(char ch) {
-<span class="fc" id="L264">		return Character.isSpaceChar(ch);</span>
+<span class="fc" id="L267">		return Character.isSpaceChar(ch);</span>
 	}
 
 	public static boolean isLatinDigit(char ch) {
-<span class="fc bfc" id="L268" title="All 4 branches covered.">		return ch &gt;= '0' &amp;&amp; ch &lt;= '9';</span>
+<span class="fc bfc" id="L271" title="All 4 branches covered.">		return ch &gt;= '0' &amp;&amp; ch &lt;= '9';</span>
 	}
 
 	public static boolean isLetterOrEmojiOrUnderscoreOrDigit(char ch) {
-<span class="fc bfc" id="L272" title="All 6 branches covered.">		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);</span>
+<span class="fc bfc" id="L275" title="All 6 branches covered.">		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);</span>
 	}
 
 	public static boolean isLetterOrEmojiOrUnderscoreOrDollar(char ch) {
-<span class="pc bpc" id="L276" title="1 of 6 branches missed.">		return isLetterOrUnderscore(ch) || ch == '$' || isEmoji(ch);</span>
+<span class="pc bpc" id="L279" title="1 of 6 branches missed.">		return isLetterOrUnderscore(ch) || ch == '$' || isEmoji(ch);</span>
 	}
 
 	private static boolean isLetterOrUnderscore(char ch) {
-<span class="fc bfc" id="L280" title="All 4 branches covered.">		return isLetter(ch) || ch == '_';</span>
+<span class="fc bfc" id="L283" title="All 4 branches covered.">		return isLetter(ch) || ch == '_';</span>
 	}
 
 	private static boolean isLetter(char ch) {
-<span class="fc" id="L284">		return Character.isLetter(ch);</span>
+<span class="fc" id="L287">		return Character.isLetter(ch);</span>
 	}
 
 	private static boolean isEmoji(char ch) {
-<span class="fc bfc" id="L288" title="All 4 branches covered.">		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch);</span>
+<span class="fc bfc" id="L291" title="All 4 branches covered.">		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch);</span>
 	}
 
 }

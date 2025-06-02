@@ -304,5 +304,11 @@ final public class StringLocated {
 <span class="fc" id="L304">		return s.charAt(i);</span>
 	}
 
+<span class="fc" id="L307">	private static final long EXCLAMATION_MARK = FoxSignature.getFoxSignatureFromRealString(&quot;!&quot;);</span>
+
+	public boolean containsExclamationMark() {
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		return (getFoxSignature() &amp; EXCLAMATION_MARK) != 0L;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
