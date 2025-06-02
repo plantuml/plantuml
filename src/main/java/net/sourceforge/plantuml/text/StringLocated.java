@@ -304,4 +304,10 @@ final public class StringLocated {
 		return s.charAt(i);
 	}
 
+	private static final long EXCLAMATION_MARK = FoxSignature.getFoxSignatureFromRealString("!");
+
+	public boolean containsExclamationMark() {
+		return (getFoxSignature() & EXCLAMATION_MARK) != 0L;
+	}
+
 }

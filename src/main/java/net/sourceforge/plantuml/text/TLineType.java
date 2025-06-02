@@ -151,6 +151,18 @@ public enum TLineType {
 	public static TLineType getFromLineInternal(StringLocated sl) {
 		final String s = sl.getString();
 
+		if (PATTERN_COMMENT_SIMPLE1.match(sl))
+			return COMMENT_SIMPLE;
+
+		if (PATTERN_COMMENT_SIMPLE2.match(sl))
+			return COMMENT_SIMPLE;
+
+		if (PATTERN_COMMENT_LONG_START.match(sl) && s.contains("'/") == false)
+			return COMMENT_LONG_START;
+
+		if (sl.containsExclamationMark() == false)
+			return PLAIN;
+
 		if (PATTERN_LEGACY_DEFINE.match(sl))
 			return LEGACY_DEFINE;
 
@@ -162,15 +174,6 @@ public enum TLineType {
 
 		if (PATTERN_AFFECTATION.match(sl))
 			return AFFECTATION;
-
-		if (PATTERN_COMMENT_SIMPLE1.match(sl))
-			return COMMENT_SIMPLE;
-
-		if (PATTERN_COMMENT_SIMPLE2.match(sl))
-			return COMMENT_SIMPLE;
-
-		if (PATTERN_COMMENT_LONG_START.match(sl) && s.contains("'/") == false)
-			return COMMENT_LONG_START;
 
 		if (PATTERN_IFDEF.match(sl))
 			return IFDEF;
