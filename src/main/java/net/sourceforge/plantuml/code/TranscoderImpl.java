@@ -93,7 +93,7 @@ public class TranscoderImpl implements Transcoder {
 				string = data.toUPF9String();
 			else
 				// ::done
-				string = data.toUFT8String();
+                               string = data.toUTF8String();
 			return stringCompressor.decompress(string);
 		} catch (Exception e) {
 			// System.err.println("Cannot decode string");
