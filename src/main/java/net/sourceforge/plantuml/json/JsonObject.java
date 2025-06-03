@@ -961,9 +961,12 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
 			return (hashTable[slot] & 0xff) - 1;
 		}
 
-		private int hashSlotFor(Object element) {
-			return element.hashCode() & hashTable.length - 1;
-		}
+                private int hashSlotFor(Object element) {
+                        // hashTable.length is a power of two, so we can use bitwise AND
+                        // to compute the modulo. Parentheses are required here to ensure
+                        // the subtraction occurs after the AND operation.
+                        return element.hashCode() & (hashTable.length - 1);
+                }
 
 	}
 
