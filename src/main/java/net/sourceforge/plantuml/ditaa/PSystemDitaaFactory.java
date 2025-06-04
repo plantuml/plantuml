@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.ditaa;
 
-import java.awt.Font;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -124,12 +123,13 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		return system;
 	}
 
+	private static final Pattern SCALE = Pattern.compile("scale=([\\d.]+)");
+
 	private float extractScale(String line) {
 		if (line == null)
 			return 1;
 
-		final Pattern p = Pattern.compile("scale=([\\d.]+)");
-		final Matcher m = p.matcher(line);
+		final Matcher m = SCALE.matcher(line);
 		if (m.find()) {
 			final String number = m.group(1);
 			return Float.parseFloat(number);
@@ -137,42 +137,42 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		return 1;
 	}
 
-	private Font extractFont(String line) {
-		if (line == null)
-			return new Font("Dialog", Font.BOLD, 12);
-
-		final Pattern pName = Pattern.compile("font-family=([a-zA-Z0-0 ]+)");
-		final Matcher mName = pName.matcher(line);
-		String fontName = "Dialog";
-		if (mName.find()) {
-			fontName = mName.group(1);
-		}
-
-		final Pattern pVariant = Pattern.compile("font-variant=(BOLD|ITALIC|PLAIN)");
-		final Matcher mVariant = pVariant.matcher(line);
-		int fontVariant = Font.BOLD;
-		if (mVariant.find()) {
-			switch (mVariant.group(1)) {
-			case "BOLD":
-				fontVariant = Font.BOLD;
-				break;
-			case "ITALIC":
-				fontVariant = Font.ITALIC;
-				break;
-			case "PLAIN":
-				fontVariant = Font.PLAIN;
-				break;
-			}
-		}
-
-		final Pattern pSize = Pattern.compile("font-size=([\\d]+)");
-		final Matcher mSize = pSize.matcher(line);
-		int fontSize = 12;
-		if (mSize.find())
-			fontSize = Integer.parseInt(mSize.group(1));
-
-		return new Font(fontName, fontVariant, fontSize);
-	}
+//	private Font extractFont(String line) {
+//		if (line == null)
+//			return new Font("Dialog", Font.BOLD, 12);
+//
+//		final Pattern pName = Pattern.compile("font-family=([a-zA-Z0-0 ]+)");
+//		final Matcher mName = pName.matcher(line);
+//		String fontName = "Dialog";
+//		if (mName.find()) {
+//			fontName = mName.group(1);
+//		}
+//
+//		final Pattern pVariant = Pattern.compile("font-variant=(BOLD|ITALIC|PLAIN)");
+//		final Matcher mVariant = pVariant.matcher(line);
+//		int fontVariant = Font.BOLD;
+//		if (mVariant.find()) {
+//			switch (mVariant.group(1)) {
+//			case "BOLD":
+//				fontVariant = Font.BOLD;
+//				break;
+//			case "ITALIC":
+//				fontVariant = Font.ITALIC;
+//				break;
+//			case "PLAIN":
+//				fontVariant = Font.PLAIN;
+//				break;
+//			}
+//		}
+//
+//		final Pattern pSize = Pattern.compile("font-size=([\\d]+)");
+//		final Matcher mSize = pSize.matcher(line);
+//		int fontSize = 12;
+//		if (mSize.find())
+//			fontSize = Integer.parseInt(mSize.group(1));
+//
+//		return new Font(fontName, fontVariant, fontSize);
+//	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {

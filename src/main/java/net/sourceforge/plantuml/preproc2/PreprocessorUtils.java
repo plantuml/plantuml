@@ -69,8 +69,9 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class PreprocessorUtils {
 
+	private static final Pattern p = Pattern.compile("%(\\w+)%");
+
 	public static String withEnvironmentVariable(String s) {
-		final Pattern p = Pattern.compile("%(\\w+)%");
 
 		final Matcher m = p.matcher(s);
 		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8

@@ -616,8 +616,9 @@ public class TextGrid {
 	}
 
 
+	private static final Pattern colorCodePattern = Pattern.compile("c[A-F0-9]{3}");
+	
 	public ArrayList<CellColorPair> findColorCodes(){
-		Pattern colorCodePattern = Pattern.compile("c[A-F0-9]{3}");
 		ArrayList<CellColorPair> result = new ArrayList<CellColorPair>();
 		int width = getWidth();
 		int height = getHeight();
@@ -641,8 +642,9 @@ public class TextGrid {
 		return result;
 	}
 
+	private static final Pattern tagPattern = Pattern.compile("\\{(.+?)\\}");
+	
 	public ArrayList<CellTagPair> findMarkupTags(){
-		Pattern tagPattern = Pattern.compile("\\{(.+?)\\}");
 		ArrayList<CellTagPair> result = new ArrayList<CellTagPair>();
 
 		int width = getWidth();

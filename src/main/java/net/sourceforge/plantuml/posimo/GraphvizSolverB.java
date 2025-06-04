@@ -90,6 +90,8 @@ public class GraphvizSolverB {
 	// }
 	// }
 
+	private static final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
+	
 	public XDimension2D solve(Cluster root, Collection<Path> paths) throws IOException {
 		final String dotString = new DotxMaker(root, paths).createDotString("nodesep=0.2;", "ranksep=0.2;");
 
@@ -118,7 +120,6 @@ public class GraphvizSolverB {
 		// traceSvgString(s);
 		// }
 
-		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(s);
 		if (mGraph.find() == false)
 			throw new IllegalStateException();

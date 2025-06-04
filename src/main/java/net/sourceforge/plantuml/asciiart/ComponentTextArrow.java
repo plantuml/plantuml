@@ -88,9 +88,10 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		return result;
 	}
 
+	private static final Pattern pattern = Pattern.compile("\\<b\\>([0-9]+)\\</b\\>");
+
 	private static String removeTagAndManageBoldNumber(String s, FileFormat fileFormat) {
 		if (fileFormat == FileFormat.UTXT) {
-			final Pattern pattern = Pattern.compile("\\<b\\>([0-9]+)\\</b\\>");
 			final Matcher matcher = pattern.matcher(s);
 			final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support
 															// Java 8

@@ -44,8 +44,8 @@ class CssVariables {
 
 	private final Map<String, String> variables = new HashMap<>();
 
-	private final Pattern learnPattern = Pattern.compile("^--([_\\w][-_\\w]+)[ :]+(.*?);?");
-	private final Pattern retrieve = Pattern.compile("var\\(-*([_\\w][-_\\w]+)\\)");
+	private static final Pattern learnPattern = Pattern.compile("^--([_\\w][-_\\w]+)[ :]+(.*?);?");
+	private static final Pattern retrieve = Pattern.compile("var\\(-*([_\\w][-_\\w]+)\\)");
 
 	public void learn(String s) {
 		final Matcher m = learnPattern.matcher(s);

@@ -554,11 +554,13 @@ public class SURL {
 		};
 	}
 
+	private static final Pattern pattern = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)");
+	
 	private static Charset extractCharset(String contentType) {
 		if (StringUtils.isEmpty(contentType))
 			return null;
 
-		final Matcher matcher = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)").matcher(contentType);
+		final Matcher matcher = pattern.matcher(contentType);
 		if (matcher.find())
 			try {
 				return Charset.forName(matcher.group(1));

@@ -42,7 +42,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -160,8 +159,8 @@ final public class UmlSource {
 //	}
 
 	/**
-	 * @deprecated Use {@link #getPlainString(String)} instead, 
-	 * like <code>getPlainString("\n")</code>
+	 * @deprecated Use {@link #getPlainString(String)} instead, like
+	 *             <code>getPlainString("\n")</code>
 	 */
 	@Deprecated()
 	public String getPlainString() {
@@ -238,14 +237,15 @@ final public class UmlSource {
 		return true;
 	}
 
+	private static final Pattern2 TITLE = MyPattern.cmpile("^[%s]*title[%s]+(.+)$");
+
 	/**
 	 * Retrieve the title, if defined in the diagram source. Never return
 	 * <code>null</code>.
 	 */
 	public Display getTitle() {
-		final Pattern2 p = MyPattern.cmpile("^[%s]*title[%s]+(.+)$");
 		for (StringLocated s : source) {
-			final Matcher2 m = p.matcher(s.getString());
+			final Matcher2 m = TITLE.matcher(s.getString());
 			final boolean ok = m.matches();
 			if (ok)
 				return Display.create(m.group(1));
@@ -257,9 +257,10 @@ final public class UmlSource {
 		return source.get(0).getString().startsWith("@startdef");
 	}
 
+	private static final Pattern ID = Pattern.compile("id=([\\w]+)\\b");
+
 	public String getId() {
-		final Pattern p = Pattern.compile("id=([\\w]+)\\b");
-		final Matcher m = p.matcher(source.get(0).getString());
+		final Matcher m = ID.matcher(source.get(0).getString());
 		if (m.find())
 			return m.group(1);
 

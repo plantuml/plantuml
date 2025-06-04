@@ -111,11 +111,12 @@ public class MainWindow extends JFrame {
 		return "txt, tex, java, htm, html, c, h, cpp, apt, pu, puml, hpp, hh, md";
 	}
 
+	private static final Pattern p = Pattern.compile("\\w+");
+	
 	private void changeExtensions(String ext) {
 		if (ext.equals(getExtensions())) {
 			return;
 		}
-		final Pattern p = Pattern.compile("\\w+");
 		final Matcher m = p.matcher(ext);
 		final StringBuilder sb = new StringBuilder();
 
@@ -137,7 +138,6 @@ public class MainWindow extends JFrame {
 	}
 
 	private String getRegexpPattern(String ext) {
-		final Pattern p = Pattern.compile("\\w+");
 		final Matcher m = p.matcher(ext);
 		final StringBuilder filePattern = new StringBuilder("(?i)^.*\\.(");
 

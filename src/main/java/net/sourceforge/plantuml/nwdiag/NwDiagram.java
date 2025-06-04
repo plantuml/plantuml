@@ -313,12 +313,13 @@ public class NwDiagram extends UmlDiagram {
 		return CommandExecutionResult.error("Maybe you forget 'nwdiag {' in your diagram ?");
 	}
 
+	private static final Pattern p = Pattern.compile("\\s*(\\w+)\\s*=\\s*(\"([^\"]*)\"|[^\\s,]+)");
+	
 	private Map<String, String> toSet(String definition) {
 		final Map<String, String> result = new HashMap<String, String>();
 		if (definition == null)
 			return result;
 
-		final Pattern p = Pattern.compile("\\s*(\\w+)\\s*=\\s*(\"([^\"]*)\"|[^\\s,]+)");
 		final Matcher m = p.matcher(definition);
 		while (m.find()) {
 			final String name = m.group(1);
