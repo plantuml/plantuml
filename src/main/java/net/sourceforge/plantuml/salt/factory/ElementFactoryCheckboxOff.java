@@ -70,7 +70,8 @@ public class ElementFactoryCheckboxOff implements ElementFactory {
 
 	private List<String> extracted(final String text) {
 		final int x = text.indexOf(']');
-		return Arrays.asList(StringUtils.trin(text.substring(x + 1)));
+		final int y = text.indexOf("].") == -1 ? 1 : 2;
+		return Arrays.asList(StringUtils.trin(text.substring(x + y)));
 	}
 
 	public boolean ready() {
