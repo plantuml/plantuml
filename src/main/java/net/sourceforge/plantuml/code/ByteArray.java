@@ -54,9 +54,9 @@ public class ByteArray {
 		return new ByteArray(input, input.length);
 	}
 
-       public String toUTF8String() throws UnsupportedEncodingException {
-               return new String(data, 0, length, UTF_8);
-       }
+	public String toUTF8String() throws UnsupportedEncodingException {
+		return new String(data, 0, length, UTF_8);
+	}
 
 	// ::comment when __CORE__
 	public String toUPF9String() throws IOException {
