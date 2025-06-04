@@ -77,11 +77,11 @@ final public class UmlSource {
 	}
 
 	public boolean containsIgnoreCase(String searched) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (StringLocated s : source)</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (StringUtils.goLowerCase(s.getString()).contains(searched))</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (StringLocated s : source)</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (StringUtils.goLowerCase(s.getString()).contains(searched))</span>
 <span class="nc" id="L82">				return true;</span>
 
-<span class="nc" id="L84">		return false;</span>
+<span class="fc" id="L84">		return false;</span>
 	}
 
 	private static boolean hasInitialSkinparam(final List&lt;StringLocated&gt; copy) {

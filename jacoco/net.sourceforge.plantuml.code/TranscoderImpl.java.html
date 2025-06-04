@@ -93,7 +93,7 @@ public class TranscoderImpl implements Transcoder {
 <span class="nc" id="L93">				string = data.toUPF9String();</span>
 			else
 				// ::done
-<span class="fc" id="L96">				string = data.toUFT8String();</span>
+<span class="fc" id="L96">				string = data.toUTF8String();</span>
 <span class="fc" id="L97">			return stringCompressor.decompress(string);</span>
 <span class="fc" id="L98">		} catch (Exception e) {</span>
 			// System.err.println(&quot;Cannot decode string&quot;);
