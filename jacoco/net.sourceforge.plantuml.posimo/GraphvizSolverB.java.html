@@ -90,154 +90,155 @@ import net.sourceforge.plantuml.svek.YDelta;
 	// }
 	// }
 
+<span class="nc" id="L93">	private static final Pattern pGraph = Pattern.compile(&quot;(?m)\\&lt;svg\\s+width=\&quot;(\\d+)pt\&quot;\\s+height=\&quot;(\\d+)pt\&quot;&quot;);</span>
+	
 	public XDimension2D solve(Cluster root, Collection&lt;Path&gt; paths) throws IOException {
-<span class="nc" id="L94">		final String dotString = new DotxMaker(root, paths).createDotString(&quot;nodesep=0.2;&quot;, &quot;ranksep=0.2;&quot;);</span>
+<span class="nc" id="L96">		final String dotString = new DotxMaker(root, paths).createDotString(&quot;nodesep=0.2;&quot;, &quot;ranksep=0.2;&quot;);</span>
 
 		// if (OptionFlags.getInstance().isKeepTmpFiles()) {
 		// traceDotString(dotString);
 		// }
 
-<span class="nc" id="L100">		final MinFinder minMax = new MinFinder();</span>
+<span class="nc" id="L102">		final MinFinder minMax = new MinFinder();</span>
 
 		// Log.println(&quot;dotString=&quot; + dotString);
 
 		// exportPng(dotString, SecurityUtils.File(&quot;png&quot;, &quot;test1.png&quot;));
 
-<span class="nc" id="L106">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(null, dotString, &quot;svg&quot;);</span>
-<span class="nc" id="L107">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L108">		final ProcessState state = graphviz.createFile3(baos);</span>
-<span class="nc" id="L109">		baos.close();</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
-<span class="nc" id="L111">			throw new IllegalStateException(&quot;Timeout2 &quot; + state);</span>
+<span class="nc" id="L108">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(null, dotString, &quot;svg&quot;);</span>
+<span class="nc" id="L109">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L110">		final ProcessState state = graphviz.createFile3(baos);</span>
+<span class="nc" id="L111">		baos.close();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="nc" id="L113">			throw new IllegalStateException(&quot;Timeout2 &quot; + state);</span>
 
-<span class="nc" id="L113">		final byte[] result = baos.toByteArray();</span>
-<span class="nc" id="L114">		final String s = new String(result, UTF_8);</span>
+<span class="nc" id="L115">		final byte[] result = baos.toByteArray();</span>
+<span class="nc" id="L116">		final String s = new String(result, UTF_8);</span>
 		// Log.println(&quot;result=&quot; + s);
 
 		// if (OptionFlags.getInstance().isKeepTmpFiles()) {
 		// traceSvgString(s);
 		// }
 
-<span class="nc" id="L121">		final Pattern pGraph = Pattern.compile(&quot;(?m)\\&lt;svg\\s+width=\&quot;(\\d+)pt\&quot;\\s+height=\&quot;(\\d+)pt\&quot;&quot;);</span>
-<span class="nc" id="L122">		final Matcher mGraph = pGraph.matcher(s);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (mGraph.find() == false)</span>
-<span class="nc" id="L124">			throw new IllegalStateException();</span>
+<span class="nc" id="L123">		final Matcher mGraph = pGraph.matcher(s);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (mGraph.find() == false)</span>
+<span class="nc" id="L125">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L126">		final int width = Integer.parseInt(mGraph.group(1));</span>
-<span class="nc" id="L127">		final int height = Integer.parseInt(mGraph.group(2));</span>
+<span class="nc" id="L127">		final int width = Integer.parseInt(mGraph.group(1));</span>
+<span class="nc" id="L128">		final int height = Integer.parseInt(mGraph.group(2));</span>
 
-<span class="nc" id="L129">		final YDelta yDelta = new YDelta(height);</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (Block b : root.getRecursiveContents()) {</span>
-<span class="nc" id="L131">			final String start = &quot;b&quot; + b.getUid();</span>
-<span class="nc" id="L132">			final int p1 = s.indexOf(&quot;&lt;title&gt;&quot; + start + &quot;&lt;/title&gt;&quot;);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (p1 == -1)</span>
-<span class="nc" id="L134">				throw new IllegalStateException();</span>
+<span class="nc" id="L130">		final YDelta yDelta = new YDelta(height);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		for (Block b : root.getRecursiveContents()) {</span>
+<span class="nc" id="L132">			final String start = &quot;b&quot; + b.getUid();</span>
+<span class="nc" id="L133">			final int p1 = s.indexOf(&quot;&lt;title&gt;&quot; + start + &quot;&lt;/title&gt;&quot;);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			if (p1 == -1)</span>
+<span class="nc" id="L135">				throw new IllegalStateException();</span>
 
-<span class="nc" id="L136">			final List&lt;XPoint2D&gt; pointsList = extractPointsList(s, p1, yDelta);</span>
-<span class="nc" id="L137">			b.setX(getMinX(pointsList));</span>
-<span class="nc" id="L138">			b.setY(getMinY(pointsList));</span>
-<span class="nc" id="L139">			minMax.manage(b.getPosition());</span>
-<span class="nc" id="L140">		}</span>
+<span class="nc" id="L137">			final List&lt;XPoint2D&gt; pointsList = extractPointsList(s, p1, yDelta);</span>
+<span class="nc" id="L138">			b.setX(getMinX(pointsList));</span>
+<span class="nc" id="L139">			b.setY(getMinY(pointsList));</span>
+<span class="nc" id="L140">			minMax.manage(b.getPosition());</span>
+<span class="nc" id="L141">		}</span>
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (Cluster cl : root.getSubClusters()) {</span>
-<span class="nc" id="L143">			final String start = &quot;cluster&quot; + cl.getUid();</span>
-<span class="nc" id="L144">			final int p1 = s.indexOf(&quot;&lt;title&gt;&quot; + start + &quot;&lt;/title&gt;&quot;);</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (p1 == -1)</span>
-<span class="nc" id="L146">				throw new IllegalStateException();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (Cluster cl : root.getSubClusters()) {</span>
+<span class="nc" id="L144">			final String start = &quot;cluster&quot; + cl.getUid();</span>
+<span class="nc" id="L145">			final int p1 = s.indexOf(&quot;&lt;title&gt;&quot; + start + &quot;&lt;/title&gt;&quot;);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (p1 == -1)</span>
+<span class="nc" id="L147">				throw new IllegalStateException();</span>
 
-<span class="nc" id="L148">			final List&lt;XPoint2D&gt; pointsList = extractPointsList(s, p1, yDelta);</span>
-<span class="nc" id="L149">			cl.setX(getMinX(pointsList));</span>
-<span class="nc" id="L150">			cl.setY(getMinY(pointsList));</span>
-<span class="nc" id="L151">			final double w = getMaxX(pointsList) - getMinX(pointsList);</span>
-<span class="nc" id="L152">			final double h = getMaxY(pointsList) - getMinY(pointsList);</span>
-<span class="nc" id="L153">			cl.setHeight(h);</span>
-<span class="nc" id="L154">			cl.setWidth(w);</span>
-<span class="nc" id="L155">			minMax.manage(cl.getPosition());</span>
-<span class="nc" id="L156">		}</span>
+<span class="nc" id="L149">			final List&lt;XPoint2D&gt; pointsList = extractPointsList(s, p1, yDelta);</span>
+<span class="nc" id="L150">			cl.setX(getMinX(pointsList));</span>
+<span class="nc" id="L151">			cl.setY(getMinY(pointsList));</span>
+<span class="nc" id="L152">			final double w = getMaxX(pointsList) - getMinX(pointsList);</span>
+<span class="nc" id="L153">			final double h = getMaxY(pointsList) - getMinY(pointsList);</span>
+<span class="nc" id="L154">			cl.setHeight(h);</span>
+<span class="nc" id="L155">			cl.setWidth(w);</span>
+<span class="nc" id="L156">			minMax.manage(cl.getPosition());</span>
+<span class="nc" id="L157">		}</span>
 
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		for (Path p : paths) {</span>
-<span class="nc" id="L159">			final String start = &quot;b&quot; + p.getStart().getUid();</span>
-<span class="nc" id="L160">			final String end = &quot;b&quot; + p.getEnd().getUid();</span>
-<span class="nc" id="L161">			final String searched = &quot;&lt;title&gt;&quot; + start + &quot;&amp;#45;&amp;gt;&quot; + end + &quot;&lt;/title&gt;&quot;;</span>
-<span class="nc" id="L162">			final int p1 = s.indexOf(searched);</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (p1 == -1)</span>
-<span class="nc" id="L164">				throw new IllegalStateException(searched);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (Path p : paths) {</span>
+<span class="nc" id="L160">			final String start = &quot;b&quot; + p.getStart().getUid();</span>
+<span class="nc" id="L161">			final String end = &quot;b&quot; + p.getEnd().getUid();</span>
+<span class="nc" id="L162">			final String searched = &quot;&lt;title&gt;&quot; + start + &quot;&amp;#45;&amp;gt;&quot; + end + &quot;&lt;/title&gt;&quot;;</span>
+<span class="nc" id="L163">			final int p1 = s.indexOf(searched);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (p1 == -1)</span>
+<span class="nc" id="L165">				throw new IllegalStateException(searched);</span>
 
-<span class="nc" id="L166">			final int p2 = s.indexOf(&quot; d=\&quot;&quot;, p1);</span>
-<span class="nc" id="L167">			final int p3 = s.indexOf(&quot;\&quot;&quot;, p2 + &quot; d=\&quot;&quot;.length());</span>
-<span class="nc" id="L168">			final String points = s.substring(p2 + &quot; d=\&quot;&quot;.length(), p3);</span>
-<span class="nc" id="L169">			final DotPath dotPath = new SvgResult(points, yDelta).toDotPath();</span>
-<span class="nc" id="L170">			p.setDotPath(dotPath);</span>
-<span class="nc" id="L171">			minMax.manage(dotPath.getMinFinder());</span>
+<span class="nc" id="L167">			final int p2 = s.indexOf(&quot; d=\&quot;&quot;, p1);</span>
+<span class="nc" id="L168">			final int p3 = s.indexOf(&quot;\&quot;&quot;, p2 + &quot; d=\&quot;&quot;.length());</span>
+<span class="nc" id="L169">			final String points = s.substring(p2 + &quot; d=\&quot;&quot;.length(), p3);</span>
+<span class="nc" id="L170">			final DotPath dotPath = new SvgResult(points, yDelta).toDotPath();</span>
+<span class="nc" id="L171">			p.setDotPath(dotPath);</span>
+<span class="nc" id="L172">			minMax.manage(dotPath.getMinFinder());</span>
 
 			// Log.println(&quot;pointsList=&quot; + pointsList);
-<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (p.getLabel() != null) {</span>
-<span class="nc" id="L175">				final List&lt;XPoint2D&gt; pointsList = extractPointsList(s, p1, yDelta);</span>
-<span class="nc" id="L176">				final double x = getMinX(pointsList);</span>
-<span class="nc" id="L177">				final double y = getMinY(pointsList);</span>
-<span class="nc" id="L178">				p.setLabelPosition(x, y);</span>
-<span class="nc" id="L179">				minMax.manage(x, y);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (p.getLabel() != null) {</span>
+<span class="nc" id="L176">				final List&lt;XPoint2D&gt; pointsList = extractPointsList(s, p1, yDelta);</span>
+<span class="nc" id="L177">				final double x = getMinX(pointsList);</span>
+<span class="nc" id="L178">				final double y = getMinY(pointsList);</span>
+<span class="nc" id="L179">				p.setLabelPosition(x, y);</span>
+<span class="nc" id="L180">				minMax.manage(x, y);</span>
 			}
-<span class="nc" id="L181">		}</span>
-<span class="nc" id="L182">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L182">		}</span>
+<span class="nc" id="L183">		return new XDimension2D(width, height);</span>
 	}
 
 	static private List&lt;XPoint2D&gt; extractPointsList(final String svg, final int starting, final YDelta yDelta) {
-<span class="nc" id="L186">		return new SvgResult(svg, yDelta).substring(starting).extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc" id="L187">		return new SvgResult(svg, yDelta).substring(starting).extractList(SvgResult.POINTS_EQUALS);</span>
 	}
 
 	static private double getMaxX(List&lt;XPoint2D&gt; points) {
-<span class="nc" id="L190">		double result = points.get(0).x;</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (points.get(i).x &gt; result)</span>
-<span class="nc" id="L193">				result = points.get(i).x;</span>
+<span class="nc" id="L191">		double result = points.get(0).x;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">			if (points.get(i).x &gt; result)</span>
+<span class="nc" id="L194">				result = points.get(i).x;</span>
 
-<span class="nc" id="L195">		return result;</span>
+<span class="nc" id="L196">		return result;</span>
 	}
 
 	static private double getMinX(List&lt;XPoint2D&gt; points) {
-<span class="nc" id="L199">		double result = points.get(0).x;</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (points.get(i).x &lt; result)</span>
-<span class="nc" id="L202">				result = points.get(i).x;</span>
+<span class="nc" id="L200">		double result = points.get(0).x;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">			if (points.get(i).x &lt; result)</span>
+<span class="nc" id="L203">				result = points.get(i).x;</span>
 
-<span class="nc" id="L204">		return result;</span>
+<span class="nc" id="L205">		return result;</span>
 	}
 
 	static private double getMaxY(List&lt;XPoint2D&gt; points) {
-<span class="nc" id="L208">		double result = points.get(0).y;</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
-<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (points.get(i).y &gt; result)</span>
-<span class="nc" id="L211">				result = points.get(i).y;</span>
+<span class="nc" id="L209">		double result = points.get(0).y;</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (points.get(i).y &gt; result)</span>
+<span class="nc" id="L212">				result = points.get(i).y;</span>
 
-<span class="nc" id="L213">		return result;</span>
+<span class="nc" id="L214">		return result;</span>
 	}
 
 	static private double getMinY(List&lt;XPoint2D&gt; points) {
-<span class="nc" id="L217">		double result = points.get(0).y;</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
-<span class="nc bnc" id="L219" title="All 2 branches missed.">			if (points.get(i).y &lt; result)</span>
-<span class="nc" id="L220">				result = points.get(i).y;</span>
+<span class="nc" id="L218">		double result = points.get(0).y;</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++)</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">			if (points.get(i).y &lt; result)</span>
+<span class="nc" id="L221">				result = points.get(i).y;</span>
 
-<span class="nc" id="L222">		return result;</span>
+<span class="nc" id="L223">		return result;</span>
 	}
 
 	private void exportPng(final String dotString, SFile f) throws IOException {
-<span class="nc" id="L226">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(null, dotString, &quot;png&quot;);</span>
-<span class="nc" id="L227">		try (OutputStream os = f.createBufferedOutputStream()) {</span>
-<span class="nc" id="L228">			final ProcessState state = graphviz.createFile3(os);</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">			if (state.differs(ProcessState.TERMINATED_OK()))</span>
-<span class="nc" id="L230">				throw new IllegalStateException(&quot;Timeout3 &quot; + state);</span>
+<span class="nc" id="L227">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(null, dotString, &quot;png&quot;);</span>
+<span class="nc" id="L228">		try (OutputStream os = f.createBufferedOutputStream()) {</span>
+<span class="nc" id="L229">			final ProcessState state = graphviz.createFile3(os);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="nc" id="L231">				throw new IllegalStateException(&quot;Timeout3 &quot; + state);</span>
 
 		}
-<span class="nc" id="L233">	}</span>
+<span class="nc" id="L234">	}</span>
 
 	private Path getPath(Collection&lt;Path&gt; paths, int start, int end) {
-<span class="nc bnc" id="L236" title="All 2 branches missed.">		for (Path p : paths)</span>
-<span class="nc bnc" id="L237" title="All 4 branches missed.">			if (p.getStart().getUid() == start &amp;&amp; p.getEnd().getUid() == end)</span>
-<span class="nc" id="L238">				return p;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		for (Path p : paths)</span>
+<span class="nc bnc" id="L238" title="All 4 branches missed.">			if (p.getStart().getUid() == start &amp;&amp; p.getEnd().getUid() == end)</span>
+<span class="nc" id="L239">				return p;</span>
 
-<span class="nc" id="L240">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L241">		throw new IllegalArgumentException();</span>
 
 	}
 }

@@ -88,90 +88,91 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 <span class="nc" id="L88">		return result;</span>
 	}
 
+<span class="fc" id="L91">	private static final Pattern pattern = Pattern.compile(&quot;\\&lt;b\\&gt;([0-9]+)\\&lt;/b\\&gt;&quot;);</span>
+
 	private static String removeTagAndManageBoldNumber(String s, FileFormat fileFormat) {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
-<span class="nc" id="L93">			final Pattern pattern = Pattern.compile(&quot;\\&lt;b\\&gt;([0-9]+)\\&lt;/b\\&gt;&quot;);</span>
-<span class="nc" id="L94">			final Matcher matcher = pattern.matcher(s);</span>
-<span class="nc" id="L95">			final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="nc" id="L95">			final Matcher matcher = pattern.matcher(s);</span>
+<span class="nc" id="L96">			final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support</span>
 															// Java 8
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			while (matcher.find()) {</span>
-<span class="nc" id="L98">				final String num = matcher.group(1);</span>
-<span class="nc" id="L99">				final String replace = StringUtils.toInternalBoldNumber(num);</span>
-<span class="nc" id="L100">				matcher.appendReplacement(result, Matcher.quoteReplacement(replace));</span>
-<span class="nc" id="L101">			}</span>
-<span class="nc" id="L102">			matcher.appendTail(result);</span>
-<span class="nc" id="L103">			s = result.toString();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			while (matcher.find()) {</span>
+<span class="nc" id="L99">				final String num = matcher.group(1);</span>
+<span class="nc" id="L100">				final String replace = StringUtils.toInternalBoldNumber(num);</span>
+<span class="nc" id="L101">				matcher.appendReplacement(result, Matcher.quoteReplacement(replace));</span>
+<span class="nc" id="L102">			}</span>
+<span class="nc" id="L103">			matcher.appendTail(result);</span>
+<span class="nc" id="L104">			s = result.toString();</span>
 		}
-<span class="nc" id="L105">		return s.replaceAll(&quot;\\&lt;[^&lt;&gt;]+\\&gt;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L106">		return s.replaceAll(&quot;\\&lt;[^&lt;&gt;]+\\&gt;&quot;, &quot;&quot;);</span>
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (config.isHidden()) {</span>
-<span class="nc" id="L110">			return;</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (config.isHidden()) {</span>
+<span class="nc" id="L111">			return;</span>
 		}
-<span class="fc" id="L112">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L113">		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();</span>
-<span class="fc" id="L114">		final int width = (int) dimensionToUse.getWidth();</span>
-<span class="fc" id="L115">		final int height = (int) dimensionToUse.getHeight();</span>
-<span class="fc" id="L116">		final int textWidth = StringUtils.getWcWidth(stringsToDisplay);</span>
+<span class="fc" id="L113">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L114">		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();</span>
+<span class="fc" id="L115">		final int width = (int) dimensionToUse.getWidth();</span>
+<span class="fc" id="L116">		final int height = (int) dimensionToUse.getHeight();</span>
+<span class="fc" id="L117">		final int textWidth = StringUtils.getWcWidth(stringsToDisplay);</span>
 
-<span class="fc" id="L118">		final int yarrow = height - 2;</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (config.isDotted()) {</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			for (int i = 1; i &lt; width; i += 2) {</span>
-<span class="nc" id="L122">				charArea.drawChar(' ', i, yarrow);</span>
+<span class="fc" id="L119">		final int yarrow = height - 2;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (config.isDotted()) {</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			for (int i = 1; i &lt; width; i += 2) {</span>
+<span class="nc" id="L123">				charArea.drawChar(' ', i, yarrow);</span>
 			}
 		}
 
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {</span>
-<span class="fc" id="L127">			charArea.drawChar('&gt;', width - 1, yarrow);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		} else if (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
-<span class="nc" id="L129">			charArea.drawChar('&lt;', 1, yarrow);</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {</span>
-<span class="nc" id="L131">			charArea.drawChar('&gt;', width - 1, yarrow);</span>
-<span class="nc" id="L132">			charArea.drawChar('&lt;', 1, yarrow);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {</span>
+<span class="fc" id="L128">			charArea.drawChar('&gt;', width - 1, yarrow);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
+<span class="nc" id="L130">			charArea.drawChar('&lt;', 1, yarrow);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		} else if (config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {</span>
+<span class="nc" id="L132">			charArea.drawChar('&gt;', width - 1, yarrow);</span>
+<span class="nc" id="L133">			charArea.drawChar('&lt;', 1, yarrow);</span>
 		} else {
-<span class="nc" id="L134">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L135">			throw new UnsupportedOperationException();</span>
 		}
 		// final int position = Math.max(0, (width - textWidth) / 2);
 
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
-<span class="fc" id="L139">			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), (width - textWidth) / 2, 0);</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="fc" id="L140">			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), (width - textWidth) / 2, 0);</span>
 		} else {
-<span class="nc" id="L141">			charArea.drawStringsLRSimple(stringsToDisplay.asList(), (width - textWidth) / 2, 0);</span>
+<span class="nc" id="L142">			charArea.drawStringsLRSimple(stringsToDisplay.asList(), (width - textWidth) / 2, 0);</span>
 		}
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L144">	}</span>
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L146">		return StringUtils.getHeight(stringsToDisplay) + 2;</span>
+<span class="fc" id="L147">		return StringUtils.getHeight(stringsToDisplay) + 2;</span>
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L150">		final int width = StringUtils.getWcWidth(stringsToDisplay) + 2;</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (maxAsciiMessageLength &gt; 0) {</span>
-<span class="nc" id="L152">			return Math.min(maxAsciiMessageLength, width);</span>
+<span class="fc" id="L151">		final int width = StringUtils.getWcWidth(stringsToDisplay) + 2;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (maxAsciiMessageLength &gt; 0) {</span>
+<span class="nc" id="L153">			return Math.min(maxAsciiMessageLength, width);</span>
 		}
-<span class="fc" id="L154">		return width;</span>
+<span class="fc" id="L155">		return width;</span>
 	}
 
 	public XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
-<span class="fc" id="L158">		return new XPoint2D(0, 0);</span>
+<span class="fc" id="L159">		return new XPoint2D(0, 0);</span>
 	}
 
 	public XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
-<span class="fc" id="L162">		return new XPoint2D(0, 0);</span>
+<span class="fc" id="L163">		return new XPoint2D(0, 0);</span>
 	}
 
 	public double getPaddingY() {
-<span class="nc" id="L166">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L167">		throw new UnsupportedOperationException();</span>
 	}
 
 	public double getYPoint(StringBounder stringBounder) {
-<span class="nc" id="L170">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L171">		throw new UnsupportedOperationException();</span>
 	}
 
 	public double getPosArrow(StringBounder stringBounder) {
-<span class="nc" id="L174">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L175">		throw new UnsupportedOperationException();</span>
 	}
 
 }

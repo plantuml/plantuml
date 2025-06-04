@@ -103,7 +103,7 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="nc" id="L103">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
 <span class="nc bnc" id="L105" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
-<span class="nc" id="L106">			final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L106">			final StringBuilder sb = new StringBuilder(width);</span>
 <span class="nc bnc" id="L107" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
 <span class="nc" id="L108">				final int level = getGrayOn16(img, x, y);</span>
 <span class="nc" id="L109">				final char code = &quot;0123456789ABCDEF&quot;.charAt(level);</span>
@@ -122,7 +122,7 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="nc" id="L122">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
 <span class="nc bnc" id="L124" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y += 2) {</span>
-<span class="nc" id="L125">			final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L125">			final StringBuilder sb = new StringBuilder(width);</span>
 <span class="nc bnc" id="L126" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
 <span class="nc" id="L127">				final int level1 = getGrayOn16(img, x, y) / 2;</span>
 <span class="nc bnc" id="L128" title="All 4 branches missed.">				assert level1 &gt;= 0 &amp;&amp; level1 &lt;= 7;</span>
@@ -144,7 +144,7 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="nc" id="L144">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
 <span class="nc bnc" id="L146" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y += 3) {</span>
-<span class="nc" id="L147">			final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L147">			final StringBuilder sb = new StringBuilder(width);</span>
 <span class="nc bnc" id="L148" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
 <span class="nc" id="L149">				final int level1 = getGrayOn16(img, x, y) / 4;</span>
 <span class="nc bnc" id="L150" title="All 4 branches missed.">				assert level1 &gt;= 0 &amp;&amp; level1 &lt;= 3;</span>
@@ -208,9 +208,9 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="nc" id="L208">		final SpriteMonochrome result = new SpriteMonochrome(width, height, 8);</span>
 <span class="nc bnc" id="L209" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
 <span class="nc bnc" id="L210" title="All 2 branches missed.">			for (int line = 0; line &lt; strings.size(); line++) {</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length())</span>
 <span class="nc" id="L212">					continue;</span>
-				}
+
 <span class="nc" id="L214">				final int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));</span>
 <span class="nc" id="L215">				final int w1 = v / 8;</span>
 <span class="nc" id="L216">				final int w2 = v % 8;</span>
@@ -226,9 +226,9 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="nc" id="L226">		final SpriteMonochrome result = new SpriteMonochrome(width, height, 4);</span>
 <span class="nc bnc" id="L227" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
 <span class="nc bnc" id="L228" title="All 2 branches missed.">			for (int line = 0; line &lt; strings.size(); line++) {</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length())</span>
 <span class="nc" id="L230">					continue;</span>
-				}
+
 <span class="nc" id="L232">				int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));</span>
 <span class="nc" id="L233">				final int w1 = v / 16;</span>
 <span class="nc" id="L234">				v = v % 16;</span>
@@ -250,12 +250,12 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="nc" id="L250">		final byte raw[] = new byte[width * height];</span>
 <span class="nc" id="L251">		int cpt = 0;</span>
 <span class="nc" id="L252">		final int coef = 16 / nbColor;</span>
-<span class="nc bnc" id="L253" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++)</span>
 <span class="nc bnc" id="L254" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
 <span class="nc" id="L255">				final int color = getGrayOn16(img, x, y) / coef;</span>
 <span class="nc" id="L256">				raw[cpt++] = (byte) color;</span>
 			}
-		}
+
 		// final byte[] comp = new CompressionZlib().compress(raw);
 <span class="nc" id="L260">		final byte[] comp = new CompressionZopfliZlib().compress(raw);</span>
 <span class="nc" id="L261">		return cut(new AsciiEncoderFinalZeros().encode(comp));</span>

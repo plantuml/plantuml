@@ -111,33 +111,33 @@ public class MainWindow extends JFrame {
 <span class="nc" id="L111">		return &quot;txt, tex, java, htm, html, c, h, cpp, apt, pu, puml, hpp, hh, md&quot;;</span>
 	}
 
+<span class="nc" id="L114">	private static final Pattern p = Pattern.compile(&quot;\\w+&quot;);</span>
+	
 	private void changeExtensions(String ext) {
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (ext.equals(getExtensions())) {</span>
-<span class="nc" id="L116">			return;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (ext.equals(getExtensions())) {</span>
+<span class="nc" id="L118">			return;</span>
 		}
-<span class="nc" id="L118">		final Pattern p = Pattern.compile(&quot;\\w+&quot;);</span>
-<span class="nc" id="L119">		final Matcher m = p.matcher(ext);</span>
-<span class="nc" id="L120">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L120">		final Matcher m = p.matcher(ext);</span>
+<span class="nc" id="L121">		final StringBuilder sb = new StringBuilder();</span>
 
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		while (m.find()) {</span>
-<span class="nc" id="L123">			final String value = m.group();</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (sb.length() &gt; 0) {</span>
-<span class="nc" id="L125">				sb.append(&quot;, &quot;);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		while (m.find()) {</span>
+<span class="nc" id="L124">			final String value = m.group();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (sb.length() &gt; 0) {</span>
+<span class="nc" id="L126">				sb.append(&quot;, &quot;);</span>
 			}
-<span class="nc" id="L127">			sb.append(value);</span>
+<span class="nc" id="L128">			sb.append(value);</span>
 
-<span class="nc" id="L129">		}</span>
-<span class="nc" id="L130">		ext = sb.toString();</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (ext.length() == 0) {</span>
-<span class="nc" id="L132">			ext = getDefaultFileExtensions();</span>
+<span class="nc" id="L130">		}</span>
+<span class="nc" id="L131">		ext = sb.toString();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (ext.length() == 0) {</span>
+<span class="nc" id="L133">			ext = getDefaultFileExtensions();</span>
 		}
-<span class="nc" id="L134">		extensions.setText(ext);</span>
-<span class="nc" id="L135">		prefs.put(KEY_PATTERN, ext);</span>
-<span class="nc" id="L136">		changeDir(dirWatcher.getDir());</span>
-<span class="nc" id="L137">	}</span>
+<span class="nc" id="L135">		extensions.setText(ext);</span>
+<span class="nc" id="L136">		prefs.put(KEY_PATTERN, ext);</span>
+<span class="nc" id="L137">		changeDir(dirWatcher.getDir());</span>
+<span class="nc" id="L138">	}</span>
 
 	private String getRegexpPattern(String ext) {
-<span class="nc" id="L140">		final Pattern p = Pattern.compile(&quot;\\w+&quot;);</span>
 <span class="nc" id="L141">		final Matcher m = p.matcher(ext);</span>
 <span class="nc" id="L142">		final StringBuilder filePattern = new StringBuilder(&quot;(?i)^.*\\.(&quot;);</span>
 

@@ -119,115 +119,116 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L119">		return &quot;&lt;&lt;O-O&gt;&gt;&quot;.equalsIgnoreCase(decoration.label);</span>
 	}
 
+<span class="fc" id="L122">	private final Pattern p = Pattern.compile(&quot;\\&lt;\\&lt;\\s?((?:\\&lt;&amp;\\w+\\&gt;|[^&lt;&gt;])+?)\\s?\\&gt;\\&gt;&quot;);</span>
+	
 	public List&lt;String&gt; getMultipleLabels() {
-<span class="nc" id="L123">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L125">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L125">		final Pattern p = Pattern.compile(&quot;\\&lt;\\&lt;\\s?((?:\\&lt;&amp;\\w+\\&gt;|[^&lt;&gt;])+?)\\s?\\&gt;\\&gt;&quot;);</span>
-<span class="nc" id="L126">		final Matcher m = p.matcher(decoration.label);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		while (m.find())</span>
-<span class="nc" id="L128">			result.add(m.group(1));</span>
+<span class="nc" id="L127">		final Matcher m = p.matcher(decoration.label);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		while (m.find())</span>
+<span class="nc" id="L129">			result.add(m.group(1));</span>
 
-<span class="nc" id="L130">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L131">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public boolean isSpotted() {
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		return decoration.character != 0;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		return decoration.character != 0;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (decoration.character == 0)</span>
-<span class="fc" id="L140">			return decoration.label;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (decoration.character == 0)</span>
+<span class="fc" id="L141">			return decoration.label;</span>
 
-<span class="nc" id="L142">		return decoration.character + &quot; &quot; + decoration.label;</span>
+<span class="nc" id="L143">		return decoration.character + &quot; &quot; + decoration.label;</span>
 	}
 
 	public char charAt(int arg0) {
-<span class="nc" id="L146">		return toString().charAt(arg0);</span>
+<span class="nc" id="L147">		return toString().charAt(arg0);</span>
 	}
 
 	public int length() {
-<span class="nc" id="L150">		return toString().length();</span>
+<span class="nc" id="L151">		return toString().length();</span>
 	}
 
 	public CharSequence subSequence(int arg0, int arg1) {
-<span class="nc" id="L154">		return toString().subSequence(arg0, arg1);</span>
+<span class="nc" id="L155">		return toString().subSequence(arg0, arg1);</span>
 	}
 
 	public double getRadius() {
-<span class="nc" id="L158">		return radius;</span>
+<span class="nc" id="L159">		return radius;</span>
 	}
 
 	public final UFont getCircledFont() {
-<span class="nc" id="L162">		return circledFont;</span>
+<span class="nc" id="L163">		return circledFont;</span>
 	}
 
 	public String getLabel(Guillemet guillemet) {
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (isWithOOSymbol())</span>
-<span class="nc" id="L167">			return null;</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (isWithOOSymbol())</span>
+<span class="nc" id="L168">			return null;</span>
 
-<span class="pc bpc" id="L169" title="1 of 4 branches missed.">		if (decoration.spriteName != null &amp;&amp; decoration.spriteName.startsWith(&quot;archimate/&quot;))</span>
-<span class="nc" id="L170">			return guillemet.manageGuillemet(&quot;&lt;&lt;&quot; + decoration.spriteName.substring(&quot;archimate/&quot;.length()) + &quot;&gt;&gt;&quot;);</span>
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">		if (decoration.spriteName != null &amp;&amp; decoration.spriteName.startsWith(&quot;archimate/&quot;))</span>
+<span class="nc" id="L171">			return guillemet.manageGuillemet(&quot;&lt;&lt;&quot; + decoration.spriteName.substring(&quot;archimate/&quot;.length()) + &quot;&gt;&gt;&quot;);</span>
 
-<span class="fc" id="L172">		return guillemet.manageGuillemet(decoration.label);</span>
+<span class="fc" id="L173">		return guillemet.manageGuillemet(decoration.label);</span>
 	}
 
 	public List&lt;String&gt; getLabels(Guillemet guillemet) {
-<span class="fc" id="L176">		final String labelLocal = getLabel(Guillemet.DOUBLE_COMPARATOR);</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (labelLocal == null)</span>
-<span class="nc" id="L178">			return Collections.emptyList();</span>
+<span class="fc" id="L177">		final String labelLocal = getLabel(Guillemet.DOUBLE_COMPARATOR);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (labelLocal == null)</span>
+<span class="nc" id="L179">			return Collections.emptyList();</span>
 
-<span class="fc" id="L180">		return StereotypeDecoration.cutLabels(labelLocal, guillemet);</span>
+<span class="fc" id="L181">		return StereotypeDecoration.cutLabels(labelLocal, guillemet);</span>
 	}
 
 	public List&lt;Style&gt; getStyles(StyleBuilder builder) {
-<span class="nc" id="L184">		final List&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		for (String s : getStyleNames()) {</span>
-<span class="nc" id="L186">			final Style style = builder.createStyle(s);</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">			assert (style != null);</span>
-<span class="nc" id="L188">			result.add(style);</span>
-<span class="nc" id="L189">		}</span>
-<span class="nc" id="L190">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L185">		final List&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		for (String s : getStyleNames()) {</span>
+<span class="nc" id="L187">			final Style style = builder.createStyle(s);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			assert (style != null);</span>
+<span class="nc" id="L189">			result.add(style);</span>
+<span class="nc" id="L190">		}</span>
+<span class="nc" id="L191">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public List&lt;String&gt; getStyleNames() {
-<span class="fc" id="L194">		return decoration.getStyleNames();</span>
+<span class="fc" id="L195">		return decoration.getStyleNames();</span>
 	}
 
 	public PackageStyle getPackageStyle() {
-<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (automaticPackageStyle == false)</span>
-<span class="fc" id="L199">			return null;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (automaticPackageStyle == false)</span>
+<span class="fc" id="L200">			return null;</span>
 
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class))</span>
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">			if ((&quot;&lt;&lt;&quot; + p + &quot;&gt;&gt;&quot;).equalsIgnoreCase(decoration.label))</span>
-<span class="nc" id="L203">				return p;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class))</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if ((&quot;&lt;&lt;&quot; + p + &quot;&gt;&gt;&quot;).equalsIgnoreCase(decoration.label))</span>
+<span class="nc" id="L204">				return p;</span>
 
-<span class="fc" id="L205">		return null;</span>
+<span class="fc" id="L206">		return null;</span>
 	}
 
 	public boolean isBiddableOrUncertain() {
-<span class="nc bnc" id="L209" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;B&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Biddable&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L210" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Uncertain&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L210" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;B&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Biddable&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Uncertain&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isCausal() {
-<span class="nc bnc" id="L214" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;C&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Causal&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L215" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;C&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Causal&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isLexicalOrGiven() {
-<span class="nc bnc" id="L218" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;L&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Lexical&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L219" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;X&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Given&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L219" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;L&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Lexical&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L220" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;X&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Given&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isDesignedOrSolved() {
-<span class="nc bnc" id="L223" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;D&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Designed&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L224" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Nested&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Solved&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L224" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;D&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Designed&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Nested&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Solved&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isMachineOrSpecification() {
-<span class="nc bnc" id="L228" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;M&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Machine&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L229" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;S&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Spec&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Specification&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L229" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;M&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Machine&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L230" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;S&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Spec&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Specification&gt;&gt;&quot;);</span>
 	}
 
 }

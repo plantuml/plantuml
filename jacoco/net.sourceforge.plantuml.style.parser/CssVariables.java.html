@@ -44,8 +44,8 @@ import java.util.regex.Pattern;
 
 <span class="fc" id="L45">	private final Map&lt;String, String&gt; variables = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L47">	private final Pattern learnPattern = Pattern.compile(&quot;^--([_\\w][-_\\w]+)[ :]+(.*?);?&quot;);</span>
-<span class="fc" id="L48">	private final Pattern retrieve = Pattern.compile(&quot;var\\(-*([_\\w][-_\\w]+)\\)&quot;);</span>
+<span class="fc" id="L47">	private static final Pattern learnPattern = Pattern.compile(&quot;^--([_\\w][-_\\w]+)[ :]+(.*?);?&quot;);</span>
+<span class="fc" id="L48">	private static final Pattern retrieve = Pattern.compile(&quot;var\\(-*([_\\w][-_\\w]+)\\)&quot;);</span>
 
 	public void learn(String s) {
 <span class="nc" id="L51">		final Matcher m = learnPattern.matcher(s);</span>

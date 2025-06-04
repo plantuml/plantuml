@@ -702,7 +702,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L702">		append(&quot;&quot; + width + &quot; &quot; + height + &quot; 8 [&quot; + width + &quot; 0 0 -&quot; + height + &quot; 0 &quot; + height + &quot;]&quot;, true);</span>
 		// append(&quot;&quot; + width + &quot; &quot; + height + &quot; 8 [0 0 0 0 0 0]&quot;);
 <span class="nc" id="L704">		append(&quot;{&lt;&quot;, true);</span>
-<span class="nc" id="L705">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L705">		final StringBuilder sb = new StringBuilder(width * height * 6);</span>
 <span class="nc bnc" id="L706" title="All 2 branches missed.">		for (int j = height - 1; j &gt;= 0; j--)</span>
 <span class="nc bnc" id="L707" title="All 2 branches missed.">			for (int i = 0; i &lt; width; i++) {</span>
 <span class="nc" id="L708">				final String hexString = getRgb(image.getRGB(i, j));</span>

@@ -716,7 +716,7 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 	public void svgPath(double x, double y, UPath path, double deltaShadow) {
 <span class="fc" id="L717">		manageShadow(deltaShadow);</span>
 <span class="fc" id="L718">		ensureVisible(x, y);</span>
-<span class="fc" id="L719">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L719">		final StringBuilder sb = new StringBuilder(path.size() * 12);</span>
 <span class="fc bfc" id="L720" title="All 2 branches covered.">		for (USegment seg : path) {</span>
 <span class="fc" id="L721">			final USegmentType type = seg.getSegmentType();</span>
 <span class="fc" id="L722">			final double coord[] = seg.getCoord();</span>
@@ -898,7 +898,7 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="nc" id="L898">			final String pos = &quot;&lt;svg x=\&quot;&quot; + format(x) + &quot;\&quot; y=\&quot;&quot; + format(y) + &quot;\&quot;&gt;&quot;;</span>
 <span class="nc" id="L899">			svg = pos + svg.substring(5);</span>
 <span class="nc" id="L900">			final String key = &quot;imagesvginlined&quot; + image.getMD5Hex() + images.size();</span>
-<span class="nc" id="L901">			final Element elt =  document.createElement(key);</span>
+<span class="nc" id="L901">			final Element elt = document.createElement(key);</span>
 <span class="nc" id="L902">			getG().appendChild(elt);</span>
 <span class="nc" id="L903">			images.put(key, svg);</span>
 		}

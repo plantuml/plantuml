@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 <span class="nc" id="L6">public class Base64OutputStream extends OutputStream {</span>
 
-<span class="nc" id="L8">	private final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L8">	private final StringBuilder sb = new StringBuilder(2048);</span>
 
 	private int nb;
 	private byte a;

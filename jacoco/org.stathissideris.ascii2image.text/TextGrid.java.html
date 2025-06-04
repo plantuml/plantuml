@@ -85,7 +85,7 @@ public class TextGrid {
 <span class="nc" id="L85">		markupTags.add(&quot;mo&quot;);</span>
 <span class="nc" id="L86">		markupTags.add(&quot;tr&quot;);</span>
 <span class="nc" id="L87">		markupTags.add(&quot;o&quot;);</span>
-<span class="nc" id="L88">	}</span>
+	}
 
 	public void addToMarkupTags(Collection&lt;String&gt; tags){
 <span class="nc" id="L91">		markupTags.addAll(tags);</span>
@@ -616,150 +616,152 @@ public class TextGrid {
 	}
 
 
+<span class="nc" id="L619">	private static final Pattern colorCodePattern = Pattern.compile(&quot;c[A-F0-9]{3}&quot;);</span>
+	
 	public ArrayList&lt;CellColorPair&gt; findColorCodes(){
-<span class="nc" id="L620">		Pattern colorCodePattern = Pattern.compile(&quot;c[A-F0-9]{3}&quot;);</span>
-<span class="nc" id="L621">		ArrayList&lt;CellColorPair&gt; result = new ArrayList&lt;CellColorPair&gt;();</span>
-<span class="nc" id="L622">		int width = getWidth();</span>
-<span class="nc" id="L623">		int height = getHeight();</span>
-<span class="nc bnc" id="L624" title="All 2 branches missed.">		for(int yi = 0; yi &lt; height; yi++){</span>
-<span class="nc bnc" id="L625" title="All 2 branches missed.">			for(int xi = 0; xi &lt; width - 3; xi++){</span>
-<span class="nc" id="L626">				Cell cell = new Cell(xi, yi);</span>
-<span class="nc" id="L627">				String s = getStringAt(cell, 4);</span>
-<span class="nc" id="L628">				Matcher matcher = colorCodePattern.matcher(s);</span>
-<span class="nc bnc" id="L629" title="All 2 branches missed.">				if(matcher.matches()){</span>
-<span class="nc" id="L630">					char cR = s.charAt(1);</span>
-<span class="nc" id="L631">					char cG = s.charAt(2);</span>
-<span class="nc" id="L632">					char cB = s.charAt(3);</span>
-<span class="nc" id="L633">					int r = Integer.valueOf(String.valueOf(cR), 16).intValue() * 17;</span>
-<span class="nc" id="L634">					int g = Integer.valueOf(String.valueOf(cG), 16).intValue() * 17;</span>
-<span class="nc" id="L635">					int b = Integer.valueOf(String.valueOf(cB), 16).intValue() * 17;</span>
-<span class="nc" id="L636">					result.add(new CellColorPair(cell, new Color(r, g, b)));</span>
+<span class="nc" id="L622">		ArrayList&lt;CellColorPair&gt; result = new ArrayList&lt;CellColorPair&gt;();</span>
+<span class="nc" id="L623">		int width = getWidth();</span>
+<span class="nc" id="L624">		int height = getHeight();</span>
+<span class="nc bnc" id="L625" title="All 2 branches missed.">		for(int yi = 0; yi &lt; height; yi++){</span>
+<span class="nc bnc" id="L626" title="All 2 branches missed.">			for(int xi = 0; xi &lt; width - 3; xi++){</span>
+<span class="nc" id="L627">				Cell cell = new Cell(xi, yi);</span>
+<span class="nc" id="L628">				String s = getStringAt(cell, 4);</span>
+<span class="nc" id="L629">				Matcher matcher = colorCodePattern.matcher(s);</span>
+<span class="nc bnc" id="L630" title="All 2 branches missed.">				if(matcher.matches()){</span>
+<span class="nc" id="L631">					char cR = s.charAt(1);</span>
+<span class="nc" id="L632">					char cG = s.charAt(2);</span>
+<span class="nc" id="L633">					char cB = s.charAt(3);</span>
+<span class="nc" id="L634">					int r = Integer.valueOf(String.valueOf(cR), 16).intValue() * 17;</span>
+<span class="nc" id="L635">					int g = Integer.valueOf(String.valueOf(cG), 16).intValue() * 17;</span>
+<span class="nc" id="L636">					int b = Integer.valueOf(String.valueOf(cB), 16).intValue() * 17;</span>
+<span class="nc" id="L637">					result.add(new CellColorPair(cell, new Color(r, g, b)));</span>
 				}
 			}
 		}
 		if(DEBUG) System.out.println(result.size()+&quot; color codes found&quot;);
-<span class="nc" id="L641">		return result;</span>
+<span class="nc" id="L642">		return result;</span>
 	}
 
+<span class="nc" id="L645">	private static final Pattern tagPattern = Pattern.compile(&quot;\\{(.+?)\\}&quot;);</span>
+	
 	public ArrayList&lt;CellTagPair&gt; findMarkupTags(){
-<span class="nc" id="L645">		Pattern tagPattern = Pattern.compile(&quot;\\{(.+?)\\}&quot;);</span>
-<span class="nc" id="L646">		ArrayList&lt;CellTagPair&gt; result = new ArrayList&lt;CellTagPair&gt;();</span>
+<span class="nc" id="L648">		ArrayList&lt;CellTagPair&gt; result = new ArrayList&lt;CellTagPair&gt;();</span>
 
-<span class="nc" id="L648">		int width = getWidth();</span>
-<span class="nc" id="L649">		int height = getHeight();</span>
-<span class="nc bnc" id="L650" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
-<span class="nc bnc" id="L651" title="All 2 branches missed.">			for(int x = 0; x &lt; width - 3; x++){</span>
-<span class="nc" id="L652">				Cell cell = new Cell(x, y);</span>
-<span class="nc" id="L653">				char c = get(cell);</span>
-<span class="nc bnc" id="L654" title="All 2 branches missed.">				if(c == '{'){</span>
-<span class="nc" id="L655">					String rowPart = rows.get(y).substring(x);</span>
-<span class="nc" id="L656">					Matcher matcher = tagPattern.matcher(rowPart);</span>
-<span class="nc bnc" id="L657" title="All 2 branches missed.">					if(matcher.find()){</span>
-<span class="nc" id="L658">						String tagName = matcher.group(1);</span>
-<span class="nc bnc" id="L659" title="All 2 branches missed.">						if(markupTags.contains(tagName)){</span>
+<span class="nc" id="L650">		int width = getWidth();</span>
+<span class="nc" id="L651">		int height = getHeight();</span>
+<span class="nc bnc" id="L652" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
+<span class="nc bnc" id="L653" title="All 2 branches missed.">			for(int x = 0; x &lt; width - 3; x++){</span>
+<span class="nc" id="L654">				Cell cell = new Cell(x, y);</span>
+<span class="nc" id="L655">				char c = get(cell);</span>
+<span class="nc bnc" id="L656" title="All 2 branches missed.">				if(c == '{'){</span>
+<span class="nc" id="L657">					String rowPart = rows.get(y).substring(x);</span>
+<span class="nc" id="L658">					Matcher matcher = tagPattern.matcher(rowPart);</span>
+<span class="nc bnc" id="L659" title="All 2 branches missed.">					if(matcher.find()){</span>
+<span class="nc" id="L660">						String tagName = matcher.group(1);</span>
+<span class="nc bnc" id="L661" title="All 2 branches missed.">						if(markupTags.contains(tagName)){</span>
 							if(DEBUG) System.out.println(&quot;found tag &quot;+tagName+&quot; at &quot;+x+&quot;, &quot;+y);
-<span class="nc" id="L661">							result.add(new CellTagPair(new Cell(x, y), tagName));</span>
+<span class="nc" id="L663">							result.add(new CellTagPair(new Cell(x, y), tagName));</span>
 						}
 					}
 				}
 			}
 		}
-<span class="nc" id="L667">		return result;</span>
+<span class="nc" id="L669">		return result;</span>
 	}
 		
 	public void removeMarkupTags(){
-<span class="nc" id="L671">		Iterator it = findMarkupTags().iterator();</span>
-<span class="nc bnc" id="L672" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L673">			CellTagPair pair = (CellTagPair) it.next();</span>
-<span class="nc" id="L674">			String tagName = pair.tag;</span>
-<span class="nc bnc" id="L675" title="All 2 branches missed.">			if(tagName == null) continue;</span>
-<span class="nc" id="L676">			int length = 2 + tagName.length();</span>
-<span class="nc" id="L677">			writeStringTo(pair.cell, StringUtils.repeatString(&quot; &quot;, length));</span>
-<span class="nc" id="L678">		}</span>
-<span class="nc" id="L679">	}</span>
+<span class="nc" id="L673">		Iterator it = findMarkupTags().iterator();</span>
+<span class="nc bnc" id="L674" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L675">			CellTagPair pair = (CellTagPair) it.next();</span>
+<span class="nc" id="L676">			String tagName = pair.tag;</span>
+<span class="nc bnc" id="L677" title="All 2 branches missed.">			if(tagName == null) continue;</span>
+<span class="nc" id="L678">			int length = 2 + tagName.length();</span>
+<span class="nc" id="L679">			writeStringTo(pair.cell, StringUtils.repeatString(&quot; &quot;, length));</span>
+<span class="nc" id="L680">		}</span>
+<span class="nc" id="L681">	}</span>
 		
 
 
 	public boolean matchesAny(GridPatternGroup criteria){
-<span class="nc" id="L684">		return criteria.isAnyMatchedBy(this);</span>
+<span class="nc" id="L686">		return criteria.isAnyMatchedBy(this);</span>
 	}
 
 	public boolean matchesAll(GridPatternGroup criteria){
-<span class="nc" id="L688">		return criteria.areAllMatchedBy(this);</span>
+<span class="nc" id="L690">		return criteria.areAllMatchedBy(this);</span>
 	}
 
 	public boolean matches(GridPattern criteria){
-<span class="nc" id="L692">		return criteria.isMatchedBy(this);</span>
+<span class="nc" id="L694">		return criteria.isMatchedBy(this);</span>
 	}
 
 
-<span class="nc" id="L696">	public boolean isOnHorizontalLine(Cell cell){ return isOnHorizontalLine(cell.x, cell.y); }</span>
+<span class="nc" id="L698">	public boolean isOnHorizontalLine(Cell cell){ return isOnHorizontalLine(cell.x, cell.y); }</span>
 	private boolean isOnHorizontalLine(int x, int y){
-<span class="nc" id="L698">		char c1 = get(x - 1, y);</span>
-<span class="nc" id="L699">		char c2 = get(x + 1, y);</span>
-<span class="nc bnc" id="L700" title="All 4 branches missed.">		if(isHorizontalLine(c1) &amp;&amp; isHorizontalLine(c2)) return true;</span>
-<span class="nc" id="L701">		return false;</span>
+<span class="nc" id="L700">		char c1 = get(x - 1, y);</span>
+<span class="nc" id="L701">		char c2 = get(x + 1, y);</span>
+<span class="nc bnc" id="L702" title="All 4 branches missed.">		if(isHorizontalLine(c1) &amp;&amp; isHorizontalLine(c2)) return true;</span>
+<span class="nc" id="L703">		return false;</span>
 	}
 
-<span class="nc" id="L704">	public boolean isOnVerticalLine(Cell cell){ return isOnVerticalLine(cell.x, cell.y); }</span>
+<span class="nc" id="L706">	public boolean isOnVerticalLine(Cell cell){ return isOnVerticalLine(cell.x, cell.y); }</span>
 	private boolean isOnVerticalLine(int x, int y){
-<span class="nc" id="L706">		char c1 = get(x, y - 1);</span>
-<span class="nc" id="L707">		char c2 = get(x, y + 1);</span>
-<span class="nc bnc" id="L708" title="All 4 branches missed.">		if(isVerticalLine(c1) &amp;&amp; isVerticalLine(c2)) return true;</span>
-<span class="nc" id="L709">		return false;</span>
+<span class="nc" id="L708">		char c1 = get(x, y - 1);</span>
+<span class="nc" id="L709">		char c2 = get(x, y + 1);</span>
+<span class="nc bnc" id="L710" title="All 4 branches missed.">		if(isVerticalLine(c1) &amp;&amp; isVerticalLine(c2)) return true;</span>
+<span class="nc" id="L711">		return false;</span>
 	}
 
 
 	public static boolean isBoundary(char c){
-<span class="nc" id="L714">		return StringUtils.isOneOf(c, boundaries);</span>
+<span class="nc" id="L716">		return StringUtils.isOneOf(c, boundaries);</span>
 	}
-<span class="nc" id="L716">	public boolean isBoundary(int x, int y){ return isBoundary(new Cell(x, y)); }</span>
+<span class="nc" id="L718">	public boolean isBoundary(int x, int y){ return isBoundary(new Cell(x, y)); }</span>
 	public boolean isBoundary(Cell cell){
-<span class="nc" id="L718">		char c = get(cell.x, cell.y);</span>
-<span class="nc bnc" id="L719" title="All 2 branches missed.">		if(0 == c) return false;</span>
-<span class="nc bnc" id="L720" title="All 6 branches missed.">		if('+' == c || '\\' == c || '/' == c){</span>
-<span class="nc" id="L721">			System.out.print(&quot;&quot;);</span>
-<span class="nc" id="L722">			if(</span>
-<span class="nc bnc" id="L723" title="All 2 branches missed.">			       isIntersection(cell) </span>
-<span class="nc bnc" id="L724" title="All 2 branches missed.">				|| isCorner(cell)</span>
-<span class="nc bnc" id="L725" title="All 2 branches missed.">				|| isStub(cell) </span>
-<span class="nc bnc" id="L726" title="All 2 branches missed.">				|| isCrossOnLine(cell)){</span>
-<span class="nc" id="L727">				return true;</span>
-<span class="nc" id="L728">			} else return false;</span>
+<span class="nc" id="L720">		char c = get(cell.x, cell.y);</span>
+<span class="nc bnc" id="L721" title="All 2 branches missed.">		if(0 == c) return false;</span>
+<span class="nc bnc" id="L722" title="All 6 branches missed.">		if('+' == c || '\\' == c || '/' == c){</span>
+<span class="nc" id="L723">			System.out.print(&quot;&quot;);</span>
+<span class="nc" id="L724">			if(</span>
+<span class="nc bnc" id="L725" title="All 2 branches missed.">			       isIntersection(cell) </span>
+<span class="nc bnc" id="L726" title="All 2 branches missed.">				|| isCorner(cell)</span>
+<span class="nc bnc" id="L727" title="All 2 branches missed.">				|| isStub(cell) </span>
+<span class="nc bnc" id="L728" title="All 2 branches missed.">				|| isCrossOnLine(cell)){</span>
+<span class="nc" id="L729">				return true;</span>
+<span class="nc" id="L730">			} else return false;</span>
 		}
 		//return StringUtils.isOneOf(c, undisputableBoundaries);
-<span class="nc bnc" id="L731" title="All 4 branches missed.">		if(StringUtils.isOneOf(c, boundaries) &amp;&amp; !isLoneDiagonal(cell)){</span>
-<span class="nc" id="L732">			return true;</span>
+<span class="nc bnc" id="L733" title="All 4 branches missed.">		if(StringUtils.isOneOf(c, boundaries) &amp;&amp; !isLoneDiagonal(cell)){</span>
+<span class="nc" id="L734">			return true;</span>
 		}
-<span class="nc" id="L734">		return false;</span>
+<span class="nc" id="L736">		return false;</span>
 	}
 
 	public boolean isLine(Cell cell){
-<span class="nc bnc" id="L738" title="All 4 branches missed.">		return isHorizontalLine(cell) || isVerticalLine(cell);</span>
+<span class="nc bnc" id="L740" title="All 4 branches missed.">		return isHorizontalLine(cell) || isVerticalLine(cell);</span>
 	}
 
 	public static boolean isHorizontalLine(char c){
-<span class="nc" id="L742">		return StringUtils.isOneOf(c, horizontalLines);</span>
+<span class="nc" id="L744">		return StringUtils.isOneOf(c, horizontalLines);</span>
 	}
-<span class="nc" id="L744">	public boolean isHorizontalLine(Cell cell){ return isHorizontalLine(cell.x, cell.y); }</span>
+<span class="nc" id="L746">	public boolean isHorizontalLine(Cell cell){ return isHorizontalLine(cell.x, cell.y); }</span>
 	public boolean isHorizontalLine(int x, int y){
-<span class="nc" id="L746">		char c = get(x, y);</span>
-<span class="nc bnc" id="L747" title="All 2 branches missed.">		if(0 == c) return false;</span>
-<span class="nc" id="L748">		return StringUtils.isOneOf(c, horizontalLines);</span>
+<span class="nc" id="L748">		char c = get(x, y);</span>
+<span class="nc bnc" id="L749" title="All 2 branches missed.">		if(0 == c) return false;</span>
+<span class="nc" id="L750">		return StringUtils.isOneOf(c, horizontalLines);</span>
 	}
 
 	public static boolean isVerticalLine(char c){
-<span class="nc" id="L752">		return StringUtils.isOneOf(c, verticalLines);</span>
+<span class="nc" id="L754">		return StringUtils.isOneOf(c, verticalLines);</span>
 	}
-<span class="nc" id="L754">	public boolean isVerticalLine(Cell cell){ return isVerticalLine(cell.x, cell.y); }</span>
+<span class="nc" id="L756">	public boolean isVerticalLine(Cell cell){ return isVerticalLine(cell.x, cell.y); }</span>
 	public boolean isVerticalLine(int x, int y){
-<span class="nc" id="L756">		char c = get(x, y);</span>
-<span class="nc bnc" id="L757" title="All 2 branches missed.">		if(0 == c) return false;</span>
-<span class="nc" id="L758">		return StringUtils.isOneOf(c, verticalLines);</span>
+<span class="nc" id="L758">		char c = get(x, y);</span>
+<span class="nc bnc" id="L759" title="All 2 branches missed.">		if(0 == c) return false;</span>
+<span class="nc" id="L760">		return StringUtils.isOneOf(c, verticalLines);</span>
 	}
 
 	public boolean isLinesEnd(int x, int y){
-<span class="nc" id="L762">		return isLinesEnd(new Cell(x, y));</span>
+<span class="nc" id="L764">		return isLinesEnd(new Cell(x, y));</span>
 	}
 	
 	/**
@@ -769,43 +771,43 @@ public class TextGrid {
 	 * @return
 	 */
 	public boolean isLinesEnd(Cell cell){
-<span class="nc" id="L772">		return matchesAny(cell, GridPatternGroup.linesEndCriteria);</span>
+<span class="nc" id="L774">		return matchesAny(cell, GridPatternGroup.linesEndCriteria);</span>
 	}
 
 	public boolean isVerticalLinesEnd(Cell cell){
-<span class="nc" id="L776">		return matchesAny(cell, GridPatternGroup.verticalLinesEndCriteria);</span>
+<span class="nc" id="L778">		return matchesAny(cell, GridPatternGroup.verticalLinesEndCriteria);</span>
 	}
 
 	public boolean isHorizontalLinesEnd(Cell cell){
-<span class="nc" id="L780">		return matchesAny(cell, GridPatternGroup.horizontalLinesEndCriteria);</span>
+<span class="nc" id="L782">		return matchesAny(cell, GridPatternGroup.horizontalLinesEndCriteria);</span>
 	}
 
 
 	public boolean isPointCell(Cell cell){
-<span class="nc" id="L785">		return (</span>
-<span class="nc bnc" id="L786" title="All 2 branches missed.">			isCorner(cell)</span>
-<span class="nc bnc" id="L787" title="All 2 branches missed.">			|| isIntersection(cell)</span>
-<span class="nc bnc" id="L788" title="All 2 branches missed.">			|| isStub(cell)</span>
-<span class="nc bnc" id="L789" title="All 2 branches missed.">			|| isLinesEnd(cell));</span>
+<span class="nc" id="L787">		return (</span>
+<span class="nc bnc" id="L788" title="All 2 branches missed.">			isCorner(cell)</span>
+<span class="nc bnc" id="L789" title="All 2 branches missed.">			|| isIntersection(cell)</span>
+<span class="nc bnc" id="L790" title="All 2 branches missed.">			|| isStub(cell)</span>
+<span class="nc bnc" id="L791" title="All 2 branches missed.">			|| isLinesEnd(cell));</span>
 	}
 
 
 	public boolean containsAtLeastOneDashedLine(CellSet set){
-<span class="nc" id="L794">		Iterator it = set.iterator();</span>
-<span class="nc bnc" id="L795" title="All 2 branches missed.">		while(it.hasNext()) {</span>
-<span class="nc" id="L796">			Cell cell = (Cell) it.next();</span>
-<span class="nc bnc" id="L797" title="All 2 branches missed.">			if(StringUtils.isOneOf(get(cell), dashedLines)) return true;</span>
-<span class="nc" id="L798">		}</span>
-<span class="nc" id="L799">		return false;</span>
+<span class="nc" id="L796">		Iterator it = set.iterator();</span>
+<span class="nc bnc" id="L797" title="All 2 branches missed.">		while(it.hasNext()) {</span>
+<span class="nc" id="L798">			Cell cell = (Cell) it.next();</span>
+<span class="nc bnc" id="L799" title="All 2 branches missed.">			if(StringUtils.isOneOf(get(cell), dashedLines)) return true;</span>
+<span class="nc" id="L800">		}</span>
+<span class="nc" id="L801">		return false;</span>
 	}
 
 	public boolean exactlyOneNeighbourIsBoundary(Cell cell) {
-<span class="nc" id="L803">		int howMany = 0;</span>
-<span class="nc bnc" id="L804" title="All 2 branches missed.">		if(isBoundary(cell.getNorth())) howMany++;</span>
-<span class="nc bnc" id="L805" title="All 2 branches missed.">		if(isBoundary(cell.getSouth())) howMany++;</span>
-<span class="nc bnc" id="L806" title="All 2 branches missed.">		if(isBoundary(cell.getEast())) howMany++;</span>
-<span class="nc bnc" id="L807" title="All 2 branches missed.">		if(isBoundary(cell.getWest())) howMany++;</span>
-<span class="nc bnc" id="L808" title="All 2 branches missed.">		return (howMany == 1);</span>
+<span class="nc" id="L805">		int howMany = 0;</span>
+<span class="nc bnc" id="L806" title="All 2 branches missed.">		if(isBoundary(cell.getNorth())) howMany++;</span>
+<span class="nc bnc" id="L807" title="All 2 branches missed.">		if(isBoundary(cell.getSouth())) howMany++;</span>
+<span class="nc bnc" id="L808" title="All 2 branches missed.">		if(isBoundary(cell.getEast())) howMany++;</span>
+<span class="nc bnc" id="L809" title="All 2 branches missed.">		if(isBoundary(cell.getWest())) howMany++;</span>
+<span class="nc bnc" id="L810" title="All 2 branches missed.">		return (howMany == 1);</span>
 	}
 
 	/**
@@ -824,60 +826,60 @@ public class TextGrid {
 	 */
 
 	public boolean isStub(Cell cell){
-<span class="nc" id="L827">		return matchesAny(cell, GridPatternGroup.stubCriteria);</span>
+<span class="nc" id="L829">		return matchesAny(cell, GridPatternGroup.stubCriteria);</span>
 	}
 
 	public boolean isCrossOnLine(Cell cell){
-<span class="nc" id="L831">		return matchesAny(cell, GridPatternGroup.crossOnLineCriteria);</span>
+<span class="nc" id="L833">		return matchesAny(cell, GridPatternGroup.crossOnLineCriteria);</span>
 	}
 
 	public boolean isHorizontalCrossOnLine(Cell cell){
-<span class="nc" id="L835">		return matchesAny(cell, GridPatternGroup.horizontalCrossOnLineCriteria);</span>
+<span class="nc" id="L837">		return matchesAny(cell, GridPatternGroup.horizontalCrossOnLineCriteria);</span>
 	}
 
 	public boolean isVerticalCrossOnLine(Cell cell){
-<span class="nc" id="L839">		return matchesAny(cell, GridPatternGroup.verticalCrossOnLineCriteria);</span>
+<span class="nc" id="L841">		return matchesAny(cell, GridPatternGroup.verticalCrossOnLineCriteria);</span>
 	}
 
 	public boolean isStarOnLine(Cell cell){
-<span class="nc" id="L843">		return matchesAny(cell, GridPatternGroup.starOnLineCriteria);</span>
+<span class="nc" id="L845">		return matchesAny(cell, GridPatternGroup.starOnLineCriteria);</span>
 	}
 
 	public boolean isLoneDiagonal(Cell cell){
-<span class="nc" id="L847">		return matchesAny(cell, GridPatternGroup.loneDiagonalCriteria);</span>
+<span class="nc" id="L849">		return matchesAny(cell, GridPatternGroup.loneDiagonalCriteria);</span>
 	}
 
 
 	public boolean isHorizontalStarOnLine(Cell cell){
-<span class="nc" id="L852">		return matchesAny(cell, GridPatternGroup.horizontalStarOnLineCriteria);</span>
+<span class="nc" id="L854">		return matchesAny(cell, GridPatternGroup.horizontalStarOnLineCriteria);</span>
 	}
 
 	public boolean isVerticalStarOnLine(Cell cell){
-<span class="nc" id="L856">		return matchesAny(cell, GridPatternGroup.verticalStarOnLineCriteria);</span>
+<span class="nc" id="L858">		return matchesAny(cell, GridPatternGroup.verticalStarOnLineCriteria);</span>
 	}
 
 	public boolean isArrowhead(Cell cell){
-<span class="nc bnc" id="L860" title="All 2 branches missed.">		return (isNorthArrowhead(cell)</span>
-<span class="nc bnc" id="L861" title="All 2 branches missed.">				|| isSouthArrowhead(cell)</span>
-<span class="nc bnc" id="L862" title="All 2 branches missed.">				|| isWestArrowhead(cell)</span>
-<span class="nc bnc" id="L863" title="All 2 branches missed.">				|| isEastArrowhead(cell));</span>
+<span class="nc bnc" id="L862" title="All 2 branches missed.">		return (isNorthArrowhead(cell)</span>
+<span class="nc bnc" id="L863" title="All 2 branches missed.">				|| isSouthArrowhead(cell)</span>
+<span class="nc bnc" id="L864" title="All 2 branches missed.">				|| isWestArrowhead(cell)</span>
+<span class="nc bnc" id="L865" title="All 2 branches missed.">				|| isEastArrowhead(cell));</span>
 	}
 	
 	public boolean isNorthArrowhead(Cell cell){
-<span class="nc bnc" id="L867" title="All 2 branches missed.">		return get(cell) == '^';</span>
+<span class="nc bnc" id="L869" title="All 2 branches missed.">		return get(cell) == '^';</span>
 	}
 
 	public boolean isEastArrowhead(Cell cell){
-<span class="nc bnc" id="L871" title="All 2 branches missed.">		return get(cell) == '&gt;';</span>
+<span class="nc bnc" id="L873" title="All 2 branches missed.">		return get(cell) == '&gt;';</span>
 	}
 
 	public boolean isWestArrowhead(Cell cell){
-<span class="nc bnc" id="L875" title="All 2 branches missed.">		return get(cell) == '&lt;';</span>
+<span class="nc bnc" id="L877" title="All 2 branches missed.">		return get(cell) == '&lt;';</span>
 	}
 
 	public boolean isSouthArrowhead(Cell cell){
-<span class="nc bnc" id="L879" title="All 4 branches missed.">		return (get(cell) == 'v' || get(cell) == 'V')</span>
-<span class="nc bnc" id="L880" title="All 2 branches missed.">				&amp;&amp; isVerticalLine(cell.getNorth());</span>
+<span class="nc bnc" id="L881" title="All 4 branches missed.">		return (get(cell) == 'v' || get(cell) == 'V')</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">				&amp;&amp; isVerticalLine(cell.getNorth());</span>
 	}
 	
 	
@@ -893,32 +895,32 @@ public class TextGrid {
 
 
 	public boolean isBullet(int x, int y){
-<span class="nc" id="L896">		return isBullet(new Cell(x, y));</span>
+<span class="nc" id="L898">		return isBullet(new Cell(x, y));</span>
 	}
 	
 	public boolean isBullet(Cell cell){
-<span class="nc" id="L900">		char c = get(cell);</span>
-<span class="nc bnc" id="L901" title="All 4 branches missed.">		if((c == 'o' || c == '*')</span>
-<span class="nc bnc" id="L902" title="All 2 branches missed.">			&amp;&amp; isBlank(cell.getEast())</span>
-<span class="nc bnc" id="L903" title="All 2 branches missed.">			&amp;&amp; isBlank(cell.getWest())</span>
-<span class="nc bnc" id="L904" title="All 2 branches missed.">			&amp;&amp; Character.isLetterOrDigit(get(cell.getEast().getEast())) )</span>
-<span class="nc" id="L905">			return true;</span>
-<span class="nc" id="L906">		return false;</span>
+<span class="nc" id="L902">		char c = get(cell);</span>
+<span class="nc bnc" id="L903" title="All 4 branches missed.">		if((c == 'o' || c == '*')</span>
+<span class="nc bnc" id="L904" title="All 2 branches missed.">			&amp;&amp; isBlank(cell.getEast())</span>
+<span class="nc bnc" id="L905" title="All 2 branches missed.">			&amp;&amp; isBlank(cell.getWest())</span>
+<span class="nc bnc" id="L906" title="All 2 branches missed.">			&amp;&amp; Character.isLetterOrDigit(get(cell.getEast().getEast())) )</span>
+<span class="nc" id="L907">			return true;</span>
+<span class="nc" id="L908">		return false;</span>
 	}
 	
 	public void replaceBullets(){
-<span class="nc" id="L910">		int width = getWidth();</span>
-<span class="nc" id="L911">		int height = getHeight();</span>
-<span class="nc bnc" id="L912" title="All 2 branches missed.">		for(int yi = 0; yi &lt; height; yi++){</span>
-<span class="nc bnc" id="L913" title="All 2 branches missed.">			for(int xi = 0; xi &lt; width; xi++){</span>
-<span class="nc" id="L914">				Cell cell = new Cell(xi, yi);</span>
-<span class="nc bnc" id="L915" title="All 2 branches missed.">				if(isBullet(cell)){</span>
-<span class="nc" id="L916">					set(cell, ' ');</span>
-<span class="nc" id="L917">					set(cell.getEast(), '\u2022');</span>
+<span class="nc" id="L912">		int width = getWidth();</span>
+<span class="nc" id="L913">		int height = getHeight();</span>
+<span class="nc bnc" id="L914" title="All 2 branches missed.">		for(int yi = 0; yi &lt; height; yi++){</span>
+<span class="nc bnc" id="L915" title="All 2 branches missed.">			for(int xi = 0; xi &lt; width; xi++){</span>
+<span class="nc" id="L916">				Cell cell = new Cell(xi, yi);</span>
+<span class="nc bnc" id="L917" title="All 2 branches missed.">				if(isBullet(cell)){</span>
+<span class="nc" id="L918">					set(cell, ' ');</span>
+<span class="nc" id="L919">					set(cell.getEast(), '\u2022');</span>
 				}
 			}
 		}
-<span class="nc" id="L921">	}</span>
+<span class="nc" id="L923">	}</span>
 	
 	/**
 	 * true if the cell is not blank
@@ -928,7 +930,7 @@ public class TextGrid {
 	 * @return
 	 */
 	public boolean isStringsStart(Cell cell){
-<span class="nc bnc" id="L931" title="All 4 branches missed.">		return (!isBlank(cell) &amp;&amp; isBlank(cell.getWest()));</span>
+<span class="nc bnc" id="L933" title="All 4 branches missed.">		return (!isBlank(cell) &amp;&amp; isBlank(cell.getWest()));</span>
 	}
 
 	/**
@@ -939,67 +941,67 @@ public class TextGrid {
 	 * @return
 	 */
 	public boolean isStringsEnd(Cell cell){
-<span class="nc bnc" id="L942" title="All 2 branches missed.">		return (!isBlank(cell)</span>
+<span class="nc bnc" id="L944" title="All 2 branches missed.">		return (!isBlank(cell)</span>
 			//&amp;&amp; (isBlank(cell.getEast()) || get(cell.getEast()) == 0));
-<span class="nc bnc" id="L944" title="All 2 branches missed.">			&amp;&amp; isBlank(cell.getEast()));</span>
+<span class="nc bnc" id="L946" title="All 2 branches missed.">			&amp;&amp; isBlank(cell.getEast()));</span>
 	}
 
 	public int otherStringsStartInTheSameColumn(Cell cell){
-<span class="nc bnc" id="L948" title="All 2 branches missed.">		if(!isStringsStart(cell)) return 0;</span>
-<span class="nc" id="L949">		int result = 0;</span>
-<span class="nc" id="L950">		int height = getHeight();</span>
-<span class="nc bnc" id="L951" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
-<span class="nc" id="L952">			Cell cCell = new Cell(cell.x, y);</span>
-<span class="nc bnc" id="L953" title="All 4 branches missed.">			if(!cCell.equals(cell) &amp;&amp; isStringsStart(cCell)){</span>
-<span class="nc" id="L954">				result++;</span>
+<span class="nc bnc" id="L950" title="All 2 branches missed.">		if(!isStringsStart(cell)) return 0;</span>
+<span class="nc" id="L951">		int result = 0;</span>
+<span class="nc" id="L952">		int height = getHeight();</span>
+<span class="nc bnc" id="L953" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
+<span class="nc" id="L954">			Cell cCell = new Cell(cell.x, y);</span>
+<span class="nc bnc" id="L955" title="All 4 branches missed.">			if(!cCell.equals(cell) &amp;&amp; isStringsStart(cCell)){</span>
+<span class="nc" id="L956">				result++;</span>
 			}
 		}
-<span class="nc" id="L957">		return result;</span>
+<span class="nc" id="L959">		return result;</span>
 	}
 
 	public int otherStringsEndInTheSameColumn(Cell cell){
-<span class="nc bnc" id="L961" title="All 2 branches missed.">		if(!isStringsEnd(cell)) return 0;</span>
-<span class="nc" id="L962">		int result = 0;</span>
-<span class="nc" id="L963">		int height = getHeight();</span>
-<span class="nc bnc" id="L964" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
-<span class="nc" id="L965">			Cell cCell = new Cell(cell.x, y);</span>
-<span class="nc bnc" id="L966" title="All 4 branches missed.">			if(!cCell.equals(cell) &amp;&amp; isStringsEnd(cCell)){</span>
-<span class="nc" id="L967">				result++;</span>
+<span class="nc bnc" id="L963" title="All 2 branches missed.">		if(!isStringsEnd(cell)) return 0;</span>
+<span class="nc" id="L964">		int result = 0;</span>
+<span class="nc" id="L965">		int height = getHeight();</span>
+<span class="nc bnc" id="L966" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
+<span class="nc" id="L967">			Cell cCell = new Cell(cell.x, y);</span>
+<span class="nc bnc" id="L968" title="All 4 branches missed.">			if(!cCell.equals(cell) &amp;&amp; isStringsEnd(cCell)){</span>
+<span class="nc" id="L969">				result++;</span>
 			}
 		}
-<span class="nc" id="L970">		return result;</span>
+<span class="nc" id="L972">		return result;</span>
 	}
 
 	public boolean isColumnBlank(int x){
-<span class="nc" id="L974">		int height = getHeight();</span>
-<span class="nc bnc" id="L975" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
-<span class="nc bnc" id="L976" title="All 2 branches missed.">			if(!isBlank(x, y)) return false;</span>
+<span class="nc" id="L976">		int height = getHeight();</span>
+<span class="nc bnc" id="L977" title="All 2 branches missed.">		for(int y = 0; y &lt; height; y++){</span>
+<span class="nc bnc" id="L978" title="All 2 branches missed.">			if(!isBlank(x, y)) return false;</span>
 		}
-<span class="nc" id="L978">		return true;</span>
+<span class="nc" id="L980">		return true;</span>
 	}
 
 
 	public CellSet followLine(int x, int y){
-<span class="nc" id="L983">		return followLine(new Cell(x, y));</span>
+<span class="nc" id="L985">		return followLine(new Cell(x, y));</span>
 	}
 
 	public CellSet followIntersection(Cell cell){
-<span class="nc" id="L987">		return followIntersection(cell, null);</span>
+<span class="nc" id="L989">		return followIntersection(cell, null);</span>
 	}
 
 	public CellSet followIntersection(Cell cell, Cell blocked){
-<span class="nc bnc" id="L991" title="All 2 branches missed.">		if(!isIntersection(cell)) return null;</span>
-<span class="nc" id="L992">		CellSet result = new CellSet();</span>
-<span class="nc" id="L993">		Cell cN = cell.getNorth();</span>
-<span class="nc" id="L994">		Cell cS = cell.getSouth();</span>
-<span class="nc" id="L995">		Cell cE = cell.getEast();</span>
-<span class="nc" id="L996">		Cell cW = cell.getWest();</span>
-<span class="nc bnc" id="L997" title="All 2 branches missed.">		if(hasEntryPoint(cN, 6)) result.add(cN);</span>
-<span class="nc bnc" id="L998" title="All 2 branches missed.">		if(hasEntryPoint(cS, 2)) result.add(cS);</span>
-<span class="nc bnc" id="L999" title="All 2 branches missed.">		if(hasEntryPoint(cE, 8)) result.add(cE);</span>
-<span class="nc bnc" id="L1000" title="All 2 branches missed.">		if(hasEntryPoint(cW, 4)) result.add(cW);</span>
-<span class="nc bnc" id="L1001" title="All 2 branches missed.">		if(result.contains(blocked)) result.remove(blocked);</span>
-<span class="nc" id="L1002">		return result;</span>
+<span class="nc bnc" id="L993" title="All 2 branches missed.">		if(!isIntersection(cell)) return null;</span>
+<span class="nc" id="L994">		CellSet result = new CellSet();</span>
+<span class="nc" id="L995">		Cell cN = cell.getNorth();</span>
+<span class="nc" id="L996">		Cell cS = cell.getSouth();</span>
+<span class="nc" id="L997">		Cell cE = cell.getEast();</span>
+<span class="nc" id="L998">		Cell cW = cell.getWest();</span>
+<span class="nc bnc" id="L999" title="All 2 branches missed.">		if(hasEntryPoint(cN, 6)) result.add(cN);</span>
+<span class="nc bnc" id="L1000" title="All 2 branches missed.">		if(hasEntryPoint(cS, 2)) result.add(cS);</span>
+<span class="nc bnc" id="L1001" title="All 2 branches missed.">		if(hasEntryPoint(cE, 8)) result.add(cE);</span>
+<span class="nc bnc" id="L1002" title="All 2 branches missed.">		if(hasEntryPoint(cW, 4)) result.add(cW);</span>
+<span class="nc bnc" id="L1003" title="All 2 branches missed.">		if(result.contains(blocked)) result.remove(blocked);</span>
+<span class="nc" id="L1004">		return result;</span>
 	}
 
 	/**
@@ -1010,261 +1012,261 @@ public class TextGrid {
 	 * @return null if the cell is not a line
 	 */
 	public CellSet followLine(Cell cell){
-<span class="nc bnc" id="L1013" title="All 2 branches missed.">		if(isHorizontalLine(cell)){</span>
-<span class="nc" id="L1014">			CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1015" title="All 2 branches missed.">			if(isBoundary(cell.getEast())) result.add(cell.getEast());</span>
-<span class="nc bnc" id="L1016" title="All 2 branches missed.">			if(isBoundary(cell.getWest())) result.add(cell.getWest());</span>
-<span class="nc" id="L1017">			return result;</span>
-<span class="nc bnc" id="L1018" title="All 2 branches missed.">		} else if (isVerticalLine(cell)){</span>
-<span class="nc" id="L1019">			CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1020" title="All 2 branches missed.">			if(isBoundary(cell.getNorth())) result.add(cell.getNorth());</span>
-<span class="nc bnc" id="L1021" title="All 2 branches missed.">			if(isBoundary(cell.getSouth())) result.add(cell.getSouth());</span>
-<span class="nc" id="L1022">			return result;			</span>
+<span class="nc bnc" id="L1015" title="All 2 branches missed.">		if(isHorizontalLine(cell)){</span>
+<span class="nc" id="L1016">			CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1017" title="All 2 branches missed.">			if(isBoundary(cell.getEast())) result.add(cell.getEast());</span>
+<span class="nc bnc" id="L1018" title="All 2 branches missed.">			if(isBoundary(cell.getWest())) result.add(cell.getWest());</span>
+<span class="nc" id="L1019">			return result;</span>
+<span class="nc bnc" id="L1020" title="All 2 branches missed.">		} else if (isVerticalLine(cell)){</span>
+<span class="nc" id="L1021">			CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1022" title="All 2 branches missed.">			if(isBoundary(cell.getNorth())) result.add(cell.getNorth());</span>
+<span class="nc bnc" id="L1023" title="All 2 branches missed.">			if(isBoundary(cell.getSouth())) result.add(cell.getSouth());</span>
+<span class="nc" id="L1024">			return result;			</span>
 		}
-<span class="nc" id="L1024">		return null;</span>
+<span class="nc" id="L1026">		return null;</span>
 	}
 
 	public CellSet followLine(Cell cell, Cell blocked){
-<span class="nc" id="L1028">		CellSet nextCells = followLine(cell);</span>
-<span class="nc bnc" id="L1029" title="All 2 branches missed.">		if(nextCells.contains(blocked)) nextCells.remove(blocked);</span>
-<span class="nc" id="L1030">		return nextCells;</span>
+<span class="nc" id="L1030">		CellSet nextCells = followLine(cell);</span>
+<span class="nc bnc" id="L1031" title="All 2 branches missed.">		if(nextCells.contains(blocked)) nextCells.remove(blocked);</span>
+<span class="nc" id="L1032">		return nextCells;</span>
 	}
 
 	public CellSet followCorner(Cell cell){
-<span class="nc" id="L1034">		return followCorner(cell, null);</span>
+<span class="nc" id="L1036">		return followCorner(cell, null);</span>
 	}
 
 	public CellSet followCorner(Cell cell, Cell blocked){
-<span class="nc bnc" id="L1038" title="All 2 branches missed.">		if(!isCorner(cell)) return null;</span>
-<span class="nc bnc" id="L1039" title="All 2 branches missed.">		if(isCorner1(cell)) return followCorner1(cell, blocked);</span>
-<span class="nc bnc" id="L1040" title="All 2 branches missed.">		if(isCorner2(cell)) return followCorner2(cell, blocked);</span>
-<span class="nc bnc" id="L1041" title="All 2 branches missed.">		if(isCorner3(cell)) return followCorner3(cell, blocked);</span>
-<span class="nc bnc" id="L1042" title="All 2 branches missed.">		if(isCorner4(cell)) return followCorner4(cell, blocked);</span>
-<span class="nc" id="L1043">		return null;</span>
+<span class="nc bnc" id="L1040" title="All 2 branches missed.">		if(!isCorner(cell)) return null;</span>
+<span class="nc bnc" id="L1041" title="All 2 branches missed.">		if(isCorner1(cell)) return followCorner1(cell, blocked);</span>
+<span class="nc bnc" id="L1042" title="All 2 branches missed.">		if(isCorner2(cell)) return followCorner2(cell, blocked);</span>
+<span class="nc bnc" id="L1043" title="All 2 branches missed.">		if(isCorner3(cell)) return followCorner3(cell, blocked);</span>
+<span class="nc bnc" id="L1044" title="All 2 branches missed.">		if(isCorner4(cell)) return followCorner4(cell, blocked);</span>
+<span class="nc" id="L1045">		return null;</span>
 	}
 
 	public CellSet followCorner1(Cell cell){
-<span class="nc" id="L1047">		return followCorner1(cell, null);</span>
+<span class="nc" id="L1049">		return followCorner1(cell, null);</span>
 	}
 	public CellSet followCorner1(Cell cell, Cell blocked){
-<span class="nc bnc" id="L1050" title="All 2 branches missed.">		if(!isCorner1(cell)) return null;</span>
-<span class="nc" id="L1051">		CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1052" title="All 2 branches missed.">		if(!cell.getSouth().equals(blocked)) result.add(cell.getSouth());</span>
-<span class="nc bnc" id="L1053" title="All 2 branches missed.">		if(!cell.getEast().equals(blocked)) result.add(cell.getEast());</span>
-<span class="nc" id="L1054">		return result;</span>
+<span class="nc bnc" id="L1052" title="All 2 branches missed.">		if(!isCorner1(cell)) return null;</span>
+<span class="nc" id="L1053">		CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1054" title="All 2 branches missed.">		if(!cell.getSouth().equals(blocked)) result.add(cell.getSouth());</span>
+<span class="nc bnc" id="L1055" title="All 2 branches missed.">		if(!cell.getEast().equals(blocked)) result.add(cell.getEast());</span>
+<span class="nc" id="L1056">		return result;</span>
 	}
 
 	public CellSet followCorner2(Cell cell){
-<span class="nc" id="L1058">		return followCorner2(cell, null);</span>
+<span class="nc" id="L1060">		return followCorner2(cell, null);</span>
 	}
 	public CellSet followCorner2(Cell cell, Cell blocked){
-<span class="nc bnc" id="L1061" title="All 2 branches missed.">		if(!isCorner2(cell)) return null;</span>
-<span class="nc" id="L1062">		CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1063" title="All 2 branches missed.">		if(!cell.getSouth().equals(blocked)) result.add(cell.getSouth());</span>
-<span class="nc bnc" id="L1064" title="All 2 branches missed.">		if(!cell.getWest().equals(blocked)) result.add(cell.getWest());</span>
-<span class="nc" id="L1065">		return result;</span>
+<span class="nc bnc" id="L1063" title="All 2 branches missed.">		if(!isCorner2(cell)) return null;</span>
+<span class="nc" id="L1064">		CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1065" title="All 2 branches missed.">		if(!cell.getSouth().equals(blocked)) result.add(cell.getSouth());</span>
+<span class="nc bnc" id="L1066" title="All 2 branches missed.">		if(!cell.getWest().equals(blocked)) result.add(cell.getWest());</span>
+<span class="nc" id="L1067">		return result;</span>
 	}
 
 	public CellSet followCorner3(Cell cell){
-<span class="nc" id="L1069">		return followCorner3(cell, null);</span>
+<span class="nc" id="L1071">		return followCorner3(cell, null);</span>
 	}
 	public CellSet followCorner3(Cell cell, Cell blocked){
-<span class="nc bnc" id="L1072" title="All 2 branches missed.">		if(!isCorner3(cell)) return null;</span>
-<span class="nc" id="L1073">		CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1074" title="All 2 branches missed.">		if(!cell.getNorth().equals(blocked)) result.add(cell.getNorth());</span>
-<span class="nc bnc" id="L1075" title="All 2 branches missed.">		if(!cell.getWest().equals(blocked)) result.add(cell.getWest());</span>
-<span class="nc" id="L1076">		return result;</span>
+<span class="nc bnc" id="L1074" title="All 2 branches missed.">		if(!isCorner3(cell)) return null;</span>
+<span class="nc" id="L1075">		CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1076" title="All 2 branches missed.">		if(!cell.getNorth().equals(blocked)) result.add(cell.getNorth());</span>
+<span class="nc bnc" id="L1077" title="All 2 branches missed.">		if(!cell.getWest().equals(blocked)) result.add(cell.getWest());</span>
+<span class="nc" id="L1078">		return result;</span>
 	}
 
 	public CellSet followCorner4(Cell cell){
-<span class="nc" id="L1080">		return followCorner4(cell, null);</span>
+<span class="nc" id="L1082">		return followCorner4(cell, null);</span>
 	}
 	public CellSet followCorner4(Cell cell, Cell blocked){
-<span class="nc bnc" id="L1083" title="All 2 branches missed.">		if(!isCorner4(cell)) return null;</span>
-<span class="nc" id="L1084">		CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1085" title="All 2 branches missed.">		if(!cell.getNorth().equals(blocked)) result.add(cell.getNorth());</span>
-<span class="nc bnc" id="L1086" title="All 2 branches missed.">		if(!cell.getEast().equals(blocked)) result.add(cell.getEast());</span>
-<span class="nc" id="L1087">		return result;</span>
+<span class="nc bnc" id="L1085" title="All 2 branches missed.">		if(!isCorner4(cell)) return null;</span>
+<span class="nc" id="L1086">		CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1087" title="All 2 branches missed.">		if(!cell.getNorth().equals(blocked)) result.add(cell.getNorth());</span>
+<span class="nc bnc" id="L1088" title="All 2 branches missed.">		if(!cell.getEast().equals(blocked)) result.add(cell.getEast());</span>
+<span class="nc" id="L1089">		return result;</span>
 	}
 
 
 	public CellSet followStub(Cell cell){
-<span class="nc" id="L1092">		return followStub(cell, null);</span>
+<span class="nc" id="L1094">		return followStub(cell, null);</span>
 	}
 	public CellSet followStub(Cell cell, Cell blocked){
-<span class="nc bnc" id="L1095" title="All 2 branches missed.">		if(!isStub(cell)) return null;</span>
-<span class="nc" id="L1096">		CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1097" title="All 2 branches missed.">		if(isBoundary(cell.getEast())) result.add(cell.getEast());</span>
-<span class="nc bnc" id="L1098" title="All 2 branches missed.">		else if(isBoundary(cell.getWest())) result.add(cell.getWest());</span>
-<span class="nc bnc" id="L1099" title="All 2 branches missed.">		else if(isBoundary(cell.getNorth())) result.add(cell.getNorth());</span>
-<span class="nc bnc" id="L1100" title="All 2 branches missed.">		else if(isBoundary(cell.getSouth())) result.add(cell.getSouth());</span>
-<span class="nc bnc" id="L1101" title="All 2 branches missed.">		if(result.contains(blocked)) result.remove(blocked);</span>
-<span class="nc" id="L1102">		return result;</span>
+<span class="nc bnc" id="L1097" title="All 2 branches missed.">		if(!isStub(cell)) return null;</span>
+<span class="nc" id="L1098">		CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1099" title="All 2 branches missed.">		if(isBoundary(cell.getEast())) result.add(cell.getEast());</span>
+<span class="nc bnc" id="L1100" title="All 2 branches missed.">		else if(isBoundary(cell.getWest())) result.add(cell.getWest());</span>
+<span class="nc bnc" id="L1101" title="All 2 branches missed.">		else if(isBoundary(cell.getNorth())) result.add(cell.getNorth());</span>
+<span class="nc bnc" id="L1102" title="All 2 branches missed.">		else if(isBoundary(cell.getSouth())) result.add(cell.getSouth());</span>
+<span class="nc bnc" id="L1103" title="All 2 branches missed.">		if(result.contains(blocked)) result.remove(blocked);</span>
+<span class="nc" id="L1104">		return result;</span>
 	}
 	
 	public CellSet followCell(Cell cell){
-<span class="nc" id="L1106">		return followCell(cell, null);</span>
+<span class="nc" id="L1108">		return followCell(cell, null);</span>
 	}
 	
 	public CellSet followCell(Cell cell, Cell blocked){
-<span class="nc bnc" id="L1110" title="All 2 branches missed.">		if(isIntersection(cell)) return followIntersection(cell, blocked);</span>
-<span class="nc bnc" id="L1111" title="All 2 branches missed.">		if(isCorner(cell)) return followCorner(cell, blocked);</span>
-<span class="nc bnc" id="L1112" title="All 2 branches missed.">		if(isLine(cell)) return followLine(cell, blocked);</span>
-<span class="nc bnc" id="L1113" title="All 2 branches missed.">		if(isStub(cell)) return followStub(cell, blocked);</span>
-<span class="nc bnc" id="L1114" title="All 2 branches missed.">		if(isCrossOnLine(cell)) return followCrossOnLine(cell, blocked);</span>
-<span class="nc" id="L1115">		System.err.println(&quot;Ambiguous input at position &quot;+cell+&quot;:&quot;);</span>
-<span class="nc" id="L1116">		TextGrid subGrid = getTestingSubGrid(cell);</span>
-<span class="nc" id="L1117">		subGrid.printDebug();</span>
-<span class="nc" id="L1118">		throw new RuntimeException(&quot;Cannot follow cell &quot;+cell+&quot;: cannot determine cell type&quot;);</span>
+<span class="nc bnc" id="L1112" title="All 2 branches missed.">		if(isIntersection(cell)) return followIntersection(cell, blocked);</span>
+<span class="nc bnc" id="L1113" title="All 2 branches missed.">		if(isCorner(cell)) return followCorner(cell, blocked);</span>
+<span class="nc bnc" id="L1114" title="All 2 branches missed.">		if(isLine(cell)) return followLine(cell, blocked);</span>
+<span class="nc bnc" id="L1115" title="All 2 branches missed.">		if(isStub(cell)) return followStub(cell, blocked);</span>
+<span class="nc bnc" id="L1116" title="All 2 branches missed.">		if(isCrossOnLine(cell)) return followCrossOnLine(cell, blocked);</span>
+<span class="nc" id="L1117">		System.err.println(&quot;Ambiguous input at position &quot;+cell+&quot;:&quot;);</span>
+<span class="nc" id="L1118">		TextGrid subGrid = getTestingSubGrid(cell);</span>
+<span class="nc" id="L1119">		subGrid.printDebug();</span>
+<span class="nc" id="L1120">		throw new RuntimeException(&quot;Cannot follow cell &quot;+cell+&quot;: cannot determine cell type&quot;);</span>
 	}
 
 	public String getCellTypeAsString(Cell cell){
-<span class="nc bnc" id="L1122" title="All 2 branches missed.">		if(isK(cell)) return &quot;K&quot;;</span>
-<span class="nc bnc" id="L1123" title="All 2 branches missed.">		if(isT(cell)) return &quot;T&quot;;</span>
-<span class="nc bnc" id="L1124" title="All 2 branches missed.">		if(isInverseK(cell)) return &quot;inverse K&quot;;</span>
-<span class="nc bnc" id="L1125" title="All 2 branches missed.">		if(isInverseT(cell)) return &quot;inverse T&quot;;</span>
-<span class="nc bnc" id="L1126" title="All 2 branches missed.">		if(isCorner1(cell)) return &quot;corner 1&quot;;</span>
-<span class="nc bnc" id="L1127" title="All 2 branches missed.">		if(isCorner2(cell)) return &quot;corner 2&quot;;</span>
-<span class="nc bnc" id="L1128" title="All 2 branches missed.">		if(isCorner3(cell)) return &quot;corner 3&quot;;</span>
-<span class="nc bnc" id="L1129" title="All 2 branches missed.">		if(isCorner4(cell)) return &quot;corner 4&quot;;</span>
-<span class="nc bnc" id="L1130" title="All 2 branches missed.">		if(isLine(cell)) return &quot;line&quot;;</span>
-<span class="nc bnc" id="L1131" title="All 2 branches missed.">		if(isStub(cell)) return &quot;stub&quot;;</span>
-<span class="nc bnc" id="L1132" title="All 2 branches missed.">		if(isCrossOnLine(cell)) return &quot;crossOnLine&quot;;</span>
-<span class="nc" id="L1133">		return &quot;unrecognisable type&quot;;</span>
+<span class="nc bnc" id="L1124" title="All 2 branches missed.">		if(isK(cell)) return &quot;K&quot;;</span>
+<span class="nc bnc" id="L1125" title="All 2 branches missed.">		if(isT(cell)) return &quot;T&quot;;</span>
+<span class="nc bnc" id="L1126" title="All 2 branches missed.">		if(isInverseK(cell)) return &quot;inverse K&quot;;</span>
+<span class="nc bnc" id="L1127" title="All 2 branches missed.">		if(isInverseT(cell)) return &quot;inverse T&quot;;</span>
+<span class="nc bnc" id="L1128" title="All 2 branches missed.">		if(isCorner1(cell)) return &quot;corner 1&quot;;</span>
+<span class="nc bnc" id="L1129" title="All 2 branches missed.">		if(isCorner2(cell)) return &quot;corner 2&quot;;</span>
+<span class="nc bnc" id="L1130" title="All 2 branches missed.">		if(isCorner3(cell)) return &quot;corner 3&quot;;</span>
+<span class="nc bnc" id="L1131" title="All 2 branches missed.">		if(isCorner4(cell)) return &quot;corner 4&quot;;</span>
+<span class="nc bnc" id="L1132" title="All 2 branches missed.">		if(isLine(cell)) return &quot;line&quot;;</span>
+<span class="nc bnc" id="L1133" title="All 2 branches missed.">		if(isStub(cell)) return &quot;stub&quot;;</span>
+<span class="nc bnc" id="L1134" title="All 2 branches missed.">		if(isCrossOnLine(cell)) return &quot;crossOnLine&quot;;</span>
+<span class="nc" id="L1135">		return &quot;unrecognisable type&quot;;</span>
 	}
 
 	
 	public CellSet followCrossOnLine(Cell cell, Cell blocked){
-<span class="nc" id="L1138">		CellSet result = new CellSet();</span>
-<span class="nc bnc" id="L1139" title="All 2 branches missed.">		if(isHorizontalCrossOnLine(cell)){</span>
-<span class="nc" id="L1140">			result.add(cell.getEast());</span>
-<span class="nc" id="L1141">			result.add(cell.getWest());</span>
-<span class="nc bnc" id="L1142" title="All 2 branches missed.">		} else if(isVerticalCrossOnLine(cell)){</span>
-<span class="nc" id="L1143">			result.add(cell.getNorth());</span>
-<span class="nc" id="L1144">			result.add(cell.getSouth());</span>
+<span class="nc" id="L1140">		CellSet result = new CellSet();</span>
+<span class="nc bnc" id="L1141" title="All 2 branches missed.">		if(isHorizontalCrossOnLine(cell)){</span>
+<span class="nc" id="L1142">			result.add(cell.getEast());</span>
+<span class="nc" id="L1143">			result.add(cell.getWest());</span>
+<span class="nc bnc" id="L1144" title="All 2 branches missed.">		} else if(isVerticalCrossOnLine(cell)){</span>
+<span class="nc" id="L1145">			result.add(cell.getNorth());</span>
+<span class="nc" id="L1146">			result.add(cell.getSouth());</span>
 		}
-<span class="nc bnc" id="L1146" title="All 2 branches missed.">		if(result.contains(blocked)) result.remove(blocked);</span>
-<span class="nc" id="L1147">		return result;</span>
+<span class="nc bnc" id="L1148" title="All 2 branches missed.">		if(result.contains(blocked)) result.remove(blocked);</span>
+<span class="nc" id="L1149">		return result;</span>
 	}
 
 	public boolean isOutOfBounds(Cell cell){
-<span class="nc bnc" id="L1151" title="All 2 branches missed.">		if(cell.x &gt; getWidth() - 1</span>
-<span class="nc bnc" id="L1152" title="All 6 branches missed.">			|| cell.y &gt; getHeight() - 1</span>
+<span class="nc bnc" id="L1153" title="All 2 branches missed.">		if(cell.x &gt; getWidth() - 1</span>
+<span class="nc bnc" id="L1154" title="All 6 branches missed.">			|| cell.y &gt; getHeight() - 1</span>
 			|| cell.x &lt; 0
-<span class="nc" id="L1154">			|| cell.y &lt; 0) return true;</span>
-<span class="nc" id="L1155">		return false;</span>
+<span class="nc" id="L1156">			|| cell.y &lt; 0) return true;</span>
+<span class="nc" id="L1157">		return false;</span>
 	}
 
 	public boolean isOutOfBounds(int x, int y){
-<span class="nc" id="L1159">		char c = get(x, y);</span>
-<span class="nc bnc" id="L1160" title="All 2 branches missed.">		if(0 == c) return true;</span>
-<span class="nc" id="L1161">		return false;</span>
+<span class="nc" id="L1161">		char c = get(x, y);</span>
+<span class="nc bnc" id="L1162" title="All 2 branches missed.">		if(0 == c) return true;</span>
+<span class="nc" id="L1163">		return false;</span>
 	}
 
 	public boolean isBlank(Cell cell){
-<span class="nc" id="L1165">		char c = get(cell);</span>
-<span class="nc bnc" id="L1166" title="All 2 branches missed.">		if(0 == c) return false;</span>
-<span class="nc bnc" id="L1167" title="All 2 branches missed.">		return c == ' ';</span>
+<span class="nc" id="L1167">		char c = get(cell);</span>
+<span class="nc bnc" id="L1168" title="All 2 branches missed.">		if(0 == c) return false;</span>
+<span class="nc bnc" id="L1169" title="All 2 branches missed.">		return c == ' ';</span>
 	}
 
 	public boolean isBlank(int x, int y){
-<span class="nc" id="L1171">		char c = get(x, y);</span>
-<span class="nc bnc" id="L1172" title="All 2 branches missed.">		if(0 == c) return true;</span>
-<span class="nc bnc" id="L1173" title="All 2 branches missed.">		return c == ' ';</span>
+<span class="nc" id="L1173">		char c = get(x, y);</span>
+<span class="nc bnc" id="L1174" title="All 2 branches missed.">		if(0 == c) return true;</span>
+<span class="nc bnc" id="L1175" title="All 2 branches missed.">		return c == ' ';</span>
 	}
 
 	public boolean isCorner(Cell cell){
-<span class="nc" id="L1177">		return isCorner(cell.x, cell.y);</span>
+<span class="nc" id="L1179">		return isCorner(cell.x, cell.y);</span>
 	}
 	public boolean isCorner(int x, int y){
-<span class="nc bnc" id="L1180" title="All 4 branches missed.">		return (isNormalCorner(x,y) || isRoundCorner(x,y));</span>
+<span class="nc bnc" id="L1182" title="All 4 branches missed.">		return (isNormalCorner(x,y) || isRoundCorner(x,y));</span>
 	}
 
 
 	public boolean matchesAny(Cell cell, GridPatternGroup criteria){
-<span class="nc" id="L1185">		TextGrid subGrid = getTestingSubGrid(cell);</span>
-<span class="nc" id="L1186">		return subGrid.matchesAny(criteria);</span>
+<span class="nc" id="L1187">		TextGrid subGrid = getTestingSubGrid(cell);</span>
+<span class="nc" id="L1188">		return subGrid.matchesAny(criteria);</span>
 	}
 	
 	public boolean isCorner1(Cell cell){
-<span class="nc" id="L1190">		return matchesAny(cell, GridPatternGroup.corner1Criteria);</span>
+<span class="nc" id="L1192">		return matchesAny(cell, GridPatternGroup.corner1Criteria);</span>
 	}
 
 	public boolean isCorner2(Cell cell){
-<span class="nc" id="L1194">		return matchesAny(cell, GridPatternGroup.corner2Criteria);</span>
+<span class="nc" id="L1196">		return matchesAny(cell, GridPatternGroup.corner2Criteria);</span>
 	}
 
 	public boolean isCorner3(Cell cell){
-<span class="nc" id="L1198">		return matchesAny(cell, GridPatternGroup.corner3Criteria);</span>
+<span class="nc" id="L1200">		return matchesAny(cell, GridPatternGroup.corner3Criteria);</span>
 	}
 
 	public boolean isCorner4(Cell cell){
-<span class="nc" id="L1202">		return matchesAny(cell, GridPatternGroup.corner4Criteria);</span>
+<span class="nc" id="L1204">		return matchesAny(cell, GridPatternGroup.corner4Criteria);</span>
 	}
 
 	public boolean isCross(Cell cell){
-<span class="nc" id="L1206">		return matchesAny(cell, GridPatternGroup.crossCriteria);</span>
+<span class="nc" id="L1208">		return matchesAny(cell, GridPatternGroup.crossCriteria);</span>
 	}
 
 	public boolean isK(Cell cell){
-<span class="nc" id="L1210">		return matchesAny(cell, GridPatternGroup.KCriteria);</span>
+<span class="nc" id="L1212">		return matchesAny(cell, GridPatternGroup.KCriteria);</span>
 	}
 
 	public boolean isInverseK(Cell cell){
-<span class="nc" id="L1214">		return matchesAny(cell, GridPatternGroup.inverseKCriteria);</span>
+<span class="nc" id="L1216">		return matchesAny(cell, GridPatternGroup.inverseKCriteria);</span>
 	}
 
 	public boolean isT(Cell cell){
-<span class="nc" id="L1218">		return matchesAny(cell, GridPatternGroup.TCriteria);</span>
+<span class="nc" id="L1220">		return matchesAny(cell, GridPatternGroup.TCriteria);</span>
 	}
 
 	public boolean isInverseT(Cell cell){
-<span class="nc" id="L1222">		return matchesAny(cell, GridPatternGroup.inverseTCriteria);</span>
+<span class="nc" id="L1224">		return matchesAny(cell, GridPatternGroup.inverseTCriteria);</span>
 	}
 
 	public boolean isNormalCorner(Cell cell){
-<span class="nc" id="L1226">		return matchesAny(cell, GridPatternGroup.normalCornerCriteria);</span>
+<span class="nc" id="L1228">		return matchesAny(cell, GridPatternGroup.normalCornerCriteria);</span>
 	}
 	public boolean isNormalCorner(int x, int y){
-<span class="nc" id="L1229">		return isNormalCorner(new Cell(x, y));</span>
+<span class="nc" id="L1231">		return isNormalCorner(new Cell(x, y));</span>
 	}
 
 	public boolean isRoundCorner(Cell cell){
-<span class="nc" id="L1233">		return matchesAny(cell, GridPatternGroup.roundCornerCriteria);</span>
+<span class="nc" id="L1235">		return matchesAny(cell, GridPatternGroup.roundCornerCriteria);</span>
 	}
 
 	public boolean isRoundCorner(int x, int y){
-<span class="nc" id="L1237">		return isRoundCorner(new Cell(x, y));</span>
+<span class="nc" id="L1239">		return isRoundCorner(new Cell(x, y));</span>
 	}
 
 	public boolean isIntersection(Cell cell){
-<span class="nc" id="L1241">		return matchesAny(cell, GridPatternGroup.intersectionCriteria);</span>
+<span class="nc" id="L1243">		return matchesAny(cell, GridPatternGroup.intersectionCriteria);</span>
 	}
 	public boolean isIntersection(int x, int y){
-<span class="nc" id="L1244">		return isIntersection(new Cell(x, y));</span>
+<span class="nc" id="L1246">		return isIntersection(new Cell(x, y));</span>
 	}
 
 	public void copyCellsTo(CellSet cells, TextGrid grid){
-<span class="nc" id="L1248">		Iterator it = cells.iterator();</span>
-<span class="nc bnc" id="L1249" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L1250">			Cell cell = (Cell) it.next();</span>
-<span class="nc" id="L1251">			grid.set(cell, this.get(cell));</span>
-<span class="nc" id="L1252">		}</span>
-<span class="nc" id="L1253">	}</span>
+<span class="nc" id="L1250">		Iterator it = cells.iterator();</span>
+<span class="nc bnc" id="L1251" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L1252">			Cell cell = (Cell) it.next();</span>
+<span class="nc" id="L1253">			grid.set(cell, this.get(cell));</span>
+<span class="nc" id="L1254">		}</span>
+<span class="nc" id="L1255">	}</span>
 	
 	public boolean equals(TextGrid grid){
-<span class="nc bnc" id="L1256" title="All 2 branches missed.">		if(grid.getHeight() != this.getHeight()</span>
-<span class="nc bnc" id="L1257" title="All 2 branches missed.">			|| grid.getWidth() != this.getWidth()</span>
+<span class="nc bnc" id="L1258" title="All 2 branches missed.">		if(grid.getHeight() != this.getHeight()</span>
+<span class="nc bnc" id="L1259" title="All 2 branches missed.">			|| grid.getWidth() != this.getWidth()</span>
 			){
-<span class="nc" id="L1259">			return false;</span>
+<span class="nc" id="L1261">			return false;</span>
 		}
-<span class="nc" id="L1261">		int height = grid.getHeight();</span>
-<span class="nc bnc" id="L1262" title="All 2 branches missed.">		for(int i = 0; i &lt; height; i++){</span>
-<span class="nc" id="L1263">			String row1 = this.getRow(i).toString();</span>
-<span class="nc" id="L1264">			String row2 = grid.getRow(i).toString();</span>
-<span class="nc bnc" id="L1265" title="All 2 branches missed.">			if(!row1.equals(row2)) return false;</span>
+<span class="nc" id="L1263">		int height = grid.getHeight();</span>
+<span class="nc bnc" id="L1264" title="All 2 branches missed.">		for(int i = 0; i &lt; height; i++){</span>
+<span class="nc" id="L1265">			String row1 = this.getRow(i).toString();</span>
+<span class="nc" id="L1266">			String row2 = grid.getRow(i).toString();</span>
+<span class="nc bnc" id="L1267" title="All 2 branches missed.">			if(!row1.equals(row2)) return false;</span>
 		}
-<span class="nc" id="L1267">		return true;</span>
+<span class="nc" id="L1269">		return true;</span>
 	}
 	
 	/**
@@ -1274,12 +1276,12 @@ public class TextGrid {
 	 * @param c
 	 */
 	public void fillCellsWith(Iterable cells, char c){
-<span class="nc" id="L1277">		Iterator&lt;Cell&gt; it = cells.iterator();</span>
-<span class="nc bnc" id="L1278" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L1279">			Cell cell = it.next();</span>
-<span class="nc" id="L1280">			set(cell.x, cell.y, c);</span>
-<span class="nc" id="L1281">		}</span>
-<span class="nc" id="L1282">	}</span>
+<span class="nc" id="L1279">		Iterator&lt;Cell&gt; it = cells.iterator();</span>
+<span class="nc bnc" id="L1280" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L1281">			Cell cell = it.next();</span>
+<span class="nc" id="L1282">			set(cell.x, cell.y, c);</span>
+<span class="nc" id="L1283">		}</span>
+<span class="nc" id="L1284">	}</span>
 
 	/**
 	 * 
@@ -1300,74 +1302,74 @@ public class TextGrid {
 //	}
 
 	public CellSet fillContinuousArea(int x, int y, char c){
-<span class="nc" id="L1303">		return fillContinuousArea(new Cell(x, y), c);</span>
+<span class="nc" id="L1305">		return fillContinuousArea(new Cell(x, y), c);</span>
 	}
 
 	public CellSet fillContinuousArea(Cell cell, char c){
-<span class="nc bnc" id="L1307" title="All 2 branches missed.">		if(isOutOfBounds(cell)) throw new IllegalArgumentException(&quot;Attempted to fill area out of bounds: &quot;+cell);</span>
-<span class="nc" id="L1308">		return seedFillOld(cell, c);</span>
+<span class="nc bnc" id="L1309" title="All 2 branches missed.">		if(isOutOfBounds(cell)) throw new IllegalArgumentException(&quot;Attempted to fill area out of bounds: &quot;+cell);</span>
+<span class="nc" id="L1310">		return seedFillOld(cell, c);</span>
 	}
 
 	private CellSet seedFill(Cell seed, char newChar){
-<span class="nc" id="L1312">		CellSet cellsFilled = new CellSet();</span>
-<span class="nc" id="L1313">		char oldChar = get(seed);</span>
+<span class="nc" id="L1314">		CellSet cellsFilled = new CellSet();</span>
+<span class="nc" id="L1315">		char oldChar = get(seed);</span>
 		
-<span class="nc bnc" id="L1315" title="All 2 branches missed.">		if(oldChar == newChar) return cellsFilled;</span>
-<span class="nc bnc" id="L1316" title="All 2 branches missed.">		if(isOutOfBounds(seed)) return cellsFilled;</span>
+<span class="nc bnc" id="L1317" title="All 2 branches missed.">		if(oldChar == newChar) return cellsFilled;</span>
+<span class="nc bnc" id="L1318" title="All 2 branches missed.">		if(isOutOfBounds(seed)) return cellsFilled;</span>
 
-<span class="nc" id="L1318">		Stack&lt;Cell&gt; stack = new Stack&lt;Cell&gt;();</span>
+<span class="nc" id="L1320">		Stack&lt;Cell&gt; stack = new Stack&lt;Cell&gt;();</span>
 
-<span class="nc" id="L1320">		stack.push(seed);</span>
+<span class="nc" id="L1322">		stack.push(seed);</span>
 		
-<span class="nc bnc" id="L1322" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
-<span class="nc" id="L1323">			Cell cell = (Cell) stack.pop();</span>
+<span class="nc bnc" id="L1324" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
+<span class="nc" id="L1325">			Cell cell = (Cell) stack.pop();</span>
 			
 			//set(cell, newChar);
-<span class="nc" id="L1326">			cellsFilled.add(cell);</span>
+<span class="nc" id="L1328">			cellsFilled.add(cell);</span>
 
-<span class="nc" id="L1328">			Cell nCell = cell.getNorth();</span>
-<span class="nc" id="L1329">			Cell sCell = cell.getSouth();</span>
-<span class="nc" id="L1330">			Cell eCell = cell.getEast();</span>
-<span class="nc" id="L1331">			Cell wCell = cell.getWest();</span>
+<span class="nc" id="L1330">			Cell nCell = cell.getNorth();</span>
+<span class="nc" id="L1331">			Cell sCell = cell.getSouth();</span>
+<span class="nc" id="L1332">			Cell eCell = cell.getEast();</span>
+<span class="nc" id="L1333">			Cell wCell = cell.getWest();</span>
 			
-<span class="nc bnc" id="L1333" title="All 4 branches missed.">			if(get(nCell) == oldChar &amp;&amp; !cellsFilled.contains(nCell)) stack.push(nCell);</span>
-<span class="nc bnc" id="L1334" title="All 4 branches missed.">			if(get(sCell) == oldChar &amp;&amp; !cellsFilled.contains(sCell)) stack.push(sCell);</span>
-<span class="nc bnc" id="L1335" title="All 4 branches missed.">			if(get(eCell) == oldChar &amp;&amp; !cellsFilled.contains(eCell)) stack.push(eCell);</span>
-<span class="nc bnc" id="L1336" title="All 4 branches missed.">			if(get(wCell) == oldChar &amp;&amp; !cellsFilled.contains(wCell)) stack.push(wCell);</span>
-<span class="nc" id="L1337">		}</span>
+<span class="nc bnc" id="L1335" title="All 4 branches missed.">			if(get(nCell) == oldChar &amp;&amp; !cellsFilled.contains(nCell)) stack.push(nCell);</span>
+<span class="nc bnc" id="L1336" title="All 4 branches missed.">			if(get(sCell) == oldChar &amp;&amp; !cellsFilled.contains(sCell)) stack.push(sCell);</span>
+<span class="nc bnc" id="L1337" title="All 4 branches missed.">			if(get(eCell) == oldChar &amp;&amp; !cellsFilled.contains(eCell)) stack.push(eCell);</span>
+<span class="nc bnc" id="L1338" title="All 4 branches missed.">			if(get(wCell) == oldChar &amp;&amp; !cellsFilled.contains(wCell)) stack.push(wCell);</span>
+<span class="nc" id="L1339">		}</span>
 		
-<span class="nc" id="L1339">		return cellsFilled;</span>
+<span class="nc" id="L1341">		return cellsFilled;</span>
 	}
 
 	private CellSet seedFillOld(Cell seed, char newChar){
-<span class="nc" id="L1343">		CellSet cellsFilled = new CellSet();</span>
-<span class="nc" id="L1344">		char oldChar = get(seed);</span>
+<span class="nc" id="L1345">		CellSet cellsFilled = new CellSet();</span>
+<span class="nc" id="L1346">		char oldChar = get(seed);</span>
 		
-<span class="nc bnc" id="L1346" title="All 2 branches missed.">		if(oldChar == newChar) return cellsFilled;</span>
-<span class="nc bnc" id="L1347" title="All 2 branches missed.">		if(isOutOfBounds(seed)) return cellsFilled;</span>
+<span class="nc bnc" id="L1348" title="All 2 branches missed.">		if(oldChar == newChar) return cellsFilled;</span>
+<span class="nc bnc" id="L1349" title="All 2 branches missed.">		if(isOutOfBounds(seed)) return cellsFilled;</span>
 
-<span class="nc" id="L1349">		Stack&lt;Cell&gt; stack = new Stack&lt;Cell&gt;();</span>
+<span class="nc" id="L1351">		Stack&lt;Cell&gt; stack = new Stack&lt;Cell&gt;();</span>
 
-<span class="nc" id="L1351">		stack.push(seed);</span>
+<span class="nc" id="L1353">		stack.push(seed);</span>
 		
-<span class="nc bnc" id="L1353" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
-<span class="nc" id="L1354">			Cell cell = (Cell) stack.pop();</span>
+<span class="nc bnc" id="L1355" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
+<span class="nc" id="L1356">			Cell cell = (Cell) stack.pop();</span>
 			
-<span class="nc" id="L1356">			set(cell, newChar);</span>
-<span class="nc" id="L1357">			cellsFilled.add(cell);</span>
+<span class="nc" id="L1358">			set(cell, newChar);</span>
+<span class="nc" id="L1359">			cellsFilled.add(cell);</span>
 
-<span class="nc" id="L1359">			Cell nCell = cell.getNorth();</span>
-<span class="nc" id="L1360">			Cell sCell = cell.getSouth();</span>
-<span class="nc" id="L1361">			Cell eCell = cell.getEast();</span>
-<span class="nc" id="L1362">			Cell wCell = cell.getWest();</span>
+<span class="nc" id="L1361">			Cell nCell = cell.getNorth();</span>
+<span class="nc" id="L1362">			Cell sCell = cell.getSouth();</span>
+<span class="nc" id="L1363">			Cell eCell = cell.getEast();</span>
+<span class="nc" id="L1364">			Cell wCell = cell.getWest();</span>
 			
-<span class="nc bnc" id="L1364" title="All 2 branches missed.">			if(get(nCell) == oldChar) stack.push(nCell);</span>
-<span class="nc bnc" id="L1365" title="All 2 branches missed.">			if(get(sCell) == oldChar) stack.push(sCell);</span>
-<span class="nc bnc" id="L1366" title="All 2 branches missed.">			if(get(eCell) == oldChar) stack.push(eCell);</span>
-<span class="nc bnc" id="L1367" title="All 2 branches missed.">			if(get(wCell) == oldChar) stack.push(wCell);</span>
-<span class="nc" id="L1368">		}</span>
+<span class="nc bnc" id="L1366" title="All 2 branches missed.">			if(get(nCell) == oldChar) stack.push(nCell);</span>
+<span class="nc bnc" id="L1367" title="All 2 branches missed.">			if(get(sCell) == oldChar) stack.push(sCell);</span>
+<span class="nc bnc" id="L1368" title="All 2 branches missed.">			if(get(eCell) == oldChar) stack.push(eCell);</span>
+<span class="nc bnc" id="L1369" title="All 2 branches missed.">			if(get(wCell) == oldChar) stack.push(wCell);</span>
+<span class="nc" id="L1370">		}</span>
 		
-<span class="nc" id="L1370">		return cellsFilled;</span>
+<span class="nc" id="L1372">		return cellsFilled;</span>
 	}
 
 
@@ -1380,106 +1382,106 @@ public class TextGrid {
 	 * @return
 	 */
 	public CellSet findBoundariesExpandingFrom(Cell seed){
-<span class="nc" id="L1383">		CellSet boundaries = new CellSet();</span>
-<span class="nc" id="L1384">		char oldChar = get(seed);</span>
+<span class="nc" id="L1385">		CellSet boundaries = new CellSet();</span>
+<span class="nc" id="L1386">		char oldChar = get(seed);</span>
 
-<span class="nc bnc" id="L1386" title="All 2 branches missed.">		if(isOutOfBounds(seed)) return boundaries;</span>
+<span class="nc bnc" id="L1388" title="All 2 branches missed.">		if(isOutOfBounds(seed)) return boundaries;</span>
 
-<span class="nc" id="L1388">		char newChar = 1; //TODO: kludge</span>
+<span class="nc" id="L1390">		char newChar = 1; //TODO: kludge</span>
 
-<span class="nc" id="L1390">		Stack&lt;Cell&gt; stack = new Stack&lt;Cell&gt;();</span>
+<span class="nc" id="L1392">		Stack&lt;Cell&gt; stack = new Stack&lt;Cell&gt;();</span>
 
-<span class="nc" id="L1392">		stack.push(seed);</span>
+<span class="nc" id="L1394">		stack.push(seed);</span>
 		
-<span class="nc bnc" id="L1394" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
-<span class="nc" id="L1395">			Cell cell = (Cell) stack.pop();</span>
+<span class="nc bnc" id="L1396" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
+<span class="nc" id="L1397">			Cell cell = (Cell) stack.pop();</span>
 			
-<span class="nc" id="L1397">			set(cell, newChar);</span>
+<span class="nc" id="L1399">			set(cell, newChar);</span>
 
-<span class="nc" id="L1399">			Cell nCell = cell.getNorth();</span>
-<span class="nc" id="L1400">			Cell sCell = cell.getSouth();</span>
-<span class="nc" id="L1401">			Cell eCell = cell.getEast();</span>
-<span class="nc" id="L1402">			Cell wCell = cell.getWest();</span>
+<span class="nc" id="L1401">			Cell nCell = cell.getNorth();</span>
+<span class="nc" id="L1402">			Cell sCell = cell.getSouth();</span>
+<span class="nc" id="L1403">			Cell eCell = cell.getEast();</span>
+<span class="nc" id="L1404">			Cell wCell = cell.getWest();</span>
 			
-<span class="nc bnc" id="L1404" title="All 2 branches missed.">			if(get(nCell) == oldChar) stack.push(nCell);</span>
-<span class="nc bnc" id="L1405" title="All 2 branches missed.">			else if(get(nCell) == '*') boundaries.add(nCell);</span>
+<span class="nc bnc" id="L1406" title="All 2 branches missed.">			if(get(nCell) == oldChar) stack.push(nCell);</span>
+<span class="nc bnc" id="L1407" title="All 2 branches missed.">			else if(get(nCell) == '*') boundaries.add(nCell);</span>
 			
-<span class="nc bnc" id="L1407" title="All 2 branches missed.">			if(get(sCell) == oldChar) stack.push(sCell);</span>
-<span class="nc bnc" id="L1408" title="All 2 branches missed.">			else if(get(sCell) == '*') boundaries.add(sCell);</span>
+<span class="nc bnc" id="L1409" title="All 2 branches missed.">			if(get(sCell) == oldChar) stack.push(sCell);</span>
+<span class="nc bnc" id="L1410" title="All 2 branches missed.">			else if(get(sCell) == '*') boundaries.add(sCell);</span>
 			
-<span class="nc bnc" id="L1410" title="All 2 branches missed.">			if(get(eCell) == oldChar) stack.push(eCell);</span>
-<span class="nc bnc" id="L1411" title="All 2 branches missed.">			else if(get(eCell) == '*') boundaries.add(eCell);</span>
+<span class="nc bnc" id="L1412" title="All 2 branches missed.">			if(get(eCell) == oldChar) stack.push(eCell);</span>
+<span class="nc bnc" id="L1413" title="All 2 branches missed.">			else if(get(eCell) == '*') boundaries.add(eCell);</span>
 			
-<span class="nc bnc" id="L1413" title="All 2 branches missed.">			if(get(wCell) == oldChar) stack.push(wCell);</span>
-<span class="nc bnc" id="L1414" title="All 2 branches missed.">			else if(get(wCell) == '*') boundaries.add(wCell);</span>
-<span class="nc" id="L1415">		}</span>
+<span class="nc bnc" id="L1415" title="All 2 branches missed.">			if(get(wCell) == oldChar) stack.push(wCell);</span>
+<span class="nc bnc" id="L1416" title="All 2 branches missed.">			else if(get(wCell) == '*') boundaries.add(wCell);</span>
+<span class="nc" id="L1417">		}</span>
 		
-<span class="nc" id="L1417">		return boundaries;</span>
+<span class="nc" id="L1419">		return boundaries;</span>
 	}
 	
 	
 	//TODO: incomplete method seedFillLine()
 	private CellSet seedFillLine(Cell cell, char newChar){
-<span class="nc" id="L1423">		CellSet cellsFilled = new CellSet();</span>
+<span class="nc" id="L1425">		CellSet cellsFilled = new CellSet();</span>
 		
-<span class="nc" id="L1425">		Stack stack = new Stack();</span>
+<span class="nc" id="L1427">		Stack stack = new Stack();</span>
 		
-<span class="nc" id="L1427">		char oldChar = get(cell);</span>
+<span class="nc" id="L1429">		char oldChar = get(cell);</span>
 		
-<span class="nc bnc" id="L1429" title="All 2 branches missed.">		if(oldChar == newChar) return cellsFilled;</span>
-<span class="nc bnc" id="L1430" title="All 2 branches missed.">		if(isOutOfBounds(cell)) return cellsFilled;</span>
+<span class="nc bnc" id="L1431" title="All 2 branches missed.">		if(oldChar == newChar) return cellsFilled;</span>
+<span class="nc bnc" id="L1432" title="All 2 branches missed.">		if(isOutOfBounds(cell)) return cellsFilled;</span>
 		
-<span class="nc" id="L1432">		stack.push(new LineSegment(cell.x, cell.x, cell.y, 1));</span>
-<span class="nc" id="L1433">		stack.push(new LineSegment(cell.x, cell.x, cell.y + 1, -1));</span>
+<span class="nc" id="L1434">		stack.push(new LineSegment(cell.x, cell.x, cell.y, 1));</span>
+<span class="nc" id="L1435">		stack.push(new LineSegment(cell.x, cell.x, cell.y + 1, -1));</span>
 		
 		int left;
-<span class="nc bnc" id="L1436" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
-<span class="nc" id="L1437">			LineSegment segment = (LineSegment) stack.pop();</span>
+<span class="nc bnc" id="L1438" title="All 2 branches missed.">		while(!stack.isEmpty()){</span>
+<span class="nc" id="L1439">			LineSegment segment = (LineSegment) stack.pop();</span>
 			int x;
 			//expand to the left
 			for(
-<span class="nc" id="L1441">					x = segment.x1;</span>
-<span class="nc bnc" id="L1442" title="All 4 branches missed.">					x &gt;= 0 &amp;&amp; get(x, segment.y) == oldChar;</span>
-<span class="nc" id="L1443">					--x){</span>
-<span class="nc" id="L1444">				set(x, segment.y, newChar);</span>
-<span class="nc" id="L1445">				cellsFilled.add(new Cell(x, segment.y));</span>
+<span class="nc" id="L1443">					x = segment.x1;</span>
+<span class="nc bnc" id="L1444" title="All 4 branches missed.">					x &gt;= 0 &amp;&amp; get(x, segment.y) == oldChar;</span>
+<span class="nc" id="L1445">					--x){</span>
+<span class="nc" id="L1446">				set(x, segment.y, newChar);</span>
+<span class="nc" id="L1447">				cellsFilled.add(new Cell(x, segment.y));</span>
 			}
 			
-<span class="nc" id="L1448">			left = cell.getEast().x;</span>
-<span class="nc bnc" id="L1449" title="All 2 branches missed.">			boolean skip = (x &gt; segment.x1)? true : false; </span>
+<span class="nc" id="L1450">			left = cell.getEast().x;</span>
+<span class="nc bnc" id="L1451" title="All 2 branches missed.">			boolean skip = (x &gt; segment.x1)? true : false; </span>
 
-<span class="nc bnc" id="L1451" title="All 2 branches missed.">			if(left &lt; segment.x1){ //leak on left?</span>
+<span class="nc bnc" id="L1453" title="All 2 branches missed.">			if(left &lt; segment.x1){ //leak on left?</span>
 				//TODO: i think the first param should be x
-<span class="nc" id="L1453">				stack.push(</span>
+<span class="nc" id="L1455">				stack.push(</span>
 				        //new LineSegment(segment.y, left, segment.x1 - 1, -segment.dy));
 				        new LineSegment(x, left, segment.y - 1, -segment.dy));
 			}
 
-<span class="nc" id="L1458">			x = segment.x1 + 1;</span>
+<span class="nc" id="L1460">			x = segment.x1 + 1;</span>
 			do {
-<span class="nc bnc" id="L1460" title="All 2 branches missed.">			    if(!skip) {</span>
-<span class="nc bnc" id="L1461" title="All 4 branches missed.">			       	for( ; x &lt; getWidth() &amp;&amp; get(x, segment.y) == oldChar; ++x){</span>
-<span class="nc" id="L1462">			       	    set(x, segment.y, newChar);</span>
-<span class="nc" id="L1463">			       	    cellsFilled.add(new Cell(x, segment.y));</span>
+<span class="nc bnc" id="L1462" title="All 2 branches missed.">			    if(!skip) {</span>
+<span class="nc bnc" id="L1463" title="All 4 branches missed.">			       	for( ; x &lt; getWidth() &amp;&amp; get(x, segment.y) == oldChar; ++x){</span>
+<span class="nc" id="L1464">			       	    set(x, segment.y, newChar);</span>
+<span class="nc" id="L1465">			       	    cellsFilled.add(new Cell(x, segment.y));</span>
 			       	}
 					
-<span class="nc" id="L1466">			       	stack.push(new LineSegment(left, x - 1, segment.y, segment.dy));</span>
-<span class="nc bnc" id="L1467" title="All 2 branches missed.">				   	if(x &gt; segment.x2 + 1) //leak on right?</span>
-<span class="nc" id="L1468">			        stack.push(new LineSegment(segment.x2 + 1, x - 1, segment.y, -segment.dy));</span>
+<span class="nc" id="L1468">			       	stack.push(new LineSegment(left, x - 1, segment.y, segment.dy));</span>
+<span class="nc bnc" id="L1469" title="All 2 branches missed.">				   	if(x &gt; segment.x2 + 1) //leak on right?</span>
+<span class="nc" id="L1470">			        stack.push(new LineSegment(segment.x2 + 1, x - 1, segment.y, -segment.dy));</span>
 			    }
-<span class="nc" id="L1470">				skip = false; //skip only once</span>
+<span class="nc" id="L1472">				skip = false; //skip only once</span>
 				
-<span class="nc bnc" id="L1472" title="All 4 branches missed.">				for(++x; x &lt;= segment.x2 &amp;&amp; get(x, segment.y) != oldChar; ++x){;}</span>
-<span class="nc" id="L1473">				left = x;</span>
-<span class="nc bnc" id="L1474" title="All 2 branches missed.">			} while( x &lt; segment.x2);</span>
-<span class="nc" id="L1475">		}</span>
+<span class="nc bnc" id="L1474" title="All 4 branches missed.">				for(++x; x &lt;= segment.x2 &amp;&amp; get(x, segment.y) != oldChar; ++x){;}</span>
+<span class="nc" id="L1475">				left = x;</span>
+<span class="nc bnc" id="L1476" title="All 2 branches missed.">			} while( x &lt; segment.x2);</span>
+<span class="nc" id="L1477">		}</span>
 
-<span class="nc" id="L1477">		return cellsFilled;</span>
+<span class="nc" id="L1479">		return cellsFilled;</span>
 	}
 	
 	public boolean cellContainsDashedLineChar(Cell cell){
-<span class="nc" id="L1481">		char c = get(cell);</span>
-<span class="nc" id="L1482">		return StringUtils.isOneOf(c, dashedLines);</span>
+<span class="nc" id="L1483">		char c = get(cell);</span>
+<span class="nc" id="L1484">		return StringUtils.isOneOf(c, dashedLines);</span>
 	}
 
 //	public boolean loadFrom(String filename)
@@ -1508,148 +1510,148 @@ public class TextGrid {
 
 	public boolean initialiseWithText(String text, ProcessingOptions options) throws UnsupportedEncodingException {
 
-<span class="nc" id="L1511">		ArrayList&lt;StringBuilder&gt; lines = new ArrayList&lt;StringBuilder&gt;();</span>
-<span class="nc" id="L1512">		String[] linesArray = text.split(&quot;(\r)?\n&quot;);</span>
-<span class="nc bnc" id="L1513" title="All 2 branches missed.">		for(int i = 0; i  &lt; linesArray.length; i++)</span>
-<span class="nc" id="L1514">			lines.add(new StringBuilder(linesArray[i]));</span>
+<span class="nc" id="L1513">		ArrayList&lt;StringBuilder&gt; lines = new ArrayList&lt;StringBuilder&gt;();</span>
+<span class="nc" id="L1514">		String[] linesArray = text.split(&quot;(\r)?\n&quot;);</span>
+<span class="nc bnc" id="L1515" title="All 2 branches missed.">		for(int i = 0; i  &lt; linesArray.length; i++)</span>
+<span class="nc" id="L1516">			lines.add(new StringBuilder(linesArray[i]));</span>
 
-<span class="nc" id="L1516">		return initialiseWithLines(lines, options);</span>
+<span class="nc" id="L1518">		return initialiseWithLines(lines, options);</span>
 	}
 
 	public boolean initialiseWithLines(ArrayList&lt;StringBuilder&gt; lines, ProcessingOptions options) throws UnsupportedEncodingException {
 
 		//remove blank rows at the bottom
-<span class="nc" id="L1522">		boolean done = false;</span>
+<span class="nc" id="L1524">		boolean done = false;</span>
 		int i;
-<span class="nc bnc" id="L1524" title="All 4 branches missed.">		for(i = lines.size() - 1; i &gt;= 0 &amp;&amp; !done; i--){</span>
-<span class="nc" id="L1525">			StringBuilder row = lines.get(i);</span>
-<span class="nc bnc" id="L1526" title="All 2 branches missed.">			if(!StringUtils.isBlank(row.toString())) done = true;</span>
+<span class="nc bnc" id="L1526" title="All 4 branches missed.">		for(i = lines.size() - 1; i &gt;= 0 &amp;&amp; !done; i--){</span>
+<span class="nc" id="L1527">			StringBuilder row = lines.get(i);</span>
+<span class="nc bnc" id="L1528" title="All 2 branches missed.">			if(!StringUtils.isBlank(row.toString())) done = true;</span>
 		}
-<span class="nc" id="L1528">		rows = new ArrayList&lt;StringBuilder&gt;(lines.subList(0, i + 2));</span>
+<span class="nc" id="L1530">		rows = new ArrayList&lt;StringBuilder&gt;(lines.subList(0, i + 2));</span>
 
-<span class="nc bnc" id="L1530" title="All 2 branches missed.">		if(options != null) fixTabs(options.getTabSize());</span>
-<span class="nc" id="L1531">		else fixTabs(options.DEFAULT_TAB_SIZE);</span>
+<span class="nc bnc" id="L1532" title="All 2 branches missed.">		if(options != null) fixTabs(options.getTabSize());</span>
+<span class="nc" id="L1533">		else fixTabs(options.DEFAULT_TAB_SIZE);</span>
 
 
 		// make all lines of equal length
 		// add blank outline around the buffer to prevent fill glitch
 		// convert tabs to spaces (or remove them if setting is 0)
 		
-<span class="nc" id="L1538">		int blankBorderSize = 2;</span>
+<span class="nc" id="L1540">		int blankBorderSize = 2;</span>
 		
-<span class="nc" id="L1540">		int maxLength = 0;</span>
-<span class="nc" id="L1541">		int index = 0;</span>
+<span class="nc" id="L1542">		int maxLength = 0;</span>
+<span class="nc" id="L1543">		int index = 0;</span>
 		
-<span class="nc" id="L1543">		String encoding = null;</span>
-<span class="nc bnc" id="L1544" title="All 2 branches missed.">		if(options != null) encoding = options.getCharacterEncoding();</span>
+<span class="nc" id="L1545">		String encoding = null;</span>
+<span class="nc bnc" id="L1546" title="All 2 branches missed.">		if(options != null) encoding = options.getCharacterEncoding();</span>
 		
-<span class="nc" id="L1546">		Iterator&lt;StringBuilder&gt; it = rows.iterator();</span>
-<span class="nc bnc" id="L1547" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L1548">			String row = it.next().toString();</span>
-<span class="nc bnc" id="L1549" title="All 2 branches missed.">			if(encoding != null){</span>
-<span class="nc" id="L1550">				byte[] bytes = row.getBytes();</span>
-<span class="nc" id="L1551">				row = new String(bytes, encoding);</span>
+<span class="nc" id="L1548">		Iterator&lt;StringBuilder&gt; it = rows.iterator();</span>
+<span class="nc bnc" id="L1549" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L1550">			String row = it.next().toString();</span>
+<span class="nc bnc" id="L1551" title="All 2 branches missed.">			if(encoding != null){</span>
+<span class="nc" id="L1552">				byte[] bytes = row.getBytes();</span>
+<span class="nc" id="L1553">				row = new String(bytes, encoding);</span>
 			}
-<span class="nc bnc" id="L1553" title="All 2 branches missed.">			if(row.length() &gt; maxLength) maxLength = row.length();</span>
-<span class="nc" id="L1554">			rows.set(index, new StringBuilder(row));</span>
-<span class="nc" id="L1555">			index++;</span>
-<span class="nc" id="L1556">		}</span>
+<span class="nc bnc" id="L1555" title="All 2 branches missed.">			if(row.length() &gt; maxLength) maxLength = row.length();</span>
+<span class="nc" id="L1556">			rows.set(index, new StringBuilder(row));</span>
+<span class="nc" id="L1557">			index++;</span>
+<span class="nc" id="L1558">		}</span>
 
-<span class="nc" id="L1558">		it = rows.iterator();</span>
-<span class="nc" id="L1559">		ArrayList&lt;StringBuilder&gt; newRows = new ArrayList&lt;StringBuilder&gt;();</span>
+<span class="nc" id="L1560">		it = rows.iterator();</span>
+<span class="nc" id="L1561">		ArrayList&lt;StringBuilder&gt; newRows = new ArrayList&lt;StringBuilder&gt;();</span>
 		//TODO: make the following depend on blankBorderSize
 		
-<span class="nc" id="L1562">		StringBuilder topBottomRow =</span>
-<span class="nc" id="L1563">			new StringBuilder(StringUtils.repeatString(&quot; &quot;, maxLength + blankBorderSize * 2));</span>
+<span class="nc" id="L1564">		StringBuilder topBottomRow =</span>
+<span class="nc" id="L1565">			new StringBuilder(StringUtils.repeatString(&quot; &quot;, maxLength + blankBorderSize * 2));</span>
 		
-<span class="nc" id="L1565">		newRows.add(topBottomRow);</span>
-<span class="nc" id="L1566">		newRows.add(topBottomRow);</span>
-<span class="nc bnc" id="L1567" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L1568">			StringBuilder row = it.next();</span>
+<span class="nc" id="L1567">		newRows.add(topBottomRow);</span>
+<span class="nc" id="L1568">		newRows.add(topBottomRow);</span>
+<span class="nc bnc" id="L1569" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L1570">			StringBuilder row = it.next();</span>
 			
-<span class="nc bnc" id="L1570" title="All 2 branches missed.">			if(row.length() &lt; maxLength) {</span>
-<span class="nc" id="L1571">				String borderString = StringUtils.repeatString(&quot; &quot;, blankBorderSize);</span>
-<span class="nc" id="L1572">				StringBuilder newRow = new StringBuilder();</span>
+<span class="nc bnc" id="L1572" title="All 2 branches missed.">			if(row.length() &lt; maxLength) {</span>
+<span class="nc" id="L1573">				String borderString = StringUtils.repeatString(&quot; &quot;, blankBorderSize);</span>
+<span class="nc" id="L1574">				StringBuilder newRow = new StringBuilder();</span>
 				
-<span class="nc" id="L1574">				newRow.append(borderString);</span>
-<span class="nc" id="L1575">				newRow.append(row);</span>
-<span class="nc" id="L1576">				newRow.append(StringUtils.repeatString(&quot; &quot;, maxLength - row.length()));</span>
-<span class="nc" id="L1577">				newRow.append(borderString);</span>
+<span class="nc" id="L1576">				newRow.append(borderString);</span>
+<span class="nc" id="L1577">				newRow.append(row);</span>
+<span class="nc" id="L1578">				newRow.append(StringUtils.repeatString(&quot; &quot;, maxLength - row.length()));</span>
+<span class="nc" id="L1579">				newRow.append(borderString);</span>
 				
-<span class="nc" id="L1579">				newRows.add(newRow);</span>
-<span class="nc" id="L1580">			} else { //TODO: why is the following line like that?</span>
-<span class="nc" id="L1581">				newRows.add(new StringBuilder(&quot;  &quot;).append(row).append(&quot;  &quot;));</span>
+<span class="nc" id="L1581">				newRows.add(newRow);</span>
+<span class="nc" id="L1582">			} else { //TODO: why is the following line like that?</span>
+<span class="nc" id="L1583">				newRows.add(new StringBuilder(&quot;  &quot;).append(row).append(&quot;  &quot;));</span>
 			}
-<span class="nc" id="L1583">		}</span>
+<span class="nc" id="L1585">		}</span>
 		//TODO: make the following depend on blankBorderSize
-<span class="nc" id="L1585">		newRows.add(topBottomRow);</span>
-<span class="nc" id="L1586">		newRows.add(topBottomRow);</span>
-<span class="nc" id="L1587">		rows = newRows;</span>
+<span class="nc" id="L1587">		newRows.add(topBottomRow);</span>
+<span class="nc" id="L1588">		newRows.add(topBottomRow);</span>
+<span class="nc" id="L1589">		rows = newRows;</span>
 		
-<span class="nc" id="L1589">		replaceBullets();</span>
-<span class="nc" id="L1590">		replaceHumanColorCodes();</span>
+<span class="nc" id="L1591">		replaceBullets();</span>
+<span class="nc" id="L1592">		replaceHumanColorCodes();</span>
 		
-<span class="nc" id="L1592">		return true;</span>
+<span class="nc" id="L1594">		return true;</span>
 	}
 	
 	private void fixTabs(int tabSize){
 
-<span class="nc" id="L1597">		int rowIndex = 0;</span>
-<span class="nc" id="L1598">		Iterator&lt;StringBuilder&gt; it = rows.iterator();</span>
+<span class="nc" id="L1599">		int rowIndex = 0;</span>
+<span class="nc" id="L1600">		Iterator&lt;StringBuilder&gt; it = rows.iterator();</span>
 
-<span class="nc bnc" id="L1600" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L1601">			String row = it.next().toString();</span>
-<span class="nc" id="L1602">			StringBuilder newRow = new StringBuilder();</span>
+<span class="nc bnc" id="L1602" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L1603">			String row = it.next().toString();</span>
+<span class="nc" id="L1604">			StringBuilder newRow = new StringBuilder();</span>
 			
-<span class="nc" id="L1604">			char[] chars = row.toCharArray();</span>
-<span class="nc bnc" id="L1605" title="All 2 branches missed.">			for(int i = 0; i &lt; chars.length; i++){</span>
-<span class="nc bnc" id="L1606" title="All 2 branches missed.">				if(chars[i] == '\t'){</span>
-<span class="nc" id="L1607">					int spacesLeft = tabSize - newRow.length() % tabSize;</span>
+<span class="nc" id="L1606">			char[] chars = row.toCharArray();</span>
+<span class="nc bnc" id="L1607" title="All 2 branches missed.">			for(int i = 0; i &lt; chars.length; i++){</span>
+<span class="nc bnc" id="L1608" title="All 2 branches missed.">				if(chars[i] == '\t'){</span>
+<span class="nc" id="L1609">					int spacesLeft = tabSize - newRow.length() % tabSize;</span>
 					if(DEBUG){
 						System.out.println(&quot;Found tab. Spaces left: &quot;+spacesLeft);
 					}
-<span class="nc" id="L1611">					String spaces = StringUtils.repeatString(&quot; &quot;, spacesLeft);</span>
-<span class="nc" id="L1612">					newRow.append(spaces);</span>
-<span class="nc" id="L1613">				} else {</span>
-<span class="nc" id="L1614">					String character = Character.toString(chars[i]);</span>
-<span class="nc" id="L1615">					newRow.append(character);</span>
+<span class="nc" id="L1613">					String spaces = StringUtils.repeatString(&quot; &quot;, spacesLeft);</span>
+<span class="nc" id="L1614">					newRow.append(spaces);</span>
+<span class="nc" id="L1615">				} else {</span>
+<span class="nc" id="L1616">					String character = Character.toString(chars[i]);</span>
+<span class="nc" id="L1617">					newRow.append(character);</span>
 				}
 			}
-<span class="nc" id="L1618">			rows.set(rowIndex, newRow);</span>
-<span class="nc" id="L1619">			rowIndex++;</span>
-<span class="nc" id="L1620">		}</span>
-<span class="nc" id="L1621">	}</span>
+<span class="nc" id="L1620">			rows.set(rowIndex, newRow);</span>
+<span class="nc" id="L1621">			rowIndex++;</span>
+<span class="nc" id="L1622">		}</span>
+<span class="nc" id="L1623">	}</span>
 	
 	/**
 	 * @return
 	 */
 	protected ArrayList&lt;StringBuilder&gt; getRows() {
-<span class="nc" id="L1627">		return rows;</span>
+<span class="nc" id="L1629">		return rows;</span>
 	}
 	
 	public class CellColorPair{
-<span class="nc" id="L1631">		public CellColorPair(Cell cell, Color color){</span>
-<span class="nc" id="L1632">			this.cell = cell;</span>
-<span class="nc" id="L1633">			this.color = color;</span>
-<span class="nc" id="L1634">		}</span>
+<span class="nc" id="L1633">		public CellColorPair(Cell cell, Color color){</span>
+<span class="nc" id="L1634">			this.cell = cell;</span>
+<span class="nc" id="L1635">			this.color = color;</span>
+<span class="nc" id="L1636">		}</span>
 		public Color color;
 		public Cell cell;
 	}
 
 	public class CellStringPair{
-<span class="nc" id="L1640">		public CellStringPair(Cell cell, String string){</span>
-<span class="nc" id="L1641">			this.cell = cell;</span>
-<span class="nc" id="L1642">			this.string = string;</span>
-<span class="nc" id="L1643">		}</span>
+<span class="nc" id="L1642">		public CellStringPair(Cell cell, String string){</span>
+<span class="nc" id="L1643">			this.cell = cell;</span>
+<span class="nc" id="L1644">			this.string = string;</span>
+<span class="nc" id="L1645">		}</span>
 		public Cell cell;
 		public String string;
 	}
 
 	public class CellTagPair{
-<span class="nc" id="L1649">		public CellTagPair(Cell cell, String tag){</span>
-<span class="nc" id="L1650">			this.cell = cell;</span>
-<span class="nc" id="L1651">			this.tag = tag;</span>
-<span class="nc" id="L1652">		}</span>
+<span class="nc" id="L1651">		public CellTagPair(Cell cell, String tag){</span>
+<span class="nc" id="L1652">			this.cell = cell;</span>
+<span class="nc" id="L1653">			this.tag = tag;</span>
+<span class="nc" id="L1654">		}</span>
 		public Cell cell;
 		public String tag;
 	}
@@ -1660,115 +1662,115 @@ public class TextGrid {
 		public int x, y;
 		
 		public Cell(Cell cell){
-<span class="nc" id="L1663">			this(cell.x, cell.y);</span>
-<span class="nc" id="L1664">		}</span>
+<span class="nc" id="L1665">			this(cell.x, cell.y);</span>
+<span class="nc" id="L1666">		}</span>
 		
-<span class="nc" id="L1666">		public Cell(int x, int y){</span>
-<span class="nc" id="L1667">			this.x = x;</span>
-<span class="nc" id="L1668">			this.y = y;</span>
-<span class="nc" id="L1669">		}</span>
+<span class="nc" id="L1668">		public Cell(int x, int y){</span>
+<span class="nc" id="L1669">			this.x = x;</span>
+<span class="nc" id="L1670">			this.y = y;</span>
+<span class="nc" id="L1671">		}</span>
 		
-<span class="nc" id="L1671">		public Cell getNorth(){ return new Cell(x, y - 1); }</span>
-<span class="nc" id="L1672">		public Cell getSouth(){ return new Cell(x, y + 1); }</span>
-<span class="nc" id="L1673">		public Cell getEast(){ return new Cell(x + 1, y); }</span>
-<span class="nc" id="L1674">		public Cell getWest(){ return new Cell(x - 1, y); }</span>
+<span class="nc" id="L1673">		public Cell getNorth(){ return new Cell(x, y - 1); }</span>
+<span class="nc" id="L1674">		public Cell getSouth(){ return new Cell(x, y + 1); }</span>
+<span class="nc" id="L1675">		public Cell getEast(){ return new Cell(x + 1, y); }</span>
+<span class="nc" id="L1676">		public Cell getWest(){ return new Cell(x - 1, y); }</span>
 
-<span class="nc" id="L1676">		public Cell getNW(){ return new Cell(x - 1, y - 1); }</span>
-<span class="nc" id="L1677">		public Cell getNE(){ return new Cell(x + 1, y - 1); }</span>
-<span class="nc" id="L1678">		public Cell getSW(){ return new Cell(x - 1, y + 1); }</span>
-<span class="nc" id="L1679">		public Cell getSE(){ return new Cell(x + 1, y + 1); }</span>
+<span class="nc" id="L1678">		public Cell getNW(){ return new Cell(x - 1, y - 1); }</span>
+<span class="nc" id="L1679">		public Cell getNE(){ return new Cell(x + 1, y - 1); }</span>
+<span class="nc" id="L1680">		public Cell getSW(){ return new Cell(x - 1, y + 1); }</span>
+<span class="nc" id="L1681">		public Cell getSE(){ return new Cell(x + 1, y + 1); }</span>
 
 		public CellSet getNeighbours4(){
-<span class="nc" id="L1682">			CellSet result = new CellSet();</span>
+<span class="nc" id="L1684">			CellSet result = new CellSet();</span>
 
-<span class="nc" id="L1684">			result.add(getNorth());</span>
-<span class="nc" id="L1685">			result.add(getSouth());</span>
-<span class="nc" id="L1686">			result.add(getWest());</span>
-<span class="nc" id="L1687">			result.add(getEast());</span>
+<span class="nc" id="L1686">			result.add(getNorth());</span>
+<span class="nc" id="L1687">			result.add(getSouth());</span>
+<span class="nc" id="L1688">			result.add(getWest());</span>
+<span class="nc" id="L1689">			result.add(getEast());</span>
 
-<span class="nc" id="L1689">			return result;</span>
+<span class="nc" id="L1691">			return result;</span>
 		}
 
 		public CellSet getNeighbours8(){
-<span class="nc" id="L1693">			CellSet result = new CellSet();</span>
+<span class="nc" id="L1695">			CellSet result = new CellSet();</span>
 
-<span class="nc" id="L1695">			result.add(getNorth());</span>
-<span class="nc" id="L1696">			result.add(getSouth());</span>
-<span class="nc" id="L1697">			result.add(getWest());</span>
-<span class="nc" id="L1698">			result.add(getEast());</span>
+<span class="nc" id="L1697">			result.add(getNorth());</span>
+<span class="nc" id="L1698">			result.add(getSouth());</span>
+<span class="nc" id="L1699">			result.add(getWest());</span>
+<span class="nc" id="L1700">			result.add(getEast());</span>
 
-<span class="nc" id="L1700">			result.add(getNW());</span>
-<span class="nc" id="L1701">			result.add(getNE());</span>
-<span class="nc" id="L1702">			result.add(getSW());</span>
-<span class="nc" id="L1703">			result.add(getSE());</span>
+<span class="nc" id="L1702">			result.add(getNW());</span>
+<span class="nc" id="L1703">			result.add(getNE());</span>
+<span class="nc" id="L1704">			result.add(getSW());</span>
+<span class="nc" id="L1705">			result.add(getSE());</span>
 
-<span class="nc" id="L1705">			return result;</span>
+<span class="nc" id="L1707">			return result;</span>
 		}
 
 
 		public boolean isNorthOf(Cell cell){
-<span class="nc bnc" id="L1710" title="All 2 branches missed.">			if(this.y &lt; cell.y) return true;</span>
-<span class="nc" id="L1711">			return false;</span>
+<span class="nc bnc" id="L1712" title="All 2 branches missed.">			if(this.y &lt; cell.y) return true;</span>
+<span class="nc" id="L1713">			return false;</span>
 		}
 
 		public boolean isSouthOf(Cell cell){
-<span class="nc bnc" id="L1715" title="All 2 branches missed.">			if(this.y &gt; cell.y) return true;</span>
-<span class="nc" id="L1716">			return false;</span>
+<span class="nc bnc" id="L1717" title="All 2 branches missed.">			if(this.y &gt; cell.y) return true;</span>
+<span class="nc" id="L1718">			return false;</span>
 		}
 
 		public boolean isWestOf(Cell cell){
-<span class="nc bnc" id="L1720" title="All 2 branches missed.">			if(this.x &lt; cell.x) return true;</span>
-<span class="nc" id="L1721">			return false;</span>
+<span class="nc bnc" id="L1722" title="All 2 branches missed.">			if(this.x &lt; cell.x) return true;</span>
+<span class="nc" id="L1723">			return false;</span>
 		}
 
 		public boolean isEastOf(Cell cell){
-<span class="nc bnc" id="L1725" title="All 2 branches missed.">			if(this.x &gt; cell.x) return true;</span>
-<span class="nc" id="L1726">			return false;</span>
+<span class="nc bnc" id="L1727" title="All 2 branches missed.">			if(this.x &gt; cell.x) return true;</span>
+<span class="nc" id="L1728">			return false;</span>
 		}
 
 
 		public boolean equals(Object o){
-<span class="nc" id="L1731">			Cell cell = (Cell) o;</span>
-<span class="nc bnc" id="L1732" title="All 2 branches missed.">			if(cell == null) return false;</span>
-<span class="nc bnc" id="L1733" title="All 4 branches missed.">			if(x == cell.x &amp;&amp; y == cell.y) return true;</span>
-<span class="nc" id="L1734">			else return false;</span>
+<span class="nc" id="L1733">			Cell cell = (Cell) o;</span>
+<span class="nc bnc" id="L1734" title="All 2 branches missed.">			if(cell == null) return false;</span>
+<span class="nc bnc" id="L1735" title="All 4 branches missed.">			if(x == cell.x &amp;&amp; y == cell.y) return true;</span>
+<span class="nc" id="L1736">			else return false;</span>
 		}
 		
 		public int hashCode() {
-<span class="nc" id="L1738">			return (x &lt;&lt; 16) | y;</span>
+<span class="nc" id="L1740">			return (x &lt;&lt; 16) | y;</span>
 		}
 		
 		public boolean isNextTo(int x2, int y2){
-<span class="nc bnc" id="L1742" title="All 4 branches missed.">			if(Math.abs(x2 - x) == 1 &amp;&amp; Math.abs(y2 - y) == 1) return false;</span>
-<span class="nc bnc" id="L1743" title="All 4 branches missed.">			if(Math.abs(x2 - x) == 1 &amp;&amp; y2 == y) return true;</span>
-<span class="nc bnc" id="L1744" title="All 4 branches missed.">			if(Math.abs(y2 - y) == 1 &amp;&amp; x2 == x) return true;</span>
-<span class="nc" id="L1745">			return false;</span>
+<span class="nc bnc" id="L1744" title="All 4 branches missed.">			if(Math.abs(x2 - x) == 1 &amp;&amp; Math.abs(y2 - y) == 1) return false;</span>
+<span class="nc bnc" id="L1745" title="All 4 branches missed.">			if(Math.abs(x2 - x) == 1 &amp;&amp; y2 == y) return true;</span>
+<span class="nc bnc" id="L1746" title="All 4 branches missed.">			if(Math.abs(y2 - y) == 1 &amp;&amp; x2 == x) return true;</span>
+<span class="nc" id="L1747">			return false;</span>
 		}
 		
 		public boolean isNextTo(Cell cell){
-<span class="nc bnc" id="L1749" title="All 2 branches missed.">			if(cell == null) throw new IllegalArgumentException(&quot;cell cannot be null&quot;);</span>
-<span class="nc" id="L1750">			return this.isNextTo(cell.x, cell.y);</span>
+<span class="nc bnc" id="L1751" title="All 2 branches missed.">			if(cell == null) throw new IllegalArgumentException(&quot;cell cannot be null&quot;);</span>
+<span class="nc" id="L1752">			return this.isNextTo(cell.x, cell.y);</span>
 		}
 		
 		public String toString(){
-<span class="nc" id="L1754">			return &quot;(&quot;+x+&quot;, &quot;+y+&quot;)&quot;;</span>
+<span class="nc" id="L1756">			return &quot;(&quot;+x+&quot;, &quot;+y+&quot;)&quot;;</span>
 		}
 		
 		public void scale(int s){
-<span class="nc" id="L1758">			x = x * s;</span>
-<span class="nc" id="L1759">			y = y * s;</span>
-<span class="nc" id="L1760">		}</span>
+<span class="nc" id="L1760">			x = x * s;</span>
+<span class="nc" id="L1761">			y = y * s;</span>
+<span class="nc" id="L1762">		}</span>
 		
 	}
 
 	private class LineSegment{
 		int x1, x2, y, dy;
-<span class="nc" id="L1766">		public LineSegment(int x1, int x2, int y, int dy){</span>
-<span class="nc" id="L1767">			this.x1 = x1;</span>
-<span class="nc" id="L1768">			this.x2 = x2;</span>
-<span class="nc" id="L1769">			this.y = y;</span>
-<span class="nc" id="L1770">			this.dy = dy;</span>
-<span class="nc" id="L1771">		}</span>
+<span class="nc" id="L1768">		public LineSegment(int x1, int x2, int y, int dy){</span>
+<span class="nc" id="L1769">			this.x1 = x1;</span>
+<span class="nc" id="L1770">			this.x2 = x2;</span>
+<span class="nc" id="L1771">			this.y = y;</span>
+<span class="nc" id="L1772">			this.dy = dy;</span>
+<span class="nc" id="L1773">		}</span>
 	}
 }
 

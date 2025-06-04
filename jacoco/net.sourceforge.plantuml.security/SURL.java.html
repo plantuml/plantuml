@@ -554,19 +554,21 @@ public class SURL {
 		};
 	}
 
+<span class="fc" id="L557">	private static final Pattern pattern = Pattern.compile(&quot;(?i)\\bcharset=\\s*\&quot;?([^\\s;\&quot;]*)&quot;);</span>
+	
 	private static Charset extractCharset(String contentType) {
-<span class="nc bnc" id="L558" title="All 2 branches missed.">		if (StringUtils.isEmpty(contentType))</span>
-<span class="nc" id="L559">			return null;</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">		if (StringUtils.isEmpty(contentType))</span>
+<span class="nc" id="L561">			return null;</span>
 
-<span class="nc" id="L561">		final Matcher matcher = Pattern.compile(&quot;(?i)\\bcharset=\\s*\&quot;?([^\\s;\&quot;]*)&quot;).matcher(contentType);</span>
-<span class="nc bnc" id="L562" title="All 2 branches missed.">		if (matcher.find())</span>
+<span class="nc" id="L563">		final Matcher matcher = pattern.matcher(contentType);</span>
+<span class="nc bnc" id="L564" title="All 2 branches missed.">		if (matcher.find())</span>
 			try {
-<span class="nc" id="L564">				return Charset.forName(matcher.group(1));</span>
-<span class="nc" id="L565">			} catch (Exception e) {</span>
-<span class="nc" id="L566">				Logme.error(e);</span>
+<span class="nc" id="L566">				return Charset.forName(matcher.group(1));</span>
+<span class="nc" id="L567">			} catch (Exception e) {</span>
+<span class="nc" id="L568">				Logme.error(e);</span>
 			}
 
-<span class="nc" id="L569">		return null;</span>
+<span class="nc" id="L571">		return null;</span>
 	}
 
 	/**
@@ -578,15 +580,15 @@ public class SURL {
 	 *                     download was broken
 	 */
 	private static byte[] retrieveResponseAsBytes(HttpURLConnection connection) throws IOException {
-<span class="nc" id="L581">		final int responseCode = connection.getResponseCode();</span>
-<span class="nc bnc" id="L582" title="All 2 branches missed.">		if (responseCode &lt; HttpURLConnection.HTTP_BAD_REQUEST) {</span>
-<span class="nc" id="L583">			try (InputStream input = connection.getInputStream()) {</span>
-<span class="nc" id="L584">				return retrieveData(input);</span>
+<span class="nc" id="L583">		final int responseCode = connection.getResponseCode();</span>
+<span class="nc bnc" id="L584" title="All 2 branches missed.">		if (responseCode &lt; HttpURLConnection.HTTP_BAD_REQUEST) {</span>
+<span class="nc" id="L585">			try (InputStream input = connection.getInputStream()) {</span>
+<span class="nc" id="L586">				return retrieveData(input);</span>
 			}
 		} else {
-<span class="nc" id="L587">			try (InputStream error = connection.getErrorStream()) {</span>
-<span class="nc" id="L588">				final byte[] bytes = retrieveData(error);</span>
-<span class="nc" id="L589">				throw new IOException(</span>
+<span class="nc" id="L589">			try (InputStream error = connection.getErrorStream()) {</span>
+<span class="nc" id="L590">				final byte[] bytes = retrieveData(error);</span>
+<span class="nc" id="L591">				throw new IOException(</span>
 						&quot;HTTP error &quot; + responseCode + &quot; with &quot; + new String(bytes, StandardCharsets.UTF_8));
 			}
 		}
@@ -600,14 +602,14 @@ public class SURL {
 	 * @throws IOException if something went wrong
 	 */
 	private static byte[] retrieveData(InputStream input) throws IOException {
-<span class="nc" id="L603">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
-<span class="nc" id="L604">		final byte[] buffer = new byte[1024];</span>
+<span class="nc" id="L605">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L606">		final byte[] buffer = new byte[1024];</span>
 		int read;
-<span class="nc bnc" id="L606" title="All 2 branches missed.">		while ((read = input.read(buffer)) &gt; 0) {</span>
-<span class="nc" id="L607">			out.write(buffer, 0, read);</span>
+<span class="nc bnc" id="L608" title="All 2 branches missed.">		while ((read = input.read(buffer)) &gt; 0) {</span>
+<span class="nc" id="L609">			out.write(buffer, 0, read);</span>
 		}
-<span class="nc" id="L609">		out.close();</span>
-<span class="nc" id="L610">		return out.toByteArray();</span>
+<span class="nc" id="L611">		out.close();</span>
+<span class="nc" id="L612">		return out.toByteArray();</span>
 	}
 
 	/**
@@ -618,20 +620,20 @@ public class SURL {
 	 * @throws IOException if something went wrong
 	 */
 	private static void sendRequestAsBytes(HttpURLConnection connection, byte[] data) throws IOException {
-<span class="nc" id="L621">		connection.setFixedLengthStreamingMode(data.length);</span>
-<span class="nc" id="L622">		try (OutputStream os = connection.getOutputStream()) {</span>
-<span class="nc" id="L623">			os.write(data);</span>
+<span class="nc" id="L623">		connection.setFixedLengthStreamingMode(data.length);</span>
+<span class="nc" id="L624">		try (OutputStream os = connection.getOutputStream()) {</span>
+<span class="nc" id="L625">			os.write(data);</span>
 		}
-<span class="nc" id="L625">	}</span>
+<span class="nc" id="L627">	}</span>
 
 	public InputStream openStream() {
-<span class="nc bnc" id="L628" title="All 2 branches missed.">		if (isUrlOk()) {</span>
-<span class="nc" id="L629">			final byte[] data = getBytes();</span>
-<span class="nc bnc" id="L630" title="All 2 branches missed.">			if (data != null)</span>
-<span class="nc" id="L631">				return new ByteArrayInputStream(data);</span>
+<span class="nc bnc" id="L630" title="All 2 branches missed.">		if (isUrlOk()) {</span>
+<span class="nc" id="L631">			final byte[] data = getBytes();</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">			if (data != null)</span>
+<span class="nc" id="L633">				return new ByteArrayInputStream(data);</span>
 
 		}
-<span class="nc" id="L634">		return null;</span>
+<span class="nc" id="L636">		return null;</span>
 	}
 
 	/**
@@ -640,7 +642,7 @@ public class SURL {
 	 * @return true, if credentials will be used for a connection
 	 */
 	public boolean isAuthorizationConfigured() {
-<span class="fc bfc" id="L643" title="All 2 branches covered.">		return WITHOUT_AUTHENTICATION.equals(securityIdentifier) == false;</span>
+<span class="fc bfc" id="L645" title="All 2 branches covered.">		return WITHOUT_AUTHENTICATION.equals(securityIdentifier) == false;</span>
 	}
 
 	/**
@@ -653,20 +655,20 @@ public class SURL {
 	 * @see SecurityUtils#isNonSSLAuthenticationAllowed()
 	 */
 	private static void applyEndpointAccessAuthentication(URLConnection http, SecurityAuthentication authentication) {
-<span class="nc bnc" id="L656" title="All 2 branches missed.">		if (authentication.isPublic())</span>
+<span class="nc bnc" id="L658" title="All 2 branches missed.">		if (authentication.isPublic())</span>
 			// Shortcut: No need to apply authentication.
-<span class="nc" id="L658">			return;</span>
+<span class="nc" id="L660">			return;</span>
 
-<span class="nc bnc" id="L660" title="All 4 branches missed.">		if (http instanceof HttpsURLConnection || SecurityUtils.isNonSSLAuthenticationAllowed()) {</span>
-<span class="nc" id="L661">			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);</span>
-<span class="nc" id="L662">			accessInterceptor.apply(authentication, http);</span>
-<span class="nc" id="L663">		} else {</span>
+<span class="nc bnc" id="L662" title="All 4 branches missed.">		if (http instanceof HttpsURLConnection || SecurityUtils.isNonSSLAuthenticationAllowed()) {</span>
+<span class="nc" id="L663">			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);</span>
+<span class="nc" id="L664">			accessInterceptor.apply(authentication, http);</span>
+<span class="nc" id="L665">		} else {</span>
 			// We cannot allow applying secret tokens on plain connections. Everyone can
 			// read the data.
-<span class="nc" id="L666">			throw new IllegalStateException(</span>
+<span class="nc" id="L668">			throw new IllegalStateException(</span>
 					&quot;The transport of authentication data over an unencrypted http connection is not allowed&quot;);
 		}
-<span class="nc" id="L669">	}</span>
+<span class="nc" id="L671">	}</span>
 
 	/**
 	 * Set the headers for a URL connection
@@ -674,20 +676,20 @@ public class SURL {
 	 * @param headers map Keys with values (can be String or list of String)
 	 */
 	private static void applyAdditionalHeaders(URLConnection http, Map&lt;String, Object&gt; headers) {
-<span class="nc bnc" id="L677" title="All 4 branches missed.">		if (headers == null || headers.isEmpty())</span>
-<span class="nc" id="L678">			return;</span>
+<span class="nc bnc" id="L679" title="All 4 branches missed.">		if (headers == null || headers.isEmpty())</span>
+<span class="nc" id="L680">			return;</span>
 
-<span class="nc bnc" id="L680" title="All 2 branches missed.">		for (Map.Entry&lt;String, Object&gt; header : headers.entrySet()) {</span>
-<span class="nc" id="L681">			final Object value = header.getValue();</span>
-<span class="nc bnc" id="L682" title="All 2 branches missed.">			if (value instanceof String)</span>
-<span class="nc" id="L683">				http.setRequestProperty(header.getKey(), (String) value);</span>
-<span class="nc bnc" id="L684" title="All 2 branches missed.">			else if (value instanceof List)</span>
-<span class="nc bnc" id="L685" title="All 2 branches missed.">				for (Object item : (List&lt;?&gt;) value)</span>
-<span class="nc bnc" id="L686" title="All 2 branches missed.">					if (item != null)</span>
-<span class="nc" id="L687">						http.addRequestProperty(header.getKey(), item.toString());</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">		for (Map.Entry&lt;String, Object&gt; header : headers.entrySet()) {</span>
+<span class="nc" id="L683">			final Object value = header.getValue();</span>
+<span class="nc bnc" id="L684" title="All 2 branches missed.">			if (value instanceof String)</span>
+<span class="nc" id="L685">				http.setRequestProperty(header.getKey(), (String) value);</span>
+<span class="nc bnc" id="L686" title="All 2 branches missed.">			else if (value instanceof List)</span>
+<span class="nc bnc" id="L687" title="All 2 branches missed.">				for (Object item : (List&lt;?&gt;) value)</span>
+<span class="nc bnc" id="L688" title="All 2 branches missed.">					if (item != null)</span>
+<span class="nc" id="L689">						http.addRequestProperty(header.getKey(), item.toString());</span>
 
-<span class="nc" id="L689">		}</span>
-<span class="nc" id="L690">	}</span>
+<span class="nc" id="L691">		}</span>
+<span class="nc" id="L692">	}</span>
 
 	/**
 	 * Removes the userInfo part from the URL, because we want to use the
@@ -699,7 +701,7 @@ public class SURL {
 	 * @throws URISyntaxException
 	 */
 	private static URL removeUserInfo(URL url) throws MalformedURLException, URISyntaxException {
-<span class="fc" id="L702">		return new URI(removeUserInfoFromUrlPath(url.toExternalForm())).toURL();</span>
+<span class="fc" id="L704">		return new URI(removeUserInfoFromUrlPath(url.toExternalForm())).toURL();</span>
 	}
 
 	/**
@@ -711,11 +713,11 @@ public class SURL {
 	 */
 	private static String removeUserInfoFromUrlPath(String url) {
 		// Simple solution:
-<span class="fc" id="L714">		final Matcher matcher = PATTERN_USERINFO.matcher(url);</span>
-<span class="fc bfc" id="L715" title="All 2 branches covered.">		if (matcher.find())</span>
-<span class="fc" id="L716">			return matcher.replaceFirst(&quot;$1$3&quot;);</span>
+<span class="fc" id="L716">		final Matcher matcher = PATTERN_USERINFO.matcher(url);</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">		if (matcher.find())</span>
+<span class="fc" id="L718">			return matcher.replaceFirst(&quot;$1$3&quot;);</span>
 
-<span class="fc" id="L718">		return url;</span>
+<span class="fc" id="L720">		return url;</span>
 	}
 	// ::done
 }
