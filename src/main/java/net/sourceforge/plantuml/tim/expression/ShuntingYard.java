@@ -80,7 +80,7 @@ public class ShuntingYard {
 				} else {
 					ouputQueue.add(variable.toToken());
 				}
-			} else if (token.getTokenType() == TokenType.OPERATOR) {
+			} else if (isOperatorOrAffectation(token)) {
 				while ((thereIsAFunctionAtTheTopOfTheOperatorStack() //
 						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //
 						|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //
@@ -135,8 +135,7 @@ public class ShuntingYard {
 
 	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(Token token) {
 		final Token top = operatorStack.peekFirst();
-		if (top != null && top.getTokenType() == TokenType.OPERATOR
-				&& top.getTokenOperator().getPrecedence() > token.getTokenOperator().getPrecedence())
+		if (top != null && isOperatorOrAffectation(top) && top.getPrecedence() > token.getPrecedence())
 			return true;
 
 		return false;
@@ -144,11 +143,15 @@ public class ShuntingYard {
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(Token token) {
 		final Token top = operatorStack.peekFirst();
-		if (top != null && top.getTokenType() == TokenType.OPERATOR && top.getTokenOperator().isLeftAssociativity()
-				&& top.getTokenOperator().getPrecedence() == token.getTokenOperator().getPrecedence())
+		if (top != null && isOperatorOrAffectation(top) && top.getLeftAssociativity()
+				&& top.getPrecedence() == token.getPrecedence())
 			return true;
 
 		return false;
+	}
+
+	private boolean isOperatorOrAffectation(final Token token) {
+		return token.getTokenType() == TokenType.OPERATOR || token.getTokenType() == TokenType.AFFECTATION;
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(Token token) {

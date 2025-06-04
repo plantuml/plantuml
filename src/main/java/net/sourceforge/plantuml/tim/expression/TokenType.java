@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.tim.EaterException;
 public enum TokenType {
 	// ::remove folder when __HAXE__
 	QUOTED_STRING, JSON_DATA, OPERATOR, OPEN_PAREN_MATH, COMMA, CLOSE_PAREN_MATH, NUMBER, PLAIN_TEXT, SPACES,
-	FUNCTION_NAME, OPEN_PAREN_FUNC, CLOSE_PAREN_FUNC;
+	FUNCTION_NAME, OPEN_PAREN_FUNC, CLOSE_PAREN_FUNC, AFFECTATION;
 
 	public static final char COMMERCIAL_MINUS_SIGN = '\u2052';
 
@@ -51,7 +51,7 @@ public enum TokenType {
 
 	private static boolean isPlainTextBreak(char ch, char ch2) {
 		final TokenType tmp = fromChar(ch, ch2);
-		if (tmp.isSingleChar1() || tmp == TokenType.OPERATOR || tmp == SPACES)
+		if (tmp.isSingleChar1() || tmp == TokenType.OPERATOR || tmp == SPACES || tmp == AFFECTATION)
 			return true;
 
 		return false;
@@ -61,8 +61,8 @@ public enum TokenType {
 		TokenType result = PLAIN_TEXT;
 		if (TLineType.isQuote(ch))
 			result = QUOTED_STRING;
-		else if (TokenOperator.getTokenOperator(ch, ch2) != null)
-			result = OPERATOR;
+		else if (ch == '=')
+			result = AFFECTATION;
 		else if (ch == '(')
 			result = OPEN_PAREN_MATH;
 		else if (ch == ')')
@@ -73,12 +73,13 @@ public enum TokenType {
 			result = NUMBER;
 		else if (TLineType.isSpaceChar(ch))
 			result = SPACES;
+		else if (TokenOperator.getTokenOperator(ch, ch2) != null)
+			result = OPERATOR;
 
 		return result;
 	}
 
-	final static public Token eatOneToken(Token lastToken, Eater eater, boolean manageColon)
-			throws EaterException {
+	final static public Token eatOneToken(Token lastToken, Eater eater, boolean manageColon) throws EaterException {
 		char ch = eater.peekChar();
 		if (ch == 0)
 			return null;
@@ -99,6 +100,8 @@ public enum TokenType {
 			}
 
 			return new Token("" + eater.eatOneChar() + eater.eatOneChar(), TokenType.OPERATOR, null);
+		} else if (ch == '=') {
+			return new Token(eater.eatOneChar(), TokenType.AFFECTATION, null);
 		} else if (ch == '(') {
 			return new Token(eater.eatOneChar(), TokenType.OPEN_PAREN_MATH, null);
 		} else if (ch == ')') {
@@ -117,7 +120,8 @@ public enum TokenType {
 		if (lastToken == null)
 			return false;
 		final TokenType type = lastToken.getTokenType();
-		if (type == TokenType.OPERATOR || type == TokenType.OPEN_PAREN_MATH || type == TokenType.COMMA)
+		if (type == TokenType.OPERATOR || type == TokenType.OPEN_PAREN_MATH || type == TokenType.COMMA
+				|| type == TokenType.AFFECTATION)
 			return false;
 		return true;
 	}

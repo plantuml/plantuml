@@ -106,10 +106,6 @@ public enum TokenOperator {
 		this.display = display;
 	}
 
-	public boolean isLeftAssociativity() {
-		return true;
-	}
-
 	public static TokenOperator getTokenOperator(char ch, char ch2) {
 		for (TokenOperator op : TokenOperator.values())
 			if (op.display.length() == 2 && op.display.charAt(0) == ch && op.display.charAt(1) == ch2)

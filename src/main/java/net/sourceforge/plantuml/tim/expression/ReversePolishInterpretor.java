@@ -38,7 +38,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -55,6 +57,7 @@ public class ReversePolishInterpretor {
 	public ReversePolishInterpretor(StringLocated location, TokenStack queue, Knowledge knowledge, TMemory memory,
 			TContext context) throws EaterException {
 
+		final Map<String, TValue> named = new HashMap<>();
 		final Deque<TValue> stack = new ArrayDeque<>();
 		if (trace)
 			System.err.println("ReversePolishInterpretor::queue=" + queue);
@@ -68,6 +71,10 @@ public class ReversePolishInterpretor {
 				stack.addFirst(TValue.fromString(token));
 			} else if (token.getTokenType() == TokenType.JSON_DATA) {
 				stack.addFirst(TValue.fromJson(token.getJson()));
+			} else if (token.getTokenType() == TokenType.AFFECTATION) {
+				final TValue v2 = stack.removeFirst();
+				final TValue v1 = stack.removeFirst();
+				named.put(v1.toString(), v2);
 			} else if (token.getTokenType() == TokenType.OPERATOR) {
 				final TValue v2 = stack.removeFirst();
 				final TValue v1 = stack.removeFirst();
@@ -78,7 +85,7 @@ public class ReversePolishInterpretor {
 				final TValue tmp = op.operate(v1, v2);
 				stack.addFirst(tmp);
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {
-				final int nb = Integer.parseInt(token.getSurface());
+				final int nb = Integer.parseInt(token.getSurface()) - named.size();
 				final Token token2 = it.nextToken();
 				if (token2.getTokenType() != TokenType.FUNCTION_NAME)
 					throw new EaterException("rpn43", location);
@@ -92,7 +99,8 @@ public class ReversePolishInterpretor {
 					throw new EaterException("Unknown built-in function " + token2.getSurface(), location);
 
 				if (function.canCover(nb, Collections.<String>emptySet()) == false)
-					throw new EaterException("Bad number of arguments for " + function.getSignature().getFunctionName(), location);
+					throw new EaterException("Bad number of arguments for " + function.getSignature().getFunctionName(),
+							location);
 
 				final List<TValue> args = new ArrayList<>();
 				for (int i = 0; i < nb; i++)
@@ -103,8 +111,8 @@ public class ReversePolishInterpretor {
 				if (location == null)
 					throw new EaterException("rpn44", location);
 
-				final TValue r = function.executeReturnFunction(context, memory, location, args,
-						Collections.<String, TValue>emptyMap());
+				final TValue r = function.executeReturnFunction(context, memory, location, args, named);
+				named.clear();
 				if (trace)
 					System.err.println("r=" + r);
 				stack.addFirst(r);

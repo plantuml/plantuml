@@ -87,4 +87,14 @@ public class Token {
 		return json;
 	}
 
+	public int getPrecedence() {
+		if (this.tokenType == TokenType.AFFECTATION)
+			return TokenOperator.EQUALS.getPrecedence();
+		return getTokenOperator().getPrecedence();
+	}
+
+	public boolean getLeftAssociativity() {
+		return true;
+	}
+
 }
