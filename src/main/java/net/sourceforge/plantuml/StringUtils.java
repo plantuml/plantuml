@@ -421,11 +421,12 @@ public class StringUtils {
 		return Integer.parseInt(uml.substring(x1, x2));
 	}
 
+	private final static Pattern2 SPLIT_COMMA = MyPattern.cmpile("([%pLN_.]+|[%g][^%g]+[%g])");
+
 	public static List<String> splitComma(String s) {
 		s = trin(s);
 		final List<String> result = new ArrayList<>();
-		final Pattern2 p = MyPattern.cmpile("([%pLN_.]+|[%g][^%g]+[%g])");
-		final Matcher2 m = p.matcher(s);
+		final Matcher2 m = SPLIT_COMMA.matcher(s);
 		while (m.find())
 			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));
 

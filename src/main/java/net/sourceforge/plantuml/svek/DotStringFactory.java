@@ -331,11 +331,12 @@ public final class DotStringFactory implements Moveable {
 		return graphviz.getDotExe();
 	}
 
+	private static final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
+
 	public void solve(final String svg) throws IOException, InterruptedException {
 		if (svg.length() == 0)
 			throw new EmptySvgException();
 
-		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(svg);
 		if (mGraph.find() == false)
 			throw new IllegalStateException();

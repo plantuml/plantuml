@@ -183,9 +183,10 @@ public class StereotypeDecoration {
 		return new StereotypeDecoration(label, htmlColor, character, spriteName, spriteScale);
 	}
 
+	private static final Pattern2 p = MyPattern.cmpile("\\<{2,3}.*?\\>{2,3}");
+
 	static List<String> cutLabels(final String label, Guillemet guillemet) {
 		final List<String> result = new ArrayList<>();
-		final Pattern2 p = MyPattern.cmpile("\\<{2,3}.*?\\>{2,3}");
 		final Matcher2 m = p.matcher(label);
 		while (m.find()) {
 			final String group = m.group();

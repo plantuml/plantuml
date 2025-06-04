@@ -50,8 +50,9 @@ public class DottedNumber {
 		this.separators = separators;
 	}
 
+	private static final Pattern p = Pattern.compile("(\\d+)|(\\D+)");
+
 	public static DottedNumber create(String value) {
-		final Pattern p = Pattern.compile("(\\d+)|(\\D+)");
 		final Matcher m = p.matcher(value);
 		final List<Integer> nums = new ArrayList<>();
 		final List<String> separators = new ArrayList<>();

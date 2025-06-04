@@ -61,10 +61,11 @@ public class SvgAttributes {
 		return new SvgAttributes();
 	}
 
+	static private final Pattern2 p = MyPattern.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
+
 	public static SvgAttributes build(String args) {
 		final SvgAttributes result = new SvgAttributes();
 		// ::comment when __HAXE__
-		final Pattern2 p = MyPattern.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
 		final Matcher2 m = p.matcher(args);
 		while (m.find())
 			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));

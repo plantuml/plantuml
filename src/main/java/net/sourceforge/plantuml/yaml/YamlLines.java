@@ -100,12 +100,12 @@ public class YamlLines implements Iterable<String> {
 		return s;
 	}
 
-	private static final Pattern p1 = Pattern.compile("^(\\s*[-])(\\s*\\S.*)$");
+	private static final Pattern DASH_PREFIXED_LINE = Pattern.compile("^(\\s*[-])(\\s*\\S.*)$");
 
 	private void manageList() {
 		final List<String> result = new ArrayList<>();
 		for (String s : lines) {
-			final Matcher m1 = p1.matcher(s);
+			final Matcher m1 = DASH_PREFIXED_LINE.matcher(s);
 			if (s.contains(": ") && m1.matches()) {
 				result.add(m1.group(1));
 				result.add(s.replaceFirst("[-]", " "));
@@ -179,9 +179,10 @@ public class YamlLines implements Iterable<String> {
 		return null;
 	}
 
+	private static final Pattern NAME_ONLY = Pattern.compile("^\\s*" + KEY + "\\s*:\\s*[|>]?\\s*$");
+
 	public static String nameOnly(String s) {
-		final Pattern p1 = Pattern.compile("^\\s*" + KEY + "\\s*:\\s*[|>]?\\s*$");
-		final Matcher m1 = p1.matcher(s);
+		final Matcher m1 = NAME_ONLY.matcher(s);
 		if (m1.matches()) {
 			final String name = m1.group(1);
 			return name;

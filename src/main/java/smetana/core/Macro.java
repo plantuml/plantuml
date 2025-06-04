@@ -1289,8 +1289,9 @@ final public class Macro {
 		return (((a).x - (b).x) * ((a).x - (b).x)) + (((a).y - (b).y) * ((a).y - (b).y));
 	}
 
+	private static final Pattern p = Pattern.compile("_dim_([.\\d]+)_([\\d.]+)_");
+
 	public static void hackInitDimensionFromLabel(ST_pointf size, String label) {
-		final Pattern p = Pattern.compile("_dim_([.\\d]+)_([\\d.]+)_");
 		final Matcher m = p.matcher(label);
 		if (m.matches()) {
 			final double ww = Double.parseDouble(m.group(1));

@@ -119,8 +119,8 @@ public class Stereotype implements CharSequence {
 		return "<<O-O>>".equalsIgnoreCase(decoration.label);
 	}
 
-	private final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
-	
+	private final static Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
+
 	public List<String> getMultipleLabels() {
 		final List<String> result = new ArrayList<>();
 

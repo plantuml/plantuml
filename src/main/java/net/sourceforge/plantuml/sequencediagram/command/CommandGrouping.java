@@ -72,9 +72,11 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 						)), RegexLeaf.end());
 	}
 
+	static private final Pattern p = Pattern.compile("^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$");
+
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
 		final String s = arg.get("COLORS", 0);
 		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();
@@ -93,7 +95,6 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 			if (StringUtils.isEmpty(comment)) {
 				comment = "group";
 			} else {
-				final Pattern p = Pattern.compile("^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$");
 				final Matcher m = p.matcher(comment);
 				if (m.find()) {
 					type = m.group(1);

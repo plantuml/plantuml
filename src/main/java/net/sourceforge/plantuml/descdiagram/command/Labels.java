@@ -62,9 +62,12 @@ public class Labels {
 
 	}
 
+	private static final Pattern2 p1 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
+	private static final Pattern2 p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
+	private static final Pattern2 p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
+
 	private String init(String labelLink) {
 		if (firstLabel == null && secondLabel == null) {
-			final Pattern2 p1 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
 			final Matcher2 m1 = p1.matcher(labelLink);
 			if (m1.matches()) {
 				firstLabel = m1.group(1);
@@ -72,7 +75,6 @@ public class Labels {
 				return StringUtils
 						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
 			}
-			final Pattern2 p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
 			final Matcher2 m2 = p2.matcher(labelLink);
 			if (m2.matches()) {
 				firstLabel = m2.group(1);
@@ -80,7 +82,6 @@ public class Labels {
 				return StringUtils
 						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
 			}
-			final Pattern2 p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
 			final Matcher2 m3 = p3.matcher(labelLink);
 			if (m3.matches()) {
 				firstLabel = null;
