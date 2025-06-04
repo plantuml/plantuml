@@ -44,7 +44,7 @@ public class Token {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L47">		return tokenType + &quot;{&quot; + surface + &quot;}&quot;;</span>
+<span class="fc" id="L47">		return tokenType + &quot;{&quot; + surface + &quot;}&quot;;</span>
 	}
 
 	public Token(char surface, TokenType tokenType, JsonValue json) {
@@ -85,6 +85,16 @@ public class Token {
 <span class="nc" id="L85">			throw new IllegalStateException();</span>
 
 <span class="fc" id="L87">		return json;</span>
+	}
+
+	public int getPrecedence() {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (this.tokenType == TokenType.AFFECTATION)</span>
+<span class="fc" id="L92">			return TokenOperator.EQUALS.getPrecedence();</span>
+<span class="fc" id="L93">		return getTokenOperator().getPrecedence();</span>
+	}
+
+	public boolean getLeftAssociativity() {
+<span class="fc" id="L97">		return true;</span>
 	}
 
 }

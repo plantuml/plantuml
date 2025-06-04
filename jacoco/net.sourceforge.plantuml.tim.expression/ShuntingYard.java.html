@@ -80,7 +80,7 @@ public class ShuntingYard {
 				} else {
 <span class="fc" id="L81">					ouputQueue.add(variable.toToken());</span>
 				}
-<span class="fc bfc" id="L83" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPERATOR) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			} else if (isOperatorOrAffectation(token)) {</span>
 <span class="fc bfc" id="L84" title="All 2 branches covered.">				while ((thereIsAFunctionAtTheTopOfTheOperatorStack() //</span>
 <span class="fc bfc" id="L85" title="All 2 branches covered.">						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //</span>
 <span class="fc bfc" id="L86" title="All 2 branches covered.">						|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //</span>
@@ -135,32 +135,35 @@ public class ShuntingYard {
 
 	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(Token token) {
 <span class="fc" id="L137">		final Token top = operatorStack.peekFirst();</span>
-<span class="fc bfc" id="L138" title="All 4 branches covered.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPERATOR</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">				&amp;&amp; top.getTokenOperator().getPrecedence() &gt; token.getTokenOperator().getPrecedence())</span>
-<span class="fc" id="L140">			return true;</span>
+<span class="fc bfc" id="L138" title="All 6 branches covered.">		if (top != null &amp;&amp; isOperatorOrAffectation(top) &amp;&amp; top.getPrecedence() &gt; token.getPrecedence())</span>
+<span class="fc" id="L139">			return true;</span>
 
-<span class="fc" id="L142">		return false;</span>
+<span class="fc" id="L141">		return false;</span>
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(Token token) {
-<span class="fc" id="L146">		final Token top = operatorStack.peekFirst();</span>
-<span class="pc bpc" id="L147" title="1 of 6 branches missed.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPERATOR &amp;&amp; top.getTokenOperator().isLeftAssociativity()</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">				&amp;&amp; top.getTokenOperator().getPrecedence() == token.getTokenOperator().getPrecedence())</span>
-<span class="fc" id="L149">			return true;</span>
+<span class="fc" id="L145">		final Token top = operatorStack.peekFirst();</span>
+<span class="pc bpc" id="L146" title="1 of 6 branches missed.">		if (top != null &amp;&amp; isOperatorOrAffectation(top) &amp;&amp; top.getLeftAssociativity()</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">				&amp;&amp; top.getPrecedence() == token.getPrecedence())</span>
+<span class="fc" id="L148">			return true;</span>
 
-<span class="fc" id="L151">		return false;</span>
+<span class="fc" id="L150">		return false;</span>
+	}
+
+	private boolean isOperatorOrAffectation(final Token token) {
+<span class="fc bfc" id="L154" title="All 4 branches covered.">		return token.getTokenType() == TokenType.OPERATOR || token.getTokenType() == TokenType.AFFECTATION;</span>
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(Token token) {
-<span class="fc" id="L155">		final Token top = operatorStack.peekFirst();</span>
-<span class="pc bpc" id="L156" title="2 of 4 branches missed.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
-<span class="nc" id="L157">			return true;</span>
+<span class="fc" id="L158">		final Token top = operatorStack.peekFirst();</span>
+<span class="pc bpc" id="L159" title="2 of 4 branches missed.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
+<span class="nc" id="L160">			return true;</span>
 
-<span class="fc" id="L159">		return true;</span>
+<span class="fc" id="L162">		return true;</span>
 	}
 
 	public TokenStack getQueue() {
-<span class="fc" id="L163">		return this.ouputQueue;</span>
+<span class="fc" id="L166">		return this.ouputQueue;</span>
 	}
 
 }

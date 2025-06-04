@@ -106,30 +106,26 @@ package net.sourceforge.plantuml.tim.expression;
 <span class="fc" id="L106">		this.display = display;</span>
 <span class="fc" id="L107">	}</span>
 
-	public boolean isLeftAssociativity() {
-<span class="fc" id="L110">		return true;</span>
-	}
-
 	public static TokenOperator getTokenOperator(char ch, char ch2) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (TokenOperator op : TokenOperator.values())</span>
+<span class="fc bfc" id="L111" title="All 6 branches covered.">			if (op.display.length() == 2 &amp;&amp; op.display.charAt(0) == ch &amp;&amp; op.display.charAt(1) == ch2)</span>
+<span class="fc" id="L112">				return op;</span>
+
 <span class="fc bfc" id="L114" title="All 2 branches covered.">		for (TokenOperator op : TokenOperator.values())</span>
-<span class="fc bfc" id="L115" title="All 6 branches covered.">			if (op.display.length() == 2 &amp;&amp; op.display.charAt(0) == ch &amp;&amp; op.display.charAt(1) == ch2)</span>
+<span class="fc bfc" id="L115" title="All 4 branches covered.">			if (op.display.length() == 1 &amp;&amp; op.display.charAt(0) == ch)</span>
 <span class="fc" id="L116">				return op;</span>
 
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (TokenOperator op : TokenOperator.values())</span>
-<span class="fc bfc" id="L119" title="All 4 branches covered.">			if (op.display.length() == 1 &amp;&amp; op.display.charAt(0) == ch)</span>
-<span class="fc" id="L120">				return op;</span>
-
-<span class="fc" id="L122">		return null;</span>
+<span class="fc" id="L118">		return null;</span>
 	}
 
 	public final int getPrecedence() {
-<span class="fc" id="L126">		return precedence;</span>
+<span class="fc" id="L122">		return precedence;</span>
 	}
 
 	public abstract TValue operate(TValue v1, TValue v2);
 
 	public final String getDisplay() {
-<span class="fc" id="L132">		return display;</span>
+<span class="fc" id="L128">		return display;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
