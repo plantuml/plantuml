@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -94,7 +95,6 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	private final ISkinParam skinParam;
 	private final Pragma pragma;
-	private final PreprocessingArtifact preprocessing;
 
 	private final List<Swimlane> swimlanesRaw = new ArrayList<>();
 	private final List<Swimlane> swimlanesSpecial = new ArrayList<>();
@@ -125,10 +125,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
-	public Swimlanes(ISkinParam skinParam, Pragma pragma, PreprocessingArtifact preprocessing) {
+	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
 		this.skinParam = skinParam;
 		this.pragma = pragma;
-		this.preprocessing = preprocessing;
 	}
 
 	protected Style getStyle() {
@@ -235,10 +234,10 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		// ::done
 
 		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
-		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
-			StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final boolean isDebug = Boolean.parseBoolean(preprocessing.getOption().getValue(OptionKey.DEBUG));
+		final boolean isDebug = Boolean.parseBoolean(skinParam.option().getValue(OptionKey.DEBUG));
 
 		ug = new UGraphicForSnake(ug);
 		if (swimlanes().size() > 1) {
@@ -255,8 +254,8 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private void drawGtile(UGraphic ug) {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
-		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
-			StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isDebug = true;
 
