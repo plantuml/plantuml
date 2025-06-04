@@ -69,19 +69,19 @@ public class PixelImage implements MutableImage {
 
 	@Override
 	public final BufferedImage getImage() {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (scale == 1)</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (scale == 1)</span>
 <span class="fc" id="L73">			return bufferedImageScale1;</span>
 
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (cache == null) {</span>
-<span class="nc" id="L76">			final int w = (int) Math.round(bufferedImageScale1.getWidth() * scale);</span>
-<span class="nc" id="L77">			final int h = (int) Math.round(bufferedImageScale1.getHeight() * scale);</span>
-<span class="nc" id="L78">			final BufferedImage after = new BufferedImage(w, h, bufferedImageScale1.getType());</span>
-<span class="nc" id="L79">			final AffineTransform at = new AffineTransform();</span>
-<span class="nc" id="L80">			at.scale(scale, scale);</span>
-<span class="nc" id="L81">			final AffineTransformOp scaleOp = new AffineTransformOp(at, type.toLegacyInt());</span>
-<span class="nc" id="L82">			this.cache = scaleOp.filter(bufferedImageScale1, after);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (cache == null) {</span>
+<span class="fc" id="L76">			final int w = (int) Math.round(bufferedImageScale1.getWidth() * scale);</span>
+<span class="fc" id="L77">			final int h = (int) Math.round(bufferedImageScale1.getHeight() * scale);</span>
+<span class="fc" id="L78">			final BufferedImage after = new BufferedImage(w, h, bufferedImageScale1.getType());</span>
+<span class="fc" id="L79">			final AffineTransform at = new AffineTransform();</span>
+<span class="fc" id="L80">			at.scale(scale, scale);</span>
+<span class="fc" id="L81">			final AffineTransformOp scaleOp = new AffineTransformOp(at, type.toLegacyInt());</span>
+<span class="fc" id="L82">			this.cache = scaleOp.filter(bufferedImageScale1, after);</span>
 		}
-<span class="nc" id="L84">		return cache;</span>
+<span class="fc" id="L84">		return cache;</span>
 	}
 
 	@Override

@@ -73,55 +73,57 @@ public class BodierMap implements Bodier {
 
 <span class="nc" id="L74">	}</span>
 
+<span class="nc" id="L76">	private static final Pattern p = Pattern.compile(&quot;(\\*-+_?\\&gt;)&quot;);</span>
+
 	public static String getLinkedEntry(String s) {
-<span class="nc" id="L77">		final Pattern p = Pattern.compile(&quot;(\\*-+_?\\&gt;)&quot;);</span>
-<span class="nc" id="L78">		final Matcher m = p.matcher(s);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (m.find()) {</span>
-<span class="nc" id="L80">			return m.group(1);</span>
-		}
-<span class="nc" id="L82">		return null;</span>
+<span class="nc" id="L79">		final Pattern p = Pattern.compile(&quot;(\\*-+_?\\&gt;)&quot;);</span>
+<span class="nc" id="L80">		final Matcher m = p.matcher(s);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L82">			return m.group(1);</span>
+
+<span class="nc" id="L84">		return null;</span>
 	}
 
 	@Override
 	public boolean addFieldOrMethod(String s) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (s.contains(&quot;=&gt;&quot;)) {</span>
-<span class="nc" id="L88">			final int x = s.indexOf(&quot;=&gt;&quot;);</span>
-<span class="nc" id="L89">			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());</span>
-<span class="nc" id="L90">			return true;</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		} else if (getLinkedEntry(s) != null) {</span>
-<span class="nc" id="L92">			final String link = getLinkedEntry(s);</span>
-<span class="nc" id="L93">			final int x = s.indexOf(link);</span>
-<span class="nc" id="L94">			map.put(s.substring(0, x).trim(), &quot;\0&quot;);</span>
-<span class="nc" id="L95">			return true;</span>
+<span class="nc" id="L89">		final int x = s.indexOf(&quot;=&gt;&quot;);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (x != -1) {</span>
+<span class="nc" id="L91">			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());</span>
+<span class="nc" id="L92">			return true;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		} else if (getLinkedEntry(s) != null) {</span>
+<span class="nc" id="L94">			final String link = getLinkedEntry(s);</span>
+<span class="nc" id="L95">			final int pos = s.indexOf(link);</span>
+<span class="nc" id="L96">			map.put(s.substring(0, pos).trim(), &quot;\0&quot;);</span>
+<span class="nc" id="L97">			return true;</span>
 		}
-<span class="nc" id="L97">		return false;</span>
+<span class="nc" id="L99">		return false;</span>
 	}
 
 	@Override
 	public Display getMethodsToDisplay() {
-<span class="nc" id="L102">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L104">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Display getFieldsToDisplay() {
-<span class="nc" id="L107">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L109">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean hasUrl() {
-<span class="nc" id="L112">		return false;</span>
+<span class="nc" id="L114">		return false;</span>
 	}
 
 	@Override
 	public TextBlock getBody(ISkinParam skinParam, final boolean showMethods, final boolean showFields,
 			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
-<span class="nc" id="L118">		final LineBreakStrategy wordWrap = style.wrapWidth();</span>
-<span class="nc" id="L119">		return new TextBlockMap(fontConfiguration, skinParam, map, wordWrap);</span>
+<span class="nc" id="L120">		final LineBreakStrategy wordWrap = style.wrapWidth();</span>
+<span class="nc" id="L121">		return new TextBlockMap(fontConfiguration, skinParam, map, wordWrap);</span>
 	}
 
 	@Override
 	public List&lt;CharSequence&gt; getRawBody() {
-<span class="nc" id="L124">		return Collections.unmodifiableList(rawBody);</span>
+<span class="nc" id="L126">		return Collections.unmodifiableList(rawBody);</span>
 	}
 
 }

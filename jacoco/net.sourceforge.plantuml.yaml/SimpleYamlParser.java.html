@@ -55,158 +55,158 @@ import net.sourceforge.plantuml.json.JsonValue;
 <span class="nc" id="L55">		pendingIndents.clear();</span>
 <span class="nc" id="L56">		pendingIndents.add(0);</span>
 <span class="nc" id="L57">		final YamlLines yamlLines = new YamlLines(lines);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (String s : yamlLines) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (String s : yamlLines)</span>
 <span class="nc" id="L59">			parseSingleLine(s);</span>
-<span class="nc" id="L60">		}</span>
+
 <span class="nc" id="L61">		return result;</span>
 
 	}
 
+<span class="nc" id="L65">	private static final Pattern NAME_AND_VALUE = Pattern.compile(&quot;^\\s*&quot; + YamlLines.KEY + &quot;\\s*: \\s*(\\S.*)$&quot;);</span>
+
 	private String[] nameAndValue(String s) {
-<span class="nc" id="L66">		final Pattern p1 = Pattern.compile(&quot;^\\s*&quot; + YamlLines.KEY + &quot;\\s*: \\s*(\\S.*)$&quot;);</span>
-<span class="nc" id="L67">		final Matcher m1 = p1.matcher(s);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (m1.matches()) {</span>
-<span class="nc" id="L69">			final String name = m1.group(1);</span>
-<span class="nc" id="L70">			final String data = m1.group(2).trim();</span>
-<span class="nc" id="L71">			return new String[] { name, data };</span>
+<span class="nc" id="L68">		final Matcher m1 = NAME_AND_VALUE.matcher(s);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (m1.matches()) {</span>
+<span class="nc" id="L70">			final String name = m1.group(1);</span>
+<span class="nc" id="L71">			final String data = m1.group(2).trim();</span>
+<span class="nc" id="L72">			return new String[] { name, data };</span>
 		}
-<span class="nc" id="L73">		return null;</span>
+<span class="nc" id="L74">		return null;</span>
 	}
 
 	private void parseSingleLine(String s) {
-<span class="nc" id="L77">		final int indent = getIndent(s);</span>
+<span class="nc" id="L78">		final int indent = getIndent(s);</span>
 //		System.err.println(&quot;s=&quot; + s);
 
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (isListStrict(s)) {</span>
-<span class="nc" id="L81">			strictMuteToArray(indent);</span>
-<span class="nc" id="L82">			return;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (isListStrict(s)) {</span>
+<span class="nc" id="L82">			strictMuteToArray(indent);</span>
+<span class="nc" id="L83">			return;</span>
 		}
 
-<span class="nc" id="L85">		final String listedValue = listedValue(s);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (listedValue != null) {</span>
-<span class="nc" id="L87">			final JsonArray array = getForceArray(indent);</span>
-<span class="nc" id="L88">			array.add(listedValue);</span>
-<span class="nc" id="L89">			return;</span>
+<span class="nc" id="L86">		final String listedValue = listedValue(s);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (listedValue != null) {</span>
+<span class="nc" id="L88">			final JsonArray array = getForceArray(indent);</span>
+<span class="nc" id="L89">			array.add(listedValue);</span>
+<span class="nc" id="L90">			return;</span>
 		}
 
-<span class="nc" id="L92">		final JsonObject working = (JsonObject) getWorking(indent);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (working == null) {</span>
-<span class="nc" id="L94">			System.err.println(&quot;ERROR: ignoring &quot; + s);</span>
-<span class="nc" id="L95">			return;</span>
+<span class="nc" id="L93">		final JsonObject working = (JsonObject) getWorking(indent);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (working == null) {</span>
+<span class="nc" id="L95">			System.err.println(&quot;ERROR: ignoring &quot; + s);</span>
+<span class="nc" id="L96">			return;</span>
 		}
 
-<span class="nc" id="L98">		final String[] nameAndValue = nameAndValue(s);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (nameAndValue != null) {</span>
-<span class="nc" id="L100">			final String name = nameAndValue[0];</span>
-<span class="nc" id="L101">			final String data = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(nameAndValue[1], &quot;\&quot;&quot;);</span>
-<span class="nc" id="L102">			working.add(name, data);</span>
-<span class="nc" id="L103">			return;</span>
+<span class="nc" id="L99">		final String[] nameAndValue = nameAndValue(s);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (nameAndValue != null) {</span>
+<span class="nc" id="L101">			final String name = nameAndValue[0];</span>
+<span class="nc" id="L102">			final String data = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(nameAndValue[1], &quot;\&quot;&quot;);</span>
+<span class="nc" id="L103">			working.add(name, data);</span>
+<span class="nc" id="L104">			return;</span>
 		}
 
-<span class="nc" id="L106">		final String nameOnly = YamlLines.nameOnly(s);</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (nameOnly != null) {</span>
-<span class="nc" id="L108">			working.add(nameOnly, new JsonObject());</span>
-<span class="nc" id="L109">			return;</span>
+<span class="nc" id="L107">		final String nameOnly = YamlLines.nameOnly(s);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (nameOnly != null) {</span>
+<span class="nc" id="L109">			working.add(nameOnly, new JsonObject());</span>
+<span class="nc" id="L110">			return;</span>
 		}
 
-<span class="nc" id="L112">		throw new UnsupportedOperationException(s);</span>
+<span class="nc" id="L113">		throw new UnsupportedOperationException(s);</span>
 	}
 
+<span class="nc" id="L116">	private static final Pattern p1 = Pattern.compile(&quot;^\\s*[-]\\s*(\\S.*)$&quot;);</span>
+
 	private String listedValue(String s) {
-<span class="nc" id="L116">		final Pattern p1 = Pattern.compile(&quot;^\\s*[-]\\s*(\\S.*)$&quot;);</span>
-<span class="nc" id="L117">		final Matcher m1 = p1.matcher(s);</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (m1.matches()) {</span>
-<span class="nc" id="L119">			final String name = m1.group(1).trim();</span>
-<span class="nc" id="L120">			return name;</span>
+<span class="nc" id="L119">		final Matcher m1 = p1.matcher(s);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (m1.matches()) {</span>
+<span class="nc" id="L121">			final String name = m1.group(1).trim();</span>
+<span class="nc" id="L122">			return name;</span>
 		}
-<span class="nc" id="L122">		return null;</span>
+<span class="nc" id="L124">		return null;</span>
 	}
 
 	private JsonArray getForceArray(int indent) {
-<span class="nc bnc" id="L126" title="All 4 branches missed.">		if (indent == 0 &amp;&amp; getLastIndent() == 0) {</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (result instanceof JsonArray == false) {</span>
-<span class="nc" id="L128">				result = new JsonArray();</span>
-			}
-<span class="nc" id="L130">			return (JsonArray) result;</span>
-		}
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		while (getLastIndent() &gt; indent - 1)</span>
-<span class="nc" id="L133">			pendingIndents.remove(pendingIndents.size() - 1);</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">		if (indent == 0 &amp;&amp; getLastIndent() == 0) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (result instanceof JsonArray == false)</span>
+<span class="nc" id="L130">				result = new JsonArray();</span>
 
-<span class="nc" id="L135">		final JsonObject last = (JsonObject) search(result, pendingIndents.size());</span>
-<span class="nc" id="L136">		final String field = last.names().get(last.size() - 1);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (last.get(field) instanceof JsonArray == false) {</span>
-<span class="nc" id="L138">			last.set(field, new JsonArray());</span>
+<span class="nc" id="L132">			return (JsonArray) result;</span>
 		}
-<span class="nc" id="L140">		return (JsonArray) last.get(field);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		while (getLastIndent() &gt; indent - 1)</span>
+<span class="nc" id="L135">			pendingIndents.remove(pendingIndents.size() - 1);</span>
+
+<span class="nc" id="L137">		final JsonObject last = (JsonObject) search(result, pendingIndents.size());</span>
+<span class="nc" id="L138">		final String field = last.names().get(last.size() - 1);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (last.get(field) instanceof JsonArray == false)</span>
+<span class="nc" id="L140">			last.set(field, new JsonArray());</span>
+
+<span class="nc" id="L142">		return (JsonArray) last.get(field);</span>
 	}
 
 	private void strictMuteToArray(int indent) {
-<span class="nc bnc" id="L144" title="All 4 branches missed.">		if (indent == 0 &amp;&amp; getLastIndent() == 0) {</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (result instanceof JsonArray == false) {</span>
-<span class="nc" id="L146">				result = new JsonArray();</span>
-			}
-<span class="nc" id="L148">			return;</span>
-		}
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		while (getLastIndent() &gt; indent)</span>
-<span class="nc" id="L151">			pendingIndents.remove(pendingIndents.size() - 1);</span>
+<span class="nc bnc" id="L146" title="All 4 branches missed.">		if (indent == 0 &amp;&amp; getLastIndent() == 0) {</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (result instanceof JsonArray == false)</span>
+<span class="nc" id="L148">				result = new JsonArray();</span>
 
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (result instanceof JsonArray) {</span>
-<span class="nc" id="L154">			((JsonArray) result).add(new JsonObject());</span>
-<span class="nc" id="L155">			return;</span>
+<span class="nc" id="L150">			return;</span>
+		}
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		while (getLastIndent() &gt; indent)</span>
+<span class="nc" id="L153">			pendingIndents.remove(pendingIndents.size() - 1);</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (result instanceof JsonArray) {</span>
+<span class="nc" id="L156">			((JsonArray) result).add(new JsonObject());</span>
+<span class="nc" id="L157">			return;</span>
 		}
 
-<span class="nc" id="L158">		final JsonObject last = (JsonObject) search(result, pendingIndents.size());</span>
-<span class="nc" id="L159">		final String field = last.names().get(last.size() - 1);</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (last.get(field) instanceof JsonArray == false) {</span>
-<span class="nc" id="L161">			last.set(field, new JsonArray());</span>
-		} else {
-<span class="nc" id="L163">			((JsonArray) last.get(field)).add(new JsonObject());</span>
-		}
-<span class="nc" id="L165">	}</span>
+<span class="nc" id="L160">		final JsonObject last = (JsonObject) search(result, pendingIndents.size());</span>
+<span class="nc" id="L161">		final String field = last.names().get(last.size() - 1);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (last.get(field) instanceof JsonArray == false)</span>
+<span class="nc" id="L163">			last.set(field, new JsonArray());</span>
+		else
+<span class="nc" id="L165">			((JsonArray) last.get(field)).add(new JsonObject());</span>
+
+<span class="nc" id="L167">	}</span>
 
 	private boolean isListStrict(String s) {
-<span class="nc" id="L168">		return s.trim().equals(&quot;-&quot;);</span>
+<span class="nc" id="L170">		return s.trim().equals(&quot;-&quot;);</span>
 	}
 
 	private int getLastIndent() {
-<span class="nc" id="L172">		return pendingIndents.get(pendingIndents.size() - 1);</span>
+<span class="nc" id="L174">		return pendingIndents.get(pendingIndents.size() - 1);</span>
 	}
 
 	private JsonValue getWorking(int indent) {
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (indent &gt; getLastIndent()) {</span>
-<span class="nc" id="L177">			pendingIndents.add(indent);</span>
-<span class="nc" id="L178">			return search(result, pendingIndents.size());</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (indent &gt; getLastIndent()) {</span>
+<span class="nc" id="L179">			pendingIndents.add(indent);</span>
+<span class="nc" id="L180">			return search(result, pendingIndents.size());</span>
 		}
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (indent == getLastIndent()) {</span>
-<span class="nc" id="L181">			return search(result, pendingIndents.size());</span>
-		}
-<span class="nc" id="L183">		final int idx = pendingIndents.indexOf(indent);</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (idx == -1) {</span>
-<span class="nc" id="L185">			return null;</span>
-		}
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (indent == getLastIndent())</span>
+<span class="nc" id="L183">			return search(result, pendingIndents.size());</span>
 
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		while (pendingIndents.size() &gt; idx + 1)</span>
-<span class="nc" id="L189">			pendingIndents.remove(pendingIndents.size() - 1);</span>
+<span class="nc" id="L185">		final int idx = pendingIndents.indexOf(indent);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (idx == -1)</span>
+<span class="nc" id="L187">			return null;</span>
 
-<span class="nc" id="L191">		return search(result, pendingIndents.size());</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		while (pendingIndents.size() &gt; idx + 1)</span>
+<span class="nc" id="L190">			pendingIndents.remove(pendingIndents.size() - 1);</span>
+
+<span class="nc" id="L192">		return search(result, pendingIndents.size());</span>
 	}
 
 	private static JsonValue search(JsonValue current1, int size) {
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (current1 instanceof JsonArray) {</span>
-<span class="nc" id="L196">			JsonArray array = (JsonArray) current1;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (current1 instanceof JsonArray) {</span>
+<span class="nc" id="L197">			JsonArray array = (JsonArray) current1;</span>
 
 			final JsonValue tmp;
-<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (array.size() == 0) {</span>
-<span class="nc" id="L200">				tmp = new JsonObject();</span>
-<span class="nc" id="L201">				array.add(tmp);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (array.size() == 0) {</span>
+<span class="nc" id="L201">				tmp = new JsonObject();</span>
+<span class="nc" id="L202">				array.add(tmp);</span>
 			} else {
-<span class="nc" id="L203">				tmp = array.get(array.size() - 1);</span>
+<span class="nc" id="L204">				tmp = array.get(array.size() - 1);</span>
 			}
-<span class="nc" id="L205">			return tmp;</span>
+<span class="nc" id="L206">			return tmp;</span>
 		}
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (size &lt;= 1) {</span>
-<span class="nc" id="L208">			return current1;</span>
-		}
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (size &lt;= 1)</span>
+<span class="nc" id="L209">			return current1;</span>
 
 <span class="nc" id="L211">		final JsonObject current = (JsonObject) current1;</span>
 <span class="nc" id="L212">		final String last = current.names().get(current.size() - 1);</span>
@@ -232,11 +232,11 @@ import net.sourceforge.plantuml.json.JsonValue;
 <span class="nc" id="L232">		int indent = 0;</span>
 <span class="nc bnc" id="L233" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
 <span class="nc" id="L234">			final char ch = s.charAt(i);</span>
-<span class="nc bnc" id="L235" title="All 4 branches missed.">			if (ch == ' ' || ch == '\t') {</span>
+<span class="nc bnc" id="L235" title="All 4 branches missed.">			if (ch == ' ' || ch == '\t')</span>
 <span class="nc" id="L236">				indent++;</span>
-			} else {
+			else
 <span class="nc" id="L238">				return indent;</span>
-			}
+
 		}
 <span class="nc" id="L241">		return 0;</span>
 	}

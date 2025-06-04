@@ -100,105 +100,107 @@ public class YamlLines implements Iterable&lt;String&gt; {
 <span class="nc" id="L100">		return s;</span>
 	}
 
+<span class="nc" id="L103">	private static final Pattern p1 = Pattern.compile(&quot;^(\\s*[-])(\\s*\\S.*)$&quot;);</span>
+
 	private void manageList() {
-<span class="nc" id="L104">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (String s : lines) {</span>
-<span class="nc" id="L106">			final Pattern p1 = Pattern.compile(&quot;^(\\s*[-])(\\s*\\S.*)$&quot;);</span>
-<span class="nc" id="L107">			final Matcher m1 = p1.matcher(s);</span>
-<span class="nc bnc" id="L108" title="All 4 branches missed.">			if (s.contains(&quot;: &quot;) &amp;&amp; m1.matches()) {</span>
-<span class="nc" id="L109">				result.add(m1.group(1));</span>
-<span class="nc" id="L110">				result.add(s.replaceFirst(&quot;[-]&quot;, &quot; &quot;));</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			} else if (m1.matches()) {</span>
-<span class="nc" id="L112">				result.add(&quot; &quot; + s);</span>
+<span class="nc" id="L106">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (String s : lines) {</span>
+<span class="nc" id="L108">			final Matcher m1 = p1.matcher(s);</span>
+<span class="nc bnc" id="L109" title="All 4 branches missed.">			if (s.contains(&quot;: &quot;) &amp;&amp; m1.matches()) {</span>
+<span class="nc" id="L110">				result.add(m1.group(1));</span>
+<span class="nc" id="L111">				result.add(s.replaceFirst(&quot;[-]&quot;, &quot; &quot;));</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			} else if (m1.matches()) {</span>
+<span class="nc" id="L113">				result.add(&quot; &quot; + s);</span>
 			} else {
-<span class="nc" id="L114">				result.add(s);</span>
+<span class="nc" id="L115">				result.add(s);</span>
 			}
 
-<span class="nc" id="L117">		}</span>
-<span class="nc" id="L118">		this.lines = result;</span>
-<span class="nc" id="L119">	}</span>
+<span class="nc" id="L118">		}</span>
+<span class="nc" id="L119">		this.lines = result;</span>
+<span class="nc" id="L120">	}</span>
 
 	private void removeFirstCols(int startingEmptyCols) {
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (startingEmptyCols == 0)</span>
-<span class="nc" id="L123">			return;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (startingEmptyCols == 0)</span>
+<span class="nc" id="L124">			return;</span>
 
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (ListIterator&lt;String&gt; it = lines.listIterator(); it.hasNext();) {</span>
-<span class="nc" id="L126">			final String s = it.next().substring(startingEmptyCols);</span>
-<span class="nc" id="L127">			it.set(s);</span>
-<span class="nc" id="L128">		}</span>
-<span class="nc" id="L129">	}</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		for (ListIterator&lt;String&gt; it = lines.listIterator(); it.hasNext();) {</span>
+<span class="nc" id="L127">			final String s = it.next().substring(startingEmptyCols);</span>
+<span class="nc" id="L128">			it.set(s);</span>
+<span class="nc" id="L129">		}</span>
+<span class="nc" id="L130">	}</span>
 
 	private int startingEmptyCols() {
-<span class="nc" id="L132">		int result = Integer.MAX_VALUE;</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (String s : lines) {</span>
-<span class="nc" id="L134">			result = Math.min(result, startingSpaces(s));</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (result == 0)</span>
-<span class="nc" id="L136">				return 0;</span>
-<span class="nc" id="L137">		}</span>
-<span class="nc" id="L138">		return result;</span>
+<span class="nc" id="L133">		int result = Integer.MAX_VALUE;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (String s : lines) {</span>
+<span class="nc" id="L135">			result = Math.min(result, startingSpaces(s));</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (result == 0)</span>
+<span class="nc" id="L137">				return 0;</span>
+<span class="nc" id="L138">		}</span>
+<span class="nc" id="L139">		return result;</span>
 	}
 
-	private static int startingSpaces(String s) {
-<span class="nc" id="L142">		final Pattern p1 = Pattern.compile(&quot;^(\\s*).*&quot;);</span>
-<span class="nc" id="L143">		final Matcher m1 = p1.matcher(s);</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (m1.matches())</span>
-<span class="nc" id="L145">			return m1.group(1).length();</span>
+<span class="nc" id="L142">	private static final Pattern STARTING_SPACES = Pattern.compile(&quot;^(\\s*).*&quot;);</span>
 
-<span class="nc" id="L147">		return 0;</span>
+	private static int startingSpaces(String s) {
+<span class="nc" id="L145">		final Matcher m1 = STARTING_SPACES.matcher(s);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (m1.matches())</span>
+<span class="nc" id="L147">			return m1.group(1).length();</span>
+
+<span class="nc" id="L149">		return 0;</span>
 	}
 
 	private void mergeMultiline() {
-<span class="nc" id="L151">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
-<span class="nc" id="L153">			final String init = isMultilineStart(i);</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (init != null) {</span>
-<span class="nc" id="L155">				final StringBuilder sb = new StringBuilder(init);</span>
-<span class="nc bnc" id="L156" title="All 4 branches missed.">				while (i + 1 &lt; lines.size() &amp;&amp; textOnly(lines.get(i + 1))) {</span>
-<span class="nc" id="L157">					sb.append(&quot; &quot; + lines.get(i + 1).trim());</span>
-<span class="nc" id="L158">					i++;</span>
+<span class="nc" id="L153">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L155">			final String init = isMultilineStart(i);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (init != null) {</span>
+<span class="nc" id="L157">				final StringBuilder sb = new StringBuilder(init);</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">				while (i + 1 &lt; lines.size() &amp;&amp; textOnly(lines.get(i + 1))) {</span>
+<span class="nc" id="L159">					sb.append(&quot; &quot; + lines.get(i + 1).trim());</span>
+<span class="nc" id="L160">					i++;</span>
 				}
-<span class="nc" id="L160">				result.add(sb.toString());</span>
-<span class="nc" id="L161">			} else {</span>
-<span class="nc" id="L162">				result.add(lines.get(i));</span>
+<span class="nc" id="L162">				result.add(sb.toString());</span>
+<span class="nc" id="L163">			} else {</span>
+<span class="nc" id="L164">				result.add(lines.get(i));</span>
 			}
 		}
-<span class="nc" id="L165">		this.lines = result;</span>
-<span class="nc" id="L166">	}</span>
+<span class="nc" id="L167">		this.lines = result;</span>
+<span class="nc" id="L168">	}</span>
 
 	private String isMultilineStart(int i) {
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		final boolean isLastLine = i == (lines.size() - 1);</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (isLastLine)</span>
-<span class="nc" id="L171">			return null;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		final boolean isLastLine = i == (lines.size() - 1);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (isLastLine)</span>
+<span class="nc" id="L173">			return null;</span>
 
-<span class="nc bnc" id="L173" title="All 4 branches missed.">		if (nameOnly(lines.get(i)) != null &amp;&amp; textOnly(lines.get(i + 1))) {</span>
-<span class="nc" id="L174">			final int idx = lines.get(i).indexOf(':');</span>
-<span class="nc" id="L175">			return lines.get(i).substring(0, idx + 1);</span>
+<span class="nc bnc" id="L175" title="All 4 branches missed.">		if (nameOnly(lines.get(i)) != null &amp;&amp; textOnly(lines.get(i + 1))) {</span>
+<span class="nc" id="L176">			final int idx = lines.get(i).indexOf(':');</span>
+<span class="nc" id="L177">			return lines.get(i).substring(0, idx + 1);</span>
 		}
-<span class="nc" id="L177">		return null;</span>
+<span class="nc" id="L179">		return null;</span>
 	}
 
 	public static String nameOnly(String s) {
-<span class="nc" id="L181">		final Pattern p1 = Pattern.compile(&quot;^\\s*&quot; + KEY + &quot;\\s*:\\s*[|&gt;]?\\s*$&quot;);</span>
-<span class="nc" id="L182">		final Matcher m1 = p1.matcher(s);</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (m1.matches()) {</span>
-<span class="nc" id="L184">			final String name = m1.group(1);</span>
-<span class="nc" id="L185">			return name;</span>
+<span class="nc" id="L183">		final Pattern p1 = Pattern.compile(&quot;^\\s*&quot; + KEY + &quot;\\s*:\\s*[|&gt;]?\\s*$&quot;);</span>
+<span class="nc" id="L184">		final Matcher m1 = p1.matcher(s);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (m1.matches()) {</span>
+<span class="nc" id="L186">			final String name = m1.group(1);</span>
+<span class="nc" id="L187">			return name;</span>
 		}
-<span class="nc" id="L187">		return null;</span>
+<span class="nc" id="L189">		return null;</span>
 	}
 
 	private boolean textOnly(String s) {
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (isList(s))</span>
-<span class="nc" id="L192">			return false;</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">		return s.indexOf(':') == -1;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (isList(s))</span>
+<span class="nc" id="L194">			return false;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		return s.indexOf(':') == -1;</span>
 	}
 
 	private boolean isList(String s) {
-<span class="nc" id="L197">		return s.trim().startsWith(&quot;-&quot;);</span>
+<span class="nc" id="L199">		return s.trim().startsWith(&quot;-&quot;);</span>
 	}
 
 	public Iterator&lt;String&gt; iterator() {
-<span class="nc" id="L201">		return Collections.unmodifiableList(lines).iterator();</span>
+<span class="nc" id="L203">		return Collections.unmodifiableList(lines).iterator();</span>
 	}
 
 }

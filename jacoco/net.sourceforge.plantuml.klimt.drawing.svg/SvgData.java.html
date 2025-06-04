@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 
 public final class SvgData {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private String svg;
 	private double startX;
@@ -82,66 +82,67 @@ public final class SvgData {
 <span class="nc" id="L82">		return modifiedSvgXmlHeader();</span>
 	}
 
-	private void init() {
-<span class="nc" id="L86">		final Pattern p = Pattern.compile(&quot;(?i)&lt;polygon\\s+[^&gt;]*points=\&quot;([^\&quot;]+)\&quot;&quot;);</span>
-<span class="nc" id="L87">		final Matcher m = p.matcher(svg);</span>
-<span class="nc" id="L88">		double minX = Double.MAX_VALUE;</span>
-<span class="nc" id="L89">		double minY = Double.MAX_VALUE;</span>
-<span class="nc" id="L90">		double maxX = -Double.MAX_VALUE;</span>
-<span class="nc" id="L91">		double maxY = -Double.MAX_VALUE;</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L93">			return;</span>
-		}
-<span class="nc" id="L95">		final String points = m.group(1);</span>
-<span class="nc" id="L96">		final StringTokenizer st = new StringTokenizer(points, &quot; &quot;);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L98">			final String token = st.nextToken();</span>
-<span class="nc" id="L99">			final StringTokenizer st2 = new StringTokenizer(token, &quot;,&quot;);</span>
-<span class="nc" id="L100">			final double x = Double.parseDouble(StringUtils.trin(st2.nextToken()));</span>
-<span class="nc" id="L101">			final double y = Double.parseDouble(StringUtils.trin(st2.nextToken()));</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (x &lt; minX) {</span>
-<span class="nc" id="L103">				minX = x;</span>
-			}
-<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (y &lt; minY) {</span>
-<span class="nc" id="L106">				minY = y;</span>
-			}
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (x &gt; maxX) {</span>
-<span class="nc" id="L109">				maxX = x;</span>
-			}
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (y &gt; maxY) {</span>
-<span class="nc" id="L112">				maxY = y;</span>
-			}
-<span class="nc" id="L114">		}</span>
+<span class="nc" id="L85">	private static final Pattern POLYGON = Pattern.compile(&quot;(?i)&lt;polygon\\s+[^&gt;]*points=\&quot;([^\&quot;]+)\&quot;&quot;);</span>
 
-<span class="nc" id="L116">		this.width = maxX - minX;</span>
-<span class="nc" id="L117">		this.height = maxY - minY;</span>
-<span class="nc" id="L118">	}</span>
+	private void init() {
+<span class="nc" id="L88">		final Matcher m = POLYGON.matcher(svg);</span>
+<span class="nc" id="L89">		double minX = Double.MAX_VALUE;</span>
+<span class="nc" id="L90">		double minY = Double.MAX_VALUE;</span>
+<span class="nc" id="L91">		double maxX = -Double.MAX_VALUE;</span>
+<span class="nc" id="L92">		double maxY = -Double.MAX_VALUE;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L94">			return;</span>
+		}
+<span class="nc" id="L96">		final String points = m.group(1);</span>
+<span class="nc" id="L97">		final StringTokenizer st = new StringTokenizer(points, &quot; &quot;);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L99">			final String token = st.nextToken();</span>
+<span class="nc" id="L100">			final StringTokenizer st2 = new StringTokenizer(token, &quot;,&quot;);</span>
+<span class="nc" id="L101">			final double x = Double.parseDouble(StringUtils.trin(st2.nextToken()));</span>
+<span class="nc" id="L102">			final double y = Double.parseDouble(StringUtils.trin(st2.nextToken()));</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (x &lt; minX) {</span>
+<span class="nc" id="L104">				minX = x;</span>
+			}
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (y &lt; minY) {</span>
+<span class="nc" id="L107">				minY = y;</span>
+			}
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (x &gt; maxX) {</span>
+<span class="nc" id="L110">				maxX = x;</span>
+			}
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (y &gt; maxY) {</span>
+<span class="nc" id="L113">				maxY = y;</span>
+			}
+<span class="nc" id="L115">		}</span>
+
+<span class="nc" id="L117">		this.width = maxX - minX;</span>
+<span class="nc" id="L118">		this.height = maxY - minY;</span>
+<span class="nc" id="L119">	}</span>
 
 	private String modifiedSvgXmlHeader() {
-<span class="nc" id="L121">		final StringBuilder newString = new StringBuilder(</span>
+<span class="nc" id="L122">		final StringBuilder newString = new StringBuilder(</span>
 				&quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; &quot;);
-<span class="nc" id="L123">		newString.append(&quot;style=\&quot;width:&quot;);</span>
-<span class="nc" id="L124">		newString.append(Math.round(getWidth()));</span>
-<span class="nc" id="L125">		newString.append(&quot;;height:&quot;);</span>
-<span class="nc" id="L126">		newString.append(Math.round(getHeight()));</span>
-<span class="nc" id="L127">		newString.append(&quot;;\&quot; &quot;);</span>
-<span class="nc" id="L128">		newString.append(&quot;width=\&quot;&quot; + Math.round(getWidth()) + &quot;pt\&quot; &quot;);</span>
-<span class="nc" id="L129">		newString.append(&quot;height=\&quot;&quot; + Math.round(getHeight()) + &quot;pt\&quot; &quot;);</span>
-<span class="nc" id="L130">		newString.append(&quot;viewBox=\&quot;&quot; + Math.round(startX) + &quot; &quot; + Math.round(startY) + &quot; &quot; + Math.round(getWidth())</span>
-<span class="nc" id="L131">				+ &quot; &quot; + Math.round(getHeight()) + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L124">		newString.append(&quot;style=\&quot;width:&quot;);</span>
+<span class="nc" id="L125">		newString.append(Math.round(getWidth()));</span>
+<span class="nc" id="L126">		newString.append(&quot;;height:&quot;);</span>
+<span class="nc" id="L127">		newString.append(Math.round(getHeight()));</span>
+<span class="nc" id="L128">		newString.append(&quot;;\&quot; &quot;);</span>
+<span class="nc" id="L129">		newString.append(&quot;width=\&quot;&quot; + Math.round(getWidth()) + &quot;pt\&quot; &quot;);</span>
+<span class="nc" id="L130">		newString.append(&quot;height=\&quot;&quot; + Math.round(getHeight()) + &quot;pt\&quot; &quot;);</span>
+<span class="nc" id="L131">		newString.append(&quot;viewBox=\&quot;&quot; + Math.round(startX) + &quot; &quot; + Math.round(startY) + &quot; &quot; + Math.round(getWidth())</span>
+<span class="nc" id="L132">				+ &quot; &quot; + Math.round(getHeight()) + &quot;\&quot;&quot;);</span>
 		// newString.append(&quot;viewBox=\&quot;&quot; + Math.round(minX) + &quot; &quot; +
 		// Math.round(minY) + &quot; &quot; + Math.round(getWidth()) + &quot; &quot;
 		// + Math.round(getHeight()) + &quot;\&quot;&quot;);
-<span class="nc" id="L135">		newString.append(&quot;&gt;&quot;);</span>
-<span class="nc" id="L136">		return svg.replaceFirst(&quot;(?i)&lt;svg[^&gt;]*&gt;&quot;, newString.toString());</span>
+<span class="nc" id="L136">		newString.append(&quot;&gt;&quot;);</span>
+<span class="nc" id="L137">		return svg.replaceFirst(&quot;(?i)&lt;svg[^&gt;]*&gt;&quot;, newString.toString());</span>
 	}
 
 	public double getWidth() {
-<span class="nc" id="L140">		return width;</span>
+<span class="nc" id="L141">		return width;</span>
 	}
 
 	public double getHeight() {
-<span class="nc" id="L144">		return height;</span>
+<span class="nc" id="L145">		return height;</span>
 	}
 
 }

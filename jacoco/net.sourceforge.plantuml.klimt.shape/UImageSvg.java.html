@@ -91,59 +91,63 @@ public class UImageSvg implements UShape {
 <span class="nc" id="L91">		return result;</span>
 	}
 
-	private String extractBackground(String style) {
-<span class="nc" id="L95">		final Pattern p = Pattern.compile(&quot;background:([^;]+)&quot;);</span>
-<span class="nc" id="L96">		final Matcher m = p.matcher(style);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L98">			return m.group(1);</span>
+<span class="nc" id="L94">	private static final Pattern BACKGROUND = Pattern.compile(&quot;background:([^;]+)&quot;);</span>
 
-<span class="nc" id="L100">		return null;</span>
+	private String extractBackground(String style) {
+<span class="nc" id="L97">		final Matcher m = BACKGROUND.matcher(style);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L99">			return m.group(1);</span>
+
+<span class="nc" id="L101">		return null;</span>
 	}
+
+<span class="nc" id="L104">	private static final Pattern STYLE = Pattern.compile(&quot;(?i)\\&lt;svg[^&gt;]+style=\&quot;([^\&quot;&gt;]+)\&quot;&quot;);</span>
 
 	private String extractSvgStyle() {
-<span class="nc" id="L104">		final Pattern p = Pattern.compile(&quot;(?i)\\&lt;svg[^&gt;]+style=\&quot;([^\&quot;&gt;]+)\&quot;&quot;);</span>
-<span class="nc" id="L105">		final Matcher m = p.matcher(svg);</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L107">			return m.group(1);</span>
+<span class="nc" id="L107">		final Matcher m = STYLE.matcher(svg);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L109">			return m.group(1);</span>
 
-<span class="nc" id="L109">		return null;</span>
+<span class="nc" id="L111">		return null;</span>
 	}
 
+<span class="nc" id="L114">	private static final Pattern VIEWBOX = Pattern</span>
+<span class="nc" id="L115">			.compile(&quot;viewBox[= \&quot;\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)&quot;);</span>
+
 	public int getData(String name) {
-<span class="nc" id="L113">		final Pattern p2 = Pattern.compile(&quot;viewBox[= \&quot;\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)&quot;);</span>
-<span class="nc" id="L114">		final Matcher m2 = p2.matcher(svg);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (m2.find()) {</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (&quot;width&quot;.equals(name)) {</span>
-<span class="nc" id="L117">				final String s = m2.group(3);</span>
-<span class="nc" id="L118">				final int width = (int) Double.parseDouble(s);</span>
-<span class="nc" id="L119">				return width;</span>
+<span class="nc" id="L118">		final Matcher m2 = VIEWBOX.matcher(svg);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (m2.find()) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (&quot;width&quot;.equals(name)) {</span>
+<span class="nc" id="L121">				final String s = m2.group(3);</span>
+<span class="nc" id="L122">				final int width = (int) Double.parseDouble(s);</span>
+<span class="nc" id="L123">				return width;</span>
 			}
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (&quot;height&quot;.equals(name)) {</span>
-<span class="nc" id="L122">				final String s = m2.group(4);</span>
-<span class="nc" id="L123">				final int result = (int) Double.parseDouble(s);</span>
-<span class="nc" id="L124">				return result;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (&quot;height&quot;.equals(name)) {</span>
+<span class="nc" id="L126">				final String s = m2.group(4);</span>
+<span class="nc" id="L127">				final int result = (int) Double.parseDouble(s);</span>
+<span class="nc" id="L128">				return result;</span>
 			}
 		}
-<span class="nc" id="L127">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
-<span class="nc" id="L128">		final Matcher m = p.matcher(svg);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (m.find()) {</span>
-<span class="nc" id="L130">			final String s = m.group(1);</span>
-<span class="nc" id="L131">			return Integer.parseInt(s);</span>
+<span class="nc" id="L131">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
+<span class="nc" id="L132">		final Matcher m = p.matcher(svg);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L134">			final String s = m.group(1);</span>
+<span class="nc" id="L135">			return Integer.parseInt(s);</span>
 		}
 
-<span class="nc" id="L134">		throw new IllegalStateException(&quot;Cannot find &quot; + name);</span>
+<span class="nc" id="L138">		throw new IllegalStateException(&quot;Cannot find &quot; + name);</span>
 	}
 
 	public double getHeight() {
-<span class="nc" id="L138">		return this.getData(&quot;height&quot;) * scale;</span>
+<span class="nc" id="L142">		return this.getData(&quot;height&quot;) * scale;</span>
 	}
 
 	public double getWidth() {
-<span class="nc" id="L142">		return this.getData(&quot;width&quot;) * scale;</span>
+<span class="nc" id="L146">		return this.getData(&quot;width&quot;) * scale;</span>
 	}
 
 	public double getScale() {
-<span class="nc" id="L146">		return scale;</span>
+<span class="nc" id="L150">		return scale;</span>
 	}
 
 }

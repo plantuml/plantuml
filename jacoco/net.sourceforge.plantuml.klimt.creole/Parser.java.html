@@ -62,28 +62,30 @@ import java.util.regex.Pattern;
 <span class="fc" id="L62">		return line.startsWith(&quot;|_&quot;);</span>
 	}
 
+<span class="fc" id="L65">	private static final Pattern SCALE = Pattern.compile(&quot;(?:scale=|\\*)([0-9.]+)&quot;);</span>
+
 	public static double getScale(String s, double def) {
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (s == null)</span>
-<span class="fc" id="L67">			return def;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (s == null)</span>
+<span class="fc" id="L69">			return def;</span>
 
-<span class="fc" id="L69">		final Pattern p = Pattern.compile(&quot;(?:scale=|\\*)([0-9.]+)&quot;);</span>
-<span class="fc" id="L70">		final Matcher m = p.matcher(s);</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L72">			return Double.parseDouble(m.group(1));</span>
+<span class="fc" id="L71">		final Matcher m = SCALE.matcher(s);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L73">			return Double.parseDouble(m.group(1));</span>
 
-<span class="fc" id="L74">		return def;</span>
+<span class="fc" id="L75">		return def;</span>
 	}
 
+<span class="fc" id="L78">	private static final Pattern COLOR = Pattern.compile(&quot;color[= :](#[0-9a-fA-F]{1,6}|\\w+)&quot;);</span>
+
 	public static String getColor(String s) {
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (s == null)</span>
-<span class="nc" id="L79">			return null;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L82">			return null;</span>
 
-<span class="fc" id="L81">		final Pattern p = Pattern.compile(&quot;color[= :](#[0-9a-fA-F]{1,6}|\\w+)&quot;);</span>
-<span class="fc" id="L82">		final Matcher m = p.matcher(s);</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L84">			return m.group(1);</span>
+<span class="fc" id="L84">		final Matcher m = COLOR.matcher(s);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L86">			return m.group(1);</span>
 
-<span class="fc" id="L86">		return null;</span>
+<span class="fc" id="L88">		return null;</span>
 	}
 
 }

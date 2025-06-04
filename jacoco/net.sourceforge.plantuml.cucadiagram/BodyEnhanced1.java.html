@@ -195,50 +195,51 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 <span class="nc" id="L195">		return result;</span>
 	}
 
+<span class="fc" id="L198">	private static final Pattern p = Pattern.compile(&quot;^(\\s+)&quot;);</span>
+	
 	private static List&lt;CharSequence&gt; buildTreeOrTable(String init, ListIterator&lt;CharSequence&gt; it) {
-<span class="nc" id="L199">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L200">		final Pattern p = Pattern.compile(&quot;^(\\s+)&quot;);</span>
-<span class="nc" id="L201">		final Matcher m = p.matcher(init);</span>
-<span class="nc" id="L202">		String start = &quot;&quot;;</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L204">			start = m.group(1);</span>
+<span class="nc" id="L201">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L202">		final Matcher m = p.matcher(init);</span>
+<span class="nc" id="L203">		String start = &quot;&quot;;</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L205">			start = m.group(1);</span>
 
-<span class="nc" id="L206">		result.add(purge(init, start));</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L208">			String s = it.next().toString();</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">			if (isTreeOrTable(s)) {</span>
-<span class="nc" id="L210">				result.add(purge(s, start));</span>
+<span class="nc" id="L207">		result.add(purge(init, start));</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L209">			String s = it.next().toString();</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (isTreeOrTable(s)) {</span>
+<span class="nc" id="L211">				result.add(purge(s, start));</span>
 			} else {
-<span class="nc" id="L212">				it.previous();</span>
-<span class="nc" id="L213">				return result;</span>
+<span class="nc" id="L213">				it.previous();</span>
+<span class="nc" id="L214">				return result;</span>
 			}
 
-<span class="nc" id="L216">		}</span>
-<span class="nc" id="L217">		return result;</span>
+<span class="nc" id="L217">		}</span>
+<span class="nc" id="L218">		return result;</span>
 	}
 
 	private static String purge(String s, String start) {
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (s.startsWith(start))</span>
-<span class="nc" id="L222">			return s.substring(start.length());</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (s.startsWith(start))</span>
+<span class="nc" id="L223">			return s.substring(start.length());</span>
 
-<span class="nc" id="L224">		return s;</span>
+<span class="nc" id="L225">		return s;</span>
 	}
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-<span class="nc" id="L229">		final TextBlock area = getArea(stringBounder);</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (area instanceof WithPorts)</span>
-<span class="nc" id="L231">			return ((WithPorts) area).getPorts(stringBounder);</span>
+<span class="nc" id="L230">		final TextBlock area = getArea(stringBounder);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (area instanceof WithPorts)</span>
+<span class="nc" id="L232">			return ((WithPorts) area).getPorts(stringBounder);</span>
 
-<span class="nc" id="L233">		return new Ports();</span>
+<span class="nc" id="L234">		return new Ports();</span>
 	}
 
 	public List&lt;Url&gt; getUrls() {
-<span class="nc" id="L237">		return Collections.unmodifiableList(urls);</span>
+<span class="nc" id="L238">		return Collections.unmodifiableList(urls);</span>
 	}
 
 	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L241">		return getArea(stringBounder).getInnerPosition(member, stringBounder, strategy);</span>
+<span class="nc" id="L242">		return getArea(stringBounder).getInnerPosition(member, stringBounder, strategy);</span>
 	}
 
 }
