@@ -8,7 +8,7 @@ root {
   RoundCorner 15
   DiagonalCorner 0
   LineColor #3600A8
-  LineThickness 1.0
+  LineThickness 4
   BackGroundColor #AAA
   Shadowing 0.0
 }
@@ -101,7 +101,7 @@ reference {
 }
 
 box {
-  LineThickness 0.1
+  LineThickness 4
   LineColor FireBrick
   BackGroundColor PowderBlue
 
@@ -124,36 +124,40 @@ delay {
   FontStyle italic
 }
 
+newpage {
+  Linecolor fuchsia
+}
+
 participant {
-  LineThickness 2.5
+  LineThickness 4
 }
 
 actor {
-  LineThickness 0.5
+  LineThickness 4
 }
 
 boundary {
-  LineThickness 1.5
+  LineThickness 4
 }
 
 control {
-  LineThickness 1.5
+  LineThickness 4
 }
 
 entity {
-  LineThickness 1.5
+  LineThickness 4
 }
 
 queue {
-  LineThickness 1.5
+  LineThickness 4
 }
 
 database {
-  LineThickness 1.5
+  LineThickness 4
 }
 
 collections {
-  LineThickness 1.5
+  LineThickness 4
 }
 
 arrow {
