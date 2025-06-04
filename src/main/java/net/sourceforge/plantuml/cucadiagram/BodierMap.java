@@ -73,25 +73,27 @@ public class BodierMap implements Bodier {
 
 	}
 
+	private static final Pattern p = Pattern.compile("(\\*-+_?\\>)");
+
 	public static String getLinkedEntry(String s) {
 		final Pattern p = Pattern.compile("(\\*-+_?\\>)");
 		final Matcher m = p.matcher(s);
-		if (m.find()) {
+		if (m.find())
 			return m.group(1);
-		}
+
 		return null;
 	}
 
 	@Override
 	public boolean addFieldOrMethod(String s) {
-		if (s.contains("=>")) {
-			final int x = s.indexOf("=>");
+		final int x = s.indexOf("=>");
+		if (x != -1) {
 			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());
 			return true;
 		} else if (getLinkedEntry(s) != null) {
 			final String link = getLinkedEntry(s);
-			final int x = s.indexOf(link);
-			map.put(s.substring(0, x).trim(), "\0");
+			final int pos = s.indexOf(link);
+			map.put(s.substring(0, pos).trim(), "\0");
 			return true;
 		}
 		return false;

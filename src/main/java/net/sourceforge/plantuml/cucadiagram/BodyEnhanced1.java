@@ -195,9 +195,10 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		return result;
 	}
 
+	private static final Pattern p = Pattern.compile("^(\\s+)");
+	
 	private static List<CharSequence> buildTreeOrTable(String init, ListIterator<CharSequence> it) {
 		final List<CharSequence> result = new ArrayList<>();
-		final Pattern p = Pattern.compile("^(\\s+)");
 		final Matcher m = p.matcher(init);
 		String start = "";
 		if (m.find())

@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.klimt.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -458,8 +457,9 @@ public class Display implements Iterable<CharSequence> {
 				this.defaultCreoleMode);
 	}
 
+	private static final Pattern p = Pattern.compile("^([^:]+?)(\\s*:.+)$");
+
 	public Display underlinedName() {
-		final Pattern p = Pattern.compile("^([^:]+?)(\\s*:.+)$");
 		final List<CharSequence> result = new ArrayList<>();
 		for (CharSequence line : displayData) {
 			if (result.size() == 0) {

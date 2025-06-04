@@ -704,8 +704,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return openClose.getLoadAt(day) > 0;
 	}
 
+	private static final Pattern p = Pattern.compile("([^:]+)(:(\\d+))?");
+
 	public boolean affectResource(Task result, String description) {
-		final Pattern p = Pattern.compile("([^:]+)(:(\\d+))?");
 		final Matcher m = p.matcher(description);
 		if (m.find() == false)
 			throw new IllegalArgumentException();

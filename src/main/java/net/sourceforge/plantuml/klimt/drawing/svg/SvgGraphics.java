@@ -1055,11 +1055,12 @@ public class SvgGraphics {
 			this.target = target;
 		}
 
+		private static final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
+
 		String getXlinkTitle() {
 			if (title == null)
 				return url;
 
-			final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
 			final Matcher m = p.matcher(title);
 			final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
 			while (m.find()) {

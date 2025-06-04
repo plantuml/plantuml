@@ -100,10 +100,11 @@ public class YamlLines implements Iterable<String> {
 		return s;
 	}
 
+	private static final Pattern p1 = Pattern.compile("^(\\s*[-])(\\s*\\S.*)$");
+
 	private void manageList() {
 		final List<String> result = new ArrayList<>();
 		for (String s : lines) {
-			final Pattern p1 = Pattern.compile("^(\\s*[-])(\\s*\\S.*)$");
 			final Matcher m1 = p1.matcher(s);
 			if (s.contains(": ") && m1.matches()) {
 				result.add(m1.group(1));
@@ -138,9 +139,10 @@ public class YamlLines implements Iterable<String> {
 		return result;
 	}
 
+	private static final Pattern STARTING_SPACES = Pattern.compile("^(\\s*).*");
+
 	private static int startingSpaces(String s) {
-		final Pattern p1 = Pattern.compile("^(\\s*).*");
-		final Matcher m1 = p1.matcher(s);
+		final Matcher m1 = STARTING_SPACES.matcher(s);
 		if (m1.matches())
 			return m1.group(1).length();
 

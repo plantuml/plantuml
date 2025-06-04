@@ -62,24 +62,26 @@ public class Parser {
 		return line.startsWith("|_");
 	}
 
+	private static final Pattern SCALE = Pattern.compile("(?:scale=|\\*)([0-9.]+)");
+
 	public static double getScale(String s, double def) {
 		if (s == null)
 			return def;
 
-		final Pattern p = Pattern.compile("(?:scale=|\\*)([0-9.]+)");
-		final Matcher m = p.matcher(s);
+		final Matcher m = SCALE.matcher(s);
 		if (m.find())
 			return Double.parseDouble(m.group(1));
 
 		return def;
 	}
 
+	private static final Pattern COLOR = Pattern.compile("color[= :](#[0-9a-fA-F]{1,6}|\\w+)");
+
 	public static String getColor(String s) {
 		if (s == null)
 			return null;
 
-		final Pattern p = Pattern.compile("color[= :](#[0-9a-fA-F]{1,6}|\\w+)");
-		final Matcher m = p.matcher(s);
+		final Matcher m = COLOR.matcher(s);
 		if (m.find())
 			return m.group(1);
 

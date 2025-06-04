@@ -91,27 +91,31 @@ public class UImageSvg implements UShape {
 		return result;
 	}
 
+	private static final Pattern BACKGROUND = Pattern.compile("background:([^;]+)");
+
 	private String extractBackground(String style) {
-		final Pattern p = Pattern.compile("background:([^;]+)");
-		final Matcher m = p.matcher(style);
+		final Matcher m = BACKGROUND.matcher(style);
 		if (m.find())
 			return m.group(1);
 
 		return null;
 	}
+
+	private static final Pattern STYLE = Pattern.compile("(?i)\\<svg[^>]+style=\"([^\">]+)\"");
 
 	private String extractSvgStyle() {
-		final Pattern p = Pattern.compile("(?i)\\<svg[^>]+style=\"([^\">]+)\"");
-		final Matcher m = p.matcher(svg);
+		final Matcher m = STYLE.matcher(svg);
 		if (m.find())
 			return m.group(1);
 
 		return null;
 	}
 
+	private static final Pattern VIEWBOX = Pattern
+			.compile("viewBox[= \"\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)");
+
 	public int getData(String name) {
-		final Pattern p2 = Pattern.compile("viewBox[= \"\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)");
-		final Matcher m2 = p2.matcher(svg);
+		final Matcher m2 = VIEWBOX.matcher(svg);
 		if (m2.find()) {
 			if ("width".equals(name)) {
 				final String s = m2.group(3);

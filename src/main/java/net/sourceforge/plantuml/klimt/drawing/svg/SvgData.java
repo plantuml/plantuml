@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 
 public final class SvgData {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private String svg;
 	private double startX;
@@ -82,9 +82,10 @@ public final class SvgData {
 		return modifiedSvgXmlHeader();
 	}
 
+	private static final Pattern POLYGON = Pattern.compile("(?i)<polygon\\s+[^>]*points=\"([^\"]+)\"");
+
 	private void init() {
-		final Pattern p = Pattern.compile("(?i)<polygon\\s+[^>]*points=\"([^\"]+)\"");
-		final Matcher m = p.matcher(svg);
+		final Matcher m = POLYGON.matcher(svg);
 		double minX = Double.MAX_VALUE;
 		double minY = Double.MAX_VALUE;
 		double maxX = -Double.MAX_VALUE;

@@ -55,16 +55,17 @@ public class SimpleYamlParser {
 		pendingIndents.clear();
 		pendingIndents.add(0);
 		final YamlLines yamlLines = new YamlLines(lines);
-		for (String s : yamlLines) {
+		for (String s : yamlLines)
 			parseSingleLine(s);
-		}
+
 		return result;
 
 	}
 
+	private static final Pattern NAME_AND_VALUE = Pattern.compile("^\\s*" + YamlLines.KEY + "\\s*: \\s*(\\S.*)$");
+
 	private String[] nameAndValue(String s) {
-		final Pattern p1 = Pattern.compile("^\\s*" + YamlLines.KEY + "\\s*: \\s*(\\S.*)$");
-		final Matcher m1 = p1.matcher(s);
+		final Matcher m1 = NAME_AND_VALUE.matcher(s);
 		if (m1.matches()) {
 			final String name = m1.group(1);
 			final String data = m1.group(2).trim();
@@ -112,8 +113,9 @@ public class SimpleYamlParser {
 		throw new UnsupportedOperationException(s);
 	}
 
+	private static final Pattern p1 = Pattern.compile("^\\s*[-]\\s*(\\S.*)$");
+
 	private String listedValue(String s) {
-		final Pattern p1 = Pattern.compile("^\\s*[-]\\s*(\\S.*)$");
 		final Matcher m1 = p1.matcher(s);
 		if (m1.matches()) {
 			final String name = m1.group(1).trim();
@@ -124,9 +126,9 @@ public class SimpleYamlParser {
 
 	private JsonArray getForceArray(int indent) {
 		if (indent == 0 && getLastIndent() == 0) {
-			if (result instanceof JsonArray == false) {
+			if (result instanceof JsonArray == false)
 				result = new JsonArray();
-			}
+
 			return (JsonArray) result;
 		}
 		while (getLastIndent() > indent - 1)
@@ -134,17 +136,17 @@ public class SimpleYamlParser {
 
 		final JsonObject last = (JsonObject) search(result, pendingIndents.size());
 		final String field = last.names().get(last.size() - 1);
-		if (last.get(field) instanceof JsonArray == false) {
+		if (last.get(field) instanceof JsonArray == false)
 			last.set(field, new JsonArray());
-		}
+
 		return (JsonArray) last.get(field);
 	}
 
 	private void strictMuteToArray(int indent) {
 		if (indent == 0 && getLastIndent() == 0) {
-			if (result instanceof JsonArray == false) {
+			if (result instanceof JsonArray == false)
 				result = new JsonArray();
-			}
+
 			return;
 		}
 		while (getLastIndent() > indent)
@@ -157,11 +159,11 @@ public class SimpleYamlParser {
 
 		final JsonObject last = (JsonObject) search(result, pendingIndents.size());
 		final String field = last.names().get(last.size() - 1);
-		if (last.get(field) instanceof JsonArray == false) {
+		if (last.get(field) instanceof JsonArray == false)
 			last.set(field, new JsonArray());
-		} else {
+		else
 			((JsonArray) last.get(field)).add(new JsonObject());
-		}
+
 	}
 
 	private boolean isListStrict(String s) {
@@ -177,13 +179,12 @@ public class SimpleYamlParser {
 			pendingIndents.add(indent);
 			return search(result, pendingIndents.size());
 		}
-		if (indent == getLastIndent()) {
+		if (indent == getLastIndent())
 			return search(result, pendingIndents.size());
-		}
+
 		final int idx = pendingIndents.indexOf(indent);
-		if (idx == -1) {
+		if (idx == -1)
 			return null;
-		}
 
 		while (pendingIndents.size() > idx + 1)
 			pendingIndents.remove(pendingIndents.size() - 1);
@@ -204,9 +205,8 @@ public class SimpleYamlParser {
 			}
 			return tmp;
 		}
-		if (size <= 1) {
+		if (size <= 1)
 			return current1;
-		}
 
 		final JsonObject current = (JsonObject) current1;
 		final String last = current.names().get(current.size() - 1);
@@ -232,11 +232,11 @@ public class SimpleYamlParser {
 		int indent = 0;
 		for (int i = 0; i < s.length(); i++) {
 			final char ch = s.charAt(i);
-			if (ch == ' ' || ch == '\t') {
+			if (ch == ' ' || ch == '\t')
 				indent++;
-			} else {
+			else
 				return indent;
-			}
+
 		}
 		return 0;
 	}
