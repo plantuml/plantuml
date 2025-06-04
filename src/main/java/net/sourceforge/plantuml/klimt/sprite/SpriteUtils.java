@@ -49,7 +49,7 @@ public class SpriteUtils {
 
 	// ::comment when __CORE__
 	public static String encodeColor(BufferedImage img, String name) {
-		final StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() * 2);
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/color] {\n");
 		final List<String> result = SpriteColorBuilder4096.encodeImage(img);
 		for (String s : result) {
@@ -61,7 +61,7 @@ public class SpriteUtils {
 	}
 
 	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);
 		sb.append(
 				"sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "] {\n");
 		final List<String> result = level.encode(img);
@@ -74,7 +74,7 @@ public class SpriteUtils {
 	}
 
 	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "z] ");
 		final List<String> list = level.encodeZ(img);
 		if (list.size() == 1) {

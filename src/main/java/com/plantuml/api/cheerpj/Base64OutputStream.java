@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 public class Base64OutputStream extends OutputStream {
 
-	private final StringBuilder sb = new StringBuilder();
+	private final StringBuilder sb = new StringBuilder(2048);
 
 	private int nb;
 	private byte a;

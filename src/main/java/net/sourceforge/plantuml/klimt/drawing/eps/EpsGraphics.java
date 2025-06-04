@@ -702,7 +702,7 @@ public class EpsGraphics {
 		append("" + width + " " + height + " 8 [" + width + " 0 0 -" + height + " 0 " + height + "]", true);
 		// append("" + width + " " + height + " 8 [0 0 0 0 0 0]");
 		append("{<", true);
-		final StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder(width * height * 6);
 		for (int j = height - 1; j >= 0; j--)
 			for (int i = 0; i < width; i++) {
 				final String hexString = getRgb(image.getRGB(i, j));

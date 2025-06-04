@@ -76,6 +76,10 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return segments.size() == 0;
 	}
 
+	public int size() {
+		return segments.size();
+	}
+
 	private void addInternal(USegment segment) {
 		segments.add(segment);
 		final double coord[] = segment.getCoord();

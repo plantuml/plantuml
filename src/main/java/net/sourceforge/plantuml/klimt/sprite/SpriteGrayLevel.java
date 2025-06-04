@@ -103,7 +103,7 @@ public enum SpriteGrayLevel {
 		final List<String> result = new ArrayList<>();
 
 		for (int y = 0; y < height; y++) {
-			final StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder(width);
 			for (int x = 0; x < width; x++) {
 				final int level = getGrayOn16(img, x, y);
 				final char code = "0123456789ABCDEF".charAt(level);
@@ -122,7 +122,7 @@ public enum SpriteGrayLevel {
 		final List<String> result = new ArrayList<>();
 
 		for (int y = 0; y < height; y += 2) {
-			final StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder(width);
 			for (int x = 0; x < width; x++) {
 				final int level1 = getGrayOn16(img, x, y) / 2;
 				assert level1 >= 0 && level1 <= 7;
@@ -144,7 +144,7 @@ public enum SpriteGrayLevel {
 		final List<String> result = new ArrayList<>();
 
 		for (int y = 0; y < height; y += 3) {
-			final StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder(width);
 			for (int x = 0; x < width; x++) {
 				final int level1 = getGrayOn16(img, x, y) / 4;
 				assert level1 >= 0 && level1 <= 3;
@@ -208,9 +208,9 @@ public enum SpriteGrayLevel {
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, 8);
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < strings.size(); line++) {
-				if (col >= strings.get(line).length()) {
+				if (col >= strings.get(line).length())
 					continue;
-				}
+
 				final int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));
 				final int w1 = v / 8;
 				final int w2 = v % 8;
@@ -226,9 +226,9 @@ public enum SpriteGrayLevel {
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, 4);
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < strings.size(); line++) {
-				if (col >= strings.get(line).length()) {
+				if (col >= strings.get(line).length())
 					continue;
-				}
+
 				int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));
 				final int w1 = v / 16;
 				v = v % 16;
@@ -250,12 +250,12 @@ public enum SpriteGrayLevel {
 		final byte raw[] = new byte[width * height];
 		int cpt = 0;
 		final int coef = 16 / nbColor;
-		for (int y = 0; y < height; y++) {
+		for (int y = 0; y < height; y++)
 			for (int x = 0; x < width; x++) {
 				final int color = getGrayOn16(img, x, y) / coef;
 				raw[cpt++] = (byte) color;
 			}
-		}
+
 		// final byte[] comp = new CompressionZlib().compress(raw);
 		final byte[] comp = new CompressionZopfliZlib().compress(raw);
 		return cut(new AsciiEncoderFinalZeros().encode(comp));
