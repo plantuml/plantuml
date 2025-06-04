@@ -1289,22 +1289,23 @@ import smetana.core.debug.SmetanaDebug;
 <span class="fc" id="L1289">		return (((a).x - (b).x) * ((a).x - (b).x)) + (((a).y - (b).y) * ((a).y - (b).y));</span>
 	}
 
+<span class="fc" id="L1292">	private static final Pattern p = Pattern.compile(&quot;_dim_([.\\d]+)_([\\d.]+)_&quot;);</span>
+
 	public static void hackInitDimensionFromLabel(ST_pointf size, String label) {
-<span class="fc" id="L1293">		final Pattern p = Pattern.compile(&quot;_dim_([.\\d]+)_([\\d.]+)_&quot;);</span>
-<span class="fc" id="L1294">		final Matcher m = p.matcher(label);</span>
-<span class="fc bfc" id="L1295" title="All 2 branches covered.">		if (m.matches()) {</span>
-<span class="fc" id="L1296">			final double ww = Double.parseDouble(m.group(1));</span>
-<span class="fc" id="L1297">			final double hh = Double.parseDouble(m.group(2));</span>
-<span class="fc" id="L1298">			size.x = ww;</span>
-<span class="fc" id="L1299">			size.y = hh;</span>
-<span class="fc" id="L1300">			JUtils.LOG2(&quot;Hacking dimension to width=&quot; + ww + &quot; height=&quot; + hh);</span>
-<span class="fc" id="L1301">		} else {</span>
-<span class="fc" id="L1302">			JUtils.LOG2(&quot;Strange label &quot; + label);</span>
+<span class="fc" id="L1295">		final Matcher m = p.matcher(label);</span>
+<span class="fc bfc" id="L1296" title="All 2 branches covered.">		if (m.matches()) {</span>
+<span class="fc" id="L1297">			final double ww = Double.parseDouble(m.group(1));</span>
+<span class="fc" id="L1298">			final double hh = Double.parseDouble(m.group(2));</span>
+<span class="fc" id="L1299">			size.x = ww;</span>
+<span class="fc" id="L1300">			size.y = hh;</span>
+<span class="fc" id="L1301">			JUtils.LOG2(&quot;Hacking dimension to width=&quot; + ww + &quot; height=&quot; + hh);</span>
+<span class="fc" id="L1302">		} else {</span>
+<span class="fc" id="L1303">			JUtils.LOG2(&quot;Strange label &quot; + label);</span>
 		}
-<span class="fc" id="L1304">	}</span>
+<span class="fc" id="L1305">	}</span>
 
 	public static CString createHackInitDimensionFromLabel(int width, int height) {
-<span class="fc" id="L1307">		return new CString(&quot;_dim_&quot; + width + &quot;_&quot; + height + &quot;_&quot;);</span>
+<span class="fc" id="L1308">		return new CString(&quot;_dim_&quot; + width + &quot;_&quot; + height + &quot;_&quot;);</span>
 	}
 
 	// geom.h
@@ -1313,14 +1314,14 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define PF2P(pf,p) ((p).x = ROUND((pf).x),(p).y = ROUND((pf).y))
 	public static void PF2P(ST_pointf pf, ST_pointf p) {
-<span class="fc" id="L1316">		p.x = ROUND(pf.x);</span>
-<span class="fc" id="L1317">		p.y = ROUND(pf.y);</span>
-<span class="fc" id="L1318">	}</span>
+<span class="fc" id="L1317">		p.x = ROUND(pf.x);</span>
+<span class="fc" id="L1318">		p.y = ROUND(pf.y);</span>
+<span class="fc" id="L1319">	}</span>
 
 	public static void PF2P(ST_pointf pf, ST_point p) {
-<span class="fc" id="L1321">		p.x = ROUND(pf.x);</span>
-<span class="fc" id="L1322">		p.y = ROUND(pf.y);</span>
-<span class="fc" id="L1323">	}</span>
+<span class="fc" id="L1322">		p.x = ROUND(pf.x);</span>
+<span class="fc" id="L1323">		p.y = ROUND(pf.y);</span>
+<span class="fc" id="L1324">	}</span>
 
 	// #define B2BF(b,bf) (P2PF((b).LL,(bf).LL),P2PF((b).UR,(bf).UR))
 	// #define BF2B(bf,b) (PF2P((bf).LL,(b).LL),PF2P((bf).UR,(b).UR))
@@ -1406,23 +1407,23 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int LAYOUT_USES_RANKDIR = (1 &lt;&lt; 0);
 
 	public static void dtinsert(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1409">		d.searchf.exe(zz, d, o, DT_INSERT);</span>
-<span class="fc" id="L1410">	}</span>
+<span class="fc" id="L1410">		d.searchf.exe(zz, d, o, DT_INSERT);</span>
+<span class="fc" id="L1411">	}</span>
 
 	public static Object dtsearch(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1413">		return d.searchf.exe(zz, d, o, DT_SEARCH);</span>
+<span class="fc" id="L1414">		return d.searchf.exe(zz, d, o, DT_SEARCH);</span>
 	}
 
 	public static Object dtfirst(Globals zz, ST_dt_s d) {
-<span class="fc" id="L1417">		return d.searchf.exe(zz, d, null, DT_FIRST);</span>
+<span class="fc" id="L1418">		return d.searchf.exe(zz, d, null, DT_FIRST);</span>
 	}
 
 	public static Object dtnext(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1421">		return d.searchf.exe(zz, d, o, DT_NEXT);</span>
+<span class="fc" id="L1422">		return d.searchf.exe(zz, d, o, DT_NEXT);</span>
 	}
 
 	public static Object dtdelete(Globals zz, ST_dt_s d, Object o) {
-<span class="nc" id="L1425">		return d.searchf.exe(zz, d, o, DT_DELETE);</span>
+<span class="nc" id="L1426">		return d.searchf.exe(zz, d, o, DT_DELETE);</span>
 	}
 
 //	#define dtlink(d,e)	(((Dtlink_t*)(e))-&gt;right)
@@ -1502,25 +1503,25 @@ import smetana.core.debug.SmetanaDebug;
 //	#define rlink(r,x)	((r) = (r)-&gt;left   = (x) )
 //	#define llink(l,x)	((l) = (l)-&gt;right  = (x) )
 	public static void rrotate(ST_dtlink_s x, ST_dtlink_s y) {
-<span class="fc" id="L1505">		x._left = y.right;</span>
-<span class="fc" id="L1506">		y.right = x;</span>
-<span class="fc" id="L1507">	}</span>
+<span class="fc" id="L1506">		x._left = y.right;</span>
+<span class="fc" id="L1507">		y.right = x;</span>
+<span class="fc" id="L1508">	}</span>
 
 	public static void lrotate(ST_dtlink_s x, ST_dtlink_s y) {
-<span class="fc" id="L1510">		x.right = y._left;</span>
-<span class="fc" id="L1511">		y._left = x;</span>
-<span class="fc" id="L1512">	}</span>
+<span class="fc" id="L1511">		x.right = y._left;</span>
+<span class="fc" id="L1512">		y._left = x;</span>
+<span class="fc" id="L1513">	}</span>
 
 	public static ST_dtlink_s rlink____warning(ST_dtlink_s r, ST_dtlink_s x) {
-<span class="fc" id="L1515">		r._left = x;</span>
+<span class="fc" id="L1516">		r._left = x;</span>
 		// r = x; WARNING THIS IS DIFFERENT FROM C: you must use returned value
-<span class="fc" id="L1517">		return x;</span>
+<span class="fc" id="L1518">		return x;</span>
 	}
 
 	public static ST_dtlink_s llink____warning(ST_dtlink_s l, ST_dtlink_s x) {
-<span class="fc" id="L1521">		l.right = x;</span>
+<span class="fc" id="L1522">		l.right = x;</span>
 		// l = x; WARNING THIS IS DIFFERENT FROM C: you must use returned value
-<span class="fc" id="L1523">		return x;</span>
+<span class="fc" id="L1524">		return x;</span>
 	}
 
 	public static final int GVRENDER_PLUGIN = 300; /* a plugin supported language */
@@ -1538,15 +1539,15 @@ import smetana.core.debug.SmetanaDebug;
 //	#define agfindedgeattr(g,a) (agattr(g,AGEDGE,a,NULL))
 
 	public static ST_Agsym_s agfindgraphattr(Globals zz, ST_Agraph_s g, final String a) {
-<span class="fc" id="L1541">		return agattr(zz, g, AGRAPH, new CString(a), null);</span>
+<span class="fc" id="L1542">		return agattr(zz, g, AGRAPH, new CString(a), null);</span>
 	}
 
 	public static ST_Agsym_s agfindnodeattr(Globals zz, ST_Agraph_s g, final String a) {
-<span class="fc" id="L1545">		return agattr(zz, g, AGNODE, new CString(a), null);</span>
+<span class="fc" id="L1546">		return agattr(zz, g, AGNODE, new CString(a), null);</span>
 	}
 
 	public static ST_Agsym_s agfindedgeattr(Globals zz, ST_Agraph_s g, final String a) {
-<span class="fc" id="L1549">		return agattr(zz, g, AGEDGE, new CString(a), null);</span>
+<span class="fc" id="L1550">		return agattr(zz, g, AGEDGE, new CString(a), null);</span>
 	}
 
 	public static final double DEFAULT_NODESEP = 0.25;
@@ -1557,15 +1558,15 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int POINTS_PER_INCH = 72;
 
 	public static int POINTS(double a_inches) {
-<span class="fc" id="L1560">		return ROUND((a_inches) * POINTS_PER_INCH);</span>
+<span class="fc" id="L1561">		return ROUND((a_inches) * POINTS_PER_INCH);</span>
 	}
 
 	public static double INCH2PS(double a_inches) {
-<span class="fc" id="L1564">		return ((a_inches) * (double) POINTS_PER_INCH);</span>
+<span class="fc" id="L1565">		return ((a_inches) * (double) POINTS_PER_INCH);</span>
 	}
 
 	public static double PS2INCH(double a_points) {
-<span class="fc" id="L1568">		return ((a_points) / (double) POINTS_PER_INCH);</span>
+<span class="fc" id="L1569">		return ((a_points) / (double) POINTS_PER_INCH);</span>
 	}
 
 	/* drawing phases */
@@ -1594,22 +1595,22 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int GAP = 4;
 
 	public static void PAD(ST_pointf d) {
-<span class="fc" id="L1597">		XPAD(d);</span>
-<span class="fc" id="L1598">		YPAD(d);</span>
-<span class="fc" id="L1599">	}</span>
+<span class="fc" id="L1598">		XPAD(d);</span>
+<span class="fc" id="L1599">		YPAD(d);</span>
+<span class="fc" id="L1600">	}</span>
 
 	public static void YPAD(ST_pointf d) {
-<span class="fc" id="L1602">		d.y += 2 * GAP;</span>
-<span class="fc" id="L1603">	}</span>
+<span class="fc" id="L1603">		d.y += 2 * GAP;</span>
+<span class="fc" id="L1604">	}</span>
 
 	public static void XPAD(ST_pointf d) {
-<span class="fc" id="L1606">		d.x += 4 * GAP;</span>
-<span class="fc" id="L1607">	}</span>
+<span class="fc" id="L1607">		d.x += 4 * GAP;</span>
+<span class="fc" id="L1608">	}</span>
 
 	public static void UNFLATTEN(ST_dt_s dt) {
-<span class="pc bpc" id="L1610" title="1 of 2 branches missed.">		if ((dt.data.type &amp; DT_FLATTEN) != 0)</span>
-<span class="nc" id="L1611">			dtrestore(dt, null);</span>
-<span class="fc" id="L1612">	}</span>
+<span class="pc bpc" id="L1611" title="1 of 2 branches missed.">		if ((dt.data.type &amp; DT_FLATTEN) != 0)</span>
+<span class="nc" id="L1612">			dtrestore(dt, null);</span>
+<span class="fc" id="L1613">	}</span>
 
 	public static final int CB_INITIALIZE = 100;
 	public static final int CB_UPDATE = 101;
@@ -1620,23 +1621,23 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int CL_CROSS = 1000; /* cost of cluster skeleton edge crossing */
 
 	public static __ptr__ AGCLOS_id(ST_Agraph_s g) {
-<span class="fc" id="L1623">		return g.clos.state.id;</span>
+<span class="fc" id="L1624">		return g.clos.state.id;</span>
 	}
 
 	public static ST_Agiddisc_s AGDISC_id(ST_Agraph_s g) {
-<span class="fc" id="L1627">		return g.clos.disc.id;</span>
+<span class="fc" id="L1628">		return g.clos.disc.id;</span>
 	}
 
 	public static __ptr__ AGCLOS_mem(ST_Agraph_s g) {
-<span class="nc" id="L1631">		return g.clos.state.mem;</span>
+<span class="nc" id="L1632">		return g.clos.state.mem;</span>
 	}
 
 	public static ST_Agmemdisc_s AGDISC_mem(ST_Agraph_s g) {
-<span class="nc" id="L1635">		return g.clos.disc.mem;</span>
+<span class="nc" id="L1636">		return g.clos.disc.mem;</span>
 	}
 
 	public static ST_Agiodisc_s AGDISC_io(ST_Agraph_s g) {
-<span class="nc" id="L1639">		return g.clos.disc.io;</span>
+<span class="nc" id="L1640">		return g.clos.disc.io;</span>
 	}
 
 	public static final double DEFAULT_FONTSIZE = 14.00;
@@ -1659,34 +1660,34 @@ import smetana.core.debug.SmetanaDebug;
 
 	public static final int SHAPE_MASK = (127 &lt;&lt; 24);
 
-<span class="fc" id="L1662">	public static final CString HEAD_ID = new CString(&quot;headport&quot;);</span>
-<span class="fc" id="L1663">	public static final CString TAIL_ID = new CString(&quot;tailport&quot;);</span>
+<span class="fc" id="L1663">	public static final CString HEAD_ID = new CString(&quot;headport&quot;);</span>
+<span class="fc" id="L1664">	public static final CString TAIL_ID = new CString(&quot;tailport&quot;);</span>
 
 	public static __ptr__ _DTKEY(__ptr__ o, FieldOffset ky, int sz) {
 		// return (__ptr__) (sz &lt; 0 ? ((__ptr__)o).addVirtualBytes(ky) :
 		// ((__ptr__)o).addVirtualBytes(ky));
-<span class="fc" id="L1668">		return (__ptr__) o.getTheField(ky);</span>
+<span class="fc" id="L1669">		return (__ptr__) o.getTheField(ky);</span>
 	}
 
 	public static int _DTCMP(Globals zz, ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, CFunction cmpf,
 			int sz) {
-<span class="pc bpc" id="L1673" title="1 of 2 branches missed.">		return cmpf != null ? (Integer) ((CFunction) cmpf).exe(zz, dt, k1, k2, dc)</span>
-<span class="pc bpc" id="L1674" title="1 of 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
+<span class="pc bpc" id="L1674" title="1 of 2 branches missed.">		return cmpf != null ? (Integer) ((CFunction) cmpf).exe(zz, dt, k1, k2, dc)</span>
+<span class="pc bpc" id="L1675" title="1 of 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
 	}
 
 	public static final int SEARCHSIZE = 30;
 
 	public static ST_Agedge_s agfindedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
-<span class="nc" id="L1680">		return agedge(zz, g, t, h, null, false);</span>
+<span class="nc" id="L1681">		return agedge(zz, g, t, h, null, false);</span>
 	}
 
 	public static int flatindex(ST_Agnode_s v) {
-<span class="nc" id="L1684">		return ND_low(v);</span>
+<span class="nc" id="L1685">		return ND_low(v);</span>
 	}
 
 	public static void flatindex(ST_Agnode_s v, int data) {
-<span class="fc" id="L1688">		ND_low(v, data);</span>
-<span class="fc" id="L1689">	}</span>
+<span class="fc" id="L1689">		ND_low(v, data);</span>
+<span class="fc" id="L1690">	}</span>
 
 	public static final int NODECARD = 64;
 	public static final int SMALLBUF = 128;
@@ -1696,21 +1697,21 @@ import smetana.core.debug.SmetanaDebug;
 
 	public static ST_subtree_t ND_subtree(ST_Agnode_s n) {
 		// return (ST_subtree_t) ((ST_Agnodeinfo_t)AGDATA(n)).par;
-<span class="nc" id="L1699">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L1700">		throw new UnsupportedOperationException();</span>
 	}
 
 	public static void ND_subtree_set(ST_Agnode_s n, ST_subtree_t value) {
 		// ((ST_Agnodeinfo_t)AGDATA(n)).par = value;
-<span class="nc" id="L1704">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L1705">		throw new UnsupportedOperationException();</span>
 	}
 
 	// #define streq(a,b) (*(a)==*(b)&amp;&amp;!strcmp(a,b))
 	public static boolean streq(CString a, CString b) {
-<span class="pc bpc" id="L1709" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
+<span class="pc bpc" id="L1710" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
 	}
 
 	public static boolean streq(CString a, String b) {
-<span class="fc" id="L1713">		return streq(a, new CString(b));</span>
+<span class="fc" id="L1714">		return streq(a, new CString(b));</span>
 	}
 
 	public static final int ARR_NONE = 0;

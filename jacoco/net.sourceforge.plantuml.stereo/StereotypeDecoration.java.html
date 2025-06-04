@@ -183,16 +183,17 @@ public class StereotypeDecoration {
 <span class="fc" id="L183">		return new StereotypeDecoration(label, htmlColor, character, spriteName, spriteScale);</span>
 	}
 
+<span class="fc" id="L186">	private static final Pattern2 p = MyPattern.cmpile(&quot;\\&lt;{2,3}.*?\\&gt;{2,3}&quot;);</span>
+
 	static List&lt;String&gt; cutLabels(final String label, Guillemet guillemet) {
-<span class="fc" id="L187">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L188">		final Pattern2 p = MyPattern.cmpile(&quot;\\&lt;{2,3}.*?\\&gt;{2,3}&quot;);</span>
-<span class="fc" id="L189">		final Matcher2 m = p.matcher(label);</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">		while (m.find()) {</span>
-<span class="fc" id="L191">			final String group = m.group();</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">			if (group.startsWith(&quot;&lt;&lt;&lt;&quot;) == false)</span>
-<span class="fc" id="L193">				result.add(guillemet.manageGuillemetStrict(group));</span>
-<span class="fc" id="L194">		}</span>
-<span class="fc" id="L195">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L189">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L190">		final Matcher2 m = p.matcher(label);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L192">			final String group = m.group();</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">			if (group.startsWith(&quot;&lt;&lt;&lt;&quot;) == false)</span>
+<span class="fc" id="L194">				result.add(guillemet.manageGuillemetStrict(group));</span>
+<span class="fc" id="L195">		}</span>
+<span class="fc" id="L196">		return Collections.unmodifiableList(result);</span>
 	}
 
 }

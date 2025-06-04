@@ -100,12 +100,12 @@ public class YamlLines implements Iterable&lt;String&gt; {
 <span class="nc" id="L100">		return s;</span>
 	}
 
-<span class="nc" id="L103">	private static final Pattern p1 = Pattern.compile(&quot;^(\\s*[-])(\\s*\\S.*)$&quot;);</span>
+<span class="nc" id="L103">	private static final Pattern DASH_PREFIXED_LINE = Pattern.compile(&quot;^(\\s*[-])(\\s*\\S.*)$&quot;);</span>
 
 	private void manageList() {
 <span class="nc" id="L106">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="nc bnc" id="L107" title="All 2 branches missed.">		for (String s : lines) {</span>
-<span class="nc" id="L108">			final Matcher m1 = p1.matcher(s);</span>
+<span class="nc" id="L108">			final Matcher m1 = DASH_PREFIXED_LINE.matcher(s);</span>
 <span class="nc bnc" id="L109" title="All 4 branches missed.">			if (s.contains(&quot;: &quot;) &amp;&amp; m1.matches()) {</span>
 <span class="nc" id="L110">				result.add(m1.group(1));</span>
 <span class="nc" id="L111">				result.add(s.replaceFirst(&quot;[-]&quot;, &quot; &quot;));</span>
@@ -179,28 +179,29 @@ public class YamlLines implements Iterable&lt;String&gt; {
 <span class="nc" id="L179">		return null;</span>
 	}
 
+<span class="nc" id="L182">	private static final Pattern NAME_ONLY = Pattern.compile(&quot;^\\s*&quot; + KEY + &quot;\\s*:\\s*[|&gt;]?\\s*$&quot;);</span>
+
 	public static String nameOnly(String s) {
-<span class="nc" id="L183">		final Pattern p1 = Pattern.compile(&quot;^\\s*&quot; + KEY + &quot;\\s*:\\s*[|&gt;]?\\s*$&quot;);</span>
-<span class="nc" id="L184">		final Matcher m1 = p1.matcher(s);</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (m1.matches()) {</span>
-<span class="nc" id="L186">			final String name = m1.group(1);</span>
-<span class="nc" id="L187">			return name;</span>
+<span class="nc" id="L185">		final Matcher m1 = NAME_ONLY.matcher(s);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (m1.matches()) {</span>
+<span class="nc" id="L187">			final String name = m1.group(1);</span>
+<span class="nc" id="L188">			return name;</span>
 		}
-<span class="nc" id="L189">		return null;</span>
+<span class="nc" id="L190">		return null;</span>
 	}
 
 	private boolean textOnly(String s) {
-<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (isList(s))</span>
-<span class="nc" id="L194">			return false;</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		return s.indexOf(':') == -1;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (isList(s))</span>
+<span class="nc" id="L195">			return false;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		return s.indexOf(':') == -1;</span>
 	}
 
 	private boolean isList(String s) {
-<span class="nc" id="L199">		return s.trim().startsWith(&quot;-&quot;);</span>
+<span class="nc" id="L200">		return s.trim().startsWith(&quot;-&quot;);</span>
 	}
 
 	public Iterator&lt;String&gt; iterator() {
-<span class="nc" id="L203">		return Collections.unmodifiableList(lines).iterator();</span>
+<span class="nc" id="L204">		return Collections.unmodifiableList(lines).iterator();</span>
 	}
 
 }

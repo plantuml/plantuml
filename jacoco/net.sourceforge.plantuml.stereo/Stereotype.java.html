@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.text.Guillemet;
 
-<span class="fc" id="L58">public class Stereotype implements CharSequence {</span>
+public class Stereotype implements CharSequence {
 
 	private final double radius;
 	private final UFont circledFont;
@@ -119,8 +119,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L119">		return &quot;&lt;&lt;O-O&gt;&gt;&quot;.equalsIgnoreCase(decoration.label);</span>
 	}
 
-<span class="fc" id="L122">	private final Pattern p = Pattern.compile(&quot;\\&lt;\\&lt;\\s?((?:\\&lt;&amp;\\w+\\&gt;|[^&lt;&gt;])+?)\\s?\\&gt;\\&gt;&quot;);</span>
-	
+<span class="fc" id="L122">	private final static Pattern p = Pattern.compile(&quot;\\&lt;\\&lt;\\s?((?:\\&lt;&amp;\\w+\\&gt;|[^&lt;&gt;])+?)\\s?\\&gt;\\&gt;&quot;);</span>
+
 	public List&lt;String&gt; getMultipleLabels() {
 <span class="nc" id="L125">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 

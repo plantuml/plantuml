@@ -61,32 +61,33 @@ public class SvgAttributes {
 <span class="fc" id="L61">		return new SvgAttributes();</span>
 	}
 
+<span class="fc" id="L64">	static private final Pattern2 p = MyPattern.cmpile(&quot;(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))&quot;);</span>
+
 	public static SvgAttributes build(String args) {
-<span class="nc" id="L65">		final SvgAttributes result = new SvgAttributes();</span>
+<span class="nc" id="L67">		final SvgAttributes result = new SvgAttributes();</span>
 		// ::comment when __HAXE__
-<span class="nc" id="L67">		final Pattern2 p = MyPattern.cmpile(&quot;(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))&quot;);</span>
-<span class="nc" id="L68">		final Matcher2 m = p.matcher(args);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		while (m.find())</span>
-<span class="nc" id="L70">			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));</span>
+<span class="nc" id="L69">		final Matcher2 m = p.matcher(args);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		while (m.find())</span>
+<span class="nc" id="L71">			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));</span>
 		// ::done
 
-<span class="nc" id="L73">		return result;</span>
+<span class="nc" id="L74">		return result;</span>
 	}
 
 	public Map&lt;String, String&gt; attributes() {
-<span class="fc" id="L77">		return Collections.unmodifiableMap(attributes);</span>
+<span class="fc" id="L78">		return Collections.unmodifiableMap(attributes);</span>
 	}
 
 	public SvgAttributes add(String key, String value) {
-<span class="nc" id="L81">		final SvgAttributes result = cloneMe();</span>
-<span class="nc" id="L82">		result.attributes.put(key, value);</span>
-<span class="nc" id="L83">		return result;</span>
+<span class="nc" id="L82">		final SvgAttributes result = cloneMe();</span>
+<span class="nc" id="L83">		result.attributes.put(key, value);</span>
+<span class="nc" id="L84">		return result;</span>
 	}
 
 	public SvgAttributes add(SvgAttributes toBeAdded) {
-<span class="nc" id="L87">		final SvgAttributes result = cloneMe();</span>
-<span class="nc" id="L88">		result.attributes.putAll(toBeAdded.attributes);</span>
-<span class="nc" id="L89">		return result;</span>
+<span class="nc" id="L88">		final SvgAttributes result = cloneMe();</span>
+<span class="nc" id="L89">		result.attributes.putAll(toBeAdded.attributes);</span>
+<span class="nc" id="L90">		return result;</span>
 	}
 
 }

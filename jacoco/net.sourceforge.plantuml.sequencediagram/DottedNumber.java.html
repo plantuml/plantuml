@@ -50,63 +50,64 @@ public class DottedNumber {
 <span class="fc" id="L50">		this.separators = separators;</span>
 <span class="fc" id="L51">	}</span>
 
+<span class="fc" id="L53">	private static final Pattern p = Pattern.compile(&quot;(\\d+)|(\\D+)&quot;);</span>
+
 	public static DottedNumber create(String value) {
-<span class="fc" id="L54">		final Pattern p = Pattern.compile(&quot;(\\d+)|(\\D+)&quot;);</span>
-<span class="fc" id="L55">		final Matcher m = p.matcher(value);</span>
-<span class="fc" id="L56">		final List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L57">		final List&lt;String&gt; separators = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		while (m.find()) {</span>
-<span class="fc" id="L59">			final String part = m.group();</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (isDigit(part.charAt(0))) {</span>
-<span class="fc" id="L61">				nums.add(Integer.parseInt(part));</span>
+<span class="fc" id="L56">		final Matcher m = p.matcher(value);</span>
+<span class="fc" id="L57">		final List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">		final List&lt;String&gt; separators = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L60">			final String part = m.group();</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (isDigit(part.charAt(0))) {</span>
+<span class="fc" id="L62">				nums.add(Integer.parseInt(part));</span>
 			} else {
-<span class="nc" id="L63">				separators.add(part);</span>
+<span class="nc" id="L64">				separators.add(part);</span>
 			}
-<span class="fc" id="L65">		}</span>
-<span class="fc" id="L66">		return new DottedNumber(nums, separators);</span>
+<span class="fc" id="L66">		}</span>
+<span class="fc" id="L67">		return new DottedNumber(nums, separators);</span>
 	}
 
 	private static boolean isDigit(final char c) {
-<span class="pc bpc" id="L70" title="2 of 4 branches missed.">		return c &gt;= '0' &amp;&amp; c &lt;= '9';</span>
+<span class="pc bpc" id="L71" title="2 of 4 branches missed.">		return c &gt;= '0' &amp;&amp; c &lt;= '9';</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L75">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int i = 0; i &lt; nums.size(); i++) {</span>
-<span class="nc" id="L77">			sb.append(nums.get(i));</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (i &lt; separators.size()) {</span>
-<span class="nc" id="L79">				sb.append(separators.get(i));</span>
+<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int i = 0; i &lt; nums.size(); i++) {</span>
+<span class="nc" id="L78">			sb.append(nums.get(i));</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (i &lt; separators.size()) {</span>
+<span class="nc" id="L80">				sb.append(separators.get(i));</span>
 			}
 		}
-<span class="nc" id="L82">		return sb.toString();</span>
+<span class="nc" id="L83">		return sb.toString();</span>
 	}
 
 	public void incrementMinor(int step) {
-<span class="fc" id="L86">		final int last = nums.size() - 1;</span>
-<span class="fc" id="L87">		final int newValue = nums.get(last) + step;</span>
-<span class="fc" id="L88">		nums.set(last, newValue);</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L87">		final int last = nums.size() - 1;</span>
+<span class="fc" id="L88">		final int newValue = nums.get(last) + step;</span>
+<span class="fc" id="L89">		nums.set(last, newValue);</span>
+<span class="fc" id="L90">	}</span>
 
 	public void incrementIntermediate() {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		final int intermediate = nums.size() == 1 ? 0 : nums.size() - 2;</span>
-<span class="nc" id="L93">		incrementIntermediate(intermediate);</span>
-<span class="nc" id="L94">	}</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		final int intermediate = nums.size() == 1 ? 0 : nums.size() - 2;</span>
+<span class="nc" id="L94">		incrementIntermediate(intermediate);</span>
+<span class="nc" id="L95">	}</span>
 
 	public void incrementIntermediate(int position) {
-<span class="nc" id="L97">		final int intermediate = position;</span>
-<span class="nc" id="L98">		final int newValue = nums.get(intermediate) + 1;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = intermediate + 1; i &lt; nums.size(); i++) {</span>
-<span class="nc" id="L100">			nums.set(i, 1);</span>
+<span class="nc" id="L98">		final int intermediate = position;</span>
+<span class="nc" id="L99">		final int newValue = nums.get(intermediate) + 1;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (int i = intermediate + 1; i &lt; nums.size(); i++) {</span>
+<span class="nc" id="L101">			nums.set(i, 1);</span>
 		}
-<span class="nc" id="L102">		nums.set(intermediate, newValue);</span>
-<span class="nc" id="L103">	}</span>
+<span class="nc" id="L103">		nums.set(intermediate, newValue);</span>
+<span class="nc" id="L104">	}</span>
 
 	public String format(DecimalFormat format) {
-<span class="pc bpc" id="L106" title="2 of 4 branches missed.">		if (nums.size() == 1 &amp;&amp; separators.size() == 0) {</span>
-<span class="fc" id="L107">			return format.format(nums.get(0));</span>
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">		if (nums.size() == 1 &amp;&amp; separators.size() == 0) {</span>
+<span class="fc" id="L108">			return format.format(nums.get(0));</span>
 		}
-<span class="nc" id="L109">		return &quot;&lt;b&gt;&quot; + toString() + &quot;&lt;/b&gt;&quot;;</span>
+<span class="nc" id="L110">		return &quot;&lt;b&gt;&quot; + toString() + &quot;&lt;/b&gt;&quot;;</span>
 	}
 
 }
