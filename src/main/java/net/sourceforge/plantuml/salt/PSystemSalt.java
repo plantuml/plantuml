@@ -211,14 +211,12 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 		cpx.add(new ElementFactoryScroll(source, dictionary));
 		cpx.add(new ElementFactoryBorder(source, dictionary));
 
-		for (AbstractElementFactoryComplex f : cpx) {
+		for (AbstractElementFactoryComplex f : cpx)
 			addSimpleFactory(f, source, dictionary);
-		}
-		for (AbstractElementFactoryComplex f1 : cpx) {
-			for (AbstractElementFactoryComplex f2 : cpx) {
+
+		for (AbstractElementFactoryComplex f1 : cpx)
+			for (AbstractElementFactoryComplex f2 : cpx)
 				f1.addFactory(f2);
-			}
-		}
 
 		for (ElementFactory f : cpx) {
 			if (f.ready()) {
@@ -239,12 +237,12 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryLine(source));
 		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));
-		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));
-		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));

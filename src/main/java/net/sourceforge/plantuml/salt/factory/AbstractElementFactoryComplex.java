@@ -59,11 +59,10 @@ public abstract class AbstractElementFactoryComplex implements ElementFactory {
 	}
 
 	protected Terminated<Element> getNextElement() {
-		for (ElementFactory factory : factories) {
-			if (factory.ready()) {
+		for (ElementFactory factory : factories)
+			if (factory.ready())
 				return factory.create();
-			}
-		}
+
 		throw new IllegalStateException(dataSource.peek(0).getElement());
 	}
 
