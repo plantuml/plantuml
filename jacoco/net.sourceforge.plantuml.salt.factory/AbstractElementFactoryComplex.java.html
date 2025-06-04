@@ -59,20 +59,19 @@ public abstract class AbstractElementFactoryComplex implements ElementFactory {
 <span class="fc" id="L59">	}</span>
 
 	protected Terminated&lt;Element&gt; getNextElement() {
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		for (ElementFactory factory : factories) {</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">			if (factory.ready()) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		for (ElementFactory factory : factories)</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">			if (factory.ready())</span>
 <span class="fc" id="L64">				return factory.create();</span>
-			}
-<span class="fc" id="L66">		}</span>
-<span class="nc" id="L67">		throw new IllegalStateException(dataSource.peek(0).getElement());</span>
+
+<span class="nc" id="L66">		throw new IllegalStateException(dataSource.peek(0).getElement());</span>
 	}
 
 	protected final DataSource getDataSource() {
-<span class="fc" id="L71">		return dataSource;</span>
+<span class="fc" id="L70">		return dataSource;</span>
 	}
 
 	protected final SaltDictionary getDictionary() {
-<span class="fc" id="L75">		return dictionary;</span>
+<span class="fc" id="L74">		return dictionary;</span>
 	}
 
 }

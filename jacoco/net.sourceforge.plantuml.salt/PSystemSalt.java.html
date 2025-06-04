@@ -211,62 +211,60 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 <span class="fc" id="L211">		cpx.add(new ElementFactoryScroll(source, dictionary));</span>
 <span class="fc" id="L212">		cpx.add(new ElementFactoryBorder(source, dictionary));</span>
 
-<span class="fc bfc" id="L214" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f : cpx) {</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f : cpx)</span>
 <span class="fc" id="L215">			addSimpleFactory(f, source, dictionary);</span>
-<span class="fc" id="L216">		}</span>
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f1 : cpx) {</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">			for (AbstractElementFactoryComplex f2 : cpx) {</span>
+
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f1 : cpx)</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			for (AbstractElementFactoryComplex f2 : cpx)</span>
 <span class="fc" id="L219">				f1.addFactory(f2);</span>
-<span class="fc" id="L220">			}</span>
-<span class="fc" id="L221">		}</span>
 
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		for (ElementFactory f : cpx) {</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">			if (f.ready()) {</span>
-<span class="fc" id="L225">				Log.info(&quot;Using &quot; + f);</span>
-<span class="fc" id="L226">				return f.create().getElement();</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		for (ElementFactory f : cpx) {</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">			if (f.ready()) {</span>
+<span class="fc" id="L223">				Log.info(&quot;Using &quot; + f);</span>
+<span class="fc" id="L224">				return f.create().getElement();</span>
 			}
-<span class="nc" id="L228">		}</span>
+<span class="nc" id="L226">		}</span>
 
-<span class="nc" id="L230">		Log.println(&quot;data=&quot; + data);</span>
-<span class="nc" id="L231">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L228">		Log.println(&quot;data=&quot; + data);</span>
+<span class="nc" id="L229">		throw new IllegalArgumentException();</span>
 
 	}
 
 	private static void addSimpleFactory(final AbstractElementFactoryComplex cpxFactory, final DataSource source,
 			SaltDictionary dictionary) {
-<span class="fc" id="L237">		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));</span>
-<span class="fc" id="L238">		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));</span>
-<span class="fc" id="L239">		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));</span>
-<span class="fc" id="L240">		cpxFactory.addFactory(new ElementFactoryLine(source));</span>
-<span class="fc" id="L241">		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));</span>
+<span class="fc" id="L235">		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));</span>
+<span class="fc" id="L236">		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));</span>
+<span class="fc" id="L237">		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));</span>
+<span class="fc" id="L238">		cpxFactory.addFactory(new ElementFactoryLine(source));</span>
+<span class="fc" id="L239">		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));</span>
+<span class="fc" id="L240">		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));</span>
+<span class="fc" id="L241">		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));</span>
 <span class="fc" id="L242">		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));</span>
 <span class="fc" id="L243">		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));</span>
 <span class="fc" id="L244">		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));</span>
 <span class="fc" id="L245">		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));</span>
-<span class="fc" id="L246">		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));</span>
-<span class="fc" id="L247">		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));</span>
-<span class="fc" id="L248">		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));</span>
-<span class="fc" id="L249">		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));</span>
-<span class="fc" id="L250">		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));</span>
-<span class="fc" id="L251">	}</span>
+<span class="fc" id="L246">		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));</span>
+<span class="fc" id="L247">		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));</span>
+<span class="fc" id="L248">		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));</span>
+<span class="fc" id="L249">	}</span>
 
 	private boolean iamSalt;
 
 	public void setIamSalt(boolean iamSalt) {
-<span class="fc" id="L256">		this.iamSalt = true;</span>
-<span class="fc" id="L257">	}</span>
+<span class="fc" id="L254">		this.iamSalt = true;</span>
+<span class="fc" id="L255">	}</span>
 
 	public final boolean isIamSalt() {
-<span class="fc" id="L260">		return iamSalt;</span>
+<span class="fc" id="L258">		return iamSalt;</span>
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L265">		return ClockwiseTopRightBottomLeft.same(5);</span>
+<span class="fc" id="L263">		return ClockwiseTopRightBottomLeft.same(5);</span>
 	}
 
 	private HColor getBlack() {
-<span class="fc" id="L269">		return HColors.BLACK;</span>
+<span class="fc" id="L267">		return HColors.BLACK;</span>
 	}
 
 }
