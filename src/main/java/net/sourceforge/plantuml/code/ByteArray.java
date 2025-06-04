@@ -54,7 +54,7 @@ public class ByteArray {
 		return new ByteArray(input, input.length);
 	}
 
-	public String toUFT8String() throws UnsupportedEncodingException {
+	public String toUTF8String() throws UnsupportedEncodingException {
 		return new String(data, 0, length, UTF_8);
 	}
 
