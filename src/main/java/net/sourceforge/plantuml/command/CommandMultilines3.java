@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -50,6 +51,8 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 
 	private final Trim trimEnd;
 
+	private final Lazy<IRegex> patternEnd;
+
 	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {
 		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false)
 			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
@@ -57,12 +60,13 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		this.strategy = strategy;
 		this.starting = patternStart;
 		this.trimEnd = trimEnd;
+		this.patternEnd = new Lazy<>(x -> getPatternEnd2());
 	}
 
 	public abstract RegexConcat getPatternEnd2();
 
 	public String[] getDescription() {
-		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd2().getPattern() };
+		return new String[] { "START: " + starting.getPattern(), "END: " + patternEnd.get().getPattern() };
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
@@ -89,14 +93,15 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		else
 			throw new IllegalStateException();
 
-		final boolean m1 = getPatternEnd2().match(potentialLast);
+		final boolean m1 = patternEnd.get().match(potentialLast);
 		if (m1 == false)
 			return CommandControl.OK_PARTIAL;
 
 		return finalVerification();
 	}
 
-	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		lines = lines.cleanList(strategy);
 		return executeNow(system, lines);
 	}
@@ -114,11 +119,10 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	protected final IRegex getStartingPattern() {
 		return starting;
 	}
-	
+
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
 	}
-
 
 }

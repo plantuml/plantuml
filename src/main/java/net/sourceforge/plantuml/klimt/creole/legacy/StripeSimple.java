@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.creole.legacy;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,32 +59,12 @@ import net.sourceforge.plantuml.klimt.creole.atom.AtomOpenIcon;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomSpace;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomSprite;
 import net.sourceforge.plantuml.klimt.creole.command.Command;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleColorAndSizeChange;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleColorChange;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleEmoji;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleExposantChange;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleFontFamilyChange;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleImg;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleLatex;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleMath;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleMonospaced;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleOpenIcon;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleQrcode;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSizeChange;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSpace;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSprite;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleStyle;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleSvgAttributeChange;
-import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleUrl;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.FontPosition;
-import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
-import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
@@ -96,7 +75,7 @@ public class StripeSimple implements Stripe {
 
 	final private List<Atom> atoms = new ArrayList<>();
 
-	final private Map<Character, List<Command>> commands = new HashMap<>();
+	final private Map<Character, List<Command>> commands;
 
 	private HorizontalAlignment align = HorizontalAlignment.LEFT;
 
@@ -128,73 +107,16 @@ public class StripeSimple implements Stripe {
 		this.style = style;
 		this.skinParam = skinParam;
 
-		addCommand(CommandCreoleStyle.createCreole(FontStyle.BOLD));
-		addCommand(CommandCreoleStyle.createLegacy(FontStyle.BOLD));
-		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.BOLD));
-
-		addCommand(CommandCreoleStyle.createCreole(FontStyle.ITALIC));
-		addCommand(CommandCreoleStyle.createLegacy(FontStyle.ITALIC));
-		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.ITALIC));
-		addCommand(CommandCreoleStyle.createLegacy(FontStyle.PLAIN));
-		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.PLAIN));
 		if (modeSimpleLine == CreoleMode.FULL)
-			addCommand(CommandCreoleStyle.createCreole(FontStyle.UNDERLINE));
-
-		addCommand(CommandCreoleStyle.createLegacy(FontStyle.UNDERLINE));
-		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.UNDERLINE));
-		addCommand(CommandCreoleStyle.createCreole(FontStyle.STRIKE));
-		addCommand(CommandCreoleStyle.createLegacy(FontStyle.STRIKE));
-		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.STRIKE));
-		addCommand(CommandCreoleStyle.createCreole(FontStyle.WAVE));
-		addCommand(CommandCreoleStyle.createLegacy(FontStyle.WAVE));
-		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.WAVE));
-		addCommand(CommandCreoleStyle.createLegacy(FontStyle.BACKCOLOR));
-		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.BACKCOLOR));
-		addCommand(CommandCreoleSizeChange.create());
-		addCommand(CommandCreoleSizeChange.createEol());
-		addCommand(CommandCreoleColorChange.create());
-		addCommand(CommandCreoleColorChange.createEol());
-		addCommand(CommandCreoleColorAndSizeChange.create());
-		addCommand(CommandCreoleColorAndSizeChange.createEol());
-		addCommand(CommandCreoleExposantChange.create(FontPosition.EXPOSANT));
-		addCommand(CommandCreoleExposantChange.create(FontPosition.INDICE));
-		addCommand(CommandCreoleImg.create());
-		addCommand(CommandCreoleQrcode.create());
-		addCommand(CommandCreoleOpenIcon.create());
-		addCommand(CommandCreoleEmoji.create());
-		// ::comment when __CORE__
-		addCommand(CommandCreoleMath.create());
-		addCommand(CommandCreoleLatex.create());
-		// ::done
-		addCommand(CommandCreoleSprite.create());
-		addCommand(CommandCreoleSpace.create());
-		addCommand(CommandCreoleFontFamilyChange.create());
-		addCommand(CommandCreoleFontFamilyChange.createEol());
-		addCommand(CommandCreoleMonospaced.create());
-		addCommand(CommandCreoleUrl.create());
-		// ::comment when __CORE__
-		if (SecurityUtils.allowSvgText())
-			addCommand(CommandCreoleSvgAttributeChange.create());
-		// ::done
+			this.commands = CommandCreoleBuilder.FULL.getMap();
+		else
+			this.commands = CommandCreoleBuilder.OTHER.getMap();
 
 		this.header = style.getHeader(fontConfiguration, context);
 
 		if (this.header != null)
 			this.atoms.add(this.header);
 
-	}
-
-	private void addCommand(Command cmd) {
-		final String starters = cmd.startingChars();
-		for (int i = 0; i < starters.length(); i++) {
-			final char ch = starters.charAt(i);
-			List<Command> localList = commands.get(ch);
-			if (localList == null) {
-				localList = new ArrayList<Command>();
-				commands.put(ch, localList);
-			}
-			localList.add(cmd);
-		}
 	}
 
 	public List<Atom> getAtoms() {

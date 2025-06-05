@@ -137,12 +137,15 @@ public class RegexLeaf implements IRegex {
 		return result;
 	}
 
+	private static final Pattern PATTERN_TO_REMOVE = Pattern.compile("\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?");
+
+
 	public long getFoxSignature() {
 		if (pattern.equals("[%s]+"))
 			return FoxSignature.getSpecialSpaces();
 		if (pattern.equals("[%s]*"))
 			return 0;
-		final String pattern2 = pattern.replaceAll("\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?", "");
+		final String pattern2 = PATTERN_TO_REMOVE.matcher(pattern).replaceAll("");
 
 		final Matcher m1 = p1.matcher(pattern2);
 		if (m1.matches())

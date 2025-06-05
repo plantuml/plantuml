@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
@@ -44,12 +45,14 @@ import net.sourceforge.plantuml.utils.BlocLines;
 public abstract class CommandMultilines<S extends Diagram> implements Command<S> {
 
 	private final Pattern2 starting;
+	private final Lazy<Pattern2> patternEnd;
 
 	public CommandMultilines(String patternStart) {
-		if (patternStart.startsWith("^") == false || patternStart.endsWith("$") == false) {
+		if (patternStart.startsWith("^") == false || patternStart.endsWith("$") == false)
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
-		}
+
 		this.starting = MyPattern.cmpile(patternStart);
+		this.patternEnd = new Lazy<>(x -> MyPattern.cmpile(getPatternEnd()));
 	}
 
 	public abstract String getPatternEnd();
@@ -69,7 +72,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
 
-		m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.getLast().getTrimmed().getString());
+		m1 = patternEnd.get().matcher(lines.getLast().getTrimmed().getString());
 		if (m1.matches() == false)
 			return CommandControl.OK_PARTIAL;
 
@@ -87,11 +90,10 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	protected final Pattern2 getStartingPattern() {
 		return starting;
 	}
-	
+
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
 	}
-
 
 }

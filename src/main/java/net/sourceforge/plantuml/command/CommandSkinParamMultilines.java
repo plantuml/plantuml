@@ -39,10 +39,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledDiagram> {
 
+	private static final Pattern2 COMMENT_SINGLE_LINE = MyPattern.cmpile(CommandMultilinesComment.COMMENT_SINGLE_LINE);
 	public static final CommandSkinParamMultilines ME = new CommandSkinParamMultilines();
 
 	private CommandSkinParamMultilines() {
@@ -59,13 +61,12 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {
-		// return MyPattern.mtches(line, "[%s]*[%q].*");
-		return MyPattern.mtches(line, CommandMultilinesComment.COMMENT_SINGLE_LINE);
+		return COMMENT_SINGLE_LINE.matcher(line).matches();
 	}
 
 	public CommandExecutionResult execute(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		final SkinLoader skinLoader = new SkinLoader(diagram);
-		
+
 		lines = lines.expandsNewline(true);
 
 		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
@@ -82,7 +83,5 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
 	}
-
-
 
 }

@@ -122,15 +122,19 @@ public abstract class Log {
 		// perflogInternal(line);
 	}
 
+	public static void deletePerfLogFile() {
+		final File file = new File(PERFLOG_FILENAME);
+		if (file.exists()) {
+			if (!file.delete()) {
+				error("Cannot del " + PERFLOG_FILENAME);
+			}
+		}
+	}
+
 	private synchronized static void perflogInternal(String line) {
 		try {
 			if (firstCall) {
-				File file = new File(PERFLOG_FILENAME);
-				if (file.exists()) {
-					if (!file.delete()) {
-						error("Cannot del " + PERFLOG_FILENAME);
-					}
-				}
+				deletePerfLogFile();
 				firstCall = false;
 			}
 			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);
@@ -142,4 +146,15 @@ public abstract class Log {
 			error("Cannot write in " + PERFLOG_FILENAME + " : " + e.getMessage());
 		}
 	}
+
+	public static synchronized void logStackTrace() {
+		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {
+			final Exception e = new Exception("StackTrace");
+			e.fillInStackTrace();
+			e.printStackTrace(pw);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
 }

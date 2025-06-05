@@ -37,9 +37,12 @@ package net.sourceforge.plantuml.regex;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.utils.Log;
 
 class MaxSizeHashMap<K, V> extends LinkedHashMap<K, V> {
 	private final int maxSize;
@@ -57,17 +60,33 @@ class MaxSizeHashMap<K, V> extends LinkedHashMap<K, V> {
 // Splitter.java to be finished
 public abstract class MyPattern {
 
-	private static final Map<String, Pattern2> cache = new MaxSizeHashMap<>(512);
+	private static final Map<String, Pattern2> cache = new MaxSizeHashMap<>(30_000);
 
 	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(""));
 
 //	static int CPT1;
 //	static int CPT2;
 
+	// private static final Map<String, AtomicInteger> COUNTER = new
+	// ConcurrentHashMap<>();
+
 	public static Pattern2 cmpile(final String p) {
-		if (p == null || p.length() == 0) {
+		if (p == null || p.length() == 0)
 			return EMPTY;
-		}
+
+		// int value = COUNTER.computeIfAbsent(p, key -> new
+		// AtomicInteger(0)).incrementAndGet();
+//		synchronized (COUNTER) {
+//			if (value > 1000) {
+//				Log.logStackTrace();
+//				try {
+//					Thread.sleep(1000L * 3600);
+//				} catch (InterruptedException e) {
+//				}
+//			}
+//			printPopularPatterns();
+//		}
+
 //		CPT1++;
 		Pattern2 result = null;
 		synchronized (cache) {
@@ -81,12 +100,24 @@ public abstract class MyPattern {
 
 		synchronized (cache) {
 			cache.put(p, result);
+//			Log.perflog("size=" + cache.size());
+//			Log.perflog(p);
 //			CPT2++;
 //			System.err.println("CPT= " + CPT1 + " / " + CPT2 + " " + cache.size());
 		}
 
 		return result;
 	}
+
+//	public static void printPopularPatterns() {
+//		Log.deletePerfLogFile();
+//		for (Map.Entry<String, AtomicInteger> entry : COUNTER.entrySet()) {
+//			int count = entry.getValue().get();
+//			if (count > 500) {
+//				Log.perflog("Pattern: " + entry.getKey() + " | Count: " + count);
+//			}
+//		}
+//	}
 
 	private static String transform(String p) {
 		// Replace ReadLineReader.java
@@ -96,10 +127,6 @@ public abstract class MyPattern {
 		p = p.replace("%q", "'\u2018\u2019"); // quote
 		p = p.replace("%g", "\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote
 		return p;
-	}
-
-	public static boolean mtches(CharSequence input, String regex) {
-		return cmpile(regex).matcher(input).matches();
 	}
 
 	public static CharSequence removeAll(CharSequence src, String regex) {
