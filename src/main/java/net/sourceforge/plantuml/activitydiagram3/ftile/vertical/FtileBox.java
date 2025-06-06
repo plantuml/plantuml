@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -194,9 +195,7 @@ public class FtileBox extends AbstractFtile {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
-
-		// final boolean isDebug = Boolean.parseBoolean(skinParam.option().getValue(OptionKey.DEBUG));
-		final boolean isDebug = true;
+		final boolean isDebug = Boolean.parseBoolean(skinParam().option().getValue(OptionKey.DEBUG));
 
 		if (isDebug) {
 			ug = ug.apply(HColors.BLUE).apply(UStroke.withThickness(2));
