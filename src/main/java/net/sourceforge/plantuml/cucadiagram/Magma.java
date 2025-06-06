@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Magma {
 

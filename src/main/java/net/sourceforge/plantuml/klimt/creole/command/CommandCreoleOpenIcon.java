@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
@@ -50,7 +49,7 @@ public class CommandCreoleOpenIcon implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.openiconPattern + ")");
+	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.openiconPattern + ")");
 
 	private CommandCreoleOpenIcon() {
 	}

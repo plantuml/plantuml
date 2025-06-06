@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainer;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -438,7 +437,7 @@ public class Display implements Iterable<CharSequence> {
 		return this;
 	}
 
-	public final static Pattern2 patternStereotype = MyPattern.cmpile("^(.*?)(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+	public final static Pattern2 patternStereotype = Pattern2.cmpile("^(.*?)(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
 
 	public Stereotype getEndingStereotype() {
 		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));

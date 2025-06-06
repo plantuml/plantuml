@@ -41,9 +41,9 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
 
 import net.atmp.CucaDiagram;
-import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 

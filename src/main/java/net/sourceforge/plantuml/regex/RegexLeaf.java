@@ -94,7 +94,7 @@ public class RegexLeaf implements IRegex {
 
 	public int count() {
 		if (count == -1)
-			count = MyPattern.cmpile(pattern).matcher("").groupCount();
+			count = Pattern2.cmpile(pattern).matcher("").groupCount();
 
 		return count;
 	}

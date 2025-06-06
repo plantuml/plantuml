@@ -41,7 +41,7 @@ import java.util.EnumSet;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 
 public enum FontStyle {
 
@@ -123,7 +123,7 @@ public enum FontStyle {
 
 	// ::comment when __HAXE__
 	public HColor getExtendedColor(String s) {
-		final Matcher2 m = MyPattern.cmpile(getActivationPattern()).matcher(s);
+		final Matcher2 m = Pattern2.cmpile(getActivationPattern()).matcher(s);
 		if (m.find() == false || m.groupCount() != 1)
 			return null;
 

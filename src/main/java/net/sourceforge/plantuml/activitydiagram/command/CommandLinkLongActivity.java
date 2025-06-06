@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -67,7 +67,6 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
-import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
@@ -159,7 +158,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
 				lines.getLast().getString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			if (sb.length() > 0 && sb.toString().endsWith("" + Jaws.BLOCK_E1_NEWLINE) == false)

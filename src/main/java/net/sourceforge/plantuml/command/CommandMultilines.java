@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -50,9 +49,10 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	public CommandMultilines(String patternStart) {
 		if (patternStart.startsWith("^") == false || patternStart.endsWith("$") == false)
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
+		final String p = patternStart;
 
-		this.starting = MyPattern.cmpile(patternStart);
-		this.patternEnd = new Lazy<>(x -> MyPattern.cmpile(getPatternEnd()));
+		this.starting = Pattern2.cmpile(p);
+		this.patternEnd = new Lazy<>(x -> Pattern2.cmpile(getPatternEnd()));
 	}
 
 	public abstract String getPatternEnd();

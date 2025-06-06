@@ -84,7 +84,6 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.FromSkinparamToStyle;
@@ -163,7 +162,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
-	private static final Pattern2 stereoPattern = MyPattern.cmpile(stereoPatternString);
+	private static final Pattern2 stereoPattern = Pattern2.cmpile(stereoPatternString);
 
 	private final Map<String, String> params = new HashMap<String, String>();
 	private final Map<String, String> paramsPendingForStyleMigration = new LinkedHashMap<String, String>();

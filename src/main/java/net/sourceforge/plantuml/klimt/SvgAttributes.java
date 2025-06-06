@@ -41,7 +41,6 @@ import java.util.TreeMap;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class SvgAttributes {
@@ -61,7 +60,7 @@ public class SvgAttributes {
 		return new SvgAttributes();
 	}
 
-	static private final Pattern2 p = MyPattern.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
+	static private final Pattern2 p = Pattern2.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
 
 	public static SvgAttributes build(String args) {
 		final SvgAttributes result = new SvgAttributes();

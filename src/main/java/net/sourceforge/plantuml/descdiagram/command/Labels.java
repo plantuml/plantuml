@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -62,9 +61,9 @@ public class Labels {
 
 	}
 
-	private static final Pattern2 p1 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
-	private static final Pattern2 p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
-	private static final Pattern2 p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
+	private static final Pattern2 p1 = Pattern2.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
+	private static final Pattern2 p2 = Pattern2.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
+	private static final Pattern2 p3 = Pattern2.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
 
 	private String init(String labelLink) {
 		if (firstLabel == null && secondLabel == null) {

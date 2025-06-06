@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleSizeChange implements Command {
@@ -50,8 +49,8 @@ public class CommandCreoleSizeChange implements Command {
 
 	private final Pattern2 mypattern;
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.fontSizePattern + "(.*?)\\</size\\>)");
-	private static final Pattern2 patternEol = MyPattern.cmpile("^(" + Splitter.fontSizePattern + "(.*)$)");
+	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.fontSizePattern + "(.*?)\\</size\\>)");
+	private static final Pattern2 patternEol = Pattern2.cmpile("^(" + Splitter.fontSizePattern + "(.*)$)");
 
 	public static Command create() {
 		return new CommandCreoleSizeChange(pattern);

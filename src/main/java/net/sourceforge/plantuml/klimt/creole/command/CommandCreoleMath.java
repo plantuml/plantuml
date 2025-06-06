@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleMath implements Command {
@@ -49,7 +48,7 @@ public class CommandCreoleMath implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.mathPattern + ")");
+	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.mathPattern + ")");
 
 	private CommandCreoleMath() {
 	}

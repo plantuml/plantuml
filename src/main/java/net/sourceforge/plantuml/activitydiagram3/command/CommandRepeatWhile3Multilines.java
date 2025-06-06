@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -107,7 +107,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
 		// 0));
 		final Display linkLabel = Display.NULL; // Display.getWithNewlines("arg.get(\"LABEL\", 0)");
-		final List<Display> splitted = testDisplay.splitMultiline(MyPattern.cmpile("\\)[%s]*(is|equals?)[%s]*\\("));
+		final List<Display> splitted = testDisplay.splitMultiline(Pattern2.cmpile("\\)[%s]*(is|equals?)[%s]*\\("));
 		if (splitted.size() == 2) {
 			testDisplay = splitted.get(0);
 			yes = splitted.get(1);

@@ -62,13 +62,15 @@ public abstract class RegexComposed implements IRegex {
 	private final AtomicReference<Pattern2> fullCached = new AtomicReference<>();
 
 	private Pattern2 getPattern2() {
-		Pattern2 result = fullCached.get();
-		if (result == null) {
-			final String fullSlow = getFullSlow();
-			result = MyPattern.cmpile(fullSlow);
-			fullCached.set(result);
-		}
-		return result;
+		final Pattern2 result = fullCached.get();
+		if (result != null)
+			return result;
+
+		final Pattern2 computed = Pattern2.cmpile(getFullSlow());
+		if (fullCached.compareAndSet(null, computed))
+			return computed;
+
+		return fullCached.get();
 	}
 
 	final protected boolean isCompiled() {

@@ -35,13 +35,46 @@
  */
 package net.sourceforge.plantuml.regex;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.jaws.Jaws;
+
+class BoundedPatternCache {
+	private final ConcurrentHashMap<String, Pattern2> cache;
+	private final AtomicInteger putCount = new AtomicInteger();
+	private final int maxSize;
+
+	public BoundedPatternCache(int initialSize, int maxSize) {
+		this.cache = new ConcurrentHashMap<>(initialSize);
+		this.maxSize = maxSize;
+	}
+
+	public Pattern2 computeIfAbsent(String key, Function<String, Pattern2> mappingFunction) {
+		return cache.computeIfAbsent(key, k -> {
+			final int size = putCount.incrementAndGet();
+			// This should never happen, but just in case, to avoid memory leak
+			if (size >= maxSize) {
+				cache.clear();
+				putCount.set(0);
+			}
+			return mappingFunction.apply(k);
+		});
+	}
+
+}
+
 public class Pattern2 {
+	
+	private static final BoundedPatternCache cache = new BoundedPatternCache(12_000, 30_000);
+	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(""));
+
 
 	private final Pattern pattern;
 
-	public Pattern2(Pattern pattern) {
+	private Pattern2(Pattern pattern) {
 		this.pattern = pattern;
 	}
 
@@ -52,5 +85,24 @@ public class Pattern2 {
 	public String pattern() {
 		return pattern.pattern();
 	}
+	
+	
+	public static Pattern2 cmpile(final String p) {
+		if (p == null || p.length() == 0)
+			return EMPTY;
+
+		return cache.computeIfAbsent(p, key -> new Pattern2(Pattern.compile(transform(key), Pattern.CASE_INSENSITIVE)));
+
+	}
+
+	private static String transform(String p) {
+		// Replace ReadLineReader.java
+		p = p.replace("%pLN", "\\p{L}\\p{N}"); // Unicode Letter, digit
+		p = p.replace("%s", "\\s\u00A0"); // space
+		p = p.replace("%q", "'\u2018\u2019"); // quote
+		p = p.replace("%g", "\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote
+		return p;
+	}
+
 
 }

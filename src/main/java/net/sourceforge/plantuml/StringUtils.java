@@ -45,7 +45,6 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.asciiart.Wcwidth;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
@@ -421,7 +420,7 @@ public class StringUtils {
 		return Integer.parseInt(uml.substring(x1, x2));
 	}
 
-	private final static Pattern2 SPLIT_COMMA = MyPattern.cmpile("([%pLN_.]+|[%g][^%g]+[%g])");
+	private final static Pattern2 SPLIT_COMMA = Pattern2.cmpile("([%pLN_.]+|[%g][^%g]+[%g])");
 
 	public static List<String> splitComma(String s) {
 		s = trin(s);

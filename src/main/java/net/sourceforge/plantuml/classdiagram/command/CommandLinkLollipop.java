@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -171,7 +170,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		if (arg.get("LABEL_LINK", 0) != null) {
 			labelLink = arg.get("LABEL_LINK", 0);
 			if (firstLabel == null && secondLabel == null) {
-				final Pattern2 p1 = MyPattern.cmpile("^\"([^\"]+)\"([^\"]+)\"([^\"]+)\"$");
+				final Pattern2 p1 = Pattern2.cmpile("^\"([^\"]+)\"([^\"]+)\"([^\"]+)\"$");
 				final Matcher2 m1 = p1.matcher(labelLink);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
@@ -179,7 +178,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 							StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
 					secondLabel = m1.group(3);
 				} else {
-					final Pattern2 p2 = MyPattern.cmpile("^\"([^\"]+)\"([^\"]+)$");
+					final Pattern2 p2 = Pattern2.cmpile("^\"([^\"]+)\"([^\"]+)$");
 					final Matcher2 m2 = p2.matcher(labelLink);
 					if (m2.matches()) {
 						firstLabel = m2.group(1);
@@ -187,7 +186,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 								.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
 						secondLabel = null;
 					} else {
-						final Pattern2 p3 = MyPattern.cmpile("^([^\"]+)\"([^\"]+)\"$");
+						final Pattern2 p3 = Pattern2.cmpile("^([^\"]+)\"([^\"]+)\"$");
 						final Matcher2 m3 = p3.matcher(labelLink);
 						if (m3.matches()) {
 							firstLabel = null;

@@ -43,7 +43,6 @@ import java.util.List;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class FileGroup {
@@ -54,7 +53,7 @@ public class FileGroup {
 	private final List<String> excluded;
 	private final Option option;
 
-	private final static Pattern2 predirPath = MyPattern.cmpile("^([^*?]*[/\\\\])?(.*)$");
+	private final static Pattern2 predirPath = Pattern2.cmpile("^([^*?]*[/\\\\])?(.*)$");
 
 	public FileGroup(String pattern, List<String> excluded, Option option) {
 		this.pattern = pattern;
@@ -127,7 +126,7 @@ public class FileGroup {
 		return f.getPath().replace('\\', '/');
 	}
 
-	private final static Pattern2 noStarInDirectory = MyPattern.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
+	private final static Pattern2 noStarInDirectory = Pattern2.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
 
 	private void initWithSimpleStar() {
 		assert pattern.indexOf("**") == -1;

@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
+import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
+
 import java.awt.Color;
 
 import net.sourceforge.plantuml.StringUtils;
-
-import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
 
 public class HColorSimple extends HColor {
 

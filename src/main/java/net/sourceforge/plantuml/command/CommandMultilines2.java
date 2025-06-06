@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -62,7 +61,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		this.strategy = strategy;
 		this.starting = patternStart;
 		this.trimEnd = trimEnd;
-		this.end = new Lazy<>(x -> MyPattern.cmpile(getPatternEnd()));
+		this.end = new Lazy<>(x -> Pattern2.cmpile(getPatternEnd()));
 	}
 
 	public boolean syntaxWithFinalBracket() {

@@ -41,12 +41,11 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class DataSourceImpl implements DataSource {
 
-	private static final Pattern2 STRUCTURED_BLOCK_START_PATTERN = MyPattern.cmpile("\\{(?:[-+^#!*/]|S-|SI|S)?");
+	private static final Pattern2 STRUCTURED_BLOCK_START_PATTERN = Pattern2.cmpile("\\{(?:[-+^#!*/]|S-|SI|S)?");
 
 	private int i = 0;
 	private final List<Terminated<String>> data = new ArrayList<Terminated<String>>();

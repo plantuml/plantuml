@@ -41,7 +41,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class Stereostyles {
@@ -58,7 +57,7 @@ public class Stereostyles {
 		return names.isEmpty();
 	}
 
-	private static final Pattern2 p = MyPattern.cmpile("\\<{3}(.*?)\\>{3}");
+	private static final Pattern2 p = Pattern2.cmpile("\\<{3}(.*?)\\>{3}");
 
 	public static Stereostyles build(String label) {
 		final Stereostyles result = new Stereostyles();

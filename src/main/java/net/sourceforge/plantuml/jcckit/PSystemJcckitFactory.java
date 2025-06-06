@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -75,7 +74,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	}
 
 	private void extractDimension(String startLine) {
-		final Pattern2 p = MyPattern.cmpile("\\((\\d+),(\\d+)\\)");
+		final Pattern2 p = Pattern2.cmpile("\\((\\d+),(\\d+)\\)");
 		final Matcher2 m = p.matcher(startLine);
 		final boolean ok = m.find();
 		if (ok) {

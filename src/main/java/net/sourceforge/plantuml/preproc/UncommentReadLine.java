@@ -38,14 +38,13 @@ package net.sourceforge.plantuml.preproc;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class UncommentReadLine implements ReadLine {
 
-	private static final Pattern2 unpause = MyPattern.cmpile(StartUtils.PAUSE_PATTERN);
+	private static final Pattern2 unpause = Pattern2.cmpile(StartUtils.PAUSE_PATTERN);
 
 	private final ReadLine raw;
 	private String headerToRemove;

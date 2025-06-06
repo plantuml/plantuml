@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
-import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -150,7 +150,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		}
 
 		final String idShort = line0.get("CODE", 0);
-		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
 				lines.getLast().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();

@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorRuntimeException;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleColorChange implements Command {
@@ -52,9 +51,9 @@ public class CommandCreoleColorChange implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.fontColorPattern + "(.*?)\\</color\\>)");
+	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.fontColorPattern + "(.*?)\\</color\\>)");
 
-	private static final Pattern2 patternEol = MyPattern.cmpile("^(" + Splitter.fontColorPattern + "(.*)$)");
+	private static final Pattern2 patternEol = Pattern2.cmpile("^(" + Splitter.fontColorPattern + "(.*)$)");
 
 	private final Pattern2 mypattern;
 

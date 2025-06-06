@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleMonospaced implements Command {
@@ -56,7 +55,8 @@ public class CommandCreoleMonospaced implements Command {
 	}
 
 	private CommandCreoleMonospaced(String p) {
-		this.pattern = MyPattern.cmpile(p);
+		final String p1 = p;
+		this.pattern = Pattern2.cmpile(p1);
 	}
 
 	public int matchingSize(String line) {

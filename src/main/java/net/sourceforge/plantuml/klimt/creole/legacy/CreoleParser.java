@@ -45,8 +45,6 @@ import java.util.Objects;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorRuntimeException;
 import net.sourceforge.plantuml.klimt.creole.CreoleContext;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -56,9 +54,7 @@ import net.sourceforge.plantuml.klimt.creole.SheetBuilder;
 import net.sourceforge.plantuml.klimt.creole.Stripe;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinSimple;
 

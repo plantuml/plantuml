@@ -41,13 +41,12 @@ import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class PSystemSudokuFactory extends PSystemSingleLineFactory {
     // ::remove folder when __HAXE__
 
-	final private static Pattern2 p = MyPattern.cmpile("^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
+	final private static Pattern2 p = Pattern2.cmpile("^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {

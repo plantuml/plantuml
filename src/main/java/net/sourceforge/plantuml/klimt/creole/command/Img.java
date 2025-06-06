@@ -47,18 +47,16 @@ import net.sourceforge.plantuml.klimt.shape.TileImage;
 import net.sourceforge.plantuml.klimt.shape.TileImageSvg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 
 public class Img implements HtmlCommand {
 
-	final static private Pattern2 srcPattern = MyPattern.cmpile("src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
-	final static private Pattern2 vspacePattern = MyPattern.cmpile("vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
-	final static private Pattern2 valignPattern = MyPattern
-			.cmpile("valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
-	final static private Pattern2 noSrcColonPattern = MyPattern.cmpile(Splitter.imgPatternNoSrcColon);
+	final static private Pattern2 srcPattern = Pattern2.cmpile("src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
+	final static private Pattern2 vspacePattern = Pattern2.cmpile("vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
+	final static private Pattern2 valignPattern = Pattern2.cmpile("valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
+	final static private Pattern2 noSrcColonPattern = Pattern2.cmpile(Splitter.imgPatternNoSrcColon);
 
 	private final TextBlock tileImage;
 

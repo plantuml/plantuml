@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -49,8 +48,9 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 	public CommandMultilinesBracket(String patternStart) {
 		if (patternStart.startsWith("^") == false || patternStart.endsWith("$") == false)
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
+		final String p = patternStart;
 
-		this.starting = MyPattern.cmpile(patternStart);
+		this.starting = Pattern2.cmpile(p);
 	}
 
 	protected boolean isCommandForbidden() {

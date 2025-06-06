@@ -44,14 +44,12 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class HColorSet {
 
-	private static final Pattern2 COLOR_GRADIENT_SEPARATOR = MyPattern.cmpile("[-\\\\|/]");
+	private static final Pattern2 COLOR_GRADIENT_SEPARATOR = Pattern2.cmpile("[-\\\\|/]");
 
 	private final static HColorSet singleton = new HColorSet();
 

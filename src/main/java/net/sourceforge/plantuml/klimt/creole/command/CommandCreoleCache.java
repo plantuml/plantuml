@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 abstract class CommandCreoleCache implements Command {
@@ -50,7 +49,8 @@ abstract class CommandCreoleCache implements Command {
 	protected CommandCreoleCache(String p) {
 		Pattern2 result = cache.get(p);
 		if (result == null) {
-			result = MyPattern.cmpile(p);
+			final String p1 = p;
+			result = Pattern2.cmpile(p1);
 			cache.put(p, result);
 		}
 		this.mypattern = result;

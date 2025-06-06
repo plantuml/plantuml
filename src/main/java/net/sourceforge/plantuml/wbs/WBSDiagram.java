@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -131,8 +130,7 @@ public class WBSDiagram extends UmlDiagram {
 		return new Fork(getSkinParam(), root);
 	}
 
-	public final static Pattern2 patternStereotype = MyPattern
-			.cmpile("^\\s*(.*?)\\s*(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+	public final static Pattern2 patternStereotype = Pattern2.cmpile("^\\s*(.*?)\\s*(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {

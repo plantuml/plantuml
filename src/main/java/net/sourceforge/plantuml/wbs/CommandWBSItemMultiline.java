@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -91,7 +91,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
-		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
 				lines.getLast().getString());
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
 

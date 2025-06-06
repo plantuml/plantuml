@@ -40,7 +40,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -48,8 +47,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class SkinLoader {
 
-	public final static Pattern2 p1 = MyPattern
-			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
+	public final static Pattern2 p1 = Pattern2.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	final private List<String> context = new ArrayList<>();
 	final private TitledDiagram diagram;

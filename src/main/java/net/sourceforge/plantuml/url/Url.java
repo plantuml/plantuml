@@ -40,7 +40,6 @@ import java.util.Comparator;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.geom.BasicEnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
-import net.sourceforge.plantuml.text.BackSlash;
 
 public class Url implements EnsureVisible {
 	private final String url;

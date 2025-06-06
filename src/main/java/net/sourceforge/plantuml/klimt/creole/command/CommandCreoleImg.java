@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleImg implements Command {
@@ -49,7 +48,7 @@ public class CommandCreoleImg implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.imgPatternNoSrcColon + ")");
+	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.imgPatternNoSrcColon + ")");
 
 	private CommandCreoleImg() {
 	}
