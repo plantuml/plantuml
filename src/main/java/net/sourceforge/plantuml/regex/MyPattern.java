@@ -39,10 +39,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.jaws.Jaws;
-import net.sourceforge.plantuml.utils.Log;
 
 class MaxSizeHashMap<K, V> extends LinkedHashMap<K, V> {
 	private final int maxSize;
@@ -57,12 +57,39 @@ class MaxSizeHashMap<K, V> extends LinkedHashMap<K, V> {
 	}
 }
 
-// Splitter.java to be finished
+class BoundedPatternCache {
+	private final ConcurrentHashMap<String, Pattern2> cache;
+	private final AtomicInteger putCount = new AtomicInteger();
+	private final int maxSize;
+
+	public BoundedPatternCache(int initialSize, int maxSize) {
+		this.cache = new ConcurrentHashMap<>(initialSize);
+		this.maxSize = maxSize;
+	}
+
+	public Pattern2 computeIfAbsent(String key, Function<String, Pattern2> mappingFunction) {
+		return cache.computeIfAbsent(key, k -> {
+			final int size = putCount.incrementAndGet();
+			// This should never happen, but just in case, to avoid memory leak
+			if (size >= maxSize) {
+				cache.clear();
+				putCount.set(0);
+			}
+			return mappingFunction.apply(k);
+		});
+	}
+
+}
+
 public abstract class MyPattern {
 
-	private static final Map<String, Pattern2> cache = new MaxSizeHashMap<>(30_000);
+	private static final BoundedPatternCache cache = new BoundedPatternCache(12_000, 30_000);
 
 	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(""));
+
+	private MyPattern() {
+
+	}
 
 //	static int CPT1;
 //	static int CPT2;
@@ -87,26 +114,8 @@ public abstract class MyPattern {
 //			printPopularPatterns();
 //		}
 
-//		CPT1++;
-		Pattern2 result = null;
-		synchronized (cache) {
-			result = cache.get(p);
-			if (result != null) {
-				return result;
-			}
-		}
-		assert result == null;
-		result = new Pattern2(Pattern.compile(transform(p), Pattern.CASE_INSENSITIVE));
+		return cache.computeIfAbsent(p, key -> new Pattern2(Pattern.compile(transform(key), Pattern.CASE_INSENSITIVE)));
 
-		synchronized (cache) {
-			cache.put(p, result);
-//			Log.perflog("size=" + cache.size());
-//			Log.perflog(p);
-//			CPT2++;
-//			System.err.println("CPT= " + CPT1 + " / " + CPT2 + " " + cache.size());
-		}
-
-		return result;
 	}
 
 //	public static void printPopularPatterns() {
@@ -127,10 +136,6 @@ public abstract class MyPattern {
 		p = p.replace("%q", "'\u2018\u2019"); // quote
 		p = p.replace("%g", "\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote
 		return p;
-	}
-
-	public static CharSequence removeAll(CharSequence src, String regex) {
-		return src.toString().replaceAll(transform(regex), "");
 	}
 
 }
