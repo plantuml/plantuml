@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
@@ -44,55 +45,56 @@ import net.sourceforge.plantuml.utils.BlocLines;
 public abstract class CommandMultilines&lt;S extends Diagram&gt; implements Command&lt;S&gt; {
 
 	private final Pattern2 starting;
+	private final Lazy&lt;Pattern2&gt; patternEnd;
 
-<span class="fc" id="L48">	public CommandMultilines(String patternStart) {</span>
-<span class="pc bpc" id="L49" title="2 of 4 branches missed.">		if (patternStart.startsWith(&quot;^&quot;) == false || patternStart.endsWith(&quot;$&quot;) == false) {</span>
-<span class="nc" id="L50">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart);</span>
-		}
-<span class="fc" id="L52">		this.starting = MyPattern.cmpile(patternStart);</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L50">	public CommandMultilines(String patternStart) {</span>
+<span class="pc bpc" id="L51" title="2 of 4 branches missed.">		if (patternStart.startsWith(&quot;^&quot;) == false || patternStart.endsWith(&quot;$&quot;) == false)</span>
+<span class="nc" id="L52">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart);</span>
+
+<span class="fc" id="L54">		this.starting = MyPattern.cmpile(patternStart);</span>
+<span class="fc" id="L55">		this.patternEnd = new Lazy&lt;&gt;(x -&gt; MyPattern.cmpile(getPatternEnd()));</span>
+<span class="fc" id="L56">	}</span>
 
 	public abstract String getPatternEnd();
 
 	public String[] getDescription() {
-<span class="nc" id="L58">		return new String[] { &quot;START: &quot; + starting.pattern(), &quot;END: &quot; + getPatternEnd() };</span>
+<span class="nc" id="L61">		return new String[] { &quot;START: &quot; + starting.pattern(), &quot;END: &quot; + getPatternEnd() };</span>
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
-<span class="nc" id="L63">			return CommandControl.NOT_OK;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc" id="L66">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L65">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (m1.matches() == false)</span>
-<span class="fc" id="L67">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L68">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L70">			return CommandControl.NOT_OK;</span>
 
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (lines.size() == 1)</span>
-<span class="fc" id="L70">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (lines.size() == 1)</span>
+<span class="fc" id="L73">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L72">		m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.getLast().getTrimmed().getString());</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (m1.matches() == false)</span>
-<span class="fc" id="L74">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc" id="L75">		m1 = patternEnd.get().matcher(lines.getLast().getTrimmed().getString());</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L77">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L76">		return finalVerification();</span>
+<span class="fc" id="L79">		return finalVerification();</span>
 	}
 
 	protected boolean isCommandForbidden() {
-<span class="fc" id="L80">		return false;</span>
+<span class="fc" id="L83">		return false;</span>
 	}
 
 	protected CommandControl finalVerification() {
-<span class="fc" id="L84">		return CommandControl.OK;</span>
+<span class="fc" id="L87">		return CommandControl.OK;</span>
 	}
 
 	protected final Pattern2 getStartingPattern() {
-<span class="nc" id="L88">		return starting;</span>
-	}
-	
-	@Override
-	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="nc" id="L91">		return starting;</span>
 	}
 
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

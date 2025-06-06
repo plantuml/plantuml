@@ -137,24 +137,27 @@ public class RegexLeaf implements IRegex {
 <span class="fc" id="L137">		return result;</span>
 	}
 
+<span class="fc" id="L140">	private static final Pattern PATTERN_TO_REMOVE = Pattern.compile(&quot;\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?&quot;);</span>
+
+
 	public long getFoxSignature() {
-<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]+&quot;))</span>
-<span class="fc" id="L142">			return FoxSignature.getSpecialSpaces();</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]*&quot;))</span>
-<span class="fc" id="L144">			return 0;</span>
-<span class="fc" id="L145">		final String pattern2 = pattern.replaceAll(&quot;\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]+&quot;))</span>
+<span class="fc" id="L145">			return FoxSignature.getSpecialSpaces();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]*&quot;))</span>
+<span class="fc" id="L147">			return 0;</span>
+<span class="fc" id="L148">		final String pattern2 = PATTERN_TO_REMOVE.matcher(pattern).replaceAll(&quot;&quot;);</span>
 
-<span class="fc" id="L147">		final Matcher m1 = p1.matcher(pattern2);</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (m1.matches())</span>
-<span class="fc" id="L149">			return FoxSignature.getFoxSignatureFromRegex(m1.group(1));</span>
+<span class="fc" id="L150">		final Matcher m1 = p1.matcher(pattern2);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (m1.matches())</span>
+<span class="fc" id="L152">			return FoxSignature.getFoxSignatureFromRegex(m1.group(1));</span>
 
-<span class="fc" id="L151">		final Matcher m2 = p2.matcher(pattern2);</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (m2.matches())</span>
-<span class="fc" id="L153">			return getSignatureP2(pattern2);</span>
+<span class="fc" id="L154">		final Matcher m2 = p2.matcher(pattern2);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (m2.matches())</span>
+<span class="fc" id="L156">			return getSignatureP2(pattern2);</span>
 
-<span class="fc" id="L155">		final Matcher m3 = p3.matcher(pattern2);</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (m3.matches())</span>
-<span class="fc" id="L157">			return FoxSignature.getSpecial1();</span>
+<span class="fc" id="L158">		final Matcher m3 = p3.matcher(pattern2);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (m3.matches())</span>
+<span class="fc" id="L160">			return FoxSignature.getSpecial1();</span>
 
 //		synchronized (UNKNOWN) {
 //			final boolean changed = UNKNOWN.add(pattern2);
@@ -166,7 +169,7 @@ public class RegexLeaf implements IRegex {
 //				// Thread.dumpStack();
 //			}
 //		}
-<span class="fc" id="L169">		return 0;</span>
+<span class="fc" id="L172">		return 0;</span>
 	}
 
 }

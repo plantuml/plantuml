@@ -122,25 +122,40 @@ import net.sourceforge.plantuml.ProgressBar;
 		// perflogInternal(line);
 <span class="nc" id="L123">	}</span>
 
+	public static void deletePerfLogFile() {
+<span class="nc" id="L126">		final File file = new File(PERFLOG_FILENAME);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (file.exists()) {</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (!file.delete()) {</span>
+<span class="nc" id="L129">				error(&quot;Cannot del &quot; + PERFLOG_FILENAME);</span>
+			}
+		}
+<span class="nc" id="L132">	}</span>
+
 	private synchronized static void perflogInternal(String line) {
 		try {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (firstCall) {</span>
-<span class="nc" id="L128">				File file = new File(PERFLOG_FILENAME);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">				if (file.exists()) {</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">					if (!file.delete()) {</span>
-<span class="nc" id="L131">						error(&quot;Cannot del &quot; + PERFLOG_FILENAME);</span>
-					}
-				}
-<span class="nc" id="L134">				firstCall = false;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (firstCall) {</span>
+<span class="nc" id="L137">				deletePerfLogFile();</span>
+<span class="nc" id="L138">				firstCall = false;</span>
 			}
-<span class="nc" id="L136">			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);</span>
-<span class="nc" id="L137">					BufferedWriter bw = new BufferedWriter(fw);</span>
-<span class="nc" id="L138">					PrintWriter out = new PrintWriter(bw)) {</span>
-<span class="nc" id="L139">				out.println(line);</span>
+<span class="nc" id="L140">			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);</span>
+<span class="nc" id="L141">					BufferedWriter bw = new BufferedWriter(fw);</span>
+<span class="nc" id="L142">					PrintWriter out = new PrintWriter(bw)) {</span>
+<span class="nc" id="L143">				out.println(line);</span>
 			}
-<span class="nc" id="L141">		} catch (IOException e) {</span>
-<span class="nc" id="L142">			error(&quot;Cannot write in &quot; + PERFLOG_FILENAME + &quot; : &quot; + e.getMessage());</span>
-<span class="nc" id="L143">		}</span>
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L145">		} catch (IOException e) {</span>
+<span class="nc" id="L146">			error(&quot;Cannot write in &quot; + PERFLOG_FILENAME + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L147">		}</span>
+<span class="nc" id="L148">	}</span>
+
+	public static synchronized void logStackTrace() {
+<span class="nc" id="L151">		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {</span>
+<span class="nc" id="L152">			final Exception e = new Exception(&quot;StackTrace&quot;);</span>
+<span class="nc" id="L153">			e.fillInStackTrace();</span>
+<span class="nc" id="L154">			e.printStackTrace(pw);</span>
+<span class="nc" id="L155">		} catch (IOException ex) {</span>
+<span class="nc" id="L156">			ex.printStackTrace();</span>
+<span class="nc" id="L157">		}</span>
+<span class="nc" id="L158">	}</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

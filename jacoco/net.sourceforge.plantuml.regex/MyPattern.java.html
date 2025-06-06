@@ -37,6 +37,9 @@ package net.sourceforge.plantuml.regex;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.jaws.Jaws;
@@ -44,66 +47,95 @@ import net.sourceforge.plantuml.jaws.Jaws;
 class MaxSizeHashMap&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; {
 	private final int maxSize;
 
-<span class="fc" id="L47">	public MaxSizeHashMap(int maxSize) {</span>
-<span class="fc" id="L48">		this.maxSize = maxSize;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L50">	public MaxSizeHashMap(int maxSize) {</span>
+<span class="nc" id="L51">		this.maxSize = maxSize;</span>
+<span class="nc" id="L52">	}</span>
 
 	@Override
 	protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		return size() &gt; maxSize;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		return size() &gt; maxSize;</span>
 	}
 }
 
-// Splitter.java to be finished
-<span class="nc" id="L58">public abstract class MyPattern {</span>
+class BoundedPatternCache {
+	private final ConcurrentHashMap&lt;String, Pattern2&gt; cache;
+<span class="fc" id="L62">	private final AtomicInteger putCount = new AtomicInteger();</span>
+	private final int maxSize;
 
-<span class="fc" id="L60">	private static final Map&lt;String, Pattern2&gt; cache = new MaxSizeHashMap&lt;&gt;(512);</span>
+<span class="fc" id="L65">	public BoundedPatternCache(int initialSize, int maxSize) {</span>
+<span class="fc" id="L66">		this.cache = new ConcurrentHashMap&lt;&gt;(initialSize);</span>
+<span class="fc" id="L67">		this.maxSize = maxSize;</span>
+<span class="fc" id="L68">	}</span>
 
-<span class="fc" id="L62">	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(&quot;&quot;));</span>
+	public Pattern2 computeIfAbsent(String key, Function&lt;String, Pattern2&gt; mappingFunction) {
+<span class="fc" id="L71">		return cache.computeIfAbsent(key, k -&gt; {</span>
+<span class="fc" id="L72">			final int size = putCount.incrementAndGet();</span>
+			// This should never happen, but just in case, to avoid memory leak
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			if (size &gt;= maxSize) {</span>
+<span class="nc" id="L75">				cache.clear();</span>
+<span class="nc" id="L76">				putCount.set(0);</span>
+			}
+<span class="fc" id="L78">			return mappingFunction.apply(k);</span>
+		});
+	}
+
+}
+
+public abstract class MyPattern {
+
+<span class="fc" id="L86">	private static final BoundedPatternCache cache = new BoundedPatternCache(12_000, 30_000);</span>
+
+<span class="fc" id="L88">	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(&quot;&quot;));</span>
+
+	private MyPattern() {
+
+	}
 
 //	static int CPT1;
 //	static int CPT2;
 
+	// private static final Map&lt;String, AtomicInteger&gt; COUNTER = new
+	// ConcurrentHashMap&lt;&gt;();
+
 	public static Pattern2 cmpile(final String p) {
-<span class="pc bpc" id="L68" title="1 of 4 branches missed.">		if (p == null || p.length() == 0) {</span>
-<span class="fc" id="L69">			return EMPTY;</span>
-		}
-//		CPT1++;
-<span class="fc" id="L72">		Pattern2 result = null;</span>
-<span class="fc" id="L73">		synchronized (cache) {</span>
-<span class="fc" id="L74">			result = cache.get(p);</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">			if (result != null) {</span>
-<span class="fc" id="L76">				return result;</span>
-			}
-<span class="fc" id="L78">		}</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		assert result == null;</span>
-<span class="fc" id="L80">		result = new Pattern2(Pattern.compile(transform(p), Pattern.CASE_INSENSITIVE));</span>
+<span class="pc bpc" id="L101" title="1 of 4 branches missed.">		if (p == null || p.length() == 0)</span>
+<span class="fc" id="L102">			return EMPTY;</span>
 
-<span class="fc" id="L82">		synchronized (cache) {</span>
-<span class="fc" id="L83">			cache.put(p, result);</span>
-//			CPT2++;
-//			System.err.println(&quot;CPT= &quot; + CPT1 + &quot; / &quot; + CPT2 + &quot; &quot; + cache.size());
-<span class="fc" id="L86">		}</span>
+		// int value = COUNTER.computeIfAbsent(p, key -&gt; new
+		// AtomicInteger(0)).incrementAndGet();
+//		synchronized (COUNTER) {
+//			if (value &gt; 1000) {
+//				Log.logStackTrace();
+//				try {
+//					Thread.sleep(1000L * 3600);
+//				} catch (InterruptedException e) {
+//				}
+//			}
+//			printPopularPatterns();
+//		}
 
-<span class="fc" id="L88">		return result;</span>
+<span class="fc" id="L117">		return cache.computeIfAbsent(p, key -&gt; new Pattern2(Pattern.compile(transform(key), Pattern.CASE_INSENSITIVE)));</span>
+
 	}
+
+//	public static void printPopularPatterns() {
+//		Log.deletePerfLogFile();
+//		for (Map.Entry&lt;String, AtomicInteger&gt; entry : COUNTER.entrySet()) {
+//			int count = entry.getValue().get();
+//			if (count &gt; 500) {
+//				Log.perflog(&quot;Pattern: &quot; + entry.getKey() + &quot; | Count: &quot; + count);
+//			}
+//		}
+//	}
 
 	private static String transform(String p) {
 		// Replace ReadLineReader.java
 		// p = p.replace(&quot;%pLN&quot;, &quot;\\p{L}0-9&quot;); // Unicode Letter, digit
-<span class="fc" id="L94">		p = p.replace(&quot;%pLN&quot;, &quot;\\p{L}\\p{N}&quot;); // Unicode Letter, digit</span>
-<span class="fc" id="L95">		p = p.replace(&quot;%s&quot;, &quot;\\s\u00A0&quot;); // space</span>
-<span class="fc" id="L96">		p = p.replace(&quot;%q&quot;, &quot;'\u2018\u2019&quot;); // quote</span>
-<span class="fc" id="L97">		p = p.replace(&quot;%g&quot;, &quot;\&quot;\u201c\u201d&quot; + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote</span>
-<span class="fc" id="L98">		return p;</span>
-	}
-
-	public static boolean mtches(CharSequence input, String regex) {
-<span class="fc" id="L102">		return cmpile(regex).matcher(input).matches();</span>
-	}
-
-	public static CharSequence removeAll(CharSequence src, String regex) {
-<span class="nc" id="L106">		return src.toString().replaceAll(transform(regex), &quot;&quot;);</span>
+<span class="fc" id="L134">		p = p.replace(&quot;%pLN&quot;, &quot;\\p{L}\\p{N}&quot;); // Unicode Letter, digit</span>
+<span class="fc" id="L135">		p = p.replace(&quot;%s&quot;, &quot;\\s\u00A0&quot;); // space</span>
+<span class="fc" id="L136">		p = p.replace(&quot;%q&quot;, &quot;'\u2018\u2019&quot;); // quote</span>
+<span class="fc" id="L137">		p = p.replace(&quot;%g&quot;, &quot;\&quot;\u201c\u201d&quot; + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote</span>
+<span class="fc" id="L138">		return p;</span>
 	}
 
 }
