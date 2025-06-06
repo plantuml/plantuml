@@ -47,94 +47,92 @@ import net.sourceforge.plantuml.klimt.shape.TileImage;
 import net.sourceforge.plantuml.klimt.shape.TileImageSvg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 
 public class Img implements HtmlCommand {
 
-<span class="nc" id="L57">	final static private Pattern2 srcPattern = MyPattern.cmpile(&quot;src[%s]*=[%s]*[\&quot;%q]?([^%s\&quot;&gt;]+)[\&quot;%q]?&quot;);</span>
-<span class="nc" id="L58">	final static private Pattern2 vspacePattern = MyPattern.cmpile(&quot;vspace[%s]*=[%s]*[\&quot;%q]?(\\d+)[\&quot;%q]?&quot;);</span>
-<span class="nc" id="L59">	final static private Pattern2 valignPattern = MyPattern</span>
-<span class="nc" id="L60">			.cmpile(&quot;valign[%s]*=[%s]*[\&quot;%q]?(top|bottom|middle)[\&quot;%q]?&quot;);</span>
-<span class="nc" id="L61">	final static private Pattern2 noSrcColonPattern = MyPattern.cmpile(Splitter.imgPatternNoSrcColon);</span>
+<span class="nc" id="L56">	final static private Pattern2 srcPattern = Pattern2.cmpile(&quot;src[%s]*=[%s]*[\&quot;%q]?([^%s\&quot;&gt;]+)[\&quot;%q]?&quot;);</span>
+<span class="nc" id="L57">	final static private Pattern2 vspacePattern = Pattern2.cmpile(&quot;vspace[%s]*=[%s]*[\&quot;%q]?(\\d+)[\&quot;%q]?&quot;);</span>
+<span class="nc" id="L58">	final static private Pattern2 valignPattern = Pattern2.cmpile(&quot;valign[%s]*=[%s]*[\&quot;%q]?(top|bottom|middle)[\&quot;%q]?&quot;);</span>
+<span class="nc" id="L59">	final static private Pattern2 noSrcColonPattern = Pattern2.cmpile(Splitter.imgPatternNoSrcColon);</span>
 
 	private final TextBlock tileImage;
 
-<span class="nc" id="L65">	private Img(TextBlock image) {</span>
-<span class="nc" id="L66">		this.tileImage = image;</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L63">	private Img(TextBlock image) {</span>
+<span class="nc" id="L64">		this.tileImage = image;</span>
+<span class="nc" id="L65">	}</span>
 
 	static int getVspace(String html) {
-<span class="nc" id="L70">		final Matcher2 m = vspacePattern.matcher(html);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L72">			return 0;</span>
+<span class="nc" id="L68">		final Matcher2 m = vspacePattern.matcher(html);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L70">			return 0;</span>
 
-<span class="nc" id="L74">		return Integer.parseInt(m.group(1));</span>
+<span class="nc" id="L72">		return Integer.parseInt(m.group(1));</span>
 	}
 
 	static ImgValign getValign(String html) {
-<span class="nc" id="L78">		final Matcher2 m = valignPattern.matcher(html);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L80">			return ImgValign.TOP;</span>
+<span class="nc" id="L76">		final Matcher2 m = valignPattern.matcher(html);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L78">			return ImgValign.TOP;</span>
 
-<span class="nc" id="L82">		return ImgValign.valueOf(StringUtils.goUpperCase(m.group(1)));</span>
+<span class="nc" id="L80">		return ImgValign.valueOf(StringUtils.goUpperCase(m.group(1)));</span>
 	}
 
 	static HtmlCommand getInstance(String html, boolean withSrc) {
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (withSrc) {</span>
-<span class="nc" id="L87">			final Matcher2 m = srcPattern.matcher(html);</span>
-<span class="nc" id="L88">			final int vspace = getVspace(html);</span>
-<span class="nc" id="L89">			final ImgValign valign = getValign(html);</span>
-<span class="nc" id="L90">			return build(m, valign, vspace);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (withSrc) {</span>
+<span class="nc" id="L85">			final Matcher2 m = srcPattern.matcher(html);</span>
+<span class="nc" id="L86">			final int vspace = getVspace(html);</span>
+<span class="nc" id="L87">			final ImgValign valign = getValign(html);</span>
+<span class="nc" id="L88">			return build(m, valign, vspace);</span>
 		}
-<span class="nc" id="L92">		final Matcher2 m = noSrcColonPattern.matcher(html);</span>
-<span class="nc" id="L93">		return build(m, ImgValign.TOP, 0);</span>
+<span class="nc" id="L90">		final Matcher2 m = noSrcColonPattern.matcher(html);</span>
+<span class="nc" id="L91">		return build(m, ImgValign.TOP, 0);</span>
 	}
 
 	private static HtmlCommand build(final Matcher2 m, final ImgValign valign, final int vspace) {
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L98">			return new PlainText(&quot;(SYNTAX ERROR)&quot;);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L96">			return new PlainText(&quot;(SYNTAX ERROR)&quot;);</span>
 		}
-<span class="nc" id="L100">		final String src = m.group(1);</span>
+<span class="nc" id="L98">		final String src = m.group(1);</span>
 		try {
-<span class="nc" id="L102">			final SFile f = FileSystem.getInstance().getFile(src);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (f.exists() == false) {</span>
+<span class="nc" id="L100">			final SFile f = FileSystem.getInstance().getFile(src);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (f.exists() == false) {</span>
 				// Check if valid URL
-<span class="nc bnc" id="L105" title="All 4 branches missed.">				if (src.startsWith(&quot;http:&quot;) || src.startsWith(&quot;https:&quot;)) {</span>
-<span class="nc" id="L106">					final SURL tmp = SURL.create(src);</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">					if (tmp == null)</span>
-<span class="nc" id="L108">						return new PlainText(&quot;(Cannot decode: &quot; + src + &quot;)&quot;);</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">				if (src.startsWith(&quot;http:&quot;) || src.startsWith(&quot;https:&quot;)) {</span>
+<span class="nc" id="L104">					final SURL tmp = SURL.create(src);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">					if (tmp == null)</span>
+<span class="nc" id="L106">						return new PlainText(&quot;(Cannot decode: &quot; + src + &quot;)&quot;);</span>
 
-<span class="nc" id="L110">					final BufferedImage read = tmp.readRasterImageFromURL();</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">					if (read == null)</span>
-<span class="nc" id="L112">						return new PlainText(&quot;(Cannot decode: &quot; + src + &quot;)&quot;);</span>
+<span class="nc" id="L108">					final BufferedImage read = tmp.readRasterImageFromURL();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">					if (read == null)</span>
+<span class="nc" id="L110">						return new PlainText(&quot;(Cannot decode: &quot; + src + &quot;)&quot;);</span>
 
-<span class="nc" id="L114">					return new Img(new TileImage(read, valign, vspace));</span>
+<span class="nc" id="L112">					return new Img(new TileImage(read, valign, vspace));</span>
 				}
-<span class="nc" id="L116">				return new PlainText(&quot;(Cannot decode: &quot; + f + &quot;)&quot;);</span>
+<span class="nc" id="L114">				return new PlainText(&quot;(Cannot decode: &quot; + f + &quot;)&quot;);</span>
 			}
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
-<span class="nc" id="L119">				final String tmp = FileUtils.readSvg(f);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">				if (tmp == null)</span>
-<span class="nc" id="L121">					return new PlainText(&quot;(Cannot decode: &quot; + f + &quot;)&quot;);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
+<span class="nc" id="L117">				final String tmp = FileUtils.readSvg(f);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">				if (tmp == null)</span>
+<span class="nc" id="L119">					return new PlainText(&quot;(Cannot decode: &quot; + f + &quot;)&quot;);</span>
 
-<span class="nc" id="L123">				return new Img(new TileImageSvg(tmp, 1));</span>
+<span class="nc" id="L121">				return new Img(new TileImageSvg(tmp, 1));</span>
 			}
-<span class="nc" id="L125">			final BufferedImage read = f.readRasterImageFromFile();</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (read == null)</span>
-<span class="nc" id="L127">				return new PlainText(&quot;(Cannot decode: &quot; + f + &quot;)&quot;);</span>
+<span class="nc" id="L123">			final BufferedImage read = f.readRasterImageFromFile();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (read == null)</span>
+<span class="nc" id="L125">				return new PlainText(&quot;(Cannot decode: &quot; + f + &quot;)&quot;);</span>
 
-<span class="nc" id="L129">			return new Img(new TileImage(f.readRasterImageFromFile(), valign, vspace));</span>
-<span class="nc" id="L130">		} catch (IOException e) {</span>
-<span class="nc" id="L131">			Logme.error(e);</span>
-<span class="nc" id="L132">			return new PlainText(&quot;ERROR &quot; + e.toString());</span>
+<span class="nc" id="L127">			return new Img(new TileImage(f.readRasterImageFromFile(), valign, vspace));</span>
+<span class="nc" id="L128">		} catch (IOException e) {</span>
+<span class="nc" id="L129">			Logme.error(e);</span>
+<span class="nc" id="L130">			return new PlainText(&quot;ERROR &quot; + e.toString());</span>
 		}
 	}
 
 	public TextBlock createMonoImage() {
-<span class="nc" id="L137">		return tileImage;</span>
+<span class="nc" id="L135">		return tileImage;</span>
 	}
 
 }

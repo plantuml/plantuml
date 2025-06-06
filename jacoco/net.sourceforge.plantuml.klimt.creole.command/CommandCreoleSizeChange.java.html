@@ -38,54 +38,53 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleSizeChange implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L48">		return &quot;&lt;&quot;;</span>
+<span class="fc" id="L47">		return &quot;&lt;&quot;;</span>
 	}
 
 	private final Pattern2 mypattern;
 
-<span class="fc" id="L53">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.fontSizePattern + &quot;(.*?)\\&lt;/size\\&gt;)&quot;);</span>
-<span class="fc" id="L54">	private static final Pattern2 patternEol = MyPattern.cmpile(&quot;^(&quot; + Splitter.fontSizePattern + &quot;(.*)$)&quot;);</span>
+<span class="fc" id="L52">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.fontSizePattern + &quot;(.*?)\\&lt;/size\\&gt;)&quot;);</span>
+<span class="fc" id="L53">	private static final Pattern2 patternEol = Pattern2.cmpile(&quot;^(&quot; + Splitter.fontSizePattern + &quot;(.*)$)&quot;);</span>
 
 	public static Command create() {
-<span class="fc" id="L57">		return new CommandCreoleSizeChange(pattern);</span>
+<span class="fc" id="L56">		return new CommandCreoleSizeChange(pattern);</span>
 	}
 
 	public static Command createEol() {
-<span class="fc" id="L61">		return new CommandCreoleSizeChange(patternEol);</span>
+<span class="fc" id="L60">		return new CommandCreoleSizeChange(patternEol);</span>
 	}
 
-<span class="fc" id="L64">	private CommandCreoleSizeChange(Pattern2 p) {</span>
-<span class="fc" id="L65">		this.mypattern = p;</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L63">	private CommandCreoleSizeChange(Pattern2 p) {</span>
+<span class="fc" id="L64">		this.mypattern = p;</span>
+<span class="fc" id="L65">	}</span>
 
 	public int matchingSize(String line) {
-<span class="fc" id="L69">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (m.find() == false) {</span>
-<span class="fc" id="L71">			return 0;</span>
+<span class="fc" id="L68">		final Matcher2 m = mypattern.matcher(line);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (m.find() == false) {</span>
+<span class="fc" id="L70">			return 0;</span>
 		}
-<span class="fc" id="L73">		return m.group(2).length();</span>
+<span class="fc" id="L72">		return m.group(2).length();</span>
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-<span class="fc" id="L77">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L79">			throw new IllegalStateException();</span>
+<span class="fc" id="L76">		final Matcher2 m = mypattern.matcher(line);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L78">			throw new IllegalStateException();</span>
 		}
-<span class="fc" id="L81">		final int size = Integer.parseInt(m.group(2));</span>
-<span class="fc" id="L82">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
-<span class="fc" id="L83">		final FontConfiguration fc2 = fc1.changeSize(size);</span>
+<span class="fc" id="L80">		final int size = Integer.parseInt(m.group(2));</span>
+<span class="fc" id="L81">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
+<span class="fc" id="L82">		final FontConfiguration fc2 = fc1.changeSize(size);</span>
 		// final FontConfiguration fc2 = new AddStyle(style, null).apply(fc1);
-<span class="fc" id="L85">		stripe.setActualFontConfiguration(fc2);</span>
-<span class="fc" id="L86">		stripe.analyzeAndAdd(m.group(3));</span>
-<span class="fc" id="L87">		stripe.setActualFontConfiguration(fc1);</span>
-<span class="fc" id="L88">		return line.substring(m.group(1).length());</span>
+<span class="fc" id="L84">		stripe.setActualFontConfiguration(fc2);</span>
+<span class="fc" id="L85">		stripe.analyzeAndAdd(m.group(3));</span>
+<span class="fc" id="L86">		stripe.setActualFontConfiguration(fc1);</span>
+<span class="fc" id="L87">		return line.substring(m.group(1).length());</span>
 	}
 
 }

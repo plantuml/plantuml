@@ -35,23 +35,75 @@
  */
 package net.sourceforge.plantuml.regex;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.jaws.Jaws;
+
+class BoundedPatternCache {
+	private final ConcurrentHashMap&lt;String, Pattern2&gt; cache;
+<span class="fc" id="L47">	private final AtomicInteger putCount = new AtomicInteger();</span>
+	private final int maxSize;
+
+<span class="fc" id="L50">	public BoundedPatternCache(int initialSize, int maxSize) {</span>
+<span class="fc" id="L51">		this.cache = new ConcurrentHashMap&lt;&gt;(initialSize);</span>
+<span class="fc" id="L52">		this.maxSize = maxSize;</span>
+<span class="fc" id="L53">	}</span>
+
+	public Pattern2 computeIfAbsent(String key, Function&lt;String, Pattern2&gt; mappingFunction) {
+<span class="fc" id="L56">		return cache.computeIfAbsent(key, k -&gt; {</span>
+<span class="fc" id="L57">			final int size = putCount.incrementAndGet();</span>
+			// This should never happen, but just in case, to avoid memory leak
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (size &gt;= maxSize) {</span>
+<span class="nc" id="L60">				cache.clear();</span>
+<span class="nc" id="L61">				putCount.set(0);</span>
+			}
+<span class="fc" id="L63">			return mappingFunction.apply(k);</span>
+		});
+	}
+
+}
+
 public class Pattern2 {
+	
+<span class="fc" id="L71">	private static final BoundedPatternCache cache = new BoundedPatternCache(12_000, 30_000);</span>
+<span class="fc" id="L72">	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(&quot;&quot;));</span>
+
 
 	private final Pattern pattern;
 
-<span class="fc" id="L44">	public Pattern2(Pattern pattern) {</span>
-<span class="fc" id="L45">		this.pattern = pattern;</span>
-<span class="fc" id="L46">	}</span>
+<span class="fc" id="L77">	private Pattern2(Pattern pattern) {</span>
+<span class="fc" id="L78">		this.pattern = pattern;</span>
+<span class="fc" id="L79">	}</span>
 
 	public Matcher2 matcher(CharSequence input) {
-<span class="fc" id="L49">		return Matcher2.build(pattern, input);</span>
+<span class="fc" id="L82">		return Matcher2.build(pattern, input);</span>
 	}
 
 	public String pattern() {
-<span class="fc" id="L53">		return pattern.pattern();</span>
+<span class="fc" id="L86">		return pattern.pattern();</span>
 	}
+	
+	
+	public static Pattern2 cmpile(final String p) {
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">		if (p == null || p.length() == 0)</span>
+<span class="fc" id="L92">			return EMPTY;</span>
+
+<span class="fc" id="L94">		return cache.computeIfAbsent(p, key -&gt; new Pattern2(Pattern.compile(transform(key), Pattern.CASE_INSENSITIVE)));</span>
+
+	}
+
+	private static String transform(String p) {
+		// Replace ReadLineReader.java
+<span class="fc" id="L100">		p = p.replace(&quot;%pLN&quot;, &quot;\\p{L}\\p{N}&quot;); // Unicode Letter, digit</span>
+<span class="fc" id="L101">		p = p.replace(&quot;%s&quot;, &quot;\\s\u00A0&quot;); // space</span>
+<span class="fc" id="L102">		p = p.replace(&quot;%q&quot;, &quot;'\u2018\u2019&quot;); // quote</span>
+<span class="fc" id="L103">		p = p.replace(&quot;%g&quot;, &quot;\&quot;\u201c\u201d&quot; + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote</span>
+<span class="fc" id="L104">		return p;</span>
+	}
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

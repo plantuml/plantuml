@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleMonospaced implements Command {
@@ -46,17 +45,18 @@ public class CommandCreoleMonospaced implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L49">		return &quot;\&quot;&quot;;</span>
+<span class="fc" id="L48">		return &quot;\&quot;&quot;;</span>
 	}
 
 	private final Pattern2 pattern;
 
 	public static Command create() {
-<span class="fc" id="L55">		return new CommandCreoleMonospaced(&quot;^(\&quot;\&quot;(.*?)\&quot;\&quot;)&quot;);</span>
+<span class="fc" id="L54">		return new CommandCreoleMonospaced(&quot;^(\&quot;\&quot;(.*?)\&quot;\&quot;)&quot;);</span>
 	}
 
-<span class="fc" id="L58">	private CommandCreoleMonospaced(String p) {</span>
-<span class="fc" id="L59">		this.pattern = MyPattern.cmpile(p);</span>
+<span class="fc" id="L57">	private CommandCreoleMonospaced(String p) {</span>
+<span class="fc" id="L58">		final String p1 = p;</span>
+<span class="fc" id="L59">		this.pattern = Pattern2.cmpile(p1);</span>
 <span class="fc" id="L60">	}</span>
 
 	public int matchingSize(String line) {

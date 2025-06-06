@@ -43,83 +43,82 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Magma {
 
 	private final CucaDiagram diagram;
 	private final List&lt;Entity&gt; standalones;
-<span class="fc" id="L52">	private final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
+<span class="fc" id="L51">	private final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
 
-<span class="fc" id="L54">	public Magma(CucaDiagram system, List&lt;Entity&gt; standalones) {</span>
-<span class="fc" id="L55">		this.diagram = system;</span>
-<span class="fc" id="L56">		this.standalones = standalones;</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L53">	public Magma(CucaDiagram system, List&lt;Entity&gt; standalones) {</span>
+<span class="fc" id="L54">		this.diagram = system;</span>
+<span class="fc" id="L55">		this.standalones = standalones;</span>
+<span class="fc" id="L56">	}</span>
 
 	public void putInSquare() {
-<span class="fc" id="L60">		final SquareLinker&lt;Entity&gt; linker = new SquareLinker&lt;Entity&gt;() {</span>
+<span class="fc" id="L59">		final SquareLinker&lt;Entity&gt; linker = new SquareLinker&lt;Entity&gt;() {</span>
 			public void topDown(Entity top, Entity down) {
-<span class="fc" id="L62">				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),</span>
-<span class="fc" id="L63">						top, down, linkType, LinkArg.noDisplay(2)));</span>
-<span class="fc" id="L64">			}</span>
+<span class="fc" id="L61">				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),</span>
+<span class="fc" id="L62">						top, down, linkType, LinkArg.noDisplay(2)));</span>
+<span class="fc" id="L63">			}</span>
 
 			public void leftRight(Entity left, Entity right) {
-<span class="fc" id="L67">				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),</span>
-<span class="fc" id="L68">						left, right, linkType, LinkArg.noDisplay(1)));</span>
-<span class="fc" id="L69">			}</span>
+<span class="fc" id="L66">				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),</span>
+<span class="fc" id="L67">						left, right, linkType, LinkArg.noDisplay(1)));</span>
+<span class="fc" id="L68">			}</span>
 		};
-<span class="fc" id="L71">		new SquareMaker&lt;Entity&gt;().putInSquare(standalones, linker);</span>
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L70">		new SquareMaker&lt;Entity&gt;().putInSquare(standalones, linker);</span>
+<span class="fc" id="L71">	}</span>
 
 	public Entity getContainer() {
-<span class="fc" id="L75">		final Entity parent = standalones.get(0).getParentContainer();</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (parent == null)</span>
-<span class="nc" id="L77">			return null;</span>
+<span class="fc" id="L74">		final Entity parent = standalones.get(0).getParentContainer();</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L76">			return null;</span>
 
-<span class="fc" id="L79">		return parent.getParentContainer();</span>
+<span class="fc" id="L78">		return parent.getParentContainer();</span>
 	}
 
 	public boolean isComplete() {
-<span class="nc" id="L83">		final Entity parent = getContainer();</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (parent == null)</span>
-<span class="nc" id="L85">			return false;</span>
+<span class="nc" id="L82">		final Entity parent = getContainer();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L84">			return false;</span>
 
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		return parent.countChildren() == standalones.size();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		return parent.countChildren() == standalones.size();</span>
 	}
 
 	private int squareSize() {
-<span class="nc" id="L91">		return SquareMaker.computeBranch(standalones.size());</span>
+<span class="nc" id="L90">		return SquareMaker.computeBranch(standalones.size());</span>
 	}
 
 	private Entity getTopLeft() {
-<span class="nc" id="L95">		return standalones.get(0);</span>
+<span class="nc" id="L94">		return standalones.get(0);</span>
 	}
 
 	private Entity getBottomLeft() {
-<span class="nc" id="L99">		int result = SquareMaker.getBottomLeft(standalones.size());</span>
-<span class="nc" id="L100">		return standalones.get(result);</span>
+<span class="nc" id="L98">		int result = SquareMaker.getBottomLeft(standalones.size());</span>
+<span class="nc" id="L99">		return standalones.get(result);</span>
 	}
 
 	private Entity getTopRight() {
-<span class="nc" id="L104">		final int s = squareSize();</span>
-<span class="nc" id="L105">		return standalones.get(s - 1);</span>
+<span class="nc" id="L103">		final int s = squareSize();</span>
+<span class="nc" id="L104">		return standalones.get(s - 1);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L110">		return standalones.get(0).getParentContainer() + &quot; &quot; + standalones.toString() + &quot; &quot; + isComplete();</span>
+<span class="nc" id="L109">		return standalones.get(0).getParentContainer() + &quot; &quot; + standalones.toString() + &quot; &quot; + isComplete();</span>
 	}
 
 	public void linkToDown(Magma down) {
-<span class="nc" id="L114">		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getBottomLeft(),</span>
-<span class="nc" id="L115">				down.getTopLeft(), linkType, LinkArg.noDisplay(2)));</span>
+<span class="nc" id="L113">		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getBottomLeft(),</span>
+<span class="nc" id="L114">				down.getTopLeft(), linkType, LinkArg.noDisplay(2)));</span>
 
-<span class="nc" id="L117">	}</span>
+<span class="nc" id="L116">	}</span>
 
 	public void linkToRight(Magma right) {
-<span class="nc" id="L120">		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getTopRight(),</span>
-<span class="nc" id="L121">				right.getTopLeft(), linkType, LinkArg.noDisplay(1)));</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L119">		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getTopRight(),</span>
+<span class="nc" id="L120">				right.getTopLeft(), linkType, LinkArg.noDisplay(1)));</span>
+<span class="nc" id="L121">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

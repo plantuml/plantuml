@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -55,68 +54,68 @@ public abstract class CommandMultilines2&lt;S extends Diagram&gt; implements Com
 
 	private final Lazy&lt;Pattern2&gt; end;
 
-<span class="fc" id="L58">	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {</span>
-<span class="pc bpc" id="L59" title="2 of 4 branches missed.">		if (patternStart.getPattern().startsWith(&quot;^&quot;) == false || patternStart.getPattern().endsWith(&quot;$&quot;) == false)</span>
-<span class="nc" id="L60">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart.getPattern());</span>
+<span class="fc" id="L57">	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {</span>
+<span class="pc bpc" id="L58" title="2 of 4 branches missed.">		if (patternStart.getPattern().startsWith(&quot;^&quot;) == false || patternStart.getPattern().endsWith(&quot;$&quot;) == false)</span>
+<span class="nc" id="L59">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart.getPattern());</span>
 
-<span class="fc" id="L62">		this.strategy = strategy;</span>
-<span class="fc" id="L63">		this.starting = patternStart;</span>
-<span class="fc" id="L64">		this.trimEnd = trimEnd;</span>
-<span class="fc" id="L65">		this.end = new Lazy&lt;&gt;(x -&gt; MyPattern.cmpile(getPatternEnd()));</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L61">		this.strategy = strategy;</span>
+<span class="fc" id="L62">		this.starting = patternStart;</span>
+<span class="fc" id="L63">		this.trimEnd = trimEnd;</span>
+<span class="fc" id="L64">		this.end = new Lazy&lt;&gt;(x -&gt; Pattern2.cmpile(getPatternEnd()));</span>
+<span class="fc" id="L65">	}</span>
 
 	public boolean syntaxWithFinalBracket() {
-<span class="fc" id="L69">		return false;</span>
+<span class="fc" id="L68">		return false;</span>
 	}
 
 	public abstract String getPatternEnd();
 
 	public String[] getDescription() {
-<span class="nc" id="L75">		return new String[] { &quot;START: &quot; + starting.getPattern(), &quot;END: &quot; + getPatternEnd() };</span>
+<span class="nc" id="L74">		return new String[] { &quot;START: &quot; + starting.getPattern(), &quot;END: &quot; + getPatternEnd() };</span>
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-<span class="fc" id="L79">		lines = lines.cleanList(strategy);</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
-<span class="nc" id="L81">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L78">		lines = lines.cleanList(strategy);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc" id="L80">			return CommandControl.NOT_OK;</span>
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (syntaxWithFinalBracket()) {</span>
-<span class="fc bfc" id="L84" title="All 4 branches covered.">			if (lines.size() == 1 &amp;&amp; lines.getFirst().getTrimmed().getString().endsWith(&quot;{&quot;) == false) {</span>
-<span class="fc" id="L85">				final String vline = ((StringLocated) lines.getAt(0)).getString() + &quot; {&quot;;</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">				if (isValid(BlocLines.singleString(vline)) == CommandControl.OK_PARTIAL)</span>
-<span class="fc" id="L87">					return CommandControl.OK_PARTIAL;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (syntaxWithFinalBracket()) {</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">			if (lines.size() == 1 &amp;&amp; lines.getFirst().getTrimmed().getString().endsWith(&quot;{&quot;) == false) {</span>
+<span class="fc" id="L84">				final String vline = ((StringLocated) lines.getAt(0)).getString() + &quot; {&quot;;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				if (isValid(BlocLines.singleString(vline)) == CommandControl.OK_PARTIAL)</span>
+<span class="fc" id="L86">					return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L89">				return CommandControl.NOT_OK;</span>
+<span class="fc" id="L88">				return CommandControl.NOT_OK;</span>
 			}
-<span class="fc" id="L91">			lines = lines.eventuallyMoveBracket();</span>
+<span class="fc" id="L90">			lines = lines.eventuallyMoveBracket();</span>
 		}
-<span class="fc" id="L93">		final StringLocated first = lines.getFirst();</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (first == null)</span>
-<span class="nc" id="L95">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L92">		final StringLocated first = lines.getFirst();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (first == null)</span>
+<span class="nc" id="L94">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L97">		final boolean result1 = starting.match(first.getTrimmed());</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (result1 == false)</span>
-<span class="fc" id="L99">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L96">		final boolean result1 = starting.match(first.getTrimmed());</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (result1 == false)</span>
+<span class="fc" id="L98">			return CommandControl.NOT_OK;</span>
 
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (lines.size() == 1)</span>
-<span class="fc" id="L102">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (lines.size() == 1)</span>
+<span class="fc" id="L101">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L104">		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()));</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (m1.matches() == false)</span>
-<span class="fc" id="L106">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc" id="L103">		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()));</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L105">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L108">		return finalVerification(lines);</span>
+<span class="fc" id="L107">		return finalVerification(lines);</span>
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
-<span class="fc" id="L112">		lines = lines.cleanList(strategy);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (syntaxWithFinalBracket())</span>
-<span class="fc" id="L114">			lines = lines.eventuallyMoveBracket();</span>
+<span class="fc" id="L111">		lines = lines.cleanList(strategy);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (syntaxWithFinalBracket())</span>
+<span class="fc" id="L113">			lines = lines.eventuallyMoveBracket();</span>
 
 		try {
-<span class="fc" id="L117">			return executeNow(system, lines, currentPass);</span>
-<span class="nc" id="L118">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L119">			return CommandExecutionResult.badColor();</span>
+<span class="fc" id="L116">			return executeNow(system, lines, currentPass);</span>
+<span class="nc" id="L117">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L118">			return CommandExecutionResult.badColor();</span>
 		}
 	}
 
@@ -124,20 +123,20 @@ public abstract class CommandMultilines2&lt;S extends Diagram&gt; implements Com
 			throws NoSuchColorException;
 
 	protected boolean isCommandForbidden() {
-<span class="fc" id="L127">		return false;</span>
+<span class="fc" id="L126">		return false;</span>
 	}
 
 	protected CommandControl finalVerification(BlocLines lines) {
-<span class="fc" id="L131">		return CommandControl.OK;</span>
+<span class="fc" id="L130">		return CommandControl.OK;</span>
 	}
 
 	protected final IRegex getStartingPattern() {
-<span class="fc" id="L135">		return starting;</span>
+<span class="fc" id="L134">		return starting;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		return pass == ParserPass.ONE;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

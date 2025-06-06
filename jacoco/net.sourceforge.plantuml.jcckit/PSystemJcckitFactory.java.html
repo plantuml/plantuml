@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -60,68 +59,68 @@ public class PSystemJcckitFactory extends PSystemBasicFactory&lt;PSystemJcckit&g
 	private int height;
 
 	public PSystemJcckitFactory() {
-<span class="fc" id="L63">		super(DiagramType.JCCKIT);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		super(DiagramType.JCCKIT);</span>
+<span class="fc" id="L63">	}</span>
 
 	@Override
 	public PSystemJcckit initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L68">		this.data = null;</span>
-<span class="nc" id="L69">		this.width = 640;</span>
-<span class="nc" id="L70">		this.height = 400;</span>
-<span class="nc" id="L71">		extractDimension(startLine);</span>
-<span class="nc" id="L72">		data = new StringBuilder();</span>
-<span class="nc" id="L73">		return createSystem(source, preprocessing);</span>
+<span class="nc" id="L67">		this.data = null;</span>
+<span class="nc" id="L68">		this.width = 640;</span>
+<span class="nc" id="L69">		this.height = 400;</span>
+<span class="nc" id="L70">		extractDimension(startLine);</span>
+<span class="nc" id="L71">		data = new StringBuilder();</span>
+<span class="nc" id="L72">		return createSystem(source, preprocessing);</span>
 
 	}
 
 	private void extractDimension(String startLine) {
-<span class="nc" id="L78">		final Pattern2 p = MyPattern.cmpile(&quot;\\((\\d+),(\\d+)\\)&quot;);</span>
-<span class="nc" id="L79">		final Matcher2 m = p.matcher(startLine);</span>
-<span class="nc" id="L80">		final boolean ok = m.find();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (ok) {</span>
-<span class="nc" id="L82">			width = Integer.parseInt(m.group(1));</span>
-<span class="nc" id="L83">			height = Integer.parseInt(m.group(2));</span>
+<span class="nc" id="L77">		final Pattern2 p = Pattern2.cmpile(&quot;\\((\\d+),(\\d+)\\)&quot;);</span>
+<span class="nc" id="L78">		final Matcher2 m = p.matcher(startLine);</span>
+<span class="nc" id="L79">		final boolean ok = m.find();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (ok) {</span>
+<span class="nc" id="L81">			width = Integer.parseInt(m.group(1));</span>
+<span class="nc" id="L82">			height = Integer.parseInt(m.group(2));</span>
 		}
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L84">	}</span>
 
 	String getDimension() {
-<span class="nc" id="L88">		return &quot;&quot; + width + &quot;-&quot; + height;</span>
+<span class="nc" id="L87">		return &quot;&quot; + width + &quot;-&quot; + height;</span>
 	}
 
 	private PSystemJcckit createSystem(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L92">		final Properties p = new Properties();</span>
+<span class="nc" id="L91">		final Properties p = new Properties();</span>
 		try {
-<span class="nc" id="L94">			final String tmp = data.toString();</span>
-<span class="nc" id="L95">			final StringReader sr = new StringReader(tmp);</span>
-<span class="nc" id="L96">			p.load(sr);</span>
+<span class="nc" id="L93">			final String tmp = data.toString();</span>
+<span class="nc" id="L94">			final StringReader sr = new StringReader(tmp);</span>
+<span class="nc" id="L95">			p.load(sr);</span>
 			// For Java 1.5
 			// p.load(new ByteArrayInputStream(data.toString().getBytes(&quot;ISO-8859-1&quot;)));
-<span class="nc" id="L99">		} catch (IOException e) {</span>
-<span class="nc" id="L100">			Log.error(&quot;Error &quot; + e);</span>
-<span class="nc" id="L101">			Logme.error(e);</span>
-<span class="nc" id="L102">			return null;</span>
-<span class="nc" id="L103">		}</span>
-<span class="nc" id="L104">		return new PSystemJcckit(source, p, width, height, preprocessing);</span>
+<span class="nc" id="L98">		} catch (IOException e) {</span>
+<span class="nc" id="L99">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L100">			Logme.error(e);</span>
+<span class="nc" id="L101">			return null;</span>
+<span class="nc" id="L102">		}</span>
+<span class="nc" id="L103">		return new PSystemJcckit(source, p, width, height, preprocessing);</span>
 	}
 
 	@Override
 	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line, PreprocessingArtifact preprocessing) {
-<span class="nc bnc" id="L109" title="All 4 branches missed.">		if (system == null &amp;&amp; line.startsWith(&quot;jcckit&quot;)) {</span>
-<span class="nc" id="L110">			data = new StringBuilder();</span>
-<span class="nc" id="L111">			extractDimension(line);</span>
-<span class="nc" id="L112">			return createSystem(source, preprocessing);</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (system == null &amp;&amp; line.startsWith(&quot;jcckit&quot;)) {</span>
+<span class="nc" id="L109">			data = new StringBuilder();</span>
+<span class="nc" id="L110">			extractDimension(line);</span>
+<span class="nc" id="L111">			return createSystem(source, preprocessing);</span>
 		}
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L115">			return null;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L114">			return null;</span>
 
-<span class="nc" id="L117">		data.append(StringUtils.trin(line));</span>
-<span class="nc" id="L118">		data.append(BackSlash.NEWLINE);</span>
-<span class="nc" id="L119">		return createSystem(source, preprocessing);</span>
+<span class="nc" id="L116">		data.append(StringUtils.trin(line));</span>
+<span class="nc" id="L117">		data.append(BackSlash.NEWLINE);</span>
+<span class="nc" id="L118">		return createSystem(source, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L124">		return null;</span>
+<span class="nc" id="L123">		return null;</span>
 	}
 
 }

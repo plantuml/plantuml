@@ -37,47 +37,46 @@ package net.sourceforge.plantuml.klimt.creole.command;
 
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleSpace implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L47">		return &quot;&lt;&quot;;</span>
+<span class="fc" id="L46">		return &quot;&lt;&quot;;</span>
 	}
 
-<span class="fc" id="L50">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(\\&lt;space:(\\d+)/?\\&gt;)&quot;);</span>
+<span class="fc" id="L49">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(\\&lt;space:(\\d+)/?\\&gt;)&quot;);</span>
 
 	private CommandCreoleSpace() {
 	}
 
 	public static Command create() {
-<span class="fc" id="L56">		return new CommandCreoleSpace();</span>
+<span class="fc" id="L55">		return new CommandCreoleSpace();</span>
 	}
 
 	public int matchingSize(String line) {
-<span class="fc" id="L60">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
-<span class="fc" id="L62">			return 0;</span>
+<span class="fc" id="L59">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
+<span class="fc" id="L61">			return 0;</span>
 		}
-<span class="nc" id="L64">		return m.group(1).length();</span>
+<span class="nc" id="L63">		return m.group(1).length();</span>
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-<span class="nc" id="L68">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L70">			throw new IllegalStateException();</span>
+<span class="nc" id="L67">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L69">			throw new IllegalStateException();</span>
 		}
 		// final int size = Integer.parseInt(m.group(2));
 		// final FontConfiguration fc1 = stripe.getActualFontConfiguration();
 		// final FontConfiguration fc2 = fc1.changeSize(size);
 		// stripe.setActualFontConfiguration(fc2);
 		// stripe.analyzeAndAdd(m.group(3));
-<span class="nc" id="L77">		final int size = Integer.parseInt(m.group(2));</span>
-<span class="nc" id="L78">		stripe.addSpace(size);</span>
+<span class="nc" id="L76">		final int size = Integer.parseInt(m.group(2));</span>
+<span class="nc" id="L77">		stripe.addSpace(size);</span>
 		// stripe.setActualFontConfiguration(fc1);
-<span class="nc" id="L80">		return line.substring(m.group(1).length());</span>
+<span class="nc" id="L79">		return line.substring(m.group(1).length());</span>
 	}
 
 }

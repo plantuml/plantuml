@@ -38,19 +38,19 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 abstract class CommandCreoleCache implements Command {
 
-<span class="fc" id="L46">	private static final Map&lt;String, Pattern2&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L45">	private static final Map&lt;String, Pattern2&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
 
 	protected final Pattern2 mypattern;
 
-<span class="fc" id="L50">	protected CommandCreoleCache(String p) {</span>
-<span class="fc" id="L51">		Pattern2 result = cache.get(p);</span>
-<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L53">			result = MyPattern.cmpile(p);</span>
+<span class="fc" id="L49">	protected CommandCreoleCache(String p) {</span>
+<span class="fc" id="L50">		Pattern2 result = cache.get(p);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L52">			final String p1 = p;</span>
+<span class="fc" id="L53">			result = Pattern2.cmpile(p1);</span>
 <span class="fc" id="L54">			cache.put(p, result);</span>
 		}
 <span class="fc" id="L56">		this.mypattern = result;</span>

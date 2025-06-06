@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -107,7 +107,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3&lt;Activit
 <span class="nc" id="L107">		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(&quot;COLOR&quot;,</span>
 		// 0));
 <span class="nc" id="L109">		final Display linkLabel = Display.NULL; // Display.getWithNewlines(&quot;arg.get(\&quot;LABEL\&quot;, 0)&quot;);</span>
-<span class="nc" id="L110">		final List&lt;Display&gt; splitted = testDisplay.splitMultiline(MyPattern.cmpile(&quot;\\)[%s]*(is|equals?)[%s]*\\(&quot;));</span>
+<span class="nc" id="L110">		final List&lt;Display&gt; splitted = testDisplay.splitMultiline(Pattern2.cmpile(&quot;\\)[%s]*(is|equals?)[%s]*\\(&quot;));</span>
 <span class="nc bnc" id="L111" title="All 2 branches missed.">		if (splitted.size() == 2) {</span>
 <span class="nc" id="L112">			testDisplay = splitted.get(0);</span>
 <span class="nc" id="L113">			yes = splitted.get(1);</span>

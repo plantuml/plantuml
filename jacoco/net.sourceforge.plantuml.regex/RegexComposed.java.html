@@ -62,68 +62,70 @@ public abstract class RegexComposed implements IRegex {
 <span class="fc" id="L62">	private final AtomicReference&lt;Pattern2&gt; fullCached = new AtomicReference&lt;&gt;();</span>
 
 	private Pattern2 getPattern2() {
-<span class="fc" id="L65">		Pattern2 result = fullCached.get();</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L67">			final String fullSlow = getFullSlow();</span>
-<span class="fc" id="L68">			result = MyPattern.cmpile(fullSlow);</span>
-<span class="fc" id="L69">			fullCached.set(result);</span>
-		}
-<span class="fc" id="L71">		return result;</span>
+<span class="fc" id="L65">		final Pattern2 result = fullCached.get();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L67">			return result;</span>
+
+<span class="fc" id="L69">		final Pattern2 computed = Pattern2.cmpile(getFullSlow());</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (fullCached.compareAndSet(null, computed))</span>
+<span class="fc" id="L71">			return computed;</span>
+
+<span class="nc" id="L73">		return fullCached.get();</span>
 	}
 
 	final protected boolean isCompiled() {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		return fullCached.get() != null;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		return fullCached.get() != null;</span>
 	}
 
-<span class="fc" id="L78">	public RegexComposed(IRegex... partial) {</span>
-<span class="fc" id="L79">		this.partials = Collections.unmodifiableList(Arrays.asList(partial));</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L80">	public RegexComposed(IRegex... partial) {</span>
+<span class="fc" id="L81">		this.partials = Collections.unmodifiableList(Arrays.asList(partial));</span>
+<span class="fc" id="L82">	}</span>
 
 	public Map&lt;String, RegexPartialMatch&gt; createPartialMatch(Iterator&lt;String&gt; it) {
 		// nbCreateMatches.incrementAndGet();
-<span class="fc" id="L84">		final Map&lt;String, RegexPartialMatch&gt; result = new HashMap&lt;String, RegexPartialMatch&gt;();</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (IRegex r : partials)</span>
-<span class="fc" id="L86">			result.putAll(r.createPartialMatch(it));</span>
+<span class="fc" id="L86">		final Map&lt;String, RegexPartialMatch&gt; result = new HashMap&lt;String, RegexPartialMatch&gt;();</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (IRegex r : partials)</span>
+<span class="fc" id="L88">			result.putAll(r.createPartialMatch(it));</span>
 
-<span class="fc" id="L88">		return result;</span>
+<span class="fc" id="L90">		return result;</span>
 	}
 
 	final public int count() {
-<span class="nc" id="L92">		int cpt = getStartCount();</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (IRegex r : partials)</span>
-<span class="nc" id="L94">			cpt += r.count();</span>
+<span class="nc" id="L94">		int cpt = getStartCount();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (IRegex r : partials)</span>
+<span class="nc" id="L96">			cpt += r.count();</span>
 
-<span class="nc" id="L96">		return cpt;</span>
+<span class="nc" id="L98">		return cpt;</span>
 	}
 
 	protected int getStartCount() {
-<span class="nc" id="L100">		return 0;</span>
+<span class="nc" id="L102">		return 0;</span>
 	}
 
 	public RegexResult matcher(String s) {
-<span class="fc" id="L104">		final Matcher2 matcher = getPattern2().matcher(s);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (matcher.find() == false)</span>
-<span class="fc" id="L106">			return null;</span>
+<span class="fc" id="L106">		final Matcher2 matcher = getPattern2().matcher(s);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (matcher.find() == false)</span>
+<span class="fc" id="L108">			return null;</span>
 
-<span class="fc" id="L108">		final Iterator&lt;String&gt; it = new MatcherIterator(matcher);</span>
-<span class="fc" id="L109">		return new RegexResult(createPartialMatch(it));</span>
+<span class="fc" id="L110">		final Iterator&lt;String&gt; it = new MatcherIterator(matcher);</span>
+<span class="fc" id="L111">		return new RegexResult(createPartialMatch(it));</span>
 	}
 
 	public boolean match(StringLocated s) {
-<span class="fc" id="L113">		final String tmp = s.getString();</span>
-<span class="fc" id="L114">		final Matcher2 matcher = getPattern2().matcher(tmp);</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (matcher == null)</span>
-<span class="nc" id="L116">			return false;</span>
+<span class="fc" id="L115">		final String tmp = s.getString();</span>
+<span class="fc" id="L116">		final Matcher2 matcher = getPattern2().matcher(tmp);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (matcher == null)</span>
+<span class="nc" id="L118">			return false;</span>
 
-<span class="fc" id="L118">		return matcher.find();</span>
+<span class="fc" id="L120">		return matcher.find();</span>
 	}
 
 	final public String getPattern() {
-<span class="fc" id="L122">		return getPattern2().pattern();</span>
+<span class="fc" id="L124">		return getPattern2().pattern();</span>
 	}
 
 	final protected List&lt;IRegex&gt; getPartials() {
-<span class="nc" id="L126">		return partials;</span>
+<span class="nc" id="L128">		return partials;</span>
 	}
 
 }

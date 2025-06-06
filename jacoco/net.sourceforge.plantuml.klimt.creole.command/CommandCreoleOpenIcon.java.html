@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
@@ -47,44 +46,44 @@ public class CommandCreoleOpenIcon implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L50">		return &quot;&lt;&quot;;</span>
+<span class="fc" id="L49">		return &quot;&lt;&quot;;</span>
 	}
 
-<span class="fc" id="L53">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.openiconPattern + &quot;)&quot;);</span>
+<span class="fc" id="L52">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.openiconPattern + &quot;)&quot;);</span>
 
 	private CommandCreoleOpenIcon() {
 	}
 
 	public static Command create() {
-<span class="fc" id="L59">		return new CommandCreoleOpenIcon();</span>
+<span class="fc" id="L58">		return new CommandCreoleOpenIcon();</span>
 	}
 
 	public int matchingSize(String line) {
-<span class="fc" id="L63">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (m.find() == false)</span>
-<span class="fc" id="L65">			return 0;</span>
+<span class="fc" id="L62">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L64">			return 0;</span>
 
-<span class="nc" id="L67">		return m.group(1).length();</span>
+<span class="nc" id="L66">		return m.group(1).length();</span>
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-<span class="nc" id="L71">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L73">			throw new IllegalStateException();</span>
+<span class="nc" id="L70">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L72">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L75">		final String colorName1 = m.group(2);</span>
-<span class="nc" id="L76">		final String src = m.group(3);</span>
-<span class="nc" id="L77">		final double scale = Parser.getScale(m.group(4), 1);</span>
-<span class="nc" id="L78">		final String colorName2 = Parser.getColor(m.group(4));</span>
+<span class="nc" id="L74">		final String colorName1 = m.group(2);</span>
+<span class="nc" id="L75">		final String src = m.group(3);</span>
+<span class="nc" id="L76">		final double scale = Parser.getScale(m.group(4), 1);</span>
+<span class="nc" id="L77">		final String colorName2 = Parser.getColor(m.group(4));</span>
 		
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
-<span class="nc" id="L81">		HColor color = null;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (colorName != null) {</span>
-<span class="nc" id="L83">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
-<span class="nc" id="L84">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
+<span class="nc" id="L80">		HColor color = null;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (colorName != null) {</span>
+<span class="nc" id="L82">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
+<span class="nc" id="L83">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
 		}
-<span class="nc" id="L86">		stripe.addOpenIcon(src, scale, color);</span>
-<span class="nc" id="L87">		return line.substring(m.group(1).length());</span>
+<span class="nc" id="L85">		stripe.addOpenIcon(src, scale, color);</span>
+<span class="nc" id="L86">		return line.substring(m.group(1).length());</span>
 	}
 
 }

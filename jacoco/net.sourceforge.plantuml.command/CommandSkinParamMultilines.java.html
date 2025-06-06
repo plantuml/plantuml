@@ -38,50 +38,49 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L47">	private static final Pattern2 COMMENT_SINGLE_LINE = MyPattern.cmpile(CommandMultilinesComment.COMMENT_SINGLE_LINE);</span>
-<span class="fc" id="L48">	public static final CommandSkinParamMultilines ME = new CommandSkinParamMultilines();</span>
+<span class="fc" id="L46">	private static final Pattern2 COMMENT_SINGLE_LINE = Pattern2.cmpile(CommandMultilinesComment.COMMENT_SINGLE_LINE);</span>
+<span class="fc" id="L47">	public static final CommandSkinParamMultilines ME = new CommandSkinParamMultilines();</span>
 
 	private CommandSkinParamMultilines() {
-<span class="fc" id="L51">		super(&quot;^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\&lt;\\&lt;.*\\&gt;\\&gt;)?[\\w.]*))?[%s]*\\{$&quot;);</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L50">		super(&quot;^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\&lt;\\&lt;.*\\&gt;\\&gt;)?[\\w.]*))?[%s]*\\{$&quot;);</span>
+<span class="fc" id="L51">	}</span>
 
 	@Override
 	protected boolean isLineConsistent(String line, int level) {
-<span class="fc" id="L56">		line = StringUtils.trin(line);</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (hasStartingQuote(line))</span>
-<span class="nc" id="L58">			return true;</span>
+<span class="fc" id="L55">		line = StringUtils.trin(line);</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (hasStartingQuote(line))</span>
+<span class="nc" id="L57">			return true;</span>
 
-<span class="fc" id="L60">		return SkinLoader.p1.matcher(line).matches();</span>
+<span class="fc" id="L59">		return SkinLoader.p1.matcher(line).matches();</span>
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {
-<span class="fc" id="L64">		return COMMENT_SINGLE_LINE.matcher(line).matches();</span>
+<span class="fc" id="L63">		return COMMENT_SINGLE_LINE.matcher(line).matches();</span>
 	}
 
 	public CommandExecutionResult execute(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
-<span class="fc" id="L68">		final SkinLoader skinLoader = new SkinLoader(diagram);</span>
+<span class="fc" id="L67">		final SkinLoader skinLoader = new SkinLoader(diagram);</span>
 
-<span class="fc" id="L70">		lines = lines.expandsNewline(true);</span>
+<span class="fc" id="L69">		lines = lines.expandsNewline(true);</span>
 
-<span class="fc" id="L72">		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (mStart.find() == false)</span>
-<span class="nc" id="L74">			return CommandExecutionResult.error(&quot;Bad syntax for skinparam&quot;);</span>
+<span class="fc" id="L71">		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (mStart.find() == false)</span>
+<span class="nc" id="L73">			return CommandExecutionResult.error(&quot;Bad syntax for skinparam&quot;);</span>
 
-<span class="fc" id="L76">		final String group1 = mStart.group(1);</span>
+<span class="fc" id="L75">		final String group1 = mStart.group(1);</span>
 
-<span class="fc" id="L78">		return skinLoader.execute(lines, group1);</span>
+<span class="fc" id="L77">		return skinLoader.execute(lines, group1);</span>
 
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

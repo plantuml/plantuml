@@ -42,67 +42,66 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorRuntimeException;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleColorAndSizeChange implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L52">		return &quot;&lt;&quot;;</span>
+<span class="fc" id="L51">		return &quot;&lt;&quot;;</span>
 	}
 
 	private final Pattern2 mypattern;
 
 	public static final String fontPattern = &quot;\\&lt;font(?:[%s]+size[%s]*=[%s]*[%g]?(\\d+)[%g]?|[%s]+color[%s]*=[%s]*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\&gt;&quot;;
 
-<span class="fc" id="L59">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + fontPattern + &quot;(.*?)\\&lt;/font\\&gt;)&quot;);</span>
+<span class="fc" id="L58">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + fontPattern + &quot;(.*?)\\&lt;/font\\&gt;)&quot;);</span>
 
-<span class="fc" id="L61">	private static final Pattern2 patternEol = MyPattern.cmpile(&quot;^(&quot; + fontPattern + &quot;(.*))$&quot;);</span>
+<span class="fc" id="L60">	private static final Pattern2 patternEol = Pattern2.cmpile(&quot;^(&quot; + fontPattern + &quot;(.*))$&quot;);</span>
 
 	public static Command create() {
-<span class="fc" id="L64">		return new CommandCreoleColorAndSizeChange(pattern);</span>
+<span class="fc" id="L63">		return new CommandCreoleColorAndSizeChange(pattern);</span>
 	}
 
 	public static Command createEol() {
-<span class="fc" id="L68">		return new CommandCreoleColorAndSizeChange(patternEol);</span>
+<span class="fc" id="L67">		return new CommandCreoleColorAndSizeChange(patternEol);</span>
 	}
 
-<span class="fc" id="L71">	private CommandCreoleColorAndSizeChange(Pattern2 pattern) {</span>
-<span class="fc" id="L72">		this.mypattern = pattern;</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L70">	private CommandCreoleColorAndSizeChange(Pattern2 pattern) {</span>
+<span class="fc" id="L71">		this.mypattern = pattern;</span>
+<span class="fc" id="L72">	}</span>
 
 	public int matchingSize(String line) {
-<span class="fc" id="L76">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (m.find() == false)</span>
-<span class="fc" id="L78">			return 0;</span>
+<span class="fc" id="L75">		final Matcher2 m = mypattern.matcher(line);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L77">			return 0;</span>
 
-<span class="nc" id="L80">		return m.group(1).length();</span>
+<span class="nc" id="L79">		return m.group(1).length();</span>
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) throws NoSuchColorRuntimeException {
-<span class="nc" id="L84">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L86">			throw new IllegalStateException();</span>
+<span class="nc" id="L83">		final Matcher2 m = mypattern.matcher(line);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L85">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L88">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
-<span class="nc" id="L89">		FontConfiguration fc2 = fc1;</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (m.group(2) != null)</span>
-<span class="nc" id="L91">			fc2 = fc2.changeSize(Integer.parseInt(m.group(2)));</span>
+<span class="nc" id="L87">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
+<span class="nc" id="L88">		FontConfiguration fc2 = fc1;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (m.group(2) != null)</span>
+<span class="nc" id="L90">			fc2 = fc2.changeSize(Integer.parseInt(m.group(2)));</span>
 
 		try {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (m.group(3) != null) {</span>
-<span class="nc" id="L95">				final String s = m.group(3);</span>
-<span class="nc" id="L96">				final HColor color = HColorSet.instance().getColor(s);</span>
-<span class="nc" id="L97">				fc2 = fc2.changeColor(color);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (m.group(3) != null) {</span>
+<span class="nc" id="L94">				final String s = m.group(3);</span>
+<span class="nc" id="L95">				final HColor color = HColorSet.instance().getColor(s);</span>
+<span class="nc" id="L96">				fc2 = fc2.changeColor(color);</span>
 			}
 
-<span class="nc" id="L100">			stripe.setActualFontConfiguration(fc2);</span>
-<span class="nc" id="L101">			stripe.analyzeAndAdd(m.group(4));</span>
-<span class="nc" id="L102">			stripe.setActualFontConfiguration(fc1);</span>
-<span class="nc" id="L103">			return line.substring(m.group(1).length());</span>
-<span class="nc" id="L104">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L105">			throw new NoSuchColorRuntimeException();</span>
+<span class="nc" id="L99">			stripe.setActualFontConfiguration(fc2);</span>
+<span class="nc" id="L100">			stripe.analyzeAndAdd(m.group(4));</span>
+<span class="nc" id="L101">			stripe.setActualFontConfiguration(fc1);</span>
+<span class="nc" id="L102">			return line.substring(m.group(1).length());</span>
+<span class="nc" id="L103">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L104">			throw new NoSuchColorRuntimeException();</span>
 		}
 	}
 

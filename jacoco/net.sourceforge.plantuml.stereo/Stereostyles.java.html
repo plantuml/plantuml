@@ -41,36 +41,35 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class Stereostyles {
 	// ::remove folder when __HAXE__
 
-<span class="fc" id="L50">	public static final Stereostyles NONE = new Stereostyles();</span>
+<span class="fc" id="L49">	public static final Stereostyles NONE = new Stereostyles();</span>
 
-<span class="fc" id="L52">	private final Set&lt;String&gt; names = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L51">	private final Set&lt;String&gt; names = new LinkedHashSet&lt;&gt;();</span>
 
-<span class="fc" id="L54">	private Stereostyles() {</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">	private Stereostyles() {</span>
+<span class="fc" id="L54">	}</span>
 
 	public boolean isEmpty() {
-<span class="fc" id="L58">		return names.isEmpty();</span>
+<span class="fc" id="L57">		return names.isEmpty();</span>
 	}
 
-<span class="fc" id="L61">	private static final Pattern2 p = MyPattern.cmpile(&quot;\\&lt;{3}(.*?)\\&gt;{3}&quot;);</span>
+<span class="fc" id="L60">	private static final Pattern2 p = Pattern2.cmpile(&quot;\\&lt;{3}(.*?)\\&gt;{3}&quot;);</span>
 
 	public static Stereostyles build(String label) {
-<span class="fc" id="L64">		final Stereostyles result = new Stereostyles();</span>
-<span class="fc" id="L65">		final Matcher2 m = p.matcher(label);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		while (m.find())</span>
-<span class="nc" id="L67">			result.names.add(m.group(1));</span>
+<span class="fc" id="L63">		final Stereostyles result = new Stereostyles();</span>
+<span class="fc" id="L64">		final Matcher2 m = p.matcher(label);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		while (m.find())</span>
+<span class="nc" id="L66">			result.names.add(m.group(1));</span>
 
-<span class="fc" id="L69">		return result;</span>
+<span class="fc" id="L68">		return result;</span>
 	}
 
 	public Collection&lt;String&gt; getStyleNames() {
-<span class="nc" id="L73">		return Collections.unmodifiableCollection(names);</span>
+<span class="nc" id="L72">		return Collections.unmodifiableCollection(names);</span>
 	}
 
 }

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -79,7 +79,7 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2&lt;MindMa
 	protected CommandExecutionResult executeNow(MindMapDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 <span class="nc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 
-<span class="nc" id="L82">		final List&lt;String&gt; lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),</span>
+<span class="nc" id="L82">		final List&lt;String&gt; lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),</span>
 <span class="nc" id="L83">				lines.getLast().getString());</span>
 <span class="nc" id="L84">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
 

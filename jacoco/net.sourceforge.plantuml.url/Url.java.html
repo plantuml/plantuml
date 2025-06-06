@@ -40,7 +40,6 @@ import java.util.Comparator;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.geom.BasicEnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
-import net.sourceforge.plantuml.text.BackSlash;
 
 public class Url implements EnsureVisible {
 	private final String url;
@@ -48,88 +47,88 @@ public class Url implements EnsureVisible {
 	private final String label;
 	private boolean member;
 
-<span class="fc" id="L51">	public Url(String url, String tooltip, String label) {</span>
-<span class="fc" id="L52">		url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(url, &quot;\&quot;&quot;);</span>
-<span class="fc" id="L53">		this.url = url;</span>
+<span class="fc" id="L50">	public Url(String url, String tooltip, String label) {</span>
+<span class="fc" id="L51">		url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(url, &quot;\&quot;&quot;);</span>
+<span class="fc" id="L52">		this.url = url;</span>
 		// ::revert when __HAXE__
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (tooltip == null)</span>
-<span class="fc" id="L56">			this.tooltip = url;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (tooltip == null)</span>
+<span class="fc" id="L55">			this.tooltip = url;</span>
 		else
-<span class="fc" id="L58">			this.tooltip = tooltip;</span>
+<span class="fc" id="L57">			this.tooltip = tooltip;</span>
 		// this.tooltip = url;
 		// ::done
 
-<span class="pc bpc" id="L62" title="1 of 4 branches missed.">		if (label == null || label.length() == 0)</span>
-<span class="fc" id="L63">			this.label = url;</span>
+<span class="pc bpc" id="L61" title="1 of 4 branches missed.">		if (label == null || label.length() == 0)</span>
+<span class="fc" id="L62">			this.label = url;</span>
 		else
-<span class="fc" id="L65">			this.label = label;</span>
+<span class="fc" id="L64">			this.label = label;</span>
 
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L66">	}</span>
 
 	public static boolean isLatex(String pendingUrl) {
-<span class="nc" id="L70">		return pendingUrl.startsWith(&quot;latex://&quot;);</span>
+<span class="nc" id="L69">		return pendingUrl.startsWith(&quot;latex://&quot;);</span>
 	}
 
 	public boolean isLatex() {
-<span class="nc" id="L74">		return isLatex(url);</span>
+<span class="nc" id="L73">		return isLatex(url);</span>
 	}
 
 	public final String getUrl() {
-<span class="fc" id="L78">		return url;</span>
+<span class="fc" id="L77">		return url;</span>
 	}
 
 	public final String getTooltip() {
-<span class="fc" id="L82">		return tooltip;</span>
+<span class="fc" id="L81">		return tooltip;</span>
 	}
 
 	public String getLabel() {
-<span class="fc" id="L86">		return label;</span>
+<span class="fc" id="L85">		return label;</span>
 	}
 
 	// ::comment when __HAXE__
 	@Override
 	public String toString() {
-<span class="nc" id="L92">		return super.toString() + &quot; &quot; + url + &quot; &quot; + visible.getCoords(1.0);</span>
+<span class="nc" id="L91">		return super.toString() + &quot; &quot; + url + &quot; &quot; + visible.getCoords(1.0);</span>
 	}
 	// ::done
 
 	public String getCoords(double scale) {
 		// ::comment when __CORE__ or __HAXE__
-<span class="pc bpc" id="L98" title="3 of 4 branches missed.">		if (Check.isJunit() &amp;&amp; visible.getCoords(1.0).contains(&quot;0,0,0,0&quot;))</span>
-<span class="nc" id="L99">			throw new IllegalStateException(toString());</span>
+<span class="pc bpc" id="L97" title="3 of 4 branches missed.">		if (Check.isJunit() &amp;&amp; visible.getCoords(1.0).contains(&quot;0,0,0,0&quot;))</span>
+<span class="nc" id="L98">			throw new IllegalStateException(toString());</span>
 		// ::done
 
-<span class="fc" id="L102">		return visible.getCoords(scale);</span>
+<span class="fc" id="L101">		return visible.getCoords(scale);</span>
 	}
 
 	public void setMember(boolean member) {
-<span class="nc" id="L106">		this.member = member;</span>
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L105">		this.member = member;</span>
+<span class="nc" id="L106">	}</span>
 
 	public final boolean isMember() {
-<span class="nc" id="L110">		return member;</span>
+<span class="nc" id="L109">		return member;</span>
 	}
 
-<span class="fc" id="L113">	private final BasicEnsureVisible visible = new BasicEnsureVisible();</span>
+<span class="fc" id="L112">	private final BasicEnsureVisible visible = new BasicEnsureVisible();</span>
 
 	public void ensureVisible(double x, double y) {
-<span class="fc" id="L116">		visible.ensureVisible(x, y);</span>
-<span class="fc" id="L117">	}</span>
+<span class="fc" id="L115">		visible.ensureVisible(x, y);</span>
+<span class="fc" id="L116">	}</span>
 
 	public boolean hasData() {
-<span class="fc" id="L120">		return visible.hasData();</span>
+<span class="fc" id="L119">		return visible.hasData();</span>
 	}
 
-<span class="fc" id="L123">	public static final Comparator&lt;Url&gt; SURFACE_COMPARATOR = new Comparator&lt;Url&gt;() {</span>
+<span class="fc" id="L122">	public static final Comparator&lt;Url&gt; SURFACE_COMPARATOR = new Comparator&lt;Url&gt;() {</span>
 		public int compare(Url url1, Url url2) {
-<span class="fc" id="L125">			final double surface1 = url1.visible.getSurface();</span>
-<span class="fc" id="L126">			final double surface2 = url2.visible.getSurface();</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (surface1 &gt; surface2)</span>
-<span class="fc" id="L128">				return 1;</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">			else if (surface1 &lt; surface2)</span>
-<span class="fc" id="L130">				return -1;</span>
+<span class="fc" id="L124">			final double surface1 = url1.visible.getSurface();</span>
+<span class="fc" id="L125">			final double surface2 = url2.visible.getSurface();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (surface1 &gt; surface2)</span>
+<span class="fc" id="L127">				return 1;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">			else if (surface1 &lt; surface2)</span>
+<span class="fc" id="L129">				return -1;</span>
 
-<span class="fc" id="L132">			return 0;</span>
+<span class="fc" id="L131">			return 0;</span>
 		}
 	};
 

@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexComposed;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -57,37 +56,37 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.text.Guillemet;
 
 public class StereotypeDecoration {
-<span class="fc" id="L60">	private final static RegexComposed circleChar = new RegexConcat( //</span>
+<span class="fc" id="L59">	private final static RegexComposed circleChar = new RegexConcat( //</span>
 			new RegexLeaf(&quot;\\&lt;\\&lt;&quot;), //
-<span class="fc" id="L62">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L61">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexLeaf(&quot;\\(&quot;), //
 			new RegexLeaf(&quot;CHAR&quot;, &quot;(\\S)&quot;), //
 			new RegexOptional( //
 					new RegexConcat( //
-<span class="fc" id="L67">							RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">							RegexLeaf.spaceZeroOrMore(), //</span>
 							new RegexLeaf(&quot;,&quot;), //
-<span class="fc" id="L69">							RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">							RegexLeaf.spaceZeroOrMore(), //</span>
 							new RegexLeaf(&quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;), //
-<span class="fc" id="L71">							RegexLeaf.spaceZeroOrMore())), //</span>
+<span class="fc" id="L70">							RegexLeaf.spaceZeroOrMore())), //</span>
 			new RegexLeaf(&quot;\\)&quot;), //
 			new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;[,]?(.*?)&quot;)), //
 			new RegexLeaf(&quot;\\&gt;\\&gt;&quot;) //
 	);
 
-<span class="fc" id="L77">	private final static RegexComposed circleSprite = new RegexConcat( //</span>
+<span class="fc" id="L76">	private final static RegexComposed circleSprite = new RegexConcat( //</span>
 			new RegexLeaf(&quot;\\&lt;\\&lt;&quot;), //
-<span class="fc" id="L79">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L78">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexLeaf(&quot;\\(?\\$&quot;), //
 			new RegexLeaf(&quot;NAME&quot;, &quot;(&quot; + SpriteUtils.SPRITE_NAME + &quot;)&quot;), //
 			new RegexLeaf(&quot;SCALE&quot;, &quot;((?:\\{scale=|\\*)([0-9.]+)\\}?)?&quot;), //
-<span class="fc" id="L83">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L82">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexOptional( //
 					new RegexConcat( //
 							new RegexLeaf(&quot;,&quot;), //
-<span class="fc" id="L87">							RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L86">							RegexLeaf.spaceZeroOrMore(), //</span>
 							new RegexLeaf(&quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;) //
 					)), //
-<span class="fc" id="L90">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L89">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;[),](.*?)&quot;)), //
 			new RegexLeaf(&quot;\\&gt;\\&gt;&quot;) //
 	);
@@ -102,98 +101,98 @@ public class StereotypeDecoration {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L105">		return &quot;label='&quot; + label + &quot;' spriteName='&quot; + spriteName + &quot;'&quot;;</span>
+<span class="nc" id="L104">		return &quot;label='&quot; + label + &quot;' spriteName='&quot; + spriteName + &quot;'&quot;;</span>
 	}
 
 	public List&lt;String&gt; getStyleNames() {
-<span class="fc" id="L109">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (String s : cutLabels(label, Guillemet.NONE))</span>
-<span class="fc" id="L111">			result.add(PREFIX + s);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (spriteName == null)</span>
-<span class="fc" id="L113">			return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L108">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (String s : cutLabels(label, Guillemet.NONE))</span>
+<span class="fc" id="L110">			result.add(PREFIX + s);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (spriteName == null)</span>
+<span class="fc" id="L112">			return Collections.unmodifiableList(result);</span>
 
-<span class="fc" id="L115">		final int idx = spriteName.lastIndexOf('/');</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (idx != -1)</span>
-<span class="nc" id="L117">			result.add(PREFIX + spriteName.substring(idx + 1));</span>
-<span class="fc" id="L118">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L114">		final int idx = spriteName.lastIndexOf('/');</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (idx != -1)</span>
+<span class="nc" id="L116">			result.add(PREFIX + spriteName.substring(idx + 1));</span>
+<span class="fc" id="L117">		return Collections.unmodifiableList(result);</span>
 	}
 
 	private StereotypeDecoration(String label, HColor htmlColor, char character, String spriteName,
-<span class="fc" id="L122">			double spriteScale) {</span>
-<span class="fc" id="L123">		this.label = label;</span>
-<span class="fc" id="L124">		this.htmlColor = htmlColor;</span>
-<span class="fc" id="L125">		this.character = character;</span>
-<span class="fc" id="L126">		this.spriteName = spriteName;</span>
-<span class="fc" id="L127">		this.spriteScale = spriteScale;</span>
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L121">			double spriteScale) {</span>
+<span class="fc" id="L122">		this.label = label;</span>
+<span class="fc" id="L123">		this.htmlColor = htmlColor;</span>
+<span class="fc" id="L124">		this.character = character;</span>
+<span class="fc" id="L125">		this.spriteName = spriteName;</span>
+<span class="fc" id="L126">		this.spriteScale = spriteScale;</span>
+<span class="fc" id="L127">	}</span>
 
 	static StereotypeDecoration buildSimple(String name) {
 		final String spriteName;
 		final double spriteScale;
-<span class="pc bpc" id="L133" title="1 of 4 branches missed.">		if (name.startsWith(&quot;&lt;&lt;$&quot;) &amp;&amp; name.endsWith(&quot;&gt;&gt;&quot;)) {</span>
-<span class="fc" id="L134">			final RegexResult mCircleSprite = StereotypeDecoration.circleSprite.matcher(name);</span>
-<span class="fc" id="L135">			spriteName = mCircleSprite.get(&quot;NAME&quot;, 0);</span>
-<span class="fc" id="L136">			spriteScale = Parser.getScale(mCircleSprite.get(&quot;SCALE&quot;, 0), 1);</span>
-<span class="fc" id="L137">		} else {</span>
-<span class="fc" id="L138">			spriteName = null;</span>
-<span class="fc" id="L139">			spriteScale = 0;</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		if (name.startsWith(&quot;&lt;&lt;$&quot;) &amp;&amp; name.endsWith(&quot;&gt;&gt;&quot;)) {</span>
+<span class="fc" id="L133">			final RegexResult mCircleSprite = StereotypeDecoration.circleSprite.matcher(name);</span>
+<span class="fc" id="L134">			spriteName = mCircleSprite.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L135">			spriteScale = Parser.getScale(mCircleSprite.get(&quot;SCALE&quot;, 0), 1);</span>
+<span class="fc" id="L136">		} else {</span>
+<span class="fc" id="L137">			spriteName = null;</span>
+<span class="fc" id="L138">			spriteScale = 0;</span>
 		}
-<span class="fc" id="L141">		return new StereotypeDecoration(name, null, '\0', spriteName, spriteScale);</span>
+<span class="fc" id="L140">		return new StereotypeDecoration(name, null, '\0', spriteName, spriteScale);</span>
 	}
 
 	public static StereotypeDecoration buildComplex(String full, HColorSet htmlColorSet) throws NoSuchColorException {
 
-<span class="fc" id="L146">		String label = &quot;&quot;;</span>
-<span class="fc" id="L147">		HColor htmlColor = null;</span>
-<span class="fc" id="L148">		char character = '\0';</span>
-<span class="fc" id="L149">		String spriteName = null;</span>
-<span class="fc" id="L150">		double spriteScale = 0;</span>
+<span class="fc" id="L145">		String label = &quot;&quot;;</span>
+<span class="fc" id="L146">		HColor htmlColor = null;</span>
+<span class="fc" id="L147">		char character = '\0';</span>
+<span class="fc" id="L148">		String spriteName = null;</span>
+<span class="fc" id="L149">		double spriteScale = 0;</span>
 
-<span class="fc" id="L152">		final List&lt;String&gt; list = cutLabels(full, Guillemet.DOUBLE_COMPARATOR);</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (String name : list) {</span>
-<span class="fc" id="L154">			final RegexResult mCircleChar = circleChar.matcher(name);</span>
-<span class="fc" id="L155">			final RegexResult mCircleSprite = circleSprite.matcher(name);</span>
+<span class="fc" id="L151">		final List&lt;String&gt; list = cutLabels(full, Guillemet.DOUBLE_COMPARATOR);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (String name : list) {</span>
+<span class="fc" id="L153">			final RegexResult mCircleChar = circleChar.matcher(name);</span>
+<span class="fc" id="L154">			final RegexResult mCircleSprite = circleSprite.matcher(name);</span>
 
-<span class="fc bfc" id="L157" title="All 2 branches covered.">			if (mCircleSprite != null) {</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">				if (StringUtils.isNotEmpty(mCircleSprite.get(&quot;LABEL&quot;, 0)))</span>
-<span class="nc" id="L159">					name = &quot;&lt;&lt;&quot; + mCircleSprite.get(&quot;LABEL&quot;, 0) + &quot;&gt;&gt;&quot;;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">			if (mCircleSprite != null) {</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">				if (StringUtils.isNotEmpty(mCircleSprite.get(&quot;LABEL&quot;, 0)))</span>
+<span class="nc" id="L158">					name = &quot;&lt;&lt;&quot; + mCircleSprite.get(&quot;LABEL&quot;, 0) + &quot;&gt;&gt;&quot;;</span>
 				else
-<span class="fc" id="L161">					name = &quot;&quot;;</span>
+<span class="fc" id="L160">					name = &quot;&quot;;</span>
 
-<span class="fc" id="L163">				final String colName = mCircleSprite.get(&quot;COLOR&quot;, 0);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">				final HColor col = colName == null ? null : htmlColorSet.getColor(colName);</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">				htmlColor = col == null ? HColors.BLACK : col;</span>
-<span class="fc" id="L166">				character = '\0';</span>
-<span class="fc" id="L167">				spriteName = mCircleSprite.get(&quot;NAME&quot;, 0);</span>
-<span class="fc" id="L168">				spriteScale = Parser.getScale(mCircleSprite.get(&quot;SCALE&quot;, 0), 1);</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">			} else if (mCircleChar != null) {</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (StringUtils.isNotEmpty(mCircleChar.get(&quot;LABEL&quot;, 0)))</span>
-<span class="fc" id="L171">					name = &quot;&lt;&lt;&quot; + mCircleChar.get(&quot;LABEL&quot;, 0) + &quot;&gt;&gt;&quot;;</span>
+<span class="fc" id="L162">				final String colName = mCircleSprite.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">				final HColor col = colName == null ? null : htmlColorSet.getColor(colName);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">				htmlColor = col == null ? HColors.BLACK : col;</span>
+<span class="fc" id="L165">				character = '\0';</span>
+<span class="fc" id="L166">				spriteName = mCircleSprite.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L167">				spriteScale = Parser.getScale(mCircleSprite.get(&quot;SCALE&quot;, 0), 1);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">			} else if (mCircleChar != null) {</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">				if (StringUtils.isNotEmpty(mCircleChar.get(&quot;LABEL&quot;, 0)))</span>
+<span class="fc" id="L170">					name = &quot;&lt;&lt;&quot; + mCircleChar.get(&quot;LABEL&quot;, 0) + &quot;&gt;&gt;&quot;;</span>
 				else
-<span class="nc" id="L173">					name = &quot;&quot;;</span>
+<span class="nc" id="L172">					name = &quot;&quot;;</span>
 
-<span class="fc" id="L175">				final String colName = mCircleChar.get(&quot;COLOR&quot;, 0);</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">				htmlColor = colName == null ? null : htmlColorSet.getColor(colName);</span>
-<span class="fc" id="L177">				character = mCircleChar.get(&quot;CHAR&quot;, 0).charAt(0);</span>
+<span class="fc" id="L174">				final String colName = mCircleChar.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">				htmlColor = colName == null ? null : htmlColorSet.getColor(colName);</span>
+<span class="fc" id="L176">				character = mCircleChar.get(&quot;CHAR&quot;, 0).charAt(0);</span>
 			}
 
-<span class="fc" id="L180">			label = label + name;</span>
-<span class="fc" id="L181">		}</span>
+<span class="fc" id="L179">			label = label + name;</span>
+<span class="fc" id="L180">		}</span>
 
-<span class="fc" id="L183">		return new StereotypeDecoration(label, htmlColor, character, spriteName, spriteScale);</span>
+<span class="fc" id="L182">		return new StereotypeDecoration(label, htmlColor, character, spriteName, spriteScale);</span>
 	}
 
-<span class="fc" id="L186">	private static final Pattern2 p = MyPattern.cmpile(&quot;\\&lt;{2,3}.*?\\&gt;{2,3}&quot;);</span>
+<span class="fc" id="L185">	private static final Pattern2 p = Pattern2.cmpile(&quot;\\&lt;{2,3}.*?\\&gt;{2,3}&quot;);</span>
 
 	static List&lt;String&gt; cutLabels(final String label, Guillemet guillemet) {
-<span class="fc" id="L189">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L190">		final Matcher2 m = p.matcher(label);</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		while (m.find()) {</span>
-<span class="fc" id="L192">			final String group = m.group();</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">			if (group.startsWith(&quot;&lt;&lt;&lt;&quot;) == false)</span>
-<span class="fc" id="L194">				result.add(guillemet.manageGuillemetStrict(group));</span>
-<span class="fc" id="L195">		}</span>
-<span class="fc" id="L196">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L188">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L189">		final Matcher2 m = p.matcher(label);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L191">			final String group = m.group();</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">			if (group.startsWith(&quot;&lt;&lt;&lt;&quot;) == false)</span>
+<span class="fc" id="L193">				result.add(guillemet.manageGuillemetStrict(group));</span>
+<span class="fc" id="L194">		}</span>
+<span class="fc" id="L195">		return Collections.unmodifiableList(result);</span>
 	}
 
 }

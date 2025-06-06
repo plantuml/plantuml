@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleMath implements Command {
@@ -46,34 +45,34 @@ public class CommandCreoleMath implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L49">		return &quot;&lt;&quot;;</span>
+<span class="fc" id="L48">		return &quot;&lt;&quot;;</span>
 	}
 
-<span class="fc" id="L52">	private static final Pattern2 pattern = MyPattern.cmpile(&quot;^(&quot; + Splitter.mathPattern + &quot;)&quot;);</span>
+<span class="fc" id="L51">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.mathPattern + &quot;)&quot;);</span>
 
 	private CommandCreoleMath() {
 	}
 
 	public static Command create() {
-<span class="fc" id="L58">		return new CommandCreoleMath();</span>
+<span class="fc" id="L57">		return new CommandCreoleMath();</span>
 	}
 
 	public int matchingSize(String line) {
-<span class="fc" id="L62">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
-<span class="fc" id="L64">			return 0;</span>
+<span class="fc" id="L61">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
+<span class="fc" id="L63">			return 0;</span>
 		}
-<span class="nc" id="L66">		return m.group(1).length();</span>
+<span class="nc" id="L65">		return m.group(1).length();</span>
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-<span class="nc" id="L70">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L72">			throw new IllegalStateException();</span>
+<span class="nc" id="L69">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L71">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L74">		final String math = m.group(2);</span>
-<span class="nc" id="L75">		stripe.addMath(ScientificEquationSafe.fromAsciiMath(math));</span>
-<span class="nc" id="L76">		return line.substring(m.group(1).length());</span>
+<span class="nc" id="L73">		final String math = m.group(2);</span>
+<span class="nc" id="L74">		stripe.addMath(ScientificEquationSafe.fromAsciiMath(math));</span>
+<span class="nc" id="L75">		return line.substring(m.group(1).length());</span>
 	}
 
 }

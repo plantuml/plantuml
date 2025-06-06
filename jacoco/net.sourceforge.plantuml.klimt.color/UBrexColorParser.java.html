@@ -37,10 +37,8 @@ package net.sourceforge.plantuml.klimt.color;
 
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
-import com.plantuml.ubrex.builder.UBrexOptional;
 import com.plantuml.ubrex.builder.UBrexPart;
 
-import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class UBrexColorParser {
@@ -58,33 +56,33 @@ public class UBrexColorParser {
 	private final String name;
 	private final ColorType mainType;
 
-<span class="fc" id="L61">	private UBrexColorParser(String name, UBrexPart regex, ColorType mainType) {</span>
-<span class="fc" id="L62">		this.regex = regex;</span>
-<span class="fc" id="L63">		this.name = name;</span>
-<span class="fc" id="L64">		this.mainType = mainType;</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L59">	private UBrexColorParser(String name, UBrexPart regex, ColorType mainType) {</span>
+<span class="fc" id="L60">		this.regex = regex;</span>
+<span class="fc" id="L61">		this.name = name;</span>
+<span class="fc" id="L62">		this.mainType = mainType;</span>
+<span class="fc" id="L63">	}</span>
 
 	public Colors getColor(RegexResult arg, HColorSet set) throws NoSuchColorException {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (mainType == null)</span>
-<span class="nc" id="L69">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (mainType == null)</span>
+<span class="nc" id="L67">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L71">		final String data = arg.getLazzy(name, 0);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L73">			return Colors.empty();</span>
+<span class="nc" id="L69">		final String data = arg.getLazzy(name, 0);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L71">			return Colors.empty();</span>
 
-<span class="nc" id="L75">		return new Colors(data, set, mainType);</span>
+<span class="nc" id="L73">		return new Colors(data, set, mainType);</span>
 	}
 
 	// New Parsers
 	public static UBrexColorParser simpleColor(ColorType mainType) {
-<span class="fc" id="L80">		return simpleColor(mainType, &quot;COLOR&quot;);</span>
+<span class="fc" id="L78">		return simpleColor(mainType, &quot;COLOR&quot;);</span>
 	}
 
 	public static UBrexColorParser simpleColor(ColorType mainType, String id) {
 		// return new BrackexColorParser(id, new RegexLeaf(id, &quot;(&quot; + COLORS_REGEXP +
 		// &quot;)?&quot;), mainType);
 		// WARNING, this now NOT optional
-<span class="fc" id="L87">		return new UBrexColorParser(id, new UBrexNamed(id, new UBrexLeaf(COLOR_REGEXP)), mainType);</span>
+<span class="fc" id="L85">		return new UBrexColorParser(id, new UBrexNamed(id, new UBrexLeaf(COLOR_REGEXP)), mainType);</span>
 	}
 
 //	public static BrackexColorParser mandatoryColor(ColorType mainType) {
@@ -123,7 +121,7 @@ public class UBrexColorParser {
 //	}
 
 	public UBrexPart getRegex() {
-<span class="fc" id="L126">		return regex;</span>
+<span class="fc" id="L124">		return regex;</span>
 	}
 
 }

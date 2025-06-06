@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -47,12 +46,13 @@ public abstract class CommandMultilines&lt;S extends Diagram&gt; implements Comm
 	private final Pattern2 starting;
 	private final Lazy&lt;Pattern2&gt; patternEnd;
 
-<span class="fc" id="L50">	public CommandMultilines(String patternStart) {</span>
-<span class="pc bpc" id="L51" title="2 of 4 branches missed.">		if (patternStart.startsWith(&quot;^&quot;) == false || patternStart.endsWith(&quot;$&quot;) == false)</span>
-<span class="nc" id="L52">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart);</span>
+<span class="fc" id="L49">	public CommandMultilines(String patternStart) {</span>
+<span class="pc bpc" id="L50" title="2 of 4 branches missed.">		if (patternStart.startsWith(&quot;^&quot;) == false || patternStart.endsWith(&quot;$&quot;) == false)</span>
+<span class="nc" id="L51">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart);</span>
+<span class="fc" id="L52">		final String p = patternStart;</span>
 
-<span class="fc" id="L54">		this.starting = MyPattern.cmpile(patternStart);</span>
-<span class="fc" id="L55">		this.patternEnd = new Lazy&lt;&gt;(x -&gt; MyPattern.cmpile(getPatternEnd()));</span>
+<span class="fc" id="L54">		this.starting = Pattern2.cmpile(p);</span>
+<span class="fc" id="L55">		this.patternEnd = new Lazy&lt;&gt;(x -&gt; Pattern2.cmpile(getPatternEnd()));</span>
 <span class="fc" id="L56">	}</span>
 
 	public abstract String getPatternEnd();

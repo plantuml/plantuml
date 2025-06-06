@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -46,11 +45,12 @@ public abstract class CommandMultilinesBracket&lt;S extends Diagram&gt; implemen
 
 	private final Pattern2 starting;
 
-<span class="fc" id="L49">	public CommandMultilinesBracket(String patternStart) {</span>
-<span class="pc bpc" id="L50" title="2 of 4 branches missed.">		if (patternStart.startsWith(&quot;^&quot;) == false || patternStart.endsWith(&quot;$&quot;) == false)</span>
-<span class="nc" id="L51">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart);</span>
+<span class="fc" id="L48">	public CommandMultilinesBracket(String patternStart) {</span>
+<span class="pc bpc" id="L49" title="2 of 4 branches missed.">		if (patternStart.startsWith(&quot;^&quot;) == false || patternStart.endsWith(&quot;$&quot;) == false)</span>
+<span class="nc" id="L50">			throw new IllegalArgumentException(&quot;Bad pattern &quot; + patternStart);</span>
+<span class="fc" id="L51">		final String p = patternStart;</span>
 
-<span class="fc" id="L53">		this.starting = MyPattern.cmpile(patternStart);</span>
+<span class="fc" id="L53">		this.starting = Pattern2.cmpile(p);</span>
 <span class="fc" id="L54">	}</span>
 
 	protected boolean isCommandForbidden() {
