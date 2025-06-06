@@ -52,16 +52,15 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 
 	private final MultilinesStrategy strategy;
 
-	private final Lazy<Pattern2> end;
+	private final Pattern2 end;
 
 	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {
-		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false)
-			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
+		assert patternStart.getPattern().startsWith("^") && patternStart.getPattern().endsWith("$");
 
 		this.strategy = strategy;
 		this.starting = patternStart;
 		this.trimEnd = trimEnd;
-		this.end = new Lazy<>(x -> Pattern2.cmpile(getPatternEnd()));
+		this.end = Pattern2.cmpile(getPatternEnd());
 	}
 
 	public boolean syntaxWithFinalBracket() {
@@ -100,7 +99,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
 
-		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()));
+		final Matcher2 m1 = end.matcher(trimEnd.trim(lines.getLast()));
 		if (m1.matches() == false)
 			return CommandControl.OK_PARTIAL;
 

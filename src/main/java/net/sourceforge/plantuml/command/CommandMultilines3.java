@@ -54,8 +54,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	private final Lazy<IRegex> patternEnd;
 
 	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {
-		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false)
-			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
+		assert patternStart.getPattern().startsWith("^") && patternStart.getPattern().endsWith("$");
 
 		this.strategy = strategy;
 		this.starting = patternStart;
