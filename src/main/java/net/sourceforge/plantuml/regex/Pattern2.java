@@ -40,6 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.jaws.Jaws;
 
 class BoundedPatternCache {
@@ -67,31 +68,32 @@ class BoundedPatternCache {
 }
 
 public class Pattern2 {
-	
+
 	private static final BoundedPatternCache cache = new BoundedPatternCache(12_000, 30_000);
-	private static final Pattern2 EMPTY = new Pattern2(Pattern.compile(""));
+	private static final Pattern2 EMPTY = new Pattern2("");
 
+	private final String patternString;
+	private final Lazy<Pattern> pattern;
 
-	private final Pattern pattern;
+	private Pattern2(String s) {
+		this.patternString = s;
+		this.pattern = new Lazy<>(() -> Pattern.compile(transform(patternString), Pattern.CASE_INSENSITIVE));
 
-	private Pattern2(Pattern pattern) {
-		this.pattern = pattern;
 	}
 
 	public Matcher2 matcher(CharSequence input) {
-		return Matcher2.build(pattern, input);
+		return Matcher2.build(pattern.get(), input);
 	}
 
 	public String pattern() {
-		return pattern.pattern();
+		return patternString;
 	}
-	
-	
+
 	public static Pattern2 cmpile(final String p) {
 		if (p == null || p.length() == 0)
 			return EMPTY;
 
-		return cache.computeIfAbsent(p, key -> new Pattern2(Pattern.compile(transform(key), Pattern.CASE_INSENSITIVE)));
+		return cache.computeIfAbsent(p, key -> new Pattern2(key));
 
 	}
 
@@ -103,6 +105,5 @@ public class Pattern2 {
 		p = p.replace("%g", "\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote
 		return p;
 	}
-
 
 }
