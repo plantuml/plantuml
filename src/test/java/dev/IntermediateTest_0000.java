@@ -22,13 +22,7 @@ You can use this file to put a test you are working on.
 Here is a simple example:
 
 @startuml
-!option debug true
-:\t\ta; <<time-event>>
-:b;
-:a; <<time-event>>
-:input; <<input>>
-:object signal;
-:object signal; <<object-signal>>
+alice->bob: this is a test
 @enduml
 
 So you can edit this file, but please do not push any modification in the "main" branch.
