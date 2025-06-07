@@ -4,6 +4,8 @@
 
 ## V1.2025.3 (Jun 1, 2025)
 - See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.3)
+- [Javadoc improvement](https://plantuml.github.io/plantuml/javadoc)
+- [Jacoco improvement (Add Java Code Coverage Report)](https://plantuml.github.io/plantuml/jacoco)
 - [Activity - How to change colour on new Activity Diagram goto](https://forum.plantuml.net/17445/how-to-change-colour-on-new-activity-diagram-goto)
 - [Activity - How to draw send signal action and accept event action in activity diagram?](https://forum.plantuml.net/16558/draw-send-signal-action-accept-event-action-activity-diagram)
 - [DITAA has crashed](https://forum.plantuml.net/19704/ditaa-has-crashed)
