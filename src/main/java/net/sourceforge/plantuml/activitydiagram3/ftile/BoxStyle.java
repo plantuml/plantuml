@@ -167,6 +167,12 @@ public abstract class BoxStyle {
 		return Stereotype.build("<<" + stereotype + ">>");
 	}
 
+	public void drawMeDebug(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
+		final Shadowable s = URectangle.build(width, height);
+		s.setDeltaShadow(shadowing);
+		ug.draw(s);
+	}
+
 }
 
 class BoxStylePlain extends BoxStyle {
