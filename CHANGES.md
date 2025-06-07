@@ -1,3 +1,22 @@
+## V1.2025.4beta
+- See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.4)
+- _TBC_ 🚧
+
+## V1.2025.3 (Jun 1, 2025)
+- See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.3)
+- [Javadoc improvement](https://plantuml.github.io/plantuml/javadoc)
+- [Jacoco improvement (Add Java Code Coverage Report)](https://plantuml.github.io/plantuml/jacoco)
+- [Activity - How to change colour on new Activity Diagram goto](https://forum.plantuml.net/17445/how-to-change-colour-on-new-activity-diagram-goto)
+- [Activity - How to draw send signal action and accept event action in activity diagram?](https://forum.plantuml.net/16558/draw-send-signal-action-accept-event-action-activity-diagram)
+- [DITAA has crashed](https://forum.plantuml.net/19704/ditaa-has-crashed)
+- [DITAA - empty lines seem to be ignored; this may result in additionally rendered boxes](https://forum.plantuml.net/19777/ditaa-empty-lines-ignored-result-additionally-rendered-boxes)
+- [Gantt - Adding a Note below a milestone in Gantt](https://forum.plantuml.net/13164/adding-a-note-below-a-milestone-in-gantt)
+- [Gantt - Custom / financial weeks in Gantt chart](https://forum.plantuml.net/17852/custom-financial-weeks-in-gantt-chart)
+- [Invalid message of obsolete version](https://forum.plantuml.net/20043/invalid-message-of-obsolete-version)
+- [SVG sprites work in a node text, but not in an edge text](https://forum.plantuml.net/20006/svg-sprites-work-in-a-node-text-but-not-in-an-edge-text)
+- [SVG - Broken inline SVG support for Quadratic Curves](https://forum.plantuml.net/16883/broken-inline-svg-support-for-quadratic-curves)
+- [State machine invalid generation for SVG](https://forum.plantuml.net/19290/state-machine-invalid-generation-for-svg)
+
 ## V1.2025.2 (Mar 5, 2025)
 
 - [EBNF - Improve the curved line on the EBNF diagram](https://github.com/plantuml/plantuml/issues/2075)
