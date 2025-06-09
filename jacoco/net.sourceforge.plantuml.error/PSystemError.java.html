@@ -133,15 +133,15 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	final public String getWarningOrError() {
-<span class="nc" id="L136">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L137">		sb.append(getDescription());</span>
-<span class="nc" id="L138">		sb.append(BackSlash.CHAR_NEWLINE);</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (CharSequence t : getTitle().getDisplay()) {</span>
-<span class="nc" id="L140">			sb.append(t);</span>
-<span class="nc" id="L141">			sb.append(BackSlash.CHAR_NEWLINE);</span>
-<span class="nc" id="L142">		}</span>
-<span class="nc" id="L143">		sb.append(BackSlash.CHAR_NEWLINE);</span>
-<span class="nc" id="L144">		return sb.toString();</span>
+<span class="fc" id="L136">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L137">		sb.append(getDescription());</span>
+<span class="fc" id="L138">		sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (CharSequence t : getTitle().getDisplay()) {</span>
+<span class="fc" id="L140">			sb.append(t);</span>
+<span class="fc" id="L141">			sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="fc" id="L142">		}</span>
+<span class="fc" id="L143">		sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="fc" id="L144">		return sb.toString();</span>
 	}
 
 	private TextBlock getGraphicalFormatted() {
@@ -250,10 +250,10 @@ public abstract class PSystemError extends PlainDiagram {
 <span class="fc" id="L250">		final TextBlock result = getGraphicalFormatted();</span>
 
 		TextBlock udrawable;
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (getSource().getTotalLineCountLessThan5()) {</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		if (getSource().getTotalLineCountLessThan5()) {</span>
 <span class="fc" id="L254">			udrawable = addWelcome(result);</span>
 		} else {
-<span class="nc" id="L256">			udrawable = result;</span>
+<span class="fc" id="L256">			udrawable = result;</span>
 		}
 <span class="fc" id="L258">		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
 		// udrawable = addMessageAdopt(udrawable);

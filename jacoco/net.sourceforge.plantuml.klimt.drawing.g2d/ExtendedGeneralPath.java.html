@@ -135,42 +135,42 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	public void arcTo(double rx, double ry, double angle, boolean largeArcFlag, boolean sweepFlag, double x, double y) {
 
 		// Ensure radii are valid
-<span class="pc bpc" id="L138" title="1 of 4 branches missed.">		if (rx == 0 || ry == 0) {</span>
+<span class="pc bpc" id="L138" title="3 of 4 branches missed.">		if (rx == 0 || ry == 0) {</span>
 <span class="fc" id="L139">			lineTo(x, y);</span>
 <span class="fc" id="L140">			return;</span>
 		}
 
-<span class="fc" id="L143">		checkMoveTo(); // check if prev command was moveto</span>
+<span class="nc" id="L143">		checkMoveTo(); // check if prev command was moveto</span>
 
 		// Get the current (x, y) coordinates of the path
-<span class="fc" id="L146">		final double x0 = cx;</span>
-<span class="fc" id="L147">		final double y0 = cy;</span>
-<span class="pc bpc" id="L148" title="3 of 4 branches missed.">		if (x0 == x &amp;&amp; y0 == y) {</span>
+<span class="nc" id="L146">		final double x0 = cx;</span>
+<span class="nc" id="L147">		final double y0 = cy;</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		if (x0 == x &amp;&amp; y0 == y) {</span>
 			// If the endpoints (x, y) and (x0, y0) are identical, then this
 			// is equivalent to omitting the elliptical arc segment entirely.
 <span class="nc" id="L151">			return;</span>
 		}
 
-<span class="fc" id="L154">		final Arc2D arc = computeArc(x0, y0, rx, ry, angle, largeArcFlag, sweepFlag, x, y);</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (arc == null) {</span>
+<span class="nc" id="L154">		final Arc2D arc = computeArc(x0, y0, rx, ry, angle, largeArcFlag, sweepFlag, x, y);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (arc == null) {</span>
 <span class="nc" id="L156">			return;</span>
 		}
 
-<span class="fc" id="L159">		final AffineTransform t = AffineTransform.getRotateInstance(Math.toRadians(angle), arc.getCenterX(),</span>
-<span class="fc" id="L160">				arc.getCenterY());</span>
-<span class="fc" id="L161">		final Shape s = t.createTransformedShape(arc);</span>
-<span class="fc" id="L162">		path.append(s, true);</span>
+<span class="nc" id="L159">		final AffineTransform t = AffineTransform.getRotateInstance(Math.toRadians(angle), arc.getCenterX(),</span>
+<span class="nc" id="L160">				arc.getCenterY());</span>
+<span class="nc" id="L161">		final Shape s = t.createTransformedShape(arc);</span>
+<span class="nc" id="L162">		path.append(s, true);</span>
 
-<span class="fc" id="L164">		makeRoom(7);</span>
-<span class="fc" id="L165">		types[numSeg++] = ExtendedPathIterator.SEG_ARCTO;</span>
-<span class="fc" id="L166">		values[numVals++] = rx;</span>
-<span class="fc" id="L167">		values[numVals++] = ry;</span>
-<span class="fc" id="L168">		values[numVals++] = angle;</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		values[numVals++] = largeArcFlag ? 1 : 0;</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		values[numVals++] = sweepFlag ? 1 : 0;</span>
-<span class="fc" id="L171">		cx = values[numVals++] = x;</span>
-<span class="fc" id="L172">		cy = values[numVals++] = y;</span>
-<span class="fc" id="L173">	}</span>
+<span class="nc" id="L164">		makeRoom(7);</span>
+<span class="nc" id="L165">		types[numSeg++] = ExtendedPathIterator.SEG_ARCTO;</span>
+<span class="nc" id="L166">		values[numVals++] = rx;</span>
+<span class="nc" id="L167">		values[numVals++] = ry;</span>
+<span class="nc" id="L168">		values[numVals++] = angle;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		values[numVals++] = largeArcFlag ? 1 : 0;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		values[numVals++] = sweepFlag ? 1 : 0;</span>
+<span class="nc" id="L171">		cx = values[numVals++] = x;</span>
+<span class="nc" id="L172">		cy = values[numVals++] = y;</span>
+<span class="nc" id="L173">	}</span>
 
 	/**
 	 * This constructs an unrotated Arc2D from the SVG specification of an
@@ -187,28 +187,28 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		//
 
 		// Compute the half distance between the current and the final point
-<span class="fc" id="L190">		final double dx2 = (x0 - x) / 2.0;</span>
-<span class="fc" id="L191">		final double dy2 = (y0 - y) / 2.0;</span>
+<span class="nc" id="L190">		final double dx2 = (x0 - x) / 2.0;</span>
+<span class="nc" id="L191">		final double dy2 = (y0 - y) / 2.0;</span>
 		// Convert angle from degrees to radians
-<span class="fc" id="L193">		angle = Math.toRadians(angle % 360.0);</span>
-<span class="fc" id="L194">		final double cosAngle = Math.cos(angle);</span>
-<span class="fc" id="L195">		final double sinAngle = Math.sin(angle);</span>
+<span class="nc" id="L193">		angle = Math.toRadians(angle % 360.0);</span>
+<span class="nc" id="L194">		final double cosAngle = Math.cos(angle);</span>
+<span class="nc" id="L195">		final double sinAngle = Math.sin(angle);</span>
 
 		//
 		// Step 1 : Compute (x1, y1)
 		//
-<span class="fc" id="L200">		final double x1 = cosAngle * dx2 + sinAngle * dy2;</span>
-<span class="fc" id="L201">		final double y1 = -sinAngle * dx2 + cosAngle * dy2;</span>
+<span class="nc" id="L200">		final double x1 = cosAngle * dx2 + sinAngle * dy2;</span>
+<span class="nc" id="L201">		final double y1 = -sinAngle * dx2 + cosAngle * dy2;</span>
 		// Ensure radii are large enough
-<span class="fc" id="L203">		rx = Math.abs(rx);</span>
-<span class="fc" id="L204">		ry = Math.abs(ry);</span>
-<span class="fc" id="L205">		double prx = rx * rx;</span>
-<span class="fc" id="L206">		double pry = ry * ry;</span>
-<span class="fc" id="L207">		final double px1 = x1 * x1;</span>
-<span class="fc" id="L208">		final double py1 = y1 * y1;</span>
+<span class="nc" id="L203">		rx = Math.abs(rx);</span>
+<span class="nc" id="L204">		ry = Math.abs(ry);</span>
+<span class="nc" id="L205">		double prx = rx * rx;</span>
+<span class="nc" id="L206">		double pry = ry * ry;</span>
+<span class="nc" id="L207">		final double px1 = x1 * x1;</span>
+<span class="nc" id="L208">		final double py1 = y1 * y1;</span>
 		// check that radii are large enough
-<span class="fc" id="L210">		final double radiiCheck = px1 / prx + py1 / pry;</span>
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (radiiCheck &gt; 1) {</span>
+<span class="nc" id="L210">		final double radiiCheck = px1 / prx + py1 / pry;</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (radiiCheck &gt; 1) {</span>
 <span class="nc" id="L212">			rx = Math.sqrt(radiiCheck) * rx;</span>
 <span class="nc" id="L213">			ry = Math.sqrt(radiiCheck) * ry;</span>
 <span class="nc" id="L214">			prx = rx * rx;</span>
@@ -218,59 +218,59 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		//
 		// Step 2 : Compute (cx1, cy1)
 		//
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		double sign = (largeArcFlag == sweepFlag) ? -1 : 1;</span>
-<span class="fc" id="L222">		double sq = ((prx * pry) - (prx * py1) - (pry * px1)) / ((prx * py1) + (pry * px1));</span>
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		sq = (sq &lt; 0) ? 0 : sq;</span>
-<span class="fc" id="L224">		final double coef = sign * Math.sqrt(sq);</span>
-<span class="fc" id="L225">		final double cx1 = coef * ((rx * y1) / ry);</span>
-<span class="fc" id="L226">		final double cy1 = coef * -((ry * x1) / rx);</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		double sign = (largeArcFlag == sweepFlag) ? -1 : 1;</span>
+<span class="nc" id="L222">		double sq = ((prx * pry) - (prx * py1) - (pry * px1)) / ((prx * py1) + (pry * px1));</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		sq = (sq &lt; 0) ? 0 : sq;</span>
+<span class="nc" id="L224">		final double coef = sign * Math.sqrt(sq);</span>
+<span class="nc" id="L225">		final double cx1 = coef * ((rx * y1) / ry);</span>
+<span class="nc" id="L226">		final double cy1 = coef * -((ry * x1) / rx);</span>
 
 		//
 		// Step 3 : Compute (cx, cy) from (cx1, cy1)
 		//
-<span class="fc" id="L231">		final double sx2 = (x0 + x) / 2.0;</span>
-<span class="fc" id="L232">		final double sy2 = (y0 + y) / 2.0;</span>
-<span class="fc" id="L233">		final double cx = sx2 + (cosAngle * cx1 - sinAngle * cy1);</span>
-<span class="fc" id="L234">		final double cy = sy2 + (sinAngle * cx1 + cosAngle * cy1);</span>
+<span class="nc" id="L231">		final double sx2 = (x0 + x) / 2.0;</span>
+<span class="nc" id="L232">		final double sy2 = (y0 + y) / 2.0;</span>
+<span class="nc" id="L233">		final double cx = sx2 + (cosAngle * cx1 - sinAngle * cy1);</span>
+<span class="nc" id="L234">		final double cy = sy2 + (sinAngle * cx1 + cosAngle * cy1);</span>
 
 		//
 		// Step 4 : Compute the angleStart (angle1) and the angleExtent (dangle)
 		//
-<span class="fc" id="L239">		final double ux = (x1 - cx1) / rx;</span>
-<span class="fc" id="L240">		final double uy = (y1 - cy1) / ry;</span>
-<span class="fc" id="L241">		final double vx = (-x1 - cx1) / rx;</span>
-<span class="fc" id="L242">		final double vy = (-y1 - cy1) / ry;</span>
+<span class="nc" id="L239">		final double ux = (x1 - cx1) / rx;</span>
+<span class="nc" id="L240">		final double uy = (y1 - cy1) / ry;</span>
+<span class="nc" id="L241">		final double vx = (-x1 - cx1) / rx;</span>
+<span class="nc" id="L242">		final double vy = (-y1 - cy1) / ry;</span>
 		// Compute the angle start
-<span class="fc" id="L244">		double n = Math.sqrt((ux * ux) + (uy * uy));</span>
-<span class="fc" id="L245">		double p = ux; // (1 * ux) + (0 * uy)</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		sign = (uy &lt; 0) ? -1.0 : 1.0;</span>
-<span class="fc" id="L247">		double angleStart = Math.toDegrees(sign * Math.acos(p / n));</span>
+<span class="nc" id="L244">		double n = Math.sqrt((ux * ux) + (uy * uy));</span>
+<span class="nc" id="L245">		double p = ux; // (1 * ux) + (0 * uy)</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		sign = (uy &lt; 0) ? -1.0 : 1.0;</span>
+<span class="nc" id="L247">		double angleStart = Math.toDegrees(sign * Math.acos(p / n));</span>
 
 		// Compute the angle extent
-<span class="fc" id="L250">		n = Math.sqrt((ux * ux + uy * uy) * (vx * vx + vy * vy));</span>
-<span class="fc" id="L251">		p = ux * vx + uy * vy;</span>
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		sign = (ux * vy - uy * vx &lt; 0) ? -1.0 : 1.0;</span>
-<span class="fc" id="L253">		double angleExtent = Math.toDegrees(sign * Math.acos(p / n));</span>
-<span class="pc bpc" id="L254" title="2 of 4 branches missed.">		if (!sweepFlag &amp;&amp; angleExtent &gt; 0) {</span>
+<span class="nc" id="L250">		n = Math.sqrt((ux * ux + uy * uy) * (vx * vx + vy * vy));</span>
+<span class="nc" id="L251">		p = ux * vx + uy * vy;</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">		sign = (ux * vy - uy * vx &lt; 0) ? -1.0 : 1.0;</span>
+<span class="nc" id="L253">		double angleExtent = Math.toDegrees(sign * Math.acos(p / n));</span>
+<span class="nc bnc" id="L254" title="All 4 branches missed.">		if (!sweepFlag &amp;&amp; angleExtent &gt; 0) {</span>
 <span class="nc" id="L255">			angleExtent -= 360f;</span>
-<span class="pc bpc" id="L256" title="3 of 4 branches missed.">		} else if (sweepFlag &amp;&amp; angleExtent &lt; 0) {</span>
+<span class="nc bnc" id="L256" title="All 4 branches missed.">		} else if (sweepFlag &amp;&amp; angleExtent &lt; 0) {</span>
 <span class="nc" id="L257">			angleExtent += 360f;</span>
 		}
-<span class="fc" id="L259">		angleExtent %= 360f;</span>
-<span class="fc" id="L260">		angleStart %= 360f;</span>
+<span class="nc" id="L259">		angleExtent %= 360f;</span>
+<span class="nc" id="L260">		angleStart %= 360f;</span>
 
 		//
 		// We can now build the resulting Arc2D in double precision
 		//
-<span class="fc" id="L265">		final Arc2D.Double arc = new Arc2D.Double();</span>
-<span class="fc" id="L266">		arc.x = cx - rx;</span>
-<span class="fc" id="L267">		arc.y = cy - ry;</span>
-<span class="fc" id="L268">		arc.width = rx * 2.0;</span>
-<span class="fc" id="L269">		arc.height = ry * 2.0;</span>
-<span class="fc" id="L270">		arc.start = -angleStart;</span>
-<span class="fc" id="L271">		arc.extent = -angleExtent;</span>
+<span class="nc" id="L265">		final Arc2D.Double arc = new Arc2D.Double();</span>
+<span class="nc" id="L266">		arc.x = cx - rx;</span>
+<span class="nc" id="L267">		arc.y = cy - ry;</span>
+<span class="nc" id="L268">		arc.width = rx * 2.0;</span>
+<span class="nc" id="L269">		arc.height = ry * 2.0;</span>
+<span class="nc" id="L270">		arc.start = -angleStart;</span>
+<span class="nc" id="L271">		arc.extent = -angleExtent;</span>
 
-<span class="fc" id="L273">		return arc;</span>
+<span class="nc" id="L273">		return arc;</span>
 	}
 
 	/**

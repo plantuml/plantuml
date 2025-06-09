@@ -53,16 +53,16 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 public class StripeCode implements StripeRaw {
 
 	final private FontConfiguration fontConfiguration;
-<span class="fc" id="L56">	private final List&lt;String&gt; raw = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L56">	private final List&lt;String&gt; raw = new ArrayList&lt;&gt;();</span>
 
 	private boolean terminated;
 
-<span class="fc" id="L60">	public StripeCode(FontConfiguration fontConfiguration) {</span>
-<span class="fc" id="L61">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L62">	}</span>
+<span class="nc" id="L60">	public StripeCode(FontConfiguration fontConfiguration) {</span>
+<span class="nc" id="L61">		this.fontConfiguration = fontConfiguration;</span>
+<span class="nc" id="L62">	}</span>
 
 	public List&lt;Atom&gt; getAtoms() {
-<span class="fc" id="L65">		return Collections.&lt;Atom&gt;singletonList(this);</span>
+<span class="nc" id="L65">		return Collections.&lt;Atom&gt;singletonList(this);</span>
 	}
 
 	public Atom getLHeader() {
@@ -71,44 +71,44 @@ public class StripeCode implements StripeRaw {
 
 	@Override
 	public boolean addAndCheckTermination(String line) {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (Parser.isCodeEnd(line)) {</span>
-<span class="fc" id="L75">			this.terminated = true;</span>
-<span class="fc" id="L76">			return true;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (Parser.isCodeEnd(line)) {</span>
+<span class="nc" id="L75">			this.terminated = true;</span>
+<span class="nc" id="L76">			return true;</span>
 		}
-<span class="fc" id="L78">		this.raw.add(line);</span>
-<span class="fc" id="L79">		return false;</span>
+<span class="nc" id="L78">		this.raw.add(line);</span>
+<span class="nc" id="L79">		return false;</span>
 	}
 
 	@Override
 	public final boolean isTerminated() {
-<span class="fc" id="L84">		return terminated;</span>
+<span class="nc" id="L84">		return terminated;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L88">		double width = 0;</span>
-<span class="fc" id="L89">		double height = 0;</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (String s : raw) {</span>
-<span class="fc" id="L91">			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
-<span class="fc" id="L92">			width = Math.max(width, dim.getWidth());</span>
-<span class="fc" id="L93">			height += dim.getHeight();</span>
-<span class="fc" id="L94">		}</span>
-<span class="fc" id="L95">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L88">		double width = 0;</span>
+<span class="nc" id="L89">		double height = 0;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (String s : raw) {</span>
+<span class="nc" id="L91">			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
+<span class="nc" id="L92">			width = Math.max(width, dim.getWidth());</span>
+<span class="nc" id="L93">			height += dim.getHeight();</span>
+<span class="nc" id="L94">		}</span>
+<span class="nc" id="L95">		return new XDimension2D(width, height);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L99">		return 0;</span>
+<span class="nc" id="L99">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L103">		double y = 0;</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (String s : raw) {</span>
-<span class="fc" id="L105">			final UText shape = UText.build(s, fontConfiguration);</span>
-<span class="fc" id="L106">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L107">			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
-<span class="fc" id="L108">			y += dim.getHeight();</span>
-<span class="fc" id="L109">			ug.apply(UTranslate.dy(y - shape.getDescent(stringBounder))).draw(shape);</span>
-<span class="fc" id="L110">		}</span>
-<span class="fc" id="L111">	}</span>
+<span class="nc" id="L103">		double y = 0;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (String s : raw) {</span>
+<span class="nc" id="L105">			final UText shape = UText.build(s, fontConfiguration);</span>
+<span class="nc" id="L106">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L107">			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
+<span class="nc" id="L108">			y += dim.getHeight();</span>
+<span class="nc" id="L109">			ug.apply(UTranslate.dy(y - shape.getDescent(stringBounder))).draw(shape);</span>
+<span class="nc" id="L110">		}</span>
+<span class="nc" id="L111">	}</span>
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {

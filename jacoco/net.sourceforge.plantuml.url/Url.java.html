@@ -123,12 +123,12 @@ public class Url implements EnsureVisible {
 		public int compare(Url url1, Url url2) {
 <span class="fc" id="L124">			final double surface1 = url1.visible.getSurface();</span>
 <span class="fc" id="L125">			final double surface2 = url2.visible.getSurface();</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (surface1 &gt; surface2)</span>
-<span class="fc" id="L127">				return 1;</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">			else if (surface1 &lt; surface2)</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (surface1 &gt; surface2)</span>
+<span class="nc" id="L127">				return 1;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			else if (surface1 &lt; surface2)</span>
 <span class="fc" id="L129">				return -1;</span>
 
-<span class="fc" id="L131">			return 0;</span>
+<span class="nc" id="L131">			return 0;</span>
 		}
 	};
 

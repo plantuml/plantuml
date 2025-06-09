@@ -215,10 +215,10 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L215">			((UmlDiagram) system).exportCmap(suggestedFile, 0, imageData);</span>
 		// ::done
 
-<span class="pc bpc" id="L218" title="2 of 4 branches missed.">		if (system instanceof TitledDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.PNG)</span>
+<span class="pc bpc" id="L218" title="1 of 4 branches missed.">		if (system instanceof TitledDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.PNG)</span>
 <span class="fc" id="L219">			return splitPng((TitledDiagram) system, suggestedFile, imageData, fileFormatOption);</span>
 
-<span class="nc" id="L221">		return singletonList(new FileImageData(outputFile, imageData));</span>
+<span class="fc" id="L221">		return singletonList(new FileImageData(outputFile, imageData));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

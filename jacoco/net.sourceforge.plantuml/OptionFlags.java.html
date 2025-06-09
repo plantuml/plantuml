@@ -208,20 +208,20 @@ public class OptionFlags {
 
 	public void logData(final SFile file, Diagram system) {
 <span class="fc" id="L210">		final String warnOrError = system.getWarningOrError();</span>
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (warnOrError == null) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (warnOrError == null) {</span>
 <span class="fc" id="L212">			return;</span>
 		}
-<span class="nc" id="L214">		synchronized (logDataInitized) {</span>
-<span class="nc bnc" id="L215" title="All 4 branches missed.">			if (logData == null &amp;&amp; logDataInitized.get() == false) {</span>
-<span class="nc" id="L216">				final String s = GraphvizUtils.getenvLogData();</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">				if (s != null) {</span>
+<span class="fc" id="L214">		synchronized (logDataInitized) {</span>
+<span class="pc bpc" id="L215" title="1 of 4 branches missed.">			if (logData == null &amp;&amp; logDataInitized.get() == false) {</span>
+<span class="fc" id="L216">				final String s = GraphvizUtils.getenvLogData();</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">				if (s != null) {</span>
 <span class="nc" id="L218">					setLogData(new SFile(s));</span>
 				}
-<span class="nc" id="L220">				logDataInitized.set(true);</span>
+<span class="fc" id="L220">				logDataInitized.set(true);</span>
 			}
 
-<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (logData == null) {</span>
-<span class="nc" id="L224">				return;</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (logData == null) {</span>
+<span class="fc" id="L224">				return;</span>
 			}
 			// final PSystemError systemError = (PSystemError) system;
 <span class="nc" id="L227">			try (PrintStream ps = SecurityUtils.createPrintStream(logData.createFileOutputStream(true))) {</span>

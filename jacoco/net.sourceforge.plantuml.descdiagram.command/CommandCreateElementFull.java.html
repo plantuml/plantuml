@@ -260,17 +260,17 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 
 	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Quark&lt;Entity&gt; code, LeafType type,
 			USymbol usymbol) {
-<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (code.getData() == null)</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (code.getData() == null)</span>
 <span class="fc" id="L264">			return false;</span>
 
-<span class="fc" id="L266">		final Entity other = code.getData();</span>
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (other.getLeafType() != type)</span>
+<span class="nc" id="L266">		final Entity other = code.getData();</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (other.getLeafType() != type)</span>
 <span class="nc" id="L268">			return true;</span>
 
-<span class="pc bpc" id="L270" title="2 of 4 branches missed.">		if (usymbol != null &amp;&amp; other.getUSymbol() != usymbol)</span>
+<span class="nc bnc" id="L270" title="All 4 branches missed.">		if (usymbol != null &amp;&amp; other.getUSymbol() != usymbol)</span>
 <span class="nc" id="L271">			return true;</span>
 
-<span class="fc" id="L273">		return false;</span>
+<span class="nc" id="L273">		return false;</span>
 	}
 
 	private char getCharEncoding(final String codeRaw) {
