@@ -62,6 +62,7 @@ public class FtileCircleEndCross extends AbstractFtile {
 	private final HColor lineColor;
 	private final HColor backColor;
 	private final Swimlane swimlane;
+	private final Style style;
 	private double shadowing;
 
 	@Override
@@ -72,6 +73,7 @@ public class FtileCircleEndCross extends AbstractFtile {
 	public FtileCircleEndCross(ISkinParam skinParam, Swimlane swimlane, Style style) {
 		super(skinParam);
 		this.swimlane = swimlane;
+		this.style = style;
 		this.shadowing = style.getShadowing();
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		this.lineColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
@@ -102,11 +104,10 @@ public class FtileCircleEndCross extends AbstractFtile {
 		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
 		ug = ug.apply(lineColor).apply(HColors.transparent().bg());
-		final double thickness = 2.5;
-		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);
+		ug.apply(style.getStroke()).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);
 
 		ug = ug.apply(backColor.bg());
-
+		final double thickness = 2.5;
 		final double size2 = (SIZE - thickness) / Math.sqrt(2);
 		final double delta = (SIZE - size2) / 2;
 		ug = ug.apply(UStroke.withThickness(thickness));

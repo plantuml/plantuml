@@ -259,6 +259,7 @@ stateDiagram {
   }
   circle {
    start, stop, end {
+      LineThickness 1
 	    LineColor #2
 	    BackgroundColor #2
     }
@@ -343,9 +344,13 @@ activityDiagram {
 	}
 	circle {
 	    start, stop, end {
+        LineThickness 1
 		    LineColor #2
 		    BackgroundColor #2
 	    }
+      end {
+        LineThickness 1.5
+      }
 	}
 	activityBar {
 	  BackgroundColor #5
@@ -636,10 +641,10 @@ activityDiagram {
 	}
 	circle {
 	    start, stop, end {
-		    LineColor #d
+        		    LineColor #d
 		    BackgroundColor #d
 	    }
-	}
+	  }
 	activityBar {
 	  BackgroundColor #a
 	}
