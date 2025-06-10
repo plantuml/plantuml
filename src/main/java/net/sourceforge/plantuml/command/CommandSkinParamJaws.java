@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexRepeatedOneOrMore;
@@ -58,9 +59,9 @@ public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 		return RegexConcat.build(CommandSkinParamJaws.class.getName(), RegexLeaf.start(), //
 				new RegexRepeatedOneOrMore("FULL", //
 						new RegexConcat( //
-								new RegexLeaf("TYPE", "(skinparam|skinparamlocked)"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(".*" + Jaws.BLOCK_E1_NEWLINE + ".*"))), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "TYPE", "(skinparam|skinparamlocked)"), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(".*" + Jaws.BLOCK_E1_NEWLINE + ".*"))), //
 				RegexLeaf.end()); //
 	}
 

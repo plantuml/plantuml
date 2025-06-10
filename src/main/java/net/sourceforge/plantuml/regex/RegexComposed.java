@@ -52,12 +52,11 @@ public abstract class RegexComposed implements IRegex {
 //	protected static final AtomicInteger vescaped = new AtomicInteger();
 
 	private final List<IRegex> partials;
+	private final PatternCacheStrategy strategy;
 
 	protected final List<IRegex> partials() {
 		return partials;
 	}
-
-	abstract protected String getFullSlow();
 
 	private final AtomicReference<Pattern2> fullCached = new AtomicReference<>();
 
@@ -66,7 +65,7 @@ public abstract class RegexComposed implements IRegex {
 		if (result != null)
 			return result;
 
-		final Pattern2 computed = Pattern2.cmpile(getFullSlow());
+		final Pattern2 computed = Pattern2.cmpile(strategy, getPatternAsString());
 		if (fullCached.compareAndSet(null, computed))
 			return computed;
 
@@ -77,8 +76,9 @@ public abstract class RegexComposed implements IRegex {
 		return fullCached.get() != null;
 	}
 
-	public RegexComposed(IRegex... partial) {
+	public RegexComposed(PatternCacheStrategy strategy, IRegex... partial) {
 		this.partials = Collections.unmodifiableList(Arrays.asList(partial));
+		this.strategy = strategy;
 	}
 
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
@@ -121,6 +121,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	final public String getPattern() {
+		// return getFullSlow();
 		return getPattern2().pattern();
 	}
 

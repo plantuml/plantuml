@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -568,7 +569,7 @@ public class Option {
 	}
 
 	private void manageDefine(String s) {
-		final Pattern2 p = Pattern2.cmpile("^(\\$?\\w+)(?:=(.*))?$");
+		final Pattern2 p = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(\\$?\\w+)(?:=(.*))?$");
 		final Matcher2 m = p.matcher(s);
 		if (m.find())
 			define(m.group(1), m.group(2));
@@ -576,7 +577,7 @@ public class Option {
 	}
 
 	private void managePragma(String s) {
-		final Pattern2 p = Pattern2.cmpile("^(\\w+)(?:=(.*))?$");
+		final Pattern2 p = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(\\w+)(?:=(.*))?$");
 		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
 			final String var = m.group(1);
@@ -588,7 +589,7 @@ public class Option {
 	}
 
 	private void manageSkinParam(String s) {
-		final Pattern2 p = Pattern2.cmpile("^(\\w+)(?:=(.*))?$");
+		final Pattern2 p = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(\\w+)(?:=(.*))?$");
 		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
 			final String var = m.group(1);

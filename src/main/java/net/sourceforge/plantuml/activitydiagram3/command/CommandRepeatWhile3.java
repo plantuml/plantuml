@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -65,36 +66,38 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("while"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
-						new RegexConcat(new RegexLeaf("TEST3", "\\((.*?)\\)"), //
+						new RegexConcat(PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "TEST3", "\\((.*?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(is|equals?)"), //
+								new RegexLeaf(1, "(is|equals?)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("WHEN3", "\\((.+?)\\)"), //
+								new RegexLeaf(1, "WHEN3", "\\((.+?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(not)"), //
+								new RegexLeaf(1, "(not)"), //
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "OUT3", "\\((.+?)\\)")), //
+						new RegexConcat(PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "TEST4", "\\((.*?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("OUT3", "\\((.+?)\\)")), //
-						new RegexConcat(new RegexLeaf("TEST4", "\\((.*?)\\)"), //
+								new RegexLeaf(1, "(not)"), //
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "OUT4", "\\((.+?)\\)")), //
+						new RegexConcat(PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "TEST2", "\\((.*?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(not)"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("OUT4", "\\((.+?)\\)")), //
-						new RegexConcat(new RegexLeaf("TEST2", "\\((.*?)\\)"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(is|equals?)"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("WHEN2", "\\((.+?)\\)") //
+								new RegexLeaf(1, "(is|equals?)"), //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf(1, "WHEN2", "\\((.+?)\\)") //
 						), //
-						new RegexOptional(new RegexLeaf("TEST1", "\\((.*)\\)")) //
+						new RegexOptional(new RegexLeaf(1, "TEST1", "\\((.*)\\)")) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexOr(//
-								new RegexLeaf("LABEL", "(.*)"), //
+								new RegexLeaf(1, "COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+						RegexLeaf.spaceZeroOrMore()
+, new RegexOr(//
+								new RegexLeaf(1, "LABEL", "(.*)"), //
 								new RegexLeaf("")) //
 				)), //
 				new RegexLeaf(";?"), //

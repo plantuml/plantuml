@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.project.lang.SentenceSimple;
 import net.sourceforge.plantuml.project.lang.Subject;
 import net.sourceforge.plantuml.project.lang.Words;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -82,12 +83,12 @@ public class SubjectTask implements Subject<ChronologyDiagram> {
 
 	public IRegex toRegex() {
 		return new RegexOr( //
-				new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\]"), //
+				new RegexLeaf(1, "SUBJECT", "\\[([^\\[\\]]+?)\\]"), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexOptional(new RegexConcat(//
+						PatternCacheStrategy.CACHE, //
 						Words.exactly(Words.AS), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("SHORTNAME", "\\[([^\\[\\]]+?)\\]"))) //
+						RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "SHORTNAME", "\\[([^\\[\\]]+?)\\]"))) //
 		);
 	}
 

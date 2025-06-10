@@ -72,14 +72,14 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteCommand.class.getName() + "multi", RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("POSITION", "(right|left|over)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|over)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "PARTICIPANT", "(?:of[%s]+)?([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -89,14 +89,14 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(FactorySequenceNoteCommand.class.getName() + "single", RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("POSITION", "(right|left|over)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|over)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "PARTICIPANT", "(?:of[%s])?([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -104,7 +104,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

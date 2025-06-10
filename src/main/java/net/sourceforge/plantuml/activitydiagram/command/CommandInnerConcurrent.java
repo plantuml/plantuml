@@ -55,7 +55,7 @@ public class CommandInnerConcurrent extends SingleLineCommand2<ActivityDiagram> 
 		return RegexConcat.build(CommandInnerConcurrent.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("--"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME", "(.*)"), //
+				new RegexLeaf(1, "NAME", "(.*)"), //
 				RegexLeaf.end()); //
 	}
 

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -57,11 +58,12 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandAtTime.class.getName(), RegexLeaf.start(), //
 				TimeTickBuilder.expressionAtWithArobase("TIME"), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("as"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf(":"), //
-						new RegexLeaf("CODE", "([%pLN_.]+)") //
+						new RegexLeaf(":")
+, new RegexLeaf(1, "CODE", "([%pLN_.]+)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());

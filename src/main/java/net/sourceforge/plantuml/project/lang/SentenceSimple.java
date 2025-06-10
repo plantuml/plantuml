@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -62,28 +63,28 @@ public abstract class SentenceSimple<D extends Diagram> implements Sentence<D> {
 	}
 
 	public String getSignature() {
-		return subject.getClass() + "/" + verb.getPattern() + "/" + complement.getClass();
+		return subject.getClass() + "/" + verb.getPatternAsString() + "/" + complement.getClass();
 	}
 
 	public final IRegex toRegex() {
 		if (complement instanceof ComplementEmpty)
 			return new RegexConcat(//
+					PatternCacheStrategy.NO_CACHE, //
 					RegexLeaf.start(), //
 					subject.toRegex(), //
 					RegexLeaf.spaceOneOrMore(), //
 					verb, //
-					adverbialOrPropositon, //
-					OPTIONAL_FINAL_DOT);
+					adverbialOrPropositon, OPTIONAL_FINAL_DOT);
 
 		return new RegexConcat(//
+				PatternCacheStrategy.NO_CACHE, //
 				RegexLeaf.start(), //
 				subject.toRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
 				verb, //
 				adverbialOrPropositon, //
 				RegexLeaf.spaceOneOrMore(), //
-				complement.toRegex("0"), //
-				OPTIONAL_FINAL_DOT);
+				complement.toRegex("0"), OPTIONAL_FINAL_DOT);
 	}
 
 	public final CommandExecutionResult execute(D project, RegexResult arg) {

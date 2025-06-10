@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -58,33 +59,35 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandClock.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COMPACT", "(compact)"), //
-								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("TYPE", "clock"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "COMPACT", "(compact)"), RegexLeaf.spaceOneOrMore())), //
+				new RegexLeaf(0, "TYPE", "clock"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(new RegexConcat( //
-						new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+						PatternCacheStrategy.CACHE, //
+						new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("as"), //
-						RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+						new RegexLeaf("as"), RegexLeaf.spaceOneOrMore())), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("with"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("period"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PERIOD", "([0-9]+)"), //
+				new RegexLeaf(1, "PERIOD", "([0-9]+)"), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("pulse"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("PULSE", "([0-9]+)") //
+						RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "PULSE", "([0-9]+)") //
 				)), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("offset"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("OFFSET", "([0-9]+)") //
+						RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "OFFSET", "([0-9]+)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				StereotypePattern.optional("STEREO"), //

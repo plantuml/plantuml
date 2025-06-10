@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -89,27 +90,27 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		return RegexConcat.build(CommandLinkLongActivity.class.getName(), RegexLeaf.start(), //
 				new RegexOptional(//
 						new RegexOr("FIRST", //
-								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
-								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
+								new RegexLeaf(2, "STAR", "(\\(\\*(top)?\\))"), //
+								new RegexLeaf(1, "CODE", "([%pLN][%pLN_.]*)"), //
+								new RegexLeaf(1, "BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf(2, "QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), //
+				new RegexLeaf(1, "BACKCOLOR", "(#\\w+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 
-				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
+				new RegexLeaf(1, "ARROW_BODY1", "([-.]+)"), //
+				new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
+				new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "ARROW_BODY2", "([-.]*)"), //
 				new RegexLeaf("\\>"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
+				new RegexOptional(new RegexLeaf(1, "BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("[%g]"), //
-				new RegexLeaf("DESC", "([^%g]*?)"), //
+				new RegexLeaf(1, "DESC", "([^%g]*?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
@@ -158,7 +159,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(PatternCacheStrategy.CACHE, getPatternEnd()),
 				lines.getLast().getString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			if (sb.length() > 0 && sb.toString().endsWith("" + Jaws.BLOCK_E1_NEWLINE) == false)

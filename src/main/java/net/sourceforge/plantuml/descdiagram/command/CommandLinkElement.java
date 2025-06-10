@@ -89,22 +89,22 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				getGroup("ENT1"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 //				new RegexOptional(new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)")), //
 //				RegexLeaf.spaceZeroOrMore(), //
 
-				new RegexLeaf("HEAD2", "(0\\)|<<|<_|[<^*+#0@)]|<\\|[\\|\\:]?|[%s]+o)?"), //
-				new RegexLeaf("BODY1", "([-=.~]+)"), //
-				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + LINE_STYLE_MUTILPLES + ")\\])?"), //
-				new RegexOptional(new RegexLeaf("DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])")), //
-				new RegexOptional(new RegexLeaf("INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
-				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("BODY2", "([-=.~]*)"), //
-				new RegexLeaf("HEAD1", "(\\(0|>>|_>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|//|o[%s]+)?"), //
+				new RegexLeaf(1, "HEAD2", "(0\\)|<<|<_|[<^*+#0@)]|<\\|[\\|\\:]?|[%s]+o)?"), //
+				new RegexLeaf(1, "BODY1", "([-=.~]+)"), //
+				new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + LINE_STYLE_MUTILPLES + ")\\])?"), //
+				new RegexOptional(new RegexLeaf(1, "DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])")), //
+				new RegexOptional(new RegexLeaf(1, "INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
+				new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "BODY2", "([-=.~]*)"), //
+				new RegexLeaf(1, "HEAD1", "(\\(0|>>|_>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|//|o[%s]+)?"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 
 				getGroup("ENT2"), //
@@ -114,7 +114,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 				color().getRegex(), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
+				new RegexLeaf(1, "LABEL_LINK", "(?::[%s]*(.+))?"), //
 				RegexLeaf.end());
 	}
 
@@ -239,7 +239,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	}
 
 	private static RegexLeaf getGroup(String name) {
-		return new RegexLeaf(name, "(" + //
+		return new RegexLeaf(1, name, "(" + //
 				"[%pLN_.]+" + //
 				"|" + //
 				"[%g][^%g]+[%g]" + //

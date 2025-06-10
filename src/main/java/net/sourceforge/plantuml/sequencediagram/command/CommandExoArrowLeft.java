@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -52,36 +53,37 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandExoArrowLeft.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("ANCHOR", CommandArrow.ANCHOR), //
-				new RegexLeaf(ARROW_SUPPCIRCLE2, "([?\\[\\]][ox]?)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(2, "ANCHOR", CommandArrow.ANCHOR), //
+				new RegexLeaf(1, ARROW_SUPPCIRCLE2, "([?\\[\\]][ox]?)?"), //
 				new RegexOr( //
 						new RegexConcat( //
-								new RegexLeaf("ARROW_BOTHDRESSING", "(<<?|//?|\\\\\\\\?)?"), //
-								new RegexLeaf("ARROW_BODYA1", "(-+)"), //
-								new RegexLeaf("ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
-								new RegexLeaf("ARROW_BODYB1", "(-*)"), //
-								new RegexLeaf("ARROW_DRESSING1", "(>>?|//?|\\\\\\\\?)")), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "ARROW_BOTHDRESSING", "(<<?|//?|\\\\\\\\?)?"), //
+								new RegexLeaf(1, "ARROW_BODYA1", "(-+)"), //
+								new RegexLeaf(1, "ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
+								new RegexLeaf(1, "ARROW_BODYB1", "(-*)"), new RegexLeaf(1, "ARROW_DRESSING1", "(>>?|//?|\\\\\\\\?)")), //
 						new RegexConcat( //
-								new RegexLeaf("ARROW_DRESSING2", "(<<?|//?|\\\\\\\\?)"), //
-								new RegexLeaf("ARROW_BODYB2", "(-*)"), //
-								new RegexLeaf("ARROW_STYLE2", CommandArrow.getColorOrStylePattern()), //
-								new RegexLeaf("ARROW_BODYA2", "(-+)"))), //
-				new RegexLeaf(ARROW_SUPPCIRCLE1, "([ox][%s]+)?"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "ARROW_DRESSING2", "(<<?|//?|\\\\\\\\?)"), //
+								new RegexLeaf(1, "ARROW_BODYB2", "(-*)"), //
+								new RegexLeaf(1, "ARROW_STYLE2", CommandArrow.getColorOrStylePattern()), new RegexLeaf(1, "ARROW_BODYA2", "(-+)"))), //
+				new RegexLeaf(1, ARROW_SUPPCIRCLE1, "([ox][%s]+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("PARTICIPANT", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "PARTICIPANT", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
+				new RegexLeaf(1, "ACTIVATION", "(?:([+*!-]+)?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
+				new RegexLeaf(1, "LIFECOLOR", "(?:(#\\w+)?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("LABEL", "(.*)") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf(1, "LABEL", "(.*)") //
 						)), RegexLeaf.end());
 	}
 

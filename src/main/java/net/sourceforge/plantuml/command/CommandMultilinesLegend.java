@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -62,13 +63,15 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 				new RegexLeaf("legend"), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("VALIGN", "(top|bottom)") //
+								new RegexLeaf(1, "VALIGN", "(top|bottom)") //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("ALIGN", "(left|right|center)") //
+								new RegexLeaf(1, "ALIGN", "(left|right|center)") //
 						)), RegexLeaf.end());
 	}
 

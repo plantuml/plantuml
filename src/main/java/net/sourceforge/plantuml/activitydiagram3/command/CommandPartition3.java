@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -68,17 +69,17 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPartition3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(partition|package|rectangle|card|group)"), //
+				new RegexLeaf(1, "TYPE", "(partition|package|rectangle|card|group)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(//
 						new RegexConcat( //
-								color("BACK1").getRegex(), //
-								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("NAME", "([%g][^%g]+[%g]|.*?)"), //
+								PatternCacheStrategy.CACHE, //
+								color("BACK1").getRegex(), RegexLeaf.spaceOneOrMore())), //
+				new RegexLeaf(1, "NAME", "([%g][^%g]+[%g]|.*?)"), //
 				new RegexOptional(//
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								color("BACK2").getRegex())), //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore(), color("BACK2").getRegex())), //
 				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf("\\{?"), //
 				RegexLeaf.end());

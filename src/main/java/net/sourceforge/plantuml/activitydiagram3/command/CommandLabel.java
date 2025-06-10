@@ -55,7 +55,7 @@ public class CommandLabel extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandLabel.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("label"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "NAME", "([%pLN_.]+)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

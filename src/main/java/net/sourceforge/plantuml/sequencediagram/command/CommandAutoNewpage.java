@@ -55,7 +55,7 @@ public class CommandAutoNewpage extends SingleLineCommand2<SequenceDiagram> {
 		return RegexConcat.build(CommandAutoNewpage.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("autonewpage"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("VALUE", "(\\d+)"), RegexLeaf.end()); //
+				new RegexLeaf(1, "VALUE", "(\\d+)"), RegexLeaf.end()); //
 	}
 
 	@Override

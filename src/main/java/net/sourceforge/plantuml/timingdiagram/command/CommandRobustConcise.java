@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -64,17 +65,17 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandRobustConcise.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COMPACT", "(compact)"), //
-								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("TYPE", "(robust|concise)"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "COMPACT", "(compact)"), RegexLeaf.spaceOneOrMore())), //
+				new RegexLeaf(1, "TYPE", "(robust|concise)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 								StereotypePattern.optional("STEREOTYPE"), //
-								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+								new RegexLeaf("as"), RegexLeaf.spaceOneOrMore())), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(color().getRegex()), //

@@ -77,14 +77,14 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 				RegexLeaf.spaceOneOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 				StereotypePattern.optionalArchimate("STEREOTYPE"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\["), //
-				new RegexLeaf("DESC", "(.*)"), //
+				new RegexLeaf(1, "DESC", "(.*)"), //
 				RegexLeaf.end());
 	}
 

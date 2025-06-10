@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -78,34 +79,34 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateElementFull.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("SYMBOL", "(?:(" + ALL_TYPES + "|\\(\\))[%s]+)?"), //
+				new RegexLeaf(1, "SYMBOL", "(?:(" + ALL_TYPES + "|\\(\\))[%s]+)?"), //
 				color2().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
-						new RegexLeaf("CODE1", CODE_WITH_QUOTE), //
+						new RegexLeaf(1, "CODE1", CODE_WITH_QUOTE), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", DISPLAY), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY2", DISPLAY), //
 								StereotypePattern.optional("STEREOTYPE2"), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE2", CODE)), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "CODE2", CODE)), //
 						new RegexConcat(//
-								new RegexLeaf("CODE3", CODE), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "CODE3", CODE), //
 								StereotypePattern.optional("STEREOTYPE3"), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("DISPLAY3", DISPLAY)), //
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "DISPLAY3", DISPLAY)), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY4", DISPLAY_WITHOUT_QUOTE), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY4", DISPLAY_WITHOUT_QUOTE), //
 								StereotypePattern.optional("STEREOTYPE4"), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE4", CODE)) //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "CODE4", CODE)) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //

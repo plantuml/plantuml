@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -81,31 +82,32 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("CODE1", "([%pLN_.]+)"), //
-								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]")), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "CODE1", "([%pLN_.]+)"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "DISPLAY1", "[%g]([^%g]+)[%g]")), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]"), //
-								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE2", "([%pLN_.]+)")), //
-						new RegexLeaf("CODE3", "([%pLN_.]+)"), //
-						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY2", "[%g]([^%g]+)[%g]"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "CODE2", "([%pLN_.]+)")), //
+						new RegexLeaf(1, "CODE3", "([%pLN_.]+)"), //
+						new RegexLeaf(1, "CODE4", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")), //
+				new RegexOptional(new RegexLeaf(2, "LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("ADDFIELD", "(.*)") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf(1, "ADDFIELD", "(.*)") //
 						)), RegexLeaf.end());
 	}
 

@@ -57,7 +57,7 @@ public class CommandScaleMaxWidth extends SingleLineCommand2<AbstractPSystem> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("max"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("WIDTH", "([0-9.]+)"), //
+				new RegexLeaf(1, "WIDTH", "([0-9.]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("width"), RegexLeaf.end()); //
 	}

@@ -73,9 +73,9 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteOnArrowCommand.class.getName() + "multi", RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|bottom|top)"), //
 				StereotypePattern.optional("STEREO2"), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -86,9 +86,9 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(FactorySequenceNoteOnArrowCommand.class.getName() + "single", RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|bottom|top)"), //
 				StereotypePattern.optional("STEREO2"), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -96,7 +96,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	public Command<SequenceDiagram> createSingleLine() {

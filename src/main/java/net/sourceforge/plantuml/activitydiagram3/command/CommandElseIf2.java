@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -64,33 +65,34 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				ColorParser.exp4(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						new RegexLeaf("\\("), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf("INCOMING", "(.*?)"), //
-						new RegexLeaf("\\)"))), //
+								new RegexLeaf(1, "INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, "INCOMING", "(.*?)"), new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("else"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf(1, "TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("then"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexOptional(new RegexConcat( //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexOptional(new RegexConcat( //
+										PatternCacheStrategy.CACHE, //
 										new RegexLeaf("\\("), //
 										new RegexOptional(new RegexOr(//
 												new RegexLeaf("->"), //
-												new RegexLeaf("WHEN_COLOR",
-														CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-										new RegexLeaf("WHEN", "(.*?)"), //
-										new RegexLeaf("\\)"))) //
+												new RegexLeaf(1,
+														"WHEN_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+										new RegexLeaf(1, "WHEN", "(.*?)"), new RegexLeaf("\\)"))) //
 						)), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());

@@ -54,7 +54,7 @@ public class CommandFootbox extends SingleLineCommand2<GanttDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(hide|show)?"), //
+				new RegexLeaf(1, "TYPE", "(hide|show)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("footbox"), //
 				RegexLeaf.end());

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.StartUtils;
@@ -236,7 +237,7 @@ final public class UmlSource {
 		return true;
 	}
 
-	private static final Pattern2 TITLE = Pattern2.cmpile("^[%s]*title[%s]+(.+)$");
+	private static final Pattern2 TITLE = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^[%s]*title[%s]+(.+)$");
 
 	/**
 	 * Retrieve the title, if defined in the diagram source. Never return

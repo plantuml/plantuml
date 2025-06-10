@@ -40,6 +40,7 @@ import java.text.DecimalFormat;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -58,16 +59,18 @@ public class CommandAutonumber extends SingleLineCommand2<SequenceDiagram> {
 		return RegexConcat.build(CommandAutonumber.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("autonumber"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("START", "(\\d(?:(?:[^%pLN%s]+|\\d+)*\\d)?)?"), //
+				new RegexLeaf(1, "START", "(\\d(?:(?:[^%pLN%s]+|\\d+)*\\d)?)?"), //
 				new RegexOptional( //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("STEP", "(\\d+)") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "STEP", "(\\d+)") //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("FORMAT", "[%g]([^%g]+)[%g]") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "FORMAT", "[%g]([^%g]+)[%g]") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}

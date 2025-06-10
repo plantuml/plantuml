@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -67,10 +68,11 @@ public class CommandChangeStateByTime extends CommandChangeState {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("COMMENT", "(.*?)") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf(1, "COMMENT", "(.*?)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}

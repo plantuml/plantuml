@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -57,27 +58,28 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWLink.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("NAME1", "([\\w][.\\w]*)"), //
+				new RegexLeaf(1, "NAME1", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat(//
+						PatternCacheStrategy.CACHE, //
 						new RegexLeaf("\\("), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("X1", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						new RegexLeaf(2, "X1", "(-?\\d+(%|%[-+]\\d+)?)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf(","), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("Y1", "(-?\\d+(%|%[-+]\\d+)?)"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\)") //
+						new RegexLeaf(2, "Y1", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("\\)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(\\<?[-=]{1,2}\\>|\\<?[-=]{1,2})"), //
+				new RegexLeaf(1, "STYLE", "(\\<?[-=]{1,2}\\>|\\<?[-=]{1,2})"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME2", "([\\w][.\\w]*)"), //
+				new RegexLeaf(1, "NAME2", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat( //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("COLOR", "(#\\w+)?"))), //
+						PatternCacheStrategy.CACHE, //
+						RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "COLOR", "(#\\w+)?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
+				new RegexLeaf(1, "MESSAGE", "(?::[%s]*(.*))?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

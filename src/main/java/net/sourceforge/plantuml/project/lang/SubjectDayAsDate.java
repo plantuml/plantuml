@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -143,9 +144,10 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 	private IRegex toRegexE() {
 		return new RegexConcat( //
-				new RegexLeaf("ETYPE", "([dDtTeE])"), //
-				new RegexLeaf("EOPERATION", "([-+])"), //
-				new RegexLeaf("ECOUNT", "([\\d]+)") //
+				PatternCacheStrategy.CACHE, //
+				new RegexLeaf(1, "ETYPE", "([dDtTeE])"), //
+				new RegexLeaf(1, "EOPERATION", "([-+])")
+, new RegexLeaf(1, "ECOUNT", "([\\d]+)") //
 		);
 	}
 

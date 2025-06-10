@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -55,23 +56,25 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 		final DayPattern dayPattern1 = new DayPattern("1");
 		final DayPattern dayPattern2 = new DayPattern("2");
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				dayPattern1.toRegex(), //
 				Words.exactly(Words.TO), //
 				Words.zeroOrMore(Words.THE), //
-				RegexLeaf.spaceOneOrMore(), //
-				dayPattern2.toRegex() //
+				RegexLeaf.spaceOneOrMore()
+, dayPattern2.toRegex() //
 		);
 	}
 
 	private IRegex toRegexE(String suffix) {
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT1" + suffix, "([\\d]+)"), //
+				new RegexLeaf(1, "ECOUNT1" + suffix, "([\\d]+)"), //
 				Words.exactly(Words.TO), //
 				Words.zeroOrMore(Words.THE), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT2" + suffix, "([\\d]+)") //
+				new RegexLeaf("[dD]\\+")
+, new RegexLeaf(1, "ECOUNT2" + suffix, "([\\d]+)") //
 		);
 	}
 

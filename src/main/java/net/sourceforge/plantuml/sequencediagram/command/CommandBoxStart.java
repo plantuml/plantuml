@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -66,11 +67,11 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 				new RegexLeaf("box"), //
 				new RegexOptional(new RegexOr( //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("NAME1", "[%g]([^%g]+)[%g]")), //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "NAME1", "[%g]([^%g]+)[%g]")), //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("NAME2", "([^#]+)")))), //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "NAME2", "([^#]+)")))), //
 				StereotypePattern.optional("STEREO"), //
 				color().getRegex(), //
 				RegexLeaf.end());

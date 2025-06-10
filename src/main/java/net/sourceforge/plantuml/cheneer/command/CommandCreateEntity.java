@@ -47,10 +47,10 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
-import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -63,18 +63,19 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 
 	protected static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(entity|relationship)"), //
+				new RegexLeaf(1, "TYPE", "(entity|relationship)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( // Copied from CommandCreatePackageBlock
 						new RegexConcat( //
-								new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g]"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(<<.+>>)?"), //
+				new RegexLeaf(1, "STEREO", "(<<.+>>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -87,18 +88,18 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		LeafType type;
 		switch (arg.get("TYPE", 0)) {
-			case "entity":
-				type = LeafType.CHEN_ENTITY;
-				break;
-			case "relationship":
-				type = LeafType.CHEN_RELATIONSHIP;
-				break;
-			default:
-				throw new IllegalStateException();
+		case "entity":
+			type = LeafType.CHEN_ENTITY;
+			break;
+		case "relationship":
+			type = LeafType.CHEN_RELATIONSHIP;
+			break;
+		default:
+			throw new IllegalStateException();
 		}
 
 		final String idShort = arg.get("CODE", 0);

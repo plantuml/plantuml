@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -79,38 +80,39 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		return RegexConcat.build(CommandLinkActivity.class.getName(), RegexLeaf.start(), //
 				new RegexOptional(//
 						new RegexOr("FIRST", //
-								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
-								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
+								new RegexLeaf(2, "STAR", "(\\(\\*(top)?\\))"), //
+								new RegexLeaf(1, "CODE", "([%pLN][%pLN_.]*)"), //
+								new RegexLeaf(1, "BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf(2, "QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				ColorParser.exp2(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 
-				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
+				new RegexLeaf(1, "ARROW_BODY1", "([-.]+)"), //
+				new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
+				new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "ARROW_BODY2", "([-.]*)"), //
 				new RegexLeaf("\\>"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
+				new RegexOptional(new RegexLeaf(1, "BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr("FIRST2", //
-						new RegexLeaf("STAR2", "(\\(\\*(top|\\d+)?\\))"), //
-						new RegexLeaf("OPENBRACKET2", "(\\{)"), //
-						new RegexLeaf("CODE2", "([%pLN][%pLN_.]*)"), //
-						new RegexLeaf("BAR2", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-						new RegexLeaf("QUOTED2", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?"), //
-						new RegexLeaf("QUOTED_INVISIBLE2", "(\\w.*?)")), //
+						new RegexLeaf(2, "STAR2", "(\\(\\*(top|\\d+)?\\))"), //
+						new RegexLeaf(1, "OPENBRACKET2", "(\\{)"), //
+						new RegexLeaf(1, "CODE2", "([%pLN][%pLN_.]*)"), //
+						new RegexLeaf(1, "BAR2", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+						new RegexLeaf(2, "QUOTED2", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?"), //
+						new RegexLeaf(1, "QUOTED_INVISIBLE2", "(\\w.*?)")), //
 				StereotypePattern.optional("STEREOTYPE2"), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("in"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("PARTITION2", "([%g][^%g]+[%g]|\\S+)") //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "PARTITION2", "([%g][^%g]+[%g]|\\S+)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp3(), //

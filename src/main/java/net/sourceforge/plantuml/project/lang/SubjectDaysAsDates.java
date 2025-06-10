@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -63,43 +64,47 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 	private IRegex toRegexB() {
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR1", "BMONTH1", "BDAY1"), //
 				Words.exactly(Words.TO), //
-				RegexLeaf.spaceOneOrMore(), //
-				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR2", "BMONTH2", "BDAY2") //
+				RegexLeaf.spaceOneOrMore()
+, TimeResolution.toRegexB_YYYY_MM_DD("BYEAR2", "BMONTH2", "BDAY2") //
 		);
 	}
 
 	private IRegex toRegexE() {
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT1", "([\\d]+)"), //
+				new RegexLeaf(1, "ECOUNT1", "([\\d]+)"), //
 				Words.exactly(Words.TO), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT2", "([\\d]+)") //
+				new RegexLeaf("[dD]\\+")
+, new RegexLeaf(1, "ECOUNT2", "([\\d]+)") //
 		);
 	}
 
 	private IRegex andRegex() {
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR3", "BMONTH3", "BDAY3"), //
 				Words.exactly(Words.AND), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("COUNT_AND", "([\\d]+)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("days?") //
+				new RegexLeaf(1, "COUNT_AND", "([\\d]+)"), //
+				RegexLeaf.spaceOneOrMore()
+, new RegexLeaf("days?") //
 
 		);
 	}
 
 	private IRegex thenRegex() {
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				new RegexLeaf("then"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("COUNT_THEN", "([\\d]+)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("days?") //
+				new RegexLeaf(1, "COUNT_THEN", "([\\d]+)"), //
+				RegexLeaf.spaceOneOrMore()
+, new RegexLeaf("days?") //
 
 		);
 	}

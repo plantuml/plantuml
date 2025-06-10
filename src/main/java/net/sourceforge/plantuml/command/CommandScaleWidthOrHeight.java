@@ -56,9 +56,9 @@ public class CommandScaleWidthOrHeight extends SingleLineCommand2<AbstractPSyste
 		return RegexConcat.build(CommandScaleWidthOrHeight.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("scale"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("VALUE", "([0-9.]+)"), //
+				new RegexLeaf(1, "VALUE", "([0-9.]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("WIDTH", "(width|height)"), RegexLeaf.end()); //
+				new RegexLeaf(1, "WIDTH", "(width|height)"), RegexLeaf.end()); //
 	}
 
 	@Override

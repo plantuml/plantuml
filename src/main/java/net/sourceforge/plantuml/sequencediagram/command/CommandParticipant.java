@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -70,17 +71,18 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 	static IRegex getOrderRegex() {
 		return new RegexOptional( //
 				new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						new RegexLeaf("order"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("ORDER", "(-?\\d{1,7})") //
+						RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "ORDER", "(-?\\d{1,7})") //
 				));
 	}
 
 	static IRegex getRegexType() {
 		return new RegexOr(//
-				new RegexLeaf("TYPE", "(participant|actor|create|boundary|control|entity|queue|database|collections)"), //
-				new RegexLeaf("CREATE",
-						"create[%s](participant|actor|boundary|control|entity|queue|database|collections)"));
+				new RegexLeaf(1, "TYPE", "(participant|actor|create|boundary|control|entity|queue|database|collections)"), //
+				new RegexLeaf(1,
+						"CREATE", "create[%s](participant|actor|boundary|control|entity|queue|database|collections)"));
 	}
 
 	@Override

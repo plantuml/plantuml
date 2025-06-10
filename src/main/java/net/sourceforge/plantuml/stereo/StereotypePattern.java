@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.stereo;
 
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -44,21 +45,23 @@ public class StereotypePattern {
 
 	public static IRegex optional(String param) {
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(mandatory(param)), //
-				RegexLeaf.spaceZeroOrMore() //
+				new RegexOptional(mandatory(param))
+, RegexLeaf.spaceZeroOrMore() //
 		);
 	}
 
 	public static IRegex mandatory(String param) {
-		return new RegexLeaf(param, "(\\<\\<.+\\>\\>)");
+		return new RegexLeaf(1, param, "(\\<\\<.+\\>\\>)");
 	}
 
 	public static IRegex optionalArchimate(String param) {
 		return new RegexConcat( //
+				PatternCacheStrategy.CACHE, //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(param, "(\\<\\<[-\\w]+\\>\\>)")), //
-				RegexLeaf.spaceZeroOrMore() //
+				new RegexOptional(new RegexLeaf(1, param, "(\\<\\<[-\\w]+\\>\\>)"))
+, RegexLeaf.spaceZeroOrMore() //
 		);
 	}
 

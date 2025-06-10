@@ -54,7 +54,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	private final Lazy<IRegex> patternEnd;
 
 	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {
-		assert patternStart.getPattern().startsWith("^") && patternStart.getPattern().endsWith("$");
+		assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
 
 		this.strategy = strategy;
 		this.starting = patternStart;
@@ -65,7 +65,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	public abstract RegexConcat getPatternEnd2();
 
 	public String[] getDescription() {
-		return new String[] { "START: " + starting.getPattern(), "END: " + patternEnd.get().getPattern() };
+		return new String[] { "START: " + starting.getPatternAsString(), "END: " + patternEnd.get().getPatternAsString() };
 	}
 
 	final public CommandControl isValid(BlocLines lines) {

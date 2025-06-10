@@ -74,7 +74,7 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 				new RegexLeaf("="), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("[%q%g]?"), //
-				new RegexLeaf("PATH", "([^%q%g]*)"), //
+				new RegexLeaf(1, "PATH", "([^%q%g]*)"), //
 				new RegexLeaf("[%q%g]?"), //
 				new RegexLeaf("\\>"), RegexLeaf.end()); //
 	}

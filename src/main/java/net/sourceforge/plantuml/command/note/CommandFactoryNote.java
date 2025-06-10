@@ -70,9 +70,9 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				ColorParser.exp1(), //
 				RegexLeaf.end() //
@@ -84,14 +84,14 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("[%g]"), //
-				new RegexLeaf("DISPLAY", "([^%g]+)"), //
+				new RegexLeaf(1, "DISPLAY", "([^%g]+)"), //
 				new RegexLeaf("[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				ColorParser.exp1(), //
 				RegexLeaf.end() //

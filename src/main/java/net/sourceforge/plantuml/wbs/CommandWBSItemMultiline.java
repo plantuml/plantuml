@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -64,11 +65,11 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
+				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
+				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
+				new RegexLeaf(1, "SHAPE", "(_)?"), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("DATA", "(.*)"), //
+				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
 	}
 
@@ -79,19 +80,19 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 
 	static IRegex getRegexConcatOld() {
 		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
-				new RegexLeaf("DIRECTION", "([<>])?"), //
+				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
+				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
+				new RegexLeaf(1, "SHAPE", "(_)?"), //
+				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
+				new RegexLeaf(1, "LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
-		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(PatternCacheStrategy.CACHE, getPatternEnd()),
 				lines.getLast().getString());
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
 

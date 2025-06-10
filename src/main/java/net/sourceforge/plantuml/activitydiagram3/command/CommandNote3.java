@@ -67,17 +67,17 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNote3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(note|floating note)"), //
+				new RegexLeaf(1, "TYPE", "(note|floating note)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("POSITION", "(left|right)?"), //
+				new RegexLeaf(1, "POSITION", "(left|right)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), //
+				new RegexLeaf(1, "NOTE", "(.*)"), //
 				RegexLeaf.end());
 	}
 

@@ -39,12 +39,13 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class StartUtils {
 	// ::remove file when __HAXE__
 
-	public static final Pattern2 patternFilename = Pattern2.cmpile("^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
+	public static final Pattern2 patternFilename = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
 
 	public static final String PAUSE_PATTERN = "((?:\\W|\\<[^<>]*\\>)*)[@\\\\]unpause";
 	public static final String START_PATTERN = "((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
@@ -121,7 +122,7 @@ public class StartUtils {
 		return s2.equals("!exit");
 	}
 
-	private static final Pattern2 append = Pattern2.cmpile("^\\W*[@\\\\](append|a)\\b");
+	private static final Pattern2 append = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^\\W*[@\\\\](append|a)\\b");
 
 	public static StringLocated getPossibleAppend(StringLocated cs) {
 		final String s = cs.getString();

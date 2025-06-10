@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -56,14 +57,16 @@ public class CommandSplitEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandSplitEnd3.class.getName(), RegexLeaf.start(), //
 				new RegexOr( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("end"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("split") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("split") //
 						), //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("split"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("end") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("end") //
 						) //
 				), //
 				new RegexLeaf(";?"), //

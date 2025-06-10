@@ -55,7 +55,7 @@ public class CommandDeactivateShort extends SingleLineCommand2<SequenceDiagram> 
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandDeactivateShort.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "deactivate"), //
+				new RegexLeaf(0, "TYPE", "deactivate"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

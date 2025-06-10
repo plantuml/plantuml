@@ -72,8 +72,8 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 
 	protected static RegexLeaf getStatePattern(String name) {
-		return new RegexLeaf(name,
-				"([%pLN_.:]+|[%pLN_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[%pLN_.:]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
+		return new RegexLeaf(3,
+				name, "([%pLN_.:]+|[%pLN_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[%pLN_.:]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
 	}
 
 	@Override

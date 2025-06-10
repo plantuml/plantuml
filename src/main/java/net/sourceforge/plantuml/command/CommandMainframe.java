@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -57,9 +58,9 @@ public class CommandMainframe extends SingleLineCommand2<TitledDiagram> {
 		return RegexConcat.build(CommandMainframe.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("mainframe"), //
 				new RegexOr( //
-						new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(":"), RegexLeaf.spaceZeroOrMore()), //
+						new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.spaceZeroOrMore(), new RegexLeaf(":"), RegexLeaf.spaceZeroOrMore()), //
 						RegexLeaf.spaceOneOrMore()), //
-				new RegexLeaf("LABEL", "(.*[%pLN_.].*)"), RegexLeaf.end()); //
+				new RegexLeaf(1, "LABEL", "(.*[%pLN_.].*)"), RegexLeaf.end()); //
 	}
 
 	@Override

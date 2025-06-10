@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -55,6 +56,7 @@ public class SentenceAnd<D extends Diagram> implements Sentence<D> {
 
 	public IRegex toRegex() {
 		return new RegexConcat(//
+				PatternCacheStrategy.NO_CACHE, //
 				RegexLeaf.start(), //
 				sentence1.getSubject().toRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -66,8 +68,7 @@ public class SentenceAnd<D extends Diagram> implements Sentence<D> {
 				sentence2.getVerbRegex(), //
 				sentence2.getAdverbialOrPropositon(), //
 				RegexLeaf.spaceOneOrMore(), //
-				sentence2.getComplement().toRegex("2"), //
-				OPTIONAL_FINAL_DOT);
+				sentence2.getComplement().toRegex("2"), OPTIONAL_FINAL_DOT);
 	}
 
 	public final CommandExecutionResult execute(D project, RegexResult arg) {

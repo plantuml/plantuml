@@ -55,7 +55,7 @@ public class CommandFootboxOld extends SingleLineCommand2<SequenceDiagram> {
 		return RegexConcat.build(CommandFootboxOld.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("footbox"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TYPE", "(on|off)?"), //
+				new RegexLeaf(1, "TYPE", "(on|off)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end()); //
 	}

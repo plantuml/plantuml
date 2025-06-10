@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -51,7 +52,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public CommandCreateBlock() {
 		super(getRegexConcat());
@@ -63,16 +64,18 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g]"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), RegexLeaf.end()); //
+				new RegexLeaf(1, "CODE", "([%pLN_.]+)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);
 		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
@@ -82,7 +85,8 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already exists " + quark.getName());
 
-		final Entity ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.BLOCK, null);
+		final Entity ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.BLOCK,
+				null);
 
 		return CommandExecutionResult.ok();
 	}

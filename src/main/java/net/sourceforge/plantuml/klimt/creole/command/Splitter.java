@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class Splitter {
 
@@ -120,7 +121,7 @@ public class Splitter {
 		sb.append(svgAttributePattern);
 
 		htmlTag = sb.toString();
-		tagOrText = Pattern2.cmpile(htmlTag + "|.+?(?=" + htmlTag + ")|.+$");
+		tagOrText = Pattern2.cmpile(PatternCacheStrategy.CACHE, htmlTag + "|.+?(?=" + htmlTag + ")|.+$");
 	}
 
 	private final List<String> splitted = new ArrayList<>();

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -62,13 +63,14 @@ public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceOneOrMore(), //
 				ColorParser.exp7(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("SWIMLANE", "([^|]+)"), //
+				new RegexLeaf(1, "SWIMLANE", "([^|]+)"), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("LABEL", "([^|]+)") //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "LABEL", "([^|]+)") //
 						)), //
 				RegexLeaf.end());
 	}

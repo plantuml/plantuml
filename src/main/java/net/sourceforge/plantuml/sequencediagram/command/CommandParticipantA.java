@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -55,12 +56,13 @@ public class CommandParticipantA extends CommandParticipant {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore() //
+								new RegexLeaf("as")
+, RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREO"), //
 				getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

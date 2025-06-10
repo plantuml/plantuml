@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -67,30 +68,30 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandArchimate.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("SYMBOL", "archimate"), //
+				new RegexLeaf(0, "SYMBOL", "archimate"), //
 				RegexLeaf.spaceOneOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
-						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexLeaf(1, "CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY2", CommandCreateElementFull.DISPLAY), //
 								StereotypePattern.optionalArchimate("STEREOTYPE2"), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "CODE2", CommandCreateElementFull.CODE)), //
 						new RegexConcat(//
-								new RegexLeaf("CODE3", CommandCreateElementFull.CODE), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "CODE3", CommandCreateElementFull.CODE), //
 								StereotypePattern.optionalArchimate("STEREOTYPE3"), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("DISPLAY3", CommandCreateElementFull.DISPLAY)), //
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "DISPLAY3", CommandCreateElementFull.DISPLAY)), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY4", CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY4", CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
 								StereotypePattern.optionalArchimate("STEREOTYPE4"), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE4", CommandCreateElementFull.CODE)) //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "CODE4", CommandCreateElementFull.CODE)) //
 				), //
 				StereotypePattern.optionalArchimate("STEREOTYPE"), //
 				RegexLeaf.end());

@@ -42,6 +42,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class Stereostyles {
 	// ::remove folder when __HAXE__
@@ -57,7 +58,7 @@ public class Stereostyles {
 		return names.isEmpty();
 	}
 
-	private static final Pattern2 p = Pattern2.cmpile("\\<{3}(.*?)\\>{3}");
+	private static final Pattern2 p = Pattern2.cmpile(PatternCacheStrategy.CACHE, "\\<{3}(.*?)\\>{3}");
 
 	public static Stereostyles build(String label) {
 		final Stereostyles result = new Stereostyles();

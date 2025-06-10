@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
@@ -130,7 +131,7 @@ public class WBSDiagram extends UmlDiagram {
 		return new Fork(getSkinParam(), root);
 	}
 
-	public final static Pattern2 patternStereotype = Pattern2.cmpile("^\\s*(.*?)\\s*(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+	public final static Pattern2 patternStereotype = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^\\s*(.*?)\\s*(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {

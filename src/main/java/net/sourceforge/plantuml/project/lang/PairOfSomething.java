@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -68,7 +69,7 @@ public class PairOfSomething<D extends Diagram> implements Something<D> {
 	public IRegex toRegex(String suffix) {
 		final IRegex pattern1 = complement1.toRegex("A" + suffix);
 		final IRegex pattern2 = complement2.toRegex("B" + suffix);
-		return new RegexConcat(pattern1, new RegexLeaf("[%s]+"), pattern2);
+		return new RegexConcat(PatternCacheStrategy.CACHE, pattern1, new RegexLeaf("[%s]+"), pattern2);
 	}
 
 }

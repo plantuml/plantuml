@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -80,23 +81,24 @@ public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("CODE1", "([%pLN_.]+)"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "CODE1", "([%pLN_.]+)"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]")), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "DISPLAY1", "[%g]([^%g]+)[%g]")), //
 						new RegexConcat(//
+								PatternCacheStrategy.CACHE, //
 								new RegexOptional(new RegexConcat( //
-										new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]"), RegexLeaf.spaceOneOrMore(), //
-										new RegexLeaf("as"), RegexLeaf.spaceOneOrMore() //
-								)), //
-								new RegexLeaf("CODE2", "([%pLN_.]+)"))), //
+										PatternCacheStrategy.CACHE, new RegexLeaf(1, "DISPLAY2", "[%g]([^%g]+)[%g]"), //
+										RegexLeaf.spaceOneOrMore(), new RegexLeaf("as")
+, RegexLeaf.spaceOneOrMore() //
+								)), new RegexLeaf(1, "CODE2", "([%pLN_.]+)"))), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")),
+				new RegexOptional(new RegexLeaf(2, "LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")),
 				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)"), RegexLeaf.end());
 	}
 

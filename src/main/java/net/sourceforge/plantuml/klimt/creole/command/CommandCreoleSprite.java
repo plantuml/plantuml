@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class CommandCreoleSprite implements Command {
@@ -49,7 +50,7 @@ public class CommandCreoleSprite implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.spritePattern + ")");
+	private static final Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + Splitter.spritePattern + ")");
 
 	private CommandCreoleSprite() {
 	}

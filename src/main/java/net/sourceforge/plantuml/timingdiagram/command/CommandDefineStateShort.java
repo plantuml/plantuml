@@ -56,12 +56,12 @@ public class CommandDefineStateShort extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandDefineStateShort.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PLAYER", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "PLAYER", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("has"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("STATE", "([-%pLN_.@]+)"), //
-				new RegexLeaf("STATES", "((,([-%pLN_.@]+))*)"), //
+				new RegexLeaf(1, "STATE", "([-%pLN_.@]+)"), //
+				new RegexLeaf(3, "STATES", "((,([-%pLN_.@]+))*)"), //
 				RegexLeaf.end());
 	}
 

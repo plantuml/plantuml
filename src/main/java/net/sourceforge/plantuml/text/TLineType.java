@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.text;
 
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -51,36 +52,36 @@ public enum TLineType {
 			"[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*");
 
 	private static RegexConcat simpleKeyword(String word) {
-		return new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(word),
-				new RegexLeaf("\\b"));
+		return new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
+				new RegexLeaf(word), new RegexLeaf("\\b"));
 	}
 
-	private static final IRegex PATTERN_LEGACY_DEFINE = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
-			new RegexLeaf("!define"), RegexLeaf.spaceOneOrMore(), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
-			new RegexLeaf("\\("));
-
-	private static final IRegex PATTERN_LEGACY_DEFINELONG = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!definelong"), RegexLeaf.spaceOneOrMore(),
-			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
-
-	private static final IRegex PATTERN_AFFECTATION_DEFINE = new RegexConcat(RegexLeaf.start(),
+	private static final IRegex PATTERN_LEGACY_DEFINE = new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.start(),
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!define"), RegexLeaf.spaceOneOrMore(),
-			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\("));
 
-	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
-			new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("(local|global)?"),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\$?"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\??="));
+	private static final IRegex PATTERN_LEGACY_DEFINELONG = new RegexConcat(PatternCacheStrategy.CACHE,
+			RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!definelong"),
+			RegexLeaf.spaceOneOrMore(), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
 
-	private static final IRegex PATTERN_COMMENT_SIMPLE1 = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("'"));
+	private static final IRegex PATTERN_AFFECTATION_DEFINE = new RegexConcat(PatternCacheStrategy.CACHE,
+			RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!define"),
+			RegexLeaf.spaceOneOrMore(), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
 
-	private static final IRegex PATTERN_COMMENT_SIMPLE2 = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("/'"), new RegexLeaf(".*"), new RegexLeaf("'/"),
-			RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(),
+			new RegexLeaf(1, "(local|global)?"), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\$?"),
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\??="));
 
-	private static final IRegex PATTERN_COMMENT_LONG_START = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("/'"));
+	private static final IRegex PATTERN_COMMENT_SIMPLE1 = new RegexConcat(PatternCacheStrategy.CACHE,
+			RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("'"));
+
+	private static final IRegex PATTERN_COMMENT_SIMPLE2 = new RegexConcat(PatternCacheStrategy.CACHE,
+			RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("/'"), new RegexLeaf(".*"),
+			new RegexLeaf("'/"), RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+
+	private static final IRegex PATTERN_COMMENT_LONG_START = new RegexConcat(PatternCacheStrategy.CACHE,
+			RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("/'"));
 
 	private static final IRegex PATTERN_IFDEF = simpleKeyword("!ifdef");
 
@@ -92,15 +93,15 @@ public enum TLineType {
 
 	private static final IRegex PATTERN_IF = simpleKeyword("!if");
 
-	private static final IRegex PATTERN_DECLARE_RETURN_FUNCTION = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf("(unquoted\\s|final\\s)*"),
-			new RegexLeaf("function"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("\\$?"),
-			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
+	private static final IRegex PATTERN_DECLARE_RETURN_FUNCTION = new RegexConcat(PatternCacheStrategy.CACHE,
+			RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"),
+			new RegexLeaf(1, "(unquoted\\s|final\\s)*"), new RegexLeaf("function"), RegexLeaf.spaceOneOrMore(),
+			new RegexLeaf("\\$?"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
-	private static final IRegex PATTERN_DECLARE_PROCEDURE = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf("(unquoted\\s|final\\s)*"),
-			new RegexLeaf("procedure"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("\\$?"),
-			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
+	private static final IRegex PATTERN_DECLARE_PROCEDURE = new RegexConcat(PatternCacheStrategy.CACHE,
+			RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"),
+			new RegexLeaf(1, "(unquoted\\s|final\\s)*"), new RegexLeaf("procedure"), RegexLeaf.spaceOneOrMore(),
+			new RegexLeaf("\\$?"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
 	private static final IRegex PATTERN_ELSE = simpleKeyword("!else");
 
@@ -116,19 +117,19 @@ public enum TLineType {
 
 	private static final IRegex PATTERN_ENDFOREACH = simpleKeyword("!endfor");
 
-	private static final IRegex PATTERN_END_FUNCTION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
-			new RegexLeaf("!end"), RegexLeaf.spaceZeroOrMore(),
-			new RegexOr(new RegexLeaf("function"), new RegexLeaf("definelong"), new RegexLeaf("procedure")),
-			new RegexLeaf("\\b"));
+	private static final IRegex PATTERN_END_FUNCTION = new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!end"),
+			RegexLeaf.spaceZeroOrMore(),
+			new RegexOr(new RegexLeaf("function"), new RegexLeaf("definelong"), new RegexLeaf("procedure")), new RegexLeaf("\\b"));
 
 	private static final IRegex PATTERN_RETURN = simpleKeyword("!return");
 
 	private static final IRegex PATTERN_THEME = simpleKeyword("!theme");
 
-	private static final IRegex PATTERN_INCLUDE = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
-			new RegexLeaf("!include"), RegexLeaf.spaceZeroOrMore(),
-			new RegexOptional(new RegexOr(new RegexLeaf("url"), new RegexLeaf("_many"), new RegexLeaf("_once"))),
-			new RegexLeaf("\\b"));
+	private static final IRegex PATTERN_INCLUDE = new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!include"),
+			RegexLeaf.spaceZeroOrMore(),
+			new RegexOptional(new RegexOr(new RegexLeaf("url"), new RegexLeaf("_many"), new RegexLeaf("_once"))), new RegexLeaf("\\b"));
 
 	private static final IRegex PATTERN_INCLUDE_SPRITES = simpleKeyword("!include_sprites");
 

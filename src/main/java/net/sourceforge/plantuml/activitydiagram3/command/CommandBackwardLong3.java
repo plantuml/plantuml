@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -59,9 +60,9 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 	@Override
 	public RegexConcat getPatternEnd2() {
 		return new RegexConcat(//
-				new RegexLeaf("TEXT", "(.*)"), //
-				new RegexLeaf("END", CommandActivity3.endingGroup()), //
-				RegexLeaf.end());
+				PatternCacheStrategy.CACHE, //
+				new RegexLeaf(1, "TEXT", "(.*)"), //
+				new RegexLeaf(2, "END", CommandActivity3.endingGroup()), RegexLeaf.end());
 	}
 
 //
@@ -77,7 +78,7 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DATA", "(.*)"), //
+				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
 	}
 

@@ -71,7 +71,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntityObjectMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "object"), //
+				new RegexLeaf(0, "TYPE", "object"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCode(), //
 				StereotypePattern.optional("STEREO"), //

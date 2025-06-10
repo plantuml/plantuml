@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -61,12 +62,12 @@ public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("else"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						new RegexLeaf("\\("), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("WHEN_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf("WHEN", "(.*?)"), //
-						new RegexLeaf("\\)"))), //
+								new RegexLeaf(1, "WHEN_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, "WHEN", "(.*?)"), new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());

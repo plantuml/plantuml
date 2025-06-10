@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.creole.StripeStyleType;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.utils.CharHidder;
 
@@ -62,14 +63,14 @@ public class CreoleStripeSimpleParser {
 	private final FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
 
-	static private final Pattern2 SECTION_TITLE_PATTERN = Pattern2.cmpile("^==([^=]*)==$");
-	static private final Pattern2 SECTION_SEPARATOR_PATTERN = Pattern2.cmpile("^===*==$");
-	static private final Pattern2 DOUBLE_DOT_DELIMITED_LINE = Pattern2.cmpile("^\\.\\.([^\\.]*)\\.\\.$");
-	static private final Pattern2 ASTERISK_PREFIXED_LINE_PATTERN = Pattern2.cmpile("^(\\*+)([^*]+(?:[^*]|\\*\\*[^*]+\\*\\*)*)$");
-	static private final Pattern2 ASTERISK_HEADER_LINE_PATTERN = Pattern2.cmpile("^(\\*+)([%s].+)$");
-	static private final Pattern2 HASH_HEADING_PATTERN = Pattern2.cmpile("^(#+)(.+)$");
-	static private final Pattern2 EQUALS_HEADING_PATTERN = Pattern2.cmpile("^(=+)(.+)$");
-	static private final Pattern2 SECTION_HEADER_PATTERN = Pattern2.cmpile("^--([^-]*)--$");
+	static private final Pattern2 SECTION_TITLE_PATTERN = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^==([^=]*)==$");
+	static private final Pattern2 SECTION_SEPARATOR_PATTERN = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^===*==$");
+	static private final Pattern2 DOUBLE_DOT_DELIMITED_LINE = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^\\.\\.([^\\.]*)\\.\\.$");
+	static private final Pattern2 ASTERISK_PREFIXED_LINE_PATTERN = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(\\*+)([^*]+(?:[^*]|\\*\\*[^*]+\\*\\*)*)$");
+	static private final Pattern2 ASTERISK_HEADER_LINE_PATTERN = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(\\*+)([%s].+)$");
+	static private final Pattern2 HASH_HEADING_PATTERN = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(#+)(.+)$");
+	static private final Pattern2 EQUALS_HEADING_PATTERN = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(=+)(.+)$");
+	static private final Pattern2 SECTION_HEADER_PATTERN = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^--([^-]*)--$");
 
 	public CreoleStripeSimpleParser(String line, CreoleContext creoleContext, FontConfiguration fontConfiguration,
 			ISkinSimple skinParam, CreoleMode mode) {

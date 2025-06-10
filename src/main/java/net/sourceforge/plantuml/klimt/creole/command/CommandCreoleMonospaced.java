@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class CommandCreoleMonospaced implements Command {
     // ::remove folder when __HAXE__
@@ -56,7 +57,7 @@ public class CommandCreoleMonospaced implements Command {
 
 	private CommandCreoleMonospaced(String p) {
 		final String p1 = p;
-		this.pattern = Pattern2.cmpile(p1);
+		this.pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, p1);
 	}
 
 	public int matchingSize(String line) {

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -49,7 +50,7 @@ public class ComplementUrl implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
+				PatternCacheStrategy.CACHE, new RegexLeaf(12, "COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
 	}
 
 	public Failable<Url> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

@@ -44,6 +44,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.style.AutomaticCounter;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -58,9 +59,9 @@ import net.sourceforge.plantuml.utils.BlocLines;
 public class StyleParserLegacy {
 
 	private final static String KEYNAMES = "[-.\\w(), ]+?";
-	private final static Pattern2 keyName = Pattern2.cmpile("^[:]?(" + KEYNAMES + ")([%s]+\\*)?[%s]*\\{$");
-	private final static Pattern2 propertyAndValue = Pattern2.cmpile("^([\\w]+):?[%s]+(.*?);?$");
-	private final static Pattern2 closeBracket = Pattern2.cmpile("^\\}$");
+	private final static Pattern2 keyName = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^[:]?(" + KEYNAMES + ")([%s]+\\*)?[%s]*\\{$");
+	private final static Pattern2 propertyAndValue = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^([\\w]+):?[%s]+(.*?);?$");
+	private final static Pattern2 closeBracket = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^\\}$");
 
 	public static Collection<Style> parse(BlocLines lines, AutomaticCounter counter) throws StyleParsingException {
 

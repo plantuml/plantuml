@@ -59,7 +59,7 @@ public class CommandUseDateFormat extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("format"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("FORMAT", "[%g]([^%g]+)[%g]"), //
+				new RegexLeaf(1, "FORMAT", "[%g]([^%g]+)[%g]"), //
 				RegexLeaf.end());
 	}
 

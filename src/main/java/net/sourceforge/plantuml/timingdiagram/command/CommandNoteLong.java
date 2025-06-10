@@ -96,11 +96,11 @@ public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(top|bottom)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("of"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
+				new RegexLeaf(1, "CODE", CommandTimeMessage.PLAYER_CODE), //
 				RegexLeaf.spaceZeroOrMore(), //
 				StereotypePattern.optional("STEREO"), //
 				RegexLeaf.spaceZeroOrMore(), //

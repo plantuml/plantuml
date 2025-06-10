@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -50,7 +51,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
 		final String p = patternStart;
 
-		this.starting = Pattern2.cmpile(p);
+		this.starting = Pattern2.cmpile(PatternCacheStrategy.CACHE, p);
 	}
 
 	protected boolean isCommandForbidden() {

@@ -108,8 +108,8 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 				color().getRegex(), //
 				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("LABEL", "(.*?)"), //
-				new RegexLeaf("STYLE", endingGroupShort()), //
+				new RegexLeaf(1, "LABEL", "(.*?)"), //
+				new RegexLeaf(2, "STYLE", endingGroupShort()), //
 				RegexLeaf.end());
 	}
 

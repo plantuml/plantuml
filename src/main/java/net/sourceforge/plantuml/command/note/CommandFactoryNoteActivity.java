@@ -72,7 +72,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + "multi", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
@@ -82,13 +82,13 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + "single", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	public Command<ActivityDiagram> createMultiLine(boolean withBracket) {

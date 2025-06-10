@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class CommandCreoleEmoji implements Command {
 
@@ -47,7 +48,7 @@ public class CommandCreoleEmoji implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.emojiPattern + ")");
+	private static final Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + Splitter.emojiPattern + ")");
 
 	private CommandCreoleEmoji() {
 	}

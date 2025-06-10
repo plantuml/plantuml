@@ -50,18 +50,18 @@ public class RegexOr extends RegexComposed implements IRegex {
 	}
 
 	public RegexOr(String name, IRegex... partials) {
-		super(partials);
+		super(PatternCacheStrategy.CACHE, partials);
 		this.name = name;
 	}
 
 	@Override
-	protected String getFullSlow() {
+	public String getPatternAsString() {
 		final StringBuilder sb = new StringBuilder("(");
 		if (name == null) {
 			sb.append("?:");
 		}
 		for (IRegex p : partials()) {
-			sb.append(p.getPattern());
+			sb.append(p.getPatternAsString());
 			sb.append("|");
 		}
 		sb.setLength(sb.length() - 1);

@@ -68,9 +68,9 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 		return RegexConcat.build(CommandArrowLong3.class.getName(), RegexLeaf.start(), //
 				new RegexOr(//
 						new RegexLeaf("->"), //
-						new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+						new RegexLeaf(1, "COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LABEL", "(.*)"), //
+				new RegexLeaf(1, "LABEL", "(.*)"), //
 				RegexLeaf.end());
 	}
 

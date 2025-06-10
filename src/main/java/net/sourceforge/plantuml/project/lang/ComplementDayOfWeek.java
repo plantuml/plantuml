@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -47,7 +48,7 @@ public class ComplementDayOfWeek implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(" + DayOfWeek.getRegexString() + ")")); //
+				PatternCacheStrategy.CACHE, new RegexLeaf(1, "COMPLEMENT" + suffix, "(" + DayOfWeek.getRegexString() + ")")); //
 	}
 
 	public Failable<DayOfWeek> getMe(GanttDiagram project, RegexResult arg, String suffix) {

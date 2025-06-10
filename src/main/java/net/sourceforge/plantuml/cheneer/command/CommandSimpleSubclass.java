@@ -63,13 +63,13 @@ public class CommandSimpleSubclass extends SingleLineCommand2<ChenEerDiagram> {
 
 	protected static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("NAME1", "([%pLN_.-]+)"), //
+				new RegexLeaf(1, "NAME1", "([%pLN_.-]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("PARTICIPATION", "([-=])"), //
-				new RegexLeaf("DIRECTION", "([<>])"), //
-				new RegexLeaf("PARTICIPATION2", "([-=])"), //
+				new RegexLeaf(1, "PARTICIPATION", "([-=])"), //
+				new RegexLeaf(1, "DIRECTION", "([<>])"), //
+				new RegexLeaf(1, "PARTICIPATION2", "([-=])"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME2", "([%pLN_.-]+)"), //
+				new RegexLeaf(1, "NAME2", "([%pLN_.-]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.end());

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -59,15 +60,16 @@ public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandActivate.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(activate|deactivate|destroy|create)"), //
+				new RegexLeaf(1, "TYPE", "(activate|deactivate|destroy|create)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("WHO", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "WHO", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("BACK", "(#\\w+)?"), //
+				new RegexLeaf(1, "BACK", "(#\\w+)?"), //
 				new RegexOptional( //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("LINE", "(#\\w+)") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "LINE", "(#\\w+)") //
 						)), RegexLeaf.end());
 	}
 

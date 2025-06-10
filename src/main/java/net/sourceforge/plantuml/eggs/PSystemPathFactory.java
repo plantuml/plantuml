@@ -41,12 +41,13 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class PSystemPathFactory extends PSystemSingleLineFactory {
     // ::remove folder when __HAXE__
 	// ::remove file when __CORE__
 
-	final private static Pattern2 p = Pattern2.cmpile("^path[%s]+([0-9A-Za-z]+)$");
+	final private static Pattern2 p = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^path[%s]+([0-9A-Za-z]+)$");
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {

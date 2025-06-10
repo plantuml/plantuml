@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -62,13 +63,14 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandGrouping.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("TYPE", "(opt|alt|loop|par|par2|break|critical|else|end|also|group)"), //
-				new RegexLeaf("COLORS", "((?<!else)(?<!also)(?<!end)#\\w+)?(?:[%s]+(#\\w+))?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "TYPE", "(opt|alt|loop|par|par2|break|critical|else|end|also|group)"), //
+				new RegexLeaf(2, "COLORS", "((?<!else)(?<!also)(?<!end)#\\w+)?(?:[%s]+(#\\w+))?"), //
 				new RegexOptional(//
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("COMMENT", "(.*?)") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "COMMENT", "(.*?)") //
 						)), RegexLeaf.end());
 	}
 

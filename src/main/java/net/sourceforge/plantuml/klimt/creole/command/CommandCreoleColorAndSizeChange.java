@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class CommandCreoleColorAndSizeChange implements Command {
 
@@ -55,9 +56,9 @@ public class CommandCreoleColorAndSizeChange implements Command {
 
 	public static final String fontPattern = "\\<font(?:[%s]+size[%s]*=[%s]*[%g]?(\\d+)[%g]?|[%s]+color[%s]*=[%s]*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\>";
 
-	private static final Pattern2 pattern = Pattern2.cmpile("^(" + fontPattern + "(.*?)\\</font\\>)");
+	private static final Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + fontPattern + "(.*?)\\</font\\>)");
 
-	private static final Pattern2 patternEol = Pattern2.cmpile("^(" + fontPattern + "(.*))$");
+	private static final Pattern2 patternEol = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + fontPattern + "(.*))$");
 
 	public static Command create() {
 		return new CommandCreoleColorAndSizeChange(pattern);

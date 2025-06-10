@@ -45,7 +45,7 @@ public interface Sentence<D extends Diagram> {
 
 	public final RegexLeaf OPTIONAL_FINAL_DOT = new RegexLeaf("\\s*[.]?\\s*$");
 
-	public final RegexLeaf SENTENCE_SEPARATOR = new RegexLeaf("\\s*(,|\\sand\\s)\\s*");
+	public final RegexLeaf SENTENCE_SEPARATOR = new RegexLeaf(1, "\\s*(,|\\sand\\s)\\s*");
 
 	public IRegex toRegex();
 

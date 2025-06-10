@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -56,21 +57,21 @@ public class CommandComponent extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandComponent.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf(1, "INDENT", "([\\s\\t]*)"), //
 				new RegexLeaf("\\*"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME", "([\\w]+)"), //
+				new RegexLeaf(1, "NAME", "([\\w]+)"), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("\\["), //
-						new RegexLeaf("WIDTH", "([\\d]+)"), //
+						new RegexLeaf(1, "WIDTH", "([\\d]+)"), //
 						new RegexLeaf("[x*]"), //
-						new RegexLeaf("HEIGHT", "([\\d]+)"), //
-						new RegexLeaf("\\]")) //
+						new RegexLeaf(1, "HEIGHT", "([\\d]+)"), new RegexLeaf("\\]")) //
 				), //
 				new RegexOptional(new RegexConcat( //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("COLOR", "(#\\w+)?"))), //
+						PatternCacheStrategy.CACHE, //
+						RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "COLOR", "(#\\w+)?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -86,14 +87,14 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandArrow.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("ANCHOR", ANCHOR), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(2, "ANCHOR", ANCHOR), //
 				new RegexOr("PART1", //
-						new RegexLeaf("PART1CODE", "([%pLN_.@]+)"), //
-						new RegexLeaf("PART1LONG", "[%g]([^%g]+)[%g]"), //
-						new RegexLeaf("PART1LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)"), //
-						new RegexLeaf("PART1CODELONG", "([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
-				new RegexLeaf("PART1ANCHOR", ANCHOR), //
+						new RegexLeaf(1, "PART1CODE", "([%pLN_.@]+)"), //
+						new RegexLeaf(1, "PART1LONG", "[%g]([^%g]+)[%g]"), //
+						new RegexLeaf(2, "PART1LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)"), //
+						new RegexLeaf(2, "PART1CODELONG", "([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+				new RegexLeaf(2, "PART1ANCHOR", ANCHOR), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexOr("ARROW_DRESSING1", //
 						new RegexLeaf("[%s][ox]"), //
@@ -101,13 +102,13 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 						new RegexLeaf("(?:[%s][ox])?//?"), //
 						new RegexLeaf("(?:[%s][ox])?\\\\\\\\?"))), //
 				new RegexOr(new RegexConcat( //
-						new RegexLeaf("ARROW_BODYA1", "(-+)"), //
-						new RegexLeaf("ARROW_STYLE1", getColorOrStylePattern()), //
-						new RegexLeaf("ARROW_BODYB1", "(-*)")), //
+						PatternCacheStrategy.CACHE, //
+						new RegexLeaf(1, "ARROW_BODYA1", "(-+)"), //
+						new RegexLeaf(1, "ARROW_STYLE1", getColorOrStylePattern()), new RegexLeaf(1, "ARROW_BODYB1", "(-*)")), //
 						new RegexConcat( //
-								new RegexLeaf("ARROW_BODYA2", "(-*)"), //
-								new RegexLeaf("ARROW_STYLE2", getColorOrStylePattern()), //
-								new RegexLeaf("ARROW_BODYB2", "(-+)"))), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "ARROW_BODYA2", "(-*)"), //
+								new RegexLeaf(1, "ARROW_STYLE2", getColorOrStylePattern()), new RegexLeaf(1, "ARROW_BODYB2", "(-+)"))), //
 				new RegexOptional(new RegexOr("ARROW_DRESSING2", //
 						new RegexLeaf("_?>>?(?:[ox][%s]|\\(\\d+\\))?"), //
 						new RegexLeaf("//?(?:[ox][%s])?"), //
@@ -115,20 +116,20 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 						new RegexLeaf("[ox][%s]"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr("PART2", //
-						new RegexLeaf("PART2CODE", "([%pLN_.@]+)"), //
-						new RegexLeaf("PART2LONG", "[%g]([^%g]+)[%g]"), //
-						new RegexLeaf("PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)"), //
-						new RegexLeaf("PART2CODELONG", "([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
-				new RegexLeaf("MULTICAST", "((?:\\s&\\s[%pLN_.@]+)*)"), //
-				new RegexLeaf("PART2ANCHOR", ANCHOR), //
+						new RegexLeaf(1, "PART2CODE", "([%pLN_.@]+)"), //
+						new RegexLeaf(1, "PART2LONG", "[%g]([^%g]+)[%g]"), //
+						new RegexLeaf(2, "PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)"), //
+						new RegexLeaf(2, "PART2CODELONG", "([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+				new RegexLeaf(1, "MULTICAST", "((?:\\s&\\s[%pLN_.@]+)*)"), //
+				new RegexLeaf(2, "PART2ANCHOR", ANCHOR), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ACTIVATION", "(?:(\\+\\+|\\*\\*|!!|--|--\\+\\+|\\+\\+--)?)"), //
+				new RegexLeaf(1, "ACTIVATION", "(?:(\\+\\+|\\*\\*|!!|--|--\\+\\+|\\+\\+--)?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
+				new RegexLeaf(1, "LIFECOLOR", "(?:(#\\w+)?)"), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
+				new RegexLeaf(1, "MESSAGE", "(?::[%s]*(.*))?"), //
 				RegexLeaf.end()).protectSize(2000);
 	}
 

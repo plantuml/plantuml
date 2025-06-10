@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -57,18 +58,18 @@ public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandHeader.class.getName(), RegexLeaf.start(), //
-				new RegexOptional(new RegexLeaf("POSITION", "(left|right|center)")), //
+				new RegexOptional(new RegexLeaf(1, "POSITION", "(left|right|center)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("header"), //
 				new RegexOr( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore()), //
+								new RegexLeaf(":"), RegexLeaf.spaceZeroOrMore()), //
 						RegexLeaf.spaceOneOrMore()), //
 				new RegexOr(//
-						new RegexLeaf("LABEL1", "[%g](.*)[%g]"), //
-						new RegexLeaf("LABEL2", "(.*[%pLN_.].*)")), //
+						new RegexLeaf(1, "LABEL1", "[%g](.*)[%g]"), //
+						new RegexLeaf(1, "LABEL2", "(.*[%pLN_.].*)")), //
 				RegexLeaf.end()); //
 	}
 

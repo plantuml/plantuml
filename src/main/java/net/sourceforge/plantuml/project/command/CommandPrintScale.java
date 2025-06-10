@@ -35,9 +35,6 @@
  */
 package net.sourceforge.plantuml.project.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,6 +42,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -71,15 +69,15 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 						new RegexLeaf("daily"), //
 						new RegexLeaf("weekly")), //
 				new RegexOptional(new RegexConcat( //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexOr("OPTION", //
-								new RegexLeaf("(with\\s+calendar\\s+date)"),
-								new RegexLeaf("NUMBER", "(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))")))), //
+						PatternCacheStrategy.CACHE, //
+						RegexLeaf.spaceOneOrMore(), new RegexOr("OPTION", //
+								new RegexLeaf(1, "(with\\s+calendar\\s+date)"),
+								new RegexLeaf(1, "NUMBER", "(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))")))), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("zoom"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("ZOOM", "([.\\d]+)"))), //
+						RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "ZOOM", "([.\\d]+)"))), //
 				RegexLeaf.end());
 	}
 

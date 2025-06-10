@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class CommandCreoleSpace implements Command {
 
@@ -46,7 +47,7 @@ public class CommandCreoleSpace implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = Pattern2.cmpile("^(\\<space:(\\d+)/?\\>)");
+	private static final Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(\\<space:(\\d+)/?\\>)");
 
 	private CommandCreoleSpace() {
 	}

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -49,7 +50,7 @@ public class CommandCreoleUrl implements Command {
 		return "[";
 	}
 
-	private static final Pattern2 pattern = Pattern2.cmpile("^(" + UrlBuilder.getRegexp() + ")");
+	private static final Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + UrlBuilder.getRegexp() + ")");
 
 	public static Command create() {
 		return new CommandCreoleUrl();

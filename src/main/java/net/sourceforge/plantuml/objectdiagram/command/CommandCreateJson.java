@@ -75,7 +75,7 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "json"), //
+				new RegexLeaf(0, "TYPE", "json"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCode(), //
 				StereotypePattern.optional("STEREO"), //

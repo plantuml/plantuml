@@ -57,7 +57,7 @@ public class CommandGroupStart extends SingleLineCommand2<GanttDiagram> {
 				new RegexLeaf("group"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("\\["), //
-				new RegexLeaf("NAME", "([^\\[\\]]+)"), //
+				new RegexLeaf(1, "NAME", "([^\\[\\]]+)"), //
 				new RegexLeaf("\\]"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());

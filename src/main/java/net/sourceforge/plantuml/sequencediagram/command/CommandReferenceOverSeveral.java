@@ -67,17 +67,17 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		return RegexConcat.build(CommandReferenceOverSeveral.class.getName(), //
 				RegexLeaf.start(), //
 				new RegexLeaf("ref"), //
-				new RegexLeaf("REF", "(#\\w+)?"), //
+				new RegexLeaf(1, "REF", "(#\\w+)?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PARTS", "(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
+				new RegexLeaf(4, "PARTS", "(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
+				new RegexOptional(new RegexLeaf(1, "URL", "(\\[\\[.*?\\]\\])")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEXT", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "TEXT", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override

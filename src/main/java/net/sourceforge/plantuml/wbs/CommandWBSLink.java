@@ -59,15 +59,15 @@ public class CommandWBSLink extends SingleLineCommand2<WBSDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWBSLink.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("CODE1", "([%pLN_]+)"), //
+				new RegexLeaf(1, "CODE1", "([%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LINK", "[.-]+\\>"), //
+				new RegexLeaf(0, "LINK", "[.-]+\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("CODE2", "([%pLN_]+)"), //
+				new RegexLeaf(1, "CODE2", "([%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
+				new RegexLeaf(1, "LABEL_LINK", "(?::[%s]*(.+))?"), //
 				RegexLeaf.end());
 	}
 

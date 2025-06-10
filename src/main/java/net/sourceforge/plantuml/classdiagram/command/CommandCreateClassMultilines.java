@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -96,35 +97,37 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClassMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
-				new RegexLeaf("TYPE",
-						"(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype)"), //
+				new RegexLeaf(1, "VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
+				new RegexLeaf(1,
+						"TYPE", "(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCodeForClassWithGeneric(), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
-						new RegexLeaf("GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
+				new RegexOptional(new RegexConcat(PatternCacheStrategy.CACHE,
+						RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
-						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("EXTENDS",
-								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
-						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
-								new RegexLeaf("\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
+				new RegexOptional(new RegexConcat(PatternCacheStrategy.CACHE,
+						new RegexLeaf("##"), new RegexLeaf(2, "LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
+				new RegexOptional(new RegexConcat(PatternCacheStrategy.CACHE,
+						RegexLeaf.spaceOneOrMore(),
+						new RegexLeaf(3,
+								"EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])")
+, new RegexOptional(new RegexConcat(PatternCacheStrategy.CACHE,
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
 				)), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("IMPLEMENTS",
-								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
-						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
-								new RegexLeaf("\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
+				new RegexOptional(new RegexConcat(PatternCacheStrategy.CACHE,
+						RegexLeaf.spaceOneOrMore(),
+						new RegexLeaf(3,
+								"IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])")
+, new RegexOptional(new RegexConcat(PatternCacheStrategy.CACHE,
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //

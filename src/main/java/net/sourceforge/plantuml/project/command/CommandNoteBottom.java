@@ -35,10 +35,7 @@
  */
 package net.sourceforge.plantuml.project.command;
 
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
-import net.sourceforge.plantuml.activitydiagram3.command.CommandNoteLong3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -63,11 +60,11 @@ public class CommandNoteBottom extends CommandMultilines2<GanttDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNoteBottom.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(note)"), //
+				new RegexLeaf(1, "TYPE", "(note)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("POSITION", "(bottom)"), //
+				new RegexLeaf(1, "POSITION", "(bottom)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				RegexLeaf.end());
 	}

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -67,15 +68,15 @@ public class Words {
 			tmp[i] = new RegexLeaf(words[i]);
 
 		final RegexOr or = new RegexOr(tmp);
-		return new RegexRepeatedZeroOrMore(new RegexConcat(RegexLeaf.spaceOneOrMore(), or));
+		return new RegexRepeatedZeroOrMore(new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.spaceOneOrMore(), or));
 	}
 
 	public static IRegex exactly(String... words) {
 		final IRegex tmp[] = new IRegex[words.length];
 		for (int i = 0; i < words.length; i++)
-			tmp[i] = new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf(words[i]));
+			tmp[i] = new RegexConcat(PatternCacheStrategy.CACHE, RegexLeaf.spaceOneOrMore(), new RegexLeaf(words[i]));
 
-		return new RegexConcat(tmp);
+		return new RegexConcat(PatternCacheStrategy.CACHE, tmp);
 	}
 
 	public static IRegex single(String word) {
@@ -83,7 +84,7 @@ public class Words {
 	}
 
 	public static IRegex namedSingle(String name, String word) {
-		return new RegexLeaf(name, word);
+		return new RegexLeaf(1, name, word);
 	}
 
 	public static IRegex namedOneOf(String name, String... words) {
@@ -95,7 +96,7 @@ public class Words {
 	}
 
 	public static IRegex concat(IRegex... expressions) {
-		return new RegexConcat(expressions);
+		return new RegexConcat(PatternCacheStrategy.CACHE, expressions);
 	}
 
 }

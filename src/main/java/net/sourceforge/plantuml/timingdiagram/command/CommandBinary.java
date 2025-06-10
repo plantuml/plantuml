@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -58,15 +59,15 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandBinary.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COMPACT", "(compact)"), //
-								RegexLeaf.spaceOneOrMore())), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "COMPACT", "(compact)"), RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("binary"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+				new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.end());
 	}

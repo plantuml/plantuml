@@ -70,18 +70,18 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "multi", RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -92,18 +92,18 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "single", RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -111,7 +111,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

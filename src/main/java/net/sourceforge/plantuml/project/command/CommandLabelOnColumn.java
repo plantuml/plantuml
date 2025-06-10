@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.LabelPosition;
 import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -61,16 +62,17 @@ public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("on"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("POSITION", "(first|last)"), //
+				new RegexLeaf(1, "POSITION", "(first|last)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("column"), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("and"), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("ALIGNED", "(left|right)"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("aligned") //
+						new RegexLeaf(1, "ALIGNED", "(left|right)"), //
+						RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("aligned") //
 				)), // 
 				RegexLeaf.end());
 	}

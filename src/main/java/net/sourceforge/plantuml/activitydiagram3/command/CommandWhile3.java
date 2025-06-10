@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -62,13 +63,13 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("while"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf(1, "TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //
 				new RegexOptional(new RegexConcat(//
+						PatternCacheStrategy.CACHE, //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("(is|equals?)"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("YES", "\\((.+?)\\)"))), //
+						new RegexLeaf(1, "(is|equals?)"), //
+						RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "YES", "\\((.+?)\\)"))), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

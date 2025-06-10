@@ -59,7 +59,7 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEndState.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("(end[%s]?state|\\})"), //
+				new RegexLeaf(1, "(end[%s]?state|\\})"), //
 				RegexLeaf.end()); //
 	}
 

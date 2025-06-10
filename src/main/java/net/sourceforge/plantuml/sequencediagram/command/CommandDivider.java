@@ -56,7 +56,7 @@ public class CommandDivider extends SingleLineCommand2<SequenceDiagram> {
 		return RegexConcat.build(CommandDivider.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("=="), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LABEL", "(.*)"), //
+				new RegexLeaf(1, "LABEL", "(.*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("=="), RegexLeaf.end()); //
 	}

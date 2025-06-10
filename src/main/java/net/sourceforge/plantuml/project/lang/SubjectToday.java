@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Today;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -58,7 +59,8 @@ public class SubjectToday implements Subject<GanttDiagram> {
 
 	public IRegex toRegex() {
 		return new RegexConcat( //
-				new RegexLeaf("today") //
+				PatternCacheStrategy.CACHE
+, new RegexLeaf("today") //
 		);
 	}
 

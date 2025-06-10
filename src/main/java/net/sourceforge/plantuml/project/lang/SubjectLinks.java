@@ -52,7 +52,7 @@ public class SubjectLinks implements Subject<GanttDiagram> {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf("SUBJECT", "links?");
+		return new RegexLeaf(1, "SUBJECT", "links?");
 	}
 
 	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {

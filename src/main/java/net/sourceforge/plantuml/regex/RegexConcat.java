@@ -69,8 +69,8 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 //			}
 	}
 
-	public RegexConcat(IRegex... partials) {
-		super(partials);
+	public RegexConcat(PatternCacheStrategy strategy, IRegex... partials) {
+		super(strategy, partials);
 	}
 
 	private long foxRegex() {
@@ -109,7 +109,7 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 	}
 
 	private static RegexConcat buildInternal(IRegex... partials) {
-		final RegexConcat result = new RegexConcat(partials);
+		final RegexConcat result = new RegexConcat(PatternCacheStrategy.CACHE, partials);
 		assert partials[0] == RegexLeaf.start();
 		assert partials[partials.length - 1] == RegexLeaf.end();
 		return result;
@@ -154,10 +154,10 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 	}
 
 	@Override
-	protected String getFullSlow() {
+	public String getPatternAsString() {
 		final StringBuilder sb = new StringBuilder();
 		for (IRegex p : partials())
-			sb.append(p.getPattern());
+			sb.append(p.getPatternAsString());
 
 		return sb.toString();
 	}

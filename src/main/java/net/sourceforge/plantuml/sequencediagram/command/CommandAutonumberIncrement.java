@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -59,8 +60,9 @@ public class CommandAutonumberIncrement extends SingleLineCommand2<SequenceDiagr
 				new RegexLeaf("inc"), //
 				new RegexOptional( //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("POS", "([A-Za-z])") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "POS", "([A-Za-z])") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}

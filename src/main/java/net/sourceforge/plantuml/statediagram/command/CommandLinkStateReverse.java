@@ -37,6 +37,7 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -53,23 +54,24 @@ public class CommandLinkStateReverse extends CommandLinkStateCommon {
 				getStatePattern("ENT2"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexConcat(
+						PatternCacheStrategy.CACHE, //
 						//
-						new RegexLeaf("ARROW_CIRCLE_END", "(o[%s]+)?"), //
+						new RegexLeaf(1, "ARROW_CIRCLE_END", "(o[%s]+)?"), //
 						new RegexLeaf("\\<"), //
-						new RegexLeaf("ARROW_BODY2", "(-*)"), //
-						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
-						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_BODY1", "(-+)"), //
-						new RegexLeaf("ARROW_CROSS_START", "(x)?")), //
+						new RegexLeaf(1, "ARROW_BODY2", "(-*)"), //
+						new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
+						new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_BODY1", "(-+)"), new RegexLeaf(1, "ARROW_CROSS_START", "(x)?")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				getStatePattern("ENT1"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("LABEL", "(.+)") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf(1, "LABEL", "(.+)") //
 						)), RegexLeaf.end());
 	}
 

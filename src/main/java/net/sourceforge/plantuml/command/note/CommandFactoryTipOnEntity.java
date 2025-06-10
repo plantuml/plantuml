@@ -79,15 +79,15 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //
 					new RegexLeaf("note"), //
 					RegexLeaf.spaceOneOrMore(), //
-					new RegexLeaf("POSITION", "(right|left)"), //
+					new RegexLeaf(1, "POSITION", "(right|left)"), //
 					RegexLeaf.spaceOneOrMore(), //
 					new RegexLeaf("of"), //
 					RegexLeaf.spaceOneOrMore(), //
 					NameAndCodeParser.codeWithMemberForClass(), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 					StereotypePattern.optional("STEREO"), //
-					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -100,15 +100,15 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left)"), //
+				new RegexLeaf(1, "POSITION", "(right|left)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("of"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.codeWithMemberForClass(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //

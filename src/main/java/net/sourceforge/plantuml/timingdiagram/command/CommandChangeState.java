@@ -80,13 +80,13 @@ abstract class CommandChangeState extends SingleLineCommand2<TimingDiagram> {
 
 	static IRegex getStateOrHidden() {
 		return new RegexOr(//
-				new RegexLeaf("STATE1", "[%g]([^%g]*)[%g]"), //
-				new RegexLeaf("STATE2", STATE_CODE), //
-				new RegexLeaf("STATE3", "(\\{hidden\\})"), //
-				new RegexLeaf("STATE4", "(\\{\\.\\.\\.\\})"), //
-				new RegexLeaf("STATE5", "(\\{-\\})"), //
-				new RegexLeaf("STATE6", "(\\{\\?\\})"), //
-				new RegexLeaf("STATE7", "(?:\\{" + STATE_CODE + "," + STATE_CODE + "\\})") //
+				new RegexLeaf(1, "STATE1", "[%g]([^%g]*)[%g]"), //
+				new RegexLeaf(1, "STATE2", STATE_CODE), //
+				new RegexLeaf(1, "STATE3", "(\\{hidden\\})"), //
+				new RegexLeaf(1, "STATE4", "(\\{\\.\\.\\.\\})"), //
+				new RegexLeaf(1, "STATE5", "(\\{-\\})"), //
+				new RegexLeaf(1, "STATE6", "(\\{\\?\\})"), //
+				new RegexLeaf(2, "STATE7", "(?:\\{" + STATE_CODE + "," + STATE_CODE + "\\})") //
 		);
 	}
 

@@ -50,7 +50,7 @@ public class CommandFootboxIgnored extends SingleLineCommand2<UmlDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandFootboxIgnored.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("(hide|show)?"), //
+				new RegexLeaf(1, "(hide|show)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("footbox"), RegexLeaf.end()); //
 	}

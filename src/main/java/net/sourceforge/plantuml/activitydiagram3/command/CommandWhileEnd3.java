@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -58,18 +59,20 @@ public class CommandWhileEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandWhileEnd3.class.getName(), RegexLeaf.start(), //
 				new RegexOr( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("end"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("while") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("while") //
 						), //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("while"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("end") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("end") //
 						) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("OUT", "\\((.+?)\\)")), //
+				new RegexOptional(new RegexLeaf(1, "OUT", "\\((.+?)\\)")), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

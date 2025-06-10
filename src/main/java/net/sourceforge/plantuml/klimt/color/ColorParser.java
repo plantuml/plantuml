@@ -73,15 +73,15 @@ public class ColorParser {
 	}
 
 	public static ColorParser simpleColor(ColorType mainType, String id) {
-		return new ColorParser(id, new RegexLeaf(id, "(" + COLORS_REGEXP + ")?"), mainType);
+		return new ColorParser(id, new RegexLeaf(1, id, "(" + COLORS_REGEXP + ")?"), mainType);
 	}
 
 	public static ColorParser mandatoryColor(ColorType mainType) {
-		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(" + COLORS_REGEXP + ")"), mainType);
+		return new ColorParser("COLOR", new RegexLeaf(1, "COLOR", "(" + COLORS_REGEXP + ")"), mainType);
 	}
 
 	public static ColorParser simpleColor(String optPrefix, ColorType mainType) {
-		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(?:" + optPrefix + " (" + COLORS_REGEXP + "))?"),
+		return new ColorParser("COLOR", new RegexLeaf(1, "COLOR", "(?:" + optPrefix + " (" + COLORS_REGEXP + "))?"),
 				mainType);
 	}
 
@@ -92,23 +92,23 @@ public class ColorParser {
 	}
 
 	public static RegexLeaf exp2() {
-		return new RegexLeaf("BACKCOLOR", "(" + COLOR_REGEXP + ")?");
+		return new RegexLeaf(1, "BACKCOLOR", "(" + COLOR_REGEXP + ")?");
 	}
 
 	public static RegexLeaf exp3() {
-		return new RegexLeaf("BACKCOLOR2", "(" + COLOR_REGEXP + ")?");
+		return new RegexLeaf(1, "BACKCOLOR2", "(" + COLOR_REGEXP + ")?");
 	}
 
 	public static RegexLeaf exp4() {
-		return new RegexLeaf("COLOR", "(?:(" + COLOR_REGEXP + "):)?");
+		return new RegexLeaf(1, "COLOR", "(?:(" + COLOR_REGEXP + "):)?");
 	}
 
 	public static RegexLeaf exp6() {
-		return new RegexLeaf("COLOR", "(?:(" + COLOR_REGEXP + ")\\|)?");
+		return new RegexLeaf(1, "COLOR", "(?:(" + COLOR_REGEXP + ")\\|)?");
 	}
 
 	public static RegexLeaf exp7() {
-		return new RegexLeaf("COLOR", "(?:(" + COLOR_REGEXP + "))?");
+		return new RegexLeaf(1, "COLOR", "(?:(" + COLOR_REGEXP + "))?");
 	}
 
 	public RegexLeaf getRegex() {

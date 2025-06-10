@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -69,18 +70,19 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), new RegexOptional( // Copied from CommandCreatePackageBlock
 						new RegexConcat( //
-								new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g]"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([%pLN%s_.:]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN%s_.:]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(<<.*>>)?"), //
+				new RegexLeaf(1, "STEREO", "(<<.*>>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("COMPOSITE", "(\\{)?"), //
+				new RegexLeaf(1, "COMPOSITE", "(\\{)?"), //
 				RegexLeaf.end());
 	}
 
@@ -89,8 +91,8 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final Entity owner = diagram.peekOwner();
 		if (owner == null) {
 			return CommandExecutionResult

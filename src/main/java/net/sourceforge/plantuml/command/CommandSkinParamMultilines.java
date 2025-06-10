@@ -39,11 +39,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledDiagram> {
 
-	private static final Pattern2 COMMENT_SINGLE_LINE = Pattern2.cmpile(CommandMultilinesComment.COMMENT_SINGLE_LINE);
+	private static final Pattern2 COMMENT_SINGLE_LINE = Pattern2.cmpile(PatternCacheStrategy.CACHE, CommandMultilinesComment.COMMENT_SINGLE_LINE);
 	public static final CommandSkinParamMultilines ME = new CommandSkinParamMultilines();
 
 	private CommandSkinParamMultilines() {

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -61,26 +62,26 @@ public class CommandEBnfSingleLine extends SingleLineCommand2<PSystemEbnf> {
 
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("\\(\\*"), //
-								new RegexLeaf("COMMENTA", "(.*[^%s].*)"), //
-								new RegexLeaf("\\*\\)"), //
-								RegexLeaf.spaceZeroOrMore())), //
+								new RegexLeaf(1, "COMMENTA", "(.*[^%s].*)"), //
+								new RegexLeaf("\\*\\)"), RegexLeaf.spaceZeroOrMore())), //
 
-				new RegexLeaf("ID", "([%pLN_][-%pLN_]*)"), //
+				new RegexLeaf(1, "ID", "([%pLN_][-%pLN_]*)"), //
 
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("\\(\\*"), //
-								new RegexLeaf("COMMENTB", "(.*[^%s].*)"), //
-								new RegexLeaf("\\*\\)"), //
-								RegexLeaf.spaceZeroOrMore())), //
+								new RegexLeaf(1, "COMMENTB", "(.*[^%s].*)"), //
+								new RegexLeaf("\\*\\)"), RegexLeaf.spaceZeroOrMore())), //
 
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("EQUALS", "(=)"), //
+				new RegexLeaf(1, "EQUALS", "(=)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LINE", "(.*;)"), //
+				new RegexLeaf(1, "LINE", "(.*;)"), //
 				RegexLeaf.end());
 	}
 

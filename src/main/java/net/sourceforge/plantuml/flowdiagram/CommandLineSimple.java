@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.golem.TileGeometry;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -56,16 +57,18 @@ public class CommandLineSimple extends SingleLineCommand2<FlowDiagram> {
 		return RegexConcat.build(CommandLineSimple.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("ORIENTATION", "([nsew])"), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "ORIENTATION", "([nsew])"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("ID_DEST", "(\\w+)"), //
+				new RegexLeaf(1, "ID_DEST", "(\\w+)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "[%g](.*)[%g]"), RegexLeaf.end());
+				new RegexLeaf(1, "LABEL", "[%g](.*)[%g]"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String idDest = arg.get("ID_DEST", 0);
 		final String label = arg.get("LABEL", 0);
 		final String orientationString = arg.get("ORIENTATION", 0);

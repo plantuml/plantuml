@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -81,20 +82,22 @@ public class ComplementDate implements Something<GanttDiagram> {
 
 	private IRegex toRegexD(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("DCOUNT" + suffix, "([\\d]+)"), //
+				PatternCacheStrategy.CACHE, //
+				new RegexLeaf(1, "DCOUNT" + suffix, "([\\d]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("days?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("after"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("start") //
+				RegexLeaf.spaceOneOrMore()
+, new RegexLeaf("start") //
 		);
 	}
 
 	private IRegex toRegexE(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT" + suffix, "([\\d]+)") //
+				PatternCacheStrategy.CACHE, //
+				new RegexLeaf("[dD]\\+")
+, new RegexLeaf(1, "ECOUNT" + suffix, "([\\d]+)") //
 		);
 	}
 

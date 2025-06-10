@@ -56,9 +56,9 @@ public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 				new RegexLeaf("sprite"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("\\$?"), //
-				new RegexLeaf("NAME", "([-%pLN_]+)"), //
+				new RegexLeaf(1, "NAME", "([-%pLN_]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("SVG", "(\\<svg\\b.*\\</svg\\>)"), RegexLeaf.end());
+				new RegexLeaf(1, "SVG", "(\\<svg\\b.*\\</svg\\>)"), RegexLeaf.end());
 	}
 
 	@Override

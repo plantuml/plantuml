@@ -60,7 +60,7 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandStereotype.class.getName(), //
 				RegexLeaf.start(), //
-				new RegexLeaf("NAME", "([%pLN_.]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "NAME", "([%pLN_.]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				StereotypePattern.mandatory("STEREO"), //
 				RegexLeaf.end()); //

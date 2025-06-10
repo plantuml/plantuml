@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -94,8 +95,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	private static RegexConcat getRegexConcat(int type) {
 		if (type == 0)
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
-					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
-					new RegexLeaf("CODE", "([%pLN_.]+)"), //
+					new RegexLeaf(1, "TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
+					new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 					StereotypePattern.optional("STEREO"), //
 					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -104,20 +105,20 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					new RegexLeaf("as"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("[%g]"), //
-					new RegexLeaf("DESC", "([^%g]*)"), //
+					new RegexLeaf(1, "DESC", "([^%g]*)"), //
 					RegexLeaf.end());
 
 		if (type == 1)
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
-					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
-					new RegexLeaf("CODE", "([%pLN_.]+)"), //
+					new RegexLeaf(1, "TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
+					new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 					StereotypePattern.optional("STEREO"), //
 					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("\\["), //
-					new RegexLeaf("DESC", "(.*)"), //
+					new RegexLeaf(1, "DESC", "(.*)"), //
 					RegexLeaf.end());
 
 		throw new IllegalArgumentException();
@@ -150,7 +151,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		}
 
 		final String idShort = line0.get("CODE", 0);
-		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(PatternCacheStrategy.CACHE, getPatternEnd()),
 				lines.getLast().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -64,16 +65,17 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandReturn.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("return"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COLOR", "(#\\w+)"), //
-								RegexLeaf.spaceOneOrMore() //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "COLOR", "(#\\w+)")
+, RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("MESSAGE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "MESSAGE", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override

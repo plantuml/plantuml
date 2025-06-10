@@ -74,9 +74,9 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 		return RegexConcat.build(CommandFactoryNoteOnLink.class.getName() + "single", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("(on|of)"), //
+				new RegexLeaf(1, "(on|of)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("link"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -84,16 +84,16 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(CommandFactoryNoteOnLink.class.getName() + "multi", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("(on|of)"), //
+				new RegexLeaf(1, "(on|of)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("link"), //
 				RegexLeaf.spaceZeroOrMore(), //

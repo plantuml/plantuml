@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class CommandCreoleSvgAttributeChange implements Command {
 
@@ -50,8 +51,8 @@ public class CommandCreoleSvgAttributeChange implements Command {
 
 	public static final String fontPattern = Splitter.svgAttributePattern;
 
-	private static final Pattern2 pattern = Pattern2.cmpile("^(" + fontPattern + "(.*?)\\</text\\>)");
-	private static final Pattern2 patternEol = Pattern2.cmpile("^(" + fontPattern + "(.*))$");
+	private static final Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + fontPattern + "(.*?)\\</text\\>)");
+	private static final Pattern2 patternEol = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + fontPattern + "(.*))$");
 
 	private final Pattern2 mypattern;
 

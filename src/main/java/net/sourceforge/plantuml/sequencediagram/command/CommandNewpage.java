@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -59,8 +60,9 @@ public class CommandNewpage extends SingleLineCommand2<SequenceDiagram> {
 				new RegexLeaf("newpage"), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
-								new RegexLeaf("LABEL", "(.*[%pLN_.].*)") //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)")
+, new RegexLeaf(1, "LABEL", "(.*[%pLN_.].*)") //
 						)), RegexLeaf.end()); //
 	}
 

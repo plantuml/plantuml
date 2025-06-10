@@ -93,11 +93,11 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(note|floating note)"), //
+				new RegexLeaf(1, "TYPE", "(note|floating note)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("POSITION", "(left|right)?"), //
+				new RegexLeaf(1, "POSITION", "(left|right)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				color().getRegex(), //
 				RegexLeaf.end());

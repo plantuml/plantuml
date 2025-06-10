@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -63,26 +64,26 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandBackward3.class.getName(), RegexLeaf.start(), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						new RegexLeaf("\\("), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf("INCOMING", "(.*?)"), //
-						new RegexLeaf("\\)"))), //
+								new RegexLeaf(1, "INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, "INCOMING", "(.*?)"), new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("backward"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("LABEL", "(.*?)"), //
-				new RegexLeaf("STYLE", CommandActivity3.endingGroup()), //
+				new RegexLeaf(1, "LABEL", "(.*?)"), //
+				new RegexLeaf(2, "STYLE", CommandActivity3.endingGroup()), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
+						PatternCacheStrategy.CACHE, //
 						new RegexLeaf("\\("), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("OUTCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf("OUTCOMING", "(.*?)"), //
-						new RegexLeaf("\\)"))), //
+								new RegexLeaf(1, "OUTCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, "OUTCOMING", "(.*?)"), new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

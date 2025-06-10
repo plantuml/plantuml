@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -55,12 +56,12 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	private final Lazy<Pattern2> end;
 
 	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {
-		assert patternStart.getPattern().startsWith("^") && patternStart.getPattern().endsWith("$");
+		assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
 
 		this.strategy = strategy;
 		this.starting = patternStart;
 		this.trimEnd = trimEnd;
-		this.end = new Lazy<>(x -> Pattern2.cmpile(getPatternEnd()));
+		this.end = new Lazy<>(x -> Pattern2.cmpile(PatternCacheStrategy.CACHE, getPatternEnd()));
 	}
 
 	public boolean syntaxWithFinalBracket() {
@@ -70,7 +71,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	public abstract String getPatternEnd();
 
 	public String[] getDescription() {
-		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd() };
+		return new String[] { "START: " + starting.getPatternAsString(), "END: " + getPatternEnd() };
 	}
 
 	final public CommandControl isValid(BlocLines lines) {

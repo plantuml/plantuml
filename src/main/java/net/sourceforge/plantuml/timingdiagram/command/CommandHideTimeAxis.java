@@ -54,7 +54,7 @@ public class CommandHideTimeAxis extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandHideTimeAxis.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("COMMAND", "(hide|manual)"), //
+				new RegexLeaf(1, "COMMAND", "(hide|manual)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("time"), //
 				new RegexLeaf(".?"), //

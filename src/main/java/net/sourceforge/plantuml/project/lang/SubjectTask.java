@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -113,18 +114,19 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 	public IRegex toRegex() {
 		return new RegexOr( //
-				new RegexLeaf("IT", "(it)"), //
-				new RegexConcat(new RegexLeaf("THEN", "(then[%s]+)?"), //
-						new RegexLeaf("SUBJECT", REGEX_TASK_CODE), //
+				new RegexLeaf(1, "IT", "(it)"), //
+				new RegexConcat(PatternCacheStrategy.CACHE, //
+						new RegexLeaf(1, "THEN", "(then[%s]+)?"), //
+						new RegexLeaf(1, "SUBJECT", REGEX_TASK_CODE), //
 						StereotypePattern.optional("STEREOTYPE"), //
 						new RegexOptional(new RegexConcat(//
+								PatternCacheStrategy.CACHE, //
 								Words.exactly(Words.AS), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("SHORTNAME", REGEX_TASK_CODE))), //
-						new RegexOptional(new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "SHORTNAME", REGEX_TASK_CODE))), new RegexOptional(new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								Words.exactly(Words.ON), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
 						))));
 	}
 

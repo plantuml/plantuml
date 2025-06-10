@@ -40,6 +40,7 @@ import java.text.DecimalFormat;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -61,13 +62,15 @@ public class CommandAutonumberResume extends SingleLineCommand2<SequenceDiagram>
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("INC", "(\\d+)") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "INC", "(\\d+)") //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("DF", "[%g]([^%g]+)[%g]") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore()
+, new RegexLeaf(1, "DF", "[%g]([^%g]+)[%g]") //
 						)), RegexLeaf.end());
 	}
 

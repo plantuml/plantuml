@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public abstract class CommandMultilines<S extends Diagram> implements Command<S> {
@@ -47,8 +48,8 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 
 	public CommandMultilines(String patternStart) {
 		assert patternStart.startsWith("^") && patternStart.endsWith("$");
-		this.starting = Pattern2.cmpile(patternStart);
-		this.patternEnd = Pattern2.cmpile(getPatternEnd());
+		this.starting = Pattern2.cmpile(PatternCacheStrategy.CACHE, patternStart);
+		this.patternEnd = Pattern2.cmpile(PatternCacheStrategy.CACHE, getPatternEnd());
 	}
 
 	public abstract String getPatternEnd();

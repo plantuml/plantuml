@@ -60,10 +60,10 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandArrow3.class.getName(), RegexLeaf.start(), //
 				new RegexOr(//
 						new RegexLeaf("->"), //
-						new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+						new RegexLeaf(1, "COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
-						new RegexLeaf("LABEL", "(.*);"), //
+						new RegexLeaf(1, "LABEL", "(.*);"), //
 						new RegexLeaf("")), //
 				RegexLeaf.end());
 	}

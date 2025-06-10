@@ -63,12 +63,12 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandHideShowByVisibility.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("COMMAND", "(hide|show)"), //
+				new RegexLeaf(1, "COMMAND", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("VISIBILITY",
-						"((?:public|private|protected|package)?(?:[,%s]+(?:public|private|protected|package))*)"), //
+				new RegexLeaf(1,
+						"VISIBILITY", "((?:public|private|protected|package)?(?:[,%s]+(?:public|private|protected|package))*)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?)"), RegexLeaf.end());
+				new RegexLeaf(1, "PORTION", "(members?|attributes?|fields?|methods?)"), RegexLeaf.end());
 	}
 
 	@Override

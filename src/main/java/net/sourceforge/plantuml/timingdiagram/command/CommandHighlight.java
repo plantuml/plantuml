@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -77,9 +78,10 @@ public class CommandHighlight extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("CAPTION", "(.*)") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf(1, "CAPTION", "(.*)") //
 						)), //
 				RegexLeaf.end());
 	}

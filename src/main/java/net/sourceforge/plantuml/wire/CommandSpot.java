@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -58,21 +59,22 @@ public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 		return RegexConcat.build(CommandSpot.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("spot"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([\\w][.\\w]*)"), //
+				new RegexLeaf(1, "NAME", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat(//
+						PatternCacheStrategy.CACHE, //
 						new RegexLeaf("\\("), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("X", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						new RegexLeaf(2, "X", "(-?\\d+(%|%[-+]\\d+)?)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf(","), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("Y", "(-?\\d+(%|%[-+]\\d+)?)"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\)") //
+						new RegexLeaf(2, "Y", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("\\)") //
 				)), //
 				new RegexOptional(new RegexConcat( //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("COLOR", "(#\\w+)?"))), //
+						PatternCacheStrategy.CACHE, //
+						RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "COLOR", "(#\\w+)?"))), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());

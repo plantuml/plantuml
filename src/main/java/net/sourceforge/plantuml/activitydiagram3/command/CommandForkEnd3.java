@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -58,23 +59,26 @@ public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.start(), //
 				new RegexOr("STYLE", //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("end"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("fork") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("fork") //
 						), //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("fork"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("end") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("end") //
 						), //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("end"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("merge") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf("merge") //
 						) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LABEL", "(\\{.+\\})?"), //
+				new RegexLeaf(1, "LABEL", "(\\{.+\\})?"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

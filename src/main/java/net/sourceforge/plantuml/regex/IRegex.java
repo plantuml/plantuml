@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 public interface IRegex {
 
-	public String getPattern();
+	public String getPatternAsString();
 
 	public int count();
 

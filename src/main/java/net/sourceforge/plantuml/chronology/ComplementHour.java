@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.lang.Something;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -64,8 +65,9 @@ public class ComplementHour implements Something<ChronologyDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("TIME", "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+)"), //
-				new RegexOptional(new RegexLeaf("MS", "\\.(\\d+)")) //
+				PatternCacheStrategy.CACHE, //
+				new RegexLeaf(1, "TIME", "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+)"), //
+				new RegexOptional(new RegexLeaf(1, "MS", "\\.(\\d+)")) //
 		); //
 	}
 

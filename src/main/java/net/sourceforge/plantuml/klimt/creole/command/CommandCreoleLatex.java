@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class CommandCreoleLatex implements Command {
 	// ::remove file when __CORE__
@@ -48,7 +49,7 @@ public class CommandCreoleLatex implements Command {
 		return "<";
 	}
 
-	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.latexPattern + ")");
+	private static final Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(" + Splitter.latexPattern + ")");
 
 	private CommandCreoleLatex() {
 	}

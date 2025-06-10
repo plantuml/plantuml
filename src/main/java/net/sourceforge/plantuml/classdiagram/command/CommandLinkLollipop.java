@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -68,29 +69,29 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		return RegexConcat.build(CommandLinkLollipop.class.getName() + umlDiagramType, RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("HEADER", "@([\\d.]+)"), //
-								RegexLeaf.spaceOneOrMore() //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "HEADER", "@([\\d.]+)"), RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("ENT1",
+				new RegexLeaf(3, "ENT1",
 						"(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
 								+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOr(new RegexLeaf("LOL_THEN_ENT", "([()]\\))([-=.]+)"), //
-						new RegexLeaf("ENT_THEN_LOL", "([-=.]+)(\\([()])")), //
+				new RegexOr(new RegexLeaf(2, "LOL_THEN_ENT", "([()]\\))([-=.]+)"), //
+						new RegexLeaf(2, "ENT_THEN_LOL", "([-=.]+)(\\([()])")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ENT2",
+				new RegexLeaf(3, "ENT2",
 						"(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
 								+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("LABEL_LINK", "(.+)") //
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "LABEL_LINK", "(.+)") //
 						)), RegexLeaf.end());
 	}
 
@@ -132,7 +133,8 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(ent1) + suffix);
 			final LeafType type = getType(arg.get("ENT_THEN_LOL", 1));
-			cl2 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent2), type, null);
+			cl2 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent2),
+					type, null);
 			normalEntity = cl1;
 
 //			assert arg.get("ENT_THEN_LOL", 0) != null;
@@ -151,7 +153,8 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(ent2) + suffix);
 			final LeafType type = getType(arg.get("LOL_THEN_ENT", 0));
-			cl1 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent1), type, null);
+			cl1 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent1),
+					type, null);
 			normalEntity = cl2;
 		}
 
@@ -170,7 +173,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		if (arg.get("LABEL_LINK", 0) != null) {
 			labelLink = arg.get("LABEL_LINK", 0);
 			if (firstLabel == null && secondLabel == null) {
-				final Pattern2 p1 = Pattern2.cmpile("^\"([^\"]+)\"([^\"]+)\"([^\"]+)\"$");
+				final Pattern2 p1 = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^\"([^\"]+)\"([^\"]+)\"([^\"]+)\"$");
 				final Matcher2 m1 = p1.matcher(labelLink);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
@@ -178,7 +181,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 							StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
 					secondLabel = m1.group(3);
 				} else {
-					final Pattern2 p2 = Pattern2.cmpile("^\"([^\"]+)\"([^\"]+)$");
+					final Pattern2 p2 = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^\"([^\"]+)\"([^\"]+)$");
 					final Matcher2 m2 = p2.matcher(labelLink);
 					if (m2.matches()) {
 						firstLabel = m2.group(1);
@@ -186,7 +189,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 								.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
 						secondLabel = null;
 					} else {
-						final Pattern2 p3 = Pattern2.cmpile("^([^\"]+)\"([^\"]+)\"$");
+						final Pattern2 p3 = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^([^\"]+)\"([^\"]+)\"$");
 						final Matcher2 m3 = p3.matcher(labelLink);
 						if (m3.matches()) {
 							firstLabel = null;
@@ -201,9 +204,9 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labelLink), length,
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
-				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
-						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
+		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+				linkType, linkArg.withQuantifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
+						diagram.getLabelangle()));
 		diagram.resetPragmaLabel();
 		addLink(diagram, link, arg.get("HEADER", 0));
 

@@ -70,21 +70,21 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateJsonSingleLine.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "json"), //
+				new RegexLeaf(0, "TYPE", "json"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
+				new RegexLeaf(2, "NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
 				StereotypePattern.optional("STEREO"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr( //
-						new RegexLeaf("DATA_BOOLEAN", "(true|false)"), //
-						new RegexLeaf("DATA_NUMBER", "(-?\\d+)"), //
-						new RegexLeaf("DATA_NULL", "(null)"), //
-						new RegexLeaf("DATA_STRING", "(\".*\")"), //
-						new RegexLeaf("DATA_ARRAY", "(\\[.*\\])"), //
-						new RegexLeaf("DATA_OBJECT", "(\\{[%s]*[%g](\\\\[%g]|[^%g])+[%g][%s]*:.*\\})") //
+						new RegexLeaf(1, "DATA_BOOLEAN", "(true|false)"), //
+						new RegexLeaf(1, "DATA_NUMBER", "(-?\\d+)"), //
+						new RegexLeaf(1, "DATA_NULL", "(null)"), //
+						new RegexLeaf(1, "DATA_STRING", "(\".*\")"), //
+						new RegexLeaf(1, "DATA_ARRAY", "(\\[.*\\])"), //
+						new RegexLeaf(2, "DATA_OBJECT", "(\\{[%s]*[%g](\\\\[%g]|[^%g])+[%g][%s]*:.*\\})") //
 				), //
 				RegexLeaf.end());
 	}

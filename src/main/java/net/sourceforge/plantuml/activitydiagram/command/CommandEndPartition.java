@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -56,6 +57,7 @@ public class CommandEndPartition extends SingleLineCommand2<ActivityDiagram> {
 		return RegexConcat.build(CommandEndPartition.class.getName(), RegexLeaf.start(), //
 				new RegexOr( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf("end"), //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("partition")), //

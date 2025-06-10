@@ -60,7 +60,7 @@ public class CommandElseLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("when"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("WHEN", "(.*)"), //
+				new RegexLeaf(1, "WHEN", "(.*)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

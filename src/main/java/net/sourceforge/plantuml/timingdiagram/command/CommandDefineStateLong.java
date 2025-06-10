@@ -54,15 +54,15 @@ public class CommandDefineStateLong extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandDefineStateLong.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PLAYER", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "PLAYER", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("has"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "[%g]([^%g]+)[%g]"), //
+				new RegexLeaf(1, "LABEL", "[%g]([^%g]+)[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("STATE", "([%pLN_.@]+)"), RegexLeaf.end());
+				new RegexLeaf(1, "STATE", "([%pLN_.@]+)"), RegexLeaf.end());
 	}
 
 	@Override

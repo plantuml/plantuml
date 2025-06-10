@@ -44,11 +44,12 @@ import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class ArobaseStringCompressor implements StringCompressor {
 
-	private final static Pattern2 pattern = Pattern2.cmpile("(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
+	private final static Pattern2 pattern = Pattern2.cmpile(PatternCacheStrategy.CACHE, "(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
 
 	public String compress(final String data) throws IOException {
 		final ReadLine r = new UncommentReadLine(ReadLineReader.create(new StringReader(data), "COMPRESS"));

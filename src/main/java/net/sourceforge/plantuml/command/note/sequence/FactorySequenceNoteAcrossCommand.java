@@ -69,11 +69,11 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + "multi", RegexLeaf.start(), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("ACROSS", "(accross|across)"), //
+				new RegexLeaf(1, "ACROSS", "(accross|across)"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -84,11 +84,11 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + "single", RegexLeaf.start(), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("ACROSS", "(accross|across)"), //
+				new RegexLeaf(1, "ACROSS", "(accross|across)"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -96,7 +96,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

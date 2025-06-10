@@ -59,9 +59,9 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 				new RegexLeaf("sprite"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("\\$?"), //
-				new RegexLeaf("NAME", "([-.%pLN_]+)"), //
+				new RegexLeaf(1, "NAME", "([-.%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]")), //
+				new RegexOptional(new RegexLeaf(5, "DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), RegexLeaf.end());
 	}
@@ -71,11 +71,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 				new RegexLeaf("sprite"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("\\$?"), //
-				new RegexLeaf("NAME", "([-.%pLN_]+)"), //
+				new RegexLeaf(1, "NAME", "([-.%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]")), //
+				new RegexOptional(new RegexLeaf(5, "DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]")), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("DATA", "([-_A-Za-z0-9]+)"), RegexLeaf.end());
+				new RegexLeaf(1, "DATA", "([-_A-Za-z0-9]+)"), RegexLeaf.end());
 	}
 
 	public Command<WithSprite> createSingleLine() {

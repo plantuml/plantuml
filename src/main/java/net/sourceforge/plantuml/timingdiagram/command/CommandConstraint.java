@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -59,22 +60,23 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandConstraint.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PART1", "(" + CommandTimeMessage.PLAYER_CODE + ")?"), //
+				new RegexLeaf(2, "PART1", "(" + CommandTimeMessage.PLAYER_CODE + ")?"), //
 				TimeTickBuilder.expressionAtWithArobase("TIME1"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\<"), //
-				new RegexLeaf("(-+)"), //
-				new RegexLeaf("ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
-				new RegexLeaf("(-*)"), //
+				new RegexLeaf(1, "(-+)"), //
+				new RegexLeaf(1, "ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
+				new RegexLeaf(1, "(-*)"), //
 				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				TimeTickBuilder.expressionAtWithArobase("TIME2"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
+								PatternCacheStrategy.CACHE, //
 								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("MESSAGE", "(.*)") //
+								RegexLeaf.spaceZeroOrMore()
+, new RegexLeaf(1, "MESSAGE", "(.*)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}

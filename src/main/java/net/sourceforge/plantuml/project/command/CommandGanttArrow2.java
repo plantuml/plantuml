@@ -58,16 +58,16 @@ public class CommandGanttArrow2 extends SingleLineCommand2<GanttDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandGanttArrow2.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\["), //
-				new RegexLeaf("TASK1", "([^\\[\\]]+?)"), //
+				new RegexLeaf(1, "TASK1", "([^\\[\\]]+?)"), //
 				new RegexLeaf("\\]"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("(-+)"), //
-				new RegexLeaf("ARROW_STYLE", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("(-*)"), //
+				new RegexLeaf(1, "(-+)"), //
+				new RegexLeaf(1, "ARROW_STYLE", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "(-*)"), //
 				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\["), //
-				new RegexLeaf("TASK2", "([^\\[\\]]+?)"), //
+				new RegexLeaf(1, "TASK2", "([^\\[\\]]+?)"), //
 				new RegexLeaf("\\]"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());

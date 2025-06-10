@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
@@ -92,7 +93,7 @@ public class Member implements CharSequence {
 		this.raw = tmpDisplay;
 		tmpDisplay = tmpDisplay.toString().replaceAll("(?i)\\{(method|field)\\}\\s*", "");
 		if (manageModifier) {
-			final Pattern2 finalUrl = Pattern2.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
+			final Pattern2 finalUrl = Pattern2.cmpile(PatternCacheStrategy.CACHE, "^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
 			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);
 			if (matcher.matches() == false) {
 				throw new IllegalStateException();

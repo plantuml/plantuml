@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -66,16 +67,16 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandHideShowByGender.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("COMMAND", "(hide|show)"), //
+				new RegexLeaf(1, "COMMAND", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("GENDER",
-						"(?:(class|object|interface|enum|annotation|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
+				new RegexLeaf(1,
+						"GENDER", "(?:(class|object|interface|enum|annotation|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("EMPTY", "(empty)"), //
-								RegexLeaf.spaceOneOrMore()) //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "EMPTY", "(empty)"), RegexLeaf.spaceOneOrMore()) //
 				), //
-				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?|circles?|circled?|stereotypes?)"), //
+				new RegexLeaf(1, "PORTION", "(members?|attributes?|fields?|methods?|circles?|circled?|stereotypes?)"), //
 				RegexLeaf.end());
 	}
 

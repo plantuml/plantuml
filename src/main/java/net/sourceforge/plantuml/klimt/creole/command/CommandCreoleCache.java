@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 abstract class CommandCreoleCache implements Command {
 
@@ -50,7 +51,7 @@ abstract class CommandCreoleCache implements Command {
 		Pattern2 result = cache.get(p);
 		if (result == null) {
 			final String p1 = p;
-			result = Pattern2.cmpile(p1);
+			result = Pattern2.cmpile(PatternCacheStrategy.CACHE, p1);
 			cache.put(p, result);
 		}
 		this.mypattern = result;

@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -90,16 +91,16 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + "single", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
-						new RegexConcat(RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("of"), //
-								RegexLeaf.spaceOneOrMore(), partialPattern), //
+						new RegexConcat(PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("of"), RegexLeaf.spaceOneOrMore(), partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -107,7 +108,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), //
+				new RegexLeaf(1, "NOTE", "(.*)"), //
 				RegexLeaf.end() //
 		);
 	}
@@ -122,17 +123,17 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 					RegexLeaf.start(), //
 					new RegexLeaf("note"), //
 					RegexLeaf.spaceOneOrMore(), //
-					new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+					new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 					new RegexOr(//
-							new RegexConcat(RegexLeaf.spaceOneOrMore(), //
-									new RegexLeaf("of"), //
+							new RegexConcat(PatternCacheStrategy.CACHE, //
 									RegexLeaf.spaceOneOrMore(), //
-									partialPattern), //
+									new RegexLeaf("of"), //
+									RegexLeaf.spaceOneOrMore(), partialPattern), //
 							new RegexLeaf("")), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 					StereotypePattern.optional("STEREO"), //
-					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					color().getRegex(), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -146,17 +147,17 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
-						new RegexConcat(RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("of"), //
+						new RegexConcat(PatternCacheStrategy.CACHE, //
 								RegexLeaf.spaceOneOrMore(), //
-								partialPattern), //
+								new RegexLeaf("of"), //
+								RegexLeaf.spaceOneOrMore(), partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

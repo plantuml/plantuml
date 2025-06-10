@@ -73,9 +73,9 @@ public class CommandParticipantMultilines extends CommandMultilines2<SequenceDia
 
 	private static RegexConcat getRegexConcat() {
 		return RegexConcat.build(CommandParticipantMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(participant)"), //
+				new RegexLeaf(1, "TYPE", "(participant)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREO"), //
 				CommandParticipant.getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

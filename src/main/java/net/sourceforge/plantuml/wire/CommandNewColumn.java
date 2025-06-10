@@ -52,7 +52,7 @@ public class CommandNewColumn extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNewColumn.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf(1, "INDENT", "([\\s\\t]*)"), //
 				new RegexLeaf("-+"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());

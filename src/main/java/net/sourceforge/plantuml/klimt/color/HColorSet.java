@@ -46,10 +46,11 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 
 public class HColorSet {
 
-	private static final Pattern2 COLOR_GRADIENT_SEPARATOR = Pattern2.cmpile("[-\\\\|/]");
+	private static final Pattern2 COLOR_GRADIENT_SEPARATOR = Pattern2.cmpile(PatternCacheStrategy.CACHE, "[-\\\\|/]");
 
 	private final static HColorSet singleton = new HColorSet();
 

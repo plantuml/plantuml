@@ -58,9 +58,9 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 				new RegexLeaf("sprite"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("\\$?"), //
-				new RegexLeaf("NAME", "([-%pLN_]+)"), //
+				new RegexLeaf(1, "NAME", "([-%pLN_]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("SVGSTART", "(\\<svg\\b.*)"), //
+				new RegexLeaf(1, "SVGSTART", "(\\<svg\\b.*)"), //
 				RegexLeaf.end());
 	}
 

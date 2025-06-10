@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.PatternCacheStrategy;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -76,45 +77,49 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 				color2().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
-						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexLeaf(1, "CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY2", CommandCreateElementFull.DISPLAY), //
 								new RegexOptional( //
 										new RegexConcat( //
+												PatternCacheStrategy.CACHE, //
 												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)")//
+												new RegexLeaf(1, "STEREOTYPE2", "(\\<\\<.+\\>\\>)")//
 										)), //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "CODE2", CommandCreateElementFull.CODE)), //
 						new RegexConcat(//
-								new RegexLeaf("CODE3", CommandCreateElementFull.CODE), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "CODE3", CommandCreateElementFull.CODE), //
 								new RegexOptional( //
 										new RegexConcat( //
-												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE3", "(\\<\\<.+\\>\\>)") //
+												PatternCacheStrategy.CACHE, //
+												RegexLeaf.spaceOneOrMore(),
+												new RegexLeaf(1, "STEREOTYPE3", "(\\<\\<.+\\>\\>)") //
 										)), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("DISPLAY3", CommandCreateElementFull.DISPLAY)), //
+								RegexLeaf.spaceZeroOrMore(),
+								new RegexLeaf(1, "DISPLAY3", CommandCreateElementFull.DISPLAY)), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY4", CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
+								PatternCacheStrategy.CACHE, //
+								new RegexLeaf(1, "DISPLAY4", CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
 								new RegexOptional( //
 										new RegexConcat( //
-												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE4", "(\\<\\<.+\\>\\>)") //
+												PatternCacheStrategy.CACHE, //
+												RegexLeaf.spaceOneOrMore(),
+												new RegexLeaf(1, "STEREOTYPE4", "(\\<\\<.+\\>\\>)") //
 										)), //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE4", CommandCreateElementFull.CODE)) //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf(1, "CODE4", CommandCreateElementFull.CODE)) //
 				), //
 				new RegexOptional( //
 						new RegexConcat( //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)") //
+								PatternCacheStrategy.CACHE, //
+								RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "STEREOTYPE", "(\\<\\<.+\\>\\>)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
@@ -139,8 +144,8 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		String codeRaw = arg.getLazzy("CODE", 0);
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 		final String symbol = "interface";
@@ -163,7 +168,8 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
-		final Entity entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);
+		final Entity entity = diagram.reallyCreateLeaf(location, quark,
+				Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));
 
 		if (stereotype != null)

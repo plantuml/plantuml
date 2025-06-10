@@ -77,7 +77,7 @@ public class Pattern2 {
 
 	private Pattern2(String s) {
 		this.patternString = s;
-		this.pattern = new Lazy<>(() -> Pattern.compile(transform(patternString), Pattern.CASE_INSENSITIVE));
+		this.pattern = new Lazy<>(() -> compileInternal(patternString));
 
 	}
 
@@ -89,12 +89,16 @@ public class Pattern2 {
 		return patternString;
 	}
 
-	public static Pattern2 cmpile(final String p) {
+	public static Pattern2 cmpile(PatternCacheStrategy strategy, final String p) {
 		if (p == null || p.length() == 0)
 			return EMPTY;
 
 		return cache.computeIfAbsent(p, key -> new Pattern2(key));
 
+	}
+
+	public static Pattern compileInternal(String patternString) {
+		return Pattern.compile(transform(patternString), Pattern.CASE_INSENSITIVE);
 	}
 
 	private static String transform(String p) {

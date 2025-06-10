@@ -55,7 +55,7 @@ public class CommandHideEmptyDescription extends SingleLineCommand2<UmlDiagram> 
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandHideEmptyDescription.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("HIDE", "(hide|show)"), //
+				new RegexLeaf(1, "HIDE", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("empty"), //
 				RegexLeaf.spaceOneOrMore(), //
