@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 	private final MultilinesStrategy strategy;
 
-	private final Pattern2 end;
+	private final Lazy&lt;Pattern2&gt; end;
 
 <span class="fc" id="L57">	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {</span>
 <span class="pc bpc" id="L58" title="2 of 4 branches missed.">		assert patternStart.getPattern().startsWith(&quot;^&quot;) &amp;&amp; patternStart.getPattern().endsWith(&quot;$&quot;);</span>
@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 <span class="fc" id="L60">		this.strategy = strategy;</span>
 <span class="fc" id="L61">		this.starting = patternStart;</span>
 <span class="fc" id="L62">		this.trimEnd = trimEnd;</span>
-<span class="fc" id="L63">		this.end = Pattern2.cmpile(getPatternEnd());</span>
+<span class="fc" id="L63">		this.end = new Lazy&lt;&gt;(x -&gt; Pattern2.cmpile(getPatternEnd()));</span>
 <span class="fc" id="L64">	}</span>
 
 	public boolean syntaxWithFinalBracket() {
@@ -99,7 +99,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 <span class="fc bfc" id="L99" title="All 2 branches covered.">		if (lines.size() == 1)</span>
 <span class="fc" id="L100">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L102">		final Matcher2 m1 = end.matcher(trimEnd.trim(lines.getLast()));</span>
+<span class="fc" id="L102">		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()));</span>
 <span class="fc bfc" id="L103" title="All 2 branches covered.">		if (m1.matches() == false)</span>
 <span class="fc" id="L104">			return CommandControl.OK_PARTIAL;</span>
 

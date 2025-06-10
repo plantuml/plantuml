@@ -146,8 +146,8 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="fc" id="L146">			g2d.drawString(text, (float) x, (float) y);</span>
 
 <span class="fc bfc" id="L148" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">				if (extended != null)</span>
-<span class="nc" id="L150">					g2d.setColor(extended.toColor(mapper));</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">				if (extended != null)</span>
+<span class="fc" id="L150">					g2d.setColor(extended.toColor(mapper));</span>
 
 <span class="fc" id="L152">				final UStroke stroke = fontConfiguration.getUnderlineStroke();</span>
 <span class="pc bpc" id="L153" title="1 of 2 branches missed.">				if (stroke.getThickness() &gt; 0) {</span>

@@ -431,12 +431,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public void startGroup(Display name, HColor backColor, USymbol type, Style style) {
-<span class="fc" id="L434">		manageSwimlaneStrategy();</span>
-<span class="fc" id="L435">		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor,</span>
-<span class="fc" id="L436">				swimlanes.getCurrentSwimlane(), nextLinkRenderer(), type, style);</span>
-<span class="fc" id="L437">		current().add(instructionGroup);</span>
-<span class="fc" id="L438">		setCurrent(instructionGroup);</span>
-<span class="fc" id="L439">	}</span>
+<span class="nc" id="L434">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L435">		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor,</span>
+<span class="nc" id="L436">				swimlanes.getCurrentSwimlane(), nextLinkRenderer(), type, style);</span>
+<span class="nc" id="L437">		current().add(instructionGroup);</span>
+<span class="nc" id="L438">		setCurrent(instructionGroup);</span>
+<span class="nc" id="L439">	}</span>
 
 	public CommandExecutionResult endGroup() {
 <span class="nc bnc" id="L442" title="All 2 branches missed.">		if (current() instanceof InstructionGroup) {</span>

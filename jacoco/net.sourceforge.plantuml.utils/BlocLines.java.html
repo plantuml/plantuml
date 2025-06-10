@@ -319,8 +319,8 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 	}
 
 	private static StringLocated removeStartingSpaces(StringLocated arg, int nbStartingSpace) {
-<span class="pc bpc" id="L322" title="1 of 2 branches missed.">		if (arg.getString().length() == 0)</span>
-<span class="nc" id="L323">			return arg;</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">		if (arg.getString().length() == 0)</span>
+<span class="fc" id="L323">			return arg;</span>
 
 <span class="fc" id="L325">		int i = 0;</span>
 <span class="pc bpc" id="L326" title="1 of 6 branches missed.">		while (i &lt; nbStartingSpace &amp;&amp; i &lt; arg.getString().length() &amp;&amp; isSpaceOrTab(arg.getString().charAt(i)))</span>

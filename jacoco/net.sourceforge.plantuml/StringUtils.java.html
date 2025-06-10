@@ -155,15 +155,15 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L155">	}</span>
 
 	final static public List&lt;String&gt; getSplit(Pattern2 pattern, String line) {
-<span class="nc" id="L158">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L158">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L160">			return null;</span>
 
-<span class="nc" id="L162">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		for (int i = 1; i &lt;= m.groupCount(); i++)</span>
-<span class="nc" id="L164">			result.add(m.group(i));</span>
+<span class="fc" id="L162">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		for (int i = 1; i &lt;= m.groupCount(); i++)</span>
+<span class="fc" id="L164">			result.add(m.group(i));</span>
 
-<span class="nc" id="L166">		return result;</span>
+<span class="fc" id="L166">		return result;</span>
 	}
 
 	public static boolean isNotEmpty(CharSequence s) {

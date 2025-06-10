@@ -169,10 +169,10 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 <span class="fc" id="L169">	}</span>
 
 	public DisplayPositionned getTitle() {
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (source == null)</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (source == null)</span>
 <span class="nc" id="L173">			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
 
-<span class="fc" id="L175">		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
+<span class="nc" id="L175">		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
 	}
 
 	public String getWarningOrError() {

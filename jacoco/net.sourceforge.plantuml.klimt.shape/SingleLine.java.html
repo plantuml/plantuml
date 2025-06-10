@@ -54,8 +54,8 @@ public class SingleLine extends AbstractTextBlock implements Line {
 
 	public static SingleLine rawText(String text, FontConfiguration fontConfiguration) {
 <span class="fc" id="L56">		final SingleLine result = new SingleLine(HorizontalAlignment.LEFT);</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (text.length() == 0)</span>
-<span class="fc" id="L58">			text = &quot; &quot;;</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (text.length() == 0)</span>
+<span class="nc" id="L58">			text = &quot; &quot;;</span>
 
 <span class="fc" id="L60">		result.blocs.add(new TileText(text, fontConfiguration, null));</span>
 <span class="fc" id="L61">		return result;</span>

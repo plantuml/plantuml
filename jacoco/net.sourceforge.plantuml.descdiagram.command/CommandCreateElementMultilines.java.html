@@ -83,10 +83,10 @@ public class CommandCreateElementMultilines extends CommandMultilines2&lt;Abstra
 	@Override
 	public String getPatternEnd() {
 <span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (type == 0)</span>
-<span class="fc" id="L86">			return &quot;^(.*)[%g]$&quot;;</span>
+<span class="nc" id="L86">			return &quot;^(.*)[%g]$&quot;;</span>
 
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (type == 1)</span>
-<span class="nc" id="L89">			return &quot;^([^\\[\\]]*)\\]$&quot;;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (type == 1)</span>
+<span class="fc" id="L89">			return &quot;^([^\\[\\]]*)\\]$&quot;;</span>
 
 <span class="nc" id="L91">		throw new IllegalArgumentException();</span>
 	}
@@ -126,71 +126,71 @@ public class CommandCreateElementMultilines extends CommandMultilines2&lt;Abstra
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L129">		final LineLocation location = lines.getLocation();</span>
+<span class="fc" id="L129">		final LineLocation location = lines.getLocation();</span>
 
-<span class="nc" id="L131">		lines = lines.trimSmart(1).expandsNewline(false);</span>
-<span class="nc" id="L132">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L133">		final String symbol = StringUtils.goUpperCase(line0.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc" id="L131">		lines = lines.trimSmart(1).expandsNewline(false);</span>
+<span class="fc" id="L132">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L133">		final String symbol = StringUtils.goUpperCase(line0.get(&quot;TYPE&quot;, 0));</span>
 		final LeafType type;
 		USymbol usymbol;
 
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (symbol.equalsIgnoreCase(&quot;usecase&quot;)) {</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (symbol.equalsIgnoreCase(&quot;usecase&quot;)) {</span>
 <span class="nc" id="L138">			type = LeafType.USECASE;</span>
 <span class="nc" id="L139">			usymbol = USymbols.USECASE;</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase/&quot;)) {</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase/&quot;)) {</span>
 <span class="nc" id="L141">			type = LeafType.USECASE_BUSINESS;</span>
 <span class="nc" id="L142">			usymbol = USymbols.USECASE_BUSINESS;</span>
 		} else {
-<span class="nc" id="L144">			usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),</span>
-<span class="nc" id="L145">					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (usymbol == null)</span>
+<span class="fc" id="L144">			usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),</span>
+<span class="fc" id="L145">					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (usymbol == null)</span>
 <span class="nc" id="L147">				throw new IllegalStateException();</span>
 
-<span class="nc" id="L149">			type = LeafType.DESCRIPTION;</span>
+<span class="fc" id="L149">			type = LeafType.DESCRIPTION;</span>
 		}
 
-<span class="nc" id="L152">		final String idShort = line0.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L153">		final List&lt;String&gt; lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),</span>
-<span class="nc" id="L154">				lines.getLast().getTrimmed().getString());</span>
-<span class="nc" id="L155">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L156">		Display display = lines.toDisplay();</span>
-<span class="nc" id="L157">		final String descStart = line0.get(&quot;DESC&quot;, 0);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(descStart))</span>
+<span class="fc" id="L152">		final String idShort = line0.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L153">		final List&lt;String&gt; lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),</span>
+<span class="fc" id="L154">				lines.getLast().getTrimmed().getString());</span>
+<span class="fc" id="L155">		lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L156">		Display display = lines.toDisplay();</span>
+<span class="fc" id="L157">		final String descStart = line0.get(&quot;DESC&quot;, 0);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(descStart))</span>
 <span class="nc" id="L159">			display = display.addFirst(descStart);</span>
 
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(lineLast.get(0)))</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(lineLast.get(0)))</span>
 <span class="nc" id="L162">			display = display.add(lineLast.get(0));</span>
 
-<span class="nc" id="L164">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L164">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc" id="L166">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
-<span class="nc" id="L167">		Entity result = quark.getData();</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (quark.getData() == null)</span>
-<span class="nc" id="L169">			result = diagram.reallyCreateLeaf(location, quark, display, type, usymbol);</span>
+<span class="fc" id="L166">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="fc" id="L167">		Entity result = quark.getData();</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="fc" id="L169">			result = diagram.reallyCreateLeaf(location, quark, display, type, usymbol);</span>
 
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))</span>
 <span class="nc" id="L172">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
 
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (stereotype != null)</span>
 <span class="nc" id="L175">			result.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
 <span class="nc" id="L176">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
 <span class="nc" id="L177">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L179">		final String urlString = line0.get(&quot;URL&quot;, 0);</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="fc" id="L179">		final String urlString = line0.get(&quot;URL&quot;, 0);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L181">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L182">			final Url url = urlBuilder.getUrl(urlString);</span>
 <span class="nc" id="L183">			result.addUrl(url);</span>
 		}
 
-<span class="nc" id="L186">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L187">		result.setColors(colors);</span>
+<span class="fc" id="L186">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L187">		result.setColors(colors);</span>
 
-<span class="nc" id="L189">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L189">		return CommandExecutionResult.ok();</span>
 	}
 
 	private static ColorParser color() {
-<span class="nc" id="L193">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L193">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 }
