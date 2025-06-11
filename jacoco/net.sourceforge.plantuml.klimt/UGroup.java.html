@@ -38,33 +38,42 @@ package net.sourceforge.plantuml.klimt;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UGroup {
 
-<span class="fc" id="L46">	private final Map&lt;UGroupType, String&gt; map = new EnumMap&lt;&gt;(UGroupType.class);</span>
+<span class="fc" id="L47">	private final Map&lt;UGroupType, String&gt; map = new EnumMap&lt;&gt;(UGroupType.class);</span>
 
-<span class="fc" id="L48">	public UGroup(LineLocation location) {</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">		if (location != null)</span>
-<span class="fc" id="L50">			map.put(UGroupType.DATA_SOURCE_LINE, &quot;&quot; + location.getPosition());</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L49">	public UGroup(LineLocation location) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (location != null)</span>
+<span class="fc" id="L51">			map.put(UGroupType.DATA_SOURCE_LINE, &quot;&quot; + location.getPosition());</span>
+<span class="fc" id="L52">	}</span>
 
-<span class="fc" id="L53">	public UGroup() {</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">	public UGroup() {</span>
+<span class="fc" id="L55">	}</span>
 
 	public void put(UGroupType key, String value) {
-<span class="fc" id="L57">		map.put(key, value);</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L58">		value = fix(value);</span>
+<span class="fc" id="L59">		map.put(key, value);</span>
+<span class="fc" id="L60">	}</span>
 
 	public static UGroup singletonMap(UGroupType key, String value) {
-<span class="fc" id="L61">		final UGroup result = new UGroup();</span>
-<span class="fc" id="L62">		result.put(key, value);</span>
-<span class="fc" id="L63">		return result;</span>
+<span class="fc" id="L63">		value = fix(value);</span>
+<span class="fc" id="L64">		final UGroup result = new UGroup();</span>
+<span class="fc" id="L65">		result.put(key, value);</span>
+<span class="fc" id="L66">		return result;</span>
+	}
+
+<span class="fc" id="L69">	private static final Pattern NON_WORD = Pattern.compile(&quot;[^-\\w ]&quot;);</span>
+
+	private static String fix(String value) {
+<span class="fc" id="L72">		return NON_WORD.matcher(value).replaceAll(&quot;.&quot;);</span>
 	}
 
 	public Map&lt;UGroupType, String&gt; asMap() {
-<span class="fc" id="L67">		return Collections.unmodifiableMap(map);</span>
+<span class="fc" id="L76">		return Collections.unmodifiableMap(map);</span>
 	}
 
 }
