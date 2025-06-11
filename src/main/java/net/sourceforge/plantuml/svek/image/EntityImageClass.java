@@ -161,14 +161,14 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_) //
 				.withTOBECHANGED(getEntity().getStereotype()) //
 				.with(getEntity().getStereostyles()) //
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyle(getEntity().getCurrentStyleBuilder());
 	}
 
 	private Style getStyleHeader() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
 				.withTOBECHANGED(getEntity().getStereotype()) //
 				.with(getEntity().getStereostyles()) //
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyle(getEntity().getCurrentStyleBuilder());
 	}
 
 	private void drawInternal(UGraphic ug) {

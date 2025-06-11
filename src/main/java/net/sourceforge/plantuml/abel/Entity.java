@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Kal;
 import net.sourceforge.plantuml.svek.Margins;
@@ -86,6 +87,7 @@ import net.sourceforge.plantuml.utils.Position;
 
 final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, Bag {
 
+	private final StyleBuilder currentStyleBuilder;
 	private final CucaDiagram diagram;
 
 	private final Quark<Entity> quark;
@@ -156,8 +158,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	// Back to Entity
-	private Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, int rawLayout) {
+	private Entity(StyleBuilder currentStyleBuilder, LineLocation location, Quark<Entity> quark, CucaDiagram diagram,
+			Bodier bodier, int rawLayout) {
 		this.location = location;
+		this.currentStyleBuilder = currentStyleBuilder;
 		this.quark = Objects.requireNonNull(quark);
 		this.diagram = diagram;
 		if (quark.isRoot())
@@ -169,15 +173,15 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		this.quark.setData(this);
 	}
 
-	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, LeafType leafType,
-			int rawLayout) {
-		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
+	public Entity(StyleBuilder currentStyleBuilder, LineLocation location, Quark<Entity> quark, CucaDiagram diagram,
+			Bodier bodier, LeafType leafType, int rawLayout) {
+		this(currentStyleBuilder, location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.leafType = leafType;
 	}
 
-	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, GroupType groupType,
-			int rawLayout) {
-		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
+	public Entity(StyleBuilder currentStyleBuilder, LineLocation location, Quark<Entity> quark, CucaDiagram diagram,
+			Bodier bodier, GroupType groupType, int rawLayout) {
+		this(currentStyleBuilder, location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.groupType = groupType;
 	}
 
@@ -740,6 +744,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	public LineLocation getLocation() {
 		return location;
+	}
+
+	public StyleBuilder getCurrentStyleBuilder() {
+		return currentStyleBuilder;
 	}
 
 }
