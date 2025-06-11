@@ -82,7 +82,7 @@ public class CircleEnd implements UDrawable {
 		final double shadowing = style.getShadowing();
 
 		circle.setDeltaShadow(shadowing);
-		ug.apply(HColors.none().bg()).apply(lineColor).draw(circle);
+		ug.apply(HColors.none().bg()).apply(lineColor).apply(style.getStroke()).draw(circle);
 
 		final double delta = 5;
 		final UShape circleSmall = UEllipse.build(SIZE - delta * 2, SIZE - delta * 2);

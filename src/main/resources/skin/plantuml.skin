@@ -259,6 +259,7 @@ stateDiagram {
   }
   circle {
    start, stop, end {
+      LineThickness 1
 	    LineColor #2
 	    BackgroundColor #2
     }
@@ -343,9 +344,13 @@ activityDiagram {
 	}
 	circle {
 	    start, stop, end {
+        LineThickness 1
 		    LineColor #2
 		    BackgroundColor #2
 	    }
+      end {
+        LineThickness 1.5
+      }
 	}
 	activityBar {
 	  BackgroundColor #5
@@ -516,7 +521,14 @@ nwdiagDiagram {
 	}
 }
 
+/*
+ ____             _                            _
+|  _ \  __ _ _ __| | __    _ __ ___   ___   __| | ___
+| | | |/ _` | '__| |/ /   | '_ ` _ \ / _ \ / _` |/ _ \
+| |_| | (_| | |  |   <    | | | | | | (_) | (_| |  __/
+|____/ \__,_|_|  |_|\_\   |_| |_| |_|\___/ \__,_|\___|
 
+*/
 @media (prefers-color-scheme:dark) {
 root {
   HyperLinkColor blue
@@ -645,6 +657,14 @@ activityDiagram {
 	}
 }
 
+stateDiagram {
+  circle {
+    start, stop, end {
+      LineColor #d
+      BackgroundColor #d
+    }
+  }
+}
 
 milestone {
 	BackGroundColor white
