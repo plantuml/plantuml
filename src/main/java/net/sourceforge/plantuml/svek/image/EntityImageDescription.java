@@ -141,17 +141,17 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final Stereotype stereotype = entity.getStereotype();
 		final Style styleTitle = signatureTitle.withTOBECHANGED(stereotype)
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
+				.getMergedStyle(getEntity().getCurrentStyleBuilder()).eventuallyOverride(colors);
 
 		final Style styleStereo = StyleSignatureBasic
 				.of(SName.root, SName.element, getStyleName(), symbol.getSNames(), SName.stereotype)
-				.forStereotypeItself(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.forStereotypeItself(stereotype).getMergedStyle(getEntity().getCurrentStyleBuilder());
 
 		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(),
 				symbol.getSNames());
 
-		final Style style = signature.withTOBECHANGED(stereotype)
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
+		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(getEntity().getCurrentStyleBuilder())
+				.eventuallyOverride(colors);
 
 		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
