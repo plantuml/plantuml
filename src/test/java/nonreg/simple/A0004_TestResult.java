@@ -75,7 +75,7 @@ ELLIPSE:
   pt2: [ 148.0000 ; 677.0000 ]
   start: 0.0
   extend: 0.0
-  stroke: 0.0-0.0-1.0
+  stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff222222
   backcolor: NULL_COLOR
