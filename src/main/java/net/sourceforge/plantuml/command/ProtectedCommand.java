@@ -75,10 +75,6 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 		return cmd.isValid(lines);
 	}
 
-	public String[] getDescription() {
-		return cmd.getDescription();
-	}
-
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return cmd.isEligibleFor(pass);

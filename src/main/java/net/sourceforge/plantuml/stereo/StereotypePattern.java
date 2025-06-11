@@ -51,13 +51,14 @@ public class StereotypePattern {
 	}
 
 	public static IRegex mandatory(String param) {
-		return new RegexLeaf(param, "(\\<\\<.+\\>\\>)");
+		return new RegexLeaf(1, param, "(\\<\\<.+\\>\\>)");
 	}
 
 	public static IRegex optionalArchimate(String param) {
 		return new RegexConcat( //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(param, "(\\<\\<[-\\w]+\\>\\>)")), //
+				new RegexOptional(//
+						new RegexLeaf(1, param, "(\\<\\<[-\\w]+\\>\\>)")), //
 				RegexLeaf.spaceZeroOrMore() //
 		);
 	}

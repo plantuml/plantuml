@@ -47,19 +47,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFootbox extends SingleLineCommand2<SequenceDiagram> {
 
-	public CommandFootbox() {
-		super(getRegexConcat());
-	}
+	public static final IRegex HIDE_SHOW_FOOTBOX = RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //
+			new RegexLeaf(1, "TYPE", "(hide|show)?"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexLeaf("footbox"), RegexLeaf.end()); //
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(hide|show)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("footbox"), RegexLeaf.end()); //
+	public CommandFootbox() {
+		super(HIDE_SHOW_FOOTBOX);
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final boolean footbox = arg.get("TYPE", 0).equalsIgnoreCase("show");
 		diagram.setShowFootbox(footbox);
 		return CommandExecutionResult.ok();

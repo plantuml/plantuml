@@ -66,22 +66,22 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 						new RegexLeaf("\\("), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf("INCOMING", "(.*?)"), //
+								new RegexLeaf(1, "INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, "INCOMING", "(.*?)"), //
 						new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("backward"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("LABEL", "(.*?)"), //
-				new RegexLeaf("STYLE", CommandActivity3.endingGroup()), //
+				new RegexLeaf(1, "LABEL", "(.*?)"), //
+				new RegexLeaf(2, "STYLE", CommandActivity3.endingGroup()), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf("\\("), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("OUTCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf("OUTCOMING", "(.*?)"), //
+								new RegexLeaf(1, "OUTCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, "OUTCOMING", "(.*?)"), //
 						new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());

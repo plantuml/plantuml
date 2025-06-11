@@ -55,7 +55,7 @@ public class CommandHSpace extends SingleLineCommand2<SequenceDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandHSpace.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\|\\|"), //
-				new RegexLeaf("VALUE", "(\\d+)?"), //
+				new RegexLeaf(1, "VALUE", "(\\d+)?"), //
 				new RegexLeaf("\\|+"), RegexLeaf.end()); //
 	}
 

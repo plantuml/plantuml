@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Collections;
-
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;

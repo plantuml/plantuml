@@ -61,22 +61,23 @@ public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("on"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("POSITION", "(first|last)"), //
+				new RegexLeaf(1, "POSITION", "(first|last)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("column"), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("and"), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("ALIGNED", "(left|right)"), //
+						new RegexLeaf(1, "ALIGNED", "(left|right)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("aligned") //
-				)), // 
+				)), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final LabelPosition position = "first".equalsIgnoreCase(arg.get("POSITION", 0)) ? LabelPosition.FIRST_COLUMN
 				: LabelPosition.LAST_COLUMN;
 		final HorizontalAlignment alignment = "right".equalsIgnoreCase(arg.get("ALIGNED", 0))

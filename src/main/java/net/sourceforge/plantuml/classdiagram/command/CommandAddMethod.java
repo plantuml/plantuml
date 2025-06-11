@@ -59,11 +59,11 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAddMethod.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("NAME", "([%pLN_.]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "NAME", "([%pLN_.]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("DATA", "(.*)"), //
+				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end()); //
 	}
 

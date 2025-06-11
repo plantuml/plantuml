@@ -57,9 +57,9 @@ public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandColorTask.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("CODE", "\\[([%pLN_.]+)\\]"), //
+				new RegexLeaf(1, "CODE", "\\[([%pLN_.]+)\\]"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("COLORS", "#(\\w+)(?:/(#?\\w+))?"), //
+				new RegexLeaf(2, "COLORS", "#(\\w+)(?:/(#?\\w+))?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

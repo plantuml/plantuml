@@ -66,10 +66,6 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 		return false;
 	}
 
-	public String[] getDescription() {
-		return new String[] { pattern.getClass().getName() };
-	}
-
 	private String myTrim(StringLocated s) {
 		if (doTrim)
 			return s.getTrimmed().getString();

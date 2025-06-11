@@ -113,18 +113,18 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 	public IRegex toRegex() {
 		return new RegexOr( //
-				new RegexLeaf("IT", "(it)"), //
-				new RegexConcat(new RegexLeaf("THEN", "(then[%s]+)?"), //
-						new RegexLeaf("SUBJECT", REGEX_TASK_CODE), //
+				new RegexLeaf(1, "IT", "(it)"), //
+				new RegexConcat(new RegexLeaf(1, "THEN", "(then[%s]+)?"), //
+						new RegexLeaf(1, "SUBJECT", REGEX_TASK_CODE), //
 						StereotypePattern.optional("STEREOTYPE"), //
 						new RegexOptional(new RegexConcat(//
 								Words.exactly(Words.AS), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("SHORTNAME", REGEX_TASK_CODE))), //
+								new RegexLeaf(1, "SHORTNAME", REGEX_TASK_CODE))), //
 						new RegexOptional(new RegexConcat( //
 								Words.exactly(Words.ON), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
+								new RegexLeaf(1, "RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
 						))));
 	}
 

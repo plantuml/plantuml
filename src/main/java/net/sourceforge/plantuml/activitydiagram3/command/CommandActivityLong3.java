@@ -54,16 +54,13 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 
-	public CommandActivityLong3() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.NONE);
-	}
+	private final static IRegex END = new RegexConcat(//
+			new RegexLeaf(1, "TEXT", "(.*)"), //
+			new RegexLeaf(2, "END", CommandActivity3.endingGroup()), //
+			RegexLeaf.end());
 
-	@Override
-	public RegexConcat getPatternEnd2() {
-		return new RegexConcat(//
-				new RegexLeaf("TEXT", "(.*)"), //
-				new RegexLeaf("END", CommandActivity3.endingGroup()), //
-				RegexLeaf.end());
+	public CommandActivityLong3() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.NONE, END);
 	}
 
 	private static ColorParser color() {
@@ -74,7 +71,7 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 		return RegexConcat.build(CommandActivityLong3.class.getName(), RegexLeaf.start(), //
 				color().getRegex(), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("DATA", "(.*)"), //
+				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
 	}
 
@@ -84,7 +81,7 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 
-		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());
+		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
 
 		final String end = lineLast.get("END", 0);
 

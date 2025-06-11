@@ -61,14 +61,15 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 						new RegexLeaf("as"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf(":"), //
-						new RegexLeaf("CODE", "([%pLN_.]+)") //
+						new RegexLeaf(1, "CODE", "([%pLN_.]+)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final TimeTick timeTick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
 		if (timeTick == null)
 			return CommandExecutionResult.error("What time?");

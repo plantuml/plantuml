@@ -61,7 +61,7 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("switch"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf(1, "TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());

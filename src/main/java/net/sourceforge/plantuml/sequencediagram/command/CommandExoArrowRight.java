@@ -52,28 +52,28 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandExoArrowRight.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("ANCHOR", CommandArrow.ANCHOR), //
-				new RegexLeaf("PARTICIPANT", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(2, "ANCHOR", CommandArrow.ANCHOR), //
+				new RegexLeaf(1, "PARTICIPANT", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(ARROW_SUPPCIRCLE1, "([%s]+[ox])?"), //
+				new RegexLeaf(1, ARROW_SUPPCIRCLE1, "([%s]+[ox])?"), //
 				new RegexOr( //
 						new RegexConcat( //
-								new RegexLeaf("ARROW_BOTHDRESSING", "(<<?|//?|\\\\\\\\?)?"), //
-								new RegexLeaf("ARROW_BODYA1", "(-+)"), //
-								new RegexLeaf("ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
-								new RegexLeaf("ARROW_BODYB1", "(-*)"), //
-								new RegexLeaf("ARROW_DRESSING1", "(>>?|//?|\\\\\\\\?)")), //
+								new RegexLeaf(1, "ARROW_BOTHDRESSING", "(<<?|//?|\\\\\\\\?)?"), //
+								new RegexLeaf(1, "ARROW_BODYA1", "(-+)"), //
+								new RegexLeaf(1, "ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
+								new RegexLeaf(1, "ARROW_BODYB1", "(-*)"), //
+								new RegexLeaf(1, "ARROW_DRESSING1", "(>>?|//?|\\\\\\\\?)")), //
 						new RegexConcat( //
-								new RegexLeaf("ARROW_DRESSING2", "(<<?|//?|\\\\\\\\?)"), //
-								new RegexLeaf("ARROW_BODYB2", "(-*)"), //
-								new RegexLeaf("ARROW_STYLE2", CommandArrow.getColorOrStylePattern()), //
-								new RegexLeaf("ARROW_BODYA2", "(-+)"))), //
-				new RegexLeaf(ARROW_SUPPCIRCLE2, "([ox]?[?\\]\\[])?"), //
+								new RegexLeaf(1, "ARROW_DRESSING2", "(<<?|//?|\\\\\\\\?)"), //
+								new RegexLeaf(1, "ARROW_BODYB2", "(-*)"), //
+								new RegexLeaf(1, "ARROW_STYLE2", CommandArrow.getColorOrStylePattern()), //
+								new RegexLeaf(1, "ARROW_BODYA2", "(-+)"))), //
+				new RegexLeaf(1, ARROW_SUPPCIRCLE2, "([ox]?[?\\]\\[])?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
+				new RegexLeaf(1, "ACTIVATION", "(?:([+*!-]+)?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
+				new RegexLeaf(1, "LIFECOLOR", "(?:(#\\w+)?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -81,7 +81,7 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("LABEL", "(.*)") //
+								new RegexLeaf(1, "LABEL", "(.*)") //
 						)), RegexLeaf.end());
 	}
 

@@ -52,23 +52,14 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 
+	private final static IRegex END = new RegexConcat(//
+			new RegexLeaf(1, "TEXT", "(.*)"), //
+			new RegexLeaf(2, "END", CommandActivity3.endingGroup()), //
+			RegexLeaf.end());
+
 	public CommandBackwardLong3() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
-
-	@Override
-	public RegexConcat getPatternEnd2() {
-		return new RegexConcat(//
-				new RegexLeaf("TEXT", "(.*)"), //
-				new RegexLeaf("END", CommandActivity3.endingGroup()), //
-				RegexLeaf.end());
-	}
-
-//
-//	@Override
-//	public String getPatternEnd() {
-//		return "^(.*)" + CommandActivity3.endingGroup() + "$";
-//	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandBackwardLong3.class.getName(), RegexLeaf.start(), //
@@ -77,7 +68,7 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DATA", "(.*)"), //
+				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
 	}
 
@@ -85,7 +76,7 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());
+		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
 		final String end = lineLast.get("END", 0);
 		final String stereo = lineLast.get("END", 1);
 

@@ -143,9 +143,9 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 	private IRegex toRegexE() {
 		return new RegexConcat( //
-				new RegexLeaf("ETYPE", "([dDtTeE])"), //
-				new RegexLeaf("EOPERATION", "([-+])"), //
-				new RegexLeaf("ECOUNT", "([\\d]+)") //
+				new RegexLeaf(1, "ETYPE", "([dDtTeE])"), //
+				new RegexLeaf(1, "EOPERATION", "([-+])"), //
+				new RegexLeaf(1, "ECOUNT", "([\\d]+)") //
 		);
 	}
 

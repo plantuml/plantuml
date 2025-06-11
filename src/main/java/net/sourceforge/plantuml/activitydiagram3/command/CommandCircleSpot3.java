@@ -57,7 +57,7 @@ public class CommandCircleSpot3 extends SingleLineCommand2<ActivityDiagram3> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCircleSpot3.class.getName(), RegexLeaf.start(), //
 				ColorParser.exp4(), //
-				new RegexLeaf("SPOT", "\\((\\S)\\)"), //
+				new RegexLeaf(1, "SPOT", "\\((\\S)\\)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

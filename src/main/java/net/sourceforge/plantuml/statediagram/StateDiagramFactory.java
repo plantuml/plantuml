@@ -101,7 +101,7 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 		cmds.add(new CommandUrl());
 
-		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();
+		final CommandFactoryNote factoryNoteCommand = CommandFactoryNote.ME;
 		cmds.add(factoryNoteCommand.createSingleLine());
 		cmds.add(factoryNoteCommand.createMultiLine(false));
 
@@ -112,11 +112,10 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandHideShow2());
 	}
-	
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.STATE;
 	}
-
 
 }

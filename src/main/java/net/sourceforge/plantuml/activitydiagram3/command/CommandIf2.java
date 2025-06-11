@@ -68,22 +68,22 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("if"), //
 				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf(1, "TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf("then"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexOptional(new RegexLeaf("WHEN", "\\((.+?)\\)")) //
+								new RegexOptional(new RegexLeaf(1, "WHEN", "\\((.+?)\\)")) //
 						)), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
@@ -100,7 +100,8 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		}
 		final Stereotype stereotype = Stereotype.build(arg.get("STEREO", 0));
 
-		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), test), Display.getWithNewlines(diagram.getPragma(), arg.get("WHEN", 0)), color, url, stereotype);
+		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), test),
+				Display.getWithNewlines(diagram.getPragma(), arg.get("WHEN", 0)), color, url, stereotype);
 
 		return CommandExecutionResult.ok();
 	}

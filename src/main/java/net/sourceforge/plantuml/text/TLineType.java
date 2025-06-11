@@ -68,7 +68,7 @@ public enum TLineType {
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
 
 	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
-			new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(), new RegexLeaf("(local|global)?"),
+			new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "(local|global)?"),
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\$?"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\??="));
 
@@ -93,12 +93,12 @@ public enum TLineType {
 	private static final IRegex PATTERN_IF = simpleKeyword("!if");
 
 	private static final IRegex PATTERN_DECLARE_RETURN_FUNCTION = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf("(unquoted\\s|final\\s)*"),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf(1, "(unquoted\\s|final\\s)*"),
 			new RegexLeaf("function"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("\\$?"),
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
 	private static final IRegex PATTERN_DECLARE_PROCEDURE = new RegexConcat(RegexLeaf.start(),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf("(unquoted\\s|final\\s)*"),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), new RegexLeaf(1, "(unquoted\\s|final\\s)*"),
 			new RegexLeaf("procedure"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("\\$?"),
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 

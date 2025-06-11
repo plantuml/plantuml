@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -42,29 +43,28 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandEbnfMultilines extends CommandMultilines2<PSystemEbnf> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);$"));
+
 	public CommandEbnfMultilines() {
-		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEbnfMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("LINE", "([%pLN_][-%pLN_]*[%s]*=.*)"), //
+				new RegexLeaf(1, "LINE", "([%pLN_][-%pLN_]*[%s]*=.*)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^(.*);$";
-	}
-
-	@Override
-	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		return diagram.addBlocLines(lines, null, null);
 	}
 

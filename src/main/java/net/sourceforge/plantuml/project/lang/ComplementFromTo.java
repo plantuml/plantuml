@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 public class ComplementFromTo implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix, "from[%s]+\\[([^\\[\\]]+)\\][%s]+to[%s]+\\[([^\\[\\]]+)\\]");
+		return new RegexLeaf(2, "COMPLEMENT" + suffix, "from[%s]+\\[([^\\[\\]]+)\\][%s]+to[%s]+\\[([^\\[\\]]+)\\]");
 	}
 
 	public Failable<TwoNames> getMe(GanttDiagram system, RegexResult arg, String suffix) {

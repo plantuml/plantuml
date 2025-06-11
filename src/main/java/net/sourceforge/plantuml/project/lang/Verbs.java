@@ -51,13 +51,13 @@ public class Verbs {
 	public static IRegex isDisplayedAs = new RegexLeaf("is[%s]+displayed[%s]+as");
 	public static IRegex isOff = new RegexLeaf("is[%s]+off");
 	public static IRegex isOn = new RegexLeaf("is[%s]+on");
-	public static IRegex isOrAre = new RegexLeaf("(is|are)");
-	public static IRegex isOrAreNamed = new RegexLeaf("(is|are)[%s]+named");
+	public static IRegex isOrAre = new RegexLeaf(1, "(is|are)");
+	public static IRegex isOrAreNamed = new RegexLeaf(1, "(is|are)[%s]+named");
 	public static IRegex just = new RegexLeaf("just");
 	public static IRegex linksTo = new RegexLeaf("links[%s]+to");
 	public static IRegex occurs = new RegexLeaf("occurs");
 	public static IRegex pauses = new RegexLeaf("pauses");
-	public static IRegex requires = new RegexLeaf("(lasts|requires)");
+	public static IRegex requires = new RegexLeaf(1, "(lasts|requires)");
 	public static IRegex starts = new RegexLeaf("starts");
 	public static IRegex worksOn = new RegexLeaf("works[%s]+on");
 

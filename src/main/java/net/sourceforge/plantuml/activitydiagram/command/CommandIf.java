@@ -69,34 +69,35 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 		return RegexConcat.build(CommandIf.class.getName(), RegexLeaf.start(), //
 				new RegexOptional(//
 						new RegexOr("FIRST", //
-								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-								new RegexLeaf("CODE", "([%pLN_.]+)"), //
-								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
+								new RegexLeaf(1, "STAR", "(\\(\\*(top)?\\))"), //
+								new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
+								new RegexLeaf(1, "BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf(1, "QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				// new RegexOptional(new RegexLeaf("ARROW",
 				// "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[=-]*\\>)")), //
 				new RegexOptional(new RegexConcat( //
-						new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
+						new RegexLeaf(1, "ARROW_BODY1", "([-.]+)"), //
+						new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
+						new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_BODY2", "([-.]*)"), //
 						new RegexLeaf("\\>") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
+				new RegexOptional(new RegexLeaf(1, "BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
-						new RegexLeaf("IF1", "if[%s]*[%g]([^%g]*)[%g][%s]*(?:as[%s]+([%pLN_.]+)[%s]+)?"), //
-						new RegexLeaf("IF2", "if[%s]+(.+?)")), //
+						new RegexLeaf(1, "IF1", "if[%s]*[%g]([^%g]*)[%g][%s]*(?:as[%s]+([%pLN_.]+)[%s]+)?"), //
+						new RegexLeaf(1, "IF2", "if[%s]+(.+?)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("then")), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final Entity entity1 = CommandLinkActivity.getEntity(location, diagram, arg, true);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No if possible at this point");
@@ -127,9 +128,10 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 
 		final Entity branch = diagram.getCurrentContext().getBranch();
 
-		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get("BRACKET", 0)), lenght);
-		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
-				branch, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get("BRACKET", 0)),
+				lenght);
+		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,
+				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		if (arg.get("ARROW", 0) != null) {
 			final Direction direction = StringUtils.getArrowDirection(arg.get("ARROW", 0));

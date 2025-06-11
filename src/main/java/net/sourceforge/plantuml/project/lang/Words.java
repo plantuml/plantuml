@@ -83,7 +83,7 @@ public class Words {
 	}
 
 	public static IRegex namedSingle(String name, String word) {
-		return new RegexLeaf(name, word);
+		return new RegexLeaf(1, name, word);
 	}
 
 	public static IRegex namedOneOf(String name, String... words) {

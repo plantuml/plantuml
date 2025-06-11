@@ -54,23 +54,22 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 
 	private final Lazy<Pattern2> end;
 
-	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {
-		assert patternStart.getPattern().startsWith("^") && patternStart.getPattern().endsWith("$");
+	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, Lazy<Pattern2> end) {
+		assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
+		assert end != null;
 
 		this.strategy = strategy;
 		this.starting = patternStart;
 		this.trimEnd = trimEnd;
-		this.end = new Lazy<>(x -> Pattern2.cmpile(getPatternEnd()));
+		this.end = end;
 	}
 
 	public boolean syntaxWithFinalBracket() {
 		return false;
 	}
 
-	public abstract String getPatternEnd();
+	public final void getPatternEndToto() {
 
-	public String[] getDescription() {
-		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd() };
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
@@ -136,6 +135,10 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
+	}
+
+	public Pattern2 getEndPattern() {
+		return end.get();
 	}
 
 }

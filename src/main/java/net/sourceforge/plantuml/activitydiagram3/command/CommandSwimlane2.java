@@ -62,20 +62,20 @@ public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceOneOrMore(), //
 				ColorParser.exp7(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("SWIMLANE", "([^|]+)"), //
+				new RegexLeaf(1, "SWIMLANE", "([^|]+)"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("LABEL", "([^|]+)") //
+								new RegexLeaf(1, "LABEL", "([^|]+)") //
 						)), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final String name = arg.get("SWIMLANE", 0);

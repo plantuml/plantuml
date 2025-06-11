@@ -66,13 +66,13 @@ public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 
 				new RegexLeaf("[%g]"), //
-				new RegexLeaf("DISPLAY", "([^%g]+)"), //
+				new RegexLeaf(1, "DISPLAY", "([^%g]+)"), //
 				new RegexLeaf("[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
 
-				new RegexLeaf("NAME", CommandNamespace.NAMESPACE_REGEX), //
+				new RegexLeaf(1, "NAME", CommandNamespace.NAMESPACE_REGEX), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //

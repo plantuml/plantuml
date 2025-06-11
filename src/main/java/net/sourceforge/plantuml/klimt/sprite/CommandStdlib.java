@@ -55,7 +55,7 @@ public class CommandStdlib extends SingleLineCommand2<StdlibDiagram> {
 		return RegexConcat.build(CommandStdlib.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("stdlib"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([-\\w.]+)"), //
+				new RegexLeaf(1, "NAME", "([-\\w.]+)"), //
 				RegexLeaf.end());
 	}
 

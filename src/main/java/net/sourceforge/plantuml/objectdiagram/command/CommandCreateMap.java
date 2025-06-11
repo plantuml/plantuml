@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
@@ -58,6 +59,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -71,22 +73,24 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^[%s]*\\}[%s]*$"));
+
 	public CommandCreateMap() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateMap.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "map"), //
+				new RegexLeaf(0, "TYPE", "map"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
+				new RegexLeaf(2, "NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
 				StereotypePattern.optional("STEREO"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
-						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
+				new RegexOptional(new RegexConcat(new RegexLeaf("##"), new RegexLeaf(2, "LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.end());
@@ -94,11 +98,6 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^[%s]*\\}[%s]*$";
 	}
 
 	@Override
@@ -130,8 +129,9 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 
 				final LinkType linkType = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 				final int length = linkStr.length() - 2;
-				final Link link = new Link(lines.getLocation(), diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
-						entity1, entity2, linkType, LinkArg.noDisplay(length));
+				final Link link = new Link(lines.getLocation(), diagram,
+						diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, linkType,
+						LinkArg.noDisplay(length));
 				link.setPortMembers(key, null);
 				diagram.addLink(link);
 			}
@@ -139,7 +139,8 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 		return CommandExecutionResult.ok();
 	}
 
-	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0)
+			throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(name));

@@ -57,14 +57,14 @@ public class CommandIfLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST", "(.+?)"), //
+				new RegexLeaf(1, "TEST", "(.+?)"), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("then"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("when"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("WHEN", "(.*)"), //
+				new RegexLeaf(1, "WHEN", "(.*)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -76,40 +77,37 @@ import net.sourceforge.plantuml.utils.Direction;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
 
-	public CommandLinkLongActivity() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
-	}
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?[%s]*(\\<\\<.*\\>\\>)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$"));
 
-	@Override
-	public String getPatternEnd() {
-		return "^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?[%s]*(\\<\\<.*\\>\\>)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$";
+	public CommandLinkLongActivity() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandLinkLongActivity.class.getName(), RegexLeaf.start(), //
 				new RegexOptional(//
 						new RegexOr("FIRST", //
-								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
-								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
+								new RegexLeaf(2, "STAR", "(\\(\\*(top)?\\))"), //
+								new RegexLeaf(1, "CODE", "([%pLN][%pLN_.]*)"), //
+								new RegexLeaf(1, "BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf(2, "QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), //
+				new RegexLeaf(1, "BACKCOLOR", "(#\\w+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 
-				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
+				new RegexLeaf(1, "ARROW_BODY1", "([-.]+)"), //
+				new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
+				new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(1, "ARROW_BODY2", "([-.]*)"), //
 				new RegexLeaf("\\>"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
+				new RegexOptional(new RegexLeaf(1, "BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("[%g]"), //
-				new RegexLeaf("DESC", "([^%g]*?)"), //
+				new RegexLeaf(1, "DESC", "([^%g]*?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
@@ -158,8 +156,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
-				lines.getLast().getString());
+		final List<String> lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			if (sb.length() > 0 && sb.toString().endsWith("" + Jaws.BLOCK_E1_NEWLINE) == false)
 				sb.append(Jaws.BLOCK_E1_NEWLINE);
@@ -177,13 +174,15 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 		if (partition != null) {
 			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(partition));
-			diagram.gotoGroup(lines.getLocation(), idNewLong, Display.getWithNewlines(diagram.getPragma(), partition), GroupType.PACKAGE);
+			diagram.gotoGroup(lines.getLocation(), idNewLong, Display.getWithNewlines(diagram.getPragma(), partition),
+					GroupType.PACKAGE);
 		}
 		final Quark<Entity> ident = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		Entity entity2 = ident.getData();
 		if (entity2 == null)
-			entity2 = diagram.reallyCreateLeaf(lines.getLocation(), ident, Display.getWithNewlines(diagram.getPragma(), displayString), LeafType.ACTIVITY, null);
+			entity2 = diagram.reallyCreateLeaf(lines.getLocation(), ident,
+					Display.getWithNewlines(diagram.getPragma(), displayString), LeafType.ACTIVITY, null);
 
 		diagram.setLastEntityConsulted(entity2);
 
@@ -216,7 +215,8 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			type = type.goDotted();
 
 		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(lines.getLocation(), diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type, linkArg);
+		Link link = new Link(lines.getLocation(), diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
+				entity2, type, linkArg);
 		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");
 		if (direction == Direction.LEFT || direction == Direction.UP)
 			link = link.getInv();

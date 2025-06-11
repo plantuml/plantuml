@@ -63,24 +63,24 @@ public class CommandEBnfSingleLine extends SingleLineCommand2<PSystemEbnf> {
 						new RegexConcat( //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("\\(\\*"), //
-								new RegexLeaf("COMMENTA", "(.*[^%s].*)"), //
+								new RegexLeaf(1, "COMMENTA", "(.*[^%s].*)"), //
 								new RegexLeaf("\\*\\)"), //
 								RegexLeaf.spaceZeroOrMore())), //
 
-				new RegexLeaf("ID", "([%pLN_][-%pLN_]*)"), //
+				new RegexLeaf(1, "ID", "([%pLN_][-%pLN_]*)"), //
 
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("\\(\\*"), //
-								new RegexLeaf("COMMENTB", "(.*[^%s].*)"), //
+								new RegexLeaf(1, "COMMENTB", "(.*[^%s].*)"), //
 								new RegexLeaf("\\*\\)"), //
 								RegexLeaf.spaceZeroOrMore())), //
 
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("EQUALS", "(=)"), //
+				new RegexLeaf(1, "EQUALS", "(=)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LINE", "(.*;)"), //
+				new RegexLeaf(1, "LINE", "(.*;)"), //
 				RegexLeaf.end());
 	}
 

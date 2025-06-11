@@ -58,22 +58,22 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 				RegexLeaf.spaceZeroOrMore(), //
 				//
 				new RegexOptional(new RegexConcat( //
-						new RegexLeaf("COMPLEMENT_NB1" + suffix, "(\\d+)"), //
+						new RegexLeaf(1, "COMPLEMENT_NB1" + suffix, "(\\d+)"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("COMPLEMENT_WORKING1" + suffix, "(working[%s]+)?"),
-						new RegexLeaf("COMPLEMENT_DAY_OR_WEEK1" + suffix, "(day|week)s?"),
+						new RegexLeaf(1, "COMPLEMENT_WORKING1" + suffix, "(working[%s]+)?"),
+						new RegexLeaf(1, "COMPLEMENT_DAY_OR_WEEK1" + suffix, "(day|week)s?"),
 						new RegexOptional(new RegexConcat(//
 								Words.exactly(Words.AND), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("COMPLEMENT_NB2" + suffix, "(\\d+)"), //
+								new RegexLeaf(1, "COMPLEMENT_NB2" + suffix, "(\\d+)"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("COMPLEMENT_WORKING2" + suffix, "(working[%s]+)?"),
-								new RegexLeaf("COMPLEMENT_DAY_OR_WEEK2" + suffix, "(day|week)s?"))),
+								new RegexLeaf(1, "COMPLEMENT_WORKING2" + suffix, "(working[%s]+)?"),
+								new RegexLeaf(1, "COMPLEMENT_DAY_OR_WEEK2" + suffix, "(day|week)s?"))),
 						RegexLeaf.spaceOneOrMore(), //
 						Words.namedOneOf("COMPLEMENT_BEFORE_OR_AFTER" + suffix, Words.BEFORE, Words.AFTER))),
 				//
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("COMPLEMENT_CODE_OTHER" + suffix, SubjectTask.REGEX_TASK_CODE + ".?s"), //
+				new RegexLeaf(1, "COMPLEMENT_CODE_OTHER" + suffix, SubjectTask.REGEX_TASK_CODE + ".?s"), //
 				RegexLeaf.spaceOneOrMore(), //
 				Words.namedOneOf("COMPLEMENT_START_OR_END" + suffix, Words.START, Words.END));
 	}

@@ -65,36 +65,36 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("while"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
-						new RegexConcat(new RegexLeaf("TEST3", "\\((.*?)\\)"), //
+						new RegexConcat(new RegexLeaf(1, "TEST3", "\\((.*?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(is|equals?)"), //
+								new RegexLeaf(1, "(is|equals?)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("WHEN3", "\\((.+?)\\)"), //
+								new RegexLeaf(1, "WHEN3", "\\((.+?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(not)"), //
+								new RegexLeaf(1, "(not)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("OUT3", "\\((.+?)\\)")), //
-						new RegexConcat(new RegexLeaf("TEST4", "\\((.*?)\\)"), //
+								new RegexLeaf(1, "OUT3", "\\((.+?)\\)")), //
+						new RegexConcat(new RegexLeaf(1, "TEST4", "\\((.*?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(not)"), //
+								new RegexLeaf(1, "(not)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("OUT4", "\\((.+?)\\)")), //
-						new RegexConcat(new RegexLeaf("TEST2", "\\((.*?)\\)"), //
+								new RegexLeaf(1, "OUT4", "\\((.+?)\\)")), //
+						new RegexConcat(new RegexLeaf(1, "TEST2", "\\((.*?)\\)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("(is|equals?)"), //
+								new RegexLeaf(1, "(is|equals?)"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("WHEN2", "\\((.+?)\\)") //
+								new RegexLeaf(1, "WHEN2", "\\((.+?)\\)") //
 						), //
-						new RegexOptional(new RegexLeaf("TEST1", "\\((.*)\\)")) //
+						new RegexOptional(new RegexLeaf(1, "TEST1", "\\((.*)\\)")) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
 						new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+								new RegexLeaf(1, "COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexOr(//
-								new RegexLeaf("LABEL", "(.*)"), //
+								new RegexLeaf(1, "LABEL", "(.*)"), //
 								new RegexLeaf("")) //
 				)), //
 				new RegexLeaf(";?"), //
@@ -102,8 +102,8 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final Display test = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("TEST", 0));
 		final Display yes = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("WHEN", 0));
 		final Display out = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("OUT", 0));

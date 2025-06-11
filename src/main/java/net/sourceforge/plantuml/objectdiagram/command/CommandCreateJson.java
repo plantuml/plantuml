@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -57,6 +58,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -69,13 +71,16 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^[%s]*\\}[%s]*$"));
+
 	public CommandCreateJson() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "json"), //
+				new RegexLeaf(0, "TYPE", "json"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCode(), //
 				StereotypePattern.optional("STEREO"), //
@@ -85,11 +90,6 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.end());
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^[%s]*\\}[%s]*$";
 	}
 
 	@Override
@@ -153,7 +153,8 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 		return sb.toString();
 	}
 
-	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0)
+			throws NoSuchColorException {
 		final String idShort = diagram.cleanId(line0.getLazzy("CODE", 0));
 
 		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
@@ -164,7 +165,8 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 
 		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(diagram.getPragma(), quark.getName())
+					.withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);
 		if (stereotype != null)

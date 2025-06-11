@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -58,6 +59,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -90,16 +92,16 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + "single", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
 						new RegexConcat(RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("of"), //
 								RegexLeaf.spaceOneOrMore(), partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -107,7 +109,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), //
+				new RegexLeaf(1, "NOTE", "(.*)"), //
 				RegexLeaf.end() //
 		);
 	}
@@ -122,7 +124,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 					RegexLeaf.start(), //
 					new RegexLeaf("note"), //
 					RegexLeaf.spaceOneOrMore(), //
-					new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+					new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 					new RegexOr(//
 							new RegexConcat(RegexLeaf.spaceOneOrMore(), //
 									new RegexLeaf("of"), //
@@ -130,9 +132,9 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 									partialPattern), //
 							new RegexLeaf("")), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 					StereotypePattern.optional("STEREO"), //
-					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					color().getRegex(), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -146,7 +148,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
 						new RegexConcat(RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("of"), //
@@ -154,9 +156,9 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 								partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -182,17 +184,15 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		};
 	}
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^[%s]*(end[%s]?note)$"));
+
+	private final static Lazy<Pattern2> END_WITH_BRACKET = new Lazy<>(
+			() -> Pattern2.cmpile("^(\\})$"));
+
 	public Command<AbstractEntityDiagram> createMultiLine(final boolean withBracket) {
 		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(partialPattern, withBracket),
-				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {
-
-			@Override
-			public String getPatternEnd() {
-				if (withBracket)
-					return "^(\\})$";
-
-				return "^[%s]*(end[%s]?note)$";
-			}
+				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {
 
 			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
@@ -221,8 +221,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		};
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0, AbstractEntityDiagram diagram, Url url,
-			Display display) throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0,
+			AbstractEntityDiagram diagram, Url url, Display display) throws NoSuchColorException {
 		final String pos = line0.get("POSITION", 0);
 		final String idShort = diagram.cleanId(line0.get("CODE", 0));
 		final Entity cl1;

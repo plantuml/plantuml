@@ -83,45 +83,44 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return RegexConcat.build(CommandLinkClass.class.getName() + umlDiagramType, RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("HEADER", "@([\\d.]+)"), //
+								new RegexLeaf(1, "HEADER", "@([\\d.]+)"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), new RegexOr( //
-								new RegexLeaf("ENT1", getClassIdentifier()), //
-								new RegexLeaf("COUPLE1", COUPLE)), //
+								new RegexLeaf(1, "ENT1", getClassIdentifier()), //
+								new RegexLeaf(2, "COUPLE1", COUPLE)), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("[\\[]"), //
-						new RegexLeaf("QUALIFIER1", "([^\\[\\]]+)"), //
+						new RegexLeaf(1, "QUALIFIER1", "([^\\[\\]]+)"), //
 						new RegexLeaf("[\\]]"), //
 						RegexLeaf.spaceOneOrMore() //
 				)), //
-				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 
-				new RegexConcat(
-						//
-						optionalHead("ARROW_HEAD1", "(?<=[%s])+[ox]", "[)#\\[<*+^}]_?", "\\<_?\\|[\\:\\|]", "[<\\[]\\|",
-								"\\}o", "\\}\\|", "\\|o", "\\|\\|"),
-						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
-						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
-						new RegexOptional(new RegexLeaf("INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
-						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
+				new RegexConcat(//
+				optionalHead("ARROW_HEAD1", "(?<=[%s])+[ox]", "[)#\\[<*+^}]_?", "\\<_?\\|[\\:\\|]", "[<\\[]\\|",
+						"\\}o", "\\}\\|", "\\|o", "\\|\\|"),
+						new RegexLeaf(1, "ARROW_BODY1", "([-=.]+)"), //
+						new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
+						new RegexOptional(new RegexLeaf(1, "INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
+						new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_BODY2", "([-=.]*)"), //
 						optionalHead("ARROW_HEAD2", "[ox][%s]+", ":\\>\\>?", "_?\\>", "[(#\\]*+^\\{]", "[\\|:]\\|\\>",
 								"\\|[>\\]]", "o\\{", "\\|\\{", "o\\|", "\\|\\|")), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 
-				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("[\\[]"), //
-						new RegexLeaf("QUALIFIER2", "([^\\[\\]]+)"), //
+						new RegexLeaf(1, "QUALIFIER2", "([^\\[\\]]+)"), //
 						new RegexLeaf("[\\]]"), //
 						RegexLeaf.spaceOneOrMore() //
 				)), //
@@ -129,8 +128,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				RegexLeaf.spaceZeroOrMore(), //
 
 				new RegexOr( //
-						new RegexLeaf("ENT2", getClassIdentifier()), //
-						new RegexLeaf("COUPLE2", COUPLE)), //
+						new RegexLeaf(1, "ENT2", getClassIdentifier()), //
+						new RegexLeaf(2, "COUPLE2", COUPLE)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -140,7 +139,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("LABEL_LINK", "(.+)") //
+								new RegexLeaf(1, "LABEL_LINK", "(.+)") //
 						)), RegexLeaf.end());
 	}
 
@@ -153,7 +152,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			sb.append(s);
 		}
 		sb.append(")?");
-		return new RegexLeaf(name, sb.toString());
+		return new RegexLeaf(1, name, sb.toString());
 	}
 
 	private static ColorParser color() {
@@ -208,10 +207,12 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl1 = quark1.get().getData();
 		if (cl1 == null)
-			cl1 = diagram.reallyCreateLeaf(location, quark1.get(), Display.getWithNewlines(diagram.getPragma(), quark1.get().getName()), LeafType.CLASS, null);
+			cl1 = diagram.reallyCreateLeaf(location, quark1.get(),
+					Display.getWithNewlines(diagram.getPragma(), quark1.get().getName()), LeafType.CLASS, null);
 		Entity cl2 = quark2.get().getData();
 		if (cl2 == null)
-			cl2 = diagram.reallyCreateLeaf(location, quark2.get(), Display.getWithNewlines(diagram.getPragma(), quark2.get().getName()), LeafType.CLASS, null);
+			cl2 = diagram.reallyCreateLeaf(location, quark2.get(),
+					Display.getWithNewlines(diagram.getPragma(), quark2.get().getName()), LeafType.CLASS, null);
 
 		final Direction dir = getDirection(arg);
 		final int queue;
@@ -226,12 +227,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String kal2 = arg.get("QUALIFIER2", 0);
 
 		final LinkArg linkArg = LinkArg
-				.build(labels.getDisplay(diagram.getPragma()), queue, diagram.getSkinParam().classAttributeIconSize() > 0)
+				.build(labels.getDisplay(diagram.getPragma()), queue,
+						diagram.getSkinParam().classAttributeIconSize() > 0)
 				.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
-		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
-				linkType, linkArg);
+		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
+				linkArg);
 		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(arg.get("URL", 0));
@@ -281,8 +283,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 	}
 
-	private CommandExecutionResult executePackageLink(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg)
-			throws NoSuchColorException {
+	private CommandExecutionResult executePackageLink(LineLocation location, AbstractClassOrObjectDiagram diagram,
+			RegexResult arg) throws NoSuchColorException {
 		final String ent1String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final String ent2String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
 		final Entity cl1 = diagram.getGroup(ent1String);
@@ -300,9 +302,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final LinkArg linkArg = LinkArg.build(labelLink, queue, diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
-				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
-						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
+		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+				linkType, linkArg.withQuantifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
+						diagram.getLabelangle()));
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 
 		diagram.resetPragmaLabel();
@@ -313,7 +315,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeArgSpecial1(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	private CommandExecutionResult executeArgSpecial1(LineLocation location, AbstractClassOrObjectDiagram diagram,
+			RegexResult arg) {
 		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
 		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));
 
@@ -334,7 +337,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl2 = ent2.getData();
 		if (cl2 == null)
-			cl2 = diagram.reallyCreateLeaf(location, ent2, Display.getWithNewlines(diagram.getPragma(), ent2.getName()), LeafType.CLASS, null);
+			cl2 = diagram.reallyCreateLeaf(location, ent2, Display.getWithNewlines(diagram.getPragma(), ent2.getName()),
+					LeafType.CLASS, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL_LINK", 0));
@@ -346,7 +350,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeArgSpecial2(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	private CommandExecutionResult executeArgSpecial2(LineLocation location, AbstractClassOrObjectDiagram diagram,
+			RegexResult arg) {
 		final String name2A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 0));
 		final String name2B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 1));
 
@@ -367,7 +372,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl1 = (Entity) ent1.getData();
 		if (cl1 == null)
-			cl1 = diagram.reallyCreateLeaf(location, ent1, Display.getWithNewlines(diagram.getPragma(), ent1.getName()), LeafType.CLASS, null);
+			cl1 = diagram.reallyCreateLeaf(location, ent1, Display.getWithNewlines(diagram.getPragma(), ent1.getName()),
+					LeafType.CLASS, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL_LINK", 0));
@@ -379,7 +385,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeArgSpecial3(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	private CommandExecutionResult executeArgSpecial3(LineLocation location, AbstractClassOrObjectDiagram diagram,
+			RegexResult arg) {
 
 		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
 		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -88,36 +90,45 @@ public class Member implements CharSequence {
 		return new Member(manageModifier, tmpDisplay, false);
 	}
 
+	private static final Pattern2 URL = Pattern2.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
+
+	private static final Pattern REMOVE_TAG_PATTERN = Pattern.compile("(?i)\\{(method|field)\\}\\s*");
+
+	private static final Pattern REMOVE_STATIC_CLASSIFIER_ABSTRACT_PATTERN = Pattern
+			.compile("(?i)\\{(static|classifier|abstract)\\}\\s*");
+
 	private Member(boolean manageModifier, CharSequence tmpDisplay, boolean isMethod) {
 		this.raw = tmpDisplay;
-		tmpDisplay = tmpDisplay.toString().replaceAll("(?i)\\{(method|field)\\}\\s*", "");
+
+		tmpDisplay = REMOVE_TAG_PATTERN.matcher(tmpDisplay.toString()).replaceAll("");
+
 		if (manageModifier) {
-			final Pattern2 finalUrl = Pattern2.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
-			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);
-			if (matcher.matches() == false) {
+			final Matcher2 matcher = URL.matcher(tmpDisplay);
+			if (matcher.matches() == false)
 				throw new IllegalStateException();
-			}
+
 			tmpDisplay = matcher.group(1);
 			final String urlString = matcher.group(2);
-			if (urlString == null) {
+			if (urlString == null)
 				this.url = null;
-			} else {
+			else
 				this.url = new UrlBuilder(null, UrlMode.STRICT).getUrl(urlString);
-			}
-		} else {
+
+		} else
 			this.url = null;
-		}
+
 		this.hasUrl = this.url != null;
 		final String lower = StringUtils.goLowerCase(tmpDisplay.toString());
 
 		if (manageModifier) {
 			this.staticModifier = lower.contains("{static}") || lower.contains("{classifier}");
 			this.abstractModifier = lower.contains("{abstract}");
-			String displayClean = tmpDisplay.toString().replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "")
-					.trim();
-			if (displayClean.length() == 0) {
+
+			String displayClean = REMOVE_STATIC_CLASSIFIER_ABSTRACT_PATTERN.matcher(tmpDisplay.toString())
+					.replaceAll("").trim();
+
+			if (displayClean.length() == 0)
 				displayClean = " ";
-			}
 
 			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {
 				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);
@@ -137,9 +148,9 @@ public class Member implements CharSequence {
 	}
 
 	public String getDisplay(boolean withVisibilityChar) {
-		if (withVisibilityChar) {
+		if (withVisibilityChar)
 			return getDisplayWithVisibilityChar();
-		}
+
 		return getDisplayWithoutVisibilityChar();
 	}
 
@@ -148,21 +159,21 @@ public class Member implements CharSequence {
 	}
 
 	private String getDisplayWithVisibilityChar() {
-		if (isPrivate()) {
+		if (isPrivate())
 			return "-" + display;
-		}
-		if (isPublic()) {
+
+		if (isPublic())
 			return "+" + display;
-		}
-		if (isPackagePrivate()) {
+
+		if (isPackagePrivate())
 			return "~" + display;
-		}
-		if (isProtected()) {
+
+		if (isProtected())
 			return "#" + display;
-		}
-		if (isIEMandatory()) {
+
+		if (isIEMandatory())
 			return "*" + display;
-		}
+
 		return display;
 	}
 

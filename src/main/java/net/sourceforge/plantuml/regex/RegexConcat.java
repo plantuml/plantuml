@@ -154,10 +154,10 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 	}
 
 	@Override
-	protected String getFullSlow() {
+	public String getPatternAsString() {
 		final StringBuilder sb = new StringBuilder();
 		for (IRegex p : partials())
-			sb.append(p.getPattern());
+			sb.append(p.getPatternAsString());
 
 		return sb.toString();
 	}

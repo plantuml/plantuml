@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -59,17 +61,15 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^end[%s]?note$"));
+
 	public CommandNoteLong3() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?note$";
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 		final NoteType type = NoteType.defaultType(line0.get("TYPE", 0));
 		final Display note = lines.toDisplay();
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
-		
+
 		final String stereotypeString = line0.get("STEREO", 0);
 		Stereotype stereotype = null;
 		if (stereotypeString != null)
@@ -93,11 +93,11 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(note|floating note)"), //
+				new RegexLeaf(1, "TYPE", "(note|floating note)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("POSITION", "(left|right)?"), //
+				new RegexLeaf(1, "POSITION", "(left|right)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				color().getRegex(), //
 				RegexLeaf.end());

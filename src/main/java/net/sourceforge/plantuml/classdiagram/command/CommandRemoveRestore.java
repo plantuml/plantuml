@@ -53,9 +53,9 @@ public class CommandRemoveRestore extends SingleLineCommand2<CucaDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRemoveRestore.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("COMMAND", "(remove|restore)"), //
+				new RegexLeaf(1, "COMMAND", "(remove|restore)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("WHAT", "(.+)"), RegexLeaf.end());
+				new RegexLeaf(1, "WHAT", "(.+)"), RegexLeaf.end());
 	}
 
 	@Override

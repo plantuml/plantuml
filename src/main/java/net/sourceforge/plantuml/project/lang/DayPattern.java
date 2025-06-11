@@ -87,11 +87,11 @@ public class DayPattern {
 
 	private IRegex toRegexA_DD_MONTH_YYYY() {
 		return new RegexConcat( //
-				new RegexLeaf(dayKeyA, "([\\d]{1,2})"), //
+				new RegexLeaf(1, dayKeyA, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(monthKeyA, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, monthKeyA, "(" + Month.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(yearKeyA, "([\\d]{1,4})"));
+				new RegexLeaf(1, yearKeyA, "([\\d]{1,4})"));
 	}
 
 	private Day resultA(RegexResult arg) {
@@ -103,11 +103,11 @@ public class DayPattern {
 
 	private IRegex toRegexB_YYYY_MM_DD() {
 		return new RegexConcat( //
-				new RegexLeaf(yearKeyB, "([\\d]{1,4})"), //
+				new RegexLeaf(1, yearKeyB, "([\\d]{1,4})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf(monthKeyB, "([\\d]{1,2})"), //
+				new RegexLeaf(1, monthKeyB, "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf(dayKeyB, "([\\d]{1,2})"));
+				new RegexLeaf(1, dayKeyB, "([\\d]{1,2})"));
 	}
 
 	private Day resultB(RegexResult arg) {
@@ -119,11 +119,11 @@ public class DayPattern {
 
 	private IRegex toRegexC_MONTH_DD_YYYY() {
 		return new RegexConcat( //
-				new RegexLeaf(monthKeyC, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, monthKeyC, "(" + Month.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(dayKeyC, "([\\d]{1,2})"), //
+				new RegexLeaf(1, dayKeyC, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(yearKeyC, "([\\d]{1,4})"));
+				new RegexLeaf(1, yearKeyC, "([\\d]{1,4})"));
 	}
 
 	private Day resultC(RegexResult arg) {

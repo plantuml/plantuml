@@ -80,10 +80,6 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 		return CommandControl.OK_PARTIAL;
 	}
 
-	public String[] getDescription() {
-		return cmd.getDescription();
-	}
-
 	public int getNbMaxLines() {
 		return nbMaxLines;
 	}

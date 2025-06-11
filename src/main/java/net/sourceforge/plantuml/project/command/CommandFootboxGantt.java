@@ -39,29 +39,20 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.sequencediagram.command.CommandFootbox;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandFootbox extends SingleLineCommand2<GanttDiagram> {
+public class CommandFootboxGantt extends SingleLineCommand2<GanttDiagram> {
 	// ::remove folder when __HAXE__
 
-	public CommandFootbox() {
-		super(getRegexConcat());
-	}
-
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(hide|show)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("footbox"), //
-				RegexLeaf.end());
+	public CommandFootboxGantt() {
+		super(CommandFootbox.HIDE_SHOW_FOOTBOX);
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final boolean footbox = arg.get("TYPE", 0).equalsIgnoreCase("show");
 		diagram.setShowFootbox(footbox);
 		return CommandExecutionResult.ok();

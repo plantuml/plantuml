@@ -37,7 +37,6 @@
 package net.sourceforge.plantuml.decoration;
 
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;

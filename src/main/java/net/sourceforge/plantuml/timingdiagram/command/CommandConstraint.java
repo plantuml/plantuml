@@ -59,13 +59,13 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandConstraint.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PART1", "(" + CommandTimeMessage.PLAYER_CODE + ")?"), //
+				new RegexLeaf(2, "PART1", "(" + CommandTimeMessage.PLAYER_CODE + ")?"), //
 				TimeTickBuilder.expressionAtWithArobase("TIME1"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\<"), //
-				new RegexLeaf("(-+)"), //
-				new RegexLeaf("ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
-				new RegexLeaf("(-*)"), //
+				new RegexLeaf(1, "(-+)"), //
+				new RegexLeaf(1, "ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
+				new RegexLeaf(1, "(-*)"), //
 				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				TimeTickBuilder.expressionAtWithArobase("TIME2"), //
@@ -74,14 +74,14 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("MESSAGE", "(.*)") //
+								new RegexLeaf(1, "MESSAGE", "(.*)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String part1 = arg.get("PART1", 0);
 		final Player player1;
 		if (part1 == null) {

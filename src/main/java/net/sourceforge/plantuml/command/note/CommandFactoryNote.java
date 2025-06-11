@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -64,43 +66,46 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public final class CommandFactoryNote implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 	// ::remove folder when __HAXE__
 
-	private IRegex getRegexConcatMultiLine() {
-		return RegexConcat.build(CommandFactoryNote.class.getName() + "multi", RegexLeaf.start(), //
-				new RegexLeaf("note"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("as"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				StereotypePattern.optional("STEREO"), //
-				ColorParser.exp1(), //
-				RegexLeaf.end() //
-		);
-	}
+	public final static CommandFactoryNote ME = new CommandFactoryNote();
 
-	private IRegex getRegexConcatSingleLine() {
-		return RegexConcat.build(CommandFactoryNote.class.getName() + "single", RegexLeaf.start(), //
-				new RegexLeaf("note"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("[%g]"), //
-				new RegexLeaf("DISPLAY", "([^%g]+)"), //
-				new RegexLeaf("[%g]"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("as"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				StereotypePattern.optional("STEREO"), //
-				ColorParser.exp1(), //
-				RegexLeaf.end() //
-		);
+	private CommandFactoryNote() {
 
 	}
+
+	private final static IRegex multiLine = RegexConcat.build(CommandFactoryNote.class.getName() + "multi",
+			RegexLeaf.start(), //
+			new RegexLeaf("note"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("as"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
+			StereotypePattern.optional("STEREO"), //
+			ColorParser.exp1(), //
+			RegexLeaf.end() //
+	);
+
+	private final static IRegex singleLine = RegexConcat.build(CommandFactoryNote.class.getName() + "single",
+			RegexLeaf.start(), //
+			new RegexLeaf("note"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("[%g]"), //
+			new RegexLeaf(1, "DISPLAY", "([^%g]+)"), //
+			new RegexLeaf("[%g]"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("as"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
+			StereotypePattern.optional("STEREO"), //
+			ColorParser.exp1(), //
+			RegexLeaf.end() //
+	);
 
 	public Command<AbstractEntityDiagram> createSingleLine() {
-		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine()) {
+		return new SingleLineCommand2<AbstractEntityDiagram>(singleLine) {
 
 			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
@@ -112,14 +117,12 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		};
 	}
 
-	public Command<AbstractEntityDiagram> createMultiLine(boolean withBracket) {
-		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(),
-				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^[%s]*end[%s]?note$"));
 
-			@Override
-			public String getPatternEnd() {
-				return "^[%s]*end[%s]?note$";
-			}
+	public Command<AbstractEntityDiagram> createMultiLine(boolean withBracket) {
+		return new CommandMultilines2<AbstractEntityDiagram>(multiLine, MultilinesStrategy.KEEP_STARTING_QUOTE,
+				Trim.BOTH, END) {
 
 			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram diagram, BlocLines lines,
@@ -134,8 +137,8 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		};
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, AbstractEntityDiagram diagram, RegexResult arg, Display display)
-			throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(LineLocation location, AbstractEntityDiagram diagram,
+			RegexResult arg, Display display) throws NoSuchColorException {
 		final String idShort = arg.get("CODE", 0);
 		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(idShort));
 

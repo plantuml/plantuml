@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.decoration.symbol.USymbolHexagon;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.dot.ExeState;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
-import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dot.UnparsableGraphvizException;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;

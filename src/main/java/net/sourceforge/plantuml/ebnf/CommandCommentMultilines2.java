@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -43,14 +44,18 @@ import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandCommentMultilines2 extends CommandMultilines2<PSystemEbnf> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^.*\\*\\*\\)[%s]*$"));
+
 	public CommandCommentMultilines2() {
-		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
@@ -62,12 +67,8 @@ public class CommandCommentMultilines2 extends CommandMultilines2<PSystemEbnf> {
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^.*\\*\\*\\)[%s]*$";
-	}
-
-	@Override
-	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		final Display note = lines.removeFewChars(3).toDisplay();
 		return diagram.addNote(note, null);
 	}

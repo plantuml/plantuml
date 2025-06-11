@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.timingdiagram.command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -64,18 +63,18 @@ public class CommandNote extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(top|bottom)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("of"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
+				new RegexLeaf(1, "CODE", CommandTimeMessage.PLAYER_CODE), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.+)"), //
+				new RegexLeaf(1, "NOTE", "(.+)"), //
 				RegexLeaf.spaceZeroOrMore(), // 
 				RegexLeaf.end());
 	}

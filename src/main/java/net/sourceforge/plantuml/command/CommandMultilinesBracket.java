@@ -57,10 +57,6 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		return false;
 	}
 
-	public String[] getDescription() {
-		return new String[] { "BRACKET: " + starting.pattern() };
-	}
-
 	protected CommandControl finalVerification() {
 		return CommandControl.OK;
 	}

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.mindmap;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -56,31 +57,29 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDiagram> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^(.*);\\s*(\\<\\<(.+)\\>\\>)?$"));
+
 	public CommandMindMapOrgmodeMultiline() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMindMapOrgmodeMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([*#]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
+				new RegexLeaf(1, "TYPE", "([*#]+)"), //
+				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
+				new RegexLeaf(1, "SHAPE", "(_)?"), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("DATA", "(.*)"), //
+				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^(.*);\\s*(\\<\\<(.+)\\>\\>)?$";
-	}
-
-	@Override
-	protected CommandExecutionResult executeNow(MindMapDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(MindMapDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
-		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
-				lines.getLast().getString());
+		final List<String> lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
 
 		final String stereotype = lineLast.get(1);

@@ -58,26 +58,26 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 	static IRegex getRegexConcat(int mode) {
 		if (mode == 0)
 			return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
-					new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
-					new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-					new RegexOptional(new RegexLeaf("CODE", "\\(([%pLN_]+)\\)")), //
-					new RegexLeaf("SHAPE", "(_)?"), //
-					new RegexLeaf("DIRECTION", "([<>])?"), //
+					new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
+					new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
+					new RegexOptional(new RegexLeaf(1, "CODE", "\\(([%pLN_]+)\\)")), //
+					new RegexLeaf(1, "SHAPE", "(_)?"), //
+					new RegexLeaf(1, "DIRECTION", "([<>])?"), //
 					RegexLeaf.spaceOneOrMore(), //
-					new RegexLeaf("LABEL", "([^%s].*)"), //
+					new RegexLeaf(1, "LABEL", "([^%s].*)"), //
 					RegexLeaf.end());
 
 		return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
-				new RegexLeaf("DIRECTION", "([<>])?"), //
+				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
+				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
+				new RegexLeaf(1, "SHAPE", "(_)?"), //
+				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "[%g](.*)[%g]"), //
+				new RegexLeaf(1, "LABEL", "[%g](.*)[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_]+)"), //
 				RegexLeaf.end());
 	}
 

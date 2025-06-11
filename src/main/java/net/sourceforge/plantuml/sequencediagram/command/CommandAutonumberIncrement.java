@@ -60,13 +60,14 @@ public class CommandAutonumberIncrement extends SingleLineCommand2<SequenceDiagr
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("POS", "([A-Za-z])") //
+								new RegexLeaf(1, "POS", "([A-Za-z])") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String position = arg.get("POS", 0);
 		if (position == null) {
 			diagram.getAutoNumber().incrementIntermediate();

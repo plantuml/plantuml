@@ -67,8 +67,8 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 						new RegexLeaf("\\("), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf("INCOMING", "(.*?)"), //
+								new RegexLeaf(1, "INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, "INCOMING", "(.*?)"), //
 						new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("else"), //
@@ -76,7 +76,7 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf(1, "TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
@@ -87,9 +87,9 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 										new RegexLeaf("\\("), //
 										new RegexOptional(new RegexOr(//
 												new RegexLeaf("->"), //
-												new RegexLeaf("WHEN_COLOR",
+												new RegexLeaf(1, "WHEN_COLOR",
 														CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-										new RegexLeaf("WHEN", "(.*?)"), //
+										new RegexLeaf(1, "WHEN", "(.*?)"), //
 										new RegexLeaf("\\)"))) //
 						)), //
 				new RegexLeaf(";?"), //
@@ -97,8 +97,8 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 

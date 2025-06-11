@@ -124,7 +124,7 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 
 		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));
 		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));
-		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();
+		final CommandFactoryNote factoryNoteCommand = CommandFactoryNote.ME;
 		cmds.add(factoryNoteCommand.createSingleLine());
 
 		cmds.add(new CommandNamespace());
@@ -155,8 +155,8 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 
 		cmds.add(new CommandDiamondAssociation());
 
-		cmds.add(new CommandCreateElementMultilines(0));
-		cmds.add(new CommandCreateElementMultilines(1));
+		cmds.add(CommandCreateElementMultilines.TYPE0);
+		cmds.add(CommandCreateElementMultilines.TYPE1);
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
 	}

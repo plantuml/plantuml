@@ -62,7 +62,7 @@ public class CommandUrl extends SingleLineCommand2<SequenceDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("of|for")), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(new RegexLeaf("is")), //
 				RegexLeaf.spaceZeroOrMore(), //

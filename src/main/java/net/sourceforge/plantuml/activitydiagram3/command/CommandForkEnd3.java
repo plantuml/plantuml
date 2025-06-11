@@ -74,13 +74,14 @@ public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 						) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LABEL", "(\\{.+\\})?"), //
+				new RegexLeaf(1, "LABEL", "(\\{.+\\})?"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String style = arg.get("STYLE", 0);
 		final ForkStyle forkStyle = style.contains("merge") ? ForkStyle.MERGE : ForkStyle.FORK;
 		final String label = arg.get("LABEL", 0);

@@ -44,29 +44,29 @@ public abstract class TimeResolution {
 
 	public static IRegex toRegexA_DD_MONTH_YYYY(String year, String month, String day) {
 		return new RegexConcat( //
-				new RegexLeaf(day, "([\\d]{1,2})"), //
+				new RegexLeaf(1, day, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(month, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, month, "(" + Month.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(year, "([\\d]{1,4})"));
+				new RegexLeaf(1, year, "([\\d]{1,4})"));
 	}
 
 	public static IRegex toRegexB_YYYY_MM_DD(String year, String month, String day) {
 		return new RegexConcat( //
-				new RegexLeaf(year, "([\\d]{1,4})"), //
+				new RegexLeaf(1, year, "([\\d]{1,4})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf(month, "([\\d]{1,2})"), //
+				new RegexLeaf(1, month, "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf(day, "([\\d]{1,2})"));
+				new RegexLeaf(1, day, "([\\d]{1,2})"));
 	}
 
 	public static IRegex toRegexC_MONTH_DD_YYYY(String year, String month, String day) {
 		return new RegexConcat( //
-				new RegexLeaf(month, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, month, "(" + Month.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(day, "([\\d]{1,2})"), //
+				new RegexLeaf(1, day, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(year, "([\\d]{1,4})"));
+				new RegexLeaf(1, year, "([\\d]{1,4})"));
 	}
 
 }

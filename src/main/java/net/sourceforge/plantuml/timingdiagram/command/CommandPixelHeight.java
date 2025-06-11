@@ -54,11 +54,11 @@ public class CommandPixelHeight extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPixelHeight.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PLAYER", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "PLAYER", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("is"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NUM", "([0-9]+)"), //
+				new RegexLeaf(1, "NUM", "([0-9]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("pixels?"), //
 				RegexLeaf.spaceOneOrMore(), //

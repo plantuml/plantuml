@@ -62,7 +62,7 @@ public abstract class SentenceSimple<D extends Diagram> implements Sentence<D> {
 	}
 
 	public String getSignature() {
-		return subject.getClass() + "/" + verb.getPattern() + "/" + complement.getClass();
+		return subject.getClass() + "/" + verb.getPatternAsString() + "/" + complement.getClass();
 	}
 
 	public final IRegex toRegex() {

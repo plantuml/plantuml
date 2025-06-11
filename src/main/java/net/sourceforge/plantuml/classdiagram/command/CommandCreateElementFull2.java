@@ -83,21 +83,21 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 			return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //
 					RegexLeaf.start(), //
 					new RegexLeaf("mix_"), //
-					new RegexLeaf("SYMBOL", regex), //
+					new RegexLeaf(1, "SYMBOL", regex), //
 					RegexLeaf.spaceOneOrMore(), //
 					new RegexOr(//
-							new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
+							new RegexLeaf(1, "CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 							new RegexConcat(//
-									new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
+									new RegexLeaf(1, "DISPLAY2", CommandCreateElementFull.DISPLAY), //
 									StereotypePattern.optional("STEREOTYPE2"), //
 									new RegexLeaf("as"), //
 									RegexLeaf.spaceOneOrMore(), //
-									new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
+									new RegexLeaf(1, "CODE2", CommandCreateElementFull.CODE)) //
 					), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 					StereotypePattern.optional("STEREOTYPE"), //
-					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -106,21 +106,21 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		}
 		return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //
 				RegexLeaf.start(), //
-				new RegexLeaf("SYMBOL", regex), //
+				new RegexLeaf(1, "SYMBOL", regex), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
-						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexLeaf(1, "CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
+								new RegexLeaf(1, "DISPLAY2", CommandCreateElementFull.DISPLAY), //
 								StereotypePattern.optional("STEREOTYPE2"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
+								new RegexLeaf(1, "CODE2", CommandCreateElementFull.CODE)) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //

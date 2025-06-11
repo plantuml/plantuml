@@ -62,13 +62,13 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandGrouping.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("TYPE", "(opt|alt|loop|par|par2|break|critical|else|end|also|group)"), //
-				new RegexLeaf("COLORS", "((?<!else)(?<!also)(?<!end)#\\w+)?(?:[%s]+(#\\w+))?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "TYPE", "(opt|alt|loop|par|par2|break|critical|else|end|also|group)"), //
+				new RegexLeaf(2, "COLORS", "((?<!else)(?<!also)(?<!end)#\\w+)?(?:[%s]+(#\\w+))?"), //
 				new RegexOptional(//
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("COMMENT", "(.*?)") //
+								new RegexLeaf(1, "COMMENT", "(.*?)") //
 						)), RegexLeaf.end());
 	}
 

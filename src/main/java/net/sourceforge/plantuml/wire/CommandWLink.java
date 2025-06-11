@@ -57,34 +57,34 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWLink.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("NAME1", "([\\w][.\\w]*)"), //
+				new RegexLeaf(1, "NAME1", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf("\\("), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("X1", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						new RegexLeaf(2, "X1", "(-?\\d+(%|%[-+]\\d+)?)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf(","), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("Y1", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						new RegexLeaf(2, "Y1", "(-?\\d+(%|%[-+]\\d+)?)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("\\)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(\\<?[-=]{1,2}\\>|\\<?[-=]{1,2})"), //
+				new RegexLeaf(1, "STYLE", "(\\<?[-=]{1,2}\\>|\\<?[-=]{1,2})"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME2", "([\\w][.\\w]*)"), //
+				new RegexLeaf(1, "NAME2", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("COLOR", "(#\\w+)?"))), //
+						new RegexLeaf(1, "COLOR", "(#\\w+)?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
+				new RegexLeaf(1, "MESSAGE", "(?::[%s]*(.*))?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 		final String name1 = arg.get("NAME1", 0);
 		final String x1 = arg.get("X1", 0);

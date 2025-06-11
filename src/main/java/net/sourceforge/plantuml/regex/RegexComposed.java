@@ -57,8 +57,6 @@ public abstract class RegexComposed implements IRegex {
 		return partials;
 	}
 
-	abstract protected String getFullSlow();
-
 	private final AtomicReference<Pattern2> fullCached = new AtomicReference<>();
 
 	private Pattern2 getPattern2() {
@@ -66,7 +64,7 @@ public abstract class RegexComposed implements IRegex {
 		if (result != null)
 			return result;
 
-		final Pattern2 computed = Pattern2.cmpile(getFullSlow());
+		final Pattern2 computed = Pattern2.cmpile(getPatternAsString());
 		if (fullCached.compareAndSet(null, computed))
 			return computed;
 
@@ -121,6 +119,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	final public String getPattern() {
+		// return getFullSlow();
 		return getPattern2().pattern();
 	}
 

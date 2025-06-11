@@ -60,27 +60,28 @@ public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandTimeMessage.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PART1", PLAYER_CODE), //
+				new RegexLeaf(1, "PART1", PLAYER_CODE), //
 				TimeTickBuilder.optionalExpressionAtWithArobase("TIME1"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ARROW_BODY", "(-+)"), //
-				new RegexLeaf("ARROW_STYLE", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_HEAD", "\\>"), //
+				new RegexLeaf(1, "ARROW_BODY", "(-+)"), //
+				new RegexLeaf(1, "ARROW_STYLE", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf(0, "ARROW_HEAD", "\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("PART2", PLAYER_CODE), //
+				new RegexLeaf(1, "PART2", PLAYER_CODE), //
 				TimeTickBuilder.optionalExpressionAtWithArobase("TIME2"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("MESSAGE", "(.*)") //
+								new RegexLeaf(1, "MESSAGE", "(.*)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final Player player1 = diagram.getPlayer(arg.get("PART1", 0));
 		if (player1 == null) {
 			return CommandExecutionResult.error("No such element: " + arg.get("PART1", 0));

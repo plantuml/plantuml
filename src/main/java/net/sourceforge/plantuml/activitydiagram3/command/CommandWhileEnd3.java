@@ -69,13 +69,14 @@ public class CommandWhileEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 						) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("OUT", "\\((.+?)\\)")), //
+				new RegexOptional(new RegexLeaf(1, "OUT", "\\((.+?)\\)")), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		return diagram.endwhile(Display.getWithNewlines(diagram.getPragma(), arg.get("OUT", 0)));
 	}
 

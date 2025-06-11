@@ -51,9 +51,9 @@ public class RegexRepeatedOneOrMore extends RegexComposed implements IRegex {
 	}
 
 	@Override
-	protected String getFullSlow() {
+	public String getPatternAsString() {
 		final StringBuilder sb = new StringBuilder("(");
-		sb.append(partials().get(0).getPattern());
+		sb.append(partials().get(0).getPatternAsString());
 		sb.append(")+");
 		return sb.toString();
 	}

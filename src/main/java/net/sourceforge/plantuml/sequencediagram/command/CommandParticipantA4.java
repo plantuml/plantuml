@@ -52,7 +52,7 @@ public class CommandParticipantA4 extends CommandParticipant {
 		return RegexConcat.build(CommandParticipantA4.class.getName(), RegexLeaf.start(), //
 				getRegexType(), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "[%g]([^%g]+)[%g]"), //
+				new RegexLeaf(1, "CODE", "[%g]([^%g]+)[%g]"), //
 				StereotypePattern.optional("STEREO"), //
 				getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

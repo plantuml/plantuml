@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 public class ComplementAnything implements Something<ChronologyDiagram> {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("ANYTHING" + suffix, "(.*?)");
+		return new RegexLeaf(1, "ANYTHING" + suffix, "(.*?)");
 	}
 
 	public Failable<String> getMe(ChronologyDiagram system, RegexResult arg, String suffix) {

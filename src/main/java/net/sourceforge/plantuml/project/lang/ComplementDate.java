@@ -81,7 +81,7 @@ public class ComplementDate implements Something<GanttDiagram> {
 
 	private IRegex toRegexD(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("DCOUNT" + suffix, "([\\d]+)"), //
+				new RegexLeaf(1, "DCOUNT" + suffix, "([\\d]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("days?"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -94,7 +94,7 @@ public class ComplementDate implements Something<GanttDiagram> {
 	private IRegex toRegexE(String suffix) {
 		return new RegexConcat( //
 				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT" + suffix, "([\\d]+)") //
+				new RegexLeaf(1, "ECOUNT" + suffix, "([\\d]+)") //
 		);
 	}
 

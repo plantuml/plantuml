@@ -52,16 +52,16 @@ public class CommandGoto extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandGoto.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf(1, "INDENT", "([\\s\\t]*)"), //
 				new RegexLeaf("goto"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("X", "(\\d+)"), //
+				new RegexLeaf(1, "X", "(\\d+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("Y", "(\\d+)"), //
+				new RegexLeaf(1, "Y", "(\\d+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //

@@ -124,7 +124,7 @@ public class StdlibDiagram extends UmlDiagram {
 		double rawHeight = 0;
 		final Stdlib folder = Stdlib.retrieve(name);
 
-		final CommandFactorySprite factorySpriteCommand = new CommandFactorySprite();
+		final CommandFactorySprite factorySpriteCommand = CommandFactorySprite.ME;
 
 		Command<WithSprite> cmd = factorySpriteCommand.createMultiLine(false);
 

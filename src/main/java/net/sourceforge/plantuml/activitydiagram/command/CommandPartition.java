@@ -68,11 +68,11 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 		return RegexConcat.build(CommandPartition.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("partition"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%g][^%g]+[%g]|\\S+)"), //
+				new RegexLeaf(1, "NAME", "([%g][^%g]+[%g]|\\S+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
 						color().getRegex(), //
-						new RegexLeaf("LEGACYCOLORIGNORED", "(#[0-9a-fA-F]{6}|#?\\w+)?")), //
+						new RegexLeaf(1, "LEGACYCOLORIGNORED", "(#[0-9a-fA-F]{6}|#?\\w+)?")), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexLeaf("\\{?"), //
 				RegexLeaf.end());

@@ -62,17 +62,18 @@ public class CommandAutonumberResume extends SingleLineCommand2<SequenceDiagram>
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("INC", "(\\d+)") //
+								new RegexLeaf(1, "INC", "(\\d+)") //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("DF", "[%g]([^%g]+)[%g]") //
+								new RegexLeaf(1, "DF", "[%g]([^%g]+)[%g]") //
 						)), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String df = arg.get("DF", 0);
 
 		DecimalFormat decimalFormat = null;

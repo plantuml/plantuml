@@ -56,7 +56,7 @@ public class CommandAssumeTransparent extends SingleLineCommand2<TitledDiagram> 
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("transparent"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("TYPE", "(dark|light)"), //
+				new RegexLeaf(1, "TYPE", "(dark|light)"), //
 				RegexLeaf.end()); //
 	}
 

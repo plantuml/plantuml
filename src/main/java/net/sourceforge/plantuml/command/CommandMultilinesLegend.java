@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -42,6 +43,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -51,10 +53,13 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^end[%s]?legend$"));
+
 	public static final CommandMultilinesLegend ME = new CommandMultilinesLegend();
 
 	private CommandMultilinesLegend() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static IRegex getRegexConcat() {
@@ -63,18 +68,13 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("VALIGN", "(top|bottom)") //
+								new RegexLeaf(1, "VALIGN", "(top|bottom)") //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("ALIGN", "(left|right|center)") //
+								new RegexLeaf(1, "ALIGN", "(left|right|center)") //
 						)), RegexLeaf.end());
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?legend$";
 	}
 
 	@Override

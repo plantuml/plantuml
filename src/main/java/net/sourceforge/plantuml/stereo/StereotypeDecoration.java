@@ -60,16 +60,16 @@ public class StereotypeDecoration {
 			new RegexLeaf("\\<\\<"), //
 			RegexLeaf.spaceZeroOrMore(), //
 			new RegexLeaf("\\("), //
-			new RegexLeaf("CHAR", "(\\S)"), //
+			new RegexLeaf(1, "CHAR", "(\\S)"), //
 			new RegexOptional( //
 					new RegexConcat( //
 							RegexLeaf.spaceZeroOrMore(), //
 							new RegexLeaf(","), //
 							RegexLeaf.spaceZeroOrMore(), //
-							new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)"), //
+							new RegexLeaf(1, "COLOR", "(#[0-9a-fA-F]{6}|\\w+)"), //
 							RegexLeaf.spaceZeroOrMore())), //
 			new RegexLeaf("\\)"), //
-			new RegexOptional(new RegexLeaf("LABEL", "[,]?(.*?)")), //
+			new RegexOptional(new RegexLeaf(1, "LABEL", "[,]?(.*?)")), //
 			new RegexLeaf("\\>\\>") //
 	);
 
@@ -77,17 +77,17 @@ public class StereotypeDecoration {
 			new RegexLeaf("\\<\\<"), //
 			RegexLeaf.spaceZeroOrMore(), //
 			new RegexLeaf("\\(?\\$"), //
-			new RegexLeaf("NAME", "(" + SpriteUtils.SPRITE_NAME + ")"), //
-			new RegexLeaf("SCALE", "((?:\\{scale=|\\*)([0-9.]+)\\}?)?"), //
+			new RegexLeaf(1, "NAME", "(" + SpriteUtils.SPRITE_NAME + ")"), //
+			new RegexLeaf(2, "SCALE", "((?:\\{scale=|\\*)([0-9.]+)\\}?)?"), //
 			RegexLeaf.spaceZeroOrMore(), //
 			new RegexOptional( //
 					new RegexConcat( //
 							new RegexLeaf(","), //
 							RegexLeaf.spaceZeroOrMore(), //
-							new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)") //
+							new RegexLeaf(1, "COLOR", "(#[0-9a-fA-F]{6}|\\w+)") //
 					)), //
 			RegexLeaf.spaceZeroOrMore(), //
-			new RegexOptional(new RegexLeaf("LABEL", "[),](.*?)")), //
+			new RegexOptional(new RegexLeaf(1, "LABEL", "[),](.*?)")), //
 			new RegexLeaf("\\>\\>") //
 	);
 

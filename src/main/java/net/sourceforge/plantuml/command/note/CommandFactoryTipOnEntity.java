@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -56,6 +57,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -79,15 +81,15 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //
 					new RegexLeaf("note"), //
 					RegexLeaf.spaceOneOrMore(), //
-					new RegexLeaf("POSITION", "(right|left)"), //
+					new RegexLeaf(1, "POSITION", "(right|left)"), //
 					RegexLeaf.spaceOneOrMore(), //
 					new RegexLeaf("of"), //
 					RegexLeaf.spaceOneOrMore(), //
 					NameAndCodeParser.codeWithMemberForClass(), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 					StereotypePattern.optional("STEREO"), //
-					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+					new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -100,15 +102,15 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left)"), //
+				new RegexLeaf(1, "POSITION", "(right|left)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("of"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.codeWithMemberForClass(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -125,17 +127,15 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		throw new UnsupportedOperationException();
 	}
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^[%s]*(end[%s]?note)$"));
+
+	private final static Lazy<Pattern2> END_WITH_BRACKET = new Lazy<>(
+			() -> Pattern2.cmpile("^(\\})$"));
+
 	public Command<AbstractEntityDiagram> createMultiLine(final boolean withBracket) {
 		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(withBracket),
-				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {
-
-			@Override
-			public String getPatternEnd() {
-				if (withBracket) {
-					return "^(\\})$";
-				}
-				return "^[%s]*(end[%s]?note)$";
-			}
+				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {
 
 			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
@@ -158,8 +158,8 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		};
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0, AbstractEntityDiagram diagram, Url url,
-			Display display) throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0,
+			AbstractEntityDiagram diagram, Url url, Display display) throws NoSuchColorException {
 
 		final String pos = line0.get("POSITION", 0);
 
@@ -179,8 +179,8 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		Entity tips = identTip.getData();
 
 		if (tips == null) {
-			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.TIPS,
-					null);
+			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), ""),
+					LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT)

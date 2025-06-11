@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -55,27 +57,25 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 
-	public CommandArrowLong3() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
-	}
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);$"));
 
-	@Override
-	public String getPatternEnd() {
-		return "^(.*);$";
+	public CommandArrowLong3() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandArrowLong3.class.getName(), RegexLeaf.start(), //
 				new RegexOr(//
 						new RegexLeaf("->"), //
-						new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+						new RegexLeaf(1, "COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LABEL", "(.*)"), //
+				new RegexLeaf(1, "LABEL", "(.*)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		// final HtmlColor color =

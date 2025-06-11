@@ -79,14 +79,14 @@ public class CommandHighlight extends SingleLineCommand2<TimingDiagram> {
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("CAPTION", "(.*)") //
+								new RegexLeaf(1, "CAPTION", "(.*)") //
 						)), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final TimeTick tickFrom = TimeTickBuilder.parseTimeTick("FROM", arg, diagram);
 		final TimeTick tickTo = TimeTickBuilder.parseTimeTick("TO", arg, diagram);
 		final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("CAPTION", 0));

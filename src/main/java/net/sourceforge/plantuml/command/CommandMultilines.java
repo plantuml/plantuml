@@ -43,18 +43,16 @@ import net.sourceforge.plantuml.utils.BlocLines;
 public abstract class CommandMultilines<S extends Diagram> implements Command<S> {
 
 	private final Pattern2 starting;
-	private final Pattern2 patternEnd;
+	private final Pattern2 ending;
 
-	public CommandMultilines(String patternStart) {
-		assert patternStart.startsWith("^") && patternStart.endsWith("$");
-		this.starting = Pattern2.cmpile(patternStart);
-		this.patternEnd = Pattern2.cmpile(getPatternEnd());
+	public CommandMultilines(Pattern2 starting, Pattern2 ending) {
+		// assert patternStart.startsWith("^") && patternStart.endsWith("$");
+		this.starting = starting;
+		this.ending = ending;
 	}
 
-	public abstract String getPatternEnd();
+	public final void getPatternEnd() {
 
-	public String[] getDescription() {
-		return new String[] { "START: " + starting.pattern(), "END: " + getPatternEnd() };
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
@@ -68,7 +66,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
 
-		m1 = patternEnd.matcher(lines.getLast().getTrimmed().getString());
+		m1 = ending.matcher(lines.getLast().getTrimmed().getString());
 		if (m1.matches() == false)
 			return CommandControl.OK_PARTIAL;
 
@@ -85,6 +83,10 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 
 	protected final Pattern2 getStartingPattern() {
 		return starting;
+	}
+
+	protected final Pattern2 getEndingPattern() {
+		return ending;
 	}
 
 	@Override

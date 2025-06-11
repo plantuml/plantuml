@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -51,21 +49,15 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 
 	private final Trim trimEnd;
 
-	private final Lazy<IRegex> patternEnd;
+	private final IRegex patternEnd;
 
-	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd) {
-		assert patternStart.getPattern().startsWith("^") && patternStart.getPattern().endsWith("$");
+	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, IRegex patternEnd) {
+		assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
 
 		this.strategy = strategy;
 		this.starting = patternStart;
 		this.trimEnd = trimEnd;
-		this.patternEnd = new Lazy<>(x -> getPatternEnd2());
-	}
-
-	public abstract RegexConcat getPatternEnd2();
-
-	public String[] getDescription() {
-		return new String[] { "START: " + starting.getPattern(), "END: " + patternEnd.get().getPattern() };
+		this.patternEnd = patternEnd;
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
@@ -92,7 +84,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		else
 			throw new IllegalStateException();
 
-		final boolean m1 = patternEnd.get().match(potentialLast);
+		final boolean m1 = patternEnd.match(potentialLast);
 		if (m1 == false)
 			return CommandControl.OK_PARTIAL;
 
@@ -117,6 +109,10 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 
 	protected final IRegex getStartingPattern() {
 		return starting;
+	}
+
+	protected final IRegex getEndingPattern() {
+		return patternEnd;
 	}
 
 	@Override

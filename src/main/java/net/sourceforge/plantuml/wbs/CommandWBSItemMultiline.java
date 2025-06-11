@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.wbs;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -58,41 +59,39 @@ import net.sourceforge.plantuml.utils.Direction;
 
 public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^(.*);\\s*(\\<\\<(.+)\\>\\>)?$"));
+
 	public CommandWBSItemMultiline() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
+				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
+				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
+				new RegexLeaf(1, "SHAPE", "(_)?"), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("DATA", "(.*)"), //
+				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^(.*);\\s*(\\<\\<(.+)\\>\\>)?$";
 	}
 
 	static IRegex getRegexConcatOld() {
 		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
-				new RegexLeaf("DIRECTION", "([<>])?"), //
+				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
+				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
+				new RegexLeaf(1, "SHAPE", "(_)?"), //
+				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
+				new RegexLeaf(1, "LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
-		final List<String> lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),
-				lines.getLast().getString());
+		final List<String> lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
 
 		final String stereotype = lineLast.get(1);
@@ -107,8 +106,8 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 
 		Direction dir = Direction.RIGHT;
 
-		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(), Stereotype.build(stereotype), dir,
-				IdeaShape.fromDesc(line0.get("SHAPE", 0)));
+		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(),
+				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.get("SHAPE", 0)));
 
 	}
 

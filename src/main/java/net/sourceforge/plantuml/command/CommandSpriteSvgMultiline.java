@@ -35,10 +35,12 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -47,10 +49,13 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("(.*\\</svg\\>)$"));
+
 	public static final CommandSpriteSvgMultiline ME = new CommandSpriteSvgMultiline();
 
 	private CommandSpriteSvgMultiline() {
-		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static IRegex getRegexConcat() {
@@ -58,19 +63,15 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 				new RegexLeaf("sprite"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("\\$?"), //
-				new RegexLeaf("NAME", "([-%pLN_]+)"), //
+				new RegexLeaf(1, "NAME", "([-%pLN_]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("SVGSTART", "(\\<svg\\b.*)"), //
+				new RegexLeaf(1, "SVGSTART", "(\\<svg\\b.*)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "(.*\\</svg\\>)$";
-	}
-
-	@Override
-	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String svgStart = line0.get("SVGSTART", 0);

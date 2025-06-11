@@ -57,7 +57,7 @@ public class CommandScaleMaxHeight extends SingleLineCommand2<AbstractPSystem> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("max"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("HEIGHT", "([0-9.]+)"), //
+				new RegexLeaf(1, "HEIGHT", "([0-9.]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("height"), RegexLeaf.end()); //
 	}

@@ -55,7 +55,7 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf("SUBJECT", "separator");
+		return new RegexLeaf(0, "SUBJECT", "separator");
 	}
 
 	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {

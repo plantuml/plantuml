@@ -58,7 +58,7 @@ public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 		return RegexConcat.build(CommandSkinParamJaws.class.getName(), RegexLeaf.start(), //
 				new RegexRepeatedOneOrMore("FULL", //
 						new RegexConcat( //
-								new RegexLeaf("TYPE", "(skinparam|skinparamlocked)"), //
+								new RegexLeaf(1, "TYPE", "(skinparam|skinparamlocked)"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(".*" + Jaws.BLOCK_E1_NEWLINE + ".*"))), //
 				RegexLeaf.end()); //

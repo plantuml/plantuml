@@ -64,17 +64,17 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandRobustConcise.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COMPACT", "(compact)"), //
+								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("TYPE", "(robust|concise)"), //
+				new RegexLeaf(1, "TYPE", "(robust|concise)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 								StereotypePattern.optional("STEREOTYPE"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(color().getRegex()), //

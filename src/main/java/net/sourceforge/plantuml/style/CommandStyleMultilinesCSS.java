@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -42,6 +43,7 @@ import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.skin.SkinParam;
@@ -50,17 +52,15 @@ import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram> {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
+
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^[%s]*\\</?style\\>[%s]*$"));
 
 	public static final CommandStyleMultilinesCSS ME = new CommandStyleMultilinesCSS();
 
 	private CommandStyleMultilinesCSS() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^[%s]*\\</?style\\>[%s]*$";
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static IRegex getRegexConcat() {

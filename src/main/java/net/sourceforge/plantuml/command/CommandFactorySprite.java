@@ -38,13 +38,14 @@ package net.sourceforge.plantuml.command;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteColorBuilder4096;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
-import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -54,65 +55,69 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactorySprite implements SingleMultiFactoryCommand<WithSprite> {
 
-	private IRegex getRegexConcatMultiLine() {
-		return RegexConcat.build(CommandFactorySprite.class.getName() + "multi", RegexLeaf.start(), //
-				new RegexLeaf("sprite"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("\\$?"), //
-				new RegexLeaf("NAME", "([-.%pLN_]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\\{"), RegexLeaf.end());
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^end[%s]?sprite|\\}$"));
+
+	public static final CommandFactorySprite ME = new CommandFactorySprite();
+
+	private CommandFactorySprite() {
+
 	}
 
-	private IRegex getRegexConcatSingleLine() {
-		return RegexConcat.build(CommandFactorySprite.class.getName() + "single", RegexLeaf.start(), //
-				new RegexLeaf("sprite"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("\\$?"), //
-				new RegexLeaf("NAME", "([-.%pLN_]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]")), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("DATA", "([-_A-Za-z0-9]+)"), RegexLeaf.end());
-	}
+	private final RegexConcat multiline = RegexConcat.build(CommandFactorySprite.class.getName() + "multi",
+			RegexLeaf.start(), //
+			new RegexLeaf("sprite"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("\\$?"), //
+			new RegexLeaf(1, "NAME", "([-.%pLN_]+)"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexOptional(new RegexLeaf(5, "DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]")), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexLeaf("\\{"), RegexLeaf.end());
+
+	private final RegexConcat singleLine = RegexConcat.build(CommandFactorySprite.class.getName() + "single",
+			RegexLeaf.start(), //
+			new RegexLeaf("sprite"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("\\$?"), //
+			new RegexLeaf(1, "NAME", "([-.%pLN_]+)"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexOptional(new RegexLeaf(5, "DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]")), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf(1, "DATA", "([-_A-Za-z0-9]+)"), RegexLeaf.end());
+
+	private final Command<WithSprite> commandMultiline = new CommandMultilines2<WithSprite>(multiline,
+			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {
+
+		@Override
+		protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines, ParserPass currentPass) {
+			lines = lines.trim().removeEmptyLines();
+			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+
+			lines = lines.subExtract(1, 1);
+			lines = lines.removeEmptyColumns();
+			if (lines.size() == 0)
+				return CommandExecutionResult.error("No sprite defined.");
+
+			return executeInternal(system, line0, lines.getLinesAsStringForSprite());
+		}
+
+	};
 
 	public Command<WithSprite> createSingleLine() {
-		return new SingleLineCommand2<WithSprite>(getRegexConcatSingleLine()) {
+		return new SingleLineCommand2<WithSprite>(singleLine) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location,
-					RegexResult arg, ParserPass currentPass) {
+			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location, RegexResult arg,
+					ParserPass currentPass) {
 				return executeInternal(system, arg, Arrays.asList((String) arg.get("DATA", 0)));
 			}
 
 		};
 	}
 
-	public Command<WithSprite> createMultiLine(boolean withBracket) {
-		return new CommandMultilines2<WithSprite>(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE,
-				Trim.BOTH) {
-
-			@Override
-			public String getPatternEnd() {
-				return "^end[%s]?sprite|\\}$";
-			}
-
-			@Override
-			protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines, ParserPass currentPass) {
-				lines = lines.trim().removeEmptyLines();
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-
-				lines = lines.subExtract(1, 1);
-				lines = lines.removeEmptyColumns();
-				if (lines.size() == 0)
-					return CommandExecutionResult.error("No sprite defined.");
-
-				return executeInternal(system, line0, lines.getLinesAsStringForSprite());
-			}
-
-		};
+	public Command<WithSprite> createMultiLine(boolean withBracketUnused) {
+		return commandMultiline;
 	}
 
 	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0, final List<String> strings) {

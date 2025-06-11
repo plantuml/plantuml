@@ -62,17 +62,18 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf(1, "DISPLAY", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);
@@ -80,7 +81,8 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 		if (display == null)
 			display = quark.getName();
 
-		return diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE);
+		return diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display),
+				GroupType.PACKAGE);
 	}
 
 }

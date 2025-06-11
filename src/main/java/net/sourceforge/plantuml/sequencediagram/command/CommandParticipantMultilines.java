@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -62,20 +64,18 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandParticipantMultilines extends CommandMultilines2<SequenceDiagram> {
 
-	public CommandParticipantMultilines() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
-	}
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^([^\\[\\]]*)\\]$"));
 
-	@Override
-	public String getPatternEnd() {
-		return "^([^\\[\\]]*)\\]$";
+	public CommandParticipantMultilines() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return RegexConcat.build(CommandParticipantMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(participant)"), //
+				new RegexLeaf(1, "TYPE", "(participant)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREO"), //
 				CommandParticipant.getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -88,7 +88,8 @@ public class CommandParticipantMultilines extends CommandMultilines2<SequenceDia
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(SequenceDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(SequenceDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 
 		final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 

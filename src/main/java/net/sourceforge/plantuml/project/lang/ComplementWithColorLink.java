@@ -46,8 +46,8 @@ public class ComplementWithColorLink implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		final String optionalStyle = "(?:(dotted|bold|dashed)[%s]+)?";
-		return new RegexLeaf("COMPLEMENT" + suffix,
-				"with[%s]+" + optionalStyle + "(#?\\w+)[%s]+" + optionalStyle + "link");
+		return new RegexLeaf(3,
+				"COMPLEMENT" + suffix, "with[%s]+" + optionalStyle + "(#?\\w+)[%s]+" + optionalStyle + "link");
 	}
 
 	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

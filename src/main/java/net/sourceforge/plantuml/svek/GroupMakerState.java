@@ -48,20 +48,10 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.dot.DotData;
-import net.sourceforge.plantuml.klimt.UStroke;
-import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
-import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 
 public final class GroupMakerState {
 

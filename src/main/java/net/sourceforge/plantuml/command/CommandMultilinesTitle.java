@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -49,12 +50,9 @@ public class CommandMultilinesTitle extends CommandMultilines<TitledDiagram> {
 	public static final CommandMultilinesTitle ME = new CommandMultilinesTitle();
 
 	private CommandMultilinesTitle() {
-		super("^title$");
-	}
+		super(Pattern2.cmpile("^title$"),
+				Pattern2.cmpile("^end[%s]?title$"));
 
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?title$";
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)

@@ -59,16 +59,17 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 		return RegexConcat.build(CommandPragma.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("!pragma"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([A-Za-z_][A-Za-z_0-9]*)"), //
+				new RegexLeaf(1, "NAME", "([A-Za-z_][A-Za-z_0-9]*)"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("VALUE", "(.*)") //
+								new RegexLeaf(1, "VALUE", "(.*)") //
 						)), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
 		final String value = arg.get("VALUE", 0);
 		if (name.equalsIgnoreCase("svgsize")) {

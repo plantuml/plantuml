@@ -70,14 +70,14 @@ public class CommandChangeStateByTime extends CommandChangeState {
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("COMMENT", "(.*?)") //
+								new RegexLeaf(1, "COMMENT", "(.*?)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final Player player = diagram.getLastPlayer();
 		if (player == null)
 			return CommandExecutionResult.error("Missing @ line before this");

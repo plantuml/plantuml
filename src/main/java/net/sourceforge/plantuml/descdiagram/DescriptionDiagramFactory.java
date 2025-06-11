@@ -72,7 +72,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class DescriptionDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public DescriptionDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public DescriptionDiagram createEmptyDiagram(UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new DescriptionDiagram(source, previous, preprocessing);
 	}
 
@@ -91,7 +92,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandTogether());
 
 		cmds.add(new CommandEndPackage());
-		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();
+		final CommandFactoryNote factoryNoteCommand = CommandFactoryNote.ME;
 		cmds.add(factoryNoteCommand.createMultiLine(false));
 
 		final CommandFactoryNoteOnLink factoryNoteOnLinkCommand = new CommandFactoryNoteOnLink(ParserPass.ONE);
@@ -113,8 +114,8 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteCommand.createSingleLine());
 		cmds.add(new CommandUrl());
 		cmds.add(new CommandCreateElementFull());
-		cmds.add(new CommandCreateElementMultilines(0));
-		cmds.add(new CommandCreateElementMultilines(1));
+		cmds.add(CommandCreateElementMultilines.TYPE0);
+		cmds.add(CommandCreateElementMultilines.TYPE1);
 
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
@@ -135,6 +136,5 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.DESCRIPTION;
 	}
-
 
 }

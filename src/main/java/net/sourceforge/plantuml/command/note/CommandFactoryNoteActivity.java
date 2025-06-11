@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -56,6 +57,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -72,7 +74,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + "multi", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
@@ -82,23 +84,22 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + "single", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
+	
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^[%s]*end[%s]?note$"));
+
 
 	public Command<ActivityDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<ActivityDiagram>(getRegexConcatMultiLine(),
-				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {
-
-			@Override
-			public String getPatternEnd() {
-				return "^[%s]*end[%s]?note$";
-			}
+				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
 
 			@Override
 			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines, ParserPass currentPass)

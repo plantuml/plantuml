@@ -147,9 +147,13 @@ public abstract class Log {
 		}
 	}
 
-	public static synchronized void logStackTrace() {
+	public static synchronized void logStackTrace(String s) {
+		if (firstCall) {
+			deletePerfLogFile();
+			firstCall = false;
+		}
 		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {
-			final Exception e = new Exception("StackTrace");
+			final Exception e = new Exception("StackTrace " + s);
 			e.fillInStackTrace();
 			e.printStackTrace(pw);
 		} catch (IOException ex) {

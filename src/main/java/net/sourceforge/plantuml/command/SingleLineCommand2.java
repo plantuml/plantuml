@@ -64,10 +64,6 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return false;
 	}
 
-	public String[] getDescription() {
-		return new String[] { pattern.getClass().getName() };
-	}
-
 	private String myTrim(StringLocated s) {
 		if (doTrim)
 			return s.getTrimmed().getString();

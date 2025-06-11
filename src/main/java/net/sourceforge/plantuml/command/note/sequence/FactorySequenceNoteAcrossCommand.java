@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -69,11 +71,11 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + "multi", RegexLeaf.start(), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("ACROSS", "(accross|across)"), //
+				new RegexLeaf(1, "ACROSS", "(accross|across)"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -84,11 +86,11 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + "single", RegexLeaf.start(), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf("ACROSS", "(accross|across)"), //
+				new RegexLeaf(1, "ACROSS", "(accross|across)"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -96,7 +98,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -116,14 +118,12 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 		};
 	}
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^end[%s]?(note|hnote|rnote)$"));
+
 	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),
-				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {
-
-			@Override
-			public String getPatternEnd() {
-				return "^end[%s]?(note|hnote|rnote)$";
-			}
+				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
 
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,

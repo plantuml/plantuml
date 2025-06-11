@@ -58,29 +58,29 @@ public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 		return RegexConcat.build(CommandSpot.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("spot"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([\\w][.\\w]*)"), //
+				new RegexLeaf(1, "NAME", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf("\\("), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("X", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						new RegexLeaf(2, "X", "(-?\\d+(%|%[-+]\\d+)?)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf(","), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("Y", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						new RegexLeaf(2, "Y", "(-?\\d+(%|%[-+]\\d+)?)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("\\)") //
 				)), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("COLOR", "(#\\w+)?"))), //
+						new RegexLeaf(1, "COLOR", "(#\\w+)?"))), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
 
 		final String stringColor = arg.get("COLOR", 0);

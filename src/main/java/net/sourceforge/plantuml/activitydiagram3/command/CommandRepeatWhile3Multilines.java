@@ -55,16 +55,13 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDiagram3> {
 
-	public CommandRepeatWhile3Multilines() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
-	}
+	private final static IRegex END = new RegexConcat(//
+			new RegexLeaf(1, "TEST1", "(.*)"), new RegexLeaf("\\)"), //
+			new RegexLeaf(";?"), //
+			RegexLeaf.end());
 
-	@Override
-	public RegexConcat getPatternEnd2() {
-		return new RegexConcat(//
-				new RegexLeaf("TEST1", "(.*)"), new RegexLeaf("\\)"), //
-				new RegexLeaf(";?"), //
-				RegexLeaf.end());
+	public CommandRepeatWhile3Multilines() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
@@ -74,15 +71,17 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 				new RegexLeaf("while"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST1", "(.*)"), //
+				new RegexLeaf(1, "TEST1", "(.*)"), //
 				RegexLeaf.end());
 	}
+
+	private static final Pattern2 IS_OR_EQUALS = Pattern2.cmpile("\\)[%s]*(is|equals?)[%s]*\\(");
 
 	@Override
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.trim();
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst().getString()));
-		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());
+		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
 
 		// System.err.println("line0=" + line0);
 		// System.err.println("linesLast=" + lineLast);
@@ -107,7 +106,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
 		// 0));
 		final Display linkLabel = Display.NULL; // Display.getWithNewlines("arg.get(\"LABEL\", 0)");
-		final List<Display> splitted = testDisplay.splitMultiline(Pattern2.cmpile("\\)[%s]*(is|equals?)[%s]*\\("));
+		final List<Display> splitted = testDisplay.splitMultiline(IS_OR_EQUALS);
 		if (splitted.size() == 2) {
 			testDisplay = splitted.get(0);
 			yes = splitted.get(1);

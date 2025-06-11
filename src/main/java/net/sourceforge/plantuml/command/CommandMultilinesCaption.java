@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -49,22 +50,20 @@ public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
 	public static final CommandMultilinesCaption ME = new CommandMultilinesCaption();
 
 	private CommandMultilinesCaption() {
-		super("^caption$");
+		super(Pattern2.cmpile("^caption$"),
+				Pattern2.cmpile("^end[%s]?caption$"));
+
 	}
 
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?caption$";
-	}
-
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		final LineLocation location = lines.getLocation();
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setCaption(DisplayPositioned.single(location, strings.replaceBackslashT(), HorizontalAlignment.CENTER,
-					VerticalAlignment.BOTTOM));
+			diagram.setCaption(DisplayPositioned.single(location, strings.replaceBackslashT(),
+					HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No caption defined");

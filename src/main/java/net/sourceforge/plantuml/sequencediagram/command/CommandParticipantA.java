@@ -55,12 +55,12 @@ public class CommandParticipantA extends CommandParticipant {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREO"), //
 				getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

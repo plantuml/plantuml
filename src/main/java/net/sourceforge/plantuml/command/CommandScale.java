@@ -56,18 +56,19 @@ public class CommandScale extends SingleLineCommand2<AbstractPSystem> {
 		return RegexConcat.build(CommandScale.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("scale"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("SCALE", "([0-9.]+)"), //
+				new RegexLeaf(1, "SCALE", "([0-9.]+)"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("/"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("DIV", "([0-9.]+)") //
+								new RegexLeaf(1, "DIV", "([0-9.]+)") //
 						)), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		double scale = Double.parseDouble(arg.get("SCALE", 0));
 		if (scale == 0)
 			return CommandExecutionResult.error("Scale cannot be zero");

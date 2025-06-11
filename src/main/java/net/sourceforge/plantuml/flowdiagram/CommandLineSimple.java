@@ -56,16 +56,17 @@ public class CommandLineSimple extends SingleLineCommand2<FlowDiagram> {
 		return RegexConcat.build(CommandLineSimple.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("ORIENTATION", "([nsew])"), //
+								new RegexLeaf(1, "ORIENTATION", "([nsew])"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("ID_DEST", "(\\w+)"), //
+				new RegexLeaf(1, "ID_DEST", "(\\w+)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "[%g](.*)[%g]"), RegexLeaf.end());
+				new RegexLeaf(1, "LABEL", "[%g](.*)[%g]"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String idDest = arg.get("ID_DEST", 0);
 		final String label = arg.get("LABEL", 0);
 		final String orientationString = arg.get("ORIENTATION", 0);

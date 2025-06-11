@@ -53,7 +53,7 @@ public class CommandAnything extends SingleLineCommand2<PSystemSalt> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("ALL", "(.*)"), //
+				new RegexLeaf(1, "ALL", "(.*)"), //
 				RegexLeaf.end());
 	}
 

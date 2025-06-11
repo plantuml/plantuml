@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 public class UrlBuilder {
     // ::remove file when __HAXE__
 
-	public static final IRegex MANDATORY = new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")");
+	public static final IRegex MANDATORY = new RegexLeaf(12, "URL", "(" + UrlBuilder.getRegexp() + ")");
 	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);
 
 	private static final String START_PART = "\\[\\[[%s]*";

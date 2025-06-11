@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 public class ComplementCompleted implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix, "(\\d+).*completed?");
+		return new RegexLeaf(1, "COMPLEMENT" + suffix, "(\\d+).*completed?");
 	}
 
 	public Failable<Completion> getMe(GanttDiagram system, RegexResult arg, String suffix) {

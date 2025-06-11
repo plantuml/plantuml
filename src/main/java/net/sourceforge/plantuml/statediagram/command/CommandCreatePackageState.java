@@ -68,13 +68,11 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	public CommandCreatePackageState() {
 		super(getRegexConcat());
 	}
-	
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;
 	}
-
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreatePackageState.class.getName(), RegexLeaf.start(), //
@@ -82,27 +80,29 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("CODE1", "([%pLN_.]+)"), //
+								new RegexLeaf(1, "CODE1", "([%pLN_.]+)"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]")), //
+								new RegexLeaf(1, "DISPLAY1", "[%g]([^%g]+)[%g]")), //
 						new RegexConcat(//
 								new RegexOptional(new RegexConcat( //
-										new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]"), RegexLeaf.spaceOneOrMore(), //
-										new RegexLeaf("as"), RegexLeaf.spaceOneOrMore() //
+										new RegexLeaf(1, "DISPLAY2", "[%g]([^%g]+)[%g]"), //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("as"), //
+										RegexLeaf.spaceOneOrMore() //
 								)), //
-								new RegexLeaf("CODE2", "([%pLN_.]+)"))), //
+								new RegexLeaf(1, "CODE2", "([%pLN_.]+)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")),
+				new RegexOptional(new RegexLeaf(2, "LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")),
 				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)"), RegexLeaf.end());
 	}
 
@@ -118,14 +118,16 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");
 		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 
 		final String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
 
-		diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display), GroupType.STATE);
+		diagram.gotoGroup(location, quark,
+				Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display),
+				GroupType.STATE);
 		final Entity p = diagram.getCurrentGroup();
 		if (display != null)
 			p.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));

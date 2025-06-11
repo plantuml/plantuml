@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command.note;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Link;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -74,9 +76,9 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 		return RegexConcat.build(CommandFactoryNoteOnLink.class.getName() + "single", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("(on|of)"), //
+				new RegexLeaf(1, "(on|of)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("link"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -84,16 +86,16 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(CommandFactoryNoteOnLink.class.getName() + "multi", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?"), //
+				new RegexLeaf(1, "POSITION", "(right|left|top|bottom)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("(on|of)"), //
+				new RegexLeaf(1, "(on|of)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("link"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -104,14 +106,12 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^end[%s]?note$"));
+
 	public Command<CucaDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<CucaDiagram>(getRegexConcatMultiLine(), MultilinesStrategy.KEEP_STARTING_QUOTE,
-				Trim.BOTH) {
-
-			@Override
-			public String getPatternEnd() {
-				return "^end[%s]?note$";
-			}
+				Trim.BOTH, END) {
 
 			@Override
 			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines,

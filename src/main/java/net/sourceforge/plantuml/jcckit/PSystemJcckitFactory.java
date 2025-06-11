@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private StringBuilder data;
 	private int width;
@@ -73,8 +73,9 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 
 	}
 
+	private static final Pattern2 p = Pattern2.cmpile("\\((\\d+),(\\d+)\\)");
+
 	private void extractDimension(String startLine) {
-		final Pattern2 p = Pattern2.cmpile("\\((\\d+),(\\d+)\\)");
 		final Matcher2 m = p.matcher(startLine);
 		final boolean ok = m.find();
 		if (ok) {
@@ -104,7 +105,8 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	}
 
 	@Override
-	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line, PreprocessingArtifact preprocessing) {
+	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line,
+			PreprocessingArtifact preprocessing) {
 		if (system == null && line.startsWith("jcckit")) {
 			data = new StringBuilder();
 			extractDimension(line);

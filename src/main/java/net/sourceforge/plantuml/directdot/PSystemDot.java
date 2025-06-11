@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.dot.ExeState;
 import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
-import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;

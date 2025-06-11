@@ -52,48 +52,48 @@ public class NameAndCodeParser {
 	public static IRegex nameAndCodeForClassWithGeneric() {
 		return new RegexOr(//
 				new RegexConcat(//
-						new RegexLeaf("DISPLAY1", DISPLAY_WITH_GENERIC), //
+						new RegexLeaf(2, "DISPLAY1", DISPLAY_WITH_GENERIC), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("as"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("CODE1", "(" + CODE + ")")), //
+						new RegexLeaf(1, "CODE1", "(" + CODE + ")")), //
 				new RegexConcat(//
-						new RegexLeaf("CODE2", "(" + CODE + ")"), //
+						new RegexLeaf(1, "CODE2", "(" + CODE + ")"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("as"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("DISPLAY2", DISPLAY_WITH_GENERIC)), //
-				new RegexLeaf("CODE3", "(" + CODE + ")"), //
-				new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")); //
+						new RegexLeaf(2, "DISPLAY2", DISPLAY_WITH_GENERIC)), //
+				new RegexLeaf(1, "CODE3", "(" + CODE + ")"), //
+				new RegexLeaf(1, "CODE4", "[%g]([^%g]+)[%g]")); //
 
 	}
 
 	public static IRegex nameAndCode() {
 		return new RegexOr(//
 				new RegexConcat(//
-						new RegexLeaf("DISPLAY1", DISPLAY), //
+						new RegexLeaf(1, "DISPLAY1", DISPLAY), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("as"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("CODE1", "(" + CODE + ")")), //
+						new RegexLeaf(1, "CODE1", "(" + CODE + ")")), //
 				new RegexConcat(//
-						new RegexLeaf("CODE2", "(" + CODE + ")"), //
+						new RegexLeaf(1, "CODE2", "(" + CODE + ")"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("as"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("DISPLAY2", DISPLAY)), //
-				new RegexLeaf("CODE3", "(" + CODE + ")"), //
-				new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")); //
+						new RegexLeaf(1, "DISPLAY2", DISPLAY)), //
+				new RegexLeaf(1, "CODE3", "(" + CODE + ")"), //
+				new RegexLeaf(1, "CODE4", "[%g]([^%g]+)[%g]")); //
 
 	}
 
 	public static IRegex codeForClass() {
-		return new RegexLeaf("CODE", "(" + NameAndCodeParser.CODE + "|[%g][^%g]+[%g])");
+		return new RegexLeaf(1, "CODE", "(" + NameAndCodeParser.CODE + "|[%g][^%g]+[%g])");
 	}
 
 	public static IRegex codeWithMemberForClass() {
-		return new RegexLeaf("CODE",
-				"(" + NameAndCodeParser.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([%g][^%g]+[%g]|[^%s]+)");
+		return new RegexLeaf(2,
+				"CODE", "(" + NameAndCodeParser.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([%g][^%g]+[%g]|[^%s]+)");
 	}
 
 }

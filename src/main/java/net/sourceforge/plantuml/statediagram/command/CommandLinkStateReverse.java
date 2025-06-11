@@ -52,16 +52,15 @@ public class CommandLinkStateReverse extends CommandLinkStateCommon {
 		return RegexConcat.build(CommandLinkStateReverse.class.getName(), RegexLeaf.start(), //
 				getStatePattern("ENT2"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexConcat(
-						//
-						new RegexLeaf("ARROW_CIRCLE_END", "(o[%s]+)?"), //
+				new RegexConcat(//
+				new RegexLeaf(1, "ARROW_CIRCLE_END", "(o[%s]+)?"), //
 						new RegexLeaf("\\<"), //
-						new RegexLeaf("ARROW_BODY2", "(-*)"), //
-						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
-						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_BODY1", "(-+)"), //
-						new RegexLeaf("ARROW_CROSS_START", "(x)?")), //
+						new RegexLeaf(1, "ARROW_BODY2", "(-*)"), //
+						new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
+						new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf(1, "ARROW_BODY1", "(-+)"), //
+						new RegexLeaf(1, "ARROW_CROSS_START", "(x)?")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				getStatePattern("ENT1"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -69,7 +68,7 @@ public class CommandLinkStateReverse extends CommandLinkStateCommon {
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("LABEL", "(.+)") //
+								new RegexLeaf(1, "LABEL", "(.+)") //
 						)), RegexLeaf.end());
 	}
 

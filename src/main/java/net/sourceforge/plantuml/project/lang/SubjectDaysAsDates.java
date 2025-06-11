@@ -73,11 +73,11 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 	private IRegex toRegexE() {
 		return new RegexConcat( //
 				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT1", "([\\d]+)"), //
+				new RegexLeaf(1, "ECOUNT1", "([\\d]+)"), //
 				Words.exactly(Words.TO), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT2", "([\\d]+)") //
+				new RegexLeaf(1, "ECOUNT2", "([\\d]+)") //
 		);
 	}
 
@@ -86,7 +86,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR3", "BMONTH3", "BDAY3"), //
 				Words.exactly(Words.AND), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("COUNT_AND", "([\\d]+)"), //
+				new RegexLeaf(1, "COUNT_AND", "([\\d]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("days?") //
 
@@ -97,7 +97,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		return new RegexConcat( //
 				new RegexLeaf("then"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("COUNT_THEN", "([\\d]+)"), //
+				new RegexLeaf(1, "COUNT_THEN", "([\\d]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("days?") //
 

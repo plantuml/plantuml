@@ -58,15 +58,15 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandBinary.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COMPACT", "(compact)"), //
+								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("binary"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+				new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.end());
 	}

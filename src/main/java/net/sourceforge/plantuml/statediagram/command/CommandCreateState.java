@@ -81,31 +81,33 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("CODE1", "([%pLN_.]+)"), //
-								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]")), //
+								new RegexLeaf(1, "CODE1", "([%pLN_.]+)"), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"),
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(1, "DISPLAY1", "[%g]([^%g]+)[%g]")), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]"), //
-								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE2", "([%pLN_.]+)")), //
-						new RegexLeaf("CODE3", "([%pLN_.]+)"), //
-						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
+								new RegexLeaf(1, "DISPLAY2", "[%g]([^%g]+)[%g]"), //
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"),
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(1, "CODE2", "([%pLN_.]+)")), //
+						new RegexLeaf(1, "CODE3", "([%pLN_.]+)"), //
+						new RegexLeaf(1, "CODE4", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")), //
+				new RegexOptional(new RegexLeaf(2, "LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("ADDFIELD", "(.*)") //
+								new RegexLeaf(1, "ADDFIELD", "(.*)") //
 						)), RegexLeaf.end());
 	}
 
@@ -134,10 +136,11 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 		Entity ent = quark.getData();
 		if (ent == null)
-			ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type, null);
+			ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type,
+					null);
 		else
 			diagram.setLastEntity(ent);
-		
+
 		diagram.ensureParentState(location, quark);
 
 		if (currentPass == ParserPass.ONE) {

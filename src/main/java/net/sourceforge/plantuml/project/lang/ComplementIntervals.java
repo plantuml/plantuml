@@ -66,12 +66,12 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 	private IRegex toRegexE(String suffix) {
 		return new RegexConcat( //
 				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT1" + suffix, "([\\d]+)"), //
+				new RegexLeaf(1, "ECOUNT1" + suffix, "([\\d]+)"), //
 				Words.exactly(Words.TO), //
 				Words.zeroOrMore(Words.THE), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT2" + suffix, "([\\d]+)") //
+				new RegexLeaf(1, "ECOUNT2" + suffix, "([\\d]+)") //
 		);
 	}
 

@@ -54,7 +54,7 @@ public class SubjectProject implements Subject<GanttDiagram> {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf("SUBJECT", "project");
+		return new RegexLeaf(0, "SUBJECT", "project");
 	}
 
 	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {

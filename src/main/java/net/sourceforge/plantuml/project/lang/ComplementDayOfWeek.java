@@ -47,7 +47,7 @@ public class ComplementDayOfWeek implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(" + DayOfWeek.getRegexString() + ")")); //
+				new RegexLeaf(1, "COMPLEMENT" + suffix, "(" + DayOfWeek.getRegexString() + ")")); //
 	}
 
 	public Failable<DayOfWeek> getMe(GanttDiagram project, RegexResult arg, String suffix) {

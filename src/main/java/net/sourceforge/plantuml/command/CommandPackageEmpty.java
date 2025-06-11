@@ -60,16 +60,16 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 		return RegexConcat.build(CommandPackageEmpty.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("package"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("DISPLAY", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
+				new RegexLeaf(1, "DISPLAY", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE", "([%pLN_.]+)") //
+								new RegexLeaf(1, "CODE", "([%pLN_.]+)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|#?\\w+)?"), //
+				new RegexLeaf(1, "COLOR", "(#[0-9a-fA-F]{6}|#?\\w+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -78,8 +78,8 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String idShort;
 		final String display;
 		if (arg.get("CODE", 0) == null) {
@@ -95,8 +95,8 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 			idShort = arg.get("CODE", 0);
 		}
 		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(idShort));
-		final CommandExecutionResult status = diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display),
-				GroupType.PACKAGE);
+		final CommandExecutionResult status = diagram.gotoGroup(location, quark,
+				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
 		final Entity p = diagram.getCurrentGroup();

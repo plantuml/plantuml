@@ -70,17 +70,17 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateDomain.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(requirement|domain)"), //
+				new RegexLeaf(1, "TYPE", "(requirement|domain)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("DISPLAY", DISPLAY_WITH_GENERIC), //
+				new RegexLeaf(2, "DISPLAY", DISPLAY_WITH_GENERIC), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([a-zA-Z0-9]+)"), //
+				new RegexLeaf(1, "CODE", "([a-zA-Z0-9]+)"), //
 				StereotypePattern.optional("STEREO"), //
 				// domain: lexical, causal, biddable
 				// requirement: FR, NFR, quality
-				new RegexLeaf("GROUP", "(\\{)?"), RegexLeaf.end());
+				new RegexLeaf(1, "GROUP", "(\\{)?"), RegexLeaf.end());
 	}
 
 	@Override

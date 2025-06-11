@@ -55,11 +55,11 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandScalePixel.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("scale"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("TICK", "(\\d+)"), //
+				new RegexLeaf(1, "TICK", "(\\d+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PIXEL", "(\\d+)"), //
+				new RegexLeaf(1, "PIXEL", "(\\d+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("pixels?"), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());

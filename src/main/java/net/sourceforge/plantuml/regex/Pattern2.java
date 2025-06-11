@@ -35,41 +35,20 @@
  */
 package net.sourceforge.plantuml.regex;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.jaws.Jaws;
 
-class BoundedPatternCache {
-	private final ConcurrentHashMap<String, Pattern2> cache;
-	private final AtomicInteger putCount = new AtomicInteger();
-	private final int maxSize;
-
-	public BoundedPatternCache(int initialSize, int maxSize) {
-		this.cache = new ConcurrentHashMap<>(initialSize);
-		this.maxSize = maxSize;
-	}
-
-	public Pattern2 computeIfAbsent(String key, Function<String, Pattern2> mappingFunction) {
-		return cache.computeIfAbsent(key, k -> {
-			final int size = putCount.incrementAndGet();
-			// This should never happen, but just in case, to avoid memory leak
-			if (size >= maxSize) {
-				cache.clear();
-				putCount.set(0);
-			}
-			return mappingFunction.apply(k);
-		});
-	}
-
-}
-
 public class Pattern2 {
 
-	private static final BoundedPatternCache cache = new BoundedPatternCache(12_000, 30_000);
+	private static final ConcurrentHashMap<String, AtomicInteger> COUNT = new ConcurrentHashMap<>();
+
 	private static final Pattern2 EMPTY = new Pattern2("");
 
 	private final String patternString;
@@ -77,7 +56,7 @@ public class Pattern2 {
 
 	private Pattern2(String s) {
 		this.patternString = s;
-		this.pattern = new Lazy<>(() -> Pattern.compile(transform(patternString), Pattern.CASE_INSENSITIVE));
+		this.pattern = new Lazy<>(() -> compileInternal(patternString));
 
 	}
 
@@ -93,17 +72,50 @@ public class Pattern2 {
 		if (p == null || p.length() == 0)
 			return EMPTY;
 
-		return cache.computeIfAbsent(p, key -> new Pattern2(key));
+		// Assert that the number of compilations for the pattern 'p' remains below the
+		// threshold (5);
+		// this helps detect potential excessive or unintended pattern compilations.
+		// Note: using 'assert' does not impact performance in production, as assertions
+		// are typically disabled by default.
+		assert COUNT.computeIfAbsent(p, k -> new AtomicInteger()).incrementAndGet() < 5;
+
+		return new Pattern2(p);
 
 	}
 
-	private static String transform(String p) {
+	public static Pattern compileInternal(String patternString) {
+		return Pattern.compile(transform(patternString), Pattern.CASE_INSENSITIVE);
+	}
+
+	private static String transformOld(String p) {
 		// Replace ReadLineReader.java
 		p = p.replace("%pLN", "\\p{L}\\p{N}"); // Unicode Letter, digit
 		p = p.replace("%s", "\\s\u00A0"); // space
 		p = p.replace("%q", "'\u2018\u2019"); // quote
 		p = p.replace("%g", "\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote
 		return p;
+	}
+
+	private static final Map<String, String> QUOTED_REPLACEMENTS = new HashMap<>();
+	static {
+		QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}\\p{N}")); // Unicode Letter or digit
+		QUOTED_REPLACEMENTS.put("%s", Matcher.quoteReplacement("\\s\u00A0")); // normal or non-breaking space
+		QUOTED_REPLACEMENTS.put("%q", Matcher.quoteReplacement("'\u2018\u2019")); // single quotes
+		QUOTED_REPLACEMENTS.put("%g", Matcher.quoteReplacement("\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE));
+	}
+
+	// private static final Pattern TRANSFORM_PATTERN = Pattern.compile("%pLN|%s|%q|%g");
+	private static final Pattern TRANSFORM_PATTERN = Pattern.compile("%(pLN|s|q|g)");
+
+	public static String transform(String input) {
+		final Matcher m = TRANSFORM_PATTERN.matcher(input);
+		final StringBuffer sb = new StringBuffer(input.length());
+		while (m.find()) {
+			final String replacement = QUOTED_REPLACEMENTS.get(m.group());
+			m.appendReplacement(sb, replacement);
+		}
+		m.appendTail(sb);
+		return sb.toString();
 	}
 
 }

@@ -59,9 +59,9 @@ public class CommandSwimlane extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandSwimlane.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\|"), //
 				ColorParser.exp6(), //
-				new RegexLeaf("SWIMLANE", "([^|]+)"), //
+				new RegexLeaf(1, "SWIMLANE", "([^|]+)"), //
 				new RegexLeaf("\\|"), //
-				new RegexLeaf("LABEL", "([^|]+)?"), //
+				new RegexLeaf(1, "LABEL", "([^|]+)?"), //
 				RegexLeaf.end());
 	}
 

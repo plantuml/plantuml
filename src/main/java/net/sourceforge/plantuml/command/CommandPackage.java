@@ -69,20 +69,20 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPackage.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(package)"), //
+				new RegexLeaf(1, "TYPE", "(package)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
+				new RegexLeaf(1, "NAME", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("AS", "([%pLN_.]+)") //
+								new RegexLeaf(1, "AS", "([%pLN_.]+)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -100,8 +100,8 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		String idShort;
 		String display;
 		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
@@ -133,9 +133,9 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),
 				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
-		
-		final CommandExecutionResult status = diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display),
-				GroupType.PACKAGE, usymbol);
+
+		final CommandExecutionResult status = diagram.gotoGroup(location, quark,
+				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE, usymbol);
 		if (status.isOk() == false)
 			return status;
 

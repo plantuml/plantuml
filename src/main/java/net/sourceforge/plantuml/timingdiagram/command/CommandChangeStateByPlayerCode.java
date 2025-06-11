@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChangeStateByPlayerCode extends CommandChangeState {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public CommandChangeStateByPlayerCode() {
 		super(getRegexConcat());
@@ -57,7 +57,7 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChangeStateByPlayerCode.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
+				new RegexLeaf(1, "CODE", CommandTimeMessage.PLAYER_CODE), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("is"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -70,14 +70,14 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("COMMENT", "(.*?)") //
+								new RegexLeaf(1, "COMMENT", "(.*?)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String code = arg.get("CODE", 0);
 		final Player player = diagram.getPlayer(code);
 		if (player == null)

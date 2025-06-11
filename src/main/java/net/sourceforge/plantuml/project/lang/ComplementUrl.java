@@ -49,7 +49,7 @@ public class ComplementUrl implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
+				new RegexLeaf(12, "COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
 	}
 
 	public Failable<Url> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

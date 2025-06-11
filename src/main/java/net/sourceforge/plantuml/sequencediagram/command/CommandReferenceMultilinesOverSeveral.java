@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -59,34 +60,30 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<SequenceDiagram> {
 
+	private static final RegexConcat REGEX_CONCAT = RegexConcat.build(
+			CommandReferenceMultilinesOverSeveral.class.getName(), //
+			RegexLeaf.start(), //
+			new RegexLeaf("ref"), //
+			new RegexLeaf(1, "REF", "(#\\w+)?"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("over"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf(1, "PARTS", "((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexOptional(new RegexLeaf(1, "URL", "(\\[\\[.*?\\]\\])")), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexLeaf(1, "UNUSED", "(#\\w+)?"), //
+			RegexLeaf.end());
+
 	public CommandReferenceMultilinesOverSeveral() {
-		super(getConcat().getPattern());
+		super(Pattern2.cmpile(REGEX_CONCAT.getPattern()),
+				Pattern2.cmpile("^end[%s]?(ref)?$"));
 	}
 
-	private static RegexConcat getConcat() {
-		return RegexConcat.build(CommandReferenceMultilinesOverSeveral.class.getName(), //
-				RegexLeaf.start(), //
-				new RegexLeaf("ref"), //
-				new RegexLeaf("REF", "(#\\w+)?"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("over"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PARTS", "((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("UNUSED", "(#\\w+)?"), //
-				RegexLeaf.end());
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?(ref)?$";
-	}
-
-	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 		final String firstLine = lines.getFirst().getTrimmed().getString();
-		final RegexResult arg = getConcat().matcher(firstLine);
+		final RegexResult arg = REGEX_CONCAT.matcher(firstLine);
 		if (arg == null)
 			return CommandExecutionResult.error("Cannot parse line " + firstLine);
 
@@ -98,7 +95,8 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
 		final List<Participant> p = new ArrayList<>();
 		for (String s : participants)
-			p.add(diagram.getOrCreateParticipant(lines.getLocation(), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
+			p.add(diagram.getOrCreateParticipant(lines.getLocation(),
+					StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();

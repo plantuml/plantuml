@@ -61,13 +61,13 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf(1, "TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("(is|equals?)"), //
+				new RegexLeaf(1, "(is|equals?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("WHEN", "(.+?)"), //
+				new RegexLeaf(1, "WHEN", "(.+?)"), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("then"), //

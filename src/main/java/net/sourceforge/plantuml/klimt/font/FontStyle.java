@@ -37,15 +37,19 @@ package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
 import java.util.EnumSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.Pattern2;
 
 public enum FontStyle {
 
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
+
+	private final Lazy<Pattern> activation = new Lazy<>(() -> Pattern.compile(getActivationPattern()));
+	private final Lazy<Pattern> deactivation = new Lazy<>(() -> Pattern.compile(getDeactivationPattern()));
 
 	public UFont mutateFont(UFont font) {
 		if (this == PLAIN)
@@ -123,7 +127,7 @@ public enum FontStyle {
 
 	// ::comment when __HAXE__
 	public HColor getExtendedColor(String s) {
-		final Matcher2 m = Pattern2.cmpile(getActivationPattern()).matcher(s);
+		final Matcher m = activation.get().matcher(s);
 		if (m.find() == false || m.groupCount() != 1)
 			return null;
 
@@ -162,7 +166,7 @@ public enum FontStyle {
 
 	public static FontStyle getStyle(String line) {
 		for (FontStyle style : EnumSet.allOf(FontStyle.class))
-			if (line.matches(style.getActivationPattern()) || line.matches(style.getDeactivationPattern()))
+			if (style.activation.get().matcher(line).matches() || style.deactivation.get().matcher(line).matches())
 				return style;
 
 		throw new IllegalArgumentException(line);

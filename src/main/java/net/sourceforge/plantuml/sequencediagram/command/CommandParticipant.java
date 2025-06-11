@@ -72,14 +72,15 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 				new RegexConcat( //
 						new RegexLeaf("order"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("ORDER", "(-?\\d{1,7})") //
+						new RegexLeaf(1, "ORDER", "(-?\\d{1,7})") //
 				));
 	}
 
 	static IRegex getRegexType() {
 		return new RegexOr(//
-				new RegexLeaf("TYPE", "(participant|actor|create|boundary|control|entity|queue|database|collections)"), //
-				new RegexLeaf("CREATE",
+				new RegexLeaf(1, "TYPE",
+						"(participant|actor|create|boundary|control|entity|queue|database|collections)"), //
+				new RegexLeaf(1, "CREATE",
 						"create[%s](participant|actor|boundary|control|entity|queue|database|collections)"));
 	}
 
@@ -95,7 +96,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		Display strings = Display.NULL;
 		if (arg.get("FULL", 0) != null)
 			strings = Display.getWithNewlines(diagram.getPragma(), arg.get("FULL", 0));
-			// strings = Display.create(arg.get("FULL", 0));
+		// strings = Display.create(arg.get("FULL", 0));
 
 		final String typeString1 = arg.get("TYPE", 0);
 		final String typeCreate1 = arg.get("CREATE", 0);

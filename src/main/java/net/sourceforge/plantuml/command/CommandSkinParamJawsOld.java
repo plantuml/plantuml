@@ -54,11 +54,11 @@ public class CommandSkinParamJawsOld extends SingleLineCommand2<TitledDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandSkinParamJawsOld.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(skinparam|skinparamlocked)"), //
+				new RegexLeaf(1, "TYPE", "(skinparam|skinparamlocked)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([\\w.]*(?:\\<\\<[^" + Jaws.BLOCK_E1_NEWLINE + "]*\\>\\>)?[\\w.]*)"), //
+				new RegexLeaf(1, "NAME", "([\\w.]*(?:\\<\\<[^" + Jaws.BLOCK_E1_NEWLINE + "]*\\>\\>)?[\\w.]*)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("VALUE", "\\{(.*" + Jaws.BLOCK_E1_NEWLINE + ".*)\\}.*"), //
+				new RegexLeaf(1, "VALUE", "\\{(.*" + Jaws.BLOCK_E1_NEWLINE + ".*)\\}.*"), //
 				RegexLeaf.end()); //
 	}
 

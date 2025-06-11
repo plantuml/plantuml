@@ -58,7 +58,7 @@ public class CommandRegexfSingleLine extends SingleLineCommand2<PSystemRegex> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRegexfSingleLine.class.getName(), RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LINE", "(.*)"), //
+				new RegexLeaf(1, "LINE", "(.*)"), //
 				RegexLeaf.end());
 	}
 

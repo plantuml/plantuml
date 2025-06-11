@@ -53,8 +53,8 @@ public class CommandDockedEvent extends SingleLineCommand2<BpmDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandDockedEvent.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("LABEL", "(.*)"), //
-				new RegexLeaf("STYLE", ";"), //
+				new RegexLeaf(1, "LABEL", "(.*)"), //
+				new RegexLeaf(0, "STYLE", ";"), //
 				RegexLeaf.end());
 	}
 

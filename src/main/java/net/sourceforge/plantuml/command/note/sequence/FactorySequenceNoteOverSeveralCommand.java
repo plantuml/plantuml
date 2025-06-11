@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -70,18 +72,18 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "multi", RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -92,18 +94,18 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "single", RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("VMERGE", "(/)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf(1, "STYLE", "(note|hnote|rnote)"), //
 				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf(1, "P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -111,7 +113,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -131,14 +133,12 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		};
 	}
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^end[%s]?(note|hnote|rnote)$"));
+
 	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),
-				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {
-
-			@Override
-			public String getPatternEnd() {
-				return "^end[%s]?(note|hnote|rnote)$";
-			}
+				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
 
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
@@ -153,12 +153,12 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		};
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, final RegexResult line0, Display display)
-			throws NoSuchColorException {
-		final Participant p1 = diagram
-				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P1", 0)));
-		final Participant p2 = diagram
-				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P2", 0)));
+	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram,
+			final RegexResult line0, Display display) throws NoSuchColorException {
+		final Participant p1 = diagram.getOrCreateParticipant(location,
+				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P1", 0)));
+		final Participant p2 = diagram.getOrCreateParticipant(location,
+				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P2", 0)));
 
 		if (display.size() > 0) {
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;

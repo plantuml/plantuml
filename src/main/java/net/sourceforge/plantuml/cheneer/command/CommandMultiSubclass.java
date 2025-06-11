@@ -68,16 +68,16 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
 
 	protected static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("SUPERCLASS", "([%pLN_.-]+)"), //
+				new RegexLeaf(1, "SUPERCLASS", "([%pLN_.-]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("PARTICIPATION", "([-=])"), //
-				new RegexLeaf("(>)"), //
-				new RegexLeaf("PARTICIPATION2", "([-=])"), //
+				new RegexLeaf(1, "PARTICIPATION", "([-=])"), //
+				new RegexLeaf(1, "(>)"), //
+				new RegexLeaf(1, "PARTICIPATION2", "([-=])"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("SYMBOL", "([doU])"), //
+				new RegexLeaf(1, "SYMBOL", "([doU])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
-				new RegexLeaf("SUBCLASSES", "(.+)"), //
+				new RegexLeaf(1, "SUBCLASSES", "(.+)"), //
 				new RegexLeaf("\\}"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //

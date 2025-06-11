@@ -55,7 +55,7 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf("SUBJECT", "(" + DayOfWeek.getRegexString() + ")");
+		return new RegexLeaf(1, "SUBJECT", "(" + DayOfWeek.getRegexString() + ")");
 	}
 
 	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg) {

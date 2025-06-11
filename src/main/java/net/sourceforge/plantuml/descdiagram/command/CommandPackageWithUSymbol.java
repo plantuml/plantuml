@@ -73,53 +73,53 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPackageWithUSymbol.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("SYMBOL",
+				new RegexLeaf(1, "SYMBOL",
 						"(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|action|process|database|storage|component|card|queue|stack)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat( //
-								new RegexLeaf("DISPLAY1", "([%g].+?[%g])"), //
+								new RegexLeaf(1, "DISPLAY1", "([%g].+?[%g])"), //
 								new RegexOptional( //
 										new RegexConcat( //
 												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE1", "(\\<\\<.+\\>\\>)") //
+												new RegexLeaf(1, "STEREOTYPE1", "(\\<\\<.+\\>\\>)") //
 										)), //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE1", "([^#%s{}]+)") //
+								new RegexLeaf(1, "CODE1", "([^#%s{}]+)") //
 						), //
 						new RegexConcat( //
-								new RegexLeaf("CODE2", "([^#%s{}%g]+)"), //
+								new RegexLeaf(1, "CODE2", "([^#%s{}%g]+)"), //
 								new RegexOptional( //
 										new RegexConcat( //
 												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
+												new RegexLeaf(1, "STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
 										)), //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("DISPLAY2", "([%g].+?[%g])") //
+								new RegexLeaf(1, "DISPLAY2", "([%g].+?[%g])") //
 						), //
 						new RegexConcat( //
-								new RegexLeaf("DISPLAY3", "([^#%s{}%g]+)"), //
+								new RegexLeaf(1, "DISPLAY3", "([^#%s{}%g]+)"), //
 								new RegexOptional( //
 										new RegexConcat( //
 												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE3", "(\\<\\<.+\\>\\>)") //
+												new RegexLeaf(1, "STEREOTYPE3", "(\\<\\<.+\\>\\>)") //
 										)), //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE3", "([^#%s{}%g]+)") //
+								new RegexLeaf(1, "CODE3", "([^#%s{}%g]+)") //
 						), //
-						new RegexLeaf("CODE8", "([%g][^%g]+[%g])"), //
-						new RegexLeaf("CODE9", "([^#%s{}%g]*)") //
+						new RegexLeaf(1, "CODE8", "([%g][^%g]+[%g])"), //
+						new RegexLeaf(1, "CODE9", "([^#%s{}%g]*)") //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -133,8 +133,8 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String codeArg = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
 		final Quark<Entity> ident = diagram.quarkInContext(false,
 				diagram.cleanId(codeArg.length() == 0 ? diagram.getUniqueSequence("##") : codeArg));
@@ -154,13 +154,13 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final USymbol usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
 				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
 
-		final CommandExecutionResult status = diagram.gotoGroup(location, ident, Display.getWithNewlines(diagram.getPragma(), display),
-				GroupType.PACKAGE, usymbol);
+		final CommandExecutionResult status = diagram.gotoGroup(location, ident,
+				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE, usymbol);
 		if (status.isOk() == false)
 			return status;
 
 		final Entity p = diagram.getCurrentGroup();
-		
+
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype, false));

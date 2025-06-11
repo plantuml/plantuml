@@ -58,33 +58,33 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 		return RegexConcat.build(CommandClock.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COMPACT", "(compact)"), //
+								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("TYPE", "clock"), //
+				new RegexLeaf(0, "TYPE", "clock"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(new RegexConcat( //
-						new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+						new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("as"), //
 						RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("with"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("period"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PERIOD", "([0-9]+)"), //
+				new RegexLeaf(1, "PERIOD", "([0-9]+)"), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("pulse"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("PULSE", "([0-9]+)") //
+						new RegexLeaf(1, "PULSE", "([0-9]+)") //
 				)), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("offset"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("OFFSET", "([0-9]+)") //
+						new RegexLeaf(1, "OFFSET", "([0-9]+)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				StereotypePattern.optional("STEREO"), //
@@ -93,7 +93,8 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		final int period = Integer.parseInt(arg.get("PERIOD", 0));

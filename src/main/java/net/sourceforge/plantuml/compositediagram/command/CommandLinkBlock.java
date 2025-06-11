@@ -60,24 +60,25 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandLinkBlock.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("ENT1", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "ENT1", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DECO1", "(\\[\\]|\\*\\))?"), //
-				new RegexLeaf("QUEUE", "([=-]+|\\.+)"), //
-				new RegexLeaf("DECO2", "(\\[\\]|\\(\\*)?"), //
+				new RegexLeaf(1, "DECO1", "(\\[\\]|\\*\\))?"), //
+				new RegexLeaf(1, "QUEUE", "([=-]+|\\.+)"), //
+				new RegexLeaf(1, "DECO2", "(\\[\\]|\\(\\*)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ENT2", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "ENT2", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(":"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("DISPLAY", "(\\S*+)") //
+								new RegexLeaf(1, "DISPLAY", "(\\S*+)") //
 						)), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
 		final Quark<Entity> quark1 = diagram.quarkInContext(true, diagram.cleanId(ent1));
@@ -102,10 +103,10 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 		final String queue = arg.get("QUEUE", 0);
 
-		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get("DISPLAY", 0)), queue.length(),
-				diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
-				cl2, linkType, linkArg);
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get("DISPLAY", 0)),
+				queue.length(), diagram.getSkinParam().classAttributeIconSize() > 0);
+		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+				linkType, linkArg);
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}

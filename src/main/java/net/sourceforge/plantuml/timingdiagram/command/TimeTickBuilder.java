@@ -50,11 +50,11 @@ public class TimeTickBuilder {
 
 	public static IRegex expressionAtWithoutArobase(String name) {
 		return new RegexOr( //
-				new RegexLeaf(name + "CODE", ":([%pLN_.]+)([-+][.\\d]+)?"), //
-				new RegexLeaf(name + "DATE", "(\\d+)/(\\d+)/(\\d+)"), //
-				new RegexLeaf(name + "HOUR", "(\\d+):(\\d+):(\\d+)"), //
-				new RegexLeaf(name + "DIGIT", "(\\+?)(-?\\d+\\.?\\d*)"), //
-				new RegexLeaf(name + "CLOCK", "([%pLN_.@]+)\\*(\\d+)"));
+				new RegexLeaf(2, name + "CODE", ":([%pLN_.]+)([-+][.\\d]+)?"), //
+				new RegexLeaf(3, name + "DATE", "(\\d+)/(\\d+)/(\\d+)"), //
+				new RegexLeaf(3, name + "HOUR", "(\\d+):(\\d+):(\\d+)"), //
+				new RegexLeaf(2, name + "DIGIT", "(\\+?)(-?\\d+\\.?\\d*)"), //
+				new RegexLeaf(2, name + "CLOCK", "([%pLN_.@]+)\\*(\\d+)"));
 	}
 
 	public static IRegex expressionAtWithArobase(String name) {

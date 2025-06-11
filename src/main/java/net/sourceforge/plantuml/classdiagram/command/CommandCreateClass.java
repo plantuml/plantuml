@@ -78,29 +78,29 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClass.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", //
-						"(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception|metaclass|stereotype)"), //
+				new RegexLeaf(1, //
+						"TYPE", "(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception|metaclass|stereotype)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCodeForClassWithGeneric(), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
-						new RegexLeaf("GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
+						new RegexLeaf(1, "GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
-						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
+						new RegexLeaf(2, "LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("EXTENDS",
-								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf(3,
+								"EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("IMPLEMENTS",
-								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf(3,
+								"IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\{"),
 						RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\}"))), //
 				RegexLeaf.end());

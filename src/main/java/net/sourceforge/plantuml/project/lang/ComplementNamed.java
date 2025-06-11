@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 public class ComplementNamed implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix, "\\[([^\\[\\]]+)\\]");
+		return new RegexLeaf(1, "COMPLEMENT" + suffix, "\\[([^\\[\\]]+)\\]");
 	}
 
 	public Failable<String> getMe(GanttDiagram system, RegexResult arg, String suffix) {

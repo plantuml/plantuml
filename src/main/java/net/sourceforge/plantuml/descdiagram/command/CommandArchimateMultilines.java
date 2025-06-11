@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -62,13 +64,11 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntityDiagram> {
 
-	public CommandArchimateMultilines() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
-	}
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^(.*)\\]$"));
 
-	@Override
-	public String getPatternEnd() {
-		return "^(.*)\\]$";
+	public CommandArchimateMultilines() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	private static IRegex getRegexConcat() {
@@ -77,14 +77,14 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 				RegexLeaf.spaceOneOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "CODE", "([%pLN_.]+)"), //
 				StereotypePattern.optionalArchimate("STEREOTYPE"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\["), //
-				new RegexLeaf("DESC", "(.*)"), //
+				new RegexLeaf(1, "DESC", "(.*)"), //
 				RegexLeaf.end());
 	}
 
@@ -105,8 +105,8 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 
 		final String icon = StereotypePattern.removeChevronBrackets(line0.getLazzy("STEREOTYPE", 0));
 
-		final Entity entity = diagram.reallyCreateLeaf(lines.getLocation(), quark, Display.getWithNewlines(quark), LeafType.DESCRIPTION,
-				USymbols.RECTANGLE);
+		final Entity entity = diagram.reallyCreateLeaf(lines.getLocation(), quark, Display.getWithNewlines(quark),
+				LeafType.DESCRIPTION, USymbols.RECTANGLE);
 
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();

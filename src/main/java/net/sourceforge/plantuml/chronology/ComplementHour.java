@@ -64,8 +64,8 @@ public class ComplementHour implements Something<ChronologyDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("TIME", "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+)"), //
-				new RegexOptional(new RegexLeaf("MS", "\\.(\\d+)")) //
+				new RegexLeaf(1, "TIME", "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+)"), //
+				new RegexOptional(new RegexLeaf(1, "MS", "\\.(\\d+)")) //
 		); //
 	}
 

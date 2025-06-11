@@ -64,21 +64,21 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandReturn.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("return"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf("COLOR", "(#\\w+)"), //
+								new RegexLeaf(1, "COLOR", "(#\\w+)"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("MESSAGE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf(1, "MESSAGE", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 		AbstractMessage message1 = diagram.getActivatingMessage();
 		boolean doDeactivation = true;

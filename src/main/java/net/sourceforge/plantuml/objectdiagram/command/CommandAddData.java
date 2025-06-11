@@ -58,11 +58,11 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAddData.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("NAME", "([%pLN_.]+)"), //
+				new RegexLeaf(1, "NAME", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DATA", "(.*)"), RegexLeaf.end()); //
+				new RegexLeaf(1, "DATA", "(.*)"), RegexLeaf.end()); //
 	}
 
 	@Override

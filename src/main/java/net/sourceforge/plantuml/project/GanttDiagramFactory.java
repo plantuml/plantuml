@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.command.CommandColorTask;
-import net.sourceforge.plantuml.project.command.CommandFootbox;
+import net.sourceforge.plantuml.project.command.CommandFootboxGantt;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow2;
 import net.sourceforge.plantuml.project.command.CommandGroupEnd;
@@ -115,7 +115,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandPrintScale());
 		cmds.add(new CommandPrintBetween());
 		cmds.add(new CommandNoteBottom());
-		cmds.add(new CommandFootbox());
+		cmds.add(new CommandFootboxGantt());
 		cmds.add(new CommandLabelOnColumn());
 		cmds.add(new CommandHideResourceName());
 		cmds.add(new CommandHideResourceFootbox());

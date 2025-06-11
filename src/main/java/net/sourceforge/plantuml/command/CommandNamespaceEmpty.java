@@ -64,7 +64,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 		return RegexConcat.build(CommandNamespaceEmpty.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("namespace"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", CommandNamespace.NAMESPACE_REGEX), //
+				new RegexLeaf(1, "NAME", CommandNamespace.NAMESPACE_REGEX), //
 				StereotypePattern.optional("STEREOTYPE"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //

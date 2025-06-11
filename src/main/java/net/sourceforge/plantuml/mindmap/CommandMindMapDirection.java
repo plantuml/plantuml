@@ -56,10 +56,10 @@ public class CommandMindMapDirection extends SingleLineCommand2<MindMapDiagram> 
 		return RegexConcat.build(CommandMindMapDirection.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[^*#]*"), //
 				new RegexLeaf("\\b"), //
-				new RegexLeaf("DIRECTION", "(left|right|top|bottom)"), //
+				new RegexLeaf(1, "DIRECTION", "(left|right|top|bottom)"), //
 				new RegexLeaf("\\b"), //
 				new RegexLeaf("[^*#]*"), //
-				new RegexLeaf("(side|direction)"), //
+				new RegexLeaf(1, "(side|direction)"), //
 				new RegexLeaf("[^*#]*"), //
 				RegexLeaf.end());
 	}

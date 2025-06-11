@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.project.command;
 
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
-import net.sourceforge.plantuml.activitydiagram3.command.CommandNoteLong3;
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,6 +45,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -57,24 +56,22 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteBottom extends CommandMultilines2<GanttDiagram> {
 
+	private final static Lazy<Pattern2> END = new Lazy<>(
+			() -> Pattern2.cmpile("^end[%s]*note$"));
+
 	public CommandNoteBottom() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNoteBottom.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(note)"), //
+				new RegexLeaf(1, "TYPE", "(note)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("POSITION", "(bottom)"), //
+				new RegexLeaf(1, "POSITION", "(bottom)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				RegexLeaf.end());
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]*note$";
 	}
 
 	@Override

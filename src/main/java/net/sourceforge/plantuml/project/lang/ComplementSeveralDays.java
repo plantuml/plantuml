@@ -47,7 +47,7 @@ public class ComplementSeveralDays implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week)s?" + //
+				new RegexLeaf(4, "COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week)s?" + //
 						"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?" //
 				)); //
 	}

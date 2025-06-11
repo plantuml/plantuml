@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.text;
 
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Guillemet {
 
@@ -49,15 +50,15 @@ public class Guillemet {
 
 	public Guillemet fromDescription(String value) {
 		if (value != null) {
-			if ("false".equalsIgnoreCase(value)) {
+			if ("false".equalsIgnoreCase(value))
 				return Guillemet.DOUBLE_COMPARATOR;
-			}
-			if ("<< >>".equalsIgnoreCase(value)) {
+
+			if ("<< >>".equalsIgnoreCase(value))
 				return Guillemet.DOUBLE_COMPARATOR;
-			}
-			if ("none".equalsIgnoreCase(value)) {
+
+			if ("none".equalsIgnoreCase(value))
 				return Guillemet.NONE;
-			}
+
 			if (value.contains(" ")) {
 				final StringTokenizer st = new StringTokenizer(value, " ");
 				return new Guillemet(st.nextToken(), st.nextToken());
@@ -72,28 +73,30 @@ public class Guillemet {
 
 	}
 
+	private static final Pattern GUILLEMET_PATTERN = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
+
 	public String manageGuillemet(String st) {
-		if (this == DOUBLE_COMPARATOR) {
+		if (this == DOUBLE_COMPARATOR)
 			return st;
-		}
-		return st.replaceAll("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>",
-				Matcher.quoteReplacement(start) + "$1" + Matcher.quoteReplacement(end));
+
+		return GUILLEMET_PATTERN.matcher(st)
+				.replaceAll(Matcher.quoteReplacement(start) + "$1" + Matcher.quoteReplacement(end));
 	}
 
 	public String manageGuillemetStrict(String st) {
-		if (this == DOUBLE_COMPARATOR) {
+		if (this == DOUBLE_COMPARATOR)
 			return st;
-		}
-		if (st.startsWith("<< ")) {
+
+		if (st.startsWith("<< "))
 			st = start + st.substring(3);
-		} else if (st.startsWith("<<")) {
+		else if (st.startsWith("<<"))
 			st = start + st.substring(2);
-		}
-		if (st.endsWith(" >>")) {
+
+		if (st.endsWith(" >>"))
 			st = st.substring(0, st.length() - 3) + end;
-		} else if (st.endsWith(">>")) {
+		else if (st.endsWith(">>"))
 			st = st.substring(0, st.length() - 2) + end;
-		}
+
 		return st;
 	}
 

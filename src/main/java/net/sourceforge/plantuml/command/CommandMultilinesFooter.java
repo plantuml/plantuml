@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -50,12 +51,8 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 	public static final CommandMultilinesFooter ME = new CommandMultilinesFooter();
 
 	private CommandMultilinesFooter() {
-		super("^(?:(left|right|center)?[%s]*)footer$");
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?footer$";
+		super(Pattern2.cmpile("^(?:(left|right|center)?[%s]*)footer$"),
+				Pattern2.cmpile("^end[%s]?footer$"));
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
