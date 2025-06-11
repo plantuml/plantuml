@@ -62,62 +62,63 @@ public class FtileCircleEndCross extends AbstractFtile {
 	private final HColor lineColor;
 	private final HColor backColor;
 	private final Swimlane swimlane;
+	private final Style style;
 	private double shadowing;
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L69">		return Collections.emptyList();</span>
+<span class="nc" id="L70">		return Collections.emptyList();</span>
 	}
 
 	public FtileCircleEndCross(ISkinParam skinParam, Swimlane swimlane, Style style) {
-<span class="nc" id="L73">		super(skinParam);</span>
-<span class="nc" id="L74">		this.swimlane = swimlane;</span>
-<span class="nc" id="L75">		this.shadowing = style.getShadowing();</span>
-<span class="nc" id="L76">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L77">		this.lineColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L74">		super(skinParam);</span>
+<span class="nc" id="L75">		this.swimlane = swimlane;</span>
+<span class="nc" id="L76">		this.style = style;</span>
+<span class="nc" id="L77">		this.shadowing = style.getShadowing();</span>
+<span class="nc" id="L78">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L79">		this.lineColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
 
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L81">	}</span>
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (swimlane == null)</span>
-<span class="nc" id="L83">			return Collections.emptySet();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (swimlane == null)</span>
+<span class="nc" id="L85">			return Collections.emptySet();</span>
 
-<span class="nc" id="L85">		return Collections.singleton(swimlane);</span>
+<span class="nc" id="L87">		return Collections.singleton(swimlane);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L89">		return swimlane;</span>
+<span class="nc" id="L91">		return swimlane;</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L93">		return swimlane;</span>
+<span class="nc" id="L95">		return swimlane;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L97">		double xTheoricalPosition = 0;</span>
-<span class="nc" id="L98">		double yTheoricalPosition = 0;</span>
-<span class="nc" id="L99">		xTheoricalPosition = Math.round(xTheoricalPosition);</span>
-<span class="nc" id="L100">		yTheoricalPosition = Math.round(yTheoricalPosition);</span>
+<span class="nc" id="L99">		double xTheoricalPosition = 0;</span>
+<span class="nc" id="L100">		double yTheoricalPosition = 0;</span>
+<span class="nc" id="L101">		xTheoricalPosition = Math.round(xTheoricalPosition);</span>
+<span class="nc" id="L102">		yTheoricalPosition = Math.round(yTheoricalPosition);</span>
 
-<span class="nc" id="L102">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
-<span class="nc" id="L103">		circle.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L104">		ug = ug.apply(lineColor).apply(HColors.transparent().bg());</span>
-<span class="nc" id="L105">		final double thickness = 2.5;</span>
-<span class="nc" id="L106">		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);</span>
+<span class="nc" id="L104">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="nc" id="L105">		circle.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L106">		ug = ug.apply(lineColor).apply(HColors.transparent().bg());</span>
+<span class="nc" id="L107">		ug.apply(style.getStroke()).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);</span>
 
-<span class="nc" id="L108">		ug = ug.apply(backColor.bg());</span>
+<span class="nc" id="L109">		ug = ug.apply(backColor.bg());</span>
+<span class="nc" id="L110">		final double thickness = 2.5;</span>
+<span class="nc" id="L111">		final double size2 = (SIZE - thickness) / Math.sqrt(2);</span>
+<span class="nc" id="L112">		final double delta = (SIZE - size2) / 2;</span>
+<span class="nc" id="L113">		ug = ug.apply(UStroke.withThickness(thickness));</span>
+<span class="nc" id="L114">		ug.apply(new UTranslate(delta, delta)).draw(new ULine(size2, size2));</span>
+<span class="nc" id="L115">		ug.apply(new UTranslate(delta, SIZE - delta)).draw(new ULine(size2, -size2));</span>
 
-<span class="nc" id="L110">		final double size2 = (SIZE - thickness) / Math.sqrt(2);</span>
-<span class="nc" id="L111">		final double delta = (SIZE - size2) / 2;</span>
-<span class="nc" id="L112">		ug = ug.apply(UStroke.withThickness(thickness));</span>
-<span class="nc" id="L113">		ug.apply(new UTranslate(delta, delta)).draw(new ULine(size2, size2));</span>
-<span class="nc" id="L114">		ug.apply(new UTranslate(delta, SIZE - delta)).draw(new ULine(size2, -size2));</span>
-
-<span class="nc" id="L116">	}</span>
+<span class="nc" id="L117">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L120">		return new FtileGeometry(SIZE, SIZE, SIZE / 2, 0);</span>
+<span class="nc" id="L121">		return new FtileGeometry(SIZE, SIZE, SIZE / 2, 0);</span>
 	}
 
 }

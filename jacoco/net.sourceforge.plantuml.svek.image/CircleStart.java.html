@@ -78,7 +78,7 @@ public class CircleStart implements UDrawable {
 <span class="fc" id="L78">		final double shadowing = style.getShadowing();</span>
 
 <span class="fc" id="L80">		circle.setDeltaShadow(shadowing);</span>
-<span class="fc" id="L81">		ug.apply(lineColor).apply(backColor.bg()).draw(circle);</span>
+<span class="fc" id="L81">		ug.apply(lineColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
 <span class="fc" id="L82">	}</span>
 
 }
