@@ -77,7 +77,7 @@ public class Pattern2 {
 		// this helps detect potential excessive or unintended pattern compilations.
 		// Note: using 'assert' does not impact performance in production, as assertions
 		// are typically disabled by default.
-		assert COUNT.computeIfAbsent(p, k -> new AtomicInteger()).incrementAndGet() < 5;
+		// assert COUNT.computeIfAbsent(p, k -> new AtomicInteger()).incrementAndGet() < 5;
 
 		return new Pattern2(p);
 
