@@ -55,13 +55,13 @@ public class RegexOr extends RegexComposed implements IRegex {
 <span class="fc" id="L55">	}</span>
 
 	@Override
-	protected String getFullSlow() {
+	public String getPatternAsString() {
 <span class="fc" id="L59">		final StringBuilder sb = new StringBuilder(&quot;(&quot;);</span>
 <span class="fc bfc" id="L60" title="All 2 branches covered.">		if (name == null) {</span>
 <span class="fc" id="L61">			sb.append(&quot;?:&quot;);</span>
 		}
 <span class="fc bfc" id="L63" title="All 2 branches covered.">		for (IRegex p : partials()) {</span>
-<span class="fc" id="L64">			sb.append(p.getPattern());</span>
+<span class="fc" id="L64">			sb.append(p.getPatternAsString());</span>
 <span class="fc" id="L65">			sb.append(&quot;|&quot;);</span>
 <span class="fc" id="L66">		}</span>
 <span class="fc" id="L67">		sb.setLength(sb.length() - 1);</span>

@@ -70,17 +70,17 @@ public class CommandCreateDomain extends SingleLineCommand2&lt;DescriptionDiagra
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L72">		return RegexConcat.build(CommandCreateDomain.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(requirement|domain)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(requirement|domain)&quot;), //
 <span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;DISPLAY&quot;, DISPLAY_WITH_GENERIC), //
+				new RegexLeaf(2, &quot;DISPLAY&quot;, DISPLAY_WITH_GENERIC), //
 <span class="fc" id="L76">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L78">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, &quot;([a-zA-Z0-9]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([a-zA-Z0-9]+)&quot;), //
 <span class="fc" id="L80">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				// domain: lexical, causal, biddable
 				// requirement: FR, NFR, quality
-<span class="fc" id="L83">				new RegexLeaf(&quot;GROUP&quot;, &quot;(\\{)?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L83">				new RegexLeaf(1, &quot;GROUP&quot;, &quot;(\\{)?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override

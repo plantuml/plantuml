@@ -58,7 +58,7 @@ public class CommandLink3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="fc" id="L58">		return RegexConcat.build(CommandLink3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;link&quot;), //
 <span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;COLOR&quot;, &quot;(#\\w+)&quot;), //
+				new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
 <span class="fc" id="L63">				RegexLeaf.end());</span>
 	}

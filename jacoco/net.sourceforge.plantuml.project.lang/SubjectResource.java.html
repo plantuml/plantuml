@@ -78,8 +78,8 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public IRegex toRegex() {
 <span class="fc" id="L80">		return new RegexOr( //</span>
-				new RegexLeaf(&quot;THEY&quot;, &quot;(she|he|they)&quot;), //
-				new RegexLeaf(&quot;RESOURCE&quot;, &quot;\\{([^{}]+)\\}&quot;) //
+				new RegexLeaf(1, &quot;THEY&quot;, &quot;(she|he|they)&quot;), //
+				new RegexLeaf(1, &quot;RESOURCE&quot;, &quot;\\{([^{}]+)\\}&quot;) //
 		);
 	}
 

@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -58,69 +57,69 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	private final boolean isDebug;
 
 	public UGraphicInterceptorUDrawable2(UGraphic ug, Map&lt;String, UTranslate&gt; positions, HColor gotoColor, boolean isDebug) {
-<span class="fc" id="L61">		super(ug);</span>
-<span class="fc" id="L62">		this.positions = positions;</span>
-<span class="fc" id="L63">		this.gotoColor = gotoColor;</span>
-<span class="fc" id="L64">		this.isDebug = isDebug;</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L60">		super(ug);</span>
+<span class="fc" id="L61">		this.positions = positions;</span>
+<span class="fc" id="L62">		this.gotoColor = gotoColor;</span>
+<span class="fc" id="L63">		this.isDebug = isDebug;</span>
+<span class="fc" id="L64">	}</span>
 
 	public void draw(UShape shape) {
 		// :: comment when __CORE__
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (shape instanceof Gtile) {</span>
-<span class="nc" id="L70">			final Gtile gtile = (Gtile) shape;</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (shape instanceof Gtile) {</span>
+<span class="nc" id="L69">			final Gtile gtile = (Gtile) shape;</span>
 			// System.err.println(&quot;gtile=&quot; + gtile);
-<span class="nc" id="L72">			gtile.drawU(this);</span>
-<span class="nc" id="L73">		} else</span>
+<span class="nc" id="L71">			gtile.drawU(this);</span>
+<span class="nc" id="L72">		} else</span>
 		// :: done
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (shape instanceof Ftile) {</span>
-<span class="fc" id="L76">			final Ftile ftile = (Ftile) shape;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (shape instanceof Ftile) {</span>
+<span class="fc" id="L75">			final Ftile ftile = (Ftile) shape;</span>
 			// System.err.println(&quot;ftile=&quot; + ftile);
-<span class="fc" id="L78">			ftile.drawU(this);</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			if (ftile instanceof FtileLabel) {</span>
-<span class="nc" id="L80">				positions.put(((FtileLabel) ftile).getName(), getPosition());</span>
+<span class="fc" id="L77">			ftile.drawU(this);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (ftile instanceof FtileLabel) {</span>
+<span class="nc" id="L79">				positions.put(((FtileLabel) ftile).getName(), getPosition());</span>
 				// System.err.println(&quot;ug=&quot; + getUg().getClass());
 			}
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			if (ftile instanceof FtileGoto) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (ftile instanceof FtileGoto) {</span>
 				// System.err.println(&quot;positions=&quot; + positions);
-<span class="nc" id="L85">				drawGoto((FtileGoto) ftile);</span>
+<span class="nc" id="L84">				drawGoto((FtileGoto) ftile);</span>
 			}
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		} else if (shape instanceof UDrawable) {</span>
-<span class="fc" id="L88">			final UDrawable drawable = (UDrawable) shape;</span>
-<span class="fc" id="L89">			drawable.drawU(this);</span>
-<span class="fc" id="L90">		} else {</span>
-<span class="fc" id="L91">			getUg().draw(shape);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		} else if (shape instanceof UDrawable) {</span>
+<span class="fc" id="L87">			final UDrawable drawable = (UDrawable) shape;</span>
+<span class="fc" id="L88">			drawable.drawU(this);</span>
+<span class="fc" id="L89">		} else {</span>
+<span class="fc" id="L90">			getUg().draw(shape);</span>
 		}
 
-<span class="fc" id="L94">	}</span>
+<span class="fc" id="L93">	}</span>
 
 	private UTranslate getPosition() {
-<span class="nc" id="L97">		return ((UGraphicForSnake) getUg()).getTranslation();</span>
+<span class="nc" id="L96">		return ((UGraphicForSnake) getUg()).getTranslation();</span>
 	}
 
 	private void drawGoto(FtileGoto ftile) {
 		//final HColor gotoColor = HColors.MY_RED;
 
-<span class="nc" id="L103">		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());</span>
-<span class="nc" id="L104">		final XPoint2D pt = geom.getPointIn();</span>
-<span class="nc" id="L105">		UGraphic ugGoto = getUg().apply(gotoColor).apply(gotoColor.bg());</span>
-<span class="nc" id="L106">		ugGoto = ugGoto.apply(UTranslate.point(pt));</span>
-<span class="nc" id="L107">		final UTranslate posNow = getPosition();</span>
-<span class="nc" id="L108">		final UTranslate dest = positions.get(ftile.getName());</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (dest == null)</span>
-<span class="nc" id="L110">			return;</span>
-<span class="nc" id="L111">		final double dx = dest.getDx() - posNow.getDx();</span>
-<span class="nc" id="L112">		final double dy = dest.getDy() - posNow.getDy();</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (isDebug) {</span>
-<span class="nc" id="L114">		ugGoto.draw(UEllipse.build(3, 3));</span>
-<span class="nc" id="L115">		ugGoto.apply(new UTranslate(dx, dy)).draw(UEllipse.build(3, 3));</span>
+<span class="nc" id="L102">		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());</span>
+<span class="nc" id="L103">		final XPoint2D pt = geom.getPointIn();</span>
+<span class="nc" id="L104">		UGraphic ugGoto = getUg().apply(gotoColor).apply(gotoColor.bg());</span>
+<span class="nc" id="L105">		ugGoto = ugGoto.apply(UTranslate.point(pt));</span>
+<span class="nc" id="L106">		final UTranslate posNow = getPosition();</span>
+<span class="nc" id="L107">		final UTranslate dest = positions.get(ftile.getName());</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (dest == null)</span>
+<span class="nc" id="L109">			return;</span>
+<span class="nc" id="L110">		final double dx = dest.getDx() - posNow.getDx();</span>
+<span class="nc" id="L111">		final double dy = dest.getDy() - posNow.getDy();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (isDebug) {</span>
+<span class="nc" id="L113">		ugGoto.draw(UEllipse.build(3, 3));</span>
+<span class="nc" id="L114">		ugGoto.apply(new UTranslate(dx, dy)).draw(UEllipse.build(3, 3));</span>
 		}
-<span class="nc" id="L117">		ugGoto.draw(ULine.hline(dx));</span>
-<span class="nc" id="L118">		ugGoto.apply(UTranslate.dx(dx)).draw(ULine.vline(dy));</span>
+<span class="nc" id="L116">		ugGoto.draw(ULine.hline(dx));</span>
+<span class="nc" id="L117">		ugGoto.apply(UTranslate.dx(dx)).draw(ULine.vline(dy));</span>
 		// ugGoto.draw(new ULine(dx, dy));
-<span class="nc" id="L120">	}</span>
+<span class="nc" id="L119">	}</span>
 
 	public UGraphic apply(UChange change) {
-<span class="fc" id="L123">		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions, gotoColor, isDebug);</span>
+<span class="fc" id="L122">		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions, gotoColor, isDebug);</span>
 	}
 
 }

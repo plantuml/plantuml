@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	public IRegex toRegex(String suffix) {
 <span class="fc" id="L49">		return new RegexConcat( //</span>
-				new RegexLeaf(&quot;COMPLEMENT&quot; + suffix, &quot;(\\d+)[%s]+(day|week)s?&quot; + //
+				new RegexLeaf(4, &quot;COMPLEMENT&quot; + suffix, &quot;(\\d+)[%s]+(day|week)s?&quot; + //
 						&quot;(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?&quot; //
 				)); //
 	}

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	public IRegex toRegex(String suffix) {
 <span class="fc" id="L49">		return new RegexConcat( //</span>
-<span class="fc" id="L50">				new RegexLeaf(&quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + DayOfWeek.getRegexString() + &quot;)&quot;)); //</span>
+<span class="fc" id="L50">				new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + DayOfWeek.getRegexString() + &quot;)&quot;)); //</span>
 	}
 
 	public Failable&lt;DayOfWeek&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {

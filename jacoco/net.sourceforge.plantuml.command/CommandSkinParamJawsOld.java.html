@@ -54,11 +54,11 @@ public class CommandSkinParamJawsOld extends SingleLineCommand2&lt;TitledDiagram
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L56">		return RegexConcat.build(CommandSkinParamJawsOld.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(skinparam|skinparamlocked)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(skinparam|skinparamlocked)&quot;), //
 <span class="nc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([\\w.]*(?:\\&lt;\\&lt;[^&quot; + Jaws.BLOCK_E1_NEWLINE + &quot;]*\\&gt;\\&gt;)?[\\w.]*)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([\\w.]*(?:\\&lt;\\&lt;[^&quot; + Jaws.BLOCK_E1_NEWLINE + &quot;]*\\&gt;\\&gt;)?[\\w.]*)&quot;), //
 <span class="nc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;VALUE&quot;, &quot;\\{(.*&quot; + Jaws.BLOCK_E1_NEWLINE + &quot;.*)\\}.*&quot;), //
+				new RegexLeaf(1, &quot;VALUE&quot;, &quot;\\{(.*&quot; + Jaws.BLOCK_E1_NEWLINE + &quot;.*)\\}.*&quot;), //
 <span class="nc" id="L62">				RegexLeaf.end()); //</span>
 	}
 

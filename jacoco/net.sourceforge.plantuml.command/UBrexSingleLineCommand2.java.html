@@ -66,99 +66,95 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L66">		return false;</span>
 	}
 
-	public String[] getDescription() {
-<span class="nc" id="L70">		return new String[] { pattern.getClass().getName() };</span>
-	}
-
 	private String myTrim(StringLocated s) {
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (doTrim)</span>
-<span class="fc" id="L75">			return s.getTrimmed().getString();</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (doTrim)</span>
+<span class="fc" id="L71">			return s.getTrimmed().getString();</span>
 
-<span class="nc" id="L77">		return s.getString();</span>
+<span class="nc" id="L73">		return s.getString();</span>
 	}
 
 	private StringLocated myTrim2(StringLocated s) {
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (doTrim)</span>
-<span class="fc" id="L82">			return s.getTrimmed();</span>
-<span class="nc" id="L83">		return s;</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (doTrim)</span>
+<span class="fc" id="L78">			return s.getTrimmed();</span>
+<span class="nc" id="L79">		return s;</span>
 
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-<span class="pc bpc" id="L88" title="3 of 4 branches missed.">		if (lines.size() == 2 &amp;&amp; syntaxWithFinalBracket())</span>
-<span class="nc" id="L89">			return isValidBracket(lines);</span>
+<span class="pc bpc" id="L84" title="3 of 4 branches missed.">		if (lines.size() == 2 &amp;&amp; syntaxWithFinalBracket())</span>
+<span class="nc" id="L85">			return isValidBracket(lines);</span>
 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (lines.size() != 1)</span>
-<span class="nc" id="L92">			return CommandControl.NOT_OK;</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (lines.size() != 1)</span>
+<span class="nc" id="L88">			return CommandControl.NOT_OK;</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
-<span class="nc" id="L95">			return CommandControl.NOT_OK;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc" id="L91">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L97">		final StringLocated line2 = myTrim2(lines.getFirst());</span>
-<span class="pc bpc" id="L98" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; line2.getString().endsWith(&quot;{&quot;) == false) {</span>
-<span class="nc" id="L99">			final String vline = lines.getAt(0).getString() + &quot; {&quot;;</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (isValid(BlocLines.singleString(vline)) == CommandControl.OK)</span>
-<span class="nc" id="L101">				return CommandControl.OK_PARTIAL;</span>
+<span class="fc" id="L93">		final StringLocated line2 = myTrim2(lines.getFirst());</span>
+<span class="pc bpc" id="L94" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; line2.getString().endsWith(&quot;{&quot;) == false) {</span>
+<span class="nc" id="L95">			final String vline = lines.getAt(0).getString() + &quot; {&quot;;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (isValid(BlocLines.singleString(vline)) == CommandControl.OK)</span>
+<span class="nc" id="L97">				return CommandControl.OK_PARTIAL;</span>
 
-<span class="nc" id="L103">			return CommandControl.NOT_OK;</span>
+<span class="nc" id="L99">			return CommandControl.NOT_OK;</span>
 		}
 
-<span class="fc" id="L106">		final UMatcher result = pattern.match(line2.getString());</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (result.exactMatch())</span>
-<span class="fc" id="L108">			return finalVerification();</span>
+<span class="fc" id="L102">		final UMatcher result = pattern.match(line2.getString());</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (result.exactMatch())</span>
+<span class="fc" id="L104">			return finalVerification();</span>
 
-<span class="fc" id="L110">		return CommandControl.NOT_OK;</span>
+<span class="fc" id="L106">		return CommandControl.NOT_OK;</span>
 	}
 
 	private CommandControl isValidBracket(BlocLines lines) {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		assert lines.size() == 2;</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		assert syntaxWithFinalBracket();</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (myTrim(lines.getAt(1)).equals(&quot;{&quot;) == false)</span>
-<span class="nc" id="L117">			return CommandControl.NOT_OK;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		assert lines.size() == 2;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		assert syntaxWithFinalBracket();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (myTrim(lines.getAt(1)).equals(&quot;{&quot;) == false)</span>
+<span class="nc" id="L113">			return CommandControl.NOT_OK;</span>
 
-<span class="nc" id="L119">		final String vline = lines.getAt(0).getString() + &quot; {&quot;;</span>
-<span class="nc" id="L120">		return isValid(BlocLines.singleString(vline));</span>
+<span class="nc" id="L115">		final String vline = lines.getAt(0).getString() + &quot; {&quot;;</span>
+<span class="nc" id="L116">		return isValid(BlocLines.singleString(vline));</span>
 	}
 
 	protected boolean isCommandForbidden() {
-<span class="fc" id="L124">		return false;</span>
+<span class="fc" id="L120">		return false;</span>
 	}
 
 	protected CommandControl finalVerification() {
-<span class="fc" id="L128">		return CommandControl.OK;</span>
+<span class="fc" id="L124">		return CommandControl.OK;</span>
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
-<span class="pc bpc" id="L132" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; lines.size() == 2) {</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">			assert myTrim(lines.getAt(1)).equals(&quot;{&quot;);</span>
-<span class="nc" id="L134">			lines = BlocLines.singleString(lines.getFirst().getString() + &quot; {&quot;);</span>
+<span class="pc bpc" id="L128" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; lines.size() == 2) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			assert myTrim(lines.getAt(1)).equals(&quot;{&quot;);</span>
+<span class="nc" id="L130">			lines = BlocLines.singleString(lines.getFirst().getString() + &quot; {&quot;);</span>
 		}
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (lines.size() != 1)</span>
-<span class="nc" id="L137">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (lines.size() != 1)</span>
+<span class="nc" id="L133">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L139">		final StringLocated first = lines.getFirst();</span>
-<span class="fc" id="L140">		final String line = myTrim(first);</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (isForbidden(line))</span>
-<span class="nc" id="L142">			return CommandExecutionResult.error(&quot;Syntax error: &quot; + line);</span>
+<span class="fc" id="L135">		final StringLocated first = lines.getFirst();</span>
+<span class="fc" id="L136">		final String line = myTrim(first);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (isForbidden(line))</span>
+<span class="nc" id="L138">			return CommandExecutionResult.error(&quot;Syntax error: &quot; + line);</span>
 
 		// final RegexResult arg = pattern.matcher(line);
-<span class="fc" id="L145">		final UMatcher result = pattern.match(line);</span>
+<span class="fc" id="L141">		final UMatcher result = pattern.match(line);</span>
 
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (result.exactMatch() == false)</span>
-<span class="nc" id="L148">			return CommandExecutionResult.error(&quot;Cannot parse line &quot; + line);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (result.exactMatch() == false)</span>
+<span class="nc" id="L144">			return CommandExecutionResult.error(&quot;Cannot parse line &quot; + line);</span>
 
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (system instanceof PSystemError)</span>
-<span class="nc" id="L151">			return CommandExecutionResult.error(&quot;PSystemError cannot be cast&quot;);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (system instanceof PSystemError)</span>
+<span class="nc" id="L147">			return CommandExecutionResult.error(&quot;PSystemError cannot be cast&quot;);</span>
 
 		try {
-<span class="fc" id="L154">			return executeArg(system, first.getLocation(), new RegexResult(result), currentPass);</span>
-<span class="nc" id="L155">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L156">			return CommandExecutionResult.badColor();</span>
+<span class="fc" id="L150">			return executeArg(system, first.getLocation(), new RegexResult(result), currentPass);</span>
+<span class="nc" id="L151">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L152">			return CommandExecutionResult.badColor();</span>
 		}
 	}
 
 	protected boolean isForbidden(CharSequence line) {
-<span class="fc" id="L161">		return false;</span>
+<span class="fc" id="L157">		return false;</span>
 	}
 
 	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg,
@@ -166,7 +162,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

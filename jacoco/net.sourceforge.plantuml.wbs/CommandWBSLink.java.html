@@ -59,15 +59,15 @@ public class CommandWBSLink extends SingleLineCommand2&lt;WBSDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L61">		return RegexConcat.build(CommandWBSLink.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;CODE1&quot;, &quot;([%pLN_]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE1&quot;, &quot;([%pLN_]+)&quot;), //
 <span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;LINK&quot;, &quot;[.-]+\\&gt;&quot;), //
+				new RegexLeaf(0, &quot;LINK&quot;, &quot;[.-]+\\&gt;&quot;), //
 <span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;CODE2&quot;, &quot;([%pLN_]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE2&quot;, &quot;([%pLN_]+)&quot;), //
 <span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L68">				color().getRegex(), //</span>
 <span class="fc" id="L69">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-				new RegexLeaf(&quot;LABEL_LINK&quot;, &quot;(?::[%s]*(.+))?&quot;), //
+				new RegexLeaf(1, &quot;LABEL_LINK&quot;, &quot;(?::[%s]*(.+))?&quot;), //
 <span class="fc" id="L71">				RegexLeaf.end());</span>
 	}
 

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.mindmap;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -56,49 +57,47 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandMindMapOrgmodeMultiline extends CommandMultilines2&lt;MindMapDiagram&gt; {
 
+<span class="fc" id="L60">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L61">			() -&gt; Pattern2.cmpile(&quot;^(.*);\\s*(\\&lt;\\&lt;(.+)\\&gt;\\&gt;)?$&quot;));</span>
+
 	public CommandMindMapOrgmodeMultiline() {
-<span class="fc" id="L60">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L64">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L65">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L64">		return RegexConcat.build(CommandMindMapOrgmodeMultiline.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;([*#]+)&quot;), //
-				new RegexOptional(new RegexLeaf(&quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
-				new RegexLeaf(&quot;SHAPE&quot;, &quot;(_)?&quot;), //
+<span class="fc" id="L68">		return RegexConcat.build(CommandMindMapOrgmodeMultiline.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;([*#]+)&quot;), //
+				new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
+				new RegexLeaf(1, &quot;SHAPE&quot;, &quot;(_)?&quot;), //
 				new RegexLeaf(&quot;:&quot;), //
-				new RegexLeaf(&quot;DATA&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L70">				RegexLeaf.end());</span>
+				new RegexLeaf(1, &quot;DATA&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L74">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L75">		return &quot;^(.*);\\s*(\\&lt;\\&lt;(.+)\\&gt;\\&gt;)?$&quot;;</span>
-	}
-
-	@Override
-	protected CommandExecutionResult executeNow(MindMapDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(MindMapDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 <span class="nc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 
-<span class="nc" id="L82">		final List&lt;String&gt; lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),</span>
-<span class="nc" id="L83">				lines.getLast().getString());</span>
-<span class="nc" id="L84">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
+<span class="nc" id="L82">		final List&lt;String&gt; lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());</span>
+<span class="nc" id="L83">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
 
-<span class="nc" id="L86">		final String stereotype = lineLast.get(1);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L88">			lines = lines.overrideLastLine(lineLast.get(0));</span>
+<span class="nc" id="L85">		final String stereotype = lineLast.get(1);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L87">			lines = lines.overrideLastLine(lineLast.get(0));</span>
 
-<span class="nc" id="L90">		final String type = line0.get(&quot;TYPE&quot;, 0);</span>
-<span class="nc" id="L91">		final String stringColor = line0.get(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="nc" id="L92">		HColor backColor = null;</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (stringColor != null)</span>
-<span class="nc" id="L94">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+<span class="nc" id="L89">		final String type = line0.get(&quot;TYPE&quot;, 0);</span>
+<span class="nc" id="L90">		final String stringColor = line0.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc" id="L91">		HColor backColor = null;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L93">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (stereotype == null)</span>
-<span class="nc" id="L97">			return diagram.addIdea(backColor, type.length() - 1, lines.toDisplay(),</span>
-<span class="nc" id="L98">					IdeaShape.fromDesc(line0.get(&quot;SHAPE&quot;, 0)));</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (stereotype == null)</span>
+<span class="nc" id="L96">			return diagram.addIdea(backColor, type.length() - 1, lines.toDisplay(),</span>
+<span class="nc" id="L97">					IdeaShape.fromDesc(line0.get(&quot;SHAPE&quot;, 0)));</span>
 
-<span class="nc" id="L100">		return diagram.addIdea(Stereotype.build(stereotype), backColor, type.length() - 1, lines.toDisplay(),</span>
-<span class="nc" id="L101">				IdeaShape.fromDesc(line0.get(&quot;SHAPE&quot;, 0)));</span>
+<span class="nc" id="L99">		return diagram.addIdea(Stereotype.build(stereotype), backColor, type.length() - 1, lines.toDisplay(),</span>
+<span class="nc" id="L100">				IdeaShape.fromDesc(line0.get(&quot;SHAPE&quot;, 0)));</span>
 	}
 
 }

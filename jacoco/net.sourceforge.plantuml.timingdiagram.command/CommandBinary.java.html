@@ -58,15 +58,15 @@ public class CommandBinary extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="fc" id="L58">		return RegexConcat.build(CommandBinary.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;COMPACT&quot;, &quot;(compact)&quot;), //
+								new RegexLeaf(1, &quot;COMPACT&quot;, &quot;(compact)&quot;), //
 <span class="fc" id="L62">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(&quot;binary&quot;), //
 <span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+				new RegexLeaf(1, &quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
 <span class="fc" id="L66">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
 <span class="fc" id="L70">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 <span class="fc" id="L71">				RegexLeaf.end());</span>
 	}

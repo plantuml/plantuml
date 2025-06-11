@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -53,35 +55,34 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteMultilines extends CommandMultilines2&lt;PSystemEbnf&gt; {
 
+<span class="nc" id="L58">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L59">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
+
 	public CommandNoteMultilines() {
-<span class="nc" id="L57">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L62">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="nc" id="L63">	}</span>
 
 	private static ColorParser color() {
-<span class="nc" id="L61">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="nc" id="L66">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L65">		return RegexConcat.build(CommandNoteMultilines.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L70">		return RegexConcat.build(CommandNoteMultilines.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="nc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L68">				color().getRegex(), //</span>
-<span class="nc" id="L69">				RegexLeaf.end());</span>
+<span class="nc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L73">				color().getRegex(), //</span>
+<span class="nc" id="L74">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L74">		return &quot;^end[%s]?note$&quot;;</span>
-	}
-
-	@Override
-	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L79">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L80">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L81">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L82">		final Display note = lines.toDisplay();</span>
-<span class="nc" id="L83">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L84">		return diagram.addNote(note, colors);</span>
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L81">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L82">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L83">		final Display note = lines.toDisplay();</span>
+<span class="nc" id="L84">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L85">		return diagram.addNote(note, colors);</span>
 	}
 
 }

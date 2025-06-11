@@ -52,14 +52,14 @@ public class CommandPrint extends SingleLineCommand2&lt;WireDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L54">		return RegexConcat.build(CommandPrint.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;INDENT&quot;, &quot;([\\s\\t]*)&quot;), //
+				new RegexLeaf(1, &quot;INDENT&quot;, &quot;([\\s\\t]*)&quot;), //
 				new RegexLeaf(&quot;print&quot;), //
 <span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 <span class="nc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[%g]&quot;), //
 <span class="nc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;TEXT&quot;, &quot;(.*)&quot;), //
+				new RegexLeaf(1, &quot;TEXT&quot;, &quot;(.*)&quot;), //
 <span class="nc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[%g]&quot;), //
 <span class="nc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>

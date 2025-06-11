@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.statediagram.command.CommandLinkStateReverse;
 <span class="fc" id="L101">		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));</span>
 <span class="fc" id="L102">		cmds.add(new CommandUrl());</span>
 
-<span class="fc" id="L104">		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();</span>
+<span class="fc" id="L104">		final CommandFactoryNote factoryNoteCommand = CommandFactoryNote.ME;</span>
 <span class="fc" id="L105">		cmds.add(factoryNoteCommand.createSingleLine());</span>
 <span class="fc" id="L106">		cmds.add(factoryNoteCommand.createMultiLine(false));</span>
 
@@ -112,12 +112,11 @@ import net.sourceforge.plantuml.statediagram.command.CommandLinkStateReverse;
 <span class="fc" id="L112">		CommonCommands.addCommonCommands1(cmds);</span>
 <span class="fc" id="L113">		cmds.add(new CommandHideShow2());</span>
 <span class="fc" id="L114">	}</span>
-	
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 <span class="fc" id="L118">		return UmlDiagramType.STATE;</span>
 	}
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

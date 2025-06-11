@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -55,27 +57,25 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandArrowLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt; {
 
-	public CommandArrowLong3() {
-<span class="fc" id="L59">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L60">	}</span>
+<span class="pc" id="L60">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);$&quot;));</span>
 
-	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L64">		return &quot;^(.*);$&quot;;</span>
-	}
+	public CommandArrowLong3() {
+<span class="fc" id="L63">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L64">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L68">		return RegexConcat.build(CommandArrowLong3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L67">		return RegexConcat.build(CommandArrowLong3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr(//
 						new RegexLeaf(&quot;-&gt;&quot;), //
-						new RegexLeaf(&quot;COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;LABEL&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L74">				RegexLeaf.end());</span>
+						new RegexLeaf(1, &quot;COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L73">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 <span class="nc" id="L79">		lines = lines.removeEmptyColumns();</span>
 <span class="nc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 		// final HtmlColor color =

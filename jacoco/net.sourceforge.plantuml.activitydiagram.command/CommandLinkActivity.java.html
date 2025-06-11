@@ -79,38 +79,38 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 <span class="fc" id="L79">		return RegexConcat.build(CommandLinkActivity.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional(//
 						new RegexOr(&quot;FIRST&quot;, //
-								new RegexLeaf(&quot;STAR&quot;, &quot;(\\(\\*(top)?\\))&quot;), //
-								new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN][%pLN_.]*)&quot;), //
-								new RegexLeaf(&quot;BAR&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
-								new RegexLeaf(&quot;QUOTED&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?&quot;))), //
+								new RegexLeaf(2, &quot;STAR&quot;, &quot;(\\(\\*(top)?\\))&quot;), //
+								new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN][%pLN_.]*)&quot;), //
+								new RegexLeaf(1, &quot;BAR&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
+								new RegexLeaf(2, &quot;QUOTED&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?&quot;))), //
 <span class="fc" id="L86">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 <span class="fc" id="L87">				ColorParser.exp2(), //</span>
 <span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
 
-				new RegexLeaf(&quot;ARROW_BODY1&quot;, &quot;([-.]+)&quot;), //
-				new RegexLeaf(&quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
-				new RegexLeaf(&quot;ARROW_DIRECTION&quot;, &quot;(\\*|left|right|up|down|le?|ri?|up?|do?)?&quot;), //
-				new RegexLeaf(&quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
-				new RegexLeaf(&quot;ARROW_BODY2&quot;, &quot;([-.]*)&quot;), //
+				new RegexLeaf(1, &quot;ARROW_BODY1&quot;, &quot;([-.]+)&quot;), //
+				new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(1, &quot;ARROW_DIRECTION&quot;, &quot;(\\*|left|right|up|down|le?|ri?|up?|do?)?&quot;), //
+				new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(1, &quot;ARROW_BODY2&quot;, &quot;([-.]*)&quot;), //
 				new RegexLeaf(&quot;\\&gt;&quot;), //
 
 <span class="fc" id="L98">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;BRACKET&quot;, &quot;\\[([^\\]*]+[^\\]]*)\\]&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;BRACKET&quot;, &quot;\\[([^\\]*]+[^\\]]*)\\]&quot;)), //
 <span class="fc" id="L100">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(&quot;FIRST2&quot;, //
-						new RegexLeaf(&quot;STAR2&quot;, &quot;(\\(\\*(top|\\d+)?\\))&quot;), //
-						new RegexLeaf(&quot;OPENBRACKET2&quot;, &quot;(\\{)&quot;), //
-						new RegexLeaf(&quot;CODE2&quot;, &quot;([%pLN][%pLN_.]*)&quot;), //
-						new RegexLeaf(&quot;BAR2&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
-						new RegexLeaf(&quot;QUOTED2&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?&quot;), //
-						new RegexLeaf(&quot;QUOTED_INVISIBLE2&quot;, &quot;(\\w.*?)&quot;)), //
+						new RegexLeaf(2, &quot;STAR2&quot;, &quot;(\\(\\*(top|\\d+)?\\))&quot;), //
+						new RegexLeaf(1, &quot;OPENBRACKET2&quot;, &quot;(\\{)&quot;), //
+						new RegexLeaf(1, &quot;CODE2&quot;, &quot;([%pLN][%pLN_.]*)&quot;), //
+						new RegexLeaf(1, &quot;BAR2&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
+						new RegexLeaf(2, &quot;QUOTED2&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?&quot;), //
+						new RegexLeaf(1, &quot;QUOTED_INVISIBLE2&quot;, &quot;(\\w.*?)&quot;)), //
 <span class="fc" id="L108">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;in&quot;), //
 <span class="fc" id="L112">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;PARTITION2&quot;, &quot;([%g][^%g]+[%g]|\\S+)&quot;) //
+								new RegexLeaf(1, &quot;PARTITION2&quot;, &quot;([%g][^%g]+[%g]|\\S+)&quot;) //
 						)), //
 <span class="fc" id="L115">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L116">				ColorParser.exp3(), //</span>
@@ -279,9 +279,9 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 
 	static Entity ubrexGetEntityForIfOnly(LineLocation location, ActivityDiagram diagram, RegexResult arg) {
 
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (arg.get(&quot;STAR&quot;, 0) != null) </span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (arg.get(&quot;STAR&quot;, 0) != null)</span>
 <span class="nc" id="L283">			return diagram.getStart(location);</span>
-		
+
 <span class="fc" id="L285">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
 <span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (idShort != null) {</span>
 <span class="nc" id="L287">			final Quark&lt;Entity&gt; ident = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>

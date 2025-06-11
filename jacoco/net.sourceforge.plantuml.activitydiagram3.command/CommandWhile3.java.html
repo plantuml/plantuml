@@ -62,13 +62,13 @@ public class CommandWhile3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 				new RegexLeaf(&quot;while&quot;), //
 <span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
-				new RegexLeaf(&quot;TEST&quot;, &quot;(.*?)&quot;), //
+				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
 				new RegexOptional(new RegexConcat(//
 <span class="fc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;(is|equals?)&quot;), //
+						new RegexLeaf(1, &quot;(is|equals?)&quot;), //
 <span class="fc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;YES&quot;, &quot;\\((.+?)\\)&quot;))), //
+						new RegexLeaf(1, &quot;YES&quot;, &quot;\\((.+?)\\)&quot;))), //
 				new RegexLeaf(&quot;;?&quot;), //
 <span class="fc" id="L73">				RegexLeaf.end());</span>
 	}

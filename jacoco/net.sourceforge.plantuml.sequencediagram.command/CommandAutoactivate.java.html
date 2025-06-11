@@ -55,7 +55,7 @@ public class CommandAutoactivate extends SingleLineCommand2&lt;SequenceDiagram&g
 <span class="fc" id="L55">		return RegexConcat.build(CommandAutoactivate.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;autoactivate&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L58">				new RegexLeaf(&quot;ON&quot;, &quot;(off|on)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L58">				new RegexLeaf(1, &quot;ON&quot;, &quot;(off|on)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

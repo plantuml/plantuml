@@ -56,7 +56,7 @@ public class CommandComment extends SingleLineCommand2&lt;PSystemEbnf&gt; {
 <span class="fc" id="L56">				RegexLeaf.start(), //</span>
 <span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(\\*&quot;), //
-				new RegexLeaf(&quot;COMMENT&quot;, &quot;(.*[^%s].*)&quot;), //
+				new RegexLeaf(1, &quot;COMMENT&quot;, &quot;(.*[^%s].*)&quot;), //
 				new RegexLeaf(&quot;\\*\\)&quot;), //
 <span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L62">				RegexLeaf.end());</span>

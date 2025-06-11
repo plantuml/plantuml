@@ -42,15 +42,15 @@ public class Lazy&lt;T&gt; {
 
 	private final Supplier&lt;T&gt; supplier;
 	private T value;
-<span class="fc" id="L45">	private boolean initialized = false;</span>
+<span class="pc" id="L45">	private boolean initialized = false;</span>
 
 <span class="fc" id="L47">	public Lazy(Supplier&lt;T&gt; supplier) {</span>
 <span class="fc" id="L48">		this.supplier = supplier;</span>
 <span class="fc" id="L49">	}</span>
 
-<span class="fc" id="L51">	public Lazy(Function&lt;Void, T&gt; function) {</span>
-<span class="fc" id="L52">		this.supplier = () -&gt; function.apply(null);</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L51">	public Lazy(Function&lt;Void, T&gt; function) {</span>
+<span class="nc" id="L52">		this.supplier = () -&gt; function.apply(null);</span>
+<span class="nc" id="L53">	}</span>
 
 	public synchronized T get() {
 <span class="fc bfc" id="L56" title="All 2 branches covered.">		if (initialized == false) {</span>

@@ -58,7 +58,7 @@ public class CommandConcurrentState extends SingleLineCommand2&lt;StateDiagram&g
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L60">		return RegexConcat.build(CommandConcurrentState.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(--+|\\|\\|+)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(--+|\\|\\|+)&quot;), //
 <span class="fc" id="L62">				RegexLeaf.end()); //</span>
 	}
 

@@ -61,30 +61,31 @@ public class CommandLabelOnColumn extends SingleLineCommand2&lt;GanttDiagram&gt;
 <span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;on&quot;), //
 <span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(first|last)&quot;), //
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(first|last)&quot;), //
 <span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;column&quot;), //
 				new RegexOptional(new RegexConcat( //
 <span class="fc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;and&quot;), //
 <span class="fc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;ALIGNED&quot;, &quot;(left|right)&quot;), //
+						new RegexLeaf(1, &quot;ALIGNED&quot;, &quot;(left|right)&quot;), //
 <span class="fc" id="L72">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;aligned&quot;) //
-				)), // 
+				)), //
 <span class="fc" id="L75">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		final LabelPosition position = &quot;first&quot;.equalsIgnoreCase(arg.get(&quot;POSITION&quot;, 0)) ? LabelPosition.FIRST_COLUMN</span>
-<span class="nc" id="L81">				: LabelPosition.LAST_COLUMN;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		final HorizontalAlignment alignment = &quot;right&quot;.equalsIgnoreCase(arg.get(&quot;ALIGNED&quot;, 0))</span>
-<span class="nc" id="L83">				? HorizontalAlignment.RIGHT</span>
-<span class="nc" id="L84">				: HorizontalAlignment.LEFT;</span>
-<span class="nc" id="L85">		final LabelStrategy strategy = new LabelStrategy(position, alignment);</span>
-<span class="nc" id="L86">		diagram.setLabelStrategy(strategy);</span>
-<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		final LabelPosition position = &quot;first&quot;.equalsIgnoreCase(arg.get(&quot;POSITION&quot;, 0)) ? LabelPosition.FIRST_COLUMN</span>
+<span class="nc" id="L82">				: LabelPosition.LAST_COLUMN;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		final HorizontalAlignment alignment = &quot;right&quot;.equalsIgnoreCase(arg.get(&quot;ALIGNED&quot;, 0))</span>
+<span class="nc" id="L84">				? HorizontalAlignment.RIGHT</span>
+<span class="nc" id="L85">				: HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L86">		final LabelStrategy strategy = new LabelStrategy(position, alignment);</span>
+<span class="nc" id="L87">		diagram.setLabelStrategy(strategy);</span>
+<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
 	}
 
 }

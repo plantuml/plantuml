@@ -44,29 +44,29 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 
 	public static IRegex toRegexA_DD_MONTH_YYYY(String year, String month, String day) {
 <span class="nc" id="L46">		return new RegexConcat( //</span>
-				new RegexLeaf(day, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(1, day, &quot;([\\d]{1,2})&quot;), //
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
-<span class="nc" id="L49">				new RegexLeaf(month, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
+<span class="nc" id="L49">				new RegexLeaf(1, month, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
-				new RegexLeaf(year, &quot;([\\d]{1,4})&quot;));
+				new RegexLeaf(1, year, &quot;([\\d]{1,4})&quot;));
 	}
 
 	public static IRegex toRegexB_YYYY_MM_DD(String year, String month, String day) {
 <span class="fc" id="L55">		return new RegexConcat( //</span>
-				new RegexLeaf(year, &quot;([\\d]{1,4})&quot;), //
+				new RegexLeaf(1, year, &quot;([\\d]{1,4})&quot;), //
 				new RegexLeaf(&quot;\\D&quot;), //
-				new RegexLeaf(month, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(1, month, &quot;([\\d]{1,2})&quot;), //
 				new RegexLeaf(&quot;\\D&quot;), //
-				new RegexLeaf(day, &quot;([\\d]{1,2})&quot;));
+				new RegexLeaf(1, day, &quot;([\\d]{1,2})&quot;));
 	}
 
 	public static IRegex toRegexC_MONTH_DD_YYYY(String year, String month, String day) {
 <span class="nc" id="L64">		return new RegexConcat( //</span>
-<span class="nc" id="L65">				new RegexLeaf(month, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
+<span class="nc" id="L65">				new RegexLeaf(1, month, &quot;(&quot; + Month.getRegexString() + &quot;)&quot;), //</span>
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
-				new RegexLeaf(day, &quot;([\\d]{1,2})&quot;), //
+				new RegexLeaf(1, day, &quot;([\\d]{1,2})&quot;), //
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
-				new RegexLeaf(year, &quot;([\\d]{1,4})&quot;));
+				new RegexLeaf(1, year, &quot;([\\d]{1,4})&quot;));
 	}
 
 }

@@ -66,22 +66,22 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf(&quot;-&gt;&quot;), //
-								new RegexLeaf(&quot;INCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf(&quot;INCOMING&quot;, &quot;(.*?)&quot;), //
+								new RegexLeaf(1, &quot;INCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, &quot;INCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
 <span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;backward&quot;), //
 <span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
-				new RegexLeaf(&quot;LABEL&quot;, &quot;(.*?)&quot;), //
-<span class="fc" id="L77">				new RegexLeaf(&quot;STYLE&quot;, CommandActivity3.endingGroup()), //</span>
+				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
+<span class="fc" id="L77">				new RegexLeaf(2, &quot;STYLE&quot;, CommandActivity3.endingGroup()), //</span>
 <span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf(&quot;-&gt;&quot;), //
-								new RegexLeaf(&quot;OUTCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf(&quot;OUTCOMING&quot;, &quot;(.*?)&quot;), //
+								new RegexLeaf(1, &quot;OUTCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, &quot;OUTCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
 <span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L87">				RegexLeaf.end());</span>

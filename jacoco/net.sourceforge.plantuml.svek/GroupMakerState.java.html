@@ -48,20 +48,10 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.dot.DotData;
-import net.sourceforge.plantuml.klimt.UStroke;
-import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
-import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 
 public final class GroupMakerState {
 
@@ -70,114 +60,114 @@ public final class GroupMakerState {
 	private final StringBounder stringBounder;
 	private final DotMode dotMode;
 
-<span class="nc" id="L73">	class InnerGroupHierarchy implements GroupHierarchy {</span>
+<span class="nc" id="L63">	class InnerGroupHierarchy implements GroupHierarchy {</span>
 
 		public Entity getRootGroup() {
-<span class="nc" id="L76">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L66">			throw new UnsupportedOperationException();</span>
 		}
 
 		public Collection&lt;Entity&gt; getChildrenGroups(Entity parent) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (parent.isRoot())</span>
-<span class="nc" id="L81">				return filter(diagram.getChildrenGroups(group));</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (parent.isRoot())</span>
+<span class="nc" id="L71">				return filter(diagram.getChildrenGroups(group));</span>
 
-<span class="nc" id="L83">			return filter(diagram.getChildrenGroups(parent));</span>
+<span class="nc" id="L73">			return filter(diagram.getChildrenGroups(parent));</span>
 		}
 
 		private Collection&lt;Entity&gt; filter(Collection&lt;Entity&gt; groups) {
-<span class="nc" id="L87">			final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">			for (Entity g : groups)</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">				if (g.getGroupType() != GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L90">					result.add(g);</span>
+<span class="nc" id="L77">			final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			for (Entity g : groups)</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (g.getGroupType() != GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L80">					result.add(g);</span>
 
-<span class="nc" id="L92">			return result;</span>
+<span class="nc" id="L82">			return result;</span>
 		}
 
 		public boolean isEmpty(Entity g) {
-<span class="nc" id="L96">			return diagram.isEmpty(g);</span>
+<span class="nc" id="L86">			return diagram.isEmpty(g);</span>
 		}
 
 	}
 
-<span class="nc" id="L101">	public GroupMakerState(CucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {</span>
-<span class="nc" id="L102">		this.diagram = diagram;</span>
-<span class="nc" id="L103">		this.stringBounder = stringBounder;</span>
-<span class="nc" id="L104">		this.group = group;</span>
-<span class="nc" id="L105">		this.dotMode = dotMode;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (group.isGroup() == false)</span>
-<span class="nc" id="L107">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L91">	public GroupMakerState(CucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {</span>
+<span class="nc" id="L92">		this.diagram = diagram;</span>
+<span class="nc" id="L93">		this.stringBounder = stringBounder;</span>
+<span class="nc" id="L94">		this.group = group;</span>
+<span class="nc" id="L95">		this.dotMode = dotMode;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (group.isGroup() == false)</span>
+<span class="nc" id="L97">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L99">	}</span>
 
 	private List&lt;Link&gt; getPureInnerLinks() {
-<span class="nc" id="L112">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (Link link : diagram.getLinks())</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink12(group, link))</span>
-<span class="nc" id="L115">				result.add(link);</span>
+<span class="nc" id="L102">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (Link link : diagram.getLinks())</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink12(group, link))</span>
+<span class="nc" id="L105">				result.add(link);</span>
 
-<span class="nc" id="L117">		return result;</span>
+<span class="nc" id="L107">		return result;</span>
 	}
 
 	public IEntityImage getImage() {
-<span class="nc" id="L121">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L111">		final ISkinParam skinParam = diagram.getSkinParam();</span>
 
-<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (group.countChildren() == 0 &amp;&amp; group.groups().size() == 0)</span>
-<span class="nc" id="L124">			return new EntityImageState(group);</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (group.countChildren() == 0 &amp;&amp; group.groups().size() == 0)</span>
+<span class="nc" id="L114">			return new EntityImageState(group);</span>
 
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (group.getGroupType() == GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L127">			return createGeneralImageBuilder(group.leafs()).buildImage(stringBounder, null, new String[0], false);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (group.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L117">			return createGeneralImageBuilder(group.leafs()).buildImage(stringBounder, null, new String[0], false);</span>
 
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (group.getGroupType() != GroupType.STATE)</span>
-<span class="nc" id="L130">			throw new UnsupportedOperationException(group.getGroupType().toString());</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (group.getGroupType() != GroupType.STATE)</span>
+<span class="nc" id="L120">			throw new UnsupportedOperationException(group.getGroupType().toString());</span>
 
 		final IEntityImage image;
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (containsSomeConcurrentStates()) {</span>
-<span class="nc" id="L134">			final List&lt;IEntityImage&gt; inners = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L135">			inners.add(createGeneralImageBuilder(filter(group.leafs())).buildImage(stringBounder, null, new String[0],</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (containsSomeConcurrentStates()) {</span>
+<span class="nc" id="L124">			final List&lt;IEntityImage&gt; inners = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L125">			inners.add(createGeneralImageBuilder(filter(group.leafs())).buildImage(stringBounder, null, new String[0],</span>
 					false));
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			for (Entity inner : group.leafs())</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)</span>
-<span class="nc" id="L139">					inners.add(inner.getSvekImage());</span>
-<span class="nc" id="L140">			image = new ConcurrentStates(inners, group.getConcurrentSeparator(), skinParam, group.getStereotype());</span>
-<span class="nc" id="L141">		} else {</span>
-<span class="nc" id="L142">			image = createGeneralImageBuilder(filter(group.leafs())).buildImage(stringBounder, null, new String[0],</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			for (Entity inner : group.leafs())</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)</span>
+<span class="nc" id="L129">					inners.add(inner.getSvekImage());</span>
+<span class="nc" id="L130">			image = new ConcurrentStates(inners, group.getConcurrentSeparator(), skinParam, group.getStereotype());</span>
+<span class="nc" id="L131">		} else {</span>
+<span class="nc" id="L132">			image = createGeneralImageBuilder(filter(group.leafs())).buildImage(stringBounder, null, new String[0],</span>
 					false);
 		}
 
-<span class="nc" id="L146">		return new InnerStateAutonom(image, group);</span>
+<span class="nc" id="L136">		return new InnerStateAutonom(image, group);</span>
 
 	}
 
 	protected GraphvizImageBuilder createGeneralImageBuilder(Collection&lt;Entity&gt; leafs) {
 
-<span class="nc" id="L152">		final List&lt;Link&gt; links = getPureInnerLinks();</span>
-<span class="nc" id="L153">		final Bibliotekon bibliotekon = new Bibliotekon(links);</span>
+<span class="nc" id="L142">		final List&lt;Link&gt; links = getPureInnerLinks();</span>
+<span class="nc" id="L143">		final Bibliotekon bibliotekon = new Bibliotekon(links);</span>
 
-<span class="nc" id="L155">		final DotData dotData = new DotData(diagram, group, links, leafs, new InnerGroupHierarchy(), PortionShower.ALL);</span>
+<span class="nc" id="L145">		final DotData dotData = new DotData(diagram, group, links, leafs, new InnerGroupHierarchy(), PortionShower.ALL);</span>
 
-<span class="nc" id="L157">		final Cluster root = new Cluster(group.getLocation(), diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());</span>
+<span class="nc" id="L147">		final Cluster root = new Cluster(group.getLocation(), diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());</span>
 
-<span class="nc" id="L159">		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);</span>
-<span class="nc" id="L160">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getUmlDiagramType(),</span>
-<span class="nc" id="L161">				diagram.getSkinParam());</span>
-<span class="nc" id="L162">		return new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(), SName.stateDiagram, dotMode,</span>
+<span class="nc" id="L149">		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);</span>
+<span class="nc" id="L150">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getUmlDiagramType(),</span>
+<span class="nc" id="L151">				diagram.getSkinParam());</span>
+<span class="nc" id="L152">		return new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(), SName.stateDiagram, dotMode,</span>
 				dotStringFactory, clusterManager);
 	}
 
 	private Collection&lt;Entity&gt; filter(Collection&lt;Entity&gt; leafs) {
-<span class="nc" id="L167">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		for (Entity leaf : leafs)</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (leaf.getLeafType() != LeafType.STATE_CONCURRENT)</span>
-<span class="nc" id="L170">				result.add(leaf);</span>
+<span class="nc" id="L157">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		for (Entity leaf : leafs)</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (leaf.getLeafType() != LeafType.STATE_CONCURRENT)</span>
+<span class="nc" id="L160">				result.add(leaf);</span>
 
-<span class="nc" id="L172">		return result;</span>
+<span class="nc" id="L162">		return result;</span>
 	}
 
 	private boolean containsSomeConcurrentStates() {
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		for (Entity entity : group.leafs())</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (entity.getLeafType() == LeafType.STATE_CONCURRENT)</span>
-<span class="nc" id="L178">				return true;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (Entity entity : group.leafs())</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			if (entity.getLeafType() == LeafType.STATE_CONCURRENT)</span>
+<span class="nc" id="L168">				return true;</span>
 
-<span class="nc" id="L180">		return false;</span>
+<span class="nc" id="L170">		return false;</span>
 	}
 
 }

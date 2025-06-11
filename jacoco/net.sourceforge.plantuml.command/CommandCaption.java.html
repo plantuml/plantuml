@@ -61,8 +61,8 @@ public class CommandCaption extends SingleLineCommand2&lt;TitledDiagram&gt; {
 				new RegexLeaf(&quot;caption&quot;), //
 				new RegexLeaf(&quot;(?:[%s]*:[%s]*|[%s]+)&quot;), //
 				new RegexOr(//
-						new RegexLeaf(&quot;DISPLAY1&quot;, &quot;[%g](.*)[%g]&quot;), //
-						new RegexLeaf(&quot;DISPLAY2&quot;, &quot;(.*[%pLN_.].*)&quot;)), //
+						new RegexLeaf(1, &quot;DISPLAY1&quot;, &quot;[%g](.*)[%g]&quot;), //
+						new RegexLeaf(1, &quot;DISPLAY2&quot;, &quot;(.*[%pLN_.].*)&quot;)), //
 <span class="fc" id="L66">				RegexLeaf.end()); //</span>
 	}
 

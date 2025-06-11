@@ -69,18 +69,18 @@ public class CommandCreateAttribute extends SingleLineCommand2&lt;ChenEerDiagram
 <span class="fc" id="L69">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), new RegexOptional( // Copied from CommandCreatePackageBlock</span>
 						new RegexConcat( //
-								new RegexLeaf(&quot;DISPLAY&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+								new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
 <span class="fc" id="L73">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L75">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN%s_.:]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN%s_.:]+)&quot;), //
 <span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STEREO&quot;, &quot;(&lt;&lt;.*&gt;&gt;)?&quot;), //
+				new RegexLeaf(1, &quot;STEREO&quot;, &quot;(&lt;&lt;.*&gt;&gt;)?&quot;), //
 <span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L81">				color().getRegex(), //</span>
 <span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;COMPOSITE&quot;, &quot;(\\{)?&quot;), //
+				new RegexLeaf(1, &quot;COMPOSITE&quot;, &quot;(\\{)?&quot;), //
 <span class="fc" id="L84">				RegexLeaf.end());</span>
 	}
 
@@ -89,8 +89,8 @@ public class CommandCreateAttribute extends SingleLineCommand2&lt;ChenEerDiagram
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L94">		final Entity owner = diagram.peekOwner();</span>
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (owner == null) {</span>
 <span class="nc" id="L96">			return CommandExecutionResult</span>

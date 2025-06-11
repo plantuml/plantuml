@@ -62,7 +62,7 @@ public abstract class SentenceSimple&lt;D extends Diagram&gt; implements Sentenc
 <span class="fc" id="L62">	}</span>
 
 	public String getSignature() {
-<span class="fc" id="L65">		return subject.getClass() + &quot;/&quot; + verb.getPattern() + &quot;/&quot; + complement.getClass();</span>
+<span class="fc" id="L65">		return subject.getClass() + &quot;/&quot; + verb.getPatternAsString() + &quot;/&quot; + complement.getClass();</span>
 	}
 
 	public final IRegex toRegex() {

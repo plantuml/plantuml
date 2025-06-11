@@ -66,16 +66,16 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;UmlDiagram&gt
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L68">		return RegexConcat.build(CommandHideShowByGender.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;COMMAND&quot;, &quot;(hide|show)&quot;), //
+				new RegexLeaf(1, &quot;COMMAND&quot;, &quot;(hide|show)&quot;), //
 <span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;GENDER&quot;,
-						&quot;(?:(class|object|interface|enum|annotation|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\&lt;\\&lt;.*\\&gt;\\&gt;)[%s]+)*?&quot;), //
+				new RegexLeaf(1,
+						&quot;GENDER&quot;, &quot;(?:(class|object|interface|enum|annotation|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\&lt;\\&lt;.*\\&gt;\\&gt;)[%s]+)*?&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;EMPTY&quot;, &quot;(empty)&quot;), //
+								new RegexLeaf(1, &quot;EMPTY&quot;, &quot;(empty)&quot;), //
 <span class="fc" id="L76">								RegexLeaf.spaceOneOrMore()) //</span>
 				), //
-				new RegexLeaf(&quot;PORTION&quot;, &quot;(members?|attributes?|fields?|methods?|circles?|circled?|stereotypes?)&quot;), //
+				new RegexLeaf(1, &quot;PORTION&quot;, &quot;(members?|attributes?|fields?|methods?|circles?|circled?|stereotypes?)&quot;), //
 <span class="fc" id="L79">				RegexLeaf.end());</span>
 	}
 

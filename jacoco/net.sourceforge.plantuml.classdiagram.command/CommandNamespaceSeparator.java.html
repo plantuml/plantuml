@@ -63,7 +63,7 @@ public class CommandNamespaceSeparator extends SingleLineCommand2&lt;AbstractPSy
 						new RegexLeaf(&quot;separator&quot;), //
 						new RegexLeaf(&quot;namespaceseparator&quot;)), //
 <span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L66">				new RegexLeaf(&quot;SEPARATOR&quot;, &quot;(\\S+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L66">				new RegexLeaf(1, &quot;SEPARATOR&quot;, &quot;(\\S+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

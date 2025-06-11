@@ -66,12 +66,12 @@ public class CommandAddField extends SingleLineCommand2&lt;StateDiagram&gt; {
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L67">		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr( //
-						new RegexLeaf(&quot;CODE3&quot;, &quot;([%pLN_.]+)&quot;), //
-						new RegexLeaf(&quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+						new RegexLeaf(1, &quot;CODE3&quot;, &quot;([%pLN_.]+)&quot;), //
+						new RegexLeaf(1, &quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 <span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 <span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L74">				new RegexLeaf(&quot;FIELD&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L74">				new RegexLeaf(1, &quot;FIELD&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override

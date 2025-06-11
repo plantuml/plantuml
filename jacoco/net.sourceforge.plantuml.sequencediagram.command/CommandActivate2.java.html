@@ -56,11 +56,11 @@ public class CommandActivate2 extends SingleLineCommand2&lt;SequenceDiagram&gt; 
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L58">		return RegexConcat.build(CommandActivate2.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%pLN_.@]+)&quot;), //
 <span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(\\+\\+|--)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(\\+\\+|--)&quot;), //
 <span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;COLOR&quot;, &quot;(#\\w+)?&quot;), //
+				new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)?&quot;), //
 <span class="fc" id="L64">				RegexLeaf.end()); //</span>
 	}
 

@@ -56,25 +56,26 @@ public class CommandLineSimple extends SingleLineCommand2&lt;FlowDiagram&gt; {
 <span class="nc" id="L56">		return RegexConcat.build(CommandLineSimple.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;ORIENTATION&quot;, &quot;([nsew])&quot;), //
+								new RegexLeaf(1, &quot;ORIENTATION&quot;, &quot;([nsew])&quot;), //
 <span class="nc" id="L60">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
-				new RegexLeaf(&quot;ID_DEST&quot;, &quot;(\\w+)&quot;), //
+				new RegexLeaf(1, &quot;ID_DEST&quot;, &quot;(\\w+)&quot;), //
 <span class="nc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L64">				new RegexLeaf(&quot;LABEL&quot;, &quot;[%g](.*)[%g]&quot;), RegexLeaf.end());</span>
+<span class="nc" id="L64">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;[%g](.*)[%g]&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L69">		final String idDest = arg.get(&quot;ID_DEST&quot;, 0);</span>
-<span class="nc" id="L70">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc" id="L71">		final String orientationString = arg.get(&quot;ORIENTATION&quot;, 0);</span>
-<span class="nc" id="L72">		TileGeometry orientation = TileGeometry.SOUTH;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (orientationString != null) {</span>
-<span class="nc" id="L74">			orientation = TileGeometry.fromString(orientationString);</span>
+	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L70">		final String idDest = arg.get(&quot;ID_DEST&quot;, 0);</span>
+<span class="nc" id="L71">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L72">		final String orientationString = arg.get(&quot;ORIENTATION&quot;, 0);</span>
+<span class="nc" id="L73">		TileGeometry orientation = TileGeometry.SOUTH;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (orientationString != null) {</span>
+<span class="nc" id="L75">			orientation = TileGeometry.fromString(orientationString);</span>
 		}
-<span class="nc" id="L76">		diagram.lineSimple(orientation, idDest, label);</span>
-<span class="nc" id="L77">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L77">		diagram.lineSimple(orientation, idDest, label);</span>
+<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
 	}
 
 }

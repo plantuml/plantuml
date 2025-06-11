@@ -38,13 +38,14 @@ package net.sourceforge.plantuml.command;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteColorBuilder4096;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
-import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -52,104 +53,108 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-<span class="fc" id="L55">public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;WithSprite&gt; {</span>
+public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;WithSprite&gt; {
 
-	private IRegex getRegexConcatMultiLine() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandFactorySprite.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;\\$?&quot;), //
-				new RegexLeaf(&quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;DIM&quot;, &quot;\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]&quot;)), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L66">				new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
-	}
+<span class="fc" id="L58">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="fc" id="L59">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?sprite|\\}$&quot;));</span>
 
-	private IRegex getRegexConcatSingleLine() {
-<span class="fc" id="L70">		return RegexConcat.build(CommandFactorySprite.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;\\$?&quot;), //
-				new RegexLeaf(&quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;DIM&quot;, &quot;\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]&quot;)), //
-<span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L78">				new RegexLeaf(&quot;DATA&quot;, &quot;([-_A-Za-z0-9]+)&quot;), RegexLeaf.end());</span>
-	}
+<span class="fc" id="L61">	public static final CommandFactorySprite ME = new CommandFactorySprite();</span>
+
+<span class="fc" id="L63">	private CommandFactorySprite() {</span>
+
+<span class="fc" id="L65">	}</span>
+
+<span class="fc" id="L67">	private final RegexConcat multiline = RegexConcat.build(CommandFactorySprite.class.getName() + &quot;multi&quot;,</span>
+<span class="fc" id="L68">			RegexLeaf.start(), //</span>
+			new RegexLeaf(&quot;sprite&quot;), //
+<span class="fc" id="L70">			RegexLeaf.spaceOneOrMore(), //</span>
+			new RegexLeaf(&quot;\\$?&quot;), //
+			new RegexLeaf(1, &quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
+<span class="fc" id="L73">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexOptional(new RegexLeaf(5, &quot;DIM&quot;, &quot;\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]&quot;)), //
+<span class="fc" id="L75">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">			new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
+
+<span class="fc" id="L78">	private final RegexConcat singleLine = RegexConcat.build(CommandFactorySprite.class.getName() + &quot;single&quot;,</span>
+<span class="fc" id="L79">			RegexLeaf.start(), //</span>
+			new RegexLeaf(&quot;sprite&quot;), //
+<span class="fc" id="L81">			RegexLeaf.spaceOneOrMore(), //</span>
+			new RegexLeaf(&quot;\\$?&quot;), //
+			new RegexLeaf(1, &quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
+<span class="fc" id="L84">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexOptional(new RegexLeaf(5, &quot;DIM&quot;, &quot;\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]&quot;)), //
+<span class="fc" id="L86">			RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L87">			new RegexLeaf(1, &quot;DATA&quot;, &quot;([-_A-Za-z0-9]+)&quot;), RegexLeaf.end());</span>
+
+<span class="fc" id="L89">	private final Command&lt;WithSprite&gt; commandMultiline = new CommandMultilines2&lt;WithSprite&gt;(multiline,</span>
+<span class="fc" id="L90">			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {</span>
+
+		@Override
+		protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines, ParserPass currentPass) {
+<span class="fc" id="L94">			lines = lines.trim().removeEmptyLines();</span>
+<span class="fc" id="L95">			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+
+<span class="fc" id="L97">			lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L98">			lines = lines.removeEmptyColumns();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (lines.size() == 0)</span>
+<span class="nc" id="L100">				return CommandExecutionResult.error(&quot;No sprite defined.&quot;);</span>
+
+<span class="fc" id="L102">			return executeInternal(system, line0, lines.getLinesAsStringForSprite());</span>
+		}
+
+	};
 
 	public Command&lt;WithSprite&gt; createSingleLine() {
-<span class="fc" id="L82">		return new SingleLineCommand2&lt;WithSprite&gt;(getRegexConcatSingleLine()) {</span>
+<span class="fc" id="L108">		return new SingleLineCommand2&lt;WithSprite&gt;(singleLine) {</span>
 
 			@Override
-			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location,
-					RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L87">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
+			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location, RegexResult arg,
+					ParserPass currentPass) {
+<span class="nc" id="L113">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
 			}
 
 		};
 	}
 
-	public Command&lt;WithSprite&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L94">		return new CommandMultilines2&lt;WithSprite&gt;(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE,</span>
-<span class="fc" id="L95">				Trim.BOTH) {</span>
-
-			@Override
-			public String getPatternEnd() {
-<span class="fc" id="L99">				return &quot;^end[%s]?sprite|\\}$&quot;;</span>
-			}
-
-			@Override
-			protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines, ParserPass currentPass) {
-<span class="fc" id="L104">				lines = lines.trim().removeEmptyLines();</span>
-<span class="fc" id="L105">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-
-<span class="fc" id="L107">				lines = lines.subExtract(1, 1);</span>
-<span class="fc" id="L108">				lines = lines.removeEmptyColumns();</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				if (lines.size() == 0)</span>
-<span class="nc" id="L110">					return CommandExecutionResult.error(&quot;No sprite defined.&quot;);</span>
-
-<span class="fc" id="L112">				return executeInternal(system, line0, lines.getLinesAsStringForSprite());</span>
-			}
-
-		};
+	public Command&lt;WithSprite&gt; createMultiLine(boolean withBracketUnused) {
+<span class="fc" id="L120">		return commandMultiline;</span>
 	}
 
 	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0, final List&lt;String&gt; strings) {
 		final Sprite sprite;
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (line0.get(&quot;DIM&quot;, 0) == null) {</span>
-<span class="nc" id="L121">			sprite = SpriteGrayLevel.GRAY_16.buildSprite(-1, -1, strings);</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (line0.get(&quot;DIM&quot;, 0) == null) {</span>
+<span class="nc" id="L126">			sprite = SpriteGrayLevel.GRAY_16.buildSprite(-1, -1, strings);</span>
 		} else {
-<span class="fc" id="L123">			final int width = Integer.parseInt(line0.get(&quot;DIM&quot;, 0));</span>
-<span class="fc" id="L124">			final int height = Integer.parseInt(line0.get(&quot;DIM&quot;, 1));</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (line0.get(&quot;DIM&quot;, 4) == null) {</span>
-<span class="fc" id="L126">				final int nbLevel = Integer.parseInt(line0.get(&quot;DIM&quot;, 2));</span>
-<span class="pc bpc" id="L127" title="3 of 6 branches missed.">				if (nbLevel != 4 &amp;&amp; nbLevel != 8 &amp;&amp; nbLevel != 16)</span>
-<span class="nc" id="L128">					return CommandExecutionResult.error(&quot;Only 4, 8 or 16 graylevel are allowed.&quot;);</span>
+<span class="fc" id="L128">			final int width = Integer.parseInt(line0.get(&quot;DIM&quot;, 0));</span>
+<span class="fc" id="L129">			final int height = Integer.parseInt(line0.get(&quot;DIM&quot;, 1));</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (line0.get(&quot;DIM&quot;, 4) == null) {</span>
+<span class="fc" id="L131">				final int nbLevel = Integer.parseInt(line0.get(&quot;DIM&quot;, 2));</span>
+<span class="pc bpc" id="L132" title="3 of 6 branches missed.">				if (nbLevel != 4 &amp;&amp; nbLevel != 8 &amp;&amp; nbLevel != 16)</span>
+<span class="nc" id="L133">					return CommandExecutionResult.error(&quot;Only 4, 8 or 16 graylevel are allowed.&quot;);</span>
 
-<span class="fc" id="L130">				final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) == null) {</span>
-<span class="fc" id="L132">					sprite = level.buildSprite(width, height, strings);</span>
+<span class="fc" id="L135">				final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) == null) {</span>
+<span class="fc" id="L137">					sprite = level.buildSprite(width, height, strings);</span>
 				} else {
-<span class="nc" id="L134">					sprite = level.buildSpriteZ(width, height, concat(strings));</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">					if (sprite == null)</span>
-<span class="nc" id="L136">						return CommandExecutionResult.error(&quot;Cannot decode sprite.&quot;);</span>
+<span class="nc" id="L139">					sprite = level.buildSpriteZ(width, height, concat(strings));</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">					if (sprite == null)</span>
+<span class="nc" id="L141">						return CommandExecutionResult.error(&quot;Cannot decode sprite.&quot;);</span>
 
 				}
-<span class="fc" id="L139">			} else {</span>
-<span class="nc" id="L140">				sprite = SpriteColorBuilder4096.buildSprite(strings);</span>
+<span class="fc" id="L144">			} else {</span>
+<span class="nc" id="L145">				sprite = SpriteColorBuilder4096.buildSprite(strings);</span>
 			}
 		}
-<span class="fc" id="L143">		system.addSprite(line0.get(&quot;NAME&quot;, 0), sprite);</span>
-<span class="fc" id="L144">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L148">		system.addSprite(line0.get(&quot;NAME&quot;, 0), sprite);</span>
+<span class="fc" id="L149">		return CommandExecutionResult.ok();</span>
 	}
 
 	private String concat(final List&lt;String&gt; strings) {
-<span class="nc" id="L148">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (String s : strings)</span>
-<span class="nc" id="L150">			sb.append(StringUtils.trin(s));</span>
+<span class="nc" id="L153">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (String s : strings)</span>
+<span class="nc" id="L155">			sb.append(StringUtils.trin(s));</span>
 
-<span class="nc" id="L152">		return sb.toString();</span>
+<span class="nc" id="L157">		return sb.toString();</span>
 	}
 
 }

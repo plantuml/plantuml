@@ -52,7 +52,7 @@ public class CommandMerge extends SingleLineCommand2&lt;BpmDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L54">		return RegexConcat.build(CommandMerge.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;ID&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;ID&quot;, &quot;([%pLN_.@]+)&quot;), //
 				new RegexLeaf(&quot;:?&quot;), //
 				new RegexLeaf(&quot;\\&lt;\\+\\&gt;&quot;), //
 <span class="nc" id="L58">				RegexLeaf.end());</span>

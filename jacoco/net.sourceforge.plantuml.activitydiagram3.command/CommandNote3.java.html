@@ -67,17 +67,17 @@ public class CommandNote3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L69">		return RegexConcat.build(CommandNote3.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(note|floating note)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(note|floating note)&quot;), //
 <span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(left|right)?&quot;), //
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right)?&quot;), //
 <span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L74">				color().getRegex(), //</span>
 <span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L76">				new RegexLeaf(&quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L76">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L77">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 <span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), //
+				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), //
 <span class="fc" id="L81">				RegexLeaf.end());</span>
 	}
 

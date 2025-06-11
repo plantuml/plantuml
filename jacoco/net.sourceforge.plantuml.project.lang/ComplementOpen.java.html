@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L44">public class ComplementOpen implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L47">		return new RegexLeaf(&quot;OPEN&quot; + suffix, &quot;(opene?d?(?: for &quot; + SubjectTask.REGEX_TASK_CODE + &quot;)?)&quot;);</span>
+<span class="fc" id="L47">		return new RegexLeaf(2, &quot;OPEN&quot; + suffix, &quot;(opene?d?(?: for &quot; + SubjectTask.REGEX_TASK_CODE + &quot;)?)&quot;);</span>
 	}
 
 	public Failable&lt;String&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {

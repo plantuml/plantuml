@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -56,27 +55,27 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 	private static final int SIZE = 4;
 
 	public EntityImageAssociationPoint(Entity entity) {
-<span class="nc" id="L59">		super(entity);</span>
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L58">		super(entity);</span>
+<span class="nc" id="L59">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L63">		return new XDimension2D(SIZE, SIZE);</span>
+<span class="nc" id="L62">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 
 	private Style getStyle() {
-<span class="nc" id="L67">		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.arrow)</span>
-<span class="nc" id="L68">				.withTOBECHANGED(getStereo()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L66">		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.arrow)</span>
+<span class="nc" id="L67">				.withTOBECHANGED(getStereo()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L72">		final UShape circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="nc" id="L71">		final UShape circle = UEllipse.build(SIZE, SIZE);</span>
 
-<span class="nc" id="L74">		final HColor color = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L75">		ug.apply(color).apply(new CopyForegroundColorToBackgroundColor()).draw(circle);</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L73">		final HColor color = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L74">		ug.apply(color).apply(new CopyForegroundColorToBackgroundColor()).draw(circle);</span>
+<span class="nc" id="L75">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L79">		return ShapeType.CIRCLE;</span>
+<span class="nc" id="L78">		return ShapeType.CIRCLE;</span>
 	}
 
 }

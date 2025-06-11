@@ -57,11 +57,11 @@ public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2&lt;Abstrac
 <span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;max&quot;), //
 <span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;WIDTH&quot;, &quot;([0-9.]+)&quot;), //
+				new RegexLeaf(1, &quot;WIDTH&quot;, &quot;([0-9.]+)&quot;), //
 <span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[*x]&quot;), //
 <span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L64">				new RegexLeaf(&quot;HEIGHT&quot;, &quot;([0-9.]+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L64">				new RegexLeaf(1, &quot;HEIGHT&quot;, &quot;([0-9.]+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory&lt;PSystemJcckit&gt; {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private StringBuilder data;
 	private int width;
@@ -73,54 +73,56 @@ public class PSystemJcckitFactory extends PSystemBasicFactory&lt;PSystemJcckit&g
 
 	}
 
+<span class="fc" id="L76">	private static final Pattern2 p = Pattern2.cmpile(&quot;\\((\\d+),(\\d+)\\)&quot;);</span>
+
 	private void extractDimension(String startLine) {
-<span class="nc" id="L77">		final Pattern2 p = Pattern2.cmpile(&quot;\\((\\d+),(\\d+)\\)&quot;);</span>
-<span class="nc" id="L78">		final Matcher2 m = p.matcher(startLine);</span>
-<span class="nc" id="L79">		final boolean ok = m.find();</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (ok) {</span>
-<span class="nc" id="L81">			width = Integer.parseInt(m.group(1));</span>
-<span class="nc" id="L82">			height = Integer.parseInt(m.group(2));</span>
+<span class="nc" id="L79">		final Matcher2 m = p.matcher(startLine);</span>
+<span class="nc" id="L80">		final boolean ok = m.find();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (ok) {</span>
+<span class="nc" id="L82">			width = Integer.parseInt(m.group(1));</span>
+<span class="nc" id="L83">			height = Integer.parseInt(m.group(2));</span>
 		}
-<span class="nc" id="L84">	}</span>
+<span class="nc" id="L85">	}</span>
 
 	String getDimension() {
-<span class="nc" id="L87">		return &quot;&quot; + width + &quot;-&quot; + height;</span>
+<span class="nc" id="L88">		return &quot;&quot; + width + &quot;-&quot; + height;</span>
 	}
 
 	private PSystemJcckit createSystem(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L91">		final Properties p = new Properties();</span>
+<span class="nc" id="L92">		final Properties p = new Properties();</span>
 		try {
-<span class="nc" id="L93">			final String tmp = data.toString();</span>
-<span class="nc" id="L94">			final StringReader sr = new StringReader(tmp);</span>
-<span class="nc" id="L95">			p.load(sr);</span>
+<span class="nc" id="L94">			final String tmp = data.toString();</span>
+<span class="nc" id="L95">			final StringReader sr = new StringReader(tmp);</span>
+<span class="nc" id="L96">			p.load(sr);</span>
 			// For Java 1.5
 			// p.load(new ByteArrayInputStream(data.toString().getBytes(&quot;ISO-8859-1&quot;)));
-<span class="nc" id="L98">		} catch (IOException e) {</span>
-<span class="nc" id="L99">			Log.error(&quot;Error &quot; + e);</span>
-<span class="nc" id="L100">			Logme.error(e);</span>
-<span class="nc" id="L101">			return null;</span>
-<span class="nc" id="L102">		}</span>
-<span class="nc" id="L103">		return new PSystemJcckit(source, p, width, height, preprocessing);</span>
+<span class="nc" id="L99">		} catch (IOException e) {</span>
+<span class="nc" id="L100">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L101">			Logme.error(e);</span>
+<span class="nc" id="L102">			return null;</span>
+<span class="nc" id="L103">		}</span>
+<span class="nc" id="L104">		return new PSystemJcckit(source, p, width, height, preprocessing);</span>
 	}
 
 	@Override
-	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line, PreprocessingArtifact preprocessing) {
-<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (system == null &amp;&amp; line.startsWith(&quot;jcckit&quot;)) {</span>
-<span class="nc" id="L109">			data = new StringBuilder();</span>
-<span class="nc" id="L110">			extractDimension(line);</span>
-<span class="nc" id="L111">			return createSystem(source, preprocessing);</span>
+	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line,
+			PreprocessingArtifact preprocessing) {
+<span class="nc bnc" id="L110" title="All 4 branches missed.">		if (system == null &amp;&amp; line.startsWith(&quot;jcckit&quot;)) {</span>
+<span class="nc" id="L111">			data = new StringBuilder();</span>
+<span class="nc" id="L112">			extractDimension(line);</span>
+<span class="nc" id="L113">			return createSystem(source, preprocessing);</span>
 		}
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L114">			return null;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L116">			return null;</span>
 
-<span class="nc" id="L116">		data.append(StringUtils.trin(line));</span>
-<span class="nc" id="L117">		data.append(BackSlash.NEWLINE);</span>
-<span class="nc" id="L118">		return createSystem(source, preprocessing);</span>
+<span class="nc" id="L118">		data.append(StringUtils.trin(line));</span>
+<span class="nc" id="L119">		data.append(BackSlash.NEWLINE);</span>
+<span class="nc" id="L120">		return createSystem(source, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L123">		return null;</span>
+<span class="nc" id="L125">		return null;</span>
 	}
 
 }

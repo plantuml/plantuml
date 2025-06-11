@@ -64,21 +64,21 @@ public class CommandReturn extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L66">		return RegexConcat.build(CommandReturn.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
+				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
 <span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;return&quot;), //
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;COLOR&quot;, &quot;(#\\w+)&quot;), //
+								new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)&quot;), //
 <span class="fc" id="L74">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
-<span class="fc" id="L76">				new RegexLeaf(&quot;MESSAGE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L76">				new RegexLeaf(1, &quot;MESSAGE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 <span class="nc" id="L83">		AbstractMessage message1 = diagram.getActivatingMessage();</span>
 <span class="nc" id="L84">		boolean doDeactivation = true;</span>

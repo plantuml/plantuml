@@ -73,15 +73,15 @@ public class ColorParser {
 	}
 
 	public static ColorParser simpleColor(ColorType mainType, String id) {
-<span class="fc" id="L76">		return new ColorParser(id, new RegexLeaf(id, &quot;(&quot; + COLORS_REGEXP + &quot;)?&quot;), mainType);</span>
+<span class="fc" id="L76">		return new ColorParser(id, new RegexLeaf(1, id, &quot;(&quot; + COLORS_REGEXP + &quot;)?&quot;), mainType);</span>
 	}
 
 	public static ColorParser mandatoryColor(ColorType mainType) {
-<span class="nc" id="L80">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(&quot;COLOR&quot;, &quot;(&quot; + COLORS_REGEXP + &quot;)&quot;), mainType);</span>
+<span class="nc" id="L80">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(1, &quot;COLOR&quot;, &quot;(&quot; + COLORS_REGEXP + &quot;)&quot;), mainType);</span>
 	}
 
 	public static ColorParser simpleColor(String optPrefix, ColorType mainType) {
-<span class="nc" id="L84">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(&quot;COLOR&quot;, &quot;(?:&quot; + optPrefix + &quot; (&quot; + COLORS_REGEXP + &quot;))?&quot;),</span>
+<span class="nc" id="L84">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:&quot; + optPrefix + &quot; (&quot; + COLORS_REGEXP + &quot;))?&quot;),</span>
 				mainType);
 	}
 
@@ -92,23 +92,23 @@ public class ColorParser {
 	}
 
 	public static RegexLeaf exp2() {
-<span class="fc" id="L95">		return new RegexLeaf(&quot;BACKCOLOR&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
+<span class="fc" id="L95">		return new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp3() {
-<span class="fc" id="L99">		return new RegexLeaf(&quot;BACKCOLOR2&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
+<span class="fc" id="L99">		return new RegexLeaf(1, &quot;BACKCOLOR2&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp4() {
-<span class="fc" id="L103">		return new RegexLeaf(&quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;):)?&quot;);</span>
+<span class="fc" id="L103">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;):)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp6() {
-<span class="fc" id="L107">		return new RegexLeaf(&quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;)\\|)?&quot;);</span>
+<span class="fc" id="L107">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;)\\|)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp7() {
-<span class="fc" id="L111">		return new RegexLeaf(&quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;))?&quot;);</span>
+<span class="fc" id="L111">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;))?&quot;);</span>
 	}
 
 	public RegexLeaf getRegex() {

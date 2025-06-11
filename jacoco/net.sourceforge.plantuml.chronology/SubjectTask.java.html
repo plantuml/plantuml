@@ -82,12 +82,12 @@ public class SubjectTask implements Subject&lt;ChronologyDiagram&gt; {
 
 	public IRegex toRegex() {
 <span class="nc" id="L84">		return new RegexOr( //</span>
-				new RegexLeaf(&quot;SUBJECT&quot;, &quot;\\[([^\\[\\]]+?)\\]&quot;), //
+				new RegexLeaf(1, &quot;SUBJECT&quot;, &quot;\\[([^\\[\\]]+?)\\]&quot;), //
 <span class="nc" id="L86">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				new RegexOptional(new RegexConcat(//
 <span class="nc" id="L88">						Words.exactly(Words.AS), //</span>
 <span class="nc" id="L89">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(&quot;SHORTNAME&quot;, &quot;\\[([^\\[\\]]+?)\\]&quot;))) //
+						new RegexLeaf(1, &quot;SHORTNAME&quot;, &quot;\\[([^\\[\\]]+?)\\]&quot;))) //
 		);
 	}
 

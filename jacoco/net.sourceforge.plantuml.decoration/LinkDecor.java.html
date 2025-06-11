@@ -37,7 +37,6 @@
 package net.sourceforge.plantuml.decoration;
 
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;
@@ -59,104 +58,104 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryPlus;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactorySquare;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 
-<span class="fc" id="L62">public enum LinkDecor {</span>
+<span class="fc" id="L61">public enum LinkDecor {</span>
 
-<span class="fc" id="L64">	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3),</span>
-<span class="fc" id="L65">	NOT_NAVIGABLE(1, false, 0.5),</span>
+<span class="fc" id="L63">	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3),</span>
+<span class="fc" id="L64">	NOT_NAVIGABLE(1, false, 0.5),</span>
 
-<span class="fc" id="L67">	REDEFINES(30, false, 2), DEFINEDBY(30, false, 2),</span>
+<span class="fc" id="L66">	REDEFINES(30, false, 2), DEFINEDBY(30, false, 2),</span>
 
-<span class="fc" id="L69">	CROWFOOT(10, true, 0.8), CIRCLE_CROWFOOT(14, false, 0.8), CIRCLE_LINE(10, false, 0.8), DOUBLE_LINE(7, false, 0.7),</span>
-<span class="fc" id="L70">	LINE_CROWFOOT(10, false, 0.8),</span>
+<span class="fc" id="L68">	CROWFOOT(10, true, 0.8), CIRCLE_CROWFOOT(14, false, 0.8), CIRCLE_LINE(10, false, 0.8), DOUBLE_LINE(7, false, 0.7),</span>
+<span class="fc" id="L69">	LINE_CROWFOOT(10, false, 0.8),</span>
 
-<span class="fc" id="L72">	ARROW(10, true, 0.5), ARROW_TRIANGLE(10, true, 0.8), ARROW_AND_CIRCLE(10, false, 0.5),</span>
+<span class="fc" id="L71">	ARROW(10, true, 0.5), ARROW_TRIANGLE(10, true, 0.8), ARROW_AND_CIRCLE(10, false, 0.5),</span>
 
-<span class="fc" id="L74">	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5),</span>
-<span class="fc" id="L75">	PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), SQUARE(0, false, 0.5),</span>
+<span class="fc" id="L73">	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5),</span>
+<span class="fc" id="L74">	PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), SQUARE(0, false, 0.5),</span>
 
-<span class="fc" id="L77">	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW_UP(0, false, 1.5), HALF_ARROW_DOWN(0, false, 1.5), SQUARE_toberemoved(30, false, 0);</span>
+<span class="fc" id="L76">	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW_UP(0, false, 1.5), HALF_ARROW_DOWN(0, false, 1.5), SQUARE_toberemoved(30, false, 0);</span>
 
 	private final double arrowSize;
 	private final int margin;
 	private final boolean fill;
 
-<span class="fc" id="L83">	private LinkDecor(int margin, boolean fill, double arrowSize) {</span>
-<span class="fc" id="L84">		this.margin = margin;</span>
-<span class="fc" id="L85">		this.fill = fill;</span>
-<span class="fc" id="L86">		this.arrowSize = arrowSize;</span>
-<span class="fc" id="L87">	}</span>
+<span class="fc" id="L82">	private LinkDecor(int margin, boolean fill, double arrowSize) {</span>
+<span class="fc" id="L83">		this.margin = margin;</span>
+<span class="fc" id="L84">		this.fill = fill;</span>
+<span class="fc" id="L85">		this.arrowSize = arrowSize;</span>
+<span class="fc" id="L86">	}</span>
 
 	public int getMargin() {
-<span class="nc" id="L90">		return margin;</span>
+<span class="nc" id="L89">		return margin;</span>
 	}
 
 	public boolean isFill() {
-<span class="nc" id="L94">		return fill;</span>
+<span class="nc" id="L93">		return fill;</span>
 	}
 
 	public double getArrowSize() {
-<span class="nc" id="L98">		return arrowSize;</span>
+<span class="nc" id="L97">		return arrowSize;</span>
 	}
 
 	public boolean isExtendsLike() {
-<span class="nc bnc" id="L102" title="All 6 branches missed.">		return this == EXTENDS || this == REDEFINES || this == DEFINEDBY;</span>
+<span class="nc bnc" id="L101" title="All 6 branches missed.">		return this == EXTENDS || this == REDEFINES || this == DEFINEDBY;</span>
 	}
 
 	public ExtremityFactory getExtremityFactoryComplete(HColor backgroundColor) {
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (this == EXTENDS)</span>
-<span class="fc" id="L107">			return new ExtremityFactoryTriangle(null, 18, 6, 18);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (this == EXTENDS)</span>
+<span class="fc" id="L106">			return new ExtremityFactoryTriangle(null, 18, 6, 18);</span>
 
-<span class="fc" id="L109">		return getExtremityFactoryLegacy(backgroundColor);</span>
+<span class="fc" id="L108">		return getExtremityFactoryLegacy(backgroundColor);</span>
 	}
 
 	public ExtremityFactory getExtremityFactoryLegacy(HColor backgroundColor) {
-<span class="pc bpc" id="L113" title="17 of 23 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L112" title="17 of 23 branches missed.">		switch (this) {</span>
 		case PLUS:
-<span class="fc" id="L115">			return new ExtremityFactoryPlus(backgroundColor);</span>
+<span class="fc" id="L114">			return new ExtremityFactoryPlus(backgroundColor);</span>
 		case REDEFINES:
-<span class="nc" id="L117">			return new ExtremityFactoryExtendsLike(backgroundColor, false);</span>
+<span class="nc" id="L116">			return new ExtremityFactoryExtendsLike(backgroundColor, false);</span>
 		case DEFINEDBY:
-<span class="nc" id="L119">			return new ExtremityFactoryExtendsLike(backgroundColor, true);</span>
+<span class="nc" id="L118">			return new ExtremityFactoryExtendsLike(backgroundColor, true);</span>
 		case HALF_ARROW_UP:
-<span class="nc" id="L121">			return new ExtremityFactoryHalfArrow(1);</span>
+<span class="nc" id="L120">			return new ExtremityFactoryHalfArrow(1);</span>
 		case HALF_ARROW_DOWN:
-<span class="nc" id="L123">			return new ExtremityFactoryHalfArrow(-1);</span>
+<span class="nc" id="L122">			return new ExtremityFactoryHalfArrow(-1);</span>
 		case ARROW_TRIANGLE:
-<span class="fc" id="L125">			return new ExtremityFactoryTriangle(null, 8, 3, 8);</span>
+<span class="fc" id="L124">			return new ExtremityFactoryTriangle(null, 8, 3, 8);</span>
 		case CROWFOOT:
-<span class="nc" id="L127">			return new ExtremityFactoryCrowfoot();</span>
+<span class="nc" id="L126">			return new ExtremityFactoryCrowfoot();</span>
 		case CIRCLE_CROWFOOT:
-<span class="nc" id="L129">			return new ExtremityFactoryCircleCrowfoot();</span>
+<span class="nc" id="L128">			return new ExtremityFactoryCircleCrowfoot();</span>
 		case LINE_CROWFOOT:
-<span class="nc" id="L131">			return new ExtremityFactoryLineCrowfoot();</span>
+<span class="nc" id="L130">			return new ExtremityFactoryLineCrowfoot();</span>
 		case CIRCLE_LINE:
-<span class="nc" id="L133">			return new ExtremityFactoryCircleLine();</span>
+<span class="nc" id="L132">			return new ExtremityFactoryCircleLine();</span>
 		case DOUBLE_LINE:
-<span class="nc" id="L135">			return new ExtremityFactoryDoubleLine();</span>
+<span class="nc" id="L134">			return new ExtremityFactoryDoubleLine();</span>
 		case CIRCLE_CROSS:
-<span class="nc" id="L137">			return new ExtremityFactoryCircleCross(backgroundColor);</span>
+<span class="nc" id="L136">			return new ExtremityFactoryCircleCross(backgroundColor);</span>
 		case ARROW:
-<span class="fc" id="L139">			return new ExtremityFactoryArrow();</span>
+<span class="fc" id="L138">			return new ExtremityFactoryArrow();</span>
 		case ARROW_AND_CIRCLE:
-<span class="nc" id="L141">			return new ExtremityFactoryArrowAndCircle(backgroundColor);</span>
+<span class="nc" id="L140">			return new ExtremityFactoryArrowAndCircle(backgroundColor);</span>
 		case NOT_NAVIGABLE:
-<span class="nc" id="L143">			return new ExtremityFactoryNotNavigable();</span>
+<span class="nc" id="L142">			return new ExtremityFactoryNotNavigable();</span>
 		case AGREGATION:
-<span class="fc" id="L145">			return new ExtremityFactoryDiamond(false);</span>
+<span class="fc" id="L144">			return new ExtremityFactoryDiamond(false);</span>
 		case COMPOSITION:
-<span class="fc" id="L147">			return new ExtremityFactoryDiamond(true);</span>
+<span class="fc" id="L146">			return new ExtremityFactoryDiamond(true);</span>
 		case CIRCLE:
-<span class="nc" id="L149">			return new ExtremityFactoryCircle(false, backgroundColor);</span>
+<span class="nc" id="L148">			return new ExtremityFactoryCircle(false, backgroundColor);</span>
 		case CIRCLE_FILL:
-<span class="nc" id="L151">			return new ExtremityFactoryCircle(true, backgroundColor);</span>
+<span class="nc" id="L150">			return new ExtremityFactoryCircle(true, backgroundColor);</span>
 		case SQUARE:
-<span class="nc" id="L153">			return new ExtremityFactorySquare(backgroundColor);</span>
+<span class="nc" id="L152">			return new ExtremityFactorySquare(backgroundColor);</span>
 		case PARENTHESIS:
-<span class="nc" id="L155">			return new ExtremityFactoryParenthesis();</span>
+<span class="nc" id="L154">			return new ExtremityFactoryParenthesis();</span>
 		case CIRCLE_CONNECT:
-<span class="nc" id="L157">			return new ExtremityFactoryCircleConnect(backgroundColor);</span>
+<span class="nc" id="L156">			return new ExtremityFactoryCircleConnect(backgroundColor);</span>
 		default:
-<span class="fc" id="L159">			return null;</span>
+<span class="fc" id="L158">			return null;</span>
 		}
 	}
 }

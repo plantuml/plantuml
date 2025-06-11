@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -59,56 +58,56 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 	private final TextBlock stereo;
 
 	public EntityImageArcCircle(Entity entity) {
-<span class="nc" id="L62">		super(entity);</span>
+<span class="nc" id="L61">		super(entity);</span>
 
-<span class="nc" id="L64">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L63">		final Stereotype stereotype = entity.getStereotype();</span>
 
-<span class="nc" id="L66">		this.name = entity.getDisplay().create(</span>
-<span class="nc" id="L67">				FontConfiguration.create(getSkinParam(), FontParam.COMPONENT, stereotype), HorizontalAlignment.CENTER,</span>
-<span class="nc" id="L68">				getSkinParam());</span>
+<span class="nc" id="L65">		this.name = entity.getDisplay().create(</span>
+<span class="nc" id="L66">				FontConfiguration.create(getSkinParam(), FontParam.COMPONENT, stereotype), HorizontalAlignment.CENTER,</span>
+<span class="nc" id="L67">				getSkinParam());</span>
 
-<span class="nc bnc" id="L70" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {</span>
-<span class="nc" id="L71">			this.stereo = null;</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {</span>
+<span class="nc" id="L70">			this.stereo = null;</span>
 		} else {
-<span class="nc" id="L73">			this.stereo = Display.getWithNewlines(getSkinParam().getPragma(), stereotype.getLabel(getSkinParam().guillemet())).create(</span>
-<span class="nc" id="L74">					FontConfiguration.create(getSkinParam(), FontParam.COMPONENT_STEREOTYPE, stereotype),</span>
-<span class="nc" id="L75">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L72">			this.stereo = Display.getWithNewlines(getSkinParam().getPragma(), stereotype.getLabel(getSkinParam().guillemet())).create(</span>
+<span class="nc" id="L73">					FontConfiguration.create(getSkinParam(), FontParam.COMPONENT_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L74">					HorizontalAlignment.CENTER, getSkinParam());</span>
 		}
 
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L77">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L81">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
-<span class="nc" id="L82">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
+<span class="nc" id="L80">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L81">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
 		// final Dimension2D circle = new Dimension2DDouble(SIZE, SIZE);
-<span class="nc" id="L84">		return dimStereo.mergeTB(dimName);</span>
+<span class="nc" id="L83">		return dimStereo.mergeTB(dimName);</span>
 	}
 
 	private XDimension2D getStereoDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (stereo == null) {</span>
-<span class="nc" id="L89">			return new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (stereo == null) {</span>
+<span class="nc" id="L88">			return new XDimension2D(0, 0);</span>
 		}
-<span class="nc" id="L91">		return stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L90">		return stereo.calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L95">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L96">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
-<span class="nc" id="L97">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L98">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L94">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L95">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
+<span class="nc" id="L96">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L97">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L100">		final double nameX = (dimTotal.getWidth() - dimName.getWidth()) / 2;</span>
-<span class="nc" id="L101">		final double nameY = dimStereo.getHeight();</span>
-<span class="nc" id="L102">		name.drawU(ug.apply(new UTranslate(nameX, nameY)));</span>
+<span class="nc" id="L99">		final double nameX = (dimTotal.getWidth() - dimName.getWidth()) / 2;</span>
+<span class="nc" id="L100">		final double nameY = dimStereo.getHeight();</span>
+<span class="nc" id="L101">		name.drawU(ug.apply(new UTranslate(nameX, nameY)));</span>
 
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L105">			final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;</span>
-<span class="nc" id="L106">			stereo.drawU(ug.apply(UTranslate.dx(stereoX)));</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="nc" id="L104">			final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L105">			stereo.drawU(ug.apply(UTranslate.dx(stereoX)));</span>
 		}
-<span class="nc" id="L108">	}</span>
+<span class="nc" id="L107">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L111">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L110">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

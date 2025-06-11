@@ -63,13 +63,13 @@ public class CommandSimpleSubclass extends SingleLineCommand2&lt;ChenEerDiagram&
 
 	protected static IRegex getRegexConcat() {
 <span class="fc" id="L65">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;NAME1&quot;, &quot;([%pLN_.-]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME1&quot;, &quot;([%pLN_.-]+)&quot;), //
 <span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;PARTICIPATION&quot;, &quot;([-=])&quot;), //
-				new RegexLeaf(&quot;DIRECTION&quot;, &quot;([&lt;&gt;])&quot;), //
-				new RegexLeaf(&quot;PARTICIPATION2&quot;, &quot;([-=])&quot;), //
+				new RegexLeaf(1, &quot;PARTICIPATION&quot;, &quot;([-=])&quot;), //
+				new RegexLeaf(1, &quot;DIRECTION&quot;, &quot;([&lt;&gt;])&quot;), //
+				new RegexLeaf(1, &quot;PARTICIPATION2&quot;, &quot;([-=])&quot;), //
 <span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME2&quot;, &quot;([%pLN_.-]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME2&quot;, &quot;([%pLN_.-]+)&quot;), //
 <span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L74">				color().getRegex(), //</span>
 <span class="fc" id="L75">				RegexLeaf.end());</span>

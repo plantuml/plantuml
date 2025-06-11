@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -68,47 +67,47 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 	final private Url url;
 
 	public EntityImageLollipopInterfaceEye1(Entity entity, Bibliotekon bibliotekon) {
-<span class="nc" id="L71">		super(entity);</span>
-<span class="nc" id="L72">		this.bibliotekon = bibliotekon;</span>
-<span class="nc" id="L73">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="nc" id="L74">		this.desc = entity.getDisplay().create(FontConfiguration.create(getSkinParam(), FontParam.CLASS, stereotype),</span>
-<span class="nc" id="L75">				HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="nc" id="L76">		this.url = entity.getUrl99();</span>
+<span class="nc" id="L70">		super(entity);</span>
+<span class="nc" id="L71">		this.bibliotekon = bibliotekon;</span>
+<span class="nc" id="L72">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L73">		this.desc = entity.getDisplay().create(FontConfiguration.create(getSkinParam(), FontParam.CLASS, stereotype),</span>
+<span class="nc" id="L74">				HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L75">		this.url = entity.getUrl99();</span>
 
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L77">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L81">		return new XDimension2D(SIZE, SIZE);</span>
+<span class="nc" id="L80">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L85">		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder));</span>
-<span class="nc" id="L86">		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground).bg());</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L88">			ug.startUrl(url);</span>
+<span class="nc" id="L84">		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder));</span>
+<span class="nc" id="L85">		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground).bg());</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L87">			ug.startUrl(url);</span>
 		}
-<span class="nc" id="L90">		final double sizeSmall = 14;</span>
-<span class="nc" id="L91">		final double diff = (SIZE - sizeSmall) / 2;</span>
-<span class="nc" id="L92">		final UEllipse circle1 = UEllipse.build(sizeSmall, sizeSmall);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (getSkinParam().shadowing(getEntity().getStereotype())) {</span>
+<span class="nc" id="L89">		final double sizeSmall = 14;</span>
+<span class="nc" id="L90">		final double diff = (SIZE - sizeSmall) / 2;</span>
+<span class="nc" id="L91">		final UEllipse circle1 = UEllipse.build(sizeSmall, sizeSmall);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (getSkinParam().shadowing(getEntity().getStereotype())) {</span>
 			// circle.setDeltaShadow(4);
 		}
-<span class="nc" id="L96">		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);</span>
-<span class="nc" id="L97">		ug = ug.apply(HColors.none().bg());</span>
+<span class="nc" id="L95">		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);</span>
+<span class="nc" id="L96">		ug = ug.apply(HColors.none().bg());</span>
 
-<span class="nc" id="L99">		XPoint2D pos = bibliotekon.getNode(getEntity()).getPosition();</span>
+<span class="nc" id="L98">		XPoint2D pos = bibliotekon.getNode(getEntity()).getPosition();</span>
 
-<span class="nc" id="L101">		final List&lt;SvekEdge&gt; lines = bibliotekon.getAllLineConnectedTo(getEntity());</span>
-<span class="nc" id="L102">		final UTranslate reverse = UTranslate.point(pos).reverse();</span>
-<span class="nc" id="L103">		final ConnectedCircle connectedCircle = new ConnectedCircle(SIZE / 2);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (SvekEdge line : lines) {</span>
-<span class="nc" id="L105">			XPoint2D pt = line.getMyPoint(getEntity());</span>
-<span class="nc" id="L106">			pt = reverse.getTranslated(pt);</span>
-<span class="nc" id="L107">			connectedCircle.addSecondaryConnection(pt);</span>
+<span class="nc" id="L100">		final List&lt;SvekEdge&gt; lines = bibliotekon.getAllLineConnectedTo(getEntity());</span>
+<span class="nc" id="L101">		final UTranslate reverse = UTranslate.point(pos).reverse();</span>
+<span class="nc" id="L102">		final ConnectedCircle connectedCircle = new ConnectedCircle(SIZE / 2);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (SvekEdge line : lines) {</span>
+<span class="nc" id="L104">			XPoint2D pt = line.getMyPoint(getEntity());</span>
+<span class="nc" id="L105">			pt = reverse.getTranslated(pt);</span>
+<span class="nc" id="L106">			connectedCircle.addSecondaryConnection(pt);</span>
 
-<span class="nc" id="L109">		}</span>
+<span class="nc" id="L108">		}</span>
 		// connectedCircle.drawU(ug.apply(UStroke.withThickness(1.5)));
-<span class="nc" id="L111">		connectedCircle.drawU(ug);</span>
+<span class="nc" id="L110">		connectedCircle.drawU(ug);</span>
 
 		//
 		// final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
@@ -118,13 +117,13 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		// final double x = SIZE / 2 - widthDesc / 2;
 		// final double y = SIZE;
 		// desc.drawU(ug.apply(new UTranslate(x, y)));
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L122">			ug.closeUrl();</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L121">			ug.closeUrl();</span>
 		}
-<span class="nc" id="L124">	}</span>
+<span class="nc" id="L123">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L127">		return ShapeType.CIRCLE;</span>
+<span class="nc" id="L126">		return ShapeType.CIRCLE;</span>
 	}
 
 }

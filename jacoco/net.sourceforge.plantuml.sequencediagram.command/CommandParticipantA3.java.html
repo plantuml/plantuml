@@ -52,11 +52,11 @@ public class CommandParticipantA3 extends CommandParticipant {
 <span class="fc" id="L52">		return RegexConcat.build(CommandParticipantA3.class.getName(), RegexLeaf.start(), //</span>
 <span class="fc" id="L53">				getRegexType(), //</span>
 <span class="fc" id="L54">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;FULL&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;FULL&quot;, &quot;([%pLN_.@]+)&quot;), //
 <span class="fc" id="L56">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
 <span class="fc" id="L60">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 <span class="fc" id="L61">				getOrderRegex(), //</span>
 <span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>

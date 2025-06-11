@@ -54,7 +54,7 @@ public class CommandGoto extends SingleLineCommand2&lt;BpmDiagram&gt; {
 <span class="nc" id="L54">		return RegexConcat.build(CommandGoto.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;goto&quot;), //
 <span class="nc" id="L56">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;ID&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;ID&quot;, &quot;([%pLN_.@]+)&quot;), //
 <span class="nc" id="L58">				RegexLeaf.end());</span>
 	}
 

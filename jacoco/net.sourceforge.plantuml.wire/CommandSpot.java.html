@@ -58,29 +58,29 @@ public class CommandSpot extends SingleLineCommand2&lt;WireDiagram&gt; {
 <span class="nc" id="L58">		return RegexConcat.build(CommandSpot.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;spot&quot;), //
 <span class="nc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([\\w][.\\w]*)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([\\w][.\\w]*)&quot;), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf(&quot;\\(&quot;), //
 <span class="nc" id="L64">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;X&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
+						new RegexLeaf(2, &quot;X&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
 <span class="nc" id="L66">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;,&quot;), //
 <span class="nc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;Y&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
+						new RegexLeaf(2, &quot;Y&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
 <span class="nc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;\\)&quot;) //
 				)), //
 				new RegexOptional(new RegexConcat( //
 <span class="nc" id="L74">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
+						new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
 
 <span class="nc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="nc" id="L78">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 <span class="nc" id="L84">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
 
 <span class="nc" id="L86">		final String stringColor = arg.get(&quot;COLOR&quot;, 0);</span>

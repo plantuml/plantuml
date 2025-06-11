@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -62,20 +64,18 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandParticipantMultilines extends CommandMultilines2&lt;SequenceDiagram&gt; {
 
-	public CommandParticipantMultilines() {
-<span class="fc" id="L66">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L67">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L68">			() -&gt; Pattern2.cmpile(&quot;^([^\\[\\]]*)\\]$&quot;));</span>
 
-	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L71">		return &quot;^([^\\[\\]]*)\\]$&quot;;</span>
-	}
+	public CommandParticipantMultilines() {
+<span class="fc" id="L71">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L72">	}</span>
 
 	private static RegexConcat getRegexConcat() {
 <span class="fc" id="L75">		return RegexConcat.build(CommandParticipantMultilines.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(participant)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(participant)&quot;), //
 <span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
 <span class="fc" id="L79">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 <span class="fc" id="L80">				CommandParticipant.getOrderRegex(), //</span>
 <span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -88,49 +88,50 @@ public class CommandParticipantMultilines extends CommandMultilines2&lt;Sequence
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(SequenceDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(SequenceDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 
-<span class="nc" id="L93">		final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L94">		final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 
-<span class="nc" id="L95">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
-<span class="nc" id="L97">			diagram.putParticipantInLast(code);</span>
-<span class="nc" id="L98">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L96">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
+<span class="nc" id="L98">			diagram.putParticipantInLast(code);</span>
+<span class="nc" id="L99">			return CommandExecutionResult.ok();</span>
 		}
 
-<span class="nc" id="L101">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L102">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L103">		final Display strings = lines.toDisplay();</span>
+<span class="nc" id="L102">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L103">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L104">		final Display strings = lines.toDisplay();</span>
 
-<span class="nc" id="L105">		final ParticipantType type = ParticipantType.PARTICIPANT;</span>
-<span class="nc" id="L106">		final boolean create = false;</span>
-<span class="nc" id="L107">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		final int order = orderString == null ? 0 : Integer.parseInt(orderString);</span>
+<span class="nc" id="L106">		final ParticipantType type = ParticipantType.PARTICIPANT;</span>
+<span class="nc" id="L107">		final boolean create = false;</span>
+<span class="nc" id="L108">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		final int order = orderString == null ? 0 : Integer.parseInt(orderString);</span>
 
-<span class="nc" id="L110">		final Participant participant = diagram.createNewParticipant(lines.getLocation(), type, code, strings, order);</span>
+<span class="nc" id="L111">		final Participant participant = diagram.createNewParticipant(lines.getLocation(), type, code, strings, order);</span>
 
-<span class="nc" id="L112">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L113">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (stereotype != null) {</span>
-<span class="nc" id="L115">			final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L116">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
-<span class="nc" id="L117">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
-<span class="nc" id="L118">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
-<span class="nc" id="L119">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L116">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L117">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
+<span class="nc" id="L118">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
+<span class="nc" id="L119">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
+<span class="nc" id="L120">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
 		}
 
-<span class="nc" id="L122">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (urlString != null) {</span>
-<span class="nc" id="L124">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L125">			final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="nc" id="L126">			participant.setUrl(url);</span>
+<span class="nc" id="L123">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L125">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L126">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L127">			participant.setUrl(url);</span>
 		}
 
-<span class="nc" id="L129">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L130">		return CommandExecutionResult.ok();</span>
 	}
 
 	private static ColorParser color() {
-<span class="nc" id="L133">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="nc" id="L134">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 }

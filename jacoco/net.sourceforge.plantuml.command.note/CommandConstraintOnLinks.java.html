@@ -70,7 +70,7 @@ public final class CommandConstraintOnLinks extends SingleLineCommand2&lt;CucaDi
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 <span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L73">				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L73">				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {

@@ -58,22 +58,22 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
 				//
 				new RegexOptional(new RegexConcat( //
-						new RegexLeaf(&quot;COMPLEMENT_NB1&quot; + suffix, &quot;(\\d+)&quot;), //
+						new RegexLeaf(1, &quot;COMPLEMENT_NB1&quot; + suffix, &quot;(\\d+)&quot;), //
 <span class="fc" id="L62">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(&quot;COMPLEMENT_WORKING1&quot; + suffix, &quot;(working[%s]+)?&quot;),
-						new RegexLeaf(&quot;COMPLEMENT_DAY_OR_WEEK1&quot; + suffix, &quot;(day|week)s?&quot;),
+						new RegexLeaf(1, &quot;COMPLEMENT_WORKING1&quot; + suffix, &quot;(working[%s]+)?&quot;),
+						new RegexLeaf(1, &quot;COMPLEMENT_DAY_OR_WEEK1&quot; + suffix, &quot;(day|week)s?&quot;),
 						new RegexOptional(new RegexConcat(//
 <span class="fc" id="L66">								Words.exactly(Words.AND), //</span>
 <span class="fc" id="L67">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;COMPLEMENT_NB2&quot; + suffix, &quot;(\\d+)&quot;), //
+								new RegexLeaf(1, &quot;COMPLEMENT_NB2&quot; + suffix, &quot;(\\d+)&quot;), //
 <span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;COMPLEMENT_WORKING2&quot; + suffix, &quot;(working[%s]+)?&quot;),
-								new RegexLeaf(&quot;COMPLEMENT_DAY_OR_WEEK2&quot; + suffix, &quot;(day|week)s?&quot;))),
+								new RegexLeaf(1, &quot;COMPLEMENT_WORKING2&quot; + suffix, &quot;(working[%s]+)?&quot;),
+								new RegexLeaf(1, &quot;COMPLEMENT_DAY_OR_WEEK2&quot; + suffix, &quot;(day|week)s?&quot;))),
 <span class="fc" id="L72">						RegexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L73">						Words.namedOneOf(&quot;COMPLEMENT_BEFORE_OR_AFTER&quot; + suffix, Words.BEFORE, Words.AFTER))),</span>
 				//
 <span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;COMPLEMENT_CODE_OTHER&quot; + suffix, SubjectTask.REGEX_TASK_CODE + &quot;.?s&quot;), //
+				new RegexLeaf(1, &quot;COMPLEMENT_CODE_OTHER&quot; + suffix, SubjectTask.REGEX_TASK_CODE + &quot;.?s&quot;), //
 <span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L78">				Words.namedOneOf(&quot;COMPLEMENT_START_OR_END&quot; + suffix, Words.START, Words.END));</span>
 	}

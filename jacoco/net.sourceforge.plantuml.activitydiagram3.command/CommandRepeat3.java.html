@@ -68,8 +68,8 @@ public class CommandRepeat3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="fc" id="L68">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;repeat&quot;), //
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;:(.*?)&quot;)), //
-<span class="fc" id="L72">				new RegexOptional(new RegexLeaf(&quot;STYLE&quot;, CommandActivity3.endingGroup())), //</span>
+				new RegexOptional(new RegexLeaf(1, &quot;LABEL&quot;, &quot;:(.*?)&quot;)), //
+<span class="fc" id="L72">				new RegexOptional(new RegexLeaf(2, &quot;STYLE&quot;, CommandActivity3.endingGroup())), //</span>
 				// new RegexLeaf(&quot;;?&quot;), //
 <span class="fc" id="L74">				RegexLeaf.end());</span>
 	}

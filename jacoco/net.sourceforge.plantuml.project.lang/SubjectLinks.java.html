@@ -52,7 +52,7 @@ public class SubjectLinks implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public IRegex toRegex() {
-<span class="nc" id="L55">		return new RegexLeaf(&quot;SUBJECT&quot;, &quot;links?&quot;);</span>
+<span class="nc" id="L55">		return new RegexLeaf(1, &quot;SUBJECT&quot;, &quot;links?&quot;);</span>
 	}
 
 	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {

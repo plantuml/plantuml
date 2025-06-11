@@ -60,10 +60,10 @@ public class CommandArrow3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="fc" id="L60">		return RegexConcat.build(CommandArrow3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr(//
 						new RegexLeaf(&quot;-&gt;&quot;), //
-						new RegexLeaf(&quot;COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+						new RegexLeaf(1, &quot;COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 <span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(//
-						new RegexLeaf(&quot;LABEL&quot;, &quot;(.*);&quot;), //
+						new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*);&quot;), //
 						new RegexLeaf(&quot;&quot;)), //
 <span class="fc" id="L68">				RegexLeaf.end());</span>
 	}

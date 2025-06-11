@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.url.UrlMode;
 
 	public IRegex toRegex(String suffix) {
 <span class="fc" id="L51">		return new RegexConcat( //</span>
-<span class="fc" id="L52">				new RegexLeaf(&quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + UrlBuilder.getRegexp() + &quot;)&quot;)); //</span>
+<span class="fc" id="L52">				new RegexLeaf(12, &quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + UrlBuilder.getRegexp() + &quot;)&quot;)); //</span>
 	}
 
 	public Failable&lt;Url&gt; getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

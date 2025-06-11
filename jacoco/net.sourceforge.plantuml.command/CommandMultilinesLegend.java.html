@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -42,6 +43,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -51,30 +53,28 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesLegend extends CommandMultilines2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L54">	public static final CommandMultilinesLegend ME = new CommandMultilinesLegend();</span>
+<span class="fc" id="L56">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L57">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?legend$&quot;));</span>
+
+<span class="fc" id="L59">	public static final CommandMultilinesLegend ME = new CommandMultilinesLegend();</span>
 
 	private CommandMultilinesLegend() {
-<span class="fc" id="L57">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L63">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L61">		return RegexConcat.build(CommandMultilinesLegend.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandMultilinesLegend.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;legend&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L65">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;VALIGN&quot;, &quot;(top|bottom)&quot;) //
+<span class="fc" id="L70">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(1, &quot;VALIGN&quot;, &quot;(top|bottom)&quot;) //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L70">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;ALIGN&quot;, &quot;(left|right|center)&quot;) //
-<span class="fc" id="L72">						)), RegexLeaf.end());</span>
-	}
-
-	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L77">		return &quot;^end[%s]?legend$&quot;;</span>
+<span class="fc" id="L75">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(1, &quot;ALIGN&quot;, &quot;(left|right|center)&quot;) //
+<span class="fc" id="L77">						)), RegexLeaf.end());</span>
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class CommandRankDir extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L54">		return RegexConcat.build(CommandRankDir.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;DIRECTION&quot;, &quot;(left[%s]to[%s]right|top[%s]to[%s]bottom)&quot;), //
+				new RegexLeaf(1, &quot;DIRECTION&quot;, &quot;(left[%s]to[%s]right|top[%s]to[%s]bottom)&quot;), //
 <span class="fc" id="L56">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;direction&quot;), //
 <span class="fc" id="L58">				RegexLeaf.end()); //</span>

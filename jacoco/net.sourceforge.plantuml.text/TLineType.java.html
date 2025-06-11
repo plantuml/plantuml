@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf(&quot;\\b&quot;));
 
 <span class="fc" id="L70">	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),</span>
-<span class="fc" id="L71">			new RegexLeaf(&quot;!&quot;), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;(local|global)?&quot;),</span>
+<span class="fc" id="L71">			new RegexLeaf(&quot;!&quot;), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, &quot;(local|global)?&quot;),</span>
 <span class="fc" id="L72">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\$?&quot;), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,</span>
 <span class="fc" id="L73">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\??=&quot;));</span>
 
@@ -93,12 +93,12 @@ import net.sourceforge.plantuml.regex.RegexOr;
 <span class="fc" id="L93">	private static final IRegex PATTERN_IF = simpleKeyword(&quot;!if&quot;);</span>
 
 <span class="fc" id="L95">	private static final IRegex PATTERN_DECLARE_RETURN_FUNCTION = new RegexConcat(RegexLeaf.start(),</span>
-<span class="fc" id="L96">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!&quot;), new RegexLeaf(&quot;(unquoted\\s|final\\s)*&quot;),</span>
+<span class="fc" id="L96">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!&quot;), new RegexLeaf(1, &quot;(unquoted\\s|final\\s)*&quot;),</span>
 <span class="fc" id="L97">			new RegexLeaf(&quot;function&quot;), RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;\\$?&quot;),</span>
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 
 <span class="fc" id="L100">	private static final IRegex PATTERN_DECLARE_PROCEDURE = new RegexConcat(RegexLeaf.start(),</span>
-<span class="fc" id="L101">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!&quot;), new RegexLeaf(&quot;(unquoted\\s|final\\s)*&quot;),</span>
+<span class="fc" id="L101">			RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;!&quot;), new RegexLeaf(1, &quot;(unquoted\\s|final\\s)*&quot;),</span>
 <span class="fc" id="L102">			new RegexLeaf(&quot;procedure&quot;), RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;\\$?&quot;),</span>
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT);
 

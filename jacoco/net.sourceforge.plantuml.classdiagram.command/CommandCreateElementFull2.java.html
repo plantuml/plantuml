@@ -83,21 +83,21 @@ public class CommandCreateElementFull2 extends SingleLineCommand2&lt;ClassDiagra
 <span class="fc" id="L83">			return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //</span>
 <span class="fc" id="L84">					RegexLeaf.start(), //</span>
 					new RegexLeaf(&quot;mix_&quot;), //
-					new RegexLeaf(&quot;SYMBOL&quot;, regex), //
+					new RegexLeaf(1, &quot;SYMBOL&quot;, regex), //
 <span class="fc" id="L87">					RegexLeaf.spaceOneOrMore(), //</span>
 					new RegexOr(//
-							new RegexLeaf(&quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
+							new RegexLeaf(1, &quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
 							new RegexConcat(//
-									new RegexLeaf(&quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
+									new RegexLeaf(1, &quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
 <span class="fc" id="L92">									StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 									new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L94">									RegexLeaf.spaceOneOrMore(), //</span>
-									new RegexLeaf(&quot;CODE2&quot;, CommandCreateElementFull.CODE)) //
+									new RegexLeaf(1, &quot;CODE2&quot;, CommandCreateElementFull.CODE)) //
 					), //
 <span class="fc" id="L97">					RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L98">					new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L98">					new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L99">					StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-<span class="fc" id="L100">					new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L100">					new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L101">					RegexLeaf.spaceZeroOrMore(), //</span>
 					UrlBuilder.OPTIONAL, //
 <span class="fc" id="L103">					RegexLeaf.spaceZeroOrMore(), //</span>
@@ -106,21 +106,21 @@ public class CommandCreateElementFull2 extends SingleLineCommand2&lt;ClassDiagra
 		}
 <span class="fc" id="L107">		return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //</span>
 <span class="fc" id="L108">				RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;SYMBOL&quot;, regex), //
+				new RegexLeaf(1, &quot;SYMBOL&quot;, regex), //
 <span class="fc" id="L110">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOr(//
-						new RegexLeaf(&quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexLeaf(1, &quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
-								new RegexLeaf(&quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
+								new RegexLeaf(1, &quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
 <span class="fc" id="L115">								StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L117">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE2&quot;, CommandCreateElementFull.CODE)) //
+								new RegexLeaf(1, &quot;CODE2&quot;, CommandCreateElementFull.CODE)) //
 				), //
 <span class="fc" id="L120">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L121">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L121">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L122">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-<span class="fc" id="L123">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L123">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L124">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L126">				RegexLeaf.spaceZeroOrMore(), //</span>

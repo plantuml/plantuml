@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Collections;
-
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -70,94 +68,94 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 	final private Url url;
 
 	public EntityImageChenEntity(Entity entity) {
-<span class="fc" id="L73">		super(entity);</span>
+<span class="fc" id="L71">		super(entity);</span>
 
-<span class="fc" id="L75">		isWeak = hasStereotype(&quot;&lt;&lt;weak&gt;&gt;&quot;);</span>
+<span class="fc" id="L73">		isWeak = hasStereotype(&quot;&lt;&lt;weak&gt;&gt;&quot;);</span>
 
-<span class="fc" id="L77">		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, getSkinParam())</span>
-<span class="fc" id="L78">				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());</span>
+<span class="fc" id="L75">		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, getSkinParam())</span>
+<span class="fc" id="L76">				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());</span>
 
-<span class="fc" id="L80">		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(), CreoleMode.FULL,</span>
-<span class="fc" id="L81">				getStyleState().wrapWidth());</span>
+<span class="fc" id="L78">		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(), CreoleMode.FULL,</span>
+<span class="fc" id="L79">				getStyleState().wrapWidth());</span>
 
-<span class="fc" id="L83">		url = entity.getUrl99();</span>
-<span class="fc" id="L84">	}</span>
+<span class="fc" id="L81">		url = entity.getUrl99();</span>
+<span class="fc" id="L82">	}</span>
 
 	private boolean hasStereotype(String stereotype) {
-<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		return getEntity().getStereotype() != null &amp;&amp; getEntity().getStereotype().toString().contains(stereotype);</span>
+<span class="pc bpc" id="L85" title="1 of 4 branches missed.">		return getEntity().getStereotype() != null &amp;&amp; getEntity().getStereotype().toString().contains(stereotype);</span>
 	}
 
 	private Style getStyleState() {
-<span class="fc" id="L91">		return getStyleState(getEntity(), getSkinParam());</span>
+<span class="fc" id="L89">		return getStyleState(getEntity(), getSkinParam());</span>
 	}
 
 	private static Style getStyleState(Entity group, ISkinParam skinParam) {
-<span class="fc" id="L95">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity)</span>
-<span class="fc" id="L96">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L93">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity)</span>
+<span class="fc" id="L94">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	private static Style getStyleStateTitle(Entity group, ISkinParam skinParam) {
-<span class="fc" id="L100">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity, SName.title)</span>
-<span class="fc" id="L101">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L98">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity, SName.title)</span>
+<span class="fc" id="L99">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	@Override
 	public ShapeType getShapeType() {
-<span class="fc" id="L106">		return ShapeType.RECTANGLE;</span>
+<span class="fc" id="L104">		return ShapeType.RECTANGLE;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L111">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L109">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
 
-<span class="fc" id="L113">		return dim.delta(MARGIN * 2 + 2 * MARGIN_LINE);</span>
+<span class="fc" id="L111">		return dim.delta(MARGIN * 2 + 2 * MARGIN_LINE);</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L118">		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L120">			ug.startUrl(url);</span>
+<span class="fc" id="L116">		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L118">			ug.startUrl(url);</span>
 
-<span class="fc" id="L122">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L123">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L120">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L121">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
 
-<span class="fc" id="L125">		final UStroke stroke = getStyleState().getStroke(getEntity().getColors());</span>
-<span class="fc" id="L126">		ug = applyColor(ug);</span>
-<span class="fc" id="L127">		ug = ug.apply(stroke);</span>
-<span class="fc" id="L128">		ug.draw(getShape(dimTotal));</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (isWeak) {</span>
-<span class="fc" id="L130">			ug.apply(new UTranslate(3, 3)).draw(getShape(dimTotal.delta(-6)));</span>
+<span class="fc" id="L123">		final UStroke stroke = getStyleState().getStroke(getEntity().getColors());</span>
+<span class="fc" id="L124">		ug = applyColor(ug);</span>
+<span class="fc" id="L125">		ug = ug.apply(stroke);</span>
+<span class="fc" id="L126">		ug.draw(getShape(dimTotal));</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (isWeak) {</span>
+<span class="fc" id="L128">			ug.apply(new UTranslate(3, 3)).draw(getShape(dimTotal.delta(-6)));</span>
 		}
 
-<span class="fc" id="L133">		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;</span>
-<span class="fc" id="L134">		final double yTitle = MARGIN + MARGIN_LINE;</span>
-<span class="fc" id="L135">		title.drawU(ug.apply(new UTranslate(xTitle, yTitle)));</span>
+<span class="fc" id="L131">		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;</span>
+<span class="fc" id="L132">		final double yTitle = MARGIN + MARGIN_LINE;</span>
+<span class="fc" id="L133">		title.drawU(ug.apply(new UTranslate(xTitle, yTitle)));</span>
 
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L138">			ug.closeUrl();</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L136">			ug.closeUrl();</span>
 
-<span class="fc" id="L140">		ug.closeGroup();</span>
-<span class="fc" id="L141">	}</span>
+<span class="fc" id="L138">		ug.closeGroup();</span>
+<span class="fc" id="L139">	}</span>
 
 	final protected UGraphic applyColor(UGraphic ug) {
-<span class="fc" id="L144">		Colors colors = getEntity().getColors();</span>
+<span class="fc" id="L142">		Colors colors = getEntity().getColors();</span>
 
-<span class="fc" id="L146">		HColor border = colors.getColor(ColorType.LINE);</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (border == null)</span>
-<span class="fc" id="L148">			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L149">		ug = ug.apply(border);</span>
+<span class="fc" id="L144">		HColor border = colors.getColor(ColorType.LINE);</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (border == null)</span>
+<span class="fc" id="L146">			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L147">		ug = ug.apply(border);</span>
 
-<span class="fc" id="L151">		HColor backcolor = colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (backcolor == null)</span>
-<span class="fc" id="L153">			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L154">		ug = ug.apply(backcolor.bg());</span>
+<span class="fc" id="L149">		HColor backcolor = colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (backcolor == null)</span>
+<span class="fc" id="L151">			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L152">		ug = ug.apply(backcolor.bg());</span>
 
-<span class="fc" id="L156">		return ug;</span>
+<span class="fc" id="L154">		return ug;</span>
 	}
 
 	private URectangle getShape(XDimension2D dimTotal) {
-<span class="fc" id="L160">		return URectangle.build(dimTotal);</span>
+<span class="fc" id="L158">		return URectangle.build(dimTotal);</span>
 	}
 
 }

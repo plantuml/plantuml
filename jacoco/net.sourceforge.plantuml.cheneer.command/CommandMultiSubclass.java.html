@@ -68,16 +68,16 @@ public class CommandMultiSubclass extends SingleLineCommand2&lt;ChenEerDiagram&g
 
 	protected static IRegex getRegexConcat() {
 <span class="fc" id="L70">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;SUPERCLASS&quot;, &quot;([%pLN_.-]+)&quot;), //
+				new RegexLeaf(1, &quot;SUPERCLASS&quot;, &quot;([%pLN_.-]+)&quot;), //
 <span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;PARTICIPATION&quot;, &quot;([-=])&quot;), //
-				new RegexLeaf(&quot;(&gt;)&quot;), //
-				new RegexLeaf(&quot;PARTICIPATION2&quot;, &quot;([-=])&quot;), //
+				new RegexLeaf(1, &quot;PARTICIPATION&quot;, &quot;([-=])&quot;), //
+				new RegexLeaf(1, &quot;(&gt;)&quot;), //
+				new RegexLeaf(1, &quot;PARTICIPATION2&quot;, &quot;([-=])&quot;), //
 <span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;SYMBOL&quot;, &quot;([doU])&quot;), //
+				new RegexLeaf(1, &quot;SYMBOL&quot;, &quot;([doU])&quot;), //
 <span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
-				new RegexLeaf(&quot;SUBCLASSES&quot;, &quot;(.+)&quot;), //
+				new RegexLeaf(1, &quot;SUBCLASSES&quot;, &quot;(.+)&quot;), //
 				new RegexLeaf(&quot;\\}&quot;), //
 <span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L83">				color().getRegex(), //</span>

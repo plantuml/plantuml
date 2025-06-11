@@ -62,35 +62,36 @@ public class CommandAutonumberResume extends SingleLineCommand2&lt;SequenceDiagr
 				new RegexOptional( //
 						new RegexConcat( //
 <span class="fc" id="L64">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;INC&quot;, &quot;(\\d+)&quot;) //
+								new RegexLeaf(1, &quot;INC&quot;, &quot;(\\d+)&quot;) //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
 <span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;DF&quot;, &quot;[%g]([^%g]+)[%g]&quot;) //
+								new RegexLeaf(1, &quot;DF&quot;, &quot;[%g]([^%g]+)[%g]&quot;) //
 <span class="fc" id="L71">						)), RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L76">		final String df = arg.get(&quot;DF&quot;, 0);</span>
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L77">		final String df = arg.get(&quot;DF&quot;, 0);</span>
 
-<span class="nc" id="L78">		DecimalFormat decimalFormat = null;</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (df != null) {</span>
+<span class="nc" id="L79">		DecimalFormat decimalFormat = null;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (df != null) {</span>
 			try {
-<span class="nc" id="L81">				decimalFormat = new DecimalFormat(df);</span>
-<span class="nc" id="L82">			} catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L83">				return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
-<span class="nc" id="L84">			}</span>
+<span class="nc" id="L82">				decimalFormat = new DecimalFormat(df);</span>
+<span class="nc" id="L83">			} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L84">				return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
+<span class="nc" id="L85">			}</span>
 		}
 
-<span class="nc" id="L87">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (inc == null) {</span>
-<span class="nc" id="L89">			diagram.getAutoNumber().resume(decimalFormat);</span>
+<span class="nc" id="L88">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (inc == null) {</span>
+<span class="nc" id="L90">			diagram.getAutoNumber().resume(decimalFormat);</span>
 		} else {
-<span class="nc" id="L91">			diagram.getAutoNumber().resume(Integer.parseInt(inc), decimalFormat);</span>
+<span class="nc" id="L92">			diagram.getAutoNumber().resume(Integer.parseInt(inc), decimalFormat);</span>
 		}
-<span class="nc" id="L93">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L94">		return CommandExecutionResult.ok();</span>
 	}
 
 }

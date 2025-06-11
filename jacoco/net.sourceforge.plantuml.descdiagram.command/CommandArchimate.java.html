@@ -67,30 +67,30 @@ public class CommandArchimate extends SingleLineCommand2&lt;DescriptionDiagram&g
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L69">		return RegexConcat.build(CommandArchimate.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;SYMBOL&quot;, &quot;archimate&quot;), //
+				new RegexLeaf(0, &quot;SYMBOL&quot;, &quot;archimate&quot;), //
 <span class="fc" id="L71">				RegexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L72">				color().getRegex(), //</span>
 <span class="fc" id="L73">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOr(//
-						new RegexLeaf(&quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexLeaf(1, &quot;CODE1&quot;, CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
-								new RegexLeaf(&quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
+								new RegexLeaf(1, &quot;DISPLAY2&quot;, CommandCreateElementFull.DISPLAY), //
 <span class="fc" id="L78">								StereotypePattern.optionalArchimate(&quot;STEREOTYPE2&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L80">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE2&quot;, CommandCreateElementFull.CODE)), //
+								new RegexLeaf(1, &quot;CODE2&quot;, CommandCreateElementFull.CODE)), //
 						new RegexConcat(//
-								new RegexLeaf(&quot;CODE3&quot;, CommandCreateElementFull.CODE), //
+								new RegexLeaf(1, &quot;CODE3&quot;, CommandCreateElementFull.CODE), //
 <span class="fc" id="L84">								StereotypePattern.optionalArchimate(&quot;STEREOTYPE3&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L86">								RegexLeaf.spaceZeroOrMore(), //</span>
-								new RegexLeaf(&quot;DISPLAY3&quot;, CommandCreateElementFull.DISPLAY)), //
+								new RegexLeaf(1, &quot;DISPLAY3&quot;, CommandCreateElementFull.DISPLAY)), //
 						new RegexConcat(//
-								new RegexLeaf(&quot;DISPLAY4&quot;, CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
+								new RegexLeaf(1, &quot;DISPLAY4&quot;, CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
 <span class="fc" id="L90">								StereotypePattern.optionalArchimate(&quot;STEREOTYPE4&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L92">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE4&quot;, CommandCreateElementFull.CODE)) //
+								new RegexLeaf(1, &quot;CODE4&quot;, CommandCreateElementFull.CODE)) //
 				), //
 <span class="fc" id="L95">				StereotypePattern.optionalArchimate(&quot;STEREOTYPE&quot;), //</span>
 <span class="fc" id="L96">				RegexLeaf.end());</span>

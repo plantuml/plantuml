@@ -56,21 +56,21 @@ public class CommandComponent extends SingleLineCommand2&lt;WireDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L58">		return RegexConcat.build(CommandComponent.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;INDENT&quot;, &quot;([\\s\\t]*)&quot;), //
+				new RegexLeaf(1, &quot;INDENT&quot;, &quot;([\\s\\t]*)&quot;), //
 				new RegexLeaf(&quot;\\*&quot;), //
 <span class="nc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([\\w]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([\\w]+)&quot;), //
 				new RegexOptional(new RegexConcat( //
 <span class="nc" id="L64">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;\\[&quot;), //
-						new RegexLeaf(&quot;WIDTH&quot;, &quot;([\\d]+)&quot;), //
+						new RegexLeaf(1, &quot;WIDTH&quot;, &quot;([\\d]+)&quot;), //
 						new RegexLeaf(&quot;[x*]&quot;), //
-						new RegexLeaf(&quot;HEIGHT&quot;, &quot;([\\d]+)&quot;), //
+						new RegexLeaf(1, &quot;HEIGHT&quot;, &quot;([\\d]+)&quot;), //
 						new RegexLeaf(&quot;\\]&quot;)) //
 				), //
 				new RegexOptional(new RegexConcat( //
 <span class="nc" id="L72">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
+						new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
 <span class="nc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="nc" id="L75">				RegexLeaf.end());</span>
 	}

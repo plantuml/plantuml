@@ -67,17 +67,17 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2&lt;SequenceD
 <span class="fc" id="L67">		return RegexConcat.build(CommandReferenceOverSeveral.class.getName(), //</span>
 <span class="fc" id="L68">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;ref&quot;), //
-				new RegexLeaf(&quot;REF&quot;, &quot;(#\\w+)?&quot;), //
+				new RegexLeaf(1, &quot;REF&quot;, &quot;(#\\w+)?&quot;), //
 <span class="fc" id="L71">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;over&quot;), //
 <span class="fc" id="L73">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;PARTS&quot;, &quot;(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)&quot;), //
+				new RegexLeaf(4, &quot;PARTS&quot;, &quot;(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)&quot;), //
 <span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;URL&quot;, &quot;(\\[\\[.*?\\]\\])&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;URL&quot;, &quot;(\\[\\[.*?\\]\\])&quot;)), //
 <span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 <span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L80">				new RegexLeaf(&quot;TEXT&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L80">				new RegexLeaf(1, &quot;TEXT&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override

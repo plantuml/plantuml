@@ -70,21 +70,21 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2&lt;AbstractE
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L72">		return RegexConcat.build(CommandCreateJsonSingleLine.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;json&quot;), //
+				new RegexLeaf(0, &quot;TYPE&quot;, &quot;json&quot;), //
 <span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)&quot;), //
+				new RegexLeaf(2, &quot;NAME&quot;, &quot;(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)&quot;), //
 <span class="fc" id="L76">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L79">				ColorParser.exp1(), //</span>
 <span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr( //
-						new RegexLeaf(&quot;DATA_BOOLEAN&quot;, &quot;(true|false)&quot;), //
-						new RegexLeaf(&quot;DATA_NUMBER&quot;, &quot;(-?\\d+)&quot;), //
-						new RegexLeaf(&quot;DATA_NULL&quot;, &quot;(null)&quot;), //
-						new RegexLeaf(&quot;DATA_STRING&quot;, &quot;(\&quot;.*\&quot;)&quot;), //
-						new RegexLeaf(&quot;DATA_ARRAY&quot;, &quot;(\\[.*\\])&quot;), //
-						new RegexLeaf(&quot;DATA_OBJECT&quot;, &quot;(\\{[%s]*[%g](\\\\[%g]|[^%g])+[%g][%s]*:.*\\})&quot;) //
+						new RegexLeaf(1, &quot;DATA_BOOLEAN&quot;, &quot;(true|false)&quot;), //
+						new RegexLeaf(1, &quot;DATA_NUMBER&quot;, &quot;(-?\\d+)&quot;), //
+						new RegexLeaf(1, &quot;DATA_NULL&quot;, &quot;(null)&quot;), //
+						new RegexLeaf(1, &quot;DATA_STRING&quot;, &quot;(\&quot;.*\&quot;)&quot;), //
+						new RegexLeaf(1, &quot;DATA_ARRAY&quot;, &quot;(\\[.*\\])&quot;), //
+						new RegexLeaf(2, &quot;DATA_OBJECT&quot;, &quot;(\\{[%s]*[%g](\\\\[%g]|[^%g])+[%g][%s]*:.*\\})&quot;) //
 				), //
 <span class="fc" id="L89">				RegexLeaf.end());</span>
 	}

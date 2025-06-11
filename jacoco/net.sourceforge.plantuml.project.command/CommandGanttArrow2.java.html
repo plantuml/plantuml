@@ -58,16 +58,16 @@ public class CommandGanttArrow2 extends SingleLineCommand2&lt;GanttDiagram&gt; {
 	static IRegex getRegexConcat() {
 <span class="fc" id="L59">		return RegexConcat.build(CommandGanttArrow2.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\[&quot;), //
-				new RegexLeaf(&quot;TASK1&quot;, &quot;([^\\[\\]]+?)&quot;), //
+				new RegexLeaf(1, &quot;TASK1&quot;, &quot;([^\\[\\]]+?)&quot;), //
 				new RegexLeaf(&quot;\\]&quot;), //
 <span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;(-+)&quot;), //
-				new RegexLeaf(&quot;ARROW_STYLE&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
-				new RegexLeaf(&quot;(-*)&quot;), //
+				new RegexLeaf(1, &quot;(-+)&quot;), //
+				new RegexLeaf(1, &quot;ARROW_STYLE&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(1, &quot;(-*)&quot;), //
 				new RegexLeaf(&quot;\\&gt;&quot;), //
 <span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\[&quot;), //
-				new RegexLeaf(&quot;TASK2&quot;, &quot;([^\\[\\]]+?)&quot;), //
+				new RegexLeaf(1, &quot;TASK2&quot;, &quot;([^\\[\\]]+?)&quot;), //
 				new RegexLeaf(&quot;\\]&quot;), //
 <span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L73">				RegexLeaf.end());</span>

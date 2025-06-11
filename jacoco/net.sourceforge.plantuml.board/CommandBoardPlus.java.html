@@ -52,9 +52,9 @@ public class CommandBoardPlus extends SingleLineCommand2&lt;BoardDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L54">		return RegexConcat.build(CommandBoardPlus.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PLUS&quot;, &quot;([+]*)&quot;), //
+				new RegexLeaf(1, &quot;PLUS&quot;, &quot;([+]*)&quot;), //
 <span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L57">				new RegexLeaf(&quot;LABEL&quot;, &quot;([^%s].*)&quot;), RegexLeaf.end());</span>
+<span class="nc" id="L57">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;([^%s].*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override

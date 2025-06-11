@@ -61,21 +61,22 @@ public class CommandAtTime extends SingleLineCommand2&lt;TimingDiagram&gt; {
 						new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L62">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;:&quot;), //
-						new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;) //
+						new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;) //
 				)), //
 <span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L67">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L72">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (timeTick == null)</span>
-<span class="nc" id="L74">			return CommandExecutionResult.error(&quot;What time?&quot;);</span>
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L73">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (timeTick == null)</span>
+<span class="nc" id="L75">			return CommandExecutionResult.error(&quot;What time?&quot;);</span>
 
-<span class="fc" id="L76">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L77">		diagram.addTime(timeTick, code);</span>
-<span class="fc" id="L78">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L77">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L78">		diagram.addTime(timeTick, code);</span>
+<span class="fc" id="L79">		return CommandExecutionResult.ok();</span>
 	}
 
 }

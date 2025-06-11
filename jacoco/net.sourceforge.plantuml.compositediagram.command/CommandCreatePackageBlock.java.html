@@ -62,25 +62,27 @@ public class CommandCreatePackageBlock extends SingleLineCommand2&lt;CompositeDi
 <span class="nc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;DISPLAY&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+								new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
 <span class="nc" id="L66">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="nc" id="L68">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
 <span class="nc" id="L71">				new RegexLeaf(&quot;(?:[%s]*\\{|[%s]+begin)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
-<span class="nc" id="L77">		String display = arg.get(&quot;DISPLAY&quot;, 0);</span>
-<span class="nc" id="L78">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L79">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (display == null)</span>
-<span class="nc" id="L81">			display = quark.getName();</span>
+<span class="nc" id="L78">		String display = arg.get(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L79">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L80">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (display == null)</span>
+<span class="nc" id="L82">			display = quark.getName();</span>
 
-<span class="nc" id="L83">		return diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE);</span>
+<span class="nc" id="L84">		return diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display),</span>
+				GroupType.PACKAGE);
 	}
 
 }

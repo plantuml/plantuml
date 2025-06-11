@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -59,17 +61,15 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L64">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="fc" id="L65">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
+
 	public CommandNoteLong3() {
-<span class="fc" id="L63">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L68">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L69">	}</span>
 
 	private static ColorParser color() {
-<span class="fc" id="L67">		return ColorParser.simpleColor(ColorType.BACK);</span>
-	}
-
-	@Override
-	public String getPatternEnd() {
-<span class="fc" id="L72">		return &quot;^end[%s]?note$&quot;;</span>
+<span class="fc" id="L72">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt;
 <span class="fc" id="L82">		final NoteType type = NoteType.defaultType(line0.get(&quot;TYPE&quot;, 0));</span>
 <span class="fc" id="L83">		final Display note = lines.toDisplay();</span>
 <span class="fc" id="L84">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
-		
+
 <span class="fc" id="L86">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
 <span class="fc" id="L87">		Stereotype stereotype = null;</span>
 <span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
@@ -93,11 +93,11 @@ public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt;
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L95">		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(note|floating note)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(note|floating note)&quot;), //
 <span class="fc" id="L97">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(left|right)?&quot;), //
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right)?&quot;), //
 <span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L100">				new RegexLeaf(&quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L100">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L101">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 <span class="fc" id="L102">				color().getRegex(), //</span>
 <span class="fc" id="L103">				RegexLeaf.end());</span>

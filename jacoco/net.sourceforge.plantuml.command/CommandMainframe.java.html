@@ -59,7 +59,7 @@ public class CommandMainframe extends SingleLineCommand2&lt;TitledDiagram&gt; {
 				new RegexOr( //
 <span class="fc" id="L60">						new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;:&quot;), RegexLeaf.spaceZeroOrMore()), //</span>
 <span class="fc" id="L61">						RegexLeaf.spaceOneOrMore()), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;LABEL&quot;, &quot;(.*[%pLN_.].*)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L62">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*[%pLN_.].*)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

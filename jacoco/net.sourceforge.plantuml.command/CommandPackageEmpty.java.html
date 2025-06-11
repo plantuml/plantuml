@@ -60,16 +60,16 @@ public class CommandPackageEmpty extends SingleLineCommand2&lt;AbstractEntityDia
 <span class="fc" id="L60">		return RegexConcat.build(CommandPackageEmpty.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;package&quot;), //
 <span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;DISPLAY&quot;, &quot;([%g][^%g]+[%g]|[^#%s{}]*)&quot;), //
+				new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;([%g][^%g]+[%g]|[^#%s{}]*)&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
 <span class="fc" id="L66">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L68">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;) //
+								new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;) //
 						)), //
 <span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|#?\\w+)?&quot;), //
+				new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|#?\\w+)?&quot;), //
 <span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
 <span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -78,8 +78,8 @@ public class CommandPackageEmpty extends SingleLineCommand2&lt;AbstractEntityDia
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String idShort;
 		final String display;
 <span class="nc bnc" id="L85" title="All 2 branches missed.">		if (arg.get(&quot;CODE&quot;, 0) == null) {</span>
@@ -95,8 +95,8 @@ public class CommandPackageEmpty extends SingleLineCommand2&lt;AbstractEntityDia
 <span class="nc" id="L95">			idShort = arg.get(&quot;CODE&quot;, 0);</span>
 		}
 <span class="nc" id="L97">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
-<span class="nc" id="L98">		final CommandExecutionResult status = diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display),</span>
-				GroupType.PACKAGE);
+<span class="nc" id="L98">		final CommandExecutionResult status = diagram.gotoGroup(location, quark,</span>
+<span class="nc" id="L99">				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE);</span>
 <span class="nc bnc" id="L100" title="All 2 branches missed.">		if (status.isOk() == false)</span>
 <span class="nc" id="L101">			return status;</span>
 <span class="nc" id="L102">		final Entity p = diagram.getCurrentGroup();</span>

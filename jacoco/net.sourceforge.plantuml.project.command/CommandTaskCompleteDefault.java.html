@@ -63,7 +63,7 @@ public class CommandTaskCompleteDefault extends SingleLineCommand2&lt;GanttDiagr
 <span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;to&quot;), //
 <span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;VALUE&quot;, &quot;(\\d+)&quot;), //
+				new RegexLeaf(1, &quot;VALUE&quot;, &quot;(\\d+)&quot;), //
 				new RegexLeaf(&quot;.*&quot;), //
 <span class="fc" id="L68">				RegexLeaf.end());</span>
 	}

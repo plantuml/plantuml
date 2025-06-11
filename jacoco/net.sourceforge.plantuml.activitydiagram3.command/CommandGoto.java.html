@@ -55,7 +55,7 @@ public class CommandGoto extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="fc" id="L55">		return RegexConcat.build(CommandGoto.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;goto&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([%pLN_.]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%pLN_.]+)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
 <span class="fc" id="L60">				RegexLeaf.end());</span>
 	}

@@ -57,50 +57,46 @@ public abstract class CommandMultilinesBracket&lt;S extends Diagram&gt; implemen
 <span class="fc" id="L57">		return false;</span>
 	}
 
-	public String[] getDescription() {
-<span class="nc" id="L61">		return new String[] { &quot;BRACKET: &quot; + starting.pattern() };</span>
-	}
-
 	protected CommandControl finalVerification() {
-<span class="fc" id="L65">		return CommandControl.OK;</span>
+<span class="fc" id="L61">		return CommandControl.OK;</span>
 	}
 
 	protected final Pattern2 getStartingPattern() {
-<span class="fc" id="L69">		return starting;</span>
+<span class="fc" id="L65">		return starting;</span>
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
-<span class="nc" id="L74">			return CommandControl.NOT_OK;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc" id="L70">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L76">		final Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (m1.matches() == false)</span>
-<span class="fc" id="L78">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L72">		final Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L74">			return CommandControl.NOT_OK;</span>
 
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (lines.size() == 1)</span>
-<span class="fc" id="L81">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (lines.size() == 1)</span>
+<span class="fc" id="L77">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L83">		int level = 1;</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (StringLocated cs : lines.subExtract(1, 0)) {</span>
-<span class="fc" id="L85">			final String s = cs.getTrimmed().getString();</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (isLineConsistent(s, level) == false)</span>
-<span class="nc" id="L87">				return CommandControl.NOT_OK;</span>
+<span class="fc" id="L79">		int level = 1;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (StringLocated cs : lines.subExtract(1, 0)) {</span>
+<span class="fc" id="L81">			final String s = cs.getTrimmed().getString();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (isLineConsistent(s, level) == false)</span>
+<span class="nc" id="L83">				return CommandControl.NOT_OK;</span>
 
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (s.endsWith(&quot;{&quot;))</span>
-<span class="nc" id="L90">				level++;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			if (s.endsWith(&quot;{&quot;))</span>
+<span class="nc" id="L86">				level++;</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (s.endsWith(&quot;}&quot;))</span>
-<span class="fc" id="L93">				level--;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			if (s.endsWith(&quot;}&quot;))</span>
+<span class="fc" id="L89">				level--;</span>
 
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (level &lt; 0)</span>
-<span class="nc" id="L96">				return CommandControl.NOT_OK;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			if (level &lt; 0)</span>
+<span class="nc" id="L92">				return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L98">		}</span>
+<span class="fc" id="L94">		}</span>
 
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (level != 0)</span>
-<span class="fc" id="L101">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (level != 0)</span>
+<span class="fc" id="L97">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L103">		return finalVerification();</span>
+<span class="fc" id="L99">		return finalVerification();</span>
 	}
 
 	protected abstract boolean isLineConsistent(String line, int level);

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -67,79 +69,78 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-<span class="fc" id="L70">public final class FactorySequenceNoteCommand implements SingleMultiFactoryCommand&lt;SequenceDiagram&gt; {</span>
+<span class="fc" id="L72">public final class FactorySequenceNoteCommand implements SingleMultiFactoryCommand&lt;SequenceDiagram&gt; {</span>
 	// ::remove folder when __HAXE__
 
 	private IRegex getRegexConcatMultiLine() {
-<span class="fc" id="L74">		return RegexConcat.build(FactorySequenceNoteCommand.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-				new RegexLeaf(&quot;VMERGE&quot;, &quot;(/)?&quot;), //
-<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
-<span class="fc" id="L79">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|over)&quot;), //
-<span class="fc" id="L81">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;PARTICIPANT&quot;, &quot;(?:of[%s]+)?([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L83">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L84">				color().getRegex(), //</span>
-<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">		return RegexConcat.build(FactorySequenceNoteCommand.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
+				new RegexLeaf(1, &quot;VMERGE&quot;, &quot;(/)?&quot;), //
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
+<span class="fc" id="L81">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left|over)&quot;), //
+<span class="fc" id="L83">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;PARTICIPANT&quot;, &quot;(?:of[%s]+)?([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
+<span class="fc" id="L85">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+<span class="fc" id="L86">				color().getRegex(), //</span>
+<span class="fc" id="L87">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L87">				RegexLeaf.end());</span>
+<span class="fc" id="L89">				RegexLeaf.end());</span>
 	}
 
 	private IRegex getRegexConcatSingleLine() {
-<span class="fc" id="L91">		return RegexConcat.build(FactorySequenceNoteCommand.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-				new RegexLeaf(&quot;VMERGE&quot;, &quot;(/)?&quot;), //
-<span class="fc" id="L94">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
-<span class="fc" id="L96">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|over)&quot;), //
-<span class="fc" id="L98">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;PARTICIPANT&quot;, &quot;(?:of[%s])?([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L100">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L101">				color().getRegex(), //</span>
-<span class="fc" id="L102">				RegexLeaf.spaceZeroOrMore(), //</span>
-				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L93">		return RegexConcat.build(FactorySequenceNoteCommand.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
+				new RegexLeaf(1, &quot;VMERGE&quot;, &quot;(/)?&quot;), //
+<span class="fc" id="L96">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
+<span class="fc" id="L98">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left|over)&quot;), //
+<span class="fc" id="L100">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;PARTICIPANT&quot;, &quot;(?:of[%s])?([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
+<span class="fc" id="L102">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+<span class="fc" id="L103">				color().getRegex(), //</span>
 <span class="fc" id="L104">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;:&quot;), //
+				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L106">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L107">				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L108">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L109">				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L111">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L113">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
+	
+<span class="fc" id="L116">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L117">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?(note|hnote|rnote)$&quot;));</span>
+
 
 	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L115">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
-<span class="fc" id="L116">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
-
-			@Override
-			public String getPatternEnd() {
-<span class="nc" id="L120">				return &quot;^end[%s]?(note|hnote|rnote)$&quot;;</span>
-			}
+<span class="fc" id="L121">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
+<span class="fc" id="L122">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
 
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L126">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L127">				lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L128">				lines = lines.removeEmptyColumns().expandsNewline(false);</span>
-<span class="nc" id="L129">				final Display display = lines.toDisplay();</span>
-<span class="nc" id="L130">				return executeInternal(lines.getLocation(), diagram, line0, diagram.manageVariable(display));</span>
+<span class="nc" id="L127">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L128">				lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L129">				lines = lines.removeEmptyColumns().expandsNewline(false);</span>
+<span class="nc" id="L130">				final Display display = lines.toDisplay();</span>
+<span class="nc" id="L131">				return executeInternal(lines.getLocation(), diagram, line0, diagram.manageVariable(display));</span>
 			}
 		};
 	}
 
 	public Command&lt;SequenceDiagram&gt; createSingleLine() {
-<span class="fc" id="L136">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
+<span class="fc" id="L137">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
 
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L141">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="fc" id="L142">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
+<span class="fc" id="L142">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="fc" id="L143">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
 			}
 
 		};
@@ -147,37 +148,37 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, RegexResult arg, Display display)
 			throws NoSuchColorException {
-<span class="fc" id="L150">		final Participant p = diagram.getOrCreateParticipant(location,</span>
-<span class="fc" id="L151">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;PARTICIPANT&quot;, 0)));</span>
+<span class="fc" id="L151">		final Participant p = diagram.getOrCreateParticipant(location,</span>
+<span class="fc" id="L152">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;PARTICIPANT&quot;, 0)));</span>
 
-<span class="fc" id="L153">		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(arg.get(&quot;POSITION&quot;, 0)));</span>
+<span class="fc" id="L154">		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(arg.get(&quot;POSITION&quot;, 0)));</span>
 
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (display.size() &gt; 0) {</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">			final boolean tryMerge = arg.get(&quot;VMERGE&quot;, 0) != null;</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (display.size() &gt; 0) {</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			final boolean tryMerge = arg.get(&quot;VMERGE&quot;, 0) != null;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
 
-<span class="fc" id="L159">			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L160">			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L161">			final String stereotypeString = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">			if (stereotypeString != null) {</span>
-<span class="nc" id="L163">				final Stereotype stereotype = Stereotype.build(stereotypeString);</span>
-<span class="nc" id="L164">				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
+<span class="fc" id="L160">			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L161">			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L162">			final String stereotypeString = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			if (stereotypeString != null) {</span>
+<span class="nc" id="L164">				final Stereotype stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L165">				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
 						ColorParam.noteBorder);
-<span class="nc" id="L166">				note.setStereotype(stereotype);</span>
+<span class="nc" id="L167">				note.setStereotype(stereotype);</span>
 			}
-<span class="fc" id="L168">			note.setColors(colors);</span>
-<span class="fc" id="L169">			note.setNoteStyle(NoteStyle.getNoteStyle(arg.get(&quot;STYLE&quot;, 0)));</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">			if (arg.get(&quot;URL&quot;, 0) != null) {</span>
-<span class="nc" id="L171">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L172">				final Url urlLink = urlBuilder.getUrl(arg.get(&quot;URL&quot;, 0));</span>
-<span class="nc" id="L173">				note.setUrl(urlLink);</span>
+<span class="fc" id="L169">			note.setColors(colors);</span>
+<span class="fc" id="L170">			note.setNoteStyle(NoteStyle.getNoteStyle(arg.get(&quot;STYLE&quot;, 0)));</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (arg.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc" id="L172">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L173">				final Url urlLink = urlBuilder.getUrl(arg.get(&quot;URL&quot;, 0));</span>
+<span class="nc" id="L174">				note.setUrl(urlLink);</span>
 			}
-<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (parallel) {</span>
-<span class="fc" id="L176">				note.goParallel();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (parallel) {</span>
+<span class="fc" id="L177">				note.goParallel();</span>
 			}
-<span class="fc" id="L178">			diagram.addNote(note, tryMerge);</span>
+<span class="fc" id="L179">			diagram.addNote(note, tryMerge);</span>
 		}
-<span class="fc" id="L180">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L181">		return CommandExecutionResult.ok();</span>
 	}
 
 }

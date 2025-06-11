@@ -60,16 +60,16 @@ public class StereotypeDecoration {
 			new RegexLeaf(&quot;\\&lt;\\&lt;&quot;), //
 <span class="fc" id="L61">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexLeaf(&quot;\\(&quot;), //
-			new RegexLeaf(&quot;CHAR&quot;, &quot;(\\S)&quot;), //
+			new RegexLeaf(1, &quot;CHAR&quot;, &quot;(\\S)&quot;), //
 			new RegexOptional( //
 					new RegexConcat( //
 <span class="fc" id="L66">							RegexLeaf.spaceZeroOrMore(), //</span>
 							new RegexLeaf(&quot;,&quot;), //
 <span class="fc" id="L68">							RegexLeaf.spaceZeroOrMore(), //</span>
-							new RegexLeaf(&quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;), //
+							new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;), //
 <span class="fc" id="L70">							RegexLeaf.spaceZeroOrMore())), //</span>
 			new RegexLeaf(&quot;\\)&quot;), //
-			new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;[,]?(.*?)&quot;)), //
+			new RegexOptional(new RegexLeaf(1, &quot;LABEL&quot;, &quot;[,]?(.*?)&quot;)), //
 			new RegexLeaf(&quot;\\&gt;\\&gt;&quot;) //
 	);
 
@@ -77,17 +77,17 @@ public class StereotypeDecoration {
 			new RegexLeaf(&quot;\\&lt;\\&lt;&quot;), //
 <span class="fc" id="L78">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexLeaf(&quot;\\(?\\$&quot;), //
-			new RegexLeaf(&quot;NAME&quot;, &quot;(&quot; + SpriteUtils.SPRITE_NAME + &quot;)&quot;), //
-			new RegexLeaf(&quot;SCALE&quot;, &quot;((?:\\{scale=|\\*)([0-9.]+)\\}?)?&quot;), //
+			new RegexLeaf(1, &quot;NAME&quot;, &quot;(&quot; + SpriteUtils.SPRITE_NAME + &quot;)&quot;), //
+			new RegexLeaf(2, &quot;SCALE&quot;, &quot;((?:\\{scale=|\\*)([0-9.]+)\\}?)?&quot;), //
 <span class="fc" id="L82">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexOptional( //
 					new RegexConcat( //
 							new RegexLeaf(&quot;,&quot;), //
 <span class="fc" id="L86">							RegexLeaf.spaceZeroOrMore(), //</span>
-							new RegexLeaf(&quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;) //
+							new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|\\w+)&quot;) //
 					)), //
 <span class="fc" id="L89">			RegexLeaf.spaceZeroOrMore(), //</span>
-			new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;[),](.*?)&quot;)), //
+			new RegexOptional(new RegexLeaf(1, &quot;LABEL&quot;, &quot;[),](.*?)&quot;)), //
 			new RegexLeaf(&quot;\\&gt;\\&gt;&quot;) //
 	);
 

@@ -57,7 +57,7 @@ public class CommandActivityLegacy1 extends SingleLineCommand2&lt;ActivityDiagra
 	static IRegex getRegexConcat() {
 <span class="fc" id="L58">		return RegexConcat.build(CommandActivityLegacy1.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;-&quot;), //
-				new RegexLeaf(&quot;LABEL&quot;, &quot;(.*)&quot;), //
+				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), //
 <span class="fc" id="L61">				RegexLeaf.end());</span>
 	}
 

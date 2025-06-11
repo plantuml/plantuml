@@ -53,7 +53,7 @@ public class CommandGroupEnd3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L55">		return RegexConcat.build(CommandGroupEnd3.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;(end ?group|group ?end)&quot;), //
+				new RegexLeaf(1, &quot;(end ?group|group ?end)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
 <span class="fc" id="L58">				RegexLeaf.end());</span>
 	}

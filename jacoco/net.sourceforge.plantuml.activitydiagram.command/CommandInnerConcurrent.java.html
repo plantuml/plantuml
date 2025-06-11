@@ -55,7 +55,7 @@ public class CommandInnerConcurrent extends SingleLineCommand2&lt;ActivityDiagra
 <span class="nc" id="L55">		return RegexConcat.build(CommandInnerConcurrent.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;--&quot;), //
 <span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;(.*)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;(.*)&quot;), //
 <span class="nc" id="L59">				RegexLeaf.end()); //</span>
 	}
 

@@ -57,7 +57,7 @@ public class CommandCase extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 				new RegexLeaf(&quot;case&quot;), //
 <span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
-				new RegexLeaf(&quot;TEST&quot;, &quot;(.*?)&quot;), //
+				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
 <span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L63">				RegexLeaf.end());</span>

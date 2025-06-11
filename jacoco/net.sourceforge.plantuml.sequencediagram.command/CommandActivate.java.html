@@ -59,24 +59,24 @@ public class CommandActivate extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L61">		return RegexConcat.build(CommandActivate.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(activate|deactivate|destroy|create)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(activate|deactivate|destroy|create)&quot;), //
 <span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;WHO&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
+				new RegexLeaf(1, &quot;WHO&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
 <span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;BACK&quot;, &quot;(#\\w+)?&quot;), //
+				new RegexLeaf(1, &quot;BACK&quot;, &quot;(#\\w+)?&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
 <span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;LINE&quot;, &quot;(#\\w+)&quot;) //
+								new RegexLeaf(1, &quot;LINE&quot;, &quot;(#\\w+)&quot;) //
 <span class="fc" id="L71">						)), RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L77">		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get(&quot;TYPE&quot;, 0)));</span>
-<span class="fc" id="L78">		final Participant p = diagram</span>
-<span class="fc" id="L79">				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0)));</span>
+<span class="fc" id="L78">		final Participant p = diagram.getOrCreateParticipant(location,</span>
+<span class="fc" id="L79">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0)));</span>
 <span class="fc" id="L80">		final String back = arg.get(&quot;BACK&quot;, 0);</span>
 <span class="fc bfc" id="L81" title="All 2 branches covered.">		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);</span>
 <span class="fc" id="L82">		final String line = arg.get(&quot;LINE&quot;, 0);</span>

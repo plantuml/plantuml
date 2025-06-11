@@ -54,11 +54,11 @@ public class CommandPage extends SingleLineCommand2&lt;AbstractPSystem&gt; {
 <span class="fc" id="L54">		return RegexConcat.build(CommandPage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;page&quot;), //
 <span class="fc" id="L56">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;NB1&quot;, &quot;(\\d+)&quot;), //
+				new RegexLeaf(1, &quot;NB1&quot;, &quot;(\\d+)&quot;), //
 <span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;x*&quot;), //
 <span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L61">				new RegexLeaf(&quot;NB2&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L61">				new RegexLeaf(1, &quot;NB2&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -66,79 +68,77 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-<span class="fc" id="L69">public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiFactoryCommand&lt;SequenceDiagram&gt; {</span>
+<span class="fc" id="L71">public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiFactoryCommand&lt;SequenceDiagram&gt; {</span>
 
 	private IRegex getRegexConcatMultiLine() {
-<span class="fc" id="L72">		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-				new RegexLeaf(&quot;VMERGE&quot;, &quot;(/)?&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
-<span class="fc" id="L77">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+<span class="fc" id="L74">		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
+				new RegexLeaf(1, &quot;VMERGE&quot;, &quot;(/)?&quot;), //
+<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
+<span class="fc" id="L79">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
 				new RegexLeaf(&quot;over&quot;), //
-<span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;P1&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;,&quot;), //
+<span class="fc" id="L81">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;P1&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
 <span class="fc" id="L83">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;P2&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L85">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L86">				color().getRegex(), //</span>
-<span class="fc" id="L87">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;,&quot;), //
+<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;P2&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
+<span class="fc" id="L87">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+<span class="fc" id="L88">				color().getRegex(), //</span>
+<span class="fc" id="L89">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L89">				RegexLeaf.end() //</span>
+<span class="fc" id="L91">				RegexLeaf.end() //</span>
 		);
 	}
 
 	private IRegex getRegexConcatSingleLine() {
-<span class="fc" id="L94">		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-				new RegexLeaf(&quot;VMERGE&quot;, &quot;(/)?&quot;), //
-<span class="fc" id="L97">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
-<span class="fc" id="L99">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+<span class="fc" id="L96">		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
+				new RegexLeaf(1, &quot;VMERGE&quot;, &quot;(/)?&quot;), //
+<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
+<span class="fc" id="L101">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
 				new RegexLeaf(&quot;over&quot;), //
-<span class="fc" id="L101">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;P1&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L103">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;,&quot;), //
+<span class="fc" id="L103">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;P1&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
 <span class="fc" id="L105">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;P2&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L107">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L108">				color().getRegex(), //</span>
-<span class="fc" id="L109">				RegexLeaf.spaceZeroOrMore(), //</span>
-				UrlBuilder.OPTIONAL, //
+				new RegexLeaf(&quot;,&quot;), //
+<span class="fc" id="L107">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;P2&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
+<span class="fc" id="L109">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+<span class="fc" id="L110">				color().getRegex(), //</span>
 <span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;:&quot;), //
+				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L113">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L114">				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L115">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L116">				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L118">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L120">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	public Command&lt;SequenceDiagram&gt; createSingleLine() {
-<span class="fc" id="L122">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
+<span class="fc" id="L124">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
 
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L127">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="nc" id="L128">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
+<span class="nc" id="L129">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="nc" id="L130">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
 			}
 
 		};
 	}
 
-	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L135">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
-<span class="fc" id="L136">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
+<span class="fc" id="L136">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L137">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?(note|hnote|rnote)$&quot;));</span>
 
-			@Override
-			public String getPatternEnd() {
-<span class="nc" id="L140">				return &quot;^end[%s]?(note|hnote|rnote)$&quot;;</span>
-			}
+	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
+<span class="fc" id="L140">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
+<span class="fc" id="L141">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
 
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
@@ -153,12 +153,12 @@ import net.sourceforge.plantuml.utils.LineLocation;
 		};
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, final RegexResult line0, Display display)
-			throws NoSuchColorException {
-<span class="nc" id="L158">		final Participant p1 = diagram</span>
-<span class="nc" id="L159">				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P1&quot;, 0)));</span>
-<span class="nc" id="L160">		final Participant p2 = diagram</span>
-<span class="nc" id="L161">				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P2&quot;, 0)));</span>
+	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram,
+			final RegexResult line0, Display display) throws NoSuchColorException {
+<span class="nc" id="L158">		final Participant p1 = diagram.getOrCreateParticipant(location,</span>
+<span class="nc" id="L159">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P1&quot;, 0)));</span>
+<span class="nc" id="L160">		final Participant p2 = diagram.getOrCreateParticipant(location,</span>
+<span class="nc" id="L161">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P2&quot;, 0)));</span>
 
 <span class="nc bnc" id="L163" title="All 2 branches missed.">		if (display.size() &gt; 0) {</span>
 <span class="nc bnc" id="L164" title="All 2 branches missed.">			final boolean tryMerge = line0.get(&quot;VMERGE&quot;, 0) != null;</span>

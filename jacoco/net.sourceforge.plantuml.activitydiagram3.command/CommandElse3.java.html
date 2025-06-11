@@ -64,8 +64,8 @@ public class CommandElse3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
 								new RegexLeaf(&quot;-&gt;&quot;), //
-								new RegexLeaf(&quot;WHEN_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
-						new RegexLeaf(&quot;WHEN&quot;, &quot;(.*?)&quot;), //
+								new RegexLeaf(1, &quot;WHEN_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf(1, &quot;WHEN&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;;?&quot;), //

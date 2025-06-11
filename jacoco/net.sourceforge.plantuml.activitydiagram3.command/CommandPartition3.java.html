@@ -68,13 +68,13 @@ public class CommandPartition3 extends SingleLineCommand2&lt;ActivityDiagram3&gt
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L70">		return RegexConcat.build(CommandPartition3.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(partition|package|rectangle|card|group)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(partition|package|rectangle|card|group)&quot;), //
 <span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional(//
 						new RegexConcat( //
 <span class="fc" id="L75">								color(&quot;BACK1&quot;).getRegex(), //</span>
 <span class="fc" id="L76">								RegexLeaf.spaceOneOrMore())), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([%g][^%g]+[%g]|.*?)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%g][^%g]+[%g]|.*?)&quot;), //
 				new RegexOptional(//
 						new RegexConcat( //
 <span class="fc" id="L80">								RegexLeaf.spaceOneOrMore(), //</span>

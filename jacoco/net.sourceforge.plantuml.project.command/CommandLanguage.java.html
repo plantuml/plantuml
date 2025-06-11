@@ -55,7 +55,7 @@ public class CommandLanguage extends SingleLineCommand2&lt;GanttDiagram&gt; {
 <span class="fc" id="L55">		return RegexConcat.build(CommandLanguage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;language&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;LANG&quot;, &quot;(\\w+)&quot;), //
+				new RegexLeaf(1, &quot;LANG&quot;, &quot;(\\w+)&quot;), //
 <span class="fc" id="L59">				RegexLeaf.end());</span>
 	}
 

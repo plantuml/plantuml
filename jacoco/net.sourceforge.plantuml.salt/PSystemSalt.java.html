@@ -170,7 +170,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	private List&lt;String&gt; manageSprite() {
 
-<span class="fc" id="L173">		final Command&lt;WithSprite&gt; cmd = new CommandFactorySprite().createMultiLine(false);</span>
+<span class="fc" id="L173">		final Command&lt;WithSprite&gt; cmd = CommandFactorySprite.ME.createMultiLine(false);</span>
 
 <span class="fc" id="L175">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L176" title="All 2 branches covered.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>

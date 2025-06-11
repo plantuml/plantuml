@@ -55,7 +55,7 @@ public class CommandAtPlayer extends SingleLineCommand2&lt;TimingDiagram&gt; {
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L56">		return RegexConcat.build(CommandAtPlayer.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;@&quot;), //
-				new RegexLeaf(&quot;PLAYER&quot;, CommandTimeMessage.PLAYER_CODE), //
+				new RegexLeaf(1, &quot;PLAYER&quot;, CommandTimeMessage.PLAYER_CODE), //
 <span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L60">				RegexLeaf.end());</span>
 	}

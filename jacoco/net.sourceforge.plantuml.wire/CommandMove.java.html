@@ -52,16 +52,16 @@ public class CommandMove extends SingleLineCommand2&lt;WireDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L54">		return RegexConcat.build(CommandMove.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;INDENT&quot;, &quot;([\\s\\t]*)&quot;), //
+				new RegexLeaf(1, &quot;INDENT&quot;, &quot;([\\s\\t]*)&quot;), //
 				new RegexLeaf(&quot;move&quot;), //
 <span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 <span class="nc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;X&quot;, &quot;(-?\\d+)&quot;), //
+				new RegexLeaf(1, &quot;X&quot;, &quot;(-?\\d+)&quot;), //
 <span class="nc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;,&quot;), //
 <span class="nc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;Y&quot;, &quot;(-?\\d+)&quot;), //
+				new RegexLeaf(1, &quot;Y&quot;, &quot;(-?\\d+)&quot;), //
 <span class="nc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\)&quot;), //
 <span class="nc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>

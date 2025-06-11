@@ -60,21 +60,22 @@ public class CommandAutonumberIncrement extends SingleLineCommand2&lt;SequenceDi
 				new RegexOptional( //
 						new RegexConcat( //
 <span class="fc" id="L62">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;POS&quot;, &quot;([A-Za-z])&quot;) //
+								new RegexLeaf(1, &quot;POS&quot;, &quot;([A-Za-z])&quot;) //
 						)), //
 <span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L70">		final String position = arg.get(&quot;POS&quot;, 0);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (position == null) {</span>
-<span class="nc" id="L72">			diagram.getAutoNumber().incrementIntermediate();</span>
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L71">		final String position = arg.get(&quot;POS&quot;, 0);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (position == null) {</span>
+<span class="nc" id="L73">			diagram.getAutoNumber().incrementIntermediate();</span>
 		} else {
-<span class="nc" id="L74">			final int pos = StringUtils.goLowerCase(position.charAt(0)) - 'a';</span>
-<span class="nc" id="L75">			diagram.getAutoNumber().incrementIntermediate(pos);</span>
+<span class="nc" id="L75">			final int pos = StringUtils.goLowerCase(position.charAt(0)) - 'a';</span>
+<span class="nc" id="L76">			diagram.getAutoNumber().incrementIntermediate(pos);</span>
 		}
-<span class="nc" id="L77">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
 	}
 
 }

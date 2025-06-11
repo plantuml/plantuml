@@ -53,11 +53,11 @@ public class CommandLink extends SingleLineCommand2&lt;NwDiagram&gt; {
 	static IRegex getRegexConcat() {
 <span class="fc" id="L54">		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //</span>
 <span class="fc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME1&quot;, &quot;([%pLN_]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME1&quot;, &quot;([%pLN_]+)&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;--&quot;), //
 <span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME2&quot;, &quot;([%pLN_]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME2&quot;, &quot;([%pLN_]+)&quot;), //
 <span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L62">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
 	}

@@ -73,11 +73,11 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	private IRegex toRegexE() {
 <span class="fc" id="L74">		return new RegexConcat( //</span>
 				new RegexLeaf(&quot;[dD]\\+&quot;), //
-				new RegexLeaf(&quot;ECOUNT1&quot;, &quot;([\\d]+)&quot;), //
+				new RegexLeaf(1, &quot;ECOUNT1&quot;, &quot;([\\d]+)&quot;), //
 <span class="fc" id="L77">				Words.exactly(Words.TO), //</span>
 <span class="fc" id="L78">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;[dD]\\+&quot;), //
-				new RegexLeaf(&quot;ECOUNT2&quot;, &quot;([\\d]+)&quot;) //
+				new RegexLeaf(1, &quot;ECOUNT2&quot;, &quot;([\\d]+)&quot;) //
 		);
 	}
 
@@ -86,7 +86,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 <span class="fc" id="L86">				TimeResolution.toRegexB_YYYY_MM_DD(&quot;BYEAR3&quot;, &quot;BMONTH3&quot;, &quot;BDAY3&quot;), //</span>
 <span class="fc" id="L87">				Words.exactly(Words.AND), //</span>
 <span class="fc" id="L88">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;COUNT_AND&quot;, &quot;([\\d]+)&quot;), //
+				new RegexLeaf(1, &quot;COUNT_AND&quot;, &quot;([\\d]+)&quot;), //
 <span class="fc" id="L90">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;days?&quot;) //
 
@@ -97,7 +97,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 <span class="fc" id="L97">		return new RegexConcat( //</span>
 				new RegexLeaf(&quot;then&quot;), //
 <span class="fc" id="L99">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;COUNT_THEN&quot;, &quot;([\\d]+)&quot;), //
+				new RegexLeaf(1, &quot;COUNT_THEN&quot;, &quot;([\\d]+)&quot;), //
 <span class="fc" id="L101">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;days?&quot;) //
 

@@ -50,11 +50,11 @@ import net.sourceforge.plantuml.timingdiagram.TimingFormat;
 
 	public static IRegex expressionAtWithoutArobase(String name) {
 <span class="fc" id="L52">		return new RegexOr( //</span>
-				new RegexLeaf(name + &quot;CODE&quot;, &quot;:([%pLN_.]+)([-+][.\\d]+)?&quot;), //
-				new RegexLeaf(name + &quot;DATE&quot;, &quot;(\\d+)/(\\d+)/(\\d+)&quot;), //
-				new RegexLeaf(name + &quot;HOUR&quot;, &quot;(\\d+):(\\d+):(\\d+)&quot;), //
-				new RegexLeaf(name + &quot;DIGIT&quot;, &quot;(\\+?)(-?\\d+\\.?\\d*)&quot;), //
-				new RegexLeaf(name + &quot;CLOCK&quot;, &quot;([%pLN_.@]+)\\*(\\d+)&quot;));
+				new RegexLeaf(2, name + &quot;CODE&quot;, &quot;:([%pLN_.]+)([-+][.\\d]+)?&quot;), //
+				new RegexLeaf(3, name + &quot;DATE&quot;, &quot;(\\d+)/(\\d+)/(\\d+)&quot;), //
+				new RegexLeaf(3, name + &quot;HOUR&quot;, &quot;(\\d+):(\\d+):(\\d+)&quot;), //
+				new RegexLeaf(2, name + &quot;DIGIT&quot;, &quot;(\\+?)(-?\\d+\\.?\\d*)&quot;), //
+				new RegexLeaf(2, name + &quot;CLOCK&quot;, &quot;([%pLN_.@]+)\\*(\\d+)&quot;));
 	}
 
 	public static IRegex expressionAtWithArobase(String name) {

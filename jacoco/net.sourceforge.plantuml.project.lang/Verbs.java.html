@@ -51,13 +51,13 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 <span class="fc" id="L51">	public static IRegex isDisplayedAs = new RegexLeaf(&quot;is[%s]+displayed[%s]+as&quot;);</span>
 <span class="fc" id="L52">	public static IRegex isOff = new RegexLeaf(&quot;is[%s]+off&quot;);</span>
 <span class="fc" id="L53">	public static IRegex isOn = new RegexLeaf(&quot;is[%s]+on&quot;);</span>
-<span class="fc" id="L54">	public static IRegex isOrAre = new RegexLeaf(&quot;(is|are)&quot;);</span>
-<span class="fc" id="L55">	public static IRegex isOrAreNamed = new RegexLeaf(&quot;(is|are)[%s]+named&quot;);</span>
+<span class="fc" id="L54">	public static IRegex isOrAre = new RegexLeaf(1, &quot;(is|are)&quot;);</span>
+<span class="fc" id="L55">	public static IRegex isOrAreNamed = new RegexLeaf(1, &quot;(is|are)[%s]+named&quot;);</span>
 <span class="fc" id="L56">	public static IRegex just = new RegexLeaf(&quot;just&quot;);</span>
 <span class="fc" id="L57">	public static IRegex linksTo = new RegexLeaf(&quot;links[%s]+to&quot;);</span>
 <span class="fc" id="L58">	public static IRegex occurs = new RegexLeaf(&quot;occurs&quot;);</span>
 <span class="fc" id="L59">	public static IRegex pauses = new RegexLeaf(&quot;pauses&quot;);</span>
-<span class="fc" id="L60">	public static IRegex requires = new RegexLeaf(&quot;(lasts|requires)&quot;);</span>
+<span class="fc" id="L60">	public static IRegex requires = new RegexLeaf(1, &quot;(lasts|requires)&quot;);</span>
 <span class="fc" id="L61">	public static IRegex starts = new RegexLeaf(&quot;starts&quot;);</span>
 <span class="fc" id="L62">	public static IRegex worksOn = new RegexLeaf(&quot;works[%s]+on&quot;);</span>
 

@@ -78,29 +78,29 @@ public class CommandCreateClass extends SingleLineCommand2&lt;ClassDiagram&gt; {
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L80">		return RegexConcat.build(CommandCreateClass.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, //
-						&quot;(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception|metaclass|stereotype)&quot;), //
+				new RegexLeaf(1, //
+						&quot;TYPE&quot;, &quot;(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception|metaclass|stereotype)&quot;), //
 <span class="fc" id="L83">				RegexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L84">				NameAndCodeParser.nameAndCodeForClassWithGeneric(), //</span>
 <span class="fc" id="L85">				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),</span>
-						new RegexLeaf(&quot;GENERIC&quot;, &quot;\\&lt;(&quot; + GenericRegexProducer.PATTERN + &quot;)\\&gt;&quot;))), //
+						new RegexLeaf(1, &quot;GENERIC&quot;, &quot;\\&lt;(&quot; + GenericRegexProducer.PATTERN + &quot;)\\&gt;&quot;))), //
 <span class="fc" id="L87">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L88">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L88">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L89">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L90">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L90">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L91">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L93">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L94">				color().getRegex(), //</span>
 <span class="fc" id="L95">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat(new RegexLeaf(&quot;##&quot;),
-						new RegexLeaf(&quot;LINECOLOR&quot;, &quot;(?:\\[(dotted|dashed|bold)\\])?(\\w+)?&quot;))), //
+						new RegexLeaf(2, &quot;LINECOLOR&quot;, &quot;(?:\\[(dotted|dashed|bold)\\])?(\\w+)?&quot;))), //
 <span class="fc" id="L98">				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),</span>
-						new RegexLeaf(&quot;EXTENDS&quot;,
-								&quot;(extends)[%s]+(&quot; + CommandCreateClassMultilines.CODES + &quot;|[%g]([^%g]+)[%g])&quot;))), //
+						new RegexLeaf(3,
+								&quot;EXTENDS&quot;, &quot;(extends)[%s]+(&quot; + CommandCreateClassMultilines.CODES + &quot;|[%g]([^%g]+)[%g])&quot;))), //
 <span class="fc" id="L101">				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),</span>
-						new RegexLeaf(&quot;IMPLEMENTS&quot;,
-								&quot;(implements)[%s]+(&quot; + CommandCreateClassMultilines.CODES + &quot;|[%g]([^%g]+)[%g])&quot;))), //
+						new RegexLeaf(3,
+								&quot;IMPLEMENTS&quot;, &quot;(implements)[%s]+(&quot; + CommandCreateClassMultilines.CODES + &quot;|[%g]([^%g]+)[%g])&quot;))), //
 <span class="fc" id="L104">				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\{&quot;),</span>
 <span class="fc" id="L105">						RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\}&quot;))), //</span>
 <span class="fc" id="L106">				RegexLeaf.end());</span>

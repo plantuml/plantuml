@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -51,26 +50,26 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	private final CircleStart circle;
 
 	public StyleSignatureBasic getDefaultStyleDefinitionCircle() {
-<span class="fc" id="L54">		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getUmlDiagramType().getStyleName(),</span>
+<span class="fc" id="L53">		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getUmlDiagramType().getStyleName(),</span>
 				SName.circle, SName.start);
 	}
 
 	public EntityImageCircleStart(Entity entity) {
-<span class="fc" id="L59">		super(entity);</span>
-<span class="fc" id="L60">		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L61">		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L58">		super(entity);</span>
+<span class="fc" id="L59">		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L60">		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());</span>
+<span class="fc" id="L61">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L65">		return circle.calculateDimension(stringBounder);</span>
+<span class="fc" id="L64">		return circle.calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L69">		circle.drawU(ug);</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L68">		circle.drawU(ug);</span>
+<span class="fc" id="L69">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L73">		return ShapeType.CIRCLE;</span>
+<span class="fc" id="L72">		return ShapeType.CIRCLE;</span>
 	}
 
 }

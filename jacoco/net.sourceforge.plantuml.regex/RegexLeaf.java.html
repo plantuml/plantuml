@@ -55,109 +55,120 @@ public class RegexLeaf implements IRegex {
 <span class="fc" id="L55">	private int count = -1;</span>
 
 	public RegexLeaf(String regex) {
-<span class="fc" id="L58">		this(null, regex);</span>
+<span class="fc" id="L58">		this(0, null, regex);</span>
 <span class="fc" id="L59">	}</span>
 
-<span class="fc" id="L61">	public RegexLeaf(String name, String regex) {</span>
-<span class="fc" id="L62">		this.pattern = regex;</span>
-<span class="fc" id="L63">		this.name = name;</span>
-<span class="fc" id="L64">	}</span>
+	public RegexLeaf(int count, String regex) {
+<span class="fc" id="L62">		this(count, null, regex);</span>
+<span class="fc" id="L63">	}</span>
+
+<span class="fc" id="L65">	public RegexLeaf(int count, String name, String regex) {</span>
+<span class="fc" id="L66">		this.pattern = regex;</span>
+<span class="fc" id="L67">		this.name = name;</span>
+<span class="fc" id="L68">		this.count = count;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		assert internalSlowCount() == count : name; // name + &quot; internal=&quot; + internalSlowCount() + &quot; count=&quot; + count</span>
+//		if (internalSlowCount() != count) {
+//			Log.logStackTrace(name + &quot; internal=&quot; + internalSlowCount() + &quot; count=&quot; + count);
+//		}
+<span class="fc" id="L73">	}</span>
 
 	public static RegexLeaf spaceZeroOrMore() {
-<span class="fc" id="L67">		return new RegexLeaf(&quot;[%s]*&quot;);</span>
+<span class="fc" id="L76">		return new RegexLeaf(&quot;[%s]*&quot;);</span>
 	}
 
 	public static RegexLeaf spaceOneOrMore() {
-<span class="fc" id="L71">		return new RegexLeaf(&quot;[%s]+&quot;);</span>
+<span class="fc" id="L80">		return new RegexLeaf(&quot;[%s]+&quot;);</span>
 	}
 
 	public static RegexLeaf start() {
-<span class="fc" id="L75">		return START;</span>
+<span class="fc" id="L84">		return START;</span>
 	}
 
 	public static RegexLeaf end() {
-<span class="fc" id="L79">		return END;</span>
+<span class="fc" id="L88">		return END;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L84">		return super.toString() + &quot; &quot; + name + &quot; &quot; + pattern;</span>
+<span class="nc" id="L93">		return super.toString() + &quot; &quot; + name + &quot; &quot; + pattern;</span>
 	}
 
 	public String getName() {
-<span class="nc" id="L88">		return name;</span>
+<span class="nc" id="L97">		return name;</span>
 	}
 
-	public String getPattern() {
-<span class="fc" id="L92">		return pattern;</span>
+	@Override
+	public String getPatternAsString() {
+<span class="fc" id="L102">		return pattern;</span>
 	}
 
 	public int count() {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (count == -1)</span>
-<span class="fc" id="L97">			count = Pattern2.cmpile(pattern).matcher(&quot;&quot;).groupCount();</span>
+<span class="fc" id="L106">		return count;</span>
+	}
 
-<span class="fc" id="L99">		return count;</span>
+	private int internalSlowCount() {
+<span class="fc" id="L110">		return Pattern2.compileInternal(pattern).matcher(&quot;&quot;).groupCount();</span>
 	}
 
 	public Map&lt;String, RegexPartialMatch&gt; createPartialMatch(Iterator&lt;String&gt; it) {
-<span class="fc" id="L103">		final RegexPartialMatch m = new RegexPartialMatch(name);</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int i = 0; i &lt; count(); i++) {</span>
-<span class="fc" id="L105">			final String group = it.next();</span>
-<span class="fc" id="L106">			m.add(group);</span>
+<span class="fc" id="L114">		final RegexPartialMatch m = new RegexPartialMatch(name);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (int i = 0; i &lt; count(); i++) {</span>
+<span class="fc" id="L116">			final String group = it.next();</span>
+<span class="fc" id="L117">			m.add(group);</span>
 		}
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (name == null)</span>
-<span class="fc" id="L109">			return Collections.emptyMap();</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (name == null)</span>
+<span class="fc" id="L120">			return Collections.emptyMap();</span>
 
-<span class="fc" id="L111">		return Collections.singletonMap(name, m);</span>
+<span class="fc" id="L122">		return Collections.singletonMap(name, m);</span>
 	}
 
 	public boolean match(StringLocated full) {
-<span class="nc" id="L115">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L126">		throw new UnsupportedOperationException();</span>
 	}
 
 	public RegexResult matcher(String full) {
-<span class="nc" id="L119">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L130">		throw new UnsupportedOperationException();</span>
 	}
 
 	// static private final Set&lt;String&gt; UNKNOWN = new HashSet&lt;&gt;();
 
-<span class="fc" id="L124">	static private final Pattern p1 = Pattern.compile(</span>
+<span class="fc" id="L135">	static private final Pattern p1 = Pattern.compile(</span>
 			&quot;^\\(?((?:[-0A-Za-z_!:@;/=,\&quot;\' ][?+*]?|\\\\[b$(){}&lt;&gt;|*.+^\\[\\]][?+*]?|\\.\\*|\\.\\+)+)(?:\\)\\+|\\))?$&quot;);
 
-<span class="fc" id="L127">	static private final Pattern p2 = Pattern.compile(&quot;^\\([-?a-z ]+(\\|[-?a-z ]+)+\\)$&quot;);</span>
+<span class="fc" id="L138">	static private final Pattern p2 = Pattern.compile(&quot;^\\([-?a-z ]+(\\|[-?a-z ]+)+\\)$&quot;);</span>
 
-<span class="fc" id="L129">	static private final Pattern p3 = Pattern.compile(&quot;^\\(?\\[[-=.~]+\\]\\+\\)?$&quot;);</span>
+<span class="fc" id="L140">	static private final Pattern p3 = Pattern.compile(&quot;^\\(?\\[[-=.~]+\\]\\+\\)?$&quot;);</span>
 
 	private static long getSignatureP2(String s) {
-<span class="fc" id="L132">		long result = -1L;</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (StringTokenizer st = new StringTokenizer(s, &quot;()|&quot;); st.hasMoreTokens();) {</span>
-<span class="fc" id="L134">			final String val = st.nextToken();</span>
-<span class="fc" id="L135">			result = result &amp; FoxSignature.getFoxSignatureFromRegex(val);</span>
-<span class="fc" id="L136">		}</span>
-<span class="fc" id="L137">		return result;</span>
+<span class="fc" id="L143">		long result = -1L;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		for (StringTokenizer st = new StringTokenizer(s, &quot;()|&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L145">			final String val = st.nextToken();</span>
+<span class="fc" id="L146">			result = result &amp; FoxSignature.getFoxSignatureFromRegex(val);</span>
+<span class="fc" id="L147">		}</span>
+<span class="fc" id="L148">		return result;</span>
 	}
 
-<span class="fc" id="L140">	private static final Pattern PATTERN_TO_REMOVE = Pattern.compile(&quot;\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?&quot;);</span>
-
+<span class="fc" id="L151">	private static final Pattern PATTERN_TO_REMOVE = Pattern</span>
+<span class="fc" id="L152">			.compile(&quot;\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?&quot;);</span>
 
 	public long getFoxSignature() {
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]+&quot;))</span>
-<span class="fc" id="L145">			return FoxSignature.getSpecialSpaces();</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]*&quot;))</span>
-<span class="fc" id="L147">			return 0;</span>
-<span class="fc" id="L148">		final String pattern2 = PATTERN_TO_REMOVE.matcher(pattern).replaceAll(&quot;&quot;);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]+&quot;))</span>
+<span class="fc" id="L156">			return FoxSignature.getSpecialSpaces();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (pattern.equals(&quot;[%s]*&quot;))</span>
+<span class="fc" id="L158">			return 0;</span>
+<span class="fc" id="L159">		final String pattern2 = PATTERN_TO_REMOVE.matcher(pattern).replaceAll(&quot;&quot;);</span>
 
-<span class="fc" id="L150">		final Matcher m1 = p1.matcher(pattern2);</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (m1.matches())</span>
-<span class="fc" id="L152">			return FoxSignature.getFoxSignatureFromRegex(m1.group(1));</span>
+<span class="fc" id="L161">		final Matcher m1 = p1.matcher(pattern2);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (m1.matches())</span>
+<span class="fc" id="L163">			return FoxSignature.getFoxSignatureFromRegex(m1.group(1));</span>
 
-<span class="fc" id="L154">		final Matcher m2 = p2.matcher(pattern2);</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (m2.matches())</span>
-<span class="fc" id="L156">			return getSignatureP2(pattern2);</span>
+<span class="fc" id="L165">		final Matcher m2 = p2.matcher(pattern2);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (m2.matches())</span>
+<span class="fc" id="L167">			return getSignatureP2(pattern2);</span>
 
-<span class="fc" id="L158">		final Matcher m3 = p3.matcher(pattern2);</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (m3.matches())</span>
-<span class="fc" id="L160">			return FoxSignature.getSpecial1();</span>
+<span class="fc" id="L169">		final Matcher m3 = p3.matcher(pattern2);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (m3.matches())</span>
+<span class="fc" id="L171">			return FoxSignature.getSpecial1();</span>
 
 //		synchronized (UNKNOWN) {
 //			final boolean changed = UNKNOWN.add(pattern2);
@@ -169,7 +180,7 @@ public class RegexLeaf implements IRegex {
 //				// Thread.dumpStack();
 //			}
 //		}
-<span class="fc" id="L172">		return 0;</span>
+<span class="fc" id="L183">		return 0;</span>
 	}
 
 }

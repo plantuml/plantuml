@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L45">public class ComplementTask implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L48">		return new RegexLeaf(&quot;COMPLEMENT&quot; + suffix, SubjectTask.REGEX_TASK_CODE);</span>
+<span class="fc" id="L48">		return new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, SubjectTask.REGEX_TASK_CODE);</span>
 	}
 
 	public Failable&lt;Task&gt; getMe(GanttDiagram gantt, RegexResult arg, String suffix) {

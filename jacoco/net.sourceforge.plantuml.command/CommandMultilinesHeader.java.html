@@ -41,43 +41,40 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesHeader extends CommandMultilines&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L49">	public static final CommandMultilinesHeader ME = new CommandMultilinesHeader();</span>
+<span class="fc" id="L50">	public static final CommandMultilinesHeader ME = new CommandMultilinesHeader();</span>
 
 	private CommandMultilinesHeader() {
-<span class="fc" id="L52">		super(&quot;^(?:(left|right|center)?[%s]*)header$&quot;);</span>
-<span class="fc" id="L53">	}</span>
-
-	@Override
-	public String getPatternEnd() {
-<span class="fc" id="L57">		return &quot;^end[%s]?header$&quot;;</span>
-	}
+<span class="fc" id="L53">		super(Pattern2.cmpile(&quot;^(?:(left|right|center)?[%s]*)header$&quot;),</span>
+<span class="fc" id="L54">				Pattern2.cmpile(&quot;^end[%s]?header$&quot;));</span>
+<span class="fc" id="L55">	}</span>
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L62">		final LineLocation location = lines.getLocation();</span>
-<span class="nc" id="L63">		lines = lines.trim();</span>
-<span class="nc" id="L64">		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L66">			throw new IllegalStateException();</span>
+<span class="nc" id="L59">		final LineLocation location = lines.getLocation();</span>
+<span class="nc" id="L60">		lines = lines.trim();</span>
+<span class="nc" id="L61">		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L63">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L68">		final String align = m.group(1);</span>
-<span class="nc" id="L69">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L70">		final Display strings = lines.toDisplay();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
-<span class="nc" id="L72">			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (align == null)</span>
-<span class="nc" id="L74">				ha = FontParam.HEADER.getStyleDefinition(null)</span>
-<span class="nc" id="L75">						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();</span>
+<span class="nc" id="L65">		final String align = m.group(1);</span>
+<span class="nc" id="L66">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L67">		final Display strings = lines.toDisplay();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
+<span class="nc" id="L69">			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (align == null)</span>
+<span class="nc" id="L71">				ha = FontParam.HEADER.getStyleDefinition(null)</span>
+<span class="nc" id="L72">						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();</span>
 
-<span class="nc" id="L77">			diagram.updateHeader(location, strings, ha);</span>
-<span class="nc" id="L78">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L74">			diagram.updateHeader(location, strings, ha);</span>
+<span class="nc" id="L75">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L80">		return CommandExecutionResult.error(&quot;Empty header&quot;);</span>
+<span class="nc" id="L77">		return CommandExecutionResult.error(&quot;Empty header&quot;);</span>
 	}
 
 }

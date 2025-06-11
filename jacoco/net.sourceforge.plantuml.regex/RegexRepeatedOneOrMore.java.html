@@ -51,9 +51,9 @@ public class RegexRepeatedOneOrMore extends RegexComposed implements IRegex {
 <span class="fc" id="L51">	}</span>
 
 	@Override
-	protected String getFullSlow() {
+	public String getPatternAsString() {
 <span class="fc" id="L55">		final StringBuilder sb = new StringBuilder(&quot;(&quot;);</span>
-<span class="fc" id="L56">		sb.append(partials().get(0).getPattern());</span>
+<span class="fc" id="L56">		sb.append(partials().get(0).getPatternAsString());</span>
 <span class="fc" id="L57">		sb.append(&quot;)+&quot;);</span>
 <span class="fc" id="L58">		return sb.toString();</span>
 	}

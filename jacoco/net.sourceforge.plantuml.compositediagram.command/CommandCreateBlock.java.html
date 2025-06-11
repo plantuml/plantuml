@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateBlock extends SingleLineCommand2&lt;CompositeDiagram&gt; {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public CommandCreateBlock() {
 <span class="nc" id="L57">		super(getRegexConcat());</span>
@@ -63,28 +63,30 @@ public class CommandCreateBlock extends SingleLineCommand2&lt;CompositeDiagram&g
 <span class="nc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;DISPLAY&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+								new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
 <span class="nc" id="L67">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="nc" id="L69">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
-<span class="nc" id="L71">				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), RegexLeaf.end()); //</span>
+<span class="nc" id="L71">				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L76">		String display = arg.get(&quot;DISPLAY&quot;, 0);</span>
-<span class="nc" id="L77">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L78">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (display == null)</span>
-<span class="nc" id="L80">			display = quark.getName();</span>
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L77">		String display = arg.get(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L78">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L79">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (display == null)</span>
+<span class="nc" id="L81">			display = quark.getName();</span>
 
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L83">			return CommandExecutionResult.error(&quot;Already exists &quot; + quark.getName());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L84">			return CommandExecutionResult.error(&quot;Already exists &quot; + quark.getName());</span>
 
-<span class="nc" id="L85">		final Entity ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.BLOCK, null);</span>
+<span class="nc" id="L86">		final Entity ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.BLOCK,</span>
+				null);
 
-<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L89">		return CommandExecutionResult.ok();</span>
 	}
 
 }

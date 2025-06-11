@@ -63,24 +63,24 @@ public class CommandEBnfSingleLine extends SingleLineCommand2&lt;PSystemEbnf&gt;
 						new RegexConcat( //
 <span class="fc" id="L64">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;\\(\\*&quot;), //
-								new RegexLeaf(&quot;COMMENTA&quot;, &quot;(.*[^%s].*)&quot;), //
+								new RegexLeaf(1, &quot;COMMENTA&quot;, &quot;(.*[^%s].*)&quot;), //
 								new RegexLeaf(&quot;\\*\\)&quot;), //
 <span class="fc" id="L68">								RegexLeaf.spaceZeroOrMore())), //</span>
 
-				new RegexLeaf(&quot;ID&quot;, &quot;([%pLN_][-%pLN_]*)&quot;), //
+				new RegexLeaf(1, &quot;ID&quot;, &quot;([%pLN_][-%pLN_]*)&quot;), //
 
 				new RegexOptional( //
 						new RegexConcat( //
 <span class="fc" id="L74">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;\\(\\*&quot;), //
-								new RegexLeaf(&quot;COMMENTB&quot;, &quot;(.*[^%s].*)&quot;), //
+								new RegexLeaf(1, &quot;COMMENTB&quot;, &quot;(.*[^%s].*)&quot;), //
 								new RegexLeaf(&quot;\\*\\)&quot;), //
 <span class="fc" id="L78">								RegexLeaf.spaceZeroOrMore())), //</span>
 
 <span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;EQUALS&quot;, &quot;(=)&quot;), //
+				new RegexLeaf(1, &quot;EQUALS&quot;, &quot;(=)&quot;), //
 <span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;LINE&quot;, &quot;(.*;)&quot;), //
+				new RegexLeaf(1, &quot;LINE&quot;, &quot;(.*;)&quot;), //
 <span class="fc" id="L84">				RegexLeaf.end());</span>
 	}
 

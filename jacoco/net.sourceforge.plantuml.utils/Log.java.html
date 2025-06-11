@@ -147,15 +147,19 @@ import net.sourceforge.plantuml.ProgressBar;
 <span class="nc" id="L147">		}</span>
 <span class="nc" id="L148">	}</span>
 
-	public static synchronized void logStackTrace() {
-<span class="nc" id="L151">		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {</span>
-<span class="nc" id="L152">			final Exception e = new Exception(&quot;StackTrace&quot;);</span>
-<span class="nc" id="L153">			e.fillInStackTrace();</span>
-<span class="nc" id="L154">			e.printStackTrace(pw);</span>
-<span class="nc" id="L155">		} catch (IOException ex) {</span>
-<span class="nc" id="L156">			ex.printStackTrace();</span>
-<span class="nc" id="L157">		}</span>
-<span class="nc" id="L158">	}</span>
+	public static synchronized void logStackTrace(String s) {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (firstCall) {</span>
+<span class="nc" id="L152">			deletePerfLogFile();</span>
+<span class="nc" id="L153">			firstCall = false;</span>
+		}
+<span class="nc" id="L155">		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {</span>
+<span class="nc" id="L156">			final Exception e = new Exception(&quot;StackTrace &quot; + s);</span>
+<span class="nc" id="L157">			e.fillInStackTrace();</span>
+<span class="nc" id="L158">			e.printStackTrace(pw);</span>
+<span class="nc" id="L159">		} catch (IOException ex) {</span>
+<span class="nc" id="L160">			ex.printStackTrace();</span>
+<span class="nc" id="L161">		}</span>
+<span class="nc" id="L162">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

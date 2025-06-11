@@ -53,9 +53,9 @@ public class CommandMindMapRoot extends SingleLineCommand2&lt;MindMapDiagram&gt;
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L55">		return RegexConcat.build(CommandMindMapRoot.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(0)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(0)&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L58">				new RegexLeaf(&quot;LABEL&quot;, &quot;([^%s].*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L58">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;([^%s].*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public class CommandRegexfSingleLine extends SingleLineCommand2&lt;PSystemRegex&
 	static IRegex getRegexConcat() {
 <span class="nc" id="L59">		return RegexConcat.build(CommandRegexfSingleLine.class.getName(), RegexLeaf.start(), //</span>
 <span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;LINE&quot;, &quot;(.*)&quot;), //
+				new RegexLeaf(1, &quot;LINE&quot;, &quot;(.*)&quot;), //
 <span class="nc" id="L62">				RegexLeaf.end());</span>
 	}
 

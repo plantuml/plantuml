@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.style.ISkinParam;
 
 public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
@@ -49,39 +48,39 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 	final private static int MIN_HEIGHT = 40;
 
 	public EntityImageStateEmptyDescription(Entity entity) {
-<span class="nc" id="L52">		super(entity);</span>
+<span class="nc" id="L51">		super(entity);</span>
 
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L53">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L57">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L58">		final XDimension2D result = dim.delta(MARGIN * 2);</span>
-<span class="nc" id="L59">		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);</span>
+<span class="nc" id="L56">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L57">		final XDimension2D result = dim.delta(MARGIN * 2);</span>
+<span class="nc" id="L58">		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L64">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L63">			ug.startUrl(url);</span>
 
-<span class="nc" id="L66">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L67">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L68">		final XDimension2D dimDesc = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L65">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L66">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L67">		final XDimension2D dimDesc = title.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L70">		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());</span>
+<span class="nc" id="L69">		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());</span>
 
-<span class="nc" id="L72">		ug = applyColor(ug);</span>
-<span class="nc" id="L73">		ug = ug.apply(stroke);</span>
+<span class="nc" id="L71">		ug = applyColor(ug);</span>
+<span class="nc" id="L72">		ug = ug.apply(stroke);</span>
 
-<span class="nc" id="L75">		ug.draw(getShape(dimTotal));</span>
+<span class="nc" id="L74">		ug.draw(getShape(dimTotal));</span>
 
-<span class="nc" id="L77">		final double xDesc = (dimTotal.getWidth() - dimDesc.getWidth()) / 2;</span>
-<span class="nc" id="L78">		final double yDesc = (dimTotal.getHeight() - dimDesc.getHeight()) / 2;</span>
-<span class="nc" id="L79">		title.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
+<span class="nc" id="L76">		final double xDesc = (dimTotal.getWidth() - dimDesc.getWidth()) / 2;</span>
+<span class="nc" id="L77">		final double yDesc = (dimTotal.getHeight() - dimDesc.getHeight()) / 2;</span>
+<span class="nc" id="L78">		title.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L82">			ug.closeUrl();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L81">			ug.closeUrl();</span>
 
-<span class="nc" id="L84">	}</span>
+<span class="nc" id="L83">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

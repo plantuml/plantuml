@@ -73,53 +73,53 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2&lt;AbstractEnt
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L75">		return RegexConcat.build(CommandPackageWithUSymbol.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;SYMBOL&quot;,
+				new RegexLeaf(1, &quot;SYMBOL&quot;,
 						&quot;(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|action|process|database|storage|component|card|queue|stack)&quot;), //
 <span class="fc" id="L78">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOr(//
 						new RegexConcat( //
-								new RegexLeaf(&quot;DISPLAY1&quot;, &quot;([%g].+?[%g])&quot;), //
+								new RegexLeaf(1, &quot;DISPLAY1&quot;, &quot;([%g].+?[%g])&quot;), //
 								new RegexOptional( //
 										new RegexConcat( //
 <span class="fc" id="L84">												RegexLeaf.spaceOneOrMore(), //</span>
-												new RegexLeaf(&quot;STEREOTYPE1&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+												new RegexLeaf(1, &quot;STEREOTYPE1&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
 										)), //
 <span class="fc" id="L87">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L89">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE1&quot;, &quot;([^#%s{}]+)&quot;) //
+								new RegexLeaf(1, &quot;CODE1&quot;, &quot;([^#%s{}]+)&quot;) //
 						), //
 						new RegexConcat( //
-								new RegexLeaf(&quot;CODE2&quot;, &quot;([^#%s{}%g]+)&quot;), //
+								new RegexLeaf(1, &quot;CODE2&quot;, &quot;([^#%s{}%g]+)&quot;), //
 								new RegexOptional( //
 										new RegexConcat( //
 <span class="fc" id="L96">												RegexLeaf.spaceOneOrMore(), //</span>
-												new RegexLeaf(&quot;STEREOTYPE2&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+												new RegexLeaf(1, &quot;STEREOTYPE2&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
 										)), //
 <span class="fc" id="L99">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L101">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;DISPLAY2&quot;, &quot;([%g].+?[%g])&quot;) //
+								new RegexLeaf(1, &quot;DISPLAY2&quot;, &quot;([%g].+?[%g])&quot;) //
 						), //
 						new RegexConcat( //
-								new RegexLeaf(&quot;DISPLAY3&quot;, &quot;([^#%s{}%g]+)&quot;), //
+								new RegexLeaf(1, &quot;DISPLAY3&quot;, &quot;([^#%s{}%g]+)&quot;), //
 								new RegexOptional( //
 										new RegexConcat( //
 <span class="fc" id="L108">												RegexLeaf.spaceOneOrMore(), //</span>
-												new RegexLeaf(&quot;STEREOTYPE3&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
+												new RegexLeaf(1, &quot;STEREOTYPE3&quot;, &quot;(\\&lt;\\&lt;.+\\&gt;\\&gt;)&quot;) //
 										)), //
 <span class="fc" id="L111">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L113">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE3&quot;, &quot;([^#%s{}%g]+)&quot;) //
+								new RegexLeaf(1, &quot;CODE3&quot;, &quot;([^#%s{}%g]+)&quot;) //
 						), //
-						new RegexLeaf(&quot;CODE8&quot;, &quot;([%g][^%g]+[%g])&quot;), //
-						new RegexLeaf(&quot;CODE9&quot;, &quot;([^#%s{}%g]*)&quot;) //
+						new RegexLeaf(1, &quot;CODE8&quot;, &quot;([%g][^%g]+[%g])&quot;), //
+						new RegexLeaf(1, &quot;CODE9&quot;, &quot;([^#%s{}%g]*)&quot;) //
 				), //
 <span class="fc" id="L119">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L120">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L120">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L121">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-<span class="fc" id="L122">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L122">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L123">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L125">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -133,8 +133,8 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2&lt;AbstractEnt
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L138">		final String codeArg = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;CODE&quot;, 0));</span>
 <span class="fc" id="L139">		final Quark&lt;Entity&gt; ident = diagram.quarkInContext(false,</span>
 <span class="pc bpc" id="L140" title="1 of 2 branches missed.">				diagram.cleanId(codeArg.length() == 0 ? diagram.getUniqueSequence(&quot;##&quot;) : codeArg));</span>
@@ -154,13 +154,13 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2&lt;AbstractEnt
 <span class="fc" id="L154">		final USymbol usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),</span>
 <span class="fc" id="L155">				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
 
-<span class="fc" id="L157">		final CommandExecutionResult status = diagram.gotoGroup(location, ident, Display.getWithNewlines(diagram.getPragma(), display),</span>
-				GroupType.PACKAGE, usymbol);
+<span class="fc" id="L157">		final CommandExecutionResult status = diagram.gotoGroup(location, ident,</span>
+<span class="fc" id="L158">				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE, usymbol);</span>
 <span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
 <span class="nc" id="L160">			return status;</span>
 
 <span class="fc" id="L162">		final Entity p = diagram.getCurrentGroup();</span>
-		
+
 <span class="fc" id="L164">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
 <span class="fc bfc" id="L165" title="All 2 branches covered.">		if (stereotype != null)</span>
 <span class="fc" id="L166">			p.setStereotype(Stereotype.build(stereotype, false));</span>

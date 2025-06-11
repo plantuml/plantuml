@@ -86,14 +86,14 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L88">		return RegexConcat.build(CommandArrow.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-				new RegexLeaf(&quot;ANCHOR&quot;, ANCHOR), //
+				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
+				new RegexLeaf(2, &quot;ANCHOR&quot;, ANCHOR), //
 				new RegexOr(&quot;PART1&quot;, //
-						new RegexLeaf(&quot;PART1CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
-						new RegexLeaf(&quot;PART1LONG&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-						new RegexLeaf(&quot;PART1LONGCODE&quot;, &quot;[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)&quot;), //
-						new RegexLeaf(&quot;PART1CODELONG&quot;, &quot;([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]&quot;)), //
-				new RegexLeaf(&quot;PART1ANCHOR&quot;, ANCHOR), //
+						new RegexLeaf(1, &quot;PART1CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
+						new RegexLeaf(1, &quot;PART1LONG&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+						new RegexLeaf(2, &quot;PART1LONGCODE&quot;, &quot;[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)&quot;), //
+						new RegexLeaf(2, &quot;PART1CODELONG&quot;, &quot;([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]&quot;)), //
+				new RegexLeaf(2, &quot;PART1ANCHOR&quot;, ANCHOR), //
 <span class="fc" id="L97">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexOr(&quot;ARROW_DRESSING1&quot;, //
 						new RegexLeaf(&quot;[%s][ox]&quot;), //
@@ -101,13 +101,13 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 						new RegexLeaf(&quot;(?:[%s][ox])?//?&quot;), //
 						new RegexLeaf(&quot;(?:[%s][ox])?\\\\\\\\?&quot;))), //
 				new RegexOr(new RegexConcat( //
-						new RegexLeaf(&quot;ARROW_BODYA1&quot;, &quot;(-+)&quot;), //
-<span class="fc" id="L105">						new RegexLeaf(&quot;ARROW_STYLE1&quot;, getColorOrStylePattern()), //</span>
-						new RegexLeaf(&quot;ARROW_BODYB1&quot;, &quot;(-*)&quot;)), //
+						new RegexLeaf(1, &quot;ARROW_BODYA1&quot;, &quot;(-+)&quot;), //
+<span class="fc" id="L105">						new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, getColorOrStylePattern()), //</span>
+						new RegexLeaf(1, &quot;ARROW_BODYB1&quot;, &quot;(-*)&quot;)), //
 						new RegexConcat( //
-								new RegexLeaf(&quot;ARROW_BODYA2&quot;, &quot;(-*)&quot;), //
-<span class="fc" id="L109">								new RegexLeaf(&quot;ARROW_STYLE2&quot;, getColorOrStylePattern()), //</span>
-								new RegexLeaf(&quot;ARROW_BODYB2&quot;, &quot;(-+)&quot;))), //
+								new RegexLeaf(1, &quot;ARROW_BODYA2&quot;, &quot;(-*)&quot;), //
+<span class="fc" id="L109">								new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, getColorOrStylePattern()), //</span>
+								new RegexLeaf(1, &quot;ARROW_BODYB2&quot;, &quot;(-+)&quot;))), //
 				new RegexOptional(new RegexOr(&quot;ARROW_DRESSING2&quot;, //
 						new RegexLeaf(&quot;_?&gt;&gt;?(?:[ox][%s]|\\(\\d+\\))?&quot;), //
 						new RegexLeaf(&quot;//?(?:[ox][%s])?&quot;), //
@@ -115,20 +115,20 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 						new RegexLeaf(&quot;[ox][%s]&quot;))), //
 <span class="fc" id="L116">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(&quot;PART2&quot;, //
-						new RegexLeaf(&quot;PART2CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
-						new RegexLeaf(&quot;PART2LONG&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-						new RegexLeaf(&quot;PART2LONGCODE&quot;, &quot;[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)&quot;), //
-						new RegexLeaf(&quot;PART2CODELONG&quot;, &quot;([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]&quot;)), //
-				new RegexLeaf(&quot;MULTICAST&quot;, &quot;((?:\\s&amp;\\s[%pLN_.@]+)*)&quot;), //
-				new RegexLeaf(&quot;PART2ANCHOR&quot;, ANCHOR), //
+						new RegexLeaf(1, &quot;PART2CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
+						new RegexLeaf(1, &quot;PART2LONG&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+						new RegexLeaf(2, &quot;PART2LONGCODE&quot;, &quot;[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)&quot;), //
+						new RegexLeaf(2, &quot;PART2CODELONG&quot;, &quot;([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]&quot;)), //
+				new RegexLeaf(1, &quot;MULTICAST&quot;, &quot;((?:\\s&amp;\\s[%pLN_.@]+)*)&quot;), //
+				new RegexLeaf(2, &quot;PART2ANCHOR&quot;, ANCHOR), //
 <span class="fc" id="L124">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;ACTIVATION&quot;, &quot;(?:(\\+\\+|\\*\\*|!!|--|--\\+\\+|\\+\\+--)?)&quot;), //
+				new RegexLeaf(1, &quot;ACTIVATION&quot;, &quot;(?:(\\+\\+|\\*\\*|!!|--|--\\+\\+|\\+\\+--)?)&quot;), //
 <span class="fc" id="L126">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;LIFECOLOR&quot;, &quot;(?:(#\\w+)?)&quot;), //
+				new RegexLeaf(1, &quot;LIFECOLOR&quot;, &quot;(?:(#\\w+)?)&quot;), //
 <span class="fc" id="L128">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L130">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;MESSAGE&quot;, &quot;(?::[%s]*(.*))?&quot;), //
+				new RegexLeaf(1, &quot;MESSAGE&quot;, &quot;(?::[%s]*(.*))?&quot;), //
 <span class="fc" id="L132">				RegexLeaf.end()).protectSize(2000);</span>
 	}
 

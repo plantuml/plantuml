@@ -35,10 +35,12 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -47,43 +49,42 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSpriteSvgMultiline extends CommandMultilines2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L50">	public static final CommandSpriteSvgMultiline ME = new CommandSpriteSvgMultiline();</span>
+<span class="fc" id="L52">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L53">			() -&gt; Pattern2.cmpile(&quot;(.*\\&lt;/svg\\&gt;)$&quot;));</span>
+
+<span class="fc" id="L55">	public static final CommandSpriteSvgMultiline ME = new CommandSpriteSvgMultiline();</span>
 
 	private CommandSpriteSvgMultiline() {
-<span class="fc" id="L53">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L59">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandSpriteSvgMultiline.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandSpriteSvgMultiline.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\$?&quot;), //
-				new RegexLeaf(&quot;NAME&quot;, &quot;([-%pLN_]+)&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;SVGSTART&quot;, &quot;(\\&lt;svg\\b.*)&quot;), //
-<span class="fc" id="L64">				RegexLeaf.end());</span>
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-%pLN_]+)&quot;), //
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;SVGSTART&quot;, &quot;(\\&lt;svg\\b.*)&quot;), //
+<span class="fc" id="L69">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L69">		return &quot;(.*\\&lt;/svg\\&gt;)$&quot;;</span>
-	}
+	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
 
-	@Override
-	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+<span class="nc" id="L76">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L77">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
+<span class="nc" id="L78">		lines = lines.subExtract(1, 0);</span>
 
-<span class="nc" id="L75">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L76">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
-<span class="nc" id="L77">		lines = lines.subExtract(1, 0);</span>
+<span class="nc" id="L80">		final StringBuilder svg = new StringBuilder(svgStart);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (StringLocated sl : lines)</span>
+<span class="nc" id="L82">			svg.append(sl.getString());</span>
 
-<span class="nc" id="L79">		final StringBuilder svg = new StringBuilder(svgStart);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (StringLocated sl : lines)</span>
-<span class="nc" id="L81">			svg.append(sl.getString());</span>
+<span class="nc" id="L84">		final SvgNanoParser nanoParser = new SvgNanoParser(svg.toString());</span>
+<span class="nc" id="L85">		system.addSprite(line0.get(&quot;NAME&quot;, 0), nanoParser);</span>
 
-<span class="nc" id="L83">		final SvgNanoParser nanoParser = new SvgNanoParser(svg.toString());</span>
-<span class="nc" id="L84">		system.addSprite(line0.get(&quot;NAME&quot;, 0), nanoParser);</span>
-
-<span class="nc" id="L86">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

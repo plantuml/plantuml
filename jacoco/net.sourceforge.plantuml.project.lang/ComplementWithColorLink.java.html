@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	public IRegex toRegex(String suffix) {
 <span class="fc" id="L48">		final String optionalStyle = &quot;(?:(dotted|bold|dashed)[%s]+)?&quot;;</span>
-<span class="fc" id="L49">		return new RegexLeaf(&quot;COMPLEMENT&quot; + suffix,</span>
-				&quot;with[%s]+&quot; + optionalStyle + &quot;(#?\\w+)[%s]+&quot; + optionalStyle + &quot;link&quot;);
+<span class="fc" id="L49">		return new RegexLeaf(3,</span>
+				&quot;COMPLEMENT&quot; + suffix, &quot;with[%s]+&quot; + optionalStyle + &quot;(#?\\w+)[%s]+&quot; + optionalStyle + &quot;link&quot;);
 	}
 
 	public Failable&lt;CenterBorderColor&gt; getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

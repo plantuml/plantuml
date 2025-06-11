@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
@@ -49,22 +48,22 @@ public class EntityImageGroup extends AbstractEntityImage {
 	// final private static int MARGIN = 10;
 
 	public EntityImageGroup(Entity entity) {
-<span class="nc" id="L52">		super(entity);</span>
+<span class="nc" id="L51">		super(entity);</span>
 		// this.desc = Display.create(StringUtils.getWithNewlines(entity.getDisplay()),
 		// FontConfiguration.create(
 		// getFont(FontParam.ACTIVITY), HtmlColorUtils.BLACK),
 		// HorizontalAlignment.CENTER);
-<span class="nc" id="L57">	}</span>
+<span class="nc" id="L56">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L60">		return new XDimension2D(30, 30);</span>
+<span class="nc" id="L59">		return new XDimension2D(30, 30);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L64">	}</span>
+<span class="nc" id="L63">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L67">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L66">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

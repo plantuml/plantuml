@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	public IRegex toRegex(String suffix) {
 <span class="nc" id="L66">		return new RegexConcat( //</span>
-				new RegexLeaf(&quot;TIME&quot;, &quot;(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+)&quot;), //
-				new RegexOptional(new RegexLeaf(&quot;MS&quot;, &quot;\\.(\\d+)&quot;)) //
+				new RegexLeaf(1, &quot;TIME&quot;, &quot;(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+)&quot;), //
+				new RegexOptional(new RegexLeaf(1, &quot;MS&quot;, &quot;\\.(\\d+)&quot;)) //
 		); //
 	}
 

@@ -55,7 +55,7 @@ public class CommandGroup extends SingleLineCommand2&lt;NwDiagram&gt; {
 <span class="fc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;group&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([%pLN_]+)?&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%pLN_]+)?&quot;), //
 <span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L60">				new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
 	}

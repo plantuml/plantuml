@@ -57,7 +57,7 @@ public class CommandHeader extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L59">		return RegexConcat.build(CommandHeader.class.getName(), RegexLeaf.start(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;POSITION&quot;, &quot;(left|right|center)&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right|center)&quot;)), //
 <span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;header&quot;), //
 				new RegexOr( //
@@ -67,8 +67,8 @@ public class CommandHeader extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="fc" id="L67">								RegexLeaf.spaceZeroOrMore()), //</span>
 <span class="fc" id="L68">						RegexLeaf.spaceOneOrMore()), //</span>
 				new RegexOr(//
-						new RegexLeaf(&quot;LABEL1&quot;, &quot;[%g](.*)[%g]&quot;), //
-						new RegexLeaf(&quot;LABEL2&quot;, &quot;(.*[%pLN_.].*)&quot;)), //
+						new RegexLeaf(1, &quot;LABEL1&quot;, &quot;[%g](.*)[%g]&quot;), //
+						new RegexLeaf(1, &quot;LABEL2&quot;, &quot;(.*[%pLN_.].*)&quot;)), //
 <span class="fc" id="L72">				RegexLeaf.end()); //</span>
 	}
 

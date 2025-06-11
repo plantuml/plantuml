@@ -52,30 +52,29 @@ public class CommandLinkStateReverse extends CommandLinkStateCommon {
 <span class="fc" id="L52">		return RegexConcat.build(CommandLinkStateReverse.class.getName(), RegexLeaf.start(), //</span>
 <span class="fc" id="L53">				getStatePattern(&quot;ENT2&quot;), //</span>
 <span class="fc" id="L54">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexConcat(
-						//
-						new RegexLeaf(&quot;ARROW_CIRCLE_END&quot;, &quot;(o[%s]+)?&quot;), //
+				new RegexConcat(//
+				new RegexLeaf(1, &quot;ARROW_CIRCLE_END&quot;, &quot;(o[%s]+)?&quot;), //
 						new RegexLeaf(&quot;\\&lt;&quot;), //
-						new RegexLeaf(&quot;ARROW_BODY2&quot;, &quot;(-*)&quot;), //
-						new RegexLeaf(&quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
-						new RegexLeaf(&quot;ARROW_DIRECTION&quot;, &quot;(left|right|up|down|le?|ri?|up?|do?)?&quot;), //
-						new RegexLeaf(&quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
-						new RegexLeaf(&quot;ARROW_BODY1&quot;, &quot;(-+)&quot;), //
-						new RegexLeaf(&quot;ARROW_CROSS_START&quot;, &quot;(x)?&quot;)), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L66">				getStatePattern(&quot;ENT1&quot;), //</span>
-<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+						new RegexLeaf(1, &quot;ARROW_BODY2&quot;, &quot;(-*)&quot;), //
+						new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+						new RegexLeaf(1, &quot;ARROW_DIRECTION&quot;, &quot;(left|right|up|down|le?|ri?|up?|do?)?&quot;), //
+						new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+						new RegexLeaf(1, &quot;ARROW_BODY1&quot;, &quot;(-+)&quot;), //
+						new RegexLeaf(1, &quot;ARROW_CROSS_START&quot;, &quot;(x)?&quot;)), //
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				getStatePattern(&quot;ENT1&quot;), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L71">								RegexLeaf.spaceZeroOrMore(), //</span>
-								new RegexLeaf(&quot;LABEL&quot;, &quot;(.+)&quot;) //
-<span class="fc" id="L73">						)), RegexLeaf.end());</span>
+<span class="fc" id="L70">								RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.+)&quot;) //
+<span class="fc" id="L72">						)), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected Direction getDefaultDirection() {
-<span class="nc" id="L78">		return Direction.LEFT;</span>
+<span class="nc" id="L77">		return Direction.LEFT;</span>
 	}
 
 }

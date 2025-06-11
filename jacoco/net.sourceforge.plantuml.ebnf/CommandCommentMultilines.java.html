@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -43,33 +44,33 @@ import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandCommentMultilines extends CommandMultilines2&lt;PSystemEbnf&gt; {
 
+<span class="fc" id="L54">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L55">			() -&gt; Pattern2.cmpile(&quot;^.*\\*\\)[%s]*$&quot;));</span>
+
 	public CommandCommentMultilines() {
-<span class="fc" id="L53">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L59">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandCommentMultilines.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandCommentMultilines.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(\\*&quot;), //
 				new RegexLeaf(&quot;.*&quot;), //
-<span class="fc" id="L61">				RegexLeaf.end());</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L66">		return &quot;^.*\\*\\)[%s]*$&quot;;</span>
-	}
-
-	@Override
-	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L71">		final Display note = lines.removeFewChars(2).toDisplay();</span>
-<span class="nc" id="L72">		return diagram.addNote(note, null);</span>
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L72">		final Display note = lines.removeFewChars(2).toDisplay();</span>
+<span class="nc" id="L73">		return diagram.addNote(note, null);</span>
 	}
 
 }

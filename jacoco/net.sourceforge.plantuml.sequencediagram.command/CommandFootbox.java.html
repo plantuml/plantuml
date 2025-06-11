@@ -47,22 +47,21 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFootbox extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
-	public CommandFootbox() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L50">	public static final IRegex HIDE_SHOW_FOOTBOX = RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //</span>
+			new RegexLeaf(1, &quot;TYPE&quot;, &quot;(hide|show)?&quot;), //
+<span class="fc" id="L52">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L53">			new RegexLeaf(&quot;footbox&quot;), RegexLeaf.end()); //</span>
 
-	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(hide|show)?&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L58">				new RegexLeaf(&quot;footbox&quot;), RegexLeaf.end()); //</span>
-	}
+	public CommandFootbox() {
+<span class="fc" id="L56">		super(HIDE_SHOW_FOOTBOX);</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L63">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
-<span class="fc" id="L64">		diagram.setShowFootbox(footbox);</span>
-<span class="fc" id="L65">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L62">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
+<span class="fc" id="L63">		diagram.setShowFootbox(footbox);</span>
+<span class="fc" id="L64">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -58,6 +59,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -80,119 +82,117 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 	private final String key;
 	private final ParserPass selectedPass;
 
-<span class="fc" id="L83">	public CommandFactoryNoteOnEntity(String key, IRegex partialPattern, ParserPass selectedPass) {</span>
-<span class="fc" id="L84">		this.partialPattern = partialPattern;</span>
-<span class="fc" id="L85">		this.key = key;</span>
-<span class="fc" id="L86">		this.selectedPass = selectedPass;</span>
-<span class="fc" id="L87">	}</span>
+<span class="fc" id="L85">	public CommandFactoryNoteOnEntity(String key, IRegex partialPattern, ParserPass selectedPass) {</span>
+<span class="fc" id="L86">		this.partialPattern = partialPattern;</span>
+<span class="fc" id="L87">		this.key = key;</span>
+<span class="fc" id="L88">		this.selectedPass = selectedPass;</span>
+<span class="fc" id="L89">	}</span>
 
 	private IRegex getRegexConcatSingleLine(IRegex partialPattern) {
-<span class="fc" id="L90">		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;single&quot;, RegexLeaf.start(), //</span>
+<span class="fc" id="L92">		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;single&quot;, RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L92">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
+<span class="fc" id="L94">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
 				new RegexOr(//
-<span class="fc" id="L95">						new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L97">						new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;of&quot;), //
-<span class="fc" id="L97">								RegexLeaf.spaceOneOrMore(), partialPattern), //</span>
+<span class="fc" id="L99">								RegexLeaf.spaceOneOrMore(), partialPattern), //</span>
 						new RegexLeaf(&quot;&quot;)), //
-<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L100">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L101">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L102">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L103">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L104">				color().getRegex(), //</span>
+<span class="fc" id="L101">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L102">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L103">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L104">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L105">				RegexLeaf.spaceZeroOrMore(), //</span>
-				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L106">				color().getRegex(), //</span>
 <span class="fc" id="L107">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;:&quot;), //
+				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L109">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L111">				RegexLeaf.end() //</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L113">				RegexLeaf.end() //</span>
 		);
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L116">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L118">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	private IRegex getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (withBracket) {</span>
-<span class="fc" id="L121">			return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;multi&quot; + withBracket,</span>
-<span class="fc" id="L122">					RegexLeaf.start(), //</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (withBracket) {</span>
+<span class="fc" id="L123">			return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;multi&quot; + withBracket,</span>
+<span class="fc" id="L124">					RegexLeaf.start(), //</span>
 					new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L124">					RegexLeaf.spaceOneOrMore(), //</span>
-					new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
+<span class="fc" id="L126">					RegexLeaf.spaceOneOrMore(), //</span>
+					new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
 					new RegexOr(//
-<span class="fc" id="L127">							new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L129">							new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
 									new RegexLeaf(&quot;of&quot;), //
-<span class="fc" id="L129">									RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L131">									RegexLeaf.spaceOneOrMore(), //</span>
 									partialPattern), //
 							new RegexLeaf(&quot;&quot;)), //
-<span class="fc" id="L132">					RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L133">					new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L134">					StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L135">					new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L136">					RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L137">					color().getRegex(), //</span>
+<span class="fc" id="L134">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L135">					new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L136">					StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L137">					new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L138">					RegexLeaf.spaceZeroOrMore(), //</span>
-					UrlBuilder.OPTIONAL, //
+<span class="fc" id="L139">					color().getRegex(), //</span>
 <span class="fc" id="L140">					RegexLeaf.spaceZeroOrMore(), //</span>
+					UrlBuilder.OPTIONAL, //
+<span class="fc" id="L142">					RegexLeaf.spaceZeroOrMore(), //</span>
 					new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L142">					RegexLeaf.end() //</span>
+<span class="fc" id="L144">					RegexLeaf.end() //</span>
 			);
 		}
-<span class="fc" id="L145">		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;multi&quot; + withBracket,</span>
-<span class="fc" id="L146">				RegexLeaf.start(), //</span>
+<span class="fc" id="L147">		return RegexConcat.build(CommandFactoryNoteOnEntity.class.getName() + key + &quot;multi&quot; + withBracket,</span>
+<span class="fc" id="L148">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L148">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
+<span class="fc" id="L150">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
 				new RegexOr(//
-<span class="fc" id="L151">						new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L153">						new RegexConcat(RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;of&quot;), //
-<span class="fc" id="L153">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L155">								RegexLeaf.spaceOneOrMore(), //</span>
 								partialPattern), //
 						new RegexLeaf(&quot;&quot;)), //
-<span class="fc" id="L156">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L157">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L158">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L159">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L160">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L161">				color().getRegex(), //</span>
+<span class="fc" id="L158">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L159">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L160">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L161">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L162">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L163">				color().getRegex(), //</span>
+<span class="fc" id="L164">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L164">				RegexLeaf.end() //</span>
+<span class="fc" id="L166">				RegexLeaf.end() //</span>
 		);
 	}
 
 	public Command&lt;AbstractEntityDiagram&gt; createSingleLine() {
-<span class="fc" id="L169">		return new SingleLineCommand2&lt;AbstractEntityDiagram&gt;(getRegexConcatSingleLine(partialPattern)) {</span>
+<span class="fc" id="L171">		return new SingleLineCommand2&lt;AbstractEntityDiagram&gt;(getRegexConcatSingleLine(partialPattern)) {</span>
 
 			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L174">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="fc" id="L175">				return executeInternal(location, arg, diagram, null, display);</span>
+<span class="fc" id="L176">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="fc" id="L177">				return executeInternal(location, arg, diagram, null, display);</span>
 			}
 
 			@Override
 			public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">				return selectedPass == pass;</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">				return selectedPass == pass;</span>
 			}
 		};
 	}
 
+<span class="fc" id="L187">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="fc" id="L188">			() -&gt; Pattern2.cmpile(&quot;^[%s]*(end[%s]?note)$&quot;));</span>
+
+<span class="fc" id="L190">	private final static Lazy&lt;Pattern2&gt; END_WITH_BRACKET = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L191">			() -&gt; Pattern2.cmpile(&quot;^(\\})$&quot;));</span>
+
 	public Command&lt;AbstractEntityDiagram&gt; createMultiLine(final boolean withBracket) {
-<span class="fc" id="L186">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(getRegexConcatMultiLine(partialPattern, withBracket),</span>
-<span class="fc" id="L187">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
-
-			@Override
-			public String getPatternEnd() {
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">				if (withBracket)</span>
-<span class="nc" id="L192">					return &quot;^(\\})$&quot;;</span>
-
-<span class="fc" id="L194">				return &quot;^[%s]*(end[%s]?note)$&quot;;</span>
-			}
+<span class="fc" id="L194">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(getRegexConcatMultiLine(partialPattern, withBracket),</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {</span>
 
 			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
@@ -221,8 +221,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		};
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0, AbstractEntityDiagram diagram, Url url,
-			Display display) throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0,
+			AbstractEntityDiagram diagram, Url url, Display display) throws NoSuchColorException {
 <span class="fc" id="L226">		final String pos = line0.get(&quot;POSITION&quot;, 0);</span>
 <span class="fc" id="L227">		final String idShort = diagram.cleanId(line0.get(&quot;CODE&quot;, 0));</span>
 		final Entity cl1;

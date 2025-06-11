@@ -60,13 +60,13 @@ public class CommandNewpage extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;(?:[%s]*:[%s]*|[%s]+)&quot;), //
-								new RegexLeaf(&quot;LABEL&quot;, &quot;(.*[%pLN_.].*)&quot;) //
+								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*[%pLN_.].*)&quot;) //
 <span class="fc" id="L64">						)), RegexLeaf.end()); //</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location,
-			RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 <span class="fc" id="L70">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
 <span class="pc bpc" id="L71" title="1 of 2 branches missed.">		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);</span>
 <span class="fc" id="L72">		diagram.newpage(strings);</span>

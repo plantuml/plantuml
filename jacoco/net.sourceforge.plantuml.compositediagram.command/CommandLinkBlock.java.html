@@ -60,39 +60,40 @@ public class CommandLinkBlock extends SingleLineCommand2&lt;CompositeDiagram&gt;
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L62">		return RegexConcat.build(CommandLinkBlock.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;ENT1&quot;, &quot;([%pLN_.]+)&quot;), //
+				new RegexLeaf(1, &quot;ENT1&quot;, &quot;([%pLN_.]+)&quot;), //
 <span class="nc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;DECO1&quot;, &quot;(\\[\\]|\\*\\))?&quot;), //
-				new RegexLeaf(&quot;QUEUE&quot;, &quot;([=-]+|\\.+)&quot;), //
-				new RegexLeaf(&quot;DECO2&quot;, &quot;(\\[\\]|\\(\\*)?&quot;), //
+				new RegexLeaf(1, &quot;DECO1&quot;, &quot;(\\[\\]|\\*\\))?&quot;), //
+				new RegexLeaf(1, &quot;QUEUE&quot;, &quot;([=-]+|\\.+)&quot;), //
+				new RegexLeaf(1, &quot;DECO2&quot;, &quot;(\\[\\]|\\(\\*)?&quot;), //
 <span class="nc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;ENT2&quot;, &quot;([%pLN_.]+)&quot;), //
+				new RegexLeaf(1, &quot;ENT2&quot;, &quot;([%pLN_.]+)&quot;), //
 <span class="nc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
 <span class="nc" id="L74">								RegexLeaf.spaceZeroOrMore(), //</span>
-								new RegexLeaf(&quot;DISPLAY&quot;, &quot;(\\S*+)&quot;) //
+								new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;(\\S*+)&quot;) //
 <span class="nc" id="L76">						)), RegexLeaf.end()); //</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L81">		final String ent1 = arg.get(&quot;ENT1&quot;, 0);</span>
-<span class="nc" id="L82">		final String ent2 = arg.get(&quot;ENT2&quot;, 0);</span>
-<span class="nc" id="L83">		final Quark&lt;Entity&gt; quark1 = diagram.quarkInContext(true, diagram.cleanId(ent1));</span>
-<span class="nc" id="L84">		final Quark&lt;Entity&gt; quark2 = diagram.quarkInContext(true, diagram.cleanId(ent2));</span>
-<span class="nc" id="L85">		final Entity cl1 = quark1.getData();</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (cl1 == null)</span>
-<span class="nc" id="L87">			return CommandExecutionResult.error(&quot;No such element &quot; + quark1.getName());</span>
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L82">		final String ent1 = arg.get(&quot;ENT1&quot;, 0);</span>
+<span class="nc" id="L83">		final String ent2 = arg.get(&quot;ENT2&quot;, 0);</span>
+<span class="nc" id="L84">		final Quark&lt;Entity&gt; quark1 = diagram.quarkInContext(true, diagram.cleanId(ent1));</span>
+<span class="nc" id="L85">		final Quark&lt;Entity&gt; quark2 = diagram.quarkInContext(true, diagram.cleanId(ent2));</span>
+<span class="nc" id="L86">		final Entity cl1 = quark1.getData();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (cl1 == null)</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;No such element &quot; + quark1.getName());</span>
 
-<span class="nc" id="L89">		final Entity cl2 = quark2.getData();</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (cl2 == null)</span>
-<span class="nc" id="L91">			return CommandExecutionResult.error(&quot;No such element &quot; + quark2.getName());</span>
+<span class="nc" id="L90">		final Entity cl2 = quark2.getData();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (cl2 == null)</span>
+<span class="nc" id="L92">			return CommandExecutionResult.error(&quot;No such element &quot; + quark2.getName());</span>
 
-<span class="nc" id="L93">		final String deco1 = arg.get(&quot;DECO1&quot;, 0);</span>
-<span class="nc" id="L94">		final String deco2 = arg.get(&quot;DECO2&quot;, 0);</span>
-<span class="nc" id="L95">		LinkType linkType = new LinkType(getLinkDecor(deco1), getLinkDecor(deco2));</span>
+<span class="nc" id="L94">		final String deco1 = arg.get(&quot;DECO1&quot;, 0);</span>
+<span class="nc" id="L95">		final String deco2 = arg.get(&quot;DECO2&quot;, 0);</span>
+<span class="nc" id="L96">		LinkType linkType = new LinkType(getLinkDecor(deco1), getLinkDecor(deco2));</span>
 
 		// if (&quot;*)&quot;.equals(deco1)) {
 		// linkType = linkType.getInterfaceProvider();
@@ -100,21 +101,21 @@ public class CommandLinkBlock extends SingleLineCommand2&lt;CompositeDiagram&gt;
 		// linkType = linkType.getInterfaceUser();
 		// }
 
-<span class="nc" id="L103">		final String queue = arg.get(&quot;QUEUE&quot;, 0);</span>
+<span class="nc" id="L104">		final String queue = arg.get(&quot;QUEUE&quot;, 0);</span>
 
-<span class="nc" id="L105">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;DISPLAY&quot;, 0)), queue.length(),</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L107">		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,</span>
-				cl2, linkType, linkArg);
-<span class="nc" id="L109">		diagram.addLink(link);</span>
-<span class="nc" id="L110">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L106">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;DISPLAY&quot;, 0)),</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">				queue.length(), diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L108">		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,</span>
+				linkType, linkArg);
+<span class="nc" id="L110">		diagram.addLink(link);</span>
+<span class="nc" id="L111">		return CommandExecutionResult.ok();</span>
 	}
 
 	private LinkDecor getLinkDecor(String s) {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (&quot;[]&quot;.equals(s))</span>
-<span class="nc" id="L115">			return LinkDecor.SQUARE_toberemoved;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (&quot;[]&quot;.equals(s))</span>
+<span class="nc" id="L116">			return LinkDecor.SQUARE_toberemoved;</span>
 
-<span class="nc" id="L117">		return LinkDecor.NONE;</span>
+<span class="nc" id="L118">		return LinkDecor.NONE;</span>
 	}
 
 }

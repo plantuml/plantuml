@@ -154,10 +154,10 @@ import net.sourceforge.plantuml.text.StringLocated;
 	}
 
 	@Override
-	protected String getFullSlow() {
+	public String getPatternAsString() {
 <span class="fc" id="L158">		final StringBuilder sb = new StringBuilder();</span>
 <span class="fc bfc" id="L159" title="All 2 branches covered.">		for (IRegex p : partials())</span>
-<span class="fc" id="L160">			sb.append(p.getPattern());</span>
+<span class="fc" id="L160">			sb.append(p.getPatternAsString());</span>
 
 <span class="fc" id="L162">		return sb.toString();</span>
 	}

@@ -59,46 +59,47 @@ public class CommandPragma extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="fc" id="L59">		return RegexConcat.build(CommandPragma.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;!pragma&quot;), //
 <span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([A-Za-z_][A-Za-z_0-9]*)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([A-Za-z_][A-Za-z_0-9]*)&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
 <span class="fc" id="L65">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;VALUE&quot;, &quot;(.*)&quot;) //
+								new RegexLeaf(1, &quot;VALUE&quot;, &quot;(.*)&quot;) //
 <span class="fc" id="L67">						)), RegexLeaf.end()); //</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L72">		final String name = StringUtils.goLowerCase(arg.get(&quot;NAME&quot;, 0));</span>
-<span class="fc" id="L73">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (name.equalsIgnoreCase(&quot;svgsize&quot;)) {</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (value.contains(&quot; &quot;)) {</span>
-<span class="nc" id="L76">				final StringTokenizer st = new StringTokenizer(value);</span>
-<span class="nc" id="L77">				system.getSkinParam().setSvgSize(st.nextToken(), st.nextToken());</span>
-<span class="nc" id="L78">			}</span>
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L73">		final String name = StringUtils.goLowerCase(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="fc" id="L74">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (name.equalsIgnoreCase(&quot;svgsize&quot;)) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (value.contains(&quot; &quot;)) {</span>
+<span class="nc" id="L77">				final StringTokenizer st = new StringTokenizer(value);</span>
+<span class="nc" id="L78">				system.getSkinParam().setSvgSize(st.nextToken(), st.nextToken());</span>
+<span class="nc" id="L79">			}</span>
 		} else {
-<span class="fc" id="L80">			system.getPragma().define(name, value);</span>
+<span class="fc" id="L81">			system.getPragma().define(name, value);</span>
 			// ::comment when __CORE__
-<span class="pc bpc" id="L82" title="3 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;jdot&quot;))</span>
-<span class="nc" id="L83">				return CommandExecutionResult.error(</span>
+<span class="pc bpc" id="L83" title="3 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;jdot&quot;))</span>
+<span class="nc" id="L84">				return CommandExecutionResult.error(</span>
 						&quot;This directive has been renamed to '!pragma layout smetana'. Please update your diagram.&quot;);
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;))</span>
-<span class="nc" id="L87">				return CommandExecutionResult.error(&quot;This directive has been renamed to '!pragma layout &quot; + value</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">			if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;))</span>
+<span class="nc" id="L88">				return CommandExecutionResult.error(&quot;This directive has been renamed to '!pragma layout &quot; + value</span>
 						+ &quot;'. Please update your diagram.&quot;);
 
-<span class="pc bpc" id="L90" title="1 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
-<span class="fc" id="L91">				system.setUseSmetana(true);</span>
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
+<span class="fc" id="L92">				system.setUseSmetana(true);</span>
 
-<span class="pc bpc" id="L93" title="1 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
-<span class="nc" id="L94">				system.setUseElk(true);</span>
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
+<span class="nc" id="L95">				system.setUseElk(true);</span>
 
-<span class="pc bpc" id="L96" title="1 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))</span>
-<span class="nc" id="L97">				system.getSkinParam().setUseVizJs(true);</span>
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))</span>
+<span class="nc" id="L98">				system.getSkinParam().setUseVizJs(true);</span>
 			// ::done
 
 		}
-<span class="fc" id="L101">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L102">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -89,22 +89,22 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 <span class="fc" id="L89">				getGroup(&quot;ENT1&quot;), //</span>
 
 <span class="fc" id="L91">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;FIRST_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;FIRST_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 <span class="fc" id="L93">				RegexLeaf.spaceZeroOrMore(), //</span>
 //				new RegexOptional(new RegexLeaf(&quot;STEREO1&quot;, &quot;(\\&lt;\\&lt;.*\\&gt;\\&gt;)&quot;)), //
 //				RegexLeaf.spaceZeroOrMore(), //
 
-				new RegexLeaf(&quot;HEAD2&quot;, &quot;(0\\)|&lt;&lt;|&lt;_|[&lt;^*+#0@)]|&lt;\\|[\\|\\:]?|[%s]+o)?&quot;), //
-				new RegexLeaf(&quot;BODY1&quot;, &quot;([-=.~]+)&quot;), //
-				new RegexLeaf(&quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + LINE_STYLE_MUTILPLES + &quot;)\\])?&quot;), //
-				new RegexOptional(new RegexLeaf(&quot;DIRECTION&quot;, &quot;(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])&quot;)), //
-				new RegexOptional(new RegexLeaf(&quot;INSIDE&quot;, &quot;(0|\\(0\\)|\\(0|0\\))(?=[-=.~])&quot;)), //
-				new RegexLeaf(&quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + LINE_STYLE + &quot;)\\])?&quot;), //
-				new RegexLeaf(&quot;BODY2&quot;, &quot;([-=.~]*)&quot;), //
-				new RegexLeaf(&quot;HEAD1&quot;, &quot;(\\(0|&gt;&gt;|_&gt;|[&gt;^*+#0@(]|[\\:\\|]?\\|&gt;|\\\\\\\\|//|o[%s]+)?&quot;), //
+				new RegexLeaf(1, &quot;HEAD2&quot;, &quot;(0\\)|&lt;&lt;|&lt;_|[&lt;^*+#0@)]|&lt;\\|[\\|\\:]?|[%s]+o)?&quot;), //
+				new RegexLeaf(1, &quot;BODY1&quot;, &quot;([-=.~]+)&quot;), //
+				new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + LINE_STYLE_MUTILPLES + &quot;)\\])?&quot;), //
+				new RegexOptional(new RegexLeaf(1, &quot;DIRECTION&quot;, &quot;(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;INSIDE&quot;, &quot;(0|\\(0\\)|\\(0|0\\))(?=[-=.~])&quot;)), //
+				new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(1, &quot;BODY2&quot;, &quot;([-=.~]*)&quot;), //
+				new RegexLeaf(1, &quot;HEAD1&quot;, &quot;(\\(0|&gt;&gt;|_&gt;|[&gt;^*+#0@(]|[\\:\\|]?\\|&gt;|\\\\\\\\|//|o[%s]+)?&quot;), //
 
 <span class="fc" id="L106">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;SECOND_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;SECOND_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 <span class="fc" id="L108">				RegexLeaf.spaceZeroOrMore(), //</span>
 
 <span class="fc" id="L110">				getGroup(&quot;ENT2&quot;), //</span>
@@ -114,7 +114,7 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 
 <span class="fc" id="L115">				color().getRegex(), //</span>
 <span class="fc" id="L116">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-				new RegexLeaf(&quot;LABEL_LINK&quot;, &quot;(?::[%s]*(.+))?&quot;), //
+				new RegexLeaf(1, &quot;LABEL_LINK&quot;, &quot;(?::[%s]*(.+))?&quot;), //
 <span class="fc" id="L118">				RegexLeaf.end());</span>
 	}
 
@@ -239,7 +239,7 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 	}
 
 	private static RegexLeaf getGroup(String name) {
-<span class="fc" id="L242">		return new RegexLeaf(name, &quot;(&quot; + //</span>
+<span class="fc" id="L242">		return new RegexLeaf(1, name, &quot;(&quot; + //</span>
 				&quot;[%pLN_.]+&quot; + //
 				&quot;|&quot; + //
 				&quot;[%g][^%g]+[%g]&quot; + //

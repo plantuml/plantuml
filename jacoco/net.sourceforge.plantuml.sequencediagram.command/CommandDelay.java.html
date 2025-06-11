@@ -56,7 +56,7 @@ public class CommandDelay extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	static IRegex getRegexConcat() {
 <span class="fc" id="L57">		return RegexConcat.build(CommandDelay.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;(?:\\.{3}|\u2026)&quot;), //
-<span class="fc" id="L59">				new RegexOptional(new RegexLeaf(&quot;LABEL&quot;, &quot;(.*)(?:\\.{3}|\u2026)&quot;)), RegexLeaf.end()); //</span>
+<span class="fc" id="L59">				new RegexOptional(new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)(?:\\.{3}|\u2026)&quot;)), RegexLeaf.end()); //</span>
 	}
 
 	@Override

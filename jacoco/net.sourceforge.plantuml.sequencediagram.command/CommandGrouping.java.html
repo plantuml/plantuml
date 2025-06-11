@@ -62,13 +62,13 @@ public class CommandGrouping extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L64">		return RegexConcat.build(CommandGrouping.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(opt|alt|loop|par|par2|break|critical|else|end|also|group)&quot;), //
-				new RegexLeaf(&quot;COLORS&quot;, &quot;((?&lt;!else)(?&lt;!also)(?&lt;!end)#\\w+)?(?:[%s]+(#\\w+))?&quot;), //
+				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(opt|alt|loop|par|par2|break|critical|else|end|also|group)&quot;), //
+				new RegexLeaf(2, &quot;COLORS&quot;, &quot;((?&lt;!else)(?&lt;!also)(?&lt;!end)#\\w+)?(?:[%s]+(#\\w+))?&quot;), //
 				new RegexOptional(//
 						new RegexConcat( //
 <span class="fc" id="L70">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;COMMENT&quot;, &quot;(.*?)&quot;) //
+								new RegexLeaf(1, &quot;COMMENT&quot;, &quot;(.*?)&quot;) //
 <span class="fc" id="L72">						)), RegexLeaf.end());</span>
 	}
 

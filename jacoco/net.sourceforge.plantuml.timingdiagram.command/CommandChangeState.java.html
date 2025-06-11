@@ -80,13 +80,13 @@ abstract class CommandChangeState extends SingleLineCommand2&lt;TimingDiagram&gt
 
 	static IRegex getStateOrHidden() {
 <span class="fc" id="L82">		return new RegexOr(//</span>
-				new RegexLeaf(&quot;STATE1&quot;, &quot;[%g]([^%g]*)[%g]&quot;), //
-				new RegexLeaf(&quot;STATE2&quot;, STATE_CODE), //
-				new RegexLeaf(&quot;STATE3&quot;, &quot;(\\{hidden\\})&quot;), //
-				new RegexLeaf(&quot;STATE4&quot;, &quot;(\\{\\.\\.\\.\\})&quot;), //
-				new RegexLeaf(&quot;STATE5&quot;, &quot;(\\{-\\})&quot;), //
-				new RegexLeaf(&quot;STATE6&quot;, &quot;(\\{\\?\\})&quot;), //
-				new RegexLeaf(&quot;STATE7&quot;, &quot;(?:\\{&quot; + STATE_CODE + &quot;,&quot; + STATE_CODE + &quot;\\})&quot;) //
+				new RegexLeaf(1, &quot;STATE1&quot;, &quot;[%g]([^%g]*)[%g]&quot;), //
+				new RegexLeaf(1, &quot;STATE2&quot;, STATE_CODE), //
+				new RegexLeaf(1, &quot;STATE3&quot;, &quot;(\\{hidden\\})&quot;), //
+				new RegexLeaf(1, &quot;STATE4&quot;, &quot;(\\{\\.\\.\\.\\})&quot;), //
+				new RegexLeaf(1, &quot;STATE5&quot;, &quot;(\\{-\\})&quot;), //
+				new RegexLeaf(1, &quot;STATE6&quot;, &quot;(\\{\\?\\})&quot;), //
+				new RegexLeaf(2, &quot;STATE7&quot;, &quot;(?:\\{&quot; + STATE_CODE + &quot;,&quot; + STATE_CODE + &quot;\\})&quot;) //
 		);
 	}
 

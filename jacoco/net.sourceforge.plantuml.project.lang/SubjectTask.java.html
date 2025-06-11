@@ -113,18 +113,18 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 
 	public IRegex toRegex() {
 <span class="fc" id="L115">		return new RegexOr( //</span>
-				new RegexLeaf(&quot;IT&quot;, &quot;(it)&quot;), //
-				new RegexConcat(new RegexLeaf(&quot;THEN&quot;, &quot;(then[%s]+)?&quot;), //
-						new RegexLeaf(&quot;SUBJECT&quot;, REGEX_TASK_CODE), //
+				new RegexLeaf(1, &quot;IT&quot;, &quot;(it)&quot;), //
+				new RegexConcat(new RegexLeaf(1, &quot;THEN&quot;, &quot;(then[%s]+)?&quot;), //
+						new RegexLeaf(1, &quot;SUBJECT&quot;, REGEX_TASK_CODE), //
 <span class="fc" id="L119">						StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 						new RegexOptional(new RegexConcat(//
 <span class="fc" id="L121">								Words.exactly(Words.AS), //</span>
 <span class="fc" id="L122">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;SHORTNAME&quot;, REGEX_TASK_CODE))), //
+								new RegexLeaf(1, &quot;SHORTNAME&quot;, REGEX_TASK_CODE))), //
 						new RegexOptional(new RegexConcat( //
 <span class="fc" id="L125">								Words.exactly(Words.ON), //</span>
 <span class="fc" id="L126">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;RESOURCE&quot;, &quot;((?:\\{[^{}]+\\}[%s]*)+)&quot;) //
+								new RegexLeaf(1, &quot;RESOURCE&quot;, &quot;((?:\\{[^{}]+\\}[%s]*)+)&quot;) //
 						))));
 	}
 

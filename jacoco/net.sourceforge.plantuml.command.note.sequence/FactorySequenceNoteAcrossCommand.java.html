@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -65,65 +67,63 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-<span class="fc" id="L68">public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactoryCommand&lt;SequenceDiagram&gt; {</span>
+<span class="fc" id="L70">public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactoryCommand&lt;SequenceDiagram&gt; {</span>
 
 	private IRegex getRegexConcatMultiLine() {
-<span class="fc" id="L71">		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;VMERGE&quot;, &quot;(/)?&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
-<span class="fc" id="L75">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
-				new RegexLeaf(&quot;ACROSS&quot;, &quot;(accross|across)&quot;), //
-<span class="fc" id="L77">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L78">				color().getRegex(), //</span>
-<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(1, &quot;VMERGE&quot;, &quot;(/)?&quot;), //
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
+<span class="fc" id="L77">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+				new RegexLeaf(1, &quot;ACROSS&quot;, &quot;(accross|across)&quot;), //
+<span class="fc" id="L79">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+<span class="fc" id="L80">				color().getRegex(), //</span>
+<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L81">				RegexLeaf.end() //</span>
+<span class="fc" id="L83">				RegexLeaf.end() //</span>
 		);
 	}
 
 	private IRegex getRegexConcatSingleLine() {
-<span class="fc" id="L86">		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;VMERGE&quot;, &quot;(/)?&quot;), //
-<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
-<span class="fc" id="L90">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
-				new RegexLeaf(&quot;ACROSS&quot;, &quot;(accross|across)&quot;), //
-<span class="fc" id="L92">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L93">				color().getRegex(), //</span>
-<span class="fc" id="L94">				RegexLeaf.spaceZeroOrMore(), //</span>
-				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L88">		return RegexConcat.build(FactorySequenceNoteAcrossCommand.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
+				new RegexLeaf(1, &quot;VMERGE&quot;, &quot;(/)?&quot;), //
+<span class="fc" id="L90">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(note|hnote|rnote)&quot;), //
+<span class="fc" id="L92">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+				new RegexLeaf(1, &quot;ACROSS&quot;, &quot;(accross|across)&quot;), //
+<span class="fc" id="L94">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+<span class="fc" id="L95">				color().getRegex(), //</span>
 <span class="fc" id="L96">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;:&quot;), //
+				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L98">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L99">				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L100">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L101">				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L103">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L105">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	public Command&lt;SequenceDiagram&gt; createSingleLine() {
-<span class="fc" id="L107">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
+<span class="fc" id="L109">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
 
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L112">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="nc" id="L113">				return executeInternal(diagram, arg, diagram.manageVariable(display));</span>
+<span class="nc" id="L114">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="nc" id="L115">				return executeInternal(diagram, arg, diagram.manageVariable(display));</span>
 			}
 
 		};
 	}
 
-	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L120">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
-<span class="fc" id="L121">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
+<span class="fc" id="L121">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L122">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?(note|hnote|rnote)$&quot;));</span>
 
-			@Override
-			public String getPatternEnd() {
-<span class="nc" id="L125">				return &quot;^end[%s]?(note|hnote|rnote)$&quot;;</span>
-			}
+	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
+<span class="fc" id="L125">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
+<span class="fc" id="L126">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
 
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,

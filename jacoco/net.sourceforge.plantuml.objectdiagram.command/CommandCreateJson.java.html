@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -57,6 +58,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -69,27 +71,25 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateJson extends CommandMultilines2&lt;AbstractEntityDiagram&gt; {
 
+<span class="fc" id="L74">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L75">			() -&gt; Pattern2.cmpile(&quot;^[%s]*\\}[%s]*$&quot;));</span>
+
 	public CommandCreateJson() {
-<span class="fc" id="L73">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L78">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L79">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L77">		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;json&quot;), //
-<span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L80">				NameAndCodeParser.nameAndCode(), //</span>
-<span class="fc" id="L81">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L82">		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(0, &quot;TYPE&quot;, &quot;json&quot;), //
+<span class="fc" id="L84">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L85">				NameAndCodeParser.nameAndCode(), //</span>
+<span class="fc" id="L86">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L83">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L84">				ColorParser.exp1(), //</span>
-<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L89">				ColorParser.exp1(), //</span>
+<span class="fc" id="L90">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L87">				RegexLeaf.end());</span>
-	}
-
-	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L92">		return &quot;^[%s]*\\}[%s]*$&quot;;</span>
+<span class="fc" id="L92">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -153,29 +153,31 @@ public class CommandCreateJson extends CommandMultilines2&lt;AbstractEntityDiagr
 <span class="nc" id="L153">		return sb.toString();</span>
 	}
 
-	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
-<span class="nc" id="L157">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
+	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0)
+			throws NoSuchColorException {
+<span class="nc" id="L158">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
 
-<span class="nc" id="L159">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L161">			return null;</span>
-<span class="nc" id="L162">		final String displayString = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="nc" id="L163">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L160">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L162">			return null;</span>
+<span class="nc" id="L163">		final String displayString = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L164">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc" id="L165">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (Display.isNull(display))</span>
-<span class="nc" id="L167">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
+<span class="nc" id="L166">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L168">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName())</span>
+<span class="nc" id="L169">					.withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
 
-<span class="nc" id="L169">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L171">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L172">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L173">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="nc" id="L171">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L173">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L174">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L175">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L175">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L176">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="nc" id="L178">		return entity;</span>
+<span class="nc" id="L177">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L178">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L180">		return entity;</span>
 	}
 
 }

@@ -57,34 +57,34 @@ public class CommandWLink extends SingleLineCommand2&lt;WireDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="nc" id="L59">		return RegexConcat.build(CommandWLink.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;NAME1&quot;, &quot;([\\w][.\\w]*)&quot;), //
+				new RegexLeaf(1, &quot;NAME1&quot;, &quot;([\\w][.\\w]*)&quot;), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf(&quot;\\(&quot;), //
 <span class="nc" id="L63">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;X1&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
+						new RegexLeaf(2, &quot;X1&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
 <span class="nc" id="L65">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;,&quot;), //
 <span class="nc" id="L67">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;Y1&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
+						new RegexLeaf(2, &quot;Y1&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
 <span class="nc" id="L69">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;\\)&quot;) //
 				)), //
 <span class="nc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;STYLE&quot;, &quot;(\\&lt;?[-=]{1,2}\\&gt;|\\&lt;?[-=]{1,2})&quot;), //
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(\\&lt;?[-=]{1,2}\\&gt;|\\&lt;?[-=]{1,2})&quot;), //
 <span class="nc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME2&quot;, &quot;([\\w][.\\w]*)&quot;), //
+				new RegexLeaf(1, &quot;NAME2&quot;, &quot;([\\w][.\\w]*)&quot;), //
 				new RegexOptional(new RegexConcat( //
 <span class="nc" id="L77">						RegexLeaf.spaceZeroOrMore(), //</span>
-						new RegexLeaf(&quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
+						new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
 <span class="nc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;MESSAGE&quot;, &quot;(?::[%s]*(.*))?&quot;), //
+				new RegexLeaf(1, &quot;MESSAGE&quot;, &quot;(?::[%s]*(.*))?&quot;), //
 <span class="nc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="nc" id="L82">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 <span class="nc" id="L89">		final String name1 = arg.get(&quot;NAME1&quot;, 0);</span>
 <span class="nc" id="L90">		final String x1 = arg.get(&quot;X1&quot;, 0);</span>

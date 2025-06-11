@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -76,147 +77,146 @@ import net.sourceforge.plantuml.utils.Direction;
 
 public class CommandLinkLongActivity extends CommandMultilines2&lt;ActivityDiagram&gt; {
 
-	public CommandLinkLongActivity() {
-<span class="fc" id="L80">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L81">	}</span>
+<span class="pc" id="L80">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?[%s]*(\\&lt;\\&lt;.*\\&gt;\\&gt;)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$&quot;));</span>
 
-	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L85">		return &quot;^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?[%s]*(\\&lt;\\&lt;.*\\&gt;\\&gt;)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$&quot;;</span>
-	}
+	public CommandLinkLongActivity() {
+<span class="fc" id="L83">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L84">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L89">		return RegexConcat.build(CommandLinkLongActivity.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L87">		return RegexConcat.build(CommandLinkLongActivity.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional(//
 						new RegexOr(&quot;FIRST&quot;, //
-								new RegexLeaf(&quot;STAR&quot;, &quot;(\\(\\*(top)?\\))&quot;), //
-								new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN][%pLN_.]*)&quot;), //
-								new RegexLeaf(&quot;BAR&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
-								new RegexLeaf(&quot;QUOTED&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?&quot;))), //
-<span class="fc" id="L96">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-				new RegexLeaf(&quot;BACKCOLOR&quot;, &quot;(#\\w+)?&quot;), //
-<span class="fc" id="L98">				RegexLeaf.spaceZeroOrMore(), //</span>
+								new RegexLeaf(2, &quot;STAR&quot;, &quot;(\\(\\*(top)?\\))&quot;), //
+								new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN][%pLN_.]*)&quot;), //
+								new RegexLeaf(1, &quot;BAR&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
+								new RegexLeaf(2, &quot;QUOTED&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?&quot;))), //
+<span class="fc" id="L94">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+				new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;(#\\w+)?&quot;), //
+<span class="fc" id="L96">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
 
-				new RegexLeaf(&quot;ARROW_BODY1&quot;, &quot;([-.]+)&quot;), //
-				new RegexLeaf(&quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
-				new RegexLeaf(&quot;ARROW_DIRECTION&quot;, &quot;(\\*|left|right|up|down|le?|ri?|up?|do?)?&quot;), //
-				new RegexLeaf(&quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
-				new RegexLeaf(&quot;ARROW_BODY2&quot;, &quot;([-.]*)&quot;), //
+				new RegexLeaf(1, &quot;ARROW_BODY1&quot;, &quot;([-.]+)&quot;), //
+				new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(1, &quot;ARROW_DIRECTION&quot;, &quot;(\\*|left|right|up|down|le?|ri?|up?|do?)?&quot;), //
+				new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
+				new RegexLeaf(1, &quot;ARROW_BODY2&quot;, &quot;([-.]*)&quot;), //
 				new RegexLeaf(&quot;\\&gt;&quot;), //
 
+<span class="fc" id="L106">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(1, &quot;BRACKET&quot;, &quot;\\[([^\\]*]+[^\\]]*)\\]&quot;)), //
 <span class="fc" id="L108">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;BRACKET&quot;, &quot;\\[([^\\]*]+[^\\]]*)\\]&quot;)), //
-<span class="fc" id="L110">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[%g]&quot;), //
-				new RegexLeaf(&quot;DESC&quot;, &quot;([^%g]*?)&quot;), //
-<span class="fc" id="L113">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L114">				RegexLeaf.end());</span>
+				new RegexLeaf(1, &quot;DESC&quot;, &quot;([^%g]*?)&quot;), //
+<span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L112">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L120">		lines = lines.trim();</span>
-<span class="nc" id="L121">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L118">		lines = lines.trim();</span>
+<span class="nc" id="L119">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 
-<span class="nc" id="L123">		final Entity entity1 = CommandLinkActivity.getEntity(lines.getLocation(), diagram, line0, true);</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (entity1 == null)</span>
-<span class="nc" id="L125">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
+<span class="nc" id="L121">		final Entity entity1 = CommandLinkActivity.getEntity(lines.getLocation(), diagram, line0, true);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L123">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
 
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (line0.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
-<span class="nc" id="L128">			entity1.setStereotype(Stereotype.build(line0.get(&quot;STEREOTYPE&quot;, 0)));</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (line0.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
+<span class="nc" id="L126">			entity1.setStereotype(Stereotype.build(line0.get(&quot;STEREOTYPE&quot;, 0)));</span>
 
-<span class="nc" id="L130">		final String stringColor = line0.get(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (stringColor != null) {</span>
-<span class="nc" id="L132">			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="nc" id="L133">					diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor));</span>
+<span class="nc" id="L128">		final String stringColor = line0.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (stringColor != null) {</span>
+<span class="nc" id="L130">			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc" id="L131">					diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor));</span>
 		}
-<span class="nc" id="L135">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L133">		final StringBuilder sb = new StringBuilder();</span>
 
-<span class="nc" id="L137">		final String desc0 = line0.get(&quot;DESC&quot;, 0);</span>
-<span class="nc" id="L138">		Url urlActivity = null;</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(desc0)) {</span>
-<span class="nc" id="L140">			urlActivity = extractUrlString(diagram, desc0);</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (urlActivity == null) {</span>
-<span class="nc" id="L142">				sb.append(desc0);</span>
-<span class="nc" id="L143">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
+<span class="nc" id="L135">		final String desc0 = line0.get(&quot;DESC&quot;, 0);</span>
+<span class="nc" id="L136">		Url urlActivity = null;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(desc0)) {</span>
+<span class="nc" id="L138">			urlActivity = extractUrlString(diagram, desc0);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (urlActivity == null) {</span>
+<span class="nc" id="L140">				sb.append(desc0);</span>
+<span class="nc" id="L141">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
 			}
 		}
-<span class="nc" id="L146">		int i = 0;</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		for (StringLocated cs : lines.subExtract(1, 1)) {</span>
-<span class="nc" id="L148">			i++;</span>
-<span class="nc bnc" id="L149" title="All 4 branches missed.">			if (i == 1 &amp;&amp; urlActivity == null) {</span>
-<span class="nc" id="L150">				urlActivity = extractUrl(diagram, cs);</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">				if (urlActivity != null)</span>
-<span class="nc" id="L152">					continue;</span>
+<span class="nc" id="L144">		int i = 0;</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (StringLocated cs : lines.subExtract(1, 1)) {</span>
+<span class="nc" id="L146">			i++;</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">			if (i == 1 &amp;&amp; urlActivity == null) {</span>
+<span class="nc" id="L148">				urlActivity = extractUrl(diagram, cs);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">				if (urlActivity != null)</span>
+<span class="nc" id="L150">					continue;</span>
 
 			}
-<span class="nc" id="L155">			sb.append(cs.getString());</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (i &lt; lines.size() - 2)</span>
-<span class="nc" id="L157">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
+<span class="nc" id="L153">			sb.append(cs.getString());</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (i &lt; lines.size() - 2)</span>
+<span class="nc" id="L155">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
 
-<span class="nc" id="L159">		}</span>
+<span class="nc" id="L157">		}</span>
 
-<span class="nc" id="L161">		final List&lt;String&gt; lineLast = StringUtils.getSplit(Pattern2.cmpile(getPatternEnd()),</span>
-<span class="nc" id="L162">				lines.getLast().getString());</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(lineLast.get(0))) {</span>
-<span class="nc bnc" id="L164" title="All 4 branches missed.">			if (sb.length() &gt; 0 &amp;&amp; sb.toString().endsWith(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE) == false)</span>
-<span class="nc" id="L165">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
+<span class="nc" id="L159">		final List&lt;String&gt; lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(lineLast.get(0))) {</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">			if (sb.length() &gt; 0 &amp;&amp; sb.toString().endsWith(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE) == false)</span>
+<span class="nc" id="L162">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
 
-<span class="nc" id="L167">			sb.append(lineLast.get(0));</span>
+<span class="nc" id="L164">			sb.append(lineLast.get(0));</span>
 		}
 
-<span class="nc" id="L170">		final String displayString = sb.toString();</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		final String idShort = lineLast.get(1) == null ? displayString : lineLast.get(1);</span>
+<span class="nc" id="L167">		final String displayString = sb.toString();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		final String idShort = lineLast.get(1) == null ? displayString : lineLast.get(1);</span>
 
-<span class="nc" id="L173">		String partition = null;</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (lineLast.get(3) != null) {</span>
-<span class="nc" id="L175">			partition = lineLast.get(3);</span>
-<span class="nc" id="L176">			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);</span>
+<span class="nc" id="L170">		String partition = null;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (lineLast.get(3) != null) {</span>
+<span class="nc" id="L172">			partition = lineLast.get(3);</span>
+<span class="nc" id="L173">			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);</span>
 		}
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (partition != null) {</span>
-<span class="nc" id="L179">			final Quark&lt;Entity&gt; idNewLong = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
-<span class="nc" id="L180">			diagram.gotoGroup(lines.getLocation(), idNewLong, Display.getWithNewlines(diagram.getPragma(), partition), GroupType.PACKAGE);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (partition != null) {</span>
+<span class="nc" id="L176">			final Quark&lt;Entity&gt; idNewLong = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
+<span class="nc" id="L177">			diagram.gotoGroup(lines.getLocation(), idNewLong, Display.getWithNewlines(diagram.getPragma(), partition),</span>
+					GroupType.PACKAGE);
 		}
-<span class="nc" id="L182">		final Quark&lt;Entity&gt; ident = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="nc" id="L180">		final Quark&lt;Entity&gt; ident = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
 
-<span class="nc" id="L184">		Entity entity2 = ident.getData();</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (entity2 == null)</span>
-<span class="nc" id="L186">			entity2 = diagram.reallyCreateLeaf(lines.getLocation(), ident, Display.getWithNewlines(diagram.getPragma(), displayString), LeafType.ACTIVITY, null);</span>
+<span class="nc" id="L182">		Entity entity2 = ident.getData();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (entity2 == null)</span>
+<span class="nc" id="L184">			entity2 = diagram.reallyCreateLeaf(lines.getLocation(), ident,</span>
+<span class="nc" id="L185">					Display.getWithNewlines(diagram.getPragma(), displayString), LeafType.ACTIVITY, null);</span>
 
-<span class="nc" id="L188">		diagram.setLastEntityConsulted(entity2);</span>
+<span class="nc" id="L187">		diagram.setLastEntityConsulted(entity2);</span>
 
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (partition != null)</span>
-<span class="nc" id="L191">			diagram.endGroup();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (partition != null)</span>
+<span class="nc" id="L190">			diagram.endGroup();</span>
 
-<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (urlActivity != null)</span>
-<span class="nc" id="L194">			entity2.addUrl(urlActivity);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (urlActivity != null)</span>
+<span class="nc" id="L193">			entity2.addUrl(urlActivity);</span>
 
-<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (lineLast.get(2) != null)</span>
-<span class="nc" id="L197">			entity2.setStereotype(Stereotype.build(lineLast.get(2)));</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (lineLast.get(2) != null)</span>
+<span class="nc" id="L196">			entity2.setStereotype(Stereotype.build(lineLast.get(2)));</span>
 
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (lineLast.get(4) != null) {</span>
-<span class="nc" id="L200">			String s = lineLast.get(4);</span>
-<span class="nc" id="L201">			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (lineLast.get(4) != null) {</span>
+<span class="nc" id="L199">			String s = lineLast.get(4);</span>
+<span class="nc" id="L200">			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
 		}
 
-<span class="nc" id="L204">		final String arrowBody1 = CommandLinkClass.notNull(line0.get(&quot;ARROW_BODY1&quot;, 0));</span>
-<span class="nc" id="L205">		final String arrowBody2 = CommandLinkClass.notNull(line0.get(&quot;ARROW_BODY2&quot;, 0));</span>
-<span class="nc" id="L206">		final String arrowDirection = CommandLinkClass.notNull(line0.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
+<span class="nc" id="L203">		final String arrowBody1 = CommandLinkClass.notNull(line0.get(&quot;ARROW_BODY1&quot;, 0));</span>
+<span class="nc" id="L204">		final String arrowBody2 = CommandLinkClass.notNull(line0.get(&quot;ARROW_BODY2&quot;, 0));</span>
+<span class="nc" id="L205">		final String arrowDirection = CommandLinkClass.notNull(line0.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
 
-<span class="nc" id="L208">		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
+<span class="nc" id="L207">		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
 
-<span class="nc" id="L210">		final int lenght = arrow.length() - 1;</span>
+<span class="nc" id="L209">		final int lenght = arrow.length() - 1;</span>
 
-<span class="nc" id="L212">		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), line0.get(&quot;BRACKET&quot;, 0));</span>
+<span class="nc" id="L211">		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), line0.get(&quot;BRACKET&quot;, 0));</span>
 
-<span class="nc" id="L214">		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (arrow.contains(&quot;.&quot;))</span>
-<span class="nc" id="L216">			type = type.goDotted();</span>
+<span class="nc" id="L213">		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (arrow.contains(&quot;.&quot;))</span>
+<span class="nc" id="L215">			type = type.goDotted();</span>
 
-<span class="nc bnc" id="L218" title="All 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L219">		Link link = new Link(lines.getLocation(), diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type, linkArg);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L218">		Link link = new Link(lines.getLocation(), diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,</span>
+				entity2, type, linkArg);
 <span class="nc" id="L220">		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
 <span class="nc bnc" id="L221" title="All 4 branches missed.">		if (direction == Direction.LEFT || direction == Direction.UP)</span>
 <span class="nc" id="L222">			link = link.getInv();</span>

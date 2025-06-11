@@ -41,44 +41,41 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesFooter extends CommandMultilines&lt;TitledDiagram&gt; {
 	// ::remove folder when __HAXE__
 
-<span class="fc" id="L50">	public static final CommandMultilinesFooter ME = new CommandMultilinesFooter();</span>
+<span class="fc" id="L51">	public static final CommandMultilinesFooter ME = new CommandMultilinesFooter();</span>
 
 	private CommandMultilinesFooter() {
-<span class="fc" id="L53">		super(&quot;^(?:(left|right|center)?[%s]*)footer$&quot;);</span>
-<span class="fc" id="L54">	}</span>
-
-	@Override
-	public String getPatternEnd() {
-<span class="fc" id="L58">		return &quot;^end[%s]?footer$&quot;;</span>
-	}
+<span class="fc" id="L54">		super(Pattern2.cmpile(&quot;^(?:(left|right|center)?[%s]*)footer$&quot;),</span>
+<span class="fc" id="L55">				Pattern2.cmpile(&quot;^end[%s]?footer$&quot;));</span>
+<span class="fc" id="L56">	}</span>
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L63">		final LineLocation location = lines.getLocation();</span>
-<span class="nc" id="L64">		lines = lines.trim();</span>
-<span class="nc" id="L65">		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L67">			throw new IllegalStateException();</span>
+<span class="nc" id="L60">		final LineLocation location = lines.getLocation();</span>
+<span class="nc" id="L61">		lines = lines.trim();</span>
+<span class="nc" id="L62">		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (m.find() == false) {</span>
+<span class="nc" id="L64">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L69">		final String align = m.group(1);</span>
-<span class="nc" id="L70">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L71">		final Display strings = lines.toDisplay();</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
-<span class="nc" id="L73">			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (align == null)</span>
-<span class="nc" id="L75">				ha = FontParam.FOOTER.getStyleDefinition(null)</span>
-<span class="nc" id="L76">						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();</span>
+<span class="nc" id="L66">		final String align = m.group(1);</span>
+<span class="nc" id="L67">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L68">		final Display strings = lines.toDisplay();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
+<span class="nc" id="L70">			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			if (align == null)</span>
+<span class="nc" id="L72">				ha = FontParam.FOOTER.getStyleDefinition(null)</span>
+<span class="nc" id="L73">						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();</span>
 
-<span class="nc" id="L78">			diagram.updateFooter(location, strings, ha);</span>
-<span class="nc" id="L79">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">			diagram.updateFooter(location, strings, ha);</span>
+<span class="nc" id="L76">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L81">		return CommandExecutionResult.error(&quot;Empty footer&quot;);</span>
+<span class="nc" id="L78">		return CommandExecutionResult.error(&quot;Empty footer&quot;);</span>
 	}
 
 }

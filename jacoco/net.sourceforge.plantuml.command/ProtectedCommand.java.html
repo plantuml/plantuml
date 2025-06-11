@@ -75,13 +75,9 @@ public class ProtectedCommand&lt;S extends Diagram&gt; implements Command&lt;S&g
 <span class="nc" id="L75">		return cmd.isValid(lines);</span>
 	}
 
-	public String[] getDescription() {
-<span class="nc" id="L79">		return cmd.getDescription();</span>
-	}
-
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc" id="L84">		return cmd.isEligibleFor(pass);</span>
+<span class="nc" id="L80">		return cmd.isEligibleFor(pass);</span>
 	}
 
 }

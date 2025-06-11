@@ -59,10 +59,10 @@ public class CommandWeekNumberStrategy extends SingleLineCommand2&lt;GanttDiagra
 				new RegexLeaf(&quot;starts?&quot;), //
 				new RegexLeaf(&quot;[^0-9]*?&quot;), //
 <span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;WEEKDAY&quot;, &quot;(&quot; + DayOfWeek.getRegexString() + &quot;)&quot;), //</span>
+<span class="fc" id="L62">				new RegexLeaf(1, &quot;WEEKDAY&quot;, &quot;(&quot; + DayOfWeek.getRegexString() + &quot;)&quot;), //</span>
 <span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;[^0-9]*?&quot;), //
-				new RegexLeaf(&quot;NUM&quot;, &quot;([0-9]+)&quot;), //
+				new RegexLeaf(1, &quot;NUM&quot;, &quot;([0-9]+)&quot;), //
 				new RegexLeaf(&quot;[^0-9]*?&quot;), //
 <span class="fc" id="L67">				RegexLeaf.end());</span>
 	}

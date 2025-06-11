@@ -45,8 +45,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L45">public class ComplementInColorsFromTo implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L48">		return new RegexLeaf(&quot;COMPLEMENT&quot; + suffix,</span>
-				&quot;from[%s]+(#?\\w+)(?:/(#?\\w+))?[%s]+to[%s]+(#?\\w+)(?:/(#?\\w+))?&quot;);
+<span class="fc" id="L48">		return new RegexLeaf(4,</span>
+				&quot;COMPLEMENT&quot; + suffix, &quot;from[%s]+(#?\\w+)(?:/(#?\\w+))?[%s]+to[%s]+(#?\\w+)(?:/(#?\\w+))?&quot;);
 	}
 
 	public Failable&lt;CenterBorderColor[]&gt; getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

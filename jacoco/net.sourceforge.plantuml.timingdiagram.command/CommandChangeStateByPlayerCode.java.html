@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChangeStateByPlayerCode extends CommandChangeState {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public CommandChangeStateByPlayerCode() {
 <span class="fc" id="L55">		super(getRegexConcat());</span>
@@ -57,7 +57,7 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L59">		return RegexConcat.build(CommandChangeStateByPlayerCode.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, CommandTimeMessage.PLAYER_CODE), //
+				new RegexLeaf(1, &quot;CODE&quot;, CommandTimeMessage.PLAYER_CODE), //
 <span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;is&quot;), //
 <span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -70,14 +70,14 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 <span class="fc" id="L70">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;:&quot;), //
 <span class="fc" id="L72">								RegexLeaf.spaceZeroOrMore(), //</span>
-								new RegexLeaf(&quot;COMMENT&quot;, &quot;(.*?)&quot;) //
+								new RegexLeaf(1, &quot;COMMENT&quot;, &quot;(.*?)&quot;) //
 						)), //
 <span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L81">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
 <span class="fc" id="L82">		final Player player = diagram.getPlayer(code);</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (player == null)</span>

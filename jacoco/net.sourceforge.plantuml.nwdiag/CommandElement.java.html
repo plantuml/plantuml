@@ -53,9 +53,9 @@ public class CommandElement extends SingleLineCommand2&lt;NwDiagram&gt; {
 	static IRegex getRegexConcat() {
 <span class="fc" id="L54">		return RegexConcat.build(CommandElement.class.getName(), RegexLeaf.start(), //</span>
 <span class="fc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;DEFINITION&quot;, &quot;(\\[(.*)\\])?&quot;), //
+				new RegexLeaf(2, &quot;DEFINITION&quot;, &quot;(\\[(.*)\\])?&quot;), //
 <span class="fc" id="L59">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
 	}
 

@@ -59,7 +59,7 @@ public class CommandSkin extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="fc" id="L59">		return RegexConcat.build(CommandSkin.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;skin&quot;), //
 <span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;SKIN&quot;, &quot;([\\w.]+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L62">				new RegexLeaf(1, &quot;SKIN&quot;, &quot;([\\w.]+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

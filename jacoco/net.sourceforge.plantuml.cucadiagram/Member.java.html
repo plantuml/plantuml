@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -57,168 +59,177 @@ public class Member implements CharSequence {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L60">		return raw.toString();</span>
+<span class="fc" id="L62">		return raw.toString();</span>
 	}
 
 	public char charAt(int index) {
-<span class="nc" id="L64">		return raw.charAt(index);</span>
+<span class="nc" id="L66">		return raw.charAt(index);</span>
 	}
 
 	public int length() {
-<span class="nc" id="L68">		return raw.length();</span>
+<span class="nc" id="L70">		return raw.length();</span>
 	}
 
 	public CharSequence subSequence(int start, int end) {
-<span class="nc" id="L72">		return raw.subSequence(start, end);</span>
+<span class="nc" id="L74">		return raw.subSequence(start, end);</span>
 	}
 
 	public static Member method(CharSequence tmpDisplay) {
-<span class="fc" id="L76">		return new Member(true, tmpDisplay, true);</span>
+<span class="fc" id="L78">		return new Member(true, tmpDisplay, true);</span>
 	}
 
 	public static Member field(CharSequence tmpDisplay) {
-<span class="fc" id="L80">		return new Member(true, tmpDisplay, false);</span>
+<span class="fc" id="L82">		return new Member(true, tmpDisplay, false);</span>
 	}
 
 	public static Member method(CharSequence tmpDisplay, boolean manageModifier) {
-<span class="nc" id="L84">		return new Member(manageModifier, tmpDisplay, true);</span>
+<span class="nc" id="L86">		return new Member(manageModifier, tmpDisplay, true);</span>
 	}
 
 	public static Member field(CharSequence tmpDisplay, boolean manageModifier) {
-<span class="nc" id="L88">		return new Member(manageModifier, tmpDisplay, false);</span>
+<span class="nc" id="L90">		return new Member(manageModifier, tmpDisplay, false);</span>
 	}
 
-<span class="fc" id="L91">	private Member(boolean manageModifier, CharSequence tmpDisplay, boolean isMethod) {</span>
-<span class="fc" id="L92">		this.raw = tmpDisplay;</span>
-<span class="fc" id="L93">		tmpDisplay = tmpDisplay.toString().replaceAll(&quot;(?i)\\{(method|field)\\}\\s*&quot;, &quot;&quot;);</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (manageModifier) {</span>
-<span class="fc" id="L95">			final Pattern2 finalUrl = Pattern2.cmpile(&quot;^(.*?)(?:\\[(&quot; + UrlBuilder.getRegexp() + &quot;)\\])?$&quot;);</span>
-<span class="fc" id="L96">			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (matcher.matches() == false) {</span>
-<span class="nc" id="L98">				throw new IllegalStateException();</span>
-			}
-<span class="fc" id="L100">			tmpDisplay = matcher.group(1);</span>
-<span class="fc" id="L101">			final String urlString = matcher.group(2);</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (urlString == null) {</span>
-<span class="fc" id="L103">				this.url = null;</span>
-			} else {
-<span class="nc" id="L105">				this.url = new UrlBuilder(null, UrlMode.STRICT).getUrl(urlString);</span>
-			}
-<span class="fc" id="L107">		} else {</span>
-<span class="nc" id="L108">			this.url = null;</span>
-		}
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		this.hasUrl = this.url != null;</span>
-<span class="fc" id="L111">		final String lower = StringUtils.goLowerCase(tmpDisplay.toString());</span>
+<span class="fc" id="L93">	private static final Pattern2 URL = Pattern2.cmpile(&quot;^(.*?)(?:\\[(&quot; + UrlBuilder.getRegexp() + &quot;)\\])?$&quot;);</span>
 
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (manageModifier) {</span>
-<span class="pc bpc" id="L114" title="1 of 4 branches missed.">			this.staticModifier = lower.contains(&quot;{static}&quot;) || lower.contains(&quot;{classifier}&quot;);</span>
-<span class="fc" id="L115">			this.abstractModifier = lower.contains(&quot;{abstract}&quot;);</span>
-<span class="fc" id="L116">			String displayClean = tmpDisplay.toString().replaceAll(&quot;(?i)\\{(static|classifier|abstract)\\}\\s*&quot;, &quot;&quot;)</span>
-<span class="fc" id="L117">					.trim();</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (displayClean.length() == 0) {</span>
-<span class="nc" id="L119">				displayClean = &quot; &quot;;</span>
-			}
+<span class="fc" id="L95">	private static final Pattern REMOVE_TAG_PATTERN = Pattern.compile(&quot;(?i)\\{(method|field)\\}\\s*&quot;);</span>
 
-<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);</span>
-<span class="fc" id="L124">				this.display = StringUtils.trin(Guillemet.GUILLEMET.manageGuillemet(displayClean.substring(1)));</span>
+<span class="fc" id="L97">	private static final Pattern REMOVE_STATIC_CLASSIFIER_ABSTRACT_PATTERN = Pattern</span>
+<span class="fc" id="L98">			.compile(&quot;(?i)\\{(static|classifier|abstract)\\}\\s*&quot;);</span>
+
+<span class="fc" id="L100">	private Member(boolean manageModifier, CharSequence tmpDisplay, boolean isMethod) {</span>
+<span class="fc" id="L101">		this.raw = tmpDisplay;</span>
+
+<span class="fc" id="L103">		tmpDisplay = REMOVE_TAG_PATTERN.matcher(tmpDisplay.toString()).replaceAll(&quot;&quot;);</span>
+
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (manageModifier) {</span>
+<span class="fc" id="L106">			final Matcher2 matcher = URL.matcher(tmpDisplay);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">			if (matcher.matches() == false)</span>
+<span class="nc" id="L108">				throw new IllegalStateException();</span>
+
+<span class="fc" id="L110">			tmpDisplay = matcher.group(1);</span>
+<span class="fc" id="L111">			final String urlString = matcher.group(2);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (urlString == null)</span>
+<span class="fc" id="L113">				this.url = null;</span>
+			else
+<span class="nc" id="L115">				this.url = new UrlBuilder(null, UrlMode.STRICT).getUrl(urlString);</span>
+
+<span class="fc" id="L117">		} else</span>
+<span class="nc" id="L118">			this.url = null;</span>
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		this.hasUrl = this.url != null;</span>
+<span class="fc" id="L121">		final String lower = StringUtils.goLowerCase(tmpDisplay.toString());</span>
+
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (manageModifier) {</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			this.staticModifier = lower.contains(&quot;{static}&quot;) || lower.contains(&quot;{classifier}&quot;);</span>
+<span class="fc" id="L125">			this.abstractModifier = lower.contains(&quot;{abstract}&quot;);</span>
+
+<span class="fc" id="L127">			String displayClean = REMOVE_STATIC_CLASSIFIER_ABSTRACT_PATTERN.matcher(tmpDisplay.toString())</span>
+<span class="fc" id="L128">					.replaceAll(&quot;&quot;).trim();</span>
+
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (displayClean.length() == 0)</span>
+<span class="nc" id="L131">				displayClean = &quot; &quot;;</span>
+
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);</span>
+<span class="fc" id="L135">				this.display = StringUtils.trin(Guillemet.GUILLEMET.manageGuillemet(displayClean.substring(1)));</span>
 			} else {
-<span class="fc" id="L126">				this.display = Guillemet.GUILLEMET.manageGuillemet(displayClean);</span>
-<span class="fc" id="L127">				visibilityModifier = null;</span>
+<span class="fc" id="L137">				this.display = Guillemet.GUILLEMET.manageGuillemet(displayClean);</span>
+<span class="fc" id="L138">				visibilityModifier = null;</span>
 			}
-<span class="fc" id="L129">		} else {</span>
-<span class="nc" id="L130">			this.staticModifier = false;</span>
-<span class="nc" id="L131">			this.visibilityModifier = null;</span>
-<span class="nc" id="L132">			this.abstractModifier = false;</span>
-<span class="nc" id="L133">			tmpDisplay = StringUtils.trin(tmpDisplay.toString());</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">			this.display = tmpDisplay.length() == 0 ? &quot; &quot;</span>
-<span class="nc" id="L135">					: Guillemet.GUILLEMET.manageGuillemet(StringUtils.trin(tmpDisplay.toString()));</span>
+<span class="fc" id="L140">		} else {</span>
+<span class="nc" id="L141">			this.staticModifier = false;</span>
+<span class="nc" id="L142">			this.visibilityModifier = null;</span>
+<span class="nc" id="L143">			this.abstractModifier = false;</span>
+<span class="nc" id="L144">			tmpDisplay = StringUtils.trin(tmpDisplay.toString());</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			this.display = tmpDisplay.length() == 0 ? &quot; &quot;</span>
+<span class="nc" id="L146">					: Guillemet.GUILLEMET.manageGuillemet(StringUtils.trin(tmpDisplay.toString()));</span>
 		}
-<span class="fc" id="L137">	}</span>
+<span class="fc" id="L148">	}</span>
 
 	public String getDisplay(boolean withVisibilityChar) {
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (withVisibilityChar) {</span>
-<span class="nc" id="L141">			return getDisplayWithVisibilityChar();</span>
-		}
-<span class="fc" id="L143">		return getDisplayWithoutVisibilityChar();</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (withVisibilityChar)</span>
+<span class="nc" id="L152">			return getDisplayWithVisibilityChar();</span>
+
+<span class="fc" id="L154">		return getDisplayWithoutVisibilityChar();</span>
 	}
 
 	private String getDisplayWithoutVisibilityChar() {
-<span class="fc" id="L147">		return display;</span>
+<span class="fc" id="L158">		return display;</span>
 	}
 
 	private String getDisplayWithVisibilityChar() {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (isPrivate()) {</span>
-<span class="nc" id="L152">			return &quot;-&quot; + display;</span>
-		}
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (isPublic()) {</span>
-<span class="nc" id="L155">			return &quot;+&quot; + display;</span>
-		}
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (isPackagePrivate()) {</span>
-<span class="nc" id="L158">			return &quot;~&quot; + display;</span>
-		}
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (isProtected()) {</span>
-<span class="nc" id="L161">			return &quot;#&quot; + display;</span>
-		}
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (isIEMandatory()) {</span>
-<span class="nc" id="L164">			return &quot;*&quot; + display;</span>
-		}
-<span class="nc" id="L166">		return display;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (isPrivate())</span>
+<span class="nc" id="L163">			return &quot;-&quot; + display;</span>
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (isPublic())</span>
+<span class="nc" id="L166">			return &quot;+&quot; + display;</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (isPackagePrivate())</span>
+<span class="nc" id="L169">			return &quot;~&quot; + display;</span>
+
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (isProtected())</span>
+<span class="nc" id="L172">			return &quot;#&quot; + display;</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (isIEMandatory())</span>
+<span class="nc" id="L175">			return &quot;*&quot; + display;</span>
+
+<span class="nc" id="L177">		return display;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc" id="L171">		final Member other = (Member) obj;</span>
-<span class="nc" id="L172">		return this.display.equals(other.display);</span>
+<span class="nc" id="L182">		final Member other = (Member) obj;</span>
+<span class="nc" id="L183">		return this.display.equals(other.display);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L177">		return display.hashCode();</span>
+<span class="nc" id="L188">		return display.hashCode();</span>
 	}
 
 	public final boolean isStatic() {
-<span class="fc" id="L181">		return staticModifier;</span>
+<span class="fc" id="L192">		return staticModifier;</span>
 	}
 
 	public final boolean isAbstract() {
-<span class="fc" id="L185">		return abstractModifier;</span>
+<span class="fc" id="L196">		return abstractModifier;</span>
 	}
 
 	private boolean isPrivate() {
-<span class="nc bnc" id="L189" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PRIVATE_FIELD</span>
+<span class="nc bnc" id="L200" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PRIVATE_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PRIVATE_METHOD;
 	}
 
 	private boolean isProtected() {
-<span class="nc bnc" id="L194" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PROTECTED_FIELD</span>
+<span class="nc bnc" id="L205" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PROTECTED_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PROTECTED_METHOD;
 	}
 
 	private boolean isPublic() {
-<span class="nc bnc" id="L199" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PUBLIC_FIELD</span>
+<span class="nc bnc" id="L210" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PUBLIC_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PUBLIC_METHOD;
 	}
 
 	private boolean isPackagePrivate() {
-<span class="nc bnc" id="L204" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_FIELD</span>
+<span class="nc bnc" id="L215" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_METHOD;
 	}
 
 	private boolean isIEMandatory() {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		return visibilityModifier == VisibilityModifier.IE_MANDATORY;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		return visibilityModifier == VisibilityModifier.IE_MANDATORY;</span>
 	}
 
 	public final VisibilityModifier getVisibilityModifier() {
-<span class="fc" id="L213">		return visibilityModifier;</span>
+<span class="fc" id="L224">		return visibilityModifier;</span>
 	}
 
 	public final Url getUrl() {
-<span class="fc" id="L217">		return url;</span>
+<span class="fc" id="L228">		return url;</span>
 	}
 
 	public boolean hasUrl() {
-<span class="nc" id="L221">		return hasUrl;</span>
+<span class="nc" id="L232">		return hasUrl;</span>
 	}
 
 }

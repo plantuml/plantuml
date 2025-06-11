@@ -78,34 +78,34 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L80">		return RegexConcat.build(CommandCreateElementFull.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;SYMBOL&quot;, &quot;(?:(&quot; + ALL_TYPES + &quot;|\\(\\))[%s]+)?&quot;), //
+				new RegexLeaf(1, &quot;SYMBOL&quot;, &quot;(?:(&quot; + ALL_TYPES + &quot;|\\(\\))[%s]+)?&quot;), //
 <span class="fc" id="L82">				color2().getRegex(), //</span>
 <span class="fc" id="L83">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(//
-						new RegexLeaf(&quot;CODE1&quot;, CODE_WITH_QUOTE), //
+						new RegexLeaf(1, &quot;CODE1&quot;, CODE_WITH_QUOTE), //
 						new RegexConcat(//
-								new RegexLeaf(&quot;DISPLAY2&quot;, DISPLAY), //
+								new RegexLeaf(1, &quot;DISPLAY2&quot;, DISPLAY), //
 <span class="fc" id="L88">								StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L90">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE2&quot;, CODE)), //
+								new RegexLeaf(1, &quot;CODE2&quot;, CODE)), //
 						new RegexConcat(//
-								new RegexLeaf(&quot;CODE3&quot;, CODE), //
+								new RegexLeaf(1, &quot;CODE3&quot;, CODE), //
 <span class="fc" id="L94">								StereotypePattern.optional(&quot;STEREOTYPE3&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L96">								RegexLeaf.spaceZeroOrMore(), //</span>
-								new RegexLeaf(&quot;DISPLAY3&quot;, DISPLAY)), //
+								new RegexLeaf(1, &quot;DISPLAY3&quot;, DISPLAY)), //
 						new RegexConcat(//
-								new RegexLeaf(&quot;DISPLAY4&quot;, DISPLAY_WITHOUT_QUOTE), //
+								new RegexLeaf(1, &quot;DISPLAY4&quot;, DISPLAY_WITHOUT_QUOTE), //
 <span class="fc" id="L100">								StereotypePattern.optional(&quot;STEREOTYPE4&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L102">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;CODE4&quot;, CODE)) //
+								new RegexLeaf(1, &quot;CODE4&quot;, CODE)) //
 				), //
 <span class="fc" id="L105">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L106">				new RegexLeaf(&quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L106">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L107">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-<span class="fc" id="L108">				new RegexLeaf(&quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L108">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
 <span class="fc" id="L109">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>

@@ -41,34 +41,32 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesTitle extends CommandMultilines&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L49">	public static final CommandMultilinesTitle ME = new CommandMultilinesTitle();</span>
+<span class="fc" id="L50">	public static final CommandMultilinesTitle ME = new CommandMultilinesTitle();</span>
 
 	private CommandMultilinesTitle() {
-<span class="fc" id="L52">		super(&quot;^title$&quot;);</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(Pattern2.cmpile(&quot;^title$&quot;),</span>
+<span class="fc" id="L54">				Pattern2.cmpile(&quot;^end[%s]?title$&quot;));</span>
 
-	@Override
-	public String getPatternEnd() {
-<span class="fc" id="L57">		return &quot;^end[%s]?title$&quot;;</span>
-	}
+<span class="fc" id="L56">	}</span>
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L62">		final LineLocation location = lines.getLocation();</span>
-<span class="fc" id="L63">		lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="fc" id="L64">		lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L65">		final Display strings = lines.toDisplay();</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (strings.size() &gt; 0) {</span>
-<span class="fc" id="L67">			diagram.setTitle(DisplayPositioned.single(location, strings.replaceBackslashT(), HorizontalAlignment.CENTER,</span>
+<span class="fc" id="L60">		final LineLocation location = lines.getLocation();</span>
+<span class="fc" id="L61">		lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L62">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L63">		final Display strings = lines.toDisplay();</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (strings.size() &gt; 0) {</span>
+<span class="fc" id="L65">			diagram.setTitle(DisplayPositioned.single(location, strings.replaceBackslashT(), HorizontalAlignment.CENTER,</span>
 					VerticalAlignment.TOP));
-<span class="fc" id="L69">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L67">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L71">		return CommandExecutionResult.error(&quot;No title defined&quot;);</span>
+<span class="nc" id="L69">		return CommandExecutionResult.error(&quot;No title defined&quot;);</span>
 	}
 
 }

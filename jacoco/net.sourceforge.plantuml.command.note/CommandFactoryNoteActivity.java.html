@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -56,6 +57,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -66,81 +68,80 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
-<span class="fc" id="L69">public final class CommandFactoryNoteActivity implements SingleMultiFactoryCommand&lt;ActivityDiagram&gt; {</span>
+<span class="fc" id="L71">public final class CommandFactoryNoteActivity implements SingleMultiFactoryCommand&lt;ActivityDiagram&gt; {</span>
 
 	private IRegex getRegexConcatMultiLine() {
-<span class="fc" id="L72">		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
+<span class="fc" id="L74">		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + &quot;multi&quot;, RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L77">				ColorParser.exp1(), //</span>
-<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L76">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				ColorParser.exp1(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	private IRegex getRegexConcatSingleLine() {
-<span class="fc" id="L82">		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
+<span class="fc" id="L84">		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + &quot;single&quot;, RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L84">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
-<span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L87">				ColorParser.exp1(), //</span>
+<span class="fc" id="L86">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left|top|bottom)&quot;), //
 <span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L89">				ColorParser.exp1(), //</span>
 <span class="fc" id="L90">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L91">				new RegexLeaf(&quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+				new RegexLeaf(&quot;:&quot;), //
+<span class="fc" id="L92">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L93">				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
+	
+<span class="fc" id="L96">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L97">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
+
 
 	public Command&lt;ActivityDiagram&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L95">		return new CommandMultilines2&lt;ActivityDiagram&gt;(getRegexConcatMultiLine(),</span>
-<span class="fc" id="L96">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH) {</span>
-
-			@Override
-			public String getPatternEnd() {
-<span class="nc" id="L100">				return &quot;^[%s]*end[%s]?note$&quot;;</span>
-			}
+<span class="fc" id="L101">		return new CommandMultilines2&lt;ActivityDiagram&gt;(getRegexConcatMultiLine(),</span>
+<span class="fc" id="L102">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
 
 			@Override
 			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines, ParserPass currentPass)
 					throws NoSuchColorException {
 				// StringUtils.trim(lines, true);
-<span class="nc" id="L107">				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L108">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="nc" id="L109">				lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L108">				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L109">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="nc" id="L110">				lines = lines.removeEmptyColumns();</span>
 
-<span class="nc" id="L111">				Display strings = lines.toDisplay();</span>
+<span class="nc" id="L112">				Display strings = lines.toDisplay();</span>
 
-<span class="nc" id="L113">				Url url = null;</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (strings.size() &gt; 0) {</span>
-<span class="nc" id="L115">					final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;),</span>
+<span class="nc" id="L114">				Url url = null;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				if (strings.size() &gt; 0) {</span>
+<span class="nc" id="L116">					final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;),</span>
 							UrlMode.STRICT);
-<span class="nc" id="L117">					url = urlBuilder.getUrl(strings.get(0).toString());</span>
+<span class="nc" id="L118">					url = urlBuilder.getUrl(strings.get(0).toString());</span>
 				}
-<span class="nc bnc" id="L119" title="All 2 branches missed.">				if (url != null)</span>
-<span class="nc" id="L120">					strings = strings.subList(1, strings.size());</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">				if (url != null)</span>
+<span class="nc" id="L121">					strings = strings.subList(1, strings.size());</span>
 
-<span class="nc" id="L122">				final String codeString = diagram.getUniqueSequence(&quot;GMN&quot;);</span>
-<span class="nc" id="L123">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, codeString);</span>
-<span class="nc" id="L124">				final Entity note = diagram.reallyCreateLeaf(lines.getLocation(), quark, strings, LeafType.NOTE, null);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">				if (url != null)</span>
-<span class="nc" id="L126">					note.addUrl(url);</span>
+<span class="nc" id="L123">				final String codeString = diagram.getUniqueSequence(&quot;GMN&quot;);</span>
+<span class="nc" id="L124">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, codeString);</span>
+<span class="nc" id="L125">				final Entity note = diagram.reallyCreateLeaf(lines.getLocation(), quark, strings, LeafType.NOTE, null);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">				if (url != null)</span>
+<span class="nc" id="L127">					note.addUrl(url);</span>
 
-<span class="nc" id="L128">				return executeInternal(lines.getLocation(), diagram, arg, note);</span>
+<span class="nc" id="L129">				return executeInternal(lines.getLocation(), diagram, arg, note);</span>
 			}
 		};
 	}
 
 	public Command&lt;ActivityDiagram&gt; createSingleLine() {
-<span class="fc" id="L134">		return new SingleLineCommand2&lt;ActivityDiagram&gt;(getRegexConcatSingleLine()) {</span>
+<span class="fc" id="L135">		return new SingleLineCommand2&lt;ActivityDiagram&gt;(getRegexConcatSingleLine()) {</span>
 
 			@Override
 			protected CommandExecutionResult executeArg(final ActivityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L139">				final String tmp = diagram.getUniqueSequence(&quot;GN&quot;);</span>
-<span class="nc" id="L140">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(tmp));</span>
+<span class="nc" id="L140">				final String tmp = diagram.getUniqueSequence(&quot;GN&quot;);</span>
+<span class="nc" id="L141">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(tmp));</span>
 
-<span class="nc" id="L142">				final Entity note = diagram.createNote(location, quark, tmp, Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0)));</span>
-<span class="nc" id="L143">				return executeInternal(location, diagram, arg, note);</span>
+<span class="nc" id="L143">				final Entity note = diagram.createNote(location, quark, tmp, Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0)));</span>
+<span class="nc" id="L144">				return executeInternal(location, diagram, arg, note);</span>
 			}
 		};
 	}
@@ -148,38 +149,38 @@ import net.sourceforge.plantuml.utils.Position;
 	private CommandExecutionResult executeInternal(LineLocation location, ActivityDiagram diagram, RegexResult arg, Entity note)
 			throws NoSuchColorException {
 
-<span class="nc" id="L151">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L152">		note.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L152">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L153">		note.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
 
-<span class="nc" id="L155">		Entity activity = diagram.getLastEntityConsulted();</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (activity == null)</span>
-<span class="nc" id="L157">			activity = diagram.getStart(location);</span>
+<span class="nc" id="L156">		Entity activity = diagram.getLastEntityConsulted();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (activity == null)</span>
+<span class="nc" id="L158">			activity = diagram.getStart(location);</span>
 
 		final Link link;
 
-<span class="nc" id="L161">		final Position position = Position.valueOf(StringUtils.goUpperCase(arg.get(&quot;POSITION&quot;, 0)))</span>
-<span class="nc" id="L162">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
+<span class="nc" id="L162">		final Position position = Position.valueOf(StringUtils.goUpperCase(arg.get(&quot;POSITION&quot;, 0)))</span>
+<span class="nc" id="L163">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
 
-<span class="nc" id="L164">		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();</span>
+<span class="nc" id="L165">		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();</span>
 
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (position == Position.RIGHT)</span>
-<span class="nc" id="L167">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,</span>
-<span class="nc" id="L168">					note, type, LinkArg.noDisplay(1));</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		else if (position == Position.LEFT)</span>
-<span class="nc" id="L170">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,</span>
-<span class="nc" id="L171">					type, LinkArg.noDisplay(1));</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		else if (position == Position.BOTTOM)</span>
-<span class="nc" id="L173">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,</span>
-<span class="nc" id="L174">					note, type, LinkArg.noDisplay(2));</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		else if (position == Position.TOP)</span>
-<span class="nc" id="L176">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,</span>
-<span class="nc" id="L177">					type, LinkArg.noDisplay(2));</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (position == Position.RIGHT)</span>
+<span class="nc" id="L168">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,</span>
+<span class="nc" id="L169">					note, type, LinkArg.noDisplay(1));</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		else if (position == Position.LEFT)</span>
+<span class="nc" id="L171">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,</span>
+<span class="nc" id="L172">					type, LinkArg.noDisplay(1));</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		else if (position == Position.BOTTOM)</span>
+<span class="nc" id="L174">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,</span>
+<span class="nc" id="L175">					note, type, LinkArg.noDisplay(2));</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		else if (position == Position.TOP)</span>
+<span class="nc" id="L177">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,</span>
+<span class="nc" id="L178">					type, LinkArg.noDisplay(2));</span>
 		else
-<span class="nc" id="L179">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L180">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L181">		diagram.addLink(link);</span>
-<span class="nc" id="L182">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L182">		diagram.addLink(link);</span>
+<span class="nc" id="L183">		return CommandExecutionResult.ok();</span>
 	}
 
 }

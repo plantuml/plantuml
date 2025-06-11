@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.regex.RegexRepeatedZeroOrMore;
 	}
 
 	public static IRegex namedSingle(String name, String word) {
-<span class="nc" id="L86">		return new RegexLeaf(name, word);</span>
+<span class="nc" id="L86">		return new RegexLeaf(1, name, word);</span>
 	}
 
 	public static IRegex namedOneOf(String name, String... words) {

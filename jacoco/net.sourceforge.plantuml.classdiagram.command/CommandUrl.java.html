@@ -64,7 +64,7 @@ public class CommandUrl extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; 
 <span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(&quot;of|for&quot;)), //
 <span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+|[%g][^%g]+[%g])&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+|[%g][^%g]+[%g])&quot;), //
 <span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(&quot;is&quot;)), //
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.timingdiagram.command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -56,50 +55,50 @@ import net.sourceforge.plantuml.utils.Position;
 public class CommandNote extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandNote() {
-<span class="fc" id="L59">		super(getRegexConcat());</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L63">		return RegexConcat.build(CommandNote.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandNote.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;POSITION&quot;, &quot;(top|bottom)&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(top|bottom)&quot;), //
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;of&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, CommandTimeMessage.PLAYER_CODE), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L73">				new RegexLeaf(&quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L74">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;CODE&quot;, CommandTimeMessage.PLAYER_CODE), //
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L73">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;NOTE&quot;, &quot;(.+)&quot;), //
-<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), // </span>
-<span class="fc" id="L80">				RegexLeaf.end());</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.+)&quot;), //
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), // </span>
+<span class="fc" id="L79">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L86">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L87">		final Player player = diagram.getPlayer(code);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (player == null)</span>
-<span class="nc" id="L89">			return CommandExecutionResult.error(&quot;Unkown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L85">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L86">		final Player player = diagram.getPlayer(code);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (player == null)</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;Unkown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L91">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="nc" id="L92">		final TimeTick now = diagram.getNow();</span>
+<span class="nc" id="L90">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="nc" id="L91">		final TimeTick now = diagram.getNow();</span>
 
-<span class="nc" id="L94">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L95">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L97">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L93">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L94">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L96">			stereotype = Stereotype.build(stereotypeString);</span>
 
 		// final Colors colors = color().getColor(arg,
 		// diagram.getSkinParam().getIHtmlColorSet());
-<span class="nc" id="L101">		player.addNote(now, note, Position.fromString(arg.get(&quot;POSITION&quot;, 0)), stereotype);</span>
-<span class="nc" id="L102">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L100">		player.addNote(now, note, Position.fromString(arg.get(&quot;POSITION&quot;, 0)), stereotype);</span>
+<span class="nc" id="L101">		return CommandExecutionResult.ok();</span>
 	}
 
 }

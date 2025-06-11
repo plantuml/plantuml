@@ -124,7 +124,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 <span class="fc" id="L125">		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));</span>
 <span class="fc" id="L126">		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));</span>
-<span class="fc" id="L127">		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();</span>
+<span class="fc" id="L127">		final CommandFactoryNote factoryNoteCommand = CommandFactoryNote.ME;</span>
 <span class="fc" id="L128">		cmds.add(factoryNoteCommand.createSingleLine());</span>
 
 <span class="fc" id="L130">		cmds.add(new CommandNamespace());</span>
@@ -155,8 +155,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 <span class="fc" id="L156">		cmds.add(new CommandDiamondAssociation());</span>
 
-<span class="fc" id="L158">		cmds.add(new CommandCreateElementMultilines(0));</span>
-<span class="fc" id="L159">		cmds.add(new CommandCreateElementMultilines(1));</span>
+<span class="fc" id="L158">		cmds.add(CommandCreateElementMultilines.TYPE0);</span>
+<span class="fc" id="L159">		cmds.add(CommandCreateElementMultilines.TYPE1);</span>
 <span class="fc" id="L160">		CommonCommands.addTitleCommands(cmds);</span>
 <span class="fc" id="L161">		CommonCommands.addCommonCommands2(cmds);</span>
 <span class="fc" id="L162">	}</span>

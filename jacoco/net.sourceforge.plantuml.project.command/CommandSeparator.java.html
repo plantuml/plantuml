@@ -55,7 +55,7 @@ public class CommandSeparator extends SingleLineCommand2&lt;GanttDiagram&gt; {
 <span class="fc" id="L55">		return RegexConcat.build(CommandSeparator.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;--&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L58">				new RegexLeaf(&quot;COMMENT&quot;, &quot;((.+?)[%s]*--)?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L58">				new RegexLeaf(2, &quot;COMMENT&quot;, &quot;((.+?)[%s]*--)?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override

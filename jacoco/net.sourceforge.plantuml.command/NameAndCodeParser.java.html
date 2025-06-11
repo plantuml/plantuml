@@ -52,48 +52,48 @@ import net.sourceforge.plantuml.regex.RegexOr;
 	public static IRegex nameAndCodeForClassWithGeneric() {
 <span class="fc" id="L53">		return new RegexOr(//</span>
 				new RegexConcat(//
-						new RegexLeaf(&quot;DISPLAY1&quot;, DISPLAY_WITH_GENERIC), //
+						new RegexLeaf(2, &quot;DISPLAY1&quot;, DISPLAY_WITH_GENERIC), //
 <span class="fc" id="L56">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L58">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(&quot;CODE1&quot;, &quot;(&quot; + CODE + &quot;)&quot;)), //
+						new RegexLeaf(1, &quot;CODE1&quot;, &quot;(&quot; + CODE + &quot;)&quot;)), //
 				new RegexConcat(//
-						new RegexLeaf(&quot;CODE2&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
+						new RegexLeaf(1, &quot;CODE2&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
 <span class="fc" id="L62">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L64">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(&quot;DISPLAY2&quot;, DISPLAY_WITH_GENERIC)), //
-				new RegexLeaf(&quot;CODE3&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
-				new RegexLeaf(&quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)); //
+						new RegexLeaf(2, &quot;DISPLAY2&quot;, DISPLAY_WITH_GENERIC)), //
+				new RegexLeaf(1, &quot;CODE3&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
+				new RegexLeaf(1, &quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)); //
 
 	}
 
 	public static IRegex nameAndCode() {
 <span class="fc" id="L72">		return new RegexOr(//</span>
 				new RegexConcat(//
-						new RegexLeaf(&quot;DISPLAY1&quot;, DISPLAY), //
+						new RegexLeaf(1, &quot;DISPLAY1&quot;, DISPLAY), //
 <span class="fc" id="L75">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L77">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(&quot;CODE1&quot;, &quot;(&quot; + CODE + &quot;)&quot;)), //
+						new RegexLeaf(1, &quot;CODE1&quot;, &quot;(&quot; + CODE + &quot;)&quot;)), //
 				new RegexConcat(//
-						new RegexLeaf(&quot;CODE2&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
+						new RegexLeaf(1, &quot;CODE2&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
 <span class="fc" id="L81">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L83">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(&quot;DISPLAY2&quot;, DISPLAY)), //
-				new RegexLeaf(&quot;CODE3&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
-				new RegexLeaf(&quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)); //
+						new RegexLeaf(1, &quot;DISPLAY2&quot;, DISPLAY)), //
+				new RegexLeaf(1, &quot;CODE3&quot;, &quot;(&quot; + CODE + &quot;)&quot;), //
+				new RegexLeaf(1, &quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)); //
 
 	}
 
 	public static IRegex codeForClass() {
-<span class="fc" id="L91">		return new RegexLeaf(&quot;CODE&quot;, &quot;(&quot; + NameAndCodeParser.CODE + &quot;|[%g][^%g]+[%g])&quot;);</span>
+<span class="fc" id="L91">		return new RegexLeaf(1, &quot;CODE&quot;, &quot;(&quot; + NameAndCodeParser.CODE + &quot;|[%g][^%g]+[%g])&quot;);</span>
 	}
 
 	public static IRegex codeWithMemberForClass() {
-<span class="fc" id="L95">		return new RegexLeaf(&quot;CODE&quot;,</span>
-				&quot;(&quot; + NameAndCodeParser.CODE_NO_DOTDOT + &quot;|[%g][^%g]+[%g])::([%g][^%g]+[%g]|[^%s]+)&quot;);
+<span class="fc" id="L95">		return new RegexLeaf(2,</span>
+				&quot;CODE&quot;, &quot;(&quot; + NameAndCodeParser.CODE_NO_DOTDOT + &quot;|[%g][^%g]+[%g])::([%g][^%g]+[%g]|[^%s]+)&quot;);
 	}
 
 }

@@ -41,33 +41,32 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesCaption extends CommandMultilines&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L49">	public static final CommandMultilinesCaption ME = new CommandMultilinesCaption();</span>
+<span class="fc" id="L50">	public static final CommandMultilinesCaption ME = new CommandMultilinesCaption();</span>
 
 	private CommandMultilinesCaption() {
-<span class="fc" id="L52">		super(&quot;^caption$&quot;);</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(Pattern2.cmpile(&quot;^caption$&quot;),</span>
+<span class="fc" id="L54">				Pattern2.cmpile(&quot;^end[%s]?caption$&quot;));</span>
 
-	@Override
-	public String getPatternEnd() {
-<span class="fc" id="L57">		return &quot;^end[%s]?caption$&quot;;</span>
-	}
+<span class="fc" id="L56">	}</span>
 
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L61">		final LineLocation location = lines.getLocation();</span>
-<span class="nc" id="L62">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L63">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L64">		final Display strings = lines.toDisplay();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
-<span class="nc" id="L66">			diagram.setCaption(DisplayPositioned.single(location, strings.replaceBackslashT(), HorizontalAlignment.CENTER,</span>
-					VerticalAlignment.BOTTOM));
-<span class="nc" id="L68">			return CommandExecutionResult.ok();</span>
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L60">		final LineLocation location = lines.getLocation();</span>
+<span class="nc" id="L61">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L62">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L63">		final Display strings = lines.toDisplay();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
+<span class="nc" id="L65">			diagram.setCaption(DisplayPositioned.single(location, strings.replaceBackslashT(),</span>
+					HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
+<span class="nc" id="L67">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L70">		return CommandExecutionResult.error(&quot;No caption defined&quot;);</span>
+<span class="nc" id="L69">		return CommandExecutionResult.error(&quot;No caption defined&quot;);</span>
 	}
 
 }

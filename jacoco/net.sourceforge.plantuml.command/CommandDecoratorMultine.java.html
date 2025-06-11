@@ -80,17 +80,13 @@ public class CommandDecoratorMultine&lt;D extends Diagram&gt; implements Command
 <span class="fc" id="L80">		return CommandControl.OK_PARTIAL;</span>
 	}
 
-	public String[] getDescription() {
-<span class="nc" id="L84">		return cmd.getDescription();</span>
-	}
-
 	public int getNbMaxLines() {
-<span class="fc" id="L88">		return nbMaxLines;</span>
+<span class="fc" id="L84">		return nbMaxLines;</span>
 	}
 	
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc" id="L93">		return cmd.isEligibleFor(pass);</span>
+<span class="nc" id="L89">		return cmd.isEligibleFor(pass);</span>
 	}
 
 }

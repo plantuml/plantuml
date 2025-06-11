@@ -54,7 +54,7 @@ public class CommandMinwidth extends SingleLineCommand2&lt;UmlDiagram&gt; {
 <span class="fc" id="L54">		return RegexConcat.build(CommandMinwidth.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;minwidth&quot;), //
 <span class="fc" id="L56">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L57">				new RegexLeaf(&quot;VALUE&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L57">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

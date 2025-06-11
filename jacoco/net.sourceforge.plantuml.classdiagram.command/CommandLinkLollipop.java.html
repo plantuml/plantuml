@@ -68,21 +68,21 @@ final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractCla
 <span class="fc" id="L68">		return RegexConcat.build(CommandLinkLollipop.class.getName() + umlDiagramType, RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;HEADER&quot;, &quot;@([\\d.]+)&quot;), //
+								new RegexLeaf(1, &quot;HEADER&quot;, &quot;@([\\d.]+)&quot;), //
 <span class="fc" id="L72">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
-				new RegexLeaf(&quot;ENT1&quot;,
+				new RegexLeaf(3, &quot;ENT1&quot;,
 <span class="fc" id="L75">						&quot;(?:&quot; + optionalKeywords(umlDiagramType) + &quot;[%s]+)?&quot;</span>
 								+ &quot;(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\&lt;\\&lt;.*\\&gt;\\&gt;)?&quot;), //
 <span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;FIRST_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;FIRST_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 <span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOr(new RegexLeaf(&quot;LOL_THEN_ENT&quot;, &quot;([()]\\))([-=.]+)&quot;), //
-						new RegexLeaf(&quot;ENT_THEN_LOL&quot;, &quot;([-=.]+)(\\([()])&quot;)), //
+				new RegexOr(new RegexLeaf(2, &quot;LOL_THEN_ENT&quot;, &quot;([()]\\))([-=.]+)&quot;), //
+						new RegexLeaf(2, &quot;ENT_THEN_LOL&quot;, &quot;([-=.]+)(\\([()])&quot;)), //
 <span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(&quot;SECOND_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+				new RegexOptional(new RegexLeaf(1, &quot;SECOND_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 <span class="fc" id="L84">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(&quot;ENT2&quot;,
+				new RegexLeaf(3, &quot;ENT2&quot;,
 <span class="fc" id="L86">						&quot;(?:&quot; + optionalKeywords(umlDiagramType) + &quot;[%s]+)?&quot;</span>
 								+ &quot;(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\&lt;\\&lt;.*\\&gt;\\&gt;)?&quot;), //
 <span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -90,7 +90,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractCla
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
 <span class="fc" id="L92">								RegexLeaf.spaceZeroOrMore(), //</span>
-								new RegexLeaf(&quot;LABEL_LINK&quot;, &quot;(.+)&quot;) //
+								new RegexLeaf(1, &quot;LABEL_LINK&quot;, &quot;(.+)&quot;) //
 <span class="fc" id="L94">						)), RegexLeaf.end());</span>
 	}
 
@@ -132,8 +132,9 @@ final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractCla
 
 <span class="nc" id="L133">			final Quark&lt;Entity&gt; idNewLong = diagram.quarkInContext(true, diagram.cleanId(ent1) + suffix);</span>
 <span class="nc" id="L134">			final LeafType type = getType(arg.get(&quot;ENT_THEN_LOL&quot;, 1));</span>
-<span class="nc" id="L135">			cl2 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent2), type, null);</span>
-<span class="nc" id="L136">			normalEntity = cl1;</span>
+<span class="nc" id="L135">			cl2 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent2),</span>
+					type, null);
+<span class="nc" id="L137">			normalEntity = cl1;</span>
 
 //			assert arg.get(&quot;ENT_THEN_LOL&quot;, 0) != null;
 //			final Quark ident1 = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1));
@@ -143,76 +144,77 @@ final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractCla
 //			cl2 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(ent2),
 //					getType(arg.get(&quot;ENT_THEN_LOL&quot;, 1)), null);
 //			normalEntity = cl1;
-<span class="nc" id="L146">		} else {</span>
-<span class="nc" id="L147">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(ent2));</span>
-<span class="nc" id="L148">			cl2 = quark.getData();</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (cl2 == null)</span>
-<span class="nc" id="L150">				return CommandExecutionResult.error(&quot;No class &quot; + quark.getName());</span>
+<span class="nc" id="L147">		} else {</span>
+<span class="nc" id="L148">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(ent2));</span>
+<span class="nc" id="L149">			cl2 = quark.getData();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (cl2 == null)</span>
+<span class="nc" id="L151">				return CommandExecutionResult.error(&quot;No class &quot; + quark.getName());</span>
 
-<span class="nc" id="L152">			final Quark&lt;Entity&gt; idNewLong = diagram.quarkInContext(true, diagram.cleanId(ent2) + suffix);</span>
-<span class="nc" id="L153">			final LeafType type = getType(arg.get(&quot;LOL_THEN_ENT&quot;, 0));</span>
-<span class="nc" id="L154">			cl1 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent1), type, null);</span>
-<span class="nc" id="L155">			normalEntity = cl2;</span>
+<span class="nc" id="L153">			final Quark&lt;Entity&gt; idNewLong = diagram.quarkInContext(true, diagram.cleanId(ent2) + suffix);</span>
+<span class="nc" id="L154">			final LeafType type = getType(arg.get(&quot;LOL_THEN_ENT&quot;, 0));</span>
+<span class="nc" id="L155">			cl1 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent1),</span>
+					type, null);
+<span class="nc" id="L157">			normalEntity = cl2;</span>
 		}
 
-<span class="nc" id="L158">		final LinkType linkType = getLinkType(arg);</span>
-<span class="nc" id="L159">		final String queue = getQueue(arg);</span>
+<span class="nc" id="L160">		final LinkType linkType = getLinkType(arg);</span>
+<span class="nc" id="L161">		final String queue = getQueue(arg);</span>
 
-<span class="nc" id="L161">		int length = queue.length();</span>
-<span class="nc bnc" id="L162" title="All 4 branches missed.">		if (length == 1 &amp;&amp; diagram.getNbOfHozizontalLollipop(normalEntity) &gt; 1)</span>
-<span class="nc" id="L163">			length++;</span>
+<span class="nc" id="L163">		int length = queue.length();</span>
+<span class="nc bnc" id="L164" title="All 4 branches missed.">		if (length == 1 &amp;&amp; diagram.getNbOfHozizontalLollipop(normalEntity) &gt; 1)</span>
+<span class="nc" id="L165">			length++;</span>
 
-<span class="nc" id="L165">		String firstLabel = arg.get(&quot;FIRST_LABEL&quot;, 0);</span>
-<span class="nc" id="L166">		String secondLabel = arg.get(&quot;SECOND_LABEL&quot;, 0);</span>
+<span class="nc" id="L167">		String firstLabel = arg.get(&quot;FIRST_LABEL&quot;, 0);</span>
+<span class="nc" id="L168">		String secondLabel = arg.get(&quot;SECOND_LABEL&quot;, 0);</span>
 
-<span class="nc" id="L168">		String labelLink = null;</span>
+<span class="nc" id="L170">		String labelLink = null;</span>
 
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (arg.get(&quot;LABEL_LINK&quot;, 0) != null) {</span>
-<span class="nc" id="L171">			labelLink = arg.get(&quot;LABEL_LINK&quot;, 0);</span>
-<span class="nc bnc" id="L172" title="All 4 branches missed.">			if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
-<span class="nc" id="L173">				final Pattern2 p1 = Pattern2.cmpile(&quot;^\&quot;([^\&quot;]+)\&quot;([^\&quot;]+)\&quot;([^\&quot;]+)\&quot;$&quot;);</span>
-<span class="nc" id="L174">				final Matcher2 m1 = p1.matcher(labelLink);</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">				if (m1.matches()) {</span>
-<span class="nc" id="L176">					firstLabel = m1.group(1);</span>
-<span class="nc" id="L177">					labelLink = StringUtils.trin(</span>
-<span class="nc" id="L178">							StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));</span>
-<span class="nc" id="L179">					secondLabel = m1.group(3);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (arg.get(&quot;LABEL_LINK&quot;, 0) != null) {</span>
+<span class="nc" id="L173">			labelLink = arg.get(&quot;LABEL_LINK&quot;, 0);</span>
+<span class="nc bnc" id="L174" title="All 4 branches missed.">			if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
+<span class="nc" id="L175">				final Pattern2 p1 = Pattern2.cmpile(&quot;^\&quot;([^\&quot;]+)\&quot;([^\&quot;]+)\&quot;([^\&quot;]+)\&quot;$&quot;);</span>
+<span class="nc" id="L176">				final Matcher2 m1 = p1.matcher(labelLink);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (m1.matches()) {</span>
+<span class="nc" id="L178">					firstLabel = m1.group(1);</span>
+<span class="nc" id="L179">					labelLink = StringUtils.trin(</span>
+<span class="nc" id="L180">							StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));</span>
+<span class="nc" id="L181">					secondLabel = m1.group(3);</span>
 				} else {
-<span class="nc" id="L181">					final Pattern2 p2 = Pattern2.cmpile(&quot;^\&quot;([^\&quot;]+)\&quot;([^\&quot;]+)$&quot;);</span>
-<span class="nc" id="L182">					final Matcher2 m2 = p2.matcher(labelLink);</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">					if (m2.matches()) {</span>
-<span class="nc" id="L184">						firstLabel = m2.group(1);</span>
-<span class="nc" id="L185">						labelLink = StringUtils.trin(StringUtils</span>
-<span class="nc" id="L186">								.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));</span>
-<span class="nc" id="L187">						secondLabel = null;</span>
+<span class="nc" id="L183">					final Pattern2 p2 = Pattern2.cmpile(&quot;^\&quot;([^\&quot;]+)\&quot;([^\&quot;]+)$&quot;);</span>
+<span class="nc" id="L184">					final Matcher2 m2 = p2.matcher(labelLink);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">					if (m2.matches()) {</span>
+<span class="nc" id="L186">						firstLabel = m2.group(1);</span>
+<span class="nc" id="L187">						labelLink = StringUtils.trin(StringUtils</span>
+<span class="nc" id="L188">								.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));</span>
+<span class="nc" id="L189">						secondLabel = null;</span>
 					} else {
-<span class="nc" id="L189">						final Pattern2 p3 = Pattern2.cmpile(&quot;^([^\&quot;]+)\&quot;([^\&quot;]+)\&quot;$&quot;);</span>
-<span class="nc" id="L190">						final Matcher2 m3 = p3.matcher(labelLink);</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">						if (m3.matches()) {</span>
-<span class="nc" id="L192">							firstLabel = null;</span>
-<span class="nc" id="L193">							labelLink = StringUtils.trin(StringUtils</span>
-<span class="nc" id="L194">									.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));</span>
-<span class="nc" id="L195">							secondLabel = m3.group(2);</span>
+<span class="nc" id="L191">						final Pattern2 p3 = Pattern2.cmpile(&quot;^([^\&quot;]+)\&quot;([^\&quot;]+)\&quot;$&quot;);</span>
+<span class="nc" id="L192">						final Matcher2 m3 = p3.matcher(labelLink);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">						if (m3.matches()) {</span>
+<span class="nc" id="L194">							firstLabel = null;</span>
+<span class="nc" id="L195">							labelLink = StringUtils.trin(StringUtils</span>
+<span class="nc" id="L196">									.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));</span>
+<span class="nc" id="L197">							secondLabel = m3.group(2);</span>
 						}
 					}
 				}
 			}
-<span class="nc" id="L200">			labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink);</span>
+<span class="nc" id="L202">			labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink);</span>
 		}
-<span class="nc" id="L202">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labelLink), length,</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L204">		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,</span>
-<span class="nc" id="L205">				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)</span>
-<span class="nc" id="L206">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>
-<span class="nc" id="L207">		diagram.resetPragmaLabel();</span>
-<span class="nc" id="L208">		addLink(diagram, link, arg.get(&quot;HEADER&quot;, 0));</span>
+<span class="nc" id="L204">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labelLink), length,</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L206">		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,</span>
+<span class="nc" id="L207">				linkType, linkArg.withQuantifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),</span>
+<span class="nc" id="L208">						diagram.getLabelangle()));</span>
+<span class="nc" id="L209">		diagram.resetPragmaLabel();</span>
+<span class="nc" id="L210">		addLink(diagram, link, arg.get(&quot;HEADER&quot;, 0));</span>
 
-<span class="nc" id="L210">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L212">		return CommandExecutionResult.ok();</span>
 	}
 
 	private void addLink(AbstractClassOrObjectDiagram diagram, Link link, String weight) {
-<span class="nc" id="L214">		diagram.addLink(link);</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (weight == null) {</span>
+<span class="nc" id="L216">		diagram.addLink(link);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (weight == null) {</span>
 			// final LinkType type = link.getType();
 			// --|&gt; highest
 			// --*, --&gt;, --o normal
@@ -228,22 +230,22 @@ final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractCla
 			// }
 			// }
 		} else {
-<span class="nc" id="L231">			link.setWeight(Double.parseDouble(weight));</span>
+<span class="nc" id="L233">			link.setWeight(Double.parseDouble(weight));</span>
 		}
-<span class="nc" id="L233">	}</span>
+<span class="nc" id="L235">	}</span>
 
 	private LinkType getLinkType(RegexResult arg) {
-<span class="nc" id="L236">		return new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="nc" id="L238">		return new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
 	}
 
 	private String getQueue(RegexResult arg) {
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		if (arg.get(&quot;LOL_THEN_ENT&quot;, 1) != null)</span>
-<span class="nc" id="L241">			return StringUtils.trin(arg.get(&quot;LOL_THEN_ENT&quot;, 1));</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (arg.get(&quot;LOL_THEN_ENT&quot;, 1) != null)</span>
+<span class="nc" id="L243">			return StringUtils.trin(arg.get(&quot;LOL_THEN_ENT&quot;, 1));</span>
 
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (arg.get(&quot;ENT_THEN_LOL&quot;, 0) != null)</span>
-<span class="nc" id="L244">			return StringUtils.trin(arg.get(&quot;ENT_THEN_LOL&quot;, 0));</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		if (arg.get(&quot;ENT_THEN_LOL&quot;, 0) != null)</span>
+<span class="nc" id="L246">			return StringUtils.trin(arg.get(&quot;ENT_THEN_LOL&quot;, 0));</span>
 
-<span class="nc" id="L246">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L248">		throw new IllegalArgumentException();</span>
 	}
 
 }

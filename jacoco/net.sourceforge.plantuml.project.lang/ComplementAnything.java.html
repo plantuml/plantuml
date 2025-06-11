@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L44">public class ComplementAnything implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L47">		return new RegexLeaf(&quot;ANYTHING&quot; + suffix, &quot;(.*?)&quot;);</span>
+<span class="fc" id="L47">		return new RegexLeaf(1, &quot;ANYTHING&quot; + suffix, &quot;(.*?)&quot;);</span>
 	}
 
 	public Failable&lt;String&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {

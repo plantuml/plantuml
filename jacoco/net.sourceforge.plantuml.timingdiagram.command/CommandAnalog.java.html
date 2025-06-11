@@ -59,25 +59,25 @@ public class CommandAnalog extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="fc" id="L59">		return RegexConcat.build(CommandAnalog.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-								new RegexLeaf(&quot;COMPACT&quot;, &quot;(compact)&quot;), //
+								new RegexLeaf(1, &quot;COMPACT&quot;, &quot;(compact)&quot;), //
 <span class="fc" id="L63">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(&quot;analog&quot;), //
 <span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+				new RegexLeaf(1, &quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
 <span class="fc" id="L67">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				new RegexOptional(//
 						new RegexConcat( //
 								new RegexLeaf(&quot;between&quot;), //
 <span class="fc" id="L71">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;START&quot;, &quot;(-?[0-9]*\\.?[0-9]+)&quot;), //
+								new RegexLeaf(1, &quot;START&quot;, &quot;(-?[0-9]*\\.?[0-9]+)&quot;), //
 <span class="fc" id="L73">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;and&quot;), //
 <span class="fc" id="L75">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;END&quot;, &quot;(-?[0-9]*\\.?[0-9]+)&quot;), //
+								new RegexLeaf(1, &quot;END&quot;, &quot;(-?[0-9]*\\.?[0-9]+)&quot;), //
 <span class="fc" id="L77">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(&quot;as&quot;), //
 <span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
 <span class="fc" id="L81">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 <span class="fc" id="L82">				RegexLeaf.end());</span>
 	}

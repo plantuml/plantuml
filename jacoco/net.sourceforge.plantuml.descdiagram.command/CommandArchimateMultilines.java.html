@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -62,14 +64,12 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandArchimateMultilines extends CommandMultilines2&lt;AbstractEntityDiagram&gt; {
 
-	public CommandArchimateMultilines() {
-<span class="fc" id="L66">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);</span>
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L67">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L68">			() -&gt; Pattern2.cmpile(&quot;^(.*)\\]$&quot;));</span>
 
-	@Override
-	public String getPatternEnd() {
-<span class="nc" id="L71">		return &quot;^(.*)\\]$&quot;;</span>
-	}
+	public CommandArchimateMultilines() {
+<span class="fc" id="L71">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L72">	}</span>
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L75">		return RegexConcat.build(CommandArchimateMultilines.class.getName(), RegexLeaf.start(), //</span>
@@ -77,14 +77,14 @@ public class CommandArchimateMultilines extends CommandMultilines2&lt;AbstractEn
 <span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L78">				color().getRegex(), //</span>
 <span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
+				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
 <span class="fc" id="L81">				StereotypePattern.optionalArchimate(&quot;STEREOTYPE&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L83">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L84">				ColorParser.exp1(), //</span>
 <span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\[&quot;), //
-				new RegexLeaf(&quot;DESC&quot;, &quot;(.*)&quot;), //
+				new RegexLeaf(1, &quot;DESC&quot;, &quot;(.*)&quot;), //
 <span class="fc" id="L88">				RegexLeaf.end());</span>
 	}
 
@@ -105,8 +105,8 @@ public class CommandArchimateMultilines extends CommandMultilines2&lt;AbstractEn
 
 <span class="nc" id="L106">		final String icon = StereotypePattern.removeChevronBrackets(line0.getLazzy(&quot;STEREOTYPE&quot;, 0));</span>
 
-<span class="nc" id="L108">		final Entity entity = diagram.reallyCreateLeaf(lines.getLocation(), quark, Display.getWithNewlines(quark), LeafType.DESCRIPTION,</span>
-				USymbols.RECTANGLE);
+<span class="nc" id="L108">		final Entity entity = diagram.reallyCreateLeaf(lines.getLocation(), quark, Display.getWithNewlines(quark),</span>
+				LeafType.DESCRIPTION, USymbols.RECTANGLE);
 
 <span class="nc" id="L111">		lines = lines.subExtract(1, 1);</span>
 <span class="nc" id="L112">		Display display = lines.toDisplay();</span>

@@ -54,11 +54,11 @@ public class CommandSkinParam extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L56">		return RegexConcat.build(CommandSkinParam.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;(skinparam|skinparamlocked)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(skinparam|skinparamlocked)&quot;), //
 <span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;NAME&quot;, &quot;([\\w.]*(?:\\&lt;\\&lt;[^&lt;&gt;]*\\&gt;\\&gt;)?[\\w.]*)&quot;), //
+				new RegexLeaf(1, &quot;NAME&quot;, &quot;([\\w.]*(?:\\&lt;\\&lt;[^&lt;&gt;]*\\&gt;\\&gt;)?[\\w.]*)&quot;), //
 <span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L61">				new RegexLeaf(&quot;VALUE&quot;, &quot;([^{}]*)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L61">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;([^{}]*)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

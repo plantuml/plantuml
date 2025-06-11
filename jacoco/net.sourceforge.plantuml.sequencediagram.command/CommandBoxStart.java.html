@@ -67,10 +67,10 @@ public class CommandBoxStart extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 				new RegexOptional(new RegexOr( //
 						new RegexConcat( //
 <span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;NAME1&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
+								new RegexLeaf(1, &quot;NAME1&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 						new RegexConcat( //
 <span class="fc" id="L72">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;NAME2&quot;, &quot;([^#]+)&quot;)))), //
+								new RegexLeaf(1, &quot;NAME2&quot;, &quot;([^#]+)&quot;)))), //
 <span class="fc" id="L74">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 <span class="fc" id="L75">				color().getRegex(), //</span>
 <span class="fc" id="L76">				RegexLeaf.end());</span>

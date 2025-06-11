@@ -54,7 +54,7 @@ public class CommandHideUnlinked extends SingleLineCommand2&lt;SequenceDiagram&g
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L56">		return RegexConcat.build(CommandHideUnlinked.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;HIDE&quot;, &quot;(hide|show)&quot;), //
+				new RegexLeaf(1, &quot;HIDE&quot;, &quot;(hide|show)&quot;), //
 <span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;@?unlinked&quot;), //
 <span class="fc" id="L60">				RegexLeaf.end()); //</span>

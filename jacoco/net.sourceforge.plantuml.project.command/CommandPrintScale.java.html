@@ -35,9 +35,6 @@
  */
 package net.sourceforge.plantuml.project.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -55,15 +52,15 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandPrintScale extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
 	public CommandPrintScale() {
-<span class="fc" id="L58">		super(getRegexConcat());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandPrintScale.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandPrintScale.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr(new RegexLeaf(&quot;projectscale&quot;), //
 						new RegexLeaf(&quot;ganttscale&quot;), //
 						new RegexLeaf(&quot;printscale&quot;)), //
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOr(&quot;SCALE&quot;, //
 						new RegexLeaf(&quot;yearly&quot;), //
 						new RegexLeaf(&quot;quarterly&quot;), //
@@ -71,38 +68,38 @@ public class CommandPrintScale extends SingleLineCommand2&lt;GanttDiagram&gt; {
 						new RegexLeaf(&quot;daily&quot;), //
 						new RegexLeaf(&quot;weekly&quot;)), //
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L74">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L71">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexOr(&quot;OPTION&quot;, //
-								new RegexLeaf(&quot;(with\\s+calendar\\s+date)&quot;),
-								new RegexLeaf(&quot;NUMBER&quot;, &quot;(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))&quot;)))), //
+								new RegexLeaf(1, &quot;(with\\s+calendar\\s+date)&quot;),
+								new RegexLeaf(1, &quot;NUMBER&quot;, &quot;(?:with\\s+week\\s+numbering\\s+from\\s+(-?\\d+))&quot;)))), //
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L79">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L76">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;zoom&quot;), //
-<span class="fc" id="L81">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(&quot;ZOOM&quot;, &quot;([.\\d]+)&quot;))), //
-<span class="fc" id="L83">				RegexLeaf.end());</span>
+<span class="fc" id="L78">						RegexLeaf.spaceOneOrMore(), //</span>
+						new RegexLeaf(1, &quot;ZOOM&quot;, &quot;([.\\d]+)&quot;))), //
+<span class="fc" id="L80">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L88">		final String scaleString = arg.get(&quot;SCALE&quot;, 0);</span>
-<span class="fc" id="L89">		final PrintScale scale = PrintScale.fromString(scaleString);</span>
-<span class="fc" id="L90">		diagram.setPrintScale(scale);</span>
+<span class="fc" id="L85">		final String scaleString = arg.get(&quot;SCALE&quot;, 0);</span>
+<span class="fc" id="L86">		final PrintScale scale = PrintScale.fromString(scaleString);</span>
+<span class="fc" id="L87">		diagram.setPrintScale(scale);</span>
 
-<span class="fc" id="L92">		final String zoom = arg.get(&quot;ZOOM&quot;, 0);</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (zoom != null)</span>
-<span class="nc" id="L94">			diagram.setFactorScale(Double.parseDouble(zoom));</span>
+<span class="fc" id="L89">		final String zoom = arg.get(&quot;ZOOM&quot;, 0);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (zoom != null)</span>
+<span class="nc" id="L91">			diagram.setFactorScale(Double.parseDouble(zoom));</span>
 
-<span class="fc" id="L96">		final String option = arg.get(&quot;OPTION&quot;, 0);</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (option != null)</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (option.contains(&quot;date&quot;))</span>
-<span class="nc" id="L99">				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.DAY_OF_MONTH, 0);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			else if (option.contains(&quot;numbering&quot;)) {</span>
-<span class="nc" id="L101">				final String number = arg.get(&quot;NUMBER&quot;, 0);</span>
-<span class="nc" id="L102">				final int weekStartingNumber = Integer.parseInt(number);</span>
-<span class="nc" id="L103">				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_N, weekStartingNumber);</span>
+<span class="fc" id="L93">		final String option = arg.get(&quot;OPTION&quot;, 0);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (option != null)</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (option.contains(&quot;date&quot;))</span>
+<span class="nc" id="L96">				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.DAY_OF_MONTH, 0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			else if (option.contains(&quot;numbering&quot;)) {</span>
+<span class="nc" id="L98">				final String number = arg.get(&quot;NUMBER&quot;, 0);</span>
+<span class="nc" id="L99">				final int weekStartingNumber = Integer.parseInt(number);</span>
+<span class="nc" id="L100">				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_N, weekStartingNumber);</span>
 			}
-<span class="fc" id="L105">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L102">		return CommandExecutionResult.ok();</span>
 	}
 
 }

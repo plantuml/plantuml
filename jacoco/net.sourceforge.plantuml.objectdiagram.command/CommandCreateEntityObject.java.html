@@ -68,7 +68,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2&lt;AbstractCla
 
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L70">		return RegexConcat.build(CommandCreateEntityObject.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;TYPE&quot;, &quot;object&quot;), //
+				new RegexLeaf(0, &quot;TYPE&quot;, &quot;object&quot;), //
 <span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L73">				NameAndCodeParser.nameAndCode(), //</span>
 <span class="fc" id="L74">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>

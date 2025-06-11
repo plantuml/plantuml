@@ -53,9 +53,9 @@ public class CommandHideShow2 extends SingleLineCommand2&lt;CucaDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L55">		return RegexConcat.build(CommandHideShow2.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(&quot;COMMAND&quot;, &quot;(hide|hide-class|show|show-class)&quot;), //
+				new RegexLeaf(1, &quot;COMMAND&quot;, &quot;(hide|hide-class|show|show-class)&quot;), //
 <span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;WHAT&quot;, &quot;([^%s]+|\\&lt;\\&lt;.*\\&gt;\\&gt;)&quot;), //
+				new RegexLeaf(1, &quot;WHAT&quot;, &quot;([^%s]+|\\&lt;\\&lt;.*\\&gt;\\&gt;)&quot;), //
 <span class="fc" id="L59">				RegexLeaf.end());</span>
 	}
 
