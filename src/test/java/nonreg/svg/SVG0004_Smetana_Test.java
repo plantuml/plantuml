@@ -40,7 +40,7 @@ Expected result MUST be put between triple brackets
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">pkg2</text>
     </g>
     <!--class Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~????????????????????????????????-???????????????-->
-    <g class="entity" data-entity="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" data-source-line="3" data-uid="ent0002" id="entity_Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️">
+    <g class="entity" data-entity="Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-source-line="3" data-uid="ent0002" id="entity_Class 1 with ASCII special chars.r.n.t...........-............._.....................................-...............">
       <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
       <ellipse fill="#ADD1B2" style="stroke:#181818;stroke-width:1;"/>
       <path fill="#000000"/>
@@ -50,7 +50,7 @@ Expected result MUST be put between triple brackets
       <line style="stroke:#181818;stroke-width:0.5;"/>
       <line style="stroke:#181818;stroke-width:0.5;"/>
     </g>
-    <g class="link" data-entity-1="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" data-entity-2="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" data-uid="lnk5" id="link_Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️_Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️">
+    <g class="link" data-entity-1="Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-entity-2="Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-uid="lnk5" id="link_Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............._Class 1 with ASCII special chars.r.n.t...........-............._.....................................-...............">
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
       <path fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Hello</text>

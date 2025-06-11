@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -54,13 +55,21 @@ public class UGroup {
 	}
 
 	public void put(UGroupType key, String value) {
+		value = fix(value);
 		map.put(key, value);
 	}
 
 	public static UGroup singletonMap(UGroupType key, String value) {
+		value = fix(value);
 		final UGroup result = new UGroup();
 		result.put(key, value);
 		return result;
+	}
+
+	private static final Pattern NON_WORD = Pattern.compile("[^-\\w ]");
+
+	private static String fix(String value) {
+		return NON_WORD.matcher(value).replaceAll(".");
 	}
 
 	public Map<UGroupType, String> asMap() {
