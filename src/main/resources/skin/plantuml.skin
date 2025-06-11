@@ -641,15 +641,23 @@ activityDiagram {
 	}
 	circle {
 	    start, stop, end {
-        		    LineColor #d
+		    LineColor #d
 		    BackgroundColor #d
 	    }
-	  }
+	}
 	activityBar {
 	  BackgroundColor #a
 	}
 }
 
+stateDiagram {
+  circle {
+    start, stop, end {
+      LineColor #d
+      BackgroundColor #d
+    }
+  }
+}
 
 milestone {
 	BackGroundColor white
