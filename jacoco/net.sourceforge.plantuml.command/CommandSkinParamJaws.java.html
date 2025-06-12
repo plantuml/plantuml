@@ -67,18 +67,18 @@ public class CommandSkinParamJaws extends SingleLineCommand2&lt;TitledDiagram&gt
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L70">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
-<span class="fc" id="L71">		BlocLines lines = BlocLines.create();</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (String line : full.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE)) {</span>
-<span class="fc" id="L73">			lines = lines.addString(line);</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			if (line.trim().equals(&quot;}&quot;)) {</span>
-<span class="fc" id="L75">				final CommandExecutionResult res = delegate.execute(diagram, lines, currentPass);</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">				if (res.isOk() == false)</span>
+<span class="nc" id="L70">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="nc" id="L71">		BlocLines lines = BlocLines.create();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (String line : full.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE)) {</span>
+<span class="nc" id="L73">			lines = lines.addString(line);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (line.trim().equals(&quot;}&quot;)) {</span>
+<span class="nc" id="L75">				final CommandExecutionResult res = delegate.execute(diagram, lines, currentPass);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">				if (res.isOk() == false)</span>
 <span class="nc" id="L77">					return res;</span>
-<span class="fc" id="L78">				lines = BlocLines.create();</span>
+<span class="nc" id="L78">				lines = BlocLines.create();</span>
 			}
 		}
-<span class="fc" id="L81">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L81">		return CommandExecutionResult.ok();</span>
 
 	}
 

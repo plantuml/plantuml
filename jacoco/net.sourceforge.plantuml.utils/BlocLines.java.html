@@ -159,9 +159,9 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 	}
 
 	public BlocLines addString(String s) {
-<span class="fc" id="L162">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
-<span class="fc" id="L163">		copy.add(new StringLocated(s, null));</span>
-<span class="fc" id="L164">		return new BlocLines(copy);</span>
+<span class="nc" id="L162">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
+<span class="nc" id="L163">		copy.add(new StringLocated(s, null));</span>
+<span class="nc" id="L164">		return new BlocLines(copy);</span>
 	}
 
 	public List&lt;String&gt; getLinesAsStringForSprite() {

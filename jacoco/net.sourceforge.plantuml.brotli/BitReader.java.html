@@ -183,7 +183,7 @@ package net.sourceforge.plantuml.brotli;
 
 	static void jumpToByteBoundary(State s) {
 <span class="fc" id="L185">		int padding = (BITNESS - s.bitOffset) &amp; 7;</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (padding != 0) {</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (padding != 0) {</span>
 <span class="fc" id="L187">			int paddingBits = readFewBits(s, padding);</span>
 <span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (paddingBits != 0) {</span>
 <span class="nc" id="L189">				throw new BrotliRuntimeException(&quot;Corrupted padding bits&quot;);</span>

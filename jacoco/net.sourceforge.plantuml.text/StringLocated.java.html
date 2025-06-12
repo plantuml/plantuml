@@ -115,9 +115,9 @@ final public class StringLocated {
 
 <span class="fc bfc" id="L116" title="All 2 branches covered.">			if (level &gt; 0) {</span>
 <span class="fc" id="L117">				pending.append(ch);</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {</span>
-<span class="nc" id="L119">				copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
-<span class="nc" id="L120">				pending.setLength(0);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {</span>
+<span class="fc" id="L119">				copy.add(new StringLocated(pending.toString(), location, preprocessorError));</span>
+<span class="fc" id="L120">				pending.setLength(0);</span>
 			} else {
 <span class="fc" id="L122">				pending.append(ch);</span>
 			}

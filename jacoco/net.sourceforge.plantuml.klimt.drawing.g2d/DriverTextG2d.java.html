@@ -76,8 +76,8 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 <span class="fc" id="L77">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
 
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
-<span class="nc" id="L80">			return;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (fontConfiguration.getColor().isTransparent())</span>
+<span class="fc" id="L80">			return;</span>
 
 <span class="fc" id="L82">		final String text = shape.getText();</span>
 

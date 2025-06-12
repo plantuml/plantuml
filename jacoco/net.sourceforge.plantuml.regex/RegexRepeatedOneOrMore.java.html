@@ -63,15 +63,15 @@ public class RegexRepeatedOneOrMore extends RegexComposed implements IRegex {
 	}
 
 	final public Map&lt;String, RegexPartialMatch&gt; createPartialMatch(Iterator&lt;String&gt; it) {
-<span class="fc" id="L66">		final Map&lt;String, RegexPartialMatch&gt; result = new HashMap&lt;String, RegexPartialMatch&gt;();</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		final String fullGroup = name == null ? null : it.next();</span>
-<span class="fc" id="L68">		result.putAll(super.createPartialMatch(it));</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (name != null) {</span>
-<span class="fc" id="L70">			final RegexPartialMatch m = new RegexPartialMatch(name);</span>
-<span class="fc" id="L71">			m.add(fullGroup);</span>
-<span class="fc" id="L72">			result.put(name, m);</span>
+<span class="nc" id="L66">		final Map&lt;String, RegexPartialMatch&gt; result = new HashMap&lt;String, RegexPartialMatch&gt;();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		final String fullGroup = name == null ? null : it.next();</span>
+<span class="nc" id="L68">		result.putAll(super.createPartialMatch(it));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (name != null) {</span>
+<span class="nc" id="L70">			final RegexPartialMatch m = new RegexPartialMatch(name);</span>
+<span class="nc" id="L71">			m.add(fullGroup);</span>
+<span class="nc" id="L72">			result.put(name, m);</span>
 		}
-<span class="fc" id="L74">		return result;</span>
+<span class="nc" id="L74">		return result;</span>
 	}
 
 
