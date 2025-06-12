@@ -99,7 +99,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf(1, "VISIBILITY",
 						"(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
 				new RegexLeaf(1, "TYPE",
-						"(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype)"), //
+						"(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype|data[%s]+class|record)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCodeForClassWithGeneric(), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
