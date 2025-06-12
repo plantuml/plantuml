@@ -44,6 +44,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -73,6 +74,7 @@ import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.version.Version;
@@ -137,6 +139,8 @@ public class PicoWebServer implements Runnable {
 				if (request.getPath().startsWith("/serverinfo") && handleInfo(out))
 					return;
 				if (request.getPath().startsWith("/plantuml/serverinfo") && handleInfo(out))
+					return;
+				if (request.getPath().startsWith("/language") && handleLanguage(out))
 					return;
 				if (enableStop && (request.getPath().startsWith("/stopserver")
 						|| request.getPath().startsWith("/plantuml/stopserver")) && handleStop(out))
@@ -211,6 +215,22 @@ public class PicoWebServer implements Runnable {
 				.add("PicoWebServer", true) //
 				.add("formats", formats); //
 		write(out, json.toString());
+
+		out.flush();
+
+		return true;
+	}
+
+	private boolean handleLanguage(BufferedOutputStream out) throws IOException {
+		write(out, "HTTP/1.1 " + "200");
+		write(out, "Cache-Control: no-cache");
+		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
+		write(out, "Date: " + new Date());
+		write(out, "Content-Type: text/text");
+		write(out, "");
+
+		final PrintStream ps = new PrintStream(out);
+		new LanguageDescriptor().print(ps);
 
 		out.flush();
 

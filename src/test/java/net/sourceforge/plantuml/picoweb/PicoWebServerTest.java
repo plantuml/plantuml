@@ -228,6 +228,13 @@ public class PicoWebServerTest {
 		assert response.getHeaderField("Location").equals("/plantuml/png/oqbDJyrBuGh8ISmh2VNrKGZ8JCuFJqqAJYqgIotY0aefG5G00000");
 	}
 
+	private static void test_language() throws Exception {
+		HttpURLConnection response = httpGet("/language");
+		assert response.getResponseCode() == 200;
+		assert readStreamAsString(response.getInputStream()).equals("foo\n"
+		);
+	}
+
 	//
 	// Test DSL
 	//
