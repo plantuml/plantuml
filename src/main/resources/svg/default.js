@@ -5,6 +5,37 @@
             ?.replaceAll('"', '\\"');
     }
 
+    function getLineEdgesAndNodes(startingNode) {
+        function findNextEdgesAndNodes(startingNode, forwards, elementsEncounteredSoFar = new Set()) {
+            elementsEncounteredSoFar.add(startingNode);
+            const nodeName = startingNode.getAttribute("data-entity");
+            const escapedNodeName = escapeForCssAttributeSelector(nodeName);
+            const thisLinkAttributeIndex = forwards ? 2 : 1;
+            const nextLinkAttributeIndex = forwards ? 1 : 2;
+
+            svg.querySelectorAll(`.link[data-entity-${nextLinkAttributeIndex}="${escapedNodeName}"]`).forEach(link => {
+                if (! elementsEncounteredSoFar.has(link)) {
+                    elementsEncounteredSoFar.add(link);
+
+                    const linkStartNodeName = link.getAttribute(`data-entity-${thisLinkAttributeIndex}`);
+                    const linkStartNode = svg.querySelector(`[data-entity="${escapeForCssAttributeSelector(linkStartNodeName)}"]`);
+
+                    if (! elementsEncounteredSoFar.has(linkStartNode)) {
+                        elementsEncounteredSoFar.add(linkStartNode);
+                        findNextEdgesAndNodes(linkStartNode, forwards, elementsEncounteredSoFar);
+                    }
+                }
+            });
+
+            return elementsEncounteredSoFar;
+        }
+
+        const ancestors = findNextEdgesAndNodes(startingNode, false);
+        const descendants = findNextEdgesAndNodes(startingNode, true);
+
+        return ancestors.union(descendants);
+    }
+
 	function getEdgesAndDistance1Nodes(startingNode) {
 		const nodeName = startingNode.getAttribute("data-entity");
 		const escapedNodeName = escapeForCssAttributeSelector(nodeName);
@@ -42,12 +73,20 @@
         if (svg.classList.contains("click-active") && this.classList.contains("click-selected")) {
             handleDeselect("click");
         } else {
-            handleSelect(this, "click");
+            handleSelectNeighbors(this, "click");
+        }
+    }
+
+    function onDoubleClickEntity() {
+        if (svg.classList.contains("click-active") && this.classList.contains("click-selected")) {
+            handleDeselect("click");
+        } else {
+            handleSelectLine(this, "click");
         }
     }
 
 	function onMouseOverEntity() {
-	    handleSelect(this, "mouseover");
+	    handleSelectNeighbors(this, "mouseover");
 	}
 
 	function onMouseOutEntity() {
@@ -59,8 +98,8 @@
     //   xxx-selected: lets us track which entity `<g>` was clicked/hovered.
     //   xxx-highlighted: when highlighting is 'active', elements without this class will be dimmed.
     //
-    // 'xxx' event type will be 'hover' or 'mouseover'.
-	function handleSelect(selectedEntityElem, eventType) {
+    // 'xxx' event type will be 'click' or 'mouseover'.
+	function handleSelectNeighbors(selectedEntityElem, eventType) {
 	    svg.querySelectorAll(`.${eventType}-selected, .${eventType}-highlighted`).forEach(elem => {
             elem.classList.remove(`${eventType}-selected`, `${eventType}-highlighted`);
         });
@@ -72,6 +111,19 @@
             node.classList.add(`${eventType}-highlighted`);
         });
 	}
+	
+    function handleSelectLine(selectedEntityElem, eventType) {
+        svg.querySelectorAll(`.${eventType}-selected, .${eventType}-highlighted`).forEach(elem => {
+            elem.classList.remove(`${eventType}-selected`, `${eventType}-highlighted`);
+        });
+
+        svg.classList.add(`${eventType}-active`);
+        selectedEntityElem.classList.add(`${eventType}-selected`, `${eventType}-highlighted`);
+
+        getLineEdgesAndNodes(selectedEntityElem).forEach(node => {
+            node.classList.add(`${eventType}-highlighted`);
+        });
+    }
 
     function handleDeselect(eventType) {
 		svg.classList.remove(`${eventType}-active`);
@@ -84,6 +136,7 @@
             entity.addEventListener("mouseover", onMouseOverEntity);
             entity.addEventListener("mouseout", onMouseOutEntity);
             entity.addEventListener("click", onClickEntity);
+            entity.addEventListener("dblclick", onDoubleClickEntity);
         });
 
         svg.addEventListener("keydown", event => {
