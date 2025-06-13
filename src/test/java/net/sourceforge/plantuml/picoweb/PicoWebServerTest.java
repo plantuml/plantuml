@@ -34,6 +34,7 @@ public class PicoWebServerTest {
 		test_GET_svg();
 		test_POST_render();
 		test_unknown_path();
+		test_language();
 	}
 
 	//
