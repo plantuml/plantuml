@@ -113,7 +113,7 @@ import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
 	private InGroupable getMaxSlow(StringBounder stringBounder) {
 <span class="fc" id="L114">		InGroupable result = null;</span>
 <span class="fc bfc" id="L115" title="All 2 branches covered.">		for (InGroupable in : inGroupables)</span>
-<span class="fc bfc" id="L116" title="All 4 branches covered.">			if (result == null || in.getMaxX(stringBounder) &gt; result.getMaxX(stringBounder))</span>
+<span class="pc bpc" id="L116" title="1 of 4 branches missed.">			if (result == null || in.getMaxX(stringBounder) &gt; result.getMaxX(stringBounder))</span>
 <span class="fc" id="L117">				result = in;</span>
 
 <span class="fc" id="L119">		return result;</span>
