@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import net.sourceforge.plantuml.StringBuilder2;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomImg;
 import net.sourceforge.plantuml.log.Logme;
@@ -265,12 +266,13 @@ public class Stdlib {
 
 	private String readSprite(int width, int height, InputStream inputStream) throws IOException {
 		final int nbLines = (height + 1) / 2;
-		final int estimatedResultCapacity = (width + 1) * height;
-		final StringBuilder result = new StringBuilder(estimatedResultCapacity);
+		final int estimatedResultCapacity = (width + 1) * (height + 1);
+
+		final StringBuilder2 result = new StringBuilder2(estimatedResultCapacity);
 		int line = 0;
 		for (int j = 0; j < nbLines; j++) {
-			final StringBuilder sb1 = new StringBuilder(width);
-			final StringBuilder sb2 = new StringBuilder(width);
+			final StringBuilder2 sb1 = new StringBuilder2(width);
+			final StringBuilder2 sb2 = new StringBuilder2(width);
 			for (int i = 0; i < width; i++) {
 				final int b = inputStream.read();
 				final int b1 = (b & 0xF0) >> 4;
@@ -287,6 +289,7 @@ public class Stdlib {
 				line++;
 			}
 		}
+
 		return result.toString();
 	}
 

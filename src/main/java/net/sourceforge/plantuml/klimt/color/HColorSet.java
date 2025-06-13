@@ -44,6 +44,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.StringBuilder2;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 
@@ -371,7 +372,7 @@ public class HColorSet {
 
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -435,7 +436,7 @@ public class HColorSet {
 			len--;
 		}
 
-		final StringBuilder sb = new StringBuilder(len);
+		final StringBuilder2 sb = new StringBuilder2(len);
 		for (int i = start; i < s.length(); i++) {
 			final char c = s.charAt(i);
 			if (c >= 'A' && c <= 'Z')
@@ -444,6 +445,7 @@ public class HColorSet {
 				sb.append(c);
 
 		}
+
 		return sb.toString();
 	}
 
