@@ -113,132 +113,134 @@ public class FromSkinparamToStyle {
 <span class="fc" id="L113">		addConvert(&quot;SequenceBoxFontColor&quot;, PName.FontColor, SName.box);</span>
 <span class="fc" id="L114">		addConvert(&quot;SequenceLifeLineBorderColor&quot;, PName.LineColor, SName.lifeLine);</span>
 <span class="fc" id="L115">		addConvert(&quot;SequenceLifeLineBackgroundColor&quot;, PName.BackGroundColor, SName.lifeLine);</span>
-<span class="fc" id="L116">		addConvert(&quot;sequenceDividerBackgroundColor&quot;, PName.BackGroundColor, SName.separator);</span>
-<span class="fc" id="L117">		addConvert(&quot;sequenceDividerBorderColor&quot;, PName.LineColor, SName.separator);</span>
-<span class="fc" id="L118">		addConFont(&quot;sequenceDivider&quot;, SName.separator);</span>
-<span class="fc" id="L119">		addConvert(&quot;sequenceDividerBorderThickness&quot;, PName.LineThickness, SName.separator);</span>
-<span class="fc" id="L120">		addConvert(&quot;SequenceMessageAlignment&quot;, PName.HorizontalAlignment, SName.arrow);</span>
+<span class="fc" id="L116">		addConFont(&quot;sequenceDelay&quot;, SName.delay);</span>
+<span class="fc" id="L117">		addConvert(&quot;sequenceDelayBorderColor&quot;, PName.LineColor, SName.delay);</span>
+<span class="fc" id="L118">		addConvert(&quot;sequenceDividerBackgroundColor&quot;, PName.BackGroundColor, SName.separator);</span>
+<span class="fc" id="L119">		addConvert(&quot;sequenceDividerBorderColor&quot;, PName.LineColor, SName.separator);</span>
+<span class="fc" id="L120">		addConFont(&quot;sequenceDivider&quot;, SName.separator);</span>
+<span class="fc" id="L121">		addConvert(&quot;sequenceDividerBorderThickness&quot;, PName.LineThickness, SName.separator);</span>
+<span class="fc" id="L122">		addConvert(&quot;SequenceMessageAlignment&quot;, PName.HorizontalAlignment, SName.arrow);</span>
 
-<span class="fc" id="L122">		addConFont(&quot;note&quot;, SName.note);</span>
-<span class="fc" id="L123">		addConvert(&quot;noteBorderThickness&quot;, PName.LineThickness, SName.note);</span>
-<span class="fc" id="L124">		addConvert(&quot;noteBorderColor&quot;, PName.LineColor, SName.note);</span>
-<span class="fc" id="L125">		addConvert(&quot;noteBackgroundColor&quot;, PName.BackGroundColor, SName.note);</span>
+<span class="fc" id="L124">		addConFont(&quot;note&quot;, SName.note);</span>
+<span class="fc" id="L125">		addConvert(&quot;noteBorderThickness&quot;, PName.LineThickness, SName.note);</span>
+<span class="fc" id="L126">		addConvert(&quot;noteBorderColor&quot;, PName.LineColor, SName.note);</span>
+<span class="fc" id="L127">		addConvert(&quot;noteBackgroundColor&quot;, PName.BackGroundColor, SName.note);</span>
 
-<span class="fc" id="L127">		addConvert(&quot;packageBackgroundColor&quot;, PName.BackGroundColor, SName.group);</span>
-<span class="fc" id="L128">		addConvert(&quot;packageBorderColor&quot;, PName.LineColor, SName.group);</span>
-<span class="fc" id="L129">		addMagic(SName.package_);</span>
+<span class="fc" id="L129">		addConvert(&quot;packageBackgroundColor&quot;, PName.BackGroundColor, SName.group);</span>
+<span class="fc" id="L130">		addConvert(&quot;packageBorderColor&quot;, PName.LineColor, SName.group);</span>
+<span class="fc" id="L131">		addMagic(SName.package_);</span>
 
-<span class="fc" id="L131">		addConvert(&quot;PartitionBorderColor&quot;, PName.LineColor, SName.composite);</span>
-<span class="fc" id="L132">		addConvert(&quot;PartitionBackgroundColor&quot;, PName.BackGroundColor, SName.composite);</span>
-<span class="fc" id="L133">		addConFont(&quot;Partition&quot;, SName.composite);</span>
+<span class="fc" id="L133">		addConvert(&quot;PartitionBorderColor&quot;, PName.LineColor, SName.composite);</span>
+<span class="fc" id="L134">		addConvert(&quot;PartitionBackgroundColor&quot;, PName.BackGroundColor, SName.composite);</span>
+<span class="fc" id="L135">		addConFont(&quot;Partition&quot;, SName.composite);</span>
 
-<span class="fc" id="L135">		addConvert(&quot;hyperlinkColor&quot;, PName.HyperLinkColor, SName.root);</span>
+<span class="fc" id="L137">		addConvert(&quot;hyperlinkColor&quot;, PName.HyperLinkColor, SName.root);</span>
 
-<span class="fc" id="L137">		addConvert(&quot;activityStartColor&quot;, PName.BackGroundColor, SName.circle, SName.start);</span>
-<span class="fc" id="L138">		addConvert(&quot;activityEndColor&quot;, PName.LineColor, SName.circle, SName.end);</span>
-<span class="fc" id="L139">		addConvert(&quot;activityStopColor&quot;, PName.LineColor, SName.circle, SName.stop);</span>
-<span class="fc" id="L140">		addConvert(&quot;activityBarColor&quot;, PName.BackGroundColor, SName.activityBar);</span>
-<span class="fc" id="L141">		addConvert(&quot;activityBorderColor&quot;, PName.LineColor, SName.activity);</span>
-<span class="fc" id="L142">		addConvert(&quot;activityBorderThickness&quot;, PName.LineThickness, SName.activity);</span>
-<span class="fc" id="L143">		addConvert(&quot;activityBackgroundColor&quot;, PName.BackGroundColor, SName.activity);</span>
-<span class="fc" id="L144">		addConFont(&quot;activity&quot;, SName.activity);</span>
-<span class="fc" id="L145">		addConvert(&quot;activityDiamondBackgroundColor&quot;, PName.BackGroundColor, SName.diamond);</span>
-<span class="fc" id="L146">		addConvert(&quot;activityDiamondBorderColor&quot;, PName.LineColor, SName.diamond);</span>
-<span class="fc" id="L147">		addConFont(&quot;activityDiamond&quot;, SName.diamond);</span>
+<span class="fc" id="L139">		addConvert(&quot;activityStartColor&quot;, PName.BackGroundColor, SName.circle, SName.start);</span>
+<span class="fc" id="L140">		addConvert(&quot;activityEndColor&quot;, PName.LineColor, SName.circle, SName.end);</span>
+<span class="fc" id="L141">		addConvert(&quot;activityStopColor&quot;, PName.LineColor, SName.circle, SName.stop);</span>
+<span class="fc" id="L142">		addConvert(&quot;activityBarColor&quot;, PName.BackGroundColor, SName.activityBar);</span>
+<span class="fc" id="L143">		addConvert(&quot;activityBorderColor&quot;, PName.LineColor, SName.activity);</span>
+<span class="fc" id="L144">		addConvert(&quot;activityBorderThickness&quot;, PName.LineThickness, SName.activity);</span>
+<span class="fc" id="L145">		addConvert(&quot;activityBackgroundColor&quot;, PName.BackGroundColor, SName.activity);</span>
+<span class="fc" id="L146">		addConFont(&quot;activity&quot;, SName.activity);</span>
+<span class="fc" id="L147">		addConvert(&quot;activityDiamondBackgroundColor&quot;, PName.BackGroundColor, SName.diamond);</span>
+<span class="fc" id="L148">		addConvert(&quot;activityDiamondBorderColor&quot;, PName.LineColor, SName.diamond);</span>
+<span class="fc" id="L149">		addConFont(&quot;activityDiamond&quot;, SName.diamond);</span>
 
-<span class="fc" id="L149">		addConFont(&quot;arrow&quot;, SName.arrow);</span>
-<span class="fc" id="L150">		addConvert(&quot;arrowThickness&quot;, PName.LineThickness, SName.arrow);</span>
-<span class="fc" id="L151">		addConvert(&quot;arrowColor&quot;, PName.LineColor, SName.arrow);</span>
-<span class="fc" id="L152">		addConvert(&quot;arrowStyle&quot;, PName.LineStyle, SName.arrow);</span>
-<span class="fc" id="L153">		addConvert(&quot;arrowHeadColor&quot;, PName.HeadColor, SName.arrow);</span>
+<span class="fc" id="L151">		addConFont(&quot;arrow&quot;, SName.arrow);</span>
+<span class="fc" id="L152">		addConvert(&quot;arrowThickness&quot;, PName.LineThickness, SName.arrow);</span>
+<span class="fc" id="L153">		addConvert(&quot;arrowColor&quot;, PName.LineColor, SName.arrow);</span>
+<span class="fc" id="L154">		addConvert(&quot;arrowStyle&quot;, PName.LineStyle, SName.arrow);</span>
+<span class="fc" id="L155">		addConvert(&quot;arrowHeadColor&quot;, PName.HeadColor, SName.arrow);</span>
 
-<span class="fc" id="L155">		addConvert(&quot;defaulttextalignment&quot;, PName.HorizontalAlignment, SName.root);</span>
-<span class="fc" id="L156">		addConvert(&quot;defaultFontName&quot;, PName.FontName, SName.root);</span>
-<span class="fc" id="L157">		addConvert(&quot;defaultFontColor&quot;, PName.FontColor, SName.root);</span>
+<span class="fc" id="L157">		addConvert(&quot;defaulttextalignment&quot;, PName.HorizontalAlignment, SName.root);</span>
+<span class="fc" id="L158">		addConvert(&quot;defaultFontName&quot;, PName.FontName, SName.root);</span>
+<span class="fc" id="L159">		addConvert(&quot;defaultFontColor&quot;, PName.FontColor, SName.root);</span>
 
-<span class="fc" id="L159">		addConFont(&quot;SwimlaneTitle&quot;, SName.swimlane);</span>
-<span class="fc" id="L160">		addConvert(&quot;SwimlaneTitleBackgroundColor&quot;, PName.BackGroundColor, SName.swimlane);</span>
-<span class="fc" id="L161">		addConvert(&quot;SwimlaneBorderColor&quot;, PName.LineColor, SName.swimlane);</span>
-<span class="fc" id="L162">		addConvert(&quot;SwimlaneBorderThickness&quot;, PName.LineThickness, SName.swimlane);</span>
+<span class="fc" id="L161">		addConFont(&quot;SwimlaneTitle&quot;, SName.swimlane);</span>
+<span class="fc" id="L162">		addConvert(&quot;SwimlaneTitleBackgroundColor&quot;, PName.BackGroundColor, SName.swimlane);</span>
+<span class="fc" id="L163">		addConvert(&quot;SwimlaneBorderColor&quot;, PName.LineColor, SName.swimlane);</span>
+<span class="fc" id="L164">		addConvert(&quot;SwimlaneBorderThickness&quot;, PName.LineThickness, SName.swimlane);</span>
 
-<span class="fc" id="L164">		addConvert(&quot;roundCorner&quot;, PName.RoundCorner, SName.root);</span>
+<span class="fc" id="L166">		addConvert(&quot;roundCorner&quot;, PName.RoundCorner, SName.root);</span>
 
-<span class="fc" id="L166">		addConvert(&quot;titleBorderThickness&quot;, PName.LineThickness, SName.title);</span>
-<span class="fc" id="L167">		addConvert(&quot;titleBorderColor&quot;, PName.LineColor, SName.title);</span>
-<span class="fc" id="L168">		addConvert(&quot;titleBackgroundColor&quot;, PName.BackGroundColor, SName.title);</span>
-<span class="fc" id="L169">		addConvert(&quot;titleBorderRoundCorner&quot;, PName.RoundCorner, SName.title);</span>
-<span class="fc" id="L170">		addConFont(&quot;title&quot;, SName.document, SName.title);</span>
+<span class="fc" id="L168">		addConvert(&quot;titleBorderThickness&quot;, PName.LineThickness, SName.title);</span>
+<span class="fc" id="L169">		addConvert(&quot;titleBorderColor&quot;, PName.LineColor, SName.title);</span>
+<span class="fc" id="L170">		addConvert(&quot;titleBackgroundColor&quot;, PName.BackGroundColor, SName.title);</span>
+<span class="fc" id="L171">		addConvert(&quot;titleBorderRoundCorner&quot;, PName.RoundCorner, SName.title);</span>
+<span class="fc" id="L172">		addConFont(&quot;title&quot;, SName.document, SName.title);</span>
 
-<span class="fc" id="L172">		addConvert(&quot;legendBorderThickness&quot;, PName.LineThickness, SName.legend);</span>
-<span class="fc" id="L173">		addConvert(&quot;legendBorderColor&quot;, PName.LineColor, SName.legend);</span>
-<span class="fc" id="L174">		addConvert(&quot;legendBackgroundColor&quot;, PName.BackGroundColor, SName.legend);</span>
-<span class="fc" id="L175">		addConvert(&quot;legendBorderRoundCorner&quot;, PName.RoundCorner, SName.legend);</span>
-<span class="fc" id="L176">		addConFont(&quot;legend&quot;, SName.legend);</span>
+<span class="fc" id="L174">		addConvert(&quot;legendBorderThickness&quot;, PName.LineThickness, SName.legend);</span>
+<span class="fc" id="L175">		addConvert(&quot;legendBorderColor&quot;, PName.LineColor, SName.legend);</span>
+<span class="fc" id="L176">		addConvert(&quot;legendBackgroundColor&quot;, PName.BackGroundColor, SName.legend);</span>
+<span class="fc" id="L177">		addConvert(&quot;legendBorderRoundCorner&quot;, PName.RoundCorner, SName.legend);</span>
+<span class="fc" id="L178">		addConFont(&quot;legend&quot;, SName.legend);</span>
 
-<span class="fc" id="L178">		addConvert(&quot;noteTextAlignment&quot;, PName.HorizontalAlignment, SName.note);</span>
+<span class="fc" id="L180">		addConvert(&quot;noteTextAlignment&quot;, PName.HorizontalAlignment, SName.note);</span>
 
-<span class="fc" id="L180">		addConvert(&quot;BackgroundColor&quot;, PName.BackGroundColor, SName.document);</span>
+<span class="fc" id="L182">		addConvert(&quot;BackgroundColor&quot;, PName.BackGroundColor, SName.document);</span>
 
-<span class="fc" id="L182">		addConvert(&quot;classBackgroundColor&quot;, PName.BackGroundColor, SName.element, SName.class_);</span>
-<span class="fc" id="L183">		addConvert(&quot;classBorderColor&quot;, PName.LineColor, SName.element, SName.class_);</span>
+<span class="fc" id="L184">		addConvert(&quot;classBackgroundColor&quot;, PName.BackGroundColor, SName.element, SName.class_);</span>
+<span class="fc" id="L185">		addConvert(&quot;classBorderColor&quot;, PName.LineColor, SName.element, SName.class_);</span>
 
-<span class="fc" id="L185">		addConvert(&quot;classFontSize&quot;, PName.FontSize, SName.element, SName.class_, SName.header);</span>
-<span class="fc" id="L186">		addConvert(&quot;classFontStyle&quot;, PName.FontStyle, SName.element, SName.class_, SName.header);</span>
-<span class="fc" id="L187">		addConvert(&quot;classFontColor&quot;, PName.FontColor, SName.element, SName.class_, SName.header);</span>
-<span class="fc" id="L188">		addConvert(&quot;classFontName&quot;, PName.FontName, SName.element, SName.class_, SName.header);</span>
+<span class="fc" id="L187">		addConvert(&quot;classFontSize&quot;, PName.FontSize, SName.element, SName.class_, SName.header);</span>
+<span class="fc" id="L188">		addConvert(&quot;classFontStyle&quot;, PName.FontStyle, SName.element, SName.class_, SName.header);</span>
+<span class="fc" id="L189">		addConvert(&quot;classFontColor&quot;, PName.FontColor, SName.element, SName.class_, SName.header);</span>
+<span class="fc" id="L190">		addConvert(&quot;classFontName&quot;, PName.FontName, SName.element, SName.class_, SName.header);</span>
 
-<span class="fc" id="L190">		addConvert(&quot;classAttributeFontSize&quot;, PName.FontSize, SName.element, SName.class_);</span>
-<span class="fc" id="L191">		addConvert(&quot;classAttributeFontStyle&quot;, PName.FontStyle, SName.element, SName.class_);</span>
-<span class="fc" id="L192">		addConvert(&quot;classAttributeFontColor&quot;, PName.FontColor, SName.element, SName.class_);</span>
-<span class="fc" id="L193">		addConvert(&quot;classAttributeFontName&quot;, PName.FontName, SName.element, SName.class_);</span>
+<span class="fc" id="L192">		addConvert(&quot;classAttributeFontSize&quot;, PName.FontSize, SName.element, SName.class_);</span>
+<span class="fc" id="L193">		addConvert(&quot;classAttributeFontStyle&quot;, PName.FontStyle, SName.element, SName.class_);</span>
+<span class="fc" id="L194">		addConvert(&quot;classAttributeFontColor&quot;, PName.FontColor, SName.element, SName.class_);</span>
+<span class="fc" id="L195">		addConvert(&quot;classAttributeFontName&quot;, PName.FontName, SName.element, SName.class_);</span>
 
-<span class="fc" id="L195">		addConvert(&quot;classBorderThickness&quot;, PName.LineThickness, SName.element, SName.class_);</span>
-<span class="fc" id="L196">		addConvert(&quot;classHeaderBackgroundColor&quot;, PName.BackGroundColor, SName.element, SName.class_, SName.header);</span>
+<span class="fc" id="L197">		addConvert(&quot;classBorderThickness&quot;, PName.LineThickness, SName.element, SName.class_);</span>
+<span class="fc" id="L198">		addConvert(&quot;classHeaderBackgroundColor&quot;, PName.BackGroundColor, SName.element, SName.class_, SName.header);</span>
 
-<span class="fc" id="L198">		addConvert(&quot;objectBackgroundColor&quot;, PName.BackGroundColor, SName.object);</span>
-<span class="fc" id="L199">		addConvert(&quot;objectBorderColor&quot;, PName.LineColor, SName.object);</span>
-<span class="fc" id="L200">		addConFont(&quot;object&quot;, SName.object);</span>
-<span class="fc" id="L201">		addConFont(&quot;objectAttribute&quot;, SName.object);</span>
-<span class="fc" id="L202">		addConvert(&quot;objectBorderThickness&quot;, PName.LineThickness, SName.object);</span>
+<span class="fc" id="L200">		addConvert(&quot;objectBackgroundColor&quot;, PName.BackGroundColor, SName.object);</span>
+<span class="fc" id="L201">		addConvert(&quot;objectBorderColor&quot;, PName.LineColor, SName.object);</span>
+<span class="fc" id="L202">		addConFont(&quot;object&quot;, SName.object);</span>
+<span class="fc" id="L203">		addConFont(&quot;objectAttribute&quot;, SName.object);</span>
+<span class="fc" id="L204">		addConvert(&quot;objectBorderThickness&quot;, PName.LineThickness, SName.object);</span>
 
-<span class="fc" id="L204">		addConvert(&quot;stateBackgroundColor&quot;, PName.BackGroundColor, SName.state);</span>
-<span class="fc" id="L205">		addConvert(&quot;stateBorderColor&quot;, PName.LineColor, SName.state);</span>
-<span class="fc" id="L206">		addConFont(&quot;state&quot;, SName.state);</span>
-<span class="fc" id="L207">		addConFont(&quot;stateAttribute&quot;, SName.state);</span>
-<span class="fc" id="L208">		addConvert(&quot;stateBorderThickness&quot;, PName.LineThickness, SName.state);</span>
+<span class="fc" id="L206">		addConvert(&quot;stateBackgroundColor&quot;, PName.BackGroundColor, SName.state);</span>
+<span class="fc" id="L207">		addConvert(&quot;stateBorderColor&quot;, PName.LineColor, SName.state);</span>
+<span class="fc" id="L208">		addConFont(&quot;state&quot;, SName.state);</span>
+<span class="fc" id="L209">		addConFont(&quot;stateAttribute&quot;, SName.state);</span>
+<span class="fc" id="L210">		addConvert(&quot;stateBorderThickness&quot;, PName.LineThickness, SName.state);</span>
 
-<span class="fc" id="L210">		addMagic(SName.agent);</span>
-<span class="fc" id="L211">		addMagic(SName.artifact);</span>
-<span class="fc" id="L212">		addMagic(SName.card);</span>
-<span class="fc" id="L213">		addMagic(SName.interface_);</span>
-<span class="fc" id="L214">		addMagic(SName.cloud);</span>
-<span class="fc" id="L215">		addMagic(SName.component);</span>
-<span class="fc" id="L216">		addMagic(SName.file);</span>
-<span class="fc" id="L217">		addMagic(SName.folder);</span>
-<span class="fc" id="L218">		addMagic(SName.frame);</span>
-<span class="fc" id="L219">		addMagic(SName.hexagon);</span>
-<span class="fc" id="L220">		addMagic(SName.node);</span>
-<span class="fc" id="L221">		addMagic(SName.person);</span>
-<span class="fc" id="L222">		addMagic(SName.queue);</span>
-<span class="fc" id="L223">		addMagic(SName.rectangle);</span>
-<span class="fc" id="L224">		addMagic(SName.stack);</span>
-<span class="fc" id="L225">		addMagic(SName.storage);</span>
-<span class="fc" id="L226">		addMagic(SName.usecase);</span>
-<span class="fc" id="L227">		addMagic(SName.map);</span>
-<span class="fc" id="L228">		addMagic(SName.archimate);</span>
-<span class="fc" id="L229">		addMagic(SName.hnote);</span>
-<span class="fc" id="L230">		addMagic(SName.rnote);</span>
+<span class="fc" id="L212">		addMagic(SName.agent);</span>
+<span class="fc" id="L213">		addMagic(SName.artifact);</span>
+<span class="fc" id="L214">		addMagic(SName.card);</span>
+<span class="fc" id="L215">		addMagic(SName.interface_);</span>
+<span class="fc" id="L216">		addMagic(SName.cloud);</span>
+<span class="fc" id="L217">		addMagic(SName.component);</span>
+<span class="fc" id="L218">		addMagic(SName.file);</span>
+<span class="fc" id="L219">		addMagic(SName.folder);</span>
+<span class="fc" id="L220">		addMagic(SName.frame);</span>
+<span class="fc" id="L221">		addMagic(SName.hexagon);</span>
+<span class="fc" id="L222">		addMagic(SName.node);</span>
+<span class="fc" id="L223">		addMagic(SName.person);</span>
+<span class="fc" id="L224">		addMagic(SName.queue);</span>
+<span class="fc" id="L225">		addMagic(SName.rectangle);</span>
+<span class="fc" id="L226">		addMagic(SName.stack);</span>
+<span class="fc" id="L227">		addMagic(SName.storage);</span>
+<span class="fc" id="L228">		addMagic(SName.usecase);</span>
+<span class="fc" id="L229">		addMagic(SName.map);</span>
+<span class="fc" id="L230">		addMagic(SName.archimate);</span>
+<span class="fc" id="L231">		addMagic(SName.hnote);</span>
+<span class="fc" id="L232">		addMagic(SName.rnote);</span>
 
-<span class="fc" id="L232">		addConvert(&quot;IconPrivateColor&quot;, PName.LineColor, SName.visibilityIcon, SName.private_);</span>
-<span class="fc" id="L233">		addConvert(&quot;IconPrivateBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.private_);</span>
-<span class="fc" id="L234">		addConvert(&quot;IconPackageColor&quot;, PName.LineColor, SName.visibilityIcon, SName.package_);</span>
-<span class="fc" id="L235">		addConvert(&quot;IconPackageBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.package_);</span>
-<span class="fc" id="L236">		addConvert(&quot;IconProtectedColor&quot;, PName.LineColor, SName.visibilityIcon, SName.protected_);</span>
-<span class="fc" id="L237">		addConvert(&quot;IconProtectedBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.protected_);</span>
-<span class="fc" id="L238">		addConvert(&quot;IconPublicColor&quot;, PName.LineColor, SName.visibilityIcon, SName.public_);</span>
-<span class="fc" id="L239">		addConvert(&quot;IconPublicBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.public_);</span>
+<span class="fc" id="L234">		addConvert(&quot;IconPrivateColor&quot;, PName.LineColor, SName.visibilityIcon, SName.private_);</span>
+<span class="fc" id="L235">		addConvert(&quot;IconPrivateBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.private_);</span>
+<span class="fc" id="L236">		addConvert(&quot;IconPackageColor&quot;, PName.LineColor, SName.visibilityIcon, SName.package_);</span>
+<span class="fc" id="L237">		addConvert(&quot;IconPackageBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.package_);</span>
+<span class="fc" id="L238">		addConvert(&quot;IconProtectedColor&quot;, PName.LineColor, SName.visibilityIcon, SName.protected_);</span>
+<span class="fc" id="L239">		addConvert(&quot;IconProtectedBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.protected_);</span>
+<span class="fc" id="L240">		addConvert(&quot;IconPublicColor&quot;, PName.LineColor, SName.visibilityIcon, SName.public_);</span>
+<span class="fc" id="L241">		addConvert(&quot;IconPublicBackgroundColor&quot;, PName.BackGroundColor, SName.visibilityIcon, SName.public_);</span>
 
-<span class="fc" id="L241">		addConvert(&quot;MinClassWidth&quot;, PName.MinimumWidth);</span>
+<span class="fc" id="L243">		addConvert(&quot;MinClassWidth&quot;, PName.MinimumWidth);</span>
 
 //		addConvert(&quot;nodeStereotypeFontSize&quot;, PName.FontSize, SName.node, SName.stereotype);
 //		addConvert(&quot;sequenceStereotypeFontSize&quot;, PName.FontSize, SName.stereotype);
@@ -246,183 +248,183 @@ public class FromSkinparamToStyle {
 //		addConvert(&quot;sequenceStereotypeFontColor&quot;, PName.FontColor, SName.stereotype);
 //		addConvert(&quot;sequenceStereotypeFontName&quot;, PName.FontName, SName.stereotype);
 
-<span class="fc" id="L249">		addConvert(&quot;lifelineStrategy&quot;, PName.LineStyle, SName.lifeLine);</span>
-<span class="fc" id="L250">		addConvert(&quot;wrapWidth&quot;, PName.MaximumWidth, SName.element);</span>
-<span class="fc" id="L251">		addConvert(&quot;HyperlinkUnderline&quot;, PName.HyperlinkUnderlineThickness, SName.element);</span>
-<span class="fc" id="L252">		addConvert(&quot;StereotypeAlignment&quot;, PName.HorizontalAlignment, SName.stereotype);</span>
+<span class="fc" id="L251">		addConvert(&quot;lifelineStrategy&quot;, PName.LineStyle, SName.lifeLine);</span>
+<span class="fc" id="L252">		addConvert(&quot;wrapWidth&quot;, PName.MaximumWidth, SName.element);</span>
+<span class="fc" id="L253">		addConvert(&quot;HyperlinkUnderline&quot;, PName.HyperlinkUnderlineThickness, SName.element);</span>
+<span class="fc" id="L254">		addConvert(&quot;StereotypeAlignment&quot;, PName.HorizontalAlignment, SName.stereotype);</span>
 
-<span class="fc" id="L254">		addConvert(&quot;stereotypeABackgroundColor&quot;, PName.BackGroundColor, SName.spotAbstractClass);</span>
-<span class="fc" id="L255">		addConvert(&quot;stereotypeABorderColor&quot;, PName.LineColor, SName.spotAbstractClass);</span>
-<span class="fc" id="L256">		addConvert(&quot;stereotypeCBackgroundColor&quot;, PName.BackGroundColor, SName.spotClass);</span>
-<span class="fc" id="L257">		addConvert(&quot;stereotypeCBorderColor&quot;, PName.LineColor, SName.spotClass);</span>
-<span class="fc" id="L258">		addConvert(&quot;stereotypeEBackgroundColor&quot;, PName.BackGroundColor, SName.spotEnum);</span>
-<span class="fc" id="L259">		addConvert(&quot;stereotypeEBorderColor&quot;, PName.LineColor, SName.spotEnum);</span>
-<span class="fc" id="L260">		addConvert(&quot;stereotypeIBackgroundColor&quot;, PName.BackGroundColor, SName.spotInterface);</span>
-<span class="fc" id="L261">		addConvert(&quot;stereotypeIBorderColor&quot;, PName.LineColor, SName.spotInterface);</span>
-<span class="fc" id="L262">		addConvert(&quot;stereotypeNBackgroundColor&quot;, PName.BackGroundColor, SName.spotAnnotation);</span>
-<span class="fc" id="L263">		addConvert(&quot;stereotypeNBorderColor&quot;, PName.LineColor, SName.spotAnnotation);</span>
-<span class="fc" id="L264">	}</span>
+<span class="fc" id="L256">		addConvert(&quot;stereotypeABackgroundColor&quot;, PName.BackGroundColor, SName.spotAbstractClass);</span>
+<span class="fc" id="L257">		addConvert(&quot;stereotypeABorderColor&quot;, PName.LineColor, SName.spotAbstractClass);</span>
+<span class="fc" id="L258">		addConvert(&quot;stereotypeCBackgroundColor&quot;, PName.BackGroundColor, SName.spotClass);</span>
+<span class="fc" id="L259">		addConvert(&quot;stereotypeCBorderColor&quot;, PName.LineColor, SName.spotClass);</span>
+<span class="fc" id="L260">		addConvert(&quot;stereotypeEBackgroundColor&quot;, PName.BackGroundColor, SName.spotEnum);</span>
+<span class="fc" id="L261">		addConvert(&quot;stereotypeEBorderColor&quot;, PName.LineColor, SName.spotEnum);</span>
+<span class="fc" id="L262">		addConvert(&quot;stereotypeIBackgroundColor&quot;, PName.BackGroundColor, SName.spotInterface);</span>
+<span class="fc" id="L263">		addConvert(&quot;stereotypeIBorderColor&quot;, PName.LineColor, SName.spotInterface);</span>
+<span class="fc" id="L264">		addConvert(&quot;stereotypeNBackgroundColor&quot;, PName.BackGroundColor, SName.spotAnnotation);</span>
+<span class="fc" id="L265">		addConvert(&quot;stereotypeNBorderColor&quot;, PName.LineColor, SName.spotAnnotation);</span>
+<span class="fc" id="L266">	}</span>
 
 	private static void addMagic(SName sname) {
-<span class="fc" id="L267">		final String cleanName = sname.name().replace(&quot;_&quot;, &quot;&quot;);</span>
-<span class="fc" id="L268">		addConvert(cleanName + &quot;BackgroundColor&quot;, PName.BackGroundColor, sname);</span>
-<span class="fc" id="L269">		addConvert(cleanName + &quot;BorderColor&quot;, PName.LineColor, sname);</span>
-<span class="fc" id="L270">		addConvert(cleanName + &quot;BorderThickness&quot;, PName.LineThickness, sname);</span>
-<span class="fc" id="L271">		addConvert(cleanName + &quot;RoundCorner&quot;, PName.RoundCorner, sname);</span>
-<span class="fc" id="L272">		addConvert(cleanName + &quot;DiagonalCorner&quot;, PName.DiagonalCorner, sname);</span>
-<span class="fc" id="L273">		addConvert(cleanName + &quot;BorderStyle&quot;, PName.LineStyle, sname);</span>
-<span class="fc" id="L274">		addConFont(cleanName, sname);</span>
-<span class="fc" id="L275">		addConvert(cleanName + &quot;Shadowing&quot;, PName.Shadowing, sname);</span>
+<span class="fc" id="L269">		final String cleanName = sname.name().replace(&quot;_&quot;, &quot;&quot;);</span>
+<span class="fc" id="L270">		addConvert(cleanName + &quot;BackgroundColor&quot;, PName.BackGroundColor, sname);</span>
+<span class="fc" id="L271">		addConvert(cleanName + &quot;BorderColor&quot;, PName.LineColor, sname);</span>
+<span class="fc" id="L272">		addConvert(cleanName + &quot;BorderThickness&quot;, PName.LineThickness, sname);</span>
+<span class="fc" id="L273">		addConvert(cleanName + &quot;RoundCorner&quot;, PName.RoundCorner, sname);</span>
+<span class="fc" id="L274">		addConvert(cleanName + &quot;DiagonalCorner&quot;, PName.DiagonalCorner, sname);</span>
+<span class="fc" id="L275">		addConvert(cleanName + &quot;BorderStyle&quot;, PName.LineStyle, sname);</span>
+<span class="fc" id="L276">		addConFont(cleanName, sname);</span>
+<span class="fc" id="L277">		addConvert(cleanName + &quot;Shadowing&quot;, PName.Shadowing, sname);</span>
 
-<span class="fc" id="L277">		addConvert(cleanName + &quot;StereotypeFontSize&quot;, PName.FontSize, SName.stereotype, sname);</span>
-<span class="fc" id="L278">		addConvert(cleanName + &quot;StereotypeFontStyle&quot;, PName.FontStyle, SName.stereotype, sname);</span>
-<span class="fc" id="L279">		addConvert(cleanName + &quot;StereotypeFontColor&quot;, PName.FontColor, SName.stereotype, sname);</span>
-<span class="fc" id="L280">		addConvert(cleanName + &quot;StereotypeFontName&quot;, PName.FontName, SName.stereotype, sname);</span>
+<span class="fc" id="L279">		addConvert(cleanName + &quot;StereotypeFontSize&quot;, PName.FontSize, SName.stereotype, sname);</span>
+<span class="fc" id="L280">		addConvert(cleanName + &quot;StereotypeFontStyle&quot;, PName.FontStyle, SName.stereotype, sname);</span>
+<span class="fc" id="L281">		addConvert(cleanName + &quot;StereotypeFontColor&quot;, PName.FontColor, SName.stereotype, sname);</span>
+<span class="fc" id="L282">		addConvert(cleanName + &quot;StereotypeFontName&quot;, PName.FontName, SName.stereotype, sname);</span>
 
-<span class="fc" id="L282">	}</span>
+<span class="fc" id="L284">	}</span>
 
-<span class="fc" id="L284">	private final List&lt;Style&gt; styles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L286">	private final List&lt;Style&gt; styles = new ArrayList&lt;&gt;();</span>
 	private final String stereo;
 	private final String key;
 
-<span class="fc" id="L288">	public FromSkinparamToStyle(String key) {</span>
+<span class="fc" id="L290">	public FromSkinparamToStyle(String key) {</span>
 
-<span class="fc bfc" id="L290" title="All 2 branches covered.">		if (key.contains(&quot;&lt;&lt;&quot;)) {</span>
-<span class="fc" id="L291">			final StringTokenizer st = new StringTokenizer(key, &quot;&lt;&gt;&quot;);</span>
-<span class="fc" id="L292">			this.key = st.nextToken();</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">			this.stereo = st.hasMoreTokens() ? st.nextToken().trim() : null;</span>
-<span class="fc" id="L294">		} else {</span>
-<span class="fc" id="L295">			this.key = key;</span>
-<span class="fc" id="L296">			this.stereo = null;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (key.contains(&quot;&lt;&lt;&quot;)) {</span>
+<span class="fc" id="L293">			final StringTokenizer st = new StringTokenizer(key, &quot;&lt;&gt;&quot;);</span>
+<span class="fc" id="L294">			this.key = st.nextToken();</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">			this.stereo = st.hasMoreTokens() ? st.nextToken().trim() : null;</span>
+<span class="fc" id="L296">		} else {</span>
+<span class="fc" id="L297">			this.key = key;</span>
+<span class="fc" id="L298">			this.stereo = null;</span>
 		}
 
-<span class="fc" id="L299">	}</span>
+<span class="fc" id="L301">	}</span>
 
 	public void convertNow(String value, final AutomaticCounter counter) {
-<span class="fc bfc" id="L302" title="All 2 branches covered.">		if (key.endsWith(&quot;shadowing&quot;)) {</span>
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
-<span class="fc" id="L304">				value = &quot;0&quot;;</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">			else if (value.equalsIgnoreCase(&quot;true&quot;))</span>
-<span class="nc" id="L306">				value = &quot;3&quot;;</span>
-<span class="fc bfc" id="L307" title="All 2 branches covered.">		} else if (key.equals(&quot;lifelinestrategy&quot;)) {</span>
-<span class="fc bfc" id="L308" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;solid&quot;))</span>
-<span class="fc" id="L309">				value = &quot;0&quot;;</span>
-<span class="fc bfc" id="L310" title="All 2 branches covered.">		} else if (key.equals(&quot;hyperlinkunderline&quot;)) {</span>
-<span class="fc bfc" id="L311" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
-<span class="fc" id="L312">				value = &quot;0&quot;;</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;true&quot;))</span>
-<span class="nc" id="L314">				value = &quot;1&quot;;</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		if (key.endsWith(&quot;shadowing&quot;)) {</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
+<span class="fc" id="L306">				value = &quot;0&quot;;</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">			else if (value.equalsIgnoreCase(&quot;true&quot;))</span>
+<span class="nc" id="L308">				value = &quot;3&quot;;</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">		} else if (key.equals(&quot;lifelinestrategy&quot;)) {</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;solid&quot;))</span>
+<span class="fc" id="L311">				value = &quot;0&quot;;</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">		} else if (key.equals(&quot;hyperlinkunderline&quot;)) {</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
+<span class="fc" id="L314">				value = &quot;0&quot;;</span>
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;true&quot;))</span>
+<span class="nc" id="L316">				value = &quot;1&quot;;</span>
 		}
 
-<span class="pc bpc" id="L317" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;right:right&quot;))</span>
-<span class="nc" id="L318">			value = &quot;right&quot;;</span>
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;dotted&quot;))</span>
-<span class="nc" id="L320">			value = &quot;1;3&quot;;</span>
-<span class="fc bfc" id="L321" title="All 2 branches covered.">		if (value.equalsIgnoreCase(&quot;dashed&quot;))</span>
-<span class="fc" id="L322">			value = &quot;7;7&quot;;</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;right:right&quot;))</span>
+<span class="nc" id="L320">			value = &quot;right&quot;;</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;dotted&quot;))</span>
+<span class="nc" id="L322">			value = &quot;1;3&quot;;</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (value.equalsIgnoreCase(&quot;dashed&quot;))</span>
+<span class="fc" id="L324">			value = &quot;7;7&quot;;</span>
 
-<span class="fc" id="L324">		final List&lt;Data&gt; datas = knowlegde.get(key.toLowerCase());</span>
+<span class="fc" id="L326">		final List&lt;Data&gt; datas = knowlegde.get(key.toLowerCase());</span>
 
-<span class="fc bfc" id="L326" title="All 2 branches covered.">		if (datas == null) {</span>
-<span class="fc bfc" id="L327" title="All 2 branches covered.">			if (key.equalsIgnoreCase(&quot;shadowing&quot;))</span>
-<span class="fc" id="L328">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root);</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">			else if (key.equalsIgnoreCase(&quot;noteshadowing&quot;))</span>
-<span class="nc" id="L330">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root, SName.note);</span>
-<span class="fc" id="L331">			return;</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (datas == null) {</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">			if (key.equalsIgnoreCase(&quot;shadowing&quot;))</span>
+<span class="fc" id="L330">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root);</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">			else if (key.equalsIgnoreCase(&quot;noteshadowing&quot;))</span>
+<span class="nc" id="L332">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root, SName.note);</span>
+<span class="fc" id="L333">			return;</span>
 		}
 
-<span class="fc" id="L334">		final boolean complex = isComplexValue(value);</span>
-<span class="fc bfc" id="L335" title="All 2 branches covered.">		if (complex) {</span>
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">			if (value.contains(&quot;;&quot;)) {</span>
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">				if (value.startsWith(&quot;;&quot;))</span>
-<span class="nc" id="L338">					value = &quot; &quot; + value;</span>
-<span class="fc" id="L339">				final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
-<span class="fc" id="L340">				value = st.nextToken();</span>
-<span class="fc bfc" id="L341" title="All 2 branches covered.">				while (st.hasMoreTokens()) {</span>
-<span class="fc" id="L342">					final String read = st.nextToken();</span>
-<span class="fc" id="L343">					readValue(read, datas, counter);</span>
-<span class="fc" id="L344">				}</span>
-<span class="fc" id="L345">			} else {</span>
-<span class="nc" id="L346">				readValue(value, datas, counter);</span>
-<span class="nc" id="L347">				return;</span>
+<span class="fc" id="L336">		final boolean complex = isComplexValue(value);</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">		if (complex) {</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">			if (value.contains(&quot;;&quot;)) {</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">				if (value.startsWith(&quot;;&quot;))</span>
+<span class="nc" id="L340">					value = &quot; &quot; + value;</span>
+<span class="fc" id="L341">				final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
+<span class="fc" id="L342">				value = st.nextToken();</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">				while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L344">					final String read = st.nextToken();</span>
+<span class="fc" id="L345">					readValue(read, datas, counter);</span>
+<span class="fc" id="L346">				}</span>
+<span class="fc" id="L347">			} else {</span>
+<span class="nc" id="L348">				readValue(value, datas, counter);</span>
+<span class="nc" id="L349">				return;</span>
 			}
 		}
 
-<span class="pc bpc" id="L351" title="1 of 2 branches missed.">		if (&quot; &quot;.equals(value) == false)</span>
-<span class="fc bfc" id="L352" title="All 2 branches covered.">			for (Data data : datas)</span>
-<span class="fc" id="L353">				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">		if (&quot; &quot;.equals(value) == false)</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">			for (Data data : datas)</span>
+<span class="fc" id="L355">				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);</span>
 
-<span class="fc" id="L355">	}</span>
+<span class="fc" id="L357">	}</span>
 
 	private void readValue(final String read, final List&lt;Data&gt; datas, final AutomaticCounter counter) {
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">		if (read.startsWith(&quot;text:&quot;)) {</span>
-<span class="nc" id="L359">			final String value2 = read.split(&quot;:&quot;)[1];</span>
-<span class="nc bnc" id="L360" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L361">				addStyle(PName.FontColor, ValueImpl.regular(value2, counter), data.styleNames);</span>
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dotted&quot;)) {</span>
-<span class="nc bnc" id="L363" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L364">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;1;3&quot;, counter), data.styleNames);</span>
-<span class="pc bpc" id="L365" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dashed&quot;)) {</span>
-<span class="nc bnc" id="L366" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L367">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;7;7&quot;, counter), data.styleNames);</span>
-<span class="pc bpc" id="L368" title="1 of 2 branches missed.">		} else if (read.toLowerCase().contains(&quot;bold&quot;)) {</span>
-<span class="nc bnc" id="L369" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L370">				addStyle(PName.LineThickness, ValueImpl.regular(&quot;2&quot;, counter), data.styleNames);</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">		if (read.startsWith(&quot;text:&quot;)) {</span>
+<span class="nc" id="L361">			final String value2 = read.split(&quot;:&quot;)[1];</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L363">				addStyle(PName.FontColor, ValueImpl.regular(value2, counter), data.styleNames);</span>
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dotted&quot;)) {</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L366">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;1;3&quot;, counter), data.styleNames);</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dashed&quot;)) {</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L369">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;7;7&quot;, counter), data.styleNames);</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">		} else if (read.toLowerCase().contains(&quot;bold&quot;)) {</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L372">				addStyle(PName.LineThickness, ValueImpl.regular(&quot;2&quot;, counter), data.styleNames);</span>
 		}
-<span class="fc" id="L372">	}</span>
+<span class="fc" id="L374">	}</span>
 
 	private boolean isComplexValue(String value) {
-<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (value.contains(&quot;;&quot;))</span>
-<span class="fc" id="L376">			return true;</span>
-<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (value.startsWith(&quot;text:&quot;))</span>
-<span class="nc" id="L378">			return true;</span>
-<span class="fc" id="L379">		return false;</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">		if (value.contains(&quot;;&quot;))</span>
+<span class="fc" id="L378">			return true;</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">		if (value.startsWith(&quot;text:&quot;))</span>
+<span class="nc" id="L380">			return true;</span>
+<span class="fc" id="L381">		return false;</span>
 	}
 
 	private ValueImpl getShadowingValue(final String value, final AutomaticCounter counter) {
-<span class="pc bpc" id="L383" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;false&quot;) || value.equalsIgnoreCase(&quot;no&quot;))</span>
-<span class="nc" id="L384">			return ValueImpl.regular(&quot;0&quot;, counter);</span>
+<span class="pc bpc" id="L385" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;false&quot;) || value.equalsIgnoreCase(&quot;no&quot;))</span>
+<span class="nc" id="L386">			return ValueImpl.regular(&quot;0&quot;, counter);</span>
 
-<span class="pc bpc" id="L386" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;true&quot;) || value.equalsIgnoreCase(&quot;yes&quot;))</span>
-<span class="nc" id="L387">			return ValueImpl.regular(&quot;3&quot;, counter);</span>
+<span class="pc bpc" id="L388" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;true&quot;) || value.equalsIgnoreCase(&quot;yes&quot;))</span>
+<span class="nc" id="L389">			return ValueImpl.regular(&quot;3&quot;, counter);</span>
 
-<span class="fc" id="L389">		return ValueImpl.regular(value, counter);</span>
+<span class="fc" id="L391">		return ValueImpl.regular(value, counter);</span>
 	}
 
 	private void addStyle(PName propertyName, Value value, SName... styleNames) {
-<span class="fc" id="L393">		Map&lt;PName, Value&gt; map = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
-<span class="fc" id="L394">		map.put(propertyName, value);</span>
-<span class="fc" id="L395">		StyleSignatureBasic sig = StyleSignatureBasic.of(styleNames);</span>
-<span class="fc bfc" id="L396" title="All 2 branches covered.">		if (stereo != null) {</span>
-<span class="fc" id="L397">			map = StyleLoader.addPriorityForStereotype(map);</span>
-<span class="fc bfc" id="L398" title="All 2 branches covered.">			for (String s : stereo.split(&quot;\\&amp;&quot;))</span>
-<span class="fc" id="L399">				sig = sig.add(StereotypeDecoration.PREFIX + s);</span>
+<span class="fc" id="L395">		Map&lt;PName, Value&gt; map = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
+<span class="fc" id="L396">		map.put(propertyName, value);</span>
+<span class="fc" id="L397">		StyleSignatureBasic sig = StyleSignatureBasic.of(styleNames);</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">		if (stereo != null) {</span>
+<span class="fc" id="L399">			map = StyleLoader.addPriorityForStereotype(map);</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">			for (String s : stereo.split(&quot;\\&amp;&quot;))</span>
+<span class="fc" id="L401">				sig = sig.add(StereotypeDecoration.PREFIX + s);</span>
 		}
 
-<span class="fc" id="L402">		final Style style = new Style(sig, map);</span>
-<span class="fc" id="L403">		styles.add(style);</span>
-<span class="fc" id="L404">	}</span>
+<span class="fc" id="L404">		final Style style = new Style(sig, map);</span>
+<span class="fc" id="L405">		styles.add(style);</span>
+<span class="fc" id="L406">	}</span>
 
 	public List&lt;Style&gt; getStyles() {
-<span class="fc" id="L407">		return Collections.unmodifiableList(styles);</span>
+<span class="fc" id="L409">		return Collections.unmodifiableList(styles);</span>
 	}
 
 	private static void addConvert(String skinparam, PName propertyName, SName... styleNames) {
-<span class="fc" id="L411">		skinparam = skinparam.toLowerCase();</span>
-<span class="fc" id="L412">		List&lt;Data&gt; datas = knowlegde.get(skinparam);</span>
-<span class="fc bfc" id="L413" title="All 2 branches covered.">		if (datas == null) {</span>
-<span class="fc" id="L414">			datas = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L415">			knowlegde.put(skinparam, datas);</span>
+<span class="fc" id="L413">		skinparam = skinparam.toLowerCase();</span>
+<span class="fc" id="L414">		List&lt;Data&gt; datas = knowlegde.get(skinparam);</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">		if (datas == null) {</span>
+<span class="fc" id="L416">			datas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L417">			knowlegde.put(skinparam, datas);</span>
 		}
-<span class="fc" id="L417">		datas.add(new Data(styleNames, propertyName));</span>
-<span class="fc" id="L418">	}</span>
+<span class="fc" id="L419">		datas.add(new Data(styleNames, propertyName));</span>
+<span class="fc" id="L420">	}</span>
 
 	private static void addConFont(String skinparam, SName... styleNames) {
-<span class="fc" id="L421">		addConvert(skinparam + &quot;FontSize&quot;, PName.FontSize, styleNames);</span>
-<span class="fc" id="L422">		addConvert(skinparam + &quot;FontStyle&quot;, PName.FontStyle, styleNames);</span>
-<span class="fc" id="L423">		addConvert(skinparam + &quot;FontColor&quot;, PName.FontColor, styleNames);</span>
-<span class="fc" id="L424">		addConvert(skinparam + &quot;FontName&quot;, PName.FontName, styleNames);</span>
-<span class="fc" id="L425">	}</span>
+<span class="fc" id="L423">		addConvert(skinparam + &quot;FontSize&quot;, PName.FontSize, styleNames);</span>
+<span class="fc" id="L424">		addConvert(skinparam + &quot;FontStyle&quot;, PName.FontStyle, styleNames);</span>
+<span class="fc" id="L425">		addConvert(skinparam + &quot;FontColor&quot;, PName.FontColor, styleNames);</span>
+<span class="fc" id="L426">		addConvert(skinparam + &quot;FontName&quot;, PName.FontName, styleNames);</span>
+<span class="fc" id="L427">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
