@@ -188,7 +188,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		else if (arg1.equalsIgnoreCase("stereotype"))
 			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);
 		else if (arg1.equalsIgnoreCase("data"))
-			gender = EntityGenderUtils.byEntityType(LeafType.DATA_CLASS);
+			gender = EntityGenderUtils.byEntityType(LeafType.DATACLASS);
 		else if (arg1.equalsIgnoreCase("record"))
 			gender = EntityGenderUtils.byEntityType(LeafType.RECORD);
 		else if (arg1.startsWith("<<"))

@@ -209,7 +209,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotMetaClass);
 		case STEREOTYPE:
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStereotype);
-		case DATA_CLASS:
+		case DATACLASS:
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotDataClass);
 		case RECORD:
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotRecord);
@@ -241,7 +241,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return 'M';
 		case STEREOTYPE:
 			return 'S';
-		case DATA_CLASS:
+		case DATACLASS:
 			return 'D';
 		case RECORD:
 			return 'R';

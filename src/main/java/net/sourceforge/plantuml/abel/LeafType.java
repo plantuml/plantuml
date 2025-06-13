@@ -44,7 +44,7 @@ public enum LeafType {
 	EMPTY_PACKAGE,
 
 	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, PROTOCOL, STRUCT, EXCEPTION, METACLASS, STEREOTYPE, LOLLIPOP_FULL,
-	LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, JSON, ASSOCIATION, ENUM, CIRCLE, DATA_CLASS, RECORD,
+	LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, JSON, ASSOCIATION, ENUM, CIRCLE, DATACLASS, RECORD,
 
 	USECASE, USECASE_BUSINESS,
 
@@ -69,7 +69,7 @@ public enum LeafType {
 	public static LeafType getLeafType(String type) {
 		type = StringUtils.goUpperCase(type);
 		if (type.startsWith("DATA"))
-			return LeafType.DATA_CLASS;
+			return LeafType.DATACLASS;
 
 		if (type.startsWith("ABSTRACT"))
 			return LeafType.ABSTRACT_CLASS;
@@ -87,7 +87,7 @@ public enum LeafType {
 		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS
 				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY
 				|| this == LeafType.PROTOCOL || this == LeafType.STRUCT || this == LeafType.EXCEPTION
-				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE || this == LeafType.DATA_CLASS || this == LeafType.RECORD;
+				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE || this == LeafType.DATACLASS || this == LeafType.RECORD;
 	}
 
 	public String toHtml() {
