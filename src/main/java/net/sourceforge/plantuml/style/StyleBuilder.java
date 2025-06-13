@@ -41,6 +41,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.utils.Log;
 
@@ -118,8 +119,14 @@ public class StyleBuilder implements AutomaticCounter {
 	public int getNextInt() {
 		return ++counter;
 	}
+	
+	private final Map<StyleSignatureBasic, Style> mergedStyleCache = new ConcurrentHashMap<>();
 
 	public Style getMergedStyle(StyleSignatureBasic signature) {
+	    return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig));
+	}
+
+	private Style computeMergedStyle(StyleSignatureBasic signature) {
 		boolean added = this.printedForLog.add(signature);
 		if (added)
 			Log.info("Using style " + signature);

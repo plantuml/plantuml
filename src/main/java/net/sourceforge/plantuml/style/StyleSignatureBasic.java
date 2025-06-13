@@ -40,7 +40,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.stereo.Stereostyles;
@@ -178,7 +180,14 @@ public class StyleSignatureBasic implements StyleSignature {
 		return -1;
 	}
 
+	private final Map<StyleSignatureBasic, Boolean> matchAllCache = new ConcurrentHashMap<>();
+
 	public boolean matchAll(StyleSignatureBasic other) {
+		final Boolean computeIfAbsent = matchAllCache.computeIfAbsent(other, k -> this.matchAllImpl(other));
+		return computeIfAbsent;
+	}
+
+	private boolean matchAllImpl(StyleSignatureBasic other) {
 		final boolean namesContainsStar = names.contains(STAR);
 		if (other.isStarred() && namesContainsStar == false)
 			return false;
