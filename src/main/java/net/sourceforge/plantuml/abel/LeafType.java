@@ -87,7 +87,7 @@ public enum LeafType {
 		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS
 				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY
 				|| this == LeafType.PROTOCOL || this == LeafType.STRUCT || this == LeafType.EXCEPTION
-				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE || this == LeafType.DATA_CLASS || this == RECORD;
+				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE || this == LeafType.DATA_CLASS || this == LeafType.RECORD;
 	}
 
 	public String toHtml() {
