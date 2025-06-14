@@ -77,23 +77,172 @@ these guidelines will help maintainers and the community to understand your sugg
 
 
 ### Your First Code Contribution
-<!-- TODO
-include Setup of env, IDE and typical getting started instructions?
 
--->
+#### Good First Issues
+  Start with issues labeled:
+  - [good first issue](https://github.com/plantuml/plantuml/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22)
+  - [documentation](https://github.com/plantuml/plantuml/issues?q=is%3Aissue%20state%3Aopen%20label%3Adocumentation)
+
+#### Environment Setup
+1. **Prerequisites:**
+  - [Java Development Kit (JDK)](https://jdk.java.net/) - version 8 or newer
+  - [Gradle](https://gradle.org/install/) - version 7.0 or newer
+  - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) - to clone the repository and manage the version control
+
+2. **Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
+
+3. **Clone your repository to IDE:**
+
+```sh
+git clone https://github.com/{your-username}/plantuml
+```
+
+4. **Navigate to the project root directory:**
+
+```sh
+cd plantuml
+```
+
+#### Building the Project - [Full Guide](https://github.com/plantuml/plantuml/blob/master/BUILDING.md)
+
+To build the project, run the following command from the project root directory:
+
+```sh
+gradle build
+```
+
+This command will build the project and create the necessary output files in the `build` directory.
+
+#### Running Tests - [Full Guide](https://github.com/plantuml/plantuml/blob/master/docs/TESTING.md)
+
+To run the tests included with the project, use the following command:
+
+```sh
+gradle test
+```
+
+#### Making Changes
+
+**1. Create feature branch:**
+
+```sh
+git checkout -b add/issue-description
+```
+
+**2. Implement changes following code structure:**
+    
+  **Example:**
+  - Diagram logic: src/main/java/net/sourceforge/plantuml
+  - Syntax parsing: src/main/java/net/sourceforge/plantuml/syntax
+  - etc
+
+**3. Add tests for new features in:**
+  - src/test/java/test/
+
+**4. Commit and push changes**:
+```sh
+git commit -am "✨ add new feature" (It is necessary to follow the commit messages styleguide)
+git push
+```
+
+#### Submitting PR
+  **Open PR against plantuml:master**
+  > PR should contain: 
+  > 1) A title that briefly describes the essence of the changes; 
+  > 2) A description that can explain in detail the essence of the changes.
 
 ### Improving The Documentation
-<!-- TODO
-Updating, improving and correcting the documentation
+#### What can be improved
+  - Updating outdated sections
+  - Enhancing explanations and examples
+  - Adding new usage examples
+  - Improving visual style and Markdown formatting
+  - Adding links to relevant resourses
+  - Adding more detailed information about the project's architecture and inner workings
+#### How to improve it
+**1. Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
 
--->
+**2. Clone your repository to IDE:**
+```sh
+git clone https://github.com/{your-username}/plantuml
+```
+
+**3. Navigate to the project root directory:**
+```sh
+cd plantuml
+```
+**4. Create a feature branch for documentation changes:**
+```sh
+git checkout -b {docname}-docs-change
+```
+
+**5. Make changes in docs**
+
+**6. Commit and push changes:**
+```sh
+git commit -am "📝 add new doc section in {docname}" (It is necessary to follow the commit messages styleguide)
+git push
+```
+
+**7. Open PR against plantuml:master**
+  > PR should contain: 
+  > 1) A title that briefly describes the essence of the changes; 
+  > 2) A description that can explain in detail the essence of the changes.
+
 
 ### Improving non regression testing
 <!-- TODO
 -->
 
 ## Styleguides
-### Commit Messages
-<!-- TODO
+### Commit Messages - [Full Guide](https://github.com/plantuml/plantuml/blob/64b21f6105db151b8600953c2a17cdf659a24f02/CONVENTIONAL_COMMIT.md)
 
--->
+#### Format
+```plaintext
+<emoji>[optional scope]: <description>
+[optional URL list]
+[optional body]
+[optional footer(s)]
+```
+
+- Use the **imperative, present tense** (e.g., "fix", "add", "remove").
+- Avoid capitalizing the first letter.
+- Do not end with a period (.).
+
+---
+
+#### Gitmoji Usage
+
+[Gitmoji](https://gitmoji.dev/) enhances commit messages by adding emojis to represent the intent of the changes. It can be used alongside the Conventional Commits specification to make commit history more visual and expressive.
+
+### Gitmoji Reference Table
+
+| Emoji   | Description                                |
+|---------|--------------------------------------------|
+| ✨      | Introducing new features                   |
+| 🐛      | Fixing a bug                               |
+| 📝      | Writing or updating documentation          |
+| 🎨      | Improving code structure/style             |
+| ♻️      | Refactoring code                           |
+| ⚡️      | Improving performance                      |
+| ✅      | Adding or updating tests                   |
+| 🔧      | Changes to configuration files             |
+| 🚀      | Deployment-related changes                 |
+| 🔒      | Fixing security issues                     |
+| 🌱      | Adding or updating a seed file             |
+| 🔥      | Removing code or files                    |
+| 🚧      | Work in progress (WIP)                    |
+| 📦️      | Add or update compiled files or packages  |
+| ⚗️      | Perform experiments                       |
+| 🎉      | Publish an official release               |
+| 👷      | Add or update CI build system              |
+| 📸      | Snapshot or preview release                |
+| 🐾      | Small, incremental changes or tweaks       |
+| 🖼️      | Enhance visual representation              |
+| 💡      | Suggesting or implementing ideas          |
+| 💄      | Add or update the UI and style files      |
+
+#### Guidelines for Using Gitmoji
+- Place the corresponding emoji at the beginning of the **description** in the commit message header.
+- Ensure the emoji aligns with the purpose of the change.
+- Add a space immediately after the emoji.
