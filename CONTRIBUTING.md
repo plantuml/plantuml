@@ -142,11 +142,49 @@ git checkout -b fix/issue-description
 git push origin fix/issue-description
 ```
   **2. Open PR against plantuml:master**
-  > PR should contain: 1) A title that briefly describes the essence of the changes; 2) A description that can explain in detail the essence of the changes
+  > PR should contain: 
+  > 1) A title that briefly describes the essence of the changes; 
+  > 2) A description that can explain in detail the essence of the changes.
 
 ### Improving The Documentation
-<!-- TODO Updating, improving and correcting the documentation 
--->
+#### What can be improved
+  - Updating outdated sections
+  - Enhancing explanations and examples
+  - Adding new usage examples
+  - Improving visual style and Markdown formatting
+  - Adding links to relevant resourses
+  - Adding more detailed information about the project's architecture and inner workings
+#### How to improve it
+1. **Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
+2. **Clone your repository to IDE:**
+
+```sh
+git clone https://github.com/{your-username}/plantuml
+```
+3. **Navigate to the project root directory:**
+
+```sh
+cd plantuml
+```
+4. **Create a feature branch for documentation changes:**
+```sh
+git checkout -b {docname}-docs-change
+```
+5. **Make changes in docs**
+6. **Commit and push changes**:
+```sh
+git commit -am "📝 add new doc section in {docname}" (be careful with styleguide of commit message)
+git push
+```
+7. **Push branch:**
+```sh
+git push origin {docname}-docs-change
+```
+8. **Open PR against plantuml:master**
+  > PR should contain: 
+  > 1) A title that briefly describes the essence of the changes; 
+  > 2) A description that can explain in detail the essence of the changes.
+
 
 
 ### Improving non regression testing
