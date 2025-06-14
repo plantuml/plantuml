@@ -91,10 +91,6 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 		throw new UnsupportedOperationException("" + getClass());
 	}
 
-	public final UStroke getThickness(Style style) {
-		return style.getStroke();
-	}
-
 	public List<WeldingPoint> getWeldingPoints() {
 		return Collections.emptyList();
 	}

@@ -113,11 +113,6 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 		return ftile.skinParam();
 	}
 
-	@Override
-	public UStroke getThickness(Style style) {
-		return ftile.getThickness(style);
-	}
-
 	protected final Ftile getFtileDelegated() {
 		return ftile;
 	}

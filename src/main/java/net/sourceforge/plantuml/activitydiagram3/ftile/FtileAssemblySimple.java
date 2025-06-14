@@ -161,11 +161,6 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 	}
 
 	@Override
-	public UStroke getThickness(Style style) {
-		return tile1.getThickness(style);
-	}
-
-	@Override
 	public List<WeldingPoint> getWeldingPoints() {
 		final List<WeldingPoint> result = new ArrayList<>(tile1.getWeldingPoints());
 		result.addAll(tile2.getWeldingPoints());

@@ -49,8 +49,6 @@ import net.sourceforge.plantuml.style.Style;
 
 public interface Ftile extends Swimable, TextBlock {
 
-	public UStroke getThickness(Style style);
-
 	public ISkinParam skinParam();
 
 	public LinkRendering getInLinkRendering();

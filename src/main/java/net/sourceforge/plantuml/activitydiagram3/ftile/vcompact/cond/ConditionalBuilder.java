@@ -243,8 +243,7 @@ public class ConditionalBuilder {
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());
 
-		final UStroke thickness = tile1
-				.getThickness(getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder()));
+		final UStroke thickness = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder()).getStroke();
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), thickness);
 
 		final Ftile shape1;
