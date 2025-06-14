@@ -77,10 +77,48 @@ these guidelines will help maintainers and the community to understand your sugg
 
 
 ### Your First Code Contribution
-<!-- TODO
-include Setup of env, IDE and typical getting started instructions?
 
--->
+#### Good First Issues
+  Start with issues labeled:
+  - [good first issue](https://github.com/plantuml/plantuml/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22)
+  - [documentation](https://github.com/plantuml/plantuml/issues?q=is%3Aissue%20state%3Aopen%20label%3Adocumentation)
+
+#### Environment Setup
+1. **Prerequisites:**
+  - [Java Development Kit (JDK)](https://jdk.java.net/) - version 8 or newer
+  - [Gradle](https://gradle.org/install/) - version 7.0 or newer
+  - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) - to clone the repository and manage the version control
+
+2. **Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
+
+3. **Clone your repository to IDE:**
+   ```sh
+   git clone https://github.com/{your-username}/plantuml
+   ```
+
+4. **Navigate to the project root directory:**
+
+    ```sh
+    cd plantuml
+    ```
+
+#### Building the Project - [Full Guide](https://github.com/plantuml/plantuml/blob/master/BUILDING.md)
+
+    To build the project, run the following command from the project root directory:
+
+      ```sh
+      gradle build
+      ```
+
+    This command will build the project and create the necessary output files in the `build` directory.
+
+#### Running Tests - [Full Guide](https://github.com/plantuml/plantuml/blob/master/docs/TESTING.md)
+
+    To run the tests included with the project, use the following command:
+
+      ```sh
+      gradle test
+      ```
 
 ### Improving The Documentation
 <!-- TODO
