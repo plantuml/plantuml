@@ -92,9 +92,10 @@ these guidelines will help maintainers and the community to understand your sugg
 2. **Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
 
 3. **Clone your repository to IDE:**
-   ```sh
-   git clone https://github.com/{your-username}/plantuml
-   ```
+
+```sh
+git clone https://github.com/{your-username}/plantuml
+```
 
 4. **Navigate to the project root directory:**
 
@@ -116,9 +117,9 @@ This command will build the project and create the necessary output files in the
 
 To run the tests included with the project, use the following command:
 
-    ```sh
-    gradle test
-    ```
+```sh
+gradle test
+```
 
 ### Improving The Documentation
 <!-- TODO
