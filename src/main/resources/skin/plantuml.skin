@@ -207,7 +207,7 @@ visibilityIcon {
     BackgroundColor black
   }
 }
-
+// light theme
 spot {
   spotAnnotation {
     BackgroundColor #E3664A
@@ -236,6 +236,12 @@ spot {
   spotStereotype {
     BackgroundColor #FF77FF
   }
+	spotDataClass {
+		BackgroundColor #7E57C2
+	}
+	spotRecord {
+		BackgroundColor #FF8F00
+	}
 }
 
 
@@ -602,6 +608,7 @@ sequenceDiagram {
 
 }
 
+//dark theme
 spot {
   spotAnnotation {
     BackgroundColor #4A0000
@@ -630,6 +637,12 @@ spot {
   spotStereotype {
     BackgroundColor #890089
   }
+	spotDataClass {
+		BackgroundColor #B39DDB
+	}
+	spotRecord {
+		BackgroundColor #FFB74D
+	}
 }
 
 

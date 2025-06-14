@@ -101,7 +101,7 @@ public enum SName {
 	highlight, //
 	hnote, //
 	interface_, //
-	json, // 
+	json, //
 	jsonDiagram, //
 	gitDiagram, //
 	label, //
@@ -157,7 +157,7 @@ public enum SName {
 	usecase, //
 	verticalSeparator, //
 	year, //
-	
+
 	visibilityIcon, //
 	private_, //
 	protected_, //
@@ -175,6 +175,8 @@ public enum SName {
 	spotAbstractClass, //
 	spotMetaClass, //
 	spotStereotype, //
+	spotDataClass,
+	spotRecord,
 
 	wbsDiagram, //
 	yamlDiagram; //

@@ -69,7 +69,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 				new RegexLeaf(1, "COMMAND", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1,
-						"GENDER", "(?:(class|object|interface|enum|annotation|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
+						"GENDER", "(?:(class|object|interface|enum|annotation|dataclass|record|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "EMPTY", "(empty)"), //
@@ -187,6 +187,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);
 		else if (arg1.equalsIgnoreCase("stereotype"))
 			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);
+		else if (arg1.equalsIgnoreCase("data"))
+			gender = EntityGenderUtils.byEntityType(LeafType.DATACLASS);
+		else if (arg1.equalsIgnoreCase("record"))
+			gender = EntityGenderUtils.byEntityType(LeafType.RECORD);
 		else if (arg1.startsWith("<<"))
 			gender = EntityGenderUtils.byStereotype(arg1);
 		else {
