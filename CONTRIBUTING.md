@@ -146,11 +146,7 @@ git push
 ```
 
 #### Submitting PR
-  **1. Push branch:**
-```sh
-git push origin fix/issue-description
-```
-  **2. Open PR against plantuml:master**
+  **Open PR against plantuml:master**
   > PR should contain: 
   > 1) A title that briefly describes the essence of the changes; 
   > 2) A description that can explain in detail the essence of the changes.
@@ -188,12 +184,7 @@ git commit -am "📝 add new doc section in {docname}" (It is necessary to follo
 git push
 ```
 
-**7. Push branch:**
-```sh
-git push origin {docname}-docs-change
-```
-
-**8. Open PR against plantuml:master**
+**7. Open PR against plantuml:master**
   > PR should contain: 
   > 1) A title that briefly describes the essence of the changes; 
   > 2) A description that can explain in detail the essence of the changes.
