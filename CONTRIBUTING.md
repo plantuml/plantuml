@@ -106,9 +106,9 @@ these guidelines will help maintainers and the community to understand your sugg
 
     To build the project, run the following command from the project root directory:
 
-      ```sh
-      gradle build
-      ```
+    ```sh
+    gradle build
+    ```
 
     This command will build the project and create the necessary output files in the `build` directory.
 
@@ -116,9 +116,9 @@ these guidelines will help maintainers and the community to understand your sugg
 
     To run the tests included with the project, use the following command:
 
-      ```sh
-      gradle test
-      ```
+    ```sh
+    gradle test
+    ```
 
 ### Improving The Documentation
 <!-- TODO
