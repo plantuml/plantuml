@@ -165,13 +165,13 @@ git push origin fix/issue-description
   - Adding more detailed information about the project's architecture and inner workings
 #### How to improve it
 **1. Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
-**2. Clone your repository to IDE:**
 
+**2. Clone your repository to IDE:**
 ```sh
 git clone https://github.com/{your-username}/plantuml
 ```
-**3. Navigate to the project root directory:**
 
+**3. Navigate to the project root directory:**
 ```sh
 cd plantuml
 ```
@@ -179,21 +179,24 @@ cd plantuml
 ```sh
 git checkout -b {docname}-docs-change
 ```
+
 **5. Make changes in docs**
-**6. Commit and push changes**:
+
+**6. Commit and push changes:**
 ```sh
 git commit -am "📝 add new doc section in {docname}" (It is necessary to follow the commit messages styleguide)
 git push
 ```
+
 **7. Push branch:**
 ```sh
 git push origin {docname}-docs-change
 ```
+
 **8. Open PR against plantuml:master**
   > PR should contain: 
   > 1) A title that briefly describes the essence of the changes; 
   > 2) A description that can explain in detail the essence of the changes.
-
 
 
 ### Improving non regression testing
