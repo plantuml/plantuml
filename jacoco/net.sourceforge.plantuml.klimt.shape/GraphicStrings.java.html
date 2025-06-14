@@ -66,145 +66,146 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final HColor background;
 
 <span class="fc" id="L68">	private final static HColor hyperlinkColor = HColors.BLUE;</span>
+<span class="fc" id="L69">	private final static HColor TEXTCOLOR = HColors.BLACK.withDark(HColors.WHITE);</span>
 
-<span class="fc" id="L70">	private final static UStroke useUnderlineForHyperlink = UStroke.simple();</span>
+<span class="fc" id="L71">	private final static UStroke useUnderlineForHyperlink = UStroke.simple();</span>
 
 	private final List&lt;String&gt; strings;
 
 	private final BufferedImage image;
-<span class="fc" id="L75">	private final double imagePadding = 30;</span>
+<span class="fc" id="L76">	private final double imagePadding = 30;</span>
 
 	private final GraphicPosition position;
 
 	private final FontConfiguration fontConfiguration;
 
 	public static IEntityImage createForError(List&lt;String&gt; strings, boolean useRed) {
-<span class="nc" id="L82">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
+<span class="nc" id="L83">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
 				CreoleMode.NO_CREOLE);
 	}
 
 	private static HColor getForeColor(boolean useRed) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (useRed) {</span>
-<span class="nc" id="L88">			return HColors.BLACK;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (useRed) {</span>
+<span class="nc" id="L89">			return HColors.BLACK;</span>
 		}
-<span class="nc" id="L90">		return HColors.MY_GREEN;</span>
+<span class="nc" id="L91">		return HColors.MY_GREEN;</span>
 	}
 
 	private static HColor getBackColor(boolean useRed) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (useRed) {</span>
-<span class="nc" id="L95">			return HColors.RED_LIGHT;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (useRed) {</span>
+<span class="nc" id="L96">			return HColors.RED_LIGHT;</span>
 		}
-<span class="nc" id="L97">		return HColors.BLACK;</span>
+<span class="nc" id="L98">		return HColors.BLACK;</span>
 	}
 
 	public static TextBlock createGreenOnBlackMonospaced(List&lt;String&gt; strings) {
-<span class="nc" id="L101">		return new GraphicStrings(strings, monospaced14(HColors.GREEN), HColors.BLACK, null, null,</span>
+<span class="nc" id="L102">		return new GraphicStrings(strings, monospaced14(HColors.GREEN), HColors.BLACK, null, null,</span>
 				CreoleMode.SIMPLE_LINE);
 	}
 
 	public static TextBlock createBlackOnWhite(List&lt;String&gt; strings) {
-<span class="nc" id="L106">		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);</span>
+<span class="nc" id="L107">		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL);</span>
 	}
 
 	public static TextBlock createBlackOnWhiteMonospaced(List&lt;String&gt; strings) {
-<span class="nc" id="L110">		return new GraphicStrings(strings, monospaced14(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);</span>
+<span class="nc" id="L111">		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL);</span>
 	}
 
 	public static TextBlock createBlackOnWhite(List&lt;String&gt; strings, BufferedImage image, GraphicPosition position) {
-<span class="fc" id="L114">		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, image, position,</span>
+<span class="fc" id="L115">		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, image, position,</span>
 				CreoleMode.FULL_BUT_UNDERSCORE);
 	}
 
 	public static FontConfiguration sansSerif12(HColor color) {
-<span class="fc" id="L119">		return FontConfiguration.create(UFont.sansSerif(12), color, hyperlinkColor, useUnderlineForHyperlink);</span>
+<span class="fc" id="L120">		return FontConfiguration.create(UFont.sansSerif(12), color, hyperlinkColor, useUnderlineForHyperlink);</span>
 	}
 
 	public static FontConfiguration sansSerif14(HColor color) {
-<span class="fc" id="L123">		return FontConfiguration.create(UFont.sansSerif(14), color, hyperlinkColor, useUnderlineForHyperlink);</span>
+<span class="fc" id="L124">		return FontConfiguration.create(UFont.sansSerif(14), color, hyperlinkColor, useUnderlineForHyperlink);</span>
 	}
 
 	private static FontConfiguration monospaced14(HColor color) {
-<span class="nc" id="L127">		return FontConfiguration.create(UFont.monospaced(14), color, hyperlinkColor, useUnderlineForHyperlink);</span>
+<span class="nc" id="L128">		return FontConfiguration.create(UFont.monospaced(14), color, hyperlinkColor, useUnderlineForHyperlink);</span>
 	}
 
 	private final CreoleMode mode;
 
 	private GraphicStrings(List&lt;String&gt; strings, FontConfiguration fontConfiguration, HColor background,
-<span class="fc" id="L133">			BufferedImage image, GraphicPosition position, CreoleMode mode) {</span>
-<span class="fc" id="L134">		this.strings = strings;</span>
-<span class="fc" id="L135">		this.background = background;</span>
-<span class="fc" id="L136">		this.image = image;</span>
-<span class="fc" id="L137">		this.position = position;</span>
-<span class="fc" id="L138">		this.mode = mode;</span>
-<span class="fc" id="L139">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L134">			BufferedImage image, GraphicPosition position, CreoleMode mode) {</span>
+<span class="fc" id="L135">		this.strings = strings;</span>
+<span class="fc" id="L136">		this.background = background;</span>
+<span class="fc" id="L137">		this.image = image;</span>
+<span class="fc" id="L138">		this.position = position;</span>
+<span class="fc" id="L139">		this.mode = mode;</span>
+<span class="fc" id="L140">		this.fontConfiguration = fontConfiguration;</span>
 
-<span class="fc" id="L141">	}</span>
+<span class="fc" id="L142">	}</span>
 
 	private TextBlock getTextBlock() {
-<span class="fc" id="L144">		final Display display = Display.create(strings);</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (mode == CreoleMode.NO_CREOLE) {</span>
-<span class="nc" id="L146">			return new TextBlockRaw(strings, fontConfiguration);</span>
+<span class="fc" id="L145">		final Display display = Display.create(strings);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (mode == CreoleMode.NO_CREOLE) {</span>
+<span class="nc" id="L147">			return new TextBlockRaw(strings, fontConfiguration);</span>
 
 		} else {
-<span class="fc" id="L149">			return display.create7(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);</span>
+<span class="fc" id="L150">			return display.create7(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);</span>
 		}
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L154">		ug = ug.apply(new UTranslate(margin, margin));</span>
-<span class="fc" id="L155">		final XDimension2D size = calculateDimensionInternal(ug.getStringBounder());</span>
-<span class="fc" id="L156">		getTextBlock().drawU(ug.apply(fontConfiguration.getColor()));</span>
+<span class="fc" id="L155">		ug = ug.apply(new UTranslate(margin, margin));</span>
+<span class="fc" id="L156">		final XDimension2D size = calculateDimensionInternal(ug.getStringBounder());</span>
+<span class="fc" id="L157">		getTextBlock().drawU(ug.apply(fontConfiguration.getColor()));</span>
 
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (image != null) {</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM) {</span>
-<span class="nc" id="L160">				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))</span>
-<span class="nc" id="L161">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {</span>
-<span class="fc" id="L163">				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))</span>
-<span class="fc" id="L164">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {</span>
-<span class="fc" id="L166">				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1))</span>
-<span class="fc" id="L167">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (image != null) {</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM) {</span>
+<span class="nc" id="L161">				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))</span>
+<span class="nc" id="L162">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {</span>
+<span class="fc" id="L164">				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))</span>
+<span class="fc" id="L165">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {</span>
+<span class="fc" id="L167">				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1))</span>
+<span class="fc" id="L168">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
 			}
 		}
-<span class="fc" id="L170">	}</span>
+<span class="fc" id="L171">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L173">		return calculateDimensionInternal(stringBounder).delta(2 * margin);</span>
+<span class="fc" id="L174">		return calculateDimensionInternal(stringBounder).delta(2 * margin);</span>
 	}
 
 	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
-<span class="fc" id="L177">		XDimension2D dim = getTextBlock().calculateDimension(stringBounder);</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (image != null) {</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM) {</span>
-<span class="nc" id="L180">				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {</span>
-<span class="fc" id="L182">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {</span>
-<span class="fc" id="L184">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L178">		XDimension2D dim = getTextBlock().calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (image != null) {</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM) {</span>
+<span class="nc" id="L181">				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {</span>
+<span class="fc" id="L183">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {</span>
+<span class="fc" id="L185">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
 			}
 		}
-<span class="fc" id="L187">		return dim;</span>
+<span class="fc" id="L188">		return dim;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L191">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L192">		return ShapeType.RECTANGLE;</span>
 	}
 
 	public HColor getBackcolor() {
-<span class="fc" id="L195">		return background;</span>
+<span class="fc" id="L196">		return background;</span>
 	}
 
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L199">		return Margins.NONE;</span>
+<span class="nc" id="L200">		return Margins.NONE;</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L203">		return false;</span>
+<span class="nc" id="L204">		return false;</span>
 	}
 
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L207">		return 0;</span>
+<span class="nc" id="L208">		return 0;</span>
 	}
 
 }
