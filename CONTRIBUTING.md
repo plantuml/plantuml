@@ -121,18 +121,87 @@ To run the tests included with the project, use the following command:
 gradle test
 ```
 
-### Improving The Documentation
-<!-- TODO
-Updating, improving and correcting the documentation
+#### Making Changes
 
+**1. Create feature branch:**
+
+```sh
+git checkout -b fix/issue-description
+```
+
+**2. Implement changes following code structure:**
+  - Diagram logic: src/main/java/net/sourceforge/plantuml
+  - Syntax parsing: src/main/java/net/sourceforge/plantuml/syntax
+
+**3. Add tests for new features in:**
+  - src/test/java/test/
+
+#### Submitting PR
+  **1. Push branch:**
+```sh
+git push origin fix/issue-description
+```
+  **2. Open PR against plantuml:master**
+  > PR should contain: 1) A title that briefly describes the essence of the changes; 2) A description that can explain in detail the essence of the changes
+
+### Improving The Documentation
+<!-- TODO Updating, improving and correcting the documentation 
 -->
+
 
 ### Improving non regression testing
 <!-- TODO
 -->
 
 ## Styleguides
-### Commit Messages
-<!-- TODO
+### Commit Messages - [Full Guide](https://github.com/plantuml/plantuml/blob/64b21f6105db151b8600953c2a17cdf659a24f02/CONVENTIONAL_COMMIT.md)
 
--->
+#### Format
+```plaintext
+<emoji>[optional scope]: <description>
+[optional URL list]
+[optional body]
+[optional footer(s)]
+```
+
+- Use the **imperative, present tense** (e.g., "fix", "add", "remove").
+- Avoid capitalizing the first letter.
+- Do not end with a period (.).
+
+---
+
+#### Gitmoji Usage
+
+[Gitmoji](https://gitmoji.dev/) enhances commit messages by adding emojis to represent the intent of the changes. It can be used alongside the Conventional Commits specification to make commit history more visual and expressive.
+
+### Gitmoji Reference Table
+
+| Emoji   | Description                                |
+|---------|--------------------------------------------|
+| ✨      | Introducing new features                   |
+| 🐛      | Fixing a bug                               |
+| 📝      | Writing or updating documentation          |
+| 🎨      | Improving code structure/style             |
+| ♻️      | Refactoring code                           |
+| ⚡️      | Improving performance                      |
+| ✅      | Adding or updating tests                   |
+| 🔧      | Changes to configuration files             |
+| 🚀      | Deployment-related changes                 |
+| 🔒      | Fixing security issues                     |
+| 🌱      | Adding or updating a seed file             |
+| 🔥      | Removing code or files                    |
+| 🚧      | Work in progress (WIP)                    |
+| 📦️      | Add or update compiled files or packages  |
+| ⚗️      | Perform experiments                       |
+| 🎉      | Publish an official release               |
+| 👷      | Add or update CI build system              |
+| 📸      | Snapshot or preview release                |
+| 🐾      | Small, incremental changes or tweaks       |
+| 🖼️      | Enhance visual representation              |
+| 💡      | Suggesting or implementing ideas          |
+| 💄      | Add or update the UI and style files      |
+
+#### Guidelines for Using Gitmoji
+- Place the corresponding emoji at the beginning of the **description** in the commit message header.
+- Ensure the emoji aligns with the purpose of the change.
+- Add a space immediately after the emoji.
