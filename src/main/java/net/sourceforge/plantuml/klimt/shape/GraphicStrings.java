@@ -66,6 +66,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final HColor background;
 
 	private final static HColor hyperlinkColor = HColors.BLUE;
+	private final static HColor TEXTCOLOR = HColors.BLACK.withDark(HColors.WHITE);
 
 	private final static UStroke useUnderlineForHyperlink = UStroke.simple();
 
@@ -103,15 +104,15 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public static TextBlock createBlackOnWhite(List<String> strings) {
-		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);
+		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL);
 	}
 
 	public static TextBlock createBlackOnWhiteMonospaced(List<String> strings) {
-		return new GraphicStrings(strings, monospaced14(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);
+		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL);
 	}
 
 	public static TextBlock createBlackOnWhite(List<String> strings, BufferedImage image, GraphicPosition position) {
-		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, image, position,
+		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, image, position,
 				CreoleMode.FULL_BUT_UNDERSCORE);
 	}
 
