@@ -130,8 +130,10 @@ git checkout -b add/issue-description
 ```
 
 **2. Implement changes following code structure:**
+  Example:
   - Diagram logic: src/main/java/net/sourceforge/plantuml
   - Syntax parsing: src/main/java/net/sourceforge/plantuml/syntax
+  - etc
 
 **3. Add tests for new features in:**
   - src/test/java/test/
