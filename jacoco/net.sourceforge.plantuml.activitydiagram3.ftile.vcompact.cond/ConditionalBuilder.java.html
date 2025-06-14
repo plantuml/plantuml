@@ -243,73 +243,72 @@ public class ConditionalBuilder {
 <span class="nc" id="L243">				.createSheet(labelTest);</span>
 <span class="nc" id="L244">		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());</span>
 
-<span class="nc" id="L246">		final UStroke thickness = tile1</span>
-<span class="nc" id="L247">				.getThickness(getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
-<span class="nc" id="L248">		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), thickness);</span>
+<span class="nc" id="L246">		final UStroke thickness = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder()).getStroke();</span>
+<span class="nc" id="L247">		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), thickness);</span>
 
 		final Ftile shape1;
-<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (eastWest)</span>
-<span class="nc" id="L253">				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
-<span class="nc" id="L254">						.withWestAndEast(tb1, tb2);</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">			if (eastWest)</span>
+<span class="nc" id="L252">				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L253">						.withWestAndEast(tb1, tb2);</span>
 			else
-<span class="nc" id="L256">				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
-<span class="nc" id="L257">						.withSouth(tb1).withEast(tb2);</span>
+<span class="nc" id="L255">				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L256">						.withSouth(tb1).withEast(tb2);</span>
 
-<span class="nc bnc" id="L259" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {</span>
-<span class="nc bnc" id="L260" title="All 2 branches missed.">			if (eastWest)</span>
-<span class="nc" id="L261">				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)</span>
-<span class="nc" id="L262">						.withWestAndEast(tb1, tb2);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">			if (eastWest)</span>
+<span class="nc" id="L260">				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)</span>
+<span class="nc" id="L261">						.withWestAndEast(tb1, tb2);</span>
 			else
-<span class="nc" id="L264">				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)</span>
-<span class="nc" id="L265">						.withSouth(tb1).withEast(tb2);</span>
+<span class="nc" id="L263">				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)</span>
+<span class="nc" id="L264">						.withSouth(tb1).withEast(tb2);</span>
 
-<span class="nc bnc" id="L267" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {</span>
-<span class="nc bnc" id="L268" title="All 2 branches missed.">			if (eastWest)</span>
-<span class="nc" id="L269">				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
-<span class="nc" id="L270">						.withWestAndEast(tb1, tb2);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			if (eastWest)</span>
+<span class="nc" id="L268">				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L269">						.withWestAndEast(tb1, tb2);</span>
 			else
-<span class="nc" id="L272">				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
-<span class="nc" id="L273">						.withSouth(tb1).withEast(tb2);</span>
+<span class="nc" id="L271">				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)</span>
+<span class="nc" id="L272">						.withSouth(tb1).withEast(tb2);</span>
 		} else {
-<span class="nc" id="L275">			throw new IllegalStateException();</span>
+<span class="nc" id="L274">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L277">		return shape1;</span>
+<span class="nc" id="L276">		return shape1;</span>
 	}
 
 	private TextBlock getLabelPositive(Branch branch) {
-<span class="nc" id="L281">		return branch.getDisplayPositive().create0(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
+<span class="nc" id="L280">		return branch.getDisplayPositive().create0(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
 				labelLineBreak, CreoleMode.SIMPLE_LINE, null, null);
 	}
 
 	private Ftile getShape2(Branch branch1, Branch branch2, boolean useNorth) {
 		final Ftile shape2;
-<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (conditionEndStyle == ConditionEndStyle.HLINE)</span>
-<span class="nc" id="L288">			return new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize, swimlane);</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		if (conditionEndStyle == ConditionEndStyle.HLINE)</span>
+<span class="nc" id="L287">			return new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize, swimlane);</span>
 
 		// else use default ConditionEndStyle.DIAMOND
-<span class="nc bnc" id="L291" title="All 2 branches missed.">		if (hasTwoBranches()) {</span>
-<span class="nc" id="L292">			final Display out1 = branch1.getFtile().getOutLinkRendering().getDisplay();</span>
-<span class="nc bnc" id="L293" title="All 2 branches missed.">			final TextBlock tbout1 = out1 == null ? null</span>
-<span class="nc" id="L294">					: out1.create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">		if (hasTwoBranches()) {</span>
+<span class="nc" id="L291">			final Display out1 = branch1.getFtile().getOutLinkRendering().getDisplay();</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">			final TextBlock tbout1 = out1 == null ? null</span>
+<span class="nc" id="L293">					: out1.create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
 							CreoleMode.SIMPLE_LINE);
-<span class="nc" id="L296">			final Display out2 = branch2.getFtile().getOutLinkRendering().getDisplay();</span>
-<span class="nc bnc" id="L297" title="All 2 branches missed.">			final TextBlock tbout2 = out2 == null ? null</span>
-<span class="nc" id="L298">					: out2.create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
+<span class="nc" id="L295">			final Display out2 = branch2.getFtile().getOutLinkRendering().getDisplay();</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">			final TextBlock tbout2 = out2 == null ? null</span>
+<span class="nc" id="L297">					: out2.create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),</span>
 							CreoleMode.SIMPLE_LINE);
-<span class="nc" id="L300">			FtileDiamond tmp = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane);</span>
-<span class="nc bnc" id="L301" title="All 2 branches missed.">			tmp = useNorth ? tmp.withNorth(tbout1) : tmp.withWest(tbout1);</span>
-<span class="nc" id="L302">			tmp = tmp.withEast(tbout2);</span>
-<span class="nc" id="L303">			shape2 = tmp;</span>
-<span class="nc" id="L304">		} else {</span>
-<span class="nc" id="L305">			shape2 = new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize / 2, swimlane);</span>
+<span class="nc" id="L299">			FtileDiamond tmp = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane);</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">			tmp = useNorth ? tmp.withNorth(tbout1) : tmp.withWest(tbout1);</span>
+<span class="nc" id="L301">			tmp = tmp.withEast(tbout2);</span>
+<span class="nc" id="L302">			shape2 = tmp;</span>
+<span class="nc" id="L303">		} else {</span>
+<span class="nc" id="L304">			shape2 = new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize / 2, swimlane);</span>
 		}
-<span class="nc" id="L307">		return shape2;</span>
+<span class="nc" id="L306">		return shape2;</span>
 	}
 
 	public boolean hasTwoBranches() {
-<span class="nc bnc" id="L311" title="All 2 branches missed.">		return tile1.calculateDimension(stringBounder).hasPointOut()</span>
-<span class="nc bnc" id="L312" title="All 2 branches missed.">				&amp;&amp; tile2.calculateDimension(stringBounder).hasPointOut();</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		return tile1.calculateDimension(stringBounder).hasPointOut()</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">				&amp;&amp; tile2.calculateDimension(stringBounder).hasPointOut();</span>
 	}
 
 }

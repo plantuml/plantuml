@@ -80,7 +80,7 @@ public class FtileDiamondInside2 extends FtileDiamondWIP {
 <span class="nc" id="L80">		final StringBounder stringBounder = ug.getStringBounder();</span>
 <span class="nc" id="L81">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
 <span class="nc" id="L82">		final XDimension2D dimTotal = calculateDimensionAlone(stringBounder);</span>
-<span class="nc" id="L83">		ug = ug.apply(borderColor).apply(getThickness(getStyle())).apply(backColor.bg());</span>
+<span class="nc" id="L83">		ug = ug.apply(borderColor).apply(getStyle().getStroke()).apply(backColor.bg());</span>
 <span class="nc" id="L84">		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));</span>
 
 <span class="nc" id="L86">		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));</span>

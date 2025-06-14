@@ -161,24 +161,19 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 	}
 
 	@Override
-	public UStroke getThickness(Style style) {
-<span class="nc" id="L165">		return tile1.getThickness(style);</span>
-	}
-
-	@Override
 	public List&lt;WeldingPoint&gt; getWeldingPoints() {
-<span class="fc" id="L170">		final List&lt;WeldingPoint&gt; result = new ArrayList&lt;&gt;(tile1.getWeldingPoints());</span>
-<span class="fc" id="L171">		result.addAll(tile2.getWeldingPoints());</span>
-<span class="fc" id="L172">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L165">		final List&lt;WeldingPoint&gt; result = new ArrayList&lt;&gt;(tile1.getWeldingPoints());</span>
+<span class="fc" id="L166">		result.addAll(tile2.getWeldingPoints());</span>
+<span class="fc" id="L167">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L176">		return Arrays.asList(tile1, tile2);</span>
+<span class="nc" id="L171">		return Arrays.asList(tile1, tile2);</span>
 	}
 
 	@Override
 	public HorizontalAlignment arrowHorizontalAlignment() {
-<span class="fc" id="L181">		return tile1.arrowHorizontalAlignment();</span>
+<span class="fc" id="L176">		return tile1.arrowHorizontalAlignment();</span>
 	}
 
 }

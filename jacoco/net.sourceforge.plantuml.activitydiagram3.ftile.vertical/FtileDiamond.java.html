@@ -86,7 +86,7 @@ public class FtileDiamond extends FtileDiamondWIP {
 
 <span class="fc" id="L87">		final double suppY1 = north.calculateDimension(ug.getStringBounder()).getHeight();</span>
 <span class="fc" id="L88">		ug = ug.apply(UTranslate.dy(suppY1));</span>
-<span class="fc" id="L89">		ug.apply(borderColor).apply(getThickness(getStyle())).apply(backColor.bg()).draw(Hexagon.asPolygon(shadowing));</span>
+<span class="fc" id="L89">		ug.apply(borderColor).apply(getStyle().getStroke()).apply(backColor.bg()).draw(Hexagon.asPolygon(shadowing));</span>
 		// final Dimension2D dimNorth = north.calculateDimension(ug.getStringBounder());
 <span class="fc" id="L91">		north.drawU(ug.apply(new UTranslate(Hexagon.hexagonHalfSize * 1.5, -suppY1)));</span>
 

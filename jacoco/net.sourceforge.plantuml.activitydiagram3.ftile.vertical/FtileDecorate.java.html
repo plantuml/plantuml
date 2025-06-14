@@ -113,39 +113,34 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 <span class="fc" id="L113">		return ftile.skinParam();</span>
 	}
 
-	@Override
-	public UStroke getThickness(Style style) {
-<span class="nc" id="L118">		return ftile.getThickness(style);</span>
-	}
-
 	protected final Ftile getFtileDelegated() {
-<span class="fc" id="L122">		return ftile;</span>
+<span class="fc" id="L117">		return ftile;</span>
 	}
 
 	@Override
 	public List&lt;WeldingPoint&gt; getWeldingPoints() {
-<span class="fc" id="L127">		return ftile.getWeldingPoints();</span>
+<span class="fc" id="L122">		return ftile.getWeldingPoints();</span>
 	}
 
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (child == ftile)</span>
-<span class="nc" id="L133">			return UTranslate.none();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (child == ftile)</span>
+<span class="nc" id="L128">			return UTranslate.none();</span>
 
-<span class="nc" id="L135">		return ftile.getTranslateFor(child, stringBounder);</span>
+<span class="nc" id="L130">		return ftile.getTranslateFor(child, stringBounder);</span>
 	}
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (this == ftile)</span>
-<span class="nc" id="L141">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (this == ftile)</span>
+<span class="nc" id="L136">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L143">		return Collections.singleton(ftile);</span>
+<span class="nc" id="L138">		return Collections.singleton(ftile);</span>
 	}
 
 	@Override
 	public HorizontalAlignment arrowHorizontalAlignment() {
-<span class="fc" id="L148">		return ftile.arrowHorizontalAlignment();</span>
+<span class="fc" id="L143">		return ftile.arrowHorizontalAlignment();</span>
 	}
 
 }

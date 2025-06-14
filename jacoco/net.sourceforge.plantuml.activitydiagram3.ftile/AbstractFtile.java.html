@@ -91,36 +91,32 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 <span class="nc" id="L91">		throw new UnsupportedOperationException(&quot;&quot; + getClass());</span>
 	}
 
-	public final UStroke getThickness(Style style) {
-<span class="fc" id="L95">		return style.getStroke();</span>
-	}
-
 	public List&lt;WeldingPoint&gt; getWeldingPoints() {
-<span class="fc" id="L99">		return Collections.emptyList();</span>
+<span class="fc" id="L95">		return Collections.emptyList();</span>
 	}
 
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L103">		throw new UnsupportedOperationException(&quot;&quot; + getClass());</span>
+<span class="nc" id="L99">		throw new UnsupportedOperationException(&quot;&quot; + getClass());</span>
 	}
 
 	public HorizontalAlignment arrowHorizontalAlignment() {
-<span class="fc" id="L107">		return skinParam.getHorizontalAlignment(AlignmentParam.arrowMessageAlignment, null, false, null);</span>
+<span class="fc" id="L103">		return skinParam.getHorizontalAlignment(AlignmentParam.arrowMessageAlignment, null, false, null);</span>
 	}
 
 	private FtileGeometry cachedGeometry;
 
 	final public FtileGeometry calculateDimension(StringBounder stringBounder) {
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (cachedGeometry == null)</span>
-<span class="fc" id="L114">			cachedGeometry = calculateDimensionFtile(stringBounder);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (cachedGeometry == null)</span>
+<span class="fc" id="L110">			cachedGeometry = calculateDimensionFtile(stringBounder);</span>
 
-<span class="fc" id="L116">		return cachedGeometry;</span>
+<span class="fc" id="L112">		return cachedGeometry;</span>
 	}
 
 	abstract protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder);
 
 	@Override
 	final public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L123">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L119">		throw new UnsupportedOperationException();</span>
 		// return getMinMaxFtile(stringBounder);
 	}
 

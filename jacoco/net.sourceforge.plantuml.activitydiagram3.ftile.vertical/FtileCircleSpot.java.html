@@ -105,7 +105,7 @@ public class FtileCircleSpot extends AbstractFtile {
 <span class="nc" id="L105">		final double shadow = style.getShadowing();</span>
 
 <span class="nc" id="L107">		circle.setDeltaShadow(shadow);</span>
-<span class="nc" id="L108">		ug.apply(borderColor).apply(backColor.bg()).apply(getThickness(style)).draw(circle);</span>
+<span class="nc" id="L108">		ug.apply(borderColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
 
 <span class="nc" id="L110">		ug.apply(fc.getColor()).apply(new UTranslate(SIZE / 2, SIZE / 2))</span>
 <span class="nc" id="L111">				.draw(new UCenteredCharacter(spot.charAt(0), fc.getFont()));</span>
