@@ -69,7 +69,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 				new RegexLeaf(1, "COMMAND", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1,
-						"GENDER", "(?:(class|object|interface|enum|annotation|data|record|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
+						"GENDER", "(?:(class|object|interface|enum|annotation|dataclass|record|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "EMPTY", "(empty)"), //
