@@ -1,4 +1,4 @@
-<!-- 
+<!--
     ========================================================================
                                 PlantUML Build File
     ========================================================================
@@ -13,16 +13,16 @@
     - Script Author: Ilya V. Paramonov
 
     ============================== Description ==============================
-	
+
     This build file offers an alternative method to build PlantUML.
-    
+
     While PlantUML is typically built using Gradle, this Ant build script
-    provides a fallback option for those who prefer or only have access to 
+    provides a fallback option for those who prefer or only have access to
     Ant.
 
     Usage:
     To build using this file, navigate to the directory containing this
-    build.xml and run "ant" in the command line. For more detailed build 
+    build.xml and run "ant" in the command line. For more detailed build
     instructions and requirements, refer to:
     https://github.com/plantuml/plantuml/blob/master/BUILDING.md
     ========================================================================
@@ -37,17 +37,17 @@
 		<!-- Prepare the build directory -->
 		<delete dir="build" />
 		<mkdir dir="build" />
-		
+
 		<!-- Compile Java sources -->
 		<javac target="1.8" source="1.8" srcdir="src" destdir="build" debug="on" />
-		
+
 		<!-- Copy resources. Grouped by type and directory for better clarity -->
         <copy todir="build/net/sourceforge/plantuml/version">
             <fileset dir="src/main/java/net/sourceforge/plantuml/version">
                 <include name="*.png" />
             </fileset>
         </copy>
-		
+
 		<copy todir="build/net/sourceforge/plantuml/openiconic/data">
 			<fileset dir="src/main/java/net/sourceforge/plantuml/openiconic/data">
 				<include name="*.txt" />
@@ -124,7 +124,7 @@
 	    <!-- Prepare the distribution directory -->
 		<delete dir="dist" />
 		<mkdir dir="dist" />
-		
+
 		<!-- Create JAR with required attributes in the manifest -->
 		<jar jarfile="plantuml.jar" basedir="build">
 			<manifest>
@@ -133,7 +133,7 @@
 				<attribute name="Class-Path" value="elk-full.jar avalon-framework-4.2.0.jar batik-all-1.7.jar commons-io-1.3.1.jar commons-logging-1.0.4.jar fop.jar xml-apis-ext-1.3.04.jar xmlgraphics-commons-1.4.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar jlm_greek.jar vizjs.jar j2v8_win32_x86_64-3.1.6.jar j2v8_linux_x86_64-3.1.6.jar j2v8_macosx_x86_64-3.1.6.jar ditaa0_9.jar" />
 			</manifest>
 		</jar>
-		
+
 		<!-- Clean up the build and distribution directories -->
 		<delete dir="build" />
 		<delete dir="dist" />
