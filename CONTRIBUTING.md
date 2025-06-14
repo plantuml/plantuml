@@ -126,7 +126,7 @@ gradle test
 **1. Create feature branch:**
 
 ```sh
-git checkout -b fix/issue-description
+git checkout -b add/issue-description
 ```
 
 **2. Implement changes following code structure:**
@@ -135,6 +135,12 @@ git checkout -b fix/issue-description
 
 **3. Add tests for new features in:**
   - src/test/java/test/
+
+**4. Commit and push changes**:
+```sh
+git commit -am "✨ add new feature" (It is necessary to follow the commit messages styleguide)
+git push
+```
 
 #### Submitting PR
   **1. Push branch:**
@@ -155,32 +161,32 @@ git push origin fix/issue-description
   - Adding links to relevant resourses
   - Adding more detailed information about the project's architecture and inner workings
 #### How to improve it
-1. **Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
-2. **Clone your repository to IDE:**
+**1. Fork PlantUML repository** - [Fork](https://github.com/plantuml/plantuml/fork)
+**2. Clone your repository to IDE:**
 
 ```sh
 git clone https://github.com/{your-username}/plantuml
 ```
-3. **Navigate to the project root directory:**
+**3. Navigate to the project root directory:**
 
 ```sh
 cd plantuml
 ```
-4. **Create a feature branch for documentation changes:**
+**4. Create a feature branch for documentation changes:**
 ```sh
 git checkout -b {docname}-docs-change
 ```
-5. **Make changes in docs**
-6. **Commit and push changes**:
+**5. Make changes in docs**
+**6. Commit and push changes**:
 ```sh
-git commit -am "📝 add new doc section in {docname}" (be careful with styleguide of commit message)
+git commit -am "📝 add new doc section in {docname}" (It is necessary to follow the commit messages styleguide)
 git push
 ```
-7. **Push branch:**
+**7. Push branch:**
 ```sh
 git push origin {docname}-docs-change
 ```
-8. **Open PR against plantuml:master**
+**8. Open PR against plantuml:master**
   > PR should contain: 
   > 1) A title that briefly describes the essence of the changes; 
   > 2) A description that can explain in detail the essence of the changes.
