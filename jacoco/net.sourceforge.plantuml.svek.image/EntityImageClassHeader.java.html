@@ -89,7 +89,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L89">				.withTOBECHANGED(stereotype) //</span>
 <span class="fc" id="L90">				.with(entity.getStereostyles()) //</span>
 <span class="fc" id="L91">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-		
+
 <span class="fc" id="L93">		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader, entity.getColors());</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		if (italic)</span>
 <span class="fc" id="L95">			fontConfigurationName = fontConfigurationName.italic();</span>
@@ -126,7 +126,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 		TextBlock genericBlock;
 <span class="fc bfc" id="L127" title="All 2 branches covered.">		if (generic == null) {</span>
 <span class="fc" id="L128">			genericBlock = null;</span>
-		} else {			
+		} else {
 <span class="fc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
 <span class="fc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
 <span class="fc" id="L132">					.withTOBECHANGED(stereotype) //</span>
@@ -186,7 +186,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	private StyleSignatureBasic spotStyleSignature(LeafType leafType) {
-<span class="pc bpc" id="L189" title="10 of 12 branches missed.">		switch (leafType) {</span>
+<span class="pc bpc" id="L189" title="12 of 14 branches missed.">		switch (leafType) {</span>
 		case ANNOTATION:
 <span class="nc" id="L191">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAnnotation);</span>
 		case ABSTRACT_CLASS:
@@ -209,53 +209,61 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="nc" id="L209">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotMetaClass);</span>
 		case STEREOTYPE:
 <span class="nc" id="L211">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStereotype);</span>
+		case DATACLASS:
+<span class="nc" id="L213">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotDataClass);</span>
+		case RECORD:
+<span class="nc" id="L215">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotRecord);</span>
 		}
-<span class="nc" id="L213">		throw new IllegalStateException();</span>
+<span class="nc" id="L217">		throw new IllegalStateException();</span>
 	}
 
 	private char getCircledChar(LeafType leafType) {
-<span class="pc bpc" id="L217" title="10 of 12 branches missed.">		switch (leafType) {</span>
+<span class="pc bpc" id="L221" title="12 of 14 branches missed.">		switch (leafType) {</span>
 		case ANNOTATION:
-<span class="nc" id="L219">			return '@';</span>
+<span class="nc" id="L223">			return '@';</span>
 		case ABSTRACT_CLASS:
-<span class="nc" id="L221">			return 'A';</span>
+<span class="nc" id="L225">			return 'A';</span>
 		case CLASS:
-<span class="fc" id="L223">			return 'C';</span>
+<span class="fc" id="L227">			return 'C';</span>
 		case INTERFACE:
-<span class="fc" id="L225">			return 'I';</span>
+<span class="fc" id="L229">			return 'I';</span>
 		case ENUM:
-<span class="nc" id="L227">			return 'E';</span>
+<span class="nc" id="L231">			return 'E';</span>
 		case ENTITY:
-<span class="nc" id="L229">			return 'E';</span>
+<span class="nc" id="L233">			return 'E';</span>
 		case PROTOCOL:
-<span class="nc" id="L231">			return 'P';</span>
+<span class="nc" id="L235">			return 'P';</span>
 		case STRUCT:
-<span class="nc" id="L233">			return 'S';</span>
+<span class="nc" id="L237">			return 'S';</span>
 		case EXCEPTION:
-<span class="nc" id="L235">			return 'X';</span>
+<span class="nc" id="L239">			return 'X';</span>
 		case METACLASS:
-<span class="nc" id="L237">			return 'M';</span>
+<span class="nc" id="L241">			return 'M';</span>
 		case STEREOTYPE:
-<span class="nc" id="L239">			return 'S';</span>
+<span class="nc" id="L243">			return 'S';</span>
+		case DATACLASS:
+<span class="nc" id="L245">			return 'D';</span>
+		case RECORD:
+<span class="nc" id="L247">			return 'R';</span>
 		}
-<span class="nc" id="L241">		assert false;</span>
-<span class="nc" id="L242">		return '?';</span>
+<span class="nc" id="L249">		assert false;</span>
+<span class="nc" id="L250">		return '?';</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L246">		return headerLayout.getDimension(stringBounder);</span>
+<span class="fc" id="L254">		return headerLayout.getDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L250">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L258">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void drawU(UGraphic ug, double width, double height) {
-<span class="fc" id="L254">		headerLayout.drawU(ug, width, height);</span>
-<span class="fc" id="L255">	}</span>
+<span class="fc" id="L262">		headerLayout.drawU(ug, width, height);</span>
+<span class="fc" id="L263">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L258">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L266">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

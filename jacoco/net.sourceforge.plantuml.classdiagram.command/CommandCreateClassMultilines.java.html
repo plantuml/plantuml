@@ -99,7 +99,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 				new RegexLeaf(1, &quot;VISIBILITY&quot;,
 <span class="fc" id="L100">						&quot;(&quot; + VisibilityModifier.regexForVisibilityCharacterInClassName() + &quot;)?&quot;), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;,
-						&quot;(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype)&quot;), //
+						&quot;(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype|dataclass|record)&quot;), //
 <span class="fc" id="L103">				RegexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L104">				NameAndCodeParser.nameAndCodeForClassWithGeneric(), //</span>
 <span class="fc" id="L105">				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, &quot;GENERIC&quot;, &quot;\\&lt;(&quot; + GenericRegexProducer.PATTERN + &quot;)\\&gt;&quot;))), //</span>

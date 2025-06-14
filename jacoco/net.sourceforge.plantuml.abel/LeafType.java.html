@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.StringUtils;
 <span class="fc" id="L44">	EMPTY_PACKAGE,</span>
 
 <span class="fc" id="L46">	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, PROTOCOL, STRUCT, EXCEPTION, METACLASS, STEREOTYPE, LOLLIPOP_FULL,</span>
-<span class="fc" id="L47">	LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, JSON, ASSOCIATION, ENUM, CIRCLE,</span>
+<span class="fc" id="L47">	LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, JSON, ASSOCIATION, ENUM, CIRCLE, DATACLASS, RECORD,</span>
 
 <span class="fc" id="L49">	USECASE, USECASE_BUSINESS,</span>
 
@@ -68,28 +68,31 @@ import net.sourceforge.plantuml.StringUtils;
 
 	public static LeafType getLeafType(String type) {
 <span class="fc" id="L70">		type = StringUtils.goUpperCase(type);</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (type.startsWith(&quot;ABSTRACT&quot;))</span>
-<span class="fc" id="L72">			return LeafType.ABSTRACT_CLASS;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (type.startsWith(&quot;DATA&quot;))</span>
+<span class="nc" id="L72">			return LeafType.DATACLASS;</span>
 
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (type.startsWith(&quot;DIAMOND&quot;))</span>
-<span class="nc" id="L75">			return LeafType.STATE_CHOICE;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (type.startsWith(&quot;ABSTRACT&quot;))</span>
+<span class="fc" id="L75">			return LeafType.ABSTRACT_CLASS;</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (type.startsWith(&quot;STATIC&quot;))</span>
-<span class="fc" id="L78">			return LeafType.CLASS;</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (type.startsWith(&quot;DIAMOND&quot;))</span>
+<span class="nc" id="L78">			return LeafType.STATE_CHOICE;</span>
 
-<span class="fc" id="L80">		return LeafType.valueOf(type);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (type.startsWith(&quot;STATIC&quot;))</span>
+<span class="fc" id="L81">			return LeafType.CLASS;</span>
+
+<span class="fc" id="L83">		return LeafType.valueOf(type);</span>
 	}
 
 	public boolean isLikeClass() {
-<span class="pc bpc" id="L84" title="8 of 22 branches missed.">		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS</span>
+<span class="pc bpc" id="L87" title="10 of 26 branches missed.">		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS</span>
 				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY
 				|| this == LeafType.PROTOCOL || this == LeafType.STRUCT || this == LeafType.EXCEPTION
-				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE;
+				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE || this == LeafType.DATACLASS || this == LeafType.RECORD;
 	}
 
 	public String toHtml() {
-<span class="nc" id="L91">		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));</span>
-<span class="nc" id="L92">		return StringUtils.capitalize(html);</span>
+<span class="nc" id="L94">		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));</span>
+<span class="nc" id="L95">		return StringUtils.capitalize(html);</span>
 	}
 
 //	public boolean manageModifier() {

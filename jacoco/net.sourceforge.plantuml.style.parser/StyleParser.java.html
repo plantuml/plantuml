@@ -232,8 +232,8 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 <span class="pc bpc" id="L232" title="1 of 4 branches missed.">			if (current == ' ' || current == '\t') {</span>
 <span class="fc" id="L233">				ins.jump();</span>
 				// Skipping
-<span class="pc bpc" id="L235" title="1 of 4 branches missed.">			} else if (current == '/' &amp;&amp; ins.peek(1) == '/') {</span>
-<span class="nc" id="L236">				jumpUntil(ins, '\n');</span>
+<span class="fc bfc" id="L235" title="All 4 branches covered.">			} else if (current == '/' &amp;&amp; ins.peek(1) == '/') {</span>
+<span class="fc" id="L236">				jumpUntil(ins, '\n');</span>
 <span class="pc bpc" id="L237" title="1 of 4 branches missed.">			} else if (current == '/' &amp;&amp; ins.peek(1) == '\'') {</span>
 <span class="nc" id="L238">				jumpUntil(ins, '\'', '/');</span>
 <span class="pc bpc" id="L239" title="1 of 4 branches missed.">			} else if (current == '/' &amp;&amp; ins.peek(1) == '*') {</span>
@@ -274,12 +274,12 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 	}
 
 	private static void jumpUntil(CharInspector ins, char ch1) {
-<span class="nc bnc" id="L277" title="All 2 branches missed.">		while (ins.peek(0) != 0) {</span>
-<span class="nc bnc" id="L278" title="All 2 branches missed.">			if (ins.peek(0) == ch1) {</span>
-<span class="nc" id="L279">				ins.jump();</span>
-<span class="nc" id="L280">				return;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		while (ins.peek(0) != 0) {</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">			if (ins.peek(0) == ch1) {</span>
+<span class="fc" id="L279">				ins.jump();</span>
+<span class="fc" id="L280">				return;</span>
 			}
-<span class="nc" id="L282">			ins.jump();</span>
+<span class="fc" id="L282">			ins.jump();</span>
 		}
 <span class="nc" id="L284">	}</span>
 
