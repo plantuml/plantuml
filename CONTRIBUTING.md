@@ -98,17 +98,17 @@ these guidelines will help maintainers and the community to understand your sugg
 
 4. **Navigate to the project root directory:**
 
-    ```sh
-    cd plantuml
-    ```
+```sh
+cd plantuml
+```
 
 #### Building the Project - [Full Guide](https://github.com/plantuml/plantuml/blob/master/BUILDING.md)
 
 To build the project, run the following command from the project root directory:
 
-    ```sh
-    gradle build
-    ```
+```sh
+gradle build
+```
 
 This command will build the project and create the necessary output files in the `build` directory.
 
