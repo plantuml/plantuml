@@ -37,6 +37,8 @@
  */
 package net.sourceforge.plantuml.abel;
 
+import java.util.EnumSet;
+
 import net.sourceforge.plantuml.StringUtils;
 
 public enum LeafType {
@@ -68,9 +70,6 @@ public enum LeafType {
 
 	public static LeafType getLeafType(String type) {
 		type = StringUtils.goUpperCase(type);
-		if (type.startsWith("DATA"))
-			return LeafType.DATACLASS;
-
 		if (type.startsWith("ABSTRACT"))
 			return LeafType.ABSTRACT_CLASS;
 
@@ -83,12 +82,19 @@ public enum LeafType {
 		return LeafType.valueOf(type);
 	}
 
+	private static final EnumSet<LeafType> LIKE_CLASS =
+	        EnumSet.of(
+	            LeafType.ANNOTATION, LeafType.ABSTRACT_CLASS, LeafType.CLASS,
+	            LeafType.INTERFACE, LeafType.ENUM, LeafType.ENTITY,
+	            LeafType.PROTOCOL, LeafType.STRUCT, LeafType.EXCEPTION,
+	            LeafType.METACLASS, LeafType.STEREOTYPE, LeafType.DATACLASS,
+	            LeafType.RECORD
+	        );
+
 	public boolean isLikeClass() {
-		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS
-				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY
-				|| this == LeafType.PROTOCOL || this == LeafType.STRUCT || this == LeafType.EXCEPTION
-				|| this == LeafType.METACLASS || this == LeafType.STEREOTYPE || this == LeafType.DATACLASS || this == LeafType.RECORD;
+	    return LIKE_CLASS.contains(this);
 	}
+
 
 	public String toHtml() {
 		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));
