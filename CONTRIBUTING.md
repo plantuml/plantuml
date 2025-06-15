@@ -195,7 +195,7 @@ git push
 -->
 
 ## Styleguides
-### Commit Messages - [Full Guide](https://github.com/plantuml/plantuml/blob/64b21f6105db151b8600953c2a17cdf659a24f02/CONVENTIONAL_COMMIT.md)
+### Commit Messages - [Full Guide](https://github.com/plantuml/plantuml/blob/master/CONVENTIONAL_COMMIT.md)
 
 #### Format
 ```plaintext
