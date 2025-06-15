@@ -39,7 +39,9 @@
         <mkdir dir="build" />
 
         <!-- Compile Java sources -->
-        <javac target="1.8" source="1.8" srcdir="src" destdir="build" debug="on" />
+        <javac target="1.8" source="1.8" srcdir="src" destdir="build" debug="on">
+            <exclude name="test/**" />
+        </javac>
 
         <!-- Copy resources. Grouped by type and directory for better clarity -->
         <copy todir="build/net/sourceforge/plantuml/version">
