@@ -279,6 +279,7 @@ delay {
   FontSize 11
   FontStyle plain
   HorizontalAlignment center
+  LineStyle 1-4
 }
 
 
