@@ -49,15 +49,12 @@ public class TrieImpl implements Trie {
 	}
 
 	private static void addInternal(TrieImpl current, String s) {
-		if (s.length() == 0)
+		if (s.isEmpty())
 			throw new UnsupportedOperationException();
 
-		while (s.length() > 0) {
-			final Character added = s.charAt(0);
-			final TrieImpl child = current.getOrCreate(added);
-			s = s.substring(1);
-			current = child;
-		}
+		for (int i = 0; i < s.length(); i++)
+			current = current.getOrCreate(s.charAt(i));
+
 	}
 
 	public boolean remove(String s) {
@@ -65,32 +62,28 @@ public class TrieImpl implements Trie {
 	}
 
 	private static boolean removeInternal(TrieImpl current, String s) {
-		if (s.length() <= 1)
-			throw new UnsupportedOperationException();
+	    if (s.length() <= 1)
+	        throw new UnsupportedOperationException();
 
-		while (s.length() > 0) {
-			final Character first = s.charAt(0);
-			final TrieImpl child = current.brothers.get(first);
-			if (child == null)
-				return false;
+	    for (int i = 0; i < s.length(); i++) {
+	        final Character first = s.charAt(i);
+	        final TrieImpl child = current.brothers.get(first);
+	        if (child == null)
+	            return false;
 
-			s = s.substring(1);
-			if (s.length() == 1) {
-				assert s.charAt(0) == '\0';
-				return child.brothers.remove('\0') != null;
-			}
-			current = child;
-		}
-		throw new IllegalStateException();
+	        if (i == s.length() - 2) {
+	            assert s.charAt(i + 1) == '\0';
+	            return child.brothers.remove('\0') != null;
+	        }
+
+	        current = child;
+	    }
+	    throw new IllegalStateException();
 	}
 
+
 	private TrieImpl getOrCreate(Character added) {
-		TrieImpl result = brothers.get(added);
-		if (result == null) {
-			result = new TrieImpl();
-			brothers.put(added, result);
-		}
-		return result;
+		return brothers.computeIfAbsent(added, k -> new TrieImpl());
 	}
 
 	public String getLonguestMatchStartingIn(String s, int pos) {

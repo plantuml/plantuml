@@ -175,10 +175,23 @@ public enum SName {
 	spotAbstractClass, //
 	spotMetaClass, //
 	spotStereotype, //
-	spotDataClass,
-	spotRecord,
+	spotDataClass, //
+	spotRecord, //
 
 	wbsDiagram, //
 	yamlDiagram; //
+
+	private static final StringTrie<SName> ALL = new StringTrie<>();
+
+	static {
+		for (SName sname : SName.values()) {
+			final String s = sname.name().replace("_", "");
+			ALL.put(s, sname);
+		}
+	}
+
+	public static SName retrieve(String s) {
+		return ALL.get(s);
+	}
 
 }
