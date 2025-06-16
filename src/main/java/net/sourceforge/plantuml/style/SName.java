@@ -181,7 +181,4 @@ public enum SName {
 	wbsDiagram, //
 	yamlDiagram; //
 
-	public static String depth(int level) {
-		return "depth(" + level + ")";
-	}
 }

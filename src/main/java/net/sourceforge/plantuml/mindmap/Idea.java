@@ -64,32 +64,31 @@ class Idea {
 
 	@DuplicateCode(reference = "WElement")
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
-		final String depth = SName.depth(level);
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
 				return StyleSignatureBasic
 						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)
-						.addS(stereotype).add(depth);
+						.addStereotype(stereotype).addLevel(level);
 			else
 				return StyleSignatureBasic
 						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-						.addS(stereotype).add(depth);
+						.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
 			return StyleSignatureBasic
 					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
-					.addS(stereotype).add(depth);
+					.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
-					.addS(stereotype).add(depth);
+					.addStereotype(stereotype).addLevel(level);
 
 		if (children.size() == 0)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
-					.addS(stereotype).add(depth);
+					.addStereotype(stereotype).addLevel(level);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).addS(stereotype)
-				.add(depth);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node)
+				.addStereotype(stereotype).addLevel(level);
 	}
 
 	private static final int STEP_BY_PARENT = WElement.STEP_BY_PARENT;
@@ -107,9 +106,9 @@ class Idea {
 	}
 
 	public Style getStyleArrow() {
-		final String depth = SName.depth(level);
 		final StyleSignatureBasic defaultStyleDefinitionArrow = StyleSignatureBasic
-				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addS(stereotype).add(depth);
+				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addStereotype(stereotype)
+				.addLevel(level);
 		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);
 	}
 

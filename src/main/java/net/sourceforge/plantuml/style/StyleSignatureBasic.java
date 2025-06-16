@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.url.Url;
 public class StyleSignatureBasic implements StyleSignature {
 	// ::remove file when __HAXE__
 
-	public static final String STAR = "*";
 	private final Set<String> names = new LinkedHashSet<>();
 	private final boolean withDot;
 
@@ -89,7 +88,16 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	}
 
-	public StyleSignatureBasic add(String s) {
+	public StyleSignatureBasic addLevel(int level) {
+		final String s = "depth(" + level + ")";
+		return addString(s);
+	}
+
+	public StyleSignatureBasic addStereotypeDecoration(String s) {
+		return addString(StereotypeDecoration.PREFIX + s);
+	}
+
+	public StyleSignatureBasic addString(String s) {
 		if (s == null)
 			return this;
 
@@ -101,7 +109,7 @@ public class StyleSignatureBasic implements StyleSignature {
 		return new StyleSignatureBasic(withDot || s.contains("."), result);
 	}
 
-	public StyleSignatureBasic addS(Stereotype stereo) {
+	public StyleSignatureBasic addStereotype(Stereotype stereo) {
 		if (stereo == null)
 			return this;
 
@@ -117,8 +125,8 @@ public class StyleSignatureBasic implements StyleSignature {
 		return new StyleSignatureBasic(withDotLocal, result);
 	}
 
-	public StyleSignatureBasic add(SName name) {
-		return add(name.name().toLowerCase().replace("_", ""));
+	public StyleSignatureBasic addSName(SName name) {
+		return addString(name.name().toLowerCase().replace("_", ""));
 	}
 
 	public StyleSignatureBasic addStar() {

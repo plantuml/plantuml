@@ -283,7 +283,7 @@ public class TextBlockJson extends AbstractTextBlock {
 		final HColor backColor = styleNode.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		ugNode.apply(backColor.bg()).apply(backColor).draw(fullNodeRectangle);
 
-		final Style styleSeparator = styleNode.getSignature().add(SName.separator)
+		final Style styleSeparator = styleNode.getSignature().addSName(SName.separator)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final UGraphic ugSeparator = styleSeparator.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 

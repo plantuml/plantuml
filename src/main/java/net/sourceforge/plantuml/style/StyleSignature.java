@@ -41,6 +41,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 public interface StyleSignature {
     // ::remove file when __HAXE__
 
+	public static final String STAR = "*";
+
 	public Style getMergedStyle(StyleBuilder styleBuilder);
 
 	public StyleSignature withTOBECHANGED(Stereotype stereotype);

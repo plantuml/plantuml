@@ -74,31 +74,30 @@ final public class WElement {
 
 	@DuplicateCode(reference = "Idea")
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
-		final String depth = SName.depth(level);
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
 				return StyleSignatureBasic
 						.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless)
-						.addS(stereotype).add(depth);
+						.addStereotype(stereotype).addLevel(level);
 			else
 				return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
-						.addS(stereotype).add(depth);
+						.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && isLeaf())
 			return StyleSignatureBasic
 					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
-					.addS(stereotype).add(depth);
+					.addStereotype(stereotype).addLevel(level);
 
 		if (isLeaf())
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
-					.addS(stereotype).add(depth);
+					.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
-					.addS(stereotype).add(depth);
+					.addStereotype(stereotype).addLevel(level);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addS(stereotype)
-				.add(depth);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addStereotype(stereotype)
+				.addLevel(level);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
