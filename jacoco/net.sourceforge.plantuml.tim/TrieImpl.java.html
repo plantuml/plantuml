@@ -49,75 +49,68 @@ import java.util.Map;
 <span class="fc" id="L49">	}</span>
 
 	private static void addInternal(TrieImpl current, String s) {
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (s.isEmpty())</span>
 <span class="nc" id="L53">			throw new UnsupportedOperationException();</span>
 
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		while (s.length() &gt; 0) {</span>
-<span class="fc" id="L56">			final Character added = s.charAt(0);</span>
-<span class="fc" id="L57">			final TrieImpl child = current.getOrCreate(added);</span>
-<span class="fc" id="L58">			s = s.substring(1);</span>
-<span class="fc" id="L59">			current = child;</span>
-<span class="fc" id="L60">		}</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="fc" id="L56">			current = current.getOrCreate(s.charAt(i));</span>
+
+<span class="fc" id="L58">	}</span>
 
 	public boolean remove(String s) {
-<span class="nc" id="L64">		return removeInternal(this, s + &quot;\0&quot;);</span>
+<span class="nc" id="L61">		return removeInternal(this, s + &quot;\0&quot;);</span>
 	}
 
 	private static boolean removeInternal(TrieImpl current, String s) {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (s.length() &lt;= 1)</span>
-<span class="nc" id="L69">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">	    if (s.length() &lt;= 1)</span>
+<span class="nc" id="L66">	        throw new UnsupportedOperationException();</span>
 
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		while (s.length() &gt; 0) {</span>
-<span class="nc" id="L72">			final Character first = s.charAt(0);</span>
-<span class="nc" id="L73">			final TrieImpl child = current.brothers.get(first);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (child == null)</span>
-<span class="nc" id="L75">				return false;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">	    for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L69">	        final Character first = s.charAt(i);</span>
+<span class="nc" id="L70">	        final TrieImpl child = current.brothers.get(first);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">	        if (child == null)</span>
+<span class="nc" id="L72">	            return false;</span>
 
-<span class="nc" id="L77">			s = s.substring(1);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (s.length() == 1) {</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				assert s.charAt(0) == '\0';</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">				return child.brothers.remove('\0') != null;</span>
-			}
-<span class="nc" id="L82">			current = child;</span>
-<span class="nc" id="L83">		}</span>
-<span class="nc" id="L84">		throw new IllegalStateException();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">	        if (i == s.length() - 2) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">	            assert s.charAt(i + 1) == '\0';</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">	            return child.brothers.remove('\0') != null;</span>
+	        }
+
+<span class="nc" id="L79">	        current = child;</span>
+	    }
+<span class="nc" id="L81">	    throw new IllegalStateException();</span>
 	}
 
+
 	private TrieImpl getOrCreate(Character added) {
-<span class="fc" id="L88">		TrieImpl result = brothers.get(added);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L90">			result = new TrieImpl();</span>
-<span class="fc" id="L91">			brothers.put(added, result);</span>
-		}
-<span class="fc" id="L93">		return result;</span>
+<span class="fc" id="L86">		return brothers.computeIfAbsent(added, k -&gt; new TrieImpl());</span>
 	}
 
 	public String getLonguestMatchStartingIn(String s, int pos) {
-<span class="fc" id="L97">		return getLonguestMatchStartingIn(this, s, pos);</span>
+<span class="fc" id="L90">		return getLonguestMatchStartingIn(this, s, pos);</span>
 	}
 
 	private static String getLonguestMatchStartingIn(TrieImpl current, String s, int pos) {
-<span class="fc" id="L101">		final StringBuilder result = new StringBuilder();</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		while (current != null) {</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (s.length() == pos)</span>
+<span class="fc" id="L94">		final StringBuilder result = new StringBuilder();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		while (current != null) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (s.length() == pos)</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				if (current.brothers.containsKey('\0'))</span>
+<span class="fc" id="L98">					return result.toString();</span>
+				else
+<span class="fc" id="L100">					return &quot;&quot;;</span>
+
+<span class="fc" id="L102">			final TrieImpl child = current.brothers.get(s.charAt(pos));</span>
+<span class="pc bpc" id="L103" title="1 of 4 branches missed.">			if (child == null || child.brothers.size() == 0)</span>
 <span class="fc bfc" id="L104" title="All 2 branches covered.">				if (current.brothers.containsKey('\0'))</span>
 <span class="fc" id="L105">					return result.toString();</span>
 				else
 <span class="fc" id="L107">					return &quot;&quot;;</span>
 
-<span class="fc" id="L109">			final TrieImpl child = current.brothers.get(s.charAt(pos));</span>
-<span class="pc bpc" id="L110" title="1 of 4 branches missed.">			if (child == null || child.brothers.size() == 0)</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (current.brothers.containsKey('\0'))</span>
-<span class="fc" id="L112">					return result.toString();</span>
-				else
-<span class="fc" id="L114">					return &quot;&quot;;</span>
-
-<span class="fc" id="L116">			result.append(s.charAt(pos));</span>
-<span class="fc" id="L117">			current = child;</span>
-<span class="fc" id="L118">			pos++;</span>
-<span class="fc" id="L119">		}</span>
-<span class="nc" id="L120">		return &quot;&quot;;</span>
+<span class="fc" id="L109">			result.append(s.charAt(pos));</span>
+<span class="fc" id="L110">			current = child;</span>
+<span class="fc" id="L111">			pos++;</span>
+<span class="fc" id="L112">		}</span>
+<span class="nc" id="L113">		return &quot;&quot;;</span>
 
 	}
 
