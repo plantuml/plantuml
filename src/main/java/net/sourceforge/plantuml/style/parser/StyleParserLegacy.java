@@ -71,7 +71,7 @@ public class StyleParserLegacy {
 		final CssVariables variables = new CssVariables();
 		StyleScheme scheme = StyleScheme.REGULAR;
 
-		Context context = new Context();
+		Context context = Context.empty();
 		final List<Map<PName, Value>> maps = new ArrayList<Map<PName, Value>>();
 		boolean inComment = false;
 		for (StringLocated s : lines) {

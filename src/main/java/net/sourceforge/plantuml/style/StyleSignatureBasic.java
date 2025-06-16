@@ -363,4 +363,8 @@ public class StyleSignatureBasic implements StyleSignature {
 		return of(concat);
 	}
 
+	public int size() {
+		return names.size();
+	}
+
 }

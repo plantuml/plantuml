@@ -37,11 +37,8 @@ package net.sourceforge.plantuml.style.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import net.sourceforge.plantuml.style.PName;
@@ -52,17 +49,40 @@ import net.sourceforge.plantuml.style.Value;
 
 class Context {
 
-	private final List<String> data = new ArrayList<String>();
+	private final List<StyleSignatureBasic> signatures = new ArrayList<>();
+
 	private final Map<PName, Value> map = new EnumMap<>(PName.class);
 	private Context parent;
+
+	private Context() {
+	}
+
+	public static Context empty() {
+		final Context result = new Context();
+		result.signatures.add(StyleSignatureBasic.empty());
+		return result;
+	}
 
 	public Context push(String newString) {
 		if (newString.startsWith(":"))
 			newString = newString.substring(1);
 		final Context result = new Context();
-		result.data.addAll(this.data);
-		result.data.add(newString);
 		result.parent = this;
+
+		boolean star = false;
+
+		if (newString.endsWith(StyleSignatureBasic.STAR)) {
+			newString = newString.substring(0, newString.length() - 1).trim();
+			star = true;
+		}
+
+		for (String s : newString.split(","))
+			for (StyleSignatureBasic ssb : this.signatures)
+				if (star)
+					result.signatures.add(ssb.addString(s).addStar());
+				else
+					result.signatures.add(ssb.addString(s));
+
 		return result;
 	}
 
@@ -74,37 +94,15 @@ class Context {
 
 	@Override
 	public String toString() {
-		return data.toString();
+		return signatures.toString();
 	}
 
 	public int size() {
-		return data.size();
+		return signatures.get(0).size();
 	}
 
 	public Collection<StyleSignatureBasic> toSignatures() {
-		List<StyleSignatureBasic> results = new ArrayList<>(Collections.singletonList(StyleSignatureBasic.empty()));
-		boolean star = false;
-		for (Iterator<String> it = data.iterator(); it.hasNext();) {
-			String s = it.next();
-			if (s.endsWith(StyleSignatureBasic.STAR)) {
-				star = true;
-				s = s.substring(0, s.length() - 1);
-			}
-			final String[] names = s.split(",");
-			final List<StyleSignatureBasic> tmp = new ArrayList<>();
-			for (StyleSignatureBasic ss : results)
-				for (String name : names)
-					tmp.add(ss.addString(name.trim()));
-			results = tmp;
-		}
-
-		if (star)
-			for (ListIterator<StyleSignatureBasic> it = results.listIterator(); it.hasNext();) {
-				final StyleSignatureBasic tmp = it.next().addStar();
-				it.set(tmp);
-			}
-
-		return Collections.unmodifiableCollection(results);
+		return signatures;
 	}
 
 	public void putInContext(PName key, Value value) {

@@ -66,7 +66,7 @@ public class StyleParser {
 		final CssVariables variables = new CssVariables();
 		StyleScheme scheme = StyleScheme.REGULAR;
 
-		Context context = new Context();
+		Context context = Context.empty();
 
 //		System.err.println("tokens=" + tokens.size());
 //		if (tokens.size() < 100)
