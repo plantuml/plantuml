@@ -168,6 +168,11 @@ sequenceDiagram {
 	  FontSize 13
 	  FontStyle bold
 	}
+
+  newpage {
+    LineStyle 2
+  }
+
 	participant {
 	  RoundCorner 5
 	}
