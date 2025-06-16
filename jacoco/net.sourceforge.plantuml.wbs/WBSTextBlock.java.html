@@ -70,7 +70,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 
 	private Style getStyleUsed() {
 <span class="fc" id="L72">		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow)</span>
-<span class="fc" id="L73">				.add(SName.depth(level)).withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L73">				.addLevel(level).withTOBECHANGED(stereotype);</span>
 <span class="fc" id="L74">		return signature.getMergedStyle(styleBuilder);</span>
 	}
 

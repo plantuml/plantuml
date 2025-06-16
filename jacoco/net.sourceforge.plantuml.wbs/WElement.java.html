@@ -74,133 +74,132 @@ final public class WElement {
 
 	@DuplicateCode(reference = &quot;Idea&quot;)
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
-<span class="fc" id="L77">		final String depth = SName.depth(level);</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (level == 0)</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			if (shape == IdeaShape.NONE)</span>
-<span class="nc" id="L80">				return StyleSignatureBasic</span>
-<span class="nc" id="L81">						.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless)</span>
-<span class="nc" id="L82">						.addS(stereotype).add(depth);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (level == 0)</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (shape == IdeaShape.NONE)</span>
+<span class="nc" id="L79">				return StyleSignatureBasic</span>
+<span class="nc" id="L80">						.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless)</span>
+<span class="nc" id="L81">						.addStereotype(stereotype).addLevel(level);</span>
 			else
-<span class="fc" id="L84">				return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)</span>
-<span class="fc" id="L85">						.addS(stereotype).add(depth);</span>
+<span class="fc" id="L83">				return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)</span>
+<span class="fc" id="L84">						.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="pc bpc" id="L87" title="3 of 4 branches missed.">		if (shape == IdeaShape.NONE &amp;&amp; isLeaf())</span>
-<span class="nc" id="L88">			return StyleSignatureBasic</span>
-<span class="nc" id="L89">					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)</span>
-<span class="nc" id="L90">					.addS(stereotype).add(depth);</span>
+<span class="pc bpc" id="L86" title="3 of 4 branches missed.">		if (shape == IdeaShape.NONE &amp;&amp; isLeaf())</span>
+<span class="nc" id="L87">			return StyleSignatureBasic</span>
+<span class="nc" id="L88">					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)</span>
+<span class="nc" id="L89">					.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (isLeaf())</span>
-<span class="fc" id="L93">			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)</span>
-<span class="fc" id="L94">					.addS(stereotype).add(depth);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (isLeaf())</span>
+<span class="fc" id="L92">			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)</span>
+<span class="fc" id="L93">					.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (shape == IdeaShape.NONE)</span>
-<span class="nc" id="L97">			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)</span>
-<span class="nc" id="L98">					.addS(stereotype).add(depth);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (shape == IdeaShape.NONE)</span>
+<span class="nc" id="L96">			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)</span>
+<span class="nc" id="L97">					.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc" id="L100">		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addS(stereotype)</span>
-<span class="fc" id="L101">				.add(depth);</span>
+<span class="fc" id="L99">		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addStereotype(stereotype)</span>
+<span class="fc" id="L100">				.addLevel(level);</span>
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (backColor == null)</span>
-<span class="fc" id="L106">			return skinParam;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (backColor == null)</span>
+<span class="fc" id="L105">			return skinParam;</span>
 
-<span class="nc" id="L108">		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));</span>
+<span class="nc" id="L107">		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));</span>
 	}
 
 	public static final int STEP_BY_PARENT = 1000_1000;
 
 	public Style getStyle() {
-<span class="fc" id="L114">		int deltaPriority = STEP_BY_PARENT * 1000;</span>
-<span class="fc" id="L115">		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		for (WElement up = parent; up != null; up = up.parent) {</span>
-<span class="fc" id="L117">			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();</span>
-<span class="fc" id="L118">			deltaPriority -= STEP_BY_PARENT;</span>
-<span class="fc" id="L119">			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);</span>
-<span class="fc" id="L120">			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L113">		int deltaPriority = STEP_BY_PARENT * 1000;</span>
+<span class="fc" id="L114">		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (WElement up = parent; up != null; up = up.parent) {</span>
+<span class="fc" id="L116">			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();</span>
+<span class="fc" id="L117">			deltaPriority -= STEP_BY_PARENT;</span>
+<span class="fc" id="L118">			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);</span>
+<span class="fc" id="L119">			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 		}
-<span class="fc" id="L122">		return result;</span>
+<span class="fc" id="L121">		return result;</span>
 	}
 
 	public WElement(HColor backColor, Display label, Stereotype stereotype, StyleBuilder styleBuilder,
 			IdeaShape shape) {
-<span class="fc" id="L127">		this(backColor, 0, label, stereotype, null, shape, styleBuilder);</span>
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L126">		this(backColor, 0, label, stereotype, null, shape, styleBuilder);</span>
+<span class="fc" id="L127">	}</span>
 
 	private WElement(HColor backColor, int level, Display label, Stereotype stereotype, WElement parent,
-<span class="fc" id="L131">			IdeaShape shape, StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L132">		this.label = label;</span>
-<span class="fc" id="L133">		this.backColor = backColor;</span>
-<span class="fc" id="L134">		this.level = level;</span>
-<span class="fc" id="L135">		this.parent = parent;</span>
-<span class="fc" id="L136">		this.shape = shape;</span>
-<span class="fc" id="L137">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L138">		this.stereotype = stereotype;</span>
-<span class="fc" id="L139">	}</span>
+<span class="fc" id="L130">			IdeaShape shape, StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L131">		this.label = label;</span>
+<span class="fc" id="L132">		this.backColor = backColor;</span>
+<span class="fc" id="L133">		this.level = level;</span>
+<span class="fc" id="L134">		this.parent = parent;</span>
+<span class="fc" id="L135">		this.shape = shape;</span>
+<span class="fc" id="L136">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L137">		this.stereotype = stereotype;</span>
+<span class="fc" id="L138">	}</span>
 
 	public boolean isLeaf() {
-<span class="fc bfc" id="L142" title="All 4 branches covered.">		return childrenLeft.size() == 0 &amp;&amp; childrenRight.size() == 0;</span>
+<span class="fc bfc" id="L141" title="All 4 branches covered.">		return childrenLeft.size() == 0 &amp;&amp; childrenRight.size() == 0;</span>
 	}
 
 	public WElement createElement(HColor backColor, int newLevel, Display newLabel, Stereotype stereotype,
 			Direction direction, IdeaShape shape, StyleBuilder styleBuilder) {
-<span class="fc" id="L147">		final WElement result = new WElement(backColor, newLevel, newLabel, stereotype, this, shape, styleBuilder);</span>
-<span class="pc bpc" id="L148" title="1 of 4 branches missed.">		if (direction == Direction.LEFT &amp;&amp; newLevel == 1)</span>
-<span class="nc" id="L149">			this.childrenRight.add(0, result);</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (direction == Direction.LEFT)</span>
-<span class="fc" id="L151">			this.childrenLeft.add(result);</span>
+<span class="fc" id="L146">		final WElement result = new WElement(backColor, newLevel, newLabel, stereotype, this, shape, styleBuilder);</span>
+<span class="pc bpc" id="L147" title="1 of 4 branches missed.">		if (direction == Direction.LEFT &amp;&amp; newLevel == 1)</span>
+<span class="nc" id="L148">			this.childrenRight.add(0, result);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (direction == Direction.LEFT)</span>
+<span class="fc" id="L150">			this.childrenLeft.add(result);</span>
 		else
-<span class="fc" id="L153">			this.childrenRight.add(result);</span>
+<span class="fc" id="L152">			this.childrenRight.add(result);</span>
 
-<span class="fc" id="L155">		return result;</span>
+<span class="fc" id="L154">		return result;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L160">		return label.toString();</span>
+<span class="nc" id="L159">		return label.toString();</span>
 	}
 
 	public final int getLevel() {
-<span class="fc" id="L164">		return level;</span>
+<span class="fc" id="L163">		return level;</span>
 	}
 
 	public final Display getLabel() {
-<span class="fc" id="L168">		return label;</span>
+<span class="fc" id="L167">		return label;</span>
 	}
 
 	public Collection&lt;WElement&gt; getChildren(Direction direction) {
-<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (direction == Direction.LEFT)</span>
-<span class="fc" id="L173">			return Collections.unmodifiableList(childrenLeft);</span>
-<span class="fc" id="L174">		return Collections.unmodifiableList(childrenRight);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (direction == Direction.LEFT)</span>
+<span class="fc" id="L172">			return Collections.unmodifiableList(childrenLeft);</span>
+<span class="fc" id="L173">		return Collections.unmodifiableList(childrenRight);</span>
 	}
 
 	public WElement getParent() {
-<span class="fc" id="L178">		return parent;</span>
+<span class="fc" id="L177">		return parent;</span>
 	}
 
 	public final IdeaShape getShape() {
-<span class="fc" id="L182">		return shape;</span>
+<span class="fc" id="L181">		return shape;</span>
 	}
 
 	public final StyleBuilder getStyleBuilder() {
-<span class="fc" id="L186">		return styleBuilder;</span>
+<span class="fc" id="L185">		return styleBuilder;</span>
 	}
 
 	public final void setGeometry(UTranslate position, XDimension2D dimension) {
-<span class="fc" id="L190">		this.position = position;</span>
-<span class="fc" id="L191">		this.dimension = dimension;</span>
-<span class="fc" id="L192">	}</span>
+<span class="fc" id="L189">		this.position = position;</span>
+<span class="fc" id="L190">		this.dimension = dimension;</span>
+<span class="fc" id="L191">	}</span>
 
 	public final UTranslate getPosition() {
-<span class="fc" id="L195">		return position;</span>
+<span class="fc" id="L194">		return position;</span>
 	}
 
 	public final XDimension2D getDimension() {
-<span class="fc" id="L199">		return dimension;</span>
+<span class="fc" id="L198">		return dimension;</span>
 	}
 
 	public Stereotype getStereotype() {
-<span class="fc" id="L203">		return stereotype;</span>
+<span class="fc" id="L202">		return stereotype;</span>
 	}
 
 }

@@ -64,117 +64,116 @@ class Idea {
 
 	@DuplicateCode(reference = &quot;WElement&quot;)
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
-<span class="fc" id="L67">		final String depth = SName.depth(level);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (level == 0)</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (shape == IdeaShape.NONE)</span>
-<span class="nc" id="L70">				return StyleSignatureBasic</span>
-<span class="nc" id="L71">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)</span>
-<span class="nc" id="L72">						.addS(stereotype).add(depth);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (level == 0)</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (shape == IdeaShape.NONE)</span>
+<span class="nc" id="L69">				return StyleSignatureBasic</span>
+<span class="nc" id="L70">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)</span>
+<span class="nc" id="L71">						.addStereotype(stereotype).addLevel(level);</span>
 			else
-<span class="fc" id="L74">				return StyleSignatureBasic</span>
-<span class="fc" id="L75">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)</span>
-<span class="fc" id="L76">						.addS(stereotype).add(depth);</span>
+<span class="fc" id="L73">				return StyleSignatureBasic</span>
+<span class="fc" id="L74">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)</span>
+<span class="fc" id="L75">						.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="pc bpc" id="L78" title="3 of 4 branches missed.">		if (shape == IdeaShape.NONE &amp;&amp; children.size() == 0)</span>
-<span class="nc" id="L79">			return StyleSignatureBasic</span>
-<span class="nc" id="L80">					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)</span>
-<span class="nc" id="L81">					.addS(stereotype).add(depth);</span>
+<span class="pc bpc" id="L77" title="3 of 4 branches missed.">		if (shape == IdeaShape.NONE &amp;&amp; children.size() == 0)</span>
+<span class="nc" id="L78">			return StyleSignatureBasic</span>
+<span class="nc" id="L79">					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)</span>
+<span class="nc" id="L80">					.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (shape == IdeaShape.NONE)</span>
-<span class="nc" id="L84">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)</span>
-<span class="nc" id="L85">					.addS(stereotype).add(depth);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (shape == IdeaShape.NONE)</span>
+<span class="nc" id="L83">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)</span>
+<span class="nc" id="L84">					.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (children.size() == 0)</span>
-<span class="fc" id="L88">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)</span>
-<span class="fc" id="L89">					.addS(stereotype).add(depth);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (children.size() == 0)</span>
+<span class="fc" id="L87">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)</span>
+<span class="fc" id="L88">					.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc" id="L91">		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).addS(stereotype)</span>
-<span class="fc" id="L92">				.add(depth);</span>
+<span class="fc" id="L90">		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node)</span>
+<span class="fc" id="L91">				.addStereotype(stereotype).addLevel(level);</span>
 	}
 
 	private static final int STEP_BY_PARENT = WElement.STEP_BY_PARENT;
 
 	public Style getStyle() {
-<span class="fc" id="L98">		int deltaPriority = STEP_BY_PARENT * 1000;</span>
-<span class="fc" id="L99">		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (Idea up = parent; up != null; up = up.parent) {</span>
-<span class="fc" id="L101">			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();</span>
-<span class="fc" id="L102">			deltaPriority -= STEP_BY_PARENT;</span>
-<span class="fc" id="L103">			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);</span>
-<span class="fc" id="L104">			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L97">		int deltaPriority = STEP_BY_PARENT * 1000;</span>
+<span class="fc" id="L98">		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (Idea up = parent; up != null; up = up.parent) {</span>
+<span class="fc" id="L100">			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();</span>
+<span class="fc" id="L101">			deltaPriority -= STEP_BY_PARENT;</span>
+<span class="fc" id="L102">			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);</span>
+<span class="fc" id="L103">			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 		}
-<span class="fc" id="L106">		return result;</span>
+<span class="fc" id="L105">		return result;</span>
 	}
 
 	public Style getStyleArrow() {
-<span class="fc" id="L110">		final String depth = SName.depth(level);</span>
-<span class="fc" id="L111">		final StyleSignatureBasic defaultStyleDefinitionArrow = StyleSignatureBasic</span>
-<span class="fc" id="L112">				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addS(stereotype).add(depth);</span>
-<span class="fc" id="L113">		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L109">		final StyleSignatureBasic defaultStyleDefinitionArrow = StyleSignatureBasic</span>
+<span class="fc" id="L110">				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addStereotype(stereotype)</span>
+<span class="fc" id="L111">				.addLevel(level);</span>
+<span class="fc" id="L112">		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);</span>
 	}
 
 	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,
 			Stereotype stereotype) {
-<span class="fc" id="L118">		return new Idea(styleBuilder, backColor, 0, null, label, shape, stereotype);</span>
+<span class="fc" id="L117">		return new Idea(styleBuilder, backColor, 0, null, label, shape, stereotype);</span>
 	}
 
 	public Idea createIdea(StyleBuilder styleBuilder, HColor backColor, int newLevel, Display newDisplay,
 			IdeaShape newShape, Stereotype stereotype) {
-<span class="fc" id="L123">		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape, stereotype);</span>
-<span class="fc" id="L124">		this.children.add(result);</span>
-<span class="fc" id="L125">		return result;</span>
+<span class="fc" id="L122">		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape, stereotype);</span>
+<span class="fc" id="L123">		this.children.add(result);</span>
+<span class="fc" id="L124">		return result;</span>
 	}
 
 	private Idea(StyleBuilder styleBuilder, HColor backColor, int level, Idea parent, Display label, IdeaShape shape,
-<span class="fc" id="L129">			Stereotype stereotype) {</span>
-<span class="fc" id="L130">		this.backColor = backColor;</span>
-<span class="fc" id="L131">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L132">		this.label = label;</span>
-<span class="fc" id="L133">		this.level = level;</span>
-<span class="fc" id="L134">		this.parent = parent;</span>
-<span class="fc" id="L135">		this.shape = shape;</span>
-<span class="fc" id="L136">		this.stereotype = stereotype;</span>
-<span class="fc" id="L137">	}</span>
+<span class="fc" id="L128">			Stereotype stereotype) {</span>
+<span class="fc" id="L129">		this.backColor = backColor;</span>
+<span class="fc" id="L130">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L131">		this.label = label;</span>
+<span class="fc" id="L132">		this.level = level;</span>
+<span class="fc" id="L133">		this.parent = parent;</span>
+<span class="fc" id="L134">		this.shape = shape;</span>
+<span class="fc" id="L135">		this.stereotype = stereotype;</span>
+<span class="fc" id="L136">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L141">		return label.toString();</span>
+<span class="nc" id="L140">		return label.toString();</span>
 	}
 
 	public final int getLevel() {
-<span class="fc" id="L145">		return level;</span>
+<span class="fc" id="L144">		return level;</span>
 	}
 
 	public final Display getLabel() {
-<span class="fc" id="L149">		return label;</span>
+<span class="fc" id="L148">		return label;</span>
 	}
 
 	public Collection&lt;Idea&gt; getChildren() {
-<span class="fc" id="L153">		return Collections.unmodifiableList(children);</span>
+<span class="fc" id="L152">		return Collections.unmodifiableList(children);</span>
 	}
 
 	public boolean hasChildren() {
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		return children.size() &gt; 0;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		return children.size() &gt; 0;</span>
 	}
 
 	public Idea getParent() {
-<span class="fc" id="L161">		return parent;</span>
+<span class="fc" id="L160">		return parent;</span>
 	}
 
 	public final IdeaShape getShape() {
-<span class="fc" id="L165">		return shape;</span>
+<span class="fc" id="L164">		return shape;</span>
 	}
 
 	public final HColor getBackColor() {
-<span class="fc" id="L169">		return backColor;</span>
+<span class="fc" id="L168">		return backColor;</span>
 	}
 
 	public final StyleBuilder getStyleBuilder() {
-<span class="nc" id="L173">		return styleBuilder;</span>
+<span class="nc" id="L172">		return styleBuilder;</span>
 	}
 
 	public final Stereotype getStereotype1() {
-<span class="nc" id="L177">		return stereotype;</span>
+<span class="nc" id="L176">		return stereotype;</span>
 	}
 
 }
