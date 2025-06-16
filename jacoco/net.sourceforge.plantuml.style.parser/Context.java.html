@@ -37,11 +37,8 @@ package net.sourceforge.plantuml.style.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import net.sourceforge.plantuml.style.PName;
@@ -50,79 +47,80 @@ import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Value;
 
-<span class="fc" id="L53">class Context {</span>
+class Context {
 
-<span class="fc" id="L55">	private final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L56">	private final Map&lt;PName, Value&gt; map = new EnumMap&lt;&gt;(PName.class);</span>
+<span class="fc" id="L52">	private final List&lt;StyleSignatureBasic&gt; signatures = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L54">	private final Map&lt;PName, Value&gt; map = new EnumMap&lt;&gt;(PName.class);</span>
 	private Context parent;
 
+<span class="fc" id="L57">	private Context() {</span>
+<span class="fc" id="L58">	}</span>
+
+	public static Context empty() {
+<span class="fc" id="L61">		final Context result = new Context();</span>
+<span class="fc" id="L62">		result.signatures.add(StyleSignatureBasic.empty());</span>
+<span class="fc" id="L63">		return result;</span>
+	}
+
 	public Context push(String newString) {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (newString.startsWith(&quot;:&quot;))</span>
-<span class="nc" id="L61">			newString = newString.substring(1);</span>
-<span class="fc" id="L62">		final Context result = new Context();</span>
-<span class="fc" id="L63">		result.data.addAll(this.data);</span>
-<span class="fc" id="L64">		result.data.add(newString);</span>
-<span class="fc" id="L65">		result.parent = this;</span>
-<span class="fc" id="L66">		return result;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (newString.startsWith(&quot;:&quot;))</span>
+<span class="nc" id="L68">			newString = newString.substring(1);</span>
+<span class="fc" id="L69">		final Context result = new Context();</span>
+<span class="fc" id="L70">		result.parent = this;</span>
+
+<span class="fc" id="L72">		boolean star = false;</span>
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (newString.endsWith(StyleSignatureBasic.STAR)) {</span>
+<span class="nc" id="L75">			newString = newString.substring(0, newString.length() - 1).trim();</span>
+<span class="nc" id="L76">			star = true;</span>
+		}
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		for (String s : newString.split(&quot;,&quot;))</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			for (StyleSignatureBasic ssb : this.signatures)</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">				if (star)</span>
+<span class="nc" id="L82">					result.signatures.add(ssb.addString(s).addStar());</span>
+				else
+<span class="fc" id="L84">					result.signatures.add(ssb.addString(s));</span>
+
+<span class="fc" id="L86">		return result;</span>
 	}
 
 	public Context pop() {
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (size() == 0)</span>
-<span class="nc" id="L71">			throw new IllegalStateException();</span>
-<span class="fc" id="L72">		return this.parent;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (size() == 0)</span>
+<span class="nc" id="L91">			throw new IllegalStateException();</span>
+<span class="fc" id="L92">		return this.parent;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L77">		return data.toString();</span>
+<span class="nc" id="L97">		return signatures.toString();</span>
 	}
 
 	public int size() {
-<span class="fc" id="L81">		return data.size();</span>
+<span class="fc" id="L101">		return signatures.get(0).size();</span>
 	}
 
 	public Collection&lt;StyleSignatureBasic&gt; toSignatures() {
-<span class="fc" id="L85">		List&lt;StyleSignatureBasic&gt; results = new ArrayList&lt;&gt;(Collections.singletonList(StyleSignatureBasic.empty()));</span>
-<span class="fc" id="L86">		boolean star = false;</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>
-<span class="fc" id="L88">			String s = it.next();</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (s.endsWith(StyleSignatureBasic.STAR)) {</span>
-<span class="nc" id="L90">				star = true;</span>
-<span class="nc" id="L91">				s = s.substring(0, s.length() - 1);</span>
-			}
-<span class="fc" id="L93">			final String[] names = s.split(&quot;,&quot;);</span>
-<span class="fc" id="L94">			final List&lt;StyleSignatureBasic&gt; tmp = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">			for (StyleSignatureBasic ss : results)</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">				for (String name : names)</span>
-<span class="fc" id="L97">					tmp.add(ss.addString(name.trim()));</span>
-<span class="fc" id="L98">			results = tmp;</span>
-<span class="fc" id="L99">		}</span>
-
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (star)</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			for (ListIterator&lt;StyleSignatureBasic&gt; it = results.listIterator(); it.hasNext();) {</span>
-<span class="nc" id="L103">				final StyleSignatureBasic tmp = it.next().addStar();</span>
-<span class="nc" id="L104">				it.set(tmp);</span>
-<span class="nc" id="L105">			}</span>
-
-<span class="fc" id="L107">		return Collections.unmodifiableCollection(results);</span>
+<span class="fc" id="L105">		return signatures;</span>
 	}
 
 	public void putInContext(PName key, Value value) {
-<span class="fc" id="L111">		map.put(key, value);</span>
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L109">		map.put(key, value);</span>
+<span class="fc" id="L110">	}</span>
 
 	public Collection&lt;Style&gt; toStyles() {
-<span class="fc" id="L115">		final Collection&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L116">		final Collection&lt;StyleSignatureBasic&gt; signatures = toSignatures();</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		for (StyleSignatureBasic signature : signatures) {</span>
-<span class="fc" id="L118">			Map&lt;PName, Value&gt; tmp = map;</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">			if (signature.isWithDot())</span>
-<span class="fc" id="L120">				tmp = StyleLoader.addPriorityForStereotype(tmp);</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (tmp.size() &gt; 0)</span>
-<span class="fc" id="L122">				result.add(new Style(signature, tmp));</span>
+<span class="fc" id="L113">		final Collection&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L114">		final Collection&lt;StyleSignatureBasic&gt; signatures = toSignatures();</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (StyleSignatureBasic signature : signatures) {</span>
+<span class="fc" id="L116">			Map&lt;PName, Value&gt; tmp = map;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">			if (signature.isWithDot())</span>
+<span class="fc" id="L118">				tmp = StyleLoader.addPriorityForStereotype(tmp);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			if (tmp.size() &gt; 0)</span>
+<span class="fc" id="L120">				result.add(new Style(signature, tmp));</span>
 
-<span class="fc" id="L124">		}</span>
-<span class="fc" id="L125">		return result;</span>
+<span class="fc" id="L122">		}</span>
+<span class="fc" id="L123">		return result;</span>
 	}
 
 }
