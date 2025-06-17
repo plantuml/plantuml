@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.skin.rose;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -65,7 +64,8 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());
 
 		final Fashion symbolContext = new Fashion(biColor.getBackColor(), biColor.getForeColor())
-				.withStroke(UStroke.withThickness(1.5)).withShadow(biColor.getDeltaShadow());
+				.withStroke(getStyle().getStroke())
+				.withShadow(biColor.getDeltaShadow());
 		this.stickman = USymbols.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
 	}

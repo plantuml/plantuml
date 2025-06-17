@@ -132,6 +132,8 @@ sequenceDiagram {
 
   destroy {
     LineColor #A80036
+    LineStyle 0
+    LineThickness 2
   }
 
 	reference {
@@ -166,6 +168,11 @@ sequenceDiagram {
 	  FontSize 13
 	  FontStyle bold
 	}
+
+  newpage {
+    LineStyle 2
+  }
+
 	participant {
 	  RoundCorner 5
 	}
@@ -277,6 +284,7 @@ delay {
   FontSize 11
   FontStyle plain
   HorizontalAlignment center
+  LineStyle 1-4
 }
 
 

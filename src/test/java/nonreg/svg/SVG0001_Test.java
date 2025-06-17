@@ -116,13 +116,13 @@ Expected result MUST be put between triple brackets
     </g>
     <g class="participant participant-head" data-participant="my_database">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_database</text>
-      <path fill="#E2E2F0" style="stroke:#181818;stroke-width:1.5;"/>
-      <path fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     </g>
     <g class="participant participant-tail" data-participant="my_database">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_database</text>
-      <path fill="#E2E2F0" style="stroke:#181818;stroke-width:1.5;"/>
-      <path fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     </g>
     <g class="participant participant-head" data-participant="my_entity">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_entity</text>
