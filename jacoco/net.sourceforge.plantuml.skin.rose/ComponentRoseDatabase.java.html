@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.skin.rose;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -59,13 +58,14 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 
 	public ComponentRoseDatabase(Style style, Style stereo, Display stringsToDisplay, boolean head,
 			ISkinParam skinParam) {
-<span class="fc" id="L62">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
-<span class="fc" id="L63">		this.head = head;</span>
+<span class="fc" id="L61">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
+<span class="fc" id="L62">		this.head = head;</span>
 
-<span class="fc" id="L65">		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());</span>
+<span class="fc" id="L64">		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());</span>
 
-<span class="fc" id="L67">		final Fashion symbolContext = new Fashion(biColor.getBackColor(), biColor.getForeColor())</span>
-<span class="fc" id="L68">				.withStroke(UStroke.withThickness(1.5)).withShadow(biColor.getDeltaShadow());</span>
+<span class="fc" id="L66">		final Fashion symbolContext = new Fashion(biColor.getBackColor(), biColor.getForeColor())</span>
+<span class="fc" id="L67">				.withStroke(getStyle().getStroke())</span>
+<span class="fc" id="L68">				.withShadow(biColor.getDeltaShadow());</span>
 <span class="fc" id="L69">		this.stickman = USymbols.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),</span>
 				symbolContext, HorizontalAlignment.CENTER);
 <span class="fc" id="L71">	}</span>

@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -54,26 +53,26 @@ public class ComponentRoseDelayLine extends AbstractComponent {
 	private final HColor color;
 
 	public ComponentRoseDelayLine(Style style, ISkinParam skinParam) {
-<span class="fc" id="L57">		super(style, skinParam);</span>
-<span class="fc" id="L58">		this.color = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L56">		super(style, skinParam);</span>
+<span class="fc" id="L57">		this.color = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="nc" id="L63">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L64">		ug = ArrowConfiguration.stroke(ug, 1, 4, 1).apply(color);</span>
-<span class="nc" id="L65">		final int x = (int) (dimensionToUse.getWidth() / 2);</span>
-<span class="nc" id="L66">		ug.apply(UAntiAliasing.ANTI_ALIASING_OFF).apply(UTranslate.dx(x)).draw(ULine.vline(dimensionToUse.getHeight()));</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L62">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L63">		ug = ug.apply(getStyle().getStroke()).apply(color);</span>
+<span class="nc" id="L64">		final int x = (int) (dimensionToUse.getWidth() / 2);</span>
+<span class="nc" id="L65">		ug.apply(UAntiAliasing.ANTI_ALIASING_OFF).apply(UTranslate.dx(x)).draw(ULine.vline(dimensionToUse.getHeight()));</span>
+<span class="nc" id="L66">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L71">		return 20;</span>
+<span class="nc" id="L70">		return 20;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L76">		return 1;</span>
+<span class="nc" id="L75">		return 1;</span>
 	}
 
 }

@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -52,25 +51,25 @@ public class ComponentRoseNewpage extends AbstractComponent {
 	private final HColor foregroundColor;
 
 	public ComponentRoseNewpage(Style style, ISkinParam skinParam) {
-<span class="fc" id="L55">		super(style, skinParam);</span>
-<span class="fc" id="L56">		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L54">		super(style, skinParam);</span>
+<span class="fc" id="L55">		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L56">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="nc" id="L61">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L62">		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(foregroundColor);</span>
-<span class="nc" id="L63">		ug.draw(ULine.hline(dimensionToUse.getWidth()));</span>
-<span class="nc" id="L64">	}</span>
+<span class="nc" id="L60">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L61">		ug = ug.apply(getStyle().getStroke()).apply(foregroundColor);</span>
+<span class="nc" id="L62">		ug.draw(ULine.hline(dimensionToUse.getWidth()));</span>
+<span class="nc" id="L63">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L68">		return 1;</span>
+<span class="fc" id="L67">		return 1;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L73">		return 0;</span>
+<span class="nc" id="L72">		return 0;</span>
 	}
 
 }
