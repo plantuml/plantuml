@@ -437,9 +437,12 @@ public class SvgGraphics {
 		return color == null || "#00000000".equals(color) ? "none" : color;
 	}
 
-	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
+	public final void setStrokeWidth(double strokeWidth, double[] strokeDasharray) {
 		this.strokeWidth = format(strokeWidth);
-		this.strokeDasharray = strokeDasharray;
+		if (strokeDasharray == null)
+			this.strokeDasharray = null;
+		else
+			this.strokeDasharray = "" + format(strokeDasharray[0]) + "," + format(strokeDasharray[1]);
 	}
 
 	public final Element getG() {

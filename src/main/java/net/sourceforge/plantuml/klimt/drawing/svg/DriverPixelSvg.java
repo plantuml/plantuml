@@ -52,7 +52,7 @@ public class DriverPixelSvg implements UDriver<UPixel, SvgGraphics> {
 		} else {
 			svg.setStrokeColor(color.toSvg(mapper));
 		}
-		svg.setStrokeWidth(0.5, "");
+		svg.setStrokeWidth(0.5, null);
 
 		svg.svgRectangle(x, y, 0.5, 0.5, 0, 0, 0/*, null, null*/);
 

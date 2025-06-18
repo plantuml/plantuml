@@ -92,17 +92,17 @@ public class UStroke implements UChange {
 		return thickness;
 	}
 
-	public String getDasharraySvg() {
+	public double[] getDasharraySvg() {
 		if (dashVisible == 0)
 			return null;
 
-		return "" + dashVisible + "," + dashSpace;
+		return new double[] { dashVisible, dashSpace };
 	}
 
 	public String getDashTikz() {
-		if (dashVisible == 0) {
+		if (dashVisible == 0)
 			return null;
-		}
+
 		return "on " + dashVisible + "pt off " + dashSpace + "pt";
 	}
 
