@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L55">		try (OutputStream os = file.createBufferedOutputStream()) {</span>
 <span class="fc" id="L56">			write(image, mapper, os, metadata, dpi);</span>
 		}
-<span class="fc" id="L58">		Log.debug(&quot;File is &quot; + file);</span>
-<span class="fc" id="L59">		Log.debug(&quot;File size &quot; + file.length());</span>
+<span class="pc" id="L58">		Log.debug(() -&gt; &quot;File is &quot; + file);</span>
+<span class="pc" id="L59">		Log.debug(() -&gt; &quot;File size &quot; + file.length());</span>
 <span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (file.length() == 0) {</span>
 <span class="nc" id="L61">			Log.error(&quot;File size is zero: &quot; + file);</span>
 <span class="nc" id="L62">			SImageIO.write(image, &quot;png&quot;, file);</span>

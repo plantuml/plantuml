@@ -175,7 +175,7 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 <span class="pc bpc" id="L175" title="2 of 4 branches missed.">			if (result != null &amp;&amp; OptionFlags.getInstance().isEnableStats()) {</span>
 <span class="nc" id="L176">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
 			}
-<span class="fc" id="L178">			Log.info(&quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
+<span class="pc" id="L178">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
 <span class="fc" id="L179">			RegexConcat.printCacheInfo();</span>
 			// ::done
 		}

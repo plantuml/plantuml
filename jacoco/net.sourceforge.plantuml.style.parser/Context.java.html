@@ -79,60 +79,62 @@ class Context {
 
 <span class="fc bfc" id="L80" title="All 2 branches covered.">		for (String s : newString.split(&quot;,&quot;))</span>
 <span class="fc bfc" id="L81" title="All 2 branches covered.">			for (StyleSignatureBasic ssb : this.signatures) {</span>
-//				if (s.startsWith(&quot;.&quot;)) {
-//					System.err.println(&quot;s1=&quot; + s);
-//				} else if (s.startsWith(&quot;depth(&quot;)) {
-//					System.err.println(&quot;s2=&quot; + s);
-//				} else {
-//					final SName sname = SName.retrieve(s);
-//					if (sname == null)
-//						System.err.println(&quot;s3=&quot; + s);
-//				}
-<span class="fc" id="L91">				ssb = ssb.addString(s);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				if (star)</span>
-<span class="nc" id="L93">					ssb = ssb.addStar();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">				if (s.startsWith(&quot;.&quot;)) {</span>
+<span class="fc" id="L83">					ssb = ssb.addStereotype(s);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">				} else if (s.startsWith(&quot;depth(&quot;)) {</span>
+<span class="nc" id="L85">					ssb = ssb.addLevel(Integer.parseInt(s.replaceAll(&quot;\\D&quot;, &quot;&quot;)));</span>
+				} else {
+<span class="fc" id="L87">					final SName sname = SName.retrieve(s);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">					if (sname == null)</span>
+<span class="nc" id="L89">						ssb = ssb.addStereotype(s);</span>
+					else
+<span class="fc" id="L91">						ssb = ssb.addSName(sname);</span>
+				}
 
-<span class="fc" id="L95">				result.signatures.add(ssb);</span>
-<span class="fc" id="L96">			}</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">				if (star)</span>
+<span class="nc" id="L95">					ssb = ssb.addStar();</span>
 
-<span class="fc" id="L98">		return result;</span>
+<span class="fc" id="L97">				result.signatures.add(ssb);</span>
+<span class="fc" id="L98">			}</span>
+
+<span class="fc" id="L100">		return result;</span>
 	}
 
 	public Context pop() {
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (size() == 0)</span>
-<span class="nc" id="L103">			throw new IllegalStateException();</span>
-<span class="fc" id="L104">		return this.parent;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (size() == 0)</span>
+<span class="nc" id="L105">			throw new IllegalStateException();</span>
+<span class="fc" id="L106">		return this.parent;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L109">		return signatures.toString();</span>
+<span class="nc" id="L111">		return signatures.toString();</span>
 	}
 
 	public int size() {
-<span class="fc" id="L113">		return signatures.get(0).size();</span>
+<span class="fc" id="L115">		return signatures.get(0).size();</span>
 	}
 
 	public Collection&lt;StyleSignatureBasic&gt; toSignatures() {
-<span class="fc" id="L117">		return signatures;</span>
+<span class="fc" id="L119">		return signatures;</span>
 	}
 
 	public void putInContext(PName key, Value value) {
-<span class="fc" id="L121">		map.put(key, value);</span>
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L123">		map.put(key, value);</span>
+<span class="fc" id="L124">	}</span>
 
 	public Collection&lt;Style&gt; toStyles() {
-<span class="fc" id="L125">		final Collection&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L126">		final Collection&lt;StyleSignatureBasic&gt; signatures = toSignatures();</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		for (StyleSignatureBasic signature : signatures) {</span>
-<span class="fc" id="L128">			Map&lt;PName, Value&gt; tmp = map;</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">			if (signature.isWithDot())</span>
-<span class="fc" id="L130">				tmp = StyleLoader.addPriorityForStereotype(tmp);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (tmp.size() &gt; 0)</span>
-<span class="fc" id="L132">				result.add(new Style(signature, tmp));</span>
+<span class="fc" id="L127">		final Collection&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L128">		final Collection&lt;StyleSignatureBasic&gt; signatures = toSignatures();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (StyleSignatureBasic signature : signatures) {</span>
+<span class="fc" id="L130">			Map&lt;PName, Value&gt; tmp = map;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (signature.isWithDot())</span>
+<span class="fc" id="L132">				tmp = StyleLoader.addPriorityForStereotype(tmp);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (tmp.size() &gt; 0)</span>
+<span class="fc" id="L134">				result.add(new Style(signature, tmp));</span>
 
-<span class="fc" id="L134">		}</span>
-<span class="fc" id="L135">		return result;</span>
+<span class="fc" id="L136">		}</span>
+<span class="fc" id="L137">		return result;</span>
 	}
 
 }

@@ -165,7 +165,7 @@ public class Defines implements Truth {
 <span class="nc" id="L165">			final EvalBoolean eval = new EvalBoolean(expression, this);</span>
 <span class="nc" id="L166">			return eval.eval();</span>
 <span class="nc" id="L167">		} catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L168">			Log.info(&quot;Error in &quot; + expression);</span>
+<span class="nc" id="L168">			Log.info(() -&gt; &quot;Error in &quot; + expression);</span>
 <span class="nc" id="L169">			return false;</span>
 		}
 	}

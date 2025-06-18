@@ -96,22 +96,22 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L96">		final String waylandDisplay = System.getenv(&quot;WAYLAND_DISPLAY&quot;);</span>
 
 <span class="nc bnc" id="L98" title="All 4 branches missed.">		if (display == null &amp;&amp; waylandDisplay != null)</span>
-<span class="nc" id="L99">			Log.info(&quot;Wayland detected; X11 compatibility may be required via XWayland.&quot;);</span>
+<span class="nc" id="L99">			Log.info(() -&gt; &quot;Wayland detected; X11 compatibility may be required via XWayland.&quot;);</span>
 <span class="nc bnc" id="L100" title="All 2 branches missed.">		else if (display != null)</span>
-<span class="nc" id="L101">			Log.info(&quot;X11 display available: &quot; + display);</span>
+<span class="nc" id="L101">			Log.info(() -&gt; &quot;X11 display available: &quot; + display);</span>
 		else
-<span class="nc" id="L103">			Log.info(&quot;No display detected; you may need the -headless flag.&quot;);</span>
+<span class="nc" id="L103">			Log.info(() -&gt; &quot;No display detected; you may need the -headless flag.&quot;);</span>
 
 <span class="nc bnc" id="L105" title="All 2 branches missed.">		if (GraphicsEnvironment.isHeadless()) {</span>
-<span class="nc" id="L106">			Log.info(&quot;Forcing -Djava.awt.headless=true&quot;);</span>
+<span class="nc" id="L106">			Log.info(() -&gt; &quot;Forcing -Djava.awt.headless=true&quot;);</span>
 <span class="nc" id="L107">			System.setProperty(&quot;java.awt.headless&quot;, &quot;true&quot;);</span>
 		}
 
 <span class="nc" id="L110">		final String javaAwtHeadless = System.getProperty(&quot;java.awt.headless&quot;);</span>
 <span class="nc bnc" id="L111" title="All 2 branches missed.">		if (javaAwtHeadless == null)</span>
-<span class="nc" id="L112">			Log.info(&quot;java.awt.headless not set&quot;);</span>
+<span class="nc" id="L112">			Log.info(() -&gt; &quot;java.awt.headless not set&quot;);</span>
 		else
-<span class="nc" id="L114">			Log.info(&quot;java.awt.headless set as '&quot; + javaAwtHeadless + &quot;'&quot;);</span>
+<span class="nc" id="L114">			Log.info(() -&gt; &quot;java.awt.headless set as '&quot; + javaAwtHeadless + &quot;'&quot;);</span>
 
 <span class="nc" id="L116">		final Option option = new Option(argsArray);</span>
 <span class="nc" id="L117">		ProgressBar.setEnable(option.isTextProgressBar());</span>
@@ -147,10 +147,10 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L147">			encodeSprite(option.getResult());</span>
 <span class="nc" id="L148">			return;</span>
 		}
-<span class="nc" id="L150">		Log.info(&quot;SecurityProfile &quot; + SecurityUtils.getSecurityProfile());</span>
+<span class="nc" id="L150">		Log.info(() -&gt; &quot;SecurityProfile &quot; + SecurityUtils.getSecurityProfile());</span>
 <span class="nc bnc" id="L151" title="All 2 branches missed.">		if (OptionFlags.getInstance().isVerbose()) {</span>
-<span class="nc" id="L152">			Log.info(&quot;PlantUML Version &quot; + Version.versionString());</span>
-<span class="nc" id="L153">			Log.info(&quot;GraphicsEnvironment.isHeadless() &quot; + GraphicsEnvironment.isHeadless());</span>
+<span class="nc" id="L152">			Log.info(() -&gt; &quot;PlantUML Version &quot; + Version.versionString());</span>
+<span class="nc" id="L153">			Log.info(() -&gt; &quot;GraphicsEnvironment.isHeadless() &quot; + GraphicsEnvironment.isHeadless());</span>
 		}
 
 <span class="nc bnc" id="L156" title="All 2 branches missed.">		if (OptionFlags.getInstance().isPrintFonts()) {</span>
@@ -259,7 +259,7 @@ import net.sourceforge.plantuml.version.Version;
 	public static void forceOpenJdkResourceLoad() {
 <span class="nc bnc" id="L260" title="All 2 branches missed.">		if (isOpenJdkRunning()) {</span>
 			// see https://github.com/plantuml/plantuml/issues/123
-<span class="nc" id="L262">			Log.info(&quot;Forcing resource load on OpenJdk&quot;);</span>
+<span class="nc" id="L262">			Log.info(() -&gt; &quot;Forcing resource load on OpenJdk&quot;);</span>
 <span class="nc" id="L263">			final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);</span>
 <span class="nc" id="L264">			final Graphics2D gg = imDummy.createGraphics();</span>
 <span class="nc" id="L265">			final String text = &quot;Alice&quot;;</span>
@@ -428,8 +428,8 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L428">		}</span>
 <span class="nc" id="L429">	}</span>
 
-	private static void multithread(final Option option, final ErrorStatus error) throws InterruptedException {
-<span class="nc" id="L432">		Log.info(&quot;Using several threads: &quot; + option.getNbThreads());</span>
+	private static void multithread(Option option, ErrorStatus error) throws InterruptedException {
+<span class="nc" id="L432">		Log.info(() -&gt; &quot;Using several threads: &quot; + option.getNbThreads());</span>
 <span class="nc" id="L433">		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());</span>
 
 <span class="nc" id="L435">		int nb = 0;</span>
@@ -461,7 +461,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L461">	}</span>
 
 	private static void foundNbFiles(int nb) {
-<span class="nc" id="L464">		Log.info(&quot;Found &quot; + nb + &quot; files&quot;);</span>
+<span class="nc" id="L464">		Log.info(() -&gt; &quot;Found &quot; + nb + &quot; files&quot;);</span>
 <span class="nc" id="L465">	}</span>
 
 	private static void incDone(boolean error) {
@@ -476,7 +476,7 @@ import net.sourceforge.plantuml.version.Version;
 
 	private static void manageFileInternal(File f, Option option, ErrorStatus error)
 			throws IOException, InterruptedException {
-<span class="nc" id="L479">		Log.info(&quot;Working on &quot; + f.getPath());</span>
+<span class="nc" id="L479">		Log.info(() -&gt; &quot;Working on &quot; + f.getPath());</span>
 <span class="nc bnc" id="L480" title="All 2 branches missed.">		if (OptionFlags.getInstance().isExtractFromMetadata()) {</span>
 <span class="nc" id="L481">			error.goOk();</span>
 <span class="nc" id="L482">			extractMetadata(f);</span>
@@ -544,7 +544,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L544">			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)</span>
 <span class="nc" id="L545">					.withPreprocFormat();</span>
 <span class="nc" id="L546">			final SFile file = suggested.getFile(0);</span>
-<span class="nc" id="L547">			Log.info(&quot;Export preprocessing source to &quot; + file.getPrintablePath());</span>
+<span class="nc" id="L547">			Log.info(() -&gt; &quot;Export preprocessing source to &quot; + file.getPrintablePath());</span>
 <span class="nc bnc" id="L548" title="All 2 branches missed.">			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {</span>
 <span class="nc" id="L549">				int level = 0;</span>
 <span class="nc bnc" id="L550" title="All 2 branches missed.">				for (CharSequence cs : blockUml.getDefinition(true)) {</span>

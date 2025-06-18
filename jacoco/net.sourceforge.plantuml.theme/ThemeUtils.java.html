@@ -91,7 +91,7 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static Theme getReaderTheme(String filename) {
-<span class="fc" id="L94">		Log.info(&quot;Loading theme &quot; + filename);</span>
+<span class="pc" id="L94">		Log.info(() -&gt; &quot;Loading theme &quot; + filename);</span>
 <span class="fc" id="L95">		final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
 <span class="fc" id="L96">		final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;</span>
 <span class="fc" id="L97">		final InputStream is = Stdlib.class.getResourceAsStream(res);</span>

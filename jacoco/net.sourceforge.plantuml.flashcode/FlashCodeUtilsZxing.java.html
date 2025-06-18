@@ -49,25 +49,25 @@ import zext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
 import zext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="fc" id="L52">public class FlashCodeUtilsZxing implements FlashCodeUtils {</span>
-    // ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+<span class="nc" id="L52">public class FlashCodeUtilsZxing implements FlashCodeUtils {</span>
+	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
-<span class="fc" id="L55">	private static final Lock lock = new ReentrantLock();</span>
+<span class="nc" id="L55">	private static final Lock lock = new ReentrantLock();</span>
 
 	public BufferedImage exportFlashcode(String s, Color fore, Color back) {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (lock.tryLock())</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (lock.tryLock())</span>
 			try {
-<span class="fc" id="L60">				final QRCodeWriter writer = new QRCodeWriter();</span>
-<span class="fc" id="L61">				final Hashtable hints = new Hashtable();</span>
-<span class="fc" id="L62">				hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);</span>
-<span class="fc" id="L63">				hints.put(EncodeHintType.CHARACTER_SET, &quot;UTF8&quot;);</span>
-<span class="fc" id="L64">				final int multiple = 1;</span>
-<span class="fc" id="L65">				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);</span>
-<span class="fc" id="L66">				return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);</span>
+<span class="nc" id="L60">				final QRCodeWriter writer = new QRCodeWriter();</span>
+<span class="nc" id="L61">				final Hashtable hints = new Hashtable();</span>
+<span class="nc" id="L62">				hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);</span>
+<span class="nc" id="L63">				hints.put(EncodeHintType.CHARACTER_SET, &quot;UTF8&quot;);</span>
+<span class="nc" id="L64">				final int multiple = 1;</span>
+<span class="nc" id="L65">				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);</span>
+<span class="nc" id="L66">				return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);</span>
 <span class="nc" id="L67">			} catch (Exception e) {</span>
-<span class="nc" id="L68">				Log.debug(&quot;Cannot create qrcode &quot; + e);</span>
+<span class="nc" id="L68">				Log.debug(() -&gt; &quot;Cannot create qrcode &quot; + e);</span>
 			} finally {
-<span class="fc" id="L70">				lock.unlock();</span>
+<span class="nc" id="L70">				lock.unlock();</span>
 			}
 
 <span class="nc" id="L73">		return null;</span>

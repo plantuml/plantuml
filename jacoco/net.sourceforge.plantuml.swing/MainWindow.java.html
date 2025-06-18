@@ -112,7 +112,7 @@ public class MainWindow extends JFrame {
 	}
 
 <span class="nc" id="L114">	private static final Pattern p = Pattern.compile(&quot;\\w+&quot;);</span>
-	
+
 	private void changeExtensions(String ext) {
 <span class="nc bnc" id="L117" title="All 2 branches missed.">		if (ext.equals(getExtensions())) {</span>
 <span class="nc" id="L118">			return;</span>
@@ -163,7 +163,7 @@ public class MainWindow extends JFrame {
 <span class="nc" id="L163">		this.option = option;</span>
 <span class="nc" id="L164">		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));</span>
 
-<span class="nc" id="L166">		Log.info(&quot;Showing MainWindow&quot;);</span>
+<span class="nc" id="L166">		Log.info(() -&gt; &quot;Showing MainWindow&quot;);</span>
 <span class="nc" id="L167">		scrollPane = new JScrollPane(jList1);</span>
 <span class="nc" id="L168">		scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
 
@@ -275,7 +275,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private void startTimer() {
-<span class="nc" id="L278">		Log.info(&quot;Init done&quot;);</span>
+<span class="nc" id="L278">		Log.info(() -&gt; &quot;Init done&quot;);</span>
 <span class="nc" id="L279">		final Timer timer = new Timer(period, new ActionListener() {</span>
 			public void actionPerformed(ActionEvent e) {
 <span class="nc" id="L281">				tick();</span>
@@ -283,7 +283,7 @@ public class MainWindow extends JFrame {
 		});
 <span class="nc" id="L284">		timer.setInitialDelay(0);</span>
 <span class="nc" id="L285">		timer.start();</span>
-<span class="nc" id="L286">		Log.info(&quot;Timer started&quot;);</span>
+<span class="nc" id="L286">		Log.info(() -&gt; &quot;Timer started&quot;);</span>
 <span class="nc" id="L287">	}</span>
 
 	private void displayDialogChangeDir() {
@@ -294,9 +294,9 @@ public class MainWindow extends JFrame {
 <span class="nc" id="L294">		chooser.setAcceptAllFileFilterUsed(false);</span>
 <span class="nc" id="L295">		final String currentPath = prefs.get(KEY_DIR, &quot;.&quot;);</span>
 <span class="nc" id="L296">		chooser.setCurrentDirectory(new File(currentPath));</span>
-<span class="nc" id="L297">		Log.info(&quot;Showing OpenDialog&quot;);</span>
+<span class="nc" id="L297">		Log.info(() -&gt; &quot;Showing OpenDialog&quot;);</span>
 <span class="nc" id="L298">		final int returnVal = chooser.showOpenDialog(this);</span>
-<span class="nc" id="L299">		Log.info(&quot;Closing OpenDialog&quot;);</span>
+<span class="nc" id="L299">		Log.info(() -&gt; &quot;Closing OpenDialog&quot;);</span>
 <span class="nc bnc" id="L300" title="All 2 branches missed.">		if (returnVal == JFileChooser.APPROVE_OPTION) {</span>
 <span class="nc" id="L301">			final File dir = chooser.getSelectedFile();</span>
 <span class="nc" id="L302">			changeDir(dir);</span>
@@ -309,7 +309,7 @@ public class MainWindow extends JFrame {
 <span class="nc" id="L309">		dirWatcher.cancel();</span>
 <span class="nc" id="L310">		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));</span>
 <span class="nc" id="L311">		setTitle(dir.getAbsolutePath());</span>
-<span class="nc" id="L312">		Log.info(&quot;Creating DirWatcher&quot;);</span>
+<span class="nc" id="L312">		Log.info(() -&gt; &quot;Creating DirWatcher&quot;);</span>
 <span class="nc" id="L313">		currentDirectoryListing2.clear();</span>
 <span class="nc" id="L314">		jList1.setListData(new Vector&lt;&gt;(currentDirectoryListing2));</span>
 <span class="nc" id="L315">		jList1.setVisible(true);</span>

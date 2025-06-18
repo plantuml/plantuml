@@ -220,7 +220,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 <span class="pc bpc" id="L221" title="1 of 2 branches missed.">		for (ElementFactory f : cpx) {</span>
 <span class="pc bpc" id="L222" title="1 of 2 branches missed.">			if (f.ready()) {</span>
-<span class="fc" id="L223">				Log.info(&quot;Using &quot; + f);</span>
+<span class="pc" id="L223">				Log.info(()-&gt;&quot;Using &quot; + f);</span>
 <span class="fc" id="L224">				return f.create().getElement();</span>
 			}
 <span class="nc" id="L226">		}</span>

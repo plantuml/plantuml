@@ -102,7 +102,7 @@ public class SpriteImage implements Sprite {
 
 	public static InputStream getInternalSprite(final String inner) {
 <span class="nc" id="L104">		final String path = &quot;/sprites/&quot; + inner;</span>
-<span class="nc" id="L105">		Log.info(&quot;Triying &quot; + path);</span>
+<span class="nc" id="L105">		Log.info(() -&gt; &quot;Triying &quot; + path);</span>
 <span class="nc" id="L106">		final InputStream is = SpriteImage.class.getResourceAsStream(path);</span>
 <span class="nc" id="L107">		return is;</span>
 	}

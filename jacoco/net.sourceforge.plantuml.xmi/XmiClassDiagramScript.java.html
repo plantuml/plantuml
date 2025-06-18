@@ -237,7 +237,7 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 		}
 <span class="nc" id="L238">		List&lt;MemberData&gt; mbers = members.get(entity.getUid());</span>
 <span class="nc bnc" id="L239" title="All 2 branches missed.">		if (mbers == null) {</span>
-<span class="nc" id="L240">			Log.info(String.format(&quot;Could not find entity %s in member list&quot;, entity.getName()));</span>
+<span class="nc" id="L240">			Log.info(() -&gt; String.format(&quot;Could not find entity %s in member list&quot;, entity.getName()));</span>
 <span class="nc" id="L241">			return null;</span>
 		}
 <span class="nc bnc" id="L243" title="All 2 branches missed.">		for (MemberData m : mbers) {</span>

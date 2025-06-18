@@ -87,85 +87,86 @@ public class Matcher2 {
 
 	private static synchronized void addTime(String id, long duration) {
 <span class="nc" id="L89">		Long total = durations.get(id);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (total == null) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (total == null)</span>
 <span class="nc" id="L91">			total = 0L;</span>
-		}
+
 <span class="nc" id="L93">		total += duration;</span>
 <span class="nc" id="L94">		durations.put(id, total);</span>
 <span class="nc" id="L95">		final String longest = getLongest();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (longest == null) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (longest == null)</span>
 <span class="nc" id="L97">			return;</span>
-		}
+
 <span class="nc bnc" id="L99" title="All 2 branches missed.">		if (durations.get(longest) &gt; printed) {</span>
-<span class="nc" id="L100">			Log.info(&quot;---------- Regex &quot; + longest + &quot; &quot; + durations.get(longest) + &quot;ms (&quot; + durations.size() + &quot;)&quot;);</span>
-<span class="nc" id="L101">			printed = durations.get(longest);</span>
+<span class="nc" id="L100">			Log.info(() -&gt; &quot;---------- Regex &quot; + longest + &quot; &quot; + durations.get(longest) + &quot;ms (&quot; + durations.size()</span>
+					+ &quot;)&quot;);
+<span class="nc" id="L102">			printed = durations.get(longest);</span>
 		}
 
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L105">	}</span>
 
 	private static String getLongest() {
-<span class="nc" id="L107">		long max = 0;</span>
-<span class="nc" id="L108">		String result = null;</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (Map.Entry&lt;String, Long&gt; ent : durations.entrySet()) {</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (ent.getValue() &gt; max) {</span>
-<span class="nc" id="L111">				max = ent.getValue();</span>
-<span class="nc" id="L112">				result = ent.getKey();</span>
+<span class="nc" id="L108">		long max = 0;</span>
+<span class="nc" id="L109">		String result = null;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (Map.Entry&lt;String, Long&gt; ent : durations.entrySet()) {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (ent.getValue() &gt; max) {</span>
+<span class="nc" id="L112">				max = ent.getValue();</span>
+<span class="nc" id="L113">				result = ent.getKey();</span>
 			}
-<span class="nc" id="L114">		}</span>
-<span class="nc" id="L115">		return result;</span>
+<span class="nc" id="L115">		}</span>
+<span class="nc" id="L116">		return result;</span>
 	}
 
 	public String group(int n) {
-<span class="fc" id="L119">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L120">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L121">			return matcher.group(n);</span>
+<span class="fc" id="L122">			return matcher.group(n);</span>
 		} finally {
-<span class="fc" id="L123">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L124">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public String group() {
-<span class="fc" id="L128">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L129">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L130">			return matcher.group();</span>
+<span class="fc" id="L131">			return matcher.group();</span>
 		} finally {
-<span class="fc" id="L132">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L133">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public int groupCount() {
-<span class="fc" id="L137">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L138">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L139">			return matcher.groupCount();</span>
+<span class="fc" id="L140">			return matcher.groupCount();</span>
 		} finally {
-<span class="fc" id="L141">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L142">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public boolean find() {
-<span class="fc" id="L146">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L147">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L148">			return matcher.find();</span>
+<span class="fc" id="L149">			return matcher.find();</span>
 		} finally {
-<span class="fc" id="L150">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L151">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public int end() {
-<span class="fc" id="L155">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L156">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L157">			return matcher.end();</span>
+<span class="fc" id="L158">			return matcher.end();</span>
 		} finally {
-<span class="fc" id="L159">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L160">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public int start() {
-<span class="fc" id="L164">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L165">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L166">			return matcher.start();</span>
+<span class="fc" id="L167">			return matcher.start();</span>
 		} finally {
-<span class="fc" id="L168">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L169">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 

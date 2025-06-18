@@ -112,7 +112,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 	public static NumberAnalyzed load(String name, Preferences prefs) {
 <span class="nc" id="L113">		final String value = prefs.get(name + &quot;.saved&quot;, &quot;&quot;);</span>
 <span class="nc bnc" id="L114" title="All 2 branches missed.">		if (value.length() == 0) {</span>
-<span class="nc" id="L115">			Log.info(&quot;Cannot load &quot; + name);</span>
+<span class="nc" id="L115">			Log.info(() -&gt; &quot;Cannot load &quot; + name);</span>
 <span class="nc" id="L116">			return null;</span>
 		}
 		try {
@@ -122,7 +122,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 <span class="nc" id="L122">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36));</span>
 <span class="nc" id="L123">		} catch (Exception e) {</span>
 <span class="nc" id="L124">			Logme.error(e);</span>
-<span class="nc" id="L125">			Log.info(&quot;Error reading &quot; + value);</span>
+<span class="nc" id="L125">			Log.info(() -&gt; &quot;Error reading &quot; + value);</span>
 <span class="nc" id="L126">			return null;</span>
 		}
 	}

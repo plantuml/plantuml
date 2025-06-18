@@ -96,7 +96,7 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 <span class="nc" id="L96">					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36));</span>
 <span class="nc" id="L97">		} catch (Exception e) {</span>
 <span class="nc" id="L98">			Logme.error(e);</span>
-<span class="nc" id="L99">			Log.info(&quot;Error reading &quot; + value);</span>
+<span class="nc" id="L99">			Log.info(() -&gt; &quot;Error reading &quot; + value);</span>
 <span class="nc" id="L100">			return null;</span>
 		}
 	}

@@ -88,14 +88,14 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L88">		addText(meta, &quot;copyleft&quot;, copyleft);</span>
 <span class="fc" id="L89">		addiText(meta, &quot;plantuml&quot;, metadata);</span>
 
-<span class="fc" id="L91">		Log.debug(&quot;PngIOMetadata pngMetadata=&quot; + meta);</span>
+<span class="pc" id="L91">		Log.debug(() -&gt; &quot;PngIOMetadata pngMetadata=&quot; + meta);</span>
 
 		// Render the PNG to file
 <span class="fc" id="L94">		final IIOImage iioImage = new IIOImage(image, null, meta);</span>
-<span class="fc" id="L95">		Log.debug(&quot;PngIOMetadata iioImage=&quot; + iioImage);</span>
+<span class="pc" id="L95">		Log.debug(() -&gt; &quot;PngIOMetadata iioImage=&quot; + iioImage);</span>
 		// Attach the metadata
 <span class="fc" id="L97">		final ImageWriter imagewriter = getImageWriter();</span>
-<span class="fc" id="L98">		Log.debug(&quot;PngIOMetadata imagewriter=&quot; + imagewriter);</span>
+<span class="pc" id="L98">		Log.debug(() -&gt; &quot;PngIOMetadata imagewriter=&quot; + imagewriter);</span>
 
 		// See
 		// http://plantuml.sourceforge.net/qa/?qa=4367/sometimes-missing-response-headers-for-broken-png-images
@@ -174,14 +174,14 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L174">		final Iterator&lt;ImageWriter&gt; iterator = SImageIO.getImageWritersBySuffix(&quot;png&quot;);</span>
 <span class="pc bpc" id="L175" title="1 of 2 branches missed.">		for (final Iterator&lt;ImageWriter&gt; it = SImageIO.getImageWritersBySuffix(&quot;png&quot;); it.hasNext();) {</span>
 <span class="fc" id="L176">			final ImageWriter imagewriter = iterator.next();</span>
-<span class="fc" id="L177">			Log.debug(&quot;PngIOMetadata countImageWriter = &quot; + it.next());</span>
+<span class="pc" id="L177">			Log.debug(() -&gt; &quot;PngIOMetadata countImageWriter = &quot; + it.next());</span>
 <span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (imagewriter.getClass().getName().equals(&quot;com.sun.imageio.plugins.png.PNGImageWriter&quot;)) {</span>
-<span class="fc" id="L179">				Log.debug(&quot;PngIOMetadata Found sun PNGImageWriter&quot;);</span>
+<span class="pc" id="L179">				Log.debug(() -&gt; &quot;PngIOMetadata Found sun PNGImageWriter&quot;);</span>
 <span class="fc" id="L180">				return imagewriter;</span>
 			}
 
 <span class="nc" id="L183">		}</span>
-<span class="nc" id="L184">		Log.debug(&quot;Using first one&quot;);</span>
+<span class="nc" id="L184">		Log.debug(() -&gt; &quot;Using first one&quot;);</span>
 <span class="nc" id="L185">		return SImageIO.getImageWritersBySuffix(&quot;png&quot;).next();</span>
 	}
 

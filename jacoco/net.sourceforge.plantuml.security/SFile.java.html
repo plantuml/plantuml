@@ -86,11 +86,11 @@ public class SFile implements Comparable&lt;SFile&gt; {
 
 	@Override
 	public String toString() {
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">				|| SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">				|| SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
 <span class="nc" id="L91">			return super.toString();</span>
 		try {
-<span class="fc" id="L93">			return internal.getCanonicalPath();</span>
+<span class="nc" id="L93">			return internal.getCanonicalPath();</span>
 <span class="nc" id="L94">		} catch (IOException e) {</span>
 <span class="nc" id="L95">			return internal.getAbsolutePath();</span>
 		}
@@ -150,7 +150,7 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public boolean isFile() {
-<span class="pc bpc" id="L153" title="1 of 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
 	}
 
 	public long lastModified() {
@@ -158,7 +158,7 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public int compareTo(SFile other) {
-<span class="fc" id="L161">		return this.internal.compareTo(other.internal);</span>
+<span class="nc" id="L161">		return this.internal.compareTo(other.internal);</span>
 	}
 
 	public String getPath() {
@@ -220,14 +220,14 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public String getPrintablePath() {
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
 			try {
 <span class="nc" id="L225">				return internal.getCanonicalPath();</span>
 <span class="nc" id="L226">			} catch (IOException e) {</span>
 <span class="nc" id="L227">				Logme.error(e);</span>
 			}
 		}
-<span class="fc" id="L230">		return &quot;&quot;;</span>
+<span class="nc" id="L230">		return &quot;&quot;;</span>
 	}
 
 	public boolean canRead() {

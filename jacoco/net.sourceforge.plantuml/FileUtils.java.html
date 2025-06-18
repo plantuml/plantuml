@@ -120,7 +120,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L120">			final String name = prefix + counter.addAndGet(1) + suffix;</span>
 <span class="nc" id="L121">			f = new File(name);</span>
 		}
-<span class="nc" id="L123">		Log.info(&quot;Creating temporary file: &quot; + f);</span>
+<span class="nc" id="L123">		Log.info(() -&gt; &quot;Creating temporary file: &quot; + f);</span>
 <span class="nc" id="L124">		f.deleteOnExit();</span>
 <span class="nc" id="L125">		return f;</span>
 	}
@@ -137,7 +137,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L137">			final String name = prefix + counter.addAndGet(1) + suffix;</span>
 <span class="nc" id="L138">			f = new SFile(name);</span>
 		}
-<span class="nc" id="L140">		Log.info(&quot;Creating temporary file: &quot; + f);</span>
+<span class="nc" id="L140">		Log.info(() -&gt; &quot;Creating temporary file: &quot; + f);</span>
 <span class="nc" id="L141">		f.deleteOnExit();</span>
 <span class="nc" id="L142">		return f;</span>
 	}

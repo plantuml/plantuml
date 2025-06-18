@@ -82,18 +82,18 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	private void runText(String text) throws IOException, InterruptedException {
-<span class="nc" id="L85">		Log.info(&quot;Getting some text from clipboard&quot;);</span>
+<span class="nc" id="L85">		Log.info(() -&gt; &quot;Getting some text from clipboard&quot;);</span>
 <span class="nc" id="L86">		final SourceStringReader source = new SourceStringReader(text);</span>
 <span class="nc" id="L87">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
 <span class="nc" id="L88">		final DiagramDescription desc = source.outputImage(baos);</span>
 <span class="nc bnc" id="L89" title="All 2 branches missed.">		if (desc == null) {</span>
-<span class="nc" id="L90">			Log.info(&quot;No image generated&quot;);</span>
+<span class="nc" id="L90">			Log.info(() -&gt; &quot;No image generated&quot;);</span>
 		} else {
-<span class="nc" id="L92">			Log.info(&quot;Image ok &quot; + desc.getDescription());</span>
+<span class="nc" id="L92">			Log.info(() -&gt; &quot;Image ok &quot; + desc.getDescription());</span>
 <span class="nc" id="L93">			baos.close();</span>
 <span class="nc" id="L94">			final BufferedImage image = SImageIO.read(baos.toByteArray());</span>
 <span class="nc" id="L95">			setClipboardImage(image);</span>
-<span class="nc" id="L96">			Log.info(&quot;Image copied in clipboard&quot;);</span>
+<span class="nc" id="L96">			Log.info(() -&gt; &quot;Image copied in clipboard&quot;);</span>
 		}
 <span class="nc" id="L98">	}</span>
 

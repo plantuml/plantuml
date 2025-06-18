@@ -8,10 +8,10 @@ import java.nio.charset.Charset;
 	public static Charset charsetOrDefault(String charsetName) {
 
 <span class="pc bpc" id="L10" title="1 of 2 branches missed.">		if (charsetName == null) {</span>
-<span class="nc" id="L11">			Log.info(&quot;Using default charset&quot;);</span>
+<span class="nc" id="L11">			Log.info(() -&gt; &quot;Using default charset&quot;);</span>
 <span class="nc" id="L12">			return Charset.defaultCharset();</span>
 		} else {
-<span class="fc" id="L14">			Log.info(&quot;Using charset &quot; + charsetName);</span>
+<span class="pc" id="L14">			Log.info(() -&gt; &quot;Using charset &quot; + charsetName);</span>
 <span class="fc" id="L15">			return Charset.forName(charsetName);</span>
 		}
 	}

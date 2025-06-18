@@ -163,7 +163,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 <span class="fc" id="L163">	}</span>
 
 	final public List&lt;GeneratedImage&gt; getGeneratedImages() throws IOException {
-<span class="fc" id="L166">		Log.info(&quot;Reading file: &quot; + file);</span>
+<span class="pc" id="L166">		Log.info(() -&gt; &quot;Reading file: &quot; + file);</span>
 
 <span class="fc" id="L168">		cpt = 0;</span>
 <span class="fc" id="L169">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
@@ -207,7 +207,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 <span class="fc" id="L208">		}</span>
 
-<span class="fc" id="L210">		Log.info(&quot;Number of image(s): &quot; + result.size());</span>
+<span class="pc" id="L210">		Log.info(() -&gt; &quot;Number of image(s): &quot; + result.size());</span>
 
 <span class="fc" id="L212">		return Collections.unmodifiableList(result);</span>
 	}

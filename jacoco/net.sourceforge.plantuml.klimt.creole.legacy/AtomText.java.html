@@ -99,8 +99,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 	@JawsStrange
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 <span class="fc" id="L101">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="fc" id="L102">		Log.debug(&quot;g2d=&quot; + rect);</span>
-<span class="fc" id="L103">		Log.debug(&quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
+<span class="pc" id="L102">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
+<span class="pc" id="L103">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
 <span class="fc" id="L104">		double h = rect.getHeight();</span>
 <span class="fc bfc" id="L105" title="All 2 branches covered.">		if (h &lt; 10)</span>
 <span class="fc" id="L106">			h = 10;</span>

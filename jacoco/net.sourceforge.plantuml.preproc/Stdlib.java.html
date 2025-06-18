@@ -155,7 +155,7 @@ public class Stdlib {
 <span class="nc" id="L155">				return cachedResult;</span>
 			}
 		}
-<span class="fc" id="L158">		Log.info(&quot;No cache for &quot; + file);</span>
+<span class="pc" id="L158">		Log.info(() -&gt; &quot;No cache for &quot; + file);</span>
 <span class="fc" id="L159">		final DataInputStream dataStream = getDataStream();</span>
 <span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (dataStream == null)</span>
 <span class="nc" id="L161">			return null;</span>
@@ -173,7 +173,7 @@ public class Stdlib {
 			while (true) {
 <span class="fc" id="L174">				final String filename = dataStream.readUTF();</span>
 <span class="pc bpc" id="L175" title="1 of 2 branches missed.">				if (filename.equals(SEPARATOR)) {</span>
-<span class="nc" id="L176">					Log.info(&quot;Not found &quot; + filename);</span>
+<span class="nc" id="L176">					Log.info(() -&gt; &quot;Not found &quot; + filename);</span>
 <span class="nc" id="L177">					return null;</span>
 				}
 <span class="fc bfc" id="L179" title="All 2 branches covered.">				if (filename.equalsIgnoreCase(file))</span>

@@ -80,33 +80,33 @@ public class CommandStyleImport extends SingleLineCommand2&lt;TitledDiagram&gt; 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L84">		final String path = arg.get(&quot;PATH&quot;, 0);</span>
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L85">		final String path = arg.get(&quot;PATH&quot;, 0);</span>
 		try {
-<span class="nc" id="L86">			BlocLines lines = null;</span>
-<span class="nc bnc" id="L87" title="All 4 branches missed.">			if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
-<span class="nc" id="L88">				SURL url = SURL.create(path);</span>
-<span class="nc" id="L89">				try (InputStream remoteInputStream = url.openStream()) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">					if (remoteInputStream != null)</span>
-<span class="nc" id="L91">						lines = BlocLines.load(remoteInputStream, location);</span>
+<span class="nc" id="L87">			BlocLines lines = null;</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">			if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
+<span class="nc" id="L89">				SURL url = SURL.create(path);</span>
+<span class="nc" id="L90">				try (InputStream remoteInputStream = url.openStream()) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">					if (remoteInputStream != null)</span>
+<span class="nc" id="L92">						lines = BlocLines.load(remoteInputStream, location);</span>
 				}
-<span class="nc" id="L93">			} else {</span>
-<span class="nc" id="L94">				final SFile styleFile = FileSystem.getInstance().getFile(path);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (styleFile.exists()) {</span>
-<span class="nc" id="L96">					lines = BlocLines.load(styleFile, location);</span>
+<span class="nc" id="L94">			} else {</span>
+<span class="nc" id="L95">				final SFile styleFile = FileSystem.getInstance().getFile(path);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (styleFile.exists()) {</span>
+<span class="nc" id="L97">					lines = BlocLines.load(styleFile, location);</span>
 				} else {
-<span class="nc" id="L98">					final InputStream internalIs = StyleLoader.class.getResourceAsStream(&quot;/skin/&quot; + path);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">					if (internalIs != null)</span>
-<span class="nc" id="L100">						lines = BlocLines.load(internalIs, location);</span>
+<span class="nc" id="L99">					final InputStream internalIs = StyleLoader.class.getResourceAsStream(&quot;/skin/&quot; + path);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">					if (internalIs != null)</span>
+<span class="nc" id="L101">						lines = BlocLines.load(internalIs, location);</span>
 				}
 			}
 
-<span class="nc bnc" id="L104" title="All 4 branches missed.">			if (lines == null || lines.size() == 0)</span>
-<span class="nc" id="L105">				return CommandExecutionResult.error(&quot;Cannot read: &quot; + path);</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">			if (lines == null || lines.size() == 0)</span>
+<span class="nc" id="L106">				return CommandExecutionResult.error(&quot;Cannot read: &quot; + path);</span>
 
-<span class="nc" id="L107">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))</span>
-<span class="nc" id="L109">				diagram.getSkinParam().muteStyle(modifiedStyle);</span>
+<span class="nc" id="L108">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
+<span class="nc" id="L109">			diagram.getSkinParam().muteStyle(StyleParser.parse(lines, styleBuilder));</span>
 
 <span class="nc" id="L111">		} catch (MalformedURLException e) {</span>
 <span class="nc" id="L112">			return CommandExecutionResult.error(&quot;Invalid URL to style definition: &quot; + e.getMessage());</span>

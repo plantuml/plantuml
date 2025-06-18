@@ -398,7 +398,7 @@ public class FromSkinparamToStyle {
 <span class="fc bfc" id="L398" title="All 2 branches covered.">		if (stereo != null) {</span>
 <span class="fc" id="L399">			map = StyleLoader.addPriorityForStereotype(map);</span>
 <span class="fc bfc" id="L400" title="All 2 branches covered.">			for (String s : stereo.split(&quot;\\&amp;&quot;))</span>
-<span class="fc" id="L401">				sig = sig.addStereotypeDecoration(s);</span>
+<span class="fc" id="L401">				sig = sig.addStereotype(s);</span>
 		}
 
 <span class="fc" id="L404">		final Style style = new Style(sig, map);</span>

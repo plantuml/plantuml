@@ -259,7 +259,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc bfc" id="L259" title="All 2 branches covered.">				if (f.isDirectory())</span>
 <span class="fc" id="L260">					result.add(f);</span>
 <span class="nc" id="L261">			} catch (IOException e) {</span>
-<span class="nc" id="L262">				Log.info(&quot;Cannot access to &quot; + tmp + &quot;. &quot; + e);</span>
+<span class="nc" id="L262">				Log.info(() -&gt; &quot;Cannot access to &quot; + tmp + &quot;. &quot; + e);</span>
 <span class="fc" id="L263">			}</span>
 <span class="fc" id="L264">		}</span>
 <span class="fc" id="L265">		return Collections.unmodifiableList(result);</span>

@@ -74,69 +74,72 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L74">		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();</span>
 <span class="nc" id="L75">		final String fontNames[] = ge.getAvailableFontFamilyNames();</span>
 <span class="nc" id="L76">		final int j = fontNames.length;</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int i = 0; i &lt; j; i++)</span>
-<span class="nc" id="L78">			Log.info(&quot;Available fonts: &quot; + fontNames[i]);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L78">			final int i2 = i;</span>
+<span class="nc" id="L79">			Log.info(() -&gt; &quot;Available fonts: &quot; + fontNames[i2]);</span>
 
-<span class="nc" id="L80">	}</span>
+		}
+
+<span class="nc" id="L83">	}</span>
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-<span class="nc" id="L83">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+<span class="nc" id="L86">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
 
-<span class="nc" id="L85">		final UFont font = fontConfiguration.getFont();</span>
-<span class="nc" id="L86">		final XDimension2D dim = stringBounder.calculateDimension(font, shape.getText());</span>
-<span class="nc" id="L87">		final double height = max(10, dim.getHeight());</span>
-<span class="nc" id="L88">		final double width = dim.getWidth();</span>
+<span class="nc" id="L88">		final UFont font = fontConfiguration.getFont();</span>
+<span class="nc" id="L89">		final XDimension2D dim = stringBounder.calculateDimension(font, shape.getText());</span>
+<span class="nc" id="L90">		final double height = max(10, dim.getHeight());</span>
+<span class="nc" id="L91">		final double width = dim.getWidth();</span>
 
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
-<span class="nc" id="L91">			final Color extended = fontConfiguration.getExtendedColor().toColor(mapper);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (extended != null) {</span>
-<span class="nc" id="L93">				g2d.setColor(extended);</span>
-<span class="nc" id="L94">				g2d.setBackground(extended);</span>
-<span class="nc" id="L95">				g2d.fill(new Rectangle2D.Double(x, y - height + 1.5, width, height));</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
+<span class="nc" id="L94">			final Color extended = fontConfiguration.getExtendedColor().toColor(mapper);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (extended != null) {</span>
+<span class="nc" id="L96">				g2d.setColor(extended);</span>
+<span class="nc" id="L97">				g2d.setBackground(extended);</span>
+<span class="nc" id="L98">				g2d.fill(new Rectangle2D.Double(x, y - height + 1.5, width, height));</span>
 			}
 		}
-<span class="nc" id="L98">		visible.ensureVisible(x, y - height + 1.5);</span>
-<span class="nc" id="L99">		visible.ensureVisible(x + width, y + 1.5);</span>
+<span class="nc" id="L101">		visible.ensureVisible(x, y - height + 1.5);</span>
+<span class="nc" id="L102">		visible.ensureVisible(x + width, y + 1.5);</span>
 
-<span class="nc" id="L101">		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));</span>
-<span class="nc" id="L102">		g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
-<span class="nc" id="L103">		final TextLayout t = UFontContext.G2D.createTextLayout(font, shape.getText());</span>
-<span class="nc" id="L104">		g2d.translate(x, y);</span>
-<span class="nc" id="L105">		g2d.fill(t.getOutline(null));</span>
-<span class="nc" id="L106">		g2d.translate(-x, -y);</span>
+<span class="nc" id="L104">		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));</span>
+<span class="nc" id="L105">		g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
+<span class="nc" id="L106">		final TextLayout t = UFontContext.G2D.createTextLayout(font, shape.getText());</span>
+<span class="nc" id="L107">		g2d.translate(x, y);</span>
+<span class="nc" id="L108">		g2d.fill(t.getOutline(null));</span>
+<span class="nc" id="L109">		g2d.translate(-x, -y);</span>
 
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
-<span class="nc" id="L109">			final HColor extended = fontConfiguration.getExtendedColor();</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (extended != null)</span>
-<span class="nc" id="L111">				g2d.setColor(extended.toColor(mapper));</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
+<span class="nc" id="L112">			final HColor extended = fontConfiguration.getExtendedColor();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (extended != null)</span>
+<span class="nc" id="L114">				g2d.setColor(extended.toColor(mapper));</span>
 
-<span class="nc" id="L113">			final int ypos = (int) (y + 2.5);</span>
-<span class="nc" id="L114">			g2d.setStroke(new BasicStroke((float) 1));</span>
-<span class="nc" id="L115">			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
-<span class="nc" id="L116">			g2d.setStroke(new BasicStroke());</span>
+<span class="nc" id="L116">			final int ypos = (int) (y + 2.5);</span>
+<span class="nc" id="L117">			g2d.setStroke(new BasicStroke((float) 1));</span>
+<span class="nc" id="L118">			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
+<span class="nc" id="L119">			g2d.setStroke(new BasicStroke());</span>
 		}
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
-<span class="nc" id="L119">			final int ypos = (int) (y + 2.5) - 1;</span>
-<span class="nc" id="L120">			final HColor extended = fontConfiguration.getExtendedColor();</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (extended != null)</span>
-<span class="nc" id="L122">				g2d.setColor(extended.toColor(mapper));</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
+<span class="nc" id="L122">			final int ypos = (int) (y + 2.5) - 1;</span>
+<span class="nc" id="L123">			final HColor extended = fontConfiguration.getExtendedColor();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (extended != null)</span>
+<span class="nc" id="L125">				g2d.setColor(extended.toColor(mapper));</span>
 
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			for (int i = (int) x; i &lt; x + width - 5; i += 6) {</span>
-<span class="nc" id="L125">				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);</span>
-<span class="nc" id="L126">				g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			for (int i = (int) x; i &lt; x + width - 5; i += 6) {</span>
+<span class="nc" id="L128">				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);</span>
+<span class="nc" id="L129">				g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);</span>
 			}
 		}
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
-<span class="nc" id="L130">			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(UFontContext.G2D));</span>
-<span class="nc" id="L131">			final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
-<span class="nc" id="L132">			final HColor extended = fontConfiguration.getExtendedColor();</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (extended != null)</span>
-<span class="nc" id="L134">				g2d.setColor(extended.toColor(mapper));</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="nc" id="L133">			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(UFontContext.G2D));</span>
+<span class="nc" id="L134">			final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
+<span class="nc" id="L135">			final HColor extended = fontConfiguration.getExtendedColor();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (extended != null)</span>
+<span class="nc" id="L137">				g2d.setColor(extended.toColor(mapper));</span>
 
-<span class="nc" id="L136">			g2d.setStroke(new BasicStroke((float) 1.5));</span>
-<span class="nc" id="L137">			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
-<span class="nc" id="L138">			g2d.setStroke(new BasicStroke());</span>
+<span class="nc" id="L139">			g2d.setStroke(new BasicStroke((float) 1.5));</span>
+<span class="nc" id="L140">			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
+<span class="nc" id="L141">			g2d.setStroke(new BasicStroke());</span>
 		}
-<span class="nc" id="L140">	}</span>
+<span class="nc" id="L143">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

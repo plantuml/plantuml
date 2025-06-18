@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 	// ::comment when __CORE__
 	static public void traceString(final SFile f, String text) throws IOException {
-<span class="nc" id="L51">		Log.info(&quot;Creating intermediate file &quot; + f.getPrintablePath());</span>
+<span class="nc" id="L51">		Log.info(() -&gt; &quot;Creating intermediate file &quot; + f.getPrintablePath());</span>
 <span class="nc" id="L52">		try (PrintWriter pw = f.createPrintWriter()) {</span>
 <span class="nc" id="L53">			pw.print(text);</span>
 		}

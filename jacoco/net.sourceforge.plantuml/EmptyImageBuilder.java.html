@@ -73,99 +73,103 @@ public class EmptyImageBuilder {
 
 		// ::comment when __CORE__
 <span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (width &gt; GraphvizUtils.getenvImageLimit()) {</span>
-<span class="nc" id="L76">			Log.info(&quot;Width too large &quot; + width + &quot;. You should set PLANTUML_LIMIT_SIZE&quot;);</span>
-<span class="nc" id="L77">			width = GraphvizUtils.getenvImageLimit();</span>
+<span class="nc" id="L76">			final double width2 = width;</span>
+<span class="nc" id="L77">			Log.info(() -&gt; &quot;Width too large &quot; + width2 + &quot;. You should set PLANTUML_LIMIT_SIZE&quot;);</span>
+<span class="nc" id="L78">			width = GraphvizUtils.getenvImageLimit();</span>
 		}
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (height &gt; GraphvizUtils.getenvImageLimit()) {</span>
-<span class="nc" id="L80">			Log.info(&quot;Height too large &quot; + height + &quot;. You should set PLANTUML_LIMIT_SIZE&quot;);</span>
-<span class="nc" id="L81">			height = GraphvizUtils.getenvImageLimit();</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (height &gt; GraphvizUtils.getenvImageLimit()) {</span>
+<span class="nc" id="L81">			final double height2 = height;</span>
+<span class="nc" id="L82">			Log.info(() -&gt; &quot;Height too large &quot; + height2 + &quot;. You should set PLANTUML_LIMIT_SIZE&quot;);</span>
+<span class="nc" id="L83">			height = GraphvizUtils.getenvImageLimit();</span>
 		}
 		// ::done
-<span class="fc" id="L84">		this.background = background;</span>
-<span class="fc" id="L85">		this.stringBounder = stringBounder;</span>
-<span class="fc" id="L86">		Log.info(&quot;Creating image &quot; + width + &quot;x&quot; + height);</span>
-<span class="fc" id="L87">		im = new BufferedImage(width, height, getType(background));</span>
-<span class="fc" id="L88">		g2d = im.createGraphics();</span>
-<span class="fc" id="L89">		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (background != null) {</span>
-<span class="fc" id="L91">			g2d.setColor(background);</span>
-<span class="fc" id="L92">			g2d.fillRect(0, 0, width, height);</span>
+<span class="fc" id="L86">		this.background = background;</span>
+<span class="fc" id="L87">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L88">		final double width3 = width;</span>
+<span class="fc" id="L89">		final double height3 = height;</span>
+<span class="pc" id="L90">		Log.info(() -&gt; &quot;Creating image &quot; + width3 + &quot;x&quot; + height3);</span>
+<span class="fc" id="L91">		im = new BufferedImage(width, height, getType(background));</span>
+<span class="fc" id="L92">		g2d = im.createGraphics();</span>
+<span class="fc" id="L93">		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (background != null) {</span>
+<span class="fc" id="L95">			g2d.setColor(background);</span>
+<span class="fc" id="L96">			g2d.fillRect(0, 0, width, height);</span>
 		}
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (watermark != null) {</span>
-<span class="nc" id="L95">			final int gray = 200;</span>
-<span class="nc" id="L96">			g2d.setColor(new Color(gray, gray, gray));</span>
-<span class="nc" id="L97">			printWatermark(watermark, width, height);</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (watermark != null) {</span>
+<span class="nc" id="L99">			final int gray = 200;</span>
+<span class="nc" id="L100">			g2d.setColor(new Color(gray, gray, gray));</span>
+<span class="nc" id="L101">			printWatermark(watermark, width, height);</span>
 		}
-<span class="fc" id="L99">	}</span>
+<span class="fc" id="L103">	}</span>
 
 	private int getType(Color background) {
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (background == null) {</span>
-<span class="nc" id="L103">			return BufferedImage.TYPE_INT_ARGB;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (background == null) {</span>
+<span class="nc" id="L107">			return BufferedImage.TYPE_INT_ARGB;</span>
 		}
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (background.getAlpha() != 255) {</span>
-<span class="nc" id="L106">			return BufferedImage.TYPE_INT_ARGB;</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (background.getAlpha() != 255) {</span>
+<span class="nc" id="L110">			return BufferedImage.TYPE_INT_ARGB;</span>
 		}
-<span class="fc" id="L108">		return BufferedImage.TYPE_INT_RGB;</span>
+<span class="fc" id="L112">		return BufferedImage.TYPE_INT_RGB;</span>
 	}
 
 	private void printWatermark(String watermark, int maxWidth, int maxHeight) {
-<span class="nc" id="L112">		final Font javaFont = g2d.getFont();</span>
-<span class="nc" id="L113">		final FontMetrics fm = g2d.getFontMetrics(javaFont);</span>
-<span class="nc" id="L114">		final Rectangle2D rect = fm.getStringBounds(watermark, g2d);</span>
-<span class="nc" id="L115">		final int height = (int) rect.getHeight();</span>
-<span class="nc" id="L116">		final int width = (int) rect.getWidth();</span>
-<span class="nc bnc" id="L117" title="All 4 branches missed.">		if (height &lt; 2 || width &lt; 2) {</span>
-<span class="nc" id="L118">			return;</span>
+<span class="nc" id="L116">		final Font javaFont = g2d.getFont();</span>
+<span class="nc" id="L117">		final FontMetrics fm = g2d.getFontMetrics(javaFont);</span>
+<span class="nc" id="L118">		final Rectangle2D rect = fm.getStringBounds(watermark, g2d);</span>
+<span class="nc" id="L119">		final int height = (int) rect.getHeight();</span>
+<span class="nc" id="L120">		final int width = (int) rect.getWidth();</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">		if (height &lt; 2 || width &lt; 2) {</span>
+<span class="nc" id="L122">			return;</span>
 		}
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (width &lt;= maxWidth)</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			for (int y = height; y &lt; maxHeight; y += height + 1) {</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">				for (int x = 0; x &lt; maxWidth; x += width + 10) {</span>
-<span class="nc" id="L123">					g2d.drawString(watermark, x, y);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (width &lt;= maxWidth)</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			for (int y = height; y &lt; maxHeight; y += height + 1) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">				for (int x = 0; x &lt; maxWidth; x += width + 10) {</span>
+<span class="nc" id="L127">					g2d.drawString(watermark, x, y);</span>
 				}
 			}
 		else {
-<span class="nc" id="L127">			final List&lt;String&gt; withBreaks = withBreaks(watermark, javaFont, fm, maxWidth);</span>
-<span class="nc" id="L128">			int y = 0;</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">			while (y &lt; maxHeight) {</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">				for (String s : withBreaks) {</span>
-<span class="nc" id="L131">					g2d.drawString(s, 0, y);</span>
-<span class="nc" id="L132">					y += (int) fm.getStringBounds(s, g2d).getHeight();</span>
-<span class="nc" id="L133">				}</span>
-<span class="nc" id="L134">				y += 10;</span>
+<span class="nc" id="L131">			final List&lt;String&gt; withBreaks = withBreaks(watermark, javaFont, fm, maxWidth);</span>
+<span class="nc" id="L132">			int y = 0;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			while (y &lt; maxHeight) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				for (String s : withBreaks) {</span>
+<span class="nc" id="L135">					g2d.drawString(s, 0, y);</span>
+<span class="nc" id="L136">					y += (int) fm.getStringBounds(s, g2d).getHeight();</span>
+<span class="nc" id="L137">				}</span>
+<span class="nc" id="L138">				y += 10;</span>
 			}
 		}
-<span class="nc" id="L137">	}</span>
+<span class="nc" id="L141">	}</span>
 
 	private int getWidth(String line, Font javaFont, FontMetrics fm) {
-<span class="nc" id="L140">		final Rectangle2D rect = fm.getStringBounds(line, g2d);</span>
-<span class="nc" id="L141">		return (int) rect.getWidth();</span>
+<span class="nc" id="L144">		final Rectangle2D rect = fm.getStringBounds(line, g2d);</span>
+<span class="nc" id="L145">		return (int) rect.getWidth();</span>
 	}
 
 	private List&lt;String&gt; withBreaks(String watermark, Font javaFont, FontMetrics fm, int maxWidth) {
-<span class="nc" id="L145">		final String[] words = watermark.split(&quot;\\s+&quot;);</span>
-<span class="nc" id="L146">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L147">		String pending = &quot;&quot;;</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (String word : words) {</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">			final String candidate = pending.length() == 0 ? word : pending + &quot; &quot; + word;</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (getWidth(candidate, javaFont, fm) &lt; maxWidth) {</span>
-<span class="nc" id="L151">				pending = candidate;</span>
+<span class="nc" id="L149">		final String[] words = watermark.split(&quot;\\s+&quot;);</span>
+<span class="nc" id="L150">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L151">		String pending = &quot;&quot;;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		for (String word : words) {</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			final String candidate = pending.length() == 0 ? word : pending + &quot; &quot; + word;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (getWidth(candidate, javaFont, fm) &lt; maxWidth) {</span>
+<span class="nc" id="L155">				pending = candidate;</span>
 			} else {
-<span class="nc" id="L153">				result.add(pending);</span>
-<span class="nc" id="L154">				pending = word;</span>
+<span class="nc" id="L157">				result.add(pending);</span>
+<span class="nc" id="L158">				pending = word;</span>
 			}
 		}
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (pending.length() &gt; 0) {</span>
-<span class="nc" id="L158">			result.add(pending);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (pending.length() &gt; 0) {</span>
+<span class="nc" id="L162">			result.add(pending);</span>
 		}
-<span class="nc" id="L160">		return result;</span>
+<span class="nc" id="L164">		return result;</span>
 	}
 
 	public BufferedImage getBufferedImage() {
-<span class="fc" id="L164">		return im;</span>
+<span class="fc" id="L168">		return im;</span>
 	}
 
 	public Graphics2D getGraphics2D() {
-<span class="fc" id="L168">		return g2d;</span>
+<span class="fc" id="L172">		return g2d;</span>
 	}
 
 //	public UGraphicG2d getUGraphicG2d(FileFormat format) {

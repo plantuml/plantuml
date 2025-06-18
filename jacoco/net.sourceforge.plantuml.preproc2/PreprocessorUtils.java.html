@@ -117,75 +117,77 @@ import net.sourceforge.plantuml.utils.Log;
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
 <span class="nc bnc" id="L118" title="All 2 branches missed.">		if (filename.endsWith(&quot;.puml&quot;) == false)</span>
 <span class="nc" id="L119">			filename = filename + &quot;.puml&quot;;</span>
-<span class="nc" id="L120">		Log.info(&quot;Loading non standard &quot; + filename);</span>
-<span class="nc" id="L121">		final String res = &quot;/stdlib/&quot; + filename;</span>
-<span class="nc" id="L122">		InputStream is = Stdlib.class.getResourceAsStream(res);</span>
 
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L125">			return null;</span>
+<span class="nc" id="L121">		final String filename2 = filename;</span>
+<span class="nc" id="L122">		Log.info(() -&gt; &quot;Loading non standard &quot; + filename2);</span>
+<span class="nc" id="L123">		final String res = &quot;/stdlib/&quot; + filename;</span>
+<span class="nc" id="L124">		InputStream is = Stdlib.class.getResourceAsStream(res);</span>
 
-<span class="nc" id="L127">		final String description = &quot;[&quot; + filename + &quot;]&quot;;</span>
-<span class="nc" id="L128">		return ReadLineReader.create(new InputStreamReader(is), description);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L127">			return null;</span>
+
+<span class="nc" id="L129">		final String description = &quot;[&quot; + filename + &quot;]&quot;;</span>
+<span class="nc" id="L130">		return ReadLineReader.create(new InputStreamReader(is), description);</span>
 	}
 	// ::done
 
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
-<span class="fc" id="L133">		Log.info(&quot;Loading sdlib &quot; + filename);</span>
-<span class="fc" id="L134">		InputStream is = getStdlibInputStream(filename);</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L136">			return null;</span>
+<span class="pc" id="L135">		Log.info(() -&gt; &quot;Loading sdlib &quot; + filename);</span>
+<span class="fc" id="L136">		InputStream is = getStdlibInputStream(filename);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L138">			return null;</span>
 
-<span class="fc" id="L138">		final String description = &quot;&lt;&quot; + filename + &quot;&gt;&quot;;</span>
+<span class="fc" id="L140">		final String description = &quot;&lt;&quot; + filename + &quot;&gt;&quot;;</span>
 		try {
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			if (StartDiagramExtractReader.containsStartDiagram(is, description)) {</span>
-<span class="nc" id="L141">				is = getStdlibInputStream(filename);</span>
-<span class="nc" id="L142">				return StartDiagramExtractReader.build(is, description);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (StartDiagramExtractReader.containsStartDiagram(is, description)) {</span>
+<span class="nc" id="L143">				is = getStdlibInputStream(filename);</span>
+<span class="nc" id="L144">				return StartDiagramExtractReader.build(is, description);</span>
 			}
-<span class="fc" id="L144">			is = getStdlibInputStream(filename);</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if (is == null)</span>
-<span class="nc" id="L146">				return null;</span>
+<span class="fc" id="L146">			is = getStdlibInputStream(filename);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">			if (is == null)</span>
+<span class="nc" id="L148">				return null;</span>
 
-<span class="fc" id="L148">			return ReadLineReader.create(new InputStreamReader(is), description);</span>
-<span class="nc" id="L149">		} catch (IOException e) {</span>
-<span class="nc" id="L150">			Logme.error(e);</span>
-<span class="nc" id="L151">			return new ReadLineSimple(s, e.toString());</span>
+<span class="fc" id="L150">			return ReadLineReader.create(new InputStreamReader(is), description);</span>
+<span class="nc" id="L151">		} catch (IOException e) {</span>
+<span class="nc" id="L152">			Logme.error(e);</span>
+<span class="nc" id="L153">			return new ReadLineSimple(s, e.toString());</span>
 		}
 	}
 
 	public static ReadLine getReaderStdlibIncludeSprites(StringLocated s, String root) throws IOException {
-<span class="nc" id="L156">		final Stdlib lib = Stdlib.retrieve(root);</span>
-<span class="nc" id="L157">		final Collection&lt;String&gt; filenames = lib.getAllFilenamesWithSprites();</span>
-<span class="nc" id="L158">		final List&lt;ReadLine&gt; readers = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L158">		final Stdlib lib = Stdlib.retrieve(root);</span>
+<span class="nc" id="L159">		final Collection&lt;String&gt; filenames = lib.getAllFilenamesWithSprites();</span>
+<span class="nc" id="L160">		final List&lt;ReadLine&gt; readers = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (String name : filenames) {</span>
-<span class="nc" id="L161">			final String data = lib.loadResource(name);</span>
-<span class="nc" id="L162">			final InputStream is = new ByteArrayInputStream(data.getBytes(UTF_8));</span>
-<span class="nc" id="L163">			readers.add(StartDiagramExtractReader.build(is, &quot;&lt;&quot; + root + &quot;/&quot; + name + &quot;&gt;&quot;));</span>
-<span class="nc" id="L164">		}</span>
-<span class="nc" id="L165">		return new ReadLineConcat(readers);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (String name : filenames) {</span>
+<span class="nc" id="L163">			final String data = lib.loadResource(name);</span>
+<span class="nc" id="L164">			final InputStream is = new ByteArrayInputStream(data.getBytes(UTF_8));</span>
+<span class="nc" id="L165">			readers.add(StartDiagramExtractReader.build(is, &quot;&lt;&quot; + root + &quot;/&quot; + name + &quot;&gt;&quot;));</span>
+<span class="nc" id="L166">		}</span>
+<span class="nc" id="L167">		return new ReadLineConcat(readers);</span>
 	}
 
 	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)
 			throws EaterException {
 		try {
-<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset))</span>
-<span class="nc" id="L172">				return StartDiagramExtractReader.build(url, s, suf, charset);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset))</span>
+<span class="nc" id="L174">				return StartDiagramExtractReader.build(url, s, suf, charset);</span>
 
-<span class="nc" id="L174">			return getReaderInclude(url, s, charset);</span>
-<span class="nc" id="L175">		} catch (IOException e) {</span>
-<span class="nc" id="L176">			Logme.error(e);</span>
-<span class="nc" id="L177">			throw new EaterException(&quot;Cannot open URL &quot; + e.getMessage(), s);</span>
+<span class="nc" id="L176">			return getReaderInclude(url, s, charset);</span>
+<span class="nc" id="L177">		} catch (IOException e) {</span>
+<span class="nc" id="L178">			Logme.error(e);</span>
+<span class="nc" id="L179">			throw new EaterException(&quot;Cannot open URL &quot; + e.getMessage(), s);</span>
 		}
 
 	}
 
 	public static ReadLine getReaderInclude(SURL url, StringLocated s, Charset charset)
 			throws EaterException, UnsupportedEncodingException {
-<span class="nc" id="L184">		final InputStream is = url.openStream();</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L186">			throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
+<span class="nc" id="L186">		final InputStream is = url.openStream();</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L188">			throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
 
-<span class="nc" id="L188">		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());</span>
+<span class="nc" id="L190">		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());</span>
 	}
 
 }

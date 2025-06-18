@@ -63,8 +63,8 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 <span class="fc" id="L64">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
 <span class="fc" id="L65">		final int spaceBottom = Math.abs(fontConfiguration.getSpace());</span>
-<span class="fc" id="L66">		Log.debug(&quot;g2d=&quot; + rect);</span>
-<span class="fc" id="L67">		Log.debug(&quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
+<span class="pc" id="L66">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
+<span class="pc" id="L67">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
 <span class="fc" id="L68">		double h = rect.getHeight();</span>
 <span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (h &lt; 10) {</span>
 <span class="nc" id="L70">			h = 10;</span>

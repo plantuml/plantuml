@@ -74,7 +74,7 @@ import net.sourceforge.plantuml.utils.Log;
 	@Override
 	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
 			throws EaterException {
-<span class="fc" id="L77">		Log.info(&quot;[MemGlobal] Setting &quot; + varname);</span>
+<span class="pc" id="L77">		Log.info(() -&gt; &quot;[MemGlobal] Setting &quot; + varname);</span>
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (scope == TVariableScope.LOCAL)</span>
 <span class="nc" id="L79">			throw new EaterException(&quot;Cannot use local variable here&quot;, location);</span>
 

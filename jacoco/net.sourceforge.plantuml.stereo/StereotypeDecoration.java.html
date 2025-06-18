@@ -91,7 +91,7 @@ public class StereotypeDecoration {
 			new RegexLeaf(&quot;\\&gt;\\&gt;&quot;) //
 	);
 
-	public static final String PREFIX = &quot;%&quot;;
+	// public static final String PREFIX = &quot;%&quot;;
 
 	final String label;
 	final HColor htmlColor;
@@ -107,13 +107,13 @@ public class StereotypeDecoration {
 	public List&lt;String&gt; getStyleNames() {
 <span class="fc" id="L108">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		for (String s : cutLabels(label, Guillemet.NONE))</span>
-<span class="fc" id="L110">			result.add(PREFIX + s);</span>
+<span class="fc" id="L110">			result.add(s);</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">		if (spriteName == null)</span>
 <span class="fc" id="L112">			return Collections.unmodifiableList(result);</span>
 
 <span class="fc" id="L114">		final int idx = spriteName.lastIndexOf('/');</span>
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (idx != -1)</span>
-<span class="nc" id="L116">			result.add(PREFIX + spriteName.substring(idx + 1));</span>
+<span class="nc" id="L116">			result.add(spriteName.substring(idx + 1));</span>
 <span class="fc" id="L117">		return Collections.unmodifiableList(result);</span>
 	}
 

@@ -161,8 +161,8 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (file == null) {</span>
 <span class="nc" id="L162">			return null;</span>
 		}
-<span class="fc" id="L164">		Log.info(&quot;Getting parent of &quot; + file);</span>
-<span class="fc" id="L165">		Log.info(&quot;--&gt;The parent is &quot; + file.getParentFile());</span>
+<span class="pc" id="L164">		Log.info(() -&gt; &quot;Getting parent of &quot; + file);</span>
+<span class="pc" id="L165">		Log.info(() -&gt; &quot;--&gt;The parent is &quot; + file.getParentFile());</span>
 <span class="fc" id="L166">		return file.getParentFile();</span>
 	}
 

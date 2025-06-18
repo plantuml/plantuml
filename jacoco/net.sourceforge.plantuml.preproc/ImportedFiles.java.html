@@ -87,7 +87,7 @@ public class ImportedFiles {
 		// final File filecurrent = SecurityUtils.File(dir.getAbsoluteFile(),
 		// nameOrPath);
 <span class="fc" id="L89">		final AFile filecurrent = dir.getAFile(nameOrPath);</span>
-<span class="fc" id="L90">		Log.info(&quot;ImportedFiles::getAFile filecurrent = &quot; + filecurrent);</span>
+<span class="pc" id="L90">		Log.info(() -&gt; &quot;ImportedFiles::getAFile filecurrent = &quot; + filecurrent);</span>
 <span class="pc bpc" id="L91" title="1 of 4 branches missed.">		if (filecurrent != null &amp;&amp; filecurrent.isOk()) </span>
 <span class="fc" id="L92">			return filecurrent;</span>
 		

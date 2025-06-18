@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	static private BufferedImage resize(BufferedImage im, int minsize) {
-<span class="nc" id="L56">		Log.info(&quot;Resizing file to &quot; + minsize);</span>
+<span class="nc" id="L56">		Log.info(() -&gt; &quot;Resizing file to &quot; + minsize);</span>
 
 <span class="nc bnc" id="L58" title="All 2 branches missed.">		if (im.getWidth() &gt;= minsize) {</span>
 <span class="nc" id="L59">			return im;</span>

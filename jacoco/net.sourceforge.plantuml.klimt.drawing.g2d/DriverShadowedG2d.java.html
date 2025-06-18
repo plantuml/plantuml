@@ -95,9 +95,9 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L95">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
 <span class="nc" id="L96">			destination = simpleBlur.filter(destination, null);</span>
 <span class="nc" id="L97">		} catch (OutOfMemoryError error) {</span>
-<span class="nc" id="L98">			Log.info(&quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
+<span class="nc" id="L98">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
 <span class="nc" id="L99">		} catch (Exception e) {</span>
-<span class="nc" id="L100">			Log.info(&quot;Warning: Cannot draw shadow: &quot; + e);</span>
+<span class="nc" id="L100">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
 <span class="nc" id="L101">		}</span>
 <span class="nc bnc" id="L102" title="All 2 branches missed.">		if (destination != null) {</span>
 <span class="nc" id="L103">			final AffineTransform at = g2d.getTransform();</span>
@@ -130,9 +130,9 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L130">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
 <span class="nc" id="L131">			destination = simpleBlur.filter(destination, null);</span>
 <span class="nc" id="L132">		} catch (OutOfMemoryError error) {</span>
-<span class="nc" id="L133">			Log.info(&quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
+<span class="nc" id="L133">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
 <span class="nc" id="L134">		} catch (Exception e) {</span>
-<span class="nc" id="L135">			Log.info(&quot;Warning: Cannot draw shadow: &quot; + e);</span>
+<span class="nc" id="L135">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
 <span class="nc" id="L136">		}</span>
 <span class="nc bnc" id="L137" title="All 2 branches missed.">		if (destination != null) {</span>
 <span class="nc" id="L138">			final AffineTransform at = g2d.getTransform();</span>
@@ -165,9 +165,9 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L165">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
 <span class="nc" id="L166">			destination = simpleBlur.filter(destination, null);</span>
 <span class="nc" id="L167">		} catch (OutOfMemoryError error) {</span>
-<span class="nc" id="L168">			Log.info(&quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
+<span class="nc" id="L168">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
 <span class="nc" id="L169">		} catch (Exception e) {</span>
-<span class="nc" id="L170">			Log.info(&quot;Warning: Cannot draw shadow: &quot; + e);</span>
+<span class="nc" id="L170">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
 <span class="nc" id="L171">		}</span>
 <span class="nc bnc" id="L172" title="All 2 branches missed.">		if (destination != null) {</span>
 <span class="nc" id="L173">			final AffineTransform at = g2d.getTransform();</span>

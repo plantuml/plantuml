@@ -75,7 +75,7 @@ public class ScientificEquationSafe {
 <span class="nc" id="L75">			return new ScientificEquationSafe(formula, new AsciiMath(formula));</span>
 <span class="nc" id="L76">		} catch (Exception e) {</span>
 <span class="nc" id="L77">			Logme.error(e);</span>
-<span class="nc" id="L78">			Log.info(&quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L78">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
 <span class="nc" id="L79">			return new ScientificEquationSafe(formula, null);</span>
 		}
 	}
@@ -85,7 +85,7 @@ public class ScientificEquationSafe {
 <span class="nc" id="L85">			return new ScientificEquationSafe(formula, new LatexBuilder(formula));</span>
 <span class="nc" id="L86">		} catch (Exception e) {</span>
 <span class="nc" id="L87">			Logme.error(e);</span>
-<span class="nc" id="L88">			Log.info(&quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L88">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
 <span class="nc" id="L89">			return new ScientificEquationSafe(formula, null);</span>
 		}
 	}

@@ -117,25 +117,24 @@ public class StyleExtractor {
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (style.size() &gt; 0) {</span>
 <span class="nc" id="L118">			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
 <span class="nc" id="L119">			final BlocLines blocLines = BlocLines.from(style);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">			for (Style modifiedStyle : StyleParser.parse(blocLines, styleBuilder))</span>
-<span class="nc" id="L121">				skinParam.muteStyle(modifiedStyle);</span>
+<span class="nc" id="L120">			skinParam.muteStyle(StyleParser.parse(blocLines, styleBuilder));</span>
 		}
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L122">	}</span>
 
 	public Iterator&lt;String&gt; getIterator() {
-<span class="fc" id="L126">		return list.iterator();</span>
+<span class="fc" id="L125">		return list.iterator();</span>
 	}
 
 	public String getTitle() {
-<span class="fc" id="L130">		return title;</span>
+<span class="fc" id="L129">		return title;</span>
 	}
 
 	public final boolean isHandwritten() {
-<span class="fc" id="L134">		return handwritten;</span>
+<span class="fc" id="L133">		return handwritten;</span>
 	}
 
 	public String getScale() {
-<span class="fc" id="L138">		return scale;</span>
+<span class="fc" id="L137">		return scale;</span>
 	}
 
 }
